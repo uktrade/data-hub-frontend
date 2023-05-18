@@ -138,6 +138,33 @@ const ProjectsCollection = ({
         }}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
+          {company && (
+            <FilterToggleSection
+              id="ProjectCollection.include-related-companies-filters"
+              label="Related companies"
+              isOpen={true}
+            >
+              <Filters.CheckboxGroup
+                legend="Include related companies"
+                name="include_related_companies"
+                qsParam="include_related_companies"
+                options={[
+                  {
+                    label: 'Parent companies',
+                    value: 'include_parent_companies',
+                  },
+                  {
+                    label: 'Subsidiary companies',
+                    value: 'include_subsidiary_companies',
+                  },
+                ]}
+                selectedOptions={
+                  selectedFilters.includeRelatedCompanies.options
+                }
+                data-test="include-related-companies-filter"
+              />
+            </FilterToggleSection>
+          )}
           <FilterToggleSection
             id="ProjectCollection.stage-and-status-filters"
             label="Stage and status"
@@ -162,7 +189,6 @@ const ProjectsCollection = ({
               groupId="status-filter"
             />
           </FilterToggleSection>
-
           <FilterToggleSection
             id="ProjectCollection.project-details-filters"
             label="Project details"
@@ -260,7 +286,6 @@ const ProjectsCollection = ({
               groupId="likelihood-to-land-filter"
             />
           </FilterToggleSection>
-
           <FilterToggleSection
             id="ProjectCollection.investment-and-involvement-details-filters"
             label="Investment and involvement details"

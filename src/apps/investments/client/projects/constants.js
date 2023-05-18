@@ -13,6 +13,7 @@ export const LABELS = {
   estimatedLandDateAfter: 'Estimated land date from',
   estimatedLandDateBefore: 'Estimated land date to',
   landDate: 'Land date',
+  includeRelatedCompanies: 'Include related companies',
 }
 
 export const SORT_OPTIONS = [

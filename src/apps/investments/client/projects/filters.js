@@ -127,4 +127,18 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.landDate,
     }),
   },
+  includeRelatedCompanies: {
+    queryParam: 'include_related_companies',
+    options: buildOptionsFilter({
+      options: [
+        { label: 'Parent companies', value: 'include_parent_companies' },
+        {
+          label: 'Subsidiary companies',
+          value: 'include_subsidiary_companies',
+        },
+      ],
+      value: queryParams.include_related_companies,
+      categoryLabel: LABELS.includeRelatedCompanies,
+    }),
+  },
 })

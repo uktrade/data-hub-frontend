@@ -209,6 +209,8 @@ describe('Company Investments Collection Page', () => {
           limit: 10,
           sortby: 'modified_on:desc',
           investor_company: [dnbCorp.id],
+          include_parent_companies: false,
+          include_subsidiary_companies: false,
         })
       )
     })
