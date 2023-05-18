@@ -26,7 +26,7 @@ import FormLayout from '../../../Layout/FormLayout'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 
 const COMPANY_NAME_MIN_LENGTH = 2
-const COMPANY_NAME_MAX_LENGTH = 30
+const COMPANY_NAME_MAX_LENGTH = 60
 
 const StyledUnorderedList = styled(UnorderedList)`
   list-style-type: disc;
