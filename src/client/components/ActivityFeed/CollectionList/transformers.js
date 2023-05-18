@@ -82,6 +82,7 @@ export const transformCompanyActivityToListItem = ({
   headingUrl: urls.interactions.detail(id),
   badges: getbadgeLabel(activityType, was_policy_feedback_provided),
   headingText: subject,
+  object: object,
 })
 
 export const transformResponseToCollection = ({
