@@ -6,15 +6,15 @@ import { SPACING } from '@govuk-react/constants'
 import {
   COMPANY_ACTIVITIES__LOADED,
   COMPANY_ACTIVITIES_SELECTED_ADVISERS,
-  COMPANY_ACTIVITIES_SELECTED_COMPANIES,
+  // COMPANY_ACTIVITIES_SELECTED_COMPANIES,
   COMPANY_ACTIVITIES__METADATA_LOADED,
-  COMPANY_ACTIVITIES_SELECTED_TEAMS,
+  // COMPANY_ACTIVITIES_SELECTED_TEAMS,
 } from '../../../actions'
 
 import {
   LABELS,
   ACTIVITY_TYPE_OPTIONS,
-  BUSINESS_INTELLIGENCE_OPTION,
+  // BUSINESS_INTELLIGENCE_OPTION,
 } from './constants'
 
 import {
@@ -37,11 +37,12 @@ import {
   TASK_GET_COMPANY_ACTIVITIES_LIST,
   TASK_GET_COMPANY_ACTIVITIES_METADATA,
   TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
+  // TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  // TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
 } from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
+import Activity from '../Activity'
 // import { FILTER_ITEMS } from '../../../../apps/companies/apps/activity-feed/constants'
 
 const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
@@ -50,12 +51,28 @@ const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
   margin-bottom: ${SPACING.SCALE_2};
 `
 
+const collectionItemTemplateDefault = (
+  activity
+  // titleRenderer,
+  // useReactRouter,
+  // pushAnalytics,
+  // selectedFilters,
+  // sanitizeFiltersForAnalytics
+) => {
+  return (
+    <li key={activity.id}>
+      <Activity {...activity} activity={activity} key={activity.id} />
+    </li>
+  )
+}
+
 const CompanyActivityCollection = ({
   payload,
   company,
   optionMetadata,
   selectedFilters,
   currentAdviserId,
+  dnbHierarchyCount,
   ...props
 }) => {
   const collectionListTask = {
@@ -71,14 +88,14 @@ const CompanyActivityCollection = ({
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
   }
-  const companyListTask = {
-    name: TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-    id: ID,
-    startOnRender: {
-      payload: payload.company,
-      onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_COMPANIES,
-    },
-  }
+  // const companyListTask = {
+  //   name: TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  //   id: ID,
+  //   startOnRender: {
+  //     payload: payload.company,
+  //     onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_COMPANIES,
+  //   },
+  // }
   const adviserListTask = {
     name: TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
     id: ID,
@@ -117,20 +134,27 @@ const CompanyActivityCollection = ({
     value: currentAdviserId,
   }
 
-  const teamListTask = {
-    name: TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
-    id: ID,
-    startOnRender: {
-      payload: payload.dit_participants__team,
-      onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_TEAMS,
-    },
+  // console.log(selectedFilters.dnbHierarchyCount)
+
+  const dnbHierarchyCountOption = {
+    label: `Activity across all ${dnbHierarchyCount} companies`,
+    value: true,
   }
+
+  // const teamListTask = {
+  //   name: TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
+  //   id: ID,
+  //   startOnRender: {
+  //     payload: payload.dit_participants__team,
+  //     onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_TEAMS,
+  //   },
+  // }
 
   return (
     <FilteredCollectionList
       {...props}
       collectionName="company activities"
-      sortOptions={optionMetadata.sortOptions}
+      // sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       entityName="companyActivities"
@@ -138,6 +162,7 @@ const CompanyActivityCollection = ({
         ...sanitizeFilter(advisers),
         ...sanitizeFilter(teams),
       })}
+      collectionItemTemplate={collectionItemTemplateDefault}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <Filters.CheckboxGroup
@@ -148,6 +173,18 @@ const CompanyActivityCollection = ({
           selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
           data-test="my-interactions-filter"
         />
+        {dnbHierarchyCount > 0 && (
+          <Filters.CheckboxGroup
+            legend={LABELS.showDNBHierarchy}
+            name="show_dnb_hierarchy"
+            qsParam="show_dnb_hierarchy"
+            options={[dnbHierarchyCountOption]}
+            selectedOptions={
+              payload.show_dnb_hierarchy ? [dnbHierarchyCountOption] : []
+            }
+            data-test="show-dnb-hierarchy-filter"
+          />
+        )}
         <StyledCheckboxGroup
           legend={LABELS.activityType}
           name="activityType"
@@ -161,14 +198,14 @@ const CompanyActivityCollection = ({
           label="Interaction details"
           isOpen={true}
         >
-          <Filters.Input
+          {/* <Filters.Input
             id="EventsCollection.subject"
             qsParam="subject"
             name="subject"
             label={LABELS.subject}
             data-test="interaction-subject-filter"
-          />
-          <Filters.CompanyTypeahead
+          /> */}
+          {/* <Filters.CompanyTypeahead
             taskProps={companyListTask}
             isMulti={true}
             label={LABELS.company}
@@ -178,7 +215,7 @@ const CompanyActivityCollection = ({
             noOptionsMessage="No companies found"
             selectedOptions={selectedFilters.company.options}
             data-test="company-filter"
-          />
+          /> */}
           <Filters.AdvisersTypeahead
             taskProps={adviserListTask}
             isMulti={true}
@@ -191,7 +228,7 @@ const CompanyActivityCollection = ({
             selectedOptions={selectedFilters.advisers.options}
             data-test="adviser-filter"
           />
-          <Filters.Date
+          {/* <Filters.Date
             label={LABELS.dateAfter}
             name="date_after"
             qsParamName="date_after"
@@ -202,8 +239,8 @@ const CompanyActivityCollection = ({
             name="date_before"
             qsParamName="date_before"
             data-test="date-before-filter"
-          />
-          <Filters.TeamsTypeahead
+          /> */}
+          {/* <Filters.TeamsTypeahead
             taskProps={teamListTask}
             isMulti={true}
             label={LABELS.teams}
@@ -213,8 +250,8 @@ const CompanyActivityCollection = ({
             noOptionsMessage="No teams found"
             selectedOptions={selectedFilters.teams.options}
             data-test="team-filter"
-          />
-          <Filters.Typeahead
+          /> */}
+          {/* <Filters.Typeahead
             isMulti={true}
             label={LABELS.sector}
             name="sector"
@@ -223,16 +260,16 @@ const CompanyActivityCollection = ({
             options={optionMetadata.sectorOptions}
             selectedOptions={selectedFilters.sectors.options}
             data-test="sector-filter"
-          />
-          <Filters.CheckboxGroup
+          /> */}
+          {/* <Filters.CheckboxGroup
             legend={LABELS.businessIntelligence}
             name="was_policy_feedback_provided"
             qsParam="was_policy_feedback_provided"
             options={BUSINESS_INTELLIGENCE_OPTION}
             selectedOptions={selectedFilters.businessIntelligence.options}
             data-test="business-intelligence-filter"
-          />
-          <Filters.CheckboxGroup
+          /> */}
+          {/* <Filters.CheckboxGroup
             maxScrollHeight={370}
             legend={LABELS.companyOneListGroupTier}
             name="company_one_list_group_tier"
@@ -240,10 +277,10 @@ const CompanyActivityCollection = ({
             options={optionMetadata.companyOneListTierOptions}
             selectedOptions={selectedFilters.companyOneListGroupTier.options}
             data-test="company-one-list-group-tier-filter"
-          />
+          /> */}
         </FilterToggleSection>
 
-        <FilterToggleSection
+        {/* <FilterToggleSection
           id="CompanyActivityCollection.service-details-filters"
           label="Service details"
           isOpen={false}
@@ -258,9 +295,9 @@ const CompanyActivityCollection = ({
             data-test="service-filter"
             groupId="service-filter"
           />
-        </FilterToggleSection>
+        </FilterToggleSection> */}
 
-        <FilterToggleSection
+        {/* <FilterToggleSection
           id="CompanyActivityCollection.policy-details-filters"
           label="Policy details"
           isOpen={false}
@@ -284,7 +321,7 @@ const CompanyActivityCollection = ({
             data-test="policy-issue-type-filter"
             groupId="policy-issue-type-filter"
           />
-        </FilterToggleSection>
+        </FilterToggleSection> */}
       </CollectionFilters>
     </FilteredCollectionList>
   )

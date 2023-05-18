@@ -8,6 +8,7 @@ export const LABELS = {
   company: 'Company',
   subject: 'Subject',
   myInteractions: 'My interactions',
+  showDNBHierarchy: 'Include related companies',
   dateAfter: 'From',
   dateBefore: 'To',
   service: 'Service',

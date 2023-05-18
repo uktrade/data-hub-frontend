@@ -146,7 +146,7 @@ const InteractionCollection = ({
       })}
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
-        <Filters.CheckboxGroup
+        <StyledCheckboxGroup
           legend={LABELS.myInteractions}
           name="my_interactions"
           qsParam="dit_participants__adviser"

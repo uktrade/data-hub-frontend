@@ -42,6 +42,34 @@ const getPageNumber = (qsParams, defaultValue = 1) => {
   return isNaN(pageNumber) ? defaultValue : pageNumber
 }
 
+const collectionItemTemplateDefault = (
+  item,
+  titleRenderer,
+  useReactRouter,
+  pushAnalytics,
+  selectedFilters,
+  sanitizeFiltersForAnalytics
+) => {
+  return (
+    <CollectionItem
+      {...item}
+      key={item.id}
+      titleRenderer={titleRenderer}
+      useReactRouter={useReactRouter}
+      onClick={() => {
+        pushAnalytics({
+          event: 'filterResultClick',
+          extra: {
+            ...filtersToAnalytics(selectedFilters),
+            ...(sanitizeFiltersForAnalytics &&
+              sanitizeFiltersForAnalytics(getSelectedFilters(selectedFilters))),
+          },
+        })
+      }}
+    />
+  )
+}
+
 const FilteredCollectionList = ({
   results = [],
   summary = null,
@@ -63,6 +91,7 @@ const FilteredCollectionList = ({
   titleRenderer = null,
   sanitizeFiltersForAnalytics = null,
   useReactRouter = false,
+  collectionItemTemplate = collectionItemTemplateDefault,
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -117,26 +146,16 @@ const FilteredCollectionList = ({
                       <ol aria-live="polite">
                         {results.map((item) => (
                           <Analytics>
-                            {(pushAnalytics) => (
-                              <CollectionItem
-                                {...item}
-                                key={item.id}
-                                titleRenderer={titleRenderer}
-                                useReactRouter={useReactRouter}
-                                onClick={() => {
-                                  pushAnalytics({
-                                    event: 'filterResultClick',
-                                    extra: {
-                                      ...filtersToAnalytics(selectedFilters),
-                                      ...(sanitizeFiltersForAnalytics &&
-                                        sanitizeFiltersForAnalytics(
-                                          getSelectedFilters(selectedFilters)
-                                        )),
-                                    },
-                                  })
-                                }}
-                              />
-                            )}
+                            {(pushAnalytics) =>
+                              collectionItemTemplate(
+                                item,
+                                titleRenderer,
+                                useReactRouter,
+                                pushAnalytics,
+                                selectedFilters,
+                                sanitizeFiltersForAnalytics
+                              )
+                            }
                           </Analytics>
                         ))}
                       </ol>

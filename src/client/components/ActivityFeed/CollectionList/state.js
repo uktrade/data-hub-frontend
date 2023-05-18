@@ -39,14 +39,20 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { currentAdviserId } = state
-  const { metadata, selectedAdvisers, selectedTeams, selectedCompanies } =
-    state[ID]
+  const {
+    metadata,
+    selectedAdvisers,
+    selectedTeams,
+    selectedCompanies,
+    showDNBHierarchy,
+  } = state[ID]
   const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
     selectedAdvisers,
     selectedTeams,
-    selectedCompanies
+    selectedCompanies,
+    showDNBHierarchy
   )
 
   return {
@@ -63,5 +69,6 @@ export const state2props = ({ router, ...state }) => {
     },
     selectedFilters,
     currentAdviserId,
+    showDNBHierarchy,
   }
 }

@@ -11,14 +11,31 @@ function Activity({
   filter,
   isOverview,
 }) {
-  const ActivityToRender = find(activities, (a) =>
-    a.canRender(activity, filter)
-  )
+  const ActivityToRender = find(activities, (a) => {
+    // console.log('ActivityToRender')
+    // console.log('activity', activity)
+    // console.log('ativity json: ', JSON.stringify(activity))
+    // console.log('a', a)
+    // console.log('a.canRender', a.canRender)
+    // console.log('typeof a.canRender', typeof a.canRender)
 
+    if (a.canRender && typeof a.canRender == 'function') {
+      // console.log('Happy happy')
+      // console.log('a.canRender(activity, filter)')
+      // console.log('result: ', a.canRender(activity, filter))
+      a.canRender(activity, filter)
+    } else {
+      // console.log('No a.canRender')
+      return null
+    }
+  })
+
+  // console.log('ActivityToRender')
+  // console.log(ActivityToRender)
   if (!ActivityToRender) {
+    // console.log('return null')
     return null
   }
-
   return (
     <ActivityToRender
       activity={activity}

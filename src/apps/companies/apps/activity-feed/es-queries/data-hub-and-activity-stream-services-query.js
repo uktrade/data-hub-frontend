@@ -182,6 +182,7 @@ const dataHubAndActivityStreamServicesQuery = ({
     shouldCriteria.push(criteria)
   }
 
+  let filters = []
   if (feedType != FILTER_FEED_TYPE.ALL) {
     let now = new Date()
     let period
@@ -208,8 +209,11 @@ const dataHubAndActivityStreamServicesQuery = ({
         },
       },
     }
-    shouldCriteria.map((criteria) => criteria.bool.must.push(dateFilter))
+    filters.push(dateFilter)
   }
+  shouldCriteria.map(
+    (criteria) => (criteria.bool.must = [...criteria.bool.must, ...filters])
+  )
 
   const dsl = {
     from,
