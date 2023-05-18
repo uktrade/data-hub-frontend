@@ -1,5 +1,4 @@
 const {
-  FILTER_ITEMS,
   FILTER_KEYS,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
@@ -65,7 +64,6 @@ async function renderActivityFeed(req, res, next) {
           flashMessages: res.locals.getMessages(),
           isOverview: false,
           activityTypeFilter: [FILTER_KEYS.dataHubActivity],
-          activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,

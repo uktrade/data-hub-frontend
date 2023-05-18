@@ -6,28 +6,6 @@ const FILTER_KEYS = {
   showDNBHierarchy: 'showDNBHierarchy',
 }
 
-const FILTER_ITEMS = {
-  dataHubAndExternalActivity: {
-    label: 'All Data Hub & external activity',
-    value: FILTER_KEYS.dataHubAndExternalActivity,
-  },
-
-  externalActivity: {
-    label: 'All external activity',
-    value: FILTER_KEYS.externalActivity,
-  },
-
-  myActivity: {
-    label: 'My activity',
-    value: FILTER_KEYS.myActivity,
-  },
-
-  dataHubActivity: {
-    label: 'All Data Hub activity',
-    value: FILTER_KEYS.dataHubActivity,
-  },
-}
-
 const FILTER_FEED_TYPE = {
   ALL: 'all',
   RECENT: 'recent',
@@ -200,7 +178,6 @@ module.exports = {
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
-  FILTER_ITEMS,
   FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
