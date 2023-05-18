@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 
 import {
   COMPANY_ACTIVITIES__LOADED,
@@ -11,11 +9,7 @@ import {
   // COMPANY_ACTIVITIES_SELECTED_TEAMS,
 } from '../../../actions'
 
-import {
-  LABELS,
-  ACTIVITY_TYPE_OPTIONS,
-  // BUSINESS_INTELLIGENCE_OPTION,
-} from './constants'
+import { LABELS } from './constants'
 
 import {
   CollectionFilters,
@@ -37,28 +31,12 @@ import {
   TASK_GET_COMPANY_ACTIVITIES_LIST,
   TASK_GET_COMPANY_ACTIVITIES_METADATA,
   TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
-  // TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-  // TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
 } from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
 import Activity from '../Activity'
-// import { FILTER_ITEMS } from '../../../../apps/companies/apps/activity-feed/constants'
 
-const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
-  /* This just tightens up the gap for when a single checkbox option group
-  (with no label) is beneath a multiple checkbox option group */
-  margin-bottom: ${SPACING.SCALE_2};
-`
-
-const collectionItemTemplateDefault = (
-  activity
-  // titleRenderer,
-  // useReactRouter,
-  // pushAnalytics,
-  // selectedFilters,
-  // sanitizeFiltersForAnalytics
-) => {
+const collectionItemTemplateDefault = (activity) => {
   return (
     <li key={activity.id}>
       <Activity {...activity} activity={activity} key={activity.id} />
@@ -88,14 +66,6 @@ const CompanyActivityCollection = ({
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
   }
-  // const companyListTask = {
-  //   name: TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-  //   id: ID,
-  //   startOnRender: {
-  //     payload: payload.company,
-  //     onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_COMPANIES,
-  //   },
-  // }
   const adviserListTask = {
     name: TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
     id: ID,
@@ -134,21 +104,10 @@ const CompanyActivityCollection = ({
     value: currentAdviserId,
   }
 
-  // console.log(selectedFilters.dnbHierarchyCount)
-
   const dnbHierarchyCountOption = {
     label: `Activity across all ${dnbHierarchyCount} companies`,
     value: true,
   }
-
-  // const teamListTask = {
-  //   name: TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
-  //   id: ID,
-  //   startOnRender: {
-  //     payload: payload.dit_participants__team,
-  //     onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_TEAMS,
-  //   },
-  // }
 
   return (
     <FilteredCollectionList
@@ -185,14 +144,6 @@ const CompanyActivityCollection = ({
             data-test="show-dnb-hierarchy-filter"
           />
         )}
-        <StyledCheckboxGroup
-          legend={LABELS.activityType}
-          name="activityType"
-          qsParam="activityType"
-          options={ACTIVITY_TYPE_OPTIONS}
-          selectedOptions={selectedFilters.activityType.options}
-          data-test="activity-type-filter"
-        />
         <FilterToggleSection
           id="CompanyActivityCollection.interaction-details-filters"
           label="Interaction details"

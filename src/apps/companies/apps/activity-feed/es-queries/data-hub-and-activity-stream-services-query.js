@@ -20,14 +20,7 @@ const dataHubAndActivityStreamServicesQuery = ({
 }) => {
   let sortDirection = 'desc'
   let shouldCriteria = []
-  let types = []
-
-  if (activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)) {
-    types = [...types, ...DATA_HUB_AND_AVENTRI_ACTIVITY]
-  }
-  if (activityTypeFilter.includes(FILTER_KEYS.externalActivity)) {
-    types = [...types, ...EXTERNAL_ACTIVITY]
-  }
+  let types = [...DATA_HUB_AND_AVENTRI_ACTIVITY, ...EXTERNAL_ACTIVITY]
   if (activityTypeFilter.includes(FILTER_KEYS.myActivity)) {
     types = [...types, ...DATA_HUB_ACTIVITY]
   }
