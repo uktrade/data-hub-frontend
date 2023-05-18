@@ -28,6 +28,7 @@ export { default as OpportunityValueTypesResource } from './OpportunityValueType
 export { default as OrderAssigneesResource } from './OrderAssignees'
 export { default as OrderSubscribersResource } from './OrderSubscribers'
 export { default as PropositionResource } from './Proposition'
+export { default as PropositionEvidenceResource } from './PropositionEvidence'
 export { default as RequiredChecksConductedResource } from './RequiredChecksConducted'
 export { default as SectorResource } from './Sector'
 export { default as TimeHorizonsResource } from './TimeHorizons'

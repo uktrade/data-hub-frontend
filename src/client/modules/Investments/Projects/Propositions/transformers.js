@@ -1,7 +1,23 @@
+import React from 'react'
+import { Link } from 'govuk-react'
 import { transformValueForAPI } from '../../../../utils/date'
+
+const VIRUS_SCAN_STATUSES = {
+  not_virus_scanned: 'File not virus scanned',
+  virus_scanning_scheduled: 'Virus scanning scheduled',
+  virus_scanning_in_progress:
+    'File is being scanned, try again in a few moments',
+  virus_scanning_failed: 'Virus scanning failed, contact your administrator',
+}
 
 export const buildPropositionUrl = (propositionId, projectId) =>
   `v3/investment/${projectId}/proposition/${propositionId}`
+
+export const buildEvidenceUrl = (propositionId, projectId) =>
+  buildPropositionUrl(propositionId, projectId) + '/document'
+
+export const capitaliseFirstLetter = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1)
 
 export const transformPropositionForAPI = ({ projectId, values }) => {
   const {
@@ -33,4 +49,45 @@ export const transformAbandonedPropositionForAPI = ({
     investmentProjectId,
     details: values.reason,
   }
+}
+
+const buildDocumentLink = (
+  avClean,
+  documentId,
+  propositionId,
+  projectId,
+  originalFilename
+) =>
+  avClean ? (
+    <Link
+      href={`/investments/projects/${projectId}/propositions/${propositionId}/download/${documentId}`}
+      aria-label={`Download the document ${originalFilename}`}
+    >
+      Download
+    </Link>
+  ) : (
+    <strong>
+      The file didn't pass virus scanning, contact your administrator
+    </strong>
+  )
+
+export const transformDocumentStatus = (
+  originalFilename,
+  status,
+  avClean,
+  id,
+  propositionId,
+  projectId
+) => {
+  const documentStatus =
+    status === 'virus_scanned'
+      ? buildDocumentLink(
+          avClean,
+          id,
+          propositionId,
+          projectId,
+          originalFilename
+        )
+      : VIRUS_SCAN_STATUSES[status]
+  return documentStatus
 }

@@ -1,19 +1,15 @@
 const { lowerCase, capitalize } = require('lodash')
 
-const { transformPropositionResponseToViewRecord } = require('../transformers')
-
 function renderDetailsPage(req, res, next) {
   try {
     const { proposition } = res.locals
     const breadcrumb = capitalize(lowerCase(proposition.name))
-    const propositionViewRecord =
-      transformPropositionResponseToViewRecord(proposition)
-    return res
-      .breadcrumb(breadcrumb)
-      .title(proposition.name)
-      .render('propositions/views/details', {
-        propositionViewRecord,
-      })
+    return res.breadcrumb(breadcrumb).render('propositions/views/details', {
+      props: {
+        propositionId: proposition.id,
+        investmentProjectId: proposition.investment_project.id,
+      },
+    })
   } catch (error) {
     next(error)
   }

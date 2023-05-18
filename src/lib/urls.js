@@ -304,10 +304,24 @@ module.exports = {
       ),
       documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url('/investments', '/projects/:investmentId/propositions'),
-      proposition: url(
-        '/investments',
-        '/projects/:investmentId/propositions/:propositionId'
-      ),
+      proposition: {
+        details: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId'
+        ),
+        abandon: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/abandon'
+        ),
+        document: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/document'
+        ),
+        complete: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/complete'
+        ),
+      },
       team: url('/investments', '/projects/:investmentId/team'),
       clientRelationshipManagement: url(
         '/investments',

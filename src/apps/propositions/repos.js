@@ -8,13 +8,6 @@ function fetchProposition(req, propositionId, investmentId) {
   )
 }
 
-function fetchPropositionFiles(req, propositionId, investmentId) {
-  return authorisedRequest(
-    req,
-    `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document`
-  )
-}
-
 function fetchDownloadLink(req, propositionId, investmentId, documentId) {
   return authorisedRequest(
     req,
@@ -52,6 +45,5 @@ module.exports = {
   completeProposition,
   fetchDownloadLink,
   fetchProposition,
-  fetchPropositionFiles,
   getPropositionsForInvestment,
 }

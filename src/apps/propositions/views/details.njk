@@ -1,38 +1,9 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block main_grid_right_column %}
-  {% component 'key-value-table', variant='striped', items=propositionViewRecord %}
-
-  {%  if proposition.status === 'ongoing' or  proposition.status === 'late' %}
-    <ul class="list-links">
-      {% if proposition.files.results.length == 0 %}
-        <li class="list-links-item">
-          <a class="govuk-button" href="{{proposition.id}}/document">
-            Upload Files
-          </a>
-        </li>
-      {% else %}
-        <li class="list-links-item">
-          <a class="link" href="{{proposition.id}}/document">
-            Upload more files
-          </a>
-        </li>
-        <li class="list-links-item">
-          <a class="govuk-button" href="{{proposition.id}}/complete">
-            Complete proposition
-          </a>
-        </li>
-      {% endif %}
-      <li class="list-links-item">
-        <a class="link" href="{{proposition.id}}/abandon">
-          Abandon proposition
-        </a>
-      </li>
-      <li class="list-links-item">
-        <a class="link" href=".">
-          View propositions list
-        </a>
-      </li>
-    </ul>
-  {%  endif %}
+{% block body %}
+  {% component 'react-slot', {
+    id: 'proposition-details',
+    props: props
+    }
+  %}
 {% endblock %}
