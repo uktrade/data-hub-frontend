@@ -3,6 +3,7 @@ const FILTER_KEYS = {
   myActivity: 'myActivity',
   externalActivity: 'externalActivity',
   dataHubActivity: 'dataHubActivity',
+  showDNBHierarchy: 'showDNBHierarchy',
 }
 
 const FILTER_ITEMS = {

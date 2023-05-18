@@ -50,11 +50,13 @@ export const transformCompanyActivityToListItem = ({
   service,
   companies,
   id,
+  type,
   contacts,
   activityType,
   was_policy_feedback_provided,
 } = {}) => ({
   id,
+  type,
   metadata: [
     { label: 'Name', value: object?.name },
     { label: 'Subject', value: object['dit:subject'] },

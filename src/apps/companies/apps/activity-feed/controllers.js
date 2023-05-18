@@ -285,18 +285,16 @@ const isAventriAttendee = (attendee) =>
 async function fetchActivityFeedHandler(req, res, next) {
   try {
     const { company, user } = res.locals
-    // console.log(req.query)
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
       activityTypeFilter = FILTER_KEYS.dataHubActivity,
       dit_participants__adviser = [],
-      showDnbHierarchy = false,
+      show_dnb_hierarchy = false,
     } = req.query
-
     let dnbHierarchyIds = []
-    if (company.is_global_ultimate && showDnbHierarchy) {
+    if (company.is_global_ultimate && show_dnb_hierarchy) {
       const { results } = await getGlobalUltimateHierarchy(
         req,
         company.global_ultimate_duns_number
