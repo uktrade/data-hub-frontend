@@ -16,7 +16,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      cy.get('[data-test="collectionCount"]').should('have.text', '1')
+      cy.get('[data-test="collectionCount"]').should('have.text', '2')
     })
   })
 
