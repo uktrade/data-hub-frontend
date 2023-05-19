@@ -71,6 +71,7 @@ const ExportList = ({
   const history = useHistory()
   const maxItems = Math.min(count, maxItemsToPaginate)
   const totalPages = Math.ceil(maxItems / itemsPerPage)
+  const hasZeroExports = !filters.areActive && count === 0
 
   const onClearAll = () => {
     history.push({
@@ -82,31 +83,35 @@ const ExportList = ({
 
   return (
     <>
-      <FiltersContainer>
-        <ExportSelect
-          label="Status"
-          qsParam="status"
-          options={filters.status.options}
-        />
-        <ExportSelect
-          label="Export potential"
-          qsParam="export_potential"
-          options={filters.exportPotential.options}
-        />
-      </FiltersContainer>
-      <HeaderContainer>
-        <StyledHeader>
-          <StyledResultCount data-test="collectionCount">
-            {count}
-          </StyledResultCount>{' '}
-          Exports
-        </StyledHeader>
-        {filters.areActive && (
-          <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
-            Remove all filters
-          </StyledButtonLink>
-        )}
-      </HeaderContainer>
+      {!hasZeroExports && (
+        <>
+          <FiltersContainer>
+            <ExportSelect
+              label="Status"
+              qsParam="status"
+              options={filters.status.options}
+            />
+            <ExportSelect
+              label="Export potential"
+              qsParam="export_potential"
+              options={filters.exportPotential.options}
+            />
+          </FiltersContainer>
+          <HeaderContainer>
+            <StyledHeader>
+              <StyledResultCount data-test="collectionCount">
+                {count}
+              </StyledResultCount>{' '}
+              Exports
+            </StyledHeader>
+            {filters.areActive && (
+              <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
+                Remove all filters
+              </StyledButtonLink>
+            )}
+          </HeaderContainer>
+        </>
+      )}
       <Task.Status
         name={TASK_GET_EXPORT_PIPELINE_LIST}
         id={ID}
@@ -118,7 +123,7 @@ const ExportList = ({
       >
         {() => (
           <>
-            {!filters.areActive && count === 0 ? (
+            {hasZeroExports ? (
               <div data-test="no-export-items">
                 <ContentWithHeading
                   data-test="no-export-items"
