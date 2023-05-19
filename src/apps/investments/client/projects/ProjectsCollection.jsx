@@ -32,6 +32,7 @@ import {
 } from '../../../../client/actions'
 
 import { sanitizeFilter } from '../../../../client/filters'
+import { INCLUDE_RELATED_COMPANIES } from './constants'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -148,16 +149,7 @@ const ProjectsCollection = ({
                 legend="Include related companies"
                 name="include_related_companies"
                 qsParam="include_related_companies"
-                options={[
-                  {
-                    label: 'Parent companies',
-                    value: 'include_parent_companies',
-                  },
-                  {
-                    label: 'Subsidiary companies',
-                    value: 'include_subsidiary_companies',
-                  },
-                ]}
+                options={INCLUDE_RELATED_COMPANIES}
                 selectedOptions={
                   selectedFilters.includeRelatedCompanies.options
                 }

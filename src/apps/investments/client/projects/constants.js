@@ -48,3 +48,14 @@ export const PROJECT_STATUS_OPTIONS = [
   { label: 'Lost', value: 'lost' },
   { label: 'Dormant', value: 'dormant' },
 ]
+
+export const INCLUDE_RELATED_COMPANIES = [
+  {
+    label: 'Parent companies',
+    value: 'include_parent_companies',
+  },
+  {
+    label: 'Subsidiary companies',
+    value: 'include_subsidiary_companies',
+  },
+]

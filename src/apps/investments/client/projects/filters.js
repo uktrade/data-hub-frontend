@@ -7,6 +7,7 @@ import {
   LABELS,
   PROJECT_STATUS_OPTIONS,
   INVOLVEMENT_LEVEL_OPTIONS,
+  INCLUDE_RELATED_COMPANIES,
 } from './constants'
 
 export const buildSelectedFilters = (
@@ -130,13 +131,7 @@ export const buildSelectedFilters = (
   includeRelatedCompanies: {
     queryParam: 'include_related_companies',
     options: buildOptionsFilter({
-      options: [
-        { label: 'Parent companies', value: 'include_parent_companies' },
-        {
-          label: 'Subsidiary companies',
-          value: 'include_subsidiary_companies',
-        },
-      ],
+      options: INCLUDE_RELATED_COMPANIES,
       value: queryParams.include_related_companies,
       categoryLabel: LABELS.includeRelatedCompanies,
     }),
