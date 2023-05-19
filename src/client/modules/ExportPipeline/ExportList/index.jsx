@@ -1,22 +1,35 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { HEADING_SIZES, FONT_SIZE } from '@govuk-react/constants'
+import { UnorderedList, ListItem, H2 } from 'govuk-react'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 
-import Task from '../../../components/Task'
-import Pagination from '../../../components/Pagination'
-
-import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
-import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
-import { parsePage } from '../../../../client/utils/pagination'
-
-import List from './List'
-import ListItemRenderer from './ItemRenderer'
 import ContentWithHeading from '../../../components/ContentWithHeading'
-import { UnorderedList, ListItem } from 'govuk-react'
-import styled from 'styled-components'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { ButtonLink, Pagination } from '../../../components'
+import { MID_GREY } from '../../../utils/colours'
+import ListItemRenderer from './ItemRenderer'
+import Task from '../../../components/Task'
+import ExportSelect from './ExportSelect'
+import List from './List'
+
+import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
+import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
+
+const StyledHeader = styled(H2)({
+  marginTop: 0,
+  fontWeight: 'normal',
+  fontSize: HEADING_SIZES.MEDIUM,
+  marginBottom: 0,
+})
+
+const StyledResultCount = styled('span')({
+  fontSize: 36,
+  fontWeight: 600,
+  lineHeight: 1,
+})
 
 const StyledContent = styled.div({
   display: 'flex',
@@ -24,73 +37,131 @@ const StyledContent = styled.div({
   rowGap: FONT_SIZE.SIZE_20,
 })
 
-const EmptyState = () => (
-  <div data-test="no-export-items">
-    <ContentWithHeading heading="You have no exports">
-      <StyledContent>
-        <div>
-          Here you can create an export project to track a company's export
-          progress. These will appear on your home page, so you keep track of
-          your exports in one place.
-        </div>
-        <span>To add an export:</span>
-        <div>
-          <UnorderedList listStyleType="bullet">
-            <ListItem>go to the company page</ListItem>
-            <ListItem>select 'Add export project' button</ListItem>
-          </UnorderedList>
-        </div>
-      </StyledContent>
-    </ContentWithHeading>
-  </div>
-)
+const FiltersContainer = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+})
 
-const ExportList = ({ count, results, itemsPerPage, maxItemsToPaginate }) => {
+const HeaderContainer = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  borderBottom: `1px solid ${MID_GREY}`,
+  paddingBottom: 10,
+  marginTop: 30,
+})
+
+const StyledButtonLink = styled(ButtonLink)({
+  marginBottom: 0,
+})
+
+const ListContainer = styled('div')({
+  marginTop: 20,
+})
+
+const ExportList = ({
+  count,
+  results,
+  itemsPerPage,
+  maxItemsToPaginate,
+  payload,
+  filters,
+}) => {
   const history = useHistory()
-  const location = useLocation()
-
-  const qsParams = qs.parse(location.search.slice(1))
-  const initialPage = parsePage(qsParams.page)
   const maxItems = Math.min(count, maxItemsToPaginate)
   const totalPages = Math.ceil(maxItems / itemsPerPage)
 
+  const onClearAll = () => {
+    history.push({
+      search: qs.stringify({
+        page: 1,
+      }),
+    })
+  }
+
   return (
-    <Task.Status
-      name={TASK_GET_EXPORT_PIPELINE_LIST}
-      id={ID}
-      progressMessage="loading export pipeline list"
-      startOnRender={{
-        payload: {
-          page: initialPage,
-        },
-        onSuccessDispatch: EXPORT__PIPELINE_LIST_LOADED,
-      }}
-    >
-      {() => (
-        <>
-          {count === 0 ? (
-            <EmptyState />
-          ) : (
-            <>
-              <List items={results} itemRenderer={ListItemRenderer} />
-              <Pagination
-                totalPages={totalPages}
-                activePage={initialPage}
-                onPageClick={(page, e) => {
-                  e.preventDefault()
-                  history.push({
-                    search: qs.stringify({
-                      ...qsParams,
-                      page,
-                    }),
-                  })
-                }}
-              />
-            </>
-          )}
-        </>
-      )}
-    </Task.Status>
+    <>
+      <FiltersContainer>
+        <ExportSelect
+          label="Status"
+          qsParam="status"
+          options={filters.status.options}
+        />
+        <ExportSelect
+          label="Export potential"
+          qsParam="export_potential"
+          options={filters.exportPotential.options}
+        />
+      </FiltersContainer>
+      <HeaderContainer>
+        <StyledHeader>
+          <StyledResultCount data-test="collectionCount">
+            {count}
+          </StyledResultCount>{' '}
+          Exports
+        </StyledHeader>
+        {filters.areActive && (
+          <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
+            Remove all filters
+          </StyledButtonLink>
+        )}
+      </HeaderContainer>
+      <Task.Status
+        name={TASK_GET_EXPORT_PIPELINE_LIST}
+        id={ID}
+        progressMessage="loading export pipeline list"
+        startOnRender={{
+          payload,
+          onSuccessDispatch: EXPORT__PIPELINE_LIST_LOADED,
+        }}
+      >
+        {() => (
+          <>
+            {!filters.areActive && count === 0 ? (
+              <div data-test="no-export-items">
+                <ContentWithHeading
+                  data-test="no-export-items"
+                  heading="You have no exports"
+                >
+                  <StyledContent>
+                    <div>
+                      Here you can create an export project to track a company's
+                      export progress. These will appear on your home page, so
+                      you keep track of your exports in one place.
+                    </div>
+                    <span>To add an export:</span>
+                    <div>
+                      <UnorderedList listStyleType="bullet">
+                        <ListItem>go to the company page</ListItem>
+                        <ListItem>select 'Add export project' button</ListItem>
+                      </UnorderedList>
+                    </div>
+                  </StyledContent>
+                </ContentWithHeading>
+              </div>
+            ) : (
+              <ListContainer>
+                <List items={results} itemRenderer={ListItemRenderer} />
+                <Pagination
+                  totalPages={totalPages}
+                  activePage={payload.page}
+                  onPageClick={(page, e) => {
+                    e.preventDefault()
+                    history.push({
+                      search: qs.stringify({
+                        ...payload,
+                        page,
+                      }),
+                    })
+                  }}
+                />
+              </ListContainer>
+            )}
+          </>
+        )}
+      </Task.Status>
+    </>
   )
 }
 

@@ -673,6 +673,15 @@ const assertPayload = (apiRequest, expectedParams) => {
 }
 
 /**
+ * Asserts the url (no domain name) is contained within the API request url
+ */
+const assertRequestUrl = (apiRequest, url) => {
+  cy.wait(apiRequest).then(({ request }) => {
+    expect(request.url).to.contain(url)
+  })
+}
+
+/**
  * Assert that the label and value exist on the date input
  */
 
@@ -858,6 +867,7 @@ module.exports = {
   assertQueryParams,
   assertNotQueryParams,
   assertPayload,
+  assertRequestUrl,
   assertDateInput,
   assertDateInputWithHint,
   assertErrorSummary,
