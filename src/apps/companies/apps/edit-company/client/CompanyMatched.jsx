@@ -30,7 +30,9 @@ const CompanyMatched = ({
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
-      {company.turnover
+      {!company.turnover_gbp && !company.turnover_range
+        ? 'Not set'
+        : company.turnover
         ? currencyGBP(company.turnover_gbp, {
             maximumSignificantDigits: 2,
           })
