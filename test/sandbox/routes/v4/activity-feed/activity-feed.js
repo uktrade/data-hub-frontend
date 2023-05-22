@@ -268,7 +268,7 @@ exports.activityFeed = function (req, res) {
     req.body,
     "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
   )
-  if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
+  if (isEqual(dataHubTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) {
     var company = get(
       req.body,
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
