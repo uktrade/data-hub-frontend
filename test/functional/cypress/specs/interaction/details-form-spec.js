@@ -58,11 +58,6 @@ const ELEMENT_SERVICE_GRANT_OFFERED = {
 const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
 }
-const ELEMENT_RELATED_TRADE_AGREEMENT = {
-  legend: 'Does this interaction relate to a named trade agreement?',
-  assert: assertFieldRadiosWithLegend,
-  optionsCount: 2,
-}
 const ELEMENT_TRADE_AGREEMENTS = {
   legend: 'Related named trade agreement(s)',
   placeholder: '-- Select named trade agreement --',
@@ -204,10 +199,10 @@ function fillCommonFields({
     fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
 
-  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
-    .next()
-    .find('input')
-    .check('yes')
+  // cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
+  //   .next()
+  //   .find('input')
+  //   .check('yes')
 
   cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
     .parent()
@@ -456,7 +451,7 @@ describe('Interaction theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
+        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -585,7 +580,7 @@ describe('Service delivery theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
+        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -689,7 +684,7 @@ describe('Investment theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
+        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -812,7 +807,7 @@ describe('Trade Agreement theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
+        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,

@@ -288,14 +288,6 @@ const StepInteractionDetails = ({
       )}
 
       <StyledRelatedTradeAgreementsWrapper>
-        <FieldRadios
-          inline={true}
-          name="has_related_trade_agreements"
-          legend="Does this interaction relate to a named trade agreement?"
-          required="Select if this relates to a named trade agreement"
-          options={OPTIONS_YES_NO}
-        />
-
         {values.has_related_trade_agreements === OPTION_YES && (
           <FieldTypeahead
             name="related_trade_agreements"
