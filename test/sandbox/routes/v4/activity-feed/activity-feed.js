@@ -76,7 +76,10 @@ const BEST_EVER_COMPANY =
 
 const BEST_EVER_COMPANY_2 =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47be'
-
+const COMPANY_WITH_MANY_CONTACTS =
+  'dit:DataHubCompany:57c41268-26be-4335-a873-557e8b0deb29'
+const MAX_EMAIL_CAMPAIGN =
+  'dit:DataHubCompany:6df487c5-7c75-4672-8907-f74b49e6c635'
 exports.activityFeed = function (req, res) {
   // Activities by contact
   var isContactActivityQuery = get(
@@ -268,18 +271,26 @@ exports.activityFeed = function (req, res) {
     req.body,
     "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
   )
-  if (isEqual(dataHubTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) {
-    var company = get(
-      req.body,
-      "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
-    )
+
+  // console.log('dataHubTypes', dataHubTypes)
+  const size = get(req.body, 'size')
+  var company = get(
+    req.body,
+    "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
+  )
+  if (company == MAX_EMAIL_CAMPAIGN) {
+    return res.json(maxemailCampaignActivities)
+  }
+  if (
+    (size != 10 && isEqual(dataHubTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) ||
+    company == COMPANY_WITH_MANY_CONTACTS
+  ) {
     const filteredSortHits = dataHubActivities.hits.hits
       .filter((hit) => hit._source.object.startTime)
       .sort((a, b) =>
         b._source.object.startTime.localeCompare(a._source.object.startTime)
       )
 
-    const size = get(req.body, 'size')
     if (size == 3) {
       switch (company) {
         case VENUS_LTD:
