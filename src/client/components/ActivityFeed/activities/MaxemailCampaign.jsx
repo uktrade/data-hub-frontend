@@ -32,27 +32,20 @@ export default class MaxemailCampaign extends React.PureComponent {
     const contacts = get(activity, 'object.contacts')
     const content = get(activity, 'object.content')
 
-    const recipients = {
-      label: 'Recipients',
-      value: contacts?.map((contact, index) => (
-        <>
-          {index ? ', ' : ''}
-          <Link href={contact.url}>{contact.name}</Link>
-        </>
-      )),
-    }
+    const recipients = contacts?.map((contact, index) => (
+      <>
+        {index ? ', ' : ''}
+        <Link href={contact.url}>{contact.name}</Link>
+      </>
+    ))
 
     const metadata = [
       { label: 'Date', value: format(published) },
       { label: 'Senders name', value: name },
       { label: 'Senders email', value: from },
       { label: 'Content', value: content },
-      ,
+      { label: 'Recipients', value: recipients },
     ]
-
-    if (contacts) {
-      metadata = [...metadata, recipients]
-    }
 
     const Row = styled('div')`
       display: flex;
