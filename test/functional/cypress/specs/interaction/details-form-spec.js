@@ -58,10 +58,7 @@ const ELEMENT_SERVICE_GRANT_OFFERED = {
 const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
 }
-const ELEMENT_TRADE_AGREEMENTS = {
-  legend: 'Related named trade agreement(s)',
-  placeholder: '-- Select named trade agreement --',
-}
+
 const ELEMENT_RELATED_OPPORTUNITY = {
   legend: 'Does this interaction relate to a large capital opportunity?',
   assert: assertFieldRadiosWithLegend,
@@ -198,25 +195,6 @@ function fillCommonFields({
   if (subservice) {
     fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
-
-  // cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
-  //   .next()
-  //   .find('input')
-  //   .check('yes')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .parent()
-    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
-    .parent()
-    .should('contain', 'UK-Australia Mutual Recognition Agreement')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .parent()
-    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
-    .parent()
-    .should('contain', 'UK-Mexico Trade Continuity Agreement')
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
@@ -451,7 +429,6 @@ describe('Interaction theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -580,7 +557,6 @@ describe('Service delivery theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -684,7 +660,6 @@ describe('Investment theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -807,7 +782,6 @@ describe('Trade Agreement theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        // ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,

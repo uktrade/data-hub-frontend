@@ -73,10 +73,6 @@ const StyledSubserviceWrapper = styled('div')`
   }
 `
 
-const StyledRelatedTradeAgreementsWrapper = styled.div`
-  margin-bottom: ${SPACING_POINTS[6]}px;
-`
-
 const getServiceContext = (theme, kind, investmentProject) => {
   if (investmentProject) {
     return SERVICE_CONTEXTS.INVESTMENT_PROJECT_INTERACTION
@@ -179,7 +175,6 @@ const StepInteractionDetails = ({
   communicationChannels,
   countries,
   onOpenContactForm,
-  relatedTradeAgreements,
   exportBarrier,
 }) => {
   const { values = {} } = useFormContext()
@@ -286,20 +281,6 @@ const StepInteractionDetails = ({
           )}
         </>
       )}
-
-      <StyledRelatedTradeAgreementsWrapper>
-        {values.has_related_trade_agreements === OPTION_YES && (
-          <FieldTypeahead
-            name="related_trade_agreements"
-            label="Related named trade agreement(s)"
-            placeholder="-- Select trade agreements --"
-            required="Select at least one Trade Agreement"
-            options={relatedTradeAgreements}
-            aria-label="Select a trade agreement"
-            isMulti={true}
-          />
-        )}
-      </StyledRelatedTradeAgreementsWrapper>
 
       <H3 as="h2">Participants</H3>
 
