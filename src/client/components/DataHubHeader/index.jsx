@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { PINK } from '../../../client/utils/colours'
+import { BLACK } from '../../../client/utils/colours'
 import { SkipLink } from 'govuk-react'
 
 import DataHubBar from './DataHubBar'
@@ -11,7 +11,7 @@ import NavBar from './NavBar'
 import { state2props } from './state'
 
 const Header = styled.header({
-  backgroundColor: PINK,
+  backgroundColor: BLACK,
 })
 
 const DataHubHeader = ({
