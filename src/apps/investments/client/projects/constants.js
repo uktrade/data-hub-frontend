@@ -13,6 +13,7 @@ export const LABELS = {
   estimatedLandDateAfter: 'Estimated land date from',
   estimatedLandDateBefore: 'Estimated land date to',
   landDate: 'Land date',
+  includeRelatedCompanies: 'Include related companies',
 }
 
 export const SORT_OPTIONS = [
@@ -46,4 +47,15 @@ export const PROJECT_STATUS_OPTIONS = [
   { label: 'Abandoned', value: 'abandoned' },
   { label: 'Lost', value: 'lost' },
   { label: 'Dormant', value: 'dormant' },
+]
+
+export const INCLUDE_RELATED_COMPANIES = [
+  {
+    label: 'Parent companies',
+    value: 'include_parent_companies',
+  },
+  {
+    label: 'Subsidiary companies',
+    value: 'include_subsidiary_companies',
+  },
 ]

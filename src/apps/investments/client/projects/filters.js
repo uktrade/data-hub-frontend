@@ -7,6 +7,7 @@ import {
   LABELS,
   PROJECT_STATUS_OPTIONS,
   INVOLVEMENT_LEVEL_OPTIONS,
+  INCLUDE_RELATED_COMPANIES,
 } from './constants'
 
 export const buildSelectedFilters = (
@@ -125,6 +126,14 @@ export const buildSelectedFilters = (
       options: financialYearOptions,
       value: queryParams.land_date_financial_year_start,
       categoryLabel: LABELS.landDate,
+    }),
+  },
+  includeRelatedCompanies: {
+    queryParam: 'include_related_companies',
+    options: buildOptionsFilter({
+      options: INCLUDE_RELATED_COMPANIES,
+      value: queryParams.include_related_companies,
+      categoryLabel: LABELS.includeRelatedCompanies,
     }),
   },
 })

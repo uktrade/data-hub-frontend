@@ -32,6 +32,7 @@ import {
 } from '../../../../client/actions'
 
 import { sanitizeFilter } from '../../../../client/filters'
+import { INCLUDE_RELATED_COMPANIES } from './constants'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -138,6 +139,24 @@ const ProjectsCollection = ({
         }}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
+          {company && (
+            <FilterToggleSection
+              id="ProjectCollection.include-related-companies-filters"
+              label="Related companies"
+              isOpen={true}
+            >
+              <Filters.CheckboxGroup
+                legend="Include related companies"
+                name="include_related_companies"
+                qsParam="include_related_companies"
+                options={INCLUDE_RELATED_COMPANIES}
+                selectedOptions={
+                  selectedFilters.includeRelatedCompanies.options
+                }
+                data-test="include-related-companies-filter"
+              />
+            </FilterToggleSection>
+          )}
           <FilterToggleSection
             id="ProjectCollection.stage-and-status-filters"
             label="Stage and status"
@@ -162,7 +181,6 @@ const ProjectsCollection = ({
               groupId="status-filter"
             />
           </FilterToggleSection>
-
           <FilterToggleSection
             id="ProjectCollection.project-details-filters"
             label="Project details"
@@ -260,7 +278,6 @@ const ProjectsCollection = ({
               groupId="likelihood-to-land-filter"
             />
           </FilterToggleSection>
-
           <FilterToggleSection
             id="ProjectCollection.investment-and-involvement-details-filters"
             label="Investment and involvement details"

@@ -31,6 +31,8 @@ const buildQueryString = (queryParams = {}) =>
 const minimumPayload = {
   limit: 10,
   offset: 0,
+  include_parent_companies: false,
+  include_subsidiary_companies: false,
 }
 
 const getFinancialYearStart = () => {
@@ -73,6 +75,8 @@ describe('Investments Collections Filter', () => {
       offset: 0,
       limit: 10,
       stage: [prospectStageId],
+      include_parent_companies: false,
+      include_subsidiary_companies: false,
     }
 
     it('should filter from the url', () => {
@@ -216,8 +220,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="sector-filter"]'
     const aerospaceSectorId = '9538cecc-5f95-e211-a939-e4115bead28a'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       sector_descends: [aerospaceSectorId],
     }
 
@@ -262,8 +265,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="country-filter"]'
     const brazilCountryId = 'b05f66a0-5d95-e211-a939-e4115bead28a'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       country_investment_originates_from: [brazilCountryId],
     }
 
@@ -309,8 +311,7 @@ describe('Investments Collections Filter', () => {
     const ukRegion = ukRegionFaker()
     const ukRegions = [ukRegion, ...ukRegionListFaker(5)]
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       uk_region_location: [ukRegion.id],
     }
 
@@ -366,8 +367,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="project-status-filter"]'
     const statusAbandoned = 'abandoned'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       status: [statusAbandoned],
     }
 
@@ -409,8 +409,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="investment-type-filter"]'
     const investmentTypeFdi = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       investment_type: [investmentTypeFdi],
     }
 
@@ -458,8 +457,7 @@ describe('Investments Collections Filter', () => {
     const yearStart = getFinancialYearStart()
     const yearRange = yearStartToRange(yearStart)
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       land_date_financial_year_start: [`${yearStart}`],
     }
 
@@ -506,8 +504,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="likelihood-to-land-filter"]'
     const likelihoodToLandMedium = '683ca57b-bd69-462c-852f-d2177e35b2eb'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       likelihood_to_land: [likelihoodToLandMedium],
     }
 
@@ -760,8 +757,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="involvement-level-filter"]'
     const involvementLevelUnspecified = 'unspecified'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       level_of_involvement_simplified: [involvementLevelUnspecified],
     }
 

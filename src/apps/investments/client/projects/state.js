@@ -32,6 +32,7 @@ const parseQueryString = (queryString) => {
 
 export const projectsState2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
+
   const queryParams = parseQueryString(queryString)
   const { metadata, selectedAdvisers } = state[INVESTMENT_PROJECTS_ID]
   const financialYearStart = getFinancialYearStart(new Date())
@@ -49,12 +50,22 @@ export const projectsState2props = ({ router, ...state }) => {
       value: `${financialYearStart + 1}`,
     },
   ]
+
   const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
     selectedAdvisers,
     financialYearOptions
   )
+
+  queryParams.include_parent_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_parent_companies'
+    )
+  queryParams.include_subsidiary_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_subsidiary_companies'
+    )
 
   return {
     ...state[INVESTMENT_PROJECTS_ID],
