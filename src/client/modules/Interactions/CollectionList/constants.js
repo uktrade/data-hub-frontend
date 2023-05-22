@@ -1,11 +1,7 @@
 export const LABELS = {
   kind: 'Interaction type',
-  activity: 'Activity types',
-  dataHub: 'Data Hub',
-  external: 'External',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
-  newInvestmentProject: 'New investment project',
   advisers: 'Adviser',
   company: 'Company',
   subject: 'Subject',
@@ -24,12 +20,6 @@ export const LABELS = {
 export const KIND_OPTIONS = [
   { label: LABELS.interaction, value: 'interaction' },
   { label: LABELS.serviceDelivery, value: 'service_delivery' },
-  { label: LABELS.newInvestmentProject, value: 'new_investment_project' },
-]
-
-export const ACTIVITY_OPTIONS = [
-  { label: LABELS.dataHub, value: 'data_hub' },
-  { label: LABELS.external, value: 'external' },
 ]
 
 export const BUSINESS_INTELLIGENCE_OPTION = [

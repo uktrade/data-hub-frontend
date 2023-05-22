@@ -31,7 +31,6 @@ const getbadgeLabel = (type, hasFeedback = false) => {
   const badges = {
     interaction: LABELS.interaction,
     service_delivery: LABELS.serviceDelivery,
-    new_investment_project: LABELS.newInvestmentProject,
   }
   return [
     {
@@ -52,7 +51,6 @@ export const transformInteractionToListItem = ({
   id,
   contacts,
   kind,
-  activity,
   was_policy_feedback_provided,
 } = {}) => ({
   id,
@@ -76,7 +74,7 @@ export const transformInteractionToListItem = ({
     },
   ].filter(({ value }) => Boolean(value)),
   headingUrl: urls.interactions.detail(id),
-  badges: getbadgeLabel(kind, activity, was_policy_feedback_provided),
+  badges: getbadgeLabel(kind, was_policy_feedback_provided),
   headingText: subject,
 })
 
