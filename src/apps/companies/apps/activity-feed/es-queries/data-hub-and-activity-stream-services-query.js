@@ -1,36 +1,19 @@
 const { sortCriteria } = require('./sortCriteria')
-const {
-  FILTER_FEED_TYPE,
-  DATA_HUB_ACTIVITY,
-  DATA_HUB_AND_AVENTRI_ACTIVITY,
-  EXTERNAL_ACTIVITY,
-  FILTER_KEYS,
-} = require('../constants')
-// const dataHubActivityQuery = require('./data-hub-activity-query')
+const { FILTER_FEED_TYPE } = require('../constants')
+
 const dataHubAndActivityStreamServicesQuery = ({
   from,
   size,
-  activityTypeFilter,
+  types,
   companyIds,
   aventriEventIds,
   getEssInteractions,
   contacts,
-  dit_participants__adviser,
   feedType = FILTER_FEED_TYPE.ALL,
 }) => {
   let sortDirection = 'desc'
-  let shouldCriteria = []
-  let types = [...DATA_HUB_AND_AVENTRI_ACTIVITY, ...EXTERNAL_ACTIVITY]
-  if (activityTypeFilter.includes(FILTER_KEYS.myActivity)) {
-    types = [...types, ...DATA_HUB_ACTIVITY]
-  }
-  // console.log(activityTypeFilter)
-  // console.log(types)
-  if (
-    activityTypeFilter.includes(FILTER_KEYS.dataHubActivity) ||
-    activityTypeFilter.includes(FILTER_KEYS.externalActivity)
-  ) {
-    let criteria = {
+  const shouldCriteria = [
+    {
       bool: {
         must: [
           {
@@ -47,60 +30,8 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    }
-    if (dit_participants__adviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
-        },
-      })
-    }
-    shouldCriteria.push(criteria)
-  }
-  if (activityTypeFilter.includes(FILTER_KEYS.externalActivity)) {
-    let criteria = {
-      bool: {
-        must: [
-          {
-            term: {
-              // Great.gov.uk forms
-              'object.type': 'dit:directoryFormsApi:Submission',
-            },
-          },
-          {
-            term: {
-              // JSON format (Note: there two other formats HTML and Text)
-              'object.attributedTo.type':
-                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
-            },
-          },
-          {
-            term: {
-              // For now, we only care about `Export enquiry` forms
-              'object.url': '/contact/export-advice/comment/',
-            },
-          },
-          {
-            // Match a Data Hub company contact to the user filling out the form at Great.gov.uk
-            terms: {
-              'actor.dit:emailAddress': [
-                ...contacts.map((contact) => contact.email),
-              ],
-            },
-          },
-        ],
-      },
-    }
-    if (dit_participants__adviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
-        },
-      })
-    }
-    shouldCriteria.push(criteria)
-  }
-
+    },
+  ]
   if (feedType != FILTER_FEED_TYPE.ALL) {
     // TODO Fix
     // shouldCriteria.push({
@@ -117,10 +48,8 @@ const dataHubAndActivityStreamServicesQuery = ({
     //   },
     // })
   }
-  // console.log('aventriEventIds')
-  // console.log(aventriEventIds)
   if (aventriEventIds?.length) {
-    let criteria = {
+    shouldCriteria.push({
       bool: {
         must: [
           {
@@ -135,18 +64,10 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    }
-    if (dit_participants__adviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
-        },
-      })
-    }
-    shouldCriteria.push(criteria)
+    })
   }
   if (getEssInteractions) {
-    let criteria = {
+    shouldCriteria.push({
       bool: {
         must: [
           {
@@ -164,18 +85,9 @@ const dataHubAndActivityStreamServicesQuery = ({
           },
         ],
       },
-    }
-    if (dit_participants__adviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
-        },
-      })
-    }
-    shouldCriteria.push(criteria)
+    })
   }
 
-  let filters = []
   if (feedType != FILTER_FEED_TYPE.ALL) {
     let now = new Date()
     let period
@@ -202,12 +114,8 @@ const dataHubAndActivityStreamServicesQuery = ({
         },
       },
     }
-    filters.push(dateFilter)
+    shouldCriteria.map((criteria) => criteria.bool.must.push(dateFilter))
   }
-  shouldCriteria.map(
-    (criteria) => (criteria.bool.must = [...criteria.bool.must, ...filters])
-  )
-
   const dsl = {
     from,
     size,
@@ -222,7 +130,6 @@ const dataHubAndActivityStreamServicesQuery = ({
       },
     },
   }
-
   return dsl
 }
 
