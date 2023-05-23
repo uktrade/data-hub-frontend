@@ -29,9 +29,8 @@ const {
 const { has, get } = require('lodash')
 const { sortCriteria } = require('../es-queries/sortCriteria')
 
+const realDate = Date
 const freezeTime = (constantDate) => {
-  // const constantDate = new Date('2015-10-02T04:41:20')
-
   /*eslint no-global-assign:off*/
   Date = class extends Date {
     constructor() {
@@ -504,6 +503,10 @@ describe('Activity feed controllers', () => {
         )
       })
 
+      after(async () => {
+        Date = realDate
+      })
+
       it('should call fetchActivityFeed with the right params', async () => {
         const expectedEsQuery = {
           from: 0,
@@ -673,6 +676,9 @@ describe('Activity feed controllers', () => {
         )
       })
 
+      after(async () => {
+        Date = realDate
+      })
       it('should call fetchActivityFeed with the right params', async () => {
         const expectedEsQuery = {
           from: 0,
