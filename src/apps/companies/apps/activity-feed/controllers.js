@@ -24,7 +24,6 @@ const {
   aventriAttendeeQuery,
   exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
-  dataHubActivityQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
@@ -34,6 +33,7 @@ const {
   transformAventriEventStatusToEventStatus,
   transformAventriEventStatusCountsToEventStatusCounts,
 } = require('./transformers')
+const dataHubCompanyActivityQuery = require('./es-queries/data-hub-company-activity-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
@@ -312,7 +312,7 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     // Get Ess Activities
     const getEssInteractions = isEssFilter(activityTypeFilter)
-    const query = dataHubActivityQuery({
+    const query = dataHubCompanyActivityQuery({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
