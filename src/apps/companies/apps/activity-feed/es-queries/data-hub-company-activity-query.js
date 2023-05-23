@@ -23,13 +23,7 @@ const dataHubCompanyActivityQuery = ({
   if (activityTypeFilter.includes(FILTER_KEYS.myActivity)) {
     types = [...types, ...DATA_HUB_ACTIVITY]
   }
-  // console.log(activityTypeFilter)
-  // console.log(types)
-  // if (
-  //   activityTypeFilter.includes(FILTER_KEYS.dataHubActivity) ||
-  //   activityTypeFilter.includes(FILTER_KEYS.externalActivity)
-  // ) {
-  let criteria = {
+  let dataHubActivityCriteria = {
     bool: {
       must: [
         {
@@ -48,16 +42,14 @@ const dataHubCompanyActivityQuery = ({
     },
   }
   if (dit_participants__adviser.length) {
-    criteria.bool.must.push({
+    dataHubActivityCriteria.bool.must.push({
       term: {
         'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
       },
     })
   }
-  shouldCriteria.push(criteria)
-  // }
-  // if (activityTypeFilter.includes(FILTER_KEYS.externalActivity)) {
-  criteria = {
+  shouldCriteria.push(dataHubActivityCriteria)
+  let externalActivityCriteria = {
     bool: {
       must: [
         {
@@ -91,13 +83,13 @@ const dataHubCompanyActivityQuery = ({
     },
   }
   if (dit_participants__adviser.length) {
-    criteria.bool.must.push({
+    externalActivityCriteria.bool.must.push({
       term: {
         'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
       },
     })
   }
-  shouldCriteria.push(criteria)
+  shouldCriteria.push(externalActivityCriteria)
   // }
 
   if (aventriEventIds?.length) {
