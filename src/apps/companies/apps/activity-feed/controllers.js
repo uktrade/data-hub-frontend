@@ -81,16 +81,8 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
-function isDataHubFilter(activityTypeFilter) {
-  return activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)
-}
-
 function isExternalFilter(activityTypeFilter) {
   return activityTypeFilter.includes(FILTER_KEYS.externalActivity)
-}
-
-function isMyActivityFilter(activityTypeFilter) {
-  return activityTypeFilter.includes(FILTER_KEYS.myActivity)
 }
 
 function isEssFilter(activityTypeFilter) {
@@ -287,7 +279,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       from = 0,
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
-      activityTypeFilter = FILTER_KEYS.dataHubActivity,
+      activityTypeFilter = [FILTER_KEYS.dataHubActivity],
       dit_participants__adviser = [],
       show_dnb_hierarchy = false,
     } = req.query
@@ -690,9 +682,7 @@ module.exports = {
   getAventriRegistrationStatusCounts,
   fetchESSDetails,
   isEssActivity,
-  isDataHubFilter,
   isExternalFilter,
-  isMyActivityFilter,
   augmentEssActivity,
   filterContactListOnEmail,
 }

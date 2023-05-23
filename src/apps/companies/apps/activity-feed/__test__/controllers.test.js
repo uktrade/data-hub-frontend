@@ -364,7 +364,7 @@ describe('Activity feed controllers', () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            activityTypeFilter: 'externalActivity',
+            activityTypeFilter: ['externalActivity'],
             showDnbHierarchy: false,
           },
           user: {
@@ -617,7 +617,7 @@ describe('Activity feed controllers', () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            activityTypeFilter: 'foobar',
+            activityTypeFilter: ['foobar'],
             showDnbHierarchy: false,
           },
           user: {
