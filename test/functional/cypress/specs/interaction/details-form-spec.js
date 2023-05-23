@@ -147,6 +147,13 @@ const ELEMENT_EXPORT_BARRIER = {
 const ELEMENT_EXPORT_BARRIER_HOW = {
   legend: 'Tell us how the interaction helped remove an export barrier',
 }
+
+const ELEMENT_POLICY_ISSUE_TYPES = {
+  label: 'Policy issue types',
+}
+const ELEMENT_POLICY_AREAS = {
+  label: 'Policy areas',
+}
 const ELEMENT_POLICY_FEEDBACK_NOTES = {
   label: 'Business intelligence',
 }
@@ -181,7 +188,8 @@ const COMMON_REQUEST_BODY = {
   subject: 'Some summary',
   notes: 'Some notes',
   was_policy_feedback_provided: 'yes',
-  policy_areas: [],
+  policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
+  policy_areas: ['583c0bb6-d3c5-4e4b-8f25-e861c1e8d9c9'],
   policy_feedback_notes: 'Some policy feedback notes',
   companies: ['0f5216e0-849f-11e6-ae22-56b6b6499611'],
   service_answers: {},
@@ -245,6 +253,17 @@ function fillCommonFields({
     .type('Some notes')
 
   cy.contains(ELEMENT_FEEDBACK_POLICY.legend).next().find('input').check('yes')
+
+  cy.contains(ELEMENT_POLICY_ISSUE_TYPES.label)
+    .next()
+    .contains('Domestic')
+    .click()
+
+  cy.contains(ELEMENT_POLICY_AREAS.label)
+    .parent()
+    .next()
+    .selectTypeaheadOption('State Aid')
+    .should('contain', 'State Aid')
 
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
     .parent()
