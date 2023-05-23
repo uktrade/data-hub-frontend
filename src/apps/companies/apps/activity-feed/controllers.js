@@ -21,10 +21,10 @@ const {
   maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
   exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
+  dataHubActivityQuery,
 } = require('./es-queries')
 const { contactActivityQuery } = require('./es-queries/contact-activity-query')
 const allActivityFeedEventsQuery = require('./es-queries/activity-feed-all-events-query')
@@ -312,7 +312,7 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     // Get Ess Activities
     const getEssInteractions = isEssFilter(activityTypeFilter)
-    const query = dataHubAndActivityStreamServicesQuery({
+    const query = dataHubActivityQuery({
       from,
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
