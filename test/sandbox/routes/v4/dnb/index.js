@@ -7,6 +7,8 @@ var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-n
 var companySearchNotMatchedUS = require('../../../fixtures/v4/dnb/company-search-not-matched-us.json')
 var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
 
+const { fakerCompanyFamilyTree } = require('./company-tree')
+
 exports.companyCreate = function (req, res) {
   if (req.body.duns_number === '111111111') {
     res.json(companyCreate)
@@ -39,4 +41,14 @@ exports.companyLink = function (req, res) {
 
 exports.companyChangeRequest = function (req, res) {
   res.json(companyChangeRequest)
+}
+
+exports.companyFamilyTree = function (req, res) {
+  res.json(
+    fakerCompanyFamilyTree({
+      treeDepth: 3,
+      minCompaniesPerLevel: 1,
+      maxCompaniesPerLevel: 5,
+    })
+  )
 }
