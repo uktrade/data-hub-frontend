@@ -8,9 +8,6 @@ describe('Company activity feed', () => {
     )
   })
 
-  // context('filter on my interactions')
-  //  if('')
-
   context('Companies House Company', () => {
     it('displays the correct activity type label', () => {
       cy.get('[data-test="companies-house-company-activity"]').within(() =>
