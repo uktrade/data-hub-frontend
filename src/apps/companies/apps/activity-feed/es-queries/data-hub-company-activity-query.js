@@ -1,28 +1,22 @@
 const { sortCriteria } = require('./sortCriteria')
 const {
   FILTER_FEED_TYPE,
-  DATA_HUB_ACTIVITY,
-  FILTER_KEYS,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
 } = require('../constants')
 
 const dataHubCompanyActivityQuery = ({
   from,
   size,
-  activityTypeFilter,
   companyIds,
   aventriEventIds,
   getEssInteractions,
   contacts,
   dit_participants__adviser,
-  feedType = FILTER_FEED_TYPE.ALL,
+  feedType,
 }) => {
   let sortDirection = 'desc'
   let shouldCriteria = []
   let types = DATA_HUB_AND_EXTERNAL_ACTIVITY
-  if (activityTypeFilter.includes(FILTER_KEYS.myActivity)) {
-    types = [...types, ...DATA_HUB_ACTIVITY]
-  }
   let dataHubActivityCriteria = {
     bool: {
       must: [
@@ -149,7 +143,7 @@ const dataHubCompanyActivityQuery = ({
   }
 
   let filters = []
-  if (feedType != FILTER_FEED_TYPE.ALL) {
+  if (feedType && feedType != FILTER_FEED_TYPE.ALL) {
     let now = new Date()
     let period
     switch (feedType) {
@@ -195,7 +189,6 @@ const dataHubCompanyActivityQuery = ({
       },
     },
   }
-
   return dsl
 }
 
