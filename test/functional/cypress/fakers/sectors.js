@@ -8,10 +8,11 @@ const sectors = [
   'Creative and Media',
 ]
 
-export const sectorFaker = () => ({
+export const sectorFaker = (overrides = {}) => ({
   ancestors: [],
   id: faker.string.uuid(),
   name: faker.helpers.arrayElement(sectors),
+  ...overrides,
 })
 
 export const sectorListFaker = (length = 1, overrides) =>

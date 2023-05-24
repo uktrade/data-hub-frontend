@@ -336,8 +336,14 @@ import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
 import { TASK_DELETE_EXPORT } from '../client/modules/ExportPipeline/ExportDelete/state'
 import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/tasks'
 
-import { TASK_GET_EXPORT_PIPELINE_LIST } from '../client/modules/ExportPipeline/ExportList/state'
-import { getExportPipelineList } from '../client/modules/ExportPipeline/ExportList/task'
+import {
+  TASK_GET_EXPORT_PIPELINE_LIST,
+  TASK_GET_EXPORT_PIPELINE_METADATA,
+} from '../client/modules/ExportPipeline/ExportList/state'
+import {
+  getExportPipelineList,
+  getExportPipelineMetadata,
+} from '../client/modules/ExportPipeline/ExportList/task'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
 import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
@@ -566,6 +572,7 @@ function App() {
           [TASK_DELETE_EXPORT]: deleteExport,
           [TASK_SAVE_EXPORT]: saveExport,
           [TASK_GET_EXPORT_PIPELINE_LIST]: getExportPipelineList,
+          [TASK_GET_EXPORT_PIPELINE_METADATA]: getExportPipelineMetadata,
           [TASK_REDIRECT_TO_CONTACT_FORM]: redirectToContactForm,
           [TASK_CREATE_INVESTMENT_PROPOSITION]: createInvestmentProposition,
           [TASK_ABANDON_INVESTMENT_PROPOSITION]: abandonInvestmentProposition,
