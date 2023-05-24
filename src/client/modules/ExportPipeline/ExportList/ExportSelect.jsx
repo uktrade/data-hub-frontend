@@ -13,6 +13,7 @@ const StyledSelect = styled(Select)({
   flex: '1 1',
   select: {
     width: '100%',
+    minWidth: 170,
   },
   marginBottom: SPACING.SCALE_1,
   [MEDIA_QUERIES.DESKTOP]: {

@@ -15,8 +15,17 @@ import Task from '../../../components/Task'
 import ExportSelect from './ExportSelect'
 import List from './List'
 
-import { ID, TASK_GET_EXPORT_PIPELINE_LIST, state2props } from './state'
-import { EXPORT__PIPELINE_LIST_LOADED } from '../../../actions'
+import {
+  ID,
+  TASK_GET_EXPORT_PIPELINE_LIST,
+  TASK_GET_EXPORT_PIPELINE_METADATA,
+  state2props,
+} from './state'
+
+import {
+  EXPORT__PIPELINE_LIST_LOADED,
+  EXPORT__PIPELINE_METADATA_LOADED,
+} from '../../../actions'
 
 const StyledHeader = styled(H2)({
   marginTop: 0,
@@ -85,18 +94,40 @@ const ExportList = ({
     <>
       {!hasZeroExports && (
         <>
-          <FiltersContainer>
-            <ExportSelect
-              label="Status"
-              qsParam="status"
-              options={filters.status.options}
-            />
-            <ExportSelect
-              label="Export potential"
-              qsParam="export_potential"
-              options={filters.exportPotential.options}
-            />
-          </FiltersContainer>
+          <Task.Status
+            name={TASK_GET_EXPORT_PIPELINE_METADATA}
+            id={ID}
+            progressMessage="loading export pipeline metadata"
+            startOnRender={{
+              payload: {},
+              onSuccessDispatch: EXPORT__PIPELINE_METADATA_LOADED,
+            }}
+          >
+            {() => (
+              <FiltersContainer>
+                <ExportSelect
+                  label="Status"
+                  qsParam="status"
+                  options={filters.status.options}
+                />
+                <ExportSelect
+                  label="Export potential"
+                  qsParam="export_potential"
+                  options={filters.exportPotential.options}
+                />
+                <ExportSelect
+                  label="Sector"
+                  qsParam="sector"
+                  options={filters.sector.options}
+                />
+                <ExportSelect
+                  label="Country"
+                  qsParam="destination_country"
+                  options={filters.country.options}
+                />
+              </FiltersContainer>
+            )}
+          </Task.Status>
           <HeaderContainer>
             <StyledHeader>
               <StyledResultCount data-test="collectionCount">
