@@ -191,27 +191,6 @@ const CompanyActivityCollection = ({
             qsParamName="date_before"
             data-test="date-before-filter"
           /> */}
-          {/* <Filters.TeamsTypeahead
-            taskProps={teamListTask}
-            isMulti={true}
-            label={LABELS.teams}
-            name="dit_participants__team"
-            qsParam="dit_participants__team"
-            placeholder="Search teams"
-            noOptionsMessage="No teams found"
-            selectedOptions={selectedFilters.teams.options}
-            data-test="team-filter"
-          /> */}
-          {/* <Filters.Typeahead
-            isMulti={true}
-            label={LABELS.sector}
-            name="sector"
-            qsParam="sector_descends"
-            placeholder="Search sector"
-            options={optionMetadata.sectorOptions}
-            selectedOptions={selectedFilters.sectors.options}
-            data-test="sector-filter"
-          /> */}
           {/* <Filters.CheckboxGroup
             legend={LABELS.businessIntelligence}
             name="was_policy_feedback_provided"
@@ -220,59 +199,7 @@ const CompanyActivityCollection = ({
             selectedOptions={selectedFilters.businessIntelligence.options}
             data-test="business-intelligence-filter"
           /> */}
-          {/* <Filters.CheckboxGroup
-            maxScrollHeight={370}
-            legend={LABELS.companyOneListGroupTier}
-            name="company_one_list_group_tier"
-            qsParam="company_one_list_group_tier"
-            options={optionMetadata.companyOneListTierOptions}
-            selectedOptions={selectedFilters.companyOneListGroupTier.options}
-            data-test="company-one-list-group-tier-filter"
-          /> */}
         </FilterToggleSection>
-
-        {/* <FilterToggleSection
-          id="CompanyActivityCollection.service-details-filters"
-          label="Service details"
-          isOpen={false}
-        >
-          <Filters.CheckboxGroup
-            maxScrollHeight={350}
-            legend={LABELS.service}
-            name="service"
-            qsParam="service"
-            options={optionMetadata.serviceOptions}
-            selectedOptions={selectedFilters.service.options}
-            data-test="service-filter"
-            groupId="service-filter"
-          />
-        </FilterToggleSection> */}
-
-        {/* <FilterToggleSection
-          id="CompanyActivityCollection.policy-details-filters"
-          label="Policy details"
-          isOpen={false}
-        >
-          <Filters.CheckboxGroup
-            maxScrollHeight={345}
-            legend={LABELS.policyAreas}
-            name="policy_areas"
-            qsParam="policy_areas"
-            options={optionMetadata.policyAreaOptions}
-            selectedOptions={selectedFilters.policyArea.options}
-            data-test="policy-area-filter"
-            groupId="policy-area-filter"
-          />
-          <Filters.CheckboxGroup
-            legend={LABELS.policyIssueType}
-            name="policy_issue_types"
-            qsParam="policy_issue_types"
-            options={optionMetadata.policyIssueTypeOptions}
-            selectedOptions={selectedFilters.policyIssueType.options}
-            data-test="policy-issue-type-filter"
-            groupId="policy-issue-type-filter"
-          />
-        </FilterToggleSection> */}
       </CollectionFilters>
     </FilteredCollectionList>
   )
