@@ -21,7 +21,6 @@ import MatchConfirmation from '../apps/companies/apps/match-company/client/Match
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
-import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
@@ -358,6 +357,7 @@ import {
   createInvestmentProposition,
   abandonInvestmentProposition,
 } from './modules/Investments/Projects/Propositions/tasks'
+import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -662,7 +662,7 @@ function App() {
           {(props) => <LeadAdvisers {...props} />}
         </Mount>
         <Mount selector="#dnb-hierarchy">
-          {(props) => <DnbHierarchy {...props} />}
+          {(props) => <CompanyHierarchy {...props} />}
         </Mount>
         <Mount selector="#company-business-details">
           {(props) => <CompanyBusinessDetails {...props} />}
