@@ -19,10 +19,7 @@ const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
-
-const activitiesSearchEndPoint =
-  urls.companies.activity.index(fixtures.company.allActivitiesCompany.id) +
-  '/data**'
+const showDnBHierarchyFilter = '[data-test="show-dnb-hierarchy-filter"]'
 
 const adviser = {
   id: myAdviserId,
@@ -39,9 +36,13 @@ const buildQueryString = (queryParams = {}) =>
 const minimumRequest = '?size=10&from=0&sortby=date:desc'
 
 describe('Company Activity Feed Filter', () => {
+  const companyActivitiesEndPoint =
+    urls.companies.activity.index(fixtures.company.allActivitiesCompany.id) +
+    '/data**'
+
   context('Default Params', () => {
     it('should set the default params in the get request url', () => {
-      cy.intercept('GET', activitiesSearchEndPoint).as('apiRequest')
+      cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
@@ -63,7 +64,7 @@ describe('Company Activity Feed Filter', () => {
         const queryString = buildQueryString({
           dit_participants__adviser: [adviser.id],
         })
-        cy.intercept('GET', activitiesSearchEndPoint).as('apiRequest')
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
         cy.visit(
           `${urls.companies.activity.index(
@@ -90,7 +91,7 @@ describe('Company Activity Feed Filter', () => {
 
       it('should filter from user input and remove chips', () => {
         const queryString = buildQueryString()
-        cy.intercept('GET', activitiesSearchEndPoint).as('apiRequest')
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
         cy.visit(
           `${urls.companies.activity.index(
@@ -111,6 +112,36 @@ describe('Company Activity Feed Filter', () => {
         assertRequestUrl('@apiRequest', minimumRequest)
         assertChipsEmpty()
         assertFieldEmpty(myInteractionsFilter)
+      })
+    })
+
+    context('Include related companies filter', () => {
+      const companyActivitiesEndPoint =
+        urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
+        '/data**'
+
+      const expectedRequestUrl = `?size=10&from=0&show_dnb_hierarchy[]=true&sortby=date:desc`
+
+      it('Activity across all companies option should be shown for related companies', () => {
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
+        )
+        // console.log('waiting')
+        assertRequestUrl('@apiRequest', minimumRequest)
+        cy.get(showDnBHierarchyFilter).find(`input`).parent().click()
+        assertRequestUrl('@apiRequest', expectedRequestUrl)
+      })
+
+      it('should set filter from url', () => {
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.dnbGlobalUltimate.id
+          )}${expectedRequestUrl}`
+        )
+        assertRequestUrl('@apiRequest', expectedRequestUrl)
+        cy.get(showDnBHierarchyFilter).find(`input`).should('be.checked')
       })
     })
   })
