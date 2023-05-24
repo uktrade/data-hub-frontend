@@ -441,10 +441,6 @@ describe('Interaction details', () => {
           'Date of service delivery': '22 April 2022',
           'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
           Event: 'No',
-          'Policy issue types':
-            'Domestic, EU exit, Non-EU trade priority, Economic opportunity, Economic risk, International Climate',
-          'Policy areas':
-            'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
           'Business intelligence':
             'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DBT.',
           'Named trade agreement(s)':
