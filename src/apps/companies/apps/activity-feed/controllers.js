@@ -314,7 +314,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       aventriEventIds,
       feedType,
       getEssInteractions,
-      activityTypeFilter,
     })
     // console.log(JSON.stringify(query))
 
