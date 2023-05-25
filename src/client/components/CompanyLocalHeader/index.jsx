@@ -286,9 +286,9 @@ const CompanyLocalHeader = ({
                   href={
                     urls.external.digitalWorkspace.accountManagementStrategyTeam
                   }
-                  aria-label="view the Account Management Framework"
+                  aria-label="view the Account management Framework"
                 >
-                  view the Account Management Framework
+                  view the Account management Framework
                 </NewWindowLink>
               </StyledDetailsMuted>
             </StatusMessage>

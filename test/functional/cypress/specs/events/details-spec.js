@@ -34,7 +34,7 @@ describe('Event Details', () => {
       'Other teams': 'CBBC HangzhouCBBC North West',
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
-      Service: 'Events : UK Based',
+      Service: 'Events : UK based',
       Documents: 'View files and documents (opens in a new window or tab)',
     })
 
@@ -62,7 +62,7 @@ describe('Event Details', () => {
       'Other teams': 'Not set',
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
-      Service: 'Events : UK Based',
+      Service: 'Events : UK based',
       Documents: 'View files and documents (opens in a new window or tab)',
     })
   })
@@ -92,7 +92,7 @@ describe('Event Details', () => {
         'Other teams': 'CBBC HangzhouCBBC North West',
         'Related programmes': 'Grown in Britain',
         'Related Trade Agreements': 'Not set',
-        Service: 'Events : UK Based',
+        Service: 'Events : UK based',
       })
     })
 
@@ -130,7 +130,7 @@ describe('Event Details', () => {
           organiser: null,
           start_date: '2016-03-16',
           service: {
-            name: 'A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+            name: 'DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor',
             id: '380bba2b-3499-e211-a939-e4115bead28a',
           },
           uk_region: null,
@@ -154,7 +154,7 @@ describe('Event Details', () => {
         'Related programmes': 'Not set',
         'Related Trade Agreements': 'Not set',
         Service:
-          'A Specific DBT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+          'DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor',
       })
     })
   })

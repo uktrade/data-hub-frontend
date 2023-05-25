@@ -8,9 +8,9 @@ import urls from '../../../../lib/urls'
 const groupExportCountries = require('../../../../lib/group-export-countries')
 
 const excludedServiceStrings = [
-  'A Specific DBT Export Service or Funding',
-  'A Specific Service',
-  'Enquiry or Referral Received',
+  'DBT export service or funding',
+  'Specific service',
+  'Enquiry or referral',
   'Enquiry Received',
 ]
 

@@ -146,7 +146,7 @@ describe('#options', () => {
       it('should return options in that context', () => {
         expect(this.options).to.deep.equal([
           {
-            label: 'Account Management',
+            label: 'Account management',
             value: 'sv1',
           },
         ])

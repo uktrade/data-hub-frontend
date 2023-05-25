@@ -521,18 +521,15 @@ describe('Interaction theme', () => {
     })
 
     it('should validate the second tier service form field', () => {
-      fillSelect(
-        '[data-test=field-service]',
-        'A Specific DBT Export Service or Funding'
-      )
+      fillSelect('[data-test=field-service]', 'DBT export service or funding')
       cy.contains('button', 'Add interaction').click()
       assertErrorSummary(interaction_error_messages)
     })
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-        service: 'A Specific DBT Export Service or Funding',
-        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+        service: 'DBT export service or funding',
+        subservice: 'UK Tradeshow Programme (UKTP) – exhibitor',
       })
 
       assertRequestBody(
@@ -643,18 +640,15 @@ describe('Service delivery theme', () => {
     })
 
     it('should validate the second tier service form field', () => {
-      fillSelect(
-        '[data-test=field-service]',
-        'A Specific DBT Export Service or Funding'
-      )
+      fillSelect('[data-test=field-service]', 'DBT export service or funding')
       cy.contains('button', 'Add interaction').click()
       assertErrorSummary(service_delivery_errors)
     })
 
     it('should save the service delivery', () => {
       submitForm(KINDS.SERVICE_DELIVERY, THEMES.EXPORT, {
-        service: 'A Specific DBT Export Service or Funding',
-        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+        service: 'DBT export service or funding',
+        subservice: 'UK Tradeshow Programme (UKTP) – exhibitor',
       })
 
       assertRequestBody(
@@ -756,7 +750,7 @@ describe('Investment theme', () => {
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.INVESTMENT, {
         service: 'Enquiry received',
-        subservice: 'General Investment Enquiry',
+        subservice: 'General investment enquiry',
       })
 
       assertRequestBody(
@@ -871,14 +865,14 @@ describe('Trade Agreement theme', () => {
     })
 
     it('should validate the second tier service form field', () => {
-      fillSelect('[data-test=field-service]', 'A Specific Service')
+      fillSelect('[data-test=field-service]', 'Specific service')
       cy.contains('button', 'Add interaction').click()
       assertErrorSummary(trade_agreement_error_messages)
     })
 
     it('should save the interaction for a specific service', () => {
       submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
-        service: 'A Specific Service',
+        service: 'Specific service',
         subservice: 'Export Academy',
       })
 
@@ -920,8 +914,8 @@ describe('Trade Agreement theme', () => {
 
     it('should save the interaction for trade agreements', () => {
       submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
-        service: 'Trade Agreement Implementation Activity',
-        subservice: 'Civil Society meetings',
+        service: 'Trade agreement implementation activity',
+        subservice: 'Civil society meetings',
       })
 
       assertRequestBody(
@@ -1038,7 +1032,7 @@ describe('Adding an interaction from a referral', () => {
     cy.contains('Continue').click()
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-      service: 'A Specific DBT Export Service or Funding',
+      service: 'DBT export service or funding',
       subservice: 'Export Academy',
       contact: null,
     })
@@ -1167,12 +1161,12 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DBT Export Service or Funding',
-        'Account Management',
-        'Enquiry or Referral Received',
-        'Export Win',
-        'Making Export Introductions',
-        'Providing Export Advice & Information',
+        'Account management',
+        'DBT export service or funding',
+        'Enquiry or referral',
+        'Export advice and information',
+        'Export introductions',
+        'Export win',
       ].join('')
     )
   })
@@ -1183,10 +1177,10 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DBT Export Service or Funding',
-        'Account Management',
+        'Account management',
+        'DBT export service or funding',
         'Events',
-        'Export Win',
+        'Export win',
       ].join('')
     )
   })
@@ -1197,11 +1191,11 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'Account Management',
+        'Account management',
         'Enquiry received',
-        'IST Specific Service',
-        'Making Investment Introductions',
-        'Providing Investment Advice & Information',
+        'IST service',
+        'Investment advice and information',
+        'Investment introductions',
       ].join('')
     )
   })
@@ -1212,13 +1206,13 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
-        'Enquiry or Referral Received',
+        'Account management',
+        'Enquiry or referral',
         'Events',
-        'Making Other Introductions',
-        'Providing Other Advice & Information',
-        'Trade Agreement Implementation Activity',
+        'Other advice and information',
+        'Other introductions',
+        'Specific service',
+        'Trade agreement implementation activity',
       ].join('')
     )
   })
@@ -1229,11 +1223,11 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
-        'Enquiry or Referral Received',
-        'Making Other Introductions',
-        'Providing Other Advice & Information',
+        'Account management',
+        'Enquiry or referral',
+        'Other advice and information',
+        'Other introductions',
+        'Specific service',
       ].join('')
     )
   })
@@ -1245,9 +1239,9 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
+        'Account management',
         'Events',
+        'Specific service',
       ].join('')
     )
   })

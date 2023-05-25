@@ -15,9 +15,9 @@ const filterServiceNames = (services) => {
   if (!services) return
 
   const excludedServiceStrings = [
-    'A Specific DBT Export Service or Funding',
-    'A Specific Service',
-    'Enquiry or Referral Received',
+    'DBT export service or funding',
+    'Specific service',
+    'Enquiry or referral',
     'Enquiry Received',
   ]
 

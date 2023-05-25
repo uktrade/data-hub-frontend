@@ -1,7 +1,7 @@
 [
   {
     "id": "9484b82b-3499-e211-a939-e4115bead28a",
-    "name": "Account Management",
+    "name": "Account management",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -16,7 +16,7 @@
   },
   {
     "id": "a4a733b6-eb95-e611-be23-e4115bead28a",
-    "name": "Account Management: Northern Powerhouse",
+    "name": "Account management: Northern Powerhouse",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -29,7 +29,7 @@
   },
   {
     "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
-    "name": "Digital Trade Advisers One-to-One",
+    "name": "Digital Trade Advisers one-to-one",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -56,7 +56,7 @@
   },
   {
     "id": "350bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Export Win",
+    "name": "Export win",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -80,7 +80,7 @@
   },
   {
     "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
-    "name": "Language and Culture Advisers One-to-One",
+    "name": "Language and Culture Advisers one-to-one",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -128,7 +128,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "UK Tradeshow Programme (UKTP) – Exhibitor",
+    "name": "UK Tradeshow Programme (UKTP) – exhibitor",
     "disabled_on": null,
     "contexts": [
       "export_service_delivery",
@@ -140,7 +140,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": [
       "export_service_delivery",

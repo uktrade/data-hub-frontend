@@ -46,7 +46,7 @@ const createEvent = () => {
     },
     eventShared: true,
     teams: ['Biopartner'],
-    service: 'Account Management : Northern Powerhouse',
+    service: 'Account management : Northern Powerhouse',
   })
 
   clickAddEventButton()
@@ -157,7 +157,7 @@ describe('Event', () => {
         .get('[data-test="service-type-label"]')
         .eq(0)
         .invoke('text')
-        .should('contain', 'Account Management')
+        .should('contain', 'Account management')
       cy.contains(eventName).click()
       cy.get(selectors.entityCollection.editEvent).click()
       fillEventType('Exhibition')

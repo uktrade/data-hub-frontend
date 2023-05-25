@@ -235,7 +235,7 @@ describe('Event create', () => {
         },
         eventShared: true,
         teams: ['BPI', 'BN America', 'Advanced Manufacturing Sector'],
-        service: 'Events : Market Visit',
+        service: 'Events : Market visit',
       })
 
       cy.get('[data-test="submit-button"]').click()

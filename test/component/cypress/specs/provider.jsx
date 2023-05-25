@@ -20,6 +20,8 @@ const reducer = (state, action) =>
     ...Typeahead.reducerSpread,
     ...FieldAddAnother.reducerSpread,
     ...Form.reducerSpread,
+    activeFeatureGroups: () => [],
+    modulePermissions: () => [],
   })(action.type === 'RESET' ? undefined : state, action)
 
 export const store = legacy_createStore(
