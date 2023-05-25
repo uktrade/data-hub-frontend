@@ -1,6 +1,7 @@
 import React from 'react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
+import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
 import { COMPANY_LOADED } from '../../../actions'
 import { useParams } from 'react-router-dom'
 import { state2props } from './state'
@@ -96,7 +97,6 @@ const localTabItems = (company) => {
       isActive: true,
     })
   }
-  // TODO switch to new api value
   if (company.is_global_headquarters) {
     tabItems.push({
       url: urls.companies.subsidiaries.index(company.id),
@@ -108,32 +108,30 @@ const localTabItems = (company) => {
   return tabItems
 }
 
-const breadcrumbs = (company) => {
-  if (!company) {
-    return []
-  }
-  return [
-    {
-      link: urls.dashboard(),
-      text: 'Home',
-    },
-    {
-      link: urls.companies.index(),
-      text: 'Companies',
-    },
-    {
-      link: urls.companies.detail(company.id),
-      text: company.name,
-    },
-    {
-      link: urls.companies.businessDetails(company.id),
-      text: 'Business details',
-    },
-    {
-      text: 'Related companies',
-    },
-  ]
-}
+const breadcrumbs = (company) =>
+  !company
+    ? []
+    : [
+        {
+          link: urls.dashboard(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
+        {
+          link: urls.companies.detail(company.id),
+          text: company.name,
+        },
+        {
+          link: urls.companies.businessDetails(company.id),
+          text: 'Business details',
+        },
+        {
+          text: 'Related companies',
+        },
+      ]
 
 const CompanyHierarchy = ({ company }) => {
   const { companyId } = useParams()
@@ -166,7 +164,7 @@ const CompanyHierarchy = ({ company }) => {
     >
       <Task.Status
         name={TASK_GET_COMPANY_DETAIL}
-        id="CompanyHierarchy"
+        id={COMPANY_DETAILS_ID}
         progressMessage="Loading company details"
         startOnRender={{
           payload: companyId,
