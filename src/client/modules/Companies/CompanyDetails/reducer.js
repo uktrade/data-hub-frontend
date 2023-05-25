@@ -7,11 +7,7 @@ export default (state = initialState, { type, result }) => {
     case COMPANY_LOADED:
       return {
         ...state,
-        company: {
-          ...result,
-          isGlobalHQ:
-            result.headquarter_type && result.headquarter_type.name === 'ghq',
-        },
+        company: result,
       }
     default:
       return state

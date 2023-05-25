@@ -7,11 +7,79 @@ import { state2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import DnbHierarchy from '../../../../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
-import {
-  CompanyTabbedLocalNavigation,
-  DefaultLayout,
-} from '../../../components'
+import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
+import {
+  StyledAnchorTag,
+  StyledListItem,
+} from '../../../components/CompanyTabbedLocalNavigation/CompanyLocalTab'
+import styled from 'styled-components'
+
+//These styled components are copied from the CompanyLocalTab file. They will all be deleted in
+//the next ticket, adding here temporarily to avoid needing to refactor code thatis about to
+//be deleted
+const StyledGridRow = styled.div`
+  margin-right: -15px;
+  margin-left: -15px;
+`
+
+const StyledGridColumn = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+  @media (min-width: 840px) {
+    width: 100%;
+    float: left;
+  }
+`
+const StyledNav = styled.nav`
+  margin-bottom: 15px;
+  color: #0b0c0c;
+  margin-top: 5px;
+  @media (min-width: 840px) {
+    margin-bottom: 30px;
+    margin-top: 5px;
+  }
+`
+
+const StyledUnorderedList = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  border-bottom: none;
+  @media (max-width: 839px) {
+    display: block;
+    padding-bottom: 20px;
+    border-bottom: 0;
+  }
+`
+
+const StyledTabAnchorTag = styled(StyledAnchorTag)`
+  width: 100%;
+`
+
+const StyledTabListItem = styled(StyledListItem)`
+  flex-grow: 1;
+`
+
+const CompanyLocalTab = ({ navItem, index }) => {
+  return (
+    navItem && (
+      <StyledTabListItem key={`tab-${index}`}>
+        <StyledTabAnchorTag
+          selected={navItem.isActive}
+          href={navItem.url}
+          id={`tab-${navItem.path}`}
+          key={`tab-link-${navItem.path}`}
+          aria-label={navItem.ariaDescription}
+        >
+          {navItem.label}
+        </StyledTabAnchorTag>
+      </StyledTabListItem>
+    )
+  )
+}
 
 const localTabItems = (company) => {
   if (!company) {
@@ -22,14 +90,16 @@ const localTabItems = (company) => {
   if (company.is_global_ultimate) {
     tabItems.push({
       url: urls.companies.dnbHierarchy.index(company.id),
+      path: '',
       label: 'Dun & Bradstreet hierarchy',
       isActive: true,
     })
   }
-
-  if (company.isGlobalHQ) {
+  // TODO switch to new api value
+  if (company.is_global_headquarters) {
     tabItems.push({
       url: urls.companies.subsidiaries.index(company.id),
+      path: '',
       label: 'Manually linked subsidiaries',
       isActive: false,
     })
@@ -105,14 +175,25 @@ const CompanyHierarchy = ({ company }) => {
         {() =>
           company && (
             <>
-              <CompanyTabbedLocalNavigation
-                company={company}
-                localNavItems={localTabItems(company)}
-              />
+              <StyledGridRow>
+                <StyledGridColumn>
+                  <StyledNav
+                    aria-label="local navigation"
+                    data-test="tabbedLocalNav"
+                  >
+                    <StyledUnorderedList data-test="tabbedLocalNavList">
+                      {localTabItems(company).map((t, index) => (
+                        <CompanyLocalTab navItem={t} index={index} />
+                      ))}
+                    </StyledUnorderedList>
+                  </StyledNav>
+                </StyledGridColumn>
+              </StyledGridRow>
+
               <div id="dnb-hierarchy">
                 <DnbHierarchy
                   dataEndpoint={urls.companies.dnbHierarchy.data(company.id)}
-                  isGlobalHQ={company.isGlobalHQ}
+                  isGlobalHQ={company.is_global_headquarters}
                 />
               </div>
             </>
