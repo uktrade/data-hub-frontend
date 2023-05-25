@@ -61,6 +61,7 @@ const StyledTabAnchorTag = styled(StyledAnchorTag)`
 
 const StyledTabListItem = styled(StyledListItem)`
   flex-grow: 1;
+  max-width: 50%;
 `
 
 const CompanyLocalTab = ({ navItem, index }) => {
