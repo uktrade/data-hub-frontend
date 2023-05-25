@@ -80,6 +80,7 @@
     "name": "ghq",
     "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3"
   },
+  "is_global_headquarters": true,
   "one_list_group_global_account_manager": {
     "name": "Travis Greene",
     "first_name": "Travis",

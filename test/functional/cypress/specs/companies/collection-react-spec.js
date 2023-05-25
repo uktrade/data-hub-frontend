@@ -34,6 +34,7 @@ describe('Company Collections - React', () => {
       id: 'ukhq-id',
       name: 'ukhq',
     },
+    is_global_headquarters: false,
     uk_region: {
       id: '874cd12a-6095-e211-a939-e4115bead28a',
       name: 'London',
@@ -50,6 +51,7 @@ describe('Company Collections - React', () => {
       id: 'ghq-id',
       name: 'ghq',
     },
+    is_global_headquarters: true,
     global_headquarters: {
       id: 'company-id',
       name: 'Company Ltd, New York',
