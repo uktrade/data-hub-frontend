@@ -154,9 +154,13 @@ describe('D&B Company hierarchy', () => {
   )
 
   context('when attempting to view the hierarchy without a D&B id', () => {
+    const accessDeniedId = 1234
     before(() => {
-      cy.intercept('api-proxy/v4/company/1234').as('companyApi')
-      cy.visit(urls.companies.dnbHierarchy.index(1234))
+      cy.intercept(`api-proxy/v4/company/${accessDeniedId}`, {
+        id: accessDeniedId,
+        global_ultimate_duns_number: null,
+      }).as('companyApi')
+      cy.visit(urls.companies.dnbHierarchy.index(accessDeniedId))
     })
     it('should display the access denied page', () => {
       cy.wait('@companyApi')
