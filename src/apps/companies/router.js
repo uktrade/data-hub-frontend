@@ -66,12 +66,14 @@ const { companyPipelineRouter } = require('../my-pipeline/router')
 
 const {
   setCompanyHierarchyLocalNav,
+  setDnbHierarchyDetails,
 } = require('./apps/dnb-hierarchy/middleware')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
+router.param('companyId', setDnbHierarchyDetails)
 
 router.get(
   urls.companies.export.route,
