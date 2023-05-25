@@ -44,7 +44,9 @@ const CompanyMatched = ({
       name="number_of_employees"
       data-test="company-matched-number-of-employees"
     >
-      {company.number_of_employees
+      {!company.number_of_employees && !company.employee_range
+        ? 'Not set'
+        : !company.employee_range
         ? company.number_of_employees.toString()
         : company.employee_range.name}
     </FieldUneditable>

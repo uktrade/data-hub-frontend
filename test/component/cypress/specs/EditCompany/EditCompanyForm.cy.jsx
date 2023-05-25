@@ -55,4 +55,49 @@ describe('EditCompanyForm', () => {
       cy.get('[data-test="field-turnover"]').contains('abc')
     })
   })
+  context('When employee_range and number_of_employees is null', () => {
+    it('should render a "Not set" message', () => {
+      cy.mount(
+        <Component
+          company={{
+            ...base_company,
+            employee_range: null,
+            number_of_employees: null,
+          }}
+        />
+      )
+      cy.get('[data-test="field-number_of_employees"]').contains('Not set')
+    })
+  })
+  context(
+    'When number of employee is populated and employee range is null',
+    () => {
+      it('should render the value as a 50', () => {
+        cy.mount(
+          <Component
+            company={{
+              ...base_company,
+              number_of_employees: 50,
+              employee_range: null,
+            }}
+          />
+        )
+        cy.get('[data-test="field-number_of_employees"]').contains('50')
+      })
+    }
+  )
+  context('When number of employee is null and employee_range is 10-49', () => {
+    it('should render the turnover range value', () => {
+      cy.mount(
+        <Component
+          company={{
+            ...base_company,
+            number_of_employees: null,
+            employee_range: { name: '10 to 49' },
+          }}
+        />
+      )
+      cy.get('[data-test="field-number_of_employees"]').contains('10 to 49')
+    })
+  })
 })
