@@ -253,7 +253,7 @@ describe('Interaction details', () => {
             href: contacts.details('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
             name: 'Johnny Cakeman',
           },
-          Service: 'Events - UK Based',
+          Service: 'Events - UK based',
           Notes: 'This is a dummy service delivery for testing',
           'Date of service delivery': '5 September 2017',
           Event: {
@@ -374,7 +374,7 @@ describe('Interaction details', () => {
               href: contacts.details('952232d2-1d25-4c3a-bcac-2f3a30a94da9'),
               name: 'Dean Cox',
             },
-            Service: 'Providing Investment Advice & Information',
+            Service: 'Investment advice and information',
             Notes: 'This is a dummy interaction for testing',
             'Date of interaction': '5 June 2017',
             'Adviser(s)': 'DBT Staff, Digital Data Hub - Live Service',
@@ -403,7 +403,7 @@ describe('Interaction details', () => {
         content: {
           Company: companyObject,
           'Contact(s)': contactObjectTheodore,
-          Service: 'Export Win',
+          Service: 'Export win',
           'Date of interaction': '7 October 2022',
           'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
           'Communication channel': 'Letter/Fax',
@@ -434,7 +434,7 @@ describe('Interaction details', () => {
         content: {
           Company: companyObject,
           'Contact(s)': contactObjectTheodore,
-          Service: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+          Service: 'UK Tradeshow Programme (UKTP) – exhibitor',
           'Service status': 'Completed',
           'Grant offered': '£1',
           'Net receipt': '£2',
@@ -444,7 +444,7 @@ describe('Interaction details', () => {
           'Policy issue types':
             'Domestic, EU exit, Non-EU trade priority, Economic opportunity, Economic risk, International Climate',
           'Policy areas':
-            'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy Transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
+            'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
           'Business intelligence':
             'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DBT.',
           'Named trade agreement(s)':

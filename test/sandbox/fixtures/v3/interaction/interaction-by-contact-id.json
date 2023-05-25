@@ -210,7 +210,7 @@
           "investment_project": null,
           "net_company_receipt": null,
           "service": {
-              "name": "Account Management",
+              "name": "Account management",
               "id": "9484b82b-3499-e211-a939-e4115bead28a"
           },
           "service_delivery_status": null,
@@ -283,7 +283,7 @@
           "investment_project": null,
           "net_company_receipt": null,
           "service": {
-              "name": "Account Management",
+              "name": "Account management",
               "id": "9484b82b-3499-e211-a939-e4115bead28a"
           },
           "service_delivery_status": null,

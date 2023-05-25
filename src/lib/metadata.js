@@ -103,26 +103,26 @@ const metadataItems = [
 ]
 
 const restrictedServiceKeys = [
-  'Account Management',
+  'Account management',
   'Bank Referral',
-  'Digital Trade Advisers One-to-One',
+  'Digital Trade Advisers one-to-one',
   'Events – Overseas',
-  'Events - UK Based',
+  'Events - UK based',
   'Events – Webinars',
   'First Time Exporters - Export Insight Visits',
   'First Time Exporters – Export Savvy',
-  'Language and Culture Advisers One-to-One',
+  'Language and Culture Advisers one-to-one',
   'Market Selection Service (MSS)',
-  'Market Visit Support (MVS)',
+  'Market visit Support (MVS)',
   'Onward Referral',
   'Open to Export Assist (OtE)',
-  'Outward Missions',
+  'Outward missions',
   'Overseas Business Network Advisers One-to-One',
   'Overseas Market Introduction Service (OMIS)',
   'Postgraduates for International Business - Placement',
-  'Significant Assistance (PIMS)',
+  'Significant assistance (PIMS)',
   'Trade - ECR Web Action Plan',
-  'UK Region Local]',
+  'UK region local]',
 ]
 
 module.exports.setRedisClient = (client) => {

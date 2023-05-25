@@ -214,12 +214,12 @@ describe('interaction list', () => {
         { value: 's3', label: 's3' },
       ],
       serviceOptions: [
-        { value: 'sv1', label: 'Account Management' },
-        { value: 'sv3', label: 'Making Introductions (Export)' },
+        { value: 'sv1', label: 'Account management' },
         {
           value: 'sv2',
-          label: 'Providing Export Advice & Information : Advice & information',
+          label: 'Export advice and information : Advice & information',
         },
+        { value: 'sv3', label: 'Export introductions' },
       ],
       teamOptions: [
         { value: 'te1', label: 'te1' },

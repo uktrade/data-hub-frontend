@@ -40,14 +40,16 @@ export const getServiceText = (service) => {
     : service
 
   const serviceText =
-    service.includes('Making') && service.includes('Introductions')
+    (service.includes('Making') && service.includes('Introductions')) ||
+    service.includes('introductions')
       ? 'Introduction'
-      : service.includes('Advice & Information')
-      ? 'Advice & Information'
-      : service.includes('Investment Enquiry')
+      : service.includes('Advice & Information') ||
+        service.includes('advice and information')
+      ? 'Advice and information'
+      : service.includes('Investment Enquiry') ||
+        service.includes('Investment enquiry')
       ? 'Enquiry'
       : INTERACTION_SERVICES[serviceType]
-
   return serviceText
 }
 
