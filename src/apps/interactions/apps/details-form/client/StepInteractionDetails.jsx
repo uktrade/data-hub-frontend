@@ -176,8 +176,6 @@ const StepInteractionDetails = ({
   contacts,
   services,
   serviceDeliveryStatuses,
-  policyAreas,
-  policyIssueTypes,
   communicationChannels,
   countries,
   onOpenContactForm,
@@ -410,22 +408,6 @@ const StepInteractionDetails = ({
 
       {values.was_policy_feedback_provided === OPTION_YES && (
         <>
-          <FieldCheckboxes
-            name="policy_issue_types"
-            legend="Policy issue types"
-            options={policyIssueTypes}
-            required="Select at least one policy issue type"
-          />
-
-          <FieldTypeahead
-            isMulti={true}
-            name="policy_areas"
-            label="Policy areas"
-            placeholder="-- Select policy area --"
-            options={policyAreas}
-            required="Select at least one policy area"
-          />
-
           <FieldTextarea
             name="policy_feedback_notes"
             label="Business intelligence summary"
@@ -580,8 +562,6 @@ StepInteractionDetails.propTypes = {
   companyId: PropTypes.string.isRequired,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
-  policyAreas: typeaheadOptionsListProp.isRequired,
-  policyIssueTypes: typeaheadOptionsListProp.isRequired,
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
   relatedTradeAgreements: typeaheadOptionsListProp.isRequired,

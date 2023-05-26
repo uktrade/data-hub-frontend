@@ -120,18 +120,6 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                 children={interaction.communicationChannel.name}
               />
             )}
-            {interaction.policyIssueTypes.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy issue types"
-                children={transformArray(interaction.policyIssueTypes)}
-              />
-            )}
-            {interaction.policyAreas.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy areas"
-                children={transformArray(interaction.policyAreas)}
-              />
-            )}
             {interaction.policyFeedbackNotes && (
               <SummaryTable.Row
                 heading="Business intelligence"
