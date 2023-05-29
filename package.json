@@ -170,7 +170,7 @@
     "@storybook/addon-essentials": "^7.0.12",
     "@storybook/addons": "^7.0.12",
     "@storybook/react": "^7.0.12",
-    "@storybook/react-webpack5": "^7.0.12",
+    "@storybook/react-webpack5": "^7.0.18",
     "babel-loader": "^9.1.2",
     "babel-plugin-istanbul": "6.1.1",
     "chai": "^4.3.7",
