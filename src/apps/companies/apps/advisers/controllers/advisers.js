@@ -61,16 +61,6 @@ async function renderCoreTeamAdvisers(req, res, next) {
     res.render('companies/views/advisers', {
       props: {
         companyId,
-        company,
-        breadcrumbs: [
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(company.id), text: company.name },
-          { text: 'Core Team' },
-        ],
         returnUrl,
         dnbRelatedCompaniesCount,
         flashMessages: res.locals.getMessages(),
