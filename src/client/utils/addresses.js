@@ -27,4 +27,11 @@ const addressToString = (address) =>
     .filter((value) => value)
     .join(', ')
 
-module.exports = { addressToString, getCompanyAddress }
+// For company addresses retrieved via the Resource component
+const addressToStringResource = (address) =>
+  ['line1', 'line2', 'town', 'county', 'postcode', 'area.name', 'country.name']
+    .map((component) => get(address, component))
+    .filter((value) => value)
+    .join(', ')
+
+module.exports = { addressToString, addressToStringResource, getCompanyAddress }

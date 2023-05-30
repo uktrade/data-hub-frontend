@@ -52,11 +52,15 @@ const StyledLink = styled('a')`
   margin-bottom: 0;
 `
 
+const checkObjectType = (company) =>
+  company.duns_number
+    ? !company.duns_number && !company.pending_dnb_investigation
+    : !company.dunsNumber && !company.pendingDnbInvestigation
+
 const CompanyTabbedLocalNavigation = (props) => {
   const { localNavItems } = props
   const company = props.company
-  const showMatchingPrompt =
-    !company.duns_number && !company.pending_dnb_investigation
+  const showMatchingPrompt = checkObjectType(company)
 
   return (
     <StyledGridRow>
