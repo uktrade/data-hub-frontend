@@ -40,8 +40,6 @@ import InteractionReferralDetails from './modules/Interactions/InteractionDetail
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
-import CompanyLocalHeader from './components/CompanyLocalHeader'
-import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
@@ -746,12 +744,6 @@ function App() {
         </Mount>
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
-        </Mount>
-        <Mount selector="#company-local-header">
-          {(props) => <CompanyLocalHeader {...props} />}
-        </Mount>
-        <Mount selector="#company-tabbed-local-navigation">
-          {(props) => <CompanyTabbedLocalNavigation {...props} />}
         </Mount>
         <Mount selector="#investment-project-admin">
           {(props) => <InvestmentProjectAdmin {...props} />}

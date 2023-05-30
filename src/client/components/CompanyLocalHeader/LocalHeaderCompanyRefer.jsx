@@ -1,8 +1,8 @@
 import React from 'react'
-
 import styled from 'styled-components'
-import { GREY_3, GREY_3_LEGACY } from '../../../client/utils/colours'
 import { FONT_SIZE } from '@govuk-react/constants'
+
+import { GREY_3, GREY_3_LEGACY } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 
 const StyledCompanyReferButton = styled('button')`
