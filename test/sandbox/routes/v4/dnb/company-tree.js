@@ -99,10 +99,11 @@ exports.fakerCompanyFamilyTree = ({
   minCompaniesPerLevel = 1,
   maxCompaniesPerLevel = 1,
 }) => ({
-  ultimate_global_company:createCompanyTree(
+  ultimate_global_company: createCompanyTree(
     treeDepth,
     minCompaniesPerLevel,
-    maxCompaniesPerLevel),
+    maxCompaniesPerLevel
+  ),
   manually_verified_subsidiaries: [
     {
       id: faker.string.uuid(),
