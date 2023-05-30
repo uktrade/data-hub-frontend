@@ -11,6 +11,7 @@ import {
 } from '../../../components/Resource'
 import { transformOneListCoreTeamToCollection } from './transformers'
 import { NewWindowLink } from '../../../components'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import urls from '../../../../lib/urls'
 
 const getSubheadingText = (company) => {
@@ -43,12 +44,32 @@ const buildAdviserRows = (oneListTeam) => {
   return advisers.length > 0 ? buildRow(advisers) : null
 }
 
-const CoreTeam = ({ companyId, oneListEmail }) => (
+const CoreTeam = ({
+  companyId,
+  oneListEmail,
+  dnbRelatedCompaniesCount,
+  returnUrl,
+  localNavItems,
+}) => (
   <CompanyResource id={companyId}>
     {(company) => (
       <CompanyOneListTeamResource id={companyId}>
         {(oneListTeam) => (
-          <>
+          <CompanyLayout
+            company={company}
+            breadcrumbs={[
+              { link: urls.dashboard(), text: 'Home' },
+              {
+                link: urls.companies.index(),
+                text: 'Companies',
+              },
+              { link: urls.companies.detail(company.id), text: company.name },
+              { text: 'Core Team' },
+            ]}
+            dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+            returnUrl={returnUrl}
+            localNavItems={localNavItems}
+          >
             <H2 size={LEVEL_SIZE[3]} data-test="core-team-heading">
               Advisers on the core team
             </H2>
@@ -89,7 +110,7 @@ const CoreTeam = ({ companyId, oneListEmail }) => (
               or email{' '}
               <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
             </Details>
-          </>
+          </CompanyLayout>
         )}
       </CompanyOneListTeamResource>
     )}
