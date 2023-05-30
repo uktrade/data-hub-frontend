@@ -13,6 +13,7 @@ import { MID_GREY } from '../../../utils/colours'
 import ListItemRenderer from './ItemRenderer'
 import Task from '../../../components/Task'
 import ExportSelect from './ExportSelect'
+import ExportDate from './ExportDate'
 import List from './List'
 
 import {
@@ -49,7 +50,8 @@ const StyledContent = styled.div({
 const FiltersContainer = styled('div')({
   display: 'flex',
   flexWrap: 'wrap',
-  justifyContent: 'space-between',
+  rowGap: 25,
+  width: 735,
 })
 
 const HeaderContainer = styled('div')({
@@ -124,6 +126,22 @@ const ExportList = ({
                   label="Country"
                   qsParam="destination_country"
                   options={filters.country.options}
+                />
+                <ExportDate
+                  type="month"
+                  boldLabel={false}
+                  label="Win date from"
+                  name="estimated_win_date_after"
+                  qsParamName="estimated_win_date_after"
+                  data-test="estimated-win-date-after"
+                />
+                <ExportDate
+                  type="month"
+                  boldLabel={false}
+                  label="Win date to"
+                  name="estimated_win_date_before"
+                  qsParamName="estimated_win_date_before"
+                  data-test="estimated-win-date-before"
                 />
               </FiltersContainer>
             )}
