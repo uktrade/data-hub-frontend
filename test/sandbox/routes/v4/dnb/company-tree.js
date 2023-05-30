@@ -40,7 +40,7 @@ const companyTreeItemFaker = (overrides = {}) => ({
   ],
   latest_interaction_date: faker.date.past(),
   hierarchy: 1,
-  subsidaries: [],
+  subsidiaries: [],
   ...overrides,
 })
 
@@ -91,7 +91,7 @@ const createSubsidiary = (
     )
     subsidiaryCompanies.push(subsidiaryCompany)
   }
-  company.subsidaries = subsidiaryCompanies
+  company.subsidiaries = subsidiaryCompanies
 }
 
 exports.fakerCompanyFamilyTree = ({
@@ -99,9 +99,11 @@ exports.fakerCompanyFamilyTree = ({
   minCompaniesPerLevel = 1,
   maxCompaniesPerLevel = 1,
 }) => ({
-  ultimate_global_company: [
-    createCompanyTree(treeDepth, minCompaniesPerLevel, maxCompaniesPerLevel),
-  ],
+  ultimate_global_company: createCompanyTree(
+    treeDepth,
+    minCompaniesPerLevel,
+    maxCompaniesPerLevel
+  ),
   manually_verified_subsidiaries: [
     {
       id: faker.string.uuid(),
