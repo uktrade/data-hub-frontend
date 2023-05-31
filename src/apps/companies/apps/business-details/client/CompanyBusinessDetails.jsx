@@ -145,7 +145,7 @@ const CompanyBusinessDetails = ({
             urls={companyUrls}
           />
           <SectionSector
-            businessDetails={businessDetails}
+            company={company}
             isArchived={isArchived(company.archived)}
             urls={companyUrls}
           />
