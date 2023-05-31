@@ -8,6 +8,7 @@ import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
 import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'
+import urls from '../../../../../lib/urls'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -29,11 +30,13 @@ const TableDetails = styled('div')`
   }
 `
 
-const SectionAbout = ({ company, isDnbCompany, isArchived, urls }) => (
+const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
   <SummaryTable
     caption={`About ${company.name}`}
     data-test="aboutDetailsContainer"
-    actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
+    actions={
+      !isArchived && <Link href={urls.companies.edit(company.id)}>Edit</Link>
+    }
   >
     <SummaryTable.Row heading="VAT number" hideWhenEmpty={true}>
       {company.vatNumber}
@@ -57,7 +60,9 @@ const SectionAbout = ({ company, isDnbCompany, isArchived, urls }) => (
       <SummaryTable.Row heading="Companies House number" hideWhenEmpty={true}>
         {company.companyNumber}
 
-        <NewWindowLink href={urls.companiesHouse}>
+        <NewWindowLink
+          href={urls.external.companiesHouse(company.companyNumber)}
+        >
           View on Companies House website
         </NewWindowLink>
       </SummaryTable.Row>
@@ -135,7 +140,6 @@ SectionAbout.propTypes = {
   company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionAbout
