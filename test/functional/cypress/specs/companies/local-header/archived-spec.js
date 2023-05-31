@@ -27,7 +27,6 @@ const advisersUrl = urls.companies.advisers.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)
-const unarchiveUrl = urls.companies.unarchive(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
 const exportProjectUrl = urls.exportPipeline.create(company.id)
 
@@ -425,7 +424,5 @@ const assertArchiveMessage = () => {
   cy.get(companyLocalHeader.archiveReason)
     .should('exist')
     .contains('Reason: Company is dissolved')
-  cy.get(companyLocalHeader.unarchiveButton)
-    .contains('Unarchive')
-    .should('have.attr', 'href', unarchiveUrl)
+  cy.get(companyLocalHeader.unarchiveButton).contains('Unarchive')
 }

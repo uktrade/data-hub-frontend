@@ -688,7 +688,12 @@ function App() {
           {(props) => <CompanyHierarchy {...props} />}
         </Mount>
         <Mount selector="#company-business-details">
-          {(props) => <CompanyBusinessDetails {...props} />}
+          {(props) => (
+            <CompanyBusinessDetails
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
         </Mount>
         <Mount selector="#company-edit-one-list">
           {(props) => (

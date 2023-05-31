@@ -428,7 +428,19 @@
     "first_name": "Billy",
     "last_name": "Bob",
     "contact_email": "",
-    "id": "926440d6-b519-4b66-b4fd-af1646ae69ba"
+    "id": "926440d6-b519-4b66-b4fd-af1646ae69ba",
+    "dit_team": {
+      "name": "IST - Sector Advisory Services",
+      "uk_region": {
+        "name": "London",
+        "id": "874cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "country": {
+        "name": "United Kingdom",
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+    }
   },
   "one_list_group_tier": {
     "name": "Tier A - SRM Programme Accounts"

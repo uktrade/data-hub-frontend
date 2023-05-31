@@ -1,4 +1,5 @@
 import axios from 'axios'
+import urls from '../../../../../lib/urls'
 
 const {
   isDateAfter,
@@ -35,10 +36,10 @@ const checkIfRequestIsValid = ({ count, results }) => {
   return false
 }
 
-export function archiveSubmitCallback({ urls, values }) {
+export function archiveSubmitCallback({ companyId, csrfToken, values }) {
   return axios({
     method: 'POST',
-    url: urls.companyArchive,
+    url: `${urls.companies.archive(companyId)}?_csrf=${csrfToken}`,
     data: values,
   })
 }
