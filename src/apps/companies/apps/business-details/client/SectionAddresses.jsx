@@ -21,8 +21,8 @@ const Address = ({ address, isRegistered }) => {
     <Table.Cell>
       {<Badge>{addressType}</Badge>}
       <StyledAddressList data-test={`addresses${addressType}`}>
-        {address.line_1 && <li>{address.line_1}</li>}
-        {address.line_2 && <li>{address.line_2}</li>}
+        {address.line1 && <li>{address.line1}</li>}
+        {address.line2 && <li>{address.line2}</li>}
         {address.town && <li>{address.town}</li>}
         {address.county && <li>{address.county}</li>}
         {address.postcode && <li>{address.postcode}</li>}
@@ -42,13 +42,8 @@ Address.defaultProps = {
   isRegistered: false,
 }
 
-const SectionAddresses = ({
-  businessDetails,
-  isDnbCompany,
-  isArchived,
-  urls,
-}) => {
-  const hasOnlyOneAddress = businessDetails.registered_address == null
+const SectionAddresses = ({ company, isDnbCompany, isArchived, urls }) => {
+  const hasOnlyOneAddress = company.registeredAddress == null
 
   return (
     <SummaryTable
@@ -63,23 +58,17 @@ const SectionAddresses = ({
     >
       <Table.Row>
         {!hasOnlyOneAddress && (
-          <Address
-            address={businessDetails.registered_address}
-            isRegistered={true}
-          />
+          <Address address={company.registeredAddress} isRegistered={true} />
         )}
 
-        <Address
-          address={businessDetails.address}
-          isRegistered={hasOnlyOneAddress}
-        />
+        <Address address={company.address} isRegistered={hasOnlyOneAddress} />
       </Table.Row>
     </SummaryTable>
   )
 }
 
 SectionAddresses.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
   urls: PropTypes.object.isRequired,
