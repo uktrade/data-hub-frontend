@@ -44,18 +44,25 @@ const lastUpdated = (company) =>
     .filter(Boolean)
     .sort()
     .reverse()[0]
+const canEditOneList = (permissions) =>
+  permissions &&
+  permissions.includes('company.change_company') &&
+  permissions.includes('company.change_one_list_core_team_member') &&
+  permissions.includes(
+    'company.change_one_list_tier_and_global_account_manager'
+  )
 
 const CompanyBusinessDetails = ({
   subsidiariesCount,
   dnbRelatedCompaniesCount,
   globalUltimate,
-  canEditOneList,
   isDnbPending,
   companyId,
   localNavItems,
   flashMessages,
   csrfToken,
   archivedDocumentUrl,
+  permissions,
 }) => (
   <CompanyResource id={companyId}>
     {(company) => (
@@ -159,7 +166,7 @@ const CompanyBusinessDetails = ({
             globalUltimate={globalUltimate}
           />
           <SectionDocuments archivedDocumentUrl={archivedDocumentUrl} />
-          {canEditOneList && (
+          {canEditOneList(permissions) && (
             <Button as={Link} href={urls.companies.editOneList(companyId)}>
               Edit One List Information
             </Button>
