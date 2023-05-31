@@ -30,22 +30,13 @@ async function renderBusinessDetails(req, res) {
 
   res.render('companies/apps/business-details/views/client-container', {
     props: {
-      breadcrumbs: [
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
-        { text: 'Business details' },
-      ],
       businessDetails: transformCompanyToBusinessDetails(company),
       subsidiariesCount: subsidiaries.count,
       dnbRelatedCompaniesCount,
       globalUltimate: globalUltimate
         ? pick(globalUltimate, ['name', 'url'])
         : undefined,
-      urls: {
+      companyUrls: {
         companiesHouse: urls.external.companiesHouse(company.company_number),
         companyBusinessDetails: urls.companies.businessDetails(company.id),
         companyEdit: urls.companies.edit(company.id),
@@ -72,9 +63,9 @@ async function renderBusinessDetails(req, res) {
         editOneList: urls.companies.editOneList(company.id),
       },
       canEditOneList: canEditOneList(userPermissions),
-      company,
       localNavItems: res.locals.localNavItems,
       flashMessages: res.locals.getMessages(),
+      companyId: company.id,
     },
   })
 }
