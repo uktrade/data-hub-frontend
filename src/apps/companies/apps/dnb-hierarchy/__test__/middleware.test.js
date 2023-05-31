@@ -111,79 +111,72 @@ describe('D&B Hierarchy middleware', () => {
       })
     })
   })
+})
 
-  describe('#setDnbHierarchyDetails', () => {
-    context('when the company does have a DUNS number', () => {
-      mockGetDnbHierarchy({
-        globalUltimateDunsNumber: DUNS_NUMBER,
-        responseBody: dnbHierarchyFixture,
-        limit: 1,
-      })
+describe('#setDnbHierarchyDetails', () => {
+  context('when the company does have a DUNS number', () => {
+    mockGetDnbHierarchy({
+      globalUltimateDunsNumber: DUNS_NUMBER,
+      responseBody: dnbHierarchyFixture,
+      limit: 1,
+    })
 
-      const middlewareParameters = buildSubsidiaryMiddlewareParameters({
-        company: {
-          global_ultimate_duns_number: DUNS_NUMBER,
-        },
-      })
+    const middlewareParameters = buildSubsidiaryMiddlewareParameters({
+      company: {
+        global_ultimate_duns_number: DUNS_NUMBER,
+      },
+    })
 
-      setDnbHierarchyDetails(
-        middlewareParameters.reqMock,
-        middlewareParameters.resMock,
-        middlewareParameters.nextSpy
-      )
+    setDnbHierarchyDetails(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
 
-      it('should set "globalUltimate"', () => {
-        expect(
-          middlewareParameters.resMock.locals.globalUltimate
-        ).to.deep.equal({
-          id: '1',
-          is_global_ultimate: true,
-          url: urls.companies.detail(1),
-        })
-      })
-
-      it('should set "dnbHierarchyCount"', () => {
-        expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(
-          2
-        )
-      })
-
-      it('should set "dnbRelatedCompaniesCount" equal to 0', () => {
-        expect(
-          middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
-        ).to.equal(1)
+    it('should set "globalUltimate"', () => {
+      expect(middlewareParameters.resMock.locals.globalUltimate).to.deep.equal({
+        id: '1',
+        is_global_ultimate: true,
+        url: urls.companies.detail(1),
       })
     })
 
-    context('when the company does not have a DUNS number', () => {
-      const middlewareParameters = buildSubsidiaryMiddlewareParameters({
-        company: {
-          duns_number: null,
-        },
-      })
+    it('should set "dnbHierarchyCount"', () => {
+      expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(2)
+    })
 
-      setDnbHierarchyDetails(
-        middlewareParameters.reqMock,
-        middlewareParameters.resMock,
-        middlewareParameters.nextSpy
-      )
+    it('should set "dnbRelatedCompaniesCount" equal to 0', () => {
+      expect(
+        middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
+      ).to.equal(1)
+    })
+  })
 
-      it('should not set "globalUltimate"', () => {
-        expect(middlewareParameters.resMock.locals.globalUltimate).to.be
-          .undefined
-      })
+  context('when the company does not have a DUNS number', () => {
+    const middlewareParameters = buildSubsidiaryMiddlewareParameters({
+      company: {
+        duns_number: null,
+      },
+    })
 
-      it('should not set "dnbHierarchyCount"', () => {
-        expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(
-          0
-        )
-      })
+    setDnbHierarchyDetails(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy
+    )
 
-      it('should set "dnbRelatedCompaniesCount" equal to 0', () => {
-        expect(
-          middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
-        ).to.equal(0)
-      })
+    it('should not set "globalUltimate"', () => {
+      expect(middlewareParameters.resMock.locals.globalUltimate).to.be.undefined
+    })
+
+    it('should not set "dnbHierarchyCount"', () => {
+      expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(0)
+    })
+
+    it('should set "dnbRelatedCompaniesCount" equal to 0', () => {
+      expect(
+        middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
+      ).to.equal(0)
     })
   })
 })

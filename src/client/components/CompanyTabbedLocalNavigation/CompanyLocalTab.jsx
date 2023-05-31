@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 
 import { BLACK, GREY_2, GREY_4, WHITE } from '../../../client/utils/colours'
 
-const StyledListItem = styled.li`
+export const StyledListItem = styled.li`
   *,
   *:before,
   *:after {
@@ -33,7 +33,7 @@ const StyledListItem = styled.li`
   }
 `
 
-const StyledAnchorTag = styled.a`
+export const StyledAnchorTag = styled.a`
   display: inline-block;
 
   @media (min-width: 840px) {

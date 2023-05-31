@@ -29,6 +29,7 @@ const reactRoutes = [
   '/export/:exportId/edit',
   '/export/:exportId/details',
   '/export/:exportId/delete',
+  '/companies/:companyId/dnb-hierarchy',
 ]
 
 reactRoutes.forEach((path) => {

@@ -16,6 +16,7 @@ import {
 } from './modules/ExportPipeline/ExportForm'
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
+import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
 const routes = {
   companies: [
@@ -23,6 +24,11 @@ const routes = {
       path: '/companies',
       module: 'datahub:companies',
       component: CompaniesCollectionList,
+    },
+    {
+      path: '/companies/:companyId/dnb-hierarchy',
+      module: 'datahub:companies',
+      component: CompanyHierarchy,
     },
   ],
   contacts: [
