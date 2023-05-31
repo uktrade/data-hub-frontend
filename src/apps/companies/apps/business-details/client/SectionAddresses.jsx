@@ -5,6 +5,7 @@ import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { Badge, SummaryTable } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
+import urls from '../../../../../lib/urls'
 
 const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
@@ -42,7 +43,7 @@ Address.defaultProps = {
   isRegistered: false,
 }
 
-const SectionAddresses = ({ company, isDnbCompany, isArchived, urls }) => {
+const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
   const hasOnlyOneAddress = company.registeredAddress == null
 
   return (
@@ -52,7 +53,9 @@ const SectionAddresses = ({ company, isDnbCompany, isArchived, urls }) => {
       actions={
         !isDnbCompany &&
         !isArchived && (
-          <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
+          <Link href={`${urls.companies.edit(company.id)}#field-address`}>
+            Edit
+          </Link>
         )
       }
     >
@@ -71,7 +74,6 @@ SectionAddresses.propTypes = {
   company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionAddresses
