@@ -37,9 +37,6 @@ const StyledRoot = styled('div')`
     margin-bottom: ${SPACING_POINTS[8]}px;
   }
 `
-
-const isGlobalHQ = (headquarterType) => headquarterType.name === 'ghq'
-const isGlobalUltimate = (isGlobalUltimate) => !!isGlobalUltimate
 const isDnbCompany = (dunsNumber) => !!dunsNumber
 const isArchived = (archived) => !!archived
 const lastUpdated = (company) =>
@@ -49,7 +46,6 @@ const lastUpdated = (company) =>
     .reverse()[0]
 
 const CompanyBusinessDetails = ({
-  businessDetails,
   subsidiariesCount,
   dnbRelatedCompaniesCount,
   globalUltimate,
@@ -156,13 +152,11 @@ const CompanyBusinessDetails = ({
             urls={companyUrls}
           />
           <SectionHierarchy
-            businessDetails={businessDetails}
+            company={company}
             subsidiariesCount={subsidiariesCount}
             dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
-            isGlobalUltimate={isGlobalUltimate(company.isGlobalUltimate)}
-            isGlobalHQ={isGlobalHQ(company.headquarterType)}
             globalUltimate={globalUltimate}
             urls={companyUrls}
           />
@@ -197,7 +191,6 @@ const CompanyBusinessDetails = ({
   </CompanyResource>
 )
 CompanyBusinessDetails.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
   companyUrls: PropTypes.object.isRequired,
   subsidiariesCount: PropTypes.number,
   dnbRelatedCompaniesCount: PropTypes.number,
