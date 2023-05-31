@@ -118,6 +118,7 @@ const CompanyLocalHeader2 = ({
   company,
   dnbRelatedCompaniesCount,
   returnUrl,
+  csrfToken,
 }) => {
   return (
     company && (
@@ -219,7 +220,9 @@ const CompanyLocalHeader2 = ({
             archivedBy={company.archivedBy}
             archivedOn={company.archivedOn}
             archiveReason={company.archivedReason}
-            unarchiveUrl={urls.companies.unarchive(company.id)}
+            unarchiveUrl={`${urls.companies.unarchive(
+              company.id
+            )}?_csrf=${csrfToken}`}
             type="company"
           />
         )}
