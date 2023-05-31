@@ -1,4 +1,7 @@
-import { assertRequestUrl } from '../../support/assertions'
+import qs from 'qs'
+
+import { assertRequestUrl, assertDateInput } from '../../support/assertions'
+import { inputDateValue } from '../../support/actions'
 import { exportFaker } from '../../fakers/export'
 import { sectorFaker } from '../../fakers/sectors'
 import { countryFaker } from '../../fakers/countries'
@@ -33,6 +36,7 @@ describe('Export filters', () => {
         name: 'Thailand',
         id: '1',
       },
+      estimated_win_date: '2023-01-01',
     }),
     exportFaker({
       id: 2,
@@ -46,6 +50,7 @@ describe('Export filters', () => {
         id: '2',
         name: 'The Bahamas',
       },
+      estimated_win_date: '2023-02-01',
     }),
     exportFaker({
       id: 3,
@@ -59,6 +64,7 @@ describe('Export filters', () => {
         id: '3',
         name: 'St Lucia',
       },
+      estimated_win_date: '2023-03-01',
     }),
   ]
 
@@ -290,6 +296,86 @@ describe('Export filters', () => {
         `${requestUrl}&destination_country=3`
       )
       assertListItems({ length: 1 })
+    })
+  })
+
+  context('Estimated win date', () => {
+    // From
+    const afterElement = '[data-test="estimated-win-date-after"]'
+    const afterDate = '2023-01'
+    const afterDateAPI = '2023-01-01'
+    const afterQueryParamsApi = `estimated_win_date_after=${afterDateAPI}`
+    // To
+    const beforeElement = '[data-test="estimated-win-date-before"]'
+    const beforeDate = '2023-02'
+    const beforeDateAPI = '2023-02-01'
+    const beforeQueryParamsApi = `estimated_win_date_before=${beforeDateAPI}`
+
+    beforeEach(() => {
+      // From
+      cy.intercept('GET', `${requestUrl}&${afterQueryParamsApi}`, {
+        body: {
+          count: exportList.length,
+          results: exportList,
+        },
+      })
+      // From and To
+      cy.intercept(
+        'GET',
+        `${requestUrl}&${afterQueryParamsApi}&${beforeQueryParamsApi}`,
+        {
+          body: {
+            count: exportList.length,
+            results: exportList,
+          },
+        }
+      ).as('apiRequestAfterBefore')
+    })
+
+    it('should have 2 calendars for filtering on month', () => {
+      cy.visit(exportTab)
+      cy.wait('@apiRequestList')
+      cy.get(afterElement).find('input').should('have.attr', 'type', 'month')
+      cy.get(beforeElement).find('input').should('have.attr', 'type', 'month')
+    })
+
+    it('should filter from the url', () => {
+      const queryParams = qs.stringify({
+        estimated_win_date_after: afterDate,
+        estimated_win_date_before: beforeDate,
+      })
+      cy.visit(`${exportTab}?${queryParams}`)
+      assertRequestUrl(
+        '@apiRequestAfterBefore',
+        `${requestUrl}&${afterQueryParamsApi}&${beforeQueryParamsApi}`
+      )
+      assertDateInput({
+        element: afterElement,
+        label: 'Win date from',
+        value: afterDate,
+      })
+      assertDateInput({
+        element: beforeElement,
+        label: 'Win date to',
+        value: beforeDate,
+      })
+    })
+
+    it('should filter from user input', () => {
+      cy.visit(exportTab)
+      cy.wait('@apiRequestList')
+      inputDateValue({
+        element: afterElement,
+        value: afterDate,
+      })
+      inputDateValue({
+        element: beforeElement,
+        value: beforeDate,
+      })
+      assertRequestUrl(
+        '@apiRequestAfterBefore',
+        `${requestUrl}&${afterQueryParamsApi}&${beforeQueryParamsApi}`
+      )
     })
   })
 })
