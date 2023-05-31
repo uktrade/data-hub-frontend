@@ -150,7 +150,7 @@ const CompanyBusinessDetails = ({
             urls={companyUrls}
           />
           <SectionOneList
-            businessDetails={businessDetails}
+            company={company}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
             urls={companyUrls}
