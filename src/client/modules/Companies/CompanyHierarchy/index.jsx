@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, H2, Link } from 'govuk-react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
@@ -54,7 +54,7 @@ const HierarchyItemContents = styled.div`
 const SubsidiaryItem = styled.div`
   padding-left: 25px;
   margin-top: 20px;
-  display: ${({ open }) => (open ? 'block' : 'none')};
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `
 const StyledButton = styled(Button)``
 
@@ -68,47 +68,55 @@ const ToggleSubsidiariesButtonContent = styled.div`
   }
 `
 
-const ToggleSubsidiariesButton = ({ open, onClick, count }) => (
+const ToggleSubsidiariesButton = ({ isOpen, onClick, count }) => (
   <ToggleSubsidiariesButtonContent data-test="toggle-subsidiaries-button">
     <StyledButton
       buttonColour={GREY_4}
       buttonTextColour={BLACK}
-      aria-expanded={open}
-      onClick={() => onClick(!open)}
+      aria-expanded={isOpen}
+      onClick={() => onClick(!isOpen)}
     >
-      <span>{open ? `-` : `+`}</span>
+      <span>{isOpen ? `-` : `+`}</span>
       <span>
-        {open ? `Hide ${count} subsidiaries` : `Show ${count} subsidiaries`}
+        {isOpen ? `Hide ${count} subsidiaries` : `Show ${count} subsidiaries`}
       </span>
     </StyledButton>
   </ToggleSubsidiariesButtonContent>
 )
 
-const Subsidiaries = ({ company, hierarchy, open, setOpen }) =>
-  Array.isArray(company.subsidaries) &&
-  company.subsidaries.length > 0 && (
+const Subsidiaries = ({ company, hierarchy, isOpen, setIsOpen, trigger }) =>
+  Array.isArray(company.subsidiaries) &&
+  company.subsidiaries.length > 0 && (
     <>
       <ToggleSubsidiariesButton
-        open={open}
-        onClick={setOpen}
-        count={company.subsidaries.length}
+        isOpen={isOpen}
+        onClick={setIsOpen}
+        count={company.subsidiaries.length}
       />
-      <SubsidiaryItem hierarchy={hierarchy} open={open}>
-        {company.subsidaries.map((subsidary) => (
-          <HierarchyItem company={subsidary} hierarchy={subsidary.hierarchy} />
+      <SubsidiaryItem hierarchy={hierarchy} isOpen={isOpen}>
+        {company.subsidiaries.map((subsidary) => (
+          <HierarchyItem
+            company={subsidary}
+            hierarchy={subsidary.hierarchy}
+            trigger={trigger}
+          />
         ))}
       </SubsidiaryItem>
     </>
   )
 
-const HierarchyHeader = ({ count, className }) => (
+const HierarchyHeader = ({ count, className, fullTreeExpanded, onClick }) => (
   <div className={className}>
     <H2>
       {count}
       <span> companies</span>
     </H2>
 
-    <ToggleSubsidiariesButton count={count} />
+    <ToggleSubsidiariesButton
+      count={count}
+      onClick={onClick}
+      isOpen={fullTreeExpanded}
+    />
   </div>
 )
 
@@ -129,14 +137,18 @@ const StyledHierarchyHeader = styled(HierarchyHeader)`
 `
 
 const Hierarchy = ({ requestedCompanyId, familyTree }) => {
+  const [fullTreeExpanded, setFullTreeExpanded] = useState(false)
   // todo add null checks for family tree, and see if this component can be removed as its just a wrapper
   return (
     familyTree && (
       <HierarchyContents data-test="hierarchy-contents">
         <StyledHierarchyHeader
           count={familyTree.ultimate_global_companies_count}
+          fullTreeExpanded={fullTreeExpanded}
+          onClick={setFullTreeExpanded}
         />
         <HierarchyItem
+          trigger={fullTreeExpanded}
           requestedCompanyId={requestedCompanyId}
           company={familyTree.ultimate_global_company}
           hierarchy={familyTree.ultimate_global_company.hierarchy}
@@ -146,8 +158,17 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   )
 }
 
-const HierarchyItem = ({ requestedCompanyId, company, hierarchy }) => {
-  const [open, setOpen] = useState(false)
+const HierarchyItem = ({ requestedCompanyId, company, hierarchy, trigger }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const log = () => {
+    // console.log('call from parent')
+    setIsOpen(!isOpen)
+  }
+
+  useEffect(() => {
+    log()
+  }, [trigger])
+
   return (
     <>
       <HierarchyItemContents
@@ -168,8 +189,9 @@ const HierarchyItem = ({ requestedCompanyId, company, hierarchy }) => {
       <Subsidiaries
         company={company}
         hierarchy={hierarchy}
-        open={open}
-        setOpen={setOpen}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        trigger={trigger}
       />
     </>
   )
