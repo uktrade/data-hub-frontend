@@ -14,6 +14,7 @@ const StyledSelect = styled(Select)({
   select: {
     width: '100%',
     minWidth: 170,
+    maxHeight: 36,
   },
   marginBottom: SPACING.SCALE_1,
   [MEDIA_QUERIES.DESKTOP]: {

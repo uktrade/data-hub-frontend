@@ -40,7 +40,7 @@ const companyTreeItemFaker = (overrides = {}) => ({
   ],
   latest_interaction_date: faker.date.past(),
   hierarchy: 1,
-  subsidaries: [],
+  subsidiaries: [],
   ...overrides,
 })
 
@@ -96,7 +96,7 @@ const createSubsidiary = (
     )
     subsidiaryCompanies.push(subsidiaryCompany)
   }
-  company.subsidaries = subsidiaryCompanies
+  company.subsidiaries = subsidiaryCompanies
 }
 
 exports.fakerCompanyFamilyTree = ({

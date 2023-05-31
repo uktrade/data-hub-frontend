@@ -16,6 +16,8 @@ export const getExportPipelineList = ({
   export_potential,
   sector,
   destination_country,
+  estimated_win_date_after, // from
+  estimated_win_date_before, // to
 }) => {
   const offset = getPageOffset({ limit, page })
   const payload = omitBy(
@@ -32,6 +34,14 @@ export const getExportPipelineList = ({
     (fieldValue) =>
       fieldValue === SHOW_ALL_OPTION.value || isUndefined(fieldValue)
   )
+
+  if (estimated_win_date_after) {
+    payload.estimated_win_date_after = `${estimated_win_date_after}-01`
+  }
+
+  if (estimated_win_date_before) {
+    payload.estimated_win_date_before = `${estimated_win_date_before}-01`
+  }
 
   const queryParams = qs.stringify(payload, { indices: false })
   return apiProxyAxios.get(`/v4/export?${queryParams}`).then(({ data }) => data)
