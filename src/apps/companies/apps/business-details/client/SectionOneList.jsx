@@ -11,8 +11,15 @@ const StyledSummaryFooterLink = styled(Link)`
   display: block;
 `
 
-const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
-  businessDetails.one_list_group_global_account_manager ? (
+const getLocation = (managerTeam) =>
+  managerTeam.ukRegion
+    ? managerTeam.ukRegion.name
+    : managerTeam.country
+    ? managerTeam.country.name
+    : '-'
+
+const SectionOneList = ({ company, isArchived, isDnbCompany, urls }) =>
+  company.oneListGroupGlobalAccountManager ? (
     <>
       <SummaryTable
         caption="Global Account Manager – One List"
@@ -23,11 +30,13 @@ const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
         }
       >
         <SummaryTable.Row heading="One List tier">
-          {businessDetails.one_list_group_tier}
+          {company.oneListGroupTier.name}
         </SummaryTable.Row>
 
         <SummaryTable.Row heading="Global Account Manager">
-          {businessDetails.one_list_group_global_account_manager}
+          {company.oneListGroupGlobalAccountManager.name}
+          {company.oneListGroupGlobalAccountManager.ditTeam.name}
+          {getLocation(company.oneListGroupGlobalAccountManager.ditTeam)}
         </SummaryTable.Row>
       </SummaryTable>
 
@@ -38,7 +47,7 @@ const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
   ) : null
 
 SectionOneList.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   urls: PropTypes.object.isRequired,
