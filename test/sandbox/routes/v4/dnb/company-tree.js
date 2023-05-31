@@ -49,7 +49,7 @@ const createCompanyTree = (
   minCompaniesPerLevel,
   maxCompaniesPerLevel
 ) => {
-  const ultimateParent = companyTreeItemFaker()
+  const ultimateParent = companyTreeItemFaker({ id: undefined })
 
   createSubsidiary(
     ultimateParent,
@@ -73,10 +73,15 @@ const createSubsidiary = (
     return
   }
 
+  const calculatedMax = faker.datatype.number({
+    min: minCompaniesPerLevel,
+    max: maxCompaniesPerLevel,
+  })
+
   const subsidiaryCompanies = []
   for (
     let comp_index = minCompaniesPerLevel;
-    comp_index <= maxCompaniesPerLevel;
+    comp_index <= calculatedMax;
     comp_index++
   ) {
     const subsidiaryCompany = companyTreeItemFaker({
@@ -99,9 +104,12 @@ exports.fakerCompanyFamilyTree = ({
   minCompaniesPerLevel = 1,
   maxCompaniesPerLevel = 1,
 }) => ({
-  ultimate_global_company: [
-    createCompanyTree(treeDepth, minCompaniesPerLevel, maxCompaniesPerLevel),
-  ],
+  ultimate_global_company: createCompanyTree(
+    treeDepth,
+    minCompaniesPerLevel,
+    maxCompaniesPerLevel
+  ),
+  ultimate_global_companies_count: 12,
   manually_verified_subsidiaries: [
     {
       id: faker.string.uuid(),

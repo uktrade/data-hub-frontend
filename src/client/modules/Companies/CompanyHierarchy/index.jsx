@@ -1,111 +1,178 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Button, H2, Link } from 'govuk-react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
-import { COMPANY_LOADED } from '../../../actions'
+import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
 import { useParams } from 'react-router-dom'
-import { state2props } from './state'
+import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
-import DnbHierarchy from '../../../../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
-import {
-  StyledAnchorTag,
-  StyledListItem,
-} from '../../../components/CompanyTabbedLocalNavigation/CompanyLocalTab'
 import styled from 'styled-components'
+import {
+  GREY_2,
+  GREY_4,
+  BLACK,
+  DARK_BLUE_LEGACY,
+  WHITE,
+} from '../../../utils/colours'
 
-//These styled components are copied from the CompanyLocalTab file. They will all be deleted in
-//the next ticket, adding here temporarily to avoid needing to refactor code thatis about to
-//be deleted
-const StyledGridRow = styled.div`
-  margin-right: -15px;
-  margin-left: -15px;
-`
-
-const StyledGridColumn = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0 15px;
-  @media (min-width: 840px) {
-    width: 100%;
-    float: left;
-  }
-`
-const StyledNav = styled.nav`
-  margin-bottom: 15px;
-  color: #0b0c0c;
-  margin-top: 5px;
-  @media (min-width: 840px) {
-    margin-bottom: 30px;
-    margin-top: 5px;
+const HierarchyContents = styled.div`
+  padding-bottom: 10px;
+  ${StyledHierarchyHeader} {
+    // background-color: red;
   }
 `
 
-const StyledUnorderedList = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
+const HierarchyItemContents = styled.div`
+  background-color: ${({ isRequestedCompanyId }) =>
+    isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
+  border: 1px solid ${GREY_2};
+  min-height: 60px;
+  padding: 10px;
+  margin-top: 20px;
   display: flex;
-  border-bottom: none;
-  @media (max-width: 839px) {
-    display: block;
-    padding-bottom: 20px;
-    border-bottom: 0;
+  flex-direction: column;
+  justify-content: space-evenly;
+  ${({ isRequestedCompanyId }) =>
+    isRequestedCompanyId &&
+    `
+    color: ${WHITE};
+  `}
+  ${Link} {
+    width: fit-content;
+    ${({ isRequestedCompanyId }) =>
+      isRequestedCompanyId &&
+      `
+    color: ${WHITE};
+  `}
   }
 `
 
-const StyledTabAnchorTag = styled(StyledAnchorTag)`
-  width: 100%;
+const SubsidiaryItem = styled.div`
+  padding-left: 25px;
+  margin-top: 20px;
+  display: ${({ open }) => (open ? 'block' : 'none')};
+`
+const StyledButton = styled(Button)``
+
+const ToggleSubsidiariesButtonContent = styled.div`
+  padding-top: 20px;
+  ${StyledButton} {
+    margin-bottom: 0px;
+    span:nth-child(1) {
+      padding-right: 10px;
+    }
+  }
 `
 
-const StyledTabListItem = styled(StyledListItem)`
-  flex-grow: 1;
-  max-width: 50%;
+const ToggleSubsidiariesButton = ({ open, onClick, count }) => (
+  <ToggleSubsidiariesButtonContent data-test="toggle-subsidiaries-button">
+    <StyledButton
+      buttonColour={GREY_4}
+      buttonTextColour={BLACK}
+      aria-expanded={open}
+      onClick={() => onClick(!open)}
+    >
+      <span>{open ? `-` : `+`}</span>
+      <span>
+        {open ? `Hide ${count} subsidiaries` : `Show ${count} subsidiaries`}
+      </span>
+    </StyledButton>
+  </ToggleSubsidiariesButtonContent>
+)
+
+const Subsidiaries = ({ company, hierarchy, open, setOpen }) =>
+  Array.isArray(company.subsidaries) &&
+  company.subsidaries.length > 0 && (
+    <>
+      <ToggleSubsidiariesButton
+        open={open}
+        onClick={setOpen}
+        count={company.subsidaries.length}
+      />
+      <SubsidiaryItem hierarchy={hierarchy} open={open}>
+        {company.subsidaries.map((subsidary) => (
+          <HierarchyItem company={subsidary} hierarchy={subsidary.hierarchy} />
+        ))}
+      </SubsidiaryItem>
+    </>
+  )
+
+const HierarchyHeader = ({ count, className }) => (
+  <div className={className}>
+    <H2>
+      {count}
+      <span> companies</span>
+    </H2>
+
+    <ToggleSubsidiariesButton count={count} />
+  </div>
+)
+
+const StyledHierarchyHeader = styled(HierarchyHeader)`
+  display: flex;
+  justify-content: space-between;
+  align-items: bottom;
+  border-bottom: 4px solid ${BLACK};
+  ${ToggleSubsidiariesButtonContent} {
+    padding-top: 0px;
+  }
+  > h2 {
+    margin-bottom: 10px;
+    > span {
+      font-size: 24px;
+    }
+  }
 `
 
-const CompanyLocalTab = ({ navItem, index }) => {
+const Hierarchy = ({ requestedCompanyId, familyTree }) => {
+  // todo add null checks for family tree, and see if this component can be removed as its just a wrapper
   return (
-    navItem && (
-      <StyledTabListItem key={`tab-${index}`}>
-        <StyledTabAnchorTag
-          selected={navItem.isActive}
-          href={navItem.url}
-          id={`tab-${navItem.path}`}
-          key={`tab-link-${navItem.path}`}
-          aria-label={navItem.ariaDescription}
-        >
-          {navItem.label}
-        </StyledTabAnchorTag>
-      </StyledTabListItem>
+    familyTree && (
+      <HierarchyContents data-test="hierarchy-contents">
+        <StyledHierarchyHeader
+          count={familyTree.ultimate_global_companies_count}
+        />
+        <HierarchyItem
+          requestedCompanyId={requestedCompanyId}
+          company={familyTree.ultimate_global_company}
+          hierarchy={familyTree.ultimate_global_company.hierarchy}
+        />
+      </HierarchyContents>
     )
   )
 }
 
-const localTabItems = (company) => {
-  if (!company) {
-    return []
-  }
-
-  const tabItems = []
-  if (company.is_global_ultimate) {
-    tabItems.push({
-      url: urls.companies.dnbHierarchy.index(company.id),
-      path: '',
-      label: 'Dun & Bradstreet hierarchy',
-      isActive: true,
-    })
-  }
-  if (company.is_global_headquarters) {
-    tabItems.push({
-      url: urls.companies.subsidiaries.index(company.id),
-      path: '',
-      label: 'Manually linked subsidiaries',
-      isActive: false,
-    })
-  }
-  return tabItems
+const HierarchyItem = ({ requestedCompanyId, company, hierarchy }) => {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <HierarchyItemContents
+        hierarchy={hierarchy}
+        isRequestedCompanyId={requestedCompanyId === company.id}
+      >
+        {company.id ? (
+          <Link
+            href={urls.companies.detail(company.id)}
+            aria-label={`Go to ${company.name} details`}
+          >
+            {company.name}
+          </Link>
+        ) : (
+          <span>{`${company.name} (not on Data Hub)`}</span>
+        )}
+      </HierarchyItemContents>
+      <Subsidiaries
+        company={company}
+        hierarchy={hierarchy}
+        open={open}
+        setOpen={setOpen}
+      />
+    </>
+  )
 }
 
 const breadcrumbs = (company) =>
@@ -133,7 +200,7 @@ const breadcrumbs = (company) =>
         },
       ]
 
-const CompanyHierarchy = ({ company }) => {
+const CompanyHierarchy = ({ company, familyTree }) => {
   const { companyId } = useParams()
   if (company && !company.global_ultimate_duns_number) {
     return (
@@ -173,32 +240,21 @@ const CompanyHierarchy = ({ company }) => {
       >
         {() =>
           company && (
-            <>
-              <StyledGridRow>
-                <StyledGridColumn>
-                  <StyledNav
-                    aria-label="local navigation"
-                    data-test="tabbedLocalNav"
-                  >
-                    <StyledUnorderedList data-test="tabbedLocalNavList">
-                      {localTabItems(company).map((t, index) => (
-                        <CompanyLocalTab navItem={t} index={index} />
-                      ))}
-                    </StyledUnorderedList>
-                  </StyledNav>
-                </StyledGridColumn>
-              </StyledGridRow>
-
-              <div id="dnb-hierarchy">
-                <DnbHierarchy
-                  dataEndpoint={urls.companies.dnbHierarchy.data(company.id)}
-                  isGlobalHQ={company.is_global_headquarters}
-                />
-              </div>
-            </>
+            <Hierarchy
+              requestedCompanyId={companyId}
+              familyTree={familyTree}
+            ></Hierarchy>
           )
         }
       </Task.Status>
+      <Task.Status
+        name={TASK_GET_DNB_FAMILY_TREE}
+        id={ID}
+        startOnRender={{
+          payload: { companyId: companyId },
+          onSuccessDispatch: DNB_FAMILY_TREE_LOADED,
+        }}
+      />
     </DefaultLayout>
   )
 }
