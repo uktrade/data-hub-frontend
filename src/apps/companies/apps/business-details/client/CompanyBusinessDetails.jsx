@@ -129,7 +129,7 @@ const CompanyBusinessDetails = ({
             </Details>
           )}
           <SectionAbout
-            businessDetails={businessDetails}
+            company={company}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
             urls={companyUrls}
