@@ -50,11 +50,12 @@ const CompanyBusinessDetails = ({
   dnbRelatedCompaniesCount,
   globalUltimate,
   canEditOneList,
-  companyUrls,
   isDnbPending,
   companyId,
   localNavItems,
   flashMessages,
+  csrfToken,
+  archivedDocumentUrl,
 }) => (
   <CompanyResource id={companyId}>
     {(company) => (
@@ -72,6 +73,7 @@ const CompanyBusinessDetails = ({
         dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         localNavItems={localNavItems}
         flashMessages={flashMessages}
+        csrfToken={csrfToken}
       >
         <StyledRoot>
           <div>
@@ -80,7 +82,9 @@ const CompanyBusinessDetails = ({
           </div>
           <div>
             Changes made to this information can be found on the{' '}
-            <Link href={companyUrls.companyEditHistory}>Edit history page</Link>
+            <Link href={urls.companies.editHistory.index(companyId)}>
+              Edit history page
+            </Link>
             .
           </div>
           {lastUpdated(company) && (
@@ -127,29 +131,24 @@ const CompanyBusinessDetails = ({
             company={company}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
-            urls={companyUrls}
           />
           <SectionAddresses
             company={company}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
-            urls={companyUrls}
           />
           <SectionRegion
             company={company}
             isArchived={isArchived(company.archived)}
-            urls={companyUrls}
           />
           <SectionSector
             company={company}
             isArchived={isArchived(company.archived)}
-            urls={companyUrls}
           />
           <SectionOneList
             company={company}
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
-            urls={companyUrls}
           />
           <SectionHierarchy
             company={company}
@@ -158,9 +157,13 @@ const CompanyBusinessDetails = ({
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
             globalUltimate={globalUltimate}
-            urls={companyUrls}
           />
-          <SectionDocuments urls={companyUrls} />
+          <SectionDocuments archivedDocumentUrl={archivedDocumentUrl} />
+          {canEditOneList && (
+            <Button as={Link} href={urls.companies.editOneList(companyId)}>
+              Edit One List Information
+            </Button>
+          )}
           <ArchiveForm
             type="company"
             id={CHECK_PENDING_REQUEST_ID}
@@ -168,10 +171,11 @@ const CompanyBusinessDetails = ({
             isArchived={isArchived(company.archived)}
             isDnbCompany={isDnbCompany(company.dunsNumber)}
             analyticsFormName="archiveCompany"
-            redirectUrl={companyUrls.companyBusinessDetails}
+            redirectUrl={urls.companies.businessDetails(companyId)}
             transformPayload={(values) => ({
               values,
-              companyUrls,
+              companyId,
+              csrfToken,
             })}
             archiveReasons={[
               {
@@ -180,22 +184,20 @@ const CompanyBusinessDetails = ({
               },
             ]}
           />
-          {canEditOneList && (
-            <Button as={Link} href={companyUrls.editOneList}>
-              Edit One List Information
-            </Button>
-          )}
         </StyledRoot>
       </CompanyLayout>
     )}
   </CompanyResource>
 )
+
 CompanyBusinessDetails.propTypes = {
-  companyUrls: PropTypes.object.isRequired,
   subsidiariesCount: PropTypes.number,
   dnbRelatedCompaniesCount: PropTypes.number,
   globalUltimate: PropTypes.object,
-  canEditOneList: PropTypes.bool,
+  companyId: PropTypes.string.isRequired,
+  flashMessages: PropTypes.object,
+  csrfToken: PropTypes.string,
+  permissions: PropTypes.array,
 }
 
 CompanyBusinessDetails.defaultProps = {

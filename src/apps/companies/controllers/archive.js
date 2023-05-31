@@ -41,7 +41,7 @@ async function unarchiveCompany(req, res) {
   } catch (error) {
     logger.error(error)
 
-    req.flash('error', 'Company could not be archived')
+    req.flash('error', 'Company could not be unarchived')
     res.redirect(detailsUrl)
   }
 }

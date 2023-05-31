@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { SummaryTable } from '../../../../../client/components/'
+import urls from '../../../../../lib/urls'
 
 const StyledSummaryFooterLink = styled(Link)`
   margin-top: -${SPACING_POINTS[7]}px;
@@ -18,7 +19,7 @@ const getLocation = (managerTeam) =>
     ? managerTeam.country.name
     : '-'
 
-const SectionOneList = ({ company, isArchived, isDnbCompany, urls }) =>
+const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
   company.oneListGroupGlobalAccountManager ? (
     <>
       <SummaryTable
@@ -26,7 +27,9 @@ const SectionOneList = ({ company, isArchived, isDnbCompany, urls }) =>
         data-test="oneListDetailsContainer"
         actions={
           !isArchived &&
-          !isDnbCompany && <Link href={urls.companyEdit}>Edit</Link>
+          !isDnbCompany && (
+            <Link href={urls.companies.edit(company.id)}>Edit</Link>
+          )
         }
       >
         <SummaryTable.Row heading="One List tier">
@@ -40,7 +43,7 @@ const SectionOneList = ({ company, isArchived, isDnbCompany, urls }) =>
         </SummaryTable.Row>
       </SummaryTable>
 
-      <StyledSummaryFooterLink href={urls.companyAdvisers}>
+      <StyledSummaryFooterLink href={urls.companies.advisers.index(company.id)}>
         See all advisers on the core team
       </StyledSummaryFooterLink>
     </>
@@ -50,7 +53,6 @@ SectionOneList.propTypes = {
   company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionOneList
