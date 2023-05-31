@@ -4,8 +4,8 @@ import Link from '@govuk-react/link'
 
 import { SummaryTable } from '../../../../../client/components/'
 
-const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
-  isBasedInUK ? (
+const SectionRegion = ({ company, isArchived, urls }) =>
+  !!company.ukBased ? (
     <SummaryTable
       caption="DBT region"
       data-test="regionDetailsContainer"
@@ -14,15 +14,14 @@ const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
       }
     >
       <SummaryTable.Row>
-        {businessDetails.uk_region || 'Not set'}
+        {company.ukRegion ? company.ukRegion.name : 'Not set'}
       </SummaryTable.Row>
     </SummaryTable>
   ) : null
 
 SectionRegion.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  isBasedInUK: PropTypes.bool.isRequired,
   urls: PropTypes.object.isRequired,
 }
 

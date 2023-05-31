@@ -42,7 +42,6 @@ const isGlobalHQ = (headquarterType) => headquarterType.name === 'ghq'
 const isGlobalUltimate = (isGlobalUltimate) => !!isGlobalUltimate
 const isDnbCompany = (dunsNumber) => !!dunsNumber
 const isArchived = (archived) => !!archived
-const isBasedInUK = (ukBased) => !!ukBased
 const lastUpdated = (company) =>
   [company.dnbModifiedOn, company.modifiedOn, company.createdOn]
     .filter(Boolean)
@@ -141,9 +140,8 @@ const CompanyBusinessDetails = ({
             urls={companyUrls}
           />
           <SectionRegion
-            businessDetails={businessDetails}
+            company={company}
             isArchived={isArchived(company.archived)}
-            isBasedInUK={isBasedInUK(company.ukBased)}
             urls={companyUrls}
           />
           <SectionSector
