@@ -1,8 +1,6 @@
 const urls = require('../../../../lib/urls')
 
-const {
-  transformCompanyToExportDetailsView,
-} = require('../exports/transformer')
+const { transformExportCountries } = require('../exports/transformer')
 
 async function renderOverview(req, res) {
   const { company } = res.locals
@@ -21,8 +19,9 @@ async function renderOverview(req, res) {
     company.company_number
   )
 
-  const { exportCountriesInformation } =
-    transformCompanyToExportDetailsView(company)
+  const exportCountriesInformation = transformExportCountries(
+    company.export_countries
+  )
 
   const maximumTenCountries = (countries, maxCount) =>
     countries.slice(0, maxCount)

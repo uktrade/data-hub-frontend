@@ -1,7 +1,6 @@
 const fixtures = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
-const exportSelectors = require('../../../../../selectors/company/export')
 
 function visitExportIndex(companyId) {
   cy.intercept('GET', '**/export-win').as('exportWinResults')
@@ -380,10 +379,8 @@ describe('Company Export tab', () => {
 
       it('should have the correct count and number of visible results', () => {
         cy.contains('15 results')
-        cy.get(exportSelectors.exportWins.listItemHeadings).should(
-          'have.length',
-          10
-        )
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
       })
 
       it('should display the next button', () => {
@@ -401,10 +398,8 @@ describe('Company Export tab', () => {
       it('the second page renders the collection list with 6 of the 15 results', () => {
         cy.get('a').contains('2').click()
 
-        cy.get(exportSelectors.exportWins.listItemHeadings).should(
-          'have.length',
-          6
-        )
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 6)
         cy.contains(
           'Quis vel quidem quo cum nesciunt recusandae laboriosam dolor.'
         )
