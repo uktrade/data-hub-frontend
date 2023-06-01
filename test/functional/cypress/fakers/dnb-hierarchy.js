@@ -1,22 +1,8 @@
-// TODO - the logic in this should be moved to the fakers folder once there is a real api to call
+import { faker } from '@faker-js/faker'
 
-var ukRegion = require('../../../fixtures/v4/metadata/uk-region.json')
-var employeeRange = require('../../../fixtures/v4/metadata/employee-range.json')
-var headquarterType = require('../../../fixtures/v4/metadata/headquarter-type.json')
-
-const { faker } = require('@faker-js/faker')
-
-const address = {
-  line_1: faker.location.streetAddress(),
-  line_2: faker.location.street(),
-  town: faker.location.city(),
-  county: faker.location.county(),
-  postcode: faker.location.zipCode(),
-  country: {
-    id: faker.string.uuid(),
-    name: faker.location.country(),
-  },
-}
+import { listFaker } from './utils'
+import { addressFaker } from './addresses'
+import { EMPLOYEE_RANGE, HEADQUARTER_TYPE } from './constants'
 
 const companyTreeItemFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
@@ -29,9 +15,9 @@ const companyTreeItemFaker = (overrides = {}) => ({
     min: 0,
     max: 15000,
   }),
-  uk_region: faker.helpers.arrayElement(ukRegion),
-  address: address, //This is called trading address on the designs
-  registered_address: address,
+  // uk_region: faker.helpers.arrayElement(ukRegion),
+  address: addressFaker(), //This is called trading address on the designs
+  registered_address: addressFaker(),
   sector: [
     {
       id: faker.string.uuid(),
@@ -43,6 +29,9 @@ const companyTreeItemFaker = (overrides = {}) => ({
   subsidiaries: [],
   ...overrides,
 })
+
+const companyTreeItemListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: companyTreeItemFaker, length, overrides })
 
 const createCompanyTree = (
   treeDepth,
@@ -103,18 +92,25 @@ const createSubsidiary = (
   company.subsidiaries = subsidiaryCompanies
 }
 
-exports.fakerCompanyFamilyTree = ({
+const companyTreeFaker = ({
   treeDepth = 2,
   minCompaniesPerLevel = 1,
   maxCompaniesPerLevel = 1,
+  globalCompany = createCompanyTree(
+    treeDepth,
+    minCompaniesPerLevel,
+    maxCompaniesPerLevel
+  ),
 }) => ({
-  ...createCompanyTree(treeDepth, minCompaniesPerLevel, maxCompaniesPerLevel),
+  ...globalCompany,
   manually_verified_subsidiaries: [
     {
       id: faker.string.uuid(),
       name: faker.company.name(),
-      employee_range: faker.helpers.arrayElement(employeeRange),
-      headquarter_type: faker.helpers.arrayElement(headquarterType),
+      employee_range: faker.helpers.arrayElement(EMPLOYEE_RANGE),
+      headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
     },
   ],
 })
+
+export { companyTreeFaker, companyTreeItemFaker, companyTreeItemListFaker }

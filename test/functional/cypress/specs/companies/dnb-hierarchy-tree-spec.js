@@ -1,3 +1,8 @@
+import {
+  companyTreeFaker,
+  companyTreeItemFaker,
+} from '../../fakers/dnb-hierarchy'
+
 const { assertErrorDialog } = require('../../support/assertions')
 
 const urls = require('../../../../../src/lib/urls')
@@ -5,6 +10,18 @@ const urls = require('../../../../../src/lib/urls')
 const {
   company: { dnbGlobalUltimate },
 } = require('../../fixtures')
+
+const companyNoSubsidiaries = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: companyTreeItemFaker({
+      id: dnbGlobalUltimate.id,
+    }),
+    ultimate_global_companies_count: 1,
+  },
+})
+
+const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
+const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
 
 describe('D&B Company hierarchy tree', () => {
   context('Error scenarios:', () => {
@@ -79,5 +96,107 @@ describe('D&B Company hierarchy tree', () => {
         })
       }
     )
+  })
+
+  context('When a company has no subsidiaries', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should only show a single company item with the requested company style', () => {
+      cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
+      cy.get('[data-test="requested-company"]').should('be.visible')
+    })
+
+    it('should hide the show all companies button', () => {
+      cy.get('[data-test="expand-tree-button"]').should('not.exist')
+    })
+
+    it('should hide the show subsidiaries button', () => {
+      cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
+    })
+  })
+
+  context('When a company has only immediate subsidiaries', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyOnlyImmediateSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should display the global company with a show subsidiaries button', () => {
+      cy.get('[data-test="hierarchy-item"]').should('have.length', 2)
+      cy.get('[data-test="toggle-subsidiaries-button"]')
+        .should('exist')
+        .should('have.length', 1)
+    })
+
+    it('should display the show all companies button', () => {
+      cy.get('[data-test="expand-tree-button"]').should('exist')
+    })
+
+    it('should display the global company with the correct company details', () => {
+      cy.get('[data-test="hierarchy-item"]')
+        .first()
+        .find('span')
+        .first()
+        .should(
+          'have.text',
+          `${companyOnlyImmediateSubsidiaries.ultimate_global_company.name} (not on Data Hub)`
+        )
+    })
+
+    it('should click the show subsidiaries button and check the subsidiary company displays with the correct company details', () => {
+      cy.get('[data-test="toggle-subsidiaries-button"]').click()
+      cy.get('[data-test="hierarchy-item"]')
+        .eq(1)
+        .find('a')
+        .should(
+          'have.text',
+          companyOnlyImmediateSubsidiaries.ultimate_global_company
+            .subsidiaries[0].name
+        )
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.detail(
+            companyOnlyImmediateSubsidiaries.ultimate_global_company
+              .subsidiaries[0].id
+          )
+        )
+    })
+  })
+
+  context('When a company has a large number of subsidiaries', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyWith5LevelsOfSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should expand all levels when the expand button is clicked', () => {
+      cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
+      cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
+      cy.get('[data-test="expand-tree-button"]').click()
+      cy.get('[data-test="hierarchy-item"]').should('be.visible')
+    })
+
+    it('should collapse all levels when the expand button is clicked again', () => {
+      cy.get('[data-test="hierarchy-item"]').should('be.visible')
+      cy.get('[data-test="expand-tree-button"]').click()
+      cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
+      cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
+    })
   })
 })
