@@ -151,7 +151,6 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'was_policy_feedback_provided',
       'were_countries_discussed',
       'is_event',
-      'has_related_trade_agreements',
     ]),
     ...transformValues(interaction, transformToID, [
       'service_delivery_status',
@@ -162,8 +161,6 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'contacts',
       'event',
       'communication_channel',
-      'policy_areas',
-      'related_trade_agreements',
       'large_capital_opportunity',
     ]),
     ...transformServiceAnswers(interaction.service_answers),
@@ -243,7 +240,6 @@ export function saveInteraction({ values, companyIds, referralId }) {
       adviser: a.value,
     })),
     date: transformValueForAPI(values.date),
-    policy_areas: transformArrayOfOptionsToValues(values.policy_areas),
     communication_channel: transformOptionToValue(values.communication_channel),
     event: transformOptionToValue(values.event),
     // Cannot be empty string
@@ -259,17 +255,12 @@ export function saveInteraction({ values, companyIds, referralId }) {
       'was_policy_feedback_provided',
       'is_event',
       'service_delivery_status',
-      'policy_issue_types',
-      'has_related_trade_agreements',
     ]),
     helped_remove_export_barrier:
       values.helped_remove_export_barrier === OPTION_YES,
     export_barrier_types: values.export_barrier_types || [],
     export_barrier_notes: values.export_barrier_notes || '',
 
-    related_trade_agreements: transformArrayOfOptionsToValues(
-      values.related_trade_agreements
-    ),
     ...(values.theme == THEMES.INVESTMENT && {
       large_capital_opportunity:
         values.has_related_opportunity == 'yes'
