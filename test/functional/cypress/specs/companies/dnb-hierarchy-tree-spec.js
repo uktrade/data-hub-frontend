@@ -3,7 +3,11 @@ import {
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
 
-const { assertErrorDialog } = require('../../support/assertions')
+const {
+  assertErrorDialog,
+  assertLocalHeader,
+  assertBreadcrumbs,
+} = require('../../support/assertions')
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -22,6 +26,22 @@ const companyNoSubsidiaries = companyTreeFaker({
 
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
 const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
+
+const assertRelatedCompaniesPage = ({ company }) => {
+  it('should render the header', () => {
+    assertLocalHeader(`Company records related to ${company.name}`)
+  })
+
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: urls.dashboard(),
+      Companies: urls.companies.index(),
+      [company.name]: urls.companies.detail(company.id),
+      'Business details': urls.companies.businessDetails(company.id),
+      'Related companies': null,
+    })
+  })
+}
 
 describe('D&B Company hierarchy tree', () => {
   context('Error scenarios:', () => {
@@ -107,6 +127,8 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
     it('should only show a single company item with the requested company style', () => {
       cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
       cy.get('[data-test="requested-company"]').should('be.visible')
@@ -130,6 +152,8 @@ describe('D&B Company hierarchy tree', () => {
       cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
     })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
     it('should display the global company with a show subsidiaries button', () => {
       cy.get('[data-test="hierarchy-item"]').should('have.length', 2)
@@ -183,6 +207,8 @@ describe('D&B Company hierarchy tree', () => {
       cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
     })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
     it('should expand all levels when the expand button is clicked', () => {
       cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
