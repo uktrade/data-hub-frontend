@@ -173,16 +173,10 @@ const COMMON_REQUEST_BODY = {
   subject: 'Some summary',
   notes: 'Some notes',
   was_policy_feedback_provided: 'yes',
-  policy_areas: [],
   policy_feedback_notes: 'Some policy feedback notes',
   companies: ['0f5216e0-849f-11e6-ae22-56b6b6499611'],
   service_answers: {},
   status: 'complete',
-  has_related_trade_agreements: 'yes',
-  related_trade_agreements: [
-    '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
-    '09787712-0d94-4137-a5f3-3f9131e681f0',
-  ],
 }
 
 function fillCommonFields({
@@ -360,13 +354,6 @@ function assertRequestBody(expectedBody, callback) {
       objectDiff(xhr.request.body, expectedBody)
     )
 
-    expect(xhr.request.body.has_related_trade_agreements).to.equal(
-      expectedBody.has_related_trade_agreements
-    )
-    expect(xhr.request.body.related_trade_agreements).to.deep.equal(
-      expectedBody.related_trade_agreements
-    )
-
     expect(xhr.request.body).to.deep.equal(expectedBody)
 
     callback(xhr)
@@ -459,7 +446,6 @@ describe('Interaction theme', () => {
 
     const interaction_error_messages = [
       'Select a service',
-      'Select if this relates to a named trade agreement',
       'Select at least one contact',
       'Select a communication channel',
       'Enter a summary',
@@ -577,7 +563,6 @@ describe('Service delivery theme', () => {
 
     const service_delivery_errors = [
       'Select a service',
-      'Select if this relates to a named trade agreement',
       'Select at least one contact',
       'Select if this was an event',
       'Enter a summary',
@@ -679,7 +664,6 @@ describe('Investment theme', () => {
 
     const investment_error_messages = [
       'Select a service',
-      'Select if this relates to a named trade agreement',
       'Select at least one contact',
       'Select a communication channel',
       'Enter a summary',
@@ -801,7 +785,6 @@ describe('Trade Agreement theme', () => {
 
     const trade_agreement_error_messages = [
       'Select a service',
-      'Select if this relates to a named trade agreement',
       'Select at least one contact',
       'Select a communication channel',
       'Enter a summary',
