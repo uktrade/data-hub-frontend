@@ -12,10 +12,9 @@ import {
   EXPORTS_HISTORY__LOADED,
   EXPORTS_HISTORY__SELECT_PAGE,
 } from '../../../../../../client/actions'
-
-const Wrapper = styled('div')`
-  margin-top: ${SPACING.SCALE_3};
-`
+import { CompanyResource } from '../../../../../../client/components/Resource'
+import CompanyLayout from '../../../../../../client/components/Layout/CompanyLayout'
+import urls from '../../../../../../lib/urls'
 
 const StyledDetails = styled(Details)`
   margin: ${SPACING.SCALE_3} 0 0 0;
@@ -40,6 +39,9 @@ function ExportsHistory({
   countryId,
   pageTitle,
   isComplete,
+  dnbRelatedCompaniesCount,
+  returnUrl,
+  localNavItems,
 }) {
   const collectionListTask = {
     name: 'Exports history',
@@ -51,22 +53,41 @@ function ExportsHistory({
     },
   }
   return (
-    <Wrapper>
-      <InsetText>
-        You can only see the history of countries that were added or edited
-        after 6th February 2020
-      </InsetText>
-      <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
-      <CollectionList
-        taskProps={collectionListTask}
-        items={results}
-        count={count}
-        onPageClick={onPageClick}
-        activePage={activePage}
-        isComplete={isComplete}
-        metadataRenderer={metadataRenderer}
-      />
-    </Wrapper>
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <CompanyLayout
+          company={company}
+          breadcrumbs={[
+            { link: urls.dashboard(), text: 'Home' },
+            {
+              link: urls.companies.index(),
+              text: 'Companies',
+            },
+            { link: urls.companies.detail(company.id), text: company.name },
+            { link: urls.companies.exports.index(company.id), text: 'Exports' },
+            { text: pageTitle },
+          ]}
+          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+          returnUrl={returnUrl}
+          localNavItems={localNavItems}
+        >
+          <InsetText>
+            You can only see the history of countries that were added or edited
+            after 6th February 2020
+          </InsetText>
+          <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
+          <CollectionList
+            taskProps={collectionListTask}
+            items={results}
+            count={count}
+            onPageClick={onPageClick}
+            activePage={activePage}
+            isComplete={isComplete}
+            metadataRenderer={metadataRenderer}
+          />
+        </CompanyLayout>
+      )}
+    </CompanyResource>
   )
 }
 

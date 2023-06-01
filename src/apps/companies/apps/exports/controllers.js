@@ -35,19 +35,9 @@ function renderExportHistory(req, res) {
       companyId: company.id,
       pageTitle,
       countryId,
-      company,
-      breadcrumbs: [
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
-        { link: urls.companies.exports.index(company.id), text: 'Exports' },
-        { text: pageTitle },
-      ],
       returnUrl,
       dnbRelatedCompaniesCount,
+      localNavItems: res.locals.localNavItems,
     },
   })
 }
