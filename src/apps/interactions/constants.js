@@ -20,12 +20,8 @@ const QUERY_FIELDS = [
   'dit_participants__team',
   'service',
   'was_policy_feedback_provided',
-  'policy_areas',
-  'policy_issue_types',
   'dit_participants__adviser',
   'company_one_list_group_tier',
-  'has_related_trade_agreements',
-  'related_trade_agreements',
 ]
 
 const QUERY_DATE_FIELDS = ['date_after', 'date_before']
