@@ -1,9 +1,6 @@
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
 const { assertBreadcrumbs } = require('../../../support/assertions')
-const exportSelectors = require('../../../../../selectors/company/export')
-
-const countrySelectors = exportSelectors.countries
 
 describe('Company Export tab - Export countries history', () => {
   function checkListItems(items) {
@@ -48,7 +45,7 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with the 0 results', () => {
         cy.contains('0 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
+        cy.get('[data-test="collection-item"]').should('not.exist')
       })
     })
 
@@ -69,7 +66,8 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with 10 of the 12 results', () => {
         cy.contains('12 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
 
         checkListItems([
           [
@@ -139,7 +137,8 @@ describe('Company Export tab - Export countries history', () => {
 
       it('the second page renders the collection list with 2 of the 12 results', () => {
         cy.get('a').contains('2').click()
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 2)
 
         checkListItems([
           [
@@ -185,7 +184,8 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with grouped countries in alphabetical order', () => {
         cy.contains('10 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
 
         checkListItems([
           [
@@ -242,7 +242,7 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not display the pagination', () => {
-        cy.get('#company-export-full-history ul').should('not.exist')
+        cy.get('[data-test="pagination"]').should('not.exist')
       })
     })
 
@@ -264,7 +264,8 @@ describe('Company Export tab - Export countries history', () => {
 
         it('renders the collection list with the one result', () => {
           cy.contains('1 result')
-          cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+          cy.get('[data-test="collection-item"]').as('collectionItems')
+          cy.get('@collectionItems').should('have.length', 1)
 
           checkListItems([
             [
@@ -293,7 +294,8 @@ describe('Company Export tab - Export countries history', () => {
 
         it('renders the collection list with grouped countries in alphabetical order', () => {
           cy.contains('4 results')
-          cy.get(countrySelectors.listItemHeadings).should('have.length', 4)
+          cy.get('[data-test="collection-item"]').as('collectionItems')
+          cy.get('@collectionItems').should('have.length', 4)
 
           checkListItems([
             [
@@ -327,7 +329,8 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not filter out the update', () => {
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 1)
         checkListItems([
           [
             'Andorra moved to future countries of interest',
@@ -393,7 +396,8 @@ describe('Company Export tab - Export countries history', () => {
         }
 
         cy.contains('5 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 5)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 5)
 
         const interactionDetails = [
           [
@@ -517,7 +521,8 @@ describe('Company Export tab - Export countries history', () => {
 
     it('renders the collection list with 2 results', () => {
       cy.contains('2 results')
-      cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+      cy.get('[data-test="collection-item"]').as('collectionItems')
+      cy.get('@collectionItems').should('have.length', 2)
 
       checkListItems([
         [
