@@ -84,15 +84,14 @@ describe('D&B Company hierarchy tree', () => {
       () => {
         before(() => {
           cy.intercept(`api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`, {
-            ultimate_global_company: {},
-            manually_verified_subsidiaries: [],
+            body: {},
           }).as('familyTreeApi')
           cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
         })
 
-        it('should display the error message', () => {
+        it('should display the empty tree message', () => {
           cy.wait('@familyTreeApi')
-          assertErrorDialog('TASK_GET_DNB_FAMILY_TREE', 'Not Found')
+          cy.get('[data-test="empty-hierarchy"]').should('be.visible')
         })
       }
     )

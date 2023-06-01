@@ -22,9 +22,6 @@ import { isEmpty } from 'lodash'
 
 const HierarchyContents = styled.div`
   padding-bottom: 10px;
-  ${StyledHierarchyHeader} {
-    // background-color: red;
-  }
 `
 
 const HierarchyItemContents = styled.div`
@@ -156,9 +153,10 @@ const StyledHierarchyHeader = styled(HierarchyHeader)`
 
 const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   const [fullTreeExpanded, setFullTreeExpanded] = useState(undefined)
-  // todo add null checks for family tree, and see if this component can be removed as its just a wrapper
   return isEmpty(familyTree) ? (
-    <span>Empty</span>
+    <div data-test="empty-hierarchy">
+      No hierarchy could be found for this company
+    </div>
   ) : (
     <HierarchyContents data-test="hierarchy-contents">
       <StyledHierarchyHeader
