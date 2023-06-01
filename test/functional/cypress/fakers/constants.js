@@ -87,3 +87,41 @@ export const EXPORTER_EXPERIENCE = [
     name: 'An exported that DBT are helping maintain and grow their exports',
   },
 ]
+
+export const HEADQUARTER_TYPE = [
+  {
+    id: '43281c5e-92a4-4794-867b-b4d5f801e6f3',
+    name: 'ghq',
+  },
+  {
+    id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+    name: 'ehq',
+  },
+  {
+    id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+    name: 'ukhq',
+  },
+]
+
+export const EMPLOYEE_RANGE = [
+  {
+    id: '3dafd8d0-5d95-e211-a939-e4115bead28a',
+    name: '1 to 9',
+  },
+  {
+    id: '3eafd8d0-5d95-e211-a939-e4115bead28a',
+    name: '10 to 49',
+  },
+  {
+    id: '3fafd8d0-5d95-e211-a939-e4115bead28a',
+    name: '50 to 249',
+  },
+  {
+    id: '40afd8d0-5d95-e211-a939-e4115bead28a',
+    name: '250 to 499',
+  },
+  {
+    id: '41afd8d0-5d95-e211-a939-e4115bead28a',
+    name: '500+',
+  },
+]
