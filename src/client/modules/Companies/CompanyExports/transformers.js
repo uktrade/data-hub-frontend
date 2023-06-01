@@ -6,13 +6,6 @@ import groupExportCountries from '../../../../lib/group-export-countries'
 import { EXPORT_INTEREST_STATUS } from '../../../../apps/constants'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 
-export const buildGreatProfile = (greatProfileStatus) => {
-  return {
-    name: exportDetailsLabels.greatProfile,
-    value: greatProfileStatus,
-  }
-}
-
 export const buildExportPotential = (company) => {
   const exportPotentialValue = exportPotentialLabels[company.exportPotential]
   return exportPotentialValue?.text
