@@ -1,8 +1,5 @@
-/* eslint-disable camelcase */
 const metadataRepo = require('../../../../lib/metadata')
 
-const { transformCompanyToExportDetailsView } = require('./transformer')
-const { exportPotentialLabels } = require('../../labels')
 const urls = require('../../../../lib/urls')
 
 function getCountry(id) {
@@ -12,39 +9,12 @@ function getCountry(id) {
 function renderExports(req, res) {
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
 
-  const isArchived = res.locals.company.archived
-
-  const {
-    exportWinCategory,
-    greatProfile,
-    exportPotential,
-    exportCountriesInformation,
-  } = transformCompanyToExportDetailsView(company)
-
   res.locals.title = `Export - ${company.name} - Companies`
 
   res.render('companies/apps/exports/views/index', {
     props: {
-      isArchived,
-      exportWinCategory,
-      greatProfile,
-      exportPotential,
-      exportCountriesInformation,
-      exportPotentials: Object.values(exportPotentialLabels),
       companyId: company.id,
-      companyNumber: company.company_number,
-      companyName: company.name,
-      company,
       localNavItems: res.locals.localNavItems,
-      breadcrumbs: [
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
-        { text: 'Exports' },
-      ],
       returnUrl,
       dnbRelatedCompaniesCount,
     },
