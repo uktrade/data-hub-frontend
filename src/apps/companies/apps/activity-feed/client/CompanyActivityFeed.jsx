@@ -5,41 +5,63 @@ import {
   ActivityFeedApp,
   ActivityFeedAction,
 } from '../../../../../client/components'
-import { companies } from '../../../../../lib/urls'
+import urls from '../../../../../lib/urls'
+import { CompanyResource } from '../../../../../client/components/Resource'
+import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
 
 const CompanyActivityFeed = ({
-  company,
+  companyId,
   activityTypeFilter,
   activityTypeFilters,
-  isGlobalUltimate,
   dnbHierarchyCount,
   apiEndpoint,
+  dnbRelatedCompaniesCount,
+  localNavItems,
+  flashMessages,
 }) => {
   const actions = (
     <>
       <ActivityFeedAction
         text="Refer this company"
-        link={companies.referrals.send(company.id)}
+        link={urls.companies.referrals.send(companyId)}
       />
       <ActivityFeedAction
         text="Add interaction"
-        link={companies.interactions.create(company.id)}
+        link={urls.companies.interactions.create(companyId)}
       />
     </>
   )
 
   return (
-    <>
-      <ActivityFeedApp
-        actions={!company.archived && actions}
-        activityTypeFilter={activityTypeFilter}
-        activityTypeFilters={activityTypeFilters}
-        isGlobalUltimate={isGlobalUltimate}
-        dnbHierarchyCount={dnbHierarchyCount}
-        apiEndpoint={apiEndpoint}
-        companyIsArchived={company.archived}
-      />
-    </>
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <CompanyLayout
+          company={company}
+          breadcrumbs={[
+            { link: urls.dashboard(), text: 'Home' },
+            {
+              link: urls.companies.index(),
+              text: 'Companies',
+            },
+            { link: urls.companies.detail(company.id), text: company.name },
+            { text: 'Activity Feed' },
+          ]}
+          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+          localNavItems={localNavItems}
+          flashMessages={flashMessages}
+        >
+          <ActivityFeedApp
+            actions={!company.archived && actions}
+            activityTypeFilter={activityTypeFilter}
+            activityTypeFilters={activityTypeFilters}
+            isGlobalUltimate={company.isGlobalUltimate}
+            dnbHierarchyCount={dnbHierarchyCount}
+            apiEndpoint={apiEndpoint}
+            companyIsArchived={company.archived}
+          />
+        </CompanyLayout>
+      )}
+    </CompanyResource>
   )
 }
 
@@ -49,7 +71,6 @@ CompanyActivityFeed.propTypes = {
   activityTypeFilter: PropTypes.string,
   activityTypeFilters: PropTypes.object,
   apiEndpoint: PropTypes.string.isRequired,
-  isGlobalUltimate: PropTypes.bool,
   dnbHierarchyCount: PropTypes.number,
 }
 
@@ -58,7 +79,6 @@ CompanyActivityFeed.defaultProps = {
   activityTypeFilter: null,
   activityTypeFilters: {},
   actions: null,
-  isGlobalUltimate: false,
   dnbHierarchyCount: null,
 }
 

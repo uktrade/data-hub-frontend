@@ -46,33 +46,20 @@ async function renderActivityFeed(req, res, next) {
 
   res.locals.title = `Activities - ${company.name} - Companies`
 
-  const breadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
-    {
-      link: urls.companies.index(),
-      text: 'Companies',
-    },
-    { link: urls.companies.detail(company.id), text: company.name },
-    { text: 'Activity Feed' },
-  ]
-
   try {
     const contentProps = company.archived
       ? {
-          company,
-          breadcrumbs,
+          companyId: company.id,
           flashMessages: res.locals.getMessages(),
           localNavItems: res.locals.localNavItems,
         }
       : {
-          company,
-          breadcrumbs,
+          companyId: company.id,
           flashMessages: res.locals.getMessages(),
           isOverview: false,
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           localNavItems: res.locals.localNavItems,
-          isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
         }
