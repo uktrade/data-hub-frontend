@@ -5,6 +5,7 @@ import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { Badge, SummaryTable } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
+import urls from '../../../../../lib/urls'
 
 const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
@@ -21,8 +22,8 @@ const Address = ({ address, isRegistered }) => {
     <Table.Cell>
       {<Badge>{addressType}</Badge>}
       <StyledAddressList data-test={`addresses${addressType}`}>
-        {address.line_1 && <li>{address.line_1}</li>}
-        {address.line_2 && <li>{address.line_2}</li>}
+        {address.line1 && <li>{address.line1}</li>}
+        {address.line2 && <li>{address.line2}</li>}
         {address.town && <li>{address.town}</li>}
         {address.county && <li>{address.county}</li>}
         {address.postcode && <li>{address.postcode}</li>}
@@ -42,13 +43,8 @@ Address.defaultProps = {
   isRegistered: false,
 }
 
-const SectionAddresses = ({
-  businessDetails,
-  isDnbCompany,
-  isArchived,
-  urls,
-}) => {
-  const hasOnlyOneAddress = businessDetails.registered_address == null
+const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
+  const hasOnlyOneAddress = company.registeredAddress == null
 
   return (
     <SummaryTable
@@ -57,32 +53,27 @@ const SectionAddresses = ({
       actions={
         !isDnbCompany &&
         !isArchived && (
-          <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
+          <Link href={`${urls.companies.edit(company.id)}#field-address`}>
+            Edit
+          </Link>
         )
       }
     >
       <Table.Row>
         {!hasOnlyOneAddress && (
-          <Address
-            address={businessDetails.registered_address}
-            isRegistered={true}
-          />
+          <Address address={company.registeredAddress} isRegistered={true} />
         )}
 
-        <Address
-          address={businessDetails.address}
-          isRegistered={hasOnlyOneAddress}
-        />
+        <Address address={company.address} isRegistered={hasOnlyOneAddress} />
       </Table.Row>
     </SummaryTable>
   )
 }
 
 SectionAddresses.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionAddresses

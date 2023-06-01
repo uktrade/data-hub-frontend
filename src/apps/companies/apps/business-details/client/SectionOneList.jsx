@@ -5,43 +5,54 @@ import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { SummaryTable } from '../../../../../client/components/'
+import urls from '../../../../../lib/urls'
 
 const StyledSummaryFooterLink = styled(Link)`
   margin-top: -${SPACING_POINTS[7]}px;
   display: block;
 `
 
-const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
-  businessDetails.one_list_group_global_account_manager ? (
+const getLocation = (managerTeam) =>
+  managerTeam.ukRegion
+    ? managerTeam.ukRegion.name
+    : managerTeam.country
+    ? managerTeam.country.name
+    : '-'
+
+const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
+  company.oneListGroupGlobalAccountManager ? (
     <>
       <SummaryTable
         caption="Global Account Manager – One List"
         data-test="oneListDetailsContainer"
         actions={
           !isArchived &&
-          !isDnbCompany && <Link href={urls.companyEdit}>Edit</Link>
+          !isDnbCompany && (
+            <Link href={urls.companies.edit(company.id)}>Edit</Link>
+          )
         }
       >
         <SummaryTable.Row heading="One List tier">
-          {businessDetails.one_list_group_tier}
+          {company.oneListGroupTier.name}
         </SummaryTable.Row>
 
         <SummaryTable.Row heading="Global Account Manager">
-          {businessDetails.one_list_group_global_account_manager}
+          {company.oneListGroupGlobalAccountManager.name}
+          {company.oneListGroupGlobalAccountManager.ditTeam.name}
+          {getLocation(company.oneListGroupGlobalAccountManager.ditTeam)}
         </SummaryTable.Row>
       </SummaryTable>
 
-      <StyledSummaryFooterLink href={urls.companyAdvisers}>
+      <StyledSummaryFooterLink href={urls.companies.advisers.index(company.id)}>
         See all advisers on the core team
       </StyledSummaryFooterLink>
     </>
   ) : null
 
 SectionOneList.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionOneList

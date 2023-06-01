@@ -3,27 +3,30 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
 import { SummaryTable } from '../../../../../client/components/'
+import urls from '../../../../../lib/urls'
 
-const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
-  isBasedInUK ? (
+const SectionRegion = ({ company, isArchived }) =>
+  !!company.ukBased ? (
     <SummaryTable
       caption="DBT region"
       data-test="regionDetailsContainer"
       actions={
-        !isArchived && <Link href={`${urls.companyEdit}#uk_region`}>Edit</Link>
+        !isArchived && (
+          <Link href={`${urls.companies.edit(company.id)}#uk_region`}>
+            Edit
+          </Link>
+        )
       }
     >
       <SummaryTable.Row>
-        {businessDetails.uk_region || 'Not set'}
+        {company.ukRegion ? company.ukRegion.name : 'Not set'}
       </SummaryTable.Row>
     </SummaryTable>
   ) : null
 
 SectionRegion.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  isBasedInUK: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionRegion
