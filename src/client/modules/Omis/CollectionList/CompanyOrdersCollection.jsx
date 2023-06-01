@@ -10,6 +10,8 @@ import { ORDERS__LOADED } from '../../../actions'
 
 import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
+import { CompanyResource } from '../../../components/Resource'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 
 import {
   companyOrdersState2props,
@@ -31,10 +33,13 @@ const StyledLinkHeader = styled(StyledHeader)`
 `
 
 const CompanyOrdersCollection = ({
-  company,
+  companyId,
   payload,
   optionMetadata,
   selectedFilters,
+  dnbRelatedCompaniesCount,
+  returnUrl,
+  localNavItems,
   ...props
 }) => {
   const collectionListTask = {
@@ -45,7 +50,7 @@ const CompanyOrdersCollection = ({
     startOnRender: {
       payload: {
         ...payload,
-        companyId: company.id,
+        companyId: companyId,
       },
       onSuccessDispatch: ORDERS__LOADED,
     },
@@ -60,38 +65,48 @@ const CompanyOrdersCollection = ({
   )
 
   return (
-    <>
-      {company.archived && (
-        <Details
-          summary="Why can I not add an order?"
-          data-test="archived-details"
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <CompanyLayout
+          company={company}
+          breadcrumbs={[{ text: 'Orders (OMIS)' }]}
+          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+          returnUrl={returnUrl}
+          localNavItems={localNavItems}
         >
-          Orders cannot be added to an archived company.{' '}
-          <Link href={`/companies/${company.id}/unarchive`}>
-            Click here to unarchive
-          </Link>
-        </Details>
+          {company.archived && (
+            <Details
+              summary="Why can I not add an order?"
+              data-test="archived-details"
+            >
+              Orders cannot be added to an archived company.{' '}
+              <Link href={`/companies/${company.id}/unarchive`}>
+                Click here to unarchive
+              </Link>
+            </Details>
+          )}
+          <FilteredCollectionList
+            {...props}
+            collectionName="order"
+            sortOptions={optionMetadata.sortOptions}
+            taskProps={collectionListTask}
+            selectedFilters={selectedFilters}
+            addItemUrl={
+              company.archived
+                ? null
+                : `/omis/create?company=${company.id}&skip-company=true`
+            }
+            entityName="order"
+            entityNamePlural="orders"
+            titleRenderer={TitleRenderer}
+            defaultQueryParams={{
+              page: 1,
+              sortby: 'created_on:desc',
+            }}
+          />
+        </CompanyLayout>
       )}
-      <FilteredCollectionList
-        {...props}
-        collectionName="order"
-        sortOptions={optionMetadata.sortOptions}
-        taskProps={collectionListTask}
-        selectedFilters={selectedFilters}
-        addItemUrl={
-          company.archived
-            ? null
-            : `/omis/create?company=${company.id}&skip-company=true`
-        }
-        entityName="order"
-        entityNamePlural="orders"
-        titleRenderer={TitleRenderer}
-        defaultQueryParams={{
-          page: 1,
-          sortby: 'created_on:desc',
-        }}
-      ></FilteredCollectionList>
-    </>
+    </CompanyResource>
   )
 }
 
