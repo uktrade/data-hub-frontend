@@ -359,6 +359,9 @@ import {
 } from './modules/Investments/Projects/Propositions/tasks'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
+import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
+import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -577,6 +580,7 @@ function App() {
           [TASK_CREATE_INVESTMENT_PROPOSITION]: createInvestmentProposition,
           [TASK_ABANDON_INVESTMENT_PROPOSITION]: abandonInvestmentProposition,
           [TASK_GET_LISTS_COMPANY_IS_IN]: getListsCompanyIsIn,
+          [TASK_GET_DNB_FAMILY_TREE]: getDnbFamilyTree,
         }}
       >
         <Mount selector="#data-hub-header">
