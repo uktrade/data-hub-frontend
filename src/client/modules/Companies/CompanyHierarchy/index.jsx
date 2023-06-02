@@ -47,18 +47,69 @@ const HierarchyItemContents = styled.div`
     color: ${WHITE};
   `}
   }
+  ${({ hierarchy }) =>
+    hierarchy > 1 &&
+    `
+      transform-style: preserve-3d;
+      :before {
+        content: '';
+        background-color: ${GREY_2};
+        position: relative;
+        width: 100px;
+        height: 5px;
+        top: 16px;
+        left: -40px;
+        display: block;
+        transform: translateZ(-1px);
+      }
+  `}
 `
 
 const SubsidiaryItem = styled.div`
   padding-left: 25px;
+  margin-left: 25px;
   margin-top: 20px;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  // border-left: 5px solid ${GREY_2};
+  transform-style: preserve-3d;
+  :before {
+    content: '';
+    background-color: ${GREY_2};
+    position: absolute;
+    width: 5px;
+    // height: 200px;
+    // bottom: calc(100% - 123px);
+    height: calc(100%);
+    // bottom: calc(11%);
+    bottom: 18px;
+    left: -4px;
+    display: block;
+    transform: translateZ(-1px);
+  }
 `
 const StyledButton = styled(Button)``
 
 const ToggleSubsidiariesButtonContent = styled.div`
   padding-top: 20px;
+
   ${StyledButton} {
+    ${({ insideTree }) =>
+      insideTree &&
+      `
+      :before {
+        content: '';
+        background-color: ${GREY_2};
+        position: absolute;
+        width: 5px;
+        height: 64%;
+        top: -23px;
+        left: 19px;
+        display: block;
+        transform: translateZ(-1px);
+      }
+      
+  `}
+    z-index: 1;
     margin-bottom: 0px;
     span:nth-child(1) {
       padding-right: 10px;
@@ -70,9 +121,10 @@ const ToggleSubsidiariesButton = ({
   isOpen,
   onClick,
   count,
+  insideTree = true,
   dataTest = 'toggle-subsidiaries-button',
 }) => (
-  <ToggleSubsidiariesButtonContent>
+  <ToggleSubsidiariesButtonContent insideTree={insideTree}>
     <StyledButton
       buttonColour={GREY_4}
       buttonTextColour={BLACK}
@@ -105,7 +157,11 @@ const Subsidiaries = ({
         onClick={setIsOpen}
         count={company.subsidiaries.length}
       />
-      <SubsidiaryItem hierarchy={hierarchy} isOpen={isOpen}>
+      <SubsidiaryItem
+        data-test="subsidiary-item"
+        hierarchy={hierarchy}
+        isOpen={isOpen}
+      >
         {company.subsidiaries.map((subsidary, index) => (
           <HierarchyItem
             company={subsidary}
@@ -129,6 +185,7 @@ const HierarchyHeader = ({ count, className, fullTreeExpanded, onClick }) => (
         count={count}
         onClick={onClick}
         isOpen={fullTreeExpanded}
+        insideTree={false}
         dataTest="expand-tree-button"
       />
     )}
@@ -170,6 +227,17 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
         company={familyTree.ultimate_global_company}
         hierarchy={familyTree.ultimate_global_company.hierarchy}
       />
+      {/* TODO The below will be replaced with values from the api in future tickets */}
+      <ToggleSubsidiariesButtonContent>
+        <Button
+          buttonColour={GREY_4}
+          buttonTextColour={BLACK}
+          as={Link}
+          href={urls.companies.subsidiaries.index(requestedCompanyId)}
+        >
+          + Show manually linked susidiaries
+        </Button>
+      </ToggleSubsidiariesButtonContent>
     </HierarchyContents>
   )
 }
