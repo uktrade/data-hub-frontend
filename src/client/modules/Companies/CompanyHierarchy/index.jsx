@@ -77,11 +77,11 @@ const SubsidiaryItem = styled.div`
     background-color: ${GREY_2};
     position: absolute;
     width: 5px;
-    // height: 200px;
-    // bottom: calc(100% - 123px);
-    height: calc(100%);
-    // bottom: calc(11%);
-    bottom: 18px;
+    height: calc(100% - 26px);
+    top: -19px;
+    // bottom: 18px;
+    // height: ${({ childCount }) => `${(childCount - 1) * 139 + 70}px`};
+    // top: -18px;
     left: -4px;
     display: block;
     transform: translateZ(-1px);
@@ -161,6 +161,7 @@ const Subsidiaries = ({
         data-test="subsidiary-item"
         hierarchy={hierarchy}
         isOpen={isOpen}
+        childCount={company.subsidiaries.length}
       >
         {company.subsidiaries.map((subsidary, index) => (
           <HierarchyItem

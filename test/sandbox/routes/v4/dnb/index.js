@@ -46,7 +46,7 @@ exports.companyChangeRequest = function (req, res) {
 exports.companyFamilyTree = function (req, res) {
   res.json(
     fakerCompanyFamilyTree({
-      treeDepth: 3,
+      treeDepth: 6,
       minCompaniesPerLevel: 1,
       maxCompaniesPerLevel: 5,
     })
