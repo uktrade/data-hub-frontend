@@ -31,7 +31,6 @@ module.exports = {
   event: '#field-event',
   policyFeedbackYes: '#field-was_policy_feedback_provided [value=yes]',
   policyFeedbackNo: '#field-was_policy_feedback_provided [value=no]',
-  policyArea: '#field-policy_areas',
   policyFeedbackNotes: '#notes',
   teamSearch: '#dit_team__typeahead .multiselect__single',
   countriesDiscussed: {
@@ -43,7 +42,6 @@ module.exports = {
     export: '#field-' + EXPORT_INTEREST_STATUS.EXPORTING_TO,
     noInterest: '#field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED,
   },
-  hasRelatedTradeAgreementsNo: '#field-has_related_trade_agreements [value=no]',
   hasRelatedOpportunityNo: '#field-has_related_opportunity [value=no]',
   exportBarrier: {
     yes: '#field-helped_remove_export_barrier [value=yes]',
