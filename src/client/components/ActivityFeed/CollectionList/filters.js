@@ -18,7 +18,7 @@ export const buildSelectedFilters = (
   selectedCompanies
 ) => ({
   showDNBHierarchy: {
-    queryParam: 'show_dnb_hierarchy',
+    queryParam: 'showDnbHierarchy',
     options: buildOptionsFilter({
       options: SHOW_DNB_HIERARCHY_OPTIONS,
       value: queryParams.showDNBHierarchy,

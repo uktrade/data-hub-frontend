@@ -11,10 +11,10 @@ const convertQueryTypes = (req, res, next) => {
     req.query.size = parseInt(size, 10)
   }
 
-  // Convert String to Boolean
+  // Convert [String] to Boolean
   const { showDnbHierarchy } = req.query
-  if (showDnbHierarchy) {
-    req.query.showDnbHierarchy = showDnbHierarchy === 'true'
+  if (showDnbHierarchy !== undefined && showDnbHierarchy === ['true']) {
+    req.query.showDnbHierarchy = true
   }
 
   next()

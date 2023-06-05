@@ -270,10 +270,10 @@ async function fetchActivityFeedHandler(req, res, next) {
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
       ditParticipantsAdviser = [],
-      show_dnb_hierarchy = false,
+      showDnbHierarchy = false,
     } = req.query
     let dnbHierarchyIds = []
-    if (company.is_global_ultimate && show_dnb_hierarchy) {
+    if (company.is_global_ultimate && showDnbHierarchy) {
       const { results } = await getGlobalUltimateHierarchy(
         req,
         company.global_ultimate_duns_number

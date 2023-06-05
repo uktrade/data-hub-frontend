@@ -121,7 +121,7 @@ describe('Company Activity Feed Filter', () => {
         urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
         '/data**'
 
-      const expectedRequestUrl = `?size=10&from=0&show_dnb_hierarchy[]=true&sortby=date:desc`
+      const expectedRequestUrl = `?size=10&from=0&showDnbHierarchy[]=true&sortby=date:desc`
 
       it('Activity across all companies option should be shown for related companies', () => {
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')

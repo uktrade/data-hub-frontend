@@ -133,11 +133,11 @@ const CompanyActivityCollection = ({
         {dnbHierarchyCount > 0 && (
           <Filters.CheckboxGroup
             legend={LABELS.showDNBHierarchy}
-            name="show_dnb_hierarchy"
-            qsParam="show_dnb_hierarchy"
+            name="showDnbHierarchy"
+            qsParam="showDnbHierarchy"
             options={[dnbHierarchyCountOption]}
             selectedOptions={
-              payload.show_dnb_hierarchy ? [dnbHierarchyCountOption] : []
+              payload.showDnbHierarchy ? [dnbHierarchyCountOption] : []
             }
             data-test="show-dnb-hierarchy-filter"
           />
