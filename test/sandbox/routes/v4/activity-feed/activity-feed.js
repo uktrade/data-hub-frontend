@@ -272,7 +272,6 @@ exports.activityFeed = function (req, res) {
     "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
   )
 
-  // console.log('dataHubTypes', dataHubTypes)
   const size = get(req.body, 'size')
   var company = get(
     req.body,
