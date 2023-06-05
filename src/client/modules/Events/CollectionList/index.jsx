@@ -182,6 +182,16 @@ const EventsCollection = ({
               data-test="event-type-filter"
               groupId="event-type-filter"
             />
+            <Filters.CheckboxGroup
+              maxScrollHeight={200}
+              legend={LABELS.relatedProgrammes}
+              name="related_programmes"
+              qsParam="related_programmes"
+              options={optionMetadata.relatedProgrammeOptions}
+              selectedOptions={selectedFilters.relatedProgrammes.options}
+              data-test="related-programme-filter"
+              groupId="related-programme-filter"
+            />
           </FilterToggleSection>
           <FilterToggleSection
             id="EventCollection.aventri"
