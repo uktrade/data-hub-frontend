@@ -10,112 +10,17 @@ import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
-import styled from 'styled-components'
-import {
-  GREY_2,
-  GREY_4,
-  BLACK,
-  DARK_BLUE_LEGACY,
-  WHITE,
-} from '../../../utils/colours'
+import { GREY_4, BLACK } from '../../../utils/colours'
 import { isEmpty } from 'lodash'
-
-const HierarchyContents = styled.div`
-  padding-bottom: 10px;
-`
-
-const HierarchyItemContents = styled.div`
-  background-color: ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
-  border: 1px solid ${GREY_2};
-  min-height: 60px;
-  padding: 10px;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId &&
-    `
-    color: ${WHITE};
-  `}
-  ${Link} {
-    width: fit-content;
-    ${({ isRequestedCompanyId }) =>
-      isRequestedCompanyId &&
-      `
-    color: ${WHITE};
-  `}
-  }
-  ${({ hierarchy }) =>
-    hierarchy > 1 &&
-    `
-      transform-style: preserve-3d;
-      :before { //This is the horizontal line to the left of the div
-        content: '';
-        background-color: ${GREY_2};
-        position: relative;
-        width: 100px;
-        height: 5px;
-        top: 16px;
-        left: -40px;
-        display: block;
-        transform: translateZ(-1px);
-      }
-  `}
-`
-
-const SubsidiaryItem = styled.div`
-  padding-left: 25px;
-  margin-left: 25px;
-  margin-top: 20px;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  // border-left: 5px solid ${GREY_2};
-  transform-style: preserve-3d;
-  :before {
-    content: '';
-    background-color: ${GREY_2};
-    position: absolute;
-    width: 5px;
-    height: calc(100% - 26px);
-    top: -19px;
-    // bottom: 18px;
-    // height: ${({ childCount }) => `${(childCount - 1) * 139 + 70}px`};
-    // top: -18px;
-    left: -4px;
-    display: block;
-    transform: translateZ(-1px);
-  }
-`
-const StyledButton = styled(Button)``
-
-const ToggleSubsidiariesButtonContent = styled.div`
-  padding-top: 20px;
-
-  ${StyledButton} {
-    ${({ insideTree }) =>
-      insideTree &&
-      `
-      :before { 
-        content: '';
-        background-color: ${GREY_2};
-        position: absolute;
-        width: 5px;
-        height: 64%;
-        top: -23px;
-        left: 19px;
-        display: block;
-        transform: translateZ(-1px);
-      }
-      
-  `}
-    z-index: 1;
-    margin-bottom: 0px;
-    span:nth-child(1) {
-      padding-right: 10px;
-    }
-  }
-`
+import {
+  StyledButton,
+  ToggleSubsidiariesButtonContent,
+  HierarchyContents,
+  HierarchyItemContents,
+  SubsidiaryList,
+  HierachyListItem,
+  HierarchyHeaderContents,
+} from './styled'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -157,7 +62,7 @@ const Subsidiaries = ({
         onClick={setIsOpen}
         count={company.subsidiaries.length}
       />
-      <SubsidiaryItem
+      <SubsidiaryList
         data-test="subsidiary-item"
         hierarchy={hierarchy}
         isOpen={isOpen}
@@ -168,15 +73,16 @@ const Subsidiaries = ({
             company={subsidary}
             hierarchy={subsidary.hierarchy}
             fullTreeExpanded={fullTreeExpanded}
-            key={`hierarchy_${index}`}
+            key={`hierarchy_item_${index}`}
+            isFinalItemInLevel={index + 1 === company.subsidiaries.length}
           />
         ))}
-      </SubsidiaryItem>
+      </SubsidiaryList>
     </>
   )
 
-const HierarchyHeader = ({ count, className, fullTreeExpanded, onClick }) => (
-  <div className={className}>
+const HierarchyHeader = ({ count, fullTreeExpanded, onClick }) => (
+  <HierarchyHeaderContents>
     <H2>
       {count}
       <span> companies</span>
@@ -190,24 +96,8 @@ const HierarchyHeader = ({ count, className, fullTreeExpanded, onClick }) => (
         dataTest="expand-tree-button"
       />
     )}
-  </div>
+  </HierarchyHeaderContents>
 )
-
-const StyledHierarchyHeader = styled(HierarchyHeader)`
-  display: flex;
-  justify-content: space-between;
-  align-items: bottom;
-  border-bottom: 4px solid ${BLACK};
-  ${ToggleSubsidiariesButtonContent} {
-    padding-top: 0px;
-  }
-  > h2 {
-    margin-bottom: 10px;
-    > span {
-      font-size: 24px;
-    }
-  }
-`
 
 const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   const [fullTreeExpanded, setFullTreeExpanded] = useState(undefined)
@@ -217,28 +107,33 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
     </div>
   ) : (
     <HierarchyContents data-test="hierarchy-contents">
-      <StyledHierarchyHeader
+      <HierarchyHeader
         count={familyTree.ultimate_global_companies_count}
         fullTreeExpanded={fullTreeExpanded}
         onClick={setFullTreeExpanded}
       />
-      <HierarchyItem
-        fullTreeExpanded={fullTreeExpanded}
-        requestedCompanyId={requestedCompanyId}
-        company={familyTree.ultimate_global_company}
-        hierarchy={familyTree.ultimate_global_company.hierarchy}
-      />
-      {/* TODO The below will be replaced with values from the api in future tickets */}
-      <ToggleSubsidiariesButtonContent>
-        <Button
-          buttonColour={GREY_4}
-          buttonTextColour={BLACK}
-          as={Link}
-          href={urls.companies.subsidiaries.index(requestedCompanyId)}
-        >
-          + Show manually linked susidiaries
-        </Button>
-      </ToggleSubsidiariesButtonContent>
+      <ul>
+        <HierarchyItem
+          fullTreeExpanded={fullTreeExpanded}
+          requestedCompanyId={requestedCompanyId}
+          company={familyTree.ultimate_global_company}
+          hierarchy={familyTree.ultimate_global_company.hierarchy}
+          globalParent={true}
+        />
+        {/* TODO The below will be replaced with values from the api in future tickets */}
+        <li>
+          <ToggleSubsidiariesButtonContent>
+            <Button
+              buttonColour={GREY_4}
+              buttonTextColour={BLACK}
+              as={Link}
+              href={urls.companies.subsidiaries.index(requestedCompanyId)}
+            >
+              + Show manually linked susidiaries
+            </Button>
+          </ToggleSubsidiariesButtonContent>
+        </li>
+      </ul>
     </HierarchyContents>
   )
 }
@@ -248,6 +143,8 @@ const HierarchyItem = ({
   company,
   hierarchy,
   fullTreeExpanded,
+  isFinalItemInLevel,
+  globalParent = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -258,7 +155,11 @@ const HierarchyItem = ({
   }, [fullTreeExpanded])
 
   return (
-    <div data-test="hierarchy-item">
+    <HierachyListItem
+      globalParent={globalParent}
+      isFinalItemInLevel={isFinalItemInLevel}
+      data-test="hierarchy-item"
+    >
       <HierarchyItemContents
         hierarchy={hierarchy}
         isRequestedCompanyId={requestedCompanyId === company.id}
@@ -286,7 +187,7 @@ const HierarchyItem = ({
         setIsOpen={setIsOpen}
         fullTreeExpanded={fullTreeExpanded}
       />
-    </div>
+    </HierachyListItem>
   )
 }
 
