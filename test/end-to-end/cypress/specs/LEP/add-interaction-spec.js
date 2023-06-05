@@ -28,7 +28,7 @@ describe('LEP add Investment Project interaction', () => {
 
   context('LEP completes the form and clicks "Add interaction"', () => {
     before(() => {
-      cy.server().route('POST', '/api-proxy/v4/interaction').as('post')
+      cy.intercept('POST', '/api-proxy/v4/interaction').as('post')
 
       cy.visit(
         investments.projects.interactions.createType(
@@ -61,8 +61,8 @@ describe('LEP add Investment Project interaction', () => {
         .get(formSelectors.add)
         .click()
         .wait('@post')
-        .should((xhr) => {
-          expect(xhr.status, 'successful POST').to.equal(201)
+        .then(({ response }) => {
+          expect(response.statusCode, 'interaction created').to.equal(201)
         })
 
       cy.contains('h1', subject)
