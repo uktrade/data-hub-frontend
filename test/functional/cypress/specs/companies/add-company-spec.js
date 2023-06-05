@@ -380,7 +380,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
-    it('should redirect to the new company overview when a sector is picked', () => {
+    it('should redirect to the company overview when a sector is picked', () => {
       cy.get(selectors.companyAdd.sectorSelect)
         .select('Airports')
         .get(selectors.companyAdd.submitButton)
@@ -572,7 +572,7 @@ describe('Add company form', () => {
       )
       cy.get(selectors.companyAdd.submitButton).click()
     })
-    it('should redirect to the new company overview', () => {
+    it('should redirect to the company overview', () => {
       cy.location('pathname').should(
         'eq',
         `/companies/${fixtures.company.investigationLimited.id}/overview`
