@@ -44,8 +44,6 @@ import CompanyLocalHeader from './components/CompanyLocalHeader'
 import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
-import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -782,12 +780,6 @@ function App() {
         </Mount>
         <Mount selector="#company-overview">
           {(props) => <CompanyOverview {...props} />}
-        </Mount>
-        <Mount selector="#company-overview-projects-collection">
-          {(props) => <InvestmentStatusCard {...props} />}
-        </Mount>
-        <Mount selector="#company-overview-export-status">
-          {(props) => <ExportStatus {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
           {(props) => <ProjectsCollection {...props} />}
