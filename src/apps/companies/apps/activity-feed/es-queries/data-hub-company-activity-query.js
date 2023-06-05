@@ -10,7 +10,7 @@ const dataHubCompanyActivityQuery = ({
   companyIds,
   aventriEventIds,
   contacts,
-  dit_participants__adviser,
+  ditParticipantsAdviser,
   feedType,
 }) => {
   let sortDirection = 'desc'
@@ -34,10 +34,10 @@ const dataHubCompanyActivityQuery = ({
       ],
     },
   }
-  if (dit_participants__adviser.length) {
+  if (ditParticipantsAdviser.length) {
     dataHubActivityCriteria.bool.must.push({
       term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
       },
     })
   }
@@ -75,10 +75,10 @@ const dataHubCompanyActivityQuery = ({
       ],
     },
   }
-  if (dit_participants__adviser.length) {
+  if (ditParticipantsAdviser.length) {
     externalActivityCriteria.bool.must.push({
       term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
       },
     })
   }
@@ -101,10 +101,10 @@ const dataHubCompanyActivityQuery = ({
         ],
       },
     }
-    if (dit_participants__adviser.length) {
+    if (ditParticipantsAdviser.length) {
       criteria.bool.must.push({
         term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
         },
       })
     }
@@ -129,10 +129,10 @@ const dataHubCompanyActivityQuery = ({
       ],
     },
   }
-  if (dit_participants__adviser.length) {
+  if (ditParticipantsAdviser.length) {
     criteria.bool.must.push({
       term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
       },
     })
   }

@@ -58,11 +58,11 @@ describe('Company Activity Feed Filter', () => {
     })
 
     context('My interactions', () => {
-      const expectedRequestUrl = `?size=10&from=0&dit_participants__adviser[]=${adviser.id}&sortby=date:desc`
+      const expectedRequestUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
 
       it('should filter from the url', () => {
         const queryString = buildQueryString({
-          dit_participants__adviser: [adviser.id],
+          ditParticipantsAdviser: [adviser.id],
         })
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
@@ -72,6 +72,7 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserApiRequest')
+        assert(true)
         assertRequestUrl('@apiRequest', expectedRequestUrl)
         /*
         Asserts the "Adviser typeahead" filter is selected with the
@@ -106,7 +107,7 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@adviserApiRequest')
         assertRequestUrl('@apiRequest', expectedRequestUrl)
 
-        assertQueryParams('adviser', [adviser.id])
+        assertQueryParams('ditParticipantsAdviser', [adviser.id])
         assertChipExists({ label: adviser.name, position: 1 })
         removeChip(adviser.id)
         assertRequestUrl('@apiRequest', minimumRequest)

@@ -26,7 +26,7 @@ export const buildSelectedFilters = (
     }),
   },
   advisers: {
-    queryParam: 'dit_participants__adviser',
+    queryParam: 'ditParticipantsAdviser',
     options: selectedAdvisers.map(({ advisers }) => ({
       label: advisers.name,
       value: advisers.id,
