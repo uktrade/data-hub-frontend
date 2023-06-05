@@ -6,6 +6,7 @@ export const LABELS = {
   country: 'Country',
   ukRegion: 'UK region',
   eventType: 'Type of event',
+  relatedProgrammes: 'Related programme',
   earliestStartDate: 'Earliest start date',
   latestStartDate: 'Latest start date',
   aventriId: 'Aventri ID',
