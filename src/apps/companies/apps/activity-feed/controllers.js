@@ -579,6 +579,13 @@ const eventsColListQueryBuilder = ({
         },
       }
     : null
+  const relatedProgrammeFilter = relatedProgramme
+    ? {
+        terms: {
+          'object.dit:relatedProgramme.id': relatedProgramme,
+        },
+      }
+    : null
 
   const filtersArray = [
     eventNameFilter,
@@ -588,6 +595,7 @@ const eventsColListQueryBuilder = ({
     ukRegionFilter,
     organiserFilter,
     eventTypeFilter,
+    relatedProgrammeFilter,
   ]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
