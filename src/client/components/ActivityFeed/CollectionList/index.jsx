@@ -68,7 +68,7 @@ const CompanyActivityCollection = ({
     name: TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
     id: ID,
     startOnRender: {
-      payload: payload.dit_participants__adviser,
+      payload: payload.ditParticipantsAdviser,
       onSuccessDispatch: COMPANY_ACTIVITIES_SELECTED_ADVISERS,
     },
   }
@@ -125,7 +125,7 @@ const CompanyActivityCollection = ({
         <Filters.CheckboxGroup
           legend={LABELS.myInteractions}
           name="my_interactions"
-          qsParam="dit_participants__adviser"
+          qsParam="ditParticipantsAdviser"
           options={[myInteractionsOption]}
           selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
           data-test="my-interactions-filter"
@@ -171,7 +171,7 @@ const CompanyActivityCollection = ({
             onlyShowActiveAdvisers={false}
             label={LABELS.advisers}
             name="advisers"
-            qsParam="dit_participants__adviser"
+            qsParam="ditParticipantsAdviser"
             placeholder="Search adviser"
             noOptionsMessage="No advisers found"
             selectedOptions={selectedFilters.advisers.options}

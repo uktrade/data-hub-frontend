@@ -220,7 +220,7 @@ describe('Activity feed controllers', () => {
           company: companyMock,
           requestQuery: {
             showDnbHierarchy: false,
-            dit_participants__adviser: [123],
+            ditParticipantsAdviser: [123],
           },
           user: {
             id: 123,

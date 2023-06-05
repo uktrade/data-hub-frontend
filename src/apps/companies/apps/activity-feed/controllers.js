@@ -269,7 +269,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       from = 0,
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
-      dit_participants__adviser = [],
+      ditParticipantsAdviser = [],
       show_dnb_hierarchy = false,
     } = req.query
     let dnbHierarchyIds = []
@@ -296,7 +296,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: filteredContacts,
-      dit_participants__adviser,
+      ditParticipantsAdviser,
       user,
       aventriEventIds,
       feedType,
