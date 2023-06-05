@@ -33,7 +33,7 @@ const HierarchyItemContents = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: start;
   ${({ isRequestedCompanyId }) =>
     isRequestedCompanyId &&
     `
@@ -51,7 +51,7 @@ const HierarchyItemContents = styled.div`
     hierarchy > 1 &&
     `
       transform-style: preserve-3d;
-      :before {
+      :before { //This is the horizontal line to the left of the div
         content: '';
         background-color: ${GREY_2};
         position: relative;
@@ -96,7 +96,7 @@ const ToggleSubsidiariesButtonContent = styled.div`
     ${({ insideTree }) =>
       insideTree &&
       `
-      :before {
+      :before { 
         content: '';
         background-color: ${GREY_2};
         position: absolute;
