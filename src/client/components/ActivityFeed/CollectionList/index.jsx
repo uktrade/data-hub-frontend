@@ -111,7 +111,6 @@ const CompanyActivityCollection = ({
     <FilteredCollectionList
       {...props}
       collectionName="activities"
-      // sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       entityName="companyActivities"
@@ -147,24 +146,6 @@ const CompanyActivityCollection = ({
           label="Interaction details"
           isOpen={true}
         >
-          {/* <Filters.Input
-            id="EventsCollection.subject"
-            qsParam="subject"
-            name="subject"
-            label={LABELS.subject}
-            data-test="interaction-subject-filter"
-          /> */}
-          {/* <Filters.CompanyTypeahead
-            taskProps={companyListTask}
-            isMulti={true}
-            label={LABELS.company}
-            name="company"
-            qsParam="company"
-            placeholder="Search company"
-            noOptionsMessage="No companies found"
-            selectedOptions={selectedFilters.company.options}
-            data-test="company-filter"
-          /> */}
           <Filters.AdvisersTypeahead
             taskProps={adviserListTask}
             isMulti={true}
@@ -177,26 +158,6 @@ const CompanyActivityCollection = ({
             selectedOptions={selectedFilters.advisers.options}
             data-test="adviser-filter"
           />
-          {/* <Filters.Date
-            label={LABELS.dateAfter}
-            name="date_after"
-            qsParamName="date_after"
-            data-test="date-after-filter"
-          />
-          <Filters.Date
-            label={LABELS.dateBefore}
-            name="date_before"
-            qsParamName="date_before"
-            data-test="date-before-filter"
-          /> */}
-          {/* <Filters.CheckboxGroup
-            legend={LABELS.businessIntelligence}
-            name="was_policy_feedback_provided"
-            qsParam="was_policy_feedback_provided"
-            options={BUSINESS_INTELLIGENCE_OPTION}
-            selectedOptions={selectedFilters.businessIntelligence.options}
-            data-test="business-intelligence-filter"
-          /> */}
         </FilterToggleSection>
       </CollectionFilters>
     </FilteredCollectionList>
