@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link, Table } from 'govuk-react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import urls from '../../../../../lib/urls'
-import { SummaryTable, Tag } from '../../../../../client/components'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
-import { companyProjectsState2props } from './state'
 import { connect } from 'react-redux'
-import { BLUE, GREY_1, GREY_2 } from '../../../../../client/utils/colours'
 import { kebabCase } from 'lodash'
+
+import { companies, investments } from '../../../../../lib/urls'
+import { Tag } from '../../../../../client/components'
+import { companyProjectsState2props } from './state'
+import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+import { buildCellContents } from './transformers'
+import { StyledSummaryTable, StyledTableRow } from './components'
 
 const StyledActiveInvestmentSubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};
@@ -25,24 +27,9 @@ const StyledActiveInvestmentSubject = styled('h3')`
   }
 `
 
-const StyledSummaryTable = styled(SummaryTable)`
-  margin: 0;
-  & > tbody th {
-    width: 50%;
-  }
-`
-
-const StyledTableRow = styled(Table.Row)`
-  border: 0;
-`
-
 const StyledTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
-`
-
-const StyledActiveInvestmentTableRow = styled(Table.Row)`
-  border: 0;
 `
 
 const StyledActiveInvestmentHeadingTableCell = styled(Table.Cell)`
@@ -83,10 +70,6 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
   padding-top: 0px;
 `
 
-const StyledSpan = styled('span')`
-  color: ${GREY_1};
-`
-
 const EditLink = styled(Link)`
   float: right;
 `
@@ -97,7 +80,7 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
     {likelihood === 'Medium' && <Tag colour="orange">Medium</Tag>}
     {likelihood === 'Low' && <Tag colour="red">Low</Tag>}
     <EditLink
-      href={`${urls.investments.projects.editDetails(
+      href={`${investments.projects.editDetails(
         investmentId
       )}#field-likelihood_to_land`}
       data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
@@ -107,154 +90,144 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
   </>
 )
 
-const ActiveInvestmentList = ({ upcomingActiveInvestments, queryString }) => {
-  return upcomingActiveInvestments.map((activeInvestment) => {
-    return (
-      <>
-        <StyledActiveInvestmentTableRow>
-          <StyledActiveInvestmentHeadingTableCell colSpan={2}>
-            <StyledActiveInvestmentSubject>
-              <Link
-                href={`${urls.investments.projects.details(
-                  activeInvestment.id
-                )}`}
-                data-test={`active-investment-page-${kebabCase(
-                  activeInvestment.name
-                )}-link`}
-              >
-                {activeInvestment.name}
-              </Link>
-            </StyledActiveInvestmentSubject>
-          </StyledActiveInvestmentHeadingTableCell>
-        </StyledActiveInvestmentTableRow>
-        <StyledActiveInvestmentTableRow>
-          <StyledActiveInvestmentHeadingTableCellHeader
-            colSpan={1}
-            data-test={`estimated-land-date-${kebabCase(
-              activeInvestment.name
-            )}-header`}
-          >
-            Estimated land date
-          </StyledActiveInvestmentHeadingTableCellHeader>
-          <StyledActiveInvestmentTableCell colSpan={1}>
-            {new Date(activeInvestment.estimated_land_date).toLocaleDateString(
-              'en-GB',
-              { month: 'long', year: 'numeric' }
-            )}
-          </StyledActiveInvestmentTableCell>
-        </StyledActiveInvestmentTableRow>
-        <StyledActiveInvestmentTableRow>
-          <StyledActiveInvestmentHeadingTableCellHeader
-            colSpan={1}
-            data-test={`likelihood-of-landing-${kebabCase(
-              activeInvestment.name
-            )}-header`}
-          >
-            Likelihood of landing
-          </StyledActiveInvestmentHeadingTableCellHeader>
-          <StyledActiveInvestmentTableCell colSpan={1}>
-            {activeInvestment.likelihood_to_land ? (
-              <LikelihoodToLand
-                investmentId={activeInvestment.id}
-                investmentName={activeInvestment.name}
-                likelihood={activeInvestment.likelihood_to_land.name}
-              />
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-          </StyledActiveInvestmentTableCell>
-        </StyledActiveInvestmentTableRow>
-        <StyledActiveInvestmentTableBottomRow>
-          <StyledActiveInvestmentHeadingTableBottomCellHeader
-            colSpan={1}
-            data-test={`last-interaction-date-${kebabCase(
-              activeInvestment.name
-            )}-header`}
-          >
-            Last interaction date
-          </StyledActiveInvestmentHeadingTableBottomCellHeader>
-          <StyledActiveInvestmentTableBottomCell colSpan={1}>
-            {activeInvestment.latest_interaction ? (
-              <Link
-                href={`${queryString}/interactions/${activeInvestment.latest_interaction.id}`}
-                data-test={`last-interaction-${kebabCase(
-                  activeInvestment.name
-                )}-link`}
-              >
-                {new Date(
-                  activeInvestment.latest_interaction.date
-                ).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </Link>
-            ) : (
-              <StyledSpan>Not set</StyledSpan>
-            )}
-          </StyledActiveInvestmentTableBottomCell>
-        </StyledActiveInvestmentTableBottomRow>
-      </>
-    )
-  })
-}
-
-const ActiveInvestmentProjectsCard = ({
-  queryString,
-  upcomingActiveInvestments,
-  stageList,
-}) => {
-  return (
-    <StyledSummaryTable
-      caption="Active investment projects"
-      data-test="activeInvestmentProjectsContainer"
-    >
-      {stageList?.active ? (
-        <ActiveInvestmentList
-          upcomingActiveInvestments={upcomingActiveInvestments}
-          queryString={queryString}
-        />
-      ) : (
-        <StyledTableRow>
-          <StyledTableCell colSpan={2}>
-            There are no active investments
-          </StyledTableCell>
-        </StyledTableRow>
-      )}
-
+const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
+  upcomingActiveInvestments.map((activeInvestment) => (
+    <>
       <StyledTableRow>
-        <StyledTableCell colSpan={2}>
-          {stageList?.active ? (
+        <StyledActiveInvestmentHeadingTableCell colSpan={2}>
+          <StyledActiveInvestmentSubject>
             <Link
-              href={`${queryString}/investments/projects`}
-              data-test="active-investments-page-link"
+              href={investments.projects.details(activeInvestment.id)}
+              data-test={`active-investment-page-${kebabCase(
+                activeInvestment.name
+              )}-link`}
             >
-              {stageList?.active <= 3 && 'View all investments'}
-              {stageList?.active === 4 &&
-                `View ${
-                  stageList.active - upcomingActiveInvestments.length
-                } more active investment`}
-              {stageList?.active > 4 &&
-                `View ${
-                  stageList.active - upcomingActiveInvestments.length
-                } more active investments`}
+              {activeInvestment.name}
             </Link>
-          ) : (
+          </StyledActiveInvestmentSubject>
+        </StyledActiveInvestmentHeadingTableCell>
+      </StyledTableRow>
+      <StyledTableRow>
+        <StyledActiveInvestmentHeadingTableCellHeader
+          colSpan={1}
+          data-test={`estimated-land-date-${kebabCase(
+            activeInvestment.name
+          )}-header`}
+        >
+          Estimated land date
+        </StyledActiveInvestmentHeadingTableCellHeader>
+        <StyledActiveInvestmentTableCell colSpan={1}>
+          {new Date(activeInvestment.estimated_land_date).toLocaleDateString(
+            'en-GB',
+            { month: 'long', year: 'numeric' }
+          )}
+        </StyledActiveInvestmentTableCell>
+      </StyledTableRow>
+      <StyledTableRow>
+        <StyledActiveInvestmentHeadingTableCellHeader
+          colSpan={1}
+          data-test={`likelihood-of-landing-${kebabCase(
+            activeInvestment.name
+          )}-header`}
+        >
+          Likelihood of landing
+        </StyledActiveInvestmentHeadingTableCellHeader>
+        <StyledActiveInvestmentTableCell colSpan={1}>
+          {buildCellContents(
+            activeInvestment.likelihood_to_land,
+            <LikelihoodToLand
+              investmentId={activeInvestment.id}
+              investmentName={activeInvestment.name}
+              likelihood={activeInvestment.likelihood_to_land?.name}
+            />
+          )}
+        </StyledActiveInvestmentTableCell>
+      </StyledTableRow>
+      <StyledActiveInvestmentTableBottomRow>
+        <StyledActiveInvestmentHeadingTableBottomCellHeader
+          colSpan={1}
+          data-test={`last-interaction-date-${kebabCase(
+            activeInvestment.name
+          )}-header`}
+        >
+          Last interaction date
+        </StyledActiveInvestmentHeadingTableBottomCellHeader>
+        <StyledActiveInvestmentTableBottomCell colSpan={1}>
+          {buildCellContents(
+            activeInvestment.latest_interaction,
             <Link
-              href={`${queryString}/investments/projects`}
-              data-test="investments-page-link"
+              href={companies.interactions.detail(
+                companyId,
+                activeInvestment.latest_interaction?.id
+              )}
+              data-test={`last-interaction-${kebabCase(
+                activeInvestment.name
+              )}-link`}
             >
-              View all investments
+              {new Date(
+                activeInvestment.latest_interaction?.date
+              ).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
             </Link>
           )}
+        </StyledActiveInvestmentTableBottomCell>
+      </StyledActiveInvestmentTableBottomRow>
+    </>
+  ))
+
+const ActiveInvestmentProjectsCard = ({
+  upcomingActiveInvestments,
+  stageList,
+  companyId,
+}) => (
+  <StyledSummaryTable
+    caption="Active investment projects"
+    data-test="activeInvestmentProjectsContainer"
+  >
+    {stageList?.active ? (
+      <ActiveInvestmentList
+        upcomingActiveInvestments={upcomingActiveInvestments}
+        companyId={companyId}
+      />
+    ) : (
+      <StyledTableRow>
+        <StyledTableCell colSpan={2}>
+          There are no active investments
         </StyledTableCell>
       </StyledTableRow>
-    </StyledSummaryTable>
-  )
-}
+    )}
 
-ActiveInvestmentProjectsCard.propTypes = {
-  investment: PropTypes.object.isRequired,
-}
+    <StyledTableRow>
+      <StyledTableCell colSpan={2}>
+        {stageList?.active ? (
+          <Link
+            href={companies.investments.companyInvestmentProjects(companyId)}
+            data-test="active-investments-page-link"
+          >
+            {stageList?.active <= 3 && 'View all investments'}
+            {stageList?.active === 4 &&
+              `View ${
+                stageList.active - upcomingActiveInvestments.length
+              } more active investment`}
+            {stageList?.active > 4 &&
+              `View ${
+                stageList.active - upcomingActiveInvestments.length
+              } more active investments`}
+          </Link>
+        ) : (
+          <Link
+            href={companies.investments.companyInvestmentProjects(companyId)}
+            data-test="investments-page-link"
+          >
+            View all investments
+          </Link>
+        )}
+      </StyledTableCell>
+    </StyledTableRow>
+  </StyledSummaryTable>
+)
 
 export default connect(companyProjectsState2props)(ActiveInvestmentProjectsCard)
