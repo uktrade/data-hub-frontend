@@ -18,37 +18,17 @@ function renderLeadAdvisers(req, res) {
     returnUrl,
     dnbRelatedCompaniesCount,
   } = res.locals
-  const { name, team, email } = companyToLeadITA(company) || {}
 
   res.locals.title = `Lead adviser - ${company.name} - Companies`
 
   res.render('companies/views/lead-advisers', {
     props: {
-      hasAccountManager: !!company.one_list_group_global_account_manager,
-      name,
-      team,
-      email,
-      companyName: company.name,
       companyId: company.id,
-      addUrl: urls.companies.advisers.assign(company.id),
-      removeUrl: urls.companies.advisers.remove(company.id),
-      hasPermissionToAddIta: permissions.includes(
-        'company.change_regional_account_manager'
-      ),
-      company,
-      breadcrumbs: [
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
-        { text: 'Lead adviser' },
-      ],
       returnUrl,
       dnbRelatedCompaniesCount,
       flashMessages: res.locals.getMessages(),
       localNavItems: res.locals.localNavItems,
+      permissions,
     },
   })
 }
