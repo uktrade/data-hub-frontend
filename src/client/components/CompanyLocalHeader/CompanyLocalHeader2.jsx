@@ -23,6 +23,7 @@ import StatusMessage from '../StatusMessage'
 import { addressToStringResource } from '../../utils/addresses'
 import urls from '../../../lib/urls'
 import ArchivePanel from '../ArchivePanel'
+import { isItaTierDAccount } from '../../modules/Companies/utils'
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -107,10 +108,6 @@ const hasAllocatedLeadIta = (company) =>
 
 const hasManagedAccountDetails = (company) =>
   company.oneListGroupTier && hasAllocatedLeadIta(company)
-
-const isItaTierDAccount = (company) =>
-  company.oneListGroupTier &&
-  company.oneListGroupTier.id === '1929c808-99b4-4abf-a891-45f2e187b410'
 
 const CompanyLocalHeader2 = ({
   breadcrumbs,
@@ -199,12 +196,12 @@ const CompanyLocalHeader2 = ({
                     {company.oneListGroupTier.name})
                   </p>
                   <p>
-                    {isItaTierDAccount(company)
+                    {isItaTierDAccount(company.oneListGroupTier)
                       ? 'Lead ITA'
                       : 'Global Account Manager'}
                     : {company.oneListGroupGlobalAccountManager.name}{' '}
                     <a href={urls.companies.advisers.index(company.id)}>
-                      {isItaTierDAccount(company)
+                      {isItaTierDAccount(company.oneListGroupTier)
                         ? 'View Lead adviser'
                         : 'View core team'}
                     </a>
