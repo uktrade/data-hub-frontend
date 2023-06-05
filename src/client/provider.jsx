@@ -153,6 +153,9 @@ import exportPipelineListReducer from './modules/ExportPipeline/ExportList/reduc
 import { ID as COMPANY_LISTS_IN_ID } from './components/CompanyLocalHeader/state'
 import companyListsInReducer from './components/CompanyLocalHeader/reducer'
 
+import { ID as COMPANY_HIERARCHY_ID } from './modules/Companies/CompanyHierarchy/state'
+import companyHierarchyReducer from './modules/Companies/CompanyHierarchy/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -246,6 +249,7 @@ const reducer = {
   [EXPORT_DETAIL_ID]: exportDetailReducer,
   [EXPORT_PIPELINE_LIST_ID]: exportPipelineListReducer,
   [COMPANY_LISTS_IN_ID]: companyListsInReducer,
+  [COMPANY_HIERARCHY_ID]: companyHierarchyReducer,
 }
 
 const preloadedState = {
