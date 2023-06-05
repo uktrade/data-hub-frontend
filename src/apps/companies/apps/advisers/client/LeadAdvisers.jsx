@@ -5,52 +5,63 @@ import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
+
 import { FormActions } from '../../../../../client/components'
-import { companies } from '../../../../../lib/urls'
 import { TEXT_COLOUR, GREY_3 } from '../../../../../client/utils/colours'
+import { CompanyResource } from '../../../../../client/components/Resource'
+import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
+import urls from '../../../../../lib/urls'
 
 const ButtonSecondary = (props) => (
   <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />
 )
 
+const hasPermissionToAddIta = (permissions) =>
+  permissions.includes('company.change_regional_account_manager')
+
 const RenderHasAccountManager = ({
-  team,
-  name,
-  email,
+  leadITA,
   addUrl,
-  removeUrl,
-  hasPermissionToAddIta,
-  companyName,
   companyId,
+  permissions,
 }) => (
   <div>
-    <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
-    <Table>
+    <Table data-test="lead-adviser-table">
       <Table.Row>
         <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
         <Table.CellHeader setWidth="33%">Lead ITA</Table.CellHeader>
         <Table.CellHeader setWidth="33%">Email</Table.CellHeader>
       </Table.Row>
       <Table.Row>
-        <Table.Cell>{team}</Table.Cell>
-        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell>{leadITA.ditTeam.name}</Table.Cell>
+        <Table.Cell>{leadITA.name}</Table.Cell>
         <Table.Cell>
-          {email ? <a href={`mailto:${email}`}>{email}</a> : '-'}
+          {leadITA.contactEmail ? (
+            <a href={`mailto:${leadITA.contactEmail}`}>
+              {leadITA.contactEmail}
+            </a>
+          ) : (
+            '-'
+          )}
         </Table.Cell>
       </Table.Row>
     </Table>
     <p>
       You can{' '}
-      <a href={companies.editHistory.index(companyId)}>
+      <a href={urls.companies.editHistory.index(companyId)}>
         see changes in the Edit history
       </a>
     </p>
-    {hasPermissionToAddIta && (
+    {hasPermissionToAddIta(permissions) && (
       <FormActions>
-        <ButtonSecondary as={Link} href={addUrl}>
+        <ButtonSecondary as={Link} href={addUrl} data-test="replace-ita-button">
           Replace Lead ITA
         </ButtonSecondary>
-        <ButtonSecondary as={Link} href={removeUrl}>
+        <ButtonSecondary
+          as={Link}
+          href={urls.companies.advisers.remove(companyId)}
+          data-test="remove-ita-button"
+        >
           Remove Lead ITA
         </ButtonSecondary>
       </FormActions>
@@ -58,86 +69,75 @@ const RenderHasAccountManager = ({
   </div>
 )
 
-const RenderHasNoAccountManager = ({
-  hasPermissionToAddIta,
-  addUrl,
-  companyName,
-}) => (
-  <div>
-    <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
-    <p>This company record has no Lead International Trade Adviser (ITA).</p>
-    {hasPermissionToAddIta && (
-      <>
-        <p>
-          You can add a Lead ITA. This will be visible to all Data Hub users.
-        </p>
-        <Button as={Link} href={addUrl}>
-          Add a Lead ITA
-        </Button>
-      </>
-    )}
-  </div>
-)
-
 const LeadAdvisers = ({
-  hasAccountManager,
-  name,
-  team,
-  email,
-  companyName,
   companyId,
-  addUrl,
-  removeUrl,
-  hasPermissionToAddIta,
-}) => {
-  return hasAccountManager ? (
-    <RenderHasAccountManager
-      name={name}
-      team={team}
-      email={email}
-      companyId={companyId}
-      companyName={companyName}
-      hasPermissionToAddIta={hasPermissionToAddIta}
-      addUrl={addUrl}
-      removeUrl={removeUrl}
-    />
-  ) : (
-    <RenderHasNoAccountManager
-      companyName={companyName}
-      hasPermissionToAddIta={hasPermissionToAddIta}
-      addUrl={addUrl}
-      removeUrl={removeUrl}
-    />
-  )
-}
-
+  dnbRelatedCompaniesCount,
+  localNavItems,
+  flashMessages,
+  returnUrl,
+  permissions,
+}) => (
+  <CompanyResource id={companyId}>
+    {(company) => (
+      <CompanyLayout
+        company={company}
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          {
+            link: urls.companies.index(),
+            text: 'Companies',
+          },
+          { link: urls.companies.detail(company.id), text: company.name },
+          { text: 'Lead adviser' },
+        ]}
+        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+        localNavItems={localNavItems}
+        flashMessages={flashMessages}
+        returnUrl={returnUrl}
+      >
+        <H2 size={LEVEL_SIZE[3]}>Lead ITA for {company.name}</H2>
+        {!!company.oneListGroupGlobalAccountManager ? (
+          <RenderHasAccountManager
+            leadITA={company.oneListGroupGlobalAccountManager}
+            companyId={companyId}
+            permissions={permissions}
+            addUrl={urls.companies.advisers.assign(company.id)}
+          />
+        ) : (
+          <>
+            <p>
+              This company record has no Lead International Trade Adviser (ITA).
+            </p>
+            {hasPermissionToAddIta(permissions) && (
+              <>
+                <p>
+                  You can add a Lead ITA. This will be visible to all Data Hub
+                  users.
+                </p>
+                <Button
+                  as={Link}
+                  href={urls.companies.advisers.assign(company.id)}
+                >
+                  Add a Lead ITA
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </CompanyLayout>
+    )}
+  </CompanyResource>
+)
 LeadAdvisers.propTypes = {
-  hasAccountManager: PropTypes.bool.isRequired,
-  name: PropTypes.string,
-  team: PropTypes.string,
-  email: PropTypes.string,
-  companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
-  addUrl: PropTypes.string.isRequired,
-  removeUrl: PropTypes.string.isRequired,
-  hasPermissionToAddIta: PropTypes.bool.isRequired,
+  permissions: PropTypes.array.isRequired,
 }
 
 RenderHasAccountManager.propTypes = {
-  name: PropTypes.string.isRequired,
-  team: PropTypes.string.isRequired,
-  email: PropTypes.string,
   addUrl: PropTypes.string.isRequired,
-  removeUrl: PropTypes.string.isRequired,
-  hasPermissionToAddIta: PropTypes.bool.isRequired,
-  companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
-}
-
-RenderHasNoAccountManager.propTypes = {
-  addUrl: PropTypes.string.isRequired,
-  hasPermissionToAddIta: PropTypes.bool.isRequired,
-  companyName: PropTypes.string.isRequired,
+  permissions: PropTypes.array.isRequired,
+  leadITA: PropTypes.object.isRequired,
 }
 
 export default LeadAdvisers

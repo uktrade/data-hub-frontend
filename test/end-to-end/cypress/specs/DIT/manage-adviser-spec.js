@@ -56,7 +56,9 @@ describe('Manage Lead ITA', () => {
   it('should not be able to add an advisor who is no longer active', () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get('#tab-advisers').click()
-    cy.get('#lead-advisers a').contains('Replace Lead ITA').click()
+    cy.get('[data-test="replace-ita-button"]')
+      .contains('Replace Lead ITA')
+      .click()
     cy.get('form label')
       .parent()
       .next()
@@ -67,7 +69,7 @@ describe('Manage Lead ITA', () => {
   it('should be able to remove an adviser', () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get('#tab-advisers').click()
-    cy.get('#lead-advisers a + a').click()
+    cy.get('[data-test="remove-ita-button"]').click()
     cy.get('form button').click()
     cy.get(selectors.companyLocalHeader().flashMessageList).contains(
       'Lead adviser information updated'
