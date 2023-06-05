@@ -127,7 +127,6 @@ describe('Company Activity Feed Filter', () => {
         cy.visit(
           urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
         )
-        // console.log('waiting')
         assertRequestUrl('@apiRequest', minimumRequest)
         cy.get(showDnBHierarchyFilter).find(`input`).parent().click()
         assertRequestUrl('@apiRequest', expectedRequestUrl)

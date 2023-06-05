@@ -83,7 +83,6 @@ const dataHubCompanyActivityQuery = ({
     })
   }
   shouldCriteria.push(externalActivityCriteria)
-  // }
 
   if (aventriEventIds?.length) {
     let criteria = {

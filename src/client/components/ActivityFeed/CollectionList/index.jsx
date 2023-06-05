@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import {
   COMPANY_ACTIVITIES__LOADED,
   COMPANY_ACTIVITIES_SELECTED_ADVISERS,
-  // COMPANY_ACTIVITIES_SELECTED_COMPANIES,
   COMPANY_ACTIVITIES__METADATA_LOADED,
-  // COMPANY_ACTIVITIES_SELECTED_TEAMS,
 } from '../../../actions'
 
 import { LABELS } from './constants'
