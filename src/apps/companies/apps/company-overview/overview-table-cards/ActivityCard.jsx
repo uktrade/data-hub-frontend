@@ -7,8 +7,6 @@ import camelCase from 'camelcase'
 import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
 import styled from 'styled-components'
 
-const { FILTER_KEYS } = require('../../activity-feed/constants')
-
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
@@ -48,7 +46,6 @@ const ActivityCard = (props) => {
           <StyledLastTableCell colspan={2}>
             <ActivityFeedApp
               actions={!company.archived && CompanyActivityFeed.actions}
-              activityTypeFilter={FILTER_KEYS.dataHubActivity}
               isGlobalUltimate={company.is_global_ultimate}
               dnbHierarchyCount={0}
               apiEndpoint={urls.companies.activity.data(company.id)}

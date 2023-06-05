@@ -1,5 +1,4 @@
 import {
-  ACTIVITY_TYPE_OPTIONS,
   BUSINESS_INTELLIGENCE_OPTION,
   LABELS,
   SHOW_DNB_HIERARCHY_OPTIONS,
@@ -18,14 +17,6 @@ export const buildSelectedFilters = (
   selectedTeams,
   selectedCompanies
 ) => ({
-  activityType: {
-    queryParam: 'activityTypeFilter',
-    options: buildOptionsFilter({
-      options: ACTIVITY_TYPE_OPTIONS,
-      value: queryParams.activityType,
-      categoryLabel: LABELS.activityType,
-    }),
-  },
   showDNBHierarchy: {
     queryParam: 'show_dnb_hierarchy',
     options: buildOptionsFilter({

@@ -9,7 +9,6 @@ const dataHubCompanyActivityQuery = ({
   size,
   companyIds,
   aventriEventIds,
-  getEssInteractions,
   contacts,
   dit_participants__adviser,
   feedType,
@@ -112,35 +111,33 @@ const dataHubCompanyActivityQuery = ({
     }
     shouldCriteria.push(criteria)
   }
-  if (getEssInteractions) {
-    let criteria = {
-      bool: {
-        must: [
-          {
-            term: {
-              'object.attributedTo.id':
-                'dit:directoryFormsApi:SubmissionType:export-support-service',
-            },
+  let criteria = {
+    bool: {
+      must: [
+        {
+          term: {
+            'object.attributedTo.id':
+              'dit:directoryFormsApi:SubmissionType:export-support-service',
           },
-          {
-            terms: {
-              'actor.dit:emailAddress': [
-                ...contacts.map((contact) => contact.email),
-              ],
-            },
-          },
-        ],
-      },
-    }
-    if (dit_participants__adviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
         },
-      })
-    }
-    shouldCriteria.push(criteria)
+        {
+          terms: {
+            'actor.dit:emailAddress': [
+              ...contacts.map((contact) => contact.email),
+            ],
+          },
+        },
+      ],
+    },
   }
+  if (dit_participants__adviser.length) {
+    criteria.bool.must.push({
+      term: {
+        'object.attributedTo.id': `dit:DataHubAdviser:${dit_participants__adviser}`,
+      },
+    })
+  }
+  shouldCriteria.push(criteria)
 
   let filters = []
   if (feedType && feedType != FILTER_FEED_TYPE.ALL) {
