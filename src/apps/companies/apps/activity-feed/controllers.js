@@ -1,5 +1,4 @@
 const {
-  FILTER_KEYS,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
@@ -63,7 +62,6 @@ async function renderActivityFeed(req, res, next) {
           breadcrumbs,
           flashMessages: res.locals.getMessages(),
           isOverview: false,
-          activityTypeFilter: [FILTER_KEYS.dataHubActivity],
           localNavItems: res.locals.localNavItems,
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
@@ -79,14 +77,6 @@ async function renderActivityFeed(req, res, next) {
   } catch (error) {
     next(error)
   }
-}
-
-function isExternalFilter(activityTypeFilter) {
-  return activityTypeFilter.includes(FILTER_KEYS.externalActivity)
-}
-
-function isEssFilter(activityTypeFilter) {
-  return activityTypeFilter.includes(FILTER_KEYS.dataHubActivity)
 }
 
 function getContactFromEmailAddress(emailAddress, contacts) {
@@ -279,7 +269,6 @@ async function fetchActivityFeedHandler(req, res, next) {
       from = 0,
       size = config.activityFeed.paginationSize,
       feedType = FILTER_FEED_TYPE.ALL,
-      activityTypeFilter = [FILTER_KEYS.dataHubActivity],
       dit_participants__adviser = [],
       show_dnb_hierarchy = false,
     } = req.query
@@ -302,8 +291,6 @@ async function fetchActivityFeedHandler(req, res, next) {
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
-    // Get Ess Activities
-    const getEssInteractions = isEssFilter(activityTypeFilter)
     const query = dataHubCompanyActivityQuery({
       from,
       size,
@@ -313,20 +300,16 @@ async function fetchActivityFeedHandler(req, res, next) {
       user,
       aventriEventIds,
       feedType,
-      getEssInteractions,
     })
-    // console.log(JSON.stringify(query))
 
     const results = await fetchActivityFeed(req, query)
 
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value
 
-    if (isExternalFilter(activityTypeFilter)) {
-      const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
-      activities = [...activities, ...campaigns]
-      total += campaigns.length
-    }
+    const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
+    activities = [...activities, ...campaigns]
+    total += campaigns.length
 
     //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
@@ -681,7 +664,6 @@ module.exports = {
   getAventriRegistrationStatusCounts,
   fetchESSDetails,
   isEssActivity,
-  isExternalFilter,
   augmentEssActivity,
   filterContactListOnEmail,
 }
