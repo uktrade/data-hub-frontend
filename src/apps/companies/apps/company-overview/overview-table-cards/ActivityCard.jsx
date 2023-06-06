@@ -1,24 +1,20 @@
 import React from 'react'
-import { Link, Table } from 'govuk-react'
+import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
-import { ActivityFeedApp, SummaryTable } from '../../../../../client/components'
-import urls from '../../../../../lib/urls'
 import camelCase from 'camelcase'
-import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
 import styled from 'styled-components'
+
+import { ActivityFeedApp, SummaryTable } from '../../../../../client/components'
+import { companies } from '../../../../../lib/urls'
+import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
+import { StyledLastTableCell, StyledTableRow } from './components'
 
 const { FILTER_ITEMS, FILTER_KEYS } = require('../../activity-feed/constants')
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
-const StyledTableRow = styled(Table.Row)`
-  border: 0;
-`
-const StyledLastTableCell = styled(Table.Cell)`
-  border: 0;
-  padding: 0;
-`
+
 const ActivityStyledLink = styled(Link)`
   caption & {
     font-weight: 400;
@@ -27,7 +23,7 @@ const ActivityStyledLink = styled(Link)`
 `
 
 const ActivityCard = (props) => {
-  const { company, queryString, numberOfItems, feedType } = props
+  const { company, numberOfItems, feedType } = props
 
   const feedTypeText = camelCase(feedType, { pascalCase: true })
 
@@ -37,7 +33,9 @@ const ActivityCard = (props) => {
         caption={
           <>
             {feedTypeText} activity
-            <ActivityStyledLink href={`${queryString}/interactions/create`}>
+            <ActivityStyledLink
+              href={companies.interactions.create(company.id)}
+            >
               Add interaction
             </ActivityStyledLink>
           </>
@@ -50,9 +48,9 @@ const ActivityCard = (props) => {
               actions={!company.archived && CompanyActivityFeed.actions}
               activityTypeFilter={FILTER_KEYS.dataHubActivity}
               activityTypeFilters={FILTER_ITEMS}
-              isGlobalUltimate={company.is_global_ultimate}
+              isGlobalUltimate={company.isGlobalUltimate}
               dnbHierarchyCount={0}
-              apiEndpoint={urls.companies.activity.data(company.id)}
+              apiEndpoint={companies.activity.data(company.id)}
               companyIsArchived={company.archived}
               isOverview={true}
               numberOfItems={numberOfItems}
@@ -63,8 +61,8 @@ const ActivityCard = (props) => {
         <StyledTableRow>
           <StyledLastTableCell colSpan={2}>
             <Link
-              href={`${queryString}/activity`}
-              data-test={'activity-page-link'}
+              href={companies.activity.index(company.id)}
+              data-test="activity-page-link"
             >
               View all activities
             </Link>
