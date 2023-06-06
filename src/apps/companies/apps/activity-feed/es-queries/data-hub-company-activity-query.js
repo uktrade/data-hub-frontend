@@ -32,6 +32,7 @@ const dataHubCompanyActivityQuery = ({
   size,
   companyIds,
   aventriEventIds,
+  maxemailCampaignIds,
   contacts,
   dateBefore = null,
   dateAfter = null,
@@ -117,6 +118,25 @@ const dataHubCompanyActivityQuery = ({
           },
         ],
       },
+    }
+    if (maxemailCampaignIds?.length) {
+      const criteria = {
+        bool: {
+          must: [
+            {
+              term: {
+                'object.type': 'dit:maxemail:Campaign',
+              },
+            },
+            {
+              terms: {
+                id: maxemailCampaignIds,
+              },
+            },
+          ],
+        },
+      }
+      shouldCriteria.push(criteria)
     }
     shouldCriteria.push(externalActivityCriteria)
   }
