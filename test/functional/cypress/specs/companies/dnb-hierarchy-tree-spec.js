@@ -53,7 +53,7 @@ describe('D&B Company hierarchy tree', () => {
           cy.intercept(`api-proxy/v4/company/${unknownId}`, {
             statusCode: 404,
           }).as('companyApi')
-          cy.visit(urls.companies.dnbHierarchy.index(unknownId))
+          cy.visit(urls.companies.dnbHierarchy.tree(unknownId))
         })
 
         it('should display the access denied page', () => {
@@ -72,7 +72,7 @@ describe('D&B Company hierarchy tree', () => {
             id: accessDeniedId,
             global_ultimate_duns_number: null,
           }).as('companyApi')
-          cy.visit(urls.companies.dnbHierarchy.index(accessDeniedId))
+          cy.visit(urls.companies.dnbHierarchy.tree(accessDeniedId))
         })
 
         it('should display the access denied page', () => {
@@ -89,7 +89,7 @@ describe('D&B Company hierarchy tree', () => {
           cy.intercept(`api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`, {
             statusCode: 404,
           }).as('familyTreeApi')
-          cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+          cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
         })
 
         it('should display the error message', () => {
@@ -106,7 +106,7 @@ describe('D&B Company hierarchy tree', () => {
           cy.intercept(`api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`, {
             body: {},
           }).as('familyTreeApi')
-          cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+          cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
         })
 
         it('should display the empty tree message', () => {
@@ -123,7 +123,7 @@ describe('D&B Company hierarchy tree', () => {
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
         companyNoSubsidiaries
       ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
     })
 
@@ -149,7 +149,7 @@ describe('D&B Company hierarchy tree', () => {
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
         companyOnlyImmediateSubsidiaries
       ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
     })
 
@@ -204,7 +204,7 @@ describe('D&B Company hierarchy tree', () => {
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
         companyWith5LevelsOfSubsidiaries
       ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
     })
 
