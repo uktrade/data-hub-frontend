@@ -508,6 +508,7 @@ const eventsColListQueryBuilder = ({
   ukRegion,
   organiser,
   eventType,
+  relatedProgramme,
 }) => {
   const eventNameFilter = name
     ? {
@@ -582,7 +583,7 @@ const eventsColListQueryBuilder = ({
   const relatedProgrammeFilter = relatedProgramme
     ? {
         terms: {
-          'object.dit:relatedProgramme.id': relatedProgramme,
+          'object.dit:relatedProgrammes.id': `dit:DataHubEventProgramme:${relatedProgramme}`,
         },
       }
     : null
@@ -617,6 +618,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       page,
       addressCountry,
       eventType,
+      relatedProgramme,
     } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -633,6 +635,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           ukRegion,
           organiser,
           eventType,
+          relatedProgramme,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
