@@ -66,10 +66,10 @@ import OrdersReconciliationCollection from './modules/Omis/CollectionList/Orders
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import Dashboard from './modules/Dashboard/Dashboard'
 import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
-import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
+import CompanyInvestments from './modules/Companies/CompanyInvestments'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -342,7 +342,6 @@ import {
   getExportPipelineMetadata,
 } from '../client/modules/ExportPipeline/ExportList/task'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
-import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
 import { getListsCompanyIsIn } from './components/CompanyLocalHeader/task'
 import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/state'
@@ -756,9 +755,6 @@ function App() {
         <Mount selector="#company-overview">
           {(props) => <CompanyOverview {...props} />}
         </Mount>
-        <Mount selector="#company-projects-collection">
-          {(props) => <ProjectsCollection {...props} />}
-        </Mount>
         <Mount selector="#company-contacts-collection">
           {(props) => <CompaniesContactsCollection {...props} />}
         </Mount>
@@ -831,9 +827,6 @@ function App() {
         <Mount selector="#core-team">
           {(props) => <CoreTeam {...props} />}
         </Mount>
-        <Mount selector="#company-large-capital-profile">
-          {(props) => <LargeCapitalProfile {...props} />}
-        </Mount>
         <Mount selector="#create-proposition">
           {(props) => <CreateProposition {...props} />}
         </Mount>
@@ -842,6 +835,9 @@ function App() {
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
+        </Mount>
+        <Mount selector="#company-investments">
+          {(props) => <CompanyInvestments {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

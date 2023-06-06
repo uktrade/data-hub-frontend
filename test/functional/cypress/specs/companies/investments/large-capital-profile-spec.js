@@ -7,7 +7,6 @@ const {
   assertSummaryTable,
 } = require('../../../support/assertions')
 
-const baseUrl = Cypress.config().baseUrl
 const { oneListCorp, lambdaPlc } = fixtures.company
 const largeCapitalProfile = companies.investments.largeCapitalProfile(
   oneListCorp.id
@@ -17,49 +16,22 @@ const largeCapitalProfileNew = companies.investments.largeCapitalProfile(
 )
 
 describe('Company Investments and Large capital profile', () => {
-  context('when viewing the 3 tabs', () => {
+  context('when viewing the investment sub-navigation', () => {
     before(() => cy.visit(largeCapitalProfile))
 
-    it('should render a meta title', () => {
-      cy.title().should(
-        'eq',
-        'Large capital profile - One List Corp - Companies - DBT Data Hub'
-      )
+    beforeEach(() => {
+      cy.get('[data-test="tablist"]').as('investmentTabs')
+      cy.get('[data-test="tab-item"]').as('tabs')
+      cy.get('@tabs').eq(0).as('investmentTab')
+      cy.get('@tabs').eq(1).as('largeCapitalTab')
     })
 
-    it('should display an "Investments projects" tab with the correct URL', () => {
-      cy.get(selectors.tabs.investmentProjects)
-        .find('a')
-        .should('have.prop', 'href')
-        .and(
-          'equal',
-          `${baseUrl}/companies/${oneListCorp.id}/investments/projects`
-        )
+    it('should display an "Investments projects" tab', () => {
+      cy.get('@investmentTab').should('have.text', 'Investments')
     })
 
-    it('should display a "Large capital profile" tab with the correct URL', () => {
-      cy.get(selectors.tabs.largeCapitalProfile)
-        .find('a')
-        .should('have.prop', 'href')
-        .and(
-          'equal',
-          `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`
-        )
-    })
-  })
-
-  context('when the Large capital profile tab is selected', () => {
-    before(() => cy.visit(largeCapitalProfile))
-
-    it('should not have an "active" class on the "Investment projects" tab', () => {
-      cy.get(selectors.tabs.investmentProjects).should(
-        'not.have.class',
-        'active'
-      )
-    })
-
-    it('should have an "active" class on the "Large capital profile" tab', () => {
-      cy.get(selectors.tabs.largeCapitalProfile).should('have.class', 'active')
+    it('should display a "Large capital profile" tab', () => {
+      cy.get('@largeCapitalTab').should('have.text', 'Large capital profile')
     })
   })
 
