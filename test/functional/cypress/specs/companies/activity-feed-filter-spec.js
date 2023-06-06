@@ -57,7 +57,7 @@ describe('Company Activity Feed Filter', () => {
       )
     })
 
-    context('My interactions', () => {
+    context('Created by', () => {
       const expectedRequestUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
 
       it('should filter from the url', () => {
@@ -76,7 +76,7 @@ describe('Company Activity Feed Filter', () => {
         assertRequestUrl('@apiRequest', expectedRequestUrl)
         /*
         Asserts the "Adviser typeahead" filter is selected with the
-        current user as this is the same as selecting "My interactions".
+        current user as this is the same as selecting "Created by" > "Me".
         */
         assertTypeaheadOptionSelected({
           element: advisersFilter,
