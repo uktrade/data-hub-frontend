@@ -98,7 +98,7 @@ const CompanyActivityCollection = ({
     .includes(currentAdviserId)
 
   const myInteractionsOption = {
-    label: LABELS.myInteractions,
+    label: LABELS.me,
     value: currentAdviserId,
   }
 
