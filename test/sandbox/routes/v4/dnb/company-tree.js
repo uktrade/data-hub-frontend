@@ -3,6 +3,7 @@
 var ukRegion = require('../../../fixtures/v4/metadata/uk-region.json')
 var employeeRange = require('../../../fixtures/v4/metadata/employee-range.json')
 var headquarterType = require('../../../fixtures/v4/metadata/headquarter-type.json')
+var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
 
 const { faker } = require('@faker-js/faker')
 
@@ -39,6 +40,8 @@ const companyTreeItemFaker = (overrides = {}) => ({
     },
   ],
   latest_interaction_date: faker.date.past(),
+  one_list_tier: faker.helpers.arrayElement(oneListTier),
+  archived: false,
   hierarchy: 1,
   subsidiaries: [],
   ...overrides,
@@ -115,6 +118,9 @@ exports.fakerCompanyFamilyTree = ({
       name: faker.company.name(),
       employee_range: faker.helpers.arrayElement(employeeRange),
       headquarter_type: faker.helpers.arrayElement(headquarterType),
+      address: address,
+      uk_region: faker.helpers.arrayElement(ukRegion),
+      archived: false,
     },
   ],
 })

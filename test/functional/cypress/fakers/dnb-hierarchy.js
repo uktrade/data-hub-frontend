@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 import { listFaker } from './utils'
 import { addressFaker } from './addresses'
 import { ukRegionFaker } from './regions'
-import { EMPLOYEE_RANGE, HEADQUARTER_TYPE } from './constants'
+import { EMPLOYEE_RANGE, HEADQUARTER_TYPE, ONE_LIST_TIER } from './constants'
 
 const companyTreeItemFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
@@ -26,6 +26,8 @@ const companyTreeItemFaker = (overrides = {}) => ({
     },
   ],
   latest_interaction_date: faker.date.past(),
+  one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
+  archived: false,
   hierarchy: 1,
   subsidiaries: [],
   ...overrides,
@@ -110,6 +112,9 @@ const companyTreeFaker = ({
       name: faker.company.name(),
       employee_range: faker.helpers.arrayElement(EMPLOYEE_RANGE),
       headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
+      address: addressFaker(),
+      uk_region: ukRegionFaker(),
+      archived: false,
     },
   ],
 })
