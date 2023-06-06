@@ -186,6 +186,9 @@ const COMMON_REQUEST_BODY = {
   companies: ['0f5216e0-849f-11e6-ae22-56b6b6499611'],
   service_answers: {},
   status: 'complete',
+}
+
+const RELATED_TRADE_AGREEMENTs_REQUEST_BODY = {
   has_related_trade_agreements: 'yes',
   related_trade_agreements: [
     '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
@@ -199,29 +202,9 @@ function fillCommonFields({
   contact = 'Johnny Cakeman',
 }) {
   fillSelect('[data-test=field-service]', service)
-
   if (subservice) {
     fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
-
-  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
-    .next()
-    .find('input')
-    .check('yes')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .parent()
-    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
-    .parent()
-    .should('contain', 'UK-Australia Mutual Recognition Agreement')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .parent()
-    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
-    .parent()
-    .should('contain', 'UK-Mexico Trade Continuity Agreement')
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
@@ -297,6 +280,27 @@ function fillExportBarrierFields() {
     .type('My export barrier notes')
 }
 
+function fillRelatedTradeAgreementFields() {
+  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
+    .next()
+    .find('input')
+    .check('yes')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .parent()
+    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
+    .parent()
+    .should('contain', 'UK-Australia Mutual Recognition Agreement')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .parent()
+    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
+    .parent()
+    .should('contain', 'UK-Mexico Trade Continuity Agreement')
+}
+
 function submitForm(kind, theme, values) {
   cy.get('#interaction-details-form').within(() => {
     fillCommonFields(values)
@@ -306,6 +310,7 @@ function submitForm(kind, theme, values) {
     }
 
     if (theme !== THEMES.INVESTMENT) {
+      fillRelatedTradeAgreementFields()
       fillExportCountriesFields()
     }
 
@@ -387,14 +392,15 @@ function assertRequestBody(expectedBody, callback) {
       objectDiff(xhr.request.body, expectedBody)
     )
 
-    expect(xhr.request.body.has_related_trade_agreements).to.equal(
-      expectedBody.has_related_trade_agreements
-    )
-    expect(xhr.request.body.related_trade_agreements).to.deep.equal(
-      expectedBody.related_trade_agreements
-    )
-
-    expect(xhr.request.body).to.deep.equal(expectedBody)
+    if (expectedBody.theme != THEMES.INVESTMENT) {
+      expect(xhr.request.body.has_related_trade_agreements).to.equal(
+        expectedBody.has_related_trade_agreements
+      )
+      expect(xhr.request.body.related_trade_agreements).to.deep.equal(
+        expectedBody.related_trade_agreements
+      )
+      expect(xhr.request.body).to.deep.equal(expectedBody)
+    }
 
     callback(xhr)
   })
@@ -516,6 +522,7 @@ describe('Interaction theme', () => {
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'export',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -635,6 +642,7 @@ describe('Service delivery theme', () => {
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'export',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           is_event: 'yes',
@@ -689,7 +697,6 @@ describe('Investment theme', () => {
         ELEMENT_SERVICE_HEADER,
         ELEMENT_SERVICE,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -709,7 +716,6 @@ describe('Investment theme', () => {
 
     const investment_error_messages = [
       'Select a service',
-      'Select if this relates to a named trade agreement',
       'Select at least one contact',
       'Select a communication channel',
       'Enter a summary',
@@ -733,7 +739,6 @@ describe('Investment theme', () => {
         service: 'Enquiry received',
         subservice: 'General investment enquiry',
       })
-
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
@@ -860,6 +865,7 @@ describe('Trade Agreement theme', () => {
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'trade_agreement',
           service: '440b7770-62d2-e325-df93-cd7b62818405',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -902,6 +908,7 @@ describe('Trade Agreement theme', () => {
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'trade_agreement',
           service: '8d098d19-5988-4afd-8c0b-cc5652eccb26',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -1021,6 +1028,7 @@ describe('Adding an interaction from a referral', () => {
     assertRequestBody(
       {
         ...COMMON_REQUEST_BODY,
+        ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
         companies: [referral.company.id],
         contacts: [referral.contact.id], // Was prepopulated
         theme: 'export',
