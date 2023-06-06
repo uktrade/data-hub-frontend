@@ -30,6 +30,7 @@ const reactRoutes = [
   '/export/:exportId/details',
   '/export/:exportId/delete',
   '/companies/:companyId/dnb-hierarchy',
+  '/companies/:companyId/company-tree',
 ]
 
 reactRoutes.forEach((path) => {
