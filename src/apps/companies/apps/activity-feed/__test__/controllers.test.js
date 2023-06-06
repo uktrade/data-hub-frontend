@@ -12,14 +12,12 @@ const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-
 const contactMock = require('../../../../../../test/sandbox/fixtures/v3/contact/contact-by-id-uk.json')
 
 const {
-  DATA_HUB_ACTIVITY,
-  EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
-  DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_MAPPING,
+  FILTER_FEED_TYPE,
 } = require('../constants')
 const {
   eventsColListQueryBuilder,
@@ -29,6 +27,16 @@ const {
 } = require('../controllers')
 const { has, get } = require('lodash')
 const { sortCriteria } = require('../es-queries/sortCriteria')
+
+const realDate = Date
+const freezeTime = (constantDate) => {
+  /*eslint no-global-assign:off*/
+  Date = class extends Date {
+    constructor() {
+      return constantDate
+    }
+  }
+}
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -77,7 +85,6 @@ describe('Activity feed controllers', () => {
             middlewareParameters = buildMiddlewareParameters({
               company: companyMock,
               requestQuery: {
-                activityTypeFilter: 'dataHubAndExternalActivity',
                 showDnbHierarchy: false,
               },
               user: {
@@ -93,43 +100,6 @@ describe('Activity feed controllers', () => {
           })
 
           it('should call fetchActivityFeed with correct params when retrieving aventri attendees', async () => {
-            const expectedEsQuery = {
-              query: {
-                bool: {
-                  must: [
-                    {
-                      term: {
-                        'object.type': 'dit:aventri:Attendee',
-                      },
-                    },
-                    {
-                      terms: {
-                        'object.dit:emailAddress': [
-                          'fred@acme.org',
-                          'fred@acme.org',
-                          'fred@acme.org',
-                          'byvanuwenu@yahoo.com',
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-              sort: {
-                'object.updated': {
-                  order: 'desc',
-                  unmapped_type: 'date',
-                },
-              },
-            }
-
-            expect(fetchActivityFeedStub).to.be.calledWith(
-              middlewareParameters.reqMock,
-              expectedEsQuery
-            )
-          })
-
-          it('should call fetchActivityFeed with the right params', async () => {
             const expectedEsQuery = {
               from: 0,
               size: 20,
@@ -194,11 +164,7 @@ describe('Activity feed controllers', () => {
                         {
                           bool: {
                             must: [
-                              {
-                                term: {
-                                  'object.type': 'dit:aventri:Event',
-                                },
-                              },
+                              { term: { 'object.type': 'dit:aventri:Event' } },
                               {
                                 terms: {
                                   id: [
@@ -253,8 +219,8 @@ describe('Activity feed controllers', () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            activityTypeFilter: 'myActivity',
             showDnbHierarchy: false,
+            ditParticipantsAdviser: [123],
           },
           user: {
             id: 123,
@@ -275,63 +241,6 @@ describe('Activity feed controllers', () => {
           sort: sortCriteria('desc'),
           query: {
             bool: {
-              must: [
-                {
-                  terms: {
-                    'object.type': DATA_HUB_ACTIVITY,
-                  },
-                },
-                {
-                  term: {
-                    'object.attributedTo.id': 'dit:DataHubAdviser:123',
-                  },
-                },
-                {
-                  terms: {
-                    'object.attributedTo.id': [
-                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        }
-
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
-
-    context('when filtering on "Data Hub activity" for a company', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'dataHubActivity',
-            showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with the right params', async () => {
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: sortCriteria('desc'),
-          query: {
-            bool: {
               filter: {
                 bool: {
                   should: [
@@ -340,7 +249,7 @@ describe('Activity feed controllers', () => {
                         must: [
                           {
                             terms: {
-                              'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
                             },
                           },
                           {
@@ -348,6 +257,12 @@ describe('Activity feed controllers', () => {
                               'object.attributedTo.id': [
                                 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
                               ],
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
                             },
                           },
                         ],
@@ -358,15 +273,55 @@ describe('Activity feed controllers', () => {
                         must: [
                           {
                             term: {
-                              'object.type': 'dit:aventri:Event',
+                              'object.type': 'dit:directoryFormsApi:Submission',
                             },
                           },
+                          {
+                            term: {
+                              'object.attributedTo.type':
+                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.url': '/contact/export-advice/comment/',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { term: { 'object.type': 'dit:aventri:Event' } },
                           {
                             terms: {
                               id: [
                                 'dit:aventri:Event:1:Create',
                                 'dit:aventri:Event:2:Create',
                               ],
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
                             },
                           },
                         ],
@@ -391,6 +346,12 @@ describe('Activity feed controllers', () => {
                               ],
                             },
                           },
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
                         ],
                       },
                     },
@@ -408,16 +369,13 @@ describe('Activity feed controllers', () => {
       })
     })
 
-    context('when filtering on "External activity" with the aventri', () => {
+    context('when filtering on default feed type', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            activityTypeFilter: 'externalActivity',
+            feedType: FILTER_FEED_TYPE.ALL,
             showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
           },
         })
 
@@ -426,6 +384,10 @@ describe('Activity feed controllers', () => {
           middlewareParameters.resMock,
           middlewareParameters.nextSpy
         )
+      })
+
+      after(async () => {
+        Date = realDate
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
@@ -443,7 +405,7 @@ describe('Activity feed controllers', () => {
                         must: [
                           {
                             terms: {
-                              'object.type': EXTERNAL_ACTIVITY,
+                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
                             },
                           },
                           {
@@ -491,16 +453,34 @@ describe('Activity feed controllers', () => {
                     {
                       bool: {
                         must: [
-                          {
-                            term: {
-                              'object.type': 'dit:aventri:Event',
-                            },
-                          },
+                          { term: { 'object.type': 'dit:aventri:Event' } },
                           {
                             terms: {
                               id: [
                                 'dit:aventri:Event:1:Create',
                                 'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:directoryFormsApi:SubmissionType:export-support-service',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
                               ],
                             },
                           },
@@ -521,6 +501,350 @@ describe('Activity feed controllers', () => {
       })
     })
 
+    context('when filtering on recent feed type', () => {
+      before(async () => {
+        freezeTime(new Date('2015-10-02T04:41:20'))
+        middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          requestQuery: {
+            feedType: 'recent',
+            showDnbHierarchy: false,
+          },
+        })
+
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      after(async () => {
+        Date = realDate
+      })
+
+      it('should call fetchActivityFeed with the right params', async () => {
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: sortCriteria('desc'),
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:directoryFormsApi:Submission',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.type':
+                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.url': '/contact/export-advice/comment/',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { term: { 'object.type': 'dit:aventri:Event' } },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:directoryFormsApi:SubmissionType:export-support-service',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+      })
+    })
+
+    context('when filtering on upcoming feed type', () => {
+      before(async () => {
+        freezeTime(new Date('2015-10-02T04:41:20'))
+        middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          requestQuery: {
+            feedType: 'upcoming',
+            showDnbHierarchy: false,
+          },
+        })
+
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      after(async () => {
+        Date = realDate
+      })
+      it('should call fetchActivityFeed with the right params', async () => {
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: sortCriteria('asc'),
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:directoryFormsApi:Submission',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.type':
+                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.url': '/contact/export-advice/comment/',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { term: { 'object.type': 'dit:aventri:Event' } },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:directoryFormsApi:SubmissionType:export-support-service',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
+                                params: { now: '2015-10-02T03:41:20.000Z' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+      })
+    })
     context(
       'when applying both Data Hub activity and DnB hierarchical filters',
       () => {
@@ -529,9 +853,6 @@ describe('Activity feed controllers', () => {
             company: {
               ...companyMock,
               is_global_ultimate: true,
-            },
-            requestQuery: {
-              activityTypeFilter: 'dataHubActivity',
               showDnbHierarchy: true,
             },
             user: {
@@ -561,15 +882,13 @@ describe('Activity feed controllers', () => {
                           must: [
                             {
                               terms: {
-                                'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
+                                'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
                               },
                             },
                             {
                               terms: {
                                 'object.attributedTo.id': [
                                   'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                                  'dit:DataHubCompany:123',
-                                  'dit:DataHubCompany:456',
                                 ],
                               },
                             },
@@ -581,9 +900,38 @@ describe('Activity feed controllers', () => {
                           must: [
                             {
                               term: {
-                                'object.type': 'dit:aventri:Event',
+                                'object.type':
+                                  'dit:directoryFormsApi:Submission',
                               },
                             },
+                            {
+                              term: {
+                                'object.attributedTo.type':
+                                  'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.url': '/contact/export-advice/comment/',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { term: { 'object.type': 'dit:aventri:Event' } },
                             {
                               terms: {
                                 id: [
@@ -632,87 +980,6 @@ describe('Activity feed controllers', () => {
       }
     )
 
-    context('when filtering param is invalid', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'foobar',
-            showDnbHierarchy: false,
-          },
-          user: {
-            id: 123,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should default to dataHubActivity', async () => {
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: sortCriteria('desc'),
-          query: {
-            bool: {
-              filter: {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          {
-                            terms: {
-                              'object.type': DATA_HUB_AND_AVENTRI_ACTIVITY,
-                            },
-                          },
-                          {
-                            terms: {
-                              'object.attributedTo.id': [
-                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      bool: {
-                        must: [
-                          {
-                            term: {
-                              'object.type': 'dit:aventri:Event',
-                            },
-                          },
-                          {
-                            terms: {
-                              id: [
-                                'dit:aventri:Event:1:Create',
-                                'dit:aventri:Event:2:Create',
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        }
-
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
-      })
-    })
-
     context('when the endpoint returns error', () => {
       const error = {
         status: 404,
@@ -750,7 +1017,6 @@ describe('Activity feed controllers', () => {
           middlewareParameters = buildMiddlewareParameters({
             company: companyMock,
             requestQuery: {
-              activityTypeFilter: 'dataHubAndExternalActivity',
               showDnbHierarchy: false,
             },
             user: {

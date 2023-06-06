@@ -28,7 +28,6 @@ export default class ActivityFeed extends React.Component {
     sendQueryParams: PropTypes.func,
     children: PropTypes.node,
     activities: PropTypes.arrayOf(PropTypes.object),
-    activityTypeFilters: PropTypes.object,
     hasMore: PropTypes.bool,
     isLoading: PropTypes.bool,
     actions: PropTypes.node,
@@ -44,7 +43,6 @@ export default class ActivityFeed extends React.Component {
     sendQueryParams: () => {},
     children: null,
     activities: [],
-    activityTypeFilters: {},
     hasMore: false,
     isLoading: false,
     actions: null,
@@ -54,24 +52,10 @@ export default class ActivityFeed extends React.Component {
   }
 
   constructor(props) {
-    const {
-      dataHubAndExternalActivity,
-      myActivity,
-      externalActivity,
-      dataHubActivity,
-    } = props.activityTypeFilters
-
     super(props)
 
     this.state = {
-      activityTypeFilter: dataHubActivity ? dataHubActivity.value : '',
       showDnbHierarchy: false,
-      activityTypeFilters: [
-        dataHubAndExternalActivity,
-        myActivity,
-        externalActivity,
-        dataHubActivity,
-      ],
     }
 
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
@@ -125,8 +109,7 @@ export default class ActivityFeed extends React.Component {
       feedType,
     } = this.props
 
-    const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
-      this.state
+    const { activityTypeFilter, showDnbHierarchy } = this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
         {!isOverview && (
@@ -137,7 +120,6 @@ export default class ActivityFeed extends React.Component {
         )}
         {!companyIsArchived && !isOverview && (
           <ActivityFeedFilters
-            activityTypeFilters={activityTypeFilters}
             activityTypeFilter={activityTypeFilter}
             onActivityTypeFilterChange={this.onActivityTypeFilterChange}
             showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}

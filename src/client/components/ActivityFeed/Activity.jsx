@@ -11,14 +11,17 @@ function Activity({
   filter,
   isOverview,
 }) {
-  const ActivityToRender = find(activities, (a) =>
-    a.canRender(activity, filter)
-  )
+  const ActivityToRender = find(activities, (a) => {
+    if (a.canRender && typeof a.canRender == 'function') {
+      return a.canRender(activity, filter)
+    } else {
+      return null
+    }
+  })
 
   if (!ActivityToRender) {
     return null
   }
-
   return (
     <ActivityToRender
       activity={activity}

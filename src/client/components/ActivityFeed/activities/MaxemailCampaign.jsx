@@ -20,10 +20,7 @@ export default class MaxemailCampaign extends React.PureComponent {
   }
 
   static canRender(activity) {
-    return (
-      CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.MaxemailCampaign) &&
-      get(activity, 'object.contacts').length
-    )
+    return CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.MaxemailCampaign)
   }
 
   render() {
@@ -35,20 +32,19 @@ export default class MaxemailCampaign extends React.PureComponent {
     const contacts = get(activity, 'object.contacts')
     const content = get(activity, 'object.content')
 
+    const recipients = contacts?.map((contact, index) => (
+      <>
+        {index ? ', ' : ''}
+        <Link href={contact.url}>{contact.name}</Link>
+      </>
+    ))
+
     const metadata = [
       { label: 'Date', value: format(published) },
       { label: 'Senders name', value: name },
       { label: 'Senders email', value: from },
       { label: 'Content', value: content },
-      {
-        label: 'Recipients',
-        value: contacts.map((contact, index) => (
-          <>
-            {index ? ', ' : ''}
-            <Link href={contact.url}>{contact.name}</Link>
-          </>
-        )),
-      },
+      { label: 'Recipients', value: recipients },
     ]
 
     const Row = styled('div')`

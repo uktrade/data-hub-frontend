@@ -46,7 +46,6 @@ const trackAnalytics = (e, pushAnalytics) => {
 }
 
 const ActivityFeedFilters = ({
-  activityTypeFilters,
   activityTypeFilter,
   onActivityTypeFilterChange,
   showActivitiesFromAllCompanies,
@@ -70,7 +69,6 @@ const ActivityFeedFilters = ({
       <Analytics>
         {(pushAnalytics) => (
           <SelectFilter
-            filters={activityTypeFilters}
             onActivityTypeFilterChange={(e) => {
               onActivityTypeFilterChange(e)
               trackAnalytics(e, pushAnalytics)
@@ -84,8 +82,7 @@ const ActivityFeedFilters = ({
 }
 
 ActivityFeedFilters.propTypes = {
-  activityTypeFilters: PropTypes.array.isRequired,
-  activityTypeFilter: PropTypes.string.isRequired,
+  activityTypeFilter: PropTypes.array.isRequired,
   onActivityTypeFilterChange: PropTypes.func.isRequired,
   showActivitiesFromAllCompanies: PropTypes.func.isRequired,
   dnbHierarchyCount: PropTypes.number,

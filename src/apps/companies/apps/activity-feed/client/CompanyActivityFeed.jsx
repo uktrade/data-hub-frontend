@@ -10,7 +10,6 @@ import { companies } from '../../../../../lib/urls'
 const CompanyActivityFeed = ({
   company,
   activityTypeFilter,
-  activityTypeFilters,
   isGlobalUltimate,
   dnbHierarchyCount,
   apiEndpoint,
@@ -33,7 +32,6 @@ const CompanyActivityFeed = ({
       <ActivityFeedApp
         actions={!company.archived && actions}
         activityTypeFilter={activityTypeFilter}
-        activityTypeFilters={activityTypeFilters}
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
         apiEndpoint={apiEndpoint}
@@ -46,8 +44,7 @@ const CompanyActivityFeed = ({
 CompanyActivityFeed.propTypes = {
   companyId: PropTypes.string,
   actions: PropTypes.node,
-  activityTypeFilter: PropTypes.string,
-  activityTypeFilters: PropTypes.object,
+  activityTypeFilter: [PropTypes.string],
   apiEndpoint: PropTypes.string.isRequired,
   isGlobalUltimate: PropTypes.bool,
   dnbHierarchyCount: PropTypes.number,
@@ -55,8 +52,7 @@ CompanyActivityFeed.propTypes = {
 
 CompanyActivityFeed.defaultProps = {
   companyId: null,
-  activityTypeFilter: null,
-  activityTypeFilters: {},
+  activityTypeFilter: [],
   actions: null,
   isGlobalUltimate: false,
   dnbHierarchyCount: null,

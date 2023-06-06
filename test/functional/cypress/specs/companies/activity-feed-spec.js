@@ -6,9 +6,6 @@ describe('Company activity feed', () => {
     cy.visit(
       urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
     )
-    cy.get('[data-test="activity-feed"] select').select(
-      'dataHubAndExternalActivity'
-    )
   })
 
   context('Companies House Company', () => {
@@ -274,8 +271,6 @@ describe('Company activity feed', () => {
       const companyId = fixtures.company.externalActivitiesLtd.id
       const url = urls.companies.activity.index(companyId)
       cy.visit(url)
-        .get('[data-test="activity-feed"] select')
-        .select('externalActivity')
     })
 
     it('displays the correct activity type label', () => {
@@ -291,9 +286,6 @@ describe('Company activity feed', () => {
 context('Export Support Service No Title', () => {
   before(() => {
     cy.visit(urls.companies.activity.index(fixtures.company.essNoTitle.id))
-    cy.get('[data-test="activity-feed"] select').select(
-      'dataHubAndExternalActivity'
-    )
   })
 
   it('Displays the ESS Inbound Enquiry support title when no title provided', () => {

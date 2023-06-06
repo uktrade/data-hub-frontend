@@ -7,8 +7,7 @@ import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/con
 export default class ActivityFeedApp extends React.Component {
   static propTypes = {
     actions: PropTypes.node,
-    activityTypeFilter: PropTypes.string,
-    activityTypeFilters: PropTypes.object,
+    activityTypeFilter: PropTypes.array.isRequired,
     apiEndpoint: PropTypes.string.isRequired,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
@@ -18,8 +17,7 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   static defaultProps = {
-    activityTypeFilter: null,
-    activityTypeFilters: {},
+    activityTypeFilter: [],
     actions: null,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
@@ -124,7 +122,6 @@ export default class ActivityFeedApp extends React.Component {
   render() {
     const { activities, isLoading, hasMore, error, total } = this.state
     const {
-      activityTypeFilters,
       actions,
       isGlobalUltimate,
       dnbHierarchyCount,
@@ -138,7 +135,6 @@ export default class ActivityFeedApp extends React.Component {
     return (
       <ActivityFeed
         activities={activities}
-        activityTypeFilters={activityTypeFilters}
         actions={actions}
         isLoading={isLoading}
         hasMore={hasMore}
