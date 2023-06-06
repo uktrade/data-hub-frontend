@@ -37,6 +37,16 @@ describe('Export filters', () => {
         id: '1',
       },
       estimated_win_date: '2023-01-01',
+      owner: {
+        name: 'Warren Buffet',
+        id: '1',
+      },
+      team_members: [
+        {
+          name: 'Peter Lynch',
+          id: '3',
+        },
+      ],
     }),
     exportFaker({
       id: 2,
@@ -51,6 +61,16 @@ describe('Export filters', () => {
         name: 'The Bahamas',
       },
       estimated_win_date: '2023-02-01',
+      owner: {
+        name: 'Benjamin Graham',
+        id: '2',
+      },
+      team_members: [
+        {
+          name: 'Warren Buffet',
+          id: '1',
+        },
+      ],
     }),
     exportFaker({
       id: 3,
@@ -65,6 +85,11 @@ describe('Export filters', () => {
         name: 'St Lucia',
       },
       estimated_win_date: '2023-03-01',
+      owner: {
+        name: 'Peter Lynch',
+        id: '3',
+      },
+      team_members: [],
     }),
   ]
 
@@ -75,6 +100,10 @@ describe('Export filters', () => {
         results: exportList,
       },
     }).as('apiRequestList')
+    cy.intercept('GET', '/api-proxy/v4/export/owner', [
+      { name: 'Warren Buffet', id: '1' },
+      { name: 'Benjamin Graham', id: '2' },
+    ]).as('apiRequestOwnersSelect')
   })
 
   context('Status', () => {
@@ -376,6 +405,49 @@ describe('Export filters', () => {
         '@apiRequestAfterBefore',
         `${requestUrl}&${afterQueryParamsApi}&${beforeQueryParamsApi}`
       )
+    })
+  })
+
+  context('Owner', () => {
+    const element = '[data-test="owner-select"]'
+
+    beforeEach(() => {
+      cy.intercept('GET', `${requestUrl}&owner=1`, {
+        body: {
+          count: 2,
+          results: exportList.slice(0, 2),
+        },
+      }).as('apiRequestListOwners')
+    })
+
+    it('should have an "Owner" filter', () => {
+      cy.visit(exportTab)
+      cy.wait('@apiRequestList')
+      cy.wait('@apiRequestOwnersSelect')
+      cy.get(element).find('span').should('have.text', 'Owner')
+      cy.get(`${element} option`).then((sectorOptions) => {
+        expect(transformOptions(sectorOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: '1', label: 'Warren Buffet' },
+          { value: '2', label: 'Benjamin Graham' },
+        ])
+      })
+    })
+
+    it('should filter from the url', () => {
+      cy.visit(`${exportTab}?owner=1`)
+      assertRequestUrl('@apiRequestListOwners', `${requestUrl}&owner=1`)
+      assertListItems({ length: 2 })
+      cy.get(`${element} select`).find(':selected').contains('Warren Buffet')
+    })
+
+    it('should filter from user input', () => {
+      cy.visit(exportTab)
+      cy.wait('@apiRequestList')
+      cy.wait('@apiRequestOwnersSelect')
+      cy.get(`${element} select`).select('Warren Buffet')
+      assertListItems({ length: 2 })
+      assertRequestUrl('@apiRequestListOwners', `${requestUrl}&owner=1`)
     })
   })
 })

@@ -25,7 +25,7 @@ const areFiltersActive = (queryParams) => {
 
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
-  const { sectorOptions, countryOptions } = state[ID]
+  const { sectorOptions, countryOptions, ownerOptions } = state[ID]
   return {
     ...state[ID],
     payload: {
@@ -45,6 +45,9 @@ export const state2props = ({ router, ...state }) => {
       },
       country: {
         options: countryOptions,
+      },
+      owner: {
+        options: ownerOptions,
       },
     },
   }
