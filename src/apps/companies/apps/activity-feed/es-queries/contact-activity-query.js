@@ -70,25 +70,6 @@ const contactActivityQuery = (
                     must: [
                       {
                         term: {
-                          'object.type': 'dit:maxemail:Email:Sent',
-                        },
-                      },
-                      {
-                        term: {
-                          'object.dit:emailAddress': {
-                            value: email,
-                            case_insensitive: true,
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  bool: {
-                    must: [
-                      {
-                        term: {
                           'object.attributedTo.id':
                             'dit:directoryFormsApi:SubmissionType:export-support-service',
                         },
