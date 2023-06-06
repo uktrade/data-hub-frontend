@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
-import { DefaultLayout } from '../../../components'
+import { DefaultLayout, Tag } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
 import { GREY_4, BLACK } from '../../../utils/colours'
 import { isEmpty } from 'lodash'
@@ -20,6 +20,7 @@ import {
   SubsidiaryList,
   HierachyListItem,
   HierarchyHeaderContents,
+  TagContents,
 } from './styled'
 
 const ToggleSubsidiariesButton = ({
@@ -179,6 +180,15 @@ const HierarchyItem = ({
         ) : (
           <span>{`${company.name} (not on Data Hub)`}</span>
         )}
+
+        <TagContents>
+          <Tag colour={'blue'}>{company.number_of_employees}</Tag>
+          {company.uk_region && (
+            <Tag colour={'blue'}>{company.uk_region.name}</Tag>
+          )}
+          <Tag colour={'blue'}>{company.address.country.name}</Tag>
+          {hierarchy == 1 && <Tag colour={'grey'}>Ultimate HQ</Tag>}
+        </TagContents>
       </HierarchyItemContents>
       <Subsidiaries
         company={company}
