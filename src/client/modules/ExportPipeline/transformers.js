@@ -72,3 +72,9 @@ export const transformAPIValuesForForm = ({
   exporter_experience: exporter_experience?.id,
   notes,
 })
+
+export const transformAPIAdvisersToOptions = ({ data }) =>
+  data.map((adviser) => ({
+    label: adviser.name,
+    value: adviser.id,
+  }))

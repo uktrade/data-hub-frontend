@@ -7,7 +7,7 @@ import qs from 'qs'
 
 import { Select } from '../../../components'
 
-const StyledSelect = styled(Select)({
+const StyledSelect = styled(Select)(({ maxWidth }) => ({
   alignItems: 'flex-start',
   flexDirection: 'column',
   flex: '1 1',
@@ -15,14 +15,15 @@ const StyledSelect = styled(Select)({
     width: '100%',
     minWidth: 170,
     maxHeight: 36,
+    ...(maxWidth ? { maxWidth: `${maxWidth}px` } : {}),
   },
   marginBottom: SPACING.SCALE_1,
   [MEDIA_QUERIES.DESKTOP]: {
     margin: SPACING.SCALE_1,
   },
-})
+}))
 
-const ExportSelect = ({ label, options = [], qsParam }) => {
+const ExportSelect = ({ label, options = [], qsParam, maxWidth }) => {
   const history = useHistory()
   const location = useLocation()
 
@@ -43,6 +44,7 @@ const ExportSelect = ({ label, options = [], qsParam }) => {
     <StyledSelect
       label={label}
       data-test={kebabCase(`${qsParam}-select`)}
+      maxWidth={maxWidth}
       input={{
         onChange,
         initialValue,

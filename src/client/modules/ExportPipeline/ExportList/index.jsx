@@ -143,6 +143,12 @@ const ExportList = ({
                   qsParamName="estimated_win_date_before"
                   data-test="estimated-win-date-before"
                 />
+                <ExportSelect
+                  label="Owner"
+                  qsParam="owner"
+                  maxWidth="173"
+                  options={filters.owner.options}
+                />
               </FiltersContainer>
             )}
           </Task.Status>
