@@ -853,9 +853,7 @@ describe('Activity feed controllers', () => {
             company: {
               ...companyMock,
               is_global_ultimate: true,
-            },
-            requestQuery: {
-              showDnbHierarchy: [true],
+              showDnbHierarchy: true,
             },
             user: {
               id: 123,
