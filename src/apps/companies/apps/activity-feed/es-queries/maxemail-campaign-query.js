@@ -1,6 +1,5 @@
-const maxemailCampaignQuery = (size = 20) => {
+const maxemailCampaignQuery = (campaignIds) => {
   return {
-    size,
     sort: [
       {
         published: {
@@ -9,8 +8,19 @@ const maxemailCampaignQuery = (size = 20) => {
       },
     ],
     query: {
-      term: {
-        'object.type': 'dit:maxemail:Campaign',
+      bool: {
+        must: [
+          {
+            term: {
+              'object.type': 'dit:maxemail:Campaign',
+            },
+          },
+          {
+            terms: {
+              id: campaignIds,
+            },
+          },
+        ],
       },
     },
   }

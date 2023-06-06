@@ -91,17 +91,25 @@ function getContactFromEmailAddress(emailAddress, contacts) {
 
 async function getMaxemailCampaigns(req, next, contacts) {
   try {
-    // Fetch Maxemail campaigns
-    const campaignQuery = maxemailCampaignQuery()
-    const campaignsResults = await fetchActivityFeed(req, campaignQuery)
-    const campaignActivities = campaignsResults.hits.hits.map(
-      (hit) => hit._source
-    )
-
     // Fetch all Maxemail emails sent to Data Hub company contacts as part of a campaign
     const emailSentQuery = maxemailEmailSentQuery(contacts)
     const emailSentResults = await fetchActivityFeed(req, emailSentQuery)
     const emailSentActivities = emailSentResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    const campaignIds = [
+      ...new Set(
+        emailSentActivities.map(
+          (activity) => `${activity.object.attributedTo.id}:Create`
+        )
+      ),
+    ]
+
+    // Fetch Maxemail campaigns
+    const campaignQuery = maxemailCampaignQuery(campaignIds)
+    const campaignsResults = await fetchActivityFeed(req, campaignQuery)
+    const campaignActivities = campaignsResults.hits.hits.map(
       (hit) => hit._source
     )
 
