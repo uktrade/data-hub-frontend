@@ -18,7 +18,6 @@ const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
-  maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
   aventriAttendeeQuery,
@@ -79,43 +78,28 @@ function getContactFromEmailAddress(emailAddress, contacts) {
     : null
 }
 
-async function getMaxemailCampaigns(req, next, contacts) {
-  try {
-    // Fetch Maxemail campaigns
-    const campaignQuery = maxemailCampaignQuery()
-    const campaignsResults = await fetchActivityFeed(req, campaignQuery)
-    const campaignActivities = campaignsResults.hits.hits.map(
-      (hit) => hit._source
-    )
+function extractEmailsByCampaignId(activities) {
+  return activities.hits.hits.reduce((emailsByCampaignId, obj) => {
+    const campaignId = `${obj._source.object.attributedTo.id}:Create`
+    const email = obj._source.object['dit:emailAddress']
 
+    if (emailsByCampaignId[campaignId]) {
+      emailsByCampaignId[campaignId].push(email)
+    } else {
+      emailsByCampaignId[campaignId] = [email]
+    }
+
+    return emailsByCampaignId
+  }, {})
+}
+
+async function getMaxemailEmailsByCampaign(req, next, contacts) {
+  try {
     // Fetch all Maxemail emails sent to Data Hub company contacts as part of a campaign
     const emailSentQuery = maxemailEmailSentQuery(contacts)
     const emailSentResults = await fetchActivityFeed(req, emailSentQuery)
-    const emailSentActivities = emailSentResults.hits.hits.map(
-      (hit) => hit._source
-    )
 
-    // Group Data Hub company contacts to a campaign
-    campaignActivities.forEach((campaign) => {
-      campaign.object.contacts = []
-      const campaignId = campaign.object['dit:maxemail:Campaign:id']
-      emailSentActivities.forEach((emailSent) => {
-        const sentEmailCampaignId =
-          emailSent.object.attributedTo['dit:maxemail:Campaign:id']
-        if (campaignId === sentEmailCampaignId) {
-          const emailAddress = emailSent.object['dit:emailAddress']
-          const contact = getContactFromEmailAddress(emailAddress, contacts)
-          if (contact) {
-            campaign.object.contacts.push(contact)
-          }
-        }
-      })
-    })
-
-    // We only want campaigns that have at least one contact
-    return campaignActivities.filter(
-      (campaign) => campaign.object.contacts.length
-    )
+    return extractEmailsByCampaignId(emailSentResults)
   } catch (error) {
     next(error)
   }
@@ -292,6 +276,10 @@ async function fetchActivityFeedHandler(req, res, next) {
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
+    const maxemailCampaigns = isExternalActivityFilter(activityType)
+      ? await getMaxemailEmailsByCampaign(req, next, filteredContacts)
+      : {}
+
     const query = dataHubCompanyActivityQuery({
       from,
       size,
@@ -304,6 +292,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       activityType,
       user,
       aventriEventIds,
+      maxemailCampaignIds: Object.keys(maxemailCampaigns),
       feedType,
     })
 
@@ -311,12 +300,6 @@ async function fetchActivityFeedHandler(req, res, next) {
 
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value
-
-    if (isExternalActivityFilter(activityType)) {
-      const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
-      activities = [...activities, ...campaigns]
-      total += campaigns.length
-    }
 
     //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
@@ -326,6 +309,13 @@ async function fetchActivityFeedHandler(req, res, next) {
           ...aventriEvents[activity.id],
         ]
       }
+      if (activity.object.type == 'dit:maxemail:Campaign') {
+        const emails = maxemailCampaigns[activity.id] || []
+        activity.object.contacts = emails
+          .map((email) => getContactFromEmailAddress(email, filteredContacts))
+          .filter(Boolean)
+      }
+
       // Add Contacts to ESS activities (need to check type as Maxemail does not have attributedTo.id key)
       if (isEssActivity(activity)) {
         const essContactEmail = activity.actor['dit:emailAddress']
@@ -338,7 +328,6 @@ async function fetchActivityFeedHandler(req, res, next) {
 
       return activity
     })
-
     res.json({
       total,
       activities,
