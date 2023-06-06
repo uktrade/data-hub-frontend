@@ -1,4 +1,5 @@
 const { sortCriteria } = require('./sortCriteria')
+const { datePeriodFilter } = require('./datePeriodFilter')
 const {
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
@@ -20,6 +21,8 @@ const dataHubCompanyActivityQuery = ({
   companyIds,
   aventriEventIds,
   contacts,
+  dateBefore = null,
+  dateAfter = null,
   ditParticipantsAdviser,
   activityType,
   feedType,
@@ -167,30 +170,18 @@ const dataHubCompanyActivityQuery = ({
   let filters = []
   if (feedType && feedType != FILTER_FEED_TYPE.ALL) {
     let now = new Date()
-    let period
     switch (feedType) {
       case FILTER_FEED_TYPE.RECENT:
-        period = 'isBefore'
+        dateBefore = now
         break
       case FILTER_FEED_TYPE.UPCOMING:
         sortDirection = 'asc'
-        period = 'isAfter'
+        dateAfter = now
         break
     }
-    const dateFilter = {
-      script: {
-        script: {
-          lang: 'painless',
-          source:
-            "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime." +
-            period +
-            '(now)',
-          params: {
-            now: now.toISOString(),
-          },
-        },
-      },
-    }
+  }
+  if (dateAfter || dateBefore) {
+    const dateFilter = datePeriodFilter(dateAfter, dateBefore)
     filters.push(dateFilter)
   }
   shouldCriteria.map(

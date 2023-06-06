@@ -257,6 +257,8 @@ async function fetchActivityFeedHandler(req, res, next) {
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
+      dateBefore = null,
+      dateAfter = null,
       feedType = FILTER_FEED_TYPE.ALL,
       ditParticipantsAdviser = [],
       showDnbHierarchy = false,
@@ -286,6 +288,8 @@ async function fetchActivityFeedHandler(req, res, next) {
       size,
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: filteredContacts,
+      dateAfter,
+      dateBefore,
       ditParticipantsAdviser,
       activityType,
       user,

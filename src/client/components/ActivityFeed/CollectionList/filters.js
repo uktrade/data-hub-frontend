@@ -50,16 +50,16 @@ export const buildSelectedFilters = (
     }),
   },
   datesAfter: {
-    queryParam: 'date_after',
+    queryParam: 'dateAfter',
     options: buildDatesFilter({
-      value: queryParams.date_after,
+      value: queryParams.dateAfter,
       categoryLabel: LABELS.dateAfter,
     }),
   },
   datesBefore: {
-    queryParam: 'date_before',
+    queryParam: 'dateBefore',
     options: buildDatesFilter({
-      value: queryParams.date_before,
+      value: queryParams.dateBefore,
       categoryLabel: LABELS.dateBefore,
     }),
   },
