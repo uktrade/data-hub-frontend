@@ -271,6 +271,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       feedType = FILTER_FEED_TYPE.ALL,
       ditParticipantsAdviser = [],
       showDnbHierarchy = false,
+      activityType = [],
     } = req.query
     let dnbHierarchyIds = []
     if (company.is_global_ultimate && showDnbHierarchy) {
@@ -297,6 +298,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       companyIds: [company.id, ...dnbHierarchyIds],
       contacts: filteredContacts,
       ditParticipantsAdviser,
+      activityType,
       user,
       aventriEventIds,
       feedType,

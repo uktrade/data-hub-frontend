@@ -1,7 +1,9 @@
 const { sortCriteria } = require('./sortCriteria')
 const {
   FILTER_FEED_TYPE,
-  DATA_HUB_AND_EXTERNAL_ACTIVITY,
+  FILTER_KEYS,
+  DATA_HUB_ACTIVITY,
+  EXTERNAL_ACTIVITY,
 } = require('../constants')
 
 const dataHubCompanyActivityQuery = ({
@@ -11,11 +13,22 @@ const dataHubCompanyActivityQuery = ({
   aventriEventIds,
   contacts,
   ditParticipantsAdviser,
+  activityType,
   feedType,
 }) => {
   let sortDirection = 'desc'
   let shouldCriteria = []
-  let types = DATA_HUB_AND_EXTERNAL_ACTIVITY
+  let types = []
+  if (activityType?.length == 0) {
+    activityType = [FILTER_KEYS.dataHubActivity, FILTER_KEYS.externalActivity]
+  }
+  if (activityType.includes(FILTER_KEYS.dataHubActivity)) {
+    types = [...types, ...DATA_HUB_ACTIVITY]
+  }
+  if (activityType.includes(FILTER_KEYS.externalActivity)) {
+    types = [...types, ...EXTERNAL_ACTIVITY]
+  }
+
   let dataHubActivityCriteria = {
     bool: {
       must: [
@@ -42,47 +55,50 @@ const dataHubCompanyActivityQuery = ({
     })
   }
   shouldCriteria.push(dataHubActivityCriteria)
-  let externalActivityCriteria = {
-    bool: {
-      must: [
-        {
-          term: {
-            // Great.gov.uk forms
-            'object.type': 'dit:directoryFormsApi:Submission',
+
+  if (activityType.includes(FILTER_KEYS.externalActivity)) {
+    let externalActivityCriteria = {
+      bool: {
+        must: [
+          {
+            term: {
+              // Great.gov.uk forms
+              'object.type': 'dit:directoryFormsApi:Submission',
+            },
           },
-        },
-        {
-          term: {
-            // JSON format (Note: there two other formats HTML and Text)
-            'object.attributedTo.type':
-              'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+          {
+            term: {
+              // JSON format (Note: there two other formats HTML and Text)
+              'object.attributedTo.type':
+                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+            },
           },
-        },
-        {
-          term: {
-            // For now, we only care about `Export enquiry` forms
-            'object.url': '/contact/export-advice/comment/',
+          {
+            term: {
+              // For now, we only care about `Export enquiry` forms
+              'object.url': '/contact/export-advice/comment/',
+            },
           },
-        },
-        {
-          // Match a Data Hub company contact to the user filling out the form at Great.gov.uk
-          terms: {
-            'actor.dit:emailAddress': [
-              ...contacts.map((contact) => contact.email),
-            ],
+          {
+            // Match a Data Hub company contact to the user filling out the form at Great.gov.uk
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
+            },
           },
-        },
-      ],
-    },
-  }
-  if (ditParticipantsAdviser.length) {
-    externalActivityCriteria.bool.must.push({
-      term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+        ],
       },
-    })
+    }
+    if (ditParticipantsAdviser.length) {
+      externalActivityCriteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(externalActivityCriteria)
   }
-  shouldCriteria.push(externalActivityCriteria)
 
   if (aventriEventIds?.length) {
     let criteria = {
@@ -110,33 +126,35 @@ const dataHubCompanyActivityQuery = ({
     }
     shouldCriteria.push(criteria)
   }
-  let criteria = {
-    bool: {
-      must: [
-        {
-          term: {
-            'object.attributedTo.id':
-              'dit:directoryFormsApi:SubmissionType:export-support-service',
+  if (activityType.includes(FILTER_KEYS.dataHubActivity)) {
+    let criteria = {
+      bool: {
+        must: [
+          {
+            term: {
+              'object.attributedTo.id':
+                'dit:directoryFormsApi:SubmissionType:export-support-service',
+            },
           },
-        },
-        {
-          terms: {
-            'actor.dit:emailAddress': [
-              ...contacts.map((contact) => contact.email),
-            ],
+          {
+            terms: {
+              'actor.dit:emailAddress': [
+                ...contacts.map((contact) => contact.email),
+              ],
+            },
           },
-        },
-      ],
-    },
-  }
-  if (ditParticipantsAdviser.length) {
-    criteria.bool.must.push({
-      term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+        ],
       },
-    })
+    }
+    if (ditParticipantsAdviser.length) {
+      criteria.bool.must.push({
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+        },
+      })
+    }
+    shouldCriteria.push(criteria)
   }
-  shouldCriteria.push(criteria)
 
   let filters = []
   if (feedType && feedType != FILTER_FEED_TYPE.ALL) {

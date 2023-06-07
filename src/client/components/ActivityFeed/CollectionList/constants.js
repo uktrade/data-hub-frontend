@@ -1,7 +1,7 @@
 import { FILTER_KEYS } from '../../../../apps/companies/apps/activity-feed/constants'
 
 export const LABELS = {
-  activityType: 'Activity types',
+  activityType: 'Activity type',
   interaction: 'Interaction',
   serviceDelivery: 'Service delivery',
   advisers: 'Adviser',
@@ -19,9 +19,9 @@ export const LABELS = {
   policyAreas: 'Policy areas',
   policyIssueType: 'Policy issue type',
   companyOneListGroupTier: 'Company One List group tier',
-  allDataHubActivity: 'All Data Hub activity',
+  allDataHubActivity: 'Internal activity',
   myActivity: 'My activity',
-  allExternalActivity: 'All external activity',
+  allExternalActivity: 'External activity',
 }
 
 export const ACTIVITY_TYPE_OPTIONS = [
