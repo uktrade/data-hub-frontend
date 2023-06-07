@@ -68,6 +68,8 @@ import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCap
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
+import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
+import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -351,7 +353,6 @@ import {
   getExportPipelineMetadata,
 } from '../client/modules/ExportPipeline/ExportList/task'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
-import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
 import { getListsCompanyIsIn } from './components/CompanyLocalHeader/task'
 import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/state'
@@ -364,7 +365,6 @@ import {
   createInvestmentProposition,
   abandonInvestmentProposition,
 } from './modules/Investments/Projects/Propositions/tasks'
-import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
 import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
@@ -774,7 +774,7 @@ function App() {
           {(props) => <CompanyOverview {...props} />}
         </Mount>
         <Mount selector="#company-projects-collection">
-          {(props) => <ProjectsCollection {...props} />}
+          {(props) => <CompanyProjectsCollection {...props} />}
         </Mount>
         <Mount selector="#company-contacts-collection">
           {(props) => <CompaniesContactsCollection {...props} />}
