@@ -1,9 +1,9 @@
 const { sortCriteria } = require('./sortCriteria')
 const {
+  DATA_HUB_AND_AVENTRI_ACTIVITY,
+  EXTERNAL_ACTIVITY,
   FILTER_FEED_TYPE,
   FILTER_KEYS,
-  DATA_HUB_ACTIVITY,
-  EXTERNAL_ACTIVITY,
 } = require('../constants')
 
 const dataHubCompanyActivityQuery = ({
@@ -23,7 +23,7 @@ const dataHubCompanyActivityQuery = ({
     activityType = [FILTER_KEYS.dataHubActivity, FILTER_KEYS.externalActivity]
   }
   if (activityType.includes(FILTER_KEYS.dataHubActivity)) {
-    types = [...types, ...DATA_HUB_ACTIVITY]
+    types = [...types, ...DATA_HUB_AND_AVENTRI_ACTIVITY]
   }
   if (activityType.includes(FILTER_KEYS.externalActivity)) {
     types = [...types, ...EXTERNAL_ACTIVITY]
