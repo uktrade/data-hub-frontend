@@ -46,8 +46,6 @@ describe('LEP add Investment Project interaction', () => {
       cy.contains('Add interaction for Mars Exports Ltd')
         .get(formSelectors.service)
         .select('Investment - services')
-        .get(formSelectors.hasRelatedTradeAgreementsNo)
-        .click()
         .get(formSelectors.contact)
         .selectTypeaheadOption('Mark Halomi')
         .get(formSelectors.communicationChannel)
