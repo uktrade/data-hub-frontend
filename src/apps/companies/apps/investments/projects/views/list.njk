@@ -1,5 +1,9 @@
-{% extends "../../../../views/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block body_main_content %}
-  {% include "./main.njk" %}
+{% block body %}
+  {% component 'react-slot', {
+      id: 'company-projects-collection',
+      props: props
+      }
+    %}
 {% endblock %}
