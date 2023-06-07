@@ -100,8 +100,8 @@ const getServiceContext = (theme, kind, investmentProject) => {
 
 const isUktpService = (service) => service?.label?.includes('(UKTP)')
 
-const isInvestmentTheme = (theme) => theme?.includes(THEMES.INVESTMENT)
-const isExportTheme = (theme) => theme?.includes(THEMES.EXPORT)
+const isInvestmentTheme = (theme) => theme === THEMES.INVESTMENT
+const isExportTheme = (theme) => theme === THEMES.EXPORT
 
 const buildServicesHierarchy = (services) =>
   Object.values(
