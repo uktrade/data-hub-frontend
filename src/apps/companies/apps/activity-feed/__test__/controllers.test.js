@@ -12,6 +12,7 @@ const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-
 const contactMock = require('../../../../../../test/sandbox/fixtures/v3/contact/contact-by-id-uk.json')
 
 const {
+  DATA_HUB_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_ATTENDEES_SORT_OPTIONS,
@@ -249,7 +250,7 @@ describe('Activity feed controllers', () => {
                           must: [
                             {
                               terms: {
-                                'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                                'object.type': DATA_HUB_ACTIVITY,
                               },
                             },
                             {
