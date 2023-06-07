@@ -1,11 +1,6 @@
-{% from "companies/apps/investments/macros/navigation.njk" import subnavigation %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% extends "../../../../views/template.njk" %}
-
-{% block body_main_content %}
-
-  {{ subnavigation(company, 'large-capital-profile') }}
-
+{% block body %}
   {% component 'react-slot', {
       id: 'company-large-capital-profile',
       props: props
