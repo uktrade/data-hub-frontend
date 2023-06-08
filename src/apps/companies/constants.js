@@ -34,6 +34,7 @@ const LOCAL_NAV = [
   {
     path: 'activity',
     label: 'Activity',
+    search: '?activityType%5B0%5D=dataHubActivity&page=1',
     permissions: ['interaction.view_all_interaction'],
   },
   {
