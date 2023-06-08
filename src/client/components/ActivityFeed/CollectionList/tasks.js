@@ -70,7 +70,7 @@ const getCompanyActivities = ({
         size,
         from: parseInt(size * (page - 1), 0),
         subject,
-        activityTypeFilter: activityType,
+        activityType,
         activity,
         ditParticipantsAdviser,
         showDnbHierarchy,

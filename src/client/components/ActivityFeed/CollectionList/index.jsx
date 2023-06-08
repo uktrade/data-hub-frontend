@@ -7,7 +7,7 @@ import {
   COMPANY_ACTIVITIES__METADATA_LOADED,
 } from '../../../actions'
 
-import { LABELS } from './constants'
+import { ACTIVITY_TYPE_OPTIONS, LABELS } from './constants'
 
 import {
   CollectionFilters,
@@ -159,6 +159,14 @@ const CompanyActivityCollection = ({
             data-test="adviser-filter"
           />
         </FilterToggleSection>
+        <Filters.CheckboxGroup
+          legend={LABELS.activityType}
+          name="activityType"
+          qsParam="activityType"
+          options={ACTIVITY_TYPE_OPTIONS}
+          selectedOptions={selectedFilters.activityType.options}
+          data-test="activity-type-filter"
+        />
       </CollectionFilters>
     </FilteredCollectionList>
   )
