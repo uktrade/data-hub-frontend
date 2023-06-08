@@ -916,8 +916,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -958,8 +960,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -983,8 +987,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1015,8 +1021,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1062,7 +1070,17 @@ describe('Activity feed controllers', () => {
         const expectedEsQuery = {
           from: 0,
           size: 20,
-          sort: sortCriteria('asc'),
+          sort: {
+            _script: {
+              type: 'number',
+              script: {
+                lang: 'painless',
+                source:
+                  "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
+              },
+              order: 'asc',
+            },
+          },
           query: {
             bool: {
               filter: {
@@ -1073,7 +1091,17 @@ describe('Activity feed controllers', () => {
                         must: [
                           {
                             terms: {
-                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                              'object.type': [
+                                'dit:Interaction',
+                                'dit:ServiceDelivery',
+                                'dit:InvestmentProject',
+                                'dit:OMISOrder',
+                                'dit:CompanyReferral',
+                                'dit:aventri:Event',
+                                'dit:Accounts',
+                                'dit:Company',
+                                'dit:Export',
+                              ],
                             },
                           },
                           {
@@ -1088,8 +1116,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1130,8 +1160,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1155,8 +1187,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1187,8 +1221,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
