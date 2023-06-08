@@ -19,7 +19,10 @@ import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToStringResource } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
 import ArchivePanel from '../ArchivePanel'
-import { isItaTierDAccount } from '../../modules/Companies/utils'
+import {
+  buildCompanyBreadcrumbs,
+  isItaTierDAccount,
+} from '../../modules/Companies/utils'
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -116,7 +119,14 @@ const CompanyLocalHeader = ({
 }) =>
   company && (
     <>
-      <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
+      <LocalHeader
+        breadcrumbs={buildCompanyBreadcrumbs(
+          breadcrumbs,
+          company.id,
+          company.name
+        )}
+        flashMessages={flashMessages}
+      >
         <GridRow>
           <GridCol setWidth="two-thirds">
             <LocalHeaderHeading data-test="heading">
@@ -138,7 +148,7 @@ const CompanyLocalHeader = ({
               </Button>
               <Button
                 as={StyledButtonLink}
-                data-test={'header-add-export-project'}
+                data-test="header-add-export-project"
                 href={urls.exportPipeline.create(company.id)}
                 aria-label={`Add export project`}
                 buttonColour={GREY_3}
