@@ -408,21 +408,6 @@ describe('Activity feed controllers', () => {
                           ],
                         },
                       },
-                      {
-                        bool: {
-                          must: [
-                            { term: { 'object.type': 'dit:aventri:Event' } },
-                            {
-                              terms: {
-                                id: [
-                                  'dit:aventri:Event:1:Create',
-                                  'dit:aventri:Event:2:Create',
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
                     ],
                   },
                 },

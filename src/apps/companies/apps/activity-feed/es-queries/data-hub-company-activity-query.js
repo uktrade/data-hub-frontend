@@ -6,6 +6,14 @@ const {
   FILTER_KEYS,
 } = require('../constants')
 
+const isInternalActivityFilter = (activityType) => {
+  return activityType.includes(FILTER_KEYS.dataHubActivity)
+}
+
+const isExternalActivityFilter = (activityType) => {
+  return activityType.includes(FILTER_KEYS.externalActivity)
+}
+
 const dataHubCompanyActivityQuery = ({
   from,
   size,
@@ -22,10 +30,10 @@ const dataHubCompanyActivityQuery = ({
   if (activityType?.length == 0) {
     activityType = [FILTER_KEYS.dataHubActivity, FILTER_KEYS.externalActivity]
   }
-  if (activityType.includes(FILTER_KEYS.dataHubActivity)) {
+  if (isInternalActivityFilter(activityType)) {
     types = [...types, ...DATA_HUB_ACTIVITY]
   }
-  if (activityType.includes(FILTER_KEYS.externalActivity)) {
+  if (isExternalActivityFilter(activityType)) {
     types = [...types, ...EXTERNAL_ACTIVITY]
   }
 
@@ -56,7 +64,7 @@ const dataHubCompanyActivityQuery = ({
   }
   shouldCriteria.push(dataHubActivityCriteria)
 
-  if (activityType.includes(FILTER_KEYS.externalActivity)) {
+  if (isExternalActivityFilter(activityType)) {
     let externalActivityCriteria = {
       bool: {
         must: [
@@ -100,33 +108,33 @@ const dataHubCompanyActivityQuery = ({
     shouldCriteria.push(externalActivityCriteria)
   }
 
-  if (aventriEventIds?.length) {
-    let criteria = {
-      bool: {
-        must: [
-          {
-            term: {
-              'object.type': 'dit:aventri:Event',
+  if (isInternalActivityFilter(activityType)) {
+    if (aventriEventIds?.length) {
+      let criteria = {
+        bool: {
+          must: [
+            {
+              term: {
+                'object.type': 'dit:aventri:Event',
+              },
             },
-          },
-          {
-            terms: {
-              id: aventriEventIds,
+            {
+              terms: {
+                id: aventriEventIds,
+              },
             },
-          },
-        ],
-      },
-    }
-    if (ditParticipantsAdviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+          ],
         },
-      })
+      }
+      if (ditParticipantsAdviser.length) {
+        criteria.bool.must.push({
+          term: {
+            'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+          },
+        })
+      }
+      shouldCriteria.push(criteria)
     }
-    shouldCriteria.push(criteria)
-  }
-  if (activityType.includes(FILTER_KEYS.dataHubActivity)) {
     let criteria = {
       bool: {
         must: [
