@@ -146,7 +146,6 @@ const ExportList = ({
                 <ExportSelect
                   label="Owner"
                   qsParam="owner"
-                  maxWidth="173"
                   options={filters.owner.options}
                 />
               </FiltersContainer>
