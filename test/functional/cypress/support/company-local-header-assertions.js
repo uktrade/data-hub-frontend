@@ -41,6 +41,18 @@ const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
 }
 
 /**
+ * Asserts that the refer this compnay button has the correct URL
+ */
+const assertReferButton = (referralUrl) => {
+  cy.get('[data-test="refer-company-button"]').contains('Refer this company')
+  cy.get('[data-test="refer-company-button"]').click()
+  cy.location().should((loc) => {
+    expect(loc.pathname).to.eq(referralUrl)
+  })
+  cy.go('back')
+}
+
+/**
  * Asserts that the company list item button has the correct URL
  */
 const assertCompanyListItemButton = (addRemoveFromListUrl, detailsUrl) => {
@@ -118,6 +130,7 @@ module.exports = {
   assertCompanyAddress,
   assertBadgeText,
   assertAddButton,
+  assertReferButton,
   assertExportProjectButton,
   assertAddInteractionButton,
   assertBreadcrumbs,

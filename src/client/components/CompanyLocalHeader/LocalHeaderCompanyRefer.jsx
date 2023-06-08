@@ -28,7 +28,10 @@ const LocalHeaderCompanyRefer = ({ company }) => {
   }
   return (
     <>
-      <StyledButton onClick={handleClickRefer}>
+      <StyledButton
+        data-test={'refer-company-button'}
+        onClick={handleClickRefer}
+      >
         <span>Refer this company</span>
       </StyledButton>
     </>
