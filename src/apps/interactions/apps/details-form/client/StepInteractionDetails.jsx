@@ -414,12 +414,18 @@ const StepInteractionDetails = ({
             required="Enter business intelligence"
             hint={
               <>
-                Add brief details of what business intelligence was discussed,
-                such as impacts on the company, sector, economy and any actions
-                taken. This information will be visible to other Data Hub users,
-                the Business Intelligence Unit and DBT.
+                Please summarise the information the business shared during this
+                interaction, including sufficient detail to convey the meaning
+                and significance of the topics covered.
                 <br />
                 <br />
+                Where available, include:
+                <br />• Opportunities, risks and/or anything affecting business
+                operations (company, sector or market) or investor sentiment
+                <br />• Quantify impacts and timescales (e.g. costs,
+                number/location of jobs created/lost)
+                <br />• Actions the business has or is proposing to take
+                <br />• Comments, questions or requests of HMG
               </>
             }
           />
