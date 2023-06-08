@@ -178,7 +178,7 @@ async function fetchActivitiesForContact(req, res, next) {
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
     // istanbul ignore next: Covered by functional tests
-    let results = await fetchActivityFeed(
+    const results = await fetchActivityFeed(
       req,
       contactActivityQuery(
         from,

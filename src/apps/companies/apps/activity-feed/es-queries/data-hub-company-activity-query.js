@@ -40,7 +40,7 @@ const dataHubCompanyActivityQuery = ({
     types = [...types, ...EXTERNAL_ACTIVITY]
   }
 
-  let dataHubActivityCriteria = {
+  const dataHubActivityCriteria = {
     bool: {
       must: [
         {
@@ -68,7 +68,7 @@ const dataHubCompanyActivityQuery = ({
   shouldCriteria.push(dataHubActivityCriteria)
 
   if (isExternalActivityFilter(activityType)) {
-    let externalActivityCriteria = {
+    const externalActivityCriteria = {
       bool: {
         must: [
           {
@@ -113,7 +113,7 @@ const dataHubCompanyActivityQuery = ({
 
   if (isInternalActivityFilter(activityType)) {
     if (aventriEventIds?.length) {
-      let criteria = {
+      const criteria = {
         bool: {
           must: [
             {
@@ -138,7 +138,7 @@ const dataHubCompanyActivityQuery = ({
       }
       shouldCriteria.push(criteria)
     }
-    let criteria = {
+    const criteria = {
       bool: {
         must: [
           {
@@ -167,9 +167,9 @@ const dataHubCompanyActivityQuery = ({
     shouldCriteria.push(criteria)
   }
 
-  let filters = []
+  const filters = []
   if (feedType && feedType != FILTER_FEED_TYPE.ALL) {
-    let now = new Date()
+    const now = new Date()
     switch (feedType) {
       case FILTER_FEED_TYPE.RECENT:
         dateBefore = now
