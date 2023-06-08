@@ -20,6 +20,7 @@ export const getExportPipelineList = ({
   estimated_win_date_after, // from
   estimated_win_date_before, // to
   owner,
+  sortby = 'created_on:desc',
 }) => {
   const offset = getPageOffset({ limit, page })
   const payload = omitBy(
@@ -33,6 +34,7 @@ export const getExportPipelineList = ({
       sector,
       destination_country,
       owner,
+      sortby,
     },
     (fieldValue) =>
       fieldValue === SHOW_ALL_OPTION.value || isUndefined(fieldValue)

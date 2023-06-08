@@ -148,6 +148,11 @@ const ExportList = ({
                   qsParam="owner"
                   options={filters.owner.options}
                 />
+                <ExportSelect
+                  label="Sort by"
+                  qsParam="sortby"
+                  options={filters.sortby.options}
+                />
               </FiltersContainer>
             )}
           </Task.Status>

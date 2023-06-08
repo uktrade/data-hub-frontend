@@ -9,6 +9,7 @@ export const TASK_GET_EXPORT_PIPELINE_METADATA =
 export const ID = 'exportPipelineList'
 
 import {
+  SORT_OPTIONS,
   STATUS_LIST_OPTIONS,
   EXPORT_POTENTIAL_LIST_OPTIONS,
 } from '../constants'
@@ -48,6 +49,9 @@ export const state2props = ({ router, ...state }) => {
       },
       owner: {
         options: ownerOptions,
+      },
+      sortby: {
+        options: SORT_OPTIONS,
       },
     },
   }
