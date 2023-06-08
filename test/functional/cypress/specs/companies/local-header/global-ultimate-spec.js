@@ -110,6 +110,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
+    })
+
     it('should display company list item buttons', () => {
       assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
@@ -151,6 +155,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
     })
 
     it('should display company list item buttons', () => {
@@ -200,6 +208,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
+    })
+
     it('should display company list item buttons', () => {
       assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
@@ -247,6 +259,10 @@ describe('Local header for global ultimate company', () => {
 
       it('should display the add to list button', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
       })
 
       it('should display company list item buttons', () => {
@@ -299,6 +315,10 @@ describe('Local header for global ultimate company', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
+      })
+
       it('should display company list item buttons', () => {
         assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })
@@ -345,6 +365,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
     })
 
     it('should display company list item buttons', () => {
@@ -394,6 +418,10 @@ describe('Local header for global ultimate company', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
     })
 
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
+    })
+
     it('should display company list item buttons', () => {
       assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
     })
@@ -439,6 +467,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
     })
 
     it('should display company list item buttons', () => {
