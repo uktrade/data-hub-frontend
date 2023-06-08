@@ -17,6 +17,7 @@ import {
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import LocalHeaderCompanyLists from './LocalHeaderCompanyLists'
+import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToString } from '../../../client/utils/addresses'
@@ -46,6 +47,7 @@ const StyledButtonContainer = styled('div')`
 
 const StyledList = styled('div')`
   padding-bottom: 10px;
+  display: inline-flex;
 `
 
 const StyledButtonLink = styled.a({
@@ -164,6 +166,7 @@ const CompanyLocalHeader = ({
           </GridRow>
           <StyledList>
             <LocalHeaderCompanyLists company={company} />
+            <LocalHeaderCompanyRefer company={company} />
           </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
