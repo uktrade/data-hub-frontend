@@ -171,10 +171,6 @@ describe('Local header for company under dnb investigation', () => {
         assertReferButton(referralsUrl)
       })
 
-      it('should display the refer this company button', () => {
-        assertReferButton(referralsUrl)
-      })
-
       it('should display company list item buttons', () => {
         assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })

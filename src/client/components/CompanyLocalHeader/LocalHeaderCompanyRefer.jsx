@@ -1,4 +1,5 @@
 import React from 'react'
+
 import styled from 'styled-components'
 import { GREY_3, GREY_3_LEGACY } from '../../../client/utils/colours'
 import { FONT_SIZE } from '@govuk-react/constants'
@@ -22,16 +23,13 @@ const StyledButton = styled(StyledCompanyReferButton)`
   border-bottom: 3px solid ${GREY_3_LEGACY};
 `
 
-const LocalHeaderCompanyRefer = ({ company }) => {
+const LocalHeaderCompanyRefer = (companyId) => {
   const handleClickRefer = () => {
-    window.location.href = `/companies/${company.id}/referrals/send`
+    window.location.href = `/companies/${companyId}/referrals/send`
   }
   return (
     <>
-      <StyledButton
-        data-test={'refer-company-button'}
-        onClick={handleClickRefer}
-      >
+      <StyledButton data-test="refer-company-button" onClick={handleClickRefer}>
         <span>Refer this company</span>
       </StyledButton>
     </>
