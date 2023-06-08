@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
-import { CompanyLocalHeader2, CompanyTabbedLocalNavigation, Main } from '..'
+import { CompanyLocalHeader, CompanyTabbedLocalNavigation, Main } from '..'
 import CompanyInvestmentSubNavigation from '../CompanyTabbedLocalNavigation/CompanyInvestmentTab'
 
 const CompanyLayout = ({
@@ -18,7 +18,7 @@ const CompanyLayout = ({
   isLCP = false,
 }) => (
   <>
-    <CompanyLocalHeader2
+    <CompanyLocalHeader
       breadcrumbs={breadcrumbs}
       flashMessages={flashMessages}
       company={company}

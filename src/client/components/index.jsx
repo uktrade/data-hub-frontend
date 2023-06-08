@@ -10,7 +10,6 @@ export { default as CollectionFilters } from './CollectionList/CollectionFilters
 export { default as CollectionHeaderRow } from './CollectionList/CollectionHeaderRow'
 export { default as CompanyLists } from './CompanyLists'
 export { default as CompanyLocalHeader } from './CompanyLocalHeader'
-export { default as CompanyLocalHeader2 } from './CompanyLocalHeader/CompanyLocalHeader2'
 export { default as CompanyTabbedLocalNavigation } from './CompanyTabbedLocalNavigation'
 export { default as ContactInformation } from './ContactInformation'
 export { default as DeleteCompanyListSection } from './CompanyLists/DeleteCompanyListSection'
