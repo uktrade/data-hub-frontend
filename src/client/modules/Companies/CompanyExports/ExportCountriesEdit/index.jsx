@@ -20,6 +20,7 @@ import {
 } from '../../../../components/Resource'
 import { transformCountriesForTypeahead } from '../transformers'
 import { transformArrayIdNameToValueLabel } from '../../../../transformers'
+import { buildCompanyBreadcrumbs } from '../../utils'
 
 const StyledH2 = styled.h2`
   font-weight: bold;
@@ -63,22 +64,17 @@ export default ({ companyId }) => (
           <>
             <LocalHeader
               heading={'Edit export countries'}
-              breadcrumbs={[
-                { link: urls.dashboard(), text: 'Home' },
-                {
-                  link: urls.companies.index(),
-                  text: 'Companies',
-                },
-                {
-                  link: urls.companies.detail(companyId),
-                  text: company.name,
-                },
-                {
-                  link: urls.companies.exports.index(companyId),
-                  text: 'Exports',
-                },
-                { text: 'Edit export countries' },
-              ]}
+              breadcrumbs={buildCompanyBreadcrumbs(
+                [
+                  {
+                    link: urls.companies.exports.index(companyId),
+                    text: 'Exports',
+                  },
+                  { text: 'Edit export countries' },
+                ],
+                company.id,
+                company.name
+              )}
             />
             <Main>
               <Task.Status
