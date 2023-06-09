@@ -12,7 +12,6 @@ import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
-import urls from '../../../../lib/urls'
 
 import {
   companyOrdersState2props,
@@ -70,15 +69,7 @@ const CompanyOrdersCollection = ({
       {(company) => (
         <CompanyLayout
           company={company}
-          breadcrumbs={[
-            { link: urls.dashboard(), text: 'Home' },
-            {
-              link: urls.companies.index(),
-              text: 'Companies',
-            },
-            { link: urls.companies.detail(company.id), text: company.name },
-            { text: 'Orders (OMIS)' },
-          ]}
+          breadcrumbs={[{ text: 'Orders (OMIS)' }]}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
           localNavItems={localNavItems}
