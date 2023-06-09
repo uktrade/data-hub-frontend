@@ -68,7 +68,7 @@ export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
               </StyledCompanyListItemButton>
             ))}
             <StyledAddButton
-              data-test={'add-to-list-button'}
+              data-test="add-to-list-button"
               onClick={handleClickAddRemove}
             >
               <span>+</span> Add to list
