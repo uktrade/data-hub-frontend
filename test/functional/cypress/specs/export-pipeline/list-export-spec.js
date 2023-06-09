@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 import { exportFaker, exportListFaker } from '../../fakers/export'
 import urls from '../../../../../src/lib/urls'
 
@@ -42,18 +44,23 @@ const assertTitleLink = (element, href, text) => {
 }
 
 describe('Export pipeline list', () => {
+  const endpoint = '/api-proxy/v4/export'
+  const queryString = qs.stringify({
+    limit: 10,
+    page: 1,
+    offset: 0,
+    archived: false,
+    sortby: 'created_on:desc',
+  })
+
   context('When the api returns no export items', () => {
     before(() => {
-      cy.intercept(
-        'GET',
-        '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false',
-        {
-          body: {
-            count: 0,
-            results: [],
-          },
-        }
-      ).as('apiRequest')
+      cy.intercept('GET', `${endpoint}?${queryString}`, {
+        body: {
+          count: 0,
+          results: [],
+        },
+      }).as('apiRequest')
       cy.visit(urls.exportPipeline.index())
       cy.wait('@apiRequest')
     })
@@ -171,16 +178,12 @@ describe('Export pipeline list', () => {
     const notArchivedExports = exportList.filter((e) => e.archived == false)
 
     before(() => {
-      cy.intercept(
-        'GET',
-        '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false',
-        {
-          body: {
-            count: notArchivedExports.length,
-            results: notArchivedExports,
-          },
-        }
-      ).as('apiRequest')
+      cy.intercept('GET', `${endpoint}?${queryString}`, {
+        body: {
+          count: notArchivedExports.length,
+          results: notArchivedExports,
+        },
+      }).as('apiRequest')
       cy.visit(urls.exportPipeline.index())
       cy.wait('@apiRequest')
     })
