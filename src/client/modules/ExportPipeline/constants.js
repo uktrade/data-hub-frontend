@@ -1,3 +1,18 @@
+export const SORT_OPTIONS = [
+  {
+    label: 'Recently created',
+    value: 'created_on:desc',
+  },
+  {
+    label: 'Export title A-Z',
+    value: 'title',
+  },
+  {
+    label: 'Export title Z-A',
+    value: '-title',
+  },
+]
+
 export const EXPORT_POTENTIAL_OPTIONS = [
   { label: 'High', value: 'high' },
   { label: 'Medium', value: 'medium' },

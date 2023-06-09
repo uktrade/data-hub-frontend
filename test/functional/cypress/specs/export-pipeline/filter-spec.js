@@ -19,8 +19,14 @@ const assertListItems = ({ length }) => {
 
 describe('Export filters', () => {
   const endpoint = '/api-proxy/v4/export'
-  const queryParams = 'limit=10&page=1&offset=0&archived=false'
-  const requestUrl = `${endpoint}?${queryParams}`
+  const defaultQueryParams = qs.stringify({
+    limit: 10,
+    page: 1,
+    offset: 0,
+    archived: false,
+    sortby: 'created_on:desc',
+  })
+  const requestUrl = `${endpoint}?${defaultQueryParams}`
   const exportTab = urls.exportPipeline.index()
 
   const exportList = [
@@ -108,9 +114,10 @@ describe('Export filters', () => {
 
   context('Status', () => {
     const element = '[data-test="status-select"]'
+    const url = `${requestUrl}&status=won`
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&status=won`, {
+      cy.intercept('GET', url, {
         body: {
           count: exportList.length,
           results: exportList.filter((exp) => exp.status === 'won'),
@@ -134,7 +141,7 @@ describe('Export filters', () => {
 
     it('should filter from the url', () => {
       cy.visit(`${exportTab}?status=won`)
-      assertRequestUrl('@apiRequestStatus', `${requestUrl}&status=won`)
+      assertRequestUrl('@apiRequestStatus', url)
       assertListItems({ length: 1 })
       cy.get(`${element} select`).find(':selected').contains('Won')
     })
@@ -143,16 +150,17 @@ describe('Export filters', () => {
       cy.visit(exportTab)
       cy.wait('@apiRequestList')
       cy.get(`${element} select`).select('won')
-      assertRequestUrl('@apiRequestStatus', `${requestUrl}&status=won`)
+      assertRequestUrl('@apiRequestStatus', url)
       assertListItems({ length: 1 })
     })
   })
 
   context('Export potential', () => {
     const element = '[data-test="export-potential-select"]'
+    const url = `${requestUrl}&export_potential=high`
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&export_potential=high`, {
+      cy.intercept('GET', url, {
         body: {
           count: exportList.length,
           results: exportList.filter((exp) => exp.export_potential === 'high'),
@@ -176,10 +184,7 @@ describe('Export filters', () => {
 
     it('should filter from the url', () => {
       cy.visit(`${exportTab}?export_potential=high`)
-      assertRequestUrl(
-        '@apiRequestExportPotential',
-        `${requestUrl}&export_potential=high`
-      )
+      assertRequestUrl('@apiRequestExportPotential', url)
       assertListItems({ length: 1 })
       cy.get(`${element} select`).find(':selected').contains('High')
     })
@@ -188,16 +193,15 @@ describe('Export filters', () => {
       cy.visit(exportTab)
       cy.wait('@apiRequestList')
       cy.get(`${element} select`).select('High')
-      assertRequestUrl(
-        '@apiRequestExportPotential',
-        `${requestUrl}&export_potential=high`
-      )
+      assertRequestUrl('@apiRequestExportPotential', url)
       assertListItems({ length: 1 })
     })
   })
 
   context('Sector', () => {
     const element = '[data-test="sector-select"]'
+    const url = `${requestUrl}&sector=1`
+
     const sectors = [
       sectorFaker({
         id: 1,
@@ -214,7 +218,7 @@ describe('Export filters', () => {
     ]
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&sector=1`, {
+      cy.intercept('GET', url, {
         body: {
           count: exportList.length,
           results: exportList.filter((exp) => exp.sector.id === '1'), // Advanced Engineering
@@ -242,7 +246,7 @@ describe('Export filters', () => {
 
     it('should filter from the url', () => {
       cy.visit(`${exportTab}?sector=1`)
-      assertRequestUrl('@apiRequestSector', `${requestUrl}&sector=1`)
+      assertRequestUrl('@apiRequestSector', url)
       assertListItems({ length: 1 })
       cy.get(`${element} select`)
         .find(':selected')
@@ -254,13 +258,15 @@ describe('Export filters', () => {
       cy.wait('@apiRequestList')
       cy.wait('@apiRequestMetadataSector')
       cy.get(`${element} select`).select('Advanced Engineering')
-      assertRequestUrl('@apiRequestSector', `${requestUrl}&sector=1`)
+      assertRequestUrl('@apiRequestSector', url)
       assertListItems({ length: 1 })
     })
   })
 
   context('Country', () => {
     const element = '[data-test="destination-country-select"]'
+    const url = `${requestUrl}&destination_country=3`
+
     const countries = [
       countryFaker({
         id: 1,
@@ -277,7 +283,7 @@ describe('Export filters', () => {
     ]
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&destination_country=3`, {
+      cy.intercept('GET', url, {
         body: {
           count: exportList.length,
           results: exportList.filter(
@@ -307,10 +313,7 @@ describe('Export filters', () => {
 
     it('should filter from the url', () => {
       cy.visit(`${exportTab}?destination_country=3`)
-      assertRequestUrl(
-        '@apiRequestCountry',
-        `${requestUrl}&destination_country=3`
-      )
+      assertRequestUrl('@apiRequestCountry', url)
       assertListItems({ length: 1 })
       cy.get(`${element} select`).find(':selected').contains('St Lucia')
     })
@@ -320,10 +323,7 @@ describe('Export filters', () => {
       cy.wait('@apiRequestList')
       cy.wait('@apiRequestMetadataCountry')
       cy.get(`${element} select`).select('St Lucia')
-      assertRequestUrl(
-        '@apiRequestCountry',
-        `${requestUrl}&destination_country=3`
-      )
+      assertRequestUrl('@apiRequestCountry', url)
       assertListItems({ length: 1 })
     })
   })
@@ -410,9 +410,10 @@ describe('Export filters', () => {
 
   context('Owner', () => {
     const element = '[data-test="owner-select"]'
+    const url = `${requestUrl}&owner=1`
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&owner=1`, {
+      cy.intercept('GET', url, {
         body: {
           count: 2,
           results: exportList.slice(0, 2),
@@ -436,7 +437,7 @@ describe('Export filters', () => {
 
     it('should filter from the url', () => {
       cy.visit(`${exportTab}?owner=1`)
-      assertRequestUrl('@apiRequestListOwners', `${requestUrl}&owner=1`)
+      assertRequestUrl('@apiRequestListOwners', url)
       assertListItems({ length: 2 })
       cy.get(`${element} select`).find(':selected').contains('Warren Buffet')
     })
@@ -447,7 +448,7 @@ describe('Export filters', () => {
       cy.wait('@apiRequestOwnersSelect')
       cy.get(`${element} select`).select('Warren Buffet')
       assertListItems({ length: 2 })
-      assertRequestUrl('@apiRequestListOwners', `${requestUrl}&owner=1`)
+      assertRequestUrl('@apiRequestListOwners', url)
     })
   })
 })

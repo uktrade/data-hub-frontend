@@ -25,7 +25,7 @@ describe('Export pipeline', () => {
       cy.intercept('POST', '/api-proxy/v4/export').as('createExport')
       cy.intercept(
         'GET',
-        '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false'
+        '/api-proxy/v4/export?limit=10&page=1&offset=0&archived=false&sortby=created_on%3Adesc'
       ).as('listExport')
     })
 

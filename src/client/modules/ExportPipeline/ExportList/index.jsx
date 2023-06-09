@@ -146,8 +146,12 @@ const ExportList = ({
                 <ExportSelect
                   label="Owner"
                   qsParam="owner"
-                  maxWidth="173"
                   options={filters.owner.options}
+                />
+                <ExportSelect
+                  label="Sort by"
+                  qsParam="sortby"
+                  options={filters.sortby.options}
                 />
               </FiltersContainer>
             )}
