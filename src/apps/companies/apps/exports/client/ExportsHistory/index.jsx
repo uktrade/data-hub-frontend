@@ -58,12 +58,6 @@ function ExportsHistory({
         <CompanyLayout
           company={company}
           breadcrumbs={[
-            { link: urls.dashboard(), text: 'Home' },
-            {
-              link: urls.companies.index(),
-              text: 'Companies',
-            },
-            { link: urls.companies.detail(company.id), text: company.name },
             { link: urls.companies.exports.index(company.id), text: 'Exports' },
             { text: pageTitle },
           ]}
