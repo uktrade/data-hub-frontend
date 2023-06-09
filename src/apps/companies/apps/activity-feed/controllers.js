@@ -45,6 +45,7 @@ async function renderActivityFeed(req, res, next) {
           companyId: company.id,
           flashMessages: res.locals.getMessages(),
           localNavItems: res.locals.localNavItems,
+          company,
         }
       : {
           companyId: company.id,
@@ -53,6 +54,7 @@ async function renderActivityFeed(req, res, next) {
           localNavItems: res.locals.localNavItems,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
+          company,
         }
 
     const props = {
