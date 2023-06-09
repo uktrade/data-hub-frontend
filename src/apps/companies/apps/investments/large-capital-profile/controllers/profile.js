@@ -1,5 +1,3 @@
-const urls = require('../../../../../../lib/urls')
-
 const renderProfile = async (req, res, next) => {
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
 
@@ -9,16 +7,7 @@ const renderProfile = async (req, res, next) => {
       'companies/apps/investments/large-capital-profile/views/profile',
       {
         props: {
-          company,
-          breadcrumbs: [
-            { link: urls.dashboard(), text: 'Home' },
-            {
-              link: urls.companies.index(),
-              text: 'Companies',
-            },
-            { link: urls.companies.detail(company.id), text: company.name },
-            { text: 'Investment' },
-          ],
+          companyId: company.id,
           returnUrl,
           dnbRelatedCompaniesCount,
           localNavItems: res.locals.localNavItems,

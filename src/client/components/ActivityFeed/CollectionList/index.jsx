@@ -34,6 +34,9 @@ import {
 import { sanitizeFilter } from '../../../../client/filters'
 import Activity from '../Activity'
 
+import { CompanyResource } from '../../Resource'
+import CompanyLayout from '../../Layout/CompanyLayout'
+
 const collectionItemTemplateDefault = (activity) => {
   return (
     <li key={activity.id}>
@@ -44,11 +47,16 @@ const collectionItemTemplateDefault = (activity) => {
 
 const CompanyActivityCollection = ({
   payload,
+  companyId,
   company,
   optionMetadata,
   selectedFilters,
   currentAdviserId,
   dnbHierarchyCount,
+  dnbRelatedCompaniesCount,
+  localNavItems,
+  flashMessages,
+  returnUrl,
   ...props
 }) => {
   const collectionListTask = {
@@ -108,67 +116,82 @@ const CompanyActivityCollection = ({
   }
 
   return (
-    <FilteredCollectionList
-      {...props}
-      collectionName="activities"
-      taskProps={collectionListTask}
-      selectedFilters={selectedFilters}
-      entityName="companyActivities"
-      sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
-        ...sanitizeFilter(advisers),
-        ...sanitizeFilter(teams),
-      })}
-      collectionItemTemplate={collectionItemTemplateDefault}
-    >
-      <CollectionFilters taskProps={collectionListMetadataTask}>
-        <Filters.CheckboxGroup
-          legend={LABELS.myInteractions}
-          name="my_interactions"
-          qsParam="ditParticipantsAdviser"
-          options={[myInteractionsOption]}
-          selectedOptions={myInteractionsSelected ? [myInteractionsOption] : []}
-          data-test="my-interactions-filter"
-        />
-        {dnbHierarchyCount > 0 && (
-          <Filters.CheckboxGroup
-            legend={LABELS.showDNBHierarchy}
-            name="showDnbHierarchy"
-            qsParam="showDnbHierarchy"
-            options={[dnbHierarchyCountOption]}
-            selectedOptions={
-              payload.showDnbHierarchy ? [dnbHierarchyCountOption] : []
-            }
-            data-test="show-dnb-hierarchy-filter"
-          />
-        )}
-        <FilterToggleSection
-          id="CompanyActivityCollection.interaction-details-filters"
-          label="Interaction details"
-          isOpen={true}
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <CompanyLayout
+          company={company}
+          breadcrumbs={[{ text: 'Activity Feed' }]}
+          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+          localNavItems={localNavItems}
+          flashMessages={flashMessages}
+          returnUrl={returnUrl}
         >
-          <Filters.AdvisersTypeahead
-            taskProps={adviserListTask}
-            isMulti={true}
-            onlyShowActiveAdvisers={false}
-            label={LABELS.advisers}
-            name="advisers"
-            qsParam="ditParticipantsAdviser"
-            placeholder="Search adviser"
-            noOptionsMessage="No advisers found"
-            selectedOptions={selectedFilters.advisers.options}
-            data-test="adviser-filter"
-          />
-        </FilterToggleSection>
-        <Filters.CheckboxGroup
-          legend={LABELS.activityType}
-          name="activityType"
-          qsParam="activityType"
-          options={ACTIVITY_TYPE_OPTIONS}
-          selectedOptions={selectedFilters.activityType.options}
-          data-test="activity-type-filter"
-        />
-      </CollectionFilters>
-    </FilteredCollectionList>
+          <FilteredCollectionList
+            {...props}
+            collectionName="activities"
+            taskProps={collectionListTask}
+            selectedFilters={selectedFilters}
+            entityName="companyActivities"
+            sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
+              ...sanitizeFilter(advisers),
+              ...sanitizeFilter(teams),
+            })}
+            collectionItemTemplate={collectionItemTemplateDefault}
+          >
+            <CollectionFilters taskProps={collectionListMetadataTask}>
+              <Filters.CheckboxGroup
+                legend={LABELS.myInteractions}
+                name="my_interactions"
+                qsParam="ditParticipantsAdviser"
+                options={[myInteractionsOption]}
+                selectedOptions={
+                  myInteractionsSelected ? [myInteractionsOption] : []
+                }
+                data-test="my-interactions-filter"
+              />
+              {dnbHierarchyCount > 0 && (
+                <Filters.CheckboxGroup
+                  legend={LABELS.showDNBHierarchy}
+                  name="showDnbHierarchy"
+                  qsParam="showDnbHierarchy"
+                  options={[dnbHierarchyCountOption]}
+                  selectedOptions={
+                    payload.showDnbHierarchy ? [dnbHierarchyCountOption] : []
+                  }
+                  data-test="show-dnb-hierarchy-filter"
+                />
+              )}
+              <FilterToggleSection
+                id="CompanyActivityCollection.interaction-details-filters"
+                label="Interaction details"
+                isOpen={true}
+              >
+                <Filters.AdvisersTypeahead
+                  taskProps={adviserListTask}
+                  isMulti={true}
+                  onlyShowActiveAdvisers={false}
+                  label={LABELS.advisers}
+                  name="advisers"
+                  qsParam="ditParticipantsAdviser"
+                  placeholder="Search adviser"
+                  noOptionsMessage="No advisers found"
+                  selectedOptions={selectedFilters.advisers.options}
+                  data-test="adviser-filter"
+                />
+              </FilterToggleSection>
+              <Filters.CheckboxGroup
+                legend={LABELS.activityType}
+                name="activityType"
+                qsParam="activityType"
+                options={ACTIVITY_TYPE_OPTIONS}
+                selectedOptions={selectedFilters.activityType.options}
+                data-test="activity-type-filter"
+              />
+            </CollectionFilters>
+          </FilteredCollectionList>
+        </CompanyLayout>
+      )}
+    </CompanyResource>
   )
 }
 

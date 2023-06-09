@@ -40,12 +40,8 @@ import InteractionReferralDetails from './modules/Interactions/InteractionDetail
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
-import CompanyLocalHeader from './components/CompanyLocalHeader'
-import CompanyTabbedLocalNavigation from './components/CompanyTabbedLocalNavigation'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
-import InvestmentStatusCard from '../apps/companies/apps/company-overview/overview-table-cards/InvestmentStatusCard'
-import ExportStatus from '../apps/companies/apps/company-overview/overview-table-cards/ExportStatus'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -72,6 +68,8 @@ import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCap
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
+import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
+import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -355,7 +353,6 @@ import {
   getExportPipelineMetadata,
 } from '../client/modules/ExportPipeline/ExportList/task'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
-import ProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
 import { getListsCompanyIsIn } from './components/CompanyLocalHeader/task'
 import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/state'
@@ -368,7 +365,6 @@ import {
   createInvestmentProposition,
   abandonInvestmentProposition,
 } from './modules/Investments/Projects/Propositions/tasks'
-import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
 import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
@@ -690,7 +686,12 @@ function App() {
           {(props) => <CompanyHierarchy {...props} />}
         </Mount>
         <Mount selector="#company-business-details">
-          {(props) => <CompanyBusinessDetails {...props} />}
+          {(props) => (
+            <CompanyBusinessDetails
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
         </Mount>
         <Mount selector="#company-edit-one-list">
           {(props) => (
@@ -747,12 +748,6 @@ function App() {
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
-        <Mount selector="#company-local-header">
-          {(props) => <CompanyLocalHeader {...props} />}
-        </Mount>
-        <Mount selector="#company-tabbed-local-navigation">
-          {(props) => <CompanyTabbedLocalNavigation {...props} />}
-        </Mount>
         <Mount selector="#investment-project-admin">
           {(props) => <InvestmentProjectAdmin {...props} />}
         </Mount>
@@ -778,14 +773,8 @@ function App() {
         <Mount selector="#company-overview">
           {(props) => <CompanyOverview {...props} />}
         </Mount>
-        <Mount selector="#company-overview-projects-collection">
-          {(props) => <InvestmentStatusCard {...props} />}
-        </Mount>
-        <Mount selector="#company-overview-export-status">
-          {(props) => <ExportStatus {...props} />}
-        </Mount>
         <Mount selector="#company-projects-collection">
-          {(props) => <ProjectsCollection {...props} />}
+          {(props) => <CompanyProjectsCollection {...props} />}
         </Mount>
         <Mount selector="#company-contacts-collection">
           {(props) => <CompaniesContactsCollection {...props} />}

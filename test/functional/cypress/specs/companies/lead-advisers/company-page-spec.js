@@ -1,6 +1,20 @@
 const fixtures = require('../../../fixtures')
-const selectors = require('../../../../../selectors')
 const urls = require('../../../../../../src/lib/urls')
+
+const assertTable = ({ element, rows }) => {
+  cy.get(element).as('table').find('th')
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
+}
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
@@ -20,10 +34,7 @@ describe('Lead advisers', () => {
       cy.get('#tab-advisers').should('contain', 'Lead adviser')
     })
     it('should display a header with the company name', () => {
-      cy.get(selectors.companyLeadAdviser.header).should(
-        'have.text',
-        'Lead ITA for Mars Exports Ltd'
-      )
+      cy.contains('Lead ITA for Mars Exports Ltd')
     })
     it('should display help text for adding a lead adviser', () => {
       cy.contains(
@@ -59,6 +70,9 @@ describe('Lead advisers', () => {
         cy.get('#tab-advisers').click()
       })
 
+      const globalAccountManager =
+        fixtures.company.oneListTierDita.one_list_group_global_account_manager
+
       it('should have a link to the Lead adviser tab', () => {
         cy.contains('View Lead adviser')
           .invoke('attr', 'href')
@@ -71,46 +85,20 @@ describe('Lead advisers', () => {
         cy.get('#tab-advisers').should('contain', 'Lead adviser')
       })
       it('should display a header with the company name', () => {
-        cy.get(selectors.companyLeadAdviser.header).should(
-          'have.text',
-          "Lead ITA for Ian's Camper Vans Ltd"
-        )
+        cy.contains("Lead ITA for Ian's Camper Vans Ltd")
       })
-      it('should display a header for the team', () => {
-        cy.get(selectors.companyLeadAdviser.table.teamHeader).should(
-          'have.text',
-          'Team'
-        )
-      })
-      it('should display a header for the Lead ITA', () => {
-        cy.get(selectors.companyLeadAdviser.table.leadItaHeader).should(
-          'have.text',
-          'Lead ITA'
-        )
-      })
-      it('should display a header for the Email', () => {
-        cy.get(selectors.companyLeadAdviser.table.emailHeader).should(
-          'have.text',
-          'Email'
-        )
-      })
-      it('should display the team name', () => {
-        cy.get(selectors.companyLeadAdviser.table.team).should(
-          'have.text',
-          'IST - Sector Advisory Services'
-        )
-      })
-      it('should display the Lead ITA', () => {
-        cy.get(selectors.companyLeadAdviser.table.leadIta).should(
-          'have.text',
-          'Travis Greene'
-        )
-      })
-      it('should display the email', () => {
-        cy.get(selectors.companyLeadAdviser.table.email).should(
-          'have.text',
-          'travis@travis.com'
-        )
+      it('should render the global account manager table', () => {
+        assertTable({
+          element: '[data-test="lead-adviser-table"]',
+          rows: [
+            ['Team', 'Lead ITA', 'Email'],
+            [
+              globalAccountManager.dit_team.name,
+              globalAccountManager.name,
+              globalAccountManager.contact_email,
+            ],
+          ],
+        })
       })
       it('should display a button to replace the Lead ITA', () => {
         cy.contains('Replace Lead ITA')

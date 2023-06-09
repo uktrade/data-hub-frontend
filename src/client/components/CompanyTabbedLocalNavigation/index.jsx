@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import CompanyLocalTab from './CompanyLocalTab'
 import styled from 'styled-components'
 import Paragraph from '@govuk-react/paragraph'
 import WarningText from '@govuk-react/warning-text'
 import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
+
+import CompanyLocalTab from './CompanyLocalTab'
 import urls from '../../../lib/urls'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { BLACK } from '../../../client/utils/colours'
@@ -52,56 +52,49 @@ const StyledLink = styled('a')`
   margin-bottom: 0;
 `
 
-const CompanyTabbedLocalNavigation = (props) => {
-  const { localNavItems } = props
-  const company = props.company
-  const showMatchingPrompt =
-    !company.duns_number && !company.pending_dnb_investigation
+const showMatchingPrompt = (company) =>
+  !company.dunsNumber && !company.pendingDnbInvestigation
 
-  return (
-    <StyledGridRow>
-      {showMatchingPrompt && (
-        <StatusMessage colour={BLACK} id="ga-company-details-matching-prompt">
-          <WarningText>
-            Business details on this company record have not been verified and
-            could be wrong.
-          </WarningText>
-          <Details summary="Why verify?">
-            <Paragraph>
-              Using verified business details from a trusted third-party
-              supplier means we can keep certain information up to date
-              automatically. This helps reduce duplicate records, provide a
-              shared view of complex companies and make it more likely we can
-              link other data sources together.
-            </Paragraph>
-            <Paragraph>
-              Verification can often be done in just 4 clicks.
-            </Paragraph>
-          </Details>
-          <Button as={StyledLink} href={urls.companies.match.index(company.id)}>
-            Verify business details
-          </Button>
-        </StatusMessage>
-      )}
-
-      <StyledGridColumn>
-        <StyledNav aria-label="local navigation" data-test="tabbedLocalNav">
-          <StyledUnorderedList data-test="tabbedLocalNavList">
-            {localNavItems?.map((navItem, index) => {
-              return (
-                <CompanyLocalTab
-                  navItem={navItem}
-                  index={index}
-                  key={`company-tab-${index}`}
-                />
-              )
-            })}
-          </StyledUnorderedList>
-        </StyledNav>
-      </StyledGridColumn>
-    </StyledGridRow>
-  )
-}
+const CompanyTabbedLocalNavigation = ({ localNavItems, company }) => (
+  <StyledGridRow>
+    {showMatchingPrompt(company) && (
+      <StatusMessage colour={BLACK} id="ga-company-details-matching-prompt">
+        <WarningText>
+          Business details on this company record have not been verified and
+          could be wrong.
+        </WarningText>
+        <Details summary="Why verify?">
+          <Paragraph>
+            Using verified business details from a trusted third-party supplier
+            means we can keep certain information up to date automatically. This
+            helps reduce duplicate records, provide a shared view of complex
+            companies and make it more likely we can link other data sources
+            together.
+          </Paragraph>
+          <Paragraph>
+            Verification can often be done in just 4 clicks.
+          </Paragraph>
+        </Details>
+        <Button as={StyledLink} href={urls.companies.match.index(company.id)}>
+          Verify business details
+        </Button>
+      </StatusMessage>
+    )}
+    <StyledGridColumn>
+      <StyledNav aria-label="local navigation" data-test="tabbedLocalNav">
+        <StyledUnorderedList data-test="tabbedLocalNavList">
+          {localNavItems?.map((navItem, index) => (
+            <CompanyLocalTab
+              navItem={navItem}
+              index={index}
+              key={`company-tab-${index}`}
+            />
+          ))}
+        </StyledUnorderedList>
+      </StyledNav>
+    </StyledGridColumn>
+  </StyledGridRow>
+)
 
 CompanyTabbedLocalNavigation.propTypes = {
   localNavItems: PropTypes.arrayOf(

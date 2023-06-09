@@ -1,11 +1,13 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
 import { COMPANY_LOADED } from '../../../actions'
-import { useParams } from 'react-router-dom'
 import { state2props } from './state'
-import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import DnbHierarchy from '../../../../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import { DefaultLayout } from '../../../components'
@@ -14,7 +16,7 @@ import {
   StyledAnchorTag,
   StyledListItem,
 } from '../../../components/CompanyTabbedLocalNavigation/CompanyLocalTab'
-import styled from 'styled-components'
+import { buildCompanyBreadcrumbs } from '../utils'
 
 //These styled components are copied from the CompanyLocalTab file. They will all be deleted in
 //the next ticket, adding here temporarily to avoid needing to refactor code thatis about to
@@ -111,27 +113,19 @@ const localTabItems = (company) => {
 const breadcrumbs = (company) =>
   !company
     ? []
-    : [
-        {
-          link: urls.dashboard(),
-          text: 'Home',
-        },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        {
-          link: urls.companies.detail(company.id),
-          text: company.name,
-        },
-        {
-          link: urls.companies.businessDetails(company.id),
-          text: 'Business details',
-        },
-        {
-          text: 'Related companies',
-        },
-      ]
+    : buildCompanyBreadcrumbs(
+        [
+          {
+            link: urls.companies.businessDetails(company.id),
+            text: 'Business details',
+          },
+          {
+            text: 'Related companies',
+          },
+        ],
+        company.id,
+        company.name
+      )
 
 const CompanyHierarchy = ({ company }) => {
   const { companyId } = useParams()

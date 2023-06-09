@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
-import { get, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
 import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'
+import urls from '../../../../../lib/urls'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -29,50 +30,52 @@ const TableDetails = styled('div')`
   }
 `
 
-const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
+const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
   <SummaryTable
-    caption={`About ${businessDetails.name}`}
+    caption={`About ${company.name}`}
     data-test="aboutDetailsContainer"
-    actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
+    actions={
+      !isArchived && <Link href={urls.companies.edit(company.id)}>Edit</Link>
+    }
   >
     <SummaryTable.Row heading="VAT number" hideWhenEmpty={true}>
-      {businessDetails.vat_number}
+      {company.vatNumber}
     </SummaryTable.Row>
 
     {!isDnbCompany && (
       <SummaryTable.Row heading="Business type" hideWhenEmpty={true}>
-        {businessDetails.business_type}
+        {company.businessType?.name}
       </SummaryTable.Row>
     )}
 
     <SummaryTable.Row heading="Trading name">
-      {isEmpty(businessDetails.trading_names)
-        ? 'Not set'
-        : businessDetails.trading_names}
+      {isEmpty(company.tradingNames) ? 'Not set' : company.tradingNames}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="CDMS reference" hideWhenEmpty={true}>
-      {businessDetails.reference_code}
+      {company.referenceCode}
     </SummaryTable.Row>
 
-    {businessDetails.company_number && (
+    {company.companyNumber && (
       <SummaryTable.Row heading="Companies House number" hideWhenEmpty={true}>
-        {businessDetails.company_number}
+        {company.companyNumber}
 
-        <NewWindowLink href={urls.companiesHouse}>
+        <NewWindowLink
+          href={urls.external.companiesHouse(company.companyNumber)}
+        >
           View on Companies House website
         </NewWindowLink>
       </SummaryTable.Row>
     )}
 
     <SummaryTable.Row heading="Annual turnover">
-      {businessDetails.turnover && (
+      {company.turnoverGbp && (
         <>
-          {currencyGBP(businessDetails.turnover, {
+          {currencyGBP(company.turnoverGbp, {
             maximumSignificantDigits: 2,
           })}
 
-          {businessDetails.is_turnover_estimated && (
+          {company.isTurnoverEstimated && (
             <TableDetails>
               This is an estimated number
               <Details summary="What does that mean?">
@@ -84,16 +87,16 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
           )}
         </>
       )}
-      {!businessDetails.turnover &&
-        get(businessDetails, 'turnover_range', 'Not set')}
+      {!company.turnoverGbp &&
+        (company.turnoverRange ? company.turnoverRange.name : 'Not set')}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Number of employees">
-      {businessDetails.number_of_employees && (
+      {company.numberOfEmployees && (
         <>
-          {businessDetails.number_of_employees}
+          {company.numberOfEmployees}
 
-          {businessDetails.is_number_of_employees_estimated && (
+          {company.isNumberOfEmployeesEstimated && (
             <TableDetails>
               This is an estimated number
               <Details summary="What does that mean?">
@@ -105,41 +108,38 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
           )}
         </>
       )}
-      {!businessDetails.number_of_employees &&
-        get(businessDetails, 'employee_range', 'Not set')}
+      {!company.numberOfEmployees &&
+        (company.employeeRange ? company.employeeRange.name : 'Not set')}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Website">
-      {businessDetails.website ? (
-        <NewWindowLink href={businessDetails.website}>
-          {businessDetails.website}
-        </NewWindowLink>
+      {company.website ? (
+        <NewWindowLink href={company.website}>{company.website}</NewWindowLink>
       ) : (
         'Not set'
       )}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Business description">
-      {businessDetails.description || 'No description has been added'}
+      {company.description || 'No description has been added'}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Segment">
-      {exportSegmentsLabels[businessDetails.export_segment] ||
+      {exportSegmentsLabels[company.exportSegment] ||
         'No export segment or not known'}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Sub-segment">
-      {exportSubSegmentsLabels[businessDetails.export_sub_segment] ||
+      {exportSubSegmentsLabels[company.exportSubSegment] ||
         'No sub export segment or not known'}
     </SummaryTable.Row>
   </SummaryTable>
 )
 
 SectionAbout.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionAbout

@@ -11,7 +11,9 @@ import {
   ExportExperienceCategoriesResource,
 } from '../../../components/Resource'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
-import { buildGreatProfile, buildExportPotential } from './transformers'
+import { buildExportPotential } from './transformers'
+import { exportDetailsLabels } from '../../../../apps/companies/labels'
+import { buildCompanyBreadcrumbs } from '../utils'
 
 const StyledDt = styled.dt`
   margin-bottom: ${SPACING_POINTS[1]}px;
@@ -28,19 +30,17 @@ export default ({ companyId }) => (
           <>
             <LocalHeader
               heading={'Edit exports'}
-              breadcrumbs={[
-                { link: urls.dashboard(), text: 'Home' },
-                {
-                  link: urls.companies.index(),
-                  text: 'Companies',
-                },
-                { link: urls.companies.detail(companyId), text: company.name },
-                {
-                  link: urls.companies.exports.index(companyId),
-                  text: 'Exports',
-                },
-                { text: 'Edit' },
-              ]}
+              breadcrumbs={buildCompanyBreadcrumbs(
+                [
+                  {
+                    link: urls.companies.exports.index(companyId),
+                    text: 'Exports',
+                  },
+                  { text: 'Edit' },
+                ],
+                company.id,
+                company.name
+              )}
             />
             <Main>
               <Form
@@ -63,17 +63,17 @@ export default ({ companyId }) => (
                   initialValue={company.exportExperienceCategory?.id}
                 />
                 <dl>
-                  <StyledDt>great.gov.uk business profile</StyledDt>
+                  <StyledDt>{exportDetailsLabels.greatProfile}</StyledDt>
                   <StyledDd>
                     <GreatProfile
                       {...{
-                        profile: buildGreatProfile(company.greatProfileStatus),
+                        profileStatus: company.greatProfileStatus,
                         companyNumber: company.companyNumber,
                       }}
                     />
                   </StyledDd>
 
-                  <StyledDt>Export potential</StyledDt>
+                  <StyledDt>{exportDetailsLabels.exportPotential}</StyledDt>
                   <StyledDd>{buildExportPotential(company)}</StyledDd>
                 </dl>
                 <FieldInput

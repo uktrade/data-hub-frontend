@@ -3,24 +3,30 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
-
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { SummaryTable } from '../../../../../client/components/'
 import WideSummaryTableRow from './WideSummaryTableRow'
+import { hqLabels } from '../../../labels'
+import { companies } from '../../../../../lib/urls'
 
 const StyledRowActionLink = styled(Link)`
   float: right;
   margin-left: ${SPACING_POINTS[3]}px;
   font-size: inherit;
 `
+const getHQLabel = (headquarterType) =>
+  headquarterType && hqLabels[headquarterType.name]
+
+const setGlobalHQUrl = (globalHeadquarters) =>
+  globalHeadquarters ? companies.detail(globalHeadquarters.id) : undefined
 
 const SubsectionDnBHierarchy = ({
   globalUltimate,
   isDnbCompany,
   isGlobalUltimate,
   dnbRelatedCompaniesCount,
-  urls,
+  companyId,
 }) => {
   if (!isDnbCompany) {
     return null
@@ -48,7 +54,7 @@ const SubsectionDnBHierarchy = ({
         {dnbRelatedCompaniesCount > 0 ? (
           <>
             Data Hub contains{' '}
-            <Link href={urls.dnbHierarchy}>
+            <Link href={companies.dnbHierarchy.index(companyId)}>
               {pluralize(
                 'other company record',
                 dnbRelatedCompaniesCount,
@@ -70,13 +76,12 @@ SubsectionDnBHierarchy.propTypes = {
   isGlobalUltimate: PropTypes.bool.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
   globalUltimate: PropTypes.object,
-  urls: PropTypes.object.isRequired,
 }
 
-const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
+const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, companyId }) => {
   if (subsidiariesCount) {
     return (
-      <Link href={urls.subsidiaries}>
+      <Link href={companies.subsidiaries.index(companyId)}>
         {pluralize('subsidiary', subsidiariesCount, true)}
       </Link>
     )
@@ -86,7 +91,7 @@ const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
     return (
       <>
         None
-        <StyledRowActionLink href={urls.linkSubsidiary}>
+        <StyledRowActionLink href={companies.subsidiaries.link(companyId)}>
           Link a subsidiary
         </StyledRowActionLink>
       </>
@@ -99,29 +104,29 @@ const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
 SubsidiariesCounter.propTypes = {
   subsidiariesCount: PropTypes.number.isRequired,
   isGlobalHQ: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
-const GlobalHQ = ({ businessDetails, urls }) => {
-  if (
-    !businessDetails.headquarter_type &&
-    !businessDetails.global_headquarters
-  ) {
+const GlobalHQ = ({ company }) => {
+  if (!company.headquarterType && !company.globalHeadquarters) {
     return (
       <>
         None
-        <StyledRowActionLink href={urls.linkGlobalHQ}>
+        <StyledRowActionLink href={companies.hierarchies.ghq.link(company.id)}>
           Link to the Global HQ
         </StyledRowActionLink>
       </>
     )
   }
 
-  if (businessDetails.global_headquarters) {
+  if (company.globalHeadquarters) {
     return (
       <>
-        <Link href={urls.globalHQ}>{businessDetails.global_headquarters}</Link>
-        <StyledRowActionLink href={urls.removeGlobalHQ}>
+        <Link href={setGlobalHQUrl(company.globalHeadquarters)}>
+          {company.globalHeadquarters.name}
+        </Link>
+        <StyledRowActionLink
+          href={companies.hierarchies.ghq.remove(company.id)}
+        >
           Remove link
         </StyledRowActionLink>
       </>
@@ -130,20 +135,18 @@ const GlobalHQ = ({ businessDetails, urls }) => {
 }
 
 GlobalHQ.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
-  urls: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
 }
 
 const SubsectionDataHubHierarchy = ({
-  businessDetails,
+  company,
   isDnbCompany,
-  urls,
   subsidiariesCount,
   isGlobalHQ,
 }) => {
   const showGlobalHQ =
-    businessDetails.global_headquarters ||
-    (!businessDetails.headquarter_type && !businessDetails.global_headquarters)
+    company.globalHeadquarters ||
+    (!company.headquarterType && !company.globalHeadquarters)
 
   return (
     <>
@@ -155,22 +158,22 @@ const SubsectionDataHubHierarchy = ({
       </WideSummaryTableRow>
 
       <SummaryTable.Row heading="Headquarter type" hideWhenEmpty={true}>
-        {businessDetails.headquarter_type_label}
+        {getHQLabel(company.headquarterType)}
       </SummaryTable.Row>
 
-      {businessDetails.headquarter_type && (
+      {company.headquarterType && (
         <SummaryTable.Row heading="Subsidiaries">
           <SubsidiariesCounter
             isGlobalHQ={isGlobalHQ}
             subsidiariesCount={subsidiariesCount}
-            urls={urls}
+            companyId={company.id}
           />
         </SummaryTable.Row>
       )}
 
       {showGlobalHQ && (
         <SummaryTable.Row heading="Global HQ">
-          <GlobalHQ businessDetails={businessDetails} urls={urls} />
+          <GlobalHQ company={company} />
         </SummaryTable.Row>
       )}
     </>
@@ -178,29 +181,25 @@ const SubsectionDataHubHierarchy = ({
 }
 
 SubsectionDataHubHierarchy.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isGlobalHQ: PropTypes.bool.isRequired,
   subsidiariesCount: PropTypes.number.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 const SectionHierarchy = ({
-  businessDetails,
-  isGlobalHQ,
+  company,
   isArchived,
   isDnbCompany,
-  isGlobalUltimate,
   subsidiariesCount,
   dnbRelatedCompaniesCount,
   globalUltimate,
-  urls,
 }) => {
+  const isGlobalHQ = company.headquarterType?.name === 'ghq'
+  const isGlobalUltimate = !!company.isGlobalUltimate
   const showDnbHierarchy = isDnbCompany
   const showDataHubHierarchy =
-    businessDetails.headquarter_type ||
-    businessDetails.global_headquarters ||
-    !isDnbCompany
+    company.headquarterType || company.globalHeadquarters || !isDnbCompany
 
   return (
     <SummaryTable
@@ -209,7 +208,9 @@ const SectionHierarchy = ({
       actions={
         !isArchived &&
         showDataHubHierarchy && (
-          <Link href={`${urls.companyEdit}#field-headquarter_type`}>Edit</Link>
+          <Link href={`${companies.edit(company.id)}#field-headquarter_type`}>
+            Edit
+          </Link>
         )
       }
     >
@@ -219,16 +220,15 @@ const SectionHierarchy = ({
           isDnbCompany={isDnbCompany}
           isGlobalUltimate={isGlobalUltimate}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-          urls={urls}
+          companyId={company.id}
         />
       )}
       {showDataHubHierarchy && (
         <SubsectionDataHubHierarchy
-          businessDetails={businessDetails}
+          company={company}
           isDnbCompany={isDnbCompany}
           isGlobalHQ={isGlobalHQ}
           subsidiariesCount={subsidiariesCount}
-          urls={urls}
         />
       )}
     </SummaryTable>
@@ -236,15 +236,12 @@ const SectionHierarchy = ({
 }
 
 SectionHierarchy.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  isGlobalHQ: PropTypes.bool.isRequired,
-  isGlobalUltimate: PropTypes.bool.isRequired,
   subsidiariesCount: PropTypes.number.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number.isRequired,
   globalUltimate: PropTypes.object,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionHierarchy
