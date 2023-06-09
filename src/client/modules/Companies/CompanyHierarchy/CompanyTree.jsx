@@ -173,7 +173,7 @@ const HierarchyItem = ({
       >
         {company.id ? (
           <Link
-            href={urls.companies.detail(company.id)}
+            href={urls.companies.details(company.id)}
             aria-label={`Go to ${company.name} details`}
           >
             {company.name}
@@ -207,7 +207,7 @@ const breadcrumbs = (company) =>
           text: 'Companies',
         },
         {
-          link: urls.companies.detail(company.id),
+          link: urls.companies.details(company.id),
           text: company.name,
         },
         {
