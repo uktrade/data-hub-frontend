@@ -6,7 +6,6 @@ import { CONTACTS__LOADED } from '../../../actions'
 import { FilteredCollectionList } from '../../../components'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
-import urls from '../../../../lib/urls'
 
 import {
   TASK_GET_CONTACTS_LIST,
@@ -42,15 +41,7 @@ const CompanyContactsCollection = ({
       {(company) => (
         <CompanyLayout
           company={company}
-          breadcrumbs={[
-            { link: urls.dashboard(), text: 'Home' },
-            {
-              link: urls.companies.index(),
-              text: 'Companies',
-            },
-            { link: urls.companies.detail(company.id), text: company.name },
-            { text: 'Contacts' },
-          ]}
+          breadcrumbs={[{ text: 'Contacts' }]}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
           localNavItems={localNavItems}
