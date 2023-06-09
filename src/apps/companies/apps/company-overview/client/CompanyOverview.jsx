@@ -12,7 +12,6 @@ import {
   InvestmentStatusCard,
 } from '../overview-table-cards'
 import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
-import urls from '../../../../../lib/urls'
 import { CompanyResource } from '../../../../../client/components/Resource/index'
 import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
 
@@ -32,15 +31,7 @@ const CompanyOverview = ({
     {(company) => (
       <CompanyLayout
         company={company}
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(company.id), text: company.name },
-          { text: 'Overview' },
-        ]}
+        breadcrumbs={[{ text: 'Overview' }]}
         dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         localNavItems={localNavItems}
         flashMessages={flashMessages}
