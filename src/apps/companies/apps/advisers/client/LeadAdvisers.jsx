@@ -81,15 +81,7 @@ const LeadAdvisers = ({
     {(company) => (
       <CompanyLayout
         company={company}
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(company.id), text: company.name },
-          { text: 'Lead adviser' },
-        ]}
+        breadcrumbs={[{ text: 'Lead adviser' }]}
         dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         localNavItems={localNavItems}
         flashMessages={flashMessages}
