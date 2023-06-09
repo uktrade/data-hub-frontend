@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { GREY_3, GREY_3_LEGACY } from '../../../client/utils/colours'
 import { FONT_SIZE } from '@govuk-react/constants'
+import urls from '../../../lib/urls'
 
 const StyledCompanyReferButton = styled('button')`
   display: inline-table;
@@ -23,9 +24,9 @@ const StyledButton = styled(StyledCompanyReferButton)`
   border-bottom: 3px solid ${GREY_3_LEGACY};
 `
 
-const LocalHeaderCompanyRefer = (companyId) => {
+const LocalHeaderCompanyRefer = ({ companyId }) => {
   const handleClickRefer = () => {
-    window.location.href = `/companies/${companyId}/referrals/send`
+    window.location.href = urls.companies.referrals.send(companyId)
   }
   return (
     <>

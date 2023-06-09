@@ -166,7 +166,7 @@ const CompanyLocalHeader = ({
           </GridRow>
           <StyledList>
             <LocalHeaderCompanyLists company={company} />
-            <LocalHeaderCompanyRefer company={company.id} />
+            <LocalHeaderCompanyRefer companyId={company.id} />
           </StyledList>
           {(company.isUltimate || company.isGlobalHQ) && (
             <TypeWrapper>
