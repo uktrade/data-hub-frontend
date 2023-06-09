@@ -13,7 +13,6 @@ import {
 } from '../../../../components/Resource'
 import { RED } from '../../../../utils/colours'
 import CompanyLayout from '../../../../components/Layout/CompanyLayout'
-import urls from '../../../../../lib/urls'
 
 import ProfileDetailsTable from './ProfileDetailsTable'
 import EditProfileDetails from './EditProfileDetails'
@@ -90,15 +89,7 @@ const LargeCapitalProfile = ({
           {(company) => (
             <CompanyLayout
               company={company}
-              breadcrumbs={[
-                { link: urls.dashboard(), text: 'Home' },
-                {
-                  link: urls.companies.index(),
-                  text: 'Companies',
-                },
-                { link: urls.companies.detail(company.id), text: company.name },
-                { text: 'Investments' },
-              ]}
+              breadcrumbs={[{ text: 'Investments' }]}
               dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
               localNavItems={localNavItems}
               flashMessages={flashMessages}
