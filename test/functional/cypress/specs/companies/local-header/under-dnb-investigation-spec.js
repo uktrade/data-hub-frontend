@@ -7,6 +7,7 @@ const {
   assertBreadcrumbs,
   assertExportCountryHistoryBreadcrumbs,
   assertAddButton,
+  assertReferButton,
   assertExportProjectButton,
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
@@ -20,6 +21,7 @@ const company = fixtures.company.investigationLimited
 
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
+const referralsUrl = urls.companies.referrals.send(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
 const exportProjectUrl = urls.exportPipeline.create(company.id)
 
@@ -51,6 +53,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the add to list button', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
       })
 
       it('should display company list item buttons', () => {
@@ -101,6 +107,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the add to list button', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
       })
 
       it('should display company list item buttons', () => {
@@ -157,6 +167,10 @@ describe('Local header for company under dnb investigation', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
+      })
+
       it('should display company list item buttons', () => {
         assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })
@@ -211,6 +225,10 @@ describe('Local header for company under dnb investigation', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
+      })
+
       it('should display company list item buttons', () => {
         assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })
@@ -259,6 +277,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the add to list button', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
+      })
+
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
       })
 
       it('should display company list item buttons', () => {
@@ -311,6 +333,10 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
     })
 
     it('should display company list item buttons', () => {
@@ -366,6 +392,10 @@ describe('Local header for company under dnb investigation', () => {
         assertAddButton(addRemoveFromListUrl, detailsUrl)
       })
 
+      it('should display the refer this company button', () => {
+        assertReferButton(referralsUrl)
+      })
+
       it('should display company list item buttons', () => {
         assertCompanyListItemButton(addRemoveFromListUrl, detailsUrl)
       })
@@ -416,6 +446,10 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the add to list button', () => {
       assertAddButton(addRemoveFromListUrl, detailsUrl)
+    })
+
+    it('should display the refer this company button', () => {
+      assertReferButton(referralsUrl)
     })
 
     it('should display company list item buttons', () => {
