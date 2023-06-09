@@ -16,6 +16,7 @@ import {
 import Form from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
+import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils'
 
 const StyledRoot = styled(Main)`
   h2:not(:first-child) {
@@ -49,17 +50,13 @@ function MatchConfirmation({
     <>
       <LocalHeader
         heading="Verify business details"
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(company.id), text: company.name },
+        breadcrumbs={buildCompanyBreadcrumbs(
           {
             text: 'Send request',
           },
-        ]}
+          company.id,
+          company.name
+        )}
       />
       <StyledRoot>
         <Form

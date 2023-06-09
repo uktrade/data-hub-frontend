@@ -9,6 +9,7 @@ import { Main, SummaryList, FieldInput } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
 import Form from '../../../../../client/components/Form'
+import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils.js'
 
 const requiredWebsiteOrPhoneValidator = (
   value,
@@ -27,17 +28,13 @@ function CannotFindMatch({ company, csrfToken }) {
     <>
       <LocalHeader
         heading="I still can’t find what I’m looking for"
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          {
-            link: urls.companies.index(),
-            text: 'Companies',
-          },
-          { link: urls.companies.detail(company.id), text: company.name },
+        breadcrumbs={buildCompanyBreadcrumbs(
           {
             text: 'Send business details',
           },
-        ]}
+          company.id,
+          company.name
+        )}
       >
         <Paragraph>
           Add the company contact details below. It will be sent to our third

@@ -5,10 +5,11 @@ import { H4 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import { UnorderedList } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
+
 import Form from '../../../../../client/components/Form/index.jsx'
 import { LocalHeader, Main } from '../../../../../client/components/index.jsx'
-
 import urls from '../../../../../lib/urls'
+import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils.js'
 
 // TODO: Reset all styles to defaults for HTML within react-slot.
 const StyledList = styled(UnorderedList)`
@@ -20,17 +21,13 @@ const MatchDuplicate = ({ company, dnbCompany, csrfToken }) => (
   <>
     <LocalHeader
       heading="These verified business details are already being used to verify another Data Hub record"
-      breadcrumbs={[
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
+      breadcrumbs={buildCompanyBreadcrumbs(
         {
           text: 'Request merge',
         },
-      ]}
+        company.id,
+        company.name
+      )}
     />
     <Main>
       <Form
