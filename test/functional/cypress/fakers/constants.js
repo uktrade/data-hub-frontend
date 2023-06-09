@@ -125,3 +125,34 @@ export const EMPLOYEE_RANGE = [
     name: '500+',
   },
 ]
+
+export const ONE_LIST_TIER = [
+  {
+    id: 'b91bf800-8d53-e311-aef3-441ea13961e2',
+    name: 'Tier A - Strategic Account',
+  },
+  {
+    id: '7e0c261a-d447-e411-985c-e4115bead28a',
+    name: 'Tier A2 - Global Partners',
+  },
+  {
+    id: 'bb1bf800-8d53-e311-aef3-441ea13961e2',
+    name: 'Tier B - Global Accounts',
+  },
+  {
+    id: '23ef2218-37f7-4abf-aacb-7c49f65ee1e3',
+    name: 'Tier B - Global Accounts (Capital Investment)',
+  },
+  {
+    id: 'bd1bf800-8d53-e311-aef3-441ea13961e2',
+    name: 'Tier C - Local Accounts (UKTI Managed)',
+  },
+  {
+    id: '12798372-8eb4-e511-88b6-e4115bead28a',
+    name: 'Tier D - LEP Managed Branch (not IST)',
+  },
+  {
+    id: '572dfefe-cd1d-e611-9bdc-e4115bead28a',
+    name: 'Tier D - POST Identified/Managed',
+  },
+]
