@@ -53,6 +53,7 @@ const Subsidiaries = ({
   isOpen,
   setIsOpen,
   fullTreeExpanded,
+  requestedCompanyId,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -70,6 +71,7 @@ const Subsidiaries = ({
       >
         {company.subsidiaries.map((subsidary, index) => (
           <HierarchyItem
+            requestedCompanyId={requestedCompanyId}
             company={subsidary}
             hierarchy={subsidary.hierarchy}
             fullTreeExpanded={fullTreeExpanded}
@@ -186,6 +188,7 @@ const HierarchyItem = ({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         fullTreeExpanded={fullTreeExpanded}
+        requestedCompanyId={requestedCompanyId}
       />
     </HierachyListItem>
   )
