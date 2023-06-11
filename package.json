@@ -124,7 +124,7 @@
     "nunjucks-markdown": "^2.0.1",
     "pluralize": "^8.0.0",
     "postcss-cli": "^10.1.0",
-    "postcss-loader": "^7.3.2",
+    "postcss-loader": "^7.3.3",
     "prop-types": "^15.8.1",
     "pure-uuid": "^1.6.3",
     "qs": "^6.11.2",
