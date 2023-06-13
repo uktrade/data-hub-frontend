@@ -1,7 +1,7 @@
 const assembleDateTimeFilterScript = (params, filters) => {
   return (
     // Use object.startTime or fall back to object.published.
-    "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); " +
+    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); " +
     // Parse parameter to make available for use.
     Object.entries(params)
       .map(([key]) => {
@@ -18,13 +18,22 @@ const assembleDateTimeFilterScript = (params, filters) => {
 const datePeriodFilter = (dateAfter, dateBefore) => {
   let filters = []
   let params = {}
-  dateAfter = dateAfter ? new Date(dateAfter) : null
-  dateBefore = dateBefore ? new Date(dateBefore) : null
   if (dateAfter) {
+    dateAfter = dateAfter ? new Date(dateAfter) : null
     filters.push('filterDateTime.isAfter(dateAfter)')
     params.dateAfter = dateAfter.toISOString()
   }
   if (dateBefore) {
+    if (typeof dateBefore === 'string') {
+      const addTime = dateBefore.length <= 10
+      dateBefore = new Date(dateBefore)
+      if (addTime) {
+        dateBefore.setUTCHours(23)
+        dateBefore.setUTCMinutes(59)
+        dateBefore.setUTCSeconds(59)
+        dateBefore.setUTCMilliseconds(999)
+      }
+    }
     filters.push('filterDateTime.isBefore(dateBefore)')
     params.dateBefore = dateBefore.toISOString()
   }
