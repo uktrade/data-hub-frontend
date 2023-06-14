@@ -7,9 +7,14 @@ import {
   assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
   assertRequestUrl,
+  assertDateInput,
 } from '../../support/assertions'
 
-import { clickCheckboxGroupOption, removeChip } from '../../support/actions'
+import {
+  clickCheckboxGroupOption,
+  inputDateValue,
+  removeChip,
+} from '../../support/actions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -72,7 +77,6 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserApiRequest')
-        assert(true)
         assertRequestUrl('@apiRequest', expectedRequestUrl)
         /*
         Asserts the "Adviser typeahead" filter is selected with the
@@ -113,6 +117,73 @@ describe('Company Activity Feed Filter', () => {
         assertRequestUrl('@apiRequest', minimumRequest)
         assertChipsEmpty()
         assertFieldEmpty(myInteractionsFilter)
+      })
+    })
+
+    context('Dates', () => {
+      const dateAfterFilter = '[data-test="date-after-filter"]'
+      const dateBeforeFilter = '[data-test="date-before-filter"]'
+      const dateAfter = '2021-06-24'
+      const dateBefore = '2023-06-24'
+
+      const expectedRequestUrl = `?size=10&from=0&sortby=date:desc&dateBefore=${dateBefore}&dateAfter=${dateAfter}`
+      it('should filter from the url', () => {
+        const queryString = buildQueryString({
+          dateAfter: dateAfter,
+          dateBefore: dateBefore,
+        })
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+        assertRequestUrl('@apiRequest', expectedRequestUrl)
+
+        assertDateInput({
+          element: dateAfterFilter,
+          label: 'From',
+          value: '2021-06-24',
+        })
+        assertDateInput({
+          element: dateBeforeFilter,
+          label: 'To',
+          value: '2023-06-24',
+        })
+        assertChipExists({ label: 'From: 24 June 2021', position: 1 })
+        assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+      })
+
+      it('should filter from user input and remove chips', () => {
+        const queryString = buildQueryString()
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+        cy.wait('@apiRequest')
+        assert(1)
+        inputDateValue({
+          element: dateAfterFilter,
+          value: '2021-06-24',
+        })
+        inputDateValue({
+          element: dateBeforeFilter,
+          value: '2023-06-24',
+        })
+        cy.wait('@apiRequest')
+        assertRequestUrl('@apiRequest', expectedRequestUrl)
+
+        assertChipExists({ label: 'From: 24 June 2021', position: 1 })
+        assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+        removeChip('2021-06-24')
+        cy.wait('@apiRequest')
+        removeChip('2023-06-24')
+        assertRequestUrl('@apiRequest', minimumRequest)
+        assertChipsEmpty()
+        assertFieldEmpty(dateBeforeFilter)
+        assertFieldEmpty(dateAfterFilter)
       })
     })
 

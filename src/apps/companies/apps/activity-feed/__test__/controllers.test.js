@@ -916,8 +916,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -958,8 +960,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -983,8 +987,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1015,8 +1021,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isBefore(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1062,7 +1070,17 @@ describe('Activity feed controllers', () => {
         const expectedEsQuery = {
           from: 0,
           size: 20,
-          sort: sortCriteria('asc'),
+          sort: {
+            _script: {
+              type: 'number',
+              script: {
+                lang: 'painless',
+                source:
+                  "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
+              },
+              order: 'asc',
+            },
+          },
           query: {
             bool: {
               filter: {
@@ -1073,7 +1091,17 @@ describe('Activity feed controllers', () => {
                         must: [
                           {
                             terms: {
-                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                              'object.type': [
+                                'dit:Interaction',
+                                'dit:ServiceDelivery',
+                                'dit:InvestmentProject',
+                                'dit:OMISOrder',
+                                'dit:CompanyReferral',
+                                'dit:aventri:Event',
+                                'dit:Accounts',
+                                'dit:Company',
+                                'dit:Export',
+                              ],
                             },
                           },
                           {
@@ -1088,8 +1116,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1130,8 +1160,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1155,8 +1187,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1187,8 +1221,10 @@ describe('Activity feed controllers', () => {
                               script: {
                                 lang: 'painless',
                                 source:
-                                  "ZonedDateTime filterDateTime = (doc.containsKey('object.startTime') ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime now = ZonedDateTime.parse(params['now']); return filterDateTime.isAfter(now)",
-                                params: { now: '2015-10-02T03:41:20.000Z' },
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
                               },
                             },
                           },
@@ -1208,6 +1244,215 @@ describe('Activity feed controllers', () => {
         )
       })
     })
+
+    context(
+      'when filtering on date they should include activities for the entire day',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              dateAfter: '2002-06-13',
+              dateBefore: '2022-06-13',
+              showDnbHierarchy: false,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        after(async () => {
+          Date = realDate
+        })
+        it('should call fetchActivityFeed with the right params', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: {
+              _script: {
+                type: 'number',
+                script: {
+                  lang: 'painless',
+                  source:
+                    "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
+                },
+                order: 'desc',
+              },
+            },
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': [
+                                  'dit:Interaction',
+                                  'dit:ServiceDelivery',
+                                  'dit:InvestmentProject',
+                                  'dit:OMISOrder',
+                                  'dit:CompanyReferral',
+                                  'dit:aventri:Event',
+                                  'dit:Accounts',
+                                  'dit:Company',
+                                  'dit:Export',
+                                ],
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                ],
+                              },
+                            },
+                            {
+                              script: {
+                                script: {
+                                  lang: 'painless',
+                                  source:
+                                    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isAfter(dateAfter) && filterDateTime.isBefore(dateBefore))",
+                                  params: {
+                                    dateAfter: '2002-06-13T00:00:00.000Z',
+                                    dateBefore: '2022-06-13T23:59:59.999Z',
+                                  },
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type':
+                                  'dit:directoryFormsApi:Submission',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.attributedTo.type':
+                                  'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.url': '/contact/export-advice/comment/',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                            {
+                              script: {
+                                script: {
+                                  lang: 'painless',
+                                  source:
+                                    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isAfter(dateAfter) && filterDateTime.isBefore(dateBefore))",
+                                  params: {
+                                    dateAfter: '2002-06-13T00:00:00.000Z',
+                                    dateBefore: '2022-06-13T23:59:59.999Z',
+                                  },
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { term: { 'object.type': 'dit:aventri:Event' } },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:aventri:Event:1:Create',
+                                  'dit:aventri:Event:2:Create',
+                                ],
+                              },
+                            },
+                            {
+                              script: {
+                                script: {
+                                  lang: 'painless',
+                                  source:
+                                    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isAfter(dateAfter) && filterDateTime.isBefore(dateBefore))",
+                                  params: {
+                                    dateAfter: '2002-06-13T00:00:00.000Z',
+                                    dateBefore: '2022-06-13T23:59:59.999Z',
+                                  },
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.attributedTo.id':
+                                  'dit:directoryFormsApi:SubmissionType:export-support-service',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                            {
+                              script: {
+                                script: {
+                                  lang: 'painless',
+                                  source:
+                                    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isAfter(dateAfter) && filterDateTime.isBefore(dateBefore))",
+                                  params: {
+                                    dateAfter: '2002-06-13T00:00:00.000Z',
+                                    dateBefore: '2022-06-13T23:59:59.999Z',
+                                  },
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      }
+    )
+
     context(
       'when applying both Data Hub activity and DnB hierarchical filters',
       () => {

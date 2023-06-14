@@ -149,6 +149,18 @@ const CompanyActivityCollection = ({
                 }
                 data-test="my-interactions-filter"
               />
+              <Filters.Date
+                label={LABELS.dateAfter}
+                name="date_after"
+                qsParamName="dateAfter"
+                data-test="date-after-filter"
+              />
+              <Filters.Date
+                label={LABELS.dateBefore}
+                name="date_before"
+                qsParamName="dateBefore"
+                data-test="date-before-filter"
+              />
               {dnbHierarchyCount > 0 && (
                 <Filters.CheckboxGroup
                   legend={LABELS.showDNBHierarchy}
