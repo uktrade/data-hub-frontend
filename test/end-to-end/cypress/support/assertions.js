@@ -1,12 +1,8 @@
 const { keys, forEach } = require('lodash')
 
 const selectors = require('../../../selectors')
-const urls = require('../../../../src/lib/urls')
 
 const PAGE_SIZE = 10
-
-const activityUrl = urls.companies.activity.index
-// ?activityType%5B0%5D=dataHubActivity&page=1
 
 const assertError = (message) => {
   cy.get('body').should('contain', message)
@@ -84,12 +80,7 @@ const assertLocalNav = (selector, navList) => {
 
 const assertActivitytab = (selector) => {
   const navElement = cy.get(selector)
-  navElement.click()
-  navElement.should((loc) => {
-    expect(loc.pathname).to.eq()
-    expect(loc.search).contains(activityUrl)
-    cy.get('[type="checkbox"]').first().check()
-  })
+  navElement.should('be.checked')
 }
 
 const assertLocalReactNav = (selector, navList) => {

@@ -55,8 +55,8 @@ describe('DBT Permission', () => {
       ])
     })
     it('when on the activity tab, internal activity should be selected', () => {
-      // I'd recommend targeting [id="tab-activity"] for better future proofing.
-      assertActivitytab('[data-test="tabbedLocalNavList"] > :nth-child(2)')
+      cy.get('[data-test="tabbedLocalNavList"]').contains('Activity').click()
+      assertActivitytab('#field-activityType-1')
     })
   })
 
