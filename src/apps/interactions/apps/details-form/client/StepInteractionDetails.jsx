@@ -100,6 +100,9 @@ const getServiceContext = (theme, kind, investmentProject) => {
 
 const isUktpService = (service) => service?.label?.includes('(UKTP)')
 
+const isInvestmentTheme = (theme) => theme === THEMES.INVESTMENT
+const isExportTheme = (theme) => theme === THEMES.EXPORT
+
 const buildServicesHierarchy = (services) =>
   Object.values(
     services.reduce((acc, s) => {
@@ -286,29 +289,29 @@ const StepInteractionDetails = ({
           )}
         </>
       )}
-
-      <StyledRelatedTradeAgreementsWrapper>
-        <FieldRadios
-          inline={true}
-          name="has_related_trade_agreements"
-          legend="Does this interaction relate to a named trade agreement?"
-          required="Select if this relates to a named trade agreement"
-          options={OPTIONS_YES_NO}
-        />
-
-        {values.has_related_trade_agreements === OPTION_YES && (
-          <FieldTypeahead
-            name="related_trade_agreements"
-            label="Related named trade agreement(s)"
-            placeholder="-- Select trade agreements --"
-            required="Select at least one Trade Agreement"
-            options={relatedTradeAgreements}
-            aria-label="Select a trade agreement"
-            isMulti={true}
+      {!isInvestmentTheme(values.theme) && (
+        <StyledRelatedTradeAgreementsWrapper>
+          <FieldRadios
+            inline={true}
+            name="has_related_trade_agreements"
+            legend="Does this interaction relate to a named trade agreement?"
+            required="Select if this relates to a named trade agreement"
+            options={OPTIONS_YES_NO}
           />
-        )}
-      </StyledRelatedTradeAgreementsWrapper>
 
+          {values.has_related_trade_agreements === OPTION_YES && (
+            <FieldTypeahead
+              name="related_trade_agreements"
+              label="Related named trade agreement(s)"
+              placeholder="-- Select trade agreements --"
+              required="Select at least one Trade Agreement"
+              options={relatedTradeAgreements}
+              aria-label="Select a trade agreement"
+              isMulti={true}
+            />
+          )}
+        </StyledRelatedTradeAgreementsWrapper>
+      )}
       <H3 as="h2">Participants</H3>
 
       <FieldTypeahead
@@ -483,7 +486,7 @@ const StepInteractionDetails = ({
           )}
         </>
       )}
-      {values.theme == THEMES.INVESTMENT && (
+      {isInvestmentTheme(values.theme) && (
         <>
           <FieldRadios
             inline={true}
@@ -520,7 +523,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {values.theme === THEMES.EXPORT && (
+      {isExportTheme(values.theme) && (
         <>
           <FieldRadios
             inline={true}

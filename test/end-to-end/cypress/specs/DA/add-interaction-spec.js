@@ -29,7 +29,7 @@ describe('DA add Investment Project interaction', () => {
 
   context('DA completes the form and clicks "Add interaction"', () => {
     before(() => {
-      cy.server().route('POST', '/api-proxy/v4/interaction').as('post')
+      cy.intercept('POST', '/api-proxy/v4/interaction').as('post')
 
       cy.visit(
         investments.projects.interactions.createType(
@@ -47,8 +47,6 @@ describe('DA add Investment Project interaction', () => {
       cy.contains('Add interaction for Mars Exports Ltd')
         .get(formSelectors.service)
         .select('Investment - services')
-        .get(formSelectors.hasRelatedTradeAgreementsNo)
-        .click()
         .get(formSelectors.contact)
         .selectTypeaheadOption('Mark Halomi')
         .get(formSelectors.communicationChannel)
@@ -64,8 +62,8 @@ describe('DA add Investment Project interaction', () => {
         .get(formSelectors.add)
         .click()
         .wait('@post')
-        .should((xhr) => {
-          expect(xhr.status, 'successful POST').to.equal(201)
+        .then((request) => {
+          expect(request.response.statusCode).to.eql(201)
         })
 
       cy.contains('h1', subject)
