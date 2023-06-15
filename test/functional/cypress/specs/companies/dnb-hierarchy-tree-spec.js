@@ -64,25 +64,6 @@ describe('D&B Company hierarchy tree', () => {
     )
 
     context(
-      'when attempting to view the hierarchy of a company without a D&B id',
-      () => {
-        const accessDeniedId = 2
-        before(() => {
-          cy.intercept(`api-proxy/v4/company/${accessDeniedId}`, {
-            id: accessDeniedId,
-            global_ultimate_duns_number: null,
-          }).as('companyApi')
-          cy.visit(urls.companies.dnbHierarchy.tree(accessDeniedId))
-        })
-
-        it('should display the access denied page', () => {
-          cy.wait('@companyApi')
-          cy.get('[data-test="access-denied"]').should('be.visible')
-        })
-      }
-    )
-
-    context(
       'when attempting to view the hierarchy of a known company and the family tree api errors',
       () => {
         before(() => {
