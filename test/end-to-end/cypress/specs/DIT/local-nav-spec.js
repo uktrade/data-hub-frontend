@@ -3,6 +3,7 @@ const selectors = require('../../../../selectors')
 const {
   assertLocalNav,
   assertLocalReactNav,
+  assertActivitytab,
 } = require('../../support/assertions')
 
 const {
@@ -52,6 +53,10 @@ describe('DBT Permission', () => {
         'Export',
         'Orders',
       ])
+    })
+    it('when on the activity tab, internal activity should be selected', () => {
+      cy.get('[data-test="tabbedLocalNavList"]').contains('Activity').click()
+      assertActivitytab('#field-activityType-1')
     })
   })
 

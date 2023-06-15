@@ -73,7 +73,7 @@ const CompanyLocalTab = (props) => {
     <StyledListItem key={`tab-${index}`}>
       <StyledAnchorTag
         selected={navItem.isActive}
-        href={navItem.url}
+        href={`${navItem.url}${navItem.search ? navItem.search : ''}`}
         id={`tab-${navItem.path}`}
         key={`tab-link-${navItem.path}`}
         aria-label={navItem.ariaDescription}

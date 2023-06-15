@@ -78,6 +78,11 @@ const assertLocalNav = (selector, navList) => {
   })
 }
 
+const assertActivitytab = (selector) => {
+  const navElement = cy.get(selector)
+  navElement.should('be.checked')
+}
+
 const assertLocalReactNav = (selector, navList) => {
   cy.get(selector).as('navElements')
   cy.get('@navElements').should(
@@ -98,4 +103,5 @@ module.exports = {
   assertLocalNav,
   assertKeyValueTable,
   assertLocalReactNav,
+  assertActivitytab,
 }
