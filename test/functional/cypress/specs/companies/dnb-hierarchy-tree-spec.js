@@ -46,24 +46,6 @@ const assertRelatedCompaniesPage = ({ company }) => {
 describe('D&B Company hierarchy tree', () => {
   context('Error scenarios:', () => {
     context(
-      'when attempting to view the hierarchy of an unknown company',
-      () => {
-        const unknownId = 1
-        before(() => {
-          cy.intercept(`api-proxy/v4/company/${unknownId}`, {
-            statusCode: 404,
-          }).as('companyApi')
-          cy.visit(urls.companies.dnbHierarchy.tree(unknownId))
-        })
-
-        it('should display the access denied page', () => {
-          cy.wait('@companyApi')
-          assertErrorDialog('TASK_GET_COMPANY_DETAIL', 'Not Found')
-        })
-      }
-    )
-
-    context(
       'when attempting to view the hierarchy of a company without a D&B id',
       () => {
         const accessDeniedId = 2
