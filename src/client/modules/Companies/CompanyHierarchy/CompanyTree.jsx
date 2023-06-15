@@ -9,6 +9,7 @@ import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
 import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
+import AccessDenied from '../../../components/AccessDenied'
 import { GREY_4, BLACK } from '../../../utils/colours'
 import { isEmpty } from 'lodash'
 import {
@@ -220,6 +221,21 @@ const breadcrumbs = (company) =>
 
 const CompanyTree = ({ company, familyTree }) => {
   const { companyId } = useParams()
+  if (company && !company.duns_number) {
+    return (
+      <AccessDenied
+        breadcrumbs={[
+          {
+            link: urls.dashboard(),
+            text: 'Home',
+          },
+          {
+            text: 'Companies',
+          },
+        ]}
+      />
+    )
+  }
 
   return (
     <DefaultLayout
