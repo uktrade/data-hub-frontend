@@ -1,5 +1,4 @@
 import React from 'react'
-
 import InsetText from '@govuk-react/inset-text'
 
 import { FieldRadios } from '../../../../../client/components'
@@ -8,48 +7,46 @@ import { THEMES, KINDS } from '../../../constants'
 import { NewWindowLink } from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 
-const getOnChangeHandler = (fieldName, setFieldValue) => (e) => {
+const getThemeHandler = (setFieldValue) => (e) => {
   setFieldValue('service', '')
-  setFieldValue(fieldName, e.target.value)
+  setFieldValue('theme', e.target.value)
 }
 
-const setInteractionKindFieldValues = (setFieldValue, e) => {
+const getKindHandler = (setFieldValue) => (e) => {
+  setFieldValue('service', '')
+  setFieldValue('kind', e.target.value)
+}
+
+const getNoKindHandler = (setFieldValue) => (e) => {
   setFieldValue('service', '')
   setFieldValue('theme', e.target.value)
   setFieldValue('kind', KINDS.INTERACTION)
 }
 
-const getInvestmentOnChangeHandler = (setFieldValue) => (e) => {
-  setInteractionKindFieldValues(setFieldValue, e)
-}
-
-const getTradeAgreementOnChangeHandler = (setFieldValue) => (e) => {
-  setInteractionKindFieldValues(setFieldValue, e)
-}
-
 const StepInteractionType = () => {
   const { setFieldValue } = useFormContext()
+
   const exportOption = {
     label: 'Export',
     value: THEMES.EXPORT,
-    onChange: getOnChangeHandler('theme', setFieldValue),
+    onChange: getThemeHandler(setFieldValue),
     children: (
       <FieldRadios
         label="What would you like to record?"
         name="kind"
+        dataTestPrefix="export"
         required="Select interaction type"
+        onChange={getKindHandler(setFieldValue)}
         options={[
           {
             label: 'A standard interaction',
             hint: 'For example, an email, phone call or meeting',
             value: KINDS.INTERACTION,
-            onChange: getOnChangeHandler('kind', setFieldValue),
           },
           {
             label: 'A service you have provided',
             hint: 'For example, a significant assist or event',
             value: KINDS.SERVICE_DELIVERY,
-            onChange: getOnChangeHandler('kind', setFieldValue),
           },
         ]}
       />
@@ -58,35 +55,34 @@ const StepInteractionType = () => {
   const investmentOption = {
     label: 'Investment',
     value: THEMES.INVESTMENT,
-    onChange: getInvestmentOnChangeHandler(setFieldValue),
+    onChange: getNoKindHandler(setFieldValue),
   }
   const tradeAgreementOption = {
     label: 'Trade agreement',
     value: THEMES.TRADE_AGREEMENT,
-    onChange: getTradeAgreementOnChangeHandler(setFieldValue),
+    onChange: getNoKindHandler(setFieldValue),
   }
   const otherOption = {
     label: 'Other',
     value: THEMES.OTHER,
-    onChange: getOnChangeHandler('theme', setFieldValue),
+    onChange: getThemeHandler(setFieldValue),
     children: (
       <FieldRadios
         label="What would you like to record?"
         name="kind"
+        dataTestPrefix="other"
         required="Select interaction type"
-        onChange={getOnChangeHandler('kind', setFieldValue)}
+        onChange={getKindHandler(setFieldValue)}
         options={[
           {
             label: 'A standard interaction',
             hint: 'For example, an email, phone call or meeting',
             value: KINDS.INTERACTION,
-            onChange: getOnChangeHandler('kind', setFieldValue),
           },
           {
             label: 'A service you have provided',
             hint: 'For example, a significant assist or event',
             value: KINDS.SERVICE_DELIVERY,
-            onChange: getOnChangeHandler('kind', setFieldValue),
           },
         ]}
       />
