@@ -18,7 +18,7 @@ import {
   HierarchyContents,
   HierarchyItemContents,
   SubsidiaryList,
-  HierachyListItem,
+  HierarchyListItem,
   HierarchyHeaderContents,
 } from './styled'
 
@@ -69,11 +69,11 @@ const Subsidiaries = ({
         isOpen={isOpen}
         childCount={company.subsidiaries.length}
       >
-        {company.subsidiaries.map((subsidary, index) => (
+        {company.subsidiaries.map((subsidiary, index) => (
           <HierarchyItem
             requestedCompanyId={requestedCompanyId}
-            company={subsidary}
-            hierarchy={subsidary.hierarchy}
+            company={subsidiary}
+            hierarchy={subsidiary.hierarchy}
             fullTreeExpanded={fullTreeExpanded}
             key={`hierarchy_item_${index}`}
             isFinalItemInLevel={index + 1 === company.subsidiaries.length}
@@ -131,7 +131,7 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
               as={Link}
               href={urls.companies.subsidiaries.index(requestedCompanyId)}
             >
-              + Show manually linked susidiaries
+              + Show manually linked subsidiaries
             </Button>
           </ToggleSubsidiariesButtonContent>
         </li>
@@ -157,7 +157,7 @@ const HierarchyItem = ({
   }, [fullTreeExpanded])
 
   return (
-    <HierachyListItem
+    <HierarchyListItem
       globalParent={globalParent}
       isFinalItemInLevel={isFinalItemInLevel}
       data-test="hierarchy-item"
@@ -173,7 +173,7 @@ const HierarchyItem = ({
       >
         {company.id ? (
           <Link
-            href={urls.companies.details(company.id)}
+            href={urls.companies.overview.index(company.id)}
             aria-label={`Go to ${company.name} details`}
           >
             {company.name}
@@ -190,7 +190,7 @@ const HierarchyItem = ({
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
       />
-    </HierachyListItem>
+    </HierarchyListItem>
   )
 }
 
@@ -207,7 +207,7 @@ const breadcrumbs = (company) =>
           text: 'Companies',
         },
         {
-          link: urls.companies.details(company.id),
+          link: urls.companies.overview.index(company.id),
           text: company.name,
         },
         {

@@ -36,7 +36,7 @@ const assertRelatedCompaniesPage = ({ company }) => {
     assertBreadcrumbs({
       Home: urls.dashboard(),
       Companies: urls.companies.index(),
-      [company.name]: urls.companies.details(company.id),
+      [company.name]: urls.companies.overview.index(company.id),
       'Business details': urls.companies.businessDetails(company.id),
       'Related companies': null,
     })
@@ -189,7 +189,7 @@ describe('D&B Company hierarchy tree', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.details(
+          urls.companies.overview.index(
             companyOnlyImmediateSubsidiaries.ultimate_global_company
               .subsidiaries[0].id
           )

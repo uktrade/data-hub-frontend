@@ -89,7 +89,7 @@ export const ToggleSubsidiariesButtonContent = styled.div`
   }
 `
 
-export const HierachyListItem = styled.li`
+export const HierarchyListItem = styled.li`
   position: relative;
   ${({ globalParent, isFinalItemInLevel }) =>
     !globalParent &&
