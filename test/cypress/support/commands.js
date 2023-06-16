@@ -317,6 +317,10 @@ Cypress.Commands.add('clearSessionStorage', () => {
   cy.window().then((win) => win.sessionStorage.clear())
 })
 
+Cypress.Commands.add('localStorage', (key, value) => {
+  cy.window().then((win) => win.localStorage.setItem(key, value))
+})
+
 Cypress.Commands.add('getViewport', () => {
   cy.document().then((doc) => {
     return doc.documentElement.getBoundingClientRect()

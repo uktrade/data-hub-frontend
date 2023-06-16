@@ -36,6 +36,9 @@ const FIELDS_TO_OMIT = [
   'has_related_opportunity',
 ]
 
+const COMPANY_INTERACTION = 'company-interaction'
+const HTTP_201_CREATED = 201
+
 function transformExportCountries(values) {
   if (values.were_countries_discussed === OPTION_NO) {
     return
@@ -206,6 +209,9 @@ export async function getInitialFormValues({
         kind: KINDS.INTERACTION,
         theme: THEMES.INVESTMENT,
       }
+    const previousSelection =
+      JSON.parse(window.localStorage.getItem(COMPANY_INTERACTION)) || {}
+
     return {
       companies: [companyId],
       investment_project: investmentId,
@@ -220,6 +226,8 @@ export async function getInitialFormValues({
           : [],
       dit_participants: [transformObjectToOption(user)],
       ...getInvestmentValues(investmentId),
+      ...(previousSelection.theme && { theme: previousSelection.theme }),
+      ...(previousSelection.kind && { kind: previousSelection.kind }),
     }
   }
 }
@@ -276,6 +284,9 @@ export function saveInteraction({ values, companyIds, referralId }) {
           ? values.large_capital_opportunity.value
           : null,
     }),
+    // If the user has selected investment the API still requires a kind.
+    ...(values.theme === THEMES.INVESTMENT &&
+      !values.kind && { kind: KINDS.INTERACTION }),
   }
 
   const payload = values.id
@@ -290,11 +301,29 @@ export function saveInteraction({ values, companyIds, referralId }) {
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
-  ).catch((e) => {
-    // Accounts for non-standard API error on contacts field
-    const contactsError = e.response.data.contacts[0]
-    return contactsError ? Promise.reject(contactsError) : catchApiError(e)
-  })
+  )
+    .then((result) => {
+      if (result.status === HTTP_201_CREATED) {
+        // Save both the theme and kind so when the user
+        // creates their next interaction both fields will
+        // prepopulate based on their previous selections.
+        // Statistics show us that users select the same
+        // options 85% of the time.
+        window.localStorage.setItem(
+          COMPANY_INTERACTION,
+          JSON.stringify({
+            theme: values.theme,
+            kind: values.kind,
+          })
+        )
+      }
+      return result
+    })
+    .catch((e) => {
+      // Accounts for non-standard API error on contacts field
+      const contactsError = e.response?.data?.contacts[0]
+      return contactsError ? Promise.reject(contactsError) : catchApiError(e)
+    })
 }
 
 export const fetchActiveEvents = () =>
