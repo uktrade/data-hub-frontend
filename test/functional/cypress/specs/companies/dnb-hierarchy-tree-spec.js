@@ -2,6 +2,7 @@ import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
+import { kebabCase } from 'lodash'
 
 const {
   assertErrorDialog,
@@ -194,6 +195,48 @@ describe('D&B Company hierarchy tree', () => {
               .subsidiaries[0].id
           )
         )
+      cy.get(
+        `[data-test=${kebabCase(
+          companyOnlyImmediateSubsidiaries.ultimate_global_company
+            .subsidiaries[0].name
+        )}-number-of-employees-tag]`
+      ).should(
+        'contain.text',
+        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
+          .number_of_employees
+      )
+      cy.get(
+        `[data-test=${kebabCase(
+          companyOnlyImmediateSubsidiaries.ultimate_global_company
+            .subsidiaries[0].name
+        )}-uk-region-tag]`
+      ).should(
+        'contain.text',
+        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
+          .uk_region.name
+      )
+      cy.get(
+        `[data-test=${kebabCase(
+          companyOnlyImmediateSubsidiaries.ultimate_global_company
+            .subsidiaries[0].name
+        )}-country-tag]`
+      ).should(
+        'contain.text',
+        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
+          .address.country.name
+      )
+      cy.get(
+        `[data-test=${kebabCase(
+          companyOnlyImmediateSubsidiaries.ultimate_global_company
+            .subsidiaries[0].name
+        )}-one-list-tag]`
+      ).should(
+        'contain.text',
+        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0].one_list_tier.name.slice(
+          0,
+          6
+        )
+      )
     })
   })
 
