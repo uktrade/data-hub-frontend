@@ -24,6 +24,7 @@ const dataHubCompanyActivityQuery = ({
   dateBefore = null,
   dateAfter = null,
   ditParticipantsAdviser,
+  createdByOthers = null,
   activityType,
   feedType,
 }) => {
@@ -40,6 +41,17 @@ const dataHubCompanyActivityQuery = ({
     types = [...types, ...EXTERNAL_ACTIVITY]
   }
 
+  if (
+    createdByOthers?.length &&
+    ditParticipantsAdviser.length &&
+    ditParticipantsAdviser.includes(createdByOthers[0])
+  ) {
+    ditParticipantsAdviser.splice(
+      ditParticipantsAdviser.indexOf(createdByOthers),
+      1
+    )
+    createdByOthers = null
+  }
   const dataHubActivityCriteria = {
     bool: {
       must: [
@@ -64,6 +76,15 @@ const dataHubCompanyActivityQuery = ({
         'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
       },
     })
+  }
+  if (createdByOthers) {
+    dataHubActivityCriteria.bool.must_not = [
+      {
+        term: {
+          'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
+        },
+      },
+    ]
   }
   shouldCriteria.push(dataHubActivityCriteria)
 
@@ -108,6 +129,15 @@ const dataHubCompanyActivityQuery = ({
         },
       })
     }
+    if (createdByOthers) {
+      externalActivityCriteria.bool.must_not = [
+        {
+          term: {
+            'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
+          },
+        },
+      ]
+    }
     shouldCriteria.push(externalActivityCriteria)
   }
 
@@ -136,6 +166,16 @@ const dataHubCompanyActivityQuery = ({
           },
         })
       }
+      if (createdByOthers) {
+        criteria.bool.must_not = [
+          {
+            term: {
+              'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
+            },
+          },
+        ]
+      }
+
       shouldCriteria.push(criteria)
     }
     const criteria = {
@@ -164,6 +204,16 @@ const dataHubCompanyActivityQuery = ({
         },
       })
     }
+    if (createdByOthers) {
+      criteria.bool.must_not = [
+        {
+          term: {
+            'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
+          },
+        },
+      ]
+    }
+
     shouldCriteria.push(criteria)
   }
 

@@ -36,6 +36,16 @@ import Activity from '../Activity'
 
 import { CompanyResource } from '../../Resource'
 import CompanyLayout from '../../Layout/CompanyLayout'
+import styled from 'styled-components'
+
+const FiltersCheckboxGroupWithNext = styled(Filters.CheckboxGroup)({
+  marginBottom: 0,
+  paddingBottom: 0,
+})
+
+const FiltersCheckboxGroupHiddenLegend = styled(Filters.CheckboxGroup)({
+  legend: { display: 'none' },
+})
 
 const collectionItemTemplateDefault = (activity) => {
   return (
@@ -101,12 +111,17 @@ const CompanyActivityCollection = ({
     },
   }
 
-  const myInteractionsSelected = selectedFilters.advisers.options
+  const createdByMeSelected = selectedFilters.advisers.options
     .map(({ value }) => value)
     .includes(currentAdviserId)
 
   const myInteractionsOption = {
     label: LABELS.me,
+    value: currentAdviserId,
+  }
+
+  const createdByOthersOption = {
+    label: LABELS.others,
     value: currentAdviserId,
   }
 
@@ -139,15 +154,23 @@ const CompanyActivityCollection = ({
             collectionItemTemplate={collectionItemTemplateDefault}
           >
             <CollectionFilters taskProps={collectionListMetadataTask}>
-              <Filters.CheckboxGroup
-                legend={LABELS.myInteractions}
+              <FiltersCheckboxGroupWithNext
+                legend={LABELS.createdBy}
                 name="my_interactions"
                 qsParam="ditParticipantsAdviser"
                 options={[myInteractionsOption]}
                 selectedOptions={
-                  myInteractionsSelected ? [myInteractionsOption] : []
+                  createdByMeSelected ? [myInteractionsOption] : []
                 }
                 data-test="my-interactions-filter"
+              />
+              <FiltersCheckboxGroupHiddenLegend
+                legend={LABELS.createdBy}
+                name="created_by_others"
+                qsParam="createdByOthers"
+                options={[createdByOthersOption]}
+                selectedOptions={selectedFilters.createdByOthers.selected}
+                data-test="created-by-others-filter"
               />
               <Filters.Date
                 label={LABELS.dateAfter}
