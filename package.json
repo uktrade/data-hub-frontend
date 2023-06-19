@@ -209,7 +209,7 @@
     "rewire": "^6.0.0",
     "sinon": "^15.1.0",
     "sinon-chai": "^3.7.0",
-    "storybook": "^7.0.20",
+    "storybook": "^7.0.22",
     "supertest": "^6.3.3",
     "webpack": "^5.87.0",
     "webpack-assets-manifest": "^5.1.0",
