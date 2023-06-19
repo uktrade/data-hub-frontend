@@ -11,7 +11,8 @@ import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
 import { GREY_4, BLACK } from '../../../utils/colours'
-import { isEmpty } from 'lodash'
+import { BsFillPersonFill } from 'react-icons/bs'
+import { isEmpty, kebabCase } from 'lodash'
 import {
   StyledButton,
   ToggleSubsidiariesButtonContent,
@@ -20,6 +21,7 @@ import {
   SubsidiaryList,
   HierarchyListItem,
   HierarchyHeaderContents,
+  HierarchyTag,
 } from './styled'
 
 const ToggleSubsidiariesButton = ({
@@ -172,12 +174,50 @@ const HierarchyItem = ({
         }
       >
         {company.id ? (
-          <Link
-            href={urls.companies.overview.index(company.id)}
-            aria-label={`Go to ${company.name} details`}
-          >
-            {company.name}
-          </Link>
+          <span>
+            <Link
+              href={urls.companies.overview.index(company.id)}
+              aria-label={`Go to ${company.name} details`}
+            >
+              {company.name}
+            </Link>
+            {company.one_list_tier.name && (
+              <HierarchyTag
+                colour="grey"
+                data-test={`${kebabCase(company.name)}-one-list-tag`}
+              >
+                One List {company.one_list_tier.name.slice(0, 6)}
+              </HierarchyTag>
+            )}
+            {company.address.country.name && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${kebabCase(company.name)}-country-tag`}
+              >
+                {company.address.country.name}
+              </HierarchyTag>
+            )}
+            {company.uk_region.name && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${kebabCase(company.name)}-uk-region-tag`}
+              >
+                {company.uk_region.name}
+              </HierarchyTag>
+            )}
+            {company.number_of_employees && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${kebabCase(company.name)}-number-of-employees-tag`}
+              >
+                <BsFillPersonFill
+                  size={'12'}
+                  style={{ verticalAlign: 'top', paddingTop: '1px' }}
+                />
+                {` ${company.number_of_employees}`}
+              </HierarchyTag>
+            )}
+          </span>
         ) : (
           <span>{`${company.name} (not on Data Hub)`}</span>
         )}

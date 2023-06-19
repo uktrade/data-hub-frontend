@@ -7,6 +7,7 @@ import {
   DARK_BLUE_LEGACY,
   WHITE,
 } from '../../../utils/colours'
+import { Tag } from '../../../components'
 
 export const HierarchyContents = styled.div`
   padding-bottom: 10px;
@@ -123,4 +124,9 @@ export const HierarchyHeaderContents = styled.div`
       font-size: 24px;
     }
   }
+`
+
+export const HierarchyTag = styled(Tag)`
+  float: right;
+  margin-left: 10px;
 `
