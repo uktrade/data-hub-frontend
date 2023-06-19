@@ -27,6 +27,11 @@ const companyNoSubsidiaries = companyTreeFaker({
 
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
 const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
+const companyName = kebabCase(
+  companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0].name
+)
+const tagContent =
+  companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
 
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
@@ -172,9 +177,17 @@ describe('D&B Company hierarchy tree', () => {
         .find('span')
         .first()
         .should(
-          'have.text',
+          'contain.text',
           `${companyOnlyImmediateSubsidiaries.ultimate_global_company.name} (not on Data Hub)`
         )
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
+        'contain.text',
+        tagContent.number_of_employees
+      )
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should(
+        'contain.text',
+        tagContent.uk_region.name
+      )
     })
 
     it('should click the show subsidiaries button and check the subsidiary company displays with the correct company details', () => {
@@ -195,47 +208,22 @@ describe('D&B Company hierarchy tree', () => {
               .subsidiaries[0].id
           )
         )
-      cy.get(
-        `[data-test=${kebabCase(
-          companyOnlyImmediateSubsidiaries.ultimate_global_company
-            .subsidiaries[0].name
-        )}-number-of-employees-tag]`
-      ).should(
+
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
         'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
-          .number_of_employees
+        tagContent.number_of_employees
       )
-      cy.get(
-        `[data-test=${kebabCase(
-          companyOnlyImmediateSubsidiaries.ultimate_global_company
-            .subsidiaries[0].name
-        )}-uk-region-tag]`
-      ).should(
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should(
         'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
-          .uk_region.name
+        tagContent.uk_region.name
       )
-      cy.get(
-        `[data-test=${kebabCase(
-          companyOnlyImmediateSubsidiaries.ultimate_global_company
-            .subsidiaries[0].name
-        )}-country-tag]`
-      ).should(
+      cy.get(`[data-test=${companyName}-country-tag]`).should(
         'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
-          .address.country.name
+        tagContent.address.country.name
       )
-      cy.get(
-        `[data-test=${kebabCase(
-          companyOnlyImmediateSubsidiaries.ultimate_global_company
-            .subsidiaries[0].name
-        )}-one-list-tag]`
-      ).should(
+      cy.get(`[data-test=${companyName}-one-list-tag]`).should(
         'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0].one_list_tier.name.slice(
-          0,
-          6
-        )
+        tagContent.one_list_tier.name.slice(0, 6)
       )
     })
   })

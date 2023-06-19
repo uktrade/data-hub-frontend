@@ -158,6 +158,7 @@ const HierarchyItem = ({
     }
   }, [fullTreeExpanded])
 
+  const companyName = kebabCase(company.name)
   return (
     <HierarchyListItem
       globalParent={globalParent}
@@ -184,7 +185,7 @@ const HierarchyItem = ({
             {company.one_list_tier.name && (
               <HierarchyTag
                 colour="grey"
-                data-test={`${kebabCase(company.name)}-one-list-tag`}
+                data-test={`${companyName}-one-list-tag`}
               >
                 One List {company.one_list_tier.name.slice(0, 6)}
               </HierarchyTag>
@@ -192,7 +193,7 @@ const HierarchyItem = ({
             {company.address.country.name && (
               <HierarchyTag
                 colour="blue"
-                data-test={`${kebabCase(company.name)}-country-tag`}
+                data-test={`${companyName}-country-tag`}
               >
                 {company.address.country.name}
               </HierarchyTag>
@@ -200,7 +201,7 @@ const HierarchyItem = ({
             {company.uk_region.name && (
               <HierarchyTag
                 colour="blue"
-                data-test={`${kebabCase(company.name)}-uk-region-tag`}
+                data-test={`${companyName}-uk-region-tag`}
               >
                 {company.uk_region.name}
               </HierarchyTag>
@@ -208,7 +209,7 @@ const HierarchyItem = ({
             {company.number_of_employees && (
               <HierarchyTag
                 colour="blue"
-                data-test={`${kebabCase(company.name)}-number-of-employees-tag`}
+                data-test={`${companyName}-number-of-employees-tag`}
               >
                 <BsFillPersonFill
                   size={'12'}
@@ -219,7 +220,29 @@ const HierarchyItem = ({
             )}
           </span>
         ) : (
-          <span>{`${company.name} (not on Data Hub)`}</span>
+          <span>
+            {`${company.name} (not on Data Hub)`}
+            {company.address.country.name && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${companyName}-country-tag`}
+              >
+                {company.address.country.name}
+              </HierarchyTag>
+            )}
+            {company.number_of_employees && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${companyName}-number-of-employees-tag`}
+              >
+                <BsFillPersonFill
+                  size={'12'}
+                  style={{ verticalAlign: 'top', paddingTop: '1px' }}
+                />
+                {` ${company.number_of_employees}`}
+              </HierarchyTag>
+            )}
+          </span>
         )}
       </HierarchyItemContents>
       <Subsidiaries
