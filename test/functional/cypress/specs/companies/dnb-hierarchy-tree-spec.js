@@ -40,6 +40,9 @@ const companyNoAdditionalTagData = companyTreeFaker({
       number_of_employees: null,
       one_list_tier: [],
       uk_region: {},
+      address: {
+        country: '',
+      },
     }),
     ultimate_global_companies_count: 1,
   },
@@ -254,7 +257,7 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=requested-company`)
         .children()
         .find('strong')
-        .should('have.length', 0)
+        .should('not.exist')
     })
   })
 
