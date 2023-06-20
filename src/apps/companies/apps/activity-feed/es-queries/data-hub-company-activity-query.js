@@ -15,6 +15,18 @@ const isExternalActivityFilter = (activityType) => {
   return activityType.includes(FILTER_KEYS.externalActivity)
 }
 
+function addFiltersToCriteria(filters, criteria) {
+  if (filters.must.length) {
+    if (!criteria.bool.must) criteria.bool.must = []
+    criteria.bool.must = [...criteria.bool.must, ...filters.must]
+  }
+  if (filters.must_not.length) {
+    if (!criteria.bool.must_not) criteria.bool.must_not = []
+    criteria.bool.must_not = [...criteria.bool.must_not, ...filters.must_not]
+  }
+  return criteria
+}
+
 const dataHubCompanyActivityQuery = ({
   from,
   size,
@@ -70,22 +82,6 @@ const dataHubCompanyActivityQuery = ({
       ],
     },
   }
-  if (ditParticipantsAdviser.length) {
-    dataHubActivityCriteria.bool.must.push({
-      term: {
-        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
-      },
-    })
-  }
-  if (createdByOthers) {
-    dataHubActivityCriteria.bool.must_not = [
-      {
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
-        },
-      },
-    ]
-  }
   shouldCriteria.push(dataHubActivityCriteria)
 
   if (isExternalActivityFilter(activityType)) {
@@ -122,22 +118,6 @@ const dataHubCompanyActivityQuery = ({
         ],
       },
     }
-    if (ditParticipantsAdviser.length) {
-      externalActivityCriteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
-        },
-      })
-    }
-    if (createdByOthers) {
-      externalActivityCriteria.bool.must_not = [
-        {
-          term: {
-            'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
-          },
-        },
-      ]
-    }
     shouldCriteria.push(externalActivityCriteria)
   }
 
@@ -159,23 +139,6 @@ const dataHubCompanyActivityQuery = ({
           ],
         },
       }
-      if (ditParticipantsAdviser.length) {
-        criteria.bool.must.push({
-          term: {
-            'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
-          },
-        })
-      }
-      if (createdByOthers) {
-        criteria.bool.must_not = [
-          {
-            term: {
-              'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
-            },
-          },
-        ]
-      }
-
       shouldCriteria.push(criteria)
     }
     const criteria = {
@@ -197,27 +160,10 @@ const dataHubCompanyActivityQuery = ({
         ],
       },
     }
-    if (ditParticipantsAdviser.length) {
-      criteria.bool.must.push({
-        term: {
-          'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
-        },
-      })
-    }
-    if (createdByOthers) {
-      criteria.bool.must_not = [
-        {
-          term: {
-            'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
-          },
-        },
-      ]
-    }
-
     shouldCriteria.push(criteria)
   }
 
-  const filters = []
+  const filters = { must: [], must_not: [] }
   if (feedType && feedType != FILTER_FEED_TYPE.ALL) {
     const now = new Date()
     switch (feedType) {
@@ -232,11 +178,25 @@ const dataHubCompanyActivityQuery = ({
   }
   if (dateAfter || dateBefore) {
     const dateFilter = datePeriodFilter(dateAfter, dateBefore)
-    filters.push(dateFilter)
+    filters.must.push(dateFilter)
   }
-  shouldCriteria.map(
-    (criteria) => (criteria.bool.must = [...criteria.bool.must, ...filters])
-  )
+  if (ditParticipantsAdviser.length) {
+    filters.must.push({
+      term: {
+        'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
+      },
+    })
+  }
+  if (createdByOthers) {
+    filters.must_not.push({
+      term: {
+        'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
+      },
+    })
+  }
+  shouldCriteria.map((criteria) => {
+    return addFiltersToCriteria(filters, criteria)
+  })
 
   const dsl = {
     from,
