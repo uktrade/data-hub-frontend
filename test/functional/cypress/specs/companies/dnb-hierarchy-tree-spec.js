@@ -33,6 +33,18 @@ const companyName = kebabCase(
 const tagContent =
   companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
 
+const companyNoAdditionalTagData = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: companyTreeItemFaker({
+      id: dnbGlobalUltimate.id,
+      number_of_employees: null,
+      one_list_tier: [],
+      uk_region: {},
+    }),
+    ultimate_global_companies_count: 1,
+  },
+})
+
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
     assertLocalHeader(`Company records related to ${company.name}`)
@@ -225,6 +237,24 @@ describe('D&B Company hierarchy tree', () => {
         'contain.text',
         tagContent.one_list_tier.name.slice(0, 6)
       )
+    })
+  })
+
+  context('When a company has no additional company information', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoAdditionalTagData
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should not show any tag information', () => {
+      cy.get(`[data-test=requested-company`)
+        .children()
+        .find('strong')
+        .should('have.length', 0)
     })
   })
 
