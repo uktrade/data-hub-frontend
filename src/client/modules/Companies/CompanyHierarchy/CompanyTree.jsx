@@ -174,76 +174,55 @@ const HierarchyItem = ({
             : 'related-company'
         }
       >
-        {company.id ? (
-          <span>
+        <span>
+          {company.id ? (
             <Link
               href={urls.companies.overview.index(company.id)}
               aria-label={`Go to ${company.name} details`}
             >
               {company.name}
             </Link>
-            {company.one_list_tier.name && (
-              <HierarchyTag
-                colour="grey"
-                data-test={`${companyName}-one-list-tag`}
-              >
-                One List {company.one_list_tier.name.slice(0, 6)}
-              </HierarchyTag>
-            )}
-            {company.address.country.name && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-country-tag`}
-              >
-                {company.address.country.name}
-              </HierarchyTag>
-            )}
-            {company.uk_region.name && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-uk-region-tag`}
-              >
-                {company.uk_region.name}
-              </HierarchyTag>
-            )}
-            {company.number_of_employees && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-number-of-employees-tag`}
-              >
-                <BsFillPersonFill
-                  size={'12'}
-                  style={{ verticalAlign: 'top', paddingTop: '1px' }}
-                />
-                {` ${company.number_of_employees}`}
-              </HierarchyTag>
-            )}
-          </span>
-        ) : (
-          <span>
-            {`${company.name} (not on Data Hub)`}
-            {company.address.country.name && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-country-tag`}
-              >
-                {company.address.country.name}
-              </HierarchyTag>
-            )}
-            {company.number_of_employees && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-number-of-employees-tag`}
-              >
-                <BsFillPersonFill
-                  size={'12'}
-                  style={{ verticalAlign: 'top', paddingTop: '1px' }}
-                />
-                {` ${company.number_of_employees}`}
-              </HierarchyTag>
-            )}
-          </span>
-        )}
+          ) : (
+            `${company.name} (not on Data Hub)`
+          )}
+
+          {company.one_list_tier.name && (
+            <HierarchyTag
+              colour="grey"
+              data-test={`${companyName}-one-list-tag`}
+            >
+              One List {company.one_list_tier.name.slice(0, 6)}
+            </HierarchyTag>
+          )}
+          {company.address.country.name && (
+            <HierarchyTag
+              colour="blue"
+              data-test={`${companyName}-country-tag`}
+            >
+              {company.address.country.name}
+            </HierarchyTag>
+          )}
+          {company.uk_region.name && (
+            <HierarchyTag
+              colour="blue"
+              data-test={`${companyName}-uk-region-tag`}
+            >
+              {company.uk_region.name}
+            </HierarchyTag>
+          )}
+          {company.number_of_employees && (
+            <HierarchyTag
+              colour="blue"
+              data-test={`${companyName}-number-of-employees-tag`}
+            >
+              <BsFillPersonFill
+                size={'12'}
+                style={{ verticalAlign: 'top', paddingTop: '1px' }}
+              />
+              {` ${company.number_of_employees}`}
+            </HierarchyTag>
+          )}
+        </span>
       </HierarchyItemContents>
       <Subsidiaries
         company={company}
