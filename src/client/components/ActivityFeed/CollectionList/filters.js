@@ -1,6 +1,7 @@
 import {
   ACTIVITY_TYPE_OPTIONS,
   BUSINESS_INTELLIGENCE_OPTION,
+  CREATED_BY_OTHERS_OPTIONS,
   LABELS,
 } from './constants'
 
@@ -35,7 +36,9 @@ export const buildSelectedFilters = (
   createdByOthers: {
     queryParams: 'createdByOthers',
     options: buildOptionsFilter({
+      options: CREATED_BY_OTHERS_OPTIONS,
       value: queryParams.createdByOthers,
+      categoryLabel: LABELS.createdBy,
     }),
   },
   company: {

@@ -25,6 +25,10 @@ export const LABELS = {
   allExternalActivity: 'External activity',
 }
 
+export const CREATED_BY_OTHERS_OPTIONS = [
+  { label: LABELS.others, value: FILTER_KEYS.others },
+]
+
 export const ACTIVITY_TYPE_OPTIONS = [
   { label: LABELS.allDataHubActivity, value: FILTER_KEYS.dataHubActivity },
   { label: LABELS.allExternalActivity, value: FILTER_KEYS.externalActivity },

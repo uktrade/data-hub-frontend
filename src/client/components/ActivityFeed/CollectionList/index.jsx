@@ -120,6 +120,9 @@ const CompanyActivityCollection = ({
     value: currentAdviserId,
   }
 
+  const createdByOthersSelected =
+    payload?.createdByOthers?.includes(currentAdviserId)
+
   const createdByOthersOption = {
     label: LABELS.others,
     value: currentAdviserId,
@@ -169,7 +172,9 @@ const CompanyActivityCollection = ({
                 name="created_by_others"
                 qsParam="createdByOthers"
                 options={[createdByOthersOption]}
-                selectedOptions={selectedFilters.createdByOthers.selected}
+                selectedOptions={
+                  createdByOthersSelected ? [createdByOthersOption] : []
+                }
                 data-test="created-by-others-filter"
               />
               <Filters.Date

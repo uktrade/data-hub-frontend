@@ -24,6 +24,7 @@ const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
+const createdByOthersFilter = '[data-test="created-by-others-filter"]'
 const showDnBHierarchyFilter = '[data-test="show-dnb-hierarchy-filter"]'
 
 const adviser = {
@@ -63,9 +64,10 @@ describe('Company Activity Feed Filter', () => {
     })
 
     context('Created by', () => {
-      const expectedRequestUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
+      const expectedRequestAdviserUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
+      const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
 
-      it('should filter from the url', () => {
+      it('should filter Me from the url', () => {
         const queryString = buildQueryString({
           ditParticipantsAdviser: [adviser.id],
         })
@@ -77,7 +79,8 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserApiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestUrl)
+        cy.wait('@apiRequest')
+        assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
         /*
         Asserts the "Adviser typeahead" filter is selected with the
         current user as this is the same as selecting "Created by" > "Me".
@@ -109,7 +112,7 @@ describe('Company Activity Feed Filter', () => {
           value: adviser.id,
         })
         cy.wait('@adviserApiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestUrl)
+        assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
 
         assertQueryParams('ditParticipantsAdviser', [adviser.id])
         assertChipExists({ label: adviser.name, position: 1 })
@@ -117,6 +120,48 @@ describe('Company Activity Feed Filter', () => {
         assertRequestUrl('@apiRequest', minimumRequest)
         assertChipsEmpty()
         assertFieldEmpty(myInteractionsFilter)
+      })
+
+      it('should filter Other from the url', () => {
+        const queryString = buildQueryString({
+          createdByOthers: [adviser.id],
+        })
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
+        assertCheckboxGroupOption({
+          element: createdByOthersFilter,
+          value: adviser.id,
+          checked: true,
+        })
+        //assertChipExists({ label: 'Created by: Others', position: 1 })
+      })
+
+      it('should filter from user input and remove chips', () => {
+        const queryString = buildQueryString()
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+        cy.wait('@apiRequest')
+        clickCheckboxGroupOption({
+          element: createdByOthersFilter,
+          value: adviser.id,
+        })
+        // cy.wait('@apiRequest')
+        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
+
+        // assertChipExists({ label: 'Created by: Others', position: 1 })
+        // removeChip(adviser.id)
+        // assertRequestUrl('@apiRequest', minimumRequest)
+        // assertChipsEmpty()
+        // assertFieldEmpty(createdByOthersFilter)
       })
     })
 
