@@ -186,7 +186,7 @@ const HierarchyItem = ({
             `${company.name} (not on Data Hub)`
           )}
 
-          {company.one_list_tier.name && (
+          {company.one_list_tier?.name && (
             <HierarchyTag
               colour="grey"
               data-test={`${companyName}-one-list-tag`}
@@ -194,7 +194,7 @@ const HierarchyItem = ({
               One List {company.one_list_tier.name.slice(0, 6)}
             </HierarchyTag>
           )}
-          {company.address.country.name && (
+          {company.address?.country.name && (
             <HierarchyTag
               colour="blue"
               data-test={`${companyName}-country-tag`}
@@ -202,7 +202,7 @@ const HierarchyItem = ({
               {company.address.country.name}
             </HierarchyTag>
           )}
-          {company.uk_region.name && (
+          {company.uk_region?.name && (
             <HierarchyTag
               colour="blue"
               data-test={`${companyName}-uk-region-tag`}

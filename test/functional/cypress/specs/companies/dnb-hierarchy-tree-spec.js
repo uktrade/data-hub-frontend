@@ -39,10 +39,8 @@ const companyNoAdditionalTagData = companyTreeFaker({
       id: dnbGlobalUltimate.id,
       number_of_employees: null,
       one_list_tier: [],
-      uk_region: {},
-      address: {
-        country: '',
-      },
+      uk_region: null,
+      address: null,
     }),
     ultimate_global_companies_count: 1,
   },
@@ -258,6 +256,13 @@ describe('D&B Company hierarchy tree', () => {
         .children()
         .find('strong')
         .should('not.exist')
+
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
+        'not.exist'
+      )
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should('not.exist')
+      cy.get(`[data-test=${companyName}-country-tag]`).should('not.exist')
+      cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
     })
   })
 
