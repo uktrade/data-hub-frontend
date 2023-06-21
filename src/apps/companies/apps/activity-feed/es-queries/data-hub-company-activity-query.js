@@ -180,14 +180,14 @@ const dataHubCompanyActivityQuery = ({
     const dateFilter = datePeriodFilter(dateAfter, dateBefore)
     filters.must.push(dateFilter)
   }
-  if (ditParticipantsAdviser.length) {
+  if (ditParticipantsAdviser?.length) {
     filters.must.push({
       term: {
         'object.attributedTo.id': `dit:DataHubAdviser:${ditParticipantsAdviser}`,
       },
     })
   }
-  if (createdByOthers) {
+  if (createdByOthers?.length) {
     filters.must_not.push({
       term: {
         'object.attributedTo.id': `dit:DataHubAdviser:${createdByOthers}`,
