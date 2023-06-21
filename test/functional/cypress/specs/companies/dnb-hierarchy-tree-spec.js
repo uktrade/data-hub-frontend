@@ -2,6 +2,7 @@ import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
+import { kebabCase } from 'lodash'
 
 const {
   assertErrorDialog,
@@ -26,6 +27,24 @@ const companyNoSubsidiaries = companyTreeFaker({
 
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
 const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
+const companyName = kebabCase(
+  companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0].name
+)
+const tagContent =
+  companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
+
+const companyNoAdditionalTagData = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: companyTreeItemFaker({
+      id: dnbGlobalUltimate.id,
+      number_of_employees: null,
+      one_list_tier: [],
+      uk_region: null,
+      address: null,
+    }),
+    ultimate_global_companies_count: 1,
+  },
+})
 
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
@@ -171,9 +190,17 @@ describe('D&B Company hierarchy tree', () => {
         .find('span')
         .first()
         .should(
-          'have.text',
+          'contain.text',
           `${companyOnlyImmediateSubsidiaries.ultimate_global_company.name} (not on Data Hub)`
         )
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
+        'contain.text',
+        tagContent.number_of_employees
+      )
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should(
+        'contain.text',
+        tagContent.uk_region.name
+      )
     })
 
     it('should click the show subsidiaries button and check the subsidiary company displays with the correct company details', () => {
@@ -194,6 +221,48 @@ describe('D&B Company hierarchy tree', () => {
               .subsidiaries[0].id
           )
         )
+
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
+        'contain.text',
+        tagContent.number_of_employees
+      )
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should(
+        'contain.text',
+        tagContent.uk_region.name
+      )
+      cy.get(`[data-test=${companyName}-country-tag]`).should(
+        'contain.text',
+        tagContent.address.country.name
+      )
+      cy.get(`[data-test=${companyName}-one-list-tag]`).should(
+        'contain.text',
+        tagContent.one_list_tier.name.slice(0, 6)
+      )
+    })
+  })
+
+  context('When a company has no additional company information', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoAdditionalTagData
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should not show any tag information', () => {
+      cy.get(`[data-test=requested-company`)
+        .children()
+        .find('strong')
+        .should('not.exist')
+
+      cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
+        'not.exist'
+      )
+      cy.get(`[data-test=${companyName}-uk-region-tag]`).should('not.exist')
+      cy.get(`[data-test=${companyName}-country-tag]`).should('not.exist')
+      cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
     })
   })
 
