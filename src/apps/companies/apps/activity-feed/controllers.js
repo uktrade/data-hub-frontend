@@ -270,7 +270,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       feedType = FILTER_FEED_TYPE.ALL,
       ditParticipantsAdviser = [],
       showDnbHierarchy = false,
-      createdByOthers = null,
+      createdByOthers = [],
       activityType = [],
     } = req.query
     let dnbHierarchyIds = []

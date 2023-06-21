@@ -1,7 +1,6 @@
 import {
   ACTIVITY_TYPE_OPTIONS,
   BUSINESS_INTELLIGENCE_OPTION,
-  CREATED_BY_OTHERS_OPTIONS,
   LABELS,
 } from './constants'
 
@@ -13,10 +12,9 @@ import {
 
 export const buildSelectedFilters = (
   queryParams,
-  metadata,
   selectedAdvisers,
-  selectedTeams,
-  selectedCompanies
+  selectedCompanies,
+  currentAdviserId
 ) => ({
   showDNBHierarchy: {
     queryParam: 'showDnbHierarchy',
@@ -36,7 +34,12 @@ export const buildSelectedFilters = (
   createdByOthers: {
     queryParams: 'createdByOthers',
     options: buildOptionsFilter({
-      options: CREATED_BY_OTHERS_OPTIONS,
+      options: [
+        {
+          label: LABELS.others,
+          value: currentAdviserId,
+        },
+      ],
       value: queryParams.createdByOthers,
       categoryLabel: LABELS.createdBy,
     }),
