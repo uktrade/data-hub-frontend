@@ -59,7 +59,7 @@ const dataHubCompanyActivityQuery = ({
     ditParticipantsAdviser.includes(createdByOthers[0])
   ) {
     ditParticipantsAdviser.splice(
-      ditParticipantsAdviser.indexOf(createdByOthers),
+      ditParticipantsAdviser.indexOf(createdByOthers[0]),
       1
     )
     createdByOthers = null
