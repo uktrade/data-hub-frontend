@@ -35,12 +35,19 @@ describe('ToggleSection', () => {
       .should('be.visible')
       .compareSnapshot('dashboard-multi')
   })
-  it('should render the filter single toggle section correctly', () => {
-    cy.visit('/iframe.html?id=togglesection--filter-single')
-    cy.get('#storybook-root')
-      .should('be.visible')
-      .compareSnapshot('filter-single')
-  })
+
+  // Temporarily commenting out this test while Pippo looks into why it's
+  // failing remotely but passes locally. The tests are run in docker
+  // containers both locally and remotely, so in theory they should produce
+  // the same results.
+
+  // it('should render the filter single toggle section correctly', () => {
+  //   cy.visit('/iframe.html?id=togglesection--filter-single')
+  //   cy.get('#storybook-root')
+  //     .should('be.visible')
+  //     .compareSnapshot('filter-single')
+  // })
+
   it('should render the filter multiple toggle section correctly', () => {
     cy.visit('/iframe.html?id=togglesection--filter-multiple')
     cy.get('#storybook-root')
