@@ -294,7 +294,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="has_related_trade_agreements"
-            legend="Does this interaction relate to a named trade agreement? (Optional)"
+            legend="Does this interaction relate to a named trade agreement? (optional)"
             options={OPTIONS_YES_NO}
           />
 
@@ -439,7 +439,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="were_countries_discussed"
-            legend="Were any countries discussed? (Optional)"
+            legend="Were any countries discussed? (optional)"
             options={OPTIONS_YES_NO}
           />
           {values.were_countries_discussed === OPTION_YES && (
@@ -489,7 +489,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="has_related_opportunity"
-            legend="Does this interaction relate to a large capital opportunity? (Optional)"
+            legend="Does this interaction relate to a large capital opportunity? (optional)"
             options={OPTIONS_YES_NO}
           />
 
@@ -525,7 +525,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="helped_remove_export_barrier"
-            legend="Did the interaction help remove an export barrier? (Optional)"
+            legend="Did the interaction help remove an export barrier? (optional)"
             options={OPTIONS_YES_NO}
           />
 
