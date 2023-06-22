@@ -175,7 +175,9 @@ const HierarchyItem = ({
         }
       >
         <span>
-          {company.id ? (
+          {Object.keys(company).length === 0 ? (
+            `No related companies found`
+          ) : company?.id ? (
             <Link
               href={urls.companies.overview.index(company.id)}
               aria-label={`Go to ${company.name} details`}
