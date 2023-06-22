@@ -16,6 +16,13 @@ const {
   company: { dnbGlobalUltimate },
 } = require('../../fixtures')
 
+const companyNoRelatedRecords = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: {},
+    ultimate_global_companies_count: 0,
+  },
+})
+
 const companyNoSubsidiaries = companyTreeFaker({
   globalCompany: {
     ultimate_global_company: companyTreeItemFaker({
@@ -133,6 +140,34 @@ describe('D&B Company hierarchy tree', () => {
         })
       }
     )
+  })
+
+  context('When a company has no related recods', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoRelatedRecords
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+    it('should only show a single item with not found message', () => {
+      cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
+      cy.get('[data-test="related-company"]')
+        .should('be.visible')
+        .should('contain.text', 'No related companies found')
+    })
+
+    it('should hide the show all companies button', () => {
+      cy.get('[data-test="expand-tree-button"]').should('not.exist')
+    })
+
+    it('should hide the show subsidiaries button', () => {
+      cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
+    })
   })
 
   context('When a company has no subsidiaries', () => {
