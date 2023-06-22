@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, H2, Link } from 'govuk-react'
+import { H2, Link } from 'govuk-react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
@@ -30,6 +30,7 @@ const ToggleSubsidiariesButton = ({
   count,
   insideTree = true,
   dataTest = 'toggle-subsidiaries-button',
+  label,
 }) => (
   <ToggleSubsidiariesButtonContent insideTree={insideTree}>
     <StyledButton
@@ -41,9 +42,7 @@ const ToggleSubsidiariesButton = ({
     >
       <span>{isOpen ? `-` : `+`}</span>
       <span>
-        {isOpen
-          ? `Hide ${count} verified subsidiaries`
-          : `Show ${count} verified subsidiaries`}
+        {isOpen ? `Hide ${count} ${label}` : `Show ${count} ${label}`}
       </span>
     </StyledButton>
   </ToggleSubsidiariesButtonContent>
@@ -56,6 +55,7 @@ const Subsidiaries = ({
   setIsOpen,
   fullTreeExpanded,
   requestedCompanyId,
+  label,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -64,6 +64,7 @@ const Subsidiaries = ({
         isOpen={isOpen}
         onClick={setIsOpen}
         count={company.subsidiaries.length}
+        label={label}
       />
       <SubsidiaryList
         data-test="subsidiary-item"
@@ -124,21 +125,40 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
           hierarchy={familyTree.ultimate_global_company.hierarchy}
           globalParent={true}
         />
-        {/* TODO The below will be replaced with values from the api in future tickets */}
-        <li>
-          <ToggleSubsidiariesButtonContent>
-            <Button
-              buttonColour={GREY_4}
-              buttonTextColour={BLACK}
-              as={Link}
-              href={urls.companies.subsidiaries.index(requestedCompanyId)}
-            >
-              + Show manually linked subsidiaries
-            </Button>
-          </ToggleSubsidiariesButtonContent>
-        </li>
+        <ManuallyLinkedList
+          requestedCompanyId={requestedCompanyId}
+          familyTree={familyTree}
+        />
       </ul>
     </HierarchyContents>
+  )
+}
+
+const ManuallyLinkedList = ({
+  requestedCompanyId,
+  familyTree,
+  fullTreeExpanded,
+}) => {
+  familyTree.subsidiaries = familyTree.manually_verified_subsidiaries
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    if (fullTreeExpanded !== undefined) {
+      setIsOpen(fullTreeExpanded)
+    }
+  }, [fullTreeExpanded])
+
+  return (
+    <Subsidiaries
+      company={familyTree}
+      hierarchy={1}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      fullTreeExpanded={fullTreeExpanded}
+      requestedCompanyId={requestedCompanyId}
+      label="manually linked subsidiaries"
+    />
   )
 }
 
@@ -212,7 +232,7 @@ const HierarchyItem = ({
               {company.uk_region.name}
             </HierarchyTag>
           )}
-          {company.number_of_employees && (
+          {(company.number_of_employees || company.employee_range?.name) && (
             <HierarchyTag
               colour="blue"
               data-test={`${companyName}-number-of-employees-tag`}
@@ -221,7 +241,9 @@ const HierarchyItem = ({
                 size={'12'}
                 style={{ verticalAlign: 'top', paddingTop: '1px' }}
               />
-              {` ${company.number_of_employees}`}
+              {company.number_of_employees && ` ${company.number_of_employees}`}
+              {company.employee_range?.name &&
+                ` ${company.employee_range?.name}`}
             </HierarchyTag>
           )}
         </span>
@@ -233,6 +255,7 @@ const HierarchyItem = ({
         setIsOpen={setIsOpen}
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
+        label=" verified subsidiaries"
       />
     </HierarchyListItem>
   )
