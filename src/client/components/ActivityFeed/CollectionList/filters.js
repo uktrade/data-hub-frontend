@@ -2,7 +2,6 @@ import {
   ACTIVITY_TYPE_OPTIONS,
   BUSINESS_INTELLIGENCE_OPTION,
   LABELS,
-  SHOW_DNB_HIERARCHY_OPTIONS,
 } from './constants'
 
 import {
@@ -13,15 +12,13 @@ import {
 
 export const buildSelectedFilters = (
   queryParams,
-  metadata,
   selectedAdvisers,
-  selectedTeams,
-  selectedCompanies
+  selectedCompanies,
+  currentAdviserId
 ) => ({
   showDNBHierarchy: {
     queryParam: 'showDnbHierarchy',
     options: buildOptionsFilter({
-      options: SHOW_DNB_HIERARCHY_OPTIONS,
       value: queryParams.showDNBHierarchy,
       categoryLabel: LABELS.showDNBHierarchy,
     }),
@@ -33,6 +30,19 @@ export const buildSelectedFilters = (
       value: advisers.id,
       categoryLabel: LABELS.advisers,
     })),
+  },
+  createdByOthers: {
+    queryParams: 'createdByOthers',
+    options: buildOptionsFilter({
+      options: [
+        {
+          label: LABELS.others,
+          value: currentAdviserId,
+        },
+      ],
+      value: queryParams.createdByOthers,
+      categoryLabel: LABELS.createdBy,
+    }),
   },
   company: {
     queryParam: 'company',

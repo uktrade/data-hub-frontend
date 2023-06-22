@@ -732,6 +732,169 @@ describe('Activity feed controllers', () => {
       })
     })
 
+    context('when filtering on "Other activity" for a company', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          requestQuery: {
+            showDnbHierarchy: false,
+            createdByOthers: [123],
+          },
+          user: {
+            id: 123,
+          },
+        })
+
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+
+      it('should call fetchActivityFeed with a createdByOthers user id', async () => {
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: sortCriteria('desc'),
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                        ],
+                        must_not: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:directoryFormsApi:Submission',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.type':
+                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.url': '/contact/export-advice/comment/',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                        ],
+                        must_not: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          { term: { 'object.type': 'dit:aventri:Event' } },
+                          {
+                            terms: {
+                              id: [
+                                'dit:aventri:Event:1:Create',
+                                'dit:aventri:Event:2:Create',
+                              ],
+                            },
+                          },
+                        ],
+                        must_not: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:directoryFormsApi:SubmissionType:export-support-service',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                        ],
+                        must_not: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+      })
+    })
+
     context('when filtering on default feed type', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({

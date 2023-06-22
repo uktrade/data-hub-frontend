@@ -42,17 +42,16 @@ export const state2props = ({ router, ...state }) => {
   const {
     metadata,
     selectedAdvisers,
-    selectedTeams,
     selectedCompanies,
     showDNBHierarchy,
+    createdByOthers,
   } = state[ID]
+
   const selectedFilters = buildSelectedFilters(
     queryParams,
-    metadata,
     selectedAdvisers,
-    selectedTeams,
     selectedCompanies,
-    showDNBHierarchy
+    currentAdviserId
   )
 
   return {
@@ -70,5 +69,6 @@ export const state2props = ({ router, ...state }) => {
     selectedFilters,
     currentAdviserId,
     showDNBHierarchy,
+    createdByOthers,
   }
 }
