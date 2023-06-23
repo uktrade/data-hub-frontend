@@ -20,7 +20,6 @@ const getKindHandler = (setFieldValue) => (e) => {
 const getNoKindHandler = (setFieldValue) => (e) => {
   setFieldValue('service', '')
   setFieldValue('theme', e.target.value)
-  setFieldValue('kind', KINDS.INTERACTION)
 }
 
 const StepInteractionType = () => {
