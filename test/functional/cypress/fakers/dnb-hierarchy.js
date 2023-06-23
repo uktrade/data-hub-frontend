@@ -114,7 +114,9 @@ const companyTreeFaker = ({
       headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
       address: addressFaker(),
       uk_region: ukRegionFaker(),
+      one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
       archived: false,
+      hierarchy: 0,
     },
   ],
 })

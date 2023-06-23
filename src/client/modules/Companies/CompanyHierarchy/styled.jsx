@@ -37,7 +37,7 @@ export const HierarchyItemContents = styled.div`
   `}
   }
   ${({ hierarchy }) =>
-    hierarchy > 1 &&
+    hierarchy != 1 &&
     `
       transform-style: preserve-3d;
       :before { //This is the horizontal line to the left of the div
@@ -69,7 +69,7 @@ export const ToggleSubsidiariesButtonContent = styled.div`
     ${({ insideTree }) =>
       insideTree &&
       `
-      :before { 
+      :before {
         content: '';
         background-color: ${GREY_2};
         position: absolute;
@@ -80,7 +80,7 @@ export const ToggleSubsidiariesButtonContent = styled.div`
         display: block;
         transform: translateZ(-1px);
       }
-      
+
   `}
     z-index: 1;
     margin-bottom: 0px;
@@ -102,11 +102,11 @@ export const HierarchyListItem = styled.li`
         position: absolute;
         width: 5px;
         height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
-        top: ${isFinalItemInLevel ? '-20px' : '-18px'};        
+        top: ${isFinalItemInLevel ? '-20px' : '-18px'};
         left: -29px;
         display: block;
         transform: translateZ(-1px);
-      }      
+      }
   `}
 `
 

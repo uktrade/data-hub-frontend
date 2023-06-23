@@ -99,6 +99,7 @@ const HierarchyHeader = ({ count, fullTreeExpanded, onClick }) => (
         isOpen={fullTreeExpanded}
         insideTree={false}
         dataTest="expand-tree-button"
+        label="verified subsidiaries"
       />
     )}
   </HierarchyHeaderContents>
@@ -125,6 +126,16 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
           hierarchy={familyTree.ultimate_global_company.hierarchy}
           globalParent={true}
         />
+        {/* {familyTree.manually_verified_subsidiaries.map((s, index) => (
+          <HierarchyItem
+            requestedCompanyId={requestedCompanyId}
+            company={s}
+            hierarchy={1}
+            fullTreeExpanded={fullTreeExpanded}
+            key={`hierarchy_item_${index}`}
+            isFinalItemInLevel={true}
+          />
+        ))} */}
         <ManuallyLinkedList
           requestedCompanyId={requestedCompanyId}
           familyTree={familyTree}
@@ -134,28 +145,17 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   )
 }
 
-const ManuallyLinkedList = ({
-  requestedCompanyId,
-  familyTree,
-  fullTreeExpanded,
-}) => {
+const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   familyTree.subsidiaries = familyTree.manually_verified_subsidiaries
 
   const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
-    if (fullTreeExpanded !== undefined) {
-      setIsOpen(fullTreeExpanded)
-    }
-  }, [fullTreeExpanded])
-
   return (
     <Subsidiaries
       company={familyTree}
-      hierarchy={1}
+      // hierarchy={2}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      fullTreeExpanded={fullTreeExpanded}
       requestedCompanyId={requestedCompanyId}
       label="manually linked subsidiaries"
     />
@@ -255,7 +255,7 @@ const HierarchyItem = ({
         setIsOpen={setIsOpen}
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
-        label=" verified subsidiaries"
+        label="verified subsidiaries"
       />
     </HierarchyListItem>
   )

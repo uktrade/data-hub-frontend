@@ -114,7 +114,9 @@ const fakeManuallyLinkedCompany = () => {
     headquarter_type: faker.helpers.arrayElement(headquarterType),
     address: address,
     uk_region: faker.helpers.arrayElement(ukRegion),
+    one_list_tier: faker.helpers.arrayElement(oneListTier),
     archived: false,
+    hierarchy: 0,
   }
 }
 
