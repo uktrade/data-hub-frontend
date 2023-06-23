@@ -20,50 +20,6 @@ async function getNonGlobalHQs(req) {
   ]
 }
 
-async function getGlobalHQ(req) {
-  const headerquarterTypes = await getOptions(req, 'headquarter-type')
-  return headerquarterTypes.find((hqType) => hqType.label === 'ghq')
-}
-
-async function getGlobalHQCompaniesCollection(req, res, next) {
-  const searchTerm = (res.locals.searchTerm = req.query.term)
-  const { id: companyId } = res.locals.company
-
-  if (!searchTerm) {
-    return next()
-  }
-
-  try {
-    const globalHQ = await getGlobalHQ(req)
-
-    res.locals.results = await searchCompanies({
-      req,
-      searchTerm,
-      page: req.query.page,
-      requestBody: {
-        ...req.body,
-        headquarter_type: globalHQ.value,
-      },
-    }).then(
-      transformApiResponseToSearchCollection(
-        { query: req.query },
-        ENTITIES,
-        transformCompanyToListItem,
-        (item) => {
-          return {
-            ...item,
-            url: `/companies/${companyId}/hierarchies/ghq/${item.id}/add`,
-          }
-        }
-      )
-    )
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function getSubsidiaryCompaniesCollection(req, res, next) {
   const searchTerm = (res.locals.searchTerm = req.query.term)
   const { id: companyId } = res.locals.company
@@ -104,6 +60,5 @@ async function getSubsidiaryCompaniesCollection(req, res, next) {
 }
 
 module.exports = {
-  getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
 }

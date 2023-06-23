@@ -1,6 +1,7 @@
 export const LABELS = {
   headquarterType: 'Type',
   companyName: 'Company name',
+  companyNumber: 'Company number',
   sector: 'Sector',
   country: 'Country',
   usState: 'US state',
