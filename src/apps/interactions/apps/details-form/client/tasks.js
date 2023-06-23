@@ -284,9 +284,16 @@ export function saveInteraction({ values, companyIds, referralId }) {
           ? values.large_capital_opportunity.value
           : null,
     }),
-    // If the user has selected investment the API still requires a kind.
-    ...(values.theme === THEMES.INVESTMENT &&
-      !values.kind && { kind: KINDS.INTERACTION }),
+    // If the user has selected Investment the
+    // API endpoint still requires a kind.
+    ...(values.theme == THEMES.INVESTMENT && {
+      kind: KINDS.INTERACTION,
+    }),
+    // If the user has selected Trade agreement
+    // the API endpoint still requires a kind.
+    ...(values.theme == THEMES.TRADE_AGREEMENT && {
+      kind: KINDS.INTERACTION,
+    }),
   }
 
   const payload = values.id
@@ -298,6 +305,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
         ...commonPayload,
         export_countries: transformExportCountries(values),
       }
+
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
