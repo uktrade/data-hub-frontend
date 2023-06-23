@@ -95,6 +95,20 @@ const createSubsidiary = (
   company.subsidiaries = subsidiaryCompanies
 }
 
+const manuallyLinkedCompanyFaker = () => {
+  return {
+    id: faker.string.uuid(),
+    name: faker.company.name(),
+    employee_range: faker.helpers.arrayElement(EMPLOYEE_RANGE),
+    headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
+    address: addressFaker(),
+    uk_region: ukRegionFaker(),
+    one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
+    archived: false,
+    hierarchy: 0,
+  }
+}
+
 const companyTreeFaker = ({
   treeDepth = 2,
   minCompaniesPerLevel = 1,
@@ -106,19 +120,9 @@ const companyTreeFaker = ({
   ),
 }) => ({
   ...globalCompany,
-  manually_verified_subsidiaries: [
-    {
-      id: faker.string.uuid(),
-      name: faker.company.name(),
-      employee_range: faker.helpers.arrayElement(EMPLOYEE_RANGE),
-      headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
-      address: addressFaker(),
-      uk_region: ukRegionFaker(),
-      one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
-      archived: false,
-      hierarchy: 0,
-    },
-  ],
+  manually_verified_subsidiaries: [...new Array(5)].map(
+    manuallyLinkedCompanyFaker
+  ),
 })
 
 export { companyTreeFaker, companyTreeItemFaker, companyTreeItemListFaker }

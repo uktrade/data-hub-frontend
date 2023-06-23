@@ -106,7 +106,7 @@ const createSubsidiary = (
   company.subsidiaries = subsidiaryCompanies
 }
 
-const fakeManuallyLinkedCompany = () => {
+const manuallyLinkedCompanyFaker = () => {
   return {
     id: faker.string.uuid(),
     name: faker.company.name(),
@@ -127,6 +127,6 @@ exports.fakerCompanyFamilyTree = ({
 }) => ({
   ...createCompanyTree(treeDepth, minCompaniesPerLevel, maxCompaniesPerLevel),
   manually_verified_subsidiaries: [...new Array(5)].map(
-    fakeManuallyLinkedCompany
+    manuallyLinkedCompanyFaker
   ),
 })
