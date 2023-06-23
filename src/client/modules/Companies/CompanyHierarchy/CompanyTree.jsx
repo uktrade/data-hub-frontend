@@ -145,28 +145,17 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   )
 }
 
-const ManuallyLinkedList = ({
-  requestedCompanyId,
-  familyTree,
-  fullTreeExpanded,
-}) => {
+const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   familyTree.subsidiaries = familyTree.manually_verified_subsidiaries
 
   const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(() => {
-    if (fullTreeExpanded !== undefined) {
-      setIsOpen(fullTreeExpanded)
-    }
-  }, [fullTreeExpanded])
-
   return (
     <Subsidiaries
       company={familyTree}
-      hierarchy={1}
+      // hierarchy={2}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      fullTreeExpanded={fullTreeExpanded}
       requestedCompanyId={requestedCompanyId}
       label="manually linked subsidiaries"
     />
