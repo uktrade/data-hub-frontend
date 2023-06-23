@@ -1,6 +1,7 @@
 const { faker } = require('@faker-js/faker')
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
+const activityFeedMaxemailSentEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-maxemail-sent-from-es.json')
 
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
 const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
@@ -26,7 +27,7 @@ const {
   augmentEssActivity,
   filterContactListOnEmail,
 } = require('../controllers')
-const { has, get } = require('lodash')
+const { get } = require('lodash')
 const { sortCriteria } = require('../es-queries/sortCriteria')
 
 const realDate = Date
@@ -52,8 +53,17 @@ describe('Activity feed controllers', () => {
     before(() => {
       const mockActivityFeedApiFunction = (req, body) => {
         //is this a query for aventriAttendeeForCompanyQuery
-        if (has(body, 'query.bool.must[0].term')) {
+        if (
+          get(body, "query.bool.must[0].term['object.type']") ===
+          'dit:aventri:Attendee'
+        ) {
           return activityFeedAventriAtendeeEsFixtures
+        }
+        if (
+          get(body, "query.bool.must[0].term['object.type']") ===
+          'dit:maxemail:Email:Sent'
+        ) {
+          return activityFeedMaxemailSentEsFixtures
         }
 
         return activityFeedEsFixtures
@@ -380,6 +390,25 @@ describe('Activity feed controllers', () => {
                           must: [
                             {
                               term: {
+                                'object.type': 'dit:maxemail:Campaign',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:maxemail:Campaign:123:Create',
+                                  'dit:maxemail:Campaign:124:Create',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
                                 'object.type':
                                   'dit:directoryFormsApi:Submission',
                               },
@@ -414,7 +443,6 @@ describe('Activity feed controllers', () => {
               },
             },
           }
-
           expect(fetchActivityFeedStub).to.be.calledWith(
             middlewareParameters.reqMock,
             expectedEsQuery
@@ -484,6 +512,25 @@ describe('Activity feed controllers', () => {
                                 terms: {
                                   'object.attributedTo.id': [
                                     'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.type': 'dit:maxemail:Campaign',
+                                },
+                              },
+                              {
+                                terms: {
+                                  id: [
+                                    'dit:maxemail:Campaign:123:Create',
+                                    'dit:maxemail:Campaign:124:Create',
                                   ],
                                 },
                               },

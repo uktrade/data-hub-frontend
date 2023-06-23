@@ -2,7 +2,6 @@ var { isEqual, startsWith, get } = require('lodash')
 
 // External activities
 var externalActivities = require('../../../fixtures/v4/activity-feed/external/external-activities.json')
-var maxemailCampaignQuery = require('../../../fixtures/v4/activity-feed/external/maxemail-campaign-query.json')
 var maxemailCampaignActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-campaign-activities.json')
 var maxemailEmailSentQuery = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-query.json')
 var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-activities.json')
@@ -360,11 +359,6 @@ exports.activityFeed = function (req, res) {
     return res.json(essInteractionDetail)
   if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:2222'))
     return res.json(essInteractionsNoTitle)
-
-  // Maxemail campaigns
-  if (isEqual(maxemailCampaignQuery, req.body)) {
-    return res.json(maxemailCampaignActivities)
-  }
 
   // Maxemail emails sent
   if (isEqual(maxemailEmailSentQuery, req.body)) {
