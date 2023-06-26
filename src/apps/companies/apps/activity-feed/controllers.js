@@ -580,13 +580,28 @@ const eventsColListQueryBuilder = ({
         },
       }
     : null
-  const relatedProgrammeFilter = relatedProgramme
-    ? {
-        terms: {
-          'object.dit:relatedProgrammes.id': `dit:DataHubEventProgramme:${relatedProgramme}`,
-        },
-      }
-    : null
+
+  const relatedProgrammeFilter =
+    relatedProgramme && relatedProgramme.length
+      ? {
+          nested: {
+            path: 'object.dit:relatedProgrammes',
+            query: {
+              bool: {
+                should: [
+                  {
+                    terms: {
+                      'object.dit:relatedProgrammes.id': relatedProgramme.map(
+                        (rp) => `dit:DataHubEventProgramme:${rp}`
+                      ),
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }
+      : null
 
   const filtersArray = [
     eventNameFilter,
