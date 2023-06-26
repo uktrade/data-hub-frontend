@@ -25,6 +25,7 @@ import {
   ManuallyLinkedHierarchyListItem,
 } from './styled'
 import pluralize from 'pluralize'
+import { ToggleSection } from '../../../components/ToggleSection'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -177,6 +178,7 @@ const HierarchyItem = ({
   globalParent = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [toggleLabel, setToggleLabel] = useState('View more detail')
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -251,6 +253,28 @@ const HierarchyItem = ({
                 ` ${company.employee_range?.name}`}
             </HierarchyTag>
           )}
+          <ToggleSection
+            onOpen={(open) =>
+              open
+                ? setToggleLabel('Hide detail')
+                : setToggleLabel('View more detail')
+            }
+            label={toggleLabel}
+            id={`${company.duns_number}_toggle`}
+          >
+            <dl>
+              <dt>Trading address</dt>
+              <dd></dd>
+              <dt>Registered address</dt>
+              <dd></dd>
+              <dt>Sector</dt>
+              <dd></dd>
+              <dt>Employees</dt>
+              <dd></dd>
+              <dt>Last interaction date</dt>
+              <dd></dd>
+            </dl>
+          </ToggleSection>
         </span>
       </HierarchyItemContents>
       <Subsidiaries

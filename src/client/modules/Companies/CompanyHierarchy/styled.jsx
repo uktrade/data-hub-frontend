@@ -7,13 +7,28 @@ import {
   DARK_BLUE_LEGACY,
   WHITE,
 } from '../../../utils/colours'
-import { Tag } from '../../../components'
+import { Tag, ToggleSection } from '../../../components'
+import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 export const HierarchyContents = styled.div`
   padding-bottom: 10px;
 `
 
 export const HierarchyItemContents = styled.div`
+  ${ToggleSection} {
+    fill: orange;
+    img {
+      width: ${FONT_SIZE.SIZE_16};
+      height: ${FONT_SIZE.SIZE_16};
+      filter: invert(34%) sepia(81%) saturate(1079%) hue-rotate(181deg)
+        brightness(87%) contrast(87%); # make the svg the BLUE colour as the text
+    }
+    ${ToggleButton} {
+      font-size: ${FONT_SIZE.SIZE_16};
+    }
+  }
+
   background-color: ${({ isRequestedCompanyId }) =>
     isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
   border: 1px solid ${GREY_2};
