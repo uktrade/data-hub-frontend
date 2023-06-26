@@ -69,7 +69,7 @@ const createSubsidiary = (
     return
   }
 
-  const calculatedMax = faker.datatype.number({
+  const calculatedMax = faker.number.int({
     min: minCompaniesPerLevel,
     max: maxCompaniesPerLevel,
   })
