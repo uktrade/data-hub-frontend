@@ -51,6 +51,7 @@ const ToggleSubsidiariesButton = ({
 const Subsidiaries = ({
   company,
   hierarchy,
+  requestedCompanyHasManuallyVerified,
   isOpen,
   setIsOpen,
   fullTreeExpanded,
@@ -79,7 +80,11 @@ const Subsidiaries = ({
             hierarchy={subsidiary.hierarchy}
             fullTreeExpanded={fullTreeExpanded}
             key={`hierarchy_item_${index}`}
-            isFinalItemInLevel={index + 1 === company.subsidiaries.length}
+            isFinalItemInLevel={
+              requestedCompanyHasManuallyVerified && hierarchy === 1
+                ? false
+                : index + 1 === company.subsidiaries.length
+            }
           />
         ))}
       </SubsidiaryList>
@@ -107,6 +112,8 @@ const HierarchyHeader = ({ count, fullTreeExpanded, onClick }) => (
 
 const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   const [fullTreeExpanded, setFullTreeExpanded] = useState(undefined)
+  const requestedCompanyHasManuallyVerified =
+    familyTree.manually_verified_subsidiaries?.length > 0
   return isEmpty(familyTree) ? (
     <div data-test="empty-hierarchy">
       No hierarchy could be found for this company
@@ -124,18 +131,11 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
           requestedCompanyId={requestedCompanyId}
           company={familyTree.ultimate_global_company}
           hierarchy={familyTree.ultimate_global_company.hierarchy}
+          requestedCompanyHasManuallyVerified={
+            requestedCompanyHasManuallyVerified
+          }
           globalParent={true}
         />
-        {/* {familyTree.manually_verified_subsidiaries.map((s, index) => (
-          <HierarchyItem
-            requestedCompanyId={requestedCompanyId}
-            company={s}
-            hierarchy={1}
-            fullTreeExpanded={fullTreeExpanded}
-            key={`hierarchy_item_${index}`}
-            isFinalItemInLevel={true}
-          />
-        ))} */}
         <ManuallyLinkedList
           requestedCompanyId={requestedCompanyId}
           familyTree={familyTree}
@@ -153,7 +153,6 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   return (
     <Subsidiaries
       company={familyTree}
-      // hierarchy={2}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       requestedCompanyId={requestedCompanyId}
@@ -166,6 +165,7 @@ const HierarchyItem = ({
   requestedCompanyId,
   company,
   hierarchy,
+  requestedCompanyHasManuallyVerified,
   fullTreeExpanded,
   isFinalItemInLevel,
   globalParent = false,
@@ -195,6 +195,7 @@ const HierarchyItem = ({
         }
       >
         <span>
+          requestedCompanyId {requestedCompanyId}
           {Object.keys(company).length === 0 ? (
             `No related companies found`
           ) : company?.id ? (
@@ -207,7 +208,6 @@ const HierarchyItem = ({
           ) : (
             `${company.name} (not on Data Hub)`
           )}
-
           {company.one_list_tier?.name && (
             <HierarchyTag
               colour="grey"
@@ -251,6 +251,9 @@ const HierarchyItem = ({
       <Subsidiaries
         company={company}
         hierarchy={hierarchy}
+        requestedCompanyHasManuallyVerified={
+          requestedCompanyHasManuallyVerified
+        }
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         fullTreeExpanded={fullTreeExpanded}
