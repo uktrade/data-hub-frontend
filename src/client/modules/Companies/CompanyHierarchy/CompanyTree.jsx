@@ -195,7 +195,6 @@ const HierarchyItem = ({
         }
       >
         <span>
-          requestedCompanyId {requestedCompanyId}
           {Object.keys(company).length === 0 ? (
             `No related companies found`
           ) : company?.id ? (
