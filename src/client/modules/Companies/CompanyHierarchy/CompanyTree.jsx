@@ -151,13 +151,15 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <Subsidiaries
-      company={familyTree}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      requestedCompanyId={requestedCompanyId}
-      label="manually linked subsidiaries"
-    />
+    <li data-test="manually-linked-hierarchy-container">
+      <Subsidiaries
+        company={familyTree}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        requestedCompanyId={requestedCompanyId}
+        label="manually linked subsidiaries"
+      />
+    </li>
   )
 }
 

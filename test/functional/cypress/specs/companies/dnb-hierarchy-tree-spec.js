@@ -53,6 +53,10 @@ const companyNoAdditionalTagData = companyTreeFaker({
   },
 })
 
+const companyManuallyLinkedSubsidiaries = companyTreeFaker({
+  mannualVerifiedSubsidiariesCount: 5,
+})
+
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
     assertLocalHeader(`Company records related to ${company.name}`)
@@ -325,6 +329,30 @@ describe('D&B Company hierarchy tree', () => {
       cy.get('[data-test="expand-tree-button"]').click()
       cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
       cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
+    })
+  })
+
+  context('When a company has manually linked subsidiaries', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyManuallyLinkedSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+    it('should display a show/hide manually linked subsidiaries button', () => {
+      cy.get('[data-test="hierarchy-item"]').should('have.length', 7)
+      cy.get('[data-test="hierarchy-item"]').eq(2).should('not.be.visible')
+      cy.get('[data-test="manually-linked-hierarchy-container"]')
+        .should('have.length', 1)
+        .contains('Show 5 manually linked subsidiaries')
+        .click()
+        .contains('Hide 5 manually linked subsidiaries')
+      cy.get('[data-test="hierarchy-item"]').eq(2).should('be.visible')
     })
   })
 })

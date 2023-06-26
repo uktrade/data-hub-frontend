@@ -118,11 +118,12 @@ const companyTreeFaker = ({
     minCompaniesPerLevel,
     maxCompaniesPerLevel
   ),
+  mannualVerifiedSubsidiariesCount = 0,
 }) => ({
   ...globalCompany,
-  manually_verified_subsidiaries: [...new Array(5)].map(
-    manuallyLinkedCompanyFaker
-  ),
+  manually_verified_subsidiaries: [
+    ...new Array(mannualVerifiedSubsidiariesCount),
+  ].map(manuallyLinkedCompanyFaker),
 })
 
 export { companyTreeFaker, companyTreeItemFaker, companyTreeItemListFaker }
