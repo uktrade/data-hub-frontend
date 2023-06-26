@@ -110,6 +110,10 @@ export const HierarchyListItem = styled.li`
   `}
 `
 
+export const ManuallyLinkedHierarchyListItem = styled.li`
+  transform: translateZ(-1px);
+`
+
 export const HierarchyHeaderContents = styled.div`
   display: flex;
   justify-content: space-between;

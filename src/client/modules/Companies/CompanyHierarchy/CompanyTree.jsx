@@ -22,7 +22,9 @@ import {
   HierarchyListItem,
   HierarchyHeaderContents,
   HierarchyTag,
+  ManuallyLinkedHierarchyListItem,
 } from './styled'
+import pluralize from 'pluralize'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -42,7 +44,9 @@ const ToggleSubsidiariesButton = ({
     >
       <span>{isOpen ? `-` : `+`}</span>
       <span>
-        {isOpen ? `Hide ${count} ${label}` : `Show ${count} ${label}`}
+        {isOpen
+          ? `Hide ${count} ${pluralize(label, count)}`
+          : `Show ${count} ${pluralize(label, count)}`}
       </span>
     </StyledButton>
   </ToggleSubsidiariesButtonContent>
@@ -151,7 +155,7 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <li data-test="manually-linked-hierarchy-container">
+    <ManuallyLinkedHierarchyListItem data-test="manually-linked-hierarchy-container">
       <Subsidiaries
         company={familyTree}
         isOpen={isOpen}
@@ -159,7 +163,7 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
         requestedCompanyId={requestedCompanyId}
         label="manually linked subsidiaries"
       />
-    </li>
+    </ManuallyLinkedHierarchyListItem>
   )
 }
 
