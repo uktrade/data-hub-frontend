@@ -25,7 +25,7 @@ export default class MaxemailCampaign extends React.PureComponent {
 
   render() {
     const { activity } = this.props
-    const published = get(activity, 'published')
+    const published = get(activity, 'object.published')
     const name = get(activity, 'actor.name')
     const from = get(activity, 'actor.dit:emailAddress')
     const emailSubject = get(activity, 'object.dit:emailSubject')
