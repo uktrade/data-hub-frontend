@@ -1988,6 +1988,54 @@ describe('Activity feed controllers', () => {
       })
     })
 
+    context(
+      'check query builder when filtering on related programmes is selected',
+      () => {
+        const expectedQuery = (relatedProgramme) => [
+          {
+            terms: {
+              'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
+            },
+          },
+          {
+            nested: {
+              path: 'object.dit:relatedProgrammes',
+              query: {
+                bool: {
+                  should: [
+                    {
+                      terms: {
+                        'object.dit:relatedProgrammes.id': relatedProgramme.map(
+                          (rp) => `dit:DataHubEventProgramme:${rp}`
+                        ),
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        ]
+
+        it('builds the right query when a single related programmes is selected', () => {
+          const relatedProgramme = ['related-programme-id-1']
+          const actualQuery = eventsColListQueryBuilder({ relatedProgramme })
+
+          expect(expectedQuery(relatedProgramme)).to.deep.equal(actualQuery)
+        })
+
+        it('builds the right query when multiple related programmes are selected', () => {
+          const relatedProgramme = [
+            'related-programme-id-1',
+            'related-programme-id-2',
+          ]
+          const actualQuery = eventsColListQueryBuilder({ relatedProgramme })
+
+          expect(expectedQuery(relatedProgramme)).to.deep.equal(actualQuery)
+        })
+      }
+    )
+
     context('check query builder when filtering on uk region', () => {
       const expectedQuery = (ukRegion) => [
         {
