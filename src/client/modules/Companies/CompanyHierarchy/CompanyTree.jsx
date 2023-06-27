@@ -28,6 +28,7 @@ import {
 import pluralize from 'pluralize'
 import { ToggleSection } from '../../../components/ToggleSection'
 import { format } from '../../../utils/date'
+import { addressToString } from '../../../utils/addresses'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -170,6 +171,16 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
   )
 }
 
+const CompanyNumberOfEmployees = ({ company }) => (
+  <>
+    {company.employee_range?.name
+      ? ` ${company.employee_range?.name}`
+      : company.number_of_employees
+      ? ` ${company.number_of_employees}`
+      : 'Not set'}
+  </>
+)
+
 const HierarchyItem = ({
   requestedCompanyId,
   company,
@@ -250,9 +261,7 @@ const HierarchyItem = ({
                 size={'12'}
                 style={{ verticalAlign: 'top', paddingTop: '1px' }}
               />
-              {company.number_of_employees && ` ${company.number_of_employees}`}
-              {company.employee_range?.name &&
-                ` ${company.employee_range?.name}`}
+              <CompanyNumberOfEmployees company={company} />
             </HierarchyTag>
           )}
           <ToggleSection
@@ -277,9 +286,7 @@ const HierarchyItem = ({
               <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
               <dt>Employees</dt>
               <dd>
-                {company.number_of_employees
-                  ? company.number_of_employees
-                  : 'Not set'}
+                <CompanyNumberOfEmployees company={company} />
               </dd>
               <dt>Last interaction date</dt>
               <dd>
@@ -308,13 +315,7 @@ const HierarchyItem = ({
 }
 
 const AddressString = ({ address }) => (
-  <>
-    {address
-      ? Object.values(address)
-          .map((val) => (val?.name ? val.name : val))
-          .join(' ')
-      : 'Not set'}
-  </>
+  <>{address ? addressToString(address) : 'Not set'}</>
 )
 
 const breadcrumbs = (company) =>

@@ -383,4 +383,58 @@ describe('D&B Company hierarchy tree', () => {
       cy.get('[data-test="hierarchy-item"]').eq(2).should('be.visible')
     })
   })
+
+  context('When a company has details', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyManuallyLinkedSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    let date = new Date(
+      Date.parse(
+        companyManuallyLinkedSubsidiaries.ultimate_global_company
+          .latest_interaction_date
+      )
+    )
+    const formattedDate = `${date.getDate()} ${date.toLocaleDateString(
+      'default',
+      {
+        month: 'short',
+      }
+    )} ${date.getFullYear()}`
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+    it('should display a View more detail link', () => {
+      cy.get('[data-test="related-company"]')
+        .contains('View more detail')
+        .get('dl')
+        .should('not.be.visible')
+      cy.get('[data-test="toggle-section-button-content"]')
+        .first()
+        .click()
+        .contains('Hide detail')
+        .parent()
+        .parent()
+        .siblings('div')
+        .first('dl')
+        .should('be.visible')
+        .should(
+          'contain.text',
+          `Trading address${companyManuallyLinkedSubsidiaries.ultimate_global_company.address.line_1}`
+        )
+        .should(
+          'contain.text',
+          `Registered address${companyManuallyLinkedSubsidiaries.ultimate_global_company.registered_address.line_1}`
+        )
+        .should('contain.text', `SectorNot set`)
+        .should(
+          'contain.text',
+          `Employees ${companyManuallyLinkedSubsidiaries.ultimate_global_company.number_of_employees}`
+        )
+        .should('contain.text', `Last interaction date${formattedDate}`)
+    })
+  })
 })
