@@ -275,9 +275,17 @@ const HierarchyItem = ({
               <dt>Sector</dt>
               <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
               <dt>Employees</dt>
-              <dd>{company.number_of_employees}</dd>
+              <dd>
+                {company.number_of_employees
+                  ? company.number_of_employees
+                  : 'Not set'}
+              </dd>
               <dt>Last interaction date</dt>
-              <dd>{company.latest_interaction_date}</dd>
+              <dd>
+                {company.latest_interaction_date
+                  ? company.latest_interaction_date
+                  : 'Not set'}
+              </dd>
             </InlineDescriptionList>
           </ToggleSection>
         </span>
