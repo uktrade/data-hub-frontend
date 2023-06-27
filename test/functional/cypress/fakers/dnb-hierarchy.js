@@ -69,7 +69,7 @@ const createSubsidiary = (
     return
   }
 
-  const calculatedMax = faker.datatype.number({
+  const calculatedMax = faker.number.int({
     min: minCompaniesPerLevel,
     max: maxCompaniesPerLevel,
   })
@@ -118,11 +118,12 @@ const companyTreeFaker = ({
     minCompaniesPerLevel,
     maxCompaniesPerLevel
   ),
+  mannualVerifiedSubsidiariesCount = 0,
 }) => ({
   ...globalCompany,
-  manually_verified_subsidiaries: [...new Array(5)].map(
-    manuallyLinkedCompanyFaker
-  ),
+  manually_verified_subsidiaries: [
+    ...new Array(mannualVerifiedSubsidiariesCount),
+  ].map(manuallyLinkedCompanyFaker),
 })
 
 export { companyTreeFaker, companyTreeItemFaker, companyTreeItemListFaker }
