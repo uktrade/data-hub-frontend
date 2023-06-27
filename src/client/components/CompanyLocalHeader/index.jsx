@@ -8,6 +8,7 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
+import { Link } from 'govuk-react'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -98,6 +99,9 @@ const StyledMain = styled(Main)`
     font-size: ${FONT_SIZE.SIZE_20};
   }
 `
+const StyledDiv = styled('div')`
+  padding-bottom: 8px;
+`
 
 const isUltimate = (company) => !!company.isGlobalUltimate
 const isGlobalHQ = (company) =>
@@ -135,6 +139,14 @@ const CompanyLocalHeader = ({
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
+            <StyledDiv>
+              <Link
+                href={urls.companies.dnbHierarchy.tree(company.id)}
+                data-test="company-tree-link"
+              >
+                View related companies
+              </Link>
+            </StyledDiv>
           </GridCol>
           <GridCol setWith="one-third">
             <StyledButtonContainer>
