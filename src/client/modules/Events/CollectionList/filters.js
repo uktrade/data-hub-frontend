@@ -63,4 +63,12 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.eventType,
     }),
   },
+  relatedProgrammes: {
+    queryParam: 'related_programmes',
+    options: buildOptionsFilter({
+      options: metadata.relatedProgrammeOptions,
+      value: queryParams.related_programmes,
+      categoryLabel: LABELS.relatedProgrammes,
+    }),
+  },
 })

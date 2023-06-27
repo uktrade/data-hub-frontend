@@ -19,6 +19,7 @@ const getEvents = ({
   address_country,
   uk_region,
   event_type,
+  related_programmes,
 }) =>
   apiProxyAxios
     .post('/v3/search/event', {
@@ -32,6 +33,7 @@ const getEvents = ({
       address_country,
       uk_region,
       event_type,
+      related_programmes,
     })
     .then(({ data }) => transformResponseToEventCollection(data))
 
@@ -40,12 +42,21 @@ const getEventsMetadata = () =>
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
     getMetadataOptions(urls.metadata.eventType(), { filterDisabled: false }),
+    getMetadataOptions(urls.metadata.programme(), { filterDisabled: false }),
   ])
-    .then(([countryOptions, ukRegionOptions, eventTypeOptions]) => ({
-      countryOptions,
-      ukRegionOptions,
-      eventTypeOptions,
-    }))
+    .then(
+      ([
+        countryOptions,
+        ukRegionOptions,
+        eventTypeOptions,
+        relatedProgrammeOptions,
+      ]) => ({
+        countryOptions,
+        ukRegionOptions,
+        eventTypeOptions,
+        relatedProgrammeOptions,
+      })
+    )
     .catch(handleError)
 
 const getAllActivityFeedEvents = ({
@@ -59,6 +70,7 @@ const getAllActivityFeedEvents = ({
   organiser,
   event_type,
   page,
+  related_programmes,
 }) =>
   axios
     .get(urls.events.activity.data(), {
@@ -73,6 +85,7 @@ const getAllActivityFeedEvents = ({
         page: page,
         addressCountry: address_country,
         eventType: event_type,
+        relatedProgramme: related_programmes,
       },
     })
     .then(({ data }) => data)
