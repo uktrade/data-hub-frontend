@@ -6,6 +6,7 @@ import {
   BLACK,
   DARK_BLUE_LEGACY,
   WHITE,
+  DARK_GREY,
 } from '../../../utils/colours'
 import { Tag, ToggleSection } from '../../../components'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
@@ -44,10 +45,11 @@ export const HierarchyItemContents = styled.div`
   flex-direction: column;
   justify-content: start;
   ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId &&
-    `
-    color: ${WHITE};
-  `}
+    isRequestedCompanyId
+      ? `color: ${WHITE};`
+      : `dt {
+      color: ${DARK_GREY};
+    }`}
   ${Link} {
     width: fit-content;
     ${({ isRequestedCompanyId }) =>
