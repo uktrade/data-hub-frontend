@@ -554,7 +554,7 @@ describe('Export theme - standard interaction', () => {
       )
     })
 
-    it('should persist form fields after navigating back', () => {
+    it('should not persist form fields after navigating back', () => {
       cy.url().should('include', '?step=interaction_details')
       cy.contains(ELEMENT_SUMMARY.label)
         .parent()
@@ -569,7 +569,7 @@ describe('Export theme - standard interaction', () => {
         .parent()
         .next()
         .find('input')
-        .should('have.attr', 'value', 'Persisting summary')
+        .should('have.attr', 'value', '')
     })
   })
 })

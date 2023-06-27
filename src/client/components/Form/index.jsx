@@ -195,6 +195,12 @@ const _Form = ({
                       })
                     }
                   }}
+                  resetFields={(values = {}) => {
+                    props.resetFields({
+                      ...initialValues,
+                      ...values,
+                    })
+                  }}
                   validateForm={(fieldNamesToValidate) => {
                     // This method is supposed to validate only the fields whose names
                     // are listed in fieldNamesToValidate,
@@ -409,6 +415,11 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__FIELD_DEREGISTER',
       fieldName,
+    }),
+  resetFields: (values) =>
+    dispatch({
+      type: 'FORM__FIELDS__RESET',
+      values,
     }),
   setFieldValue: (fieldName, fieldValue) =>
     dispatch({
