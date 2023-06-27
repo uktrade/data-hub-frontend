@@ -21,11 +21,16 @@ export const HierarchyItemContents = styled.div`
     img {
       width: ${FONT_SIZE.SIZE_16};
       height: ${FONT_SIZE.SIZE_16};
-      filter: invert(34%) sepia(81%) saturate(1079%) hue-rotate(181deg)
-        brightness(87%) contrast(87%); # make the svg the BLUE colour as the text
+      ${({ isRequestedCompanyId }) =>
+        isRequestedCompanyId
+          ? `filter: invert(100%); # make the svg the WHITE colour as the text`
+          : `filter: invert(34%) sepia(81%) saturate(1079%) hue-rotate(181deg)
+        brightness(87%) contrast(87%); # make the svg the BLUE colour as the text`}
     }
     ${ToggleButton} {
       font-size: ${FONT_SIZE.SIZE_16};
+      ${({ isRequestedCompanyId }) =>
+        isRequestedCompanyId ? `color: white;` : ``}
     }
   }
 
@@ -148,4 +153,24 @@ export const HierarchyHeaderContents = styled.div`
 export const HierarchyTag = styled(Tag)`
   float: right;
   margin-left: 10px;
+`
+
+export const ToggleSectionHighlighted = styled(ToggleSection)`
+  div[data-test='requested-company'] ToggleButton {
+    color: white;
+  }
+`
+
+export const InlineDescriptionList = styled.dl`
+  dt,
+  dd {
+    display: inline;
+  }
+  dd:before {
+    content: ' ';
+  }
+  dd:after {
+    content: ' ';
+    display: block;
+  }
 `

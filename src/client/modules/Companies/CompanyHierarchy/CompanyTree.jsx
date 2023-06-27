@@ -23,6 +23,7 @@ import {
   HierarchyHeaderContents,
   HierarchyTag,
   ManuallyLinkedHierarchyListItem,
+  InlineDescriptionList,
 } from './styled'
 import pluralize from 'pluralize'
 import { ToggleSection } from '../../../components/ToggleSection'
@@ -262,18 +263,22 @@ const HierarchyItem = ({
             label={toggleLabel}
             id={`${company.duns_number}_toggle`}
           >
-            <dl>
+            <InlineDescriptionList>
               <dt>Trading address</dt>
-              <dd></dd>
+              <dd>
+                <AddressString address={company.address} />
+              </dd>
               <dt>Registered address</dt>
-              <dd></dd>
+              <dd>
+                <AddressString address={company.registered_address} />
+              </dd>
               <dt>Sector</dt>
-              <dd></dd>
+              <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
               <dt>Employees</dt>
-              <dd></dd>
+              <dd>{company.number_of_employees}</dd>
               <dt>Last interaction date</dt>
-              <dd></dd>
-            </dl>
+              <dd>{company.latest_interaction_date}</dd>
+            </InlineDescriptionList>
           </ToggleSection>
         </span>
       </HierarchyItemContents>
@@ -292,6 +297,10 @@ const HierarchyItem = ({
     </HierarchyListItem>
   )
 }
+
+const AddressString = ({ address }) => (
+  <>{address ? Object.values(address).join(' ') : 'Not set'}</>
+)
 
 const breadcrumbs = (company) =>
   !company
