@@ -27,6 +27,7 @@ import {
 } from './styled'
 import pluralize from 'pluralize'
 import { ToggleSection } from '../../../components/ToggleSection'
+import { format } from '../../../utils/date'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -283,7 +284,7 @@ const HierarchyItem = ({
               <dt>Last interaction date</dt>
               <dd>
                 {company.latest_interaction_date
-                  ? company.latest_interaction_date
+                  ? format(company.latest_interaction_date)
                   : 'Not set'}
               </dd>
             </InlineDescriptionList>
@@ -307,7 +308,13 @@ const HierarchyItem = ({
 }
 
 const AddressString = ({ address }) => (
-  <>{address ? Object.values(address).join(' ') : 'Not set'}</>
+  <>
+    {address
+      ? Object.values(address)
+          .map((val) => (val?.name ? val.name : val))
+          .join(' ')
+      : 'Not set'}
+  </>
 )
 
 const breadcrumbs = (company) =>
