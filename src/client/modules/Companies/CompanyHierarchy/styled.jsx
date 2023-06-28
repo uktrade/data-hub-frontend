@@ -19,6 +19,8 @@ export const HierarchyContents = styled.div`
 export const HierarchyItemContents = styled.div`
   ${ToggleSection} {
     fill: orange;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
     img {
       width: ${FONT_SIZE.SIZE_16};
       height: ${FONT_SIZE.SIZE_16};
@@ -28,8 +30,12 @@ export const HierarchyItemContents = styled.div`
           : `filter: invert(34%) sepia(81%) saturate(1079%) hue-rotate(181deg)
         brightness(87%) contrast(87%); # make the svg the BLUE colour as the text`}
     }
+    > div {
+      padding: 0px;
+    }
     ${ToggleButton} {
       font-size: ${FONT_SIZE.SIZE_16};
+      padding: 10px 15px 15px 15px;
       ${({ isRequestedCompanyId }) =>
         isRequestedCompanyId ? `color: white;` : ``}
     }
@@ -39,17 +45,11 @@ export const HierarchyItemContents = styled.div`
     isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
   border: 1px solid ${GREY_2};
   min-height: 60px;
-  padding: 10px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId
-      ? `color: ${WHITE};`
-      : `dt {
-      color: ${DARK_GREY};
-    }`}
+
   ${Link} {
     width: fit-content;
     ${({ isRequestedCompanyId }) =>
@@ -69,11 +69,15 @@ export const HierarchyItemContents = styled.div`
         width: 100px;
         height: 5px;
         top: 16px;
-        left: -40px;
+        left: -30px;
         display: block;
         transform: translateZ(-1px);
       }
   `}
+`
+
+export const HierarchyItemHeading = styled.div`
+  padding: 15px;
 `
 
 export const SubsidiaryList = styled.ul`
@@ -123,7 +127,7 @@ export const HierarchyListItem = styled.li`
         background-color: ${GREY_2};
         position: absolute;
         width: 5px;
-        height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
+        height: ${isFinalItemInLevel ? '42px' : 'calc(100% + 40px)'};
         top: ${isFinalItemInLevel ? '-20px' : '-18px'};
         left: -29px;
         display: block;
@@ -154,7 +158,7 @@ export const HierarchyHeaderContents = styled.div`
 
 export const HierarchyTag = styled(Tag)`
   float: right;
-  margin-left: 10px;
+  margin-left: 15px;
 `
 
 export const ToggleSectionHighlighted = styled(ToggleSection)`
@@ -164,9 +168,17 @@ export const ToggleSectionHighlighted = styled(ToggleSection)`
 `
 
 export const InlineDescriptionList = styled.dl`
+  padding: 15px;
+  background-color: ${GREY_4};
+  border-top: 1px solid ${GREY_2};
   dt,
   dd {
     display: inline;
+    font-size: ${FONT_SIZE.SIZE_16};
+    font-height: 1;
+  }
+  dt {
+    color: ${DARK_GREY};
   }
   dd:before {
     content: ' ';

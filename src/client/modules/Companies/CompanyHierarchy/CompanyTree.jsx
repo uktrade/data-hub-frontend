@@ -24,6 +24,7 @@ import {
   HierarchyTag,
   ManuallyLinkedHierarchyListItem,
   InlineDescriptionList,
+  HierarchyItemHeading,
 } from './styled'
 import pluralize from 'pluralize'
 import { ToggleSection } from '../../../components/ToggleSection'
@@ -216,7 +217,7 @@ const HierarchyItem = ({
             : 'related-company'
         }
       >
-        <span>
+        <HierarchyItemHeading>
           {Object.keys(company).length === 0 ? (
             `No related companies found`
           ) : company?.id ? (
@@ -265,43 +266,41 @@ const HierarchyItem = ({
               <CompanyNumberOfEmployees company={company} />
             </HierarchyTag>
           )}
-          {isOnDataHub && (
-            <ToggleSection
-              onOpen={(open) =>
-                open
-                  ? setToggleLabel('Hide detail')
-                  : setToggleLabel('View more detail')
-              }
-              label={toggleLabel}
-              id={`${company.duns_number}_toggle`}
-            >
-              <InlineDescriptionList>
-                <dt>Trading address</dt>
-                <dd>
-                  <AddressString address={company.address} />
-                </dd>
-                <dt>Registered address</dt>
-                <dd>
-                  <AddressString address={company.registered_address} />
-                </dd>
-                <dt>Sector</dt>
-                <dd>
-                  {company.sector?.name ? company.sector.name : 'Not set'}
-                </dd>
-                <dt>Employees</dt>
-                <dd>
-                  <CompanyNumberOfEmployees company={company} />
-                </dd>
-                <dt>Last interaction date</dt>
-                <dd>
-                  {company.latest_interaction_date
-                    ? format(company.latest_interaction_date)
-                    : 'Not set'}
-                </dd>
-              </InlineDescriptionList>
-            </ToggleSection>
-          )}
-        </span>
+        </HierarchyItemHeading>
+        {isOnDataHub && (
+          <ToggleSection
+            onOpen={(open) =>
+              open
+                ? setToggleLabel('Hide detail')
+                : setToggleLabel('View more detail')
+            }
+            label={toggleLabel}
+            id={`${company.duns_number}_toggle`}
+          >
+            <InlineDescriptionList>
+              <dt>Trading address</dt>
+              <dd>
+                <AddressString address={company.address} />
+              </dd>
+              <dt>Registered address</dt>
+              <dd>
+                <AddressString address={company.registered_address} />
+              </dd>
+              <dt>Sector</dt>
+              <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
+              <dt>Employees</dt>
+              <dd>
+                <CompanyNumberOfEmployees company={company} />
+              </dd>
+              <dt>Last interaction date</dt>
+              <dd>
+                {company.latest_interaction_date
+                  ? format(company.latest_interaction_date)
+                  : 'Not set'}
+              </dd>
+            </InlineDescriptionList>
+          </ToggleSection>
+        )}
       </HierarchyItemContents>
       <Subsidiaries
         company={company}
