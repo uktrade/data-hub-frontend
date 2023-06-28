@@ -230,7 +230,7 @@ describe('D&B Company hierarchy tree', () => {
     it('should display the global company with the correct company details', () => {
       cy.get('[data-test="hierarchy-item"]')
         .first()
-        .find('span')
+        .find('div')
         .first()
         .should(
           'contain.text',
@@ -252,7 +252,7 @@ describe('D&B Company hierarchy tree', () => {
         .eq(1)
         .find('a')
         .should(
-          'have.text',
+          'contain.text',
           companyOnlyImmediateSubsidiaries.ultimate_global_company
             .subsidiaries[0].name
         )
@@ -384,7 +384,25 @@ describe('D&B Company hierarchy tree', () => {
     })
   })
 
-  context('When a company has details', () => {
+  context('When a company has is the current company', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+    it('should not display a View more detail link for companies not on Data Hub', () => {
+      cy.get('[data-test="requested-company"]')
+        .first()
+        .should('contain', '(this record)')
+    })
+  })
+
+  context('When a company is details', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
@@ -397,18 +415,27 @@ describe('D&B Company hierarchy tree', () => {
     let date = new Date(
       Date.parse(
         companyManuallyLinkedSubsidiaries.ultimate_global_company
-          .latest_interaction_date
+          .subsidiaries[0].latest_interaction_date
       )
     )
-    const formattedDate = `${date.getDate()} ${date.toLocaleDateString(
-      'default',
-      {
-        month: 'short',
-      }
-    )} ${date.getFullYear()}`
+    const formattedDate = `${date
+      .getDate()
+      .toString()
+      .padStart(2, '0')} ${date.toLocaleDateString('default', {
+      month: 'short',
+    })} ${date.getFullYear()}`
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-    it('should display a View more detail link', () => {
+    it('should not display a View more detail link for companies not on Data Hub', () => {
       cy.get('[data-test="related-company"]')
+        .first()
+        .should('not.contain', 'View more detail')
+    })
+    it('should display a View more detail link for Data Hub', () => {
+      cy.get('[data-test="toggle-subsidiaries-button"]').first().click()
+      cy.get('[data-test="related-company"]')
+        .first()
+        .next()
+        .next()
         .contains('View more detail')
         .get('dl')
         .should('not.be.visible')
@@ -423,16 +450,16 @@ describe('D&B Company hierarchy tree', () => {
         .should('be.visible')
         .should(
           'contain.text',
-          `Trading address${companyManuallyLinkedSubsidiaries.ultimate_global_company.address.line_1}`
+          `Trading address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].address.line_1}`
         )
         .should(
           'contain.text',
-          `Registered address${companyManuallyLinkedSubsidiaries.ultimate_global_company.registered_address.line_1}`
+          `Registered address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].registered_address.line_1}`
         )
         .should('contain.text', `SectorNot set`)
         .should(
           'contain.text',
-          `Employees ${companyManuallyLinkedSubsidiaries.ultimate_global_company.number_of_employees}`
+          `Employees ${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].number_of_employees}`
         )
         .should('contain.text', `Last interaction date${formattedDate}`)
     })

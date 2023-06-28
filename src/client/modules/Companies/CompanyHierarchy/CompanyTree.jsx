@@ -194,6 +194,7 @@ const HierarchyItem = ({
   const [isOpen, setIsOpen] = useState(false)
   const [toggleLabel, setToggleLabel] = useState('View more detail')
   const isOnDataHub = Object.keys(company).length !== 0 && company?.id
+  const isRequestedCompanyId = requestedCompanyId === company.id
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -210,11 +211,9 @@ const HierarchyItem = ({
     >
       <HierarchyItemContents
         hierarchy={hierarchy}
-        isRequestedCompanyId={requestedCompanyId === company.id}
+        isRequestedCompanyId={isRequestedCompanyId}
         data-test={
-          requestedCompanyId === company.id
-            ? 'requested-company'
-            : 'related-company'
+          isRequestedCompanyId ? 'requested-company' : 'related-company'
         }
       >
         <HierarchyItemHeading>
@@ -225,7 +224,7 @@ const HierarchyItem = ({
               href={urls.companies.overview.index(company.id)}
               aria-label={`Go to ${company.name} details`}
             >
-              {company.name}
+              {company.name} {isRequestedCompanyId ? '(this record)' : ''}
             </Link>
           ) : (
             `${company.name} (not on Data Hub)`
