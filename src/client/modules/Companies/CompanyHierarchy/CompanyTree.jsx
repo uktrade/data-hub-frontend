@@ -192,6 +192,7 @@ const HierarchyItem = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [toggleLabel, setToggleLabel] = useState('View more detail')
+  const isOnDataHub = Object.keys(company).length !== 0 && company?.id
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -264,38 +265,42 @@ const HierarchyItem = ({
               <CompanyNumberOfEmployees company={company} />
             </HierarchyTag>
           )}
-          <ToggleSection
-            onOpen={(open) =>
-              open
-                ? setToggleLabel('Hide detail')
-                : setToggleLabel('View more detail')
-            }
-            label={toggleLabel}
-            id={`${company.duns_number}_toggle`}
-          >
-            <InlineDescriptionList>
-              <dt>Trading address</dt>
-              <dd>
-                <AddressString address={company.address} />
-              </dd>
-              <dt>Registered address</dt>
-              <dd>
-                <AddressString address={company.registered_address} />
-              </dd>
-              <dt>Sector</dt>
-              <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
-              <dt>Employees</dt>
-              <dd>
-                <CompanyNumberOfEmployees company={company} />
-              </dd>
-              <dt>Last interaction date</dt>
-              <dd>
-                {company.latest_interaction_date
-                  ? format(company.latest_interaction_date)
-                  : 'Not set'}
-              </dd>
-            </InlineDescriptionList>
-          </ToggleSection>
+          {isOnDataHub && (
+            <ToggleSection
+              onOpen={(open) =>
+                open
+                  ? setToggleLabel('Hide detail')
+                  : setToggleLabel('View more detail')
+              }
+              label={toggleLabel}
+              id={`${company.duns_number}_toggle`}
+            >
+              <InlineDescriptionList>
+                <dt>Trading address</dt>
+                <dd>
+                  <AddressString address={company.address} />
+                </dd>
+                <dt>Registered address</dt>
+                <dd>
+                  <AddressString address={company.registered_address} />
+                </dd>
+                <dt>Sector</dt>
+                <dd>
+                  {company.sector?.name ? company.sector.name : 'Not set'}
+                </dd>
+                <dt>Employees</dt>
+                <dd>
+                  <CompanyNumberOfEmployees company={company} />
+                </dd>
+                <dt>Last interaction date</dt>
+                <dd>
+                  {company.latest_interaction_date
+                    ? format(company.latest_interaction_date)
+                    : 'Not set'}
+                </dd>
+              </InlineDescriptionList>
+            </ToggleSection>
+          )}
         </span>
       </HierarchyItemContents>
       <Subsidiaries
