@@ -99,6 +99,9 @@ const Subsidiaries = ({
               buttonColour={GREY_4}
               buttonTextColour={BLACK}
               data-test="link-subsidiary-button"
+              onClick={() =>
+                (window.location = `/companies/${requestedCompanyId}/subsidiaries/link`)
+              }
             >
               Link a new subsidiary company
             </StyledLinkedSubsidiaryButton>
