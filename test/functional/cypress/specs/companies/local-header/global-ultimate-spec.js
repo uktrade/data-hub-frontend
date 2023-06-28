@@ -27,9 +27,9 @@ const advisersUrl = urls.companies.advisers.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)
-const dnbHierarchyUrl = urls.companies.dnbHierarchy.index(company.id)
 const addInteractionUrl = urls.companies.interactions.create(company.id)
 const exportProjectUrl = urls.exportPipeline.create(company.id)
+const companyTreeUrl = urls.companies.dnbHierarchy.tree(company.id)
 
 describe('Local header for global ultimate company', () => {
   context('when visting a global ultimate company activity page', () => {
@@ -51,6 +51,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -83,7 +87,8 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
-  context('when visting a global ultimate company activity page', () => {
+
+  context('when visting a global ultimate business details page', () => {
     before(() => {
       cy.visit(urls.companies.businessDetails(company.id))
     })
@@ -102,6 +107,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -134,6 +143,7 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
+
   context('when visting a global ultimate company contacts page', () => {
     before(() => {
       cy.visit(urls.companies.contacts(company.id))
@@ -149,6 +159,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -181,6 +195,7 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
+
   context('when visting a global ultimate company core team page', () => {
     before(() => {
       cy.visit(advisersUrl)
@@ -200,6 +215,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -232,6 +251,7 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
+
   context(
     'when visting a global ultimate company investment projects page',
     () => {
@@ -249,8 +269,8 @@ describe('Local header for global ultimate company', () => {
         assertCompanyName(company.name)
       })
 
-      it('should display the company address', () => {
-        assertCompanyAddress(address)
+      it('should display the view related companies link', () => {
+        assertRelatedCompaniesLink(address)
       })
 
       it('should display the correct add interaction button', () => {
@@ -286,6 +306,7 @@ describe('Local header for global ultimate company', () => {
       })
     }
   )
+
   context(
     'when visting a global ultimate company investment large capital page',
     () => {
@@ -307,6 +328,10 @@ describe('Local header for global ultimate company', () => {
         assertCompanyAddress(address)
       })
 
+      it('should display the view related companies link', () => {
+        assertRelatedCompaniesLink(address)
+      })
+
       it('should display the correct add interaction button', () => {
         assertAddInteractionButton(addInteractionUrl)
       })
@@ -340,6 +365,7 @@ describe('Local header for global ultimate company', () => {
       })
     }
   )
+
   context('when visting a global ultimate company export page', () => {
     before(() => {
       cy.visit(urls.companies.exports.index(company.id))
@@ -359,6 +385,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -391,6 +421,7 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
+
   context('when visting a global ultimate company export history page', () => {
     before(() => {
       cy.visit(urls.companies.exports.history.index(company.id))
@@ -410,6 +441,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyAddress(address)
     })
 
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
+    })
+
     it('should display the correct add interaction button', () => {
       assertAddInteractionButton(addInteractionUrl)
     })
@@ -442,6 +477,7 @@ describe('Local header for global ultimate company', () => {
       assertDescription()
     })
   })
+
   context('when visting a global ultimate company orders page', () => {
     before(() => {
       cy.visit(urls.companies.orders(company.id))
@@ -459,6 +495,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company address', () => {
       assertCompanyAddress(address)
+    })
+
+    it('should display the view related companies link', () => {
+      assertRelatedCompaniesLink(address)
     })
 
     it('should display the correct add interaction button', () => {
@@ -505,12 +545,12 @@ const assertMetaList = () => {
 }
 
 const assertDescription = () => {
-  cy.get(companyLocalHeader.description.paragraph(1))
-    .contains(
-      'Data Hub contains 2 other company records related to this company'
-    )
-    .contains('2 other company records')
-    .should('have.attr', 'href', dnbHierarchyUrl)
-  assertOneListTierA(2)
-  assertCoreTeam(3, advisersUrl)
+  assertOneListTierA(1)
+  assertCoreTeam(2, advisersUrl)
+}
+
+const assertRelatedCompaniesLink = () => {
+  cy.get(companyLocalHeader.relatedCompaniesLink)
+    .contains('View related companies')
+    .should('have.attr', 'href', companyTreeUrl)
 }
