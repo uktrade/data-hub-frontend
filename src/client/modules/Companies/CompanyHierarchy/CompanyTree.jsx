@@ -275,7 +275,9 @@ const HierarchyItem = ({
                 : setToggleLabel('View more detail')
             }
             label={toggleLabel}
-            id={`${company.duns_number}_toggle`}
+            id={`${
+              company.duns_number ? company.duns_number : company.id
+            }_toggle`}
           >
             <InlineDescriptionList>
               <dt>Trading address</dt>
