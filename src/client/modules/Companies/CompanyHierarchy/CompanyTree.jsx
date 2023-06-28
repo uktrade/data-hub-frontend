@@ -23,6 +23,7 @@ import {
   HierarchyHeaderContents,
   HierarchyTag,
   ManuallyLinkedHierarchyListItem,
+  StyledLinkedSubsidiaryButton,
 } from './styled'
 import pluralize from 'pluralize'
 
@@ -61,6 +62,7 @@ const Subsidiaries = ({
   fullTreeExpanded,
   requestedCompanyId,
   label,
+  isManuallyLinked = false,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -87,10 +89,21 @@ const Subsidiaries = ({
             isFinalItemInLevel={
               requestedCompanyHasManuallyVerified && hierarchy === 1
                 ? false
-                : index + 1 === company.subsidiaries.length
+                : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
           />
         ))}
+        {isManuallyLinked && (
+          <li>
+            <StyledLinkedSubsidiaryButton
+              buttonColour={GREY_4}
+              buttonTextColour={BLACK}
+              data-test="link-subsidiary-button"
+            >
+              Link a new subsidiary company
+            </StyledLinkedSubsidiaryButton>
+          </li>
+        )}
       </SubsidiaryList>
     </>
   )
@@ -161,6 +174,7 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         requestedCompanyId={requestedCompanyId}
+        isManuallyLinked={true}
         label="manually linked subsidiaries"
       />
     </ManuallyLinkedHierarchyListItem>
