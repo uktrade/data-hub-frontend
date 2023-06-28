@@ -3,6 +3,7 @@ module.exports = () => {
     metaList: '[data-test="metaList"]',
     companyName: '[data-test="heading"]',
     address: '[data-test="address"]',
+    relatedCompaniesLink: '[data-test="company-tree-link"]',
     badge: '[data-test="badge"]',
     description: {
       paragraph: (number) => `[data-test="description"] p:nth-child(${number})`,

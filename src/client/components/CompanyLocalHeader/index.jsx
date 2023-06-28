@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import pluralize from 'pluralize'
 import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
+import { Link } from 'govuk-react'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -98,6 +98,9 @@ const StyledMain = styled(Main)`
     font-size: ${FONT_SIZE.SIZE_20};
   }
 `
+const StyledRelatedCompaniesWrapper = styled('div')`
+  padding-bottom: 20px;
+`
 
 const isUltimate = (company) => !!company.isGlobalUltimate
 const isGlobalHQ = (company) =>
@@ -135,6 +138,16 @@ const CompanyLocalHeader = ({
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
+            {dnbRelatedCompaniesCount > 0 && (
+              <StyledRelatedCompaniesWrapper>
+                <Link
+                  href={urls.companies.dnbHierarchy.tree(company.id)}
+                  data-test="company-tree-link"
+                >
+                  View related companies
+                </Link>
+              </StyledRelatedCompaniesWrapper>
+            )}
           </GridCol>
           <GridCol setWith="one-third">
             <StyledButtonContainer>
@@ -183,19 +196,8 @@ const CompanyLocalHeader = ({
             )}
           </TypeWrapper>
         )}
-        {(dnbRelatedCompaniesCount > 0 ||
-          hasManagedAccountDetails(company)) && (
+        {hasManagedAccountDetails(company) && (
           <StyledDescription data-test="description">
-            {dnbRelatedCompaniesCount > 0 && (
-              <p>
-                Data Hub contains{' '}
-                <a href={urls.companies.dnbHierarchy.index(company.id)}>
-                  {dnbRelatedCompaniesCount} other company{' '}
-                  {pluralize('record', dnbRelatedCompaniesCount)}
-                </a>{' '}
-                related to this company
-              </p>
-            )}
             {hasManagedAccountDetails(company) && (
               <>
                 <p>
