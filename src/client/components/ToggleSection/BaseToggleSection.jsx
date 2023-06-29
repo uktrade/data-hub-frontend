@@ -49,7 +49,7 @@ export const ToggleButtonIcon = ({ colour = BLACK, isOpen }) => (
   <ToggleButtonIconStyle isOpen={isOpen}>
     <svg
       version="1.1"
-      viewBox="210 300 600 450"
+      viewBox="210 320 600 470"
       xmlns="http://www.w3.org/2000/svg"
       class="app-c-expander__icon app-c-expander__icon--up"
       aria-hidden="true"

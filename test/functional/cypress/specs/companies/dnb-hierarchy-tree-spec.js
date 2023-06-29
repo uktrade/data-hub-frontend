@@ -1,5 +1,4 @@
-import { format } from 'date-fns'
-
+import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import {
   companyTreeFaker,
   companyTreeItemFaker,
@@ -414,11 +413,9 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
-    const formattedDate = format(
-      new Date(
-        companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].latest_interaction_date
-      ),
-      'dd MMM yyyy'
+    const formattedDate = formatWithoutParsing(
+      companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
+        .latest_interaction_date
     )
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
