@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { H2, Link } from 'govuk-react'
+import { H2, Link, Button } from 'govuk-react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
@@ -95,15 +95,16 @@ const Subsidiaries = ({
         ))}
         {isManuallyLinked && (
           <li>
-            <StyledLinkedSubsidiaryButton
-              buttonColour={GREY_4}
-              buttonTextColour={BLACK}
-              data-test="link-subsidiary-button"
-              onClick={() =>
-                (window.location = `/companies/${requestedCompanyId}/subsidiaries/link`)
-              }
-            >
-              Link a new subsidiary company
+            <StyledLinkedSubsidiaryButton>
+              <Button
+                as={Link}
+                href={urls.companies.subsidiaries.link(requestedCompanyId)}
+                buttonColour={GREY_4}
+                buttonTextColour={BLACK}
+                data-test="link-subsidiary-button"
+              >
+                Link a new subsidiary company
+              </Button>
             </StyledLinkedSubsidiaryButton>
           </li>
         )}

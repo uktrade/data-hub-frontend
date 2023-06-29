@@ -63,31 +63,32 @@ export const SubsidiaryList = styled.ul`
 `
 export const StyledButton = styled(Button)``
 
-export const StyledLinkedSubsidiaryButton = styled(Button)`
+export const StyledLinkedSubsidiaryButton = styled.div`
   margin-top: 20px;
-  transform-style: preserve-3d;
 
-  // This is the horizontal line to the left of the button
+  transform-style: preserve-3d;
   :before {
+    //This is the horizontal line to the left of the div
     content: '';
     background-color: ${GREY_2};
     position: relative;
     width: 100px;
     height: 5px;
-    top: 16px;
-    left: -40px;
+    top: 22px;
+    left: -29px;
     display: block;
     transform: translateZ(-1px);
   }
-  // This is the vertical line that stretches between the last company and the button
+
   :after {
+    // This is the vertical line that stretches between the last company and the button
     content: '';
     background-color: ${GREY_2};
     position: absolute;
     width: 5px;
     height: 48px;
-    top: -20px;
-    left: -31px;
+    top: -21px;
+    left: -29px;
     display: block;
   }
 `
