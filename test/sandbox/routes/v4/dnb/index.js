@@ -55,3 +55,7 @@ exports.companyFamilyTree = function (req, res) {
     })
   )
 }
+
+exports.relatedCompaniesCount = function (req, res) {
+  res.json(1)
+}
