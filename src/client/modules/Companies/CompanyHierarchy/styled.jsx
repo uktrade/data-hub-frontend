@@ -25,6 +25,7 @@ const verticalLine = css`
   background-color: ${GREY_2};
   position: absolute;
   width: 5px;
+  left: -29px;
   display: block;
   transform: translateZ(-1px);
 `
@@ -94,7 +95,6 @@ export const StyledLinkedSubsidiaryButton = styled.div`
     ${verticalLine}
     height: 48px;
     top: -21px;
-    left: -29px;
   }
 `
 
@@ -135,7 +135,6 @@ export const HierarchyListItem = styled.li`
         background-color: ${GREY_2};
         height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
         top: ${isFinalItemInLevel ? '-20px' : '-18px'};
-        left: -29px;
       }
   `}
 `
