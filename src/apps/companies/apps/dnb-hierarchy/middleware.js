@@ -27,37 +27,39 @@ function setCompanyHierarchyLocalNav(req, res, next) {
   }
 }
 
-async function getDnbHierarchyDetails(req, dunsNumber, companyId) {
-  if (dunsNumber) {
-    const dnbHierarchyCount = await getRelatedCompaniesCount(req, companyId)
-    const globalUltimate = await getGlobalUltimate(req, dunsNumber)
+async function getDnbHierarchyDetails(req, company) {
+  if (company.duns_number && company.global_ultimate_duns_number) {
+    const dnbRelatedCompaniesCount = await getRelatedCompaniesCount(
+      req,
+      company.id
+    )
+    const globalUltimate = await getGlobalUltimate(
+      req,
+      company.global_ultimate_duns_number
+    )
     const globalUltimateResult = get(globalUltimate, 'results[0]')
-
     return {
       globalUltimate: globalUltimateResult && {
         ...globalUltimateResult,
         url: urls.companies.detail(globalUltimateResult.id),
       },
-      dnbHierarchyCount,
+      dnbRelatedCompaniesCount: dnbRelatedCompaniesCount,
     }
   }
 
   return {
-    dnbHierarchyCount: 0,
+    dnbRelatedCompaniesCount: 0,
   }
 }
 
 async function setDnbHierarchyDetails(req, res, next) {
   const { company } = res.locals
 
-  const { globalUltimate, dnbHierarchyCount } = await getDnbHierarchyDetails(
-    req,
-    company.global_ultimate_duns_number,
-    company.id
-  )
+  const { globalUltimate, dnbRelatedCompaniesCount } =
+    await getDnbHierarchyDetails(req, company)
   res.locals.globalUltimate = globalUltimate
-  res.locals.dnbHierarchyCount = dnbHierarchyCount
-  res.locals.dnbRelatedCompaniesCount = dnbHierarchyCount
+  res.locals.dnbHierarchyCount = dnbRelatedCompaniesCount + 1 //TODO these 2 variables can be refactored into a single but they are used across many components so a lot of files will change
+  res.locals.dnbRelatedCompaniesCount = dnbRelatedCompaniesCount
   next()
 }
 

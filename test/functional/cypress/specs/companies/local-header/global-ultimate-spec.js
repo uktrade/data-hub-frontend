@@ -551,6 +551,6 @@ const assertDescription = () => {
 
 const assertRelatedCompaniesLink = () => {
   cy.get(companyLocalHeader.relatedCompaniesLink)
-    .contains('View related companies')
+    .contains('View 5 related companies')
     .should('have.attr', 'href', companyTreeUrl)
 }

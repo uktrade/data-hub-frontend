@@ -7,6 +7,7 @@ var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-n
 var companySearchNotMatchedNoCountry = require('../../../fixtures/v4/dnb/company-search-not-matched-no-country.json')
 var companySearchNotMatchedUS = require('../../../fixtures/v4/dnb/company-search-not-matched-us.json')
 var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
+var dnbGlobalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
 
 const { fakerCompanyFamilyTree } = require('./company-tree')
 
@@ -57,5 +58,5 @@ exports.companyFamilyTree = function (req, res) {
 }
 
 exports.relatedCompaniesCount = function (req, res) {
-  res.json(1)
+  res.json(req.params.companyId === dnbGlobalUltimate.id ? 5 : 0)
 }
