@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
-import { GREY_4, BLACK } from '../../../utils/colours'
+import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { isEmpty, kebabCase } from 'lodash'
 import {
@@ -268,10 +268,9 @@ const HierarchyItem = ({
         </HierarchyItemHeading>
         {isOnDataHub && (
           <ToggleSection
+            colour={isRequestedCompanyId ? WHITE : BLUE}
             onOpen={(open) =>
-              open
-                ? setToggleLabel('Hide detail')
-                : setToggleLabel('View more detail')
+              setToggleLabel(open ? 'Hide detail' : 'View more detail')
             }
             label={toggleLabel}
             id={`${

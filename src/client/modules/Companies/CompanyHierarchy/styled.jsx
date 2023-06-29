@@ -162,7 +162,7 @@ export const HierarchyTag = styled(Tag)`
 
 export const ToggleSectionHighlighted = styled(ToggleSection)`
   div[data-test='requested-company'] ToggleButton {
-    color: white;
+    color: ${WHITE};
   }
 `
 
