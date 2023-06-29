@@ -156,12 +156,6 @@ export const HierarchyTag = styled(Tag)`
   margin-left: 15px;
 `
 
-export const ToggleSectionHighlighted = styled(ToggleSection)`
-  div[data-test='requested-company'] ToggleButton {
-    color: ${WHITE};
-  }
-`
-
 export const InlineDescriptionList = styled.dl`
   padding: 15px;
   background-color: ${GREY_4};
