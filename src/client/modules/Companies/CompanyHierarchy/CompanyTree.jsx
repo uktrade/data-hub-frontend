@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { H2, Link } from 'govuk-react'
+import { H2, Link, Button } from 'govuk-react'
 import Task from '../../../components/Task'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
@@ -23,6 +23,7 @@ import {
   HierarchyHeaderContents,
   HierarchyTag,
   ManuallyLinkedHierarchyListItem,
+  StyledLinkedSubsidiaryButton,
 } from './styled'
 import pluralize from 'pluralize'
 
@@ -61,6 +62,7 @@ const Subsidiaries = ({
   fullTreeExpanded,
   requestedCompanyId,
   label,
+  isManuallyLinked = false,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -87,10 +89,25 @@ const Subsidiaries = ({
             isFinalItemInLevel={
               requestedCompanyHasManuallyVerified && hierarchy === 1
                 ? false
-                : index + 1 === company.subsidiaries.length
+                : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
           />
         ))}
+        {isManuallyLinked && (
+          <li>
+            <StyledLinkedSubsidiaryButton>
+              <Button
+                as={Link}
+                href={urls.companies.subsidiaries.link(requestedCompanyId)}
+                buttonColour={GREY_4}
+                buttonTextColour={BLACK}
+                data-test="link-subsidiary-button"
+              >
+                Link a new subsidiary company
+              </Button>
+            </StyledLinkedSubsidiaryButton>
+          </li>
+        )}
       </SubsidiaryList>
     </>
   )
@@ -161,6 +178,7 @@ const ManuallyLinkedList = ({ requestedCompanyId, familyTree }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         requestedCompanyId={requestedCompanyId}
+        isManuallyLinked={true}
         label="manually linked subsidiaries"
       />
     </ManuallyLinkedHierarchyListItem>

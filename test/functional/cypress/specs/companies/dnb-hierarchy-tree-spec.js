@@ -382,5 +382,25 @@ describe('D&B Company hierarchy tree', () => {
         .contains('Hide 5 manually linked subsidiaries')
       cy.get('[data-test="hierarchy-item"]').eq(2).should('be.visible')
     })
+
+    it('should display a link new subsidiary company button', () => {
+      cy.get('[data-test="manually-linked-hierarchy-container"]')
+        .should('have.length', 1)
+        .click()
+      cy.get('[data-test="link-subsidiary-button"]')
+        .should('be.visible')
+        .contains('Link a new subsidiary company')
+    })
+
+    it('should go to the link new subsidiary page when button is clicked', () => {
+      cy.get('[data-test="manually-linked-hierarchy-container"]')
+        .should('have.length', 1)
+        .click()
+      cy.get('[data-test="link-subsidiary-button"]').click()
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.subsidiaries.link(dnbGlobalUltimate.id)
+      )
+    })
   })
 })

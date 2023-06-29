@@ -1,5 +1,5 @@
 import { Button, Link } from 'govuk-react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import {
   GREY_2,
   GREY_4,
@@ -8,6 +8,27 @@ import {
   WHITE,
 } from '../../../utils/colours'
 import { Tag } from '../../../components'
+
+const horizontalLine = css`
+  //This is the horizontal line to the left of the div
+  content: '';
+  background-color: ${GREY_2};
+  position: relative;
+  width: 100px;
+  height: 5px;
+  display: block;
+  transform: translateZ(-1px);
+`
+const verticalLine = css`
+  //This is the vertical line that stretches between the child companies
+  content: '';
+  background-color: ${GREY_2};
+  position: absolute;
+  width: 5px;
+  left: -29px;
+  display: block;
+  transform: translateZ(-1px);
+`
 
 export const HierarchyContents = styled.div`
   padding-bottom: 10px;
@@ -40,16 +61,12 @@ export const HierarchyItemContents = styled.div`
     hierarchy != 1 &&
     `
       transform-style: preserve-3d;
-      :before { //This is the horizontal line to the left of the div
-        content: '';
+      
+      :before {
+        ${horizontalLine}
         background-color: ${GREY_2};
-        position: relative;
-        width: 100px;
-        height: 5px;
         top: 16px;
         left: -40px;
-        display: block;
-        transform: translateZ(-1px);
       }
   `}
 `
@@ -62,6 +79,24 @@ export const SubsidiaryList = styled.ul`
   transform-style: preserve-3d;
 `
 export const StyledButton = styled(Button)``
+
+export const StyledLinkedSubsidiaryButton = styled.div`
+  margin-top: 20px;
+
+  transform-style: preserve-3d;
+
+  :before {
+    ${horizontalLine}
+    top: 22px;
+    left: -29px;
+  }
+
+  :after {
+    ${verticalLine}
+    height: 48px;
+    top: -21px;
+  }
+`
 
 export const ToggleSubsidiariesButtonContent = styled.div`
   padding-top: 20px;
@@ -96,16 +131,10 @@ export const HierarchyListItem = styled.li`
     !globalParent &&
     `
       :before {
-        //This is the vertical line that stretches between the child companies
-        content: '';
+        ${verticalLine}
         background-color: ${GREY_2};
-        position: absolute;
-        width: 5px;
         height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
         top: ${isFinalItemInLevel ? '-20px' : '-18px'};
-        left: -29px;
-        display: block;
-        transform: translateZ(-1px);
       }
   `}
 `
