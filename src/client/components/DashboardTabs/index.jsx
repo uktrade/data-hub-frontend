@@ -8,6 +8,7 @@ import CompanyLists from '../CompanyLists'
 import ExportList from '../../modules/ExportPipeline/ExportList'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
+import ReferralList from '../ReferralList'
 
 const StyledDiv = styled('div')`
   padding-top: 16px;
@@ -36,6 +37,10 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
         [urls.exportPipeline.index()]: {
           label: 'Export list',
           content: <ExportList />,
+        },
+        [urls.companies.referrals.list()]: {
+          label: 'My referrals',
+          content: <ReferralList id="ReferralList" />,
         },
       }}
     />
