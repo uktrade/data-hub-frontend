@@ -9,6 +9,10 @@ import {
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
 import {
+  readThemeAndKindFromLocalStorage,
+  writeThemeAndKindToLocalStorage,
+} from './utils'
+import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_NO,
   OPTION_YES,
@@ -36,7 +40,6 @@ const FIELDS_TO_OMIT = [
   'has_related_opportunity',
 ]
 
-const COMPANY_INTERACTION = 'company-interaction'
 const HTTP_201_CREATED = 201
 
 function transformExportCountries(values) {
@@ -204,13 +207,13 @@ export async function getInitialFormValues({
   } else {
     // If creating an interaction
     const date = new Date()
-    const getInvestmentValues = (investmentId) =>
-      investmentId && {
-        kind: KINDS.INTERACTION,
-        theme: THEMES.INVESTMENT,
-      }
-    const previousSelection =
-      JSON.parse(window.localStorage.getItem(COMPANY_INTERACTION)) || {}
+
+    // If the user is coming from the investment page
+    // they don't get to choose the theme or kind.
+    const getThemeAndKindForInvestment = () => ({
+      theme: THEMES.INVESTMENT,
+      kind: KINDS.INTERACTION,
+    })
 
     return {
       companies: [companyId],
@@ -225,9 +228,9 @@ export async function getInitialFormValues({
           ? [transformObjectToOption(referral.contact)]
           : [],
       dit_participants: [transformObjectToOption(user)],
-      ...getInvestmentValues(investmentId),
-      ...(previousSelection.theme && { theme: previousSelection.theme }),
-      ...(previousSelection.kind && { kind: previousSelection.kind }),
+      ...(investmentId
+        ? getThemeAndKindForInvestment()
+        : readThemeAndKindFromLocalStorage()),
     }
   }
 }
@@ -317,13 +320,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
         // prepopulate based on their previous selections.
         // Statistics show us that users select the same
         // options 85% of the time.
-        window.localStorage.setItem(
-          COMPANY_INTERACTION,
-          JSON.stringify({
-            theme: values.theme,
-            kind: values.kind,
-          })
-        )
+        writeThemeAndKindToLocalStorage(values.theme, values.kind)
       }
       return result
     })
