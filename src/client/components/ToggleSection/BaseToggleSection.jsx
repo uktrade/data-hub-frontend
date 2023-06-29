@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLUE } from '../../../client/utils/colours'
+import { BLACK, BLUE } from '../../../client/utils/colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
 import multiInstance from '../../utils/multiinstance'
-
-import icon from './assets/caret.svg'
 
 const ToggleContainer = styled('div')``
 
@@ -38,14 +36,30 @@ export const ToggleButton = styled('button')`
   }
 `
 
-export const ToggleButtonIcon = styled('img')`
-  width: 18px;
-  height: 18px;
+export const ToggleButtonIconStyle = styled('span')`
   margin-right: ${SPACING.SCALE_2};
   ${({ isOpen }) => `
     transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
   `}
 `
+
+export const ToggleButtonIcon = ({ colour = BLACK, isOpen }) => (
+  <ToggleButtonIconStyle isOpen={isOpen}>
+    <svg
+      width="18px"
+      height="18px"
+      version="1.1"
+      viewBox="210 275 600 425"
+      xmlns="http://www.w3.org/2000/svg"
+      class="app-c-expander__icon app-c-expander__icon--up"
+      aria-hidden="true"
+      focusable="false"
+      fill={colour}
+    >
+      <path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z" />
+    </svg>
+  </ToggleButtonIconStyle>
+)
 
 export const ButtonContent = styled('span')``
 
@@ -66,6 +80,7 @@ const BaseToggleSection = ({
   open,
   onOpen,
   isOpen = false,
+  colour = BLACK,
   children,
   justifyHeaderContent = false,
   ...props
@@ -85,12 +100,12 @@ const BaseToggleSection = ({
         aria-expanded={isOpen}
       >
         <ToggleButtonIcon
-          src={icon}
           onClick={() => {
             open(!isOpen)
             onOpen && onOpen(!isOpen)
           }}
           isOpen={isOpen}
+          colour={colour}
           alt="Toggle details"
         />
         <ButtonContent data-test="toggle-section-button-content">
