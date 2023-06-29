@@ -18,7 +18,6 @@ export const HierarchyContents = styled.div`
 
 export const HierarchyItemContents = styled.div`
   ${ToggleSection} {
-    fill: orange;
     margin-bottom: 0px;
     padding-bottom: 0px;
     img {
@@ -37,7 +36,7 @@ export const HierarchyItemContents = styled.div`
       font-size: ${FONT_SIZE.SIZE_16};
       padding: 10px 15px 15px 15px;
       ${({ isRequestedCompanyId }) =>
-        isRequestedCompanyId ? `color: white;` : ``}
+        isRequestedCompanyId ? `color: ${WHITE};` : ``}
     }
   }
 

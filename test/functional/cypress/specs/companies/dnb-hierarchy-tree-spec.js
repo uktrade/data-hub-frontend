@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 import {
   companyTreeFaker,
   companyTreeItemFaker,
@@ -412,18 +414,13 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
-    let date = new Date(
-      Date.parse(
-        companyManuallyLinkedSubsidiaries.ultimate_global_company
-          .subsidiaries[0].latest_interaction_date
-      )
+    const formattedDate = format(
+      new Date(
+        companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].latest_interaction_date
+      ),
+      'dd MMM yyyy'
     )
-    const formattedDate = `${date
-      .getDate()
-      .toString()
-      .padStart(2, '0')} ${date.toLocaleDateString('default', {
-      month: 'short',
-    })} ${date.getFullYear()}`
+
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
     it('should not display a View more detail link for companies not on Data Hub', () => {
       cy.get('[data-test="related-company"]')
