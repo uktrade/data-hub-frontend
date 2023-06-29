@@ -21,14 +21,9 @@ export const HierarchyItemContents = styled.div`
   ${ToggleSection} {
     margin-bottom: 0px;
     padding-bottom: 0px;
-    img {
+    svg {
       width: ${FONT_SIZE.SIZE_16};
       height: ${FONT_SIZE.SIZE_16};
-      ${({ isRequestedCompanyId }) =>
-        isRequestedCompanyId
-          ? `filter: invert(100%); # make the svg the WHITE colour as the text`
-          : `filter: invert(34%) sepia(81%) saturate(1079%) hue-rotate(181deg)
-        brightness(87%) contrast(87%); # make the svg the BLUE colour as the text`}
     }
     > div {
       padding: 0px;
