@@ -37,8 +37,6 @@ export const ToggleButton = styled('button')`
 `
 
 export const ToggleButtonIconStyle = styled('span')`
-  width: 18px;
-  height: 18px;
   margin-right: ${SPACING.SCALE_2};
   ${({ isOpen }) => `
     transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
@@ -48,8 +46,10 @@ export const ToggleButtonIconStyle = styled('span')`
 export const ToggleButtonIcon = ({ colour = BLACK, isOpen }) => (
   <ToggleButtonIconStyle isOpen={isOpen}>
     <svg
+      width="18px"
+      height="18px"
       version="1.1"
-      viewBox="210 320 600 470"
+      viewBox="210 275 600 425"
       xmlns="http://www.w3.org/2000/svg"
       class="app-c-expander__icon app-c-expander__icon--up"
       aria-hidden="true"

@@ -1,5 +1,7 @@
 import { Button, Link } from 'govuk-react'
+import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
+
 import {
   GREY_2,
   GREY_4,
@@ -10,7 +12,6 @@ import {
 } from '../../../utils/colours'
 import { Tag, ToggleSection } from '../../../components'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
-import { FONT_SIZE } from '@govuk-react/constants'
 
 export const HierarchyContents = styled.div`
   padding-bottom: 10px;

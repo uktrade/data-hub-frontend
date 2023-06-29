@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react'
 import { H2, Link } from 'govuk-react'
-import Task from '../../../components/Task'
+import { isEmpty, kebabCase } from 'lodash'
+import pluralize from 'pluralize'
+import React, { useEffect, useState } from 'react'
+import { BsFillPersonFill } from 'react-icons/bs'
+import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
-import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
-import { useParams } from 'react-router-dom'
-import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
-import { connect } from 'react-redux'
-import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
-import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
-import { BsFillPersonFill } from 'react-icons/bs'
-import { isEmpty, kebabCase } from 'lodash'
+import Task from '../../../components/Task'
+import { ToggleSection } from '../../../components/ToggleSection'
+import urls from '../../../../lib/urls'
+import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
 import {
   StyledButton,
   ToggleSubsidiariesButtonContent,
@@ -26,10 +28,9 @@ import {
   InlineDescriptionList,
   HierarchyItemHeading,
 } from './styled'
-import pluralize from 'pluralize'
-import { ToggleSection } from '../../../components/ToggleSection'
-import { format } from '../../../utils/date'
 import { addressToString } from '../../../utils/addresses'
+import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
+import { format } from '../../../utils/date'
 
 const ToggleSubsidiariesButton = ({
   isOpen,

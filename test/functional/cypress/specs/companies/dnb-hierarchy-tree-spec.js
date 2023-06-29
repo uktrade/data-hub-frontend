@@ -1,9 +1,10 @@
+import { kebabCase } from 'lodash'
+
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
-import { kebabCase } from 'lodash'
 
 const {
   assertErrorDialog,
