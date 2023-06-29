@@ -57,8 +57,7 @@ async function setDnbHierarchyDetails(req, res, next) {
   )
   res.locals.globalUltimate = globalUltimate
   res.locals.dnbHierarchyCount = dnbHierarchyCount
-  res.locals.dnbRelatedCompaniesCount =
-    dnbHierarchyCount > 1 ? dnbHierarchyCount - 1 : 0
+  res.locals.dnbRelatedCompaniesCount = dnbHierarchyCount
   next()
 }
 
