@@ -454,7 +454,7 @@ describe('D&B Company hierarchy tree', () => {
         .should('contain.text', `SectorNot set`)
         .should(
           'contain.text',
-          `Employees ${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].number_of_employees}`
+          `Employees${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].number_of_employees}`
         )
         .should('contain.text', `Last interaction date${formattedDate}`)
     })
