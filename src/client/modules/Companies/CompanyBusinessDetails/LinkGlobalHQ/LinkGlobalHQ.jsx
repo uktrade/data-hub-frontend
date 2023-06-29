@@ -95,13 +95,13 @@ const LinkGlobalHQ = ({
           </p>
         </StyledPanel>
         <FilteredCollectionList
-          {...props}
           collectionName="company"
           sortOptions={optionMetadata.sortOptions}
           taskProps={collectionListTask}
           selectedFilters={selectedFilters}
           entityName="company"
           entityNamePlural="companies"
+          {...props}
         >
           <CollectionFilters taskProps={collectionListMetadataTask}>
             <FilterToggleSection
