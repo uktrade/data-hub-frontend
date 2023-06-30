@@ -144,7 +144,7 @@ const CompanyLocalHeader = ({
                   href={urls.companies.dnbHierarchy.tree(company.id)}
                   data-test="company-tree-link"
                 >
-                  {`View ${dnbRelatedCompaniesCount} related companies`}
+                  {`View ${dnbRelatedCompaniesCount + 1} related companies`}
                 </Link>
               </StyledRelatedCompaniesWrapper>
             )}

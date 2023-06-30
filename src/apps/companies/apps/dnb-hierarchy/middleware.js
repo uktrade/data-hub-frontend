@@ -38,16 +38,19 @@ async function getDnbHierarchyDetails(req, company) {
       company.global_ultimate_duns_number
     )
     const globalUltimateResult = get(globalUltimate, 'results[0]')
+
     return {
       globalUltimate: globalUltimateResult && {
         ...globalUltimateResult,
         url: urls.companies.detail(globalUltimateResult.id),
       },
       dnbRelatedCompaniesCount: dnbRelatedCompaniesCount,
+      dnbHierarchyCount: dnbRelatedCompaniesCount + 1,
     }
   }
 
   return {
+    dnbHierarchyCount: 0,
     dnbRelatedCompaniesCount: 0,
   }
 }
@@ -55,10 +58,11 @@ async function getDnbHierarchyDetails(req, company) {
 async function setDnbHierarchyDetails(req, res, next) {
   const { company } = res.locals
 
-  const { globalUltimate, dnbRelatedCompaniesCount } =
+  const { globalUltimate, dnbHierarchyCount, dnbRelatedCompaniesCount } =
     await getDnbHierarchyDetails(req, company)
+
   res.locals.globalUltimate = globalUltimate
-  res.locals.dnbHierarchyCount = dnbRelatedCompaniesCount + 1 //TODO these 2 variables can be refactored into a single but they are used across many components so a lot of files will change
+  res.locals.dnbHierarchyCount = dnbHierarchyCount
   res.locals.dnbRelatedCompaniesCount = dnbRelatedCompaniesCount
   next()
 }
