@@ -51,7 +51,6 @@ export const ToggleButtonIcon = ({ colour = BLACK, isOpen }) => (
       version="1.1"
       viewBox="210 275 600 425"
       xmlns="http://www.w3.org/2000/svg"
-      class="app-c-expander__icon app-c-expander__icon--up"
       aria-hidden="true"
       focusable="false"
       fill={colour}
