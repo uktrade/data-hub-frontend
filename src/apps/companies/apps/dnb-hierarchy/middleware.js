@@ -29,27 +29,30 @@ function setCompanyHierarchyLocalNav(req, res, next) {
 
 async function getDnbHierarchyDetails(req, company) {
   if (company.duns_number) {
-    const dnbRelatedCompaniesCount = await getRelatedCompaniesCount(
-      req,
-      company.id
-    )
-
-    let globalUltimateResult
-    if (company.global_ultimate_duns_number) {
-      const globalUltimate = await getGlobalUltimate(
+    try {
+      const dnbRelatedCompaniesCount = await getRelatedCompaniesCount(
         req,
-        company.global_ultimate_duns_number
+        company.id
       )
-      globalUltimateResult = get(globalUltimate, 'results[0]')
-    }
+      let globalUltimateResult
+      if (company.global_ultimate_duns_number) {
+        const globalUltimate = await getGlobalUltimate(
+          req,
+          company.global_ultimate_duns_number
+        )
+        globalUltimateResult = get(globalUltimate, 'results[0]')
+      }
 
-    return {
-      globalUltimate: globalUltimateResult && {
-        ...globalUltimateResult,
-        url: urls.companies.detail(globalUltimateResult.id),
-      },
-      dnbRelatedCompaniesCount: dnbRelatedCompaniesCount,
-      dnbHierarchyCount: dnbRelatedCompaniesCount + 1,
+      return {
+        globalUltimate: globalUltimateResult && {
+          ...globalUltimateResult,
+          url: urls.companies.detail(globalUltimateResult.id),
+        },
+        dnbRelatedCompaniesCount: dnbRelatedCompaniesCount,
+        dnbHierarchyCount: dnbRelatedCompaniesCount + 1,
+      }
+    } catch (err) {
+      return { dnbHierarchyCount: 0, dnbRelatedCompaniesCount: 0 }
     }
   }
 
