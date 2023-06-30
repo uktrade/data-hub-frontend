@@ -19,40 +19,6 @@ describe('Business hierarchy', () => {
         )
       })
     })
-    context('when linking a global hq to a company', () => {
-      it('should create the link', () => {
-        cy.get(`${selectors.companyBusinessDetails().hierarchy} td a`).click()
-        cy.get('input[type="search"]')
-          .type(fixtures.company.oneListCorp.name)
-          .next()
-          .click()
-        cy.get('.c-entity-list li a').first().click()
-        cy.get('[data-test="status-message"]').should(
-          'contain',
-          'You’ve linked the Global Headquarters'
-        )
-
-        cy.get(selectors.companyBusinessDetails().hierarchy).should(
-          'contain',
-          'Global HQOne List CorpRemove link'
-        )
-      })
-    })
-    context('when removing the link to a global hq', () => {
-      it('should remove the link', () => {
-        cy.get(
-          `${selectors.companyBusinessDetails().hierarchy} td a:nth-child(2)`
-        ).click()
-        cy.get('[data-test="status-message"]').should(
-          'contain',
-          'You’ve removed the link to Global Headquarters'
-        )
-        cy.get(selectors.companyBusinessDetails().hierarchy).should(
-          'contain',
-          'Global HQNoneLink to the Global HQ'
-        )
-      })
-    })
   })
   context('Company Subsidiary', () => {
     const company = fixtures.company.create.lambda()

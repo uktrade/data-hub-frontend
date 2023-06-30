@@ -27,10 +27,7 @@ const {
   handleRoutePermissions,
 } = require('../middleware')
 
-const {
-  getGlobalHQCompaniesCollection,
-  getSubsidiaryCompaniesCollection,
-} = require('./middleware/collection')
+const { getSubsidiaryCompaniesCollection } = require('./middleware/collection')
 
 const {
   getCompany,
@@ -103,11 +100,7 @@ router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
 router.use(urls.companies.editOneList.route, editOneListRouter)
 
-router.get(
-  urls.companies.hierarchies.ghq.link.route,
-  getGlobalHQCompaniesCollection,
-  renderAddGlobalHQ
-)
+router.get(urls.companies.hierarchies.ghq.link.route, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
 
