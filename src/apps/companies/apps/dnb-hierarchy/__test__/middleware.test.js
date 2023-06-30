@@ -180,4 +180,38 @@ describe('#setDnbHierarchyDetails', async () => {
       ).to.equal(0)
     })
   })
+
+  context('when the api call fails to get related companies', async () => {
+    let middlewareParameters
+
+    before(async () => {
+      middlewareParameters = buildSubsidiaryMiddlewareParameters({
+        company: {
+          id: 1,
+          duns_number: DUNS_NUMBER,
+        },
+      })
+
+      mockGetDnbHierarchy({
+        companyId: 1,
+        responseCode: 502,
+      })
+
+      await setDnbHierarchyDetails(
+        middlewareParameters.reqMock,
+        middlewareParameters.resMock,
+        middlewareParameters.nextSpy
+      )
+    })
+
+    it('should  swallow exception and return empty response', async () => {
+      expect(middlewareParameters.resMock.locals.globalUltimate).to.be.undefined
+      expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.be.equal(
+        0
+      )
+      expect(
+        middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
+      ).to.be.equal(0)
+    })
+  })
 })

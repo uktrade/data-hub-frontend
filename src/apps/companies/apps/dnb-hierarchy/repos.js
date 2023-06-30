@@ -17,7 +17,7 @@ function getDnbHierarchy(req, globalUltimateDunsNumber, limit, page = 1) {
 
 async function getRelatedCompaniesCount(req, companyId) {
   return await authorisedRequest(req, {
-    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies/count?include_subsidiary_companies=true`,
+    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`,
   })
 }
 

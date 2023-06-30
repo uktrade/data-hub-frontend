@@ -18,7 +18,7 @@ function mockGetDnbHierarchy({
 
   nock(config.apiRoot)
     .get(
-      `/v4/dnb/${companyId}/related-companies/count?include_subsidiary_companies=true`
+      `/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`
     )
     .reply(responseCode, relatedCompaniesCount)
 
