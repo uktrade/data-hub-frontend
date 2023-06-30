@@ -1,8 +1,11 @@
+import { kebabCase } from 'lodash'
+import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
-import { kebabCase } from 'lodash'
+import { DARK_BLUE_LEGACY } from '../../../../../src/client/utils/colours'
+import hexRgb from 'hex-rgb'
 
 const {
   assertErrorDialog,
@@ -230,7 +233,7 @@ describe('D&B Company hierarchy tree', () => {
     it('should display the global company with the correct company details', () => {
       cy.get('[data-test="hierarchy-item"]')
         .first()
-        .find('span')
+        .find('div')
         .first()
         .should(
           'contain.text',
@@ -252,7 +255,7 @@ describe('D&B Company hierarchy tree', () => {
         .eq(1)
         .find('a')
         .should(
-          'have.text',
+          'contain.text',
           companyOnlyImmediateSubsidiaries.ultimate_global_company
             .subsidiaries[0].name
         )
@@ -360,7 +363,30 @@ describe('D&B Company hierarchy tree', () => {
     })
   })
 
-  context('When a company has manually linked subsidiaries', () => {
+  context('When a company is the requested company', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyNoSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+    it('should display with a different background colour to other items', () => {
+      cy.get('[data-test="requested-company"]')
+        .first()
+        .should(
+          'have.css',
+          'background-color',
+          hexRgb(DARK_BLUE_LEGACY, { format: 'css' }).replaceAll(' ', ', ')
+        )
+    })
+  })
+
+  context('When a company has a mix of known and unknown subsidiaries', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
@@ -370,37 +396,51 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
+    const formattedDate = formatWithoutParsing(
+      companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
+        .latest_interaction_date
+    )
+
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
-    it('should display a show/hide manually linked subsidiaries button', () => {
-      cy.get('[data-test="hierarchy-item"]').should('have.length', 7)
-      cy.get('[data-test="hierarchy-item"]').eq(2).should('not.be.visible')
-      cy.get('[data-test="manually-linked-hierarchy-container"]')
-        .should('have.length', 1)
-        .contains('Show 5 manually linked subsidiaries')
-        .click()
-        .contains('Hide 5 manually linked subsidiaries')
-      cy.get('[data-test="hierarchy-item"]').eq(2).should('be.visible')
+    it('should not display a View more detail link for companies not on Data Hub', () => {
+      cy.get('[data-test="related-company"]')
+        .first()
+        .should('not.contain', 'View more detail')
     })
 
-    it('should display a link new subsidiary company button', () => {
-      cy.get('[data-test="manually-linked-hierarchy-container"]')
-        .should('have.length', 1)
+    it('should display a View more detail link for companies on Data Hub', () => {
+      cy.get('[data-test="toggle-subsidiaries-button"]').first().click()
+      cy.get('[data-test="related-company"]')
+        .first()
+        .next()
+        .next()
+        .contains('View more detail')
+        .get('dl')
+        .should('not.be.visible')
+      cy.get('[data-test="toggle-section-button-content"]')
+        .first()
         .click()
-      cy.get('[data-test="link-subsidiary-button"]')
+        .contains('Hide detail')
+        .parent()
+        .parent()
+        .siblings('div')
+        .first('dl')
         .should('be.visible')
-        .contains('Link a new subsidiary company')
-    })
-
-    it('should go to the link new subsidiary page when button is clicked', () => {
-      cy.get('[data-test="manually-linked-hierarchy-container"]')
-        .should('have.length', 1)
-        .click()
-      cy.get('[data-test="link-subsidiary-button"]').click()
-      cy.location('pathname').should(
-        'eq',
-        urls.companies.subsidiaries.link(dnbGlobalUltimate.id)
-      )
+        .should(
+          'contain.text',
+          `Trading address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].address.line_1}`
+        )
+        .should(
+          'contain.text',
+          `Registered address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].registered_address.line_1}`
+        )
+        .should('contain.text', `SectorNot set`)
+        .should(
+          'contain.text',
+          `Employees${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].number_of_employees}`
+        )
+        .should('contain.text', `Last interaction date${formattedDate}`)
     })
   })
 })
