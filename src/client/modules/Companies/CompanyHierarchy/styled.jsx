@@ -60,16 +60,12 @@ export const HierarchyItemContents = styled.div`
     isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
   border: 1px solid ${GREY_2};
   min-height: 60px;
-  padding: 10px;
+
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId &&
-    `
-    color: ${WHITE};
-  `}
+
   ${Link} {
     width: fit-content;
     ${({ isRequestedCompanyId }) =>
@@ -87,7 +83,7 @@ export const HierarchyItemContents = styled.div`
         ${horizontalLine}
         background-color: ${GREY_2};
         top: 16px;
-        left: -40px;
+        left: -30px;
       }
   `}
 `
@@ -158,7 +154,7 @@ export const HierarchyListItem = styled.li`
       :before {
         ${verticalLine}
         background-color: ${GREY_2};
-        height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
+        height: ${isFinalItemInLevel ? '40px' : 'calc(100% + 40px)'};
         top: ${isFinalItemInLevel ? '-20px' : '-18px'};
       }
   `}
