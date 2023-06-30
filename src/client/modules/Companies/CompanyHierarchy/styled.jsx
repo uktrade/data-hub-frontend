@@ -6,8 +6,11 @@ import {
   BLACK,
   DARK_BLUE_LEGACY,
   WHITE,
+  DARK_GREY,
 } from '../../../utils/colours'
-import { Tag } from '../../../components'
+import { Tag, ToggleSection } from '../../../components'
+import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 const horizontalLine = css`
   //This is the horizontal line to the left of the div
@@ -35,20 +38,34 @@ export const HierarchyContents = styled.div`
 `
 
 export const HierarchyItemContents = styled.div`
+  ${ToggleSection} {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    svg {
+      width: ${FONT_SIZE.SIZE_16};
+      height: ${FONT_SIZE.SIZE_16};
+    }
+    > div {
+      padding: 0px;
+    }
+    ${ToggleButton} {
+      font-size: ${FONT_SIZE.SIZE_16};
+      padding: 10px 15px 15px 15px;
+      ${({ isRequestedCompanyId }) =>
+        isRequestedCompanyId ? `color: ${WHITE};` : ``}
+    }
+  }
+
   background-color: ${({ isRequestedCompanyId }) =>
     isRequestedCompanyId ? DARK_BLUE_LEGACY : GREY_4};
   border: 1px solid ${GREY_2};
   min-height: 60px;
-  padding: 10px;
+
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  ${({ isRequestedCompanyId }) =>
-    isRequestedCompanyId &&
-    `
-    color: ${WHITE};
-  `}
+
   ${Link} {
     width: fit-content;
     ${({ isRequestedCompanyId }) =>
@@ -61,14 +78,18 @@ export const HierarchyItemContents = styled.div`
     hierarchy != 1 &&
     `
       transform-style: preserve-3d;
-      
+
       :before {
         ${horizontalLine}
         background-color: ${GREY_2};
         top: 16px;
-        left: -40px;
+        left: -30px;
       }
   `}
+`
+
+export const HierarchyItemHeading = styled.div`
+  padding: 15px;
 `
 
 export const SubsidiaryList = styled.ul`
@@ -133,7 +154,7 @@ export const HierarchyListItem = styled.li`
       :before {
         ${verticalLine}
         background-color: ${GREY_2};
-        height: ${isFinalItemInLevel ? '48px' : 'calc(100% + 40px)'};
+        height: ${isFinalItemInLevel ? '40px' : 'calc(100% + 40px)'};
         top: ${isFinalItemInLevel ? '-20px' : '-18px'};
       }
   `}
@@ -161,5 +182,26 @@ export const HierarchyHeaderContents = styled.div`
 
 export const HierarchyTag = styled(Tag)`
   float: right;
-  margin-left: 10px;
+  margin-left: 15px;
+`
+export const InlineDescriptionList = styled.dl`
+  padding: 15px;
+  background-color: ${GREY_4};
+  border-top: 1px solid ${GREY_2};
+  dt,
+  dd {
+    display: inline;
+    font-size: ${FONT_SIZE.SIZE_16};
+    font-height: 1;
+  }
+  dt {
+    color: ${DARK_GREY};
+  }
+  dd:before {
+    content: ' ';
+  }
+  dd:after {
+    content: ' ';
+    display: block;
+  }
 `

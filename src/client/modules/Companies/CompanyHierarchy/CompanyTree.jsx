@@ -1,18 +1,20 @@
+import { Button, H2, Link } from 'govuk-react'
+import { isEmpty, kebabCase } from 'lodash'
+import pluralize from 'pluralize'
 import React, { useEffect, useState } from 'react'
-import { H2, Link, Button } from 'govuk-react'
-import Task from '../../../components/Task'
+import { BsFillPersonFill } from 'react-icons/bs'
+import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
-import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
-import { useParams } from 'react-router-dom'
-import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
-import { connect } from 'react-redux'
-import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
-import { GREY_4, BLACK } from '../../../utils/colours'
-import { BsFillPersonFill } from 'react-icons/bs'
-import { isEmpty, kebabCase } from 'lodash'
+import Task from '../../../components/Task'
+import { ToggleSection } from '../../../components/ToggleSection'
+import urls from '../../../../lib/urls'
+import { ID, TASK_GET_DNB_FAMILY_TREE, state2props } from './state'
 import {
   StyledButton,
   ToggleSubsidiariesButtonContent,
@@ -23,9 +25,13 @@ import {
   HierarchyHeaderContents,
   HierarchyTag,
   ManuallyLinkedHierarchyListItem,
+  InlineDescriptionList,
+  HierarchyItemHeading,
   StyledLinkedSubsidiaryButton,
 } from './styled'
-import pluralize from 'pluralize'
+import { addressToString } from '../../../utils/addresses'
+import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
+import { format } from '../../../utils/date'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -195,6 +201,9 @@ const HierarchyItem = ({
   globalParent = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [toggleLabel, setToggleLabel] = useState('View more detail')
+  const isOnDataHub = Object.keys(company).length !== 0 && company?.id
+  const isRequestedCompanyId = requestedCompanyId === company.id
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -211,14 +220,12 @@ const HierarchyItem = ({
     >
       <HierarchyItemContents
         hierarchy={hierarchy}
-        isRequestedCompanyId={requestedCompanyId === company.id}
+        isRequestedCompanyId={isRequestedCompanyId}
         data-test={
-          requestedCompanyId === company.id
-            ? 'requested-company'
-            : 'related-company'
+          isRequestedCompanyId ? 'requested-company' : 'related-company'
         }
       >
-        <span>
+        <HierarchyItemHeading>
           {Object.keys(company).length === 0 ? (
             `No related companies found`
           ) : company?.id ? (
@@ -264,12 +271,45 @@ const HierarchyItem = ({
                 size={'12'}
                 style={{ verticalAlign: 'top', paddingTop: '1px' }}
               />
-              {company.number_of_employees && ` ${company.number_of_employees}`}
-              {company.employee_range?.name &&
-                ` ${company.employee_range?.name}`}
+              <CompanyNumberOfEmployees company={company} />
             </HierarchyTag>
           )}
-        </span>
+        </HierarchyItemHeading>
+        {isOnDataHub && (
+          <ToggleSection
+            colour={isRequestedCompanyId ? WHITE : BLUE}
+            onOpen={(open) =>
+              setToggleLabel(open ? 'Hide detail' : 'View more detail')
+            }
+            label={toggleLabel}
+            id={`${
+              company.duns_number ? company.duns_number : company.id
+            }_toggle`}
+          >
+            <InlineDescriptionList>
+              <dt>Trading address</dt>
+              <dd>
+                <AddressString address={company.address} />
+              </dd>
+              <dt>Registered address</dt>
+              <dd>
+                <AddressString address={company.registered_address} />
+              </dd>
+              <dt>Sector</dt>
+              <dd>{company.sector?.name ? company.sector.name : 'Not set'}</dd>
+              <dt>Employees</dt>
+              <dd>
+                <CompanyNumberOfEmployees company={company} />
+              </dd>
+              <dt>Last interaction date</dt>
+              <dd>
+                {company.latest_interaction_date
+                  ? format(company.latest_interaction_date)
+                  : 'Not set'}
+              </dd>
+            </InlineDescriptionList>
+          </ToggleSection>
+        )}
       </HierarchyItemContents>
       <Subsidiaries
         company={company}
@@ -286,6 +326,20 @@ const HierarchyItem = ({
     </HierarchyListItem>
   )
 }
+
+const CompanyNumberOfEmployees = ({ company }) => (
+  <>
+    {company.employee_range?.name
+      ? company.employee_range.name
+      : company.number_of_employees
+      ? company.number_of_employees
+      : 'Not set'}
+  </>
+)
+
+const AddressString = ({ address }) => (
+  <>{address ? addressToString(address) : 'Not set'}</>
+)
 
 const breadcrumbs = (company) =>
   !company
