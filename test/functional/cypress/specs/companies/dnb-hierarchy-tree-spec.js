@@ -446,7 +446,7 @@ describe('D&B Company hierarchy tree', () => {
 })
 
 context(
-  'When a company has only verified and manually linked subsidiaries',
+  'When a company has both verified and manually linked subsidiaries',
   () => {
     before(() => {
       cy.intercept(
