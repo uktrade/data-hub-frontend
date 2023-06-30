@@ -210,3 +210,9 @@ export const InlineDescriptionList = styled.dl`
     display: block;
   }
 `
+
+export const AddCompanyLink = styled(Link)`
+  font-size: ${FONT_SIZE.SIZE_16};
+  margin-left: 15px;
+  padding-bottom: 15px;
+`
