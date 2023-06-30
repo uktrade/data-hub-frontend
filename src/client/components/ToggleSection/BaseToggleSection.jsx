@@ -128,6 +128,7 @@ BaseToggleSection.propTypes = {
   children: PropTypes.node,
   major: PropTypes.bool,
   justifyHeaderContent: PropTypes.bool,
+  colour: PropTypes.string,
 }
 
 export const MultiInstanceToggleSection = multiInstance({
