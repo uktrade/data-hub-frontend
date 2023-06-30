@@ -118,15 +118,20 @@ const Subsidiaries = ({
     </>
   )
 
-const HierarchyHeader = ({ count, fullTreeExpanded, onClick }) => (
+const HierarchyHeader = ({
+  ultimateGlobalCount,
+  totalCount,
+  fullTreeExpanded,
+  onClick,
+}) => (
   <HierarchyHeaderContents>
     <H2>
-      {count}
+      {totalCount}
       <span> companies</span>
     </H2>
-    {count > 1 && (
+    {ultimateGlobalCount > 1 && (
       <ToggleSubsidiariesButton
-        count={count}
+        count={ultimateGlobalCount}
         onClick={onClick}
         isOpen={fullTreeExpanded}
         insideTree={false}
@@ -139,8 +144,10 @@ const HierarchyHeader = ({ count, fullTreeExpanded, onClick }) => (
 
 const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   const [fullTreeExpanded, setFullTreeExpanded] = useState(undefined)
+  const manuallyVerifiedSubsidiariesCount =
+    familyTree.manually_verified_subsidiaries?.length
   const requestedCompanyHasManuallyVerified =
-    familyTree.manually_verified_subsidiaries?.length > 0
+    manuallyVerifiedSubsidiariesCount > 0
   return isEmpty(familyTree) ? (
     <div data-test="empty-hierarchy">
       No hierarchy could be found for this company
@@ -148,7 +155,11 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   ) : (
     <HierarchyContents data-test="hierarchy-contents">
       <HierarchyHeader
-        count={familyTree.ultimate_global_companies_count}
+        ultimateGlobalCount={familyTree.ultimate_global_companies_count}
+        totalCount={
+          familyTree.ultimate_global_companies_count +
+          manuallyVerifiedSubsidiariesCount
+        }
         fullTreeExpanded={fullTreeExpanded}
         onClick={setFullTreeExpanded}
       />

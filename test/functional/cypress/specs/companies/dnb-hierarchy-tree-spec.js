@@ -153,7 +153,7 @@ describe('D&B Company hierarchy tree', () => {
     )
   })
 
-  context('When a company has no related recods', () => {
+  context('When a company has no related records', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
@@ -444,3 +444,27 @@ describe('D&B Company hierarchy tree', () => {
     })
   })
 })
+
+context(
+  'When a company has both verified and manually linked subsidiaries',
+  () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyManuallyLinkedSubsidiaries
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+    it('should have correct count of ultimate global companies in button', () => {
+      cy.get('[data-test="expand-tree-button"]').should('exist').contains('2')
+    })
+
+    it('should show header with count of ultimate global and manually linked companies', () => {
+      cy.get('[data-test="hierarchy-contents"]').should('exist').contains('7')
+    })
+  }
+)
