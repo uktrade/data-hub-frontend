@@ -106,46 +106,52 @@ describe('D&B Hierarchy middleware', () => {
 })
 
 describe('#setDnbHierarchyDetails', async () => {
-  context('when the company does have a DUNS number', async () => {
-    mockGetDnbHierarchy({
-      relatedCompaniesCount: 5,
-      companyId: 1,
-      limit: 1,
-    })
+  context('when the company DOES have a duns number', async () => {
+    let middlewareParameters
 
-    const middlewareParameters = buildSubsidiaryMiddlewareParameters({
-      company: {
-        id: 1,
-        global_ultimate_duns_number: DUNS_NUMBER,
-      },
-    })
+    before(async () => {
+      middlewareParameters = buildSubsidiaryMiddlewareParameters({
+        company: {
+          id: 1,
+          duns_number: DUNS_NUMBER,
+          global_ultimate_duns_number: DUNS_NUMBER,
+        },
+      })
 
-    await setDnbHierarchyDetails(
-      middlewareParameters.reqMock,
-      middlewareParameters.resMock,
-      middlewareParameters.nextSpy
-    )
+      mockGetDnbHierarchy({
+        responseBody: { results: [{ id: '2', is_global_ultimate: true }] },
+        relatedCompaniesCount: 5,
+        companyId: 1,
+        limit: 1,
+      })
+
+      await setDnbHierarchyDetails(
+        middlewareParameters.reqMock,
+        middlewareParameters.resMock,
+        middlewareParameters.nextSpy
+      )
+    })
 
     it('should set "globalUltimate"', async () => {
       expect(middlewareParameters.resMock.locals.globalUltimate).to.deep.equal({
-        id: '1',
+        id: '2',
         is_global_ultimate: true,
-        url: urls.companies.detail(1),
+        url: urls.companies.detail(2),
       })
     })
 
-    it('should set "dnbHierarchyCount"', () => {
-      expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(5)
+    it('should set "dnbHierarchyCount"', async () => {
+      expect(middlewareParameters.resMock.locals.dnbHierarchyCount).to.equal(6)
     })
 
-    it('should set "dnbRelatedCompaniesCount"', () => {
+    it('should set "dnbRelatedCompaniesCount"', async () => {
       expect(
         middlewareParameters.resMock.locals.dnbRelatedCompaniesCount
       ).to.equal(5)
     })
   })
 
-  context('when the company does not have a DUNS number', async () => {
+  context('when the company DOES NOT have a duns number', async () => {
     const middlewareParameters = buildSubsidiaryMiddlewareParameters({
       company: {
         duns_number: null,

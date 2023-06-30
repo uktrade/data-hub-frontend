@@ -28,16 +28,20 @@ function setCompanyHierarchyLocalNav(req, res, next) {
 }
 
 async function getDnbHierarchyDetails(req, company) {
-  if (company.duns_number && company.global_ultimate_duns_number) {
+  if (company.duns_number) {
     const dnbRelatedCompaniesCount = await getRelatedCompaniesCount(
       req,
       company.id
     )
-    const globalUltimate = await getGlobalUltimate(
-      req,
-      company.global_ultimate_duns_number
-    )
-    const globalUltimateResult = get(globalUltimate, 'results[0]')
+
+    let globalUltimateResult
+    if (company.global_ultimate_duns_number) {
+      const globalUltimate = await getGlobalUltimate(
+        req,
+        company.global_ultimate_duns_number
+      )
+      globalUltimateResult = get(globalUltimate, 'results[0]')
+    }
 
     return {
       globalUltimate: globalUltimateResult && {

@@ -16,13 +16,13 @@ function getDnbHierarchy(req, globalUltimateDunsNumber, limit, page = 1) {
 }
 
 async function getRelatedCompaniesCount(req, companyId) {
-  return authorisedRequest(req, {
+  return await authorisedRequest(req, {
     url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies/count?include_subsidiary_companies=true`,
   })
 }
 
 async function getGlobalUltimate(req, globalUltimateDunsNumber) {
-  return authorisedRequest(req, {
+  return await authorisedRequest(req, {
     method: 'POST',
     url: `${config.apiRoot}/v4/search/company`,
     qs: {

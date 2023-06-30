@@ -23,7 +23,8 @@ function mockGetDnbHierarchy({
     .reply(responseCode, relatedCompaniesCount)
 
   nock(config.apiRoot)
-    .post(`/v4/search/company?limit=1`)
+    .post(`/v4/search/company`)
+    .query(true)
     .reply(responseCode, responseBody)
 }
 
