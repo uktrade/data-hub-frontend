@@ -88,7 +88,7 @@ const routes = {
   community: [
     {
       path: '/community',
-      module: 'datahub:community',
+      module: 'datahub:companies',
       component: Community,
     },
   ],

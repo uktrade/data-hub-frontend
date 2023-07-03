@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultLayout } from '../../../components'
+import { DefaultLayout } from 'src/client/components/index.jsx'
 
 const Community = () => {
   return (
