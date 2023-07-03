@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled, { ThemeProvider } from 'styled-components'
@@ -7,6 +8,11 @@ import { connect } from 'react-redux'
 import { BLUE } from '../../../client/utils/colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
+import {
+  readFromLocalStorage,
+  writeToLocalStorage,
+  DASHBOARD_TAB,
+} from '../../../client/utils/localStorage'
 import Banner from '../LocalHeader/Banner'
 import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
 import { ID as REMINDER_SUMMARY_ID } from '../NotificationAlert/state'
@@ -89,108 +95,120 @@ const PersonalisedDashboard = ({
   dataHubFeed,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
-}) => (
-  <ThemeProvider theme={blueTheme}>
-    <Banner items={dataHubFeed} />
-    <SearchBackground data-test="search-data-hub">
-      <SearchContainer width="960">
-        <Search csrfToken={csrfToken} />
-      </SearchContainer>
-    </SearchBackground>
-    <CustomContainer width="1180">
-      <FlashMessages />
-      <Task.Status
-        name={TASK_CHECK_FOR_INVESTMENTS}
-        id={CHECK_FOR_INVESTMENTS_ID}
-        startOnRender={{
-          payload: {
-            adviser,
-          },
-          onSuccessDispatch: MY_INVESTMENTS__CHECK_COMPLETE,
-        }}
-      >
-        {() => (
-          <GridRow data-test="dashboard">
-            {hasInvestmentProjects && (
-              <GridCol setWidth="one-third">
-                <Aside>
-                  {hasInvestmentFeatureGroup || hasExportFeatureGroup ? (
+}) => {
+  const history = useHistory()
+
+  const previouslySelectedTabPath = readFromLocalStorage(DASHBOARD_TAB)
+  if (previouslySelectedTabPath) {
+    history.push(previouslySelectedTabPath)
+  }
+
+  return (
+    <ThemeProvider theme={blueTheme}>
+      <Banner items={dataHubFeed} />
+      <SearchBackground data-test="search-data-hub">
+        <SearchContainer width="960">
+          <Search csrfToken={csrfToken} />
+        </SearchContainer>
+      </SearchBackground>
+      <CustomContainer width="1180">
+        <FlashMessages />
+        <Task.Status
+          name={TASK_CHECK_FOR_INVESTMENTS}
+          id={CHECK_FOR_INVESTMENTS_ID}
+          startOnRender={{
+            payload: {
+              adviser,
+            },
+            onSuccessDispatch: MY_INVESTMENTS__CHECK_COMPLETE,
+          }}
+        >
+          {() => (
+            <GridRow data-test="dashboard">
+              {hasInvestmentProjects && (
+                <GridCol setWidth="one-third">
+                  <Aside>
+                    {hasInvestmentFeatureGroup || hasExportFeatureGroup ? (
+                      <DashboardToggleSection
+                        label="Reminders"
+                        id="reminder-summary-section"
+                        badge={
+                          !!reminderSummaryCount && (
+                            <NotificationBadge value={reminderSummaryCount} />
+                          )
+                        }
+                        major={true}
+                        isOpen={reminderSummaryCount > 0}
+                        data-test="reminder-summary-section"
+                      >
+                        <ReminderSummary />
+                      </DashboardToggleSection>
+                    ) : (
+                      // Outstanding propositions
+                      <DashboardToggleSection
+                        label="Reminders"
+                        id="investment-reminders-section"
+                        badge={
+                          !!remindersCount && (
+                            <NotificationBadge value={remindersCount} />
+                          )
+                        }
+                        major={true}
+                        isOpen={false}
+                        data-test="investment-reminders-section"
+                      >
+                        <InvestmentReminders adviser={adviser} />
+                      </DashboardToggleSection>
+                    )}
                     <DashboardToggleSection
-                      label="Reminders"
-                      id="reminder-summary-section"
-                      badge={
-                        !!reminderSummaryCount && (
-                          <NotificationBadge value={reminderSummaryCount} />
-                        )
-                      }
-                      major={true}
-                      isOpen={reminderSummaryCount > 0}
-                      data-test="reminder-summary-section"
+                      label="Investment projects summary"
+                      id="investment-project-summary-section"
+                      isOpen={true}
+                      data-test="investment-project-summary-section"
                     >
-                      <ReminderSummary />
+                      <InvestmentProjectSummary adviser={adviser} />
                     </DashboardToggleSection>
-                  ) : (
-                    // Outstanding propositions
-                    <DashboardToggleSection
-                      label="Reminders"
-                      id="investment-reminders-section"
-                      badge={
-                        !!remindersCount && (
-                          <NotificationBadge value={remindersCount} />
-                        )
-                      }
-                      major={true}
-                      isOpen={false}
-                      data-test="investment-reminders-section"
-                    >
-                      <InvestmentReminders adviser={adviser} />
-                    </DashboardToggleSection>
-                  )}
-                  <DashboardToggleSection
-                    label="Investment projects summary"
-                    id="investment-project-summary-section"
-                    isOpen={true}
-                    data-test="investment-project-summary-section"
-                  >
-                    <InvestmentProjectSummary adviser={adviser} />
-                  </DashboardToggleSection>
-                </Aside>
+                  </Aside>
+                </GridCol>
+              )}
+              <GridCol setWidth={hasInvestmentProjects ? 'two-thirds' : 'full'}>
+                <Main>
+                  <DashboardTabs
+                    id={id}
+                    adviser={adviser}
+                    hasInvestmentProjects={hasInvestmentProjects}
+                    onTabChange={({ path }) =>
+                      writeToLocalStorage(DASHBOARD_TAB, path)
+                    }
+                  />
+                </Main>
               </GridCol>
-            )}
-            <GridCol setWidth={hasInvestmentProjects ? 'two-thirds' : 'full'}>
-              <Main>
-                <DashboardTabs
-                  id={id}
-                  adviser={adviser}
-                  hasInvestmentProjects={hasInvestmentProjects}
+            </GridRow>
+          )}
+        </Task.Status>
+        <Task.Status
+          name={TASK_DATA_HUB_FEED}
+          id={DATA_HUB_FEED_ID}
+          startOnRender={{
+            onSuccessDispatch: DATA_HUB_FEED__FETCHED,
+          }}
+        >
+          {() => (
+            <GridRow data-test="data-hub-feed">
+              <GridCol setWidth="full">
+                <DataHubFeed
+                  items={dataHubFeed}
+                  feedLimit={1}
+                  isPersonalisedDashboard={true}
                 />
-              </Main>
-            </GridCol>
-          </GridRow>
-        )}
-      </Task.Status>
-      <Task.Status
-        name={TASK_DATA_HUB_FEED}
-        id={DATA_HUB_FEED_ID}
-        startOnRender={{
-          onSuccessDispatch: DATA_HUB_FEED__FETCHED,
-        }}
-      >
-        {() => (
-          <GridRow data-test="data-hub-feed">
-            <GridCol setWidth="full">
-              <DataHubFeed
-                items={dataHubFeed}
-                feedLimit={1}
-                isPersonalisedDashboard={true}
-              />
-            </GridCol>
-          </GridRow>
-        )}
-      </Task.Status>
-    </CustomContainer>
-  </ThemeProvider>
-)
+              </GridCol>
+            </GridRow>
+          )}
+        </Task.Status>
+      </CustomContainer>
+    </ThemeProvider>
+  )
+}
 
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
