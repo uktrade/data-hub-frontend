@@ -211,8 +211,10 @@ export const InlineDescriptionList = styled.dl`
   }
 `
 
+export const AddCompanyLinkDiv = styled('div')`
+  padding: 15px;
+`
+
 export const AddCompanyLink = styled(Link)`
   font-size: ${FONT_SIZE.SIZE_16};
-  margin-left: 15px;
-  padding-bottom: 15px;
 `

@@ -29,6 +29,7 @@ import {
   HierarchyItemHeading,
   StyledLinkedSubsidiaryButton,
   AddCompanyLink,
+  AddCompanyLinkDiv,
 } from './styled'
 import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
@@ -322,12 +323,15 @@ const HierarchyItem = ({
             </InlineDescriptionList>
           </ToggleSection>
         ) : (
-          <AddCompanyLink
-            href={urls.companies.create()}
-            aria-label={`Add ${company.name} to data Hub`}
-          >
-            Add {company.name} to Data Hub
-          </AddCompanyLink>
+          <AddCompanyLinkDiv>
+            <AddCompanyLink
+              href={urls.companies.createFromDNB(company.duns_number)}
+              aria-label={`Add ${company.name} to data Hub`}
+              data-test={`add-${companyName}`}
+            >
+              Add {company.name} to Data Hub
+            </AddCompanyLink>
+          </AddCompanyLinkDiv>
         )}
       </HierarchyItemContents>
       <Subsidiaries
