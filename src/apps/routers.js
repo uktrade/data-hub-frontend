@@ -10,6 +10,7 @@ const appsRouters = []
 const reactRoutes = [
   '/companies',
   '/contacts',
+  '/community',
   '/events',
   '/interactions',
   '/omis',

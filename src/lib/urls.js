@@ -127,6 +127,7 @@ module.exports = {
   company: {
     exportWin: url('/api-proxy/v4/company', '/:companyId/export-win'),
   },
+  community: url('/community'),
   companies: {
     index: url('/companies', PRIMARY_LINK_PARAMS.companies),
     create: url('/companies', '/create'),

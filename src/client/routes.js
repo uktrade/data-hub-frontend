@@ -18,6 +18,7 @@ import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
+import Community from './modules/Community'
 import Strategy from './modules/Companies/AccountManagement/Strategy'
 import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
@@ -82,6 +83,13 @@ const routes = {
       path: '/contacts',
       module: 'datahub:contacts',
       component: ContactsCollectionList,
+    },
+  ],
+  community: [
+    {
+      path: '/community',
+      module: 'datahub:community',
+      component: Community,
     },
   ],
   events: [
