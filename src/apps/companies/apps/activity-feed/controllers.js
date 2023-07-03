@@ -258,7 +258,10 @@ async function fetchActivityFeedHandler(req, res, next) {
       activityType = [],
     } = req.query
     let dnbHierarchyIds = []
-    if (company.is_global_ultimate && showDnbHierarchy) {
+    if (
+      company.is_global_ultimate &&
+      (showDnbHierarchy === true || showDnbHierarchy[0] === 'true')
+    ) {
       const { results } = await getGlobalUltimateHierarchy(
         req,
         company.global_ultimate_duns_number
