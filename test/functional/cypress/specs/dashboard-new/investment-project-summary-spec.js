@@ -101,11 +101,6 @@ describe('Investment projects summary', () => {
 
   context('with filters applied', () => {
     it('should apply status and land date filters to links', () => {
-      // If the user is an ITA (as in these tests) the UI redirects
-      // the user from / to /export. Therefore, we have to select the
-      // "Investment projects" tab before testing
-      cy.get('[data-test="tablist"]').contains('Investment projects').click()
-
       const financialYearStart = getFinancialYearStart(new Date()).toString()
       const query = `adviser=${myAdviserId}&land_date_financial_year_start[0]=${financialYearStart}&status=ongoing`
       cy.get('[data-test="land-date-select"] select').select(financialYearStart)

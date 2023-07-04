@@ -3,7 +3,6 @@ const urls = require('../../lib/urls')
 const { renderDashboard } = require('./controllers')
 const spaBasePath = require('../../middleware/spa-base-path')
 const userFeatures = require('../../middleware/user-features')
-const userRole = require('../../middleware/user-role')
 
 module.exports = {
   router: router.get(
@@ -16,7 +15,6 @@ module.exports = {
     ],
     spaBasePath(urls.dashboard.route),
     userFeatures('personalised-dashboard'),
-    userRole,
     renderDashboard
   ),
 }

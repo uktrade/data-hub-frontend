@@ -148,6 +148,7 @@ const TabNav = ({
   tabs,
   label,
   onChange,
+  onTabChange,
   onFocusChange,
   id,
   routed,
@@ -222,6 +223,7 @@ const TabNav = ({
                       }
                       onClick={() => {
                         onChange(key, index)
+                        onTabChange && onTabChange({ path: key })
                         if (routed && !selected) {
                           const url = keepQueryParams ? `${key}${search}` : key
                           history.push(url)
@@ -258,6 +260,7 @@ TabNav.propTypes = {
   label: PropTypes.string.isRequired,
   routed: PropTypes.any,
   keepQueryParams: PropTypes.bool,
+  onTabChange: PropTypes.func,
   tabs: PropTypes.oneOfType([
     PropTypes.arrayOf(tabPropType),
     PropTypes.objectOf(tabPropType),

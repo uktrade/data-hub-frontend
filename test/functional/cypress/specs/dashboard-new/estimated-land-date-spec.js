@@ -54,11 +54,6 @@ describe('Dashboard items - estimated land date', () => {
     }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
-
-    // If the user is an ITA (as in these tests) the UI redirects
-    // the user from / to /export. Therefore, we have to select the
-    // "Investment projects" tab before testing
-    cy.get('[data-test="tablist"]').contains('Investment projects').click()
     cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
 
