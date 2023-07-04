@@ -90,6 +90,10 @@ export const HierarchyItemContents = styled.div`
 
 export const HierarchyItemHeading = styled.div`
   padding: 15px;
+
+  :first-child {
+    line-height: 30px;
+  }
 `
 
 export const SubsidiaryList = styled.ul`
@@ -184,6 +188,7 @@ export const HierarchyTag = styled(Tag)`
   float: right;
   margin-left: 15px;
 `
+
 export const InlineDescriptionList = styled.dl`
   padding: 15px;
   background-color: ${GREY_4};
