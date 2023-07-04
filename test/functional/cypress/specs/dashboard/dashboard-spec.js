@@ -92,7 +92,7 @@ describe('Dashboard', () => {
         .next()
         .should('have.text', 'My referrals')
         .next()
-        .should('have.text', 'Export list')
+        .should('have.text', 'Export projects')
     })
   })
 })
