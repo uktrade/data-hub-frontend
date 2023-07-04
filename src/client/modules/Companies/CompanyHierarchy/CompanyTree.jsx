@@ -435,7 +435,7 @@ const CompanyTree = ({ company, familyTree }) => {
         renderError={() => (
           <div data-test="company-tree-loaded-error">
             <h1>
-              This company contained too many records to display a company tree
+              This company contains too many records to display the Company Tree
             </h1>
           </div>
         )}
