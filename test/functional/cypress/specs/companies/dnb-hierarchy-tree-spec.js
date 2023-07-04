@@ -130,7 +130,7 @@ describe('D&B Company hierarchy tree', () => {
 
         it('should display the error message', () => {
           cy.wait('@familyTreeApi')
-          assertErrorDialog('TASK_GET_DNB_FAMILY_TREE', 'Not Found')
+          cy.get('[data-test="company-tree-loaded-error"]').should('be.visible')
         })
       }
     )
