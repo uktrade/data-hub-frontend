@@ -8,6 +8,7 @@ import { ActivityFeedApp, SummaryTable } from '../../../../../client/components'
 import { companies } from '../../../../../lib/urls'
 import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
 import { StyledLastTableCell, StyledTableRow } from './components'
+import { FILTER_KEYS } from '../../activity-feed/constants'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
@@ -51,6 +52,7 @@ const ActivityCard = (props) => {
               isOverview={true}
               numberOfItems={numberOfItems}
               feedType={feedType}
+              activityType={[FILTER_KEYS.dataHubActivity]}
             />
           </StyledLastTableCell>
         </StyledTableRow>

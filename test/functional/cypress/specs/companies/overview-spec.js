@@ -899,6 +899,9 @@ describe('Company overview page', () => {
       })
 
       it('the card should contain a message outling three active investments', () => {
+        cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]', {
+          timeout: 1000,
+        }).should('be.visible')
         cy.get('[data-test="activeInvestmentProjectsContainer"]')
           .children()
           .first()
