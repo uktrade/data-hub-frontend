@@ -154,7 +154,7 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
-  if (size == 10 && isAventriEventQuery) {
+  if ((size === undefined || size == 10) && isAventriEventQuery) {
     var aventriEventIdQuery = req.body.query.bool.must[1]
     var aventriId = aventriEventIdQuery.terms.id[0]
 
