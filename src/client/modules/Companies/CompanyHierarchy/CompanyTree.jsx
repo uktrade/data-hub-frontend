@@ -432,6 +432,13 @@ const CompanyTree = ({ company, familyTree }) => {
           payload: { companyId: companyId },
           onSuccessDispatch: DNB_FAMILY_TREE_LOADED,
         }}
+        renderError={() => (
+          <div data-test="company-tree-loaded-error">
+            <h1>
+              This company contains too many records to display the Company Tree
+            </h1>
+          </div>
+        )}
       />
     </DefaultLayout>
   )
