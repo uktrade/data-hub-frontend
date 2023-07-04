@@ -36,7 +36,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
           content: <CompanyLists />,
         },
         [urls.exportPipeline.index()]: {
-          label: 'Export list',
+          label: 'Export projects',
           content: <ExportList />,
         },
         [urls.companies.referrals.list()]: {

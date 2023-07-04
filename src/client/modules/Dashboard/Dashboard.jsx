@@ -81,7 +81,7 @@ const Dashboard = ({
                   ),
                 },
                 [urls.exportPipeline.index()]: {
-                  label: 'Export list',
+                  label: 'Export projects',
                   content: <ExportList />,
                 },
               }}
