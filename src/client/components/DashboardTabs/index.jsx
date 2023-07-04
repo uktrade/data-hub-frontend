@@ -14,13 +14,14 @@ const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
+const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
       label="Dashboard"
       routed={true}
       keepQueryParams={false}
+      onTabChange={onTabChange}
       tabs={{
         [urls.dashboard()]: {
           label: 'Investment projects',
@@ -50,6 +51,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
 DashboardTabs.propTypes = {
   id: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
+  onTabChange: PropTypes.func,
 }
 
 export default DashboardTabs
