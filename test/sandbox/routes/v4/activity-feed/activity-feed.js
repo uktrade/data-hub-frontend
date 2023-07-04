@@ -80,6 +80,7 @@ const COMPANY_WITH_MANY_CONTACTS =
 const MAX_EMAIL_CAMPAIGN =
   'dit:DataHubCompany:6df487c5-7c75-4672-8907-f74b49e6c635'
 exports.activityFeed = function (req, res) {
+  const size = get(req.body, 'size')
   // Activities by contact
   var isContactActivityQuery = get(
     req.body,
@@ -153,7 +154,7 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
-  if (isAventriEventQuery) {
+  if ((size === undefined || size == 10) && isAventriEventQuery) {
     var aventriEventIdQuery = req.body.query.bool.must[1]
     var aventriId = aventriEventIdQuery.terms.id[0]
 
@@ -271,7 +272,6 @@ exports.activityFeed = function (req, res) {
     "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
   )
 
-  const size = get(req.body, 'size')
   var company = get(
     req.body,
     "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
@@ -281,6 +281,7 @@ exports.activityFeed = function (req, res) {
   }
   if (
     (size != 10 && isEqual(dataHubTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) ||
+    isEqual(dataHubTypes, DATA_HUB_ACTIVITY) ||
     company == COMPANY_WITH_MANY_CONTACTS
   ) {
     const filteredSortHits = dataHubActivities.hits.hits

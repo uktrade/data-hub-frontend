@@ -7,7 +7,7 @@ import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/con
 export default class ActivityFeedApp extends React.Component {
   static propTypes = {
     actions: PropTypes.node,
-    activityTypeFilter: PropTypes.array.isRequired,
+    activityType: PropTypes.array.isRequired,
     apiEndpoint: PropTypes.string.isRequired,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
@@ -17,7 +17,7 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   static defaultProps = {
-    activityTypeFilter: [],
+    activityType: [],
     actions: null,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
@@ -28,7 +28,7 @@ export default class ActivityFeedApp extends React.Component {
   constructor(props) {
     super(props)
 
-    const { activityTypeFilter, feedType } = props
+    const { activityType, feedType } = props
 
     this.state = {
       activities: [],
@@ -38,7 +38,7 @@ export default class ActivityFeedApp extends React.Component {
       from: 0,
       total: 0,
       queryParams: {
-        activityTypeFilter,
+        activityType,
         showDnbHierarchy: false,
         feedType: feedType,
       },
@@ -99,12 +99,12 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   static async fetchActivities(apiEndpoint, from, numberOfItems, queryParams) {
-    const { activityTypeFilter, showDnbHierarchy, feedType } = queryParams
+    const { activityType, showDnbHierarchy, feedType } = queryParams
 
     const params = {
       from,
       size: numberOfItems,
-      activityTypeFilter,
+      activityType,
       showDnbHierarchy,
       feedType,
     }
@@ -128,6 +128,7 @@ export default class ActivityFeedApp extends React.Component {
       companyIsArchived,
       isOverview,
       feedType,
+      activityType,
     } = this.props
 
     const isEmptyFeed = activities.length === 0 && !hasMore
@@ -146,6 +147,7 @@ export default class ActivityFeedApp extends React.Component {
         companyIsArchived={companyIsArchived}
         isOverview={isOverview}
         feedType={feedType}
+        activityType={activityType}
       >
         {isEmptyFeed && !error && (
           <div data-test="noActivities">There are no activities to show.</div>
