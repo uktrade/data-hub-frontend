@@ -1,11 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import {
-  COMPANIES__LOADED,
-  COMPANIES__METADATA_LOADED,
-  COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
-} from '../../../actions'
+import { COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER } from '../../../actions'
 
 import {
   CollectionFilters,
@@ -15,20 +11,12 @@ import {
   Filters,
 } from '../../../components'
 
-import {
-  listSkeletonPlaceholder,
-  CheckboxPlaceholder,
-  InputPlaceholder,
-  ToggleHeadingPlaceholder,
-} from '../../../components/SkeletonPlaceholder'
-
 import { LABELS } from './constants'
 
 import {
   ID,
   TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_LIST,
-  TASK_GET_COMPANIES_METADATA,
   state2props,
 } from './state'
 
@@ -37,6 +25,10 @@ import {
   export_segments,
   export_sub_segments,
 } from '../../../../apps/companies/apps/edit-company/client/constants'
+import {
+  companyCollectionListTask,
+  companyCollectionListMetadataTask,
+} from '../utils'
 
 const CompaniesCollection = ({
   payload,
@@ -45,37 +37,6 @@ const CompaniesCollection = ({
   selectedFilters,
   ...props
 }) => {
-  const collectionListTask = {
-    name: TASK_GET_COMPANIES_LIST,
-    id: ID,
-    progressMessage: 'Loading companies',
-    renderProgress: listSkeletonPlaceholder(),
-    startOnRender: {
-      payload,
-      onSuccessDispatch: COMPANIES__LOADED,
-    },
-  }
-
-  const collectionListMetadataTask = {
-    name: TASK_GET_COMPANIES_METADATA,
-    id: ID,
-    progressMessage: 'Loading filters',
-    renderProgress: () => (
-      <>
-        <ToggleHeadingPlaceholder />
-        <InputPlaceholder />
-        <CheckboxPlaceholder count={3} />
-        <InputPlaceholder />
-        <CheckboxPlaceholder count={2} />
-        <InputPlaceholder />
-        <ToggleHeadingPlaceholder count={2} />
-      </>
-    ),
-    startOnRender: {
-      onSuccessDispatch: COMPANIES__METADATA_LOADED,
-    },
-  }
-
   const leadItaGlobalAccountManagerTask = {
     name: TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
     id: ID,
@@ -91,7 +52,11 @@ const CompaniesCollection = ({
         {...props}
         collectionName="company"
         sortOptions={optionMetadata.sortOptions}
-        taskProps={collectionListTask}
+        taskProps={companyCollectionListTask(
+          TASK_GET_COMPANIES_LIST,
+          ID,
+          payload
+        )}
         selectedFilters={selectedFilters}
         baseDownloadLink="/companies/export"
         entityName="company"
@@ -107,7 +72,7 @@ const CompaniesCollection = ({
           ...sanitizeFilter(leadItaOrGlobalAccountManagers),
         })}
       >
-        <CollectionFilters taskProps={collectionListMetadataTask}>
+        <CollectionFilters taskProps={companyCollectionListMetadataTask(ID)}>
           <FilterToggleSection
             id="CompanyCollection.company-details-filters"
             label="Company details"
