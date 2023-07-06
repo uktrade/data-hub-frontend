@@ -25,7 +25,7 @@ const Community = () => {
     'Hello, I would like to volunteer to take part in future user research around CRM.'
   return (
     <DefaultLayout
-      heading={'CRM Community'}
+      heading={'CRM community'}
       pageTitle={'Community'}
       subheading={
         'Find out about upcoming improvements to CRM and to help shape its future development.'
