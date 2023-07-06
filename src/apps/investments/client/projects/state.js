@@ -1,6 +1,3 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
-
 import {
   getFinancialYearStart,
   generateFinancialYearLabel,
@@ -13,6 +10,7 @@ import {
   PROJECT_STATUS_OPTIONS,
   INVOLVEMENT_LEVEL_OPTIONS,
 } from './constants'
+import { parseQueryString } from '../../../../client/utils'
 
 export const INVESTMENT_PROJECTS_ID = 'projectsList'
 export const COMPANY_PROJECTS_LIST_ID = 'companyProjectsList'
@@ -21,14 +19,6 @@ export const TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME =
   'TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME'
 export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
   'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
-
-const parseQueryString = (queryString) => {
-  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryParams,
-    page: parseInt(queryParams.page || 1, 10),
-  }
-}
 
 export const projectsState2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)

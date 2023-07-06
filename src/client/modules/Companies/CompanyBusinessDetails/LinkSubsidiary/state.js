@@ -1,21 +1,11 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
-
 import { transformPostcodeToApi } from '../../CollectionList/transformers'
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from '../../CollectionList/constants'
+import { parseQueryString } from '../../../../utils'
 
 export const ID = 'linkSubsidiary'
 
 export const TASK_GET_SUBSIDIARY_LIST = 'TASK_GET_SUBSIDIARY_LIST'
-
-const parseQueryString = (queryString) => {
-  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryParams,
-    page: parseInt(queryParams.page || 1, 10),
-  }
-}
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
