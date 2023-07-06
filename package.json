@@ -222,6 +222,7 @@
     "semver-regex": "^3.1.4",
     "d3-color": "3.1.0",
     "http-cache-semantics": "4.1.1",
-    "yaml": "2.2.2"
+    "yaml": "2.2.2",
+    "semver": "7.5.2"
   }
 }
