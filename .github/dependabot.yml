@@ -19,9 +19,6 @@ updates:
   - dependency-name: react-router-dom # TET-34
     versions:
     - "> 5.3.0"
-  - dependency-name: redis # TET-131
-    versions:
-    - "> 3.1.2"
   - dependency-name: axios # TET-354
     versions:
     - "> 0.27.2"
@@ -45,10 +42,10 @@ updates:
   - dependency-name: "@storybook/react"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/builder-webpack5"
+  - dependency-name: "@storybook/react-webpack5"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/manager-webpack5"
+  - dependency-name: "storybook"
     versions:
     - ">= 0"
   - dependency-name: "@sentry/node"
