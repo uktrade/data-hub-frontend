@@ -50,10 +50,15 @@ const telephoneValidator = (
   return null
 }
 
-function CompanyNotFoundStep({ organisationTypes, country, features }) {
+function CompanyNotFoundStep({
+  organisationTypes,
+  country,
+  features,
+  allowBackButton,
+}) {
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-      <Step name="unhappy">
+      <Step name="unhappy" backButton={allowBackButton}>
         <Details summary="Why am I seeing this?">
           The company you want to add to Data Hub cannot be found in the
           external databases Data Hub checks. You will need to provide

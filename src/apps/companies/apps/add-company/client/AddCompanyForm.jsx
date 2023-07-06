@@ -20,6 +20,7 @@ import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
 
 import Form from '../../../../../client/components/Form'
+import { CompanyDunsKnownStep } from './CompanyDunsKnownStep'
 
 function AddCompanyForm({
   csrfToken,
@@ -28,6 +29,7 @@ function AddCompanyForm({
   regions,
   sectors,
   features,
+  dunsNumber,
 }) {
   const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
   const overseasCountries = countries.filter(
@@ -89,33 +91,53 @@ function AddCompanyForm({
         const countryIsoCode = get(country, 'value')
         const postcode = get(values.dnbCompany, 'address_postcode')
         const manualPostcode = values.postcode
+        const companyLocationUnknown = values.companyLocationUnknown
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
           setFieldValue('country', countryID)
+          setFieldValue('countryName', countryName)
         }, [countryID])
 
         return (
           <>
-            <Step name="companyLocation">
-              <FieldRadios
-                name="companyLocation"
-                legend="Where is this company located?"
-                required="Specify location of the company"
-                options={Object.values(COMPANY_LOCATION_OPTIONS)}
-                bigLegend={true}
+            {dunsNumber && (
+              <CompanyDunsKnownStep
+                csrfToken={csrfToken}
+                features={features}
+                dunsNumber={dunsNumber}
+                countries={countries}
               />
-            </Step>
+            )}
 
-            <CompanySearchStep
-              countryName={countryName}
-              countryIsoCode={countryIsoCode}
-              csrfToken={csrfToken}
-              features={features}
-            />
+            {!dunsNumber && (
+              <Step name="companyLocation">
+                <FieldRadios
+                  name="companyLocation"
+                  legend="Where is this company located?"
+                  required="Specify location of the company"
+                  options={Object.values(COMPANY_LOCATION_OPTIONS)}
+                  bigLegend={true}
+                />
+              </Step>
+            )}
+
+            {!dunsNumber && (
+              <CompanySearchStep
+                countryName={countryName}
+                countryIsoCode={countryIsoCode}
+                csrfToken={csrfToken}
+                features={features}
+              />
+            )}
 
             {!values.cannotFind && (
-              <CompanyFoundStep countryName={countryName} features={features} />
+              <CompanyFoundStep
+                countryOptions={COMPANY_LOCATION_OPTIONS}
+                features={features}
+                allowBackButton={dunsNumber ? true : undefined}
+                showCountry={companyLocationUnknown}
+              />
             )}
 
             {!values.cannotFind && (
@@ -132,6 +154,7 @@ function AddCompanyForm({
                 organisationTypes={organisationTypes}
                 country={country}
                 features={features}
+                allowBackButton={dunsNumber ? true : undefined}
               />
             )}
             {values.cannotFind && (

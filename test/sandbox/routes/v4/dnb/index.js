@@ -4,6 +4,7 @@ var companyLink = require('../../../fixtures/v4/dnb/company-link.json')
 var companyChangeRequest = require('../../../fixtures/v4/dnb/company-change-request.json')
 var companySearchMatched = require('../../../fixtures/v4/dnb/company-search-matched.json')
 var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-not-matched.json')
+var companySearchNotMatchedNoCountry = require('../../../fixtures/v4/dnb/company-search-not-matched-no-country.json')
 var companySearchNotMatchedUS = require('../../../fixtures/v4/dnb/company-search-not-matched-us.json')
 var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
 
@@ -26,6 +27,8 @@ exports.companySearch = function (req, res) {
     return res.json(companySearchNotMatched)
   } else if (req.body.duns_number === '222222222') {
     return res.json(companySearchMatched)
+  } else if (req.body.duns_number === '333333333') {
+    return res.json(companySearchNotMatchedNoCountry)
   }
 
   return res.json(companySearch)

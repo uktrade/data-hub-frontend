@@ -8,9 +8,7 @@
       "dnb_company": {
         "duns_number": "111111111",
         "primary_name": "Some unmatched company",
-        "trading_names": [
-          "Some unmatched company trading name"
-        ],
+        "trading_names": ["Some unmatched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",
@@ -53,9 +51,7 @@
       "dnb_company": {
         "duns_number": "222222222",
         "primary_name": "Some matched company",
-        "trading_names": [
-          "Some matched company trading name"
-        ],
+        "trading_names": ["Some matched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",
@@ -147,9 +143,7 @@
       "dnb_company": {
         "duns_number": "268435455",
         "primary_name": "Some unmatched US company",
-        "trading_names": [
-          "Some unmatched company trading name"
-        ],
+        "trading_names": ["Some unmatched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",
