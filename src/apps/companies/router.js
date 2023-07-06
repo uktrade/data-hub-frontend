@@ -27,8 +27,6 @@ const {
   handleRoutePermissions,
 } = require('../middleware')
 
-const { getSubsidiaryCompaniesCollection } = require('./middleware/collection')
-
 const {
   getCompany,
   setIsCompanyAlreadyAdded,
@@ -106,7 +104,6 @@ router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
 
 router.get(
   urls.companies.hierarchies.subsidiaries.search.route,
-  getSubsidiaryCompaniesCollection,
   renderLinkSubsidiary
 )
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
