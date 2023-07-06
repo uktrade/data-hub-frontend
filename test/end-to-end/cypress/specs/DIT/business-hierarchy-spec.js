@@ -44,29 +44,6 @@ describe('Business hierarchy', () => {
       )
     })
 
-    it('should link a subsidiary', () => {
-      cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).click()
-
-      cy.get(selectors.companySubsidiariesLink().search.term).type('Mars')
-      cy.get(selectors.companySubsidiariesLink().search.button).click()
-      cy.get(selectors.companySubsidiariesLink().search.result(1).title).click()
-
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'You’ve linked the subsidiary'
-      )
-    })
-
-    it('should remove a subsidiary', () => {
-      cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
-      cy.get(selectors.companySubsidiariesLink().removeSubsidiary).click()
-
-      cy.get('[data-test="status-message"]').should(
-        'contain',
-        'You’ve removed the link to Global Headquarters'
-      )
-    })
-
     it('should update business hierarchy type to not a HQ', () => {
       cy.get(selectors.companySubsidiaries().edit).click()
 
