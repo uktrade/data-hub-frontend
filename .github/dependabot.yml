@@ -61,3 +61,11 @@ updates:
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]
   rebase-strategy: disabled
+- package-ecosystem: npm
+  directory: "/test/sandbox"
+  schedule:
+    interval: "weekly"
+    day: "monday"
+    time: "02:00"
+    timezone: Europe/London
+  open-pull-requests-limit: 10

@@ -17,6 +17,7 @@
   },
   "overrides": {
     "ansi-regex": "5.0.1",
-    "minimist": "^1.2.6"
+    "minimist": "^1.2.6",
+    "semver": "7.5.2"
   }
 }
