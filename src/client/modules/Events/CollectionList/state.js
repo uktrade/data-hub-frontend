@@ -1,5 +1,6 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
+import { buildSelectedFilters } from './filters'
+import { SORT_OPTIONS } from './constants'
+import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_EVENTS_LIST = 'TASK_GET_EVENTS_LIST'
 export const TASK_GET_EVENTS_METADATA = 'TASK_GET_EVENTS_METADATA'
@@ -8,17 +9,6 @@ export const TASK_GET_ALL_ACTIVITY_FEED_EVENTS =
   'TASK_GET_ALL_ACTIVITY_FEED_EVENTS'
 
 export const ID = 'eventsList'
-
-import { buildSelectedFilters } from './filters'
-import { SORT_OPTIONS } from './constants'
-
-const parseQueryString = (queryString) => {
-  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryParams,
-    page: parseInt(queryParams.page || 1, 10),
-  }
-}
 
 /**
  * Convert both location and redux state to props

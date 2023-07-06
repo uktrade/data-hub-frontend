@@ -1,5 +1,7 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
+import { buildSelectedFilters } from './filters'
+import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
+import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
+import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_COMPANIES_LIST = 'TASK_GET_COMPANIES_LIST'
 export const TASK_GET_COMPANIES_METADATA = 'TASK_GET_COMPANIES_METADATA'
@@ -7,18 +9,6 @@ export const TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME =
   'TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME'
 
 export const ID = 'companiesList'
-
-import { buildSelectedFilters } from './filters'
-import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
-import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
-
-const parseQueryString = (queryString) => {
-  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryParams,
-    page: parseInt(queryParams.page || 1, 10),
-  }
-}
 
 /**
  * Convert both location and redux state to props
