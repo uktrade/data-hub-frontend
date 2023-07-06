@@ -23,21 +23,20 @@ const ListItemRow = styled('div')`
 
 const collectionList =
   ({ listItems = 10, listItemFields = 6 } = {}) =>
-  () =>
-    (
-      <List>
-        {Array.from(Array(listItems).keys()).map((i) => (
-          <ListItem marginTop={i === 0 ? null : 40}>
-            {Array.from(Array(listItemFields).keys()).map((j) => (
-              <ListItemRow
-                height={j === 0 ? 20 : 13}
-                marginTop={j === 0 ? null : 15}
-                widthPercent={randomNumberMinToMax(30, 60)}
-              />
-            ))}
-          </ListItem>
-        ))}
-      </List>
-    )
+  () => (
+    <List>
+      {Array.from(Array(listItems).keys()).map((i) => (
+        <ListItem marginTop={i === 0 ? null : 40}>
+          {Array.from(Array(listItemFields).keys()).map((j) => (
+            <ListItemRow
+              height={j === 0 ? 20 : 13}
+              marginTop={j === 0 ? null : 15}
+              widthPercent={randomNumberMinToMax(30, 60)}
+            />
+          ))}
+        </ListItem>
+      ))}
+    </List>
+  )
 
 export default collectionList

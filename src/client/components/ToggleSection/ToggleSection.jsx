@@ -21,7 +21,9 @@ export const ToggleSection = styled(MultiInstanceToggleSection)`
     &:focus ${ButtonContent} {
       color: ${BLACK};
       background-color: ${YELLOW};
-      box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
+      box-shadow:
+        0 -2px ${YELLOW},
+        0 4px ${BLACK};
     }
   }
 

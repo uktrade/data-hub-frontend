@@ -76,7 +76,9 @@ const FooterLink = styled.a`
   }
   &:focus {
     background-color: ${FOCUS_COLOUR};
-    box-shadow: 0 -2px ${FOCUS_COLOUR}, 0 4px ${BLACK};
+    box-shadow:
+      0 -2px ${FOCUS_COLOUR},
+      0 4px ${BLACK};
     text-decoration: none;
   }
 `
