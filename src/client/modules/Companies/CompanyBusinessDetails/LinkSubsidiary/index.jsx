@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 
 import {
@@ -11,7 +9,6 @@ import {
   Filters,
   LocalHeader,
   Main,
-  Panel,
 } from '../../../../components'
 import {
   buildCompanyBreadcrumbs,
@@ -19,13 +16,9 @@ import {
   companyCollectionListMetadataTask,
 } from '../../utils'
 import { LABELS } from '../../CollectionList/constants'
-import { ID, state2props, TASK_GET_GLOBAL_HQ_LIST } from './state'
+import { ID, state2props, TASK_GET_SUBSIDIARY_LIST } from './state'
 
-const StyledPanel = styled(Panel)`
-  margin-bottom: ${SPACING.SCALE_3};
-`
-
-const LinkGlobalHQ = ({
+const LinkSubsidiary = ({
   companyId,
   companyName,
   payload,
@@ -36,29 +29,22 @@ const LinkGlobalHQ = ({
 }) => (
   <>
     <LocalHeader
-      heading="Search and select the Global HQ"
+      heading="Search and select a subsidiary"
       breadcrumbs={buildCompanyBreadcrumbs(
         {
-          text: 'Link Global HQ',
+          text: 'Link subsidiary',
         },
         companyId,
         companyName
       )}
     />
     <Main>
-      <StyledPanel data-test="help-panel">
-        <p>
-          If you can’t find the company you’re looking for, it may not be a
-          Global HQ. You should check if it is a Global HQ by clicking
-          ‘Companies’ at the top of the page and searching for it there.
-        </p>
-      </StyledPanel>
       <FilteredCollectionList
         collectionName="company"
         sortOptions={optionMetadata.sortOptions}
-        taskProps={companyCollectionListTask(TASK_GET_GLOBAL_HQ_LIST, ID, {
+        taskProps={companyCollectionListTask(TASK_GET_SUBSIDIARY_LIST, ID, {
           ...payload,
-          childCompanyId: companyId,
+          parentCompanyId: companyId,
         })}
         selectedFilters={selectedFilters}
         entityName="company"
@@ -159,9 +145,9 @@ const LinkGlobalHQ = ({
   </>
 )
 
-LinkGlobalHQ.propTypes = {
+LinkSubsidiary.propTypes = {
   companyId: PropTypes.string.isRequired,
   companyName: PropTypes.string.isRequired,
 }
 
-export default connect(state2props)(LinkGlobalHQ)
+export default connect(state2props)(LinkSubsidiary)

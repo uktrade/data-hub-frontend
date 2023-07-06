@@ -161,6 +161,9 @@ import companyHierarchyReducer from './modules/Companies/CompanyHierarchy/reduce
 import { ID as LINK_GLOBAL_HQ_ID } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
 import linkGlobalHQReducer from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/reducer'
 
+import { ID as LINK_SUBSIDIARY_ID } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
+import linkSubsidiaryReducer from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -257,6 +260,7 @@ const reducer = {
   [COMPANY_LISTS_IN_ID]: companyListsInReducer,
   [COMPANY_HIERARCHY_ID]: companyHierarchyReducer,
   [LINK_GLOBAL_HQ_ID]: linkGlobalHQReducer,
+  [LINK_SUBSIDIARY_ID]: linkSubsidiaryReducer,
 }
 
 const preloadedState = {

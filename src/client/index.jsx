@@ -71,6 +71,7 @@ import PropositionDetails from './modules/Investments/Projects/Propositions/Prop
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
+import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -373,6 +374,9 @@ import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
 import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
 import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
 
+import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
+import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -598,6 +602,7 @@ function App() {
           [TASK_GET_LISTS_COMPANY_IS_IN]: getListsCompanyIsIn,
           [TASK_GET_DNB_FAMILY_TREE]: getDnbFamilyTree,
           [TASK_GET_GLOBAL_HQ_LIST]: getGlobalHeadquartersCollection,
+          [TASK_GET_SUBSIDIARY_LIST]: getSubsidiaryCollection,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -867,6 +872,9 @@ function App() {
         </Mount>
         <Mount selector="#link-global-hq">
           {(props) => <LinkGlobalHQ {...props} />}
+        </Mount>
+        <Mount selector="#link-subsidiary">
+          {(props) => <LinkSubsidiary {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
