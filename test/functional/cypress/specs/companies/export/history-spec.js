@@ -390,9 +390,12 @@ describe('Company Export tab - Export countries history', () => {
             .find('div span')
             .should('contain', 'Interaction')
 
-          assertionTasks.reduce(($details, { assertion, value }) => {
-            return $details.should(assertion, value)
-          }, cy.get('@' + interaction).find('details'))
+          assertionTasks.reduce(
+            ($details, { assertion, value }) => {
+              return $details.should(assertion, value)
+            },
+            cy.get('@' + interaction).find('details')
+          )
         }
 
         cy.contains('5 results')
