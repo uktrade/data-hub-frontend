@@ -1,3 +1,5 @@
+import './wdyr' // <-- this needs to be first for the profiling to work
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Switch } from 'react-router-dom'
