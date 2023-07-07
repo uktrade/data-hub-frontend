@@ -60,7 +60,6 @@ function AddCompanyForm({
     ) {
       return COMPANY_LOCATION_OPTIONS.uk
     }
-
     if (companyOverseasCountry) {
       return overseasCountries.find((c) => c.value === companyOverseasCountry)
     }

@@ -1000,7 +1000,25 @@ describe('Add company form', () => {
       'and a single company is found that is not on datahub with a matching datahub country',
       () => {
         before(() => {
-          cy.visit(`${urls.companies.create()}?duns_number=111111111`)
+          cy.intercept('POST', '/companies/create/dnb/company-search?_csrf=*', {
+            results: [
+              {
+                dnb_company: {
+                  primary_name: 'US company',
+                  duns_number: '111111111',
+                  address_line_1: '256 Square Street',
+                  address_line_2: '',
+                  address_town: 'Austin',
+                  address_county: '',
+                  address_postcode: '765413',
+                  address_area: 'Texas',
+                  address_country: 'US',
+                  registration_numbers: [],
+                },
+              },
+            ],
+          })
+          cy.visit(`${urls.companies.create()}?duns_number=268435455`)
         })
 
         it('should display a confirmation summary without the option to select a country', () => {
@@ -1012,19 +1030,18 @@ describe('Add company form', () => {
             'contain',
             'Registered company name'
           )
+          cy.get(selectors.companyAdd.summary).should('contain', 'US company')
+
+          cy.get(selectors.companyAdd.summary).should('contain', 'Country')
           cy.get(selectors.companyAdd.summary).should(
             'contain',
-            'Some unmatched company'
+            'United States'
           )
-          cy.get(selectors.companyAdd.summary).should(
-            'contain',
-            'Companies House number'
-          )
-          cy.get(selectors.companyAdd.summary).should('contain', '00016033')
+
           cy.get(selectors.companyAdd.summary).should('contain', 'Address')
           cy.get(selectors.companyAdd.summary).should(
             'contain',
-            '123 ABC Road, Brighton, BN2 9QB'
+            '256 Square Street, Austin, 765413'
           )
 
           cy.get(
@@ -1037,11 +1054,11 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.continueButton).should('be.visible')
         })
 
-        it('should display both dbt region and sector', () => {
+        it('should display only the dbt sector', () => {
           cy.get(selectors.companyAdd.continueButton).click()
 
           cy.get(selectors.companyAdd.newCompanyRecordForm.dbtRegion).should(
-            'exist'
+            'not.exist'
           )
           cy.get(selectors.companyAdd.newCompanyRecordForm.dbtSector).should(
             'exist'
@@ -1049,9 +1066,6 @@ describe('Add company form', () => {
         })
 
         it('should submit the form', () => {
-          cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
-            'London'
-          )
           cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
             'Advanced Engineering'
           )

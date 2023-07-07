@@ -6,6 +6,7 @@ import { useFormContext } from '../../../../../client/components/Form/hooks'
 import ProgressIndicator from '../../../../../client/components/ProgressIndicator'
 import { get } from 'lodash'
 import { getDnbEntityText } from './CompanySearchStep'
+import { ISO_CODE } from './constants'
 
 export const CompanyDunsKnownStep = ({
   dunsNumber,
@@ -38,7 +39,12 @@ export const CompanyDunsKnownStep = ({
             )
             setFieldValue('dnbCompany', dnb_company)
             if (matchingCountry) {
-              setFieldValue('companyLocation', matchingCountry.value)
+              if (matchingCountry.value === ISO_CODE.UK) {
+                setFieldValue('companyLocation', matchingCountry.value)
+              } else {
+                setFieldValue('companyLocation', 'overseas')
+                setFieldValue('companyOverseasCountry', matchingCountry.value)
+              }
             } else {
               setFieldValue('companyLocationUnknown', true)
             }
