@@ -5,17 +5,28 @@ import principlesImg from './img-principles.jpg'
 import trainingImg from './img-training.jpg'
 import researchImg from './img-research.jpg'
 import { DefaultLayout } from '../../components'
-// import { Link } from 'govuk-react'
+import { Link } from 'govuk-react'
 import { H4 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
 import urls from '../../../lib/urls'
 
+const StyledHeading = styled(H4)`
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
+`
 const StyledImage = styled('img')`
   width: 100%;
   height: auto;
   objectfit: cover;
+`
+const StyledParagraph = styled('p')`
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
 `
 
 const Community = () => {
@@ -40,62 +51,83 @@ const Community = () => {
         },
       ]}
       useReactRouter={false}
+      // data-test="community-page"
     >
       <GridRow>
         <GridCol>
-          <div>
+          <div data-test="community-roadmap">
             <StyledImage src={roadmapImg} alt="Roadmap" />
-            <H4>Take a look at what we're working on</H4>
-            <p>
-              Our CRM roadmap shows what we're currently working on and the work
-              that is lined up over the coming months
-            </p>
+            <StyledHeading data-test="community-roadmap-header">
+              Take a look at what we're working on
+            </StyledHeading>
+            <StyledParagraph>
+              Our{' '}
+              <Link href={urls.external.community.roadmap()}>CRM roadmap</Link>{' '}
+              shows what we're currently working on and the work that is lined
+              up over the coming months
+            </StyledParagraph>
           </div>
         </GridCol>
         <GridCol>
-          <div>
+          <div data-test="community-feedback">
             <StyledImage src={feedbackImg} alt="Feedback" />
-            <H4>Discuss and give feedback</H4>
-            <p>
-              Do you have a great idea? We would love to hear it. Tell us your
-              feedback or experience using our CRM tools.
-            </p>
+            <StyledHeading data-test="community-feedback-header">
+              Discuss and give feedback
+            </StyledHeading>
+            <StyledParagraph>
+              Do you have a great idea? We would love to hear it. Tell us your{' '}
+              <Link href={urls.external.community.feedback()}>
+                feedback or experience
+              </Link>{' '}
+              using our CRM tools.
+            </StyledParagraph>
           </div>
         </GridCol>
       </GridRow>
       <GridRow>
         <GridCol>
-          <div>
+          <div data-test="community-principles">
             <StyledImage src={principlesImg} alt="Principles" />
-            <H4>Our CRM principles</H4>
-            <p>
+            <StyledHeading data-test="community-principles-header">
+              Our CRM principles
+            </StyledHeading>
+            <StyledParagraph>
               These set the direction for future work around customer
               relationship management and help us to plan and prioritise
-              upcoming development. Find out more about our CRM principles.
-            </p>
+              upcoming development.{' '}
+              <Link href={urls.external.community.principles()}>
+                Find out more about our CRM principles.
+              </Link>
+            </StyledParagraph>
           </div>
         </GridCol>
 
         <GridCol>
-          <div>
+          <div data-test="community-training">
             <StyledImage src={trainingImg} alt="Training" />
-            <H4>Sign up for training</H4>
-            <p>
+            <StyledHeading data-test="community-training-header">
+              Sign up for training
+            </StyledHeading>
+            <StyledParagraph>
               We offer introductions to Data Hub and Data Workspace as well as
               bootcamps to help use our analysis and visualisation tools
-              effectively. View available training and sign up today!.
-            </p>
+              effectively.{' '}
+              <Link href={urls.external.community.training()}>
+                View available training
+              </Link>{' '}
+              and sign up today!.
+            </StyledParagraph>
           </div>
         </GridCol>
         <GridCol>
-          <div>
+          <div data-test="community-research">
             <StyledImage src={researchImg} alt="Research" />
-            <H4>Volunteer for user research</H4>
-            <p>
+            <StyledHeading>Volunteer for user research</StyledHeading>
+            <StyledParagraph>
               We regularly run user research sessions to find out how our
               current tools are used and to test new solutions. We need your
               help, if you are interested
-              <a
+              <Link
                 href={
                   'mailto:' +
                   email +
@@ -106,9 +138,10 @@ const Community = () => {
                 }
               >
                 {' '}
-                sign up to take part in user research.
-              </a>
-            </p>
+                sign up to take part in user research
+              </Link>
+              .
+            </StyledParagraph>
           </div>
         </GridCol>
       </GridRow>

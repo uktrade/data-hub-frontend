@@ -113,6 +113,16 @@ module.exports = {
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
     reminderAndSettings:
       'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
+    community: {
+      roadmap: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-roadmap',
+      feedback: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/crm-community/feedback-or-propose-changes',
+      principles: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-principles',
+      training: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/crm-community/training',
+    },
   },
 
   dashboard: {
