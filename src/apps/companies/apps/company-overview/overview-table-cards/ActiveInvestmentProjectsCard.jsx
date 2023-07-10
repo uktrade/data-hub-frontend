@@ -53,8 +53,8 @@ const StyledActiveInvestmentTableCell = styled(Table.Cell)`
 
 const StyledActiveInvestmentTableBottomRow = styled(Table.Row)`
   border-bottom: 1px solid ${GREY_2};
-  pading-bottom: 50px;
-  magin-bottom: 50px;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
 `
 
 const StyledActiveInvestmentHeadingTableBottomCellHeader = styled(
