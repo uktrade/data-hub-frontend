@@ -16,6 +16,10 @@ describe('LEP Permission', () => {
       cy.visit(urls.companies.detail(company.pk))
     })
 
+    it('should not display Market Access in the Datahub Bar', () => {
+      cy.get('[data-test="market-access-link"]').should('not.be.visible')
+    })
+
     it('should display LEP only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Overview',
@@ -37,6 +41,7 @@ describe('LEP Permission', () => {
         'Companies',
         'Contacts',
         'Investments',
+        'Community',
         'Support',
       ])
     })

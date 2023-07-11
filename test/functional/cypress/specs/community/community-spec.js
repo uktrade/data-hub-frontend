@@ -2,15 +2,16 @@ import urls from '../../../../../src/lib/urls'
 
 describe('Community', () => {
   context('When visiting the Community page', () => {
-    it('should display the correct page title', () => {
+    beforeEach(() => {
       cy.visit(urls.community.index())
+    })
+    it('should display the correct page title', () => {
       cy.get('[data-test="localHeader"]')
         .children()
         .should('contain.text', 'CRM community')
     })
 
     it('should display the correct subheading', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="localHeader"]')
         .children()
         .should(
@@ -20,62 +21,69 @@ describe('Community', () => {
     })
 
     it('should display the correct breadcrumbs', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="localHeader"]')
-        .children()
-        .should('contain.text', 'Home')
-        .should('contain.text', 'CRM Community')
+      assertBreadcrumbs('Home', 'CRM Community')
     })
 
     it('should display the roadmap block', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-roadmap"]')
         .children()
         .should('exist')
         .should('contain.text', "Take a look at what we're working on")
         .children()
-        .should('have.attr', 'href', urls.external.community.roadmap())
+        .should(
+          'have.attr',
+          'href',
+          urls.external.helpCentre.community.roadmap()
+        )
     })
 
     it('should display the feedback block', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-feedback"]')
         .children()
         .should('exist')
         .should('contain.text', 'Discuss and give feedback')
         .children()
-        .should('have.attr', 'href', urls.external.community.feedback())
+        .should(
+          'have.attr',
+          'href',
+          urls.external.helpCentre.community.feedback()
+        )
     })
 
     it('should display the principles block', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-principles"]')
         .children()
         .should('exist')
         .should('contain.text', 'Our CRM principles')
         .children()
-        .should('have.attr', 'href', urls.external.community.principles())
+        .should(
+          'have.attr',
+          'href',
+          urls.external.helpCentre.community.principles()
+        )
     })
 
     it('should display the training block', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-training"]')
         .children()
         .should('exist')
         .should('contain.text', 'Sign up for training')
         .children()
-        .should('have.attr', 'href', urls.external.community.training())
+        .should(
+          'have.attr',
+          'href',
+          urls.external.helpCentre.community.training()
+        )
     })
 
     it('should display the user research block', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-research"]')
         .should('exist')
         .should('contain.text', 'Volunteer for user research')
     })
 
     it('should display the correct email subject', () => {
-      cy.visit(urls.community.index())
       cy.get('[data-test="community-research"]')
         .children()
         .should('exist')

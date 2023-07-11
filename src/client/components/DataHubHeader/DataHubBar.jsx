@@ -13,6 +13,7 @@ import {
 
 import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
+import ProtectedLink from '../ProtectedLink'
 
 const DATA_WORKSPACE = 'Data Workspace'
 const MARKET_ACCESS_LABEL = 'Market Access'
@@ -93,7 +94,7 @@ const BetaTag = styled.strong({
 const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   color: WHITE,
   display: 'none',
-  marginLeft: '10px',
+  marginLeft: '20px',
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
@@ -168,13 +169,15 @@ const DataHubBar = ({
         <BetaTag>beta</BetaTag>
       </DataHubContainer>
       <Container hasFeatureGroup={hasFeatureGroup}>
-        <NavigationLink
-          hasFeatureGroup={hasFeatureGroup}
-          showVerticalNav={showVerticalNav}
-          href={MARKET_ACCESS_PATHNAME}
-        >
-          {MARKET_ACCESS_LABEL}
-        </NavigationLink>
+        <ProtectedLink module={'market-access'} data-test="market-access-link">
+          <NavigationLink
+            hasFeatureGroup={hasFeatureGroup}
+            showVerticalNav={showVerticalNav}
+            href={MARKET_ACCESS_PATHNAME}
+          >
+            {MARKET_ACCESS_LABEL}
+          </NavigationLink>
+        </ProtectedLink>
         <NavigationLink
           hasFeatureGroup={hasFeatureGroup}
           showVerticalNav={showVerticalNav}

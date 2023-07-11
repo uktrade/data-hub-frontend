@@ -129,7 +129,6 @@ import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
 
 import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
 import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
-import Community from './modules/Community'
 
 import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
@@ -291,11 +290,6 @@ function App() {
               csrfToken={globalProps.csrfToken}
               {...props}
             />
-          )}
-        </Mount>
-        <Mount selector="#dnb-community">
-          {(props) => (
-            <Community csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
         <Mount selector="#company-edit-one-list">

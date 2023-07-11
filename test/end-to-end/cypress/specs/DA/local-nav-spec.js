@@ -33,13 +33,17 @@ describe('DA Permission', () => {
       cy.visit(urls.dashboard.index())
     })
 
+    it('should display Market Access in the Datahub Bar', () => {
+      cy.get('[data-test="market-access-link"]').should('be.visible')
+    })
+
     it('should display DA only tabs', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
         'Investments',
         'Orders',
-        'Market access',
+        'Community',
         'Support',
       ])
     })
