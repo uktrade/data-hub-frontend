@@ -17,11 +17,18 @@ const StyledHeading = styled(H4)`
   font-weight: 700;
   line-height: 34px;
   padding-top: 20px;
+  white-space: nowrap;
 `
 const StyledImage = styled('img')`
-  width: 100%;
-  height: auto;
-  objectfit: cover;
+  width: 465px;
+  height: 278.459px;
+  flex-shrink: 0;
+`
+
+const SmallStyledImage = styled('img')`
+  width: 300px;
+  height: 179.651px;
+  flex-shrink: 0;
 `
 const StyledParagraph = styled('p')`
   font-size: 16px;
@@ -89,7 +96,7 @@ const Community = () => {
       <GridRow>
         <GridCol>
           <div data-test="community-principles">
-            <StyledImage src={principlesImg} alt="Principles" />
+            <SmallStyledImage src={principlesImg} alt="Principles" />
             <StyledHeading data-test="community-principles-header">
               Our CRM principles
             </StyledHeading>
@@ -106,7 +113,7 @@ const Community = () => {
 
         <GridCol>
           <div data-test="community-training">
-            <StyledImage src={trainingImg} alt="Training" />
+            <SmallStyledImage src={trainingImg} alt="Training" />
             <StyledHeading data-test="community-training-header">
               Sign up for training
             </StyledHeading>
@@ -123,7 +130,7 @@ const Community = () => {
         </GridCol>
         <GridCol>
           <div data-test="community-research">
-            <StyledImage src={researchImg} alt="Research" />
+            <SmallStyledImage src={researchImg} alt="Research" />
             <StyledHeading>Volunteer for user research</StyledHeading>
             <StyledParagraph>
               We regularly run user research sessions to find out how our
