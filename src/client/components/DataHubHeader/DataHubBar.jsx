@@ -14,13 +14,15 @@ import {
 import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
 
-const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
+const DATA_WORKSPACE = 'Data Workspace'
+const MARKET_ACCESS_LABEL = 'Market Access'
+const MARKET_ACCESS_PATHNAME = 'https://market-access.trade.gov.uk/'
 
 const googleAnalyticsUTM = qs.stringify({
   utm_source: 'Data Hub',
   utm_medium: 'referral',
   utm_campaign: 'dataflow',
-  utm_content: SWITCH_TO_DATA_WORKSPACE,
+  utm_content: DATA_WORKSPACE,
 })
 
 const Layout = styled.div({
@@ -91,6 +93,7 @@ const BetaTag = styled.strong({
 const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   color: WHITE,
   display: 'none',
+  marginLeft: '10px',
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
@@ -168,9 +171,16 @@ const DataHubBar = ({
         <NavigationLink
           hasFeatureGroup={hasFeatureGroup}
           showVerticalNav={showVerticalNav}
+          href={MARKET_ACCESS_PATHNAME}
+        >
+          {MARKET_ACCESS_LABEL}
+        </NavigationLink>
+        <NavigationLink
+          hasFeatureGroup={hasFeatureGroup}
+          showVerticalNav={showVerticalNav}
           href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
         >
-          {SWITCH_TO_DATA_WORKSPACE}
+          {DATA_WORKSPACE}
         </NavigationLink>
         {hasFeatureGroup && <NotificationAlert />}
         <MobileMenuButton
