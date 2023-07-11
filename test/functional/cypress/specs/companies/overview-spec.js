@@ -24,7 +24,7 @@ describe('Company overview page', () => {
   const companyBusinessDetailsUrlAllOverview = urls.companies.businessDetails(
     fixtures.company.allOverviewDetails.id
   )
-  const companyAdivsersUrlAllOverview = urls.companies.advisers.index(
+  const companyAdvisersUrlAllOverview = urls.companies.advisers.index(
     fixtures.company.allOverviewDetails.id
   )
   const companyExportsAllOverview = urls.companies.exports.index(
@@ -92,7 +92,9 @@ describe('Company overview page', () => {
         cy.get('th').contains('Number of Employees')
         cy.get('td').contains('260').parent().next()
         cy.get('th').contains('DBT Sector')
-        cy.get('td').contains('Retail')
+        cy.get('td').contains('Retail').parent().next()
+        cy.get('th').contains('Headquarter Location')
+        cy.get('td').contains('United Kingdom')
       })
 
       it('the card should link to the business overview page', () => {
@@ -102,6 +104,72 @@ describe('Company overview page', () => {
         cy.location('pathname').should(
           'eq',
           companyBusinessDetailsUrlAllOverview
+        )
+        cy.go('back')
+      })
+    }
+  )
+  context(
+    'when viewing the Business details card for a global ultimate company',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(
+            fixtures.company.dnBGlobalUltimateAndGlobalHq.id
+          )
+        )
+      })
+      it('the card should contain Headquarter Location matching country of the company', () => {
+        cy.get('[data-test="businessDetailsContainer"]')
+          .children()
+          .first()
+          .contains('Business details')
+          .next()
+          .children()
+          .last()
+        cy.get('th').contains('Headquarter Location')
+        cy.get('td').contains('United States')
+      })
+      it('the card should link to the company tree page', () => {
+        cy.get('[data-test="company-tree-link"]')
+          .contains('View company tree')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.dnbHierarchy.tree(
+            fixtures.company.dnBGlobalUltimateAndGlobalHq.id
+          )
+        )
+        cy.go('back')
+      })
+    }
+  )
+  context(
+    'when viewing the Business details card for a subsidiary company',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.dnbSubsidiary.id)
+        )
+      })
+      it('the card should contain Headquarter Location matching country of global ultimate company', () => {
+        cy.get('[data-test="businessDetailsContainer"]')
+          .children()
+          .first()
+          .contains('Business details')
+          .next()
+          .children()
+          .last()
+        cy.get('th').contains('Headquarter Location')
+        cy.get('td').contains('Canada')
+      })
+      it('the card should link to the company tree page', () => {
+        cy.get('[data-test="company-tree-link"]')
+          .contains('View company tree')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.dnbHierarchy.tree(fixtures.company.dnbSubsidiary.id)
         )
         cy.go('back')
       })
@@ -138,6 +206,10 @@ describe('Company overview page', () => {
           .siblings()
           .contains('td', 'Not set')
         cy.get('th').contains('DBT Sector').siblings().contains('td', 'Not set')
+        cy.get('th')
+          .contains('Headquarter Location')
+          .siblings()
+          .contains('td', 'Not set')
       })
     }
   )
@@ -196,7 +268,7 @@ describe('Company overview page', () => {
         cy.get('[data-test="account-management-page-link"]')
           .contains('View full account management')
           .click()
-        cy.location('pathname').should('eq', companyAdivsersUrlAllOverview)
+        cy.location('pathname').should('eq', companyAdvisersUrlAllOverview)
         cy.go('back')
       })
     }
