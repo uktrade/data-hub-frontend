@@ -16,6 +16,7 @@ const StyledHeading = styled(H4)`
   font-style: normal;
   font-weight: 700;
   line-height: 34px;
+  padding-top: 20px;
 `
 const StyledImage = styled('img')`
   width: 100%;
@@ -26,6 +27,7 @@ const StyledParagraph = styled('p')`
   font-size: 16px;
   line-height: 26px;
   font-weight: 400;
+  padding-bottom: 20px;
 `
 
 const Community = () => {
