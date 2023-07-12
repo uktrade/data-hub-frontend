@@ -140,9 +140,7 @@ describe('Company overview page', () => {
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(
-            fixtures.company.dnBGlobalUltimateAndGlobalHq.id
-          )
+          urls.companies.overview.index(fixtures.company.dnbGlobalUltimate.id)
         )
       })
       it('the card should contain Headquarter Location matching country of the company', () => {
@@ -154,7 +152,7 @@ describe('Company overview page', () => {
           .children()
           .last()
         cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('United States')
+        cy.get('td').contains('United Kingdom')
       })
       it('the card should link to the company tree page', () => {
         cy.get('[data-test="company-tree-link"]')
@@ -236,6 +234,10 @@ describe('Company overview page', () => {
           .contains('Headquarter Location')
           .siblings()
           .contains('td', 'Not set')
+      })
+
+      it('the card should not show link to the company tree page', () => {
+        cy.get('[data-test="company-tree-link"]').should('not.exist')
       })
     }
   )

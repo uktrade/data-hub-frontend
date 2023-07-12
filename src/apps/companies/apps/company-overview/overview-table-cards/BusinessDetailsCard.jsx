@@ -15,9 +15,6 @@ import {
 
 const StyledAddressList = styled('ul')``
 
-const isGlobalHQ = (company) =>
-  company.headquarterType && company.headquarterType.name === 'ghq'
-
 const BusinessDetailsCard = ({ company }) => (
   <StyledSummaryTable
     caption="Business details"
@@ -71,21 +68,18 @@ const BusinessDetailsCard = ({ company }) => (
       {buildCellContents(company.sector, company.sector?.name)}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Headquarter Location">
-      {isGlobalHQ(company)
-        ? buildCellContents(
-            company.address?.country,
-            company.address?.country?.name
-          )
-        : buildCellContents(
-            company.globalUltimateCountry,
-            company.globalUltimateCountry
-          )}
-      <Link
-        href={urls.companies.dnbHierarchy.tree(company.id)}
-        data-test="company-tree-link"
-      >
-        View company tree
-      </Link>
+      {buildCellContents(
+        company.globalUltimateCountry,
+        company.globalUltimateCountry
+      )}
+      {company.globalUltimateCountry && (
+        <Link
+          href={urls.companies.dnbHierarchy.tree(company.id)}
+          data-test="company-tree-link"
+        >
+          View company tree
+        </Link>
+      )}
     </SummaryTable.Row>
     <StyledTableRow>
       <StyledLastTableCell colSpan={2}>
