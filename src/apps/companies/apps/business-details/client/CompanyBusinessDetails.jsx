@@ -13,7 +13,6 @@ import SectionHierarchy from './SectionHierarchy'
 import SectionRegion from './SectionRegion'
 import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
-import SectionDocuments from './SectionDocuments'
 import ArchiveForm from '../../../../../client/components/ArchiveForm'
 import { StatusMessage } from '../../../../../client/components/'
 import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
@@ -61,7 +60,6 @@ const CompanyBusinessDetails = ({
   localNavItems,
   flashMessages,
   csrfToken,
-  archivedDocumentUrl,
   permissions,
 }) => (
   <CompanyResource id={companyId}>
@@ -157,7 +155,6 @@ const CompanyBusinessDetails = ({
             isDnbCompany={isDnbCompany(company.dunsNumber)}
             globalUltimate={globalUltimate}
           />
-          <SectionDocuments archivedDocumentUrl={archivedDocumentUrl} />
           {canEditOneList(permissions) && (
             <Button as={Link} href={urls.companies.editOneList(companyId)}>
               Edit One List Information

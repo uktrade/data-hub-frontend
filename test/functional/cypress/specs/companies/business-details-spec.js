@@ -376,16 +376,6 @@ describe('Companies business details', () => {
         'Global HQ': 'Archived LtdRemove link',
       })
       assertLastUpdatedParagraph('15 Jul 2016')
-
-      it('should display the "Documents from CDMS" details container', () => {
-        assertSummaryTable({
-          dataTest: 'documentsDetailsContainer',
-          heading: 'Documents from CDMS',
-          showEditLink: false,
-          content: ['View files and documents (opens in a new window or tab)'],
-        })
-      })
-
       assertArchiveContainerVisible()
     }
   )

@@ -5,7 +5,7 @@ import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 
 import { InteractionResource } from '../../../components/Resource'
 import InteractionReferralDetails from './InteractionReferralDetails'
-import { NewWindowLink, SummaryTable } from '../../../components'
+import { SummaryTable } from '../../../components'
 import ArchivePanel from '../../../components/ArchivePanel'
 import CompleteInteraction from './CompleteInteraction'
 
@@ -29,7 +29,7 @@ import {
 
 const EXPORT = 'export'
 
-const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
+const InteractionDetails = ({ interactionId }) => {
   return (
     <InteractionResource id={interactionId}>
       {(interaction) => (
@@ -145,21 +145,6 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                   >
                     {interaction.largeCapitalOpportunity.name}
                   </Link>
-                }
-              />
-            )}
-            {interaction.archivedDocumentsUrlPath && (
-              <SummaryTable.Row
-                heading="Documents"
-                children={
-                  <NewWindowLink
-                    href={
-                      archivedDocumentPath +
-                      interaction.archivedDocumentsUrlPath
-                    }
-                  >
-                    View files and documents
-                  </NewWindowLink>
                 }
               />
             )}

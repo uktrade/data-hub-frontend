@@ -3,36 +3,6 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const { dashboard, investments } = require('../../../../../src/lib/urls')
 
 describe('Investment Project Documents', () => {
-  context('when there is a document link', () => {
-    before(() => {
-      cy.visit(
-        investments.projects.documents(
-          fixtures.investment.investmentWithLink.id
-        )
-      )
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard(),
-        Investments: investments.index(),
-        Projects: investments.projects.index(),
-        'New hotel (commitment to invest)': investments.projects.project(
-          'fb5b5006-56af-40e0-8615-7aba53e0e4bf'
-        ),
-        Documents: null,
-      })
-    })
-
-    it('should display appropriate message when there is a link to a document', () => {
-      cy.get('[data-test=document-header]').should('contain', 'Document')
-      cy.get('[data-test=document-link]').should(
-        'contain',
-        'View files and documents'
-      )
-    })
-  })
-
   context('when there is not a document link', () => {
     before(() => {
       cy.visit(

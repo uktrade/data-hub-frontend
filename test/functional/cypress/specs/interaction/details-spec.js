@@ -226,7 +226,7 @@ describe('Interaction details', () => {
     assertCannotCompleteTextNotVisible()
   })
 
-  context('Complete service delivery with documents', () => {
+  context('Complete service delivery', () => {
     const params = {}
 
     before(() => {
@@ -260,7 +260,6 @@ describe('Interaction details', () => {
             href: events.details('bda12a57-433c-4a0c-a7ce-5ebd080e09e8'),
             name: 'Grand exhibition',
           },
-          Documents: 'View files and documents (opens in a new window or tab)',
         },
       })
     })
