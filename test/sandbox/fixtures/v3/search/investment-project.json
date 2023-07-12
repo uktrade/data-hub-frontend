@@ -924,7 +924,7 @@
       "address_town": null,
       "allow_blank_estimated_land_date": false,
       "allow_blank_possible_uk_regions": false,
-      "status": "lost",
+      "status": "delayed",
       "some_new_jobs": null,
       "approved_non_fdi": null,
       "address_1": null,

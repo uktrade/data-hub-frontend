@@ -33,34 +33,8 @@ describe('Company overview page', () => {
   const noActiveInvestments = exportFaker({
     count: 10,
     results: [],
-    summary: {
-      prospect: {
-        label: 'Prospect',
-        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
-        value: 0,
-      },
-      assign_pm: {
-        label: 'Assign PM',
-        id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
-        value: 0,
-      },
-      Prospect: {
-        label: 'Prospect',
-        id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
-        value: 0,
-      },
-      verify_win: {
-        label: 'Verify Win',
-        id: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
-        value: 0,
-      },
-      won: {
-        label: 'Won',
-        id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-        value: 0,
-      },
-    },
   })
+
   context(
     'when viewing company overview the tab should display Overview',
     () => {
@@ -898,7 +872,7 @@ describe('Company overview page', () => {
         )
       })
 
-      it('the card should contain a message outling three active investments', () => {
+      it('the card should contain a message outlining three active investments', () => {
         cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]', {
           timeout: 1000,
         }).should('be.visible')
@@ -1055,6 +1029,7 @@ describe('Company overview page', () => {
                   id: '3fd90013-4bcb-4c39-b8df-df264471ea85',
                 },
                 name: 'New restaurant',
+                status: 'ongoing',
               },
             ],
           },
@@ -1071,6 +1046,96 @@ describe('Company overview page', () => {
         cy.get('[data-test="likelihood-of-landing-new-restaurant-header"]')
           .next()
           .contains('Not set')
+      })
+    }
+  )
+  context(
+    'when viewing the active investment projects card only ongoing or delayed investments are viewable',
+    () => {
+      before(() => {
+        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+          body: {
+            count: 4,
+            results: [
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Ongoing',
+                status: 'ongoing',
+              },
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Delayed',
+                status: 'delayed',
+              },
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Lost',
+                status: 'lost',
+              },
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Won',
+                status: 'won',
+              },
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Abandoned',
+                status: 'abandoned',
+              },
+              {
+                likelihood_to_land: null,
+                stage: {
+                  id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+                  name: 'Active',
+                },
+                estimated_land_date: '2025-10-13',
+                name: 'Active Dormant',
+                status: 'dormant',
+              },
+            ],
+          },
+        }).as('apiRequest')
+        cy.visit(
+          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+        )
+      })
+      it('the card should contact two active investments only', () => {
+        cy.get(
+          '[data-test="active-investment-page-active-ongoing-link"]'
+        ).contains('Active Ongoing')
+        cy.get(
+          '[data-test="active-investment-page-active-delayed-link"]'
+        ).contains('Active Delayed')
+      })
+      it('the card should contain a link stating 4 more active investments', () => {
+        cy.get('[data-test="active-investments-page-link"]').contains(
+          'View 4 more active investments'
+        )
       })
     }
   )

@@ -42,7 +42,11 @@ export default (state = { initialState }, { type, result }) => {
 
     const allActiveInvestments = []
     for (const investment of resultList) {
-      if (investment.stage.name === 'Active') {
+      if (
+        (investment.stage.name === 'Active' &&
+          investment.status === 'delayed') ||
+        (investment.stage.name === 'Active' && investment.status === 'ongoing')
+      ) {
         let newDate = new Date(investment.estimated_land_date)
         investment.estimated_land_date = newDate
         allActiveInvestments.push(investment)
