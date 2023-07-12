@@ -72,6 +72,7 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
+import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -377,6 +378,9 @@ import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusi
 import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
 
+import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './modules/Investments/Projects/state'
+import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -603,6 +607,7 @@ function App() {
           [TASK_GET_DNB_FAMILY_TREE]: getDnbFamilyTree,
           [TASK_GET_GLOBAL_HQ_LIST]: getGlobalHeadquartersCollection,
           [TASK_GET_SUBSIDIARY_LIST]: getSubsidiaryCollection,
+          [TASK_EDIT_INVESTMENT_PROJECT_SUMMARY]: updateInvestmentProject,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -875,6 +880,9 @@ function App() {
         </Mount>
         <Mount selector="#link-subsidiary">
           {(props) => <LinkSubsidiary {...props} />}
+        </Mount>
+        <Mount selector="#edit-project-summary">
+          {(props) => <EditProjectSummary {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

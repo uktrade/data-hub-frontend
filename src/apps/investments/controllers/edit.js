@@ -2,7 +2,14 @@
 const valueCutOffDate = new Date('2020-04-01')
 
 function editDetailsGet(req, res) {
-  res.breadcrumb('Edit details').render('investments/views/details-edit')
+  const { investment } = res.locals
+  const { user } = req.session
+  res.breadcrumb('Edit details').render('investments/views/details-edit', {
+    props: {
+      projectId: investment.id,
+      currentAdviser: user.id,
+    },
+  })
 }
 
 function editValueGet(req, res) {

@@ -12,7 +12,7 @@ import Form from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import { TASK_SAVE_INVESTMENT_PROJECT_MANAGERS } from './state'
 import {
-  transformAdviserForTypeahead,
+  transformObjectForTypeahead,
   transformAdviserForAPI,
   transformObjectForTable,
   transformLocationsForTable,
@@ -44,10 +44,10 @@ function EditProjectManagement({
         id="edit-investment-project-management"
         analyticsFormName="editInvestmentProjectManagement"
         initialValues={{
-          project_assurance_adviser: transformAdviserForTypeahead(
+          project_assurance_adviser: transformObjectForTypeahead(
             projectAssuranceAdviser
           ),
-          project_manager: transformAdviserForTypeahead(projectManager),
+          project_manager: transformObjectForTypeahead(projectManager),
         }}
         cancelRedirectTo={() => urls.investments.projects.team(id)}
         redirectTo={() => urls.investments.projects.team(id)}
