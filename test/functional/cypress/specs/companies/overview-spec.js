@@ -161,7 +161,7 @@ describe('Company overview page', () => {
         cy.location('pathname').should(
           'eq',
           urls.companies.dnbHierarchy.tree(
-            fixtures.company.dnBGlobalUltimateAndGlobalHq.id
+            fixtures.company.dnbGlobalUltimate.id
           )
         )
         cy.go('back')
@@ -234,6 +234,10 @@ describe('Company overview page', () => {
           .contains('Headquarter Location')
           .siblings()
           .contains('td', 'Not set')
+      })
+
+      it('the card should not show link to the company tree page', () => {
+        cy.get('[data-test="company-tree-link"]').should('not.exist')
       })
     }
   )
