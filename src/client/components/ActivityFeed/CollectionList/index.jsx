@@ -7,7 +7,11 @@ import {
   COMPANY_ACTIVITIES__METADATA_LOADED,
 } from '../../../actions'
 
-import { ACTIVITY_TYPE_OPTIONS, LABELS } from './constants'
+import {
+  BUSINESS_INTELLIGENCE_OPTION,
+  ACTIVITY_TYPE_OPTIONS,
+  LABELS,
+} from './constants'
 
 import {
   CollectionFilters,
@@ -221,6 +225,14 @@ const CompanyActivityCollection = ({
                 options={ACTIVITY_TYPE_OPTIONS}
                 selectedOptions={selectedFilters.activityType.options}
                 data-test="activity-type-filter"
+              />
+              <Filters.CheckboxGroup
+                legend={LABELS.businessIntelligence}
+                name="businessIntelligence"
+                qsParam="was_policy_feedback_provided"
+                options={BUSINESS_INTELLIGENCE_OPTION}
+                selectedOptions={selectedFilters.businessIntelligence.options}
+                data-test="business-intelligence-filter"
               />
             </CollectionFilters>
           </FilteredCollectionList>
