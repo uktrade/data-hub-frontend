@@ -3,6 +3,7 @@ module.exports = {
     mercuryTradingLtd: require('./ch-company/mercury-trading-ltd'),
   },
   company: {
+    default: require('../../../../test/sandbox/fixtures/v4/company/company.json'),
     noOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-no-overview-details.json'),
     allOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-all-overview-details.json'),
     archivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived.json'),

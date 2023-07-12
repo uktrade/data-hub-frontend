@@ -9,6 +9,7 @@ module.exports = {
   summary: 'form dl',
   regionSelect: 'form select#uk_region',
   sectorSelect: 'form select#sector',
+
   entitySearch: {
     companyNameField: 'input[name="dnbCompanyName"]',
     postalCodeField: 'input[name="dnbPostalCode"]',
@@ -22,6 +23,8 @@ module.exports = {
       summary: 'details summary span',
       stillCannotFind: `button:contains("I still can't find what I'm looking for")`,
     },
+    outOfBusiness: '[data-test="company-out-of-business"]',
+    alreadyOnDatahub: '[data-test="company-already-on-datahub"]',
   },
   newCompanyRecordForm: {
     whyAmISeeingThis: {
@@ -52,6 +55,9 @@ module.exports = {
     sector: 'select#sector',
     areaUS: 'select#area',
     areaCanada: 'select#areaCanada',
+    companyLocation: '[data-test="field-companyLocation"]',
+    dbtRegion: '[data-test="field-uk_region"]',
+    dbtSector: '[data-test="field-sector"]',
   },
   companyDetails: {
     subheader: 'form h2',
