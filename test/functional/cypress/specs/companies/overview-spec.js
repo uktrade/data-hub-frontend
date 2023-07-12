@@ -235,10 +235,6 @@ describe('Company overview page', () => {
           .siblings()
           .contains('td', 'Not set')
       })
-
-      it('the card should not show link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]').should('not.exist')
-      })
     }
   )
   context(
