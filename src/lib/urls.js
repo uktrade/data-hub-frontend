@@ -124,6 +124,7 @@ module.exports = {
   companies: {
     index: url('/companies', PRIMARY_LINK_PARAMS.companies),
     create: url('/companies', '/create'),
+    createFromDNB: url('/companies/create?duns_number=', ':dunsNumber'),
     export: url('/companies', '/export'),
     detail: url('/companies', '/:companyId'),
     edit: url('/companies', '/:companyId/edit'),
