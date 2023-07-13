@@ -56,6 +56,27 @@ const companyNoAdditionalTagData = companyTreeFaker({
   },
 })
 
+const companyWithLinkedSubsidiaryNotInDataHub = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: companyTreeItemFaker({
+      id: dnbGlobalUltimate.id,
+      number_of_employees: 123,
+      one_list_tier: [],
+      uk_region: null,
+      address: null,
+      subsidiaries: [
+        {
+          duns_number: '123456789',
+          name: 'Not on Data Hub Ltd',
+          number_of_employees: 13,
+          hierarchy: 2,
+        },
+      ],
+    }),
+    ultimate_global_companies_count: 2,
+  },
+})
+
 const companyManuallyLinkedSubsidiary = companyTreeFaker({
   mannualVerifiedSubsidiariesCount: 1,
 })
@@ -309,6 +330,26 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=${companyName}-uk-region-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-country-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
+    })
+  })
+
+  context('When a company has subsidiaries not on Data Hub', () => {
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+        companyWithLinkedSubsidiaryNotInDataHub
+      ).as('treeApi')
+      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+      cy.wait('@treeApi')
+    })
+
+    it('should have a link to add the company to Data Hub', () => {
+      cy.get('[data-test="expand-tree-button"]').click()
+      cy.get(`[data-test=add-not-on-data-hub-ltd`).click()
+      cy.location().should((loc) => {
+        expect(loc.search).to.eq('?duns_number=123456789')
+      })
+      cy.go('back')
     })
   })
 

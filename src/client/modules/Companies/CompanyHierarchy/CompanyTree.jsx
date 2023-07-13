@@ -28,6 +28,8 @@ import {
   InlineDescriptionList,
   HierarchyItemHeading,
   StyledLinkedSubsidiaryButton,
+  AddCompanyLink,
+  AddCompanyLinkDiv,
 } from './styled'
 import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
@@ -286,7 +288,7 @@ const HierarchyItem = ({
             </HierarchyTag>
           )}
         </HierarchyItemHeading>
-        {isOnDataHub && (
+        {isOnDataHub ? (
           <ToggleSection
             colour={isRequestedCompanyId ? WHITE : BLUE}
             onOpen={(open) =>
@@ -320,6 +322,16 @@ const HierarchyItem = ({
               </dd>
             </InlineDescriptionList>
           </ToggleSection>
+        ) : (
+          <AddCompanyLinkDiv>
+            <AddCompanyLink
+              href={urls.companies.createFromDNB(company.duns_number)}
+              aria-label={`Add ${company.name} to data Hub`}
+              data-test={`add-${companyName}`}
+            >
+              Add {company.name} to Data Hub
+            </AddCompanyLink>
+          </AddCompanyLinkDiv>
         )}
       </HierarchyItemContents>
       <Subsidiaries

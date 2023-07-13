@@ -210,3 +210,11 @@ export const InlineDescriptionList = styled.dl`
     display: block;
   }
 `
+
+export const AddCompanyLinkDiv = styled('div')`
+  padding: 15px;
+`
+
+export const AddCompanyLink = styled(Link)`
+  font-size: ${FONT_SIZE.SIZE_16};
+`
