@@ -23,6 +23,7 @@ const companyNoRelatedRecords = companyTreeFaker({
   globalCompany: {
     ultimate_global_company: {},
     ultimate_global_companies_count: 0,
+    family_tree_companies_count: 0,
   },
 })
 
@@ -32,6 +33,7 @@ const companyNoSubsidiaries = companyTreeFaker({
       id: dnbGlobalUltimate.id,
     }),
     ultimate_global_companies_count: 1,
+    family_tree_companies_count: 1,
   },
 })
 
@@ -53,6 +55,7 @@ const companyNoAdditionalTagData = companyTreeFaker({
       address: null,
     }),
     ultimate_global_companies_count: 1,
+    family_tree_companies_count: 1,
   },
 })
 
@@ -63,6 +66,10 @@ const companyManuallyLinkedSubsidiary = companyTreeFaker({
 const companyManuallyLinkedSubsidiaries = companyTreeFaker({
   mannualVerifiedSubsidiariesCount: 5,
 })
+
+const reducedTreeCompanyTree = companyTreeFaker({})
+reducedTreeCompanyTree.reduced_tree = true
+reducedTreeCompanyTree.ultimate_global_companies_count = 15000
 
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
@@ -165,6 +172,13 @@ describe('D&B Company hierarchy tree', () => {
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
+    it('should display the total number of companies in the tree', () => {
+      cy.get('[data-test="hierarchy-header"] > h2').should(
+        'have.text',
+        `${companyNoRelatedRecords.family_tree_companies_count} companies`
+      )
+    })
+
     it('should only show a single item with not found message', () => {
       cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
       cy.get('[data-test="related-company"]')
@@ -196,6 +210,13 @@ describe('D&B Company hierarchy tree', () => {
     it('should only show a single company item with the requested company style', () => {
       cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
       cy.get('[data-test="requested-company"]').should('be.visible')
+    })
+
+    it('should display the total number of companies in the tree', () => {
+      cy.get('[data-test="hierarchy-header"] > h2').should(
+        'have.text',
+        `${companyNoSubsidiaries.family_tree_companies_count} company`
+      )
     })
 
     it('should hide the show all companies button', () => {
@@ -443,15 +464,36 @@ describe('D&B Company hierarchy tree', () => {
         .should('contain.text', `Last interaction date${formattedDate}`)
     })
   })
-})
 
-context(
-  'When a company has both verified and manually linked subsidiaries',
-  () => {
+  context(
+    'When a company has both verified and manually linked subsidiaries',
+    () => {
+      before(() => {
+        cy.intercept(
+          `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
+          companyManuallyLinkedSubsidiaries
+        ).as('treeApi')
+        cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
+        cy.wait('@treeApi')
+      })
+
+      assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+      it('should have correct count of ultimate global companies in button', () => {
+        cy.get('[data-test="expand-tree-button"]').should('exist').contains('2')
+      })
+
+      it('should show header with count of ultimate global and manually linked companies', () => {
+        cy.get('[data-test="hierarchy-contents"]').should('exist').contains('7')
+      })
+    }
+  )
+
+  context('When a company has a reduced companytree', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyManuallyLinkedSubsidiaries
+        reducedTreeCompanyTree
       ).as('treeApi')
       cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
       cy.wait('@treeApi')
@@ -459,12 +501,15 @@ context(
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
-    it('should have correct count of ultimate global companies in button', () => {
-      cy.get('[data-test="expand-tree-button"]').should('exist').contains('2')
+    it('should have display a message about this being a reduced company tree', () => {
+      cy.get('[data-test="reduced-tree-hierarchy"]').should('exist')
     })
 
-    it('should show header with count of ultimate global and manually linked companies', () => {
-      cy.get('[data-test="hierarchy-contents"]').should('exist').contains('7')
+    it('should display the total number of companies in the tree compared to the overall global count', () => {
+      cy.get('[data-test="hierarchy-header"] > h2').should(
+        'have.text',
+        `${reducedTreeCompanyTree.family_tree_companies_count} companies out of ${reducedTreeCompanyTree.ultimate_global_companies_count}`
+      )
     })
-  }
-)
+  })
+})
