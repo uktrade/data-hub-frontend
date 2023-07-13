@@ -1,7 +1,7 @@
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, H2, Link } from 'govuk-react'
-import { isEmpty, kebabCase } from 'lodash'
+import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
-import React, { useEffect, useState } from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -72,6 +72,7 @@ const Subsidiaries = ({
   requestedCompanyId,
   label,
   isManuallyLinked = false,
+  setAncestorsIsOpenFunctions,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -100,6 +101,7 @@ const Subsidiaries = ({
                 ? false
                 : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
+            setAncestorsIsOpenFunctions={setAncestorsIsOpenFunctions}
           />
         ))}
         {isManuallyLinked && (
@@ -227,12 +229,38 @@ const HierarchyItem = ({
   requestedCompanyHasManuallyVerified,
   fullTreeExpanded,
   isFinalItemInLevel,
+  setAncestorsIsOpenFunctions,
   globalParent = false,
 }) => {
+  const hierarchyItemRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [hasAutoFocusedRequestedCompany, setHasAutoFocusedRequestedCompany] =
+    useState(undefined)
+
   const [toggleLabel, setToggleLabel] = useState('View more detail')
   const isOnDataHub = Object.keys(company).length !== 0 && company?.id
   const isRequestedCompanyId = requestedCompanyId === company.id
+
+  useEffect(() => {
+    if (
+      isRequestedCompanyId &&
+      Array.isArray(setAncestorsIsOpenFunctions) &&
+      !hasAutoFocusedRequestedCompany
+    ) {
+      setAncestorsIsOpenFunctions
+        .filter((x) => isFunction(x))
+        .forEach((setIsOpen) => {
+          setIsOpen(true)
+        })
+      setHasAutoFocusedRequestedCompany(true)
+    }
+  }, [hasAutoFocusedRequestedCompany])
+
+  useEffect(() => {
+    if (hasAutoFocusedRequestedCompany && hierarchyItemRef?.current) {
+      hierarchyItemRef.current.scrollIntoView()
+    }
+  }, [hasAutoFocusedRequestedCompany])
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -246,7 +274,10 @@ const HierarchyItem = ({
       globalParent={globalParent}
       isFinalItemInLevel={isFinalItemInLevel}
       data-test="hierarchy-item"
+      aria-expanded={isOpen}
+      data-test-id={company?.id}
     >
+      <span ref={hierarchyItemRef}></span>
       <HierarchyItemContents
         hierarchy={hierarchy}
         isRequestedCompanyId={isRequestedCompanyId}
@@ -361,6 +392,11 @@ const HierarchyItem = ({
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
         label="verified subsidiaries"
+        setAncestorsIsOpenFunctions={
+          setAncestorsIsOpenFunctions
+            ? [...setAncestorsIsOpenFunctions, setIsOpen]
+            : [setIsOpen]
+        }
       />
     </HierarchyListItem>
   )

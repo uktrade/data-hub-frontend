@@ -39,6 +39,11 @@ const companyNoSubsidiaries = companyTreeFaker({
 
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
 const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
+const companyWith10LevelsOfSubsidiaries = companyTreeFaker({
+  treeDepth: 10,
+  minCompaniesPerLevel: 3,
+  maxCompaniesPerLevel: 4,
+})
 const companyName = kebabCase(
   companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0].name
 )
@@ -399,6 +404,64 @@ describe('D&B Company hierarchy tree', () => {
       cy.get('[data-test="expand-tree-button"]').click()
       cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
       cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
+    })
+  })
+
+  context('When the requested company is in the middle of a tree', () => {
+    const getCompanyAtLevel = (ultimate, level) => {
+      let startLevel = 1
+      let company = ultimate
+      while (startLevel !== level) {
+        company = company.subsidiaries[0]
+        startLevel++
+      }
+      return company
+    }
+
+    const middleCompany = getCompanyAtLevel(
+      companyWith10LevelsOfSubsidiaries.ultimate_global_company,
+      5
+    )
+
+    before(() => {
+      cy.intercept(
+        `api-proxy/v4/dnb/${middleCompany.id}/family-tree`,
+        companyWith10LevelsOfSubsidiaries
+      ).as('treeApi')
+      cy.intercept(
+        `api-proxy/v4/company/${middleCompany.id}`,
+        dnbGlobalUltimate
+      ).as('company')
+      cy.visit(`${urls.companies.dnbHierarchy.tree(middleCompany.id)}`)
+      cy.wait('@treeApi')
+    })
+
+    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
+
+    it('all parent levels should be expanded', () => {
+      cy.get(`[data-test-id="${middleCompany.id}"]`).should(
+        'have.attr',
+        'aria-expanded',
+        'false'
+      )
+
+      cy.get('[data-test="hierarchy-item"]')
+        .filter(':lt(4)')
+        .each((item) =>
+          cy.wrap(item).should('have.attr', 'aria-expanded', 'true')
+        )
+    })
+
+    it('should auto scroll to the item', () => {
+      cy.isInViewport(`[data-test-id="${middleCompany.id}"]`)
+    })
+
+    it('all other levels should be collapsed', () => {
+      cy.get('[data-test="hierarchy-item"]')
+        .filter(':gt(4)')
+        .each((item) =>
+          cy.wrap(item).should('have.attr', 'aria-expanded', 'false')
+        )
     })
   })
 
