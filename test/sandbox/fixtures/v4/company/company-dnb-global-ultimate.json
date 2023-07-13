@@ -76,5 +76,6 @@
   "export_potential": null,
   "great_profile_status": null,
   "is_global_ultimate": true,
-  "global_ultimate_duns_number": "079942718"
+  "global_ultimate_duns_number": "079942718",
+  "global_ultimate_country": "United Kingdom"
 }

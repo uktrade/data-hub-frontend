@@ -67,6 +67,17 @@ const BusinessDetailsCard = ({ company }) => (
     <SummaryTable.Row heading="DBT Sector">
       {buildCellContents(company.sector, company.sector?.name)}
     </SummaryTable.Row>
+    {company.globalUltimateCountry && (
+      <SummaryTable.Row heading="Headquarter Location">
+        {company.globalUltimateCountry}
+        <Link
+          href={urls.companies.dnbHierarchy.tree(company.id)}
+          data-test="company-tree-link"
+        >
+          View company tree
+        </Link>
+      </SummaryTable.Row>
+    )}
     <StyledTableRow>
       <StyledLastTableCell colSpan={2}>
         <Link
