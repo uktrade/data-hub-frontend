@@ -204,10 +204,7 @@ describe('Company overview page', () => {
           .siblings()
           .contains('td', 'Not set')
         cy.get('th').contains('DBT Sector').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Headquarter Location')
-          .siblings()
-          .contains('td', 'Not set')
+        cy.get('th').contains('Headquarter Location').should('not.exist')
       })
 
       it('the card should not show link to the company tree page', () => {
