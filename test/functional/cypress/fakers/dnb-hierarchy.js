@@ -49,12 +49,14 @@ const createCompanyTree = (
     minCompaniesPerLevel,
     maxCompaniesPerLevel
   )
-
+  const companiesCount = (
+    JSON.stringify(ultimateParent).match(/duns_number/g) || []
+  ).length
   return {
     ultimate_global_company: ultimateParent,
-    ultimate_global_companies_count: (
-      JSON.stringify(ultimateParent).match(/duns_number/g) || []
-    ).length,
+    ultimate_global_companies_count: companiesCount,
+    family_tree_companies_count: companiesCount,
+    reduced_tree: false,
   }
 }
 

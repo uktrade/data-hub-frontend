@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import InsetText from '@govuk-react/inset-text'
 
 import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
 import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
@@ -122,18 +123,24 @@ const Subsidiaries = ({
 
 const HierarchyHeader = ({
   ultimateGlobalCount,
+  familyTreeCompaniesCount,
+  reducedTree,
   totalCount,
   fullTreeExpanded,
   onClick,
 }) => (
-  <HierarchyHeaderContents>
+  <HierarchyHeaderContents data-test="hierarchy-header">
     <H2>
       {totalCount}
-      <span> companies</span>
+      <span>
+        {' '}
+        {pluralize('company', totalCount)}
+        {reducedTree && ` out of ${ultimateGlobalCount}`}
+      </span>
     </H2>
-    {ultimateGlobalCount > 1 && (
+    {familyTreeCompaniesCount > 1 && (
       <ToggleSubsidiariesButton
-        count={ultimateGlobalCount}
+        count={familyTreeCompaniesCount}
         onClick={onClick}
         isOpen={fullTreeExpanded}
         insideTree={false}
@@ -150,20 +157,29 @@ const Hierarchy = ({ requestedCompanyId, familyTree }) => {
     familyTree.manually_verified_subsidiaries?.length
   const requestedCompanyHasManuallyVerified =
     manuallyVerifiedSubsidiariesCount > 0
+
   return isEmpty(familyTree) ? (
     <div data-test="empty-hierarchy">
       No hierarchy could be found for this company
     </div>
   ) : (
     <HierarchyContents data-test="hierarchy-contents">
+      {familyTree.reduced_tree && (
+        <InsetText data-test="reduced-tree-hierarchy">
+          Due to the large number of companies in this tree, only the immediate
+          parent companies are being shown
+        </InsetText>
+      )}
       <HierarchyHeader
         ultimateGlobalCount={familyTree.ultimate_global_companies_count}
         totalCount={
-          familyTree.ultimate_global_companies_count +
+          familyTree.family_tree_companies_count +
           manuallyVerifiedSubsidiariesCount
         }
         fullTreeExpanded={fullTreeExpanded}
         onClick={setFullTreeExpanded}
+        reducedTree={familyTree.reduced_tree}
+        familyTreeCompaniesCount={familyTree.family_tree_companies_count}
       />
       <ul>
         <HierarchyItem
