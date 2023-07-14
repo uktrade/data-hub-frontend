@@ -72,7 +72,7 @@ const Subsidiaries = ({
   requestedCompanyId,
   label,
   isManuallyLinked = false,
-  setAncestorsIsOpenFunctions,
+  openAncestorFunctions,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -101,7 +101,7 @@ const Subsidiaries = ({
                 ? false
                 : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
-            setAncestorsIsOpenFunctions={setAncestorsIsOpenFunctions}
+            openAncestorFunctions={openAncestorFunctions}
           />
         ))}
         {isManuallyLinked && (
@@ -229,13 +229,12 @@ const HierarchyItem = ({
   requestedCompanyHasManuallyVerified,
   fullTreeExpanded,
   isFinalItemInLevel,
-  setAncestorsIsOpenFunctions,
+  openAncestorFunctions,
   globalParent = false,
 }) => {
   const hierarchyItemRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [hasAutoFocusedRequestedCompany, setHasAutoFocusedRequestedCompany] =
-    useState(undefined)
+  const [hasExpandedParents, setHasExpandedParents] = useState(undefined)
 
   const [toggleLabel, setToggleLabel] = useState('View more detail')
   const isOnDataHub = Object.keys(company).length !== 0 && company?.id
@@ -244,23 +243,23 @@ const HierarchyItem = ({
   useEffect(() => {
     if (
       isRequestedCompanyId &&
-      Array.isArray(setAncestorsIsOpenFunctions) &&
-      !hasAutoFocusedRequestedCompany
+      Array.isArray(openAncestorFunctions) &&
+      !hasExpandedParents
     ) {
-      setAncestorsIsOpenFunctions
+      openAncestorFunctions
         .filter((x) => isFunction(x))
         .forEach((setIsOpen) => {
           setIsOpen(true)
         })
-      setHasAutoFocusedRequestedCompany(true)
+      setHasExpandedParents(true)
     }
-  }, [hasAutoFocusedRequestedCompany])
+  }, [hasExpandedParents])
 
   useEffect(() => {
-    if (hasAutoFocusedRequestedCompany && hierarchyItemRef?.current) {
+    if (hasExpandedParents && hierarchyItemRef?.current) {
       hierarchyItemRef.current.scrollIntoView()
     }
-  }, [hasAutoFocusedRequestedCompany])
+  }, [hasExpandedParents])
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -392,9 +391,9 @@ const HierarchyItem = ({
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
         label="verified subsidiaries"
-        setAncestorsIsOpenFunctions={
-          setAncestorsIsOpenFunctions
-            ? [...setAncestorsIsOpenFunctions, setIsOpen]
+        openAncestorFunctions={
+          openAncestorFunctions
+            ? [...openAncestorFunctions, setIsOpen]
             : [setIsOpen]
         }
       />
