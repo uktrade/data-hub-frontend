@@ -71,8 +71,9 @@ const Subsidiaries = ({
   fullTreeExpanded,
   requestedCompanyId,
   label,
-  isManuallyLinked = false,
   openAncestorFunctions,
+  parentItemRef,
+  isManuallyLinked = false,
 }) =>
   Array.isArray(company.subsidiaries) &&
   company.subsidiaries.length > 0 && (
@@ -102,6 +103,7 @@ const Subsidiaries = ({
                 : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
             openAncestorFunctions={openAncestorFunctions}
+            parentItemRef={parentItemRef}
           />
         ))}
         {isManuallyLinked && (
@@ -230,9 +232,11 @@ const HierarchyItem = ({
   fullTreeExpanded,
   isFinalItemInLevel,
   openAncestorFunctions,
+  parentItemRef,
   globalParent = false,
 }) => {
   const hierarchyItemRef = useRef(null)
+
   const [isOpen, setIsOpen] = useState(false)
   const [hasExpandedParents, setHasExpandedParents] = useState(undefined)
 
@@ -256,8 +260,8 @@ const HierarchyItem = ({
   }, [hasExpandedParents])
 
   useEffect(() => {
-    if (hasExpandedParents && hierarchyItemRef?.current) {
-      hierarchyItemRef.current.scrollIntoView()
+    if (hasExpandedParents && parentItemRef?.current) {
+      parentItemRef.current.scrollIntoView()
     }
   }, [hasExpandedParents])
 
@@ -275,8 +279,8 @@ const HierarchyItem = ({
       data-test="hierarchy-item"
       aria-expanded={isOpen}
       data-test-id={company?.id}
+      ref={hierarchyItemRef}
     >
-      <span ref={hierarchyItemRef}></span>
       <HierarchyItemContents
         hierarchy={hierarchy}
         isRequestedCompanyId={isRequestedCompanyId}
@@ -396,6 +400,7 @@ const HierarchyItem = ({
             ? [...openAncestorFunctions, setIsOpen]
             : [setIsOpen]
         }
+        parentItemRef={hierarchyItemRef}
       />
     </HierarchyListItem>
   )
