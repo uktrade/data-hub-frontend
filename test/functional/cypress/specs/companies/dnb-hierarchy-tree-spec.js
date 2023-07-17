@@ -77,6 +77,7 @@ const companyWithLinkedSubsidiaryNotInDataHub = companyTreeFaker({
       ],
     }),
     ultimate_global_companies_count: 2,
+    family_tree_companies_count: 2,
   },
 })
 
