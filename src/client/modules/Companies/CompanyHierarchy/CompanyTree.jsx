@@ -1,7 +1,7 @@
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, H2, Link } from 'govuk-react'
-import { isEmpty, kebabCase } from 'lodash'
+import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
-import React, { useEffect, useState } from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -71,6 +71,8 @@ const Subsidiaries = ({
   fullTreeExpanded,
   requestedCompanyId,
   label,
+  openAncestorFunctions,
+  parentItemRef,
   isManuallyLinked = false,
 }) =>
   Array.isArray(company.subsidiaries) &&
@@ -100,6 +102,8 @@ const Subsidiaries = ({
                 ? false
                 : index + 1 === company.subsidiaries.length && !isManuallyLinked
             }
+            openAncestorFunctions={openAncestorFunctions}
+            parentItemRef={parentItemRef}
           />
         ))}
         {isManuallyLinked && (
@@ -227,12 +231,39 @@ const HierarchyItem = ({
   requestedCompanyHasManuallyVerified,
   fullTreeExpanded,
   isFinalItemInLevel,
+  openAncestorFunctions,
+  parentItemRef,
   globalParent = false,
 }) => {
+  const hierarchyItemRef = useRef(null)
+
   const [isOpen, setIsOpen] = useState(false)
+  const [hasExpandedParents, setHasExpandedParents] = useState(undefined)
+
   const [toggleLabel, setToggleLabel] = useState('View more detail')
   const isOnDataHub = Object.keys(company).length !== 0 && company?.id
   const isRequestedCompanyId = requestedCompanyId === company.id
+
+  useEffect(() => {
+    if (
+      isRequestedCompanyId &&
+      Array.isArray(openAncestorFunctions) &&
+      !hasExpandedParents
+    ) {
+      openAncestorFunctions
+        .filter((x) => isFunction(x))
+        .forEach((setIsOpen) => {
+          setIsOpen(true)
+        })
+      setHasExpandedParents(true)
+    }
+  }, [hasExpandedParents])
+
+  useEffect(() => {
+    if (hasExpandedParents && parentItemRef?.current) {
+      parentItemRef.current.scrollIntoView()
+    }
+  }, [hasExpandedParents])
 
   useEffect(() => {
     if (fullTreeExpanded !== undefined) {
@@ -246,6 +277,9 @@ const HierarchyItem = ({
       globalParent={globalParent}
       isFinalItemInLevel={isFinalItemInLevel}
       data-test="hierarchy-item"
+      aria-expanded={isOpen}
+      data-test-id={company?.id}
+      ref={hierarchyItemRef}
     >
       <HierarchyItemContents
         hierarchy={hierarchy}
@@ -361,6 +395,12 @@ const HierarchyItem = ({
         fullTreeExpanded={fullTreeExpanded}
         requestedCompanyId={requestedCompanyId}
         label="verified subsidiaries"
+        openAncestorFunctions={
+          openAncestorFunctions
+            ? [...openAncestorFunctions, setIsOpen]
+            : [setIsOpen]
+        }
+        parentItemRef={hierarchyItemRef}
       />
     </HierarchyListItem>
   )
