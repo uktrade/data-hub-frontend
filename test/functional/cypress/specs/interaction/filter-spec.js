@@ -63,7 +63,7 @@ const adviser = {
 }
 
 const myCompanyId = '0fb3379c-341c-4da4-b825-bf8d47b26baa'
-const myCompanyEndpoint = `/api-proxy/v4/company/${myCompanyId}`
+const searchCompanyEndpoint = `/api-proxy/v4/search/company`
 
 const companiesFilter = '[data-test="company-filter"]'
 
@@ -209,7 +209,9 @@ describe('Interactions Collections Filter', () => {
         count: 1,
         results: [company],
       }).as('companyListApiRequest')
-      cy.intercept('GET', myCompanyEndpoint, company).as('companyApiRequest')
+      cy.intercept('POST', searchCompanyEndpoint, { results: [company] }).as(
+        'companyApiRequest'
+      )
       cy.visit(`/interactions?${queryParams}`)
       assertPayload('@apiRequest', expectedPayload)
       assertTypeaheadOptionSelected({
@@ -226,7 +228,9 @@ describe('Interactions Collections Filter', () => {
         count: 1,
         results: [company],
       }).as('companyListApiRequest')
-      cy.intercept('GET', myCompanyEndpoint, company).as('companyApiRequest')
+      cy.intercept('POST', searchCompanyEndpoint, { results: [company] }).as(
+        'companyApiRequest'
+      )
 
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
