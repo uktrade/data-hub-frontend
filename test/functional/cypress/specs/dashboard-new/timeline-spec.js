@@ -1,9 +1,9 @@
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
+import urls from '../../../../../src/lib/urls'
 
 describe('Dashboard timeline', () => {
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
     const project = investmentProjectFaker({
       stage: INVESTMENT_PROJECT_STAGES.active,
     })
@@ -13,7 +13,7 @@ describe('Dashboard timeline', () => {
         results: [project],
       },
     }).as('apiRequest')
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
     cy.wait('@apiRequest')
   })
 

@@ -1,11 +1,6 @@
 describe('Dashboard - Data Hub feed', () => {
-  before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-  })
-
   after(() => {
     cy.resetUser()
-    cy.resetFeatureFlags()
   })
 
   context('No updates', () => {

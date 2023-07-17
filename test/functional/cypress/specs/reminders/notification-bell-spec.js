@@ -16,9 +16,6 @@ describe('Notification bell', () => {
   })
 
   context('Dashboard', () => {
-    beforeEach(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
-    })
     it('should display a notification bell when investments are enabled', () => {
       cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.dashboard())

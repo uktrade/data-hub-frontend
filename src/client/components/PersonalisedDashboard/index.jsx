@@ -103,6 +103,18 @@ const PersonalisedDashboard = ({
     history.push(previouslySelectedTabPath)
   }
 
+  const showOutstandingPropositions =
+    hasInvestmentProjects &&
+    !hasInvestmentFeatureGroup &&
+    !hasExportFeatureGroup
+
+  const showReminders =
+    (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
+    hasExportFeatureGroup
+
+  const hasAtLeastOneModule =
+    showOutstandingPropositions || showReminders || hasInvestmentProjects
+
   return (
     <ThemeProvider theme={blueTheme}>
       <Banner items={dataHubFeed} />
@@ -125,26 +137,10 @@ const PersonalisedDashboard = ({
         >
           {() => (
             <GridRow data-test="dashboard">
-              {hasInvestmentProjects && (
+              {hasAtLeastOneModule && (
                 <GridCol setWidth="one-third">
                   <Aside>
-                    {hasInvestmentFeatureGroup || hasExportFeatureGroup ? (
-                      <DashboardToggleSection
-                        label="Reminders"
-                        id="reminder-summary-section"
-                        badge={
-                          !!reminderSummaryCount && (
-                            <NotificationBadge value={reminderSummaryCount} />
-                          )
-                        }
-                        major={true}
-                        isOpen={reminderSummaryCount > 0}
-                        data-test="reminder-summary-section"
-                      >
-                        <ReminderSummary />
-                      </DashboardToggleSection>
-                    ) : (
-                      // Outstanding propositions
+                    {showOutstandingPropositions && (
                       <DashboardToggleSection
                         label="Reminders"
                         id="investment-reminders-section"
@@ -160,18 +156,46 @@ const PersonalisedDashboard = ({
                         <InvestmentReminders adviser={adviser} />
                       </DashboardToggleSection>
                     )}
-                    <DashboardToggleSection
-                      label="Investment projects summary"
-                      id="investment-project-summary-section"
-                      isOpen={true}
-                      data-test="investment-project-summary-section"
-                    >
-                      <InvestmentProjectSummary adviser={adviser} />
-                    </DashboardToggleSection>
+
+                    {showReminders && (
+                      <DashboardToggleSection
+                        label="Reminders"
+                        id="reminder-summary-section"
+                        badge={
+                          !!reminderSummaryCount && (
+                            <NotificationBadge value={reminderSummaryCount} />
+                          )
+                        }
+                        major={true}
+                        isOpen={reminderSummaryCount > 0}
+                        data-test="reminder-summary-section"
+                      >
+                        <ReminderSummary />
+                      </DashboardToggleSection>
+                    )}
+
+                    {/* Investment projects wheel */}
+                    {hasInvestmentProjects && (
+                      <DashboardToggleSection
+                        label="Investment projects summary"
+                        id="investment-project-summary-section"
+                        isOpen={true}
+                        data-test="investment-project-summary-section"
+                      >
+                        <InvestmentProjectSummary adviser={adviser} />
+                      </DashboardToggleSection>
+                    )}
                   </Aside>
                 </GridCol>
               )}
-              <GridCol setWidth={hasInvestmentProjects ? 'two-thirds' : 'full'}>
+
+              <GridCol
+                setWidth={
+                  hasInvestmentProjects || hasExportFeatureGroup
+                    ? 'two-thirds'
+                    : 'full'
+                }
+              >
                 <Main>
                   <DashboardTabs
                     id={id}

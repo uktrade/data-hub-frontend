@@ -346,6 +346,9 @@ module.exports = {
         '/projects/create/investment-type/info/:anchor'
       ),
     },
+    dashboard: {
+      projects: url('/investment-projects'),
+    },
     profiles: {
       index: url('/investments', '/profiles'),
       data: url('/investments', '/profiles/data'),

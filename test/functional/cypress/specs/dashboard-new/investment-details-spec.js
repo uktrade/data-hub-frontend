@@ -1,10 +1,8 @@
-import { faker } from '@faker-js/faker'
-
-const { companies, interactions } = require('../../../../../src/lib/urls')
-
+import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
-
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+import { companies, interactions } from '../../../../../src/lib/urls'
+import { faker } from '@faker-js/faker'
+import urls from '../../../../../src/lib/urls'
 
 const todayFormatted = formatWithoutParsing(new Date())
 
@@ -35,14 +33,13 @@ describe('Dashboard - Investment details', () => {
     investmentProjectFaker({ latest_interaction: undefined }),
   ]
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
         count: investmentProjects.length,
         results: investmentProjects,
       },
     }).as('apiRequest')
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
     cy.wait('@apiRequest')
   })
 

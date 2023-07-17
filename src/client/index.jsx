@@ -62,7 +62,6 @@ import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
-import Dashboard from './modules/Dashboard/Dashboard'
 import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
@@ -849,16 +848,6 @@ function App() {
         </Mount>
         <Mount selector="#attendee-search">
           {(props) => <AttendeeSearch {...props} />}
-        </Mount>
-        <Mount selector="#dashboard-old">
-          {(props) => (
-            <Dashboard
-              csrfToken={globalProps.csrfToken}
-              flashMessage={props.flashMessage}
-              dashboardTabId="homepage"
-              {...props}
-            />
-          )}
         </Mount>
         <Mount selector="#core-team">
           {(props) => <CoreTeam {...props} />}

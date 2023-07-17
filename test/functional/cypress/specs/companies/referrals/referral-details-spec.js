@@ -238,7 +238,7 @@ describe('Referral details', () => {
   context('When you come to the details page from /my-referrals', () => {
     it('should take you back there when you click "back"', () => {
       cy.visit(urls.dashboard())
-      cy.contains('My referrals').click()
+      cy.contains('Referrals').click()
       cy.contains('Andy to Lou').click()
       cy.contains('Back').should(
         'have.attr',

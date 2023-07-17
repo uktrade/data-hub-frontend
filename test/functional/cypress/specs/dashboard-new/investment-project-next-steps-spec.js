@@ -1,9 +1,9 @@
-const { investments } = require('../../../../../src/lib/urls')
+import { investments } from '../../../../../src/lib/urls'
+import urls from '../../../../../src/lib/urls'
 
 describe('Dashboard - Investment project next steps', () => {
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
   })
 
   after(() => {

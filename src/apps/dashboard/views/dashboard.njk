@@ -1,6 +1,13 @@
-  {% if isFeatureTesting %}
-    {% include "./dashboard-new.njk" %}
-  {% else %}
-    {% include "./dashboard-old.njk" %}
-  {% endif %}
+{% extends "_layouts/template.njk" %}
 
+{% block local_header %}
+{% endblock %}
+
+{% block main %}
+
+  {% component 'react-slot', {
+    id: 'dashboard',
+    props: props
+  } %}
+
+{% endblock %}

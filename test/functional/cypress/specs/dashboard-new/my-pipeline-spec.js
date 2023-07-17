@@ -1,7 +1,6 @@
 describe('Dashboard', () => {
   context('Tabs - default', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 
@@ -18,19 +17,18 @@ describe('Dashboard', () => {
         .children()
         .should('have.length', 4)
         .first()
-        .should('have.text', 'Investment projects')
-        .next()
         .should('have.text', 'Company lists')
+        .next()
+        .should('have.text', 'Investment projects')
         .next()
         .should('have.text', 'Export projects')
         .next()
-        .should('have.text', 'My referrals')
+        .should('have.text', 'Referrals')
     })
   })
 
   context('Tabs - Export', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 
@@ -47,13 +45,13 @@ describe('Dashboard', () => {
         .children()
         .should('have.length', 4)
         .first()
-        .should('have.text', 'Investment projects')
-        .next()
         .should('have.text', 'Company lists')
+        .next()
+        .should('have.text', 'Investment projects')
         .next()
         .should('have.text', 'Export projects')
         .next()
-        .should('have.text', 'My referrals')
+        .should('have.text', 'Referrals')
     })
   })
 })

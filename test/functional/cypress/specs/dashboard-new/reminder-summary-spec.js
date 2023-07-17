@@ -1,6 +1,5 @@
 describe('Dashboard reminder summary', () => {
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
     cy.setUserFeatureGroups([
       'investment-notifications',
       'export-notifications',
