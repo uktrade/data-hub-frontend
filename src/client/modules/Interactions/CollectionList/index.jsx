@@ -174,6 +174,7 @@ const InteractionCollection = ({
               noOptionsMessage="No companies found"
               selectedOptions={selectedFilters.company.options}
               data-test="company-filter"
+              closeMenuOnSelect={false}
             />
             <Filters.AdvisersTypeahead
               taskProps={adviserListTask}
