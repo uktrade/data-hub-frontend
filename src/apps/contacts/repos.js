@@ -13,15 +13,12 @@ function unarchiveContact(req, contactId) {
   })
 }
 
-async function getContactsForCompany(req, companyId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
+async function getContactsForCompany(req, companyId) {
   const response = await authorisedRequest(req, {
     url: `${config.apiRoot}/v3/contact`,
     qs: {
       company_id: companyId,
-      limit,
-      offset,
+      limit: 500,
     },
   })
   return sortBy(response.results, [(name) => name.first_name])
