@@ -5,7 +5,7 @@ function renderContacts(req, res) {
 
   res.render('companies/views/contacts', {
     props: {
-      companyId: company.id,
+      company,
       returnUrl,
       dnbRelatedCompaniesCount,
       localNavItems: res.locals.localNavItems,
