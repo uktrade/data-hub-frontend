@@ -54,7 +54,10 @@ const SubsectionDnBHierarchy = ({
         {dnbRelatedCompaniesCount > 0 ? (
           <>
             Data Hub contains{' '}
-            <Link href={companies.dnbHierarchy.index(companyId)}>
+            <Link
+              data-test="company-tree-link"
+              href={companies.dnbHierarchy.tree(companyId)}
+            >
               {pluralize(
                 'other company record',
                 dnbRelatedCompaniesCount,

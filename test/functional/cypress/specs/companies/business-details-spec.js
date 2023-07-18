@@ -261,6 +261,30 @@ describe('Companies business details', () => {
   )
 
   context(
+    'when viewing business details for a Dun & Bradstreet company with a global ultimate',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.businessDetails(fixtures.company.dnbGlobalUltimate.id)
+        )
+      })
+
+      it('the card should link to the company tree page', () => {
+        cy.get('[data-test="company-tree-link"]')
+          .contains('other company records')
+          .click()
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.dnbHierarchy.tree(
+            fixtures.company.dnbGlobalUltimate.id
+          )
+        )
+        cy.go('back')
+      })
+    }
+  )
+
+  context(
     'when viewing business details for a US company with administrative area information',
     () => {
       before(() => {
