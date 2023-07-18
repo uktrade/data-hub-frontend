@@ -48,6 +48,13 @@ const assertCompanyTradingName = (tradingName) => {
 }
 
 /**
+ * Asserts that the company trading name is not visible
+ */
+const assertCompanyTradingNameNotVisible = () => {
+  cy.get('[data-test="trading-name"]').should('not.exist')
+}
+
+/**
  * Asserts that the refer this compnay button has the correct URL
  */
 const assertReferButton = (referralUrl) => {
@@ -147,4 +154,5 @@ module.exports = {
   assertArchivePanelNotVisible,
   assertCompanyListItemButton,
   assertCompanyTradingName,
+  assertCompanyTradingNameNotVisible,
 }

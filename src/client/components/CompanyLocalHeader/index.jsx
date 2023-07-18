@@ -144,9 +144,20 @@ const CompanyLocalHeader = ({
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
-            <LocalHeaderTradingName data-test="trading-name">
-              t/a {company.tradingNames[0]}
-            </LocalHeaderTradingName>
+            {company.tradingNames.length > 0 && (
+              <LocalHeaderTradingName data-test="trading-name">
+                Trading as:{' '}
+                {company.tradingNames
+                  .slice(0, company.tradingNames.length - 1)
+                  .join(', ') +
+                  (company.tradingNames.length > 1
+                    ? ` and ${
+                        company.tradingNames[company.tradingNames.length - 1]
+                      }`
+                    : '')}
+              </LocalHeaderTradingName>
+            )}
+
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
