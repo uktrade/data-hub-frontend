@@ -41,6 +41,13 @@ const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
 }
 
 /**
+ * Asserts that the company trading name appears correctly
+ */
+const assertCompanyTradingName = (tradingName) => {
+  cy.get('[data-test="trading-name"]').contains(tradingName)
+}
+
+/**
  * Asserts that the refer this compnay button has the correct URL
  */
 const assertReferButton = (referralUrl) => {
@@ -139,4 +146,5 @@ module.exports = {
   assertCoreTeam,
   assertArchivePanelNotVisible,
   assertCompanyListItemButton,
+  assertCompanyTradingName,
 }
