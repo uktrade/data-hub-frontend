@@ -12,6 +12,7 @@ const {
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
   assertCompanyListItemButton,
+  assertCompanyTradingNameNotVisible,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -41,6 +42,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
+      })
+
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
       })
 
       it('should display the company address', () => {
@@ -95,6 +100,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
+      })
+
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
       })
 
       it('should display the company address', () => {
@@ -155,6 +164,10 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyName(company.name)
       })
 
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
+      })
+
       it('should display the company address', () => {
         assertCompanyAddress(address)
       })
@@ -213,6 +226,10 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyName(company.name)
       })
 
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
+      })
+
       it('should display the company address', () => {
         assertCompanyAddress(address)
       })
@@ -265,6 +282,10 @@ describe('Local header for company under dnb investigation', () => {
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
+      })
+
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
       })
 
       it('should display the company address', () => {
@@ -321,6 +342,10 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
@@ -380,6 +405,10 @@ describe('Local header for company under dnb investigation', () => {
         assertCompanyName(company.name)
       })
 
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
+      })
+
       it('should display the company address', () => {
         assertCompanyAddress(address)
       })
@@ -434,6 +463,10 @@ describe('Local header for company under dnb investigation', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
