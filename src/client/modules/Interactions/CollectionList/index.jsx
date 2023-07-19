@@ -201,6 +201,7 @@ const InteractionCollection = ({
               data-test="date-before-filter"
             />
             <Filters.TeamsTypeahead
+              closeMenuOnSelect={false}
               taskProps={teamListTask}
               isMulti={true}
               label={LABELS.teams}
