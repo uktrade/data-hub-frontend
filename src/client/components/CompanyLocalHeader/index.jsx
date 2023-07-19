@@ -29,7 +29,7 @@ import {
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
 
-const LocalHeaderTradingName = styled('h2')`
+const LocalHeaderTradingNames = styled('h2')`
   font-size: ${HEADING_SIZES.S}px;
 `
 
@@ -145,17 +145,13 @@ const CompanyLocalHeader = ({
               {company.name}
             </LocalHeaderHeading>
             {company.tradingNames.length > 0 && (
-              <LocalHeaderTradingName data-test="trading-name">
-                Trading as:{' '}
-                {company.tradingNames
-                  .slice(0, company.tradingNames.length - 1)
-                  .join(', ') +
+              <LocalHeaderTradingNames data-test="trading-names">
+                Trading as{' '}
+                {company.tradingNames.slice(0, -1).join(', ') +
                   (company.tradingNames.length > 1
-                    ? ` and ${
-                        company.tradingNames[company.tradingNames.length - 1]
-                      }`
+                    ? ` and ${company.tradingNames.at(-1)}`
                     : '')}
-              </LocalHeaderTradingName>
+              </LocalHeaderTradingNames>
             )}
 
             <StyledAddress data-test="address">

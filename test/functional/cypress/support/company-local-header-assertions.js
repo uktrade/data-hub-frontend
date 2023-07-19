@@ -44,14 +44,14 @@ const assertAddButton = (addRemoveFromListUrl, detailsUrl) => {
  * Asserts that the company trading name appears correctly
  */
 const assertCompanyTradingName = (tradingName) => {
-  cy.get('[data-test="trading-name"]').contains(tradingName)
+  cy.get('[data-test="trading-names"]').contains(tradingName)
 }
 
 /**
  * Asserts that the company trading name is not visible
  */
 const assertCompanyTradingNameNotVisible = () => {
-  cy.get('[data-test="trading-name"]').should('not.exist')
+  cy.get('[data-test="trading-names"]').should('not.exist')
 }
 
 /**
