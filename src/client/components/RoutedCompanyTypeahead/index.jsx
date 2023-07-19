@@ -33,13 +33,14 @@ const fetchCompanies = () => {
 const RoutedCompanyTypeahead = ({
   taskProps,
   loadOptions = fetchCompanies(),
+  closeMenuOnSelect,
   ...props
 }) => (
   <Task.Status {...taskProps} progressOverlay={true}>
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={closeMenuOnSelect}
         {...props}
       />
     )}
@@ -53,6 +54,9 @@ RoutedCompanyTypeahead.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  closeMenuOnSelect: PropTypes.bool,
 }
+
+RoutedCompanyTypeahead.defaultProps = { closeMenuOnSelect: true }
 
 export default RoutedCompanyTypeahead
