@@ -19,9 +19,9 @@ export const buildSelectedFilters = (
   },
   organisers: {
     queryParam: 'organiser',
-    options: selectedOrganisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedOrganisers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.organiser,
     })),
   },
