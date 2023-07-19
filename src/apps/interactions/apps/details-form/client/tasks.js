@@ -26,6 +26,7 @@ import {
   transformToYesNo,
   transformToID,
   transformObjectToTypeahead,
+  transformExportCountriesToGroupStatus,
 } from '../../../../transformers'
 
 import { formatWithoutParsing } from '../../../../../client/utils/date'
@@ -123,6 +124,10 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
   const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
   const date = new Date(interaction.date)
 
+  const exportCountries = get(interaction, 'export_countries') || []
+  const groupExportCountries =
+    transformExportCountriesToGroupStatus(exportCountries)
+
   return {
     theme: interaction.theme || THEMES.OTHER,
     service: childServiceLabel ? parentServiceLabel : serviceId,
@@ -173,6 +178,11 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'large_capital_opportunity',
     ]),
     ...transformServiceAnswers(interaction.service_answers),
+    ...transformValues(groupExportCountries, transformObjectToTypeahead, [
+      'currently_exporting',
+      'future_interest',
+      'not_interested',
+    ]),
   }
 }
 
@@ -199,11 +209,19 @@ export async function getInitialFormValues({
     return valuesFromStorage
   } else if (interactionId) {
     // If editing an interaction
+
     return apiProxyAxios
       .get(`v4/interaction/${interactionId}`)
       .then(({ data }) =>
         transformInteractionToValues(data, companyId, investmentId)
       )
+
+    /**
+     * NOTE:
+     * The transformed interaction values above currently cascaded
+     * as props(values) in the FORM, from InteractionDetailsForm down to
+     * StepInteractionDetails
+     **/
   } else {
     // If creating an interaction
     const date = new Date()
@@ -297,6 +315,8 @@ export function saveInteraction({ values, companyIds, referralId }) {
     ...(values.theme == THEMES.TRADE_AGREEMENT && {
       kind: KINDS.INTERACTION,
     }),
+    // Added export countries object as common payload
+    export_countries: transformExportCountries(values),
   }
 
   const payload = values.id
@@ -306,7 +326,6 @@ export function saveInteraction({ values, companyIds, referralId }) {
     : {
         ...values,
         ...commonPayload,
-        export_countries: transformExportCountries(values),
       }
 
   return request(

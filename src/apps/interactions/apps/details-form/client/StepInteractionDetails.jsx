@@ -435,7 +435,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {!values.id && values.theme !== THEMES.INVESTMENT && (
+      {values.theme !== THEMES.INVESTMENT && (
         <>
           <FieldRadios
             inline={true}
@@ -443,6 +443,7 @@ const StepInteractionDetails = ({
             legend="Were any countries discussed? (optional)"
             options={OPTIONS_YES_NO}
           />
+
           {values.were_countries_discussed === OPTION_YES && (
             <>
               <FieldTypeahead
@@ -450,6 +451,7 @@ const StepInteractionDetails = ({
                 label="Countries currently exporting to"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.currently_exporting}
                 options={countries}
                 validate={[
                   validateRequiredCountries,
@@ -462,6 +464,7 @@ const StepInteractionDetails = ({
                 label="Future countries of interest"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.future_interest}
                 options={countries}
                 validate={[
                   validateRequiredCountries,
@@ -474,6 +477,7 @@ const StepInteractionDetails = ({
                 label="Countries not interested in"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.not_interested}
                 options={countries}
                 validate={[
                   validateRequiredCountries,

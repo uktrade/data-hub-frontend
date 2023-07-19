@@ -4,6 +4,7 @@ const { format, isDateValid } = require('../client/utils/date')
 const { OPTION_NO, OPTION_YES } = require('./constants')
 
 const { hqLabels } = require('./companies/labels')
+const groupExportCountries = require('../lib/group-export-countries')
 
 function transformObjectToOption({ id, name }) {
   return {
@@ -119,10 +120,14 @@ const transformObjectToTypeahead = (value) => {
 
 const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
 
+const transformExportCountriesToGroupStatus = (countries) =>
+  groupExportCountries(countries)
+
 module.exports = {
   transformHQCodeToLabelledOption,
   transformObjectToOption,
   transformStringToOption,
+  transformExportCountriesToGroupStatus,
   transformContactToOption,
   transformCountryToOptionWithIsoCode,
   transformIdToObject,
