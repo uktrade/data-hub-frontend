@@ -4,11 +4,7 @@ const { transformInvestmentLandingForView } = require('./landing')
 const { transformInvestmentRequirementsForView } = require('./requirements')
 const { transformInvestmentValueForView } = require('./value')
 
-const {
-  transformToApi,
-  transformFromApi,
-  transformInvestmentForView,
-} = require('./project')
+const { transformInvestmentForView } = require('./project')
 
 const {
   transformInvestmentProjectToListItem,
@@ -28,8 +24,6 @@ module.exports = {
   transformInvestmentRequirementsForView,
   transformInvestmentFDIForView,
   transformInvestmentLandingForView,
-  transformToApi,
-  transformFromApi,
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,

@@ -34,8 +34,6 @@ const {
 } = require('./controllers')
 
 const {
-  detailsFormMiddleware,
-  investmentTypeFormMiddleware,
   projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
@@ -125,59 +123,10 @@ router.get(
   create.investmentType.renderInvestmentInfoPage
 )
 
-router
-  .route('/create/investment-type/:companyId')
-  .get(
-    investmentTypeFormMiddleware.populateForm,
-    create.investmentType.renderInvestmentTypePage
-  )
-  .post(
-    investmentTypeFormMiddleware.validateForm,
-    create.investmentType.postHandler,
-    investmentTypeFormMiddleware.populateForm,
-    create.investmentType.renderInvestmentTypePage
-  )
-
-router
-  .route('/create/equity-source/:companyId')
-  .get(
-    create.equitySource.getHandler,
-    create.equitySource.renderEquitySourcePage
-  )
-  .post(
-    create.equitySource.postHandler,
-    create.equitySource.getHandler,
-    create.equitySource.renderEquitySourcePage
-  )
-
-router
-  .route('/create/project/:equityCompanyId')
-  .get(
-    detailsFormMiddleware.populateForm,
-    create.project.getHandler,
-    create.project.renderCreateProjectPage
-  )
-  .post(
-    detailsFormMiddleware.populateForm,
-    detailsFormMiddleware.handleFormPost,
-    detailsFormMiddleware.validateForm,
-    create.project.postHandler,
-    create.project.getHandler,
-    create.project.renderCreateProjectPage
-  )
-
 router.get('/:investmentId', redirectToFirstNavItem)
 router.get('/:investmentId/details', details.detailsGetHandler)
 
-router
-  .route('/:investmentId/edit-details')
-  .get(detailsFormMiddleware.populateForm, edit.editDetailsGet)
-  .post(
-    detailsFormMiddleware.populateForm,
-    detailsFormMiddleware.handleFormPost,
-    edit.editDetailsPost,
-    edit.editDetailsGet
-  )
+router.route('/:investmentId/edit-details').get(edit.editDetailsGet)
 
 router
   .route('/:investmentId/edit-value')
