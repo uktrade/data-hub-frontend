@@ -83,7 +83,10 @@ jobs:
           command: |
             mkdir -p partial-coverage
             touch partial-coverage/.placeholder
-            cp cypress-coverage/coverage-final.json partial-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json
+            if [ -f cypress-coverage/coverage-final.json ]; then
+              cp cypress-coverage/coverage-final.json partial-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json
+            fi
+
       - persist_to_workspace:
           root: ~/
           paths:
