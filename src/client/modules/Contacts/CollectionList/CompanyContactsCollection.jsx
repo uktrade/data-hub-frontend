@@ -4,7 +4,6 @@ import { Link, Details } from 'govuk-react'
 
 import { CONTACTS__LOADED } from '../../../actions'
 import { FilteredCollectionList } from '../../../components'
-import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 
 import {
@@ -14,7 +13,7 @@ import {
 } from './state'
 
 const CompanyContactsCollection = ({
-  companyId,
+  company,
   payload,
   optionMetadata,
   selectedFilters,
@@ -30,52 +29,48 @@ const CompanyContactsCollection = ({
     startOnRender: {
       payload: {
         ...payload,
-        companyId: companyId,
+        companyId: company.id,
       },
       onSuccessDispatch: CONTACTS__LOADED,
     },
   }
 
   return (
-    <CompanyResource id={companyId}>
-      {(company) => (
-        <CompanyLayout
-          company={company}
-          breadcrumbs={[{ text: 'Contacts' }]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-          returnUrl={returnUrl}
-          localNavItems={localNavItems}
+    <CompanyLayout
+      company={company}
+      breadcrumbs={[{ text: 'Contacts' }]}
+      dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+      returnUrl={returnUrl}
+      localNavItems={localNavItems}
+    >
+      {company.archived && (
+        <Details
+          summary="Why can I not add a contact?"
+          data-test="archived-details"
         >
-          {company.archived && (
-            <Details
-              summary="Why can I not add a contact?"
-              data-test="archived-details"
-            >
-              Contacts cannot be added to an archived company.{' '}
-              <Link href={`/companies/${company.id}/unarchive`}>
-                Click here to unarchive
-              </Link>
-            </Details>
-          )}
-          <FilteredCollectionList
-            {...props}
-            collectionName="contact"
-            sortOptions={optionMetadata.sortOptions}
-            taskProps={collectionListTask}
-            selectedFilters={selectedFilters}
-            addItemUrl={
-              company.archived ? null : `/contacts/create?company=${company.id}`
-            }
-            entityName="contact"
-            defaultQueryParams={{
-              archived: ['false'],
-              sortby: 'modified_on:desc',
-              page: 1,
-            }}
-          />
-        </CompanyLayout>
+          Contacts cannot be added to an archived company.{' '}
+          <Link href={`/companies/${company.id}/unarchive`}>
+            Click here to unarchive
+          </Link>
+        </Details>
       )}
-    </CompanyResource>
+      <FilteredCollectionList
+        {...props}
+        collectionName="contact"
+        sortOptions={optionMetadata.sortOptions}
+        taskProps={collectionListTask}
+        selectedFilters={selectedFilters}
+        addItemUrl={
+          company.archived ? null : `/contacts/create?company=${company.id}`
+        }
+        entityName="contact"
+        defaultQueryParams={{
+          archived: ['false'],
+          sortby: 'modified_on:desc',
+          page: 1,
+        }}
+      />
+    </CompanyLayout>
   )
 }
 

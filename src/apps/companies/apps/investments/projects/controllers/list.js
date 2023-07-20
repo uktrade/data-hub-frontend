@@ -4,7 +4,7 @@ function renderProjects(req, res) {
 
   res.render('companies/apps/investments/projects/views/list', {
     props: {
-      companyId: company.id,
+      company,
       returnUrl,
       dnbRelatedCompaniesCount,
       localNavItems: res.locals.localNavItems,
