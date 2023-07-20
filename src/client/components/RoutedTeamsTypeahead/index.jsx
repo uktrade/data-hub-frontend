@@ -30,6 +30,7 @@ const fetchTeams = () =>
 
 const RoutedTeamsTypeahead = ({
   taskProps,
+  closeMenuOnSelect,
   loadOptions = fetchTeams(),
   ...props
 }) => (
@@ -37,7 +38,7 @@ const RoutedTeamsTypeahead = ({
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={closeMenuOnSelect}
         {...props}
       />
     )}
@@ -50,6 +51,9 @@ RoutedTeamsTypeahead.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  closeMenuOnSelect: PropTypes.bool,
 }
+
+RoutedTeamsTypeahead.defaultProps = { closeMenuOnSelect: true }
 
 export default RoutedTeamsTypeahead

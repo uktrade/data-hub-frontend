@@ -91,22 +91,24 @@ function* subscribeToDismiss() {
  * @param {Record<string, Task>} registry - A registry of tasks
  */
 function* subscribeToStart(registry) {
+  // Object to hold references to running tasks
+  const runningTasks = {}
+
   while (true) {
     const action = yield take(TASK__START)
-    const { name, id } = action
+    const { name } = action
     const task = registry[action.name]
     if (!task) {
       throw Error(`Task "${name}" is not registered!`)
     }
-    const status = yield select((state) =>
-      get(state, ['tasks', name, id, 'status'])
-    )
-    if (status === 'progress') {
-      throw Error(
-        `Cannot start task "${name}.${id}" because it is already in progress. Cancel it first!`
-      )
+
+    // If a task is already running, cancel it
+    if (runningTasks[name]) {
+      yield cancel(runningTasks[name])
     }
-    yield spawn(manageTask, task, action)
+
+    // Start a new task and save a reference to it
+    runningTasks[name] = yield fork(manageTask, task, action)
   }
 }
 
