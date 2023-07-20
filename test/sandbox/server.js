@@ -58,6 +58,7 @@ var v4referralList = require('./routes/v4/referrals/list.js')
 var v4Proposition = require('./routes/v4/proposition/proposition.js')
 var v4Reminders = require('./routes/v4/reminders/index.js')
 var v4Reminder = require('./routes/v4/reminder/reminder.js')
+var v4SearchAdviser = require('./routes/v4/search/adviser.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -600,6 +601,7 @@ app.post(
   '/v4/search/export-country-history',
   v4SearchExports.fetchExportHistory
 )
+app.post('/v4/search/adviser', v4SearchAdviser.advisers)
 
 // Whoami endpoint
 app.get('/whoami', user.whoami)
