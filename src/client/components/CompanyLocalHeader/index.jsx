@@ -6,13 +6,9 @@ import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
-import {
-  SPACING,
-  FONT_SIZE,
-  BREAKPOINTS,
-  HEADING_SIZES,
-} from '@govuk-react/constants'
+import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
+import { H3 } from '@govuk-react/heading'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -29,8 +25,8 @@ import {
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
 
-const LocalHeaderTradingNames = styled('h2')`
-  font-size: ${HEADING_SIZES.S}px;
+const LocalHeaderTradingNames = styled(H3)`
+  font-weight: normal;
 `
 
 const StyledAddress = styled('p')`
@@ -144,7 +140,7 @@ const CompanyLocalHeader = ({
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
-            {company.tradingNames.length > 0 && (
+            {company.tradingNames && company.tradingNames.length > 0 && (
               <LocalHeaderTradingNames data-test="trading-names">
                 Trading as{' '}
                 {company.tradingNames.length === 1
