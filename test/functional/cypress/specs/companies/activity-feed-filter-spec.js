@@ -20,7 +20,7 @@ const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
+const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
@@ -72,13 +72,15 @@ describe('Company Activity Feed Filter', () => {
           ditParticipantsAdviser: [adviser.id],
         })
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+        cy.intercept('POST', adviserSearchEndpoint, {
+          results: [adviser],
+        }).as('adviserSearchApiRequest')
         cy.visit(
           `${urls.companies.activity.index(
             fixtures.company.allActivitiesCompany.id
           )}?${queryString}`
         )
-        cy.wait('@adviserApiRequest')
+        cy.wait('@adviserSearchApiRequest')
         cy.wait('@apiRequest')
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
         /*
@@ -100,7 +102,9 @@ describe('Company Activity Feed Filter', () => {
       it('should filter from user input and remove chips', () => {
         const queryString = buildQueryString()
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+        cy.intercept('POST', adviserSearchEndpoint, {
+          results: [adviser],
+        }).as('adviserSearchApiRequest')
         cy.visit(
           `${urls.companies.activity.index(
             fixtures.company.allActivitiesCompany.id
@@ -111,7 +115,7 @@ describe('Company Activity Feed Filter', () => {
           element: myInteractionsFilter,
           value: adviser.id,
         })
-        cy.wait('@adviserApiRequest')
+        cy.wait('@adviserSearchApiRequest')
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
 
         assertQueryParams('ditParticipantsAdviser', [adviser.id])
