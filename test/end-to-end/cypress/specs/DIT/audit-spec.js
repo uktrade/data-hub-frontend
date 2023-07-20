@@ -3,6 +3,9 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 let companyObj
@@ -75,8 +78,8 @@ describe('Investment Project', () => {
   })
 
   it('should display name of the person who made investment project record changes', () => {
-    cy.get('[data-test="submit"]').click()
-    cy.get(selectors.message.successful).should('be.visible')
+    cy.get('[data-test="submit-button"]').click()
+    assertFlashMessage('Investment details updated')
 
     cy.visit(urls.investments.editHistory.index(investmentProjectObj.pk))
 
