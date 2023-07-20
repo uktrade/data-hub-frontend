@@ -426,7 +426,7 @@ describe('Companies business details', () => {
           heading: 'About DnB Corp',
           showEditLink: true,
           content: {
-            'Trading name': 'DnBD&B',
+            'Trading name': 'DnBD&BDun & Bradstreet',
             'Annual turnover':
               '£720,000This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             'Number of employees':
