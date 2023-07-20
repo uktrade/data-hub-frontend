@@ -43,6 +43,7 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const companyAutocompleteEndpoint = '/api-proxy/v4/company?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
@@ -52,7 +53,6 @@ const companyOneListTierGroupMetadataEndpoint =
   '/api-proxy/v4/metadata/one-list-tier'
 
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
@@ -274,11 +274,14 @@ describe('Interactions Collections Filter', () => {
       })
 
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.intercept('GET', adviserAutocompleteEndpoint, {
         count: 1,
         results: [adviser],
       }).as('adviserListApiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+
       cy.visit(`/interactions?${queryParams}`)
       assertPayload('@apiRequest', expectedPayload)
       assertTypeaheadOptionSelected({
@@ -304,7 +307,9 @@ describe('Interactions Collections Filter', () => {
         count: 1,
         results: [adviser],
       }).as('adviserListApiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
 
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
@@ -315,7 +320,7 @@ describe('Interactions Collections Filter', () => {
         mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('dit_participants__adviser', [adviser.id])
       assertTypeaheadOptionSelected({
@@ -354,9 +359,11 @@ describe('Interactions Collections Filter', () => {
         dit_participants__adviser: [adviser.id],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`/interactions?${queryString}`)
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       /*
       Asserts the "Adviser typeahead" filter is selected with the
@@ -377,14 +384,16 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       clickCheckboxGroupOption({
         element: myInteractionsFilter,
         value: adviser.id,
       })
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [adviser.id])
       assertChipExists({ label: adviser.name, position: 1 })
