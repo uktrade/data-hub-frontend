@@ -18,6 +18,7 @@ import {
   BusinessActivitiesResourse,
   CompanyContactsResource,
   FDITypesResource,
+  LikelihoodToLandResource,
   ReferralSourceActivityResource,
   ReferralSourceMarketingResource,
   ReferralSourceWebsiteResource,
@@ -246,5 +247,16 @@ export const FieldEstimatedLandDate = ({ initialValue = null }) => (
     required="Enter an estimated land date"
     invalid="Enter a valid estimated land date"
     initialValue={initialValue}
+  />
+)
+
+export const FieldLikelihoodOfLanding = ({ initialValue = null }) => (
+  <ResourceOptionsField
+    name="likelihood_to_land"
+    label="Likelihood of landing (optional)"
+    resource={LikelihoodToLandResource}
+    field={FieldTypeahead}
+    initialValue={initialValue}
+    placeholder="Select a likelihood of landing value"
   />
 )

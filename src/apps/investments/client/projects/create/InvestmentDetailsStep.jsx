@@ -26,6 +26,7 @@ import {
   FieldReferralSourceAdviser,
   FieldReferralSourceHierarchy,
   FieldEstimatedLandDate,
+  FieldLikelihoodOfLanding,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const findSelectedItem = (items, value) =>
@@ -129,16 +130,8 @@ const InvestmentDetailsStep = ({ values, company }) => {
         />
 
         <FieldReferralSourceHierarchy />
-
         <FieldEstimatedLandDate />
-
-        <FieldTypeahead
-          name="likelihood_to_land"
-          label="Likelihood of landing"
-          options={values.likelihoodToLand}
-          placeholder="Select a likelihood of landing value"
-          data-test="likelihood-to-land"
-        />
+        <FieldLikelihoodOfLanding />
 
         <FieldDate
           name="actual_land_date"

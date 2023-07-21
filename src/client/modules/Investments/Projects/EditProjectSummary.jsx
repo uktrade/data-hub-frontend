@@ -18,7 +18,6 @@ import {
   InvestmentInvestorTypesResource,
   InvestmentTypesResource,
   LevelOfInvolvementResource,
-  LikelihoodToLandResource,
   SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -41,6 +40,7 @@ import {
   FieldReferralSourceAdviser,
   FieldReferralSourceHierarchy,
   FieldEstimatedLandDate,
+  FieldLikelihoodOfLanding,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -158,15 +158,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.estimatedLandDate
               )}
             />
-            <ResourceOptionsField
-              name="likelihood_to_land"
-              label="Likelihood of landing"
-              resource={LikelihoodToLandResource}
-              field={FieldTypeahead}
+            <FieldLikelihoodOfLanding
               initialValue={transformObjectForTypeahead(
                 project.likelihoodToLand
               )}
-              placeholder="Select a likelihood of landing value"
             />
             <FieldDate
               name="actual_land_date"
