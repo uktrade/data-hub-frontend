@@ -26,6 +26,7 @@ import {
   ReferralSourceMarketingResource,
   ReferralSourceWebsiteResource,
   SectorResource,
+  SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayForTypeahead } from './transformers'
@@ -293,5 +294,16 @@ export const FieldLevelOfInvolvement = ({ initialValue = null }) => (
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a level of involvement"
+  />
+)
+
+export const FieldSpecificProgramme = ({ initialValue = null }) => (
+  <ResourceOptionsField
+    name="specific_programme"
+    label="Specific investment programme (optional)"
+    resource={SpecificInvestmentProgrammesResource}
+    field={FieldTypeahead}
+    initialValue={initialValue}
+    placeholder="Choose a specific programme"
   />
 )

@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import {
   FieldInput,
   FieldRadios,
-  FieldTypeahead,
   FieldWrapper,
   Form,
   Main,
@@ -15,9 +14,7 @@ import {
 import {
   InvestmentResource,
   InvestmentTypesResource,
-  SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import urls from '../../../../lib/urls'
 import { transformObjectForTypeahead } from '../../../../apps/investments/client/projects/team/transformers'
 import { transformArrayForTypeahead } from './transformers'
@@ -41,6 +38,7 @@ import {
   FieldActualLandDate,
   FieldInvestmentInvestorType,
   FieldLevelOfInvolvement,
+  FieldSpecificProgramme,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -177,15 +175,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.levelOfInvolvement
               )}
             />
-            <ResourceOptionsField
-              name="specific_programme"
-              label="Specific investment programme"
-              resource={SpecificInvestmentProgrammesResource}
-              field={FieldTypeahead}
+            <FieldSpecificProgramme
               initialValue={transformObjectForTypeahead(
                 project.specificProgramme
               )}
-              placeholder="Choose a specific programme"
             />
           </Form>
         </Main>

@@ -5,7 +5,6 @@ import {
   Step,
   FieldInput,
   FieldRadios,
-  FieldTypeahead,
   SummaryTable,
   ContactInformation,
   FormLayout,
@@ -29,6 +28,13 @@ import {
   FieldActualLandDate,
   FieldInvestmentInvestorType,
   FieldLevelOfInvolvement,
+  FieldLikelihoodOfLanding,
+  FieldProjectDescription,
+  FieldProjectName,
+  FieldProjectSector,
+  FieldReferralSourceAdviser,
+  FieldReferralSourceHierarchy,
+  FieldSpecificProgramme,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const findSelectedItem = (items, value) =>
@@ -137,14 +143,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldActualLandDate />
         <FieldInvestmentInvestorType label="Is the investor new or existing? (optional)" />
         <FieldLevelOfInvolvement />
-
-        <FieldTypeahead
-          name="specific_programme"
-          label="Specific investment programme (optional)"
-          options={values.investmentSpecificProgramme}
-          placeholder="Choose a specific programme"
-          data-test="specific-investment-programme"
-        />
+        <FieldSpecificProgramme />
       </Step>
     </FormLayout>
   )
