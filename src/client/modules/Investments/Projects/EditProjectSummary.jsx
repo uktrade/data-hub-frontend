@@ -14,7 +14,6 @@ import {
 } from '../../../components'
 import {
   InvestmentResource,
-  InvestmentInvestorTypesResource,
   InvestmentTypesResource,
   LevelOfInvolvementResource,
   SpecificInvestmentProgrammesResource,
@@ -41,6 +40,7 @@ import {
   FieldEstimatedLandDate,
   FieldLikelihoodOfLanding,
   FieldActualLandDate,
+  FieldInvestmentInvestorType,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -168,11 +168,8 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.actualLandDate
               )}
             />
-            <ResourceOptionsField
-              name="investor_type"
+            <FieldInvestmentInvestorType
               label="New or existing investor"
-              resource={InvestmentInvestorTypesResource}
-              field={FieldRadios}
               initialValue={project.investorType?.id}
             />
             <ResourceOptionsField

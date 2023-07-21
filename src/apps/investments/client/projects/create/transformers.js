@@ -34,7 +34,7 @@ export const transformFormValuesToPayload = (values, csrfToken) => ({
   referral_source_activity_website: values.referral_source_activity_website,
   estimated_land_date: formatEstimatedLandDate(values.estimated_land_date),
   actual_land_date: formatActualLandDate(values.actual_land_date),
-  investor_type: values.investor_type?.value,
+  investor_type: values.investor_type,
   level_of_involvement: values.level_of_involvement?.value,
   specific_programme: values.specific_programme?.value,
 })

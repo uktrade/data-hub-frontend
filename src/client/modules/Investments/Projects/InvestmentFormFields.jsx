@@ -10,6 +10,7 @@ import {
   FieldAdvisersTypeahead,
   FieldDate,
   FieldInput,
+  FieldRadios,
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
@@ -18,6 +19,7 @@ import {
   BusinessActivitiesResourse,
   CompanyContactsResource,
   FDITypesResource,
+  InvestmentInvestorTypesResource,
   LikelihoodToLandResource,
   ReferralSourceActivityResource,
   ReferralSourceMarketingResource,
@@ -267,6 +269,16 @@ export const FieldActualLandDate = ({ initialValue = null }) => (
     label="Actual land date (optional)"
     hint="The date investment project activities started"
     invalid="Enter a valid actual land date"
+    initialValue={initialValue}
+  />
+)
+
+export const FieldInvestmentInvestorType = ({ label, initialValue = null }) => (
+  <ResourceOptionsField
+    name="investor_type"
+    label={label}
+    resource={InvestmentInvestorTypesResource}
+    field={FieldRadios}
     initialValue={initialValue}
   />
 )

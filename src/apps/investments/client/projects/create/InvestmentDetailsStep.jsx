@@ -133,14 +133,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
         <FieldActualLandDate />
-
-        <FieldTypeahead
-          name="investor_type"
-          label="Is the investor new or existing? (optional)"
-          options={values.investmentInvestorType}
-          placeholder="Choose an investor type"
-          data-test="investor-type"
-        />
+        <FieldInvestmentInvestorType label="Is the investor new or existing? (optional)" />
 
         <FieldTypeahead
           name="level_of_involvement"

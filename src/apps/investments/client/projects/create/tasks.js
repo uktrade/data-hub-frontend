@@ -80,7 +80,6 @@ const fetchValuesFromAPI = () =>
     getMetadataOptions(urls.metadata.referralSourceActivity()),
     getMetadataOptions(urls.metadata.referralSourceMarketing()),
     getMetadataOptions(urls.metadata.referralSourceWebsite()),
-    getMetadataOptions(urls.metadata.investmentInvestorType()),
     getMetadataOptions(urls.metadata.investmentInvolvement()),
     getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
   ]).then(
@@ -91,7 +90,6 @@ const fetchValuesFromAPI = () =>
       referralSourceActivity,
       referralSourceMarketing,
       referralSourceWebsite,
-      investmentInvestorType,
       investmentInvolvement,
       investmentSpecificProgramme,
     ]) => ({
@@ -101,7 +99,6 @@ const fetchValuesFromAPI = () =>
       referralSourceActivity,
       referralSourceMarketing,
       referralSourceWebsite,
-      investmentInvestorType,
       investmentInvolvement,
       investmentSpecificProgramme,
     })
