@@ -78,7 +78,10 @@ describe('Investment Project', () => {
   })
 
   it('should display name of the person who made investment project record changes', () => {
-    cy.wait(1000)
+    cy.intercept('api-proxy/v4/metadata/investment-specific-programme').as(
+      'apiRequest'
+    )
+    cy.wait('@apiRequest')
     cy.get('[data-test="submit-button"]').click()
     assertFlashMessage('Investment details updated')
 
