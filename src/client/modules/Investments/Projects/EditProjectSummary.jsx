@@ -71,287 +71,281 @@ const checkReferralSourceAdviser = (currentAdviser, referralSourceAdviser) =>
   currentAdviser === referralSourceAdviser
 
 const EditProjectSummary = ({ projectId, currentAdviser }) => (
-  <InvestmentTypesResource>
-    {(investmentTypes) => (
-      <ReferralSourceActivityResource>
-        {(referralSourceActivities) => (
-          <InvestmentResource id={projectId}>
-            {(project) => (
-              <>
-                <H2 size={LEVEL_SIZE[3]}>Update investment project summary</H2>
-                <Main>
-                  <Form
-                    id="edit-project-summary"
-                    analyticsFormName="editInvestmentProjectSummary"
-                    cancelButtonLabel="Back"
-                    cancelRedirectTo={() =>
-                      urls.investments.projects.details(project.id)
-                    }
-                    flashMessage={() => 'Investment details updated'}
-                    submitButtonlabel="Save"
-                    redirectTo={() =>
-                      urls.investments.projects.details(project.id)
-                    }
-                    submissionTaskName={TASK_EDIT_INVESTMENT_PROJECT_SUMMARY}
-                    transformPayload={(values) =>
-                      transformProjectSummaryForApi({
-                        projectId,
-                        currentAdviser,
-                        values,
-                      })
-                    }
-                  >
-                    <FieldInput
-                      label="Project name"
-                      name="name"
-                      type="text"
-                      initialValue={project.name}
-                      required="Enter the project name"
-                      placeholder="e.g. Project Zeus"
-                    />
-                    <FieldTextarea
-                      type="text"
-                      name="description"
-                      label="Project description"
-                      required="Enter a description"
-                      initialValue={project.description}
-                    />
-                    <FieldTextarea
-                      type="text"
-                      name="anonymous_description"
-                      label="Anonymised description of the project"
-                      hint="Do not include company names, financial details or address details"
-                      initialValue={project.anonymousDescription}
-                    />
-                    <FieldRadios
-                      name="investment_type"
-                      label="Investment type"
-                      initialValue={project.investmentType.id}
-                      options={transformArrayForTypeahead(investmentTypes).map(
-                        (option) => ({
-                          ...option,
-                          ...(option.label === 'FDI' && {
-                            children: (
-                              <ResourceOptionsField
-                                name="fdi_type"
-                                label="Type of foreign direct investment (FDI)"
-                                resource={FDITypesResource}
-                                field={FieldTypeahead}
-                                initialValue={transformObjectForTypeahead(
-                                  project.fdiType
-                                )}
-                                placeholder="Select an FDI type"
-                                required="Select the FDI type"
-                              />
-                            ),
-                          }),
-                        })
-                      )}
-                    />
-                    <ResourceOptionsField
-                      name="sector"
-                      label="Primary sector"
-                      resource={SectorResource}
-                      field={FieldTypeahead}
-                      initialValue={transformObjectForTypeahead(project.sector)}
-                      placeholder="Choose a sector"
-                    />
-                    <StyledFieldWrapper name="businessActivitiesWrapper">
-                      <ResourceOptionsField
-                        name="business_activities"
-                        label="Business activities"
-                        resource={BusinessActivitiesResourse}
-                        field={FieldTypeahead}
-                        initialValue={transformArrayForTypeahead(
-                          project.businessActivities
-                        )}
-                        isMulti={true}
-                        placeholder="Choose a business activity"
-                      />
-                      <FieldInput
-                        label="Other business activity (if not on list)"
-                        name="other_business_activity"
-                        type="text"
-                        initialValue={project.otherBusinessActivity}
-                        placeholder="e.g. meet and greet dinner"
-                      />
-                    </StyledFieldWrapper>
-                    <ResourceOptionsField
-                      name="client_contacts"
-                      label="Client contacts"
-                      resource={CompanyContactsResource}
-                      id={project.investorCompany.id}
-                      field={FieldTypeahead}
-                      resultToOptions={({ results }) =>
-                        transformArrayForTypeahead(results)
-                      }
-                      initialValue={transformArrayForTypeahead(
-                        project.clientContacts
-                      )}
-                      isMulti={true}
-                      placeholder="Choose the client contacts"
-                    />
-                    <FieldRadios
-                      name="is_referral_source"
-                      label="Are you the referral source for this project?"
+  <InvestmentResource id={projectId}>
+    {(project) => (
+      <>
+        <H2 size={LEVEL_SIZE[3]}>Update investment project summary</H2>
+        <Main>
+          <Form
+            id="edit-project-summary"
+            analyticsFormName="editInvestmentProjectSummary"
+            cancelButtonLabel="Back"
+            cancelRedirectTo={() =>
+              urls.investments.projects.details(project.id)
+            }
+            flashMessage={() => 'Investment details updated'}
+            submitButtonlabel="Save"
+            redirectTo={() => urls.investments.projects.details(project.id)}
+            submissionTaskName={TASK_EDIT_INVESTMENT_PROJECT_SUMMARY}
+            transformPayload={(values) =>
+              transformProjectSummaryForApi({
+                projectId,
+                currentAdviser,
+                values,
+              })
+            }
+          >
+            <FieldInput
+              label="Project name"
+              name="name"
+              type="text"
+              initialValue={project.name}
+              required="Enter the project name"
+              placeholder="e.g. Project Zeus"
+            />
+            <FieldTextarea
+              type="text"
+              name="description"
+              label="Project description"
+              required="Enter a description"
+              initialValue={project.description}
+            />
+            <FieldTextarea
+              type="text"
+              name="anonymous_description"
+              label="Anonymised description of the project"
+              hint="Do not include company names, financial details or address details"
+              initialValue={project.anonymousDescription}
+            />
+            <InvestmentTypesResource>
+              {(investmentTypes) => (
+                <FieldRadios
+                  name="investment_type"
+                  label="Investment type"
+                  initialValue={project.investmentType.id}
+                  options={transformArrayForTypeahead(investmentTypes).map(
+                    (option) => ({
+                      ...option,
+                      ...(option.label === 'FDI' && {
+                        children: (
+                          <ResourceOptionsField
+                            name="fdi_type"
+                            label="Type of foreign direct investment (FDI)"
+                            resource={FDITypesResource}
+                            field={FieldTypeahead}
+                            initialValue={transformObjectForTypeahead(
+                              project.fdiType
+                            )}
+                            placeholder="Select an FDI type"
+                            required="Select the FDI type"
+                          />
+                        ),
+                      }),
+                    })
+                  )}
+                />
+              )}
+            </InvestmentTypesResource>
+            <ResourceOptionsField
+              name="sector"
+              label="Primary sector"
+              resource={SectorResource}
+              field={FieldTypeahead}
+              initialValue={transformObjectForTypeahead(project.sector)}
+              placeholder="Choose a sector"
+            />
+            <StyledFieldWrapper name="businessActivitiesWrapper">
+              <ResourceOptionsField
+                name="business_activities"
+                label="Business activities"
+                resource={BusinessActivitiesResourse}
+                field={FieldTypeahead}
+                initialValue={transformArrayForTypeahead(
+                  project.businessActivities
+                )}
+                isMulti={true}
+                placeholder="Choose a business activity"
+              />
+              <FieldInput
+                label="Other business activity (if not on list)"
+                name="other_business_activity"
+                type="text"
+                initialValue={project.otherBusinessActivity}
+                placeholder="e.g. meet and greet dinner"
+              />
+            </StyledFieldWrapper>
+            <ResourceOptionsField
+              name="client_contacts"
+              label="Client contacts"
+              resource={CompanyContactsResource}
+              id={project.investorCompany.id}
+              field={FieldTypeahead}
+              resultToOptions={({ results }) =>
+                transformArrayForTypeahead(results)
+              }
+              initialValue={transformArrayForTypeahead(project.clientContacts)}
+              isMulti={true}
+              placeholder="Choose the client contacts"
+            />
+            <FieldRadios
+              name="is_referral_source"
+              label="Are you the referral source for this project?"
+              initialValue={
+                checkReferralSourceAdviser(
+                  currentAdviser,
+                  project.referralSourceAdviser.id
+                )
+                  ? OPTION_YES
+                  : OPTION_NO
+              }
+              options={OPTIONS_YES_NO.map((option) => ({
+                ...option,
+                ...(option.value === OPTION_NO && {
+                  children: (
+                    <FieldAdvisersTypeahead
+                      name="referral_source_adviser"
+                      label="Referral source adviser"
                       initialValue={
                         checkReferralSourceAdviser(
                           currentAdviser,
                           project.referralSourceAdviser.id
                         )
-                          ? OPTION_YES
-                          : OPTION_NO
+                          ? null
+                          : transformObjectForTypeahead(
+                              project.referralSourceAdviser
+                            )
                       }
-                      options={OPTIONS_YES_NO.map((option) => ({
-                        ...option,
-                        ...(option.value === OPTION_NO && {
-                          children: (
-                            <FieldAdvisersTypeahead
-                              name="referral_source_adviser"
-                              label="Referral source adviser"
+                      placeholder="Select referral source adviser"
+                      required="Select the referral source adviser"
+                    />
+                  ),
+                }),
+              }))}
+            />
+            <ReferralSourceActivityResource>
+              {(referralSourceActivities) => (
+                <StyledReferralSourceWrapper>
+                  <FieldSelect
+                    name="referral_source_activity"
+                    label="Referral source activity"
+                    initialValue={project.referralSourceActivity?.id}
+                    options={transformArrayForTypeahead(
+                      referralSourceActivities
+                    ).map((option) => ({
+                      ...option,
+                      ...(option.label === 'Marketing' && {
+                        children: (
+                          <StyledContainer>
+                            <ResourceOptionsField
+                              name="referral_source_activity_marketing"
+                              label="Marketing"
+                              resource={ReferralSourceMarketingResource}
+                              field={FieldSelect}
                               initialValue={
-                                checkReferralSourceAdviser(
-                                  currentAdviser,
-                                  project.referralSourceAdviser.id
-                                )
-                                  ? null
-                                  : transformObjectForTypeahead(
-                                      project.referralSourceAdviser
-                                    )
+                                project.referralSourceActivityMarketing?.id
                               }
-                              placeholder="Select referral source adviser"
-                              required="Select the referral source adviser"
+                              placeholder="Choose a marketing type"
+                              required="Select the marketing type"
                             />
-                          ),
-                        }),
-                      }))}
-                    />
-                    <StyledReferralSourceWrapper>
-                      <FieldSelect
-                        name="referral_source_activity"
-                        label="Referral source activity"
-                        initialValue={project.referralSourceActivity?.id}
-                        options={transformArrayForTypeahead(
-                          referralSourceActivities
-                        ).map((option) => ({
-                          ...option,
-                          ...(option.label === 'Marketing' && {
-                            children: (
-                              <StyledContainer>
-                                <ResourceOptionsField
-                                  name="referral_source_activity_marketing"
-                                  label="Marketing"
-                                  resource={ReferralSourceMarketingResource}
-                                  field={FieldSelect}
-                                  initialValue={
-                                    project.referralSourceActivityMarketing?.id
-                                  }
-                                  placeholder="Choose a marketing type"
-                                  required="Select the marketing type"
-                                />
-                              </StyledContainer>
-                            ),
-                          }),
-                          ...(option.label === 'Website' && {
-                            children: (
-                              <StyledContainer>
-                                <ResourceOptionsField
-                                  name="referral_source_activity_website"
-                                  label="Website"
-                                  resource={ReferralSourceWebsiteResource}
-                                  field={FieldSelect}
-                                  initialValue={
-                                    project.referralSourceActivityWebsite?.id
-                                  }
-                                  placeholder="Choose a website"
-                                  required="Select the website"
-                                />
-                              </StyledContainer>
-                            ),
-                          }),
-                          ...(option.label === 'Event' && {
-                            children: (
-                              <StyledContainer>
-                                <FieldInput
-                                  label="Event"
-                                  name="referral_source_activity_event"
-                                  type="text"
-                                  initialValue={
-                                    project.referralSourceActivityEvent
-                                  }
-                                  placeholder="e.g. conversation at conference"
-                                  required="Enter the event details"
-                                />
-                              </StyledContainer>
-                            ),
-                          }),
-                        }))}
-                      />
-                    </StyledReferralSourceWrapper>
-                    <FieldDate
-                      name="estimated_land_date"
-                      label="Estimated land date"
-                      initialValue={transformDateStringToDateObject(
-                        project.estimatedLandDate
-                      )}
-                      hint="When activities planned under the investment project will have fully commenced"
-                      showDay={false}
-                      required="Enter the project's estimated land date"
-                    />
-                    <ResourceOptionsField
-                      name="likelihood_to_land"
-                      label="Likelihood of landing"
-                      resource={LikelihoodToLandResource}
-                      field={FieldTypeahead}
-                      initialValue={transformObjectForTypeahead(
-                        project.likelihoodToLand
-                      )}
-                      placeholder="Select a likelihood of landing value"
-                    />
-                    <FieldDate
-                      name="actual_land_date"
-                      label="Actual land date"
-                      initialValue={transformDateStringToDateObject(
-                        project.actualLandDate
-                      )}
-                      hint="When activities under the investment project fully commenced"
-                    />
-                    <ResourceOptionsField
-                      name="investor_type"
-                      label="New or existing investor"
-                      resource={InvestmentInvestorTypesResource}
-                      field={FieldRadios}
-                      initialValue={project.investorType?.id}
-                    />
-                    <ResourceOptionsField
-                      name="level_of_involvement"
-                      label="Investor level of involvement"
-                      resource={LevelOfInvolvementResource}
-                      field={FieldTypeahead}
-                      initialValue={transformObjectForTypeahead(
-                        project.levelOfInvolvement
-                      )}
-                      placeholder="Choose a level of involvement"
-                    />
-                    <ResourceOptionsField
-                      name="specific_programme"
-                      label="Specific investment programme"
-                      resource={SpecificInvestmentProgrammesResource}
-                      field={FieldTypeahead}
-                      initialValue={transformObjectForTypeahead(
-                        project.specificProgramme
-                      )}
-                      placeholder="Choose a specific programme"
-                    />
-                  </Form>
-                </Main>
-              </>
-            )}
-          </InvestmentResource>
-        )}
-      </ReferralSourceActivityResource>
+                          </StyledContainer>
+                        ),
+                      }),
+                      ...(option.label === 'Website' && {
+                        children: (
+                          <StyledContainer>
+                            <ResourceOptionsField
+                              name="referral_source_activity_website"
+                              label="Website"
+                              resource={ReferralSourceWebsiteResource}
+                              field={FieldSelect}
+                              initialValue={
+                                project.referralSourceActivityWebsite?.id
+                              }
+                              placeholder="Choose a website"
+                              required="Select the website"
+                            />
+                          </StyledContainer>
+                        ),
+                      }),
+                      ...(option.label === 'Event' && {
+                        children: (
+                          <StyledContainer>
+                            <FieldInput
+                              label="Event"
+                              name="referral_source_activity_event"
+                              type="text"
+                              initialValue={project.referralSourceActivityEvent}
+                              placeholder="e.g. conversation at conference"
+                              required="Enter the event details"
+                            />
+                          </StyledContainer>
+                        ),
+                      }),
+                    }))}
+                  />
+                </StyledReferralSourceWrapper>
+              )}
+            </ReferralSourceActivityResource>
+            <FieldDate
+              name="estimated_land_date"
+              label="Estimated land date"
+              initialValue={transformDateStringToDateObject(
+                project.estimatedLandDate
+              )}
+              hint="When activities planned under the investment project will have fully commenced"
+              showDay={false}
+              required="Enter the project's estimated land date"
+            />
+            <ResourceOptionsField
+              name="likelihood_to_land"
+              label="Likelihood of landing"
+              resource={LikelihoodToLandResource}
+              field={FieldTypeahead}
+              initialValue={transformObjectForTypeahead(
+                project.likelihoodToLand
+              )}
+              placeholder="Select a likelihood of landing value"
+            />
+            <FieldDate
+              name="actual_land_date"
+              label="Actual land date"
+              initialValue={transformDateStringToDateObject(
+                project.actualLandDate
+              )}
+              hint="When activities under the investment project fully commenced"
+            />
+            <ResourceOptionsField
+              name="investor_type"
+              label="New or existing investor"
+              resource={InvestmentInvestorTypesResource}
+              field={FieldRadios}
+              initialValue={project.investorType?.id}
+            />
+            <ResourceOptionsField
+              name="level_of_involvement"
+              label="Investor level of involvement"
+              resource={LevelOfInvolvementResource}
+              field={FieldTypeahead}
+              initialValue={transformObjectForTypeahead(
+                project.levelOfInvolvement
+              )}
+              placeholder="Choose a level of involvement"
+            />
+            <ResourceOptionsField
+              name="specific_programme"
+              label="Specific investment programme"
+              resource={SpecificInvestmentProgrammesResource}
+              field={FieldTypeahead}
+              initialValue={transformObjectForTypeahead(
+                project.specificProgramme
+              )}
+              placeholder="Choose a specific programme"
+            />
+          </Form>
+        </Main>
+      </>
     )}
-  </InvestmentTypesResource>
+  </InvestmentResource>
 )
 EditProjectSummary.propTypes = {
   projectId: PropTypes.string.isRequired,
