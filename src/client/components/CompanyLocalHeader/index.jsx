@@ -145,7 +145,7 @@ const CompanyLocalHeader = ({
                 Trading as:{' '}
                 {company.tradingNames.length === 1
                   ? company.tradingNames[0]
-                  : company.tradingNames.slice.join(', ')}
+                  : company.tradingNames.join(', ')}
               </LocalHeaderTradingNames>
             )}
 
