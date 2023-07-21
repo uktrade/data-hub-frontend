@@ -21,24 +21,6 @@ export const getCompanyInvestmentsCount = (companyId) =>
       count: data.count,
     }))
 
-const getAdvisers = () =>
-  apiProxyAxios
-    .get('/adviser/', {
-      params: {
-        is_active: true,
-        limit: 100000,
-        offset: 0,
-      },
-    })
-    .then(({ data: { results } }) =>
-      results
-        .filter((adviser) => adviser?.name.trim().length)
-        .map(({ id, name }) => ({
-          label: name,
-          value: id,
-        }))
-    )
-
 export const searchCompany = ({ searchTerm }) =>
   apiProxyAxios
     .post('/v4/search/company', {
@@ -75,31 +57,10 @@ const fetchValuesFromSessionStorage = (contact) => {
 const fetchValuesFromAPI = () =>
   Promise.all([
     getAdviser(),
-    getAdvisers(),
     getMetadataOptions(urls.metadata.investmentType()),
-    getMetadataOptions(urls.metadata.referralSourceActivity()),
-    getMetadataOptions(urls.metadata.referralSourceMarketing()),
-    getMetadataOptions(urls.metadata.referralSourceWebsite()),
-    getMetadataOptions(urls.metadata.investmentInvolvement()),
-    getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
-  ]).then(
-    ([
-      adviser,
-      advisers,
-      investmentTypes,
-      referralSourceActivity,
-      referralSourceMarketing,
-      referralSourceWebsite,
-      investmentInvolvement,
-      investmentSpecificProgramme,
-    ]) => ({
-      adviser,
-      advisers,
-      investmentTypes: orderInvestmentTypes(investmentTypes),
-      referralSourceActivity,
-      referralSourceMarketing,
-      referralSourceWebsite,
-      investmentInvolvement,
-      investmentSpecificProgramme,
-    })
-  )
+    getMetadataOptions(urls.metadata.fdiType()),
+  ]).then(([adviser, investmentTypes, fdiTypes]) => ({
+    adviser,
+    investmentTypes: orderInvestmentTypes(investmentTypes),
+    fdiTypes,
+  }))

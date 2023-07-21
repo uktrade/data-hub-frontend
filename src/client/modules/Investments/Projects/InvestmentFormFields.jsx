@@ -74,7 +74,7 @@ export const FieldProjectName = ({
     name="name"
     type="text"
     initialValue={initialValue}
-    required="Enter the project name"
+    required="Enter a project name"
     placeholder={placeholder}
   />
 )
@@ -87,7 +87,7 @@ export const FieldProjectDescription = ({
     type="text"
     name="description"
     label="Project description"
-    required="Enter a description"
+    required="Enter a project description"
     initialValue={initialValue}
     hint={hint}
   />
@@ -98,7 +98,7 @@ export const FieldAnonDescription = ({ initialValue = null }) => (
     type="text"
     name="anonymous_description"
     label="Anonymous project details (optional)"
-    hint="Do not include company names, financial details or address details"
+    hint="Do not include company names, financial details or addresses"
     initialValue={initialValue}
   />
 )
@@ -111,6 +111,7 @@ export const FieldProjectSector = ({ initialValue = null }) => (
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a sector"
+    required="Choose a primary sector"
   />
 )
 
@@ -123,6 +124,7 @@ export const FieldBusinessActivity = ({ initialValue = null }) => (
     initialValue={initialValue}
     isMulti={true}
     placeholder="Choose a business activity"
+    required="Choose a business activity"
     hint="You can select more than one activity"
   />
 )
@@ -184,6 +186,7 @@ export const FieldReferralSourceHierarchy = ({
           name="referral_source_activity"
           label="Referral source activity"
           emptyOption="Choose a referral source activity"
+          required="Choose a referral source activity"
           initialValue={initialValue}
           fullWidth={true}
           options={transformArrayForTypeahead(referralSourceActivities).map(
@@ -199,7 +202,7 @@ export const FieldReferralSourceHierarchy = ({
                       field={FieldSelect}
                       initialValue={marketingInitialValue}
                       placeholder="Choose a marketing type"
-                      required="Select the marketing type"
+                      required="Choose the marketing type"
                       fullWidth={true}
                     />
                   </StyledContainer>
@@ -215,7 +218,7 @@ export const FieldReferralSourceHierarchy = ({
                       field={FieldSelect}
                       initialValue={websiteInitialValue}
                       placeholder="Choose a website"
-                      required="Select the website"
+                      required="Choose the website"
                       fullWidth={true}
                     />
                   </StyledContainer>
@@ -283,6 +286,7 @@ export const FieldInvestmentInvestorType = ({ label, initialValue = null }) => (
     resource={InvestmentInvestorTypesResource}
     field={FieldRadios}
     initialValue={initialValue}
+    placeholder="Choose an investor type'"
   />
 )
 

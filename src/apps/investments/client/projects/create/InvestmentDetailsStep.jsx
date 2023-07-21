@@ -10,23 +10,12 @@ import {
   FormLayout,
   FieldAdvisersTypeahead,
 } from '../../../../../client/components'
-import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
-import Task from '../../../../../client/components/Task'
-import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
-import { FORM_LAYOUT } from '../../../../../common/constants'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 import {
-  FieldProjectName,
-  FieldProjectDescription,
+  FieldActualLandDate,
   FieldAnonDescription,
-  FieldProjectSector,
   FieldBusinessActivity,
   FieldClientContacts,
-  FieldReferralSourceAdviser,
-  FieldReferralSourceHierarchy,
   FieldEstimatedLandDate,
-  FieldLikelihoodOfLanding,
-  FieldActualLandDate,
   FieldInvestmentInvestorType,
   FieldLevelOfInvolvement,
   FieldLikelihoodOfLanding,
@@ -37,6 +26,11 @@ import {
   FieldReferralSourceHierarchy,
   FieldSpecificProgramme,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
+import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
+import Task from '../../../../../client/components/Task'
+import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
+import { FORM_LAYOUT } from '../../../../../common/constants'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 
 const findSelectedItem = (items, value) =>
   items ? items.find((type) => type.value === value) : null
@@ -125,18 +119,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
           }))}
         />
 
-        <FieldRadios
-          name="referralSourceAdviser"
-          legend="Are you the referral source for this project?"
-          required="Select yes if you're the referral source for this project"
-          options={OPTIONS_YES_NO.map((option) => ({
-            ...option,
-            ...(option.value === OPTION_NO && {
-              children: <FieldReferralSourceAdviser />,
-            }),
-          }))}
-        />
-
+        <FieldReferralSourceAdviser label="Are you the referral source for this project?" />
         <FieldReferralSourceHierarchy />
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
@@ -161,16 +144,6 @@ InvestmentDetailsStep.propTypes = {
     investment_type: PropTypes.string,
     fdiTypes: PropTypes.arrayOf(optionProp),
     fdi_type: PropTypes.string,
-    sectors: PropTypes.arrayOf(optionProp),
-    investmentBusinessActivity: PropTypes.arrayOf(optionProp),
-    advisers: PropTypes.arrayOf(PropTypes.object),
-    referralSourceActivity: PropTypes.arrayOf(optionProp),
-    referralSourceMarketing: PropTypes.arrayOf(optionProp),
-    referralSourceWebsite: PropTypes.arrayOf(optionProp),
-    investmentInvestorType: PropTypes.arrayOf(optionProp),
-    investmentInvolvement: PropTypes.arrayOf(optionProp),
-    investmentSpecificProgramme: PropTypes.arrayOf(optionProp),
-    likelihoodToLand: PropTypes.arrayOf(optionProp),
   }),
 }
 

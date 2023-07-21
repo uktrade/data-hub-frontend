@@ -3,16 +3,17 @@ const { company } = require('../../fixtures')
 const { expect } = require('chai')
 
 const {
-  assertSelectOptions,
   assertSummaryTable,
   assertFieldTypeahead,
   assertFieldTextarea,
+  assertFieldRadios,
   assertFieldRadiosWithLegend,
   assertFieldInput,
   assertFieldSelect,
   assertFieldDate,
   assertFieldDateShort,
 } = require('../../support/assertions')
+const { clearTypeahead } = require('../../support/form-fillers')
 
 const { usCompany } = company
 
@@ -54,41 +55,14 @@ const investmentTypeTests = () => {
   })
 
   it('should display a list of "FDI types" when selecting "FDI"', () => {
-    cy.checkRadioGroup('Investment type', 'FDI')
-    assertSelectOptions('select option', [
-      {
-        label: 'Select an FDI type',
-        value: '',
-      },
-      {
-        label: 'Acquisition',
-        value: 'ac035522-ad0b-4eeb-87f4-0ce964e4b104',
-      },
-      {
-        label: 'Capital only',
-        value: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
-      },
-      {
-        label: 'Creation of new site or activity',
-        value: 'f8447013-cfdc-4f35-a146-6619665388b3',
-      },
-      {
-        label: 'Expansion of existing site or activity',
-        value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
-      },
-      {
-        label: 'Joint venture',
-        value: 'a7dbf6b3-9c04-43a7-9be9-d3072f138fab',
-      },
-      {
-        label: 'Merger',
-        value: '32018db0-fd2d-4b8c-aee4-a931bde3abe8',
-      },
-      {
-        label: 'Retention',
-        value: '0657168e-8a58-4f37-914f-ec541556fc28',
-      },
-    ])
+    cy.get('[data-test="investment-type-fdi"]').click()
+    cy.get('[data-test="field-fdi_type"]').then((element) => {
+      assertFieldTypeahead({
+        element,
+        label: 'Type of foreign direct investment (FDI)',
+        placeholder: 'Select an FDI type',
+      })
+    })
   })
 
   it('should display a "Continue" button', () => {
@@ -209,7 +183,7 @@ describe('Investment Detail Step Form Content', () => {
 
   it('should display the Project name field', () => {
     cy.get('form label').should('contain', 'Project name')
-    cy.get('[data-test="name"]').should('be.visible')
+    cy.get('[data-test="field-name"]').should('be.visible')
   })
 
   it('should display the Project description field', () => {
@@ -247,24 +221,23 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Business activities',
-        placeholder: 'Search',
+        placeholder: 'Choose a business activity',
         hint: 'You can select more than one activity',
       })
     })
   })
 
   it('should not display the other business activitiy field', () => {
-    cy.get('div[data-test="business-activities"] input').clear()
+    clearTypeahead('[data-test=field-business_activities]')
 
     cy.get('[data-test="field-other_business_activity"]').should('not.exist')
   })
 
   it('should display the other business activitiy field if Other listed in Business activities field', () => {
-    cy.get('div[data-test="business-activities"] input').clear()
-    cy.get('div[data-test="business-activities"] input').type('other')
-    cy.get(
-      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
-    ).click()
+    clearTypeahead('[data-test=field-business_activities]')
+    cy.get('[data-test="field-business_activities"]').selectTypeaheadOption(
+      'Other'
+    )
 
     cy.get('[data-test="field-other_business_activity"]').then((element) => {
       assertFieldInput({
@@ -280,7 +253,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Client contact details',
-        placeholder: 'Search',
+        placeholder: 'Choose a client contact',
       })
     })
   })
@@ -310,7 +283,7 @@ describe('Investment Detail Step Form Content', () => {
   })
 
   it('should display the Referral source field', () => {
-    cy.get('[data-test="field-referralSourceAdviser"]').then((element) => {
+    cy.get('[data-test="field-is_referral_source"]').then((element) => {
       assertFieldRadiosWithLegend({
         element,
         legend: 'Are you the referral source for this project?',
@@ -324,8 +297,8 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldSelect({
         element,
         label: 'Referral source activity',
-        value: 'Choose a referral source activity',
-        optionsCount: 46,
+        placeholder: 'Choose a referral source activity',
+        optionsCount: 49,
       })
     })
   })
@@ -351,10 +324,10 @@ describe('Investment Detail Step Form Content', () => {
 
   it('should display the new or existing investor field', () => {
     cy.get('[data-test="field-investor_type"]').then((element) => {
-      assertFieldTypeahead({
+      assertFieldRadios({
         element,
         label: 'Is the investor new or existing? (optional)',
-        placeholder: 'Choose an investor type',
+        optionsCount: 2,
       })
     })
   })
@@ -389,13 +362,13 @@ describe('Validation error messages', () => {
   const validationErrorMessages = [
     'Enter a project name',
     'Enter a project description',
-    'Choose a sector',
+    'Choose a primary sector',
     'Choose a business activity',
+    'Choose a client contact',
     "Select yes if you're the client relationship manager for this project",
     "Select yes if you're the referral source for this project",
-    'Choose a referral source activity',
     'Enter an estimated land date',
-    'Choose a client contact',
+    'Choose a referral source activity',
   ]
 
   const validationErrorMessageOtherBusinessActivities =
@@ -421,10 +394,9 @@ describe('Validation error messages', () => {
   })
 
   it('should display Other Business Activities validation error messages', () => {
-    cy.get('div[data-test="business-activities"] input').type('other')
-    cy.get(
-      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
-    ).click()
+    cy.get('[data-test="field-business_activities"]').selectTypeaheadOption(
+      'Other'
+    )
     cy.get('[data-test="submit"]').click()
     cy.get('a[href="#field-other_business_activity"]').contains(
       validationErrorMessageOtherBusinessActivities

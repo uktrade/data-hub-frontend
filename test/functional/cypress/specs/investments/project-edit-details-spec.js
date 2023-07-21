@@ -43,8 +43,8 @@ describe('Editing the project summary', () => {
     cy.get('[data-test="field-anonymous_description"]').then((element) => {
       assertFieldTextarea({
         element,
-        label: 'Anonymised description of the project',
-        hint: 'Do not include company names, financial details or address details',
+        label: 'Anonymous project details (optional)',
+        hint: 'Do not include company names, financial details or addresses',
       })
     })
   })
@@ -106,8 +106,8 @@ describe('Editing the project summary', () => {
     cy.get('[data-test="field-client_contacts"]').then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Client contacts',
-        placeholder: 'Choose the client contacts',
+        label: 'Client contact details',
+        placeholder: 'Choose a client contact',
         value: 'Dean Cox',
       })
     })
@@ -118,7 +118,7 @@ describe('Editing the project summary', () => {
       assertFieldTypeahead({
         element,
         label: 'Referral source adviser',
-        placeholder: 'Select referral source adviser',
+        placeholder: 'Choose a referral source adviser',
         value: 'Puck Head',
         isMulti: false,
       })
@@ -261,7 +261,7 @@ describe('Editing the project summary', () => {
     cy.get('[data-test="field-level_of_involvement"]').then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Investor level of involvement',
+        label: 'Level of investor involvement',
         placeholder: 'Choose a level of involvement',
       })
     })

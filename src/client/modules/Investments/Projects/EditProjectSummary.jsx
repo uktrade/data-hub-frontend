@@ -15,6 +15,23 @@ import {
   InvestmentResource,
   InvestmentTypesResource,
 } from '../../../components/Resource'
+import {
+  FieldActualLandDate,
+  FieldAnonDescription,
+  FieldBusinessActivity,
+  FieldClientContacts,
+  FieldEstimatedLandDate,
+  FieldFDIType,
+  FieldInvestmentInvestorType,
+  FieldLevelOfInvolvement,
+  FieldLikelihoodOfLanding,
+  FieldProjectDescription,
+  FieldProjectName,
+  FieldProjectSector,
+  FieldReferralSourceAdviser,
+  FieldReferralSourceHierarchy,
+  FieldSpecificProgramme,
+} from './InvestmentFormFields'
 import urls from '../../../../lib/urls'
 import { transformObjectForTypeahead } from '../../../../apps/investments/client/projects/team/transformers'
 import { transformArrayForTypeahead } from './transformers'
@@ -23,23 +40,6 @@ import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import { GREY_2 } from '../../../utils/colours'
 import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
 import { transformProjectSummaryForApi } from './transformers'
-import {
-  FieldFDIType,
-  FieldProjectName,
-  FieldProjectDescription,
-  FieldAnonDescription,
-  FieldProjectSector,
-  FieldBusinessActivity,
-  FieldClientContacts,
-  FieldReferralSourceAdviser,
-  FieldReferralSourceHierarchy,
-  FieldEstimatedLandDate,
-  FieldLikelihoodOfLanding,
-  FieldActualLandDate,
-  FieldInvestmentInvestorType,
-  FieldLevelOfInvolvement,
-  FieldSpecificProgramme,
-} from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
