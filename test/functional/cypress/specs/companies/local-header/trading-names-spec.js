@@ -12,7 +12,7 @@ describe('Local header trading names', () => {
       it('should display the company trading names', () => {
         cy.get('[data-test="trading-names"]').should(
           'have.text',
-          'Trading as DnB, D&B'
+          'Trading as: DnB, D&B'
         )
       })
     }
@@ -30,7 +30,7 @@ describe('Local header trading names', () => {
       it('should display the company trading name', () => {
         cy.get('[data-test="trading-names"]').should(
           'have.text',
-          'Trading as DnB Global Ultimate'
+          'Trading as: DnB Global Ultimate'
         )
       })
     }
