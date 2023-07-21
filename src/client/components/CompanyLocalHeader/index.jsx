@@ -142,10 +142,7 @@ const CompanyLocalHeader = ({
             </LocalHeaderHeading>
             {company?.tradingNames.length > 0 && (
               <LocalHeaderTradingNames data-test="trading-names">
-                Trading as:{' '}
-                {company.tradingNames.length === 1
-                  ? company.tradingNames[0]
-                  : company.tradingNames.join(', ')}
+                Trading as:{' ' + company.tradingNames.join(', ')}
               </LocalHeaderTradingNames>
             )}
 
