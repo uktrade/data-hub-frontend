@@ -65,7 +65,6 @@ const InvestmentProjectForm = ({ company, csrfToken }) => (
                   {!company && <CompanySearchStep />}
                   <InvestmentTypeStep
                     investmentTypes={values.investmentTypes}
-                    fdiTypes={values.fdiTypes}
                   />
                   <InvestmentDetailsStep
                     company={dhCompany}

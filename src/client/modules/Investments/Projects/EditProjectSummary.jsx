@@ -19,7 +19,6 @@ import {
 import {
   BusinessActivitiesResourse,
   CompanyContactsResource,
-  FDITypesResource,
   InvestmentResource,
   InvestmentInvestorTypesResource,
   InvestmentTypesResource,
@@ -44,6 +43,7 @@ import {
 import { GREY_2 } from '../../../utils/colours'
 import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
 import { transformProjectSummaryForApi } from './transformers'
+import { FieldFDIType } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -128,16 +128,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                       ...option,
                       ...(option.label === 'FDI' && {
                         children: (
-                          <ResourceOptionsField
-                            name="fdi_type"
-                            label="Type of foreign direct investment (FDI)"
-                            resource={FDITypesResource}
-                            field={FieldTypeahead}
+                          <FieldFDIType
                             initialValue={transformObjectForTypeahead(
                               project.fdiType
                             )}
-                            placeholder="Select an FDI type"
-                            required="Select the FDI type"
                           />
                         ),
                       }),
