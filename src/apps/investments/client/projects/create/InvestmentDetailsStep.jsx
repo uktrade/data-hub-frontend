@@ -15,7 +15,6 @@ import {
   ContactInformation,
   FormLayout,
 } from '../../../../../client/components'
-import { CompanyContactsResource } from '../../../../../client/components/Resource'
 import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
@@ -27,6 +26,7 @@ import {
   FieldAnonDescription,
   FieldProjectSector,
   FieldBusinessActivity,
+  FieldClientContacts,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const StyledContainer = styled.div(({ error }) => ({
@@ -158,38 +158,21 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
               CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID
             )
             return (
-              <CompanyContactsResource id={company.id}>
-                {({ results }) => {
-                  return (
-                    <>
-                      <FieldTypeahead
-                        name="client_contacts"
-                        label="Client contact details"
-                        placeholder="Search"
-                        required="Choose a client contact"
-                        data-test="client-contact"
-                        options={results.map(({ name, id }) => ({
-                          label: name,
-                          value: id,
-                        }))}
-                        isMulti={true}
-                      />
-                      <ContactInformation
-                        onOpenContactForm={({ redirectUrl }) => {
-                          openContactFormTask.start({
-                            payload: {
-                              values,
-                              url: redirectUrl,
-                              storeId: CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
-                            },
-                          })
-                        }}
-                        companyId={company.id}
-                      />
-                    </>
-                  )
-                }}
-              </CompanyContactsResource>
+              <>
+                <FieldClientContacts companyId={company.id} />
+                <ContactInformation
+                  onOpenContactForm={({ redirectUrl }) => {
+                    openContactFormTask.start({
+                      payload: {
+                        values,
+                        url: redirectUrl,
+                        storeId: CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
+                      },
+                    })
+                  }}
+                  companyId={company.id}
+                />
+              </>
             )
           }}
         </Task>

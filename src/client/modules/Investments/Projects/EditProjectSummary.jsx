@@ -16,7 +16,6 @@ import {
   Main,
 } from '../../../components'
 import {
-  CompanyContactsResource,
   InvestmentResource,
   InvestmentInvestorTypesResource,
   InvestmentTypesResource,
@@ -47,6 +46,7 @@ import {
   FieldAnonDescription,
   FieldProjectSector,
   FieldBusinessActivity,
+  FieldClientContacts,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -142,18 +142,9 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 placeholder="e.g. meet and greet dinner"
               />
             </StyledFieldWrapper>
-            <ResourceOptionsField
-              name="client_contacts"
-              label="Client contacts"
-              resource={CompanyContactsResource}
-              id={project.investorCompany.id}
-              field={FieldTypeahead}
-              resultToOptions={({ results }) =>
-                transformArrayForTypeahead(results)
-              }
+            <FieldClientContacts
+              companyId={project.investorCompany.id}
               initialValue={transformArrayForTypeahead(project.clientContacts)}
-              isMulti={true}
-              placeholder="Choose the client contacts"
             />
             <FieldRadios
               name="is_referral_source"

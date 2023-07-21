@@ -7,10 +7,12 @@ import React from 'react'
 import { FieldInput, FieldTextarea, FieldTypeahead } from '../../../components'
 import {
   BusinessActivitiesResourse,
+  CompanyContactsResource,
   FDITypesResource,
   SectorResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import { transformArrayForTypeahead } from './transformers'
 
 export const FieldFDIType = ({ initialValue = null }) => (
   <ResourceOptionsField
@@ -83,5 +85,20 @@ export const FieldBusinessActivity = ({ initialValue = null }) => (
     isMulti={true}
     placeholder="Choose a business activity"
     hint="You can select more than one activity"
+  />
+)
+
+export const FieldClientContacts = ({ initialValue = null, companyId }) => (
+  <ResourceOptionsField
+    name="client_contacts"
+    label="Client contact details"
+    resource={CompanyContactsResource}
+    id={companyId}
+    field={FieldTypeahead}
+    resultToOptions={({ results }) => transformArrayForTypeahead(results)}
+    initialValue={initialValue}
+    isMulti={true}
+    placeholder="Choose a client contact"
+    required="Choose a client contact"
   />
 )
