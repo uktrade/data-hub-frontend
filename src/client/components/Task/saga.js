@@ -7,6 +7,7 @@ import {
   call,
   select,
   cancel,
+  cancelled,
 } from 'redux-saga/effects'
 
 import {
@@ -50,6 +51,12 @@ function* startTask(task, action) {
         errorMessage: error,
       })
     }
+  } finally {
+    // handling task cancellation
+    if (yield cancelled()) {
+      const { id, name } = action
+      yield put({ type: TASK__CLEAR, id, name })
+    }
   }
 }
 
@@ -60,12 +67,17 @@ function* startTask(task, action) {
  */
 function* manageTask(task, action) {
   const s = yield fork(startTask, task, action)
-  while (true) {
-    yield take(
-      ({ type, name, id }) =>
-        type === TASK__CANCEL && name === action.name && id === action.id
-    )
-    yield cancel(s)
+  try {
+    while (true) {
+      yield take(
+        ({ type, name, id }) =>
+          type === TASK__CANCEL && name === action.name && id === action.id
+      )
+    }
+  } finally {
+    if (yield cancelled()) {
+      yield cancel(s)
+    }
   }
 }
 
@@ -93,22 +105,37 @@ function* subscribeToDismiss() {
 function* subscribeToStart(registry) {
   // Object to hold references to running tasks
   const runningTasks = {}
+  const listOfTasksToCancel = ['TASK_GET_CONTACTS_LIST']
 
   while (true) {
     const action = yield take(TASK__START)
-    const { name } = action
+    const { name, id } = action
     const task = registry[action.name]
     if (!task) {
       throw Error(`Task "${name}" is not registered!`)
     }
 
     // If a task is already running, cancel it
+    // This behaviour mimics takeLatest without major refactor
     if (runningTasks[name]) {
-      yield cancel(runningTasks[name])
+      if (listOfTasksToCancel.includes(name)) {
+        yield cancel(runningTasks[name])
+        yield put({ type: TASK__CLEAR, id, name }) // Clearing the task
+      }
+    }
+
+    const status = yield select((state) =>
+      get(state, ['tasks', name, id, 'status'])
+    )
+
+    if (status === 'progress') {
+      throw Error(
+        `Cannot start task "${name}.${id}" because it is already in progress. Cancel it first!`
+      )
     }
 
     // Start a new task and save a reference to it
-    runningTasks[name] = yield fork(manageTask, task, action)
+    runningTasks[name] = yield spawn(manageTask, task, action)
   }
 }
 
