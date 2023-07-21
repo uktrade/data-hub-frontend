@@ -8,6 +8,7 @@ import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
+import { H4 } from '@govuk-react/heading'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -23,6 +24,10 @@ import {
   buildCompanyBreadcrumbs,
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
+
+const LocalHeaderTradingNames = styled(H4)`
+  font-weight: normal;
+`
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -135,6 +140,12 @@ const CompanyLocalHeader = ({
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
+            {company?.tradingNames.length > 0 && (
+              <LocalHeaderTradingNames data-test="trading-names">
+                Trading as: {company.tradingNames.join(', ')}
+              </LocalHeaderTradingNames>
+            )}
+
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
