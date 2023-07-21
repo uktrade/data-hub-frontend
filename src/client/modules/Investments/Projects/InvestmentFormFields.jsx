@@ -20,6 +20,7 @@ import {
   CompanyContactsResource,
   FDITypesResource,
   InvestmentInvestorTypesResource,
+  LevelOfInvolvementResource,
   LikelihoodToLandResource,
   ReferralSourceActivityResource,
   ReferralSourceMarketingResource,
@@ -29,6 +30,7 @@ import {
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayForTypeahead } from './transformers'
 import { GREY_2 } from '../../../utils/colours'
+import { OPTIONS_YES_NO, OPTION_NO } from '../../../../apps/constants'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -280,5 +282,16 @@ export const FieldInvestmentInvestorType = ({ label, initialValue = null }) => (
     resource={InvestmentInvestorTypesResource}
     field={FieldRadios}
     initialValue={initialValue}
+  />
+)
+
+export const FieldLevelOfInvolvement = ({ initialValue = null }) => (
+  <ResourceOptionsField
+    name="level_of_involvement"
+    label="Level of investor involvement (optional)"
+    resource={LevelOfInvolvementResource}
+    field={FieldTypeahead}
+    initialValue={initialValue}
+    placeholder="Choose a level of involvement"
   />
 )

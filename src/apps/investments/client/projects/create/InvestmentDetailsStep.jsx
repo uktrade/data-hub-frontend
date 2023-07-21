@@ -27,6 +27,8 @@ import {
   FieldEstimatedLandDate,
   FieldLikelihoodOfLanding,
   FieldActualLandDate,
+  FieldInvestmentInvestorType,
+  FieldLevelOfInvolvement,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const findSelectedItem = (items, value) =>
@@ -134,14 +136,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldLikelihoodOfLanding />
         <FieldActualLandDate />
         <FieldInvestmentInvestorType label="Is the investor new or existing? (optional)" />
-
-        <FieldTypeahead
-          name="level_of_involvement"
-          label="Level of investor involvement (optional)"
-          options={values.investmentInvolvement}
-          placeholder="Choose a level of involvement"
-          data-test="level-of-involvement"
-        />
+        <FieldLevelOfInvolvement />
 
         <FieldTypeahead
           name="specific_programme"

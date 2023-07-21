@@ -15,7 +15,6 @@ import {
 import {
   InvestmentResource,
   InvestmentTypesResource,
-  LevelOfInvolvementResource,
   SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -41,6 +40,7 @@ import {
   FieldLikelihoodOfLanding,
   FieldActualLandDate,
   FieldInvestmentInvestorType,
+  FieldLevelOfInvolvement,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -172,15 +172,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
               label="New or existing investor"
               initialValue={project.investorType?.id}
             />
-            <ResourceOptionsField
-              name="level_of_involvement"
-              label="Investor level of involvement"
-              resource={LevelOfInvolvementResource}
-              field={FieldTypeahead}
+            <FieldLevelOfInvolvement
               initialValue={transformObjectForTypeahead(
                 project.levelOfInvolvement
               )}
-              placeholder="Choose a level of involvement"
             />
             <ResourceOptionsField
               name="specific_programme"
