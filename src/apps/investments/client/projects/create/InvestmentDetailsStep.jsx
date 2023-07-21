@@ -27,6 +27,7 @@ import {
   FieldProjectSector,
   FieldBusinessActivity,
   FieldClientContacts,
+  FieldReferralSourceAdviser,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const StyledContainer = styled.div(({ error }) => ({
@@ -203,14 +204,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           options={OPTIONS_YES_NO.map((option) => ({
             ...option,
             ...(option.value === OPTION_NO && {
-              children: (
-                <FieldSelect
-                  name="referral_source_adviser"
-                  options={values.advisers}
-                  required="Choose a referral source adviser"
-                  aria-label="Choose a referral source adviser"
-                />
-              ),
+              children: <FieldReferralSourceAdviser />,
             }),
           }))}
         />

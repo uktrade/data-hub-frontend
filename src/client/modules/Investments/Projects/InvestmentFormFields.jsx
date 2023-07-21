@@ -4,7 +4,12 @@
 
 import React from 'react'
 
-import { FieldInput, FieldTextarea, FieldTypeahead } from '../../../components'
+import {
+  FieldAdvisersTypeahead,
+  FieldInput,
+  FieldTextarea,
+  FieldTypeahead,
+} from '../../../components'
 import {
   BusinessActivitiesResourse,
   CompanyContactsResource,
@@ -100,5 +105,33 @@ export const FieldClientContacts = ({ initialValue = null, companyId }) => (
     isMulti={true}
     placeholder="Choose a client contact"
     required="Choose a client contact"
+  />
+)
+
+export const FieldReferralSourceAdviser = ({
+  label = null,
+  initialValue = null,
+  typeaheadInitialValue = null,
+}) => (
+  <FieldRadios
+    name="is_referral_source"
+    legend="Are you the referral source for this project?"
+    required="Select yes if you're the referral source for this project"
+    initialValue={initialValue}
+    options={OPTIONS_YES_NO.map((option) => ({
+      ...option,
+      ...(option.value === OPTION_NO && {
+        children: (
+          <FieldAdvisersTypeahead
+            name="referral_source_adviser"
+            label={label}
+            initialValue={typeaheadInitialValue}
+            placeholder="Choose a referral source adviser"
+            required="Choose a referral source adviser"
+            aria-label="Choose a referral source adviser"
+          />
+        ),
+      }),
+    }))}
   />
 )

@@ -5,7 +5,6 @@ import { LEVEL_SIZE, SPACING, SPACING_POINTS } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import {
-  FieldAdvisersTypeahead,
   FieldDate,
   FieldInput,
   FieldRadios,
@@ -31,11 +30,7 @@ import urls from '../../../../lib/urls'
 import { transformObjectForTypeahead } from '../../../../apps/investments/client/projects/team/transformers'
 import { transformArrayForTypeahead } from './transformers'
 import { transformDateStringToDateObject } from '../../../../apps/transformers'
-import {
-  OPTION_NO,
-  OPTION_YES,
-  OPTIONS_YES_NO,
-} from '../../../../apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import { GREY_2 } from '../../../utils/colours'
 import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
 import { transformProjectSummaryForApi } from './transformers'
@@ -47,6 +42,7 @@ import {
   FieldProjectSector,
   FieldBusinessActivity,
   FieldClientContacts,
+  FieldReferralSourceAdviser,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -146,9 +142,8 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
               companyId={project.investorCompany.id}
               initialValue={transformArrayForTypeahead(project.clientContacts)}
             />
-            <FieldRadios
+            <FieldReferralSourceAdviser
               name="is_referral_source"
-              label="Are you the referral source for this project?"
               initialValue={
                 checkReferralSourceAdviser(
                   currentAdviser,
@@ -157,29 +152,15 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                   ? OPTION_YES
                   : OPTION_NO
               }
-              options={OPTIONS_YES_NO.map((option) => ({
-                ...option,
-                ...(option.value === OPTION_NO && {
-                  children: (
-                    <FieldAdvisersTypeahead
-                      name="referral_source_adviser"
-                      label="Referral source adviser"
-                      initialValue={
-                        checkReferralSourceAdviser(
-                          currentAdviser,
-                          project.referralSourceAdviser.id
-                        )
-                          ? null
-                          : transformObjectForTypeahead(
-                              project.referralSourceAdviser
-                            )
-                      }
-                      placeholder="Select referral source adviser"
-                      required="Select the referral source adviser"
-                    />
-                  ),
-                }),
-              }))}
+              label="Referral source adviser"
+              typeaheadInitialValue={
+                checkReferralSourceAdviser(
+                  currentAdviser,
+                  project.referralSourceAdviser.id
+                )
+                  ? null
+                  : transformObjectForTypeahead(project.referralSourceAdviser)
+              }
             />
             <ReferralSourceActivityResource>
               {(referralSourceActivities) => (
