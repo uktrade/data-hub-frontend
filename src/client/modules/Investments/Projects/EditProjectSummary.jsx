@@ -16,7 +16,6 @@ import {
   Main,
 } from '../../../components'
 import {
-  BusinessActivitiesResourse,
   CompanyContactsResource,
   InvestmentResource,
   InvestmentInvestorTypesResource,
@@ -47,6 +46,7 @@ import {
   FieldProjectDescription,
   FieldAnonDescription,
   FieldProjectSector,
+  FieldBusinessActivity,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -129,16 +129,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
               initialValue={transformObjectForTypeahead(project.sector)}
             />
             <StyledFieldWrapper name="businessActivitiesWrapper">
-              <ResourceOptionsField
-                name="business_activities"
-                label="Business activities"
-                resource={BusinessActivitiesResourse}
-                field={FieldTypeahead}
+              <FieldBusinessActivity
                 initialValue={transformArrayForTypeahead(
                   project.businessActivities
                 )}
-                isMulti={true}
-                placeholder="Choose a business activity"
               />
               <FieldInput
                 label="Other business activity (if not on list)"

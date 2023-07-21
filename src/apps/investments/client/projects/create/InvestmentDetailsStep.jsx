@@ -26,6 +26,7 @@ import {
   FieldProjectDescription,
   FieldAnonDescription,
   FieldProjectSector,
+  FieldBusinessActivity,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const StyledContainer = styled.div(({ error }) => ({
@@ -135,17 +136,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         <FieldProjectDescription hint="Provide a short description of the project" />
         <FieldAnonDescription />
         <FieldProjectSector />
-
-        <FieldTypeahead
-          name="business_activities"
-          label="Business activities"
-          hint="You can select more than one activity"
-          placeholder="Search"
-          required="Choose a business activity"
-          options={values.investmentBusinessActivity}
-          isMulti={true}
-          data-test="business-activities"
-        />
+        <FieldBusinessActivity />
 
         {Object.keys(values).length &&
           values?.business_activities?.find(

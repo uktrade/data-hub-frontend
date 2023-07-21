@@ -5,7 +5,11 @@
 import React from 'react'
 
 import { FieldInput, FieldTextarea, FieldTypeahead } from '../../../components'
-import { FDITypesResource, SectorResource } from '../../../components/Resource'
+import {
+  BusinessActivitiesResourse,
+  FDITypesResource,
+  SectorResource,
+} from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 
 export const FieldFDIType = ({ initialValue = null }) => (
@@ -66,5 +70,18 @@ export const FieldProjectSector = ({ initialValue = null }) => (
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a sector"
+  />
+)
+
+export const FieldBusinessActivity = ({ initialValue = null }) => (
+  <ResourceOptionsField
+    name="business_activities"
+    label="Business activities"
+    resource={BusinessActivitiesResourse}
+    field={FieldTypeahead}
+    initialValue={initialValue}
+    isMulti={true}
+    placeholder="Choose a business activity"
+    hint="You can select more than one activity"
   />
 )
