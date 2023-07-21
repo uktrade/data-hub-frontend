@@ -260,3 +260,13 @@ export const FieldLikelihoodOfLanding = ({ initialValue = null }) => (
     placeholder="Select a likelihood of landing value"
   />
 )
+
+export const FieldActualLandDate = ({ initialValue = null }) => (
+  <FieldDate
+    name="actual_land_date"
+    label="Actual land date (optional)"
+    hint="The date investment project activities started"
+    invalid="Enter a valid actual land date"
+    initialValue={initialValue}
+  />
+)

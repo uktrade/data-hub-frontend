@@ -5,7 +5,6 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import {
-  FieldDate,
   FieldInput,
   FieldRadios,
   FieldTypeahead,
@@ -41,6 +40,7 @@ import {
   FieldReferralSourceHierarchy,
   FieldEstimatedLandDate,
   FieldLikelihoodOfLanding,
+  FieldActualLandDate,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -163,13 +163,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.likelihoodToLand
               )}
             />
-            <FieldDate
-              name="actual_land_date"
-              label="Actual land date"
+            <FieldActualLandDate
               initialValue={transformDateStringToDateObject(
                 project.actualLandDate
               )}
-              hint="When activities under the investment project fully commenced"
             />
             <ResourceOptionsField
               name="investor_type"

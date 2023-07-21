@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import {
   Step,
-  FieldDate,
   FieldInput,
   FieldRadios,
   FieldTypeahead,
@@ -27,6 +26,7 @@ import {
   FieldReferralSourceHierarchy,
   FieldEstimatedLandDate,
   FieldLikelihoodOfLanding,
+  FieldActualLandDate,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const findSelectedItem = (items, value) =>
@@ -132,14 +132,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldReferralSourceHierarchy />
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
-
-        <FieldDate
-          name="actual_land_date"
-          label="Actual land date (optional)"
-          hint="The date investment project activities started"
-          invalid="Enter a valid actual land date"
-          data-test="actual-land-date"
-        />
+        <FieldActualLandDate />
 
         <FieldTypeahead
           name="investor_type"
