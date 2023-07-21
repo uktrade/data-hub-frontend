@@ -25,6 +25,7 @@ import {
   FieldClientContacts,
   FieldReferralSourceAdviser,
   FieldReferralSourceHierarchy,
+  FieldEstimatedLandDate,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const findSelectedItem = (items, value) =>
@@ -129,15 +130,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
 
         <FieldReferralSourceHierarchy />
 
-        <FieldDate
-          format="short"
-          name="estimated_land_date"
-          label="Estimated land date"
-          hint="An estimated date of when investment project activities will start"
-          required="Enter an estimated land date"
-          invalid="Enter a valid estimated land date"
-          data-test="estimated-land-date"
-        />
+        <FieldEstimatedLandDate />
 
         <FieldTypeahead
           name="likelihood_to_land"

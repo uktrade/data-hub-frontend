@@ -40,6 +40,7 @@ import {
   FieldClientContacts,
   FieldReferralSourceAdviser,
   FieldReferralSourceHierarchy,
+  FieldEstimatedLandDate,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -152,15 +153,10 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
               eventInitialValue={project.referralSourceActivityEvent}
               eventPlaceholder="e.g. conversation at conference"
             />
-            <FieldDate
-              name="estimated_land_date"
-              label="Estimated land date"
+            <FieldEstimatedLandDate
               initialValue={transformDateStringToDateObject(
                 project.estimatedLandDate
               )}
-              hint="When activities planned under the investment project will have fully commenced"
-              showDay={false}
-              required="Enter the project's estimated land date"
             />
             <ResourceOptionsField
               name="likelihood_to_land"

@@ -8,6 +8,7 @@ import { SPACING, SPACING_POINTS } from '@govuk-react/constants'
 
 import {
   FieldAdvisersTypeahead,
+  FieldDate,
   FieldInput,
   FieldSelect,
   FieldTextarea,
@@ -234,4 +235,16 @@ export const FieldReferralSourceHierarchy = ({
       </StyledReferralSourceWrapper>
     )}
   </ReferralSourceActivityResource>
+)
+
+export const FieldEstimatedLandDate = ({ initialValue = null }) => (
+  <FieldDate
+    format="short"
+    name="estimated_land_date"
+    label="Estimated land date"
+    hint="An estimated date of when investment project activities will start"
+    required="Enter an estimated land date"
+    invalid="Enter a valid estimated land date"
+    initialValue={initialValue}
+  />
 )
