@@ -3,22 +3,6 @@ const urls = require('../../../../../../src/lib/urls')
 
 describe('Local header trading names', () => {
   context(
-    'when viewing the local header for a company with 3 trading names',
-    () => {
-      beforeEach(() => {
-        cy.visit(urls.companies.activity.index(fixtures.company.dnbCorp.id))
-      })
-
-      it('should display the company trading names', () => {
-        cy.get('[data-test="trading-names"]').should(
-          'have.text',
-          'Trading as DnB, D&B and Dun & Bradstreet'
-        )
-      })
-    }
-  )
-
-  context(
     'when viewing the local header for a company with 2 trading names',
     () => {
       beforeEach(() => {
@@ -28,7 +12,7 @@ describe('Local header trading names', () => {
       it('should display the company trading names', () => {
         cy.get('[data-test="trading-names"]').should(
           'have.text',
-          'Trading as DnB and D&B'
+          'Trading as DnB, D&B'
         )
       })
     }
