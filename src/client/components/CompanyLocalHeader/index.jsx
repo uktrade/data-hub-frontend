@@ -8,7 +8,7 @@ import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
-import { H3 } from '@govuk-react/heading'
+import { H4 } from '@govuk-react/heading'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -25,7 +25,7 @@ import {
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
 
-const LocalHeaderTradingNames = styled(H3)`
+const LocalHeaderTradingNames = styled(H4)`
   font-weight: normal;
 `
 
@@ -140,7 +140,7 @@ const CompanyLocalHeader = ({
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
-            {company.tradingNames && company.tradingNames.length > 0 && (
+            {company?.tradingNames.length > 0 && (
               <LocalHeaderTradingNames data-test="trading-names">
                 Trading as:{' '}
                 {company.tradingNames.length === 1
