@@ -8,6 +8,7 @@ import {
   SummaryTable,
   ContactInformation,
   FormLayout,
+  FieldAdvisersTypeahead,
 } from '../../../../../client/components'
 import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
@@ -114,9 +115,8 @@ const InvestmentDetailsStep = ({ values, company }) => {
             ...option,
             ...(option.value === OPTION_NO && {
               children: (
-                <FieldSelect
+                <FieldAdvisersTypeahead
                   name="client_relationship_manager"
-                  options={values.advisers}
                   required="Choose a client relationship manager"
                   aria-label="Choose a client relationship manager"
                 />
