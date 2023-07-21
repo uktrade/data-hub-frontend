@@ -5,7 +5,7 @@
 import React from 'react'
 
 import { FieldInput, FieldTextarea, FieldTypeahead } from '../../../components'
-import { FDITypesResource } from '../../../components/Resource'
+import { FDITypesResource, SectorResource } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 
 export const FieldFDIType = ({ initialValue = null }) => (
@@ -55,5 +55,16 @@ export const FieldAnonDescription = ({ initialValue = null }) => (
     label="Anonymous project details (optional)"
     hint="Do not include company names, financial details or address details"
     initialValue={initialValue}
+  />
+)
+
+export const FieldProjectSector = ({ initialValue = null }) => (
+  <ResourceOptionsField
+    name="sector"
+    label="Primary sector"
+    resource={SectorResource}
+    field={FieldTypeahead}
+    initialValue={initialValue}
+    placeholder="Choose a sector"
   />
 )

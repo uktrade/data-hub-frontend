@@ -76,11 +76,6 @@ const fetchValuesFromAPI = () =>
   Promise.all([
     getAdviser(),
     getAdvisers(),
-    getMetadataOptions(urls.metadata.sector(), {
-      params: {
-        level__lte: '0',
-      },
-    }),
     getMetadataOptions(urls.metadata.investmentType()),
     getMetadataOptions(urls.metadata.referralSourceActivity()),
     getMetadataOptions(urls.metadata.referralSourceMarketing()),
@@ -94,7 +89,6 @@ const fetchValuesFromAPI = () =>
     ([
       adviser,
       advisers,
-      sectors,
       investmentTypes,
       referralSourceActivity,
       referralSourceMarketing,
@@ -107,7 +101,6 @@ const fetchValuesFromAPI = () =>
     ]) => ({
       adviser,
       advisers,
-      sectors,
       investmentTypes: orderInvestmentTypes(investmentTypes),
       referralSourceActivity,
       referralSourceMarketing,

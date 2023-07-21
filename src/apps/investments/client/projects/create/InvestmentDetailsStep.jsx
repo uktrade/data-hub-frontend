@@ -25,6 +25,7 @@ import {
   FieldProjectName,
   FieldProjectDescription,
   FieldAnonDescription,
+  FieldProjectSector,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const StyledContainer = styled.div(({ error }) => ({
@@ -133,15 +134,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         <FieldProjectName />
         <FieldProjectDescription hint="Provide a short description of the project" />
         <FieldAnonDescription />
-
-        <FieldTypeahead
-          name="sector"
-          label="Primary sector"
-          options={values.sectors}
-          placeholder="Choose a sector"
-          required="Choose a sector"
-          data-test="primary-sector"
-        />
+        <FieldProjectSector />
 
         <FieldTypeahead
           name="business_activities"

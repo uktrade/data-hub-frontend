@@ -26,7 +26,6 @@ import {
   ReferralSourceActivityResource,
   ReferralSourceMarketingResource,
   ReferralSourceWebsiteResource,
-  SectorResource,
   SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -47,6 +46,7 @@ import {
   FieldProjectName,
   FieldProjectDescription,
   FieldAnonDescription,
+  FieldProjectSector,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -125,13 +125,8 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 />
               )}
             </InvestmentTypesResource>
-            <ResourceOptionsField
-              name="sector"
-              label="Primary sector"
-              resource={SectorResource}
-              field={FieldTypeahead}
+            <FieldProjectSector
               initialValue={transformObjectForTypeahead(project.sector)}
-              placeholder="Choose a sector"
             />
             <StyledFieldWrapper name="businessActivitiesWrapper">
               <ResourceOptionsField
