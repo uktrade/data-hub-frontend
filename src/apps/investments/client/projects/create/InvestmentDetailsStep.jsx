@@ -10,7 +10,6 @@ import {
   FieldInput,
   FieldRadios,
   FieldSelect,
-  FieldTextarea,
   FieldTypeahead,
   SummaryTable,
   ContactInformation,
@@ -22,6 +21,11 @@ import Task from '../../../../../client/components/Task'
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
+import {
+  FieldProjectName,
+  FieldProjectDescription,
+  FieldAnonDescription,
+} from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const StyledContainer = styled.div(({ error }) => ({
   paddingLeft: SPACING.SCALE_4,
@@ -126,30 +130,9 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           </SummaryTable.Row>
         </SummaryTable>
 
-        <FieldInput
-          type="text"
-          name="name"
-          label="Project name"
-          required="Enter a project name"
-          data-test="name"
-        />
-
-        <FieldTextarea
-          type="text"
-          name="description"
-          label="Project description"
-          hint="Provide a short description of the project"
-          required="Enter a project description"
-          data-test="description"
-        />
-
-        <FieldTextarea
-          type="text"
-          name="anonymous_description"
-          label="Anonymous project details (optional)"
-          hint="Do not include company names, financial details or addresses"
-          data-test="anonymous-description"
-        />
+        <FieldProjectName />
+        <FieldProjectDescription hint="Provide a short description of the project" />
+        <FieldAnonDescription />
 
         <FieldTypeahead
           name="sector"

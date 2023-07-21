@@ -4,7 +4,7 @@
 
 import React from 'react'
 
-import { FieldTypeahead } from '../../../components'
+import { FieldInput, FieldTextarea, FieldTypeahead } from '../../../components'
 import { FDITypesResource } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 
@@ -17,5 +17,43 @@ export const FieldFDIType = ({ initialValue = null }) => (
     initialValue={initialValue}
     placeholder="Select an FDI type"
     required="Select the FDI type"
+  />
+)
+
+export const FieldProjectName = ({
+  initialValue = null,
+  placeholder = null,
+}) => (
+  <FieldInput
+    label="Project name"
+    name="name"
+    type="text"
+    initialValue={initialValue}
+    required="Enter the project name"
+    placeholder={placeholder}
+  />
+)
+
+export const FieldProjectDescription = ({
+  initialValue = null,
+  hint = null,
+}) => (
+  <FieldTextarea
+    type="text"
+    name="description"
+    label="Project description"
+    required="Enter a description"
+    initialValue={initialValue}
+    hint={hint}
+  />
+)
+
+export const FieldAnonDescription = ({ initialValue = null }) => (
+  <FieldTextarea
+    type="text"
+    name="anonymous_description"
+    label="Anonymous project details (optional)"
+    hint="Do not include company names, financial details or address details"
+    initialValue={initialValue}
   />
 )

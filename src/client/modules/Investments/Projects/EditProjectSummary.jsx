@@ -10,7 +10,6 @@ import {
   FieldInput,
   FieldRadios,
   FieldSelect,
-  FieldTextarea,
   FieldTypeahead,
   FieldWrapper,
   Form,
@@ -43,7 +42,12 @@ import {
 import { GREY_2 } from '../../../utils/colours'
 import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
 import { transformProjectSummaryForApi } from './transformers'
-import { FieldFDIType } from './InvestmentFormFields'
+import {
+  FieldFDIType,
+  FieldProjectName,
+  FieldProjectDescription,
+  FieldAnonDescription,
+} from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -95,28 +99,9 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
               })
             }
           >
-            <FieldInput
-              label="Project name"
-              name="name"
-              type="text"
-              initialValue={project.name}
-              required="Enter the project name"
-              placeholder="e.g. Project Zeus"
-            />
-            <FieldTextarea
-              type="text"
-              name="description"
-              label="Project description"
-              required="Enter a description"
-              initialValue={project.description}
-            />
-            <FieldTextarea
-              type="text"
-              name="anonymous_description"
-              label="Anonymised description of the project"
-              hint="Do not include company names, financial details or address details"
-              initialValue={project.anonymousDescription}
-            />
+            <FieldProjectName initialValue={project.name} />
+            <FieldProjectDescription initialValue={project.description} />
+            <FieldAnonDescription initialValue={project.anonymousDescription} />
             <InvestmentTypesResource>
               {(investmentTypes) => (
                 <FieldRadios
