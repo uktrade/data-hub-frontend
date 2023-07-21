@@ -58,5 +58,19 @@ exports.companyFamilyTree = function (req, res) {
 }
 
 exports.relatedCompaniesCount = function (req, res) {
-  res.json(req.params.companyId === dnbGlobalUltimate.id ? 5 : 0)
+  res.json(
+    req.params.companyId === dnbGlobalUltimate.id
+      ? {
+          total: 5,
+          related_companies_count: 3,
+          manually_linked_subsidiaries_count: 2,
+          reduced_tree: false,
+        }
+      : {
+          total: 0,
+          related_companies_count: 0,
+          manually_linked_subsidiaries_count: 0,
+          reduced_tree: false,
+        }
+  )
 }

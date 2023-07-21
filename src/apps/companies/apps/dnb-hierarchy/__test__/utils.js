@@ -20,7 +20,10 @@ function mockGetDnbHierarchy({
     .get(
       `/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`
     )
-    .reply(responseCode, relatedCompaniesCount)
+    .reply(responseCode, {
+      related_companies_count: relatedCompaniesCount,
+      total: relatedCompaniesCount,
+    })
 
   nock(config.apiRoot)
     .post(`/v4/search/company`)

@@ -48,8 +48,8 @@ async function getDnbHierarchyDetails(req, company) {
           ...globalUltimateResult,
           url: urls.companies.detail(globalUltimateResult.id),
         },
-        dnbRelatedCompaniesCount: dnbRelatedCompaniesCount,
-        dnbHierarchyCount: dnbRelatedCompaniesCount + 1,
+        dnbRelatedCompaniesCount: dnbRelatedCompaniesCount.total,
+        dnbHierarchyCount: dnbRelatedCompaniesCount.related_companies_count + 1,
       }
     } catch (err) {
       return { dnbHierarchyCount: 0, dnbRelatedCompaniesCount: 0 }
