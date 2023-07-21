@@ -177,6 +177,7 @@ const InteractionCollection = ({
               closeMenuOnSelect={false}
             />
             <Filters.AdvisersTypeahead
+              closeMenuOnSelect={false}
               taskProps={adviserListTask}
               isMulti={true}
               onlyShowActiveAdvisers={false}

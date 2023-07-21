@@ -195,6 +195,7 @@ const ProjectsCollection = ({
               data-test="my-projects-filter"
             />
             <Filters.AdvisersTypeahead
+              closeMenuOnSelect={false}
               taskProps={adviserListTask}
               isMulti={true}
               onlyShowActiveAdvisers={false}

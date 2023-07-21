@@ -28,6 +28,7 @@ const fetchAdvisers = (onlyShowActiveAdvisers) => {
 
 const RoutedAdvisersTypeahead = ({
   taskProps,
+  closeMenuOnSelect,
   onlyShowActiveAdvisers = true,
   loadOptions = fetchAdvisers(onlyShowActiveAdvisers),
   ...props
@@ -36,7 +37,7 @@ const RoutedAdvisersTypeahead = ({
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={closeMenuOnSelect}
         {...props}
       />
     )}
@@ -50,6 +51,9 @@ RoutedAdvisersTypeahead.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  closeMenuOnSelect: PropTypes.bool,
 }
+
+RoutedAdvisersTypeahead.defaultProps = { closeMenuOnSelect: true }
 
 export default RoutedAdvisersTypeahead
