@@ -3,10 +3,13 @@
  */
 
 import React from 'react'
+import styled from 'styled-components'
+import { SPACING, SPACING_POINTS } from '@govuk-react/constants'
 
 import {
   FieldAdvisersTypeahead,
   FieldInput,
+  FieldSelect,
   FieldTextarea,
   FieldTypeahead,
 } from '../../../components'
@@ -14,10 +17,34 @@ import {
   BusinessActivitiesResourse,
   CompanyContactsResource,
   FDITypesResource,
+  ReferralSourceActivityResource,
+  ReferralSourceMarketingResource,
+  ReferralSourceWebsiteResource,
   SectorResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayForTypeahead } from './transformers'
+import { GREY_2 } from '../../../utils/colours'
+
+const StyledReferralSourceWrapper = styled.div`
+  margin-bottom: ${SPACING_POINTS[6]}px;
+`
+
+const StyledContainer = styled.div(({ error }) => ({
+  paddingLeft: SPACING.SCALE_4,
+  marginLeft: SPACING.SCALE_4,
+  marginTop: SPACING.SCALE_2,
+  ...(error
+    ? { marginLeft: 0 }
+    : {
+        borderLeft: `${SPACING.SCALE_1} solid ${GREY_2}`,
+        marginLeft: SPACING.SCALE_4,
+      }),
+}))
+
+const StyledFieldInput = styled(FieldInput)({
+  width: '100%',
+})
 
 export const FieldFDIType = ({ initialValue = null }) => (
   <ResourceOptionsField
@@ -134,4 +161,77 @@ export const FieldReferralSourceAdviser = ({
       }),
     }))}
   />
+)
+
+export const FieldReferralSourceHierarchy = ({
+  initialValue = null,
+  marketingInitialValue = null,
+  websiteInitialValue = null,
+  eventInitialValue = null,
+  eventPlaceholder = '',
+}) => (
+  <ReferralSourceActivityResource>
+    {(referralSourceActivities) => (
+      <StyledReferralSourceWrapper>
+        <FieldSelect
+          name="referral_source_activity"
+          label="Referral source activity"
+          emptyOption="Choose a referral source activity"
+          initialValue={initialValue}
+          fullWidth={true}
+          options={transformArrayForTypeahead(referralSourceActivities).map(
+            (option) => ({
+              ...option,
+              ...(option.label === 'Marketing' && {
+                children: (
+                  <StyledContainer>
+                    <ResourceOptionsField
+                      name="referral_source_activity_marketing"
+                      label="Marketing"
+                      resource={ReferralSourceMarketingResource}
+                      field={FieldSelect}
+                      initialValue={marketingInitialValue}
+                      placeholder="Choose a marketing type"
+                      required="Select the marketing type"
+                      fullWidth={true}
+                    />
+                  </StyledContainer>
+                ),
+              }),
+              ...(option.label === 'Website' && {
+                children: (
+                  <StyledContainer>
+                    <ResourceOptionsField
+                      name="referral_source_activity_website"
+                      label="Website"
+                      resource={ReferralSourceWebsiteResource}
+                      field={FieldSelect}
+                      initialValue={websiteInitialValue}
+                      placeholder="Choose a website"
+                      required="Select the website"
+                      fullWidth={true}
+                    />
+                  </StyledContainer>
+                ),
+              }),
+              ...(option.label === 'Event' && {
+                children: (
+                  <StyledContainer>
+                    <StyledFieldInput
+                      label="Event"
+                      name="referral_source_activity_event"
+                      type="text"
+                      initialValue={eventInitialValue}
+                      placeholder={eventPlaceholder}
+                      required="Enter the event details"
+                    />
+                  </StyledContainer>
+                ),
+              }),
+            })
+          )}
+        />
+      </StyledReferralSourceWrapper>
+    )}
+  </ReferralSourceActivityResource>
 )

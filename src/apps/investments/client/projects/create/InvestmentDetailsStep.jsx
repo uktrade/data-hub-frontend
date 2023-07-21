@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 
-import { GREY_2 } from '../../../../../client/utils/colours'
 import {
   Step,
   FieldDate,
   FieldInput,
   FieldRadios,
-  FieldSelect,
   FieldTypeahead,
   SummaryTable,
   ContactInformation,
@@ -28,91 +24,13 @@ import {
   FieldBusinessActivity,
   FieldClientContacts,
   FieldReferralSourceAdviser,
+  FieldReferralSourceHierarchy,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
-
-const StyledContainer = styled.div(({ error }) => ({
-  paddingLeft: SPACING.SCALE_4,
-  marginLeft: SPACING.SCALE_4,
-  marginTop: SPACING.SCALE_2,
-  ...(error
-    ? { marginLeft: 0 }
-    : {
-        borderLeft: `${SPACING.SCALE_1} solid ${GREY_2}`,
-        marginLeft: SPACING.SCALE_4,
-      }),
-}))
-
-const StyledFieldInput = styled(FieldInput)({
-  width: '100%',
-})
 
 const findSelectedItem = (items, value) =>
   items ? items.find((type) => type.value === value) : null
 
-const buildReferralSourceHierarchy = (
-  {
-    referralSourceActivity = [],
-    referralSourceMarketing,
-    referralSourceWebsite,
-  },
-  {
-    referral_source_activity_event,
-    referral_source_activity_marketing,
-    referral_source_activity_website,
-  }
-) =>
-  referralSourceActivity.map((item) => ({
-    ...item,
-    ...(item.label === 'Event'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_event}>
-              <StyledFieldInput
-                type="text"
-                name="referral_source_activity_event"
-                label="Event type"
-                required="Enter an event type"
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-    ...(item.label === 'Marketing'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_marketing}>
-              <FieldSelect
-                name="referral_source_activity_marketing"
-                label="Choose a marketing type"
-                aria-label="Choose a marketing type"
-                required="You must choose a marketing type"
-                options={referralSourceMarketing}
-                fullWidth={true}
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-    ...(item.label === 'Website'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_website}>
-              <FieldSelect
-                name="referral_source_activity_website"
-                label="Choose a website"
-                aria-label="Choose a website"
-                required="You must choose a website"
-                options={referralSourceWebsite}
-                fullWidth={true}
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-  }))
-
-const InvestmentDetailsStep = ({ values, errors, company }) => {
-  const referralSourceHierarchy = buildReferralSourceHierarchy(values, errors)
+const InvestmentDetailsStep = ({ values, company }) => {
   const investmentType = findSelectedItem(
     values.investmentTypes,
     values.investment_type
@@ -209,15 +127,7 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           }))}
         />
 
-        <FieldSelect
-          name="referral_source_activity"
-          label="Referral source activity"
-          emptyOption="Choose a referral source activity"
-          options={referralSourceHierarchy}
-          required="Choose a referral source activity"
-          data-test="referral-source-activity"
-          fullWidth={true}
-        />
+        <FieldReferralSourceHierarchy />
 
         <FieldDate
           format="short"

@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { H2 } from 'govuk-react'
-import { LEVEL_SIZE, SPACING, SPACING_POINTS } from '@govuk-react/constants'
+import { LEVEL_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import {
   FieldDate,
   FieldInput,
   FieldRadios,
-  FieldSelect,
   FieldTypeahead,
   FieldWrapper,
   Form,
@@ -20,9 +19,6 @@ import {
   InvestmentTypesResource,
   LevelOfInvolvementResource,
   LikelihoodToLandResource,
-  ReferralSourceActivityResource,
-  ReferralSourceMarketingResource,
-  ReferralSourceWebsiteResource,
   SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -43,6 +39,7 @@ import {
   FieldBusinessActivity,
   FieldClientContacts,
   FieldReferralSourceAdviser,
+  FieldReferralSourceHierarchy,
 } from './InvestmentFormFields'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -50,22 +47,6 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   border-radius: 5px;
   padding: 16px 16px;
 `
-
-const StyledReferralSourceWrapper = styled.div`
-  margin-bottom: ${SPACING_POINTS[6]}px;
-`
-
-const StyledContainer = styled.div(({ error }) => ({
-  paddingLeft: SPACING.SCALE_4,
-  marginLeft: SPACING.SCALE_4,
-  marginTop: SPACING.SCALE_2,
-  ...(error
-    ? { marginLeft: 0 }
-    : {
-        borderLeft: `${SPACING.SCALE_1} solid ${GREY_2}`,
-        marginLeft: SPACING.SCALE_4,
-      }),
-}))
 
 const checkReferralSourceAdviser = (currentAdviser, referralSourceAdviser) =>
   currentAdviser === referralSourceAdviser
@@ -162,70 +143,15 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                   : transformObjectForTypeahead(project.referralSourceAdviser)
               }
             />
-            <ReferralSourceActivityResource>
-              {(referralSourceActivities) => (
-                <StyledReferralSourceWrapper>
-                  <FieldSelect
-                    name="referral_source_activity"
-                    label="Referral source activity"
-                    initialValue={project.referralSourceActivity?.id}
-                    options={transformArrayForTypeahead(
-                      referralSourceActivities
-                    ).map((option) => ({
-                      ...option,
-                      ...(option.label === 'Marketing' && {
-                        children: (
-                          <StyledContainer>
-                            <ResourceOptionsField
-                              name="referral_source_activity_marketing"
-                              label="Marketing"
-                              resource={ReferralSourceMarketingResource}
-                              field={FieldSelect}
-                              initialValue={
-                                project.referralSourceActivityMarketing?.id
-                              }
-                              placeholder="Choose a marketing type"
-                              required="Select the marketing type"
-                            />
-                          </StyledContainer>
-                        ),
-                      }),
-                      ...(option.label === 'Website' && {
-                        children: (
-                          <StyledContainer>
-                            <ResourceOptionsField
-                              name="referral_source_activity_website"
-                              label="Website"
-                              resource={ReferralSourceWebsiteResource}
-                              field={FieldSelect}
-                              initialValue={
-                                project.referralSourceActivityWebsite?.id
-                              }
-                              placeholder="Choose a website"
-                              required="Select the website"
-                            />
-                          </StyledContainer>
-                        ),
-                      }),
-                      ...(option.label === 'Event' && {
-                        children: (
-                          <StyledContainer>
-                            <FieldInput
-                              label="Event"
-                              name="referral_source_activity_event"
-                              type="text"
-                              initialValue={project.referralSourceActivityEvent}
-                              placeholder="e.g. conversation at conference"
-                              required="Enter the event details"
-                            />
-                          </StyledContainer>
-                        ),
-                      }),
-                    }))}
-                  />
-                </StyledReferralSourceWrapper>
-              )}
-            </ReferralSourceActivityResource>
+            <FieldReferralSourceHierarchy
+              initialValue={project.referralSourceActivity?.id}
+              marketingInitialValue={
+                project.referralSourceActivityMarketing?.id
+              }
+              websiteInitialValue={project.referralSourceActivityWebsite?.id}
+              eventInitialValue={project.referralSourceActivityEvent}
+              eventPlaceholder="e.g. conversation at conference"
+            />
             <FieldDate
               name="estimated_land_date"
               label="Estimated land date"
