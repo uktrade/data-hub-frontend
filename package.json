@@ -191,7 +191,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
-    "js-beautify": "^1.14.8",
+    "js-beautify": "^1.14.9",
     "jsdom": "^20.0.3",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.3",
