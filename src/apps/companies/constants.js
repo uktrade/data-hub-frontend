@@ -44,7 +44,7 @@ const LOCAL_NAV = [
   {
     path: 'contacts',
     label: 'Company contacts',
-    search: '?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1',
+    search: '?archived[0]=false&sortby=modified_on:desc&page=1',
     permissions: ['company.view_contact'],
   },
   {
