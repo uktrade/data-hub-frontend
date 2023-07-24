@@ -15,6 +15,7 @@ const {
   assertArchivePanelNotVisible,
   assertAddInteractionButton,
   assertCompanyListItemButton,
+  assertCompanyTradingName,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -45,6 +46,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
     })
 
     it('should display the company address', () => {
@@ -103,6 +108,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyName(company.name)
     })
 
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
+    })
+
     it('should display the company address', () => {
       assertCompanyAddress(address)
     })
@@ -153,6 +162,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
     })
 
     it('should display the company address', () => {
@@ -209,6 +222,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
     })
 
     it('should display the company address', () => {
@@ -269,6 +286,10 @@ describe('Local header for global ultimate company', () => {
         assertCompanyName(company.name)
       })
 
+      it('should display the company trading name', () => {
+        assertCompanyTradingName(company.trading_names)
+      })
+
       it('should display the view related companies link', () => {
         assertRelatedCompaniesLink(address)
       })
@@ -322,6 +343,10 @@ describe('Local header for global ultimate company', () => {
 
       it('should display the company name', () => {
         assertCompanyName(company.name)
+      })
+
+      it('should display the company trading name', () => {
+        assertCompanyTradingName(company.trading_names)
       })
 
       it('should display the company address', () => {
@@ -381,6 +406,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyName(company.name)
     })
 
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
+    })
+
     it('should display the company address', () => {
       assertCompanyAddress(address)
     })
@@ -437,6 +466,10 @@ describe('Local header for global ultimate company', () => {
       assertCompanyName(company.name)
     })
 
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
+    })
+
     it('should display the company address', () => {
       assertCompanyAddress(address)
     })
@@ -491,6 +524,10 @@ describe('Local header for global ultimate company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should display the company trading name', () => {
+      assertCompanyTradingName(company.trading_names)
     })
 
     it('should display the company address', () => {

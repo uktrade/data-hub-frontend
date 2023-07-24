@@ -14,6 +14,7 @@ const {
   assertCoreTeam,
   assertAddInteractionButton,
   assertCompanyListItemButton,
+  assertCompanyTradingNameNotVisible,
 } = require('../../../support/company-local-header-assertions')
 
 const companyLocalHeader = selectors.companyLocalHeader()
@@ -40,6 +41,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
@@ -90,6 +95,10 @@ describe('Local header for archived company', () => {
       assertCompanyName(company.name)
     })
 
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
+    })
+
     it('should display the company address', () => {
       assertCompanyAddress(address)
     })
@@ -134,6 +143,10 @@ describe('Local header for archived company', () => {
     assertBreadcrumbs(company.name, detailsUrl, 'Core Team')
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
@@ -182,6 +195,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
@@ -234,6 +251,10 @@ describe('Local header for archived company', () => {
         assertCompanyName(company.name)
       })
 
+      it('should not display a company trading name', () => {
+        assertCompanyTradingNameNotVisible()
+      })
+
       it('should display the company address', () => {
         assertCompanyAddress(address)
       })
@@ -280,6 +301,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {
@@ -330,6 +355,10 @@ describe('Local header for archived company', () => {
       assertCompanyName(company.name)
     })
 
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
+    })
+
     it('should display the company address', () => {
       assertCompanyAddress(address)
     })
@@ -376,6 +405,10 @@ describe('Local header for archived company', () => {
 
     it('should display the company name', () => {
       assertCompanyName(company.name)
+    })
+
+    it('should not display a company trading name', () => {
+      assertCompanyTradingNameNotVisible()
     })
 
     it('should display the company address', () => {

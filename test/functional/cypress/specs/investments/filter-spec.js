@@ -49,7 +49,7 @@ const myAdviser = {
 }
 
 const searchEndpoint = '/api-proxy/v3/search/investment_project'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviser.id}`
+const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
@@ -126,9 +126,12 @@ describe('Investments Collections Filter', () => {
         adviser: [myAdviser.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       /*
       Asserts the "Adviser typeahead" filter is selected with the
@@ -149,7 +152,9 @@ describe('Investments Collections Filter', () => {
     it('should filter from "my projects" input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
       cy.get('[data-test="toggle-section-button"]')
@@ -159,7 +164,7 @@ describe('Investments Collections Filter', () => {
         element: myProjectsFilter,
         value: myAdviser.id,
       })
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [myAdviser.id])
       assertChipExists({ label: myAdviser.name, position: 1 })
@@ -172,7 +177,9 @@ describe('Investments Collections Filter', () => {
     it('should filter from "advisers" input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.intercept('GET', adviserAutocompleteEndpoint, {
         count: 1,
         results: [myAdviser],
@@ -188,7 +195,7 @@ describe('Investments Collections Filter', () => {
         mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [myAdviser.id])
       assertTypeaheadOptionSelected({

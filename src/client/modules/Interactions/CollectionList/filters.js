@@ -23,9 +23,9 @@ export const buildSelectedFilters = (
   },
   advisers: {
     queryParam: 'dit_participants__adviser',
-    options: selectedAdvisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedAdvisers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.advisers,
     })),
   },
