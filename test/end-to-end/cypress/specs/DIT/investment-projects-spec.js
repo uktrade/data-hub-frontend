@@ -18,10 +18,9 @@ const populateForm = (data) => {
     element: selectors.investment.form.primarySector,
     input: data.sector,
   })
-  selectFirstTypeaheadOption({
-    element: selectors.investment.form.businessActivities,
-    input: data.businessActivities,
-  })
+  cy.get(selectors.investment.form.businessActivities).selectTypeaheadOption(
+    data.businessActivities
+  )
   selectFirstTypeaheadOption({
     element: selectors.investment.form.clientContact,
     input: data.contact,
@@ -40,18 +39,13 @@ const populateForm = (data) => {
   cy.get(selectors.investment.form.actualLandDateYear).type(data.year)
   cy.get(selectors.investment.form.actualLandDateMonth).type(data.month)
   cy.get(selectors.investment.form.actualLandDateDay).type(data.day)
-  selectFirstTypeaheadOption({
-    element: selectors.investment.form.investorType,
-    input: data.investor,
-  })
-  selectFirstTypeaheadOption({
-    element: selectors.investment.form.levelOfInvolvement,
-    input: data.investorLevel,
-  })
-  selectFirstTypeaheadOption({
-    element: selectors.investment.form.specificInvestmentProgramme,
-    input: data.specificInvestmentProgramme,
-  })
+  cy.get(selectors.investment.form.investorTypeNew).click()
+  cy.get(selectors.investment.form.levelOfInvolvement).selectTypeaheadOption(
+    data.investorLevel
+  )
+  cy.get(
+    selectors.investment.form.specificInvestmentProgramme
+  ).selectTypeaheadOption(data.specificInvestmentProgramme)
   cy.get(selectors.investment.form.submitButton).click()
 }
 
@@ -69,7 +63,6 @@ describe('Creating an investment project', () => {
     day: '5',
     month: '5',
     year: '2031',
-    investor: 'New Investor',
     investorLevel: 'HQ and Post Only',
     specificInvestmentProgramme: 'Space',
   }
@@ -87,7 +80,9 @@ describe('Creating an investment project', () => {
     it('should create an FDI project', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
-      cy.get(selectors.companyInvestmentProjects.fdiType).select('Merger')
+      cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
+        'Merger'
+      )
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
       populateForm(data)
@@ -106,7 +101,7 @@ describe('Creating an investment project', () => {
         'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
-        'New or existing investor': data.investor,
+        'New or existing investor': 'New Investor',
         'Level of involvement': data.investorLevel,
         'Specific investment programme': data.specificInvestmentProgramme,
       })
@@ -173,7 +168,7 @@ describe('Creating an investment project', () => {
         'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
-        'New or existing investor': data.investor,
+        'New or existing investor': 'New Investor',
         'Level of involvement': data.investorLevel,
         'Specific investment programme': data.specificInvestmentProgramme,
       })
@@ -238,7 +233,7 @@ describe('Creating an investment project', () => {
         'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
-        'New or existing investor': data.investor,
+        'New or existing investor': 'New Investor',
         'Level of involvement': data.investorLevel,
         'Specific investment programme': data.specificInvestmentProgramme,
       })
@@ -249,17 +244,19 @@ describe('Creating an investment project', () => {
     before(() => {
       cy.visit(investments.projects.index())
       cy.contains('Add investment project').click()
-    })
-    it('should create an FDI project', () => {
-      cy.get('input[data-test="company-name"]')
+      cy.get('[data-test="field-companyName"]')
         .type('Mars Exports Ltd')
         .type('{enter}')
       cy.get('[data-test="entity-list-item"]')
         .first()
         .contains('Mars Exports Ltd')
         .click()
+    })
+    it('should create an FDI project', () => {
       cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
-      cy.get(selectors.companyInvestmentProjects.fdiType).select('Merger')
+      cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
+        'Merger'
+      )
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
       populateForm({
@@ -282,7 +279,7 @@ describe('Creating an investment project', () => {
         'Anonymised description': data.anonymousDescription,
         'Estimated land date': 'October 2030',
         'Actual land date': '5 May 2031',
-        'New or existing investor': data.investor,
+        'New or existing investor': 'New Investor',
         'Level of involvement': data.investorLevel,
         'Specific investment programme': data.specificInvestmentProgramme,
       })
@@ -292,15 +289,15 @@ describe('Creating an investment project', () => {
       before(() => {
         cy.visit(investments.projects.index())
         cy.contains('Add investment project').click()
-      })
-      it('should create a Non-FDI project', () => {
-        cy.get('input[data-test="company-name"]')
+        cy.get('[data-test="field-companyName"]')
           .type('Mars Exports Ltd')
           .type('{enter}')
         cy.get('[data-test="entity-list-item"]')
           .first()
           .contains('Mars Exports Ltd')
           .click()
+      })
+      it('should create a Non-FDI project', () => {
         cy.get(selectors.companyInvestmentProjects.nonFdiInvestmentType).click()
         cy.get(selectors.companyInvestmentProjects.continue).click()
 
@@ -324,7 +321,7 @@ describe('Creating an investment project', () => {
           'Anonymised description': data.anonymousDescription,
           'Estimated land date': 'October 2030',
           'Actual land date': '5 May 2031',
-          'New or existing investor': data.investor,
+          'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
           'Specific investment programme': data.specificInvestmentProgramme,
         })
@@ -335,16 +332,16 @@ describe('Creating an investment project', () => {
       before(() => {
         cy.visit(investments.projects.index())
         cy.contains('Add investment project').click()
-      })
-
-      it('should create a commitment to investment project', () => {
-        cy.get('input[data-test="company-name"]')
+        cy.get('[data-test="field-companyName"]')
           .type('Mars Exports Ltd')
           .type('{enter}')
         cy.get('[data-test="entity-list-item"]')
           .first()
           .contains('Mars Exports Ltd')
           .click()
+      })
+
+      it('should create a commitment to investment project', () => {
         cy.get(selectors.companyInvestmentProjects.ctiInvestmentType).click()
         cy.get(selectors.companyInvestmentProjects.continue).click()
 
@@ -368,7 +365,7 @@ describe('Creating an investment project', () => {
           'Anonymised description': data.anonymousDescription,
           'Estimated land date': 'October 2030',
           'Actual land date': '5 May 2031',
-          'New or existing investor': data.investor,
+          'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
           'Specific investment programme': data.specificInvestmentProgramme,
         })
