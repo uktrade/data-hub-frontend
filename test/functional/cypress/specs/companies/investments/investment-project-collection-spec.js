@@ -20,6 +20,7 @@ const {
 } = require('../../../fakers/investment-projects')
 const { companies, investments } = require('../../../../../../src/lib/urls')
 const fixtures = require('../../../fixtures')
+const urls = require('../../../../../../src/lib/urls')
 
 const { dnbCorp, archivedLtd } = fixtures.company
 
@@ -69,6 +70,12 @@ function assertListItem({
       `Estimated land date ${formattedEstimatedLandDate}`
     )
   })
+
+  it('should render the subsidiary companies enabled', () => {
+    cy.get('[data-test="checkbox-include_related_companies"]').should(
+      'not.be.disabled'
+    )
+  })
 }
 
 describe('Company Investments Collection Page', () => {
@@ -92,14 +99,17 @@ describe('Company Investments Collection Page', () => {
       sortby: 'modified_on:desc',
     })
 
+  const visitLink = `${companies.investments.companyInvestmentProjects(
+    dnbCorp.id
+  )}?${buildQueryString()}`
+
   before(() => {
-    const queryString = buildQueryString()
+    // const queryString = buildQueryString()
+
     collectionListRequest(
       'v3/search/investment_project',
       investmentProjects,
-      `${companies.investments.companyInvestmentProjects(
-        dnbCorp.id
-      )}?${queryString}`
+      visitLink
     )
   })
 
@@ -215,4 +225,30 @@ describe('Company Investments Collection Page', () => {
       )
     })
   })
+
+  context(
+    'Viewing the company investment projects collection page for company with large number of companies',
+    () => {
+      before(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            dnbCorp.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: true }
+        ).as('relatedCompaniesApiRequest')
+        cy.visit(visitLink)
+      })
+
+      it('should render the subsidiary companies disabled', () => {
+        cy.wait('@relatedCompaniesApiRequest')
+        cy.get('[data-test="checkbox-include_related_companies"]')
+          .eq(0)
+          .should('not.be.disabled')
+        cy.get('[data-test="checkbox-include_related_companies"]')
+          .eq(1)
+          .should('be.disabled')
+      })
+    }
+  )
 })

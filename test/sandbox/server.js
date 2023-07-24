@@ -465,6 +465,10 @@ app.post('/v4/dnb/company-link', v4Dnb.companyLink)
 app.post('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
 app.get('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
 app.get('/v4/dnb/:companyId/family-tree', v4Dnb.companyFamilyTree)
+app.get(
+  '/v4/dnb/:companyId/related-companies/count',
+  v4Dnb.relatedCompaniesCount
+)
 
 // V4 legacy company list
 app.get('/v4/user/company-list/:companyId', v4Company.getCompanyList)

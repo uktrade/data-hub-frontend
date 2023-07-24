@@ -33,6 +33,7 @@ import LargeCapitalInvestmentReturnRate from './LargeCapitalInvestmentReturnRate
 import LargeCapitalInvestmentEquityPercentages from './LargeCapitalInvestmentEquityPercentages'
 import Proposition from './Proposition'
 import PropositionEvidence from './PropositionEvidence'
+import RelatedCompaniesCount from './RelatedCompaniesCount'
 
 export default {
   ...Advisers.tasks,
@@ -70,4 +71,5 @@ export default {
   ...LargeCapitalInvestmentEquityPercentages.tasks,
   ...Proposition.tasks,
   ...PropositionEvidence.tasks,
+  ...RelatedCompaniesCount.tasks,
 }
