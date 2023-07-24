@@ -33,6 +33,16 @@ import LargeCapitalInvestmentReturnRate from './LargeCapitalInvestmentReturnRate
 import LargeCapitalInvestmentEquityPercentages from './LargeCapitalInvestmentEquityPercentages'
 import Proposition from './Proposition'
 import PropositionEvidence from './PropositionEvidence'
+import ReferralSourceActivity from './ReferralSourceActivity'
+import LikelihoodToLand from './LikelihoodToLand'
+import LevelOfInvolvement from './LevelOfInvolvement'
+import InvestmentInvestorTypes from './InvestmentInvestorTypes'
+import SpecificInvestmentProgrammes from './SpecificInvestmentProgrammes'
+import InvestmentTypes from './InvestmentTypes'
+import FDITypes from './FDITypes'
+import BusinessActivities from './BusinessActivities'
+import ReferralSourceMarketing from './ReferralSourceMarketing'
+import ReferralSourceWebsite from './ReferralSourceWebsite'
 
 export default {
   ...Advisers.tasks,
@@ -70,4 +80,14 @@ export default {
   ...LargeCapitalInvestmentEquityPercentages.tasks,
   ...Proposition.tasks,
   ...PropositionEvidence.tasks,
+  ...ReferralSourceActivity.tasks,
+  ...LikelihoodToLand.tasks,
+  ...LevelOfInvolvement.tasks,
+  ...InvestmentInvestorTypes.tasks,
+  ...SpecificInvestmentProgrammes.tasks,
+  ...InvestmentTypes.tasks,
+  ...FDITypes.tasks,
+  ...BusinessActivities.tasks,
+  ...ReferralSourceMarketing.tasks,
+  ...ReferralSourceWebsite.tasks,
 }

@@ -1,5 +1,5 @@
 var likelihoodToLand = require('../../../fixtures/v4/metadata/likelihood-to-land.json')
-var investmentInvestorType = require('../../../fixtures/v4/metadata/likelihood-to-land.json')
+var investmentInvestorType = require('../../../fixtures/v4/metadata/investment-investor-type.json')
 var investmentInvolvement = require('../../../fixtures/v4/metadata/investment-involvement.json')
 var investmentSpecificProgramme = require('../../../fixtures/v4/metadata/investment-specific-programme.json')
 var investmentProjectStage = require('../../../fixtures/v4/metadata/investment-project-stage.json')

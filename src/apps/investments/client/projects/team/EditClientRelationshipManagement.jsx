@@ -9,7 +9,7 @@ import urls from '../../../../../lib/urls'
 import { TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER } from './state'
 import { GlobalAccountManagerDetails } from './GlobalAccountManagerDetails'
 import {
-  transformAdviserForTypeahead,
+  transformObjectForTypeahead,
   transformAdviserForAPI,
 } from './transformers'
 
@@ -33,7 +33,7 @@ const EditClientRelationshipManagement = ({
     cancelButtonLabel="Back"
     cancelRedirectTo={() => urls.investments.projects.team(id)}
     initialValues={{
-      client_relationship_manager: transformAdviserForTypeahead(
+      client_relationship_manager: transformObjectForTypeahead(
         clientRelationshipManager
       ),
     }}

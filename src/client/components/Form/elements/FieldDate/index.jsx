@@ -105,6 +105,7 @@ const FieldDate = ({
   invalid,
   format,
   reduced,
+  showDay = true,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -150,7 +151,7 @@ const FieldDate = ({
           />
         ) : (
           <StyledList>
-            {format === FORMAT_LONG && (
+            {format === FORMAT_LONG && showDay && (
               <StyledLabel>
                 <LabelText>{labels.day}</LabelText>
                 <Input
@@ -248,6 +249,10 @@ FieldDate.propTypes = {
    * Toggles wether the element is a filter or not
    */
   reduced: PropTypes.bool,
+  /**
+   * Toggles whether to show the Day box or not
+   */
+  showDay: PropTypes.bool,
 }
 
 FieldDate.defaultProps = {

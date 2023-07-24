@@ -1,6 +1,5 @@
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
-const { getDitCompany } = require('../companies/repos')
 
 function getCompanyInvestmentProjects(req, companyId, page = 1) {
   const limit = 10
@@ -22,30 +21,6 @@ function updateInvestment(req, investmentId, body) {
   return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}`,
     method: 'PATCH',
-    body,
-  })
-}
-
-function getEquityCompanyDetails(req, equityCompanyId) {
-  const promises = [
-    getDitCompany(req, equityCompanyId),
-    getCompanyInvestmentProjects(req, equityCompanyId),
-  ]
-
-  return Promise.all(promises).then(
-    ([equityCompany, equityCompanyInvestments]) => {
-      return {
-        equityCompany,
-        equityCompanyInvestments,
-      }
-    }
-  )
-}
-
-function createInvestmentProject(req, body) {
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v3/investment`,
-    method: 'POST',
     body,
   })
 }
@@ -92,8 +67,6 @@ module.exports = {
   getCompanyInvestmentProjects,
   getInvestment,
   updateInvestment,
-  getEquityCompanyDetails,
-  createInvestmentProject,
   getInvestmentProjectAuditLog,
   archiveInvestmentProject,
   unarchiveInvestmentProject,

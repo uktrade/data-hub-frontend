@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { filter, keyBy, snakeCase, upperFirst } = require('lodash')
+const { filter, upperFirst } = require('lodash')
 const { format, isDateValid } = require('../client/utils/date')
 const { OPTION_NO, OPTION_YES } = require('./constants')
 
@@ -85,17 +85,6 @@ function transformDateStringToDateObject(dateString) {
   }
 }
 
-/**
- * Utility to build an object from a transformed metadata array of objects so you can reference properties
- * by key rather than array index. Helpful when the array length changes.
- * @returns {{}}
- */
-function buildMetaDataObj(collection) {
-  return keyBy(collection, (elem) => {
-    return snakeCase(elem.label)
-  })
-}
-
 const transformOptionToValue = (option) => {
   if (!option || !option.value) {
     return null
@@ -131,7 +120,6 @@ const transformObjectToTypeahead = (value) => {
 const transformToYesNo = (value) => (value ? OPTION_YES : OPTION_NO)
 
 module.exports = {
-  buildMetaDataObj,
   transformHQCodeToLabelledOption,
   transformObjectToOption,
   transformStringToOption,
