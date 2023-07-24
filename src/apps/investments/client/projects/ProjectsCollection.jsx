@@ -105,7 +105,8 @@ const ProjectsCollection = ({
     .map(({ value }) => value)
     .includes(currentAdviserId)
   const myProjectsOption = { label: 'My projects', value: currentAdviserId }
-
+  const subsidiaries_limited_label =
+    'Due to the large number of related companies in this  tree, we can only show projects from parent companies.'
   return (
     <>
       {company?.archived && (
@@ -165,14 +166,14 @@ const ProjectsCollection = ({
                       selectedFilters.includeRelatedCompanies.options
                     }
                     data-test="include-related-companies-filter"
-                    aria-description="Due to the large number of related companies in this
-                    tree, we can only show projects from parent companies."
+                    aria-description={
+                      count.reducedTree ? subsidiaries_limited_label : undefined
+                    }
                   />
                   {count.reducedTree && (
                     <StyledDetails summary="Why can't I filter by subsidiary companies?">
                       <StyledParagraph>
-                        Due to the large number of related companies in this
-                        tree, we can only show projects from parent companies.
+                        {subsidiaries_limited_label}
                       </StyledParagraph>
                     </StyledDetails>
                   )}
