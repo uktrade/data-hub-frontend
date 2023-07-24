@@ -4,7 +4,6 @@ const {
   getInvestment,
   updateInvestment,
   getCompanyInvestmentProjects,
-  createInvestmentProject,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
 } = require('../../../apps/investments/repos')
@@ -47,19 +46,6 @@ describe('Investment repository', () => {
 
     it('should return an investment object', () => {
       expect(this.investmentProject).to.deep.equal(investmentData)
-    })
-  })
-
-  describe('#createInvestmentProject', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot).post(`/v3/investment`).reply(200, { id: '12345' })
-      this.investmentProject = await createInvestmentProject(stubRequest, {
-        foo: 'bar',
-      })
-    })
-
-    it('should return an investment requirements object', () => {
-      expect(this.investmentProject).to.deep.equal({ id: '12345' })
     })
   })
 

@@ -2,7 +2,14 @@
 const valueCutOffDate = new Date('2020-04-01')
 
 function editDetailsGet(req, res) {
-  res.breadcrumb('Edit details').render('investments/views/details-edit')
+  const { investment } = res.locals
+  const { user } = req.session
+  res.breadcrumb('Edit details').render('investments/views/details-edit', {
+    props: {
+      projectId: investment.id,
+      currentAdviser: user.id,
+    },
+  })
 }
 
 function editValueGet(req, res) {
@@ -23,18 +30,6 @@ function renderRequirementsForm(req, res) {
   res.render('investments/views/requirements-edit')
 }
 
-function editDetailsPost(req, res, next) {
-  if (res.locals.form.errors || req.body['add-item']) {
-    return next()
-  }
-
-  const { resultId } = res.locals
-  const { projects } = res.locals.paths
-
-  req.flash('success', 'Investment details updated')
-  return res.redirect(`${projects}/${resultId}/details`)
-}
-
 function renderValueForm(req, res) {
   return res.render('investments/views/value-edit')
 }
@@ -43,6 +38,5 @@ module.exports = {
   editDetailsGet,
   editValueGet,
   renderRequirementsForm,
-  editDetailsPost,
   renderValueForm,
 }
