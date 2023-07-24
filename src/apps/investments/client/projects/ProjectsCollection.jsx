@@ -32,11 +32,6 @@ import {
 } from '../../../../client/actions'
 
 import { sanitizeFilter } from '../../../../client/filters'
-import {
-  INCLUDE_RELATED_COMPANIES,
-  INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY,
-} from './constants'
-import { RelatedCompaniesCountResource } from '../../../../client/components/Resource'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -105,8 +100,7 @@ const ProjectsCollection = ({
     .map(({ value }) => value)
     .includes(currentAdviserId)
   const myProjectsOption = { label: 'My projects', value: currentAdviserId }
-  const subsidiaries_limited_label =
-    'Due to the large number of related companies in this  tree, we can only show projects from parent companies.'
+
   return (
     <>
       {company?.archived && (
@@ -146,40 +140,10 @@ const ProjectsCollection = ({
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           {company && (
-            <RelatedCompaniesCountResource id={company.id}>
-              {(count) => (
-                <FilterToggleSection
-                  id="ProjectCollection.include-related-companies-filters"
-                  label="Related companies"
-                  isOpen={true}
-                >
-                  <Filters.CheckboxGroup
-                    legend="Include related companies"
-                    name="include_related_companies"
-                    qsParam="include_related_companies"
-                    options={
-                      count.reducedTree
-                        ? INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY
-                        : INCLUDE_RELATED_COMPANIES
-                    }
-                    selectedOptions={
-                      selectedFilters.includeRelatedCompanies.options
-                    }
-                    data-test="include-related-companies-filter"
-                    aria-description={
-                      count.reducedTree ? subsidiaries_limited_label : undefined
-                    }
-                  />
-                  {count.reducedTree && (
-                    <StyledDetails summary="Why can't I filter by subsidiary companies?">
-                      <StyledParagraph>
-                        {subsidiaries_limited_label}
-                      </StyledParagraph>
-                    </StyledDetails>
-                  )}
-                </FilterToggleSection>
-              )}
-            </RelatedCompaniesCountResource>
+            <Filters.RelatedCompaniesCheckboxGroup
+              company={company}
+              selectedOptions={selectedFilters.includeRelatedCompanies.options}
+            />
           )}
           <FilterToggleSection
             id="ProjectCollection.stage-and-status-filters"
