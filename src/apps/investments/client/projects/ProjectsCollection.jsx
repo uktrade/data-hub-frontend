@@ -165,6 +165,8 @@ const ProjectsCollection = ({
                       selectedFilters.includeRelatedCompanies.options
                     }
                     data-test="include-related-companies-filter"
+                    aria-description="Due to the large number of related companies in this
+                    tree, we can only show projects from parent companies."
                   />
                   {count.reducedTree && (
                     <StyledDetails summary="Why can't I filter by subsidiary companies?">
