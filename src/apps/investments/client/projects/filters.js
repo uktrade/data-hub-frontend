@@ -1,3 +1,4 @@
+import { INCLUDE_RELATED_COMPANIES } from '../../../../client/components/RoutedRelatedCompaniesCheckboxGroup/constants'
 import {
   buildOptionsFilter,
   buildDatesFilter,
@@ -7,7 +8,6 @@ import {
   LABELS,
   PROJECT_STATUS_OPTIONS,
   INVOLVEMENT_LEVEL_OPTIONS,
-  INCLUDE_RELATED_COMPANIES,
 } from './constants'
 
 export const buildSelectedFilters = (
@@ -26,9 +26,9 @@ export const buildSelectedFilters = (
   },
   advisers: {
     queryParam: 'adviser',
-    options: selectedAdvisers.map((adviser) => ({
-      label: adviser.name,
-      value: adviser.id,
+    options: selectedAdvisers.map(({ advisers }) => ({
+      label: advisers.name,
+      value: advisers.id,
       categoryLabel: LABELS.adviser,
     })),
   },
