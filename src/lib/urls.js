@@ -112,7 +112,9 @@ module.exports = {
       'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
   },
 
-  dashboard: url('/'),
+  dashboard: {
+    index: url('/'),
+  },
   oauth: {
     redirect: url('/oauth'),
     callback: url('/oauth/callback'),

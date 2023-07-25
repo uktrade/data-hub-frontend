@@ -7,7 +7,7 @@ import StepReferralConfirmation from './StepReferralConfirmation'
 import Step from '../../../../../../client/components/Form/elements/Step.jsx'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
 import { Main } from '../../../../../../client/components/'
-import { companies, dashboard } from '../../../../../../lib/urls'
+import urls from '../../../../../../lib/urls'
 import Task from '../../../../../../client/components/Task'
 import Form from '../../../../../../client/components/Form'
 
@@ -26,12 +26,12 @@ const SendReferralForm = ({
     <LocalHeader
       heading={'Send a referral'}
       breadcrumbs={[
-        { link: dashboard(), text: 'Home' },
+        { link: urls.dashboard.index(), text: 'Home' },
         {
-          link: companies.index(),
+          link: urls.companies.index(),
           text: 'Companies',
         },
-        { link: companies.detail(companyId), text: companyName },
+        { link: urls.companies.detail(companyId), text: companyName },
         { text: 'Send a referral' },
       ]}
       flashMessages={flashMessages}
@@ -53,10 +53,10 @@ const SendReferralForm = ({
           referralSubject: subject,
         })}
         initialValuesTaskName="Get send referral initial values"
-        redirectTo={() => companies.detail(companyId)}
+        redirectTo={() => urls.companies.detail(companyId)}
         flashMessage={() => [
           'Referral sent',
-          `You can <a href=${companies.referrals.list()}>see all of your referrals on your Homepage</a>.`,
+          `You can <a href=${urls.companies.referrals.list()}>see all of your referrals on your Homepage</a>.`,
         ]}
       >
         <Step name="referral_details" forwardButton={null}>

@@ -1,10 +1,9 @@
 const selectors = require('../../../../selectors')
-
-const { dashboard } = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Search', () => {
   before(() => {
-    cy.visit(dashboard())
+    cy.visit(urls.dashboard.index())
 
     cy.get('#search-input').type('fred').type('{enter}')
   })

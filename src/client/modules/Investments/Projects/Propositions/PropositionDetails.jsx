@@ -57,7 +57,7 @@ const PropositionDetails = ({ propositionId, investmentProjectId }) => (
                 <LocalHeader
                   heading={proposition.name}
                   breadcrumbs={[
-                    { link: urls.dashboard(), text: 'Home' },
+                    { link: urls.dashboard.index(), text: 'Home' },
                     {
                       link: urls.investments.index(),
                       text: 'Investments',

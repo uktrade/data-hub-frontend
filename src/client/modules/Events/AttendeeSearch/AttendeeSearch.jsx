@@ -82,7 +82,7 @@ const AttendeeSearch = ({
           <LocalHeader
             heading={event.name}
             breadcrumbs={[
-              { link: urls.dashboard(), text: 'Home' },
+              { link: urls.dashboard.index(), text: 'Home' },
               {
                 link: urls.events.index(),
                 text: 'Events',

@@ -26,7 +26,7 @@ export const buildCompanyBreadcrumbs = (
   companyName
 ) => {
   const initalBreadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
+    { link: urls.dashboard.index(), text: 'Home' },
     {
       link: urls.companies.index(),
       text: 'Companies',

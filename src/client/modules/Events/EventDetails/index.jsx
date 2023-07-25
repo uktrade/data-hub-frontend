@@ -47,7 +47,7 @@ const EventDetails = ({
   const { id } = useParams()
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {

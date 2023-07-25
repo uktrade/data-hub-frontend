@@ -41,7 +41,7 @@ describe('Send a referral form', () => {
     context('when viewing the "send referral" form', () => {
       it('should display breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           'Venus Ltd': urls.companies.detail(fixtures.company.withContacts.id),
           'Send a referral': null,

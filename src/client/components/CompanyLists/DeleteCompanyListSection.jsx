@@ -25,7 +25,7 @@ const DeleteCompanyListSection = ({
       <LocalHeader
         heading="Delete list"
         breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.dashboard.index(), text: 'Home' },
           {
             text: 'Delete list',
           },

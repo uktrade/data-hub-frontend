@@ -16,7 +16,7 @@ describe('Event Attendees', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Events: urls.events.index(),
         'One-day exhibition': null,
       })
@@ -68,7 +68,7 @@ describe('Event Attendees', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Events: urls.events.index(),
         'Teddy bear expo': null,
       })

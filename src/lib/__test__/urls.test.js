@@ -25,9 +25,9 @@ describe('urls', () => {
 
   describe('dashboard', () => {
     it('should return the correct value', () => {
-      expect(urls.dashboard()).to.equal('/')
-      expect(urls.dashboard.mountPoint).to.equal('/')
-      expect(urls.dashboard.route).to.equal('/')
+      expect(urls.dashboard.index()).to.equal('/')
+      expect(urls.dashboard.index.mountPoint).to.equal('/')
+      expect(urls.dashboard.index.route).to.equal('/')
     })
   })
 

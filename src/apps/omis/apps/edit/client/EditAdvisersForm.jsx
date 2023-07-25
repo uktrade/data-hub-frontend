@@ -17,7 +17,7 @@ export const EditAdvisersLocalHeader = ({
   <LocalHeader
     heading={heading}
     breadcrumbs={[
-      { link: urls.dashboard(), text: 'Home' },
+      { link: urls.dashboard.index(), text: 'Home' },
       { link: urls.omis.index(), text: 'Orders (OMIS)' },
       { link: urls.omis.workOrder(orderId), text: reference },
       { text: lastFieldText },
@@ -53,7 +53,7 @@ export const EditAdvisersForm = ({
       label="Adviser"
       /*
         We need to allow the users to remove all advisers without adding new ones.
-        Therefore validation is only enabled when the order has no pre-existing advisers. 
+        Therefore validation is only enabled when the order has no pre-existing advisers.
       */
       required={orderAdvisers.length ? null : 'Enter at least one team member'}
       placeholder="Search team member"

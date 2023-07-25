@@ -23,7 +23,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
-        [urls.dashboard()]: {
+        [urls.dashboard.index()]: {
           label: 'Company lists',
           content: <CompanyLists />,
         },

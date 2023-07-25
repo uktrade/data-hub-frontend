@@ -1,12 +1,6 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-
-const {
-  companies,
-  contacts,
-  dashboard,
-  investments,
-} = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 const {
   assertLocalNav,
@@ -19,7 +13,7 @@ describe('DA Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company.pk))
+      cy.visit(urls.companies.detail(company.pk))
     })
 
     it('should display DA only tabs', () => {
@@ -36,7 +30,7 @@ describe('DA Permission', () => {
 
   describe('dashboard', () => {
     before(() => {
-      cy.visit(dashboard())
+      cy.visit(urls.dashboard.index())
     })
 
     it('should display DA only tabs', () => {
@@ -58,7 +52,7 @@ describe('DA Permission', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.details(contact.pk))
+      cy.visit(urls.contacts.details(contact.pk))
     })
 
     it('should display DA only tabs', () => {
@@ -72,7 +66,7 @@ describe('DA Permission', () => {
   describe('investment projects', () => {
     before(() => {
       cy.visit(
-        investments.projects.details(
+        urls.investments.projects.details(
           fixtures.investmentProject.newGolfCourse.id
         )
       )

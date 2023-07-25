@@ -43,7 +43,7 @@ const generateBreadcrumbs = (openSettingsBreadCrumb) => {
   if (openSettingsBreadCrumb?.isOpen) {
     return [
       {
-        link: urls.dashboard(),
+        link: urls.dashboard.index(),
         text: 'Home',
       },
       {
@@ -61,7 +61,7 @@ const generateBreadcrumbs = (openSettingsBreadCrumb) => {
   } else {
     return [
       {
-        link: urls.dashboard(),
+        link: urls.dashboard.index(),
         text: 'Home',
       },
       {

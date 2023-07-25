@@ -23,7 +23,7 @@ const EventForm = () => {
 
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: DISPLAY_HOME,
     },
     {

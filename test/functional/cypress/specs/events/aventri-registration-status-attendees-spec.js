@@ -64,7 +64,7 @@ describe('Aventri status event registration attendees', () => {
 
         it('should display aventri event name in breadcrumb', () => {
           assertBreadcrumbs({
-            Home: urls.dashboard.route,
+            Home: urls.dashboard.index.route,
             Events: urls.events.index(),
             'EITA Test Filtering Event 2022': null,
           })

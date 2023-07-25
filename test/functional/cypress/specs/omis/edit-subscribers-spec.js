@@ -46,7 +46,7 @@ describe('View edit subscribers page', () => {
     })
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         'Orders (OMIS)': urls.omis.index(),
         [draftOrder.reference]: urls.omis.workOrder(draftOrder.id),
         'Add or remove advisers in the UK': undefined,
