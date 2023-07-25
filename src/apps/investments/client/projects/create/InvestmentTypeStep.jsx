@@ -10,12 +10,9 @@ import {
 } from '@govuk-react/constants'
 
 import { GREY_1 } from '../../../../../client/utils/colours'
-import {
-  Step,
-  FieldRadios,
-  FieldSelect,
-} from '../../../../../client/components'
+import { Step, FieldRadios } from '../../../../../client/components'
 import { investments } from '../../../../../lib/urls'
+import { FieldFDIType } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
 
 const FDI = 'FDI'
 const NON_FDI = 'Non-FDI'
@@ -32,7 +29,7 @@ const StyledLink = styled(Link)({
   },
 })
 
-const InvestmentTypeStep = ({ investmentTypes = [], fdiTypes = [] }) => (
+const InvestmentTypeStep = ({ investmentTypes = [] }) => (
   <Step name="investmentType">
     <FieldRadios
       name="investment_type"
@@ -49,15 +46,7 @@ const InvestmentTypeStep = ({ investmentTypes = [], fdiTypes = [] }) => (
               Is this an FDI project?
             </StyledLink>
           ),
-          children: (
-            <FieldSelect
-              name="fdi_type"
-              emptyOption="Select an FDI type"
-              options={fdiTypes}
-              required="Select an FDI type"
-              aria-label="select an FDI type"
-            />
-          ),
+          children: <FieldFDIType />,
         }),
         ...(option.label === NON_FDI && {
           link: (
@@ -91,7 +80,6 @@ const optionProp = PropTypes.shape({
 
 InvestmentTypeStep.propTypes = {
   investmentTypes: PropTypes.arrayOf(optionProp),
-  fdiTypes: PropTypes.arrayOf(optionProp),
 }
 
 export default InvestmentTypeStep
