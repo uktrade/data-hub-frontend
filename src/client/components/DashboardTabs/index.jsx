@@ -24,6 +24,10 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
       onTabChange={onTabChange}
       tabs={{
         [urls.dashboard()]: {
+          label: 'Company lists',
+          content: <CompanyLists />,
+        },
+        [urls.investments.dashboard.projects()]: {
           label: 'Investment projects',
           content: hasInvestmentProjects ? (
             <MyInvestmentProjects adviser={adviser} />
@@ -31,16 +35,12 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
             <NoInvestmentProjects />
           ),
         },
-        [urls.companyLists.index()]: {
-          label: 'Company lists',
-          content: <CompanyLists />,
-        },
         [urls.exportPipeline.index()]: {
           label: 'Export projects',
           content: <ExportList />,
         },
         [urls.companies.referrals.list()]: {
-          label: 'My referrals',
+          label: 'Referrals',
           content: <ReferralList id="ReferralList" />,
         },
       }}

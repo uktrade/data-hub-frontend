@@ -14,7 +14,6 @@ describe('Dashboard - My projects list', () => {
   const myProjects = [project1, ...otherProjects]
 
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
         count: myProjects.length,
@@ -23,7 +22,7 @@ describe('Dashboard - My projects list', () => {
     }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
-    cy.get('[data-test="tablist"] span:first-child button').click()
+    cy.get('[data-test="tablist"] button').contains('Investment').click()
   })
 
   after(() => {

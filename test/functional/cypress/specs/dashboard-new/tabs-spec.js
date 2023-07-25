@@ -12,23 +12,21 @@ describe('Selecting a dashboard tab based on localstorage', () => {
       .should('have.attr', 'aria-selected', 'true')
   }
 
-  context('Investment projects', () => {
-    const INVESTMENT_PROJECTS = 0
+  context('Company lists', () => {
+    const COMPANY_LISTS = 0
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard())
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit(urls.dashboard())
-      assertTabSelected(INVESTMENT_PROJECTS)
+      assertTabSelected(COMPANY_LISTS)
     })
   })
 
-  context('Company lists', () => {
-    const COMPANY_LISTS = 1
+  context('Investment projects', () => {
+    const INVESTMENT_PROJECTS = 1
     it('should select the tab', () => {
-      cy.localStorage(LOCAL_STORAGE_KEY, urls.companyLists.index())
-      cy.setUserFeatures(['personalised-dashboard'])
+      cy.localStorage(LOCAL_STORAGE_KEY, urls.investments.dashboard.projects())
       cy.visit(urls.dashboard())
-      assertTabSelected(COMPANY_LISTS)
+      assertTabSelected(INVESTMENT_PROJECTS)
     })
   })
 
@@ -36,17 +34,15 @@ describe('Selecting a dashboard tab based on localstorage', () => {
     const EXPORT_PROJECTS = 2
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.exportPipeline.index())
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit(urls.dashboard())
       assertTabSelected(EXPORT_PROJECTS)
     })
   })
 
-  context('My referrals', () => {
+  context('Referrals', () => {
     const MY_REFERRALS = 3
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.companies.referrals.list())
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit(urls.dashboard())
       assertTabSelected(MY_REFERRALS)
     })

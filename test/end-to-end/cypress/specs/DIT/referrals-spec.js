@@ -43,7 +43,7 @@ describe('Referrals', () => {
     it('should display the new referral on the homepage', () => {
       cy.get(companyLocalHeader.flashMessageList).find('a').eq(0).click()
       cy.get(selectors.tabbedNav().item(2)).click()
-      cy.selectDhTablistTab('Dashboard', 'My referrals').within(() => {
+      cy.selectDhTablistTab('Dashboard', 'Referrals').within(() => {
         cy.get('select').select('Sent referrals')
         cy.contains('h3', '1 sent referral')
           .parent()

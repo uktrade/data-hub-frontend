@@ -1,8 +1,4 @@
 describe('Dashboard - Flash Messages', () => {
-  before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-  })
-
   beforeEach(() => {
     cy.visit('/')
   })

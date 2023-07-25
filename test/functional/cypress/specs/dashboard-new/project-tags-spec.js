@@ -8,10 +8,6 @@ import { investmentProjectSummaryFaker } from '../../fakers/investment-project-s
 describe('Dashboard - Investment project tags', () => {
   const summary = investmentProjectSummaryFaker()
 
-  before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-  })
-
   after(() => {
     cy.resetUser()
   })
@@ -28,7 +24,7 @@ describe('Dashboard - Investment project tags', () => {
     }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
-    cy.get('[data-test="tablist"] span:first-child button').click()
+    cy.get('[data-test="tablist"] button').contains('Investment').click()
     const expected = [
       {
         label: 'Prospect',
@@ -78,7 +74,7 @@ describe('Dashboard - Investment project tags', () => {
     }).as('apiRequest')
     cy.visit('/')
     cy.wait('@apiRequest')
-    cy.get('[data-test="tablist"] span:first-child button').click()
+    cy.get('[data-test="tablist"] button').contains('Investment').click()
     const expected = ['ongoing', 'delayed', 'abandoned', 'lost', 'dormant']
 
     cy.get('[data-test="project-status-tag"]').each(($el, i) => {

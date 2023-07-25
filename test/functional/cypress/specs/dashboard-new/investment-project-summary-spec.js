@@ -1,5 +1,6 @@
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
 import { investmentProjectListFaker } from '../../fakers/investment-projects'
+import urls from '../../../../../src/lib/urls'
 
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
@@ -17,10 +18,6 @@ describe('Investment projects summary', () => {
   const { prospect, assign_pm, active, verify_win, won } =
     investmentProjectSummary
 
-  before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-  })
-
   after(() => {
     cy.resetUser()
   })
@@ -33,7 +30,7 @@ describe('Investment projects summary', () => {
         summary: investmentProjectSummary,
       },
     }).as('apiRequest')
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
     cy.wait('@apiRequest')
   })
 

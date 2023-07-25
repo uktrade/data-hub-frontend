@@ -26,7 +26,7 @@ describe('Dashboard', () => {
     })
 
     it('should display the correct heading', () => {
-      cy.get('@dataHubFeed').find('h3').should('have.text', 'Data Hub updates')
+      cy.get('@dataHubFeed').find('h3').should('have.text', '"What\'s new"')
     })
 
     it('should display the info feed list', () => {
@@ -86,13 +86,15 @@ describe('Dashboard', () => {
         .eq(0)
         .should('exist')
         .children()
-        .should('have.length', 3)
+        .should('have.length', 4)
         .first()
-        .should('have.text', 'My companies lists')
+        .should('have.text', 'Company lists')
         .next()
-        .should('have.text', 'My referrals')
+        .should('have.text', 'Investment projects')
         .next()
         .should('have.text', 'Export projects')
+        .next()
+        .should('have.text', 'Referrals')
     })
   })
 })

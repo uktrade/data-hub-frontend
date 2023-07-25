@@ -1,10 +1,6 @@
 const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
-  before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-  })
-
   after(() => {
     cy.resetUser()
   })
@@ -16,7 +12,7 @@ describe('Dashboard - no investment projects', () => {
         results: [],
       },
     }).as('apiRequest')
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
     cy.wait('@apiRequest')
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
@@ -24,18 +20,6 @@ describe('Dashboard - no investment projects', () => {
   })
 
   context('Tabbed navigation', () => {
-    it('should contain two tabs named "Investment projects" and "Company lists"', () => {
-      cy.get('@tabList')
-        .find('button')
-        .eq(0)
-        .should('have.text', 'Investment projects')
-
-      cy.get('@tabList')
-        .find('button')
-        .eq(1)
-        .should('have.text', 'Company lists')
-    })
-
     it('should have a heading of `No investment projects`', () => {
       cy.get('@tabPanel')
         .find('h1')

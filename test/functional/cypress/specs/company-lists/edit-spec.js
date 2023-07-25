@@ -66,10 +66,7 @@ describe('Edit company list page', () => {
     })
 
     it('displays the "List updated" flash message', () => {
-      cy.get('[data-auto-id="localHeader"]').should(
-        'contain.text',
-        'List updated'
-      )
+      cy.get('[data-test="flash"]').should('contain.text', 'List updated')
     })
   })
 

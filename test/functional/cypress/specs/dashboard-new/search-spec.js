@@ -3,7 +3,6 @@ const urls = require('../../../../../src/lib/urls')
 describe('Dashboard search', () => {
   context('Search form attributes and text', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 
@@ -68,7 +67,6 @@ describe('Dashboard search', () => {
 
   context('Searching for something on Data Hub', () => {
     before(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
       cy.visit('/')
     })
 

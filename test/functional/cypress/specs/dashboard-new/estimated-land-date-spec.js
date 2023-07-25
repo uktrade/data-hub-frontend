@@ -7,6 +7,7 @@ const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
 
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
+import urls from '../../../../../src/lib/urls'
 
 const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
   cy.get('@projectListItems')
@@ -40,8 +41,7 @@ describe('Dashboard items - estimated land date', () => {
   const summary = investmentProjectSummaryFaker()
 
   before(() => {
-    cy.setUserFeatures(['personalised-dashboard'])
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
   })
 
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe('Dashboard items - estimated land date', () => {
         summary,
       },
     }).as('apiRequest')
-    cy.visit('/')
+    cy.visit(urls.investments.dashboard.projects())
     cy.wait('@apiRequest')
     cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })
