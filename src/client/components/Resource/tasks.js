@@ -43,6 +43,7 @@ import FDITypes from './FDITypes'
 import BusinessActivities from './BusinessActivities'
 import ReferralSourceMarketing from './ReferralSourceMarketing'
 import ReferralSourceWebsite from './ReferralSourceWebsite'
+import RelatedCompaniesCount from './RelatedCompaniesCount'
 
 export default {
   ...Advisers.tasks,
@@ -90,4 +91,5 @@ export default {
   ...BusinessActivities.tasks,
   ...ReferralSourceMarketing.tasks,
   ...ReferralSourceWebsite.tasks,
+  ...RelatedCompaniesCount.tasks,
 }

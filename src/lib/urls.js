@@ -173,6 +173,10 @@ module.exports = {
       index: url('/companies', '/:companyId/dnb-hierarchy'),
       data: url('/companies', '/:companyId/dnb-hierarchy/data'),
       tree: url('/companies', '/:companyId/company-tree'),
+      relatedCompaniesCount: url(
+        '/v4/dnb',
+        '/:companyId/related-companies/count'
+      ),
     },
     exports: {
       index: url('/companies', '/:companyId/exports'),

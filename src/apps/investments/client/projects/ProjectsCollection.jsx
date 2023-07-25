@@ -32,7 +32,6 @@ import {
 } from '../../../../client/actions'
 
 import { sanitizeFilter } from '../../../../client/filters'
-import { INCLUDE_RELATED_COMPANIES } from './constants'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -43,6 +42,7 @@ const StyledDetails = styled(Details)`
     font-size: ${FONT_SIZE.SIZE_16};
   }
 `
+
 const ProjectsCollection = ({
   company,
   payload,
@@ -140,22 +140,10 @@ const ProjectsCollection = ({
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           {company && (
-            <FilterToggleSection
-              id="ProjectCollection.include-related-companies-filters"
-              label="Related companies"
-              isOpen={true}
-            >
-              <Filters.CheckboxGroup
-                legend="Include related companies"
-                name="include_related_companies"
-                qsParam="include_related_companies"
-                options={INCLUDE_RELATED_COMPANIES}
-                selectedOptions={
-                  selectedFilters.includeRelatedCompanies.options
-                }
-                data-test="include-related-companies-filter"
-              />
-            </FilterToggleSection>
+            <Filters.RelatedCompaniesCheckboxGroup
+              company={company}
+              selectedOptions={selectedFilters.includeRelatedCompanies.options}
+            />
           )}
           <FilterToggleSection
             id="ProjectCollection.stage-and-status-filters"

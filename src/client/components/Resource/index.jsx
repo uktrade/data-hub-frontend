@@ -39,6 +39,7 @@ export { default as ReferralSourceActivityResource } from './ReferralSourceActiv
 export { default as ReferralSourceMarketingResource } from './ReferralSourceMarketing'
 export { default as ReferralSourceWebsiteResource } from './ReferralSourceWebsite'
 export { default as RequiredChecksConductedResource } from './RequiredChecksConducted'
+export { default as RelatedCompaniesCountResource } from './RelatedCompaniesCount'
 export { default as SectorResource } from './Sector'
 export { default as SpecificInvestmentProgrammesResource } from './SpecificInvestmentProgrammes'
 export { default as TimeHorizonsResource } from './TimeHorizons'
