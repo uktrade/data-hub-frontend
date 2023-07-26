@@ -30,7 +30,7 @@ function addFiltersToCriteria(filters, criteria) {
 const dataHubCompanyActivityQuery = ({
   from,
   size,
-  sortby,
+  sortBy,
   companyIds,
   aventriEventIds,
   maxemailCampaignIds,
@@ -42,7 +42,7 @@ const dataHubCompanyActivityQuery = ({
   activityType,
   feedType,
 }) => {
-  let sortDirection = sortby == 'date:asc' ? 'asc' : 'desc'
+  let sortDirection = sortBy == 'date:asc' ? 'asc' : 'desc'
   let shouldCriteria = []
   let types = []
   if (activityType?.length == 0) {
