@@ -32,7 +32,7 @@ const EventAventriDetails = ({
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {

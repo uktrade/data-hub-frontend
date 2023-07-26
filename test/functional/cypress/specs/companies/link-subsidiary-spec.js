@@ -68,7 +68,7 @@ describe('Link Subsidiary', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [testCompany.name]: urls.companies.detail(testCompany.id),
         ['Link subsidiary']: null,

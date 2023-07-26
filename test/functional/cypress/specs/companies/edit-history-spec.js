@@ -29,7 +29,7 @@ describe('Edit History', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
         'Business details': urls.companies.businessDetails(

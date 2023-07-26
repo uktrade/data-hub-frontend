@@ -21,7 +21,7 @@ describe('Event Aventri Details', () => {
     })
     it('should display aventri event name in breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Events: urls.events.index(),
         'EITA Test Event 2022': null,
       })
@@ -158,7 +158,7 @@ describe('Event Aventri Details', () => {
 
     it('should render an error message', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Events: urls.events.index(),
       })
       assertErrorDialog(
@@ -175,7 +175,7 @@ describe('Event Aventri Details', () => {
 
     it('should render an error message', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Events: urls.events.index(),
       })
       assertErrorDialog(

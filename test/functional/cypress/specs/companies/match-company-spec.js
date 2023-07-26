@@ -112,7 +112,7 @@ describe('Match a company', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
         'Search for verified business details': null,
@@ -246,7 +246,7 @@ describe('Match a company', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.venusLtd.name]: urls.companies.detail(
           fixtures.company.venusLtd.id
@@ -418,7 +418,7 @@ describe('Match a company', () => {
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           [fixtures.company.venusLtd.name]: urls.companies.detail(
             fixtures.company.venusLtd.id
@@ -545,7 +545,7 @@ describe('Match a company', () => {
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           [fixtures.company.venusLtd.name]: urls.companies.detail(
             fixtures.company.venusLtd.id

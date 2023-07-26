@@ -16,7 +16,7 @@ describe('Event Details', () => {
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
 
     assertBreadcrumbs({
-      Home: urls.dashboard.route,
+      Home: urls.dashboard.index.route,
       Events: urls.events.index(),
       'One-day exhibition': null,
     })
@@ -74,7 +74,7 @@ describe('Event Details', () => {
 
     it('should display no document link details', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Events: urls.events.index(),
         'Teddy bear expo': null,
       })

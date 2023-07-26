@@ -31,7 +31,7 @@ describe('Edit History', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         'New hotel (FDI)': urls.investments.projects.project(

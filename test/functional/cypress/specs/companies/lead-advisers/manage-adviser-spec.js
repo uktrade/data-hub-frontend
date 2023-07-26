@@ -21,7 +21,7 @@ const addOrReplaceTestCase = ({
       : 'Add someone as the Lead ITA'
 
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [companyName]: urls.companies.detail(companyId),
       [replace ? 'Replace the Lead ITA' : 'Add Lead ITA']: undefined,
@@ -128,7 +128,7 @@ describe('Manage Lead ITA', () => {
     cy.visit(urls.companies.advisers.remove('managed'))
 
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [COMPANY_NAME]: urls.companies.detail(COMPANY_ID),
       [HEADLINE]: undefined,

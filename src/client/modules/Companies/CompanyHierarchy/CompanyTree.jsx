@@ -425,7 +425,7 @@ const breadcrumbs = (company) =>
     ? []
     : [
         {
-          link: urls.dashboard(),
+          link: urls.dashboard.index(),
           text: 'Home',
         },
         {
@@ -452,7 +452,7 @@ const CompanyTree = ({ company, familyTree }) => {
       <AccessDenied
         breadcrumbs={[
           {
-            link: urls.dashboard(),
+            link: urls.dashboard.index(),
             text: 'Home',
           },
           {

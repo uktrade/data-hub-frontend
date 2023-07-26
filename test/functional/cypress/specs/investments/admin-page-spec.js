@@ -34,7 +34,7 @@ describe('Update the project stage', () => {
     })
     it('should display breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         [fixtures.investment.newHotelFdi.name]:

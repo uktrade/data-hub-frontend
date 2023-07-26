@@ -17,7 +17,7 @@ describe('AccessDenied', () => {
         <Component
           breadcrumbs={[
             {
-              link: urls.dashboard(),
+              link: urls.dashboard.index(),
               text: 'Home',
             },
             {
@@ -28,7 +28,7 @@ describe('AccessDenied', () => {
         />
       )
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
       })
     })

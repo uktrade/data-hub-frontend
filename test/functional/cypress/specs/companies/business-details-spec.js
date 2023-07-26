@@ -49,7 +49,7 @@ const assertAddressDefaultsToRegistered = () => {
 const assertBusinessDetailsBreadcrumbs = (company) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.detail(company.id),
       'Business details': null,

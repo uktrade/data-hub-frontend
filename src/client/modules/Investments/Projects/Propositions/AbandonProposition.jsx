@@ -32,7 +32,7 @@ const AbandonProposition = ({ propositionId, investmentProjectId }) => (
             <LocalHeader
               heading={`Abandon proposition ${proposition.name}`}
               breadcrumbs={[
-                { link: urls.dashboard(), text: 'Home' },
+                { link: urls.dashboard.index(), text: 'Home' },
                 {
                   link: urls.investments.index(),
                   text: 'Investments',

@@ -105,7 +105,7 @@ const assertRelatedCompaniesPage = ({ company }) => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.overview.index(company.id),
       'Business details': urls.companies.businessDetails(company.id),

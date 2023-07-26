@@ -25,7 +25,7 @@ const investment = {
 }
 
 const breadcrumbs = [
-  { link: urls.dashboard(), text: 'Home' },
+  { link: urls.dashboard.index(), text: 'Home' },
   {
     link: urls.investments.index(),
     text: 'Investments',

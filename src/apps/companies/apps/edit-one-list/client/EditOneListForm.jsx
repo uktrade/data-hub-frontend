@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
-import { companies, dashboard } from '../../../../../lib/urls'
+import urls from '../../../../../lib/urls'
 import {
   Main,
   FieldRadios,
@@ -35,7 +35,7 @@ function EditOneListForm({
       submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
       analyticsFormName="editOneList"
       transformPayload={(values) => ({ values, companyId })}
-      redirectTo={() => companies.businessDetails(companyId)}
+      redirectTo={() => urls.companies.businessDetails(companyId)}
       flashMessage={() => 'One List information has been updated.'}
     >
       {({ values }) => (
@@ -43,12 +43,12 @@ function EditOneListForm({
           <LocalHeader
             heading={`Add or edit ${companyName} One List information`}
             breadcrumbs={[
-              { link: dashboard(), text: 'Home' },
+              { link: urls.dashboard.index(), text: 'Home' },
               {
-                link: companies.index(),
+                link: urls.companies.index(),
                 text: 'Companies',
               },
-              { link: companies.detail(companyId), text: companyName },
+              { link: urls.companies.detail(companyId), text: companyName },
               { text: 'Edit One List information' },
             ]}
           />
