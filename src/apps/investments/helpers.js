@@ -9,7 +9,6 @@ const allLabels = assign(
   labels.valueLabels.view,
   labels.valueLabels.edit,
   labels.requirementsLabels.view,
-  labels.requirementsLabels.edit,
   labels.projectManagementLabels.edit,
   labels.projectManagementLabels.edit
 )

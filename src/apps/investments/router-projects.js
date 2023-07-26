@@ -35,7 +35,6 @@ const {
 
 const {
   projectStageFormMiddleware,
-  requirementsFormMiddleware,
   valueFormMiddleware,
 } = require('./middleware/forms')
 
@@ -139,12 +138,7 @@ router
 
 router
   .route('/:investmentId/edit-requirements')
-  .get(requirementsFormMiddleware.populateForm, edit.renderRequirementsForm)
-  .post(
-    requirementsFormMiddleware.handleFormPost,
-    requirementsFormMiddleware.populateForm,
-    edit.renderRequirementsForm
-  )
+  .get(edit.renderRequirementsForm)
 
 router.get(
   '/:investmentId/team',
