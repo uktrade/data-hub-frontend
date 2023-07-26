@@ -44,6 +44,15 @@ export const state2props = ({ router, ...state }) => {
     currentAdviserId
   )
 
+  queryParams.include_parent_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_parent_companies'
+    )
+  queryParams.include_subsidiary_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_subsidiary_companies'
+    )
+
   return {
     ...state[ID],
     payload: {

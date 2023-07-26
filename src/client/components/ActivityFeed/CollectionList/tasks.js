@@ -64,6 +64,8 @@ const getCompanyActivities = ({
   policy_issue_types,
   company_one_list_group_tier,
   dit_participants__team,
+  include_parent_companies,
+  include_subsidiary_companies,
 }) =>
   axios
     .get(`/companies/${company?.id}/activity/data`, {
@@ -86,6 +88,8 @@ const getCompanyActivities = ({
         policy_issue_types,
         company_one_list_group_tier,
         dit_participants__team,
+        include_parent_companies,
+        include_subsidiary_companies,
       },
     })
     .then(({ data }) => transformResponseToCollection(data))

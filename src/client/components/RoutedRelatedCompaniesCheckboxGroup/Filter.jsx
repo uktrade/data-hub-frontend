@@ -2,14 +2,14 @@ import React from 'react'
 import { Details, Paragraph } from 'govuk-react'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import {
-  INCLUDE_RELATED_COMPANIES,
-  INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY,
-} from '../../../apps/investments/client/projects/constants'
 import { RelatedCompaniesCountResource } from '../Resource'
 import { FilterToggleSection } from '../ToggleSection'
 
 import RoutedCheckboxGroupField from '../RoutedCheckboxGroupField'
+import {
+  INCLUDE_RELATED_COMPANIES,
+  INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY,
+} from './constants'
 
 const SUBSIDIARIES_LIMITED_LABEL =
   'Due to the large number of related companies in this  tree, we can only show projects from parent companies.'
