@@ -229,6 +229,9 @@ module.exports = {
       index: url('/companies', '/:companyId/subsidiaries'),
       link: url('/companies', '/:companyId/subsidiaries/link'),
     },
+    accountManagement: {
+      index: url('/companies', '/:companyId/account-management'),
+    },
   },
   companyLists: {
     index: url('/company-lists'),
