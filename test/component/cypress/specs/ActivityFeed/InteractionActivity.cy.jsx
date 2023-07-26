@@ -170,12 +170,7 @@ const buildAndMountActivity = (
     <DataHubProvider
       tasks={{ [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags }}
     >
-      <Interaction
-        activity={activity}
-        showDetails={false}
-        showDnbHierarchy={false}
-        filter={[]}
-      />
+      <Interaction activity={activity} showDetails={false} filter={[]} />
     </DataHubProvider>
   )
 }

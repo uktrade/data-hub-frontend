@@ -39,7 +39,6 @@ export default class ActivityFeedApp extends React.Component {
       total: 0,
       queryParams: {
         activityType,
-        showDnbHierarchy: false,
         feedType: feedType,
       },
     }
@@ -99,13 +98,12 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   static async fetchActivities(apiEndpoint, from, numberOfItems, queryParams) {
-    const { activityType, showDnbHierarchy, feedType } = queryParams
+    const { activityType, feedType } = queryParams
 
     const params = {
       from,
       size: numberOfItems,
       activityType,
-      showDnbHierarchy,
       feedType,
     }
 
