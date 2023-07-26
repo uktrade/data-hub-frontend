@@ -2,6 +2,7 @@ const { faker } = require('@faker-js/faker')
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
 const activityFeedMaxemailSentEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-maxemail-sent-from-es.json')
+const activityFeedDefaultQuery = require('../../../../../../test/unit/data/activity-feed/activity-feed-default-query.json')
 
 const allActivityFeedEvents = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/all-activity-feed-events.json')
 const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
@@ -13,7 +14,6 @@ const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-
 const contactMock = require('../../../../../../test/sandbox/fixtures/v3/contact/contact-by-id-uk.json')
 
 const {
-  DATA_HUB_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_ATTENDEES_SORT_OPTIONS,
@@ -39,7 +39,6 @@ const freezeTime = (constantDate) => {
     }
   }
 }
-
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
     fetchAllActivityFeedEventsStub,
@@ -214,7 +213,74 @@ describe('Activity feed controllers', () => {
       })
     })
 
-    context('Activty type filter', () => {
+    context('Activity sort', () => {
+      context('default sort order should be desc', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              showDnbHierarchy: false,
+              activityType: ['dataHubActivity'],
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with a internal filters', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: sortCriteria('desc'),
+            query: activityFeedDefaultQuery,
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      })
+
+      context('when sorting sort order should be reflected in query', () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              showDnbHierarchy: false,
+              sortby: 'date:asc',
+              activityType: ['dataHubActivity'],
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with a internal filters', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: sortCriteria('asc'),
+            query: activityFeedDefaultQuery,
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+        })
+      })
+    })
+
+    context('Activity type filter', () => {
       context('when filtering on "internal" for a company', () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
@@ -237,82 +303,8 @@ describe('Activity feed controllers', () => {
           const expectedEsQuery = {
             from: 0,
             size: 20,
-            sort: {
-              _script: {
-                type: 'number',
-                script: {
-                  lang: 'painless',
-                  source:
-                    "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
-                },
-                order: 'desc',
-              },
-            },
-            query: {
-              bool: {
-                filter: {
-                  bool: {
-                    should: [
-                      {
-                        bool: {
-                          must: [
-                            {
-                              terms: {
-                                'object.type': DATA_HUB_ACTIVITY,
-                              },
-                            },
-                            {
-                              terms: {
-                                'object.attributedTo.id': [
-                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        bool: {
-                          must: [
-                            { term: { 'object.type': 'dit:aventri:Event' } },
-                            {
-                              terms: {
-                                id: [
-                                  'dit:aventri:Event:1:Create',
-                                  'dit:aventri:Event:2:Create',
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        bool: {
-                          must: [
-                            {
-                              term: {
-                                'object.attributedTo.id':
-                                  'dit:directoryFormsApi:SubmissionType:export-support-service',
-                              },
-                            },
-                            {
-                              terms: {
-                                'actor.dit:emailAddress': [
-                                  'fred@acme.org',
-                                  'fred@acme.org',
-                                  'fred@acme.org',
-                                  'byvanuwenu@yahoo.com',
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            },
+            sort: sortCriteria('desc'),
+            query: activityFeedDefaultQuery,
           }
 
           expect(fetchActivityFeedStub).to.be.calledWith(
@@ -344,17 +336,7 @@ describe('Activity feed controllers', () => {
           const expectedEsQuery = {
             from: 0,
             size: 20,
-            sort: {
-              _script: {
-                type: 'number',
-                script: {
-                  lang: 'painless',
-                  source:
-                    "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
-                },
-                order: 'desc',
-              },
-            },
+            sort: sortCriteria('desc'),
             query: {
               bool: {
                 filter: {
@@ -470,17 +452,7 @@ describe('Activity feed controllers', () => {
             const expectedEsQuery = {
               from: 0,
               size: 20,
-              sort: {
-                _script: {
-                  type: 'number',
-                  script: {
-                    lang: 'painless',
-                    source:
-                      "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
-                  },
-                  order: 'desc',
-                },
-              },
+              sort: sortCriteria('desc'),
               query: {
                 bool: {
                   filter: {
@@ -1271,17 +1243,7 @@ describe('Activity feed controllers', () => {
         const expectedEsQuery = {
           from: 0,
           size: 20,
-          sort: {
-            _script: {
-              type: 'number',
-              script: {
-                lang: 'painless',
-                source:
-                  "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
-              },
-              order: 'asc',
-            },
-          },
+          sort: sortCriteria('asc'),
           query: {
             bool: {
               filter: {
@@ -1472,17 +1434,7 @@ describe('Activity feed controllers', () => {
           const expectedEsQuery = {
             from: 0,
             size: 20,
-            sort: {
-              _script: {
-                type: 'number',
-                script: {
-                  lang: 'painless',
-                  source:
-                    "if (doc['object.startTime'].size() > 0) return doc['object.startTime'].value.toInstant().toEpochMilli(); return doc['published'].value.toInstant().toEpochMilli();",
-                },
-                order: 'desc',
-              },
-            },
+            sort: sortCriteria('desc'),
             query: {
               bool: {
                 filter: {

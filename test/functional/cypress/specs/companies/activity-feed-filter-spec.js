@@ -28,6 +28,8 @@ const createdByOthersFilter = '[data-test="created-by-others-filter"]'
 const relatedCompaniesFilter =
   '[data-test="checkbox-include_related_companies"]'
 
+const sortByDropDown = '[data-test="sortby"]'
+
 const adviser = {
   id: myAdviserId,
   name: 'Jimmy West',
@@ -143,7 +145,6 @@ describe('Company Activity Feed Filter', () => {
           value: adviser.id,
           checked: true,
         })
-        //assertChipExists({ label: 'Created by: Others', position: 1 })
       })
 
       it('should filter from user input and remove chips', () => {
@@ -314,6 +315,52 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@relatedCompaniesApiRequest')
         assertRequestUrl('@apiRequest', expectedRequestUrl)
         cy.get(relatedCompaniesFilter).should('be.checked')
+      })
+    })
+  })
+
+  context('Sorting', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
+      )
+    })
+
+    context('Sorted by', () => {
+      const expectedRequestUrl = `?size=10&from=0&sortby=date:desc`
+      const expectedRequestUrlAsc = `?size=10&from=0&sortby=date:asc`
+
+      it('Sort by should default to desc', () => {
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}`
+        )
+        cy.get(sortByDropDown)
+          .find(`select`)
+          .invoke('val')
+          .should('equal', 'date:desc')
+
+        assertRequestUrl('@apiRequest', expectedRequestUrl)
+      })
+
+      it('Sort by should be set to `Oldest first` from the url', () => {
+        const queryString = buildQueryString({
+          sortby: 'date:asc',
+        })
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+        cy.get(sortByDropDown)
+          .find(`select`)
+          .invoke('val')
+          .should('equal', 'date:asc')
+
+        assertRequestUrl('@apiRequest', expectedRequestUrlAsc)
       })
     })
   })

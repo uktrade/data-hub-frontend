@@ -139,6 +139,7 @@ const CompanyActivityCollection = ({
           <FilteredCollectionList
             {...props}
             collectionName="activities"
+            sortOptions={optionMetadata.sortOptions}
             taskProps={collectionListTask}
             selectedFilters={selectedFilters}
             entityName="companyActivities"
