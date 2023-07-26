@@ -1,4 +1,5 @@
 import { transformDateObjectToDateString } from '../../../transformers'
+import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 
 const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -7,6 +8,11 @@ export const transformArrayForTypeahead = (advisers) =>
     label: value.name,
     value: value.id,
   }))
+
+export const transformBoolToRadioOption = (boolean) =>
+  boolean ? OPTION_YES : OPTION_NO
+
+const transformRadioOptionToBool = (radioOption) => radioOption === OPTION_YES
 
 const setReferralSourceEvent = (values) => {
   const {
@@ -27,6 +33,34 @@ const setReferralSourceAdviser = (currentAdviser, values) => {
   return is_referral_source === 'yes'
     ? currentAdviser
     : checkIfItemHasValue(referral_source_adviser?.value)
+}
+
+const setConditionalArrayValue = (radioValue, array) =>
+  transformRadioOptionToBool(radioValue) ? array.map((x) => x.value) : []
+
+const setSiteDecidedSubValues = (
+  site_decided,
+  address1,
+  address2,
+  city,
+  postcode,
+  uk_region_locations
+) => {
+  return transformRadioOptionToBool(site_decided)
+    ? {
+        address_1: address1,
+        address_2: address2,
+        address_town: city,
+        address_postcode: postcode,
+        uk_region_locations: uk_region_locations.map((x) => x.value),
+      }
+    : {
+        address_1: '',
+        address_2: '',
+        address_town: '',
+        address_postcode: '',
+        uk_region_locations: [],
+      }
 }
 
 export const transformProjectSummaryForApi = ({
@@ -82,4 +116,51 @@ export const transformProjectSummaryForApi = ({
     referral_source_activity_event: setReferralSourceEvent(values),
     referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
   }
+}
+
+export const transformProjectRequirementsForApi = ({ projectId, values }) => {
+  const {
+    actual_uk_regions,
+    address1,
+    address2,
+    city,
+    client_considering_other_countries,
+    client_requirements,
+    competitor_countries,
+    delivery_partners,
+    postcode,
+    site_decided,
+    strategic_drivers,
+    uk_region_locations,
+  } = values
+
+  const siteDecidedObject = setSiteDecidedSubValues(
+    site_decided,
+    address1,
+    address2,
+    city,
+    postcode,
+    uk_region_locations
+  )
+
+  const requirementsValues = {
+    id: projectId,
+    actual_uk_regions: setConditionalArrayValue(
+      site_decided,
+      actual_uk_regions
+    ),
+    client_considering_other_countries: transformRadioOptionToBool(
+      client_considering_other_countries
+    ),
+    client_requirements,
+    competitor_countries: setConditionalArrayValue(
+      client_considering_other_countries,
+      competitor_countries
+    ),
+    delivery_partners: delivery_partners.map((x) => x.value),
+    site_decided: transformRadioOptionToBool(site_decided),
+    strategic_drivers: strategic_drivers.map((x) => x.value),
+  }
+
+  return { ...siteDecidedObject, ...requirementsValues }
 }

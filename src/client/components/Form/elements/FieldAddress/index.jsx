@@ -61,6 +61,9 @@ const FieldAddress = ({
   apiEndpoint,
   onSelectUKAddress,
   isCountrySelectable,
+  hideCountyField = false,
+  initialValue = null,
+  useStaticPostcodeField = false,
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
@@ -239,7 +242,7 @@ const FieldAddress = ({
       )}
       {(country_form_value || !isCountrySelectable) && (
         <>
-          {isUK && (
+          {isUK && !useStaticPostcodeField && (
             <>
               <StyledRowDiv>
                 <StyledFieldPostcode
@@ -287,19 +290,33 @@ const FieldAddress = ({
             name="address1"
             label="Address line 1"
             required="Enter an address"
+            initialValue={initialValue?.address1}
           />
           <FieldInput
             type="text"
             name="address2"
             label="Address line 2 (optional)"
+            initialValue={initialValue?.address2}
           />
           <FieldInput
             type="text"
             name="city"
             label="Town or city"
             required="Enter a town or city"
+            initialValue={initialValue?.town}
           />
-          {!(isUS || isCanada) && (
+          {useStaticPostcodeField && (
+            <FieldInput
+              type="text"
+              name="postcode"
+              label={postcodeLabel()}
+              required={postcodeErrorMessage()}
+              maxLength={10}
+              validate={postcodeValidator}
+              initialValue={initialValue?.postcode}
+            />
+          )}
+          {!(isUS || isCanada || hideCountyField) && (
             <FieldInput type="text" name="county" label="County (optional)" />
           )}
           <>
@@ -332,7 +349,7 @@ FieldAddress.propTypes = {
   legend: PropTypes.node,
   hint: PropTypes.node,
   name: PropTypes.string.isRequired,
-  apiEndpoint: PropTypes.string.isRequired,
+  apiEndpoint: PropTypes.string,
   onSelectUKAddress: PropTypes.func,
   isCountrySelectable: PropTypes.any,
   // Country is only required if isCountrySelectable is falsy, but this can't be
