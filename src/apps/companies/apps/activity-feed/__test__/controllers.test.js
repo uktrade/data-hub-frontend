@@ -92,9 +92,7 @@ describe('Activity feed controllers', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
-          requestQuery: {
-            showDnbHierarchy: false,
-          },
+          requestQuery: {},
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -221,7 +219,6 @@ describe('Activity feed controllers', () => {
           middlewareParameters = buildMiddlewareParameters({
             company: companyMock,
             requestQuery: {
-              showDnbHierarchy: false,
               activityType: ['dataHubActivity'],
             },
           })
@@ -329,7 +326,6 @@ describe('Activity feed controllers', () => {
           middlewareParameters = buildMiddlewareParameters({
             company: companyMock,
             requestQuery: {
-              showDnbHierarchy: false,
               activityType: ['externalActivity'],
             },
           })
@@ -456,7 +452,6 @@ describe('Activity feed controllers', () => {
             middlewareParameters = buildMiddlewareParameters({
               company: companyMock,
               requestQuery: {
-                showDnbHierarchy: false,
                 activityType: ['dataHubActivity', 'externalActivity'],
               },
             })
@@ -629,7 +624,6 @@ describe('Activity feed controllers', () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            showDnbHierarchy: false,
             ditParticipantsAdviser: [123],
           },
           user: {
@@ -784,7 +778,6 @@ describe('Activity feed controllers', () => {
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            showDnbHierarchy: false,
             createdByOthers: [123],
           },
           user: {
@@ -948,7 +941,6 @@ describe('Activity feed controllers', () => {
           company: companyMock,
           requestQuery: {
             feedType: FILTER_FEED_TYPE.ALL,
-            showDnbHierarchy: false,
           },
         })
 
@@ -1081,7 +1073,6 @@ describe('Activity feed controllers', () => {
           company: companyMock,
           requestQuery: {
             feedType: 'recent',
-            showDnbHierarchy: false,
           },
         })
 
@@ -1262,7 +1253,6 @@ describe('Activity feed controllers', () => {
           company: companyMock,
           requestQuery: {
             feedType: 'upcoming',
-            showDnbHierarchy: false,
           },
         })
 
@@ -1464,7 +1454,6 @@ describe('Activity feed controllers', () => {
             requestQuery: {
               dateAfter: '2002-06-13',
               dateBefore: '2022-06-13',
-              showDnbHierarchy: false,
             },
           })
 
@@ -1664,14 +1653,15 @@ describe('Activity feed controllers', () => {
     )
 
     context(
-      'when applying both Data Hub activity and DnB hierarchical filters',
+      'when applying both Data Hub activity and related company filters',
       () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
             company: {
               ...companyMock,
               is_global_ultimate: true,
-              showDnbHierarchy: true,
+              include_parent_companies: true,
+              include_subsidiary_companies: true,
             },
             user: {
               id: 123,
@@ -1834,9 +1824,7 @@ describe('Activity feed controllers', () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
             company: companyMock,
-            requestQuery: {
-              showDnbHierarchy: false,
-            },
+            requestQuery: {},
             user: {
               id: 123,
             },
