@@ -27,7 +27,14 @@ function editValueGet(req, res) {
 }
 
 function renderRequirementsForm(req, res) {
-  res.render('investments/views/requirements-edit')
+  const { investment } = res.locals
+  res
+    .breadcrumb('Edit requirements')
+    .render('investments/views/requirements-edit', {
+      props: {
+        projectId: investment.id,
+      },
+    })
 }
 
 function renderValueForm(req, res) {
