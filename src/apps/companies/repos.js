@@ -144,6 +144,17 @@ function createDnbChangeRequest(req, dunsNumber, changes) {
   })
 }
 
+function getRelatedCompanies(
+  req,
+  companyId,
+  include_parent_companies,
+  include_subsidiary_companies
+) {
+  return authorisedRequest(req, {
+    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies?include_subsidiary_companies=${include_subsidiary_companies}&include_parent_companies=${include_parent_companies}`,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -161,4 +172,5 @@ module.exports = {
   createDnbCompanyInvestigation,
   linkDataHubCompanyToDnBCompany,
   createDnbChangeRequest,
+  getRelatedCompanies,
 }
