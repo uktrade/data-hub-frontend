@@ -54,9 +54,9 @@ export default class ActivityFeed extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {}
+
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
-    this.showActivitiesFromAllCompanies =
-      this.showActivitiesFromAllCompanies.bind(this)
   }
 
   onActivityTypeFilterChange(e) {
