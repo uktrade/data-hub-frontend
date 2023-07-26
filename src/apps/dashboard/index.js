@@ -9,7 +9,7 @@ module.exports = {
     [
       urls.dashboard.index(),
       urls.companyLists.index(),
-      urls.investments.dashboard.projects(),
+      urls.dashboard.investmentProjects(),
       urls.companies.referrals.list(),
       urls.exportPipeline.index(),
     ],

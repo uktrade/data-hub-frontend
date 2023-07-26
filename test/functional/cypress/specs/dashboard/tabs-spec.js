@@ -24,7 +24,7 @@ describe('Selecting a dashboard tab based on localstorage', () => {
   context('Investment projects', () => {
     const INVESTMENT_PROJECTS = 1
     it('should select the tab', () => {
-      cy.localStorage(LOCAL_STORAGE_KEY, urls.investments.dashboard.projects())
+      cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard.investmentProjects())
       cy.visit(urls.dashboard.index())
       assertTabSelected(INVESTMENT_PROJECTS)
     })

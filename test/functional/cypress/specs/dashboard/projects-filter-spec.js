@@ -53,7 +53,7 @@ describe('Dashboard - my projects list filters', () => {
               }
         )
       }).as('apiRequest')
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.wait('@apiRequest')
     })
 
@@ -142,7 +142,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.intercept('POST', '/api-proxy/v3/search/investment_project').as(
         'apiRequest'
       )
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.wait('@apiRequest')
     })
     it('should filter by stage', () => {
@@ -177,7 +177,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.intercept('POST', '/api-proxy/v3/search/investment_project').as(
         'apiRequest'
       )
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.wait('@apiRequest')
     })
 
@@ -185,7 +185,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="stage-select"] select').select('Prospect')
       cy.wait('@apiRequest')
       cy.visit('/companies')
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.get('[data-test="stage-select"] select')
         .find(':selected')
         .contains('Prospect')
@@ -195,7 +195,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="status-select"] select').select('Ongoing')
       cy.wait('@apiRequest')
       cy.visit('/companies')
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.get('[data-test="status-select"] select')
         .find(':selected')
         .contains('Ongoing')
@@ -206,7 +206,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="land-date-select"] select').select(financialYearStart)
       cy.wait('@apiRequest')
       cy.visit('/companies')
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.get('[data-test="land-date-select"] select')
         .find(':selected')
         .contains(financialYearStart)
@@ -216,7 +216,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="sort-select"] select').select('Latest land date')
       cy.wait('@apiRequest')
       cy.visit('/companies')
-      cy.visit(urls.investments.dashboard.projects())
+      cy.visit(urls.dashboard.investmentProjects())
       cy.get('[data-test="sort-select"] select')
         .find(':selected')
         .contains('Latest land date')

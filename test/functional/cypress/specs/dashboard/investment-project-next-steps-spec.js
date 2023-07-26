@@ -3,7 +3,7 @@ import urls from '../../../../../src/lib/urls'
 
 describe('Dashboard - Investment project next steps', () => {
   before(() => {
-    cy.visit(urls.investments.dashboard.projects())
+    cy.visit(urls.dashboard.investmentProjects())
   })
 
   after(() => {
