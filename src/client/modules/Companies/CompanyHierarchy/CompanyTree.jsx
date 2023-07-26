@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, H2, Link } from 'govuk-react'
+import { Button, GridCol, H2, Link } from 'govuk-react'
 import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
 import { BsFillPersonFill } from 'react-icons/bs'
@@ -31,6 +31,8 @@ import {
   StyledLinkedSubsidiaryButton,
   AddCompanyLink,
   AddCompanyLinkDiv,
+  GridColTags,
+  TradingNames,
 } from './styled'
 import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
@@ -289,54 +291,63 @@ const HierarchyItem = ({
         }
       >
         <HierarchyItemHeading>
-          {Object.keys(company).length === 0 ? (
-            `No related companies found`
-          ) : company?.id ? (
-            <Link
-              href={urls.companies.overview.index(company.id)}
-              aria-label={`Go to ${company.name} details`}
-            >
-              {company.name}
-            </Link>
-          ) : (
-            `${company.name} (not on Data Hub)`
-          )}
-          {company.one_list_tier?.name && (
-            <HierarchyTag
-              colour="grey"
-              data-test={`${companyName}-one-list-tag`}
-            >
-              One List {company.one_list_tier.name.slice(0, 6)}
-            </HierarchyTag>
-          )}
-          {company.address?.country.name && (
-            <HierarchyTag
-              colour="blue"
-              data-test={`${companyName}-country-tag`}
-            >
-              {company.address.country.name}
-            </HierarchyTag>
-          )}
-          {company.uk_region?.name && (
-            <HierarchyTag
-              colour="blue"
-              data-test={`${companyName}-uk-region-tag`}
-            >
-              {company.uk_region.name}
-            </HierarchyTag>
-          )}
-          {(company.number_of_employees || company.employee_range?.name) && (
-            <HierarchyTag
-              colour="blue"
-              data-test={`${companyName}-number-of-employees-tag`}
-            >
-              <BsFillPersonFill
-                size={'12'}
-                style={{ verticalAlign: 'top', paddingTop: '1px' }}
-              />
-              <CompanyNumberOfEmployees company={company} />
-            </HierarchyTag>
-          )}
+          <GridColTags>
+            {company.one_list_tier?.name && (
+              <HierarchyTag
+                colour="grey"
+                data-test={`${companyName}-one-list-tag`}
+              >
+                One List {company.one_list_tier.name.slice(0, 6)}
+              </HierarchyTag>
+            )}
+            {company.address?.country.name && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${companyName}-country-tag`}
+              >
+                {company.address.country.name}
+              </HierarchyTag>
+            )}
+            {company.uk_region?.name && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${companyName}-uk-region-tag`}
+              >
+                {company.uk_region.name}
+              </HierarchyTag>
+            )}
+            {(company.number_of_employees || company.employee_range?.name) && (
+              <HierarchyTag
+                colour="blue"
+                data-test={`${companyName}-number-of-employees-tag`}
+              >
+                <BsFillPersonFill
+                  size={'12'}
+                  style={{ verticalAlign: 'top', paddingTop: '1px' }}
+                />
+                <CompanyNumberOfEmployees company={company} />
+              </HierarchyTag>
+            )}
+          </GridColTags>
+          <GridCol setWidth="two-thirds">
+            {Object.keys(company).length === 0 ? (
+              `No related companies found`
+            ) : company?.id ? (
+              <Link
+                href={urls.companies.overview.index(company.id)}
+                aria-label={`Go to ${company.name} details`}
+              >
+                {company.name}
+              </Link>
+            ) : (
+              `${company.name} (not on Data Hub)`
+            )}
+            {company?.trading_names.length > 0 && (
+              <TradingNames>
+                Trading as: {company?.trading_names.join(', ')}
+              </TradingNames>
+            )}
+          </GridCol>
         </HierarchyItemHeading>
         {isOnDataHub ? (
           <ToggleSection

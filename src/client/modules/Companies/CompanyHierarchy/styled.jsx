@@ -1,4 +1,4 @@
-import { Button, Link } from 'govuk-react'
+import { Button, Link, GridCol } from 'govuk-react'
 import styled, { css } from 'styled-components'
 import {
   GREY_2,
@@ -217,4 +217,15 @@ export const AddCompanyLinkDiv = styled('div')`
 
 export const AddCompanyLink = styled(Link)`
   font-size: ${FONT_SIZE.SIZE_16};
+`
+
+export const GridColTags = styled(GridCol)`
+  setwidth: one-third;
+  float: right;
+  width: auto;
+`
+
+export const TradingNames = styled.div`
+  font-size: ${FONT_SIZE.SIZE_16};
+  color: ${DARK_GREY};
 `
