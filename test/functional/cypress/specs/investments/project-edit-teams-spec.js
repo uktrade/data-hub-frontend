@@ -35,7 +35,7 @@ describe('View edit team members page', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         [projectWithCompleteTeam.name]: urls.investments.projects.project(

@@ -16,7 +16,7 @@ describe('Companies subsidiaries', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.oneListCorp.name]: urls.companies.detail(
           fixtures.company.oneListCorp.id
@@ -40,7 +40,7 @@ describe('Companies subsidiaries', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.venusLtd.name]: urls.companies.detail(
           fixtures.company.venusLtd.id
@@ -66,7 +66,7 @@ describe('Companies subsidiaries', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.archivedLtd.name]: urls.companies.detail(
           fixtures.company.archivedLtd.id
@@ -96,7 +96,7 @@ describe('Companies subsidiaries', () => {
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           [fixtures.company.dnBGlobalUltimateAndGlobalHq.name]:
             urls.companies.detail(

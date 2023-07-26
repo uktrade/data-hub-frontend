@@ -1,23 +1,16 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 const {
   assertLocalNav,
   assertLocalReactNav,
   assertActivitytab,
 } = require('../../support/assertions')
 
-const {
-  companies,
-  contacts,
-  dashboard,
-  events,
-  investments,
-} = require('../../../../../src/lib/urls')
-
 describe('DBT Permission', () => {
   describe('dashboard', () => {
     before(() => {
-      cy.visit(dashboard())
+      cy.visit(urls.dashboard.index())
     })
 
     it('should display DBT only header nav links', () => {
@@ -39,7 +32,7 @@ describe('DBT Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company.pk))
+      cy.visit(urls.companies.detail(company.pk))
     })
 
     it('should display DBT only tabs', () => {
@@ -67,7 +60,7 @@ describe('DBT Permission', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.contact(contact.pk))
+      cy.visit(urls.contacts.contact(contact.pk))
     })
 
     it('should display DBT only side navs', () => {
@@ -84,7 +77,7 @@ describe('DBT Permission', () => {
     before(() => {
       const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
-      cy.visit(investments.projects.project(investmentProject.pk))
+      cy.visit(urls.investments.projects.project(investmentProject.pk))
     })
 
     it('should display DBT only side navs', () => {
@@ -104,7 +97,7 @@ describe('DBT Permission', () => {
     before(() => {
       const event = fixtures.event.create.defaultEvent()
       cy.loadFixture([event])
-      cy.visit(events.details(event.pk))
+      cy.visit(urls.events.details(event.pk))
     })
 
     it('should display DBT only side navs', () => {

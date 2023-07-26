@@ -423,7 +423,7 @@ describe('Export theme - standard interaction', () => {
     })
 
     testBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [`Add interaction for ${company.name}`]: null,
     })

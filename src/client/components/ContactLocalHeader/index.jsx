@@ -48,7 +48,7 @@ const currentTab = getCurrentTab(path)
 
 const buildBreadcrumbs = (currentTab, id, name) => {
   const initalBreadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
+    { link: urls.dashboard.index(), text: 'Home' },
     { link: urls.contacts.index(), text: 'Contacts' },
   ]
   const dynamicBreadcrumbs = currentTab

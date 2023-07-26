@@ -71,7 +71,7 @@ describe('Event attendee search', () => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Events: urls.events.index(),
       'Empty one-day exhibition': urls.events.details(eventFixtureId),
       'Add attendee': null,

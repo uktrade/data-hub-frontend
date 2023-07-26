@@ -30,7 +30,7 @@ const RemindersForms = () => {
       subheading={subject}
       breadcrumbs={[
         {
-          link: urls.dashboard(),
+          link: urls.dashboard.index(),
           text: 'Home',
         },
         {

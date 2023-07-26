@@ -1,12 +1,12 @@
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
-const { dashboard, investments } = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Investment Project Documents', () => {
   context('when there is not a document link', () => {
     before(() => {
       cy.visit(
-        investments.projects.documents(
+        urls.investments.projects.documents(
           fixtures.investment.investmentWithNoLink.id
         )
       )
@@ -14,10 +14,10 @@ describe('Investment Project Documents', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: dashboard(),
-        Investments: investments.index(),
-        Projects: investments.projects.index(),
-        'Green tea plantation': investments.projects.project(
+        Home: urls.dashboard.index(),
+        Investments: urls.investments.index(),
+        Projects: urls.investments.projects.index(),
+        'Green tea plantation': urls.investments.projects.project(
           'addca042-5a00-412c-9d7c-acc04552756c'
         ),
         Documents: null,

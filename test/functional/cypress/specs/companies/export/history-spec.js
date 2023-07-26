@@ -23,7 +23,7 @@ describe('Company Export tab - Export countries history', () => {
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           [fixtures.company.lambdaPlc.name]: urls.companies.detail(
             fixtures.company.lambdaPlc.id
@@ -502,7 +502,7 @@ describe('Company Export tab - Export countries history', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.dnbCorp.name]: urls.companies.detail(
           fixtures.company.dnbCorp.id

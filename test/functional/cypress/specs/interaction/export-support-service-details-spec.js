@@ -19,7 +19,7 @@ describe('Event Export Support Details', () => {
       })
       it('should display ess name in breadcrumb', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard.route,
+          Home: urls.dashboard.index.route,
           Interactions: urls.interactions.index(),
           'Test ESS Interaction': null,
         })
@@ -55,7 +55,7 @@ describe('Event Export Support Details', () => {
     })
     it('should display ess name in breadcrumb', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Interactions: urls.interactions.index(),
         'ESS Inbound Enquiry': null,
       })
@@ -73,7 +73,7 @@ describe('Event Export Support Details', () => {
 
     it('should render an error message', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Interactions: urls.interactions.index(),
       })
       assertErrorDialog(
