@@ -12,7 +12,7 @@ const {
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
-const { getGlobalUltimateHierarchy } = require('../../repos')
+const { getRelatedCompanies } = require('../../repos')
 const urls = require('../../../../lib/urls')
 const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
@@ -253,22 +253,22 @@ async function fetchActivityFeedHandler(req, res, next) {
       dateAfter = null,
       feedType = FILTER_FEED_TYPE.ALL,
       ditParticipantsAdviser = [],
-      showDnbHierarchy = false,
+      include_parent_companies = false,
+      include_subsidiary_companies = false,
       createdByOthers = [],
       activityType = [],
     } = req.query
-    let dnbHierarchyIds = []
-    if (
-      company.is_global_ultimate &&
-      (showDnbHierarchy === true || showDnbHierarchy[0] === 'true')
-    ) {
-      const { results } = await getGlobalUltimateHierarchy(
+
+    const relatedCompanyIds = []
+    if (include_parent_companies || include_subsidiary_companies) {
+      const relatedCompaniesResponse = await getRelatedCompanies(
         req,
-        company.global_ultimate_duns_number
+        company.id,
+        include_parent_companies,
+        include_subsidiary_companies
       )
-      dnbHierarchyIds = results
-        .filter((company) => !company.is_global_ultimate)
-        .map((company) => company.id)
+
+      relatedCompanyIds.push(...relatedCompaniesResponse.related_companies)
     }
 
     const filteredContacts = filterContactListOnEmail(company.contacts)
@@ -286,7 +286,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     const query = dataHubCompanyActivityQuery({
       from,
       size,
-      companyIds: [company.id, ...dnbHierarchyIds],
+      companyIds: [company.id, ...relatedCompanyIds],
       contacts: filteredContacts,
       dateAfter,
       dateBefore,

@@ -243,6 +243,7 @@ describe('Company Activity Feed Filter', () => {
         '/data**'
       const urlQuery = `?size=10&from=0&sortby=date:desc&include_related_companies[0]=include_parent_companies&include_related_companies[1]=include_subsidiary_companies`
       const expectedRequestUrl = `?size=10&from=0&sortby=date:desc&include_parent_companies=true&include_subsidiary_companies=true`
+
       it('Should render the subsidiary companies option disabled when related companies large', () => {
         cy.intercept(
           'GET',
