@@ -18,7 +18,6 @@ export default class CompaniesHouseAccount extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
