@@ -17,13 +17,6 @@ export const buildSelectedFilters = (
   selectedCompanies,
   currentAdviserId
 ) => ({
-  showDNBHierarchy: {
-    queryParam: 'showDnbHierarchy',
-    options: buildOptionsFilter({
-      value: queryParams.showDNBHierarchy,
-      categoryLabel: LABELS.showDNBHierarchy,
-    }),
-  },
   advisers: {
     queryParam: 'ditParticipantsAdviser',
     options: selectedAdvisers.map((adviser) => ({

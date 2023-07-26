@@ -10,7 +10,7 @@ export const LABELS = {
   createdBy: 'Created by',
   me: 'Me',
   others: 'Others',
-  showDNBHierarchy: 'Include related companies',
+
   dateAfter: 'From',
   dateBefore: 'To',
   service: 'Service',
