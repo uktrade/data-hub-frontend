@@ -39,7 +39,7 @@ describe('Dashboard - Investment details', () => {
         results: investmentProjects,
       },
     }).as('apiRequest')
-    cy.visit(urls.investments.dashboard.projects())
+    cy.visit(urls.dashboard.investmentProjects())
     cy.wait('@apiRequest')
   })
 

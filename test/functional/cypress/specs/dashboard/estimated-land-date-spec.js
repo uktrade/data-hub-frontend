@@ -41,7 +41,7 @@ describe('Dashboard items - estimated land date', () => {
   const summary = investmentProjectSummaryFaker()
 
   before(() => {
-    cy.visit(urls.investments.dashboard.projects())
+    cy.visit(urls.dashboard.investmentProjects())
   })
 
   beforeEach(() => {
@@ -52,7 +52,7 @@ describe('Dashboard items - estimated land date', () => {
         summary,
       },
     }).as('apiRequest')
-    cy.visit(urls.investments.dashboard.projects())
+    cy.visit(urls.dashboard.investmentProjects())
     cy.wait('@apiRequest')
     cy.get('[data-test="projects-list-item"]').as('projectListItems')
   })

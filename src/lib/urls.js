@@ -114,6 +114,7 @@ module.exports = {
 
   dashboard: {
     index: url('/'),
+    investmentProjects: url('/investment-projects'),
   },
   oauth: {
     redirect: url('/oauth'),
@@ -351,9 +352,6 @@ module.exports = {
         '/investments',
         '/projects/create/investment-type/info/:anchor'
       ),
-    },
-    dashboard: {
-      projects: url('/investment-projects'),
     },
     profiles: {
       index: url('/investments', '/profiles'),
