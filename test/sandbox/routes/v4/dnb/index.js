@@ -74,3 +74,9 @@ exports.relatedCompaniesCount = function (req, res) {
         }
   )
 }
+exports.relatedCompanies = function (req, res) {
+  res.json({
+    related_companies: [],
+    reduced_tree: false,
+  })
+}

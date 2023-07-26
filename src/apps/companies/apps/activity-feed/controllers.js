@@ -258,6 +258,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       createdByOthers = [],
       activityType = [],
     } = req.query
+
     let relatedCompanyIds = []
     if (include_parent_companies || include_subsidiary_companies) {
       const relatedCompaniesResponse = await getRelatedCompanies(
