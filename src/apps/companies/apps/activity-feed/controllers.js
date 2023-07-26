@@ -260,13 +260,14 @@ async function fetchActivityFeedHandler(req, res, next) {
     } = req.query
     let relatedCompanyIds = []
     if (include_parent_companies || include_subsidiary_companies) {
-      const { related_companies } = await getRelatedCompanies(
+      const relatedCompaniesResponse = await getRelatedCompanies(
         req,
         company.id,
         include_parent_companies,
         include_subsidiary_companies
       )
-      relatedCompanyIds = related_companies
+
+      relatedCompanyIds = relatedCompaniesResponse.related_companies
     }
 
     const filteredContacts = filterContactListOnEmail(company.contacts)

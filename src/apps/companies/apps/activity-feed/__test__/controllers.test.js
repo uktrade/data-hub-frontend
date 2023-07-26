@@ -43,7 +43,7 @@ const freezeTime = (constantDate) => {
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
     fetchAllActivityFeedEventsStub,
-    getGlobalUltimateHierarchyStub,
+    getRelatedCompaniesStub,
     controllers,
     middlewareParameters,
     fetchMatchingDataHubContactStub,
@@ -71,9 +71,10 @@ describe('Activity feed controllers', () => {
       fetchActivityFeedStub = sinon
         .stub()
         .callsFake(mockActivityFeedApiFunction)
-      getGlobalUltimateHierarchyStub = sinon
+
+      getRelatedCompaniesStub = sinon
         .stub()
-        .resolves({ results: [{ id: '123' }, { id: '456' }] })
+        .resolves({ related_companies: ['123', '456'] })
 
       controllers = proxyquire(
         '../../src/apps/companies/apps/activity-feed/controllers',
@@ -82,7 +83,7 @@ describe('Activity feed controllers', () => {
             fetchActivityFeed: fetchActivityFeedStub,
           },
           '../../repos': {
-            getGlobalUltimateHierarchy: getGlobalUltimateHierarchyStub,
+            getRelatedCompanies: getRelatedCompaniesStub,
           },
         }
       )
@@ -1657,14 +1658,13 @@ describe('Activity feed controllers', () => {
       () => {
         before(async () => {
           middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...companyMock,
-              is_global_ultimate: true,
-              include_parent_companies: true,
-              include_subsidiary_companies: true,
-            },
+            company: companyMock,
             user: {
               id: 123,
+            },
+            requestQuery: {
+              include_parent_companies: true,
+              include_subsidiary_companies: false,
             },
           })
 
@@ -1675,7 +1675,7 @@ describe('Activity feed controllers', () => {
           )
         })
 
-        it('should call fetchActivityFeed with the right params', async () => {
+        it('should call fetchActivityFeed with the related companies included', async () => {
           const expectedEsQuery = {
             from: 0,
             size: 20,
@@ -1697,6 +1697,8 @@ describe('Activity feed controllers', () => {
                               terms: {
                                 'object.attributedTo.id': [
                                   'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                  'dit:DataHubCompany:123',
+                                  'dit:DataHubCompany:456',
                                 ],
                               },
                             },
