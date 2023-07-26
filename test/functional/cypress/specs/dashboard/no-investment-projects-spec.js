@@ -12,7 +12,7 @@ describe('Dashboard - no investment projects', () => {
         results: [],
       },
     }).as('apiRequest')
-    cy.visit(urls.investments.dashboard.projects())
+    cy.visit(urls.dashboard.investmentProjects())
     cy.wait('@apiRequest')
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
