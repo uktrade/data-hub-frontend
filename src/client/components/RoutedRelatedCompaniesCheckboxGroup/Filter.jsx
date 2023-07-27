@@ -28,33 +28,41 @@ const RoutedRelatedCompaniesCheckboxGroup = ({ company, selectedOptions }) => (
   <>
     {company.dunsNumber && (
       <RelatedCompaniesCountResource id={company.id}>
-        {(count) => (
-          <FilterToggleSection
-            id="ProjectCollection.include-related-companies-filters"
-            label="Related companies"
-            isOpen={true}
-          >
-            <RoutedCheckboxGroupField
-              legend="Include related companies"
-              name="include_related_companies"
-              qsParam="include_related_companies"
-              options={
-                count.reducedTree
-                  ? INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY
-                  : INCLUDE_RELATED_COMPANIES
-              }
-              selectedOptions={selectedOptions}
-              data-test="include-related-companies-filter"
-              aria-description={
-                count.reducedTree ? SUBSIDIARIES_LIMITED_LABEL : undefined
-              }
-            />
-            {count.reducedTree && (
-              <StyledDetails summary="Why can't I filter by subsidiary companies?">
-                <StyledParagraph>{SUBSIDIARIES_LIMITED_LABEL}</StyledParagraph>
-              </StyledDetails>
+        {(relatedCompaniesCountResponse) => (
+          <>
+            {relatedCompaniesCountResponse.relatedCompaniesCount > 0 && (
+              <FilterToggleSection
+                id="ProjectCollection.include-related-companies-filters"
+                label="Related companies"
+                isOpen={true}
+              >
+                <RoutedCheckboxGroupField
+                  legend="Include related companies"
+                  name="include_related_companies"
+                  qsParam="include_related_companies"
+                  options={
+                    relatedCompaniesCountResponse.reducedTree
+                      ? INCLUDE_RELATED_COMPANIES_DISABLED_SUBSIDIARY
+                      : INCLUDE_RELATED_COMPANIES
+                  }
+                  selectedOptions={selectedOptions}
+                  data-test="include-related-companies-filter"
+                  aria-description={
+                    relatedCompaniesCountResponse.reducedTree
+                      ? SUBSIDIARIES_LIMITED_LABEL
+                      : undefined
+                  }
+                />
+                {relatedCompaniesCountResponse.reducedTree && (
+                  <StyledDetails summary="Why can't I filter by subsidiary companies?">
+                    <StyledParagraph>
+                      {SUBSIDIARIES_LIMITED_LABEL}
+                    </StyledParagraph>
+                  </StyledDetails>
+                )}
+              </FilterToggleSection>
             )}
-          </FilterToggleSection>
+          </>
         )}
       </RelatedCompaniesCountResource>
     )}

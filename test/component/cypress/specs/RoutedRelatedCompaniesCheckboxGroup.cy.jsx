@@ -3,15 +3,16 @@ import RoutedRelatedCompaniesCheckboxGroup from '../../../../src/client/componen
 import DataHubProvider from './provider'
 
 describe('RoutedRelatedCompaniesCheckboxGroup', () => {
-  const Component = (props) => (
+  const Component = ({ company, taskResponse = {} }) => (
     <DataHubProvider
+      resetTasks={true}
       tasks={{
         ['RelatedCompaniesCount']: () => {
-          return {}
+          return taskResponse
         },
       }}
     >
-      <RoutedRelatedCompaniesCheckboxGroup {...props} />
+      <RoutedRelatedCompaniesCheckboxGroup company={company} />
     </DataHubProvider>
   )
 
@@ -24,10 +25,32 @@ describe('RoutedRelatedCompaniesCheckboxGroup', () => {
     })
   })
 
-  context('When company has a duns number', () => {
-    it('should render the filter', () => {
-      cy.mount(<Component company={{ dunsNumber: 1234 }} />)
-      cy.get('[data-test="include-related-companies-filter"]').should('exist')
+  context('When company has a duns number and no related companies', () => {
+    it('should not render the filter', () => {
+      cy.mount(
+        <Component
+          company={{ dunsNumber: 1234 }}
+          taskResponse={{ relatedCompaniesCount: 0 }}
+        />
+      )
+      cy.get('[data-test="include-related-companies-filter"]').should(
+        'not.exist'
+      )
     })
   })
+
+  context(
+    'When company has a duns number and at least 1 related company',
+    () => {
+      it('should render the filter', () => {
+        cy.mount(
+          <Component
+            company={{ dunsNumber: 1234 }}
+            taskResponse={{ relatedCompaniesCount: 1 }}
+          />
+        )
+        cy.get('[data-test="include-related-companies-filter"]').should('exist')
+      })
+    }
+  )
 })
