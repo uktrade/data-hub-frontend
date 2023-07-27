@@ -11,7 +11,7 @@ const testTab = (tabText) => {
     'Business details': 'tab-business-details',
     'Company contacts': 'tab-contacts',
     'Lead adviser': 'tab-advisers',
-    Investment: 'tab-investments/projects',
+    Investment: 'tab-investments',
     Export: 'tab-exports',
     Orders: 'tab-orders',
   }
