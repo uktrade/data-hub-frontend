@@ -52,8 +52,9 @@ const LOCAL_NAV = [
     label: 'Lead adviser',
   },
   {
-    path: 'investments',
+    path: 'investments/projects',
     label: 'Investment',
+    search: '?page=1&sortby=created_on%3Adesc',
     permissions: [
       'investment.view_all_investmentproject',
       'investment.view_associated_investmentproject',
