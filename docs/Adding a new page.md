@@ -70,4 +70,26 @@ companies: [
 ]
 ```
 
+### Cypress Testing
+
+A basic test should be added to ensure the new route loads the component correctly. There will usually be a sub folder in the `test/functional/cypress/specs` folder that the new test can be added into, if not a new one can be created. For this test, we will create a new spec file in `/companies/account-management-spec.js`
+
+```
+const fixtures = require('../../fixtures')
+const urls = require('../../../../../src/lib/urls')
+
+describe('New page', () => {
+  context('When visiting the new page', () => {
+    it('should display the h1 heading of New Page', () => {
+      cy.visit(
+        urls.companies.newPage.index(
+          fixtures.company.allActivitiesCompany.id
+        )
+      )
+      cy.get('h1').contains('New page')
+    })
+  })
+})
+```
+
 An example PR where this process was followed can be viewed at: https://github.com/uktrade/data-hub-frontend/pull/5713
