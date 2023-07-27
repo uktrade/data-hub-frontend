@@ -72,7 +72,7 @@ companies: [
 
 ### Cypress Testing
 
-A basic test should be added to ensure the new route loads the component correctly. There will usually be a sub folder in the `test/functional/cypress/specs` folder that the new test can be added into, if not a new one can be created. For this test, we will create a new spec file in `/companies/account-management-spec.js`
+A basic test should be added to ensure the new route loads the component correctly. There will usually be a sub folder in the `test/functional/cypress/specs` folder that the new test can be added into, if not a new one can be created. For this test, we will create a new spec file in `/companies/new-page-spec.js`
 
 ```
 const fixtures = require('../../fixtures')
