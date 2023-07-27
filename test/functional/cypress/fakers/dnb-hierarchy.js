@@ -28,6 +28,7 @@ const companyTreeItemFaker = (overrides = {}) => ({
   latest_interaction_date: faker.date.past(),
   one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
   archived: false,
+  trading_names: [faker.company.name()],
   hierarchy: 1,
   subsidiaries: [],
   ...overrides,
@@ -108,6 +109,7 @@ const manuallyLinkedCompanyFaker = () => {
     one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
     archived: false,
     hierarchy: 0,
+    trading_names: [faker.company.name()],
   }
 }
 

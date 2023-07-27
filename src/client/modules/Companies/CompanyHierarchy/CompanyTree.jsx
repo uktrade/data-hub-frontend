@@ -342,8 +342,11 @@ const HierarchyItem = ({
             ) : (
               `${company.name} (not on Data Hub)`
             )}
-            {company?.trading_names.length > 0 && (
-              <TradingNames>
+            {company?.trading_names?.length > 0 && (
+              <TradingNames
+                data-test={`${companyName}-trading-names`}
+                isRequestedCompanyId={isRequestedCompanyId}
+              >
                 Trading as: {company?.trading_names.join(', ')}
               </TradingNames>
             )}

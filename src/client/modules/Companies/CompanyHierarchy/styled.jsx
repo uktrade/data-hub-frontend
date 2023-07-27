@@ -227,5 +227,6 @@ export const GridColTags = styled(GridCol)`
 
 export const TradingNames = styled.div`
   font-size: ${FONT_SIZE.SIZE_16};
-  color: ${DARK_GREY};
+  ${({ isRequestedCompanyId }) =>
+    isRequestedCompanyId ? `color: ${WHITE};` : `color: ${DARK_GREY};`}
 `
