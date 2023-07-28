@@ -159,14 +159,8 @@ describe('Company Activity Feed Filter', () => {
           element: createdByOthersFilter,
           value: adviser.id,
         })
-        // cy.wait('@apiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
 
-        // assertChipExists({ label: 'Created by: Others', position: 1 })
-        // removeChip(adviser.id)
-        // assertRequestUrl('@apiRequest', minimumRequest)
-        // assertChipsEmpty()
-        // assertFieldEmpty(createdByOthersFilter)
+        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
       })
     })
 
@@ -250,7 +244,7 @@ describe('Company Activity Feed Filter', () => {
           `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
             fixtures.company.dnbGlobalUltimate.id
           )}?include_manually_linked_companies=true`,
-          { reduced_tree: true }
+          { reduced_tree: true, related_companies_count: 2000, total: 2000 }
         ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
@@ -268,7 +262,7 @@ describe('Company Activity Feed Filter', () => {
           `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
             fixtures.company.dnbGlobalUltimate.id
           )}?include_manually_linked_companies=true`,
-          { reduced_tree: false }
+          { reduced_tree: false, related_companies_count: 1, total: 1 }
         ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
@@ -287,7 +281,7 @@ describe('Company Activity Feed Filter', () => {
           `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
             fixtures.company.dnbGlobalUltimate.id
           )}?include_manually_linked_companies=true`,
-          { reduced_tree: false }
+          { reduced_tree: false, related_companies_count: 1, total: 1 }
         ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
@@ -309,7 +303,7 @@ describe('Company Activity Feed Filter', () => {
           `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
             fixtures.company.dnbGlobalUltimate.id
           )}?include_manually_linked_companies=true`,
-          { reduced_tree: false }
+          { reduced_tree: false, related_companies_count: 1, total: 1 }
         ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
