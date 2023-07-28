@@ -84,8 +84,8 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
-
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
+
         /*
         Asserts the "Adviser typeahead" filter is selected with the
         current user as this is the same as selecting "Created by" > "Me".
