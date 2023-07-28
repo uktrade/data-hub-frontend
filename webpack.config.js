@@ -151,10 +151,10 @@ module.exports = (env) => ({
         },
       },
       {
-        test: /\.(png|svg|jpe?g)$/,
-        type: 'asset/resource',
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset',
         generator: {
-          filename: 'images/[name].[hash:8].[ext]',
+          filename: 'images/[name].[hash:8][ext]',
         },
         // use: [{ loader: 'image-webpack-loader' }],
       },
