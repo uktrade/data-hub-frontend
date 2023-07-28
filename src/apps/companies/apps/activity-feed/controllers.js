@@ -259,6 +259,7 @@ async function fetchActivityFeedHandler(req, res, next) {
       activityType = [],
     } = req.query
 
+    const sortBy = req.query.sortby
     const relatedCompanyIds = []
     if (include_parent_companies || include_subsidiary_companies) {
       const relatedCompaniesResponse = await getRelatedCompanies(
@@ -286,6 +287,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     const query = dataHubCompanyActivityQuery({
       from,
       size,
+      sortBy,
       companyIds: [company.id, ...relatedCompanyIds],
       contacts: filteredContacts,
       dateAfter,
