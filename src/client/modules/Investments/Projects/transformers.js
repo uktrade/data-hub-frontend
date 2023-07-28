@@ -12,7 +12,8 @@ export const transformArrayForTypeahead = (advisers) =>
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
 
-const transformRadioOptionToBool = (radioOption) => radioOption === OPTION_YES
+export const transformRadioOptionToBool = (radioOption) =>
+  radioOption === OPTION_YES
 
 const setReferralSourceEvent = (values) => {
   const {
