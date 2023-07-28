@@ -9,6 +9,13 @@ const searchEndpoint = '/api-proxy/v3/search/investment_project'
 
 describe('Company Investments Filter', () => {
   before(() => {
+    cy.intercept(
+      'GET',
+      `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+        dnbCorp.id
+      )}?include_manually_linked_companies=true`,
+      { reduced_tree: false, related_companies_count: 1, total: 1 }
+    ).as('relatedCompaniesApiRequest')
     cy.visit(urls.companies.investments.companyInvestmentProjects(dnbCorp.id))
   })
 
