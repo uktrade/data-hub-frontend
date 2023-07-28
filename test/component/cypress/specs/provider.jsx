@@ -31,9 +31,10 @@ export const store = legacy_createStore(
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
-export default ({ children, tasks }) => {
+export default ({ children, tasks = {}, resetTasks = false }) => {
   // We only ever want to start the sagas once
-  runMiddlewareOnce(tasks || {})
+  resetTasks ? sagaMiddleware.run(rootSaga(tasks)) : runMiddlewareOnce(tasks)
+
   return (
     <Provider store={store}>
       <BrowserRouter>{children}</BrowserRouter>
