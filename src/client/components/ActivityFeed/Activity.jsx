@@ -4,13 +4,7 @@ import PropTypes from 'prop-types'
 
 import activities from './activities'
 
-function Activity({
-  activity,
-  showDetails,
-  showDnbHierarchy,
-  filter,
-  isOverview,
-}) {
+function Activity({ activity, showDetails, filter, isOverview }) {
   const ActivityToRender = find(activities, (a) => {
     if (a.canRender && typeof a.canRender == 'function') {
       return a.canRender(activity, filter)
@@ -27,7 +21,6 @@ function Activity({
       activity={activity}
       filter={filter}
       showDetails={showDetails}
-      showDnbHierarchy={showDnbHierarchy}
       isOverview={isOverview}
     />
   )
@@ -36,13 +29,11 @@ function Activity({
 Activity.propTypes = {
   activity: PropTypes.object.isRequired,
   showDetails: PropTypes.bool,
-  showDnbHierarchy: PropTypes.bool,
   filter: PropTypes.array,
 }
 
 Activity.defaultProps = {
   showDetails: false,
-  showDnbHierarchy: false,
   filter: [],
 }
 

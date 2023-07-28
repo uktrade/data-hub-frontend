@@ -54,42 +54,21 @@ export default class ActivityFeed extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      showDnbHierarchy: false,
-    }
+    this.state = {}
 
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
-    this.showActivitiesFromAllCompanies =
-      this.showActivitiesFromAllCompanies.bind(this)
   }
 
   onActivityTypeFilterChange(e) {
     const activityTypeFilter = e.target.value
     const { sendQueryParams } = this.props
-    const { showDnbHierarchy } = this.state
 
     sendQueryParams({
       activityTypeFilter,
-      showDnbHierarchy,
     })
 
     this.setState({
       activityTypeFilter,
-    })
-  }
-
-  showActivitiesFromAllCompanies(e) {
-    const showDnbHierarchy = e.target.checked
-    const { sendQueryParams } = this.props
-    const { activityTypeFilter } = this.state
-
-    sendQueryParams({
-      activityTypeFilter,
-      showDnbHierarchy,
-    })
-
-    this.setState({
-      showDnbHierarchy,
     })
   }
 
@@ -102,14 +81,12 @@ export default class ActivityFeed extends React.Component {
       actions,
       children,
       totalActivities,
-      isGlobalUltimate,
-      dnbHierarchyCount,
       companyIsArchived,
       isOverview,
       feedType,
     } = this.props
 
-    const { activityTypeFilter, showDnbHierarchy } = this.state
+    const { activityTypeFilter } = this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
         {!isOverview && (
@@ -122,19 +99,12 @@ export default class ActivityFeed extends React.Component {
           <ActivityFeedFilters
             activityTypeFilter={activityTypeFilter}
             onActivityTypeFilterChange={this.onActivityTypeFilterChange}
-            showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}
-            isGlobalUltimate={isGlobalUltimate}
-            dnbHierarchyCount={dnbHierarchyCount}
           />
         )}
         <ActivityFeedCardList>
           {activities.map((activity) => (
             <li key={activity.id}>
-              <Activity
-                activity={activity}
-                showDnbHierarchy={showDnbHierarchy}
-                isOverview={isOverview}
-              />
+              <Activity activity={activity} isOverview={isOverview} />
             </li>
           ))}
         </ActivityFeedCardList>
