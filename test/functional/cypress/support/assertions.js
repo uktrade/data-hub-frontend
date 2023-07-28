@@ -181,36 +181,6 @@ const assertSelectOptions = (element, expectedOptions) =>
     ).to.deep.eq(expectedOptions)
   })
 
-const assertFieldAddAnother = ({
-  element,
-  label,
-  values,
-  emptyOption,
-  optionsCount = 0,
-}) =>
-  cy
-    .wrap(element)
-    .as('fieldAddAnother')
-    .then(
-      () =>
-        label &&
-        cy
-          .get('@fieldAddAnother')
-          .find('label')
-          .first()
-          .should('have.text', label)
-    )
-    .parent()
-    .children('div')
-    .each((item, i) => {
-      assertFieldSelect({
-        element: item,
-        emptyOption,
-        optionsCount,
-        value: values && values[i] && values[i].name,
-      })
-    })
-
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
     .wrap(element)
@@ -492,19 +462,6 @@ const assertFormActions = ({ element, buttons }) =>
 
 const assertFormFields = (formElement, specs) =>
   formElement.children().each((element, i) => {
-    if (specs[i]) {
-      const spec = specs[i]
-      if (spec instanceof Function) {
-        spec(element)
-      } else {
-        const { assert, ...params } = spec
-        assert({ element, ...params })
-      }
-    }
-  })
-
-const assertFormFieldsWithLegend = (formElement, specs) =>
-  formElement.parent().each((element, i) => {
     if (specs[i]) {
       const spec = specs[i]
       if (spec instanceof Function) {
@@ -837,7 +794,6 @@ module.exports = {
   assertFieldTextarea,
   assertFieldSelect,
   assertSelectOptions,
-  assertFieldAddAnother,
   assertFieldRadios,
   assertFieldRadiosWithLegend,
   assertFieldCheckbox,
@@ -848,7 +804,6 @@ module.exports = {
   assertFieldDateShort,
   assertFieldHidden,
   assertFormFields,
-  assertFormFieldsWithLegend,
   assertDetails,
   assertLocalHeader,
   assertTabbedLocalNav,
