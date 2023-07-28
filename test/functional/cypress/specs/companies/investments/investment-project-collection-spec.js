@@ -104,6 +104,13 @@ describe('Company Investments Collection Page', () => {
   )}?${buildQueryString()}`
 
   before(() => {
+    cy.intercept(
+      'GET',
+      `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+        dnbCorp.id
+      )}?include_manually_linked_companies=true`,
+      { reduced_tree: false, related_companies_count: 1, total: 1 }
+    ).as('relatedCompaniesApiRequest')
     collectionListRequest(
       'v3/search/investment_project',
       investmentProjects,

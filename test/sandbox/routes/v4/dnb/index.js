@@ -67,8 +67,8 @@ exports.relatedCompaniesCount = function (req, res) {
           reduced_tree: false,
         }
       : {
-          total: 1,
-          related_companies_count: 1,
+          total: 0,
+          related_companies_count: 0,
           manually_linked_subsidiaries_count: 0,
           reduced_tree: false,
         }
