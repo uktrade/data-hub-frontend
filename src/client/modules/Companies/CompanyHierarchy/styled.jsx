@@ -225,6 +225,11 @@ export const GridColTags = styled(GridCol)`
   width: auto;
 `
 
+export const GridColHeader = styled(GridCol)`
+  setwidth: two-thirds;
+  padding-left: 0px;
+`
+
 export const TradingNames = styled.div`
   font-size: ${FONT_SIZE.SIZE_16};
   ${({ isRequestedCompanyId }) =>

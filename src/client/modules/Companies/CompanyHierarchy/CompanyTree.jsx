@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, GridCol, H2, Link } from 'govuk-react'
+import { Button, H2, Link } from 'govuk-react'
 import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
 import { BsFillPersonFill } from 'react-icons/bs'
@@ -32,6 +32,7 @@ import {
   AddCompanyLink,
   AddCompanyLinkDiv,
   GridColTags,
+  GridColHeader,
   TradingNames,
 } from './styled'
 import { addressToString } from '../../../utils/addresses'
@@ -329,7 +330,7 @@ const HierarchyItem = ({
               </HierarchyTag>
             )}
           </GridColTags>
-          <GridCol setWidth="two-thirds">
+          <GridColHeader>
             {Object.keys(company).length === 0 ? (
               `No related companies found`
             ) : company?.id ? (
@@ -350,7 +351,7 @@ const HierarchyItem = ({
                 Trading as: {company?.trading_names.join(', ')}
               </TradingNames>
             )}
-          </GridCol>
+          </GridColHeader>
         </HierarchyItemHeading>
         {isOnDataHub ? (
           <ToggleSection
