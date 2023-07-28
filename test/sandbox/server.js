@@ -470,6 +470,7 @@ app.get(
   '/v4/dnb/:companyId/related-companies/count',
   v4Dnb.relatedCompaniesCount
 )
+app.get('/v4/dnb/:companyId/related-companies', v4Dnb.relatedCompanies)
 
 // V4 legacy company list
 app.get('/v4/user/company-list/:companyId', v4Company.getCompanyList)

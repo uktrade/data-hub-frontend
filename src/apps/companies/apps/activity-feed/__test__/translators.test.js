@@ -10,7 +10,6 @@ describe('Converting query String types', () => {
         requestQuery: {
           from: '0',
           size: '20',
-          showDnbHierarchy: 'false',
         },
       })
 
@@ -25,7 +24,6 @@ describe('Converting query String types', () => {
       expect(middlewareParameters.reqMock.query).to.deep.equal({
         from: 0,
         size: 20,
-        showDnbHierarchy: 'false',
       })
     })
 

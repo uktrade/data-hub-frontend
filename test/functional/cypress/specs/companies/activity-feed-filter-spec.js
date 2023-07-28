@@ -25,7 +25,8 @@ const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
 const createdByOthersFilter = '[data-test="created-by-others-filter"]'
-const showDnBHierarchyFilter = '[data-test="show-dnb-hierarchy-filter"]'
+const relatedCompaniesFilter =
+  '[data-test="checkbox-include_related_companies"]'
 
 const adviser = {
   id: myAdviserId,
@@ -240,28 +241,85 @@ describe('Company Activity Feed Filter', () => {
       const companyActivitiesEndPoint =
         urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
         '/data**'
+      const urlQuery = `?size=10&from=0&sortby=date:desc&include_related_companies[0]=include_parent_companies&include_related_companies[1]=include_subsidiary_companies`
+      const expectedRequestUrl = `?size=10&from=0&sortby=date:desc&include_parent_companies=true&include_subsidiary_companies=true`
 
-      const expectedRequestUrl = `?size=10&from=0&showDnbHierarchy[]=true&sortby=date:desc`
-
-      it('Activity across all companies option should be shown for related companies', () => {
+      it('Should render the subsidiary companies option disabled when related companies large', () => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            fixtures.company.dnbGlobalUltimate.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: true }
+        ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
           urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
         )
+        cy.wait('@apiRequest')
+
+        cy.get(relatedCompaniesFilter).eq(0).should('not.be.disabled')
+        cy.get(relatedCompaniesFilter).eq(1).should('be.disabled')
+      })
+
+      it('Should render the subsidiary companies option enabled when related companies small', () => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            fixtures.company.dnbGlobalUltimate.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: false }
+        ).as('relatedCompaniesApiRequest')
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
+        )
+        cy.wait('@apiRequest')
+
+        cy.wait('@relatedCompaniesApiRequest')
+        cy.get(relatedCompaniesFilter).eq(0).should('not.be.disabled')
+        cy.get(relatedCompaniesFilter).eq(1).should('not.be.disabled')
+      })
+
+      it('Activity across all companies option should be shown for related companies', () => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            fixtures.company.dnbGlobalUltimate.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: false }
+        ).as('relatedCompaniesApiRequest')
+        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
+        )
+
         assertRequestUrl('@apiRequest', minimumRequest)
-        cy.get(showDnBHierarchyFilter).find(`input`).parent().click()
+
+        cy.get(relatedCompaniesFilter).click({
+          multiple: true,
+        })
+        cy.wait('@apiRequest')
         assertRequestUrl('@apiRequest', expectedRequestUrl)
       })
 
       it('should set filter from url', () => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            fixtures.company.dnbGlobalUltimate.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: false }
+        ).as('relatedCompaniesApiRequest')
         cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
           `${urls.companies.activity.index(
             fixtures.company.dnbGlobalUltimate.id
-          )}${expectedRequestUrl}`
+          )}${urlQuery}`
         )
+        cy.wait('@relatedCompaniesApiRequest')
         assertRequestUrl('@apiRequest', expectedRequestUrl)
-        cy.get(showDnBHierarchyFilter).find(`input`).should('be.checked')
+        cy.get(relatedCompaniesFilter).should('be.checked')
       })
     })
   })

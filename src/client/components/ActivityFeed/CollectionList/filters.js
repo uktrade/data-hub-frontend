@@ -9,6 +9,7 @@ import {
   buildDatesFilter,
   buildInputFieldFilter,
 } from '../../../filters'
+import { INCLUDE_RELATED_COMPANIES } from '../../RoutedRelatedCompaniesCheckboxGroup/constants'
 
 export const buildSelectedFilters = (
   queryParams,
@@ -16,13 +17,6 @@ export const buildSelectedFilters = (
   selectedCompanies,
   currentAdviserId
 ) => ({
-  showDNBHierarchy: {
-    queryParam: 'showDnbHierarchy',
-    options: buildOptionsFilter({
-      value: queryParams.showDNBHierarchy,
-      categoryLabel: LABELS.showDNBHierarchy,
-    }),
-  },
   advisers: {
     queryParam: 'ditParticipantsAdviser',
     options: selectedAdvisers.map((adviser) => ({
@@ -87,6 +81,14 @@ export const buildSelectedFilters = (
       options: BUSINESS_INTELLIGENCE_OPTION,
       value: queryParams.was_policy_feedback_provided,
       categoryLabel: LABELS.businessIntelligence,
+    }),
+  },
+  includeRelatedCompanies: {
+    queryParam: 'include_related_companies',
+    options: buildOptionsFilter({
+      options: INCLUDE_RELATED_COMPANIES,
+      value: queryParams.include_related_companies,
+      categoryLabel: LABELS.includeRelatedCompanies,
     }),
   },
 })
