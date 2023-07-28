@@ -46,6 +46,8 @@ import ReferralSourceWebsite from './ReferralSourceWebsite'
 import RelatedCompaniesCount from './RelatedCompaniesCount'
 import StrategicDrivers from './StrategicDrivers'
 import DeliveryPartners from './DeliveryPartners'
+import SalaryRanges from './SalaryRanges'
+import FDIValues from './FDIValues'
 
 export default {
   ...Advisers.tasks,
@@ -96,4 +98,6 @@ export default {
   ...RelatedCompaniesCount.tasks,
   ...StrategicDrivers.tasks,
   ...DeliveryPartners.tasks,
+  ...SalaryRanges.tasks,
+  ...FDIValues.tasks,
 }

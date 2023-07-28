@@ -322,6 +322,7 @@ module.exports = {
         '/investments',
         '/projects/:investmentId/edit-team-members'
       ),
+      editValue: url('/investments', '/projects/:investmentId/edit-value'),
       documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url('/investments', '/projects/:investmentId/propositions'),
       proposition: {

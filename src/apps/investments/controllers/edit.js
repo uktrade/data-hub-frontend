@@ -38,7 +38,12 @@ function renderRequirementsForm(req, res) {
 }
 
 function renderValueForm(req, res) {
-  return res.render('investments/views/value-edit')
+  const { investment } = res.locals
+  res.breadcrumb('Edit value').render('investments/views/value-edit', {
+    props: {
+      projectId: investment.id,
+    },
+  })
 }
 
 module.exports = {
