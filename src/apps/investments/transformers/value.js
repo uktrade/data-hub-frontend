@@ -104,28 +104,6 @@ function transformInvestmentValueForView({
   }
 }
 
-function transformInvestmentValueFormBodyToApiRequest(props) {
-  const totalInvestment =
-    props.client_cannot_provide_total_investment === 'true'
-      ? null
-      : props.total_investment || null
-
-  const foreignEquityInvestment =
-    props.client_cannot_provide_foreign_investment === 'true'
-      ? null
-      : props.foreign_equity_investment || null
-
-  return {
-    ...props,
-    ...{
-      total_investment: totalInvestment,
-      foreign_equity_investment: foreignEquityInvestment,
-      number_new_jobs: props.number_new_jobs || null,
-      number_safeguarded_jobs: props.number_safeguarded_jobs || null,
-    },
-  }
-}
-
 function transformAssociatedProject({
   id,
   associated_non_fdi_r_and_d_project,
@@ -159,5 +137,4 @@ function transformAssociatedProject({
 
 module.exports = {
   transformInvestmentValueForView,
-  transformInvestmentValueFormBodyToApiRequest,
 }

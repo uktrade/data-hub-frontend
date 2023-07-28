@@ -33,10 +33,7 @@ const {
   team,
 } = require('./controllers')
 
-const {
-  projectStageFormMiddleware,
-  valueFormMiddleware,
-} = require('./middleware/forms')
+const { projectStageFormMiddleware } = require('./middleware/forms')
 
 const { renderProjectsView } = require('./controllers/projects')
 const { renderPropositionList } = require('./controllers/propositions')
@@ -125,16 +122,9 @@ router.get(
 router.get('/:investmentId', redirectToFirstNavItem)
 router.get('/:investmentId/details', details.detailsGetHandler)
 
-router.route('/:investmentId/edit-details').get(edit.editDetailsGet)
+router.route('/:investmentId/edit-details').get(edit.renderDetailsForm)
 
-router
-  .route('/:investmentId/edit-value')
-  .get(valueFormMiddleware.populateForm, edit.renderValueForm)
-  .post(
-    valueFormMiddleware.populateForm,
-    valueFormMiddleware.handleFormPost,
-    edit.renderValueForm
-  )
+router.route('/:investmentId/edit-value').get(edit.renderValueForm)
 
 router
   .route('/:investmentId/edit-requirements')

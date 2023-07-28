@@ -39,8 +39,6 @@ const labels = {
       export_revenue: 'Export revenue',
     },
     edit: {
-      government_assistance:
-        'Is this project receiving government financial assistance?',
       number_new_jobs: 'Number of new jobs',
       number_safeguarded_jobs: 'Number of safeguarded jobs',
       client_cannot_provide_total_investment:

@@ -1,7 +1,4 @@
-// For projects landing after 01/04/2020, the project value field is not needed
-const valueCutOffDate = new Date('2020-04-01')
-
-function editDetailsGet(req, res) {
+function renderDetailsForm(req, res) {
   const { investment } = res.locals
   const { user } = req.session
   res.breadcrumb('Edit details').render('investments/views/details-edit', {
@@ -9,20 +6,6 @@ function editDetailsGet(req, res) {
       projectId: investment.id,
       currentAdviser: user.id,
     },
-  })
-}
-
-function editValueGet(req, res) {
-  const {
-    estimated_land_date: estimatedLandDate,
-    actual_land_date: actualLandDate,
-  } = res.locals.form.state
-  const datesBeforeCutOff = [estimatedLandDate, actualLandDate].some(
-    (date) => date !== null && new Date(date) < valueCutOffDate
-  )
-
-  res.breadcrumb('Edit value').render('investments/views/value-edit', {
-    projectValueNeeded: datesBeforeCutOff,
   })
 }
 
@@ -47,8 +30,7 @@ function renderValueForm(req, res) {
 }
 
 module.exports = {
-  editDetailsGet,
-  editValueGet,
+  renderDetailsForm,
   renderRequirementsForm,
   renderValueForm,
 }
