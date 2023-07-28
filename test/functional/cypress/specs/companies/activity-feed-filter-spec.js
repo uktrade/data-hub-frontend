@@ -84,7 +84,7 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
-        cy.wait('@apiRequest')
+
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
         /*
         Asserts the "Adviser typeahead" filter is selected with the
