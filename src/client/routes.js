@@ -19,6 +19,7 @@ import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import AccountManagement from './modules/Companies/AccountManagement'
+import Strategy from './modules/Companies/AccountManagement/strategy'
 
 const routes = {
   companies: [
@@ -41,6 +42,11 @@ const routes = {
       path: '/companies/:companyId/account-management',
       module: 'datahub:companies',
       component: AccountManagement,
+    },
+    {
+      path: '/companies/:companyId/account-management/strategy/create',
+      module: 'datahub:companies',
+      component: Strategy,
     },
   ],
   contacts: [

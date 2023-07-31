@@ -234,6 +234,10 @@ module.exports = {
     },
     accountManagement: {
       index: url('/companies', '/:companyId/account-management'),
+      create: url(
+        '/companies',
+        '/:companyId/account-management/strategy/create'
+      ),
     },
   },
   companyLists: {
