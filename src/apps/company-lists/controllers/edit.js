@@ -21,9 +21,9 @@ async function renderEditCompanyListPage(req, res, next) {
     } = res.locals
     const props = {
       id,
-      cancelUrl: `${urls.dashboard()}`,
+      cancelUrl: `${urls.dashboard.index()}`,
       listName: name,
-      returnUrl: `${urls.dashboard()}`,
+      returnUrl: `${urls.dashboard.index()}`,
     }
     res.breadcrumb('Edit list name').render('company-lists/views/edit-list', {
       props,

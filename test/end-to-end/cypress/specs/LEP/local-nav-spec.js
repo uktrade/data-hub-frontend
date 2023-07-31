@@ -1,12 +1,6 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-
-const {
-  companies,
-  contacts,
-  dashboard,
-  investments,
-} = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 const {
   assertLocalNav,
@@ -19,7 +13,7 @@ describe('LEP Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company.pk))
+      cy.visit(urls.companies.detail(company.pk))
     })
 
     it('should display LEP only tabs', () => {
@@ -35,7 +29,7 @@ describe('LEP Permission', () => {
 
   describe('dashboard', () => {
     before(() => {
-      cy.visit(dashboard())
+      cy.visit(urls.dashboard.index())
     })
 
     it('should display LEP only tabs', () => {
@@ -55,7 +49,7 @@ describe('LEP Permission', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.details(contact.pk))
+      cy.visit(urls.contacts.details(contact.pk))
     })
 
     it('should display LEP only tabs', () => {
@@ -69,7 +63,7 @@ describe('LEP Permission', () => {
   describe('investment projects', () => {
     before(() => {
       cy.visit(
-        investments.projects.details(fixtures.investmentProject.newZoo.id)
+        urls.investments.projects.details(fixtures.investmentProject.newZoo.id)
       )
     })
 

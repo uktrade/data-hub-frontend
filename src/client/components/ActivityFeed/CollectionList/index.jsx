@@ -125,11 +125,6 @@ const CompanyActivityCollection = ({
     value: currentAdviserId,
   }
 
-  const dnbHierarchyCountOption = {
-    label: `Activity across all ${dnbHierarchyCount} companies`,
-    value: true,
-  }
-
   return (
     <CompanyResource id={companyId}>
       {(company) => (
@@ -144,6 +139,7 @@ const CompanyActivityCollection = ({
           <FilteredCollectionList
             {...props}
             collectionName="activities"
+            sortOptions={optionMetadata.sortOptions}
             taskProps={collectionListTask}
             selectedFilters={selectedFilters}
             entityName="companyActivities"
@@ -185,15 +181,11 @@ const CompanyActivityCollection = ({
                 data-test="date-before-filter"
               />
               {dnbHierarchyCount > 0 && (
-                <Filters.CheckboxGroup
-                  legend={LABELS.showDNBHierarchy}
-                  name="showDnbHierarchy"
-                  qsParam="showDnbHierarchy"
-                  options={[dnbHierarchyCountOption]}
+                <Filters.RelatedCompaniesCheckboxGroup
+                  company={company}
                   selectedOptions={
-                    payload.showDnbHierarchy ? [dnbHierarchyCountOption] : []
+                    selectedFilters.includeRelatedCompanies.options
                   }
-                  data-test="show-dnb-hierarchy-filter"
                 />
               )}
               <FilterToggleSection

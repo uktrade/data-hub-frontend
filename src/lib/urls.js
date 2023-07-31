@@ -112,7 +112,10 @@ module.exports = {
       'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
   },
 
-  dashboard: url('/'),
+  dashboard: {
+    index: url('/'),
+    investmentProjects: url('/investment-projects'),
+  },
   oauth: {
     redirect: url('/oauth'),
     callback: url('/oauth/callback'),
@@ -228,6 +231,13 @@ module.exports = {
     subsidiaries: {
       index: url('/companies', '/:companyId/subsidiaries'),
       link: url('/companies', '/:companyId/subsidiaries/link'),
+    },
+    accountManagement: {
+      index: url('/companies', '/:companyId/account-management'),
+      create: url(
+        '/companies',
+        '/:companyId/account-management/strategy/create'
+      ),
     },
   },
   companyLists: {
@@ -349,9 +359,6 @@ module.exports = {
         '/investments',
         '/projects/create/investment-type/info/:anchor'
       ),
-    },
-    dashboard: {
-      projects: url('/investment-projects'),
     },
     profiles: {
       index: url('/investments', '/profiles'),

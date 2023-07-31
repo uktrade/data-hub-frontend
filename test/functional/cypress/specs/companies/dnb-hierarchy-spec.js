@@ -39,7 +39,7 @@ function assertRelatedCompaniesPage({
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.detail(company.id),
       'Business details': urls.companies.businessDetails(company.id),

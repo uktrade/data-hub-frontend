@@ -32,6 +32,7 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Making changes](#making-changes)
 - [Formatting markdown files](#formatting-markdown-files)
 - [Managing Dependabot PRs](./docs/Dependabot.md)
+- [Adding a new page](./docs/Adding%20a%20new%20page.md)
 
 ## Getting started
 

@@ -44,6 +44,8 @@ import BusinessActivities from './BusinessActivities'
 import ReferralSourceMarketing from './ReferralSourceMarketing'
 import ReferralSourceWebsite from './ReferralSourceWebsite'
 import RelatedCompaniesCount from './RelatedCompaniesCount'
+import StrategicDrivers from './StrategicDrivers'
+import DeliveryPartners from './DeliveryPartners'
 
 export default {
   ...Advisers.tasks,
@@ -92,4 +94,6 @@ export default {
   ...ReferralSourceMarketing.tasks,
   ...ReferralSourceWebsite.tasks,
   ...RelatedCompaniesCount.tasks,
+  ...StrategicDrivers.tasks,
+  ...DeliveryPartners.tasks,
 }

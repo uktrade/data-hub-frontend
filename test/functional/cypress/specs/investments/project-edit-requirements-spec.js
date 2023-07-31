@@ -1,76 +1,25 @@
 const {
-  assertFormFieldsWithLegend,
   assertLocalHeader,
   assertBreadcrumbs,
-  assertFieldAddAnother,
   assertFieldTextarea,
-  assertFieldInputWithLegend,
+  assertFieldRadios,
+  assertFieldTypeahead,
+  assertFieldInput,
+  assertFieldUneditable,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
 const projectNoExistingRequirements = require('../../fixtures/investment/investment-no-existing-requirements.json')
 const projectHasExistingRequirements = require('../../fixtures/investment/investment-has-existing-requirements.json')
 
-const assertBooleanFieldRadios = ({ element, legend, value }) =>
-  cy
-    .wrap(element)
-    .as('fieldRadio')
-    .find('legend')
-    .first()
-    .should('have.text', legend)
-    .parent()
-    .find('input')
-    .should('have.length', 2)
-    .then(
-      () =>
-        value &&
-        cy
-          .get('@fieldRadio')
-          .find('input:checked')
-          .next()
-          .should('have.text', 'Yes')
-    )
-
-const assertRequirementsFieldAddress = ({ element, value = {} }) => {
-  const addressElements = [
-    {
-      assert: ({ element }) => cy.wrap(element).should('have.text', 'Address'),
-    },
-    {
-      label: 'Street',
-      value: value.line_1,
-      assert: assertFieldInputWithLegend,
-    },
-    {
-      label: 'Street 2',
-      value: value.line_2,
-      assert: assertFieldInputWithLegend,
-    },
-    {
-      label: 'Town',
-      value: value.town,
-      assert: assertFieldInputWithLegend,
-    },
-    {
-      label: 'Postcode',
-      value: value.postcode,
-      assert: assertFieldInputWithLegend,
-    },
-  ]
-  cy.wrap(element)
-    .children()
-    .each((item, i) => {
-      if (addressElements[i]) {
-        const { assert, ...params } = addressElements[i]
-        assert({ element: item, ...params })
-      }
-    })
-}
-
 const navigateToForm = ({ project }) => {
   cy.visit(investments.projects.details(project.id))
   cy.get('[data-test="investment-requirements-link"]').click()
 }
+
+const checkIfClientConsidering = (valueToCheck) => (valueToCheck ? 3 : 2)
+const checkIfSiteDecided = (valueToCheck) => (valueToCheck ? 7 : 2)
+const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
 
 const testProjectRequirementsForm = ({ project }) => {
   before(() => {
@@ -85,89 +34,157 @@ const testProjectRequirementsForm = ({ project }) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: null,
+      [project.name]: investments.projects.project(project.id),
+      'Edit requirements': null,
     })
   })
 
-  it('should render expected form fields with existing values', () => {
-    assertFormFieldsWithLegend(cy.get('form'), [
-      {
-        assert: assertFieldAddAnother,
+  it('should render the strategic drivers field', () => {
+    cy.get('[data-test="field-strategic_drivers"]').then((element) => {
+      assertFieldTypeahead({
+        element,
         label: 'Strategic drivers behind this investment',
+        placeholder: 'Select a strategic driver',
         values: project.strategic_drivers,
-        optionsCount: 11,
-        emptyOption: '-- Select strategic driver --',
-      },
-      {
-        assert: assertFieldTextarea,
+      })
+    })
+  })
+
+  it('should display the client requirements field', () => {
+    cy.get('[data-test="field-client_requirements"]').then((element) => {
+      assertFieldTextarea({
+        element,
         label: 'Client requirements',
         value: project.client_requirements,
-      },
-      {
-        assert: assertBooleanFieldRadios,
-        legend: 'Is the client considering other countries?',
-        value: project.client_considering_other_countries,
-        optionsCount: 2,
-      },
-      {
-        assert: assertFieldAddAnother,
-        label: 'Competitor countries',
-        emptyOption: '-- Select country --',
-        values: project.competitor_countries,
-        optionsCount: 251,
-      },
-      {
-        assert: assertFieldAddAnother,
+      })
+    })
+  })
+
+  it('should display the considering other countries field', () => {
+    cy.get('[data-test="field-client_considering_other_countries"]').then(
+      (element) => {
+        assertFieldRadios({
+          element,
+          label: 'Is the client considering other countries?',
+          optionsCount: checkIfClientConsidering(
+            project.client_considering_other_countries
+          ),
+          value: convertBoolToYesNo(project.client_considering_other_countries),
+        })
+      }
+    )
+  })
+
+  project.client_considering_other_countries
+    ? it('should display the competitor countries field', () => {
+        cy.get('[data-test="field-competitor_countries"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Competitor countries',
+            placeholder: 'Choose a country',
+            values: project.competitor_countries,
+          })
+        })
+      })
+    : it('should not display the competitor countries field', () => {
+        cy.get('[data-test="field-competitor_countries"]').should('not.exist')
+      })
+
+  it('should render the possible UK locations field', () => {
+    cy.get('[data-test="field-uk_region_locations"]').then((element) => {
+      assertFieldTypeahead({
+        element,
         label: 'Possible UK locations for this investment',
+        placeholder: 'Select a UK region',
         values: project.uk_region_locations,
-        optionsCount: 16,
-        emptyOption: '-- Select region --',
-      },
-      {
-        assert: assertBooleanFieldRadios,
-        legend:
+      })
+    })
+  })
+
+  it('should display the site decided field', () => {
+    cy.get('[data-test="field-site_decided"]').then((element) => {
+      assertFieldRadios({
+        element,
+        label:
           'Has the UK location (site address) for this investment been decided yet?',
-        value: project.site_decided,
-        optionsCount: 2,
-      },
-      {
-        assert: assertRequirementsFieldAddress,
-        value: {
-          line_1: project.address_1,
-          line_2: project.address_2,
-          town: project.address_town,
-          postcode: project.address_postcode,
-        },
-      },
-      {
-        assert: assertFieldAddAnother,
-        label: 'UK regions landed',
-        values: project.actual_uk_regions,
-        optionsCount: 16,
-        emptyOption: '-- Select region --',
-      },
-      {
-        assert: assertFieldAddAnother,
+        optionsCount: checkIfSiteDecided(project.site_decided),
+        value: convertBoolToYesNo(project.site_decided),
+      })
+    })
+  })
+
+  project.site_decided
+    ? it('should display the address field', () => {
+        cy.get('[data-test="field-country"]').then((element) => {
+          assertFieldUneditable({
+            element,
+            label: 'Country',
+            value: 'United Kingdom',
+          })
+        })
+        cy.get('[data-test="field-address1"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Address line 1',
+            value: project.address_1,
+          })
+        })
+        cy.get('[data-test="field-address2"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Address line 2 (optional)',
+            value: project.address_2,
+          })
+        })
+        cy.get('[data-test="field-city"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Town or city',
+            value: project.address_town,
+          })
+        })
+        cy.get('[data-test="field-postcode"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Postcode',
+            value: project.address_postcode,
+          })
+        })
+      })
+    : it('should not display the address field', () => {
+        cy.get('[data-test="field-address"]').should('not.exist')
+      })
+
+  project.site_decided
+    ? it('should render the landed regions field', () => {
+        cy.get('[data-test="field-actual_uk_regions"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'UK regions landed',
+            placeholder: 'Select a UK region',
+            values: project.actual_uk_regions,
+          })
+        })
+      })
+    : it('should not display the landed regions field', () => {
+        cy.get('[data-test="field-actual_uk_regions"]').should('not.exist')
+      })
+
+  it('should render the delivery partners field', () => {
+    cy.get('[data-test="field-delivery_partners"]').then((element) => {
+      assertFieldTypeahead({
+        element,
         label: 'Delivery partners',
+        placeholder: 'Select a delivery partner',
         values: project.delivery_partners,
-        optionsCount: 43,
-        emptyOption: '-- Select a partner --',
-      },
-    ])
+      })
+    })
   })
 }
 
 describe('Edit the requirements of a project', () => {
   context('When editing a project without existing requirements data', () => {
     testProjectRequirementsForm({ project: projectNoExistingRequirements })
-
-    it('should not display hidden fields', () => {
-      cy.get('[data-test="group-field-competitor_countries"]').should(
-        'be.hidden'
-      )
-
-      cy.get('[data-test="group-field-actual_uk_regions"]').should('be.hidden')
-    })
   })
 
   context(
@@ -194,49 +211,38 @@ describe('Edit the requirements of a project', () => {
     })
 
     it('should allow the user to fill in all fields', () => {
-      cy.get('[data-test="field-strategic_drivers"]').select('Skills seeking')
-      cy.get('[data-test="field-strategic_drivers-add_button"]').click()
-      cy.get('[data-test="field-strategic_drivers-1"]').select('Cost reduction')
+      cy.get('[data-test="field-strategic_drivers"]')
+        .selectTypeaheadOption('Skills seeking')
+        .selectTypeaheadOption('Cost reduction')
 
       cy.get('[data-test="field-client_requirements"]').type(
         'Test requirements'
       )
 
-      cy.get('[data-test="field-client_considering_other_countries-1"]').check({
-        // required as the label covers the radio button
-        force: true,
-      })
-      cy.get('[data-test="field-competitor_countries"]').select('Japan')
-
-      cy.get('[data-test="field-uk_region_locations"]').select('East Midlands')
-      cy.get('[data-test="field-uk_region_locations-add_button"]').click()
-      cy.get('[data-test="field-uk_region_locations-1"]').select(
-        'East of England'
+      cy.get('[data-test="client-considering-other-countries-yes"]').click()
+      cy.get('[data-test="field-competitor_countries"]').selectTypeaheadOption(
+        'Japan'
       )
 
-      cy.get('[data-test="field-site_decided-1"]').check({
-        force: true,
-      })
-      cy.get('[data-test="field-address_1"]').type('Street address')
-      cy.get('[data-test="field-address_2"]').type('Street address 2')
-      cy.get('[data-test="field-address_town"]').type('Town')
-      cy.get('[data-test="field-address_postcode"]').type('AB1 2CD')
+      cy.get('[data-test="field-uk_region_locations"]')
+        .selectTypeaheadOption('East Midlands')
+        .selectTypeaheadOption('East of England')
 
-      cy.get('[data-test="field-actual_uk_regions"]').select('East Midlands')
-      cy.get('[data-test="field-actual_uk_regions-add_button"]').click()
-      cy.get('[data-test="field-actual_uk_regions-1"]').select(
-        'East of England'
-      )
+      cy.get('[data-test="site-decided-yes"]').click()
+      cy.get('[data-test="field-address1"]').type('Street address')
+      cy.get('[data-test="field-address2"]').type('Street address 2')
+      cy.get('[data-test="field-city"]').type('Town')
+      cy.get('[data-test="field-postcode"]').type('AB1 2CD')
 
-      cy.get('[data-test="field-delivery_partners"]').select(
-        'Black Country LEP'
-      )
-      cy.get('[data-test="field-delivery_partners-add_button"]').click()
-      cy.get('[data-test="field-delivery_partners-1"]').select(
-        'Coast to Capital LEP'
-      )
+      cy.get('[data-test="field-actual_uk_regions"]')
+        .selectTypeaheadOption('East Midlands')
+        .selectTypeaheadOption('East of England')
 
-      cy.contains('Save').click()
+      cy.get('[data-test="field-delivery_partners"]')
+        .selectTypeaheadOption('Black Country LEP')
+        .selectTypeaheadOption('Coast to Capital LEP')
+
+      cy.get('[data-test="submit-button"]').click()
     })
 
     it('should redirect the user to the details screen', () => {
@@ -249,31 +255,6 @@ describe('Edit the requirements of a project', () => {
 
     it('should display a flash message to inform the user of the change', () => {
       cy.get('[data-test="flash"]').contains('Investment requirements updated')
-    })
-  })
-
-  context('When making changes that miss out required fields', () => {
-    before(() => {
-      navigateToForm({ project: projectNoExistingRequirements })
-
-      cy.get('[data-test="field-strategic_drivers"]').select('Skills seeking')
-      cy.contains('Save').click()
-    })
-
-    it('should not redirect the user to the details screen', () => {
-      cy.url().should('include', 'edit-requirements')
-    })
-
-    it('should display a flash message to inform the user of the error', () => {
-      cy.get('[data-test="form-alert"]').contains(
-        'There was a problem submitting this form'
-      )
-    })
-
-    it('should highlight erroneous form input', () => {
-      cy.get('[data-test="group-field-client_requirements"]')
-        .should('have.class', 'has-error')
-        .contains('required')
     })
   })
 })

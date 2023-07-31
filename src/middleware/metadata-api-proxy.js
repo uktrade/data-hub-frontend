@@ -60,6 +60,7 @@ const ALLOWLIST = [
   '/v4/metadata/export-experience',
   '/v4/metadata/capital-investment/return-rate',
   '/v4/metadata/capital-investment/equity-percentage',
+  '/v4/metadata/investment-delivery-partner',
 ]
 
 module.exports = (app) => {

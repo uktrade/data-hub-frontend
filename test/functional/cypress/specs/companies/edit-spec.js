@@ -34,7 +34,7 @@ const assertRegisteredAddress = ({ element, ukBased }) =>
 
 const describeCompanyEditForm = ({ company, elements }) => {
   testBreadcrumbs({
-    Home: urls.dashboard(),
+    Home: urls.dashboard.index(),
     Companies: urls.companies.index(),
     [company.name]: urls.companies.detail(company.id),
     'Business details': urls.companies.businessDetails(company.id),

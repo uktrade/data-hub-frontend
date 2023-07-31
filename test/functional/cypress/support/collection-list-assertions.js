@@ -23,7 +23,7 @@ const assertCollectionBreadcrumbs = (pageName) => {
 const assertCompanyCollectionBreadcrumbs = (companyFixture, pageName) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [companyFixture.name]: urls.companies.detail(companyFixture.id),
       [pageName]: null,

@@ -7,13 +7,13 @@ module.exports = {
   router: router.get(
     // These paths are handled by react-router
     [
-      urls.dashboard(),
+      urls.dashboard.index(),
       urls.companyLists.index(),
-      urls.investments.dashboard.projects(),
+      urls.dashboard.investmentProjects(),
       urls.companies.referrals.list(),
       urls.exportPipeline.index(),
     ],
-    spaBasePath(urls.dashboard.route),
+    spaBasePath(urls.dashboard.index.route),
     renderDashboard
   ),
 }

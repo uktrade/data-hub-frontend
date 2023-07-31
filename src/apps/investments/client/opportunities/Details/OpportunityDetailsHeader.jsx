@@ -66,7 +66,7 @@ const OpportunityDetailsHeader = ({
     currentPath.includes('/interactions') ? 'Interactions' : 'Details'
 
   const breadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
+    { link: urls.dashboard.index(), text: 'Home' },
     { link: urls.investments.index(), text: 'Investments' },
     { link: urls.investments.opportunities.index(), text: 'UK opportunities' },
     { link: urls.investments.opportunities.details(id), text: name },

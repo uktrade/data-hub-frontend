@@ -102,7 +102,7 @@ const assertAddInteractionButton = (url) => {
  */
 const assertBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
   testBreadcrumbs({
-    Home: urls.dashboard(),
+    Home: urls.dashboard.index(),
     Companies: urls.companies.index(),
     [companyName]: detailsUrl,
     [lastCrumb]: null,
@@ -114,7 +114,7 @@ const assertBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
  */
 const assertExportCountryHistoryBreadcrumbs = (company, detailsUrl) => {
   testBreadcrumbs({
-    Home: urls.dashboard(),
+    Home: urls.dashboard.index(),
     Companies: urls.companies.index(),
     [company.name]: detailsUrl,
     Exports: urls.companies.exports.index(company.id),

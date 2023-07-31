@@ -10,7 +10,7 @@ export const LABELS = {
   createdBy: 'Created by',
   me: 'Me',
   others: 'Others',
-  showDNBHierarchy: 'Include related companies',
+
   dateAfter: 'From',
   dateBefore: 'To',
   service: 'Service',
@@ -39,6 +39,5 @@ export const BUSINESS_INTELLIGENCE_OPTION = [
 
 export const SORT_OPTIONS = [
   { value: 'date:desc', name: 'Recently created' },
-  { value: 'company.name', name: 'Company name A-Z' },
-  { value: 'subject', name: 'Subject A-Z' },
+  { value: 'date:asc', name: 'Oldest first' },
 ]

@@ -27,7 +27,7 @@ const ESSInteractionDetails = ({
 
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {

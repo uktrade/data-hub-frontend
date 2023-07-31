@@ -58,6 +58,7 @@ const companyNoAdditionalTagData = companyTreeFaker({
       one_list_tier: [],
       uk_region: null,
       address: null,
+      trading_names: [],
     }),
     ultimate_global_companies_count: 1,
     family_tree_companies_count: 1,
@@ -105,7 +106,7 @@ const assertRelatedCompaniesPage = ({ company }) => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.overview.index(company.id),
       'Business details': urls.companies.businessDetails(company.id),
@@ -253,6 +254,14 @@ describe('D&B Company hierarchy tree', () => {
     it('should hide the show subsidiaries button', () => {
       cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
     })
+
+    it('should show trading names under heading', () => {
+      const company = companyNoSubsidiaries.ultimate_global_company
+      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
+        'have.text',
+        `Trading as: ${company.trading_names}`
+      )
+    })
   })
 
   context('When a company has only immediate subsidiaries', () => {
@@ -294,6 +303,14 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=${companyName}-uk-region-tag]`).should(
         'contain.text',
         tagContent.uk_region.name
+      )
+    })
+
+    it('should show trading names under heading', () => {
+      const company = companyOnlyImmediateSubsidiaries.ultimate_global_company
+      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
+        'have.text',
+        `Trading as: ${company.trading_names}`
       )
     })
 
@@ -357,6 +374,13 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=${companyName}-uk-region-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-country-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
+    })
+
+    it('should not show any trading names', () => {
+      const company = companyNoAdditionalTagData.ultimate_global_company
+      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
+        'not.exist'
+      )
     })
   })
 

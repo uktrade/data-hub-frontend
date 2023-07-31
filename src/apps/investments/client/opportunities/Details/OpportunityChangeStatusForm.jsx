@@ -22,7 +22,7 @@ const OpportunityChangeStatusForm = ({ opportunityId }) => {
         <>
           <LocalHeader
             breadcrumbs={[
-              { link: urls.dashboard(), text: 'Home' },
+              { link: urls.dashboard.index(), text: 'Home' },
               { link: urls.investments.index(), text: 'Investments' },
               {
                 link: urls.investments.opportunities.index(),

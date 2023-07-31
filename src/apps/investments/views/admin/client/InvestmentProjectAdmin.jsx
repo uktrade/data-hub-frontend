@@ -28,7 +28,7 @@ const InvestmentProjectAdmin = ({
       <LocalHeader
         heading={'Change the project stage'}
         breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.dashboard.index(), text: 'Home' },
           { link: urls.investments.index(), text: 'Investments' },
           { link: urls.investments.projects.index(), text: 'Projects' },
           {

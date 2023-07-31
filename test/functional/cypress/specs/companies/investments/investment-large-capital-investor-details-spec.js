@@ -44,7 +44,7 @@ describe('View large capital investor details page', () => {
 
     it('should have the correct url or breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [existingCompany.name]: urls.companies.detail(existingCompany.id),
         Investment: null,
@@ -133,7 +133,7 @@ describe('View large capital investor details page', () => {
 
     it('should have the correct url or breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [newCompany.name]: urls.companies.detail(newCompany.id),
         Investment: null,

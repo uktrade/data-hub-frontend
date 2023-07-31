@@ -34,12 +34,15 @@ import {
 } from './InvestmentFormFields'
 import urls from '../../../../lib/urls'
 import { transformObjectForTypeahead } from '../../../../apps/investments/client/projects/team/transformers'
-import { transformArrayForTypeahead } from './transformers'
+import {
+  transformArrayForTypeahead,
+  transformRadioOptionToBool,
+  transformProjectSummaryForApi,
+} from './transformers'
 import { transformDateStringToDateObject } from '../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import { GREY_2 } from '../../../utils/colours'
 import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
-import { transformProjectSummaryForApi } from './transformers'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -47,8 +50,18 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   padding: 16px 16px;
 `
 
+const checkReferralSourceAdviserIsCurrentAdviser = (
+  currentAdviser,
+  referralSourceAdviser
+) => (currentAdviser === referralSourceAdviser ? OPTION_YES : OPTION_NO)
+
 const checkReferralSourceAdviser = (currentAdviser, referralSourceAdviser) =>
-  currentAdviser === referralSourceAdviser
+  referralSourceAdviser == null
+    ? null
+    : checkReferralSourceAdviserIsCurrentAdviser(
+        currentAdviser,
+        referralSourceAdviser
+      )
 
 const EditProjectSummary = ({ projectId, currentAdviser }) => (
   <InvestmentResource id={projectId}>
@@ -124,19 +137,17 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
             />
             <FieldReferralSourceAdviser
               name="is_referral_source"
-              initialValue={
-                checkReferralSourceAdviser(
-                  currentAdviser,
-                  project.referralSourceAdviser.id
-                )
-                  ? OPTION_YES
-                  : OPTION_NO
-              }
+              initialValue={checkReferralSourceAdviser(
+                currentAdviser,
+                project.referralSourceAdviser?.id
+              )}
               label="Referral source adviser"
               typeaheadInitialValue={
-                checkReferralSourceAdviser(
-                  currentAdviser,
-                  project.referralSourceAdviser.id
+                transformRadioOptionToBool(
+                  checkReferralSourceAdviser(
+                    currentAdviser,
+                    project.referralSourceAdviser?.id
+                  )
                 )
                   ? null
                   : transformObjectForTypeahead(project.referralSourceAdviser)

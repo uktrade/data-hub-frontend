@@ -73,20 +73,6 @@ const labels = {
       uk_company: 'UK recipient company',
       delivery_partners: 'Delivery partners',
     },
-    edit: {
-      strategic_drivers: 'Strategic drivers behind this investment',
-      client_considering_other_countries:
-        'Is the client considering other countries?',
-      uk_region_locations: 'Possible UK locations for this investment',
-      site_decided:
-        'Has the UK location (site address) for this investment been decided yet?',
-      actual_uk_regions: 'UK regions landed',
-      delivery_partners: 'Delivery partners',
-      address_1: 'Street',
-      address_2: 'Street 2',
-      address_town: 'Town',
-      address_postcode: 'Postcode',
-    },
   },
   evaluationValueLabels: {
     view: {
@@ -184,11 +170,6 @@ labels.valueLabels.edit = Object.assign(
   {},
   labels.valueLabels.view,
   labels.valueLabels.edit
-)
-labels.requirementsLabels.edit = Object.assign(
-  {},
-  labels.requirementsLabels.view,
-  labels.requirementsLabels.edit
 )
 
 module.exports = labels

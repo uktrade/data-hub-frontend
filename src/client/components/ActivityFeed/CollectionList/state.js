@@ -29,13 +29,8 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { currentAdviserId } = state
-  const {
-    metadata,
-    selectedAdvisers,
-    selectedCompanies,
-    showDNBHierarchy,
-    createdByOthers,
-  } = state[ID]
+  const { metadata, selectedAdvisers, selectedCompanies, createdByOthers } =
+    state[ID]
 
   const selectedFilters = buildSelectedFilters(
     queryParams,
@@ -43,6 +38,15 @@ export const state2props = ({ router, ...state }) => {
     selectedCompanies,
     currentAdviserId
   )
+
+  queryParams.include_parent_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_parent_companies'
+    )
+  queryParams.include_subsidiary_companies =
+    selectedFilters.includeRelatedCompanies.options.some(
+      (f) => f.value === 'include_subsidiary_companies'
+    )
 
   return {
     ...state[ID],
@@ -58,7 +62,6 @@ export const state2props = ({ router, ...state }) => {
     },
     selectedFilters,
     currentAdviserId,
-    showDNBHierarchy,
     createdByOthers,
   }
 }

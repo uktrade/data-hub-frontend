@@ -200,7 +200,6 @@ const SectionHierarchy = ({
 }) => {
   const isGlobalHQ = company.headquarterType?.name === 'ghq'
   const isGlobalUltimate = !!company.isGlobalUltimate
-  const showDnbHierarchy = isDnbCompany
   const showDataHubHierarchy =
     company.headquarterType || company.globalHeadquarters || !isDnbCompany
 
@@ -217,7 +216,7 @@ const SectionHierarchy = ({
         )
       }
     >
-      {showDnbHierarchy && (
+      {isDnbCompany && (
         <SubsectionDnBHierarchy
           globalUltimate={globalUltimate}
           isDnbCompany={isDnbCompany}

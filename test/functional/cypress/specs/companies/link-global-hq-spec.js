@@ -88,7 +88,7 @@ describe('Link Global HQ', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [testCompany.name]: urls.companies.detail(testCompany.id),
         ['Link Global HQ']: null,
