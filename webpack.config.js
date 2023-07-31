@@ -156,7 +156,6 @@ module.exports = (env) => ({
         generator: {
           filename: 'images/[name].[hash:8][ext]',
         },
-        // use: [{ loader: 'image-webpack-loader' }],
       },
       {
         test: /\.scss$/,
