@@ -25,8 +25,8 @@ const setReferralSourceEvent = (values) => {
   return checkIfItemHasValue(referral_source_activity_marketing) ||
     checkIfItemHasValue(referral_source_activity_website) ||
     checkIfItemHasValue(referral_source_activity)
-    ? ''
-    : referral_source_activity_event
+    ? referral_source_activity_event
+    : ''
 }
 
 const setReferralSourceAdviser = (currentAdviser, values) => {
@@ -44,8 +44,7 @@ const setSiteDecidedSubValues = (
   address1,
   address2,
   city,
-  postcode,
-  uk_region_locations
+  postcode
 ) => {
   return transformRadioOptionToBool(site_decided)
     ? {
@@ -53,15 +52,20 @@ const setSiteDecidedSubValues = (
         address_2: address2,
         address_town: city,
         address_postcode: postcode,
-        uk_region_locations: uk_region_locations.map((x) => x.value),
       }
     : {
         address_1: '',
         address_2: '',
         address_town: '',
         address_postcode: '',
-        uk_region_locations: [],
       }
+}
+
+export const checkLandDate = (estimatedLandDate) => {
+  if (estimatedLandDate.day === '') {
+    estimatedLandDate.day = '01'
+  }
+  return transformDateObjectToDateString(estimatedLandDate)
 }
 
 export const transformProjectSummaryForApi = ({
@@ -95,7 +99,7 @@ export const transformProjectSummaryForApi = ({
     name,
     description,
     anonymous_description,
-    estimated_land_date: transformDateObjectToDateString(estimated_land_date),
+    estimated_land_date: checkLandDate(estimated_land_date),
     investment_type: checkIfItemHasValue(investment_type),
     fdi_type: checkIfItemHasValue(fdi_type?.value),
     actual_land_date: transformDateObjectToDateString(actual_land_date),
@@ -140,8 +144,7 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
     address1,
     address2,
     city,
-    postcode,
-    uk_region_locations
+    postcode
   )
 
   const requirementsValues = {
@@ -161,6 +164,7 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
     delivery_partners: delivery_partners.map((x) => x.value),
     site_decided: transformRadioOptionToBool(site_decided),
     strategic_drivers: strategic_drivers.map((x) => x.value),
+    uk_region_locations: uk_region_locations.map((x) => x.value),
   }
 
   return { ...siteDecidedObject, ...requirementsValues }
