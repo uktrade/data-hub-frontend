@@ -1,0 +1,1 @@
+export const TASK_SAVE_STRATEGY = 'TASK_SAVE_STRATEGY'
