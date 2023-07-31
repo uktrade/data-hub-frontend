@@ -18,7 +18,7 @@ import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
-import Strategy from './modules/Companies/AccountManagement/strategy'
+import Strategy from './modules/Companies/AccountManagement/Strategy'
 
 const routes = {
   companies: [
