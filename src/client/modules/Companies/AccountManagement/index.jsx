@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { CompanyResource } from '../../../components/Resource'
-import { H2, H4, Link } from 'govuk-react'
+import { H3, Link } from 'govuk-react'
 import Button from '@govuk-react/button'
 import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
@@ -9,18 +9,21 @@ import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { DARK_GREY, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { DefaultLayout } from '../../../components'
+import { FONT_SIZE } from '@govuk-react/constants'
 
-const LastUpdatedHeading = styled(H4)`
+const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
   font-weight: normal;
-  margin-top: -25px;
+  margin-top: -20px;
+  margin-bottom: -10px;
+  font-size: ${FONT_SIZE.SIZE_14};
 `
 
 const Strategy = ({ company }) => (
   <>
     <GridRow>
       <GridCol>
-        <H2>Strategy</H2>
+        <H3>Strategy</H3>
       </GridCol>
       {company.strategy && (
         <div>
