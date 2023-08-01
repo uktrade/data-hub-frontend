@@ -4,6 +4,7 @@ const {
   assertFieldTextarea,
   assertBreadcrumbs,
   assertFlashMessage,
+  assertPayload,
 } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
@@ -14,8 +15,11 @@ const companyAccountManagementUrl = urls.companies.accountManagement.index(
 
 describe('Company account management strategy', () => {
   context('When visiting the strategy create page', () => {
-    it('should display the header', () => {
+    before(() => {
       cy.visit(urls.companies.accountManagement.create(company.id))
+    })
+
+    it('should display the header', () => {
       cy.get('h1').should('have.text', `Add strategy for ${company.name}`)
     })
 
@@ -42,8 +46,11 @@ describe('Company account management strategy', () => {
     })
 
     it('save strategy button should link to company account management page', () => {
+      cy.intercept('GET', companyAccountManagementUrl).as('apiRequest')
+      cy.get('[id="strategy"]').type('Example strategy')
       cy.get('[data-test="submit-button"]').contains('Save strategy').click()
       cy.location('pathname').should('eq', companyAccountManagementUrl)
+      assertPayload('@apiRequest', {})
       cy.go('back')
     })
 
