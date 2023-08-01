@@ -26,7 +26,7 @@ describe('Company account management', () => {
     })
 
     it('should display the strategy heading', () => {
-      cy.get('h2').contains('Strategy')
+      cy.get('h3').contains('Strategy')
     })
 
     it('should display the edit history details link', () => {
@@ -70,7 +70,7 @@ describe('Company account management', () => {
       })
 
       it('should display the strategy heading', () => {
-        cy.get('h2').contains('Strategy')
+        cy.get('h3').contains('Strategy')
       })
 
       it('should display the add strategy button', () => {
