@@ -37,11 +37,6 @@ const routes = {
       module: 'datahub:companies',
       component: CompanyTree,
     },
-    // {
-    //   path: '/companies/:companyId/account-management',
-    //   module: 'datahub:companies',
-    //   component: AccountManagement,
-    // },
     {
       path: '/companies/:companyId/account-management/strategy/create',
       module: 'datahub:companies',

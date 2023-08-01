@@ -86,7 +86,7 @@ const AccountManagement = ({
       {(company) => (
         <CompanyLayout
           company={company}
-          breadcrumbs={[{ text: 'Account Management' }]}
+          breadcrumbs={[{ text: 'Account management' }]}
           localNavItems={localNavItems}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           flashMessages={flashMessages}
