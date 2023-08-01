@@ -1,12 +1,17 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+
 import { TASK_SAVE_STRATEGY } from './state'
 import { FORM_LAYOUT } from '../../../../common/constants'
-import Form from '../../../components/Form'
-import { DefaultLayout, FormLayout, FieldTextarea } from '../../../components'
-
+import {
+  DefaultLayout,
+  Form,
+  FormLayout,
+  FieldTextarea,
+} from '../../../components'
 import urls from '../../../../lib/urls'
-import { useParams } from 'react-router-dom'
 import { CompanyResource } from '../../../components/Resource'
+import { buildCompanyBreadcrumbs } from '../utils'
 
 const Strategy = () => {
   const { companyId } = useParams()
@@ -16,18 +21,19 @@ const Strategy = () => {
         <DefaultLayout
           heading={`Add strategy for ${company.name}`}
           pageTitle={'Strategy'}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            { link: urls.companies.index(), text: 'Companies' },
-            { link: urls.companies.detail(companyId), text: company.name },
-            {
-              link: urls.companies.accountManagement.index(companyId),
-              text: 'Account management',
-            },
-            {
-              text: `Strategy for ${company.name}`,
-            },
-          ]}
+          breadcrumbs={buildCompanyBreadcrumbs(
+            [
+              {
+                link: urls.companies.accountManagement.index(companyId),
+                text: 'Account management',
+              },
+              {
+                text: `Strategy for ${company.name}`,
+              },
+            ],
+            company.id,
+            company.name
+          )}
           useReactRouter={false}
         >
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
