@@ -3,6 +3,7 @@ const urls = require('../../../../../src/lib/urls')
 const {
   assertFieldTextarea,
   assertBreadcrumbs,
+  assertFlashMessage,
 } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
@@ -49,6 +50,12 @@ describe('Company account management strategy', () => {
     it('cancels form when back link is clicked', () => {
       cy.get('[data-test="cancel-button"]').contains('Back').click()
       cy.location('pathname').should('eq', companyAccountManagementUrl)
+      cy.go('back')
+    })
+
+    it('displays a success flash message when form is submitted', () => {
+      cy.get('[data-test="submit-button"]').contains('Save strategy').click()
+      assertFlashMessage('Strategy saved')
       cy.go('back')
     })
   })
