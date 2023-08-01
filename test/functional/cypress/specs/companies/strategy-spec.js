@@ -7,7 +7,11 @@ const {
   assertPayload,
 } = require('../../support/assertions')
 
+const { fill } = require('../../support/form-fillers')
+
 const company = fixtures.company.allActivitiesCompany
+
+const endpoint = `/api-proxy/v4/company/${company.id}`
 
 const companyAccountManagementUrl = urls.companies.accountManagement.index(
   company.id
@@ -15,7 +19,8 @@ const companyAccountManagementUrl = urls.companies.accountManagement.index(
 
 describe('Company account management strategy', () => {
   context('When visiting the strategy create page', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.intercept('PATCH', endpoint).as('apiRequest')
       cy.visit(urls.companies.accountManagement.create(company.id))
     })
 
@@ -46,24 +51,20 @@ describe('Company account management strategy', () => {
     })
 
     it('save strategy button should link to company account management page', () => {
-      cy.intercept('GET', companyAccountManagementUrl).as('apiRequest')
-      cy.get('[id="strategy"]').type('Example strategy')
+      fill('[data-test=field-strategy]', 'Example strategy')
       cy.get('[data-test="submit-button"]').contains('Save strategy').click()
+      assertPayload('@apiRequest', { strategy: 'Example strategy' })
       cy.location('pathname').should('eq', companyAccountManagementUrl)
-      assertPayload('@apiRequest', {})
-      cy.go('back')
     })
 
     it('cancels form when back link is clicked', () => {
       cy.get('[data-test="cancel-button"]').contains('Back').click()
       cy.location('pathname').should('eq', companyAccountManagementUrl)
-      cy.go('back')
     })
 
     it('displays a success flash message when form is submitted', () => {
       cy.get('[data-test="submit-button"]').contains('Save strategy').click()
       assertFlashMessage('Strategy saved')
-      cy.go('back')
     })
   })
 })
