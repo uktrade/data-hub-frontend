@@ -1,23 +1,33 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
-const { assertFieldTextarea } = require('../../support/assertions')
+const {
+  assertFieldTextarea,
+  assertBreadcrumbs,
+} = require('../../support/assertions')
+
+const company = fixtures.company.allActivitiesCompany
 
 const companyAccountManagementUrl = urls.companies.accountManagement.index(
-  fixtures.company.allActivitiesCompany.id
+  company.id
 )
 
 describe('Company account management strategy', () => {
   context('When visiting the strategy create page', () => {
     it('should display the header', () => {
-      cy.visit(
-        urls.companies.accountManagement.create(
-          fixtures.company.allActivitiesCompany.id
-        )
-      )
-      cy.get('h1').should(
-        'have.text',
-        `Add strategy for ${fixtures.company.allActivitiesCompany.name}`
-      )
+      cy.visit(urls.companies.accountManagement.create(company.id))
+      cy.get('h1').should('have.text', `Add strategy for ${company.name}`)
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard.index(),
+        Companies: urls.companies.index(),
+        [company.name]: urls.companies.detail(company.id),
+        'Account management': urls.companies.accountManagement.index(
+          company.id
+        ),
+        [`Strategy for ${company.name}`]: null,
+      })
     })
 
     it('should display the strategy field', () => {

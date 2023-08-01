@@ -16,7 +16,18 @@ const Strategy = () => {
         <DefaultLayout
           heading={`Add strategy for ${company.name}`}
           pageTitle={'Strategy'}
-          breadcrumbs={[]}
+          breadcrumbs={[
+            { link: urls.dashboard.index(), text: 'Home' },
+            { link: urls.companies.index(), text: 'Companies' },
+            { link: urls.companies.detail(companyId), text: company.name },
+            {
+              link: urls.companies.accountManagement.index(companyId),
+              text: 'Account management',
+            },
+            {
+              text: `Strategy for ${company.name}`,
+            },
+          ]}
           useReactRouter={false}
         >
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
