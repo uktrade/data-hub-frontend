@@ -31,7 +31,6 @@ const reactRoutes = [
   '/export/:exportId/delete',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',
-  '/companies/:companyId/account-management',
   '/companies/:companyId/account-management/strategy/create',
 ]
 

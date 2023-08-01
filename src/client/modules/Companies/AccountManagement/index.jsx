@@ -1,5 +1,4 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
 import { CompanyResource } from '../../../components/Resource'
 import { H3, Link } from 'govuk-react'
 import Button from '@govuk-react/button'
@@ -8,8 +7,8 @@ import { format } from '../../../../client/utils/date'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { DARK_GREY, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { DefaultLayout } from '../../../components'
 import { FONT_SIZE } from '@govuk-react/constants'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -75,19 +74,26 @@ const Strategy = ({ company }) => (
   </>
 )
 
-const AccountManagement = ({}) => {
-  const { companyId } = useParams()
+const AccountManagement = ({
+  localNavItems,
+  companyId,
+  dnbRelatedCompaniesCount,
+  flashMessages,
+  csrfToken,
+}) => {
   return (
     <CompanyResource id={companyId}>
       {(company) => (
-        <DefaultLayout
-          heading={'Account Management'}
-          pageTitle={'Account Management'}
+        <CompanyLayout
+          company={company}
           breadcrumbs={[{ text: 'Account Management' }]}
-          useReactRouter={false}
+          localNavItems={localNavItems}
+          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+          flashMessages={flashMessages}
+          csrfToken={csrfToken}
         >
           <Strategy company={company} />
-        </DefaultLayout>
+        </CompanyLayout>
       )}
     </CompanyResource>
   )
