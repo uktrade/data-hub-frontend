@@ -204,7 +204,9 @@ const ActiveInvestmentProjectsCard = ({
       <StyledTableCell colSpan={2}>
         {stageList?.active ? (
           <Link
-            href={companies.investments.companyInvestmentProjects(companyId)}
+            href={companies.investments.companyInvestmentProjectsWithSearch(
+              companyId
+            )}
             data-test="active-investments-page-link"
           >
             {stageList?.active <= 3 && 'View all investments'}
@@ -219,7 +221,9 @@ const ActiveInvestmentProjectsCard = ({
           </Link>
         ) : (
           <Link
-            href={companies.investments.companyInvestmentProjects(companyId)}
+            href={companies.investments.companyInvestmentProjectsWithSearch(
+              companyId
+            )}
             data-test="investments-page-link"
           >
             View all investments

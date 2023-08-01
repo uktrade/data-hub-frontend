@@ -216,6 +216,10 @@ module.exports = {
         '/companies',
         '/:companyId/investments/projects'
       ),
+      companyInvestmentProjectsWithSearch: url(
+        '/companies',
+        '/:companyId/investments/projects?page=1&sortby=created_on%3Adesc'
+      ),
       largeCapitalProfile: url(
         '/companies',
         '/:companyId/investments/large-capital-profile'
