@@ -73,6 +73,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
 import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
+import AccountManagement from './modules/Companies/AccountManagement'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -383,7 +384,6 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
 } from './modules/Investments/Projects/state'
 import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
-import AccountManagement from './modules/Companies/AccountManagement'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
