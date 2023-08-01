@@ -120,7 +120,7 @@ const InvestmentStatusCard = ({
           <StyledTableRow>
             <StyledLastTableCell colSpan={2}>
               <Link
-                href={urls.companies.investments.companyInvestmentProjects(
+                href={urls.companies.investments.companyInvestmentProjectsWithSearch(
                   companyId
                 )}
                 data-test="investment-page-link"
