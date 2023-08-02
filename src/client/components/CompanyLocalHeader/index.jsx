@@ -140,7 +140,7 @@ const CompanyLocalHeader = ({
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
-            {company?.tradingNames.length > 0 && (
+            {company?.tradingNames?.length > 0 && (
               <LocalHeaderTradingNames data-test="trading-names">
                 Trading as: {company.tradingNames.join(', ')}
               </LocalHeaderTradingNames>
