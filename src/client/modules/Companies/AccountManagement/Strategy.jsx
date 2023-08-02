@@ -19,7 +19,11 @@ const Strategy = () => {
     <CompanyResource id={companyId}>
       {(company) => (
         <DefaultLayout
-          heading={`Add strategy for ${company.name}`}
+          heading={
+            company.strategy
+              ? `Edit strategy for ${company.name}`
+              : `Add strategy for ${company.name}`
+          }
           pageTitle={'Strategy'}
           breadcrumbs={buildCompanyBreadcrumbs(
             [
