@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker'
 import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import { format } from 'date-fns'
+import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -26,6 +27,9 @@ describe('Company account management', () => {
     modifiedBy: userFaker(),
     modifiedOn: faker.date.past(),
   })
+
+  const noBlockersObjective = objectiveFaker({ has_blocker: false })
+  const objectives = objectiveListFaker((length = 3))
 
   context('When visiting the account management page with a strategy', () => {
     before(() => {
@@ -98,4 +102,25 @@ describe('Company account management', () => {
       })
     }
   )
+
+  context(
+    'When visiting the account management page without objectives',
+    () => {
+      before(() => {
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+          results: [],
+        }).as('objectiveApi')
+        cy.visit(urls.companies.accountManagement.index(companyId))
+      })
+    }
+  )
+
+  context('When visiting the account management page with objectives', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+        results: [...objectives, noBlockersObjective],
+      }).as('objectiveApi')
+      cy.visit(urls.companies.accountManagement.index(companyId))
+    })
+  })
 })
