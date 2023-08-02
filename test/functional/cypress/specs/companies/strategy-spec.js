@@ -100,7 +100,6 @@ describe('Company account management strategy', () => {
           hint: "This should outline a plan than provides a concise overview of the business direction and DBT's approach to help them achieve that.",
           value: allActivitiesCompany.strategy,
         })
-        // clear the field
         cy.get('[id="strategy"]').clear()
         fill('[data-test=field-strategy]', 'test strategy')
         cy.get('[data-test="submit-button"]').contains('Save strategy').click()
