@@ -384,7 +384,6 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
 } from './modules/Investments/Projects/state'
 import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
-import AccountManagement from './modules/Companies/AccountManagement'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
