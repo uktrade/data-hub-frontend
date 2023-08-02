@@ -42,6 +42,11 @@ const routes = {
       module: 'datahub:companies',
       component: Strategy,
     },
+    {
+      path: '/companies/:companyId/account-management/strategy/edit',
+      module: 'datahub:companies',
+      component: Strategy,
+    },
   ],
   contacts: [
     {

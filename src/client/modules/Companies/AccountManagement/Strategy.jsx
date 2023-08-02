@@ -47,6 +47,7 @@ const Strategy = () => {
                 urls.companies.accountManagement.index(companyId)
               }
               submissionTaskName={TASK_SAVE_STRATEGY}
+              initialValues={company}
               transformPayload={({ strategy }) => ({ companyId, strategy })}
               flashMessage={() => 'Strategy saved'}
               submitButtonLabel="Save strategy"

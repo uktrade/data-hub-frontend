@@ -70,7 +70,7 @@ describe('Company account management', () => {
       cy.get('[data-test="edit-strategy-link"]').should(
         'have.attr',
         'href',
-        urls.companies.accountManagement.create(companyId)
+        urls.companies.accountManagement.edit(companyId)
       )
     })
   })

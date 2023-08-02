@@ -32,6 +32,7 @@ const reactRoutes = [
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',
   '/companies/:companyId/account-management/strategy/create',
+  '/companies/:companyId/account-management/strategy/edit',
 ]
 
 reactRoutes.forEach((path) => {
