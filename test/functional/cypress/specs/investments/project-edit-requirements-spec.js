@@ -20,6 +20,8 @@ const navigateToForm = ({ project }) => {
 const checkIfClientConsidering = (valueToCheck) => (valueToCheck ? 3 : 2)
 const checkIfSiteDecided = (valueToCheck) => (valueToCheck ? 7 : 2)
 const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
+const convertBoolToYesNoWithNullCheck = (valueToCheck) =>
+  valueToCheck === null ? null : convertBoolToYesNo(valueToCheck)
 
 const testProjectRequirementsForm = ({ project }) => {
   before(() => {
@@ -69,7 +71,9 @@ const testProjectRequirementsForm = ({ project }) => {
           optionsCount: checkIfClientConsidering(
             project.client_considering_other_countries
           ),
-          value: convertBoolToYesNo(project.client_considering_other_countries),
+          value: convertBoolToYesNoWithNullCheck(
+            project.client_considering_other_countries
+          ),
         })
       }
     )
@@ -108,7 +112,7 @@ const testProjectRequirementsForm = ({ project }) => {
         label:
           'Has the UK location (site address) for this investment been decided yet?',
         optionsCount: checkIfSiteDecided(project.site_decided),
-        value: convertBoolToYesNo(project.site_decided),
+        value: convertBoolToYesNoWithNullCheck(project.site_decided),
       })
     })
   })
