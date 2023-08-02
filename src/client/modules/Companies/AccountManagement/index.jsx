@@ -18,6 +18,10 @@ const LastUpdatedHeading = styled.div`
   font-size: ${FONT_SIZE.SIZE_14};
 `
 
+const StyledLink = styled(Link)`
+  padding-right: 15px;
+`
+
 const Strategy = ({ company }) => (
   <>
     <GridRow>
@@ -26,12 +30,12 @@ const Strategy = ({ company }) => (
       </GridCol>
       {company.strategy && (
         <div>
-          <Link
+          <StyledLink
             href={urls.companies.accountManagement.create(company.id)}
             data-test="edit-strategy-link"
           >
             Edit
-          </Link>
+          </StyledLink>
         </div>
       )}
     </GridRow>
