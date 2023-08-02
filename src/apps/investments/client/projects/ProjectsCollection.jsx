@@ -120,7 +120,7 @@ const ProjectsCollection = ({
         sortOptions={optionMetadata.sortOptions}
         taskProps={collectionListTask}
         selectedFilters={selectedFilters}
-        baseDownloadLink="/investments/projects/export"
+        baseDownloadLink={!company ? '/investments/projects/export' : null}
         entityName="project"
         addItemUrl={
           !company
