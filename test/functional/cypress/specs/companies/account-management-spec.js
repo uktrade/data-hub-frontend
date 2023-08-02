@@ -7,6 +7,18 @@ const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 const companyId = fixtures.company.allActivitiesCompany.id
+
+const assertBreadcrumbs = (company) => {
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: urls.dashboard.index(),
+      Companies: urls.companies.index(),
+      [company.name]: urls.companies.detail(company.id),
+      'Account management': null,
+    })
+  })
+}
+
 describe('Company account management', () => {
   const companyWithStrategy = companyFaker({
     strategy: 'ABC',
@@ -24,6 +36,8 @@ describe('Company account management', () => {
       ).as('companyApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
     })
+
+    assertBreadcrumbs(fixtures.company.allActivitiesCompany)
 
     it('should display the strategy heading', () => {
       cy.get('h3').contains('Strategy')
@@ -68,6 +82,8 @@ describe('Company account management', () => {
         ).as('companyApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
       })
+
+      assertBreadcrumbs(fixtures.company.allActivitiesCompany)
 
       it('should display the strategy heading', () => {
         cy.get('h3').contains('Strategy')

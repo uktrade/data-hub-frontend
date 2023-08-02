@@ -73,6 +73,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
 import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
+import AccountManagement from './modules/Companies/AccountManagement'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -881,7 +882,11 @@ function App() {
         <Mount selector="#edit-project-requirements">
           {(props) => <EditProjectRequirements {...props} />}
         </Mount>
-
+        <Mount selector="#account-management">
+          {(props) => (
+            <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
         <Mount selector="#react-app">
           {() => (
             <Switch>
