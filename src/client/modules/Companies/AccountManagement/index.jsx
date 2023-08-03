@@ -45,7 +45,9 @@ const Strategy = ({ company }) => (
         {company.strategy && (
           <div>
             <StyledLink
-              href={urls.companies.accountManagement.create(company.id)}
+              href={urls.companies.accountManagement.strategy.create(
+                company.id
+              )}
               data-test="edit-strategy-link"
             >
               Edit
@@ -82,7 +84,7 @@ const Strategy = ({ company }) => (
         <Button
           data-test="add-strategy-button"
           as={Link}
-          href={urls.companies.accountManagement.create(company.id)}
+          href={urls.companies.accountManagement.strategy.create(company.id)}
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
         >
