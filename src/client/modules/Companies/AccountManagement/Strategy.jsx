@@ -19,7 +19,11 @@ const Strategy = () => {
     <CompanyResource id={companyId}>
       {(company) => (
         <DefaultLayout
-          heading={`Add strategy for ${company.name}`}
+          heading={
+            company.strategy
+              ? `Edit strategy for ${company.name}`
+              : `Add strategy for ${company.name}`
+          }
           pageTitle={'Strategy'}
           breadcrumbs={buildCompanyBreadcrumbs(
             [
@@ -47,6 +51,7 @@ const Strategy = () => {
                 urls.companies.accountManagement.index(companyId)
               }
               submissionTaskName={TASK_SAVE_STRATEGY}
+              initialValues={company}
               transformPayload={({ strategy }) => ({ companyId, strategy })}
               flashMessage={() => 'Strategy saved'}
               submitButtonLabel="Save strategy"

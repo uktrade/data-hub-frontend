@@ -242,6 +242,7 @@ module.exports = {
         '/companies',
         '/:companyId/account-management/strategy/create'
       ),
+      edit: url('/companies', '/:companyId/account-management/strategy/edit'),
     },
   },
   companyLists: {

@@ -31,7 +31,7 @@ const Strategy = ({ company }) => (
       {company.strategy && (
         <div>
           <StyledLink
-            href={urls.companies.accountManagement.create(company.id)}
+            href={urls.companies.accountManagement.edit(company.id)}
             data-test="edit-strategy-link"
           >
             Edit
