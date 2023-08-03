@@ -52,6 +52,10 @@ export const mockLoadOptions = (query = '') =>
   )
 
 describe('Typeahead2', () => {
+  // Average typing speed between 150-200 character per minute(CPM)/60
+  // which converted into milliseconds(1sec/1000)
+  const averageTypingTimeout = 3000
+
   context('static single-select', () => {
     beforeEach(() => {
       store.dispatch(RESET_ACTION)
@@ -245,6 +249,50 @@ describe('Typeahead2', () => {
         .should('have.text', options[3].label)
         .should('have.attr', 'aria-selected', 'true')
     })
+
+    it('should keeps typing new filter when input typed having multi keywords', () => {
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .click()
+        .type('black') // 1st filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Blackberry')
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .trigger('keyup')
+        .wait(averageTypingTimeout)
+        .type('bana') // 2nd filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Banana')
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .trigger('keyup')
+        .wait(averageTypingTimeout)
+        .type('papa') // 3rd filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Papaya')
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
+    })
   })
 
   context('async single-select', () => {
@@ -418,6 +466,53 @@ describe('Typeahead2', () => {
         .find('[data-test="typeahead-menu-option"]')
         .eq(1)
         .should('have.attr', 'aria-selected', 'false')
+    })
+
+    it('should keeps typing new filter when input typed having multi keywords', () => {
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .click()
+        .type('nis') // 1st filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Dennis Kennedy')
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .trigger('keyup')
+        .wait(averageTypingTimeout)
+        .type('zil') // 2nd filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Denzil Lincoln')
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .trigger('keyup')
+        .wait(averageTypingTimeout)
+        .type('nard') // 3rd filter string keyword
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should(
+          'have.text',
+          'Bernard Harris-Patelc - Welsh Government (Investment)'
+        )
+        .click()
+        .should('have.attr', 'aria-selected', 'true')
     })
   })
 })

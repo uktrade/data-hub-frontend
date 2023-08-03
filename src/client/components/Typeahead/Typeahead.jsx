@@ -40,6 +40,7 @@ import {
   maintainScrollVisibility,
   menuActions,
   getNewSelectedOptions,
+  TIMEOUT,
 } from './utils'
 import reducer from './reducer'
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './state'
@@ -202,6 +203,7 @@ const Typeahead = ({
   const onInputKeyDown = (event) => {
     const max = filteredOptions.length - 1
     const action = getActionFromKey(event.code, menuOpen)
+    setTimeout(() => TIMEOUT.clearAllTimeouts()) // clear onInputKeyUp timeouts
     switch (action) {
       case menuActions.next:
       case menuActions.last:
@@ -238,6 +240,18 @@ const Typeahead = ({
         return
     }
   }
+
+  // Average typing speed between 150-200 character per minute(CPM)/60
+  // which converted into milliseconds(1sec/1000)
+  const onInputKeyUp = (setTimeoutFn, averageTypingTimeout = 3000) => {
+    TIMEOUT.setTimeout(() => {
+      selectTextInput(name)
+    }, averageTypingTimeout)
+  }
+
+  const selectTextInput = (elementId) =>
+    document.getElementById(elementId).select()
+
   const menuActive = loadOptions ? !!input : true
   return (
     <div id={`${name}-wrapper`} data-test={testId} className={className}>
@@ -293,6 +307,7 @@ const Typeahead = ({
             }
           }}
           onKeyDown={onInputKeyDown}
+          onKeyUp={onInputKeyUp}
           error={error}
           ref={inputRef}
           data-test="typeahead-input"
