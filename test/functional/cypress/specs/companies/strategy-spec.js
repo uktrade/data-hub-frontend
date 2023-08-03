@@ -25,7 +25,9 @@ describe('Company account management strategy', () => {
       cy.intercept('PATCH', `/api-proxy/v4/company/${dnbCorpCompany.id}`).as(
         'apiRequest'
       )
-      cy.visit(urls.companies.accountManagement.create(dnbCorpCompany.id))
+      cy.visit(
+        urls.companies.accountManagement.strategy.create(dnbCorpCompany.id)
+      )
     })
 
     it('should display the header', () => {
@@ -82,7 +84,9 @@ describe('Company account management strategy', () => {
         'PATCH',
         `/api-proxy/v4/company/${allActivitiesCompany.id}`
       ).as('apiRequest')
-      cy.visit(urls.companies.accountManagement.edit(allActivitiesCompany.id))
+      cy.visit(
+        urls.companies.accountManagement.strategy.edit(allActivitiesCompany.id)
+      )
     })
 
     it('should display the header', () => {
