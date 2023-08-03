@@ -9,7 +9,7 @@ import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
-import { DARK_GREY, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
+import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { FONT_SIZE } from '@govuk-react/constants'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
@@ -20,6 +20,11 @@ const LastUpdatedHeading = styled.div`
   margin-top: -20px;
   margin-bottom: -10px;
   font-size: ${FONT_SIZE.SIZE_14};
+`
+
+const BorderContainer = styled('div')`
+  border-top: 1px solid ${GREY_2};
+  padding-top: 20px;
 `
 
 const StyledLink = styled(Link)`
@@ -82,6 +87,26 @@ const Strategy = ({ company }) => (
   </>
 )
 
+const objectiveMetadata = (objective) => {
+  const rows = [
+    {
+      label: 'Due date',
+      value: format(objective.targetDate),
+    },
+    {
+      label: 'Progress',
+      value: `${objective.progress}%`,
+    },
+  ]
+  if (objective.hasBlocker) {
+    rows.unshift({
+      label: 'Blockers',
+      value: objective.blockerDescription,
+    })
+  }
+  return rows
+}
+
 const AccountManagement = ({
   localNavItems,
   companyId,
@@ -106,15 +131,16 @@ const AccountManagement = ({
               <>
                 <H3>Current objectives</H3>
                 {results.map((objective) => (
-                  <>
+                  <BorderContainer>
                     <GridRow>
                       <GridCol>
                         <H4>{objective.subject}</H4>
                       </GridCol>
                       <div>
                         <StyledLink
-                          href={urls.companies.accountManagement.objectives.create(
-                            company.id
+                          href={urls.companies.accountManagement.objectives.edit(
+                            company.id,
+                            objective.id
                           )}
                           data-test="edit-objective-link"
                         >
@@ -122,40 +148,34 @@ const AccountManagement = ({
                         </StyledLink>
                       </div>
                     </GridRow>
-                    <LastUpdatedHeading data-test="last-updated-details">
-                      <span>{`Last updated by ${
-                        objective?.modifiedBy?.name
-                      }: ${format(objective.modifiedOn)}`}</span>
-                    </LastUpdatedHeading>
+
+                    <GridRow>
+                      <GridCol>
+                        <LastUpdatedHeading data-test="last-updated-details">
+                          <span>{`Last updated by ${
+                            objective?.modifiedBy?.name
+                          }: ${format(objective.modifiedOn)}`}</span>
+                        </LastUpdatedHeading>
+                      </GridCol>
+                    </GridRow>
+
                     <p>{objective.detail}</p>
-                    <Metadata
-                      rows={[
-                        {
-                          label: 'Blockers',
-                          value:
-                            objective.hasBlocker &&
-                            objective.blockerDescription,
-                        },
-                        { label: 'Due date', value: objective.targetDate },
-                        {
-                          label: 'Progress',
-                          value: `${objective.progress}%`,
-                        },
-                      ]}
-                    ></Metadata>
-                  </>
+                    <Metadata rows={objectiveMetadata(objective)}></Metadata>
+                  </BorderContainer>
                 ))}
-                <Button
-                  data-test="add-objective-button"
-                  as={Link}
-                  href={urls.companies.accountManagement.objectives.create(
-                    company.id
-                  )}
-                  buttonColour={GREY_3}
-                  buttonTextColour={TEXT_COLOUR}
-                >
-                  Add new objective
-                </Button>
+                <BorderContainer>
+                  <Button
+                    data-test="add-objective-button"
+                    as={Link}
+                    href={urls.companies.accountManagement.objectives.create(
+                      company.id
+                    )}
+                    buttonColour={GREY_3}
+                    buttonTextColour={TEXT_COLOUR}
+                  >
+                    Add new objective
+                  </Button>
+                </BorderContainer>
               </>
             )}
           </CompanyObjectivesResource>
