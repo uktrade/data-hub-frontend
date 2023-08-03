@@ -24,67 +24,131 @@ const LastUpdatedHeading = styled.div`
 
 const BorderContainer = styled('div')`
   border-top: 1px solid ${GREY_2};
-  padding-top: 20px;
+  padding: 20px 0px;
 `
 
 const StyledLink = styled(Link)`
   padding-right: 15px;
 `
 
+const SectionGridRow = styled(GridRow)`
+  padding-bottom: 10px;
+`
+
 const Strategy = ({ company }) => (
-  <>
-    <GridRow>
-      <GridCol>
-        <H3>Strategy</H3>
-      </GridCol>
-      {company.strategy && (
-        <div>
-          <StyledLink
-            href={urls.companies.accountManagement.strategy.edit(company.id)}
-            data-test="edit-strategy-link"
-          >
-            Edit
-          </StyledLink>
-        </div>
-      )}
-    </GridRow>
-
-    {company.strategy && (
-      <>
+  <SectionGridRow data-test="strategy-row">
+    <GridCol>
+      <GridRow>
         <GridCol>
-          <GridRow>
-            <LastUpdatedHeading data-test="last-updated-strategy-details">
-              <span>{`Last updated by ${company?.modifiedBy?.name}: ${format(
-                company.modifiedOn
-              )}. `}</span>
-              <span>
-                View changes in{' '}
-                <Link
-                  href={urls.companies.editHistory.index(company.id)}
-                  data-test="edit-history-link"
-                >
-                  Edit history page
-                </Link>
-              </span>
-            </LastUpdatedHeading>
-          </GridRow>
+          <H3>Strategy</H3>
         </GridCol>
-        <p>{company.strategy}</p>
-      </>
-    )}
+        {company.strategy && (
+          <div>
+            <StyledLink
+              href={urls.companies.accountManagement.create(company.id)}
+              data-test="edit-strategy-link"
+            >
+              Edit
+            </StyledLink>
+          </div>
+        )}
+      </GridRow>
 
-    {!company.strategy && (
-      <Button
-        data-test="add-strategy-button"
-        as={Link}
-        href={urls.companies.accountManagement.strategy.create(company.id)}
-        buttonColour={GREY_3}
-        buttonTextColour={TEXT_COLOUR}
-      >
-        Add strategy
-      </Button>
+      {company.strategy && (
+        <>
+          <GridRow>
+            <GridCol>
+              <LastUpdatedHeading data-test="last-updated-strategy-details">
+                <span>{`Last updated by ${company?.modifiedBy?.name}: ${format(
+                  company.modifiedOn
+                )}. `}</span>
+                <span>
+                  View changes in{' '}
+                  <Link
+                    href={urls.companies.editHistory.index(company.id)}
+                    data-test="edit-history-link"
+                  >
+                    Edit history page
+                  </Link>
+                </span>
+              </LastUpdatedHeading>
+            </GridCol>
+          </GridRow>
+          <p>{company.strategy}</p>
+        </>
+      )}
+
+      {!company.strategy && (
+        <Button
+          data-test="add-strategy-button"
+          as={Link}
+          href={urls.companies.accountManagement.create(company.id)}
+          buttonColour={GREY_3}
+          buttonTextColour={TEXT_COLOUR}
+        >
+          Add strategy
+        </Button>
+      )}
+    </GridCol>
+  </SectionGridRow>
+)
+
+const Objectives = ({ company }) => (
+  <CompanyObjectivesResource id={company.id}>
+    {({ results }) => (
+      <SectionGridRow data-test="objectives-row">
+        <GridCol>
+          <H3>Current objectives</H3>
+          {results.map((objective, index) => (
+            <BorderContainer key={`objective_${index}`}>
+              <GridRow>
+                <GridCol>
+                  <H4>{objective.subject}</H4>
+                </GridCol>
+                <div>
+                  <StyledLink
+                    href={urls.companies.accountManagement.objectives.edit(
+                      company.id,
+                      objective.id
+                    )}
+                    data-test="edit-objective-link"
+                  >
+                    Edit
+                  </StyledLink>
+                </div>
+              </GridRow>
+
+              <GridRow>
+                <GridCol>
+                  <LastUpdatedHeading data-test="last-updated-details">
+                    <span>{`Last updated by ${
+                      objective?.modifiedBy?.name
+                    }: ${format(objective.modifiedOn)}`}</span>
+                  </LastUpdatedHeading>
+                </GridCol>
+              </GridRow>
+
+              <p>{objective.detail}</p>
+              <Metadata rows={objectiveMetadata(objective)}></Metadata>
+            </BorderContainer>
+          ))}
+          <BorderContainer>
+            <Button
+              data-test="add-objective-button"
+              as={Link}
+              href={urls.companies.accountManagement.objectives.create(
+                company.id
+              )}
+              buttonColour={GREY_3}
+              buttonTextColour={TEXT_COLOUR}
+            >
+              Add new objective
+            </Button>
+          </BorderContainer>
+        </GridCol>
+      </SectionGridRow>
     )}
-  </>
+  </CompanyObjectivesResource>
 )
 
 const objectiveMetadata = (objective) => {
@@ -126,59 +190,7 @@ const AccountManagement = ({
           csrfToken={csrfToken}
         >
           <Strategy company={company} />
-          <CompanyObjectivesResource id={companyId}>
-            {({ results }) => (
-              <>
-                <H3>Current objectives</H3>
-                {results.map((objective) => (
-                  <BorderContainer>
-                    <GridRow>
-                      <GridCol>
-                        <H4>{objective.subject}</H4>
-                      </GridCol>
-                      <div>
-                        <StyledLink
-                          href={urls.companies.accountManagement.objectives.edit(
-                            company.id,
-                            objective.id
-                          )}
-                          data-test="edit-objective-link"
-                        >
-                          Edit
-                        </StyledLink>
-                      </div>
-                    </GridRow>
-
-                    <GridRow>
-                      <GridCol>
-                        <LastUpdatedHeading data-test="last-updated-details">
-                          <span>{`Last updated by ${
-                            objective?.modifiedBy?.name
-                          }: ${format(objective.modifiedOn)}`}</span>
-                        </LastUpdatedHeading>
-                      </GridCol>
-                    </GridRow>
-
-                    <p>{objective.detail}</p>
-                    <Metadata rows={objectiveMetadata(objective)}></Metadata>
-                  </BorderContainer>
-                ))}
-                <BorderContainer>
-                  <Button
-                    data-test="add-objective-button"
-                    as={Link}
-                    href={urls.companies.accountManagement.objectives.create(
-                      company.id
-                    )}
-                    buttonColour={GREY_3}
-                    buttonTextColour={TEXT_COLOUR}
-                  >
-                    Add new objective
-                  </Button>
-                </BorderContainer>
-              </>
-            )}
-          </CompanyObjectivesResource>
+          <Objectives company={company} />
         </CompanyLayout>
       )}
     </CompanyResource>
