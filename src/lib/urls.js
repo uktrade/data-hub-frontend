@@ -238,11 +238,13 @@ module.exports = {
     },
     accountManagement: {
       index: url('/companies', '/:companyId/account-management'),
-      create: url(
-        '/companies',
-        '/:companyId/account-management/strategy/create'
-      ),
-      edit: url('/companies', '/:companyId/account-management/strategy/edit'),
+      strategy: {
+        create: url(
+          '/companies',
+          '/:companyId/account-management/strategy/create'
+        ),
+        edit: url('/companies', '/:companyId/account-management/strategy/edit'),
+      },
     },
   },
   companyLists: {
