@@ -56,7 +56,7 @@ describe('Company account management', () => {
     })
 
     it('should display the updated by information', () => {
-      cy.get('[data-test="last-updated-details"] > span')
+      cy.get('[data-test="last-updated-strategy-details"] > span')
         .eq(0)
         .contains(
           `Last updated by ${companyWithStrategy.modifiedBy.name}: ${format(
@@ -112,6 +112,10 @@ describe('Company account management', () => {
         }).as('objectiveApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
       })
+
+      it('should not display any objectives', () => {})
+
+      it('should display the add objective button', () => {})
     }
   )
 

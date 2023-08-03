@@ -48,6 +48,7 @@ import StrategicDrivers from './StrategicDrivers'
 import DeliveryPartners from './DeliveryPartners'
 import SalaryRanges from './SalaryRanges'
 import FDIValues from './FDIValues'
+import CompanyObjectives from './CompanyObjectives'
 
 export default {
   ...Advisers.tasks,
@@ -100,4 +101,5 @@ export default {
   ...DeliveryPartners.tasks,
   ...SalaryRanges.tasks,
   ...FDIValues.tasks,
+  ...CompanyObjectives.tasks,
 }
