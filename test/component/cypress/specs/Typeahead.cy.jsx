@@ -126,6 +126,21 @@ describe('Typeahead2', () => {
         .click()
         .should('have.attr', 'value', '')
     })
+
+    it('should highlight entered text when option is clicked and replace when new text when entered', () => {
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('Bl')
+      cy.get('@component').find('[data-test="typeahead-input"]').click()
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('An')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .should('have.value', 'An')
+    })
   })
 
   context('static multi-select', () => {
@@ -321,6 +336,21 @@ describe('Typeahead2', () => {
         .blur()
         .click()
         .should('have.attr', 'value', '')
+    })
+
+    it('should highlight entered text when option is clicked and replace when new text when entered', () => {
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('Bl')
+      cy.get('@component').find('[data-test="typeahead-input"]').click()
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('An')
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .should('have.value', 'An')
     })
   })
 
