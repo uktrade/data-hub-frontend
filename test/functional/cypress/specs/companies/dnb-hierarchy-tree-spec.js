@@ -6,6 +6,7 @@ import {
 } from '../../fakers/dnb-hierarchy'
 import { DARK_BLUE_LEGACY } from '../../../../../src/client/utils/colours'
 import hexRgb from 'hex-rgb'
+import { hqLabels } from '../../../../../src/apps/companies/labels'
 
 const {
   assertErrorDialog,
@@ -59,6 +60,7 @@ const companyNoAdditionalTagData = companyTreeFaker({
       uk_region: null,
       address: null,
       trading_names: [],
+      headquarter_type: null,
     }),
     ultimate_global_companies_count: 1,
     family_tree_companies_count: 1,
@@ -349,6 +351,10 @@ describe('D&B Company hierarchy tree', () => {
         'contain.text',
         tagContent.one_list_tier.name.slice(0, 6)
       )
+      cy.get(`[data-test=${companyName}-headquarter-type-tag]`).should(
+        'contain.text',
+        hqLabels[tagContent.headquarter_type.name]
+      )
     })
   })
 
@@ -374,6 +380,9 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=${companyName}-uk-region-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-country-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
+      cy.get(`[data-test=${companyName}-headquarter-type-tag]`).should(
+        'not.exist'
+      )
     })
 
     it('should not show any trading names', () => {
