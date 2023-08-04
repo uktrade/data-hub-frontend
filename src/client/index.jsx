@@ -391,6 +391,9 @@ import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
 import { TASK_SAVE_STRATEGY } from './modules/Companies/AccountManagement/state'
 import { saveStrategy } from './modules/Companies/AccountManagement/tasks'
 
+import { TASK_SAVE_OBJECTIVE } from './modules/Companies/AccountManagement/state'
+import { saveObjective } from './modules/Companies/AccountManagement/tasks'
+
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -622,6 +625,7 @@ function App() {
           [TASK_EDIT_INVESTMENT_PROJECT_VALUE]: updateInvestmentProject,
           [TASK_SAVE_STRATEGY]: saveStrategy,
           [TASK_EDIT_INVESTMENT_PROJECT_STATUS]: updateInvestmentProject,
+          [TASK_SAVE_OBJECTIVE]: saveObjective,
         }}
       >
         <Mount selector="#data-hub-header">
