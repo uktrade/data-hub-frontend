@@ -94,7 +94,10 @@ const Objective = () => {
               }
               submissionTaskName={TASK_SAVE_OBJECTIVE}
               initialValues={company}
-              transformPayload={({ objective }) => ({ companyId, objective })}
+              transformPayload={({ target_date }) => ({
+                companyId,
+                target_date,
+              })}
               flashMessage={() => 'Objective saved'}
               submitButtonLabel="Save objective"
               cancelButtonLabel="Back"
@@ -103,13 +106,13 @@ const Objective = () => {
                 <>
                   <FieldInput
                     type="text"
-                    name="objective_subject"
+                    name="subject"
                     label="Objective Subject"
                     required="Enter a objective subject"
                     hint="This should be concise, specific, measurable, and aligned with the strategy"
                   />
                   <FieldTextarea
-                    name="objective_detail"
+                    name="detail"
                     label="Objective Detail (optional)"
                     hint="Provide more context and rationale for the objective. What does it aim to accomplish? How do we aim to help them achieve it?"
                   />
@@ -125,7 +128,7 @@ const Objective = () => {
                     bigLegend={true}
                   />
                   <FieldRadios
-                    name="objective_percentage"
+                    name="percentage"
                     legend="How close are we to achieving this objective at the moment?"
                     options={Object.values(OBJECTIVE_PERCENTAGE)}
                     bigLegend={true}
