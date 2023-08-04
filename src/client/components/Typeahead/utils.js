@@ -96,16 +96,3 @@ export const maintainScrollVisibility = ({ parent, target }) => {
     parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)
   }
 }
-
-export const TIMEOUT = {
-  timeoutIds: [],
-  setTimeout(setTimeoutFn, timeoutDelay) {
-    const id = setTimeout(setTimeoutFn, timeoutDelay)
-    this.timeoutIds.push(id)
-  },
-  clearAllTimeouts() {
-    while (this.timeoutIds.length) {
-      clearTimeout(this.timeoutIds.pop())
-    }
-  },
-}
