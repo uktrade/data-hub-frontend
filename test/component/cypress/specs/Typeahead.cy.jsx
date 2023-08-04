@@ -127,7 +127,7 @@ describe('Typeahead2', () => {
         .should('have.attr', 'value', '')
     })
 
-    it('should highlight entered text when option is clicked and replace when new text when entered', () => {
+    it('should highlight entered text when option is clicked and replace when new text is entered', () => {
       cy.get('@component')
         .find('[data-test="typeahead-input"]')
         .clear()
@@ -338,7 +338,7 @@ describe('Typeahead2', () => {
         .should('have.attr', 'value', '')
     })
 
-    it('should highlight entered text when option is clicked and replace when new text when entered', () => {
+    it('should highlight entered text when option is clicked and replace when new text is entered', () => {
       cy.get('@component')
         .find('[data-test="typeahead-input"]')
         .clear()
