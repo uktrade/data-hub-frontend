@@ -340,7 +340,7 @@ const Typeahead = ({
                       aria-setsize={filteredOptions.length}
                       aria-posinset={index}
                       onClick={() => {
-                        inputRef.current && inputRef.current.focus()
+                        inputRef.current && inputRef.current.select()
                         onOptionToggle(option)
                         onChange(
                           getNewSelectedOptions({
