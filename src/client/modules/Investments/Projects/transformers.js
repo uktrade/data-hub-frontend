@@ -257,3 +257,8 @@ export const transformProjectValueForApi = ({ projectId, values }) => {
     ),
   }
 }
+
+export const transformProjectStatusForApi = ({ project, values }) => ({
+  id: project.id,
+  status: values.status,
+})

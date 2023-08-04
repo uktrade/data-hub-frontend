@@ -229,6 +229,22 @@ const assertFieldRadiosWithLegend = ({
           .should('have.text', value)
     )
 
+const assertFieldRadiosWithoutLabel = ({ element, value, optionsCount }) =>
+  cy
+    .wrap(element)
+    .as('fieldRadio')
+    .find('input')
+    .should('have.length', optionsCount)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldRadio')
+          .find('input:checked')
+          .next()
+          .should('have.text', value)
+    )
+
 const assertFieldCheckbox = ({ element, label, value, checked }) => {
   cy.wrap(element)
     .as('fieldCheckbox')
@@ -796,6 +812,7 @@ module.exports = {
   assertSelectOptions,
   assertFieldRadios,
   assertFieldRadiosWithLegend,
+  assertFieldRadiosWithoutLabel,
   assertFieldCheckbox,
   assertFieldAddress,
   assertFieldUneditable,

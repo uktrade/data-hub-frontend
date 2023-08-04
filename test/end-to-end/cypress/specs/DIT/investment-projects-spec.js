@@ -3,6 +3,9 @@ const selectors = require('../../../../selectors')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 const {
+  assertFieldRadiosWithoutLabel,
+} = require('../../../../functional/cypress/support/assertions')
+const {
   selectFirstTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
 
@@ -237,6 +240,27 @@ describe('Creating an investment project', () => {
         'Level of involvement': data.investorLevel,
         'Specific investment programme': data.specificInvestmentProgramme,
       })
+    })
+
+    it('should change the project status', () => {
+      cy.contains('change').click()
+
+      cy.get('[data-test="field-status"]').then((element) => {
+        assertFieldRadiosWithoutLabel({
+          element,
+          optionsCount: 5,
+          value: 'Ongoing',
+        })
+      })
+
+      cy.get('[data-test="status-dormant"]').click()
+      cy.get('[data-test="submit-button"]').click()
+
+      cy.get('[data-test="status-message"]').should(
+        'contain',
+        'Investment status updated'
+      )
+      cy.contains('Dormant')
     })
   })
 

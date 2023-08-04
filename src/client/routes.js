@@ -19,6 +19,7 @@ import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Strategy from './modules/Companies/AccountManagement/Strategy'
+import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 
 const routes = {
   companies: [
@@ -146,6 +147,13 @@ const routes = {
       path: '/export/:exportId/delete',
       module: 'datahub:companies',
       component: ExportFormDelete,
+    },
+  ],
+  investments: [
+    {
+      path: '/investments/projects/:investmentId/status',
+      module: 'datahub:investments',
+      component: EditProjectStatus,
     },
   ],
 }
