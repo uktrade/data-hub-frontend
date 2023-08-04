@@ -28,7 +28,7 @@ const Objective = () => {
       value: 'yes',
       children: (
         <FieldTextarea
-          name="blocker_detail"
+          name="blocker_description"
           label="Blocker detail (optional)"
           hint="Provide more context for the blocker.What and why?"
         />
@@ -93,11 +93,7 @@ const Objective = () => {
                 urls.companies.accountManagement.index(companyId)
               }
               submissionTaskName={TASK_SAVE_OBJECTIVE}
-              initialValues={company}
-              transformPayload={({ target_date }) => ({
-                companyId,
-                target_date,
-              })}
+              transformPayload={(values) => ({ companyId, values })}
               flashMessage={() => 'Objective saved'}
               submitButtonLabel="Save objective"
               cancelButtonLabel="Back"
@@ -122,13 +118,13 @@ const Objective = () => {
                     invalid="Enter a valid target date"
                   />
                   <FieldRadios
-                    name="blockers"
+                    name="has_blocker"
                     legend="Are there any blockers to achieving this objective?"
                     options={Object.values(IS_BLOCKER)}
                     bigLegend={true}
                   />
                   <FieldRadios
-                    name="percentage"
+                    name="progress"
                     legend="How close are we to achieving this objective at the moment?"
                     options={Object.values(OBJECTIVE_PERCENTAGE)}
                     bigLegend={true}
