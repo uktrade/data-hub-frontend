@@ -73,6 +73,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
 import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
+import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
@@ -382,6 +383,7 @@ import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDeta
 import {
   TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
+  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
 } from './modules/Investments/Projects/state'
 import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
 
@@ -616,6 +618,7 @@ function App() {
           [TASK_GET_SUBSIDIARY_LIST]: getSubsidiaryCollection,
           [TASK_EDIT_INVESTMENT_PROJECT_SUMMARY]: updateInvestmentProject,
           [TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS]: updateInvestmentProject,
+          [TASK_EDIT_INVESTMENT_PROJECT_VALUE]: updateInvestmentProject,
           [TASK_SAVE_STRATEGY]: saveStrategy,
         }}
       >
@@ -886,11 +889,15 @@ function App() {
         <Mount selector="#edit-project-requirements">
           {(props) => <EditProjectRequirements {...props} />}
         </Mount>
+        <Mount selector="#edit-project-value">
+          {(props) => <EditProjectValue {...props} />}
+        </Mount>
         <Mount selector="#account-management">
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
+
         <Mount selector="#react-app">
           {() => (
             <Switch>

@@ -23,8 +23,8 @@ import { TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS } from './state'
 import urls from '../../../../lib/urls'
 import {
   transformArrayForTypeahead,
-  transformBoolToRadioOption,
   transformProjectRequirementsForApi,
+  transformBoolToRadioOptionWithNullCheck,
 } from './transformers'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 import { UNITED_KINGDOM_ID } from '../../../../common/constants'
@@ -78,7 +78,7 @@ const EditProjectRequirements = ({ projectId }) => (
             <FieldRadios
               name="client_considering_other_countries"
               label="Is the client considering other countries?"
-              initialValue={transformBoolToRadioOption(
+              initialValue={transformBoolToRadioOptionWithNullCheck(
                 project.clientConsideringOtherCountries
               )}
               options={OPTIONS_YES_NO.map((option) => ({
@@ -112,7 +112,9 @@ const EditProjectRequirements = ({ projectId }) => (
             <FieldRadios
               name="site_decided"
               label="Has the UK location (site address) for this investment been decided yet?"
-              initialValue={transformBoolToRadioOption(project.siteDecided)}
+              initialValue={transformBoolToRadioOptionWithNullCheck(
+                project.siteDecided
+              )}
               options={OPTIONS_YES_NO.map((option) => ({
                 ...option,
                 ...(option.value === OPTION_YES && {

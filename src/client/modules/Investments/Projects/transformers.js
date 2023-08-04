@@ -12,8 +12,23 @@ export const transformArrayForTypeahead = (advisers) =>
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
 
+export const transformBoolToRadioOptionWithNullCheck = (boolean) =>
+  boolean === null ? null : transformBoolToRadioOption(boolean)
+
 export const transformRadioOptionToBool = (radioOption) =>
   radioOption === OPTION_YES
+
+const transformRadioOptionToInvertedBool = (radioOption) =>
+  radioOption === null ? null : radioOption === OPTION_NO
+
+export const transformBoolToInvertedRadioOption = (boolean) =>
+  boolean ? OPTION_NO : OPTION_YES
+
+export const transformBoolToInvertedRadioOptionWithNullCheck = (boolean) =>
+  boolean === null ? null : transformBoolToInvertedRadioOption(boolean)
+
+export const transformRadioOptionToBoolWithNullCheck = (boolean) =>
+  boolean === null ? null : transformRadioOptionToBool(boolean)
 
 const setReferralSourceEvent = (values) => {
   const {
@@ -38,6 +53,9 @@ const setReferralSourceAdviser = (currentAdviser, values) => {
 
 const setConditionalArrayValue = (radioValue, array) =>
   transformRadioOptionToBool(radioValue) ? array.map((x) => x.value) : []
+
+const setConditionalStringValue = (inputValue, investmentValue) =>
+  transformRadioOptionToBool(inputValue) ? investmentValue : null
 
 const setSiteDecidedSubValues = (
   site_decided,
@@ -66,6 +84,21 @@ export const checkLandDate = (estimatedLandDate) => {
     estimatedLandDate.day = '01'
   }
   return transformDateObjectToDateString(estimatedLandDate)
+}
+
+export const setGVAMessage = (project) => {
+  const { foreignEquityInvestment, sector } = project
+  if (!foreignEquityInvestment && !sector) {
+    return 'Add capital expenditure value and primary sector (investment project summary) to calculate GVA'
+  }
+
+  if (!foreignEquityInvestment) {
+    return 'Add capital expenditure value and click "Save" to calculate GVA'
+  }
+
+  if (!sector) {
+    return 'Add primary sector (investment project summary) to calculate GVA'
+  }
 }
 
 export const transformProjectSummaryForApi = ({
@@ -153,7 +186,7 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
       site_decided,
       actual_uk_regions
     ),
-    client_considering_other_countries: transformRadioOptionToBool(
+    client_considering_other_countries: transformRadioOptionToBoolWithNullCheck(
       client_considering_other_countries
     ),
     client_requirements,
@@ -162,10 +195,65 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
       competitor_countries
     ),
     delivery_partners: delivery_partners.map((x) => x.value),
-    site_decided: transformRadioOptionToBool(site_decided),
+    site_decided: transformRadioOptionToBoolWithNullCheck(site_decided),
     strategic_drivers: strategic_drivers.map((x) => x.value),
     uk_region_locations: uk_region_locations.map((x) => x.value),
   }
 
   return { ...siteDecidedObject, ...requirementsValues }
+}
+
+export const transformProjectValueForApi = ({ projectId, values }) => {
+  const {
+    average_salary,
+    client_cannot_provide_foreign_investment,
+    client_cannot_provide_total_investment,
+    export_revenue,
+    fdi_value,
+    foreign_equity_investment,
+    government_assistance,
+    gross_value_added,
+    new_tech_to_uk,
+    non_fdi_r_and_d_budget,
+    number_new_jobs,
+    number_safeguarded_jobs,
+    r_and_d_budget,
+    total_investment,
+  } = values
+
+  return {
+    id: projectId,
+    average_salary: checkIfItemHasValue(average_salary),
+    client_cannot_provide_foreign_investment:
+      transformRadioOptionToInvertedBool(
+        client_cannot_provide_foreign_investment
+      ),
+    client_cannot_provide_total_investment: transformRadioOptionToInvertedBool(
+      client_cannot_provide_total_investment
+    ),
+    export_revenue: transformRadioOptionToBoolWithNullCheck(export_revenue),
+    fdi_value: checkIfItemHasValue(fdi_value),
+    foreign_equity_investment: setConditionalStringValue(
+      client_cannot_provide_foreign_investment,
+      foreign_equity_investment
+    ),
+    government_assistance: transformRadioOptionToBoolWithNullCheck(
+      government_assistance
+    ),
+    gross_value_added: setConditionalStringValue(
+      client_cannot_provide_foreign_investment,
+      gross_value_added
+    ),
+    new_tech_to_uk: transformRadioOptionToBoolWithNullCheck(new_tech_to_uk),
+    non_fdi_r_and_d_budget: transformRadioOptionToBoolWithNullCheck(
+      non_fdi_r_and_d_budget
+    ),
+    number_new_jobs: checkIfItemHasValue(number_new_jobs),
+    number_safeguarded_jobs: checkIfItemHasValue(number_safeguarded_jobs),
+    r_and_d_budget: transformRadioOptionToBoolWithNullCheck(r_and_d_budget),
+    total_investment: setConditionalStringValue(
+      client_cannot_provide_total_investment,
+      total_investment
+    ),
+  }
 }

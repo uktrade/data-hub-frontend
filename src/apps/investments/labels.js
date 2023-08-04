@@ -39,28 +39,10 @@ const labels = {
       export_revenue: 'Export revenue',
     },
     edit: {
-      government_assistance:
-        'Is this project receiving government financial assistance?',
       number_new_jobs: 'Number of new jobs',
       number_safeguarded_jobs: 'Number of safeguarded jobs',
-      r_and_d_budget:
-        'Does this project have budget for a research and development?',
-      non_fdi_r_and_d_budget:
-        'Is this project associated with a non-FDI R&D project?',
-      new_tech_to_uk:
-        'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
-      export_revenue:
-        'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
       client_cannot_provide_total_investment:
         'Can client provide total investment value?',
-      client_cannot_provide_total_investment_hint:
-        'Includes capital, operational and R&D expenditure',
-      client_cannot_provide_foreign_investment:
-        'Can client provide capital expenditure value?',
-      client_cannot_provide_foreign_investment_hint:
-        'Foreign equity only, excluding operational and R&D expenditure',
-      fdi_value: 'Project value',
-      likelihood_to_land: 'Likelihood of landing',
     },
   },
   requirementsLabels: {
@@ -72,6 +54,8 @@ const labels = {
       actual_uk_regions: 'UK regions landed',
       uk_company: 'UK recipient company',
       delivery_partners: 'Delivery partners',
+      client_considering_other_countries:
+        'Is the client considering other countries?',
     },
   },
   evaluationValueLabels: {
