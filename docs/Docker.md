@@ -25,7 +25,7 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 
 
 ```bash
-export VERSION=2.0.5 # Increment this version each time when you edit Dockerfile.
+export VERSION=2.0.4 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies .
 
