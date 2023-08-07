@@ -10,32 +10,33 @@ import { format } from '../../../../client/utils/date'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
   font-weight: normal;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  margin-top: -${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_2};
   font-size: ${FONT_SIZE.SIZE_14};
 `
 
 const BorderContainer = styled('div')`
   border-top: 1px solid ${GREY_2};
-  padding: 20px 0px;
+  padding: ${SPACING.SCALE_4} 0px;
   ${({ finalItem }) =>
-    finalItem && `border-bottom: 1px solid ${GREY_2}; margin-bottom:30px;`}
+    finalItem &&
+    `border-bottom: 1px solid ${GREY_2}; margin-bottom: ${SPACING.SCALE_5};`}
 `
 
 const StyledLink = styled(Link)`
-  padding-right: 30px;
+  padding-right: ${SPACING.SCALE_5};
 `
 
 const SectionGridRow = styled(GridRow)`
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding-bottom: ${SPACING.SCALE_2};
+  padding-top: ${SPACING.SCALE_2};
 `
 
 const Strategy = ({ company }) => (
