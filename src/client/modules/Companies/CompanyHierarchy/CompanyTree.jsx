@@ -294,6 +294,14 @@ const HierarchyItem = ({
       >
         <HierarchyItemHeading>
           <GridColTags>
+            {isOnDataHub && (
+              <HierarchyTag
+                colour="turquoise"
+                data-test={`${companyName}-verified-tag`}
+              >
+                Verified
+              </HierarchyTag>
+            )}
             {company.one_list_tier?.name && (
               <HierarchyTag
                 colour="grey"

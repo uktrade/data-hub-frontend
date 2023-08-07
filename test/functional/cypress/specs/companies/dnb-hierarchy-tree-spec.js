@@ -355,6 +355,17 @@ describe('D&B Company hierarchy tree', () => {
         'contain.text',
         hqLabels[tagContent.headquarter_type.name]
       )
+      cy.get(`[data-test=${companyName}-verified-tag]`).should(
+        'contain.text',
+        'Verified'
+      )
+    })
+
+    it('should not have a verified tag', () => {
+      const company = companyOnlyImmediateSubsidiaries.ultimate_global_company
+      cy.get(`[data-test=${kebabCase(company.name)}-verified-tag]`).should(
+        'not.exist'
+      )
     })
   })
 
@@ -368,11 +379,11 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
-    it('should not show any tag information', () => {
+    it('should not show any tag information except for verified', () => {
       cy.get(`[data-test=requested-company`)
         .children()
         .find('strong')
-        .should('not.exist')
+        .should('exist')
 
       cy.get(`[data-test=${companyName}-number-of-employees-tag]`).should(
         'not.exist'
@@ -382,6 +393,11 @@ describe('D&B Company hierarchy tree', () => {
       cy.get(`[data-test=${companyName}-one-list-tag]`).should('not.exist')
       cy.get(`[data-test=${companyName}-headquarter-type-tag]`).should(
         'not.exist'
+      )
+      const company = companyNoAdditionalTagData.ultimate_global_company
+      cy.get(`[data-test=${kebabCase(company.name)}-verified-tag]`).should(
+        'contain.text',
+        'Verified'
       )
     })
 
