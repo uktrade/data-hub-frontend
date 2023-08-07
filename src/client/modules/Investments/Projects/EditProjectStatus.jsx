@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom/cjs/react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { DefaultLayout, FieldRadios, Form } from '../../../components'
 import { InvestmentResource } from '../../../components/Resource'
