@@ -17,8 +17,8 @@ import { Metadata } from '../../../components'
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
   font-weight: normal;
-  margin-top: -20px;
-  margin-bottom: -10px;
+  margin-top: -10px;
+  margin-bottom: 10px;
   font-size: ${FONT_SIZE.SIZE_14};
 `
 
@@ -28,11 +28,12 @@ const BorderContainer = styled('div')`
 `
 
 const StyledLink = styled(Link)`
-  padding-right: 15px;
+  padding-right: 30px;
 `
 
 const SectionGridRow = styled(GridRow)`
   padding-bottom: 10px;
+  padding-top: 10px;
 `
 
 const Strategy = ({ company }) => (
@@ -43,16 +44,12 @@ const Strategy = ({ company }) => (
           <H3>Strategy</H3>
         </GridCol>
         {company.strategy && (
-          <div>
-            <StyledLink
-              href={urls.companies.accountManagement.strategy.create(
-                company.id
-              )}
-              data-test="edit-strategy-link"
-            >
-              Edit
-            </StyledLink>
-          </div>
+          <StyledLink
+            href={urls.companies.accountManagement.strategy.create(company.id)}
+            data-test="edit-strategy-link"
+          >
+            Edit
+          </StyledLink>
         )}
       </GridRow>
 
@@ -76,7 +73,7 @@ const Strategy = ({ company }) => (
               </LastUpdatedHeading>
             </GridCol>
           </GridRow>
-          <p>{company.strategy}</p>
+          <Metadata rows={[{ value: company.strategy }]}></Metadata>
         </>
       )}
 
@@ -102,22 +99,25 @@ const Objectives = ({ company }) => (
         <GridCol>
           <H3>Current objectives</H3>
           {results.map((objective, index) => (
-            <BorderContainer key={`objective_${index}`}>
+            <BorderContainer
+              key={`objective_${index}`}
+              data-test={`objective ${
+                objective.hasBlocker ? 'has-blocker' : 'no-blocker'
+              }`}
+            >
               <GridRow>
                 <GridCol>
                   <H4>{objective.subject}</H4>
                 </GridCol>
-                <div>
-                  <StyledLink
-                    href={urls.companies.accountManagement.objectives.edit(
-                      company.id,
-                      objective.id
-                    )}
-                    data-test="edit-objective-link"
-                  >
-                    Edit
-                  </StyledLink>
-                </div>
+                <StyledLink
+                  href={urls.companies.accountManagement.objectives.edit(
+                    company.id,
+                    objective.id
+                  )}
+                  data-test="edit-objective-link"
+                >
+                  Edit
+                </StyledLink>
               </GridRow>
 
               <GridRow>
@@ -130,7 +130,6 @@ const Objectives = ({ company }) => (
                 </GridCol>
               </GridRow>
 
-              <p>{objective.detail}</p>
               <Metadata rows={objectiveMetadata(objective)}></Metadata>
             </BorderContainer>
           ))}
@@ -156,6 +155,9 @@ const Objectives = ({ company }) => (
 const objectiveMetadata = (objective) => {
   const rows = [
     {
+      value: objective.detail,
+    },
+    {
       label: 'Due date',
       value: format(objective.targetDate),
     },
@@ -165,7 +167,7 @@ const objectiveMetadata = (objective) => {
     },
   ]
   if (objective.hasBlocker) {
-    rows.unshift({
+    rows.splice(1, 0, {
       label: 'Blockers',
       value: objective.blockerDescription,
     })

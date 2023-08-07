@@ -113,9 +113,17 @@ describe('Company account management', () => {
         cy.visit(urls.companies.accountManagement.index(companyId))
       })
 
-      it('should not display any objectives', () => {})
+      it('should not display any objectives', () => {
+        cy.get('[data-test="objective"]').should('not.exist')
+      })
 
-      it('should display the add objective button', () => {})
+      it('should display the add objective button', () => {
+        cy.get('[data-test="add-objective-button"]').should(
+          'have.attr',
+          'href',
+          urls.companies.accountManagement.objectives.create(companyId)
+        )
+      })
     }
   )
 
@@ -125,6 +133,20 @@ describe('Company account management', () => {
         results: [...objectives, noBlockersObjective],
       }).as('objectiveApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
+      cy.wait('@objectiveApi')
+    })
+
+    it('should display the blocker text when an objective has a blocker', () => {
+      cy.get('[data-test="objective has-blocker"]')
+        .eq(0)
+        .find('[data-test="metadata-item"]')
+        .should('contain', objectives[0].blocker_description)
+    })
+
+    it('should not display the blocker text when an objective has no blocker', () => {
+      cy.get('[data-test="objective no-blocker"]')
+        .find('[data-test="metadata-item"]')
+        .should('not.contain', noBlockersObjective.blocker_description)
     })
   })
 })
