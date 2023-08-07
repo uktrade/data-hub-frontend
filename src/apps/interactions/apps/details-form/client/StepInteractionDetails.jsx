@@ -319,6 +319,7 @@ const StepInteractionDetails = ({
         placeholder="Select contact"
         required="Select at least one contact"
         options={contacts}
+        noOptionsMessage="No contacts listed, add a new contact"
         isMulti={true}
       />
       <ContactInformation

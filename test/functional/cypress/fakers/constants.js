@@ -84,7 +84,7 @@ export const EXPORTER_EXPERIENCE = [
   {
     id: '02a063e3-dab8-40ca-92d3-8e9c2d9f812d',
     order: 40,
-    name: 'An exported that DBT are helping maintain and grow their exports',
+    name: 'An exporter that DBT are helping maintain and grow their exports',
   },
 ]
 
