@@ -25,6 +25,8 @@ const LastUpdatedHeading = styled.div`
 const BorderContainer = styled('div')`
   border-top: 1px solid ${GREY_2};
   padding: 20px 0px;
+  ${({ finalItem }) =>
+    finalItem && `border-bottom: 1px solid ${GREY_2}; margin-bottom:30px;`}
 `
 
 const StyledLink = styled(Link)`
@@ -104,6 +106,7 @@ const Objectives = ({ company }) => (
               data-test={`objective ${
                 objective.hasBlocker ? 'has-blocker' : 'no-blocker'
               }`}
+              finalItem={index === results.length - 1}
             >
               <GridRow>
                 <GridCol>
@@ -133,19 +136,18 @@ const Objectives = ({ company }) => (
               <Metadata rows={objectiveMetadata(objective)}></Metadata>
             </BorderContainer>
           ))}
-          <BorderContainer>
-            <Button
-              data-test="add-objective-button"
-              as={Link}
-              href={urls.companies.accountManagement.objectives.create(
-                company.id
-              )}
-              buttonColour={GREY_3}
-              buttonTextColour={TEXT_COLOUR}
-            >
-              Add new objective
-            </Button>
-          </BorderContainer>
+
+          <Button
+            data-test="add-objective-button"
+            as={Link}
+            href={urls.companies.accountManagement.objectives.create(
+              company.id
+            )}
+            buttonColour={GREY_3}
+            buttonTextColour={TEXT_COLOUR}
+          >
+            Add new objective
+          </Button>
         </GridCol>
       </SectionGridRow>
     )}
