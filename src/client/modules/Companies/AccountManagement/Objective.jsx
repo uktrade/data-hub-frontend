@@ -15,26 +15,10 @@ import {
 import urls from '../../../../lib/urls'
 import { CompanyResource } from '../../../components/Resource'
 import { buildCompanyBreadcrumbs } from '../utils'
+import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 
 const Objective = () => {
   const { companyId } = useParams()
-  const IS_BLOCKER = {
-    no: {
-      label: 'No',
-      value: 'no',
-    },
-    yes: {
-      label: 'Yes',
-      value: 'yes',
-      children: (
-        <FieldTextarea
-          name="blocker_description"
-          label="Blocker detail (optional)"
-          hint="Provide more context for the blocker.What and why?"
-        />
-      ),
-    },
-  }
   const OBJECTIVE_PERCENTAGE = {
     0: {
       label: '0%',
@@ -119,15 +103,23 @@ const Objective = () => {
                   />
                   <FieldRadios
                     name="has_blocker"
-                    legend="Are there any blockers to achieving this objective?"
-                    options={Object.values(IS_BLOCKER)}
-                    bigLegend={true}
+                    label="Are there any blockers to achieving this objective?"
+                    options={OPTIONS_YES_NO.map((option) => ({
+                      ...option,
+                      ...(option.value === OPTION_YES && {
+                        children: (
+                          <FieldTextarea
+                            name="blocker_description"
+                            label="Blocker description"
+                          />
+                        ),
+                      }),
+                    }))}
                   />
                   <FieldRadios
                     name="progress"
                     legend="How close are we to achieving this objective at the moment?"
                     options={Object.values(OBJECTIVE_PERCENTAGE)}
-                    bigLegend={true}
                   />
                 </>
               )}

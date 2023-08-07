@@ -1,4 +1,6 @@
 import { apiProxyAxios } from '../../../../client/components/Task/utils'
+import { transformValueForAPI } from '../../../utils/date'
+import { transformRadioOptionToBool } from '../../Investments/Projects/transformers'
 
 export const saveStrategy = ({ strategy, companyId }) => {
   const request = apiProxyAxios.patch
@@ -7,14 +9,10 @@ export const saveStrategy = ({ strategy, companyId }) => {
 }
 
 export const saveObjective = ({ values, companyId }) => {
-  if (values.has_blocker == 'yes') {
-    values.has_blocker = true
-  } else {
-    values.has_blocker = false
-  }
+  values.target_date = transformValueForAPI(values.target_date)
   values.progress = parseInt(values.progress)
-  values.target_date = `${values.target_date.year}-${values.target_date.month}-${values.target_date.day}`
   values.company = companyId
+  values.has_blocker = transformRadioOptionToBool(values.has_blocker)
   const request = apiProxyAxios.post
   const endpoint = `/v4/company/${companyId}/objective`
   return request(endpoint, values)
