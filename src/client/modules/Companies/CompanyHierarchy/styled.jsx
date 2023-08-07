@@ -227,6 +227,7 @@ export const GridColTags = styled(GridCol)`
 
 export const GridColHeader = styled(GridCol)`
   setwidth: two-thirds;
+  float: left;
   padding-left: 0px;
 `
 
