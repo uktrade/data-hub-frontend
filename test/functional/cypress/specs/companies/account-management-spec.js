@@ -107,7 +107,7 @@ describe('Company account management', () => {
     'When visiting the account management page without objectives',
     () => {
       before(() => {
-        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
           results: [],
         }).as('objectiveApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
@@ -129,7 +129,7 @@ describe('Company account management', () => {
 
   context('When visiting the account management page with objectives', () => {
     before(() => {
-      cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+      cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
         results: [...objectives, noBlockersObjective],
       }).as('objectiveApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
