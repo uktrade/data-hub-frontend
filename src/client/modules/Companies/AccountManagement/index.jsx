@@ -45,7 +45,7 @@ const Strategy = ({ company }) => (
         </GridCol>
         {company.strategy && (
           <StyledLink
-            href={urls.companies.accountManagement.strategy.create(company.id)}
+            href={urls.companies.accountManagement.strategy.edit(company.id)}
             data-test="edit-strategy-link"
           >
             Edit
