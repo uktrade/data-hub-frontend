@@ -13,7 +13,7 @@
     "@faker-js/faker": "^8.0.0"
   },
   "engines": {
-    "node": "20.4.0"
+    "node": "18.15.0"
   },
   "overrides": {
     "ansi-regex": "5.0.1",
