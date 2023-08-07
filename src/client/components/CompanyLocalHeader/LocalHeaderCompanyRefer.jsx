@@ -16,10 +16,7 @@ const StyledCompanyReferButton = styled('button')`
   span {
     pointer-events: none;
     display: inline-block;
-    font-size: ${FONT_SIZE.SIZE_16};
   }
-`
-const StyledButton = styled(StyledCompanyReferButton)`
   background-color: ${GREY_3};
   border-bottom: 3px solid ${GREY_3_LEGACY};
 `
@@ -30,9 +27,12 @@ const LocalHeaderCompanyRefer = ({ companyId }) => {
   }
   return (
     <>
-      <StyledButton data-test="refer-company-button" onClick={handleClickRefer}>
+      <StyledCompanyReferButton
+        data-test="refer-company-button"
+        onClick={handleClickRefer}
+      >
         <span>Refer this company</span>
-      </StyledButton>
+      </StyledCompanyReferButton>
     </>
   )
 }
