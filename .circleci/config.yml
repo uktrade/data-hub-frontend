@@ -180,7 +180,7 @@ jobs:
 
   release-storybook:
     docker:
-      - image: node:18.15.0-buster
+      - image: node:20.4.0-buster
     steps:
       - checkout
       - add_ssh_keys:
