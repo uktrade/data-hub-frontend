@@ -100,10 +100,12 @@ const Objective = () => {
                     name="target_date"
                     label="Target date"
                     invalid="Enter a valid target date"
+                    required="Enter a target date"
                   />
                   <FieldRadios
                     name="has_blocker"
                     label="Are there any blockers to achieving this objective?"
+                    required="Select if there are any blockers"
                     options={OPTIONS_YES_NO.map((option) => ({
                       ...option,
                       ...(option.value === OPTION_YES && {
@@ -119,6 +121,7 @@ const Objective = () => {
                   <FieldRadios
                     name="progress"
                     legend="How close are we to achieving this objective at the moment?"
+                    required="Select a percentage"
                     options={Object.values(OBJECTIVE_PERCENTAGE)}
                   />
                 </>
