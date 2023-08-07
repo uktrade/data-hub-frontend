@@ -384,6 +384,7 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
   TASK_EDIT_INVESTMENT_PROJECT_VALUE,
+  TASK_EDIT_INVESTMENT_PROJECT_STATUS,
 } from './modules/Investments/Projects/state'
 import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
 
@@ -620,6 +621,7 @@ function App() {
           [TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS]: updateInvestmentProject,
           [TASK_EDIT_INVESTMENT_PROJECT_VALUE]: updateInvestmentProject,
           [TASK_SAVE_STRATEGY]: saveStrategy,
+          [TASK_EDIT_INVESTMENT_PROJECT_STATUS]: updateInvestmentProject,
         }}
       >
         <Mount selector="#data-hub-header">

@@ -56,8 +56,6 @@ const {
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 
-const { renderStatusPage, postStatus } = require('./controllers/status')
-
 const {
   selectUKCompany,
   searchForUKCompany,
@@ -186,11 +184,6 @@ router.use(
 )
 
 router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
-
-router
-  .route('/:investmentId/status')
-  .post(postStatus, renderStatusPage)
-  .get(renderStatusPage)
 
 router.get(
   '/:investmentId/edit-ukcompany',

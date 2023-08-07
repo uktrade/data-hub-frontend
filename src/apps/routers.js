@@ -33,6 +33,7 @@ const reactRoutes = [
   '/companies/:companyId/company-tree',
   '/companies/:companyId/account-management/strategy/create',
   '/companies/:companyId/account-management/strategy/edit',
+  '/investments/projects/:investmentId/status',
 ]
 
 reactRoutes.forEach((path) => {
