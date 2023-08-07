@@ -87,13 +87,13 @@ const Objective = () => {
                   <FieldInput
                     type="text"
                     name="subject"
-                    label="Objective Subject"
+                    label="Objective subject"
                     required="Enter a objective subject"
                     hint="This should be concise, specific, measurable, and aligned with the strategy"
                   />
                   <FieldTextarea
                     name="detail"
-                    label="Objective Detail (optional)"
+                    label="Objective detail (optional)"
                     hint="Provide more context and rationale for the objective. What does it aim to accomplish? How do we aim to help them achieve it?"
                   />
                   <FieldDate
