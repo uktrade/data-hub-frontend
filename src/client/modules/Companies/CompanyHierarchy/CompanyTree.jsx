@@ -38,6 +38,7 @@ import {
 import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
 import { format } from '../../../utils/date'
+import { hqLabels } from '../../../../apps/companies/labels'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -299,6 +300,14 @@ const HierarchyItem = ({
                 data-test={`${companyName}-one-list-tag`}
               >
                 One List {company.one_list_tier.name.slice(0, 6)}
+              </HierarchyTag>
+            )}
+            {company.headquarter_type?.name && (
+              <HierarchyTag
+                colour="grey"
+                data-test={`${companyName}-headquarter-type-tag`}
+              >
+                {hqLabels[company.headquarter_type.name]}
               </HierarchyTag>
             )}
             {company.address?.country.name && (
