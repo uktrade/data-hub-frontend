@@ -350,3 +350,5 @@ Cypress.Commands.add('isInViewport', (element) => {
     expect(rect.bottom).not.to.be.greaterThan(bottom)
   })
 })
+
+Cypress.Commands.add('dataTest', (value) => cy.get(`[data-test="${value}"]`))

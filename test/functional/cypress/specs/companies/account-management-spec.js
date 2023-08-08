@@ -56,7 +56,7 @@ describe('Company account management', () => {
     })
 
     it('should display the updated by information', () => {
-      cy.get('[data-test="last-updated-details"] > span')
+      cy.get('[data-test="last-updated-strategy-details"] > span')
         .eq(0)
         .contains(
           `Last updated by ${companyWithStrategy.modifiedBy.name}: ${format(
@@ -107,20 +107,46 @@ describe('Company account management', () => {
     'When visiting the account management page without objectives',
     () => {
       before(() => {
-        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
           results: [],
         }).as('objectiveApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
+      })
+
+      it('should not display any objectives', () => {
+        cy.get('[data-test="objective"]').should('not.exist')
+      })
+
+      it('should display the add objective button', () => {
+        cy.get('[data-test="add-objective-button"]').should(
+          'have.attr',
+          'href',
+          urls.companies.accountManagement.objectives.create(companyId)
+        )
       })
     }
   )
 
   context('When visiting the account management page with objectives', () => {
     before(() => {
-      cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective`, {
+      cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
         results: [...objectives, noBlockersObjective],
       }).as('objectiveApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
+      cy.wait('@objectiveApi')
+    })
+
+    it('should display the blocker text when an objective has a blocker', () => {
+      cy.get('[data-test="objective has-blocker"]')
+        .eq(0)
+        .find('[data-test="metadata-item"]')
+        .should('contain', objectives[0].blocker_description)
+    })
+
+    it('should not display the blocker text when an objective has no blocker', () => {
+      cy.get('[data-test="objective no-blocker"]')
+        .find('[data-test="metadata-item"]')
+        .should('not.contain', noBlockersObjective.blocker_description)
     })
   })
 })
