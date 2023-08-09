@@ -19,28 +19,28 @@ import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 
 const Objective = () => {
   const { companyId } = useParams()
-  const OBJECTIVE_PERCENTAGE = {
-    0: {
+  const OBJECTIVE_PERCENTAGE = [
+    {
       label: '0%',
       value: '0',
     },
-    25: {
+    {
       label: '25%',
       value: '25',
     },
-    50: {
+    {
       label: '50%',
       value: '50',
     },
-    75: {
+    {
       label: '75%',
       value: '75',
     },
-    100: {
+    {
       label: '100% - objective complete',
       value: '100',
     },
-  }
+  ]
   return (
     <CompanyResource id={companyId}>
       {(company) => (
@@ -88,7 +88,7 @@ const Objective = () => {
                     type="text"
                     name="subject"
                     label="Objective subject"
-                    required="Enter a objective subject"
+                    required="Enter an objective subject"
                     hint="This should be concise, specific, measurable, and aligned with the strategy"
                   />
                   <FieldTextarea
@@ -122,7 +122,7 @@ const Objective = () => {
                     name="progress"
                     legend="How close are we to achieving this objective at the moment?"
                     required="Select a percentage"
-                    options={Object.values(OBJECTIVE_PERCENTAGE)}
+                    options={OBJECTIVE_PERCENTAGE}
                   />
                 </>
               )}
