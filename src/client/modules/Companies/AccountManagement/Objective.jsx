@@ -95,6 +95,7 @@ const Objective = () => {
                     name="detail"
                     label="Objective detail (optional)"
                     hint="Provide more context and rationale for the objective. What does it aim to accomplish? How do we aim to help them achieve it?"
+                    data-test="detail-input"
                   />
                   <FieldDate
                     name="target_date"

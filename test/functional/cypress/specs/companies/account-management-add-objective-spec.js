@@ -1,6 +1,13 @@
 import { companyFaker } from '../../fakers/companies'
 import { objectiveFaker } from '../../fakers/objective'
 
+const {
+  assertErrorSummary,
+  assertPayload,
+} = require('../../support/assertions')
+
+const { fill } = require('../../../../functional/cypress/support/form-fillers')
+
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
@@ -39,12 +46,10 @@ describe('Company account management', () => {
       })
 
       it('should contain all required form inputs', () => {
-        cy.get('[data-test="subject-input"]')
-          .click()
-          .type(noBlockersObjective.subject)
-        cy.get('[data-test="target_date-day"]').click().type('10')
-        cy.get('[data-test="target_date-month"]').click().type('10')
-        cy.get('[data-test="target_date-year"]').click().type('2030')
+        fill('[data-test="subject-input"]', noBlockersObjective.subject)
+        fill('[data-test="target_date-day"]', '10')
+        fill('[data-test="target_date-month"]', '10')
+        fill('[data-test="target_date-year"]', '2030')
         cy.get('[data-test="has-blocker-no"]').click()
         cy.get('[data-test="progress-50"]').click()
         cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
@@ -59,7 +64,6 @@ describe('Company account management', () => {
     'When no fields are completed when a form is submitted the form',
     () => {
       before(() => {
-        cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
         cy.visit(urls.companies.accountManagement.objectives.create(companyId))
       })
 
@@ -71,17 +75,12 @@ describe('Company account management', () => {
           .next()
           .children()
           .should('have.length', 4)
-          .first()
-          .contains('Enter a objective subject')
-          .parent()
-          .next()
-          .contains('Enter a target date')
-          .parent()
-          .next()
-          .contains('Select if there are any blockers')
-          .parent()
-          .next()
-          .contains('Select a percentage')
+        assertErrorSummary([
+          'Enter an objective subject',
+          'Enter a target date',
+          'Select if there are any blockers',
+          'Select a percentage',
+        ])
       })
     }
   )
@@ -91,52 +90,57 @@ describe('Company account management', () => {
       cy.visit(urls.companies.accountManagement.objectives.create(companyId))
     })
     it('should highlight an error with the date input', () => {
-      cy.get('[data-test="subject-input"]')
-        .click()
-        .type(noBlockersObjective.subject)
-      cy.get('[data-test="target_date-day"]').click().type('32')
-      cy.get('[data-test="target_date-month"]').click().type('18')
-      cy.get('[data-test="target_date-year"]').click().type('030')
+      fill('[data-test="subject-input"]', noBlockersObjective.subject)
+      fill('[data-test="target_date-day"]', '32')
+      fill('[data-test="target_date-month"]', '18')
+      fill('[data-test="target_date-year"]', '030')
       cy.get('[data-test="has-blocker-no"]').click()
       cy.get('[data-test="progress-50"]').click()
       cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
         results: noBlockersObjective,
-      })
+      }).as('postObjectiveApiRequest')
       cy.get('[data-test="submit-button"]').click()
       cy.get('[data-test="summary-form-errors"]')
         .children()
         .contains('There is a problem')
-        .next()
-        .children()
-        .should('have.length', 1)
-        .first()
-        .contains('Enter a valid target date')
+      assertErrorSummary(['Enter a valid target date'])
+      cy.get('[data-test="field-target_date-error"]').contains(
+        'Enter a valid target date'
+      )
     })
   })
-  context('When adding an objective with blockers', () => {
+  context('When adding all objective fields including with blockers', () => {
     before(() => {
       cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
       cy.visit(urls.companies.accountManagement.objectives.create(companyId))
     })
     it('clicking yes to blocker should reveal a text area to enable blocker to be captured', () => {
-      cy.get('[data-test="subject-input"]')
-        .click()
-        .type(noBlockersObjective.subject)
-      cy.get('[data-test="target_date-day"]').click().type('3')
-      cy.get('[data-test="target_date-month"]').click().type('1')
-      cy.get('[data-test="target_date-year"]').click().type('2030')
+      fill('[data-test="subject-input"]', noBlockersObjective.subject)
+      fill('[data-test="detail-input"]', noBlockersObjective.detail)
+      fill('[data-test="target_date-day"]', '3')
+      fill('[data-test="target_date-month"]', '1')
+      fill('[data-test="target_date-year"]', '2020')
       cy.get('[data-test="has-blocker-no"]').click()
       cy.get('[data-test="field-blocker_description"]').should('not.exist')
       cy.get('[data-test="has-blocker-yes"]').click()
       cy.get('[data-test="field-blocker_description"]')
         .should('exist')
         .click()
-        .type('Blocker words')
+        .type(noBlockersObjective.blocker_description)
       cy.get('[data-test="progress-25"]').click()
       cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
         results: noBlockersObjective,
-      })
+      }).as('postObjectiveApiRequest')
       cy.get('[data-test="submit-button"]').click()
+      assertPayload('@postObjectiveApiRequest', {
+        subject: noBlockersObjective.subject,
+        detail: noBlockersObjective.detail,
+        company: companyId,
+        target_date: '2020-01-03',
+        has_blocker: true,
+        blocker_description: noBlockersObjective.blocker_description,
+        progress: 25,
+      })
       cy.get('[data-test="status-message"]').contains('Objective saved')
     })
   })
