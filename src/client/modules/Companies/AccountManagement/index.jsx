@@ -207,6 +207,7 @@ const AccountManagement = ({
               companyId={companyId}
               company={company}
               permissions={permissions}
+              flashMessages={[flashMessages]}
             />
           ) : (
             <>Hello renderCoreTeamAdvisers</>
