@@ -201,20 +201,40 @@ const AccountManagement = ({
         >
           <Strategy company={company} />
           <Objectives company={company} />
-          {company.oneListGroupTier === null ||
-          company.oneListGroupTier.id ===
+          {/* <span>{console.log(company)}</span>
+          <span>
+            {console.log(
+              '!company.oneListGroupTier: ',
+              !company.oneListGroupTier
+            )}
+          </span>
+          <span>
+            {console.log(
+              'company.oneListGroupTier?.id: ',
+              company.oneListGroupTier?.id
+            )}
+          </span> */}
+          {!company.oneListGroupTier ||
+          company.oneListGroupTier?.id ===
             '1929c808-99b4-4abf-a891-45f2e187b410' ? (
-            <LeadITA
-              companyId={companyId}
-              company={company}
-              permissions={permissions}
-              flashMessages={[flashMessages]}
-            />
+            <>
+              {' '}
+              {/* <span>{console.log('LEADITA')}</span> */}
+              <LeadITA
+                companyId={companyId}
+                company={company}
+                permissions={permissions}
+                flashMessages={[flashMessages]}
+              />
+            </>
           ) : (
-            <CoreTeamAdvisers
-              company={company}
-              oneListEmail={'one.list@example.com'}
-            />
+            <>
+              {/* <span>{console.log('CORETEAMADVISERS')}</span> */}
+              <CoreTeamAdvisers
+                company={company}
+                oneListEmail={'one.list@example.com'}
+              />
+            </>
           )}
         </CompanyLayout>
       )}

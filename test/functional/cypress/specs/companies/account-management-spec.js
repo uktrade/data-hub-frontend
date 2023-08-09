@@ -85,6 +85,7 @@ describe('Company account management', () => {
           companyFaker({ strategy: undefined, id: companyId })
         ).as('companyApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
+        cy.wait('@companyApi')
       })
 
       assertBreadcrumbs(fixtures.company.allActivitiesCompany)
