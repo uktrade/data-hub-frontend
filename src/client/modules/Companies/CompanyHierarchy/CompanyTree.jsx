@@ -293,6 +293,28 @@ const HierarchyItem = ({
         }
       >
         <HierarchyItemHeading>
+          <GridColHeader>
+            {Object.keys(company).length === 0 ? (
+              `No related companies found`
+            ) : company?.id ? (
+              <Link
+                href={urls.companies.overview.index(company.id)}
+                aria-label={`Go to ${company.name} details`}
+              >
+                {company.name}
+              </Link>
+            ) : (
+              `${company.name} (not on Data Hub)`
+            )}
+            {company?.trading_names?.length > 0 && (
+              <TradingNames
+                data-test={`${companyName}-trading-names`}
+                isRequestedCompanyId={isRequestedCompanyId}
+              >
+                Trading as: {company?.trading_names.join(', ')}
+              </TradingNames>
+            )}
+          </GridColHeader>
           <GridColTags>
             {company.one_list_tier?.name && (
               <HierarchyTag
@@ -339,28 +361,6 @@ const HierarchyItem = ({
               </HierarchyTag>
             )}
           </GridColTags>
-          <GridColHeader>
-            {Object.keys(company).length === 0 ? (
-              `No related companies found`
-            ) : company?.id ? (
-              <Link
-                href={urls.companies.overview.index(company.id)}
-                aria-label={`Go to ${company.name} details`}
-              >
-                {company.name}
-              </Link>
-            ) : (
-              `${company.name} (not on Data Hub)`
-            )}
-            {company?.trading_names?.length > 0 && (
-              <TradingNames
-                data-test={`${companyName}-trading-names`}
-                isRequestedCompanyId={isRequestedCompanyId}
-              >
-                Trading as: {company?.trading_names.join(', ')}
-              </TradingNames>
-            )}
-          </GridColHeader>
         </HierarchyItemHeading>
         {isOnDataHub ? (
           <ToggleSection
