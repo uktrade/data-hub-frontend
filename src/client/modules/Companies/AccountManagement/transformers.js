@@ -13,7 +13,7 @@ export const transformFormValuesForAPI = ({
   subject,
   detail,
   target_date: transformValueForAPI(target_date),
-  company: company,
+  company,
   has_blocker: transformRadioOptionToBool(has_blocker),
   blocker_description,
   progress: parseInt(progress),
