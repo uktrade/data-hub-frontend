@@ -42,7 +42,6 @@ const CompanyLayout = ({
 
 CompanyLayout.propTypes = {
   company: PropTypes.object.isRequired,
-  permissions: PropTypes.array.isRequired,
   children: PropTypes.element.isRequired,
   isInvestment: PropTypes.bool,
   isLCP: PropTypes.bool,

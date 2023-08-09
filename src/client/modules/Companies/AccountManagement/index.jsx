@@ -14,6 +14,7 @@ import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
+import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -210,7 +211,10 @@ const AccountManagement = ({
               flashMessages={[flashMessages]}
             />
           ) : (
-            <>Hello renderCoreTeamAdvisers</>
+            <CoreTeamAdvisers
+              company={company}
+              oneListEmail={'one.list@example.com'}
+            />
           )}
         </CompanyLayout>
       )}

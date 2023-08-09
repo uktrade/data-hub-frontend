@@ -69,13 +69,13 @@ const RenderHasAccountManager = ({
   </div>
 )
 
-export const LeadITA = ({ company, companyId, permissions }) => (
+export const LeadITA = ({ company, permissions }) => (
   <>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {company.name}</H2>
     {!!company.oneListGroupGlobalAccountManager ? (
       <RenderHasAccountManager
         leadITA={company.oneListGroupGlobalAccountManager}
-        companyId={companyId}
+        companyId={company.id}
         permissions={permissions}
         addUrl={urls.companies.advisers.assign(company.id)}
       />
@@ -99,6 +99,11 @@ export const LeadITA = ({ company, companyId, permissions }) => (
     )}
   </>
 )
+
+LeadITA.propTypes = {
+  company: PropTypes.object.isRequired,
+  permissions: PropTypes.array.isRequired,
+}
 
 const LeadAdvisers = ({
   companyId,
