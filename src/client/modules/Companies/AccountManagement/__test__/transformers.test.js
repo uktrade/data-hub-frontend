@@ -1,4 +1,5 @@
 import { transformFormValuesForAPI } from '../transformers'
+import { OPTION_YES } from '../../../../apps/constants'
 
 describe('transformFormValuesForAPI', () => {
   context('When a values object is passed as a prop', () => {
@@ -9,7 +10,7 @@ describe('transformFormValuesForAPI', () => {
           detail: 'The objective details',
           target_date: { day: '3', month: '3', year: '2030' },
           company: 123,
-          has_blocker: 'Yes',
+          has_blocker: OPTION_YES,
           blocker_description: 'A blocker description',
           progress: '50',
         })
