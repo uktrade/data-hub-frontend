@@ -7,11 +7,11 @@ describe('transformFormValuesForAPI', () => {
         transformFormValuesForAPI({
           subject: 'A subject',
           detail: 'The objective details',
-          target_date: '2030-03-03',
+          target_date: { day: '3', month: '3', year: '2030' },
           company: 123,
-          has_blocker: true,
+          has_blocker: 'Yes',
           blocker_description: 'A blocker description',
-          progress: 50,
+          progress: '50',
         })
       ).to.be.deep.equal({
         subject: 'A subject',
