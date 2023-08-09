@@ -69,6 +69,37 @@ const RenderHasAccountManager = ({
   </div>
 )
 
+export const LeadITA = ({ company, companyId, permissions }) => (
+  <>
+    <H2 size={LEVEL_SIZE[3]}>Lead ITA for {company.name}</H2>
+    {!!company.oneListGroupGlobalAccountManager ? (
+      <RenderHasAccountManager
+        leadITA={company.oneListGroupGlobalAccountManager}
+        companyId={companyId}
+        permissions={permissions}
+        addUrl={urls.companies.advisers.assign(company.id)}
+      />
+    ) : (
+      <>
+        <p>
+          This company record has no Lead International Trade Adviser (ITA).
+        </p>
+        {hasPermissionToAddIta(permissions) && (
+          <>
+            <p>
+              You can add a Lead ITA. This will be visible to all Data Hub
+              users.
+            </p>
+            <Button as={Link} href={urls.companies.advisers.assign(company.id)}>
+              Add a Lead ITA
+            </Button>
+          </>
+        )}
+      </>
+    )}
+  </>
+)
+
 const LeadAdvisers = ({
   companyId,
   dnbRelatedCompaniesCount,
@@ -87,35 +118,11 @@ const LeadAdvisers = ({
         flashMessages={flashMessages}
         returnUrl={returnUrl}
       >
-        <H2 size={LEVEL_SIZE[3]}>Lead ITA for {company.name}</H2>
-        {!!company.oneListGroupGlobalAccountManager ? (
-          <RenderHasAccountManager
-            leadITA={company.oneListGroupGlobalAccountManager}
-            companyId={companyId}
-            permissions={permissions}
-            addUrl={urls.companies.advisers.assign(company.id)}
-          />
-        ) : (
-          <>
-            <p>
-              This company record has no Lead International Trade Adviser (ITA).
-            </p>
-            {hasPermissionToAddIta(permissions) && (
-              <>
-                <p>
-                  You can add a Lead ITA. This will be visible to all Data Hub
-                  users.
-                </p>
-                <Button
-                  as={Link}
-                  href={urls.companies.advisers.assign(company.id)}
-                >
-                  Add a Lead ITA
-                </Button>
-              </>
-            )}
-          </>
-        )}
+        <LeadITA
+          company={company}
+          companyId={companyId}
+          permissions={permissions}
+        ></LeadITA>
       </CompanyLayout>
     )}
   </CompanyResource>

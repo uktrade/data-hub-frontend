@@ -13,6 +13,7 @@ import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
+import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -184,6 +185,7 @@ const AccountManagement = ({
   dnbRelatedCompaniesCount,
   flashMessages,
   csrfToken,
+  permissions,
 }) => {
   return (
     <CompanyResource id={companyId}>
@@ -193,11 +195,22 @@ const AccountManagement = ({
           breadcrumbs={[{ text: 'Account management' }]}
           localNavItems={localNavItems}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-          flashMessages={flashMessages}
+          flashMessages={[flashMessages]}
           csrfToken={csrfToken}
         >
           <Strategy company={company} />
           <Objectives company={company} />
+          {company.oneListGroupTier === null ||
+          company.oneListGroupTier.id ===
+            '1929c808-99b4-4abf-a891-45f2e187b410' ? (
+            <LeadITA
+              companyId={companyId}
+              company={company}
+              permissions={permissions}
+            />
+          ) : (
+            <>Hello renderCoreTeamAdvisers</>
+          )}
         </CompanyLayout>
       )}
     </CompanyResource>
