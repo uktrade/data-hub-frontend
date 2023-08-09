@@ -9,7 +9,7 @@ const convertAdviser = ({ name, contact_email, dit_team }) => ({
 
 export default () =>
   Promise.all([
-    apiProxyAxios.get('v4/company-referral'),
+    apiProxyAxios.get('v4/company-referral?limit=100000&offset=0'),
     apiProxyAxios.get('whoami/'),
   ]).then(
     ([
