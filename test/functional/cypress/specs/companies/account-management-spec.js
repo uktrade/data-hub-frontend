@@ -39,6 +39,7 @@ describe('Company account management', () => {
         companyWithStrategy
       ).as('companyApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
+      cy.wait('@companyApi')
     })
 
     assertBreadcrumbs(fixtures.company.allActivitiesCompany)
@@ -112,6 +113,7 @@ describe('Company account management', () => {
           results: [],
         }).as('objectiveApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
+        cy.wait('@objectiveApi')
       })
 
       it('should not display any objectives', () => {
