@@ -15,6 +15,7 @@ import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
+import { isItaTierDAccount } from '../utils'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -201,40 +202,19 @@ const AccountManagement = ({
         >
           <Strategy company={company} />
           <Objectives company={company} />
-          {/* <span>{console.log(company)}</span>
-          <span>
-            {console.log(
-              '!company.oneListGroupTier: ',
-              !company.oneListGroupTier
-            )}
-          </span>
-          <span>
-            {console.log(
-              'company.oneListGroupTier?.id: ',
-              company.oneListGroupTier?.id
-            )}
-          </span> */}
           {!company.oneListGroupTier ||
-          company.oneListGroupTier?.id ===
-            '1929c808-99b4-4abf-a891-45f2e187b410' ? (
-            <>
-              {' '}
-              {/* <span>{console.log('LEADITA')}</span> */}
-              <LeadITA
-                companyId={companyId}
-                company={company}
-                permissions={permissions}
-                flashMessages={[flashMessages]}
-              />
-            </>
+          isItaTierDAccount(company.oneListGroupTier) ? (
+            <LeadITA
+              companyId={companyId}
+              company={company}
+              permissions={permissions}
+              flashMessages={[flashMessages]}
+            />
           ) : (
-            <>
-              {/* <span>{console.log('CORETEAMADVISERS')}</span> */}
-              <CoreTeamAdvisers
-                company={company}
-                oneListEmail={'one.list@example.com'}
-              />
-            </>
+            <CoreTeamAdvisers
+              company={company}
+              oneListEmail={'one.list@example.com'}
+            />
           )}
         </CompanyLayout>
       )}

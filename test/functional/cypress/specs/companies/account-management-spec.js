@@ -9,6 +9,40 @@ const urls = require('../../../../../src/lib/urls')
 
 const companyId = fixtures.company.allActivitiesCompany.id
 
+const company = fixtures.company.oneListCorp
+const globalAccountManager = company.one_list_group_global_account_manager
+
+const coreTeamResponse = {
+  adviser: {
+    name: 'Travis Greene',
+    ditTeam: {
+      name: 'IST - Sector Advisory Services',
+      ukRegion: {
+        name: 'London',
+      },
+      country: {
+        name: 'United Kingdom',
+      },
+    },
+  },
+  isGlobalAccountManager: true,
+}
+
+const assertTable = ({ element, rows }) => {
+  cy.get(element).as('table').find('th')
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
+}
+
 const assertBreadcrumbs = (company) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
@@ -152,4 +186,178 @@ describe('Company account management', () => {
         .should('not.contain', noBlockersObjective.blocker_description)
     })
   })
+})
+
+describe('One List core team', () => {
+  context('when viewing a One List Tier company', () => {
+    before(() => {
+      cy.visit(urls.companies.accountManagement.index(company.id))
+    })
+
+    it('should render the heading', () => {
+      cy.get('[data-test=core-team-heading]')
+        .should('exist')
+        .should('have.text', 'Advisers on the core team')
+    })
+
+    it('should render the subheading', () => {
+      cy.get('[data-test=core-team-subheading]')
+        .should('exist')
+        .should(
+          'have.text',
+          'This is an account managed company on the One List (Tier A - Strategic Account)'
+        )
+    })
+
+    it('should render the global account manager table', () => {
+      assertTable({
+        element: '[data-test="global-acc-manager-table"]',
+        rows: [
+          ['Team', 'Location', 'Global Account Manager'],
+          [
+            globalAccountManager.dit_team.name,
+            globalAccountManager.dit_team.uk_region.name,
+            globalAccountManager.name,
+          ],
+        ],
+      })
+    })
+
+    it('should render the advisers table', () => {
+      assertTable({
+        element: '[data-test="advisers-table"]',
+        rows: [
+          ['Team', 'Location', 'Adviser on core team'],
+          ['Heart of the South West LEP', 'United Kingdom', 'Holly Collins'],
+          [
+            'IG - Specialists - Knowledge Intensive Industry',
+            'London',
+            'Jenny Carey',
+          ],
+        ],
+      })
+    })
+
+    it('should render the details section', () => {
+      cy.get('[data-test=core-team-details]')
+        .click()
+        .should('exist')
+        .contains(
+          'Need to find out more, or edit the One List tier information?For more information, or if you need to change the One List tier or account management team for this company, go to the Digital Workspace (opens in a new window or tab) or email'
+        )
+    })
+  })
+
+  context('when viewing a One List Tier company with no advisers', () => {
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/company/${company.id}/one-list-group-core-team`,
+        {
+          body: [coreTeamResponse],
+        }
+      ).as('apiRequest')
+      cy.visit(urls.companies.accountManagement.index(company.id))
+      cy.wait('@apiRequest')
+    })
+
+    it('should only render the global account manager table', () => {
+      assertTable({
+        element: '[data-test="global-acc-manager-table"]',
+        rows: [
+          ['Team', 'Location', 'Global Account Manager'],
+          [
+            globalAccountManager.dit_team.name,
+            globalAccountManager.dit_team.uk_region.name,
+            globalAccountManager.name,
+          ],
+        ],
+      })
+      cy.get('[data-test=advisers-table]').should('not.exist')
+    })
+  })
+})
+
+describe('Lead advisers', () => {
+  context('when viewing a non One List tier company', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.accountManagement.index(
+          fixtures.company.marsExportsLtd.id
+        )
+      )
+    })
+
+    it('should render a meta title', () => {
+      cy.title().should('eq', 'Companies - DBT Data Hub')
+    })
+
+    it('should display a header with the company name', () => {
+      cy.contains('Lead ITA for Mars Exports Ltd')
+    })
+    it('should display help text for adding a lead adviser', () => {
+      cy.contains(
+        'This company record has no Lead International Trade Adviser (ITA).'
+      )
+      cy.contains(
+        'You can add a Lead ITA. This will be visible to all Data Hub users.'
+      )
+    })
+    it('should display a button to add a lead adviser', () => {
+      cy.contains('Add a Lead ITA')
+        .invoke('attr', 'href')
+        .should(
+          'eq',
+          urls.companies.advisers.assign(fixtures.company.marsExportsLtd.id)
+        )
+    })
+  })
+  context(
+    'when viewing a One List tier D - ITA company with an allocated Account manager',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.accountManagement.index(
+            fixtures.company.oneListTierDita.id
+          )
+        )
+      })
+
+      const globalAccountManager =
+        fixtures.company.oneListTierDita.one_list_group_global_account_manager
+
+      it('should display a header with the company name', () => {
+        cy.contains("Lead ITA for Ian's Camper Vans Ltd")
+      })
+      it('should render the global account manager table', () => {
+        assertTable({
+          element: '[data-test="lead-adviser-table"]',
+          rows: [
+            ['Team', 'Lead ITA', 'Email'],
+            [
+              globalAccountManager.dit_team.name,
+              globalAccountManager.name,
+              globalAccountManager.contact_email,
+            ],
+          ],
+        })
+      })
+      it('should display a button to replace the Lead ITA', () => {
+        cy.contains('Replace Lead ITA')
+          .invoke('attr', 'href')
+          .should(
+            'eq',
+            urls.companies.advisers.assign(fixtures.company.oneListTierDita.id)
+          )
+      })
+      it('should display a button to remove the Lead ITA', () => {
+        cy.contains('Remove Lead ITA')
+          .invoke('attr', 'href')
+          .should(
+            'eq',
+            urls.companies.advisers.remove(fixtures.company.oneListTierDita.id)
+          )
+      })
+    }
+  )
 })
