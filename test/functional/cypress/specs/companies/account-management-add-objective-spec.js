@@ -32,23 +32,28 @@ describe('Company account management', () => {
 
   const noBlockersObjective = objectiveFaker({ has_blocker: false })
 
+  context('When visiting the add objective page', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
+      cy.visit(urls.companies.accountManagement.objectives.create(companyId))
+    })
+    assertBreadcrumbs(fixtures.company.allActivitiesCompany)
+    it('should display the add objective heading', () => {
+      cy.get('h1').contains(`Add objective for ${company.name}`)
+    })
+  })
+
   context(
     'When correctly adding required inputs for an objectives that has no blockers',
     () => {
       before(() => {
         cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
-        cy.visit(urls.companies.accountManagement.objectives.create(companyId))
         cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
           results: noBlockersObjective,
-        })
+        }).as('postObjectiveApiRequest')
+        cy.visit(urls.companies.accountManagement.objectives.create(companyId))
       })
-
-      assertBreadcrumbs(fixtures.company.allActivitiesCompany)
-
-      it('should display the add objective heading', () => {
-        cy.get('h1').contains(`Add objective for ${company.name}`)
-      })
-      it('should contain all required form inputs', () => {
+      it('should submit with the minimum amount of data', () => {
         fill('[data-test="subject-input"]', noBlockersObjective.subject)
         fill('[data-test="target_date-day"]', '10')
         fill('[data-test="target_date-month"]', '10')
@@ -99,15 +104,16 @@ describe('Company account management', () => {
       )
     })
   })
+
   context('When adding all objective fields including with blockers', () => {
     before(() => {
       cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
-      cy.visit(urls.companies.accountManagement.objectives.create(companyId))
       cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
         results: noBlockersObjective,
       }).as('postObjectiveApiRequest')
+      cy.visit(urls.companies.accountManagement.objectives.create(companyId))
     })
-    it('clicking yes to blocker should reveal a text area to enable blocker to be captured', () => {
+    it('should reveal a text area to enable a blocker description to be captured', () => {
       fill('[data-test="subject-input"]', noBlockersObjective.subject)
       fill('[data-test="detail-input"]', noBlockersObjective.detail)
       fill('[data-test="target_date-day"]', '3')
@@ -134,6 +140,7 @@ describe('Company account management', () => {
       cy.get('[data-test="status-message"]').contains('Objective saved')
     })
   })
+
   context('When clicking the back link', () => {
     before(() => {
       cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
