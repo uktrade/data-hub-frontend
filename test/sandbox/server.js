@@ -59,6 +59,7 @@ var v4Proposition = require('./routes/v4/proposition/proposition.js')
 var v4Reminders = require('./routes/v4/reminders/index.js')
 var v4Reminder = require('./routes/v4/reminder/reminder.js')
 var v4SearchAdviser = require('./routes/v4/search/adviser.js')
+var v4Objective = require('./routes/v4/objective/index.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -447,6 +448,7 @@ app.patch(
   '/v4/company/:companyId/update-one-list-core-team',
   v4Company.patchOneListCoreTeam
 )
+app.get('/v4/company/:companyId/objective', v4Objective.objectives)
 
 // V4 interactions
 app.get('/v4/interaction', v4Interaction.getInteractions)
