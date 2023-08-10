@@ -139,6 +139,8 @@ const config = {
       },
     },
   },
+  //only keys in this list will be made available to react. For security, no api keys or passwords are to be added here.
+  keysAccessibleFromReact: ['ONE_LIST_EMAIL'],
   greatProfileUrl: envVars.GREAT_PROFILE_URL,
 }
 
