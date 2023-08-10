@@ -377,6 +377,23 @@ module.exports = {
         '/investments',
         '/projects/create/investment-type/info/:anchor'
       ),
+      editAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/edit-associated'
+      ),
+      evidence: url('/investments', '/projects/:projectId/evidence'),
+      recipientCompany: url(
+        '/investments',
+        '/projects/:projectId/edit-ukcompany'
+      ),
+      removeRecipientCompany: url(
+        '/investments',
+        '/projects/:projectId/remove-ukcompany'
+      ),
+      removeAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/remove-associated'
+      ),
     },
     profiles: {
       index: url('/investments', '/profiles'),

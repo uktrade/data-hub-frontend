@@ -75,6 +75,7 @@ import EditProjectSummary from './modules/Investments/Projects/EditProjectSummar
 import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
 import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
+import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -385,6 +386,7 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
   TASK_EDIT_INVESTMENT_PROJECT_VALUE,
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
+  TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
 } from './modules/Investments/Projects/state'
 import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
 
@@ -630,6 +632,7 @@ function App() {
           [TASK_EDIT_INVESTMENT_PROJECT_STATUS]: updateInvestmentProject,
           [TASK_SAVE_OBJECTIVE]: saveObjective,
           [TASK_GET_OBJECTIVE]: getObjective,
+          [TASK_UPDATE_INVESTMENT_PROJECT_STAGE]: updateInvestmentProject,
         }}
       >
         <Mount selector="#data-hub-header">
@@ -906,6 +909,9 @@ function App() {
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
+        </Mount>
+        <Mount selector="#project-details">
+          {(props) => <ProjectDetails {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

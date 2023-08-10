@@ -69,7 +69,7 @@ export const SORT_OPTIONS = [
 
 export const INCOMPLETE_FIELDS = {
   client_cannot_provide_total_investment:
-    'Includes capital, operational and R&D expenditure',
+    'Can client provide total investment value?',
   number_new_jobs: 'Number of new jobs',
   strategic_drivers: 'Strategic drivers behind this investment',
   client_requirements: 'Client requirements',
@@ -102,6 +102,7 @@ export const INCOMPLETE_FIELDS = {
   competitor_countries: 'Competitor countries',
   foreign_equity_investment: 'Foreign equity investment',
   associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
+  fdi_type: 'FDI type',
 }
 
 export const STAGES = ['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']

@@ -41,6 +41,9 @@ function detailsGetHandler(req, res, next) {
       isRequirementsStarted,
       details: getDataLabels(transformedDetails, detailsLabels.view),
       values: getDataLabels(transformedValue, valueLabels.view),
+      props: {
+        projectId: res.locals.investment.id,
+      },
     })
   }
   return next()

@@ -6,3 +6,9 @@ export const TASK_EDIT_INVESTMENT_PROJECT_VALUE =
   'TASK_EDIT_INVESTMENT_PROJECT_VALUE'
 export const TASK_EDIT_INVESTMENT_PROJECT_STATUS =
   'TASK_EDIT_INVESTMENT_PROJECT_VALUE'
+export const TASK_UPDATE_INVESTMENT_PROJECT_STAGE =
+  'TASK_UPDATE_INVESTMENT_PROJECT_STAGE'
+
+export const state2props = (state) => {
+  return { currentAdviserId: state.currentAdviserId }
+}
