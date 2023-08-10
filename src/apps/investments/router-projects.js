@@ -33,8 +33,6 @@ const {
   team,
 } = require('./controllers')
 
-const { projectStageFormMiddleware } = require('./middleware/forms')
-
 const { renderProjectsView } = require('./controllers/projects')
 const { renderPropositionList } = require('./controllers/propositions')
 const { renderAdminView } = require('./controllers/admin')
@@ -170,11 +168,6 @@ router
 router
   .route('/:investmentId/evidence/:evidenceId/delete')
   .get(setEvidenceReturnUrl, deleteEvidence)
-
-router.post(
-  '/:investmentId/change-project-stage',
-  projectStageFormMiddleware.handleFormPost
-)
 
 router.use(
   urls.investments.projects.interactions.index.route,

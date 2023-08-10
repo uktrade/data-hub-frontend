@@ -5,59 +5,6 @@ const roleAdviserTeam = {
 }
 
 const labels = {
-  detailsLabels: {
-    view: {
-      investor_company: 'Client',
-      investment_type: 'Investment type',
-      sector: 'Primary sector',
-      business_activities: 'Business activity',
-      client_contacts: 'Client contacts',
-      description: 'Project description',
-      anonymous_description: 'Anonymised description',
-      estimated_land_date: 'Estimated land date',
-      likelihood_to_land: 'Likelihood of landing',
-      actual_land_date: 'Actual land date',
-      investor_type: 'New or existing investor',
-      level_of_involvement: 'Level of involvement',
-      specific_programme: 'Specific investment programme',
-    },
-  },
-  valueLabels: {
-    view: {
-      total_investment: 'Total investment',
-      total_investment_hint: 'Enter the total number of GB pounds',
-      foreign_equity_investment: 'Capital expenditure value',
-      foreign_equity_investment_hint: 'Enter the total number of GB pounds',
-      gross_value_added: 'Gross Value Added (GVA)',
-      government_assistance: 'Government assistance',
-      number_new_jobs: 'New jobs',
-      average_salary: 'Average salary of new jobs',
-      number_safeguarded_jobs: 'Safeguarded jobs',
-      r_and_d_budget: 'R&D budget',
-      associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
-      new_tech_to_uk: 'New-to-world tech',
-      export_revenue: 'Export revenue',
-    },
-    edit: {
-      number_new_jobs: 'Number of new jobs',
-      number_safeguarded_jobs: 'Number of safeguarded jobs',
-      client_cannot_provide_total_investment:
-        'Can client provide total investment value?',
-    },
-  },
-  requirementsLabels: {
-    view: {
-      strategic_drivers: 'Strategic drivers',
-      client_requirements: 'Client requirements',
-      competitor_countries: 'Competitor countries',
-      uk_region_locations: 'Possible UK locations',
-      actual_uk_regions: 'UK regions landed',
-      uk_company: 'UK recipient company',
-      delivery_partners: 'Delivery partners',
-      client_considering_other_countries:
-        'Is the client considering other countries?',
-    },
-  },
   evaluationValueLabels: {
     view: {
       sector_name: 'Primary sector',
@@ -93,10 +40,6 @@ const labels = {
     },
   },
   projectManagementLabels: {
-    edit: {
-      project_manager: 'Project Manager',
-      project_assurance_adviser: 'Project Assurance Adviser',
-    },
     view: roleAdviserTeam,
   },
   briefInvestmentSummaryLabels: {
@@ -149,11 +92,5 @@ const labels = {
     sector: 'Sector',
   },
 }
-
-labels.valueLabels.edit = Object.assign(
-  {},
-  labels.valueLabels.view,
-  labels.valueLabels.edit
-)
 
 module.exports = labels
