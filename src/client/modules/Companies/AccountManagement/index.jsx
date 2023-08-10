@@ -16,6 +16,7 @@ import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
+import { oneList } from '../../../../config'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -197,24 +198,16 @@ const AccountManagement = ({
           breadcrumbs={[{ text: 'Account management' }]}
           localNavItems={localNavItems}
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-          flashMessages={[flashMessages]}
+          flashMessages={flashMessages}
           csrfToken={csrfToken}
         >
           <Strategy company={company} />
           <Objectives company={company} />
           {!company.oneListGroupTier ||
           isItaTierDAccount(company.oneListGroupTier) ? (
-            <LeadITA
-              companyId={companyId}
-              company={company}
-              permissions={permissions}
-              flashMessages={[flashMessages]}
-            />
+            <LeadITA company={company} permissions={permissions} />
           ) : (
-            <CoreTeamAdvisers
-              company={company}
-              oneListEmail={'one.list@example.com'}
-            />
+            <CoreTeamAdvisers company={company} oneListEmail={oneList.email} />
           )}
         </CompanyLayout>
       )}
