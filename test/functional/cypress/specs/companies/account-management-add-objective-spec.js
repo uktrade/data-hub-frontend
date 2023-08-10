@@ -69,12 +69,6 @@ describe('Company account management', () => {
 
       it('should highlight all required inputs', () => {
         cy.get('[data-test="submit-button"]').click()
-        cy.get('[data-test="summary-form-errors"]')
-          .children()
-          .contains('There is a problem')
-          .next()
-          .children()
-          .should('have.length', 4)
         assertErrorSummary([
           'Enter an objective subject',
           'Enter a target date',
@@ -100,9 +94,6 @@ describe('Company account management', () => {
         results: noBlockersObjective,
       }).as('postObjectiveApiRequest')
       cy.get('[data-test="submit-button"]').click()
-      cy.get('[data-test="summary-form-errors"]')
-        .children()
-        .contains('There is a problem')
       assertErrorSummary(['Enter a valid target date'])
       cy.get('[data-test="field-target_date-error"]').contains(
         'Enter a valid target date'
