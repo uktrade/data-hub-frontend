@@ -223,6 +223,10 @@ describe('D&B Company hierarchy tree', () => {
     it('should hide the show subsidiaries button', () => {
       cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
     })
+
+    it('should hide the add to Data Hub link', () => {
+      cy.get('[data-test="add-"]').should('not.exist')
+    })
   })
 
   context('When a company has no subsidiaries', () => {

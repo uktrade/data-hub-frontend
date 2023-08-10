@@ -397,15 +397,17 @@ const HierarchyItem = ({
             </InlineDescriptionList>
           </ToggleSection>
         ) : (
-          <AddCompanyLinkDiv>
-            <AddCompanyLink
-              href={urls.companies.createFromDNB(company.duns_number)}
-              aria-label={`Add ${company.name} to data Hub`}
-              data-test={`add-${companyName}`}
-            >
-              Add {company.name} to Data Hub
-            </AddCompanyLink>
-          </AddCompanyLinkDiv>
+          company.duns_number && (
+            <AddCompanyLinkDiv>
+              <AddCompanyLink
+                href={urls.companies.createFromDNB(company.duns_number)}
+                aria-label={`Add ${company.name} to data Hub`}
+                data-test={`add-${companyName}`}
+              >
+                Add {company.name} to Data Hub
+              </AddCompanyLink>
+            </AddCompanyLinkDiv>
+          )
         )}
       </HierarchyItemContents>
       <Subsidiaries
