@@ -10,7 +10,6 @@ async function renderAccountManagement(req, res) {
       dnbRelatedCompaniesCount,
       permissions,
       localNavItems: localNavItems,
-      // flashMessages: res.locals.getMessages(),
       flashMessages: [],
       companyId: company.id,
       returnUrl: returnUrl,
