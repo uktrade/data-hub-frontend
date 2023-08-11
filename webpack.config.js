@@ -2,6 +2,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const webpack = require('webpack')
 const { spawn } = require('child_process')
+const fs = require('fs')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
@@ -10,13 +11,16 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 const config = require('./src/config')
 
-const env = dotenv.config().parsed
-const envKeys = Object.keys(env)
-  .filter((f) => config.keysAccessibleFromReact.includes(f))
-  .reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next])
-    return prev
-  }, {})
+let envKeys = {}
+if (fs.existsSync('.env')) {
+  const env = dotenv.config().parsed
+  envKeys = Object.keys(env)
+    .filter((f) => config.keysAccessibleFromReact.includes(f))
+    .reduce((prev, next) => {
+      prev[`process.env.${next}`] = JSON.stringify(env[next])
+      return prev
+    }, {})
+}
 
 /**
  * A webpack plugin that starts a node.js server after the assets are compiled.
