@@ -1,5 +1,9 @@
+import { transformDateStringToDateObject } from '../../../transformers'
 import { transformValueForAPI } from '../../../utils/date'
-import { transformRadioOptionToBool } from '../../Investments/Projects/transformers'
+import {
+  transformBoolToRadioOption,
+  transformRadioOptionToBool,
+} from '../../Investments/Projects/transformers'
 
 export const transformFormValuesForAPI = ({
   company,
@@ -17,4 +21,22 @@ export const transformFormValuesForAPI = ({
   has_blocker: transformRadioOptionToBool(has_blocker),
   blocker_description,
   progress: parseInt(progress),
+})
+
+export const transformAPIValuesForForm = ({
+  company,
+  subject,
+  detail,
+  target_date,
+  has_blocker,
+  blocker_description,
+  progress,
+}) => ({
+  subject,
+  detail,
+  target_date: transformDateStringToDateObject(target_date),
+  company,
+  has_blocker: transformBoolToRadioOption(has_blocker),
+  blocker_description,
+  progress: `${progress}`,
 })
