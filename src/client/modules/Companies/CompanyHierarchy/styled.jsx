@@ -75,9 +75,9 @@ export const HierarchyItemContents = styled.div`
   `}
   }
   ${({ hierarchy }) =>
-    !hierarchy ||
-    (hierarchy != 1 &&
-      `
+    hierarchy &&
+    hierarchy != 1 &&
+    `
       transform-style: preserve-3d;
 
       :before {
@@ -86,7 +86,7 @@ export const HierarchyItemContents = styled.div`
         top: 16px;
         left: -30px;
       }
-  `)}
+  `}
 `
 
 export const HierarchyItemHeading = styled.div`
