@@ -11,6 +11,9 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 const config = require('./src/config')
 
+// On local dev environments we use a .env file, however on deployed environments we use environment
+// variables set from within the Vault. This code is here to load the variables in a .env file into
+// the process.env variable so they can be accessed in the same way on local
 let envKeys = {}
 if (fs.existsSync('.env')) {
   const env = dotenv.config().parsed

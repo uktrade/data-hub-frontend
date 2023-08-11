@@ -46,7 +46,6 @@ const buildAdviserRows = (oneListTeam) => {
 
 const CoreTeam = ({
   companyId,
-  oneListEmail,
   dnbRelatedCompaniesCount,
   returnUrl,
   localNavItems,
@@ -100,7 +99,9 @@ const CoreTeam = ({
                 Digital Workspace
               </NewWindowLink>{' '}
               or email{' '}
-              <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+              <Link href={`mailto:${process.env.ONE_LIST_EMAIL}`}>
+                {process.env.ONE_LIST_EMAIL}
+              </Link>
             </Details>
           </CompanyLayout>
         )}
