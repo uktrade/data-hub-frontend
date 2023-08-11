@@ -20,7 +20,8 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Strategy from './modules/Companies/AccountManagement/Strategy'
 import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
-import Objective from './modules/Companies/AccountManagement/Objective'
+import ObjectiveAdd from './modules/Companies/AccountManagement/objective/ObjectiveAdd'
+import ObjectiveEdit from './modules/Companies/AccountManagement/objective/ObjectiveEdit'
 
 const routes = {
   companies: [
@@ -52,12 +53,12 @@ const routes = {
     {
       path: '/companies/:companyId/account-management/objective/create',
       module: 'datahub:companies',
-      component: Objective,
+      component: ObjectiveAdd,
     },
     {
-      path: '/companies/:companyId/account-management/objective/edit',
+      path: '/companies/:companyId/account-management/objective/:objectiveId/edit',
       module: 'datahub:companies',
-      component: Objective,
+      component: ObjectiveEdit,
     },
   ],
   contacts: [
