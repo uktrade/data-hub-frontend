@@ -16,6 +16,7 @@ import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
+import { ONE_LIST_EMAIL } from './constants'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -206,10 +207,7 @@ const AccountManagement = ({
           isItaTierDAccount(company.oneListGroupTier) ? (
             <LeadITA company={company} permissions={permissions} />
           ) : (
-            <CoreTeamAdvisers
-              company={company}
-              oneListEmail={'one.list@example.com'}
-            />
+            <CoreTeamAdvisers company={company} oneListEmail={ONE_LIST_EMAIL} />
           )}
         </CompanyLayout>
       )}
