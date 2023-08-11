@@ -123,11 +123,7 @@ const LeadAdvisers = ({
         flashMessages={flashMessages}
         returnUrl={returnUrl}
       >
-        <LeadITA
-          company={company}
-          companyId={companyId}
-          permissions={permissions}
-        ></LeadITA>
+        <LeadITA company={company} permissions={permissions}></LeadITA>
       </CompanyLayout>
     )}
   </CompanyResource>
