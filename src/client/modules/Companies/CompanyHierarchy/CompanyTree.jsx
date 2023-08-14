@@ -402,7 +402,7 @@ const HierarchyItem = ({
               <AddCompanyLink
                 href={urls.companies.createFromDNB(company.duns_number)}
                 aria-label={`Add ${company.name} to data Hub`}
-                data-test={`add-${companyName}`}
+                data-test={`add-company-${companyName}`}
               >
                 Add {company.name} to Data Hub
               </AddCompanyLink>
