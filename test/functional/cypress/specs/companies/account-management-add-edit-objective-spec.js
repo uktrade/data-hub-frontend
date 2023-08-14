@@ -22,13 +22,16 @@ const companyId = fixtures.company.allActivitiesCompany.id
 const noBlockersObjective = objectiveFaker({ has_blocker: false })
 const withBlockersObjective = objectiveFaker({ progress: 75 })
 
-const assertBreadcrumbs = (company) => {
+const assertBreadcrumbs = (company, objective) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
       Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.detail(company.id),
-      'Account management': null,
+      'Account management': urls.companies.accountManagement.index(company.id),
+      [objective
+        ? `Edit ${objective.subject}`
+        : `Add objective for ${company.name}`]: null,
     })
   })
 }
@@ -186,7 +189,10 @@ describe('Company account management', () => {
       )
     })
 
-    assertBreadcrumbs(fixtures.company.allActivitiesCompany)
+    assertBreadcrumbs(
+      fixtures.company.allActivitiesCompany,
+      withBlockersObjective
+    )
 
     it('should display the add objective heading', () => {
       cy.get('h1').contains(

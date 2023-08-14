@@ -38,6 +38,7 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
       value: '100',
     },
   ]
+
   return (
     <DefaultLayout
       heading={
@@ -53,7 +54,9 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
             text: 'Account management',
           },
           {
-            text: `Objective for ${company.name}`,
+            text: objectiveItem
+              ? `Edit ${objectiveItem.subject}`
+              : `Add objective for ${company.name}`,
           },
         ],
         company.id,
