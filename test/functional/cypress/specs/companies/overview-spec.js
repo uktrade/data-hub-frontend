@@ -352,7 +352,7 @@ describe('Company overview page', () => {
         .click()
       cy.location('pathname').should(
         'eq',
-        `/companies/${fixtures.company.oneListTierDita.id}/advisers`
+        `/companies/${fixtures.company.oneListTierDita.id}/account-management`
       )
       cy.go('back')
     })
@@ -380,7 +380,7 @@ describe('Company overview page', () => {
           .click()
         cy.location('pathname').should(
           'eq',
-          `/companies/${fixtures.company.allOverviewDetails.id}/advisers`
+          `/companies/${fixtures.company.allOverviewDetails.id}/account-management`
         )
         cy.go('back')
       })
