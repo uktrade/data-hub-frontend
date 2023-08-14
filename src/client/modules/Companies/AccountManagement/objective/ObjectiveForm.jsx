@@ -103,7 +103,7 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
               />
               <FieldRadios
                 name="has_blocker"
-                label="Are there any blockers to achieving this objective?"
+                legend="Are there any blockers to achieving this objective?"
                 required="Select if there are any blockers"
                 options={OPTIONS_YES_NO.map((option) => ({
                   ...option,
