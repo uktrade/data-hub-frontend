@@ -76,7 +76,12 @@ const ExportDetailsForm = ({ exportItem }) => {
   return (
     <DefaultLayout
       heading={exportItem ? exportItem.title : ''}
-      subheading={exportItem?.company?.name}
+      headingLink={
+        exportItem && {
+          url: `/companies/${exportItem.company.id}/overview`,
+          text: exportItem.company.name,
+        }
+      }
       pageTitle="Export details"
       breadcrumbs={getBreadcrumbs(exportItem)}
       useReactRouter={false}

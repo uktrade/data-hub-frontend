@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 
 const DefaultLayout = ({
   heading,
+  headingLink,
   subheading,
   pageTitle,
   flashMessages,
@@ -37,6 +38,7 @@ const DefaultLayout = ({
       />
       <LocalHeader
         heading={heading}
+        headingLink={headingLink}
         subheading={subheading}
         flashMessages={flashMessages}
         breadcrumbs={
@@ -56,6 +58,10 @@ const DefaultLayout = ({
 
 DefaultLayout.propTypes = {
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  headingLink: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
   subheading: PropTypes.string,
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
