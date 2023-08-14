@@ -409,7 +409,7 @@ describe('D&B Company hierarchy tree', () => {
 
     it('should have a link to add the company to Data Hub', () => {
       cy.get('[data-test="expand-tree-button"]').click()
-      cy.get(`[data-test=add-not-on-data-hub-ltd`).click()
+      cy.get(`[data-test=add-company-not-on-data-hub-ltd`).click()
       cy.location().should((loc) => {
         expect(loc.search).to.eq('?duns_number=123456789')
       })
