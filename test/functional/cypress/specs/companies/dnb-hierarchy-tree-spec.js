@@ -225,7 +225,7 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     it('should hide the add to Data Hub link', () => {
-      cy.get('[data-test="add-"]').should('not.exist')
+      cy.get('[data-test="add-company-"]').should('not.exist')
     })
   })
 
