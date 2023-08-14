@@ -73,7 +73,7 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
           transformPayload={(values) => ({
             values,
             companyId: company.id,
-            objectiveId: objectiveItem.id,
+            objective: objectiveItem,
           })}
           flashMessage={() => 'Objective saved'}
           submitButtonLabel="Save objective"

@@ -7,12 +7,12 @@ export const saveStrategy = ({ strategy, companyId }) => {
   return request(endpoint, { strategy: strategy })
 }
 
-export const saveObjective = ({ values, companyId, objectiveId }) => {
+export const saveObjective = ({ values, companyId, objective }) => {
   values.company = companyId
   let request, endpoint
-  if (objectiveId) {
+  if (objective) {
     request = apiProxyAxios.patch
-    endpoint = `/v4/company/${companyId}/objective/${objectiveId}`
+    endpoint = `/v4/company/${companyId}/objective/${objective.id}`
   } else {
     request = apiProxyAxios.post
     endpoint = `/v4/company/${companyId}/objective`
