@@ -4,6 +4,7 @@ import jsf from 'json-schema-faker'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { userFaker } from './users'
+import { ditTeamFaker } from './dit-team'
 
 const UK = {
   NAME: 'United Kingdom',
@@ -17,12 +18,6 @@ const SECTOR_NAMES = [
   'Advanced Engineering',
   'Biotechnology and Pharmaceuticals',
   'Creative and Media',
-]
-
-const DIT_TEAM_NAMES = [
-  'Digital Data Hub - Live Service',
-  'Aberdeen City Council',
-  'Healthcare UK',
 ]
 
 const contactFaker = (overrides = {}) => ({
@@ -75,10 +70,7 @@ const contactFaker = (overrides = {}) => ({
   created_on: faker.date.past(),
   created_by: {
     ...userFaker(),
-    dit_team: {
-      name: faker.helpers.arrayElement(DIT_TEAM_NAMES),
-      id: faker.string.uuid(),
-    },
+    dit_team: ditTeamFaker(),
   },
   modified_on: faker.date.past(),
   ...overrides,

@@ -13,6 +13,10 @@ import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { Metadata } from '../../../components'
+import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
+import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
+import { isItaTierDAccount } from '../utils'
+import { ONE_LIST_EMAIL } from './constants'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -184,6 +188,7 @@ const AccountManagement = ({
   dnbRelatedCompaniesCount,
   flashMessages,
   csrfToken,
+  permissions,
 }) => {
   return (
     <CompanyResource id={companyId}>
@@ -198,6 +203,12 @@ const AccountManagement = ({
         >
           <Strategy company={company} />
           <Objectives company={company} />
+          {!company.oneListGroupTier ||
+          isItaTierDAccount(company.oneListGroupTier) ? (
+            <LeadITA company={company} permissions={permissions} />
+          ) : (
+            <CoreTeamAdvisers company={company} oneListEmail={ONE_LIST_EMAIL} />
+          )}
         </CompanyLayout>
       )}
     </CompanyResource>

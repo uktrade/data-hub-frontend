@@ -5,6 +5,7 @@ import apiSchema from '../../../api-schema.json'
 
 import { addressFaker } from './addresses'
 import { listFaker } from './utils'
+import { adviserFaker } from './advisers'
 
 /**
  * Generate fake data for a single company.
@@ -17,6 +18,11 @@ const companyFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   address: addressFaker(),
   registered_address: addressFaker(),
+  one_list_group_global_account_manager: adviserFaker(),
+  one_list_group_tier: {
+    id: faker.string.uuid(),
+    name: faker.word.adjective(),
+  },
   ...overrides,
 })
 
