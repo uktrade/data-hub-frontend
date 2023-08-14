@@ -24,7 +24,7 @@ const company = fixtures.company.dnbGlobalUltimate
 const address =
   '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
 
-const advisersUrl = urls.companies.accountManagement.index(company.id)
+const accountManagementUrl = urls.companies.accountManagement.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)
@@ -209,12 +209,12 @@ describe('Local header for global ultimate company', () => {
     })
   })
 
-  context('when visting a global ultimate company core team page', () => {
+  context('when visting a global ultimate company account page', () => {
     before(() => {
-      cy.visit(advisersUrl)
+      cy.visit(accountManagementUrl)
     })
 
-    assertBreadcrumbs(company.name, detailsUrl, 'Core Team')
+    assertBreadcrumbs(company.name, detailsUrl, 'Account management')
 
     it('should not display the archive panel', () => {
       assertArchivePanelNotVisible()
@@ -583,7 +583,7 @@ const assertMetaList = () => {
 
 const assertDescription = () => {
   assertOneListTierA(1)
-  assertCoreTeam(2, advisersUrl)
+  assertCoreTeam(2, accountManagementUrl)
 }
 
 const assertRelatedCompaniesLink = () => {
