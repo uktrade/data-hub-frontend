@@ -12,7 +12,7 @@ const addOrReplaceTestCase = ({
 }) => {
   it(`should be able to ${replace ? 'replace' : 'add'} an adviser`, () => {
     cy.visit(urls.companies.detail(company.pk))
-    cy.get('#tab-advisers').click()
+    cy.get('#tab-account-management').click()
     cy.get('#lead-advisers a')
       .contains(`${replace ? 'Replace Lead ITA' : 'Add a Lead ITA'}`)
       .click()
@@ -53,9 +53,9 @@ describe('Manage Lead ITA', () => {
     replace: true,
   })
 
-  it('should not be able to add an advisor who is no longer active', () => {
+  it('should not be able to add an adviser who is no longer active', () => {
     cy.visit(urls.companies.detail(company.pk))
-    cy.get('#tab-advisers').click()
+    cy.get('#tab-account-management').click()
     cy.get('[data-test="replace-ita-button"]')
       .contains('Replace Lead ITA')
       .click()
@@ -68,7 +68,7 @@ describe('Manage Lead ITA', () => {
 
   it('should be able to remove an adviser', () => {
     cy.visit(urls.companies.detail(company.pk))
-    cy.get('#tab-advisers').click()
+    cy.get('#tab-account-management').click()
     cy.get('[data-test="remove-ita-button"]').click()
     cy.get('form button').click()
     cy.get(selectors.companyLocalHeader().flashMessageList).contains(
