@@ -59,7 +59,7 @@ const RenderHasAccountManager = ({
         </ButtonSecondary>
         <ButtonSecondary
           as={Link}
-          href={urls.companies.advisers.remove(companyId)}
+          href={urls.companies.accountManagement.advisers.remove(companyId)}
           data-test="remove-ita-button"
         >
           Remove Lead ITA
@@ -77,7 +77,7 @@ export const LeadITA = ({ company, permissions }) => (
         leadITA={company.oneListGroupGlobalAccountManager}
         companyId={company.id}
         permissions={permissions}
-        addUrl={urls.companies.advisers.assign(company.id)}
+        addUrl={urls.companies.accountManagement.advisers.assign(company.id)}
       />
     ) : (
       <>
@@ -90,7 +90,12 @@ export const LeadITA = ({ company, permissions }) => (
               You can add a Lead ITA. This will be visible to all Data Hub
               users.
             </p>
-            <Button as={Link} href={urls.companies.advisers.assign(company.id)}>
+            <Button
+              as={Link}
+              href={urls.companies.accountManagement.advisers.assign(
+                company.id
+              )}
+            >
               Add a Lead ITA
             </Button>
           </>

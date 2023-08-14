@@ -151,7 +151,7 @@ describe('Local header for company under dnb investigation', () => {
     'when visting a company under dnb investigation lead adviser page',
     () => {
       before(() => {
-        cy.visit(urls.companies.advisers.index(company.id))
+        cy.visit(urls.companies.accountManagement.index(company.id))
       })
 
       assertBreadcrumbs(company.name, detailsUrl, 'Lead adviser')

@@ -14,7 +14,7 @@ describe('Advisors', () => {
   })
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index(company.pk))
+    cy.visit(companies.accountManagement.index(company.pk))
 
     cy.get('[data-test=core-team-heading]').should(
       'contain',

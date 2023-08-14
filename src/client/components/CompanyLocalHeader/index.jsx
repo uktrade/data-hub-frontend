@@ -222,7 +222,7 @@ const CompanyLocalHeader = ({
                     ? 'Lead ITA'
                     : 'Global Account Manager'}
                   : {company.oneListGroupGlobalAccountManager.name}{' '}
-                  <a href={urls.companies.advisers.index(company.id)}>
+                  <a href={urls.companies.accountManagement.index(company.id)}>
                     {isItaTierDAccount(company.oneListGroupTier)
                       ? 'View Lead adviser'
                       : 'View core team'}

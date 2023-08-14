@@ -49,7 +49,9 @@ describe('Lead advisers', () => {
         .invoke('attr', 'href')
         .should(
           'eq',
-          urls.companies.advisers.assign(fixtures.company.marsExportsLtd.id)
+          urls.companies.accountManagement.assign(
+            fixtures.company.marsExportsLtd.id
+          )
         )
     })
   })
@@ -78,7 +80,9 @@ describe('Lead advisers', () => {
           .invoke('attr', 'href')
           .should(
             'eq',
-            urls.companies.advisers.index(fixtures.company.oneListTierDita.id)
+            urls.companies.accountManagement.index(
+              fixtures.company.oneListTierDita.id
+            )
           )
       })
       it('should display the "Lead Adviser" tab in the navigation', () => {
@@ -105,7 +109,9 @@ describe('Lead advisers', () => {
           .invoke('attr', 'href')
           .should(
             'eq',
-            urls.companies.advisers.assign(fixtures.company.oneListTierDita.id)
+            urls.companies.accountManagement.assign(
+              fixtures.company.oneListTierDita.id
+            )
           )
       })
       it('should display a button to remove the Lead ITA', () => {
@@ -113,7 +119,9 @@ describe('Lead advisers', () => {
           .invoke('attr', 'href')
           .should(
             'eq',
-            urls.companies.advisers.remove(fixtures.company.oneListTierDita.id)
+            urls.companies.accountManagement.advisers.remove(
+              fixtures.company.oneListTierDita.id
+            )
           )
       })
     }

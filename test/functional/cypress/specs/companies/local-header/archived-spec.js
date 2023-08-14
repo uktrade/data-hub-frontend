@@ -24,7 +24,7 @@ const archiveMessage =
   'This company was archived on 06 Jul 2018 by John Rogers.'
 const company = fixtures.company.archivedLtd
 
-const advisersUrl = urls.companies.advisers.index(company.id)
+const advisersUrl = urls.companies.accountManagement.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)

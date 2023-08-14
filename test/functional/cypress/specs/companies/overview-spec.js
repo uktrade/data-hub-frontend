@@ -24,9 +24,10 @@ describe('Company overview page', () => {
   const companyBusinessDetailsUrlAllOverview = urls.companies.businessDetails(
     fixtures.company.allOverviewDetails.id
   )
-  const companyAdvisersUrlAllOverview = urls.companies.advisers.index(
-    fixtures.company.allOverviewDetails.id
-  )
+  const companyAccountManagementAdvisersUrlAllOverview =
+    urls.companies.accountManagement.index(
+      fixtures.company.allOverviewDetails.id
+    )
   const companyExportsAllOverview = urls.companies.exports.index(
     fixtures.company.allOverviewDetails.id
   )
@@ -267,7 +268,10 @@ describe('Company overview page', () => {
         cy.get('[data-test="account-management-page-link"]')
           .contains('View full account management')
           .click()
-        cy.location('pathname').should('eq', companyAdvisersUrlAllOverview)
+        cy.location('pathname').should(
+          'eq',
+          companyAccountManagementAdvisersUrlAllOverview
+        )
         cy.go('back')
       })
     }

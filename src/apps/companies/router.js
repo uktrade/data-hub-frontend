@@ -123,7 +123,13 @@ router.use(
   setInteractionsDetails,
   interactionsRouter
 )
+// TODO MK: How to reflect this for account management?!
 router.use(urls.companies.advisers.index.route, setReturnUrl, advisersRouter)
+// router.use(
+//   urls.companies.accountManagement.advisers.index.route,
+//   setReturnUrl,
+//   advisersRouter
+// )
 
 router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 

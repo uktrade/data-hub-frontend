@@ -73,7 +73,7 @@ const form = (req, res) => {
       companyId: id,
       isRemove,
       currentLeadITA,
-      cancelUrl: urls.companies.advisers.index(id),
+      cancelUrl: urls.companies.accountManagement.index(id),
     },
   })
 }
@@ -91,7 +91,7 @@ async function submit(req, res, next) {
     })
 
     req.flash('success', 'Lead adviser information updated')
-    res.redirect(urls.companies.advisers.index(id))
+    res.redirect(urls.companies.accountManagement.index(id))
   } catch (error) {
     next(error)
   }

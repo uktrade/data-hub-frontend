@@ -14,7 +14,7 @@ const addOrReplaceTestCase = ({
   it(`Should render "${replace ? 'replace' : 'add'} a lead adviser" ${
     !team && replace ? 'with no team' : ''
   }`, () => {
-    cy.visit(urls.companies.advisers.assign(companyId))
+    cy.visit(urls.companies.accountManagement.assign(companyId))
 
     const headline = replace
       ? 'Replace the Lead ITA'
@@ -86,7 +86,11 @@ const addOrReplaceTestCase = ({
       .next()
       .as('cancel')
       .contains('Cancel')
-      .should('have.attr', 'href', urls.companies.advisers.index(companyId))
+      .should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.index(companyId)
+      )
   })
 
 describe('Manage Lead ITA', () => {
@@ -113,7 +117,7 @@ describe('Manage Lead ITA', () => {
 
   context('When submitted with no adviser is selected', () => {
     it('Should display errors', () => {
-      cy.visit(urls.companies.advisers.assign('managed'))
+      cy.visit(urls.companies.accountManagement.assign('managed'))
       cy.get('form button').click()
       cy.get('form div').contains('There is a problemSelect an ITA')
       cy.get('#field-dit_participants').contains('Select an ITA')
@@ -125,7 +129,7 @@ describe('Manage Lead ITA', () => {
     const COMPANY_NAME = 'Managed Company'
     const COMPANY_ID = 'managed'
 
-    cy.visit(urls.companies.advisers.remove('managed'))
+    cy.visit(urls.companies.accountManagement.advisers.remove('managed'))
 
     assertBreadcrumbs({
       Home: urls.dashboard.index(),
@@ -169,6 +173,10 @@ describe('Manage Lead ITA', () => {
       .as('submit')
       .next()
       .contains('Cancel')
-      .should('have.attr', 'href', urls.companies.advisers.index(COMPANY_ID))
+      .should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.index(COMPANY_ID)
+      )
   })
 })

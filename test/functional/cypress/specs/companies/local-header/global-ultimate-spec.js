@@ -24,7 +24,7 @@ const company = fixtures.company.dnbGlobalUltimate
 const address =
   '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
 
-const advisersUrl = urls.companies.advisers.index(company.id)
+const advisersUrl = urls.companies.accountManagement.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)
