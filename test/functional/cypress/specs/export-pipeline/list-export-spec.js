@@ -10,7 +10,7 @@ const assertStatusTag = (element, text) =>
   cy.get(element).find('strong').eq(1).should('have.text', text)
 
 const assertCompanyName = (element, text) => {
-  cy.get(element).find('h2').should('have.text', text)
+  cy.get(element).find('h3').should('have.text', text)
 }
 
 const assertDestination = (element, text) => {
@@ -36,9 +36,10 @@ const assertCreatedOnDate = (element, text) => {
   cy.get(element).find('dd').eq(5).should('have.text', text)
 }
 
-const assertTitleLink = (element, href, text) => {
+const assertLink = (element, index, href, text) => {
   cy.get(element)
     .find('a')
+    .eq(index)
     .should('have.attr', 'href', href)
     .should('have.text', text)
 }
@@ -77,6 +78,7 @@ describe('Export pipeline list', () => {
       export_potential: 'high',
       status: 'active',
       company: {
+        id: 1,
         name: 'Coca-Cola',
       },
       title: 'Export Coca-Cola',
@@ -99,6 +101,7 @@ describe('Export pipeline list', () => {
       export_potential: 'medium',
       status: 'won',
       company: {
+        id: 2,
         name: 'Alphabet',
       },
       title: 'Export Alphabet',
@@ -123,6 +126,7 @@ describe('Export pipeline list', () => {
       export_potential: 'low',
       status: 'inactive',
       company: {
+        id: 3,
         name: 'Meta',
       },
       title: 'Export Meta',
@@ -152,6 +156,7 @@ describe('Export pipeline list', () => {
       export_potential: 'low',
       status: 'inactive',
       company: {
+        id: 4,
         name: 'Sony',
       },
       title: 'Missing Migrated Data',
@@ -233,12 +238,47 @@ describe('Export pipeline list', () => {
       assertCompanyName('@fourthListItem', 'Sony')
     })
 
+    it('should display a link to the company', () => {
+      const linkIndex = 0
+      assertLink(
+        '@firstListItem',
+        linkIndex,
+        '/companies/1/overview',
+        'Coca-Cola'
+      )
+      assertLink(
+        '@secondListItem',
+        linkIndex,
+        '/companies/2/overview',
+        'Alphabet'
+      )
+      assertLink('@thirdListItem', linkIndex, '/companies/3/overview', 'Meta')
+      assertLink('@fourthListItem', linkIndex, '/companies/4/overview', 'Sony')
+    })
+
     it('should display a link to the export', () => {
-      assertTitleLink('@firstListItem', '/export/1/details', 'Export Coca-Cola')
-      assertTitleLink('@secondListItem', '/export/2/details', 'Export Alphabet')
-      assertTitleLink('@thirdListItem', '/export/3/details', 'Export Meta')
-      assertTitleLink(
+      const linkIndex = 1
+      assertLink(
+        '@firstListItem',
+        linkIndex,
+        '/export/1/details',
+        'Export Coca-Cola'
+      )
+      assertLink(
+        '@secondListItem',
+        linkIndex,
+        '/export/2/details',
+        'Export Alphabet'
+      )
+      assertLink(
+        '@thirdListItem',
+        linkIndex,
+        '/export/3/details',
+        'Export Meta'
+      )
+      assertLink(
         '@fourthListItem',
+        linkIndex,
         '/export/5/details',
         'Missing Migrated Data'
       )
