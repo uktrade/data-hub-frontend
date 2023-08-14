@@ -34,7 +34,6 @@ const form = (req, res) => {
   const {
     company: { name, id },
   } = res.locals
-  // TODO MK: Check best practice REACT router src/apps/companies/apps/account-management/router.js
   const isRemove = req.url.endsWith('/remove')
   const currentLeadITA = companyToLeadITA(res.locals.company)
   res.render('companies/apps/advisers/views/manage-adviser.njk', {

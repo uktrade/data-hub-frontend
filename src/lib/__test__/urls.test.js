@@ -88,7 +88,6 @@ describe('urls', () => {
         '/:companyId/activity/data'
       )
 
-      // TODO MK: Check whether there is an equivalent section for account Management (renamed from advisers below)
       expect(urls.companies.accountManagement.index(companyId)).to.equal(
         `/companies/${companyId}/account-management`
       )
@@ -96,9 +95,9 @@ describe('urls', () => {
         '/:companyId/account-management'
       )
 
-      expect(urls.companies.accountManagement.assign(companyId)).to.equal(
-        `/companies/${companyId}/account-management/advisers/assign`
-      )
+      expect(
+        urls.companies.accountManagement.advisers.assign(companyId)
+      ).to.equal(`/companies/${companyId}/account-management/advisers/assign`)
       expect(
         urls.companies.accountManagement.advisers.remove(companyId)
       ).to.equal(`/companies/${companyId}/account-management/advisers/remove`)
