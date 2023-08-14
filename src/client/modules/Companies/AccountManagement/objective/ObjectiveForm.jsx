@@ -71,9 +71,9 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
           redirectTo={() => urls.companies.accountManagement.index(company.id)}
           submissionTaskName={TASK_SAVE_OBJECTIVE}
           transformPayload={(values) => ({
+            values,
             companyId: company.id,
             objectiveId: objectiveItem.id,
-            values,
           })}
           flashMessage={() => 'Objective saved'}
           submitButtonLabel="Save objective"

@@ -9,16 +9,15 @@ export const saveStrategy = ({ strategy, companyId }) => {
 
 export const saveObjective = ({ values, companyId, objectiveId }) => {
   values.company = companyId
-  // values.id = objectiveId
+  let request, endpoint
   if (objectiveId) {
-    const request = apiProxyAxios.patch
-    const endpoint = `/v4/company/${companyId}/objective/${objectiveId}`
-    return request(endpoint, transformFormValuesForAPI(values))
+    request = apiProxyAxios.patch
+    endpoint = `/v4/company/${companyId}/objective/${objectiveId}`
   } else {
-    const request = apiProxyAxios.post
-    const endpoint = `/v4/company/${companyId}/objective`
-    return request(endpoint, transformFormValuesForAPI(values))
+    request = apiProxyAxios.post
+    endpoint = `/v4/company/${companyId}/objective`
   }
+  return request(endpoint, transformFormValuesForAPI(values))
 }
 
 export const getObjective = ({ companyId, objectiveId }) =>

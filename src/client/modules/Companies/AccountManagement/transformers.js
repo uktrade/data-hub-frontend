@@ -24,6 +24,7 @@ export const transformFormValuesForAPI = ({
 })
 
 export const transformAPIValuesForForm = ({
+  id,
   company,
   subject,
   detail,
@@ -32,6 +33,7 @@ export const transformAPIValuesForForm = ({
   blocker_description,
   progress,
 }) => ({
+  id,
   subject,
   detail,
   target_date: transformDateStringToDateObject(target_date),
