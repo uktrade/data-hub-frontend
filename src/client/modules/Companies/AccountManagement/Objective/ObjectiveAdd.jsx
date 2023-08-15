@@ -8,7 +8,7 @@ const ObjectiveAdd = () => {
   const { companyId } = useParams()
   return (
     <CompanyResource id={companyId}>
-      {(company) => <ObjectiveForm company={company}></ObjectiveForm>}
+      {(company) => <ObjectiveForm company={company} />}
     </CompanyResource>
   )
 }
