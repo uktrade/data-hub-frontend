@@ -1,26 +1,15 @@
 import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { Select } from 'govuk-react'
 import styled from 'styled-components'
 import { get, kebabCase } from 'lodash'
 import qs from 'qs'
 
-import { Select } from '../../../components'
-
-const StyledSelect = styled(Select)(() => ({
-  alignItems: 'flex-start',
-  flexDirection: 'column',
-  flex: '1 1',
+const StyledSelect = styled(Select)({
   select: {
     width: '100%',
-    minWidth: 170,
-    maxHeight: 36,
   },
-  marginBottom: SPACING.SCALE_1,
-  [MEDIA_QUERIES.DESKTOP]: {
-    margin: SPACING.SCALE_1,
-  },
-}))
+})
 
 const ExportSelect = ({ label, options = [], qsParam }) => {
   const history = useHistory()
