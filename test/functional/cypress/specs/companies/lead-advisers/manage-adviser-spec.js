@@ -14,7 +14,7 @@ const addOrReplaceTestCase = ({
   it(`Should render "${replace ? 'replace' : 'add'} a lead adviser" ${
     !team && replace ? 'with no team' : ''
   }`, () => {
-    cy.visit(urls.companies.accountManagement.assign(companyId))
+    cy.visit(urls.companies.accountManagement.advisers.assign(companyId))
 
     const headline = replace
       ? 'Replace the Lead ITA'
@@ -117,7 +117,7 @@ describe('Manage Lead ITA', () => {
 
   context('When submitted with no adviser is selected', () => {
     it('Should display errors', () => {
-      cy.visit(urls.companies.accountManagement.assign('managed'))
+      cy.visit(urls.companies.accountManagement.advisers.assign('managed'))
       cy.get('form button').click()
       cy.get('form div').contains('There is a problemSelect an ITA')
       cy.get('#field-dit_participants').contains('Select an ITA')
