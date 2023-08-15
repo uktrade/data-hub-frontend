@@ -1,6 +1,8 @@
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const { setLocalNav } = require('../../../middleware')
+const { LOCAL_NAV } = require('../../constants')
 
-const localNavigation = require('../local-navigation')
+const localNavigation = setLocalNav(LOCAL_NAV)
 
 let middlewareParameters
 
@@ -43,13 +45,7 @@ describe('Companies local navigation', () => {
       )
     })
 
-    commonTests([
-      'Activity',
-      'Company contacts',
-      'Investment',
-      'Export',
-      'Orders',
-    ])
+    commonTests(['Activity', 'Contacts', 'Investment', 'Export', 'Orders'])
   })
 
   context('when the company is on the One List', () => {
@@ -85,8 +81,8 @@ describe('Companies local navigation', () => {
 
     commonTests([
       'Activity',
-      'Company contacts',
-      'Core team',
+      'Contacts',
+      'Account management',
       'Investment',
       'Export',
       'Orders',
@@ -126,8 +122,8 @@ describe('Companies local navigation', () => {
       })
       commonTests([
         'Activity',
-        'Company contacts',
-        'Lead adviser',
+        'Contacts',
+        'Account management',
         'Investment',
         'Export',
         'Orders',
@@ -163,8 +159,8 @@ describe('Companies local navigation', () => {
     })
     commonTests([
       'Activity',
-      'Company contacts',
-      'Lead adviser',
+      'Contacts',
+      'Account management',
       'Investment',
       'Export',
       'Orders',
