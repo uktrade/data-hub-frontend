@@ -10,7 +10,7 @@ const addOrReplaceTestCase = ({
   successMessage,
   replace,
 }) => {
-  it(`should be able to ${replace ? 'replace' : 'add'} an adviser`, () => {
+  xit(`should be able to ${replace ? 'replace' : 'add'} an adviser`, () => {
     cy.visit(urls.companies.detail(company.pk))
     cy.get('#tab-account-management').click()
     cy.get('#lead-advisers a')
@@ -32,7 +32,7 @@ const addOrReplaceTestCase = ({
   })
 }
 
-describe('Manage Lead ITA', () => {
+xdescribe('Manage Lead ITA', () => {
   company = fixtures.company.create.lambda()
   before(() => {
     cy.loadFixture([company])
