@@ -171,7 +171,7 @@ describe('Export filters', () => {
     it('should have an "Export potential" filter', () => {
       cy.visit(exportTab)
       cy.wait('@apiRequestList')
-      cy.get(element).find('span').should('have.text', 'Export potential')
+      cy.get(element).find('span').should('have.text', 'Ex. Potential')
       cy.get(`${element} option`).then((statusOptions) => {
         expect(transformOptions(statusOptions)).to.deep.eq([
           { value: 'all-statuses', label: 'Show all' },
@@ -380,12 +380,12 @@ describe('Export filters', () => {
       )
       assertDateInput({
         element: afterElement,
-        label: 'Win date from',
+        label: 'Win from',
         value: afterDate,
       })
       assertDateInput({
         element: beforeElement,
-        label: 'Win date to',
+        label: 'Win to',
         value: beforeDate,
       })
     })
