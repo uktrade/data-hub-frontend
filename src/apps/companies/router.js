@@ -25,6 +25,7 @@ const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const {
   redirectToFirstNavItem,
   handleRoutePermissions,
+  setLocalNav,
 } = require('../middleware')
 
 const {
@@ -38,7 +39,6 @@ const {
   removeGlobalHQ,
   addSubsidiary,
 } = require('./middleware/hierarchies')
-const setCompaniesLocalNav = require('./middleware/local-navigation')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 const formatPostcodes = require('./middleware/format-postcodes')
 
@@ -90,7 +90,7 @@ router.get(urls.companies.unarchive.route, unarchiveCompany)
 router.use(
   urls.companies.detail.route,
   handleRoutePermissions(LOCAL_NAV),
-  setCompaniesLocalNav
+  setLocalNav(LOCAL_NAV)
 )
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)

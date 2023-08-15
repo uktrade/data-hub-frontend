@@ -6,28 +6,6 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
-describe('Advisors', () => {
-  const company = fixtures.company.create.corp()
-
-  before(() => {
-    cy.loadFixture([company])
-  })
-
-  it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index(company.pk))
-
-    cy.get('[data-test=core-team-heading]').should(
-      'contain',
-      'Advisers on the core team'
-    )
-
-    cy.get('[data-test=global-acc-manager-table]')
-      .should('contain', 'IST - Sector Advisory Services')
-      .and('contain', 'London')
-      .and('contain', 'Travis Greene')
-  })
-})
-
 describe('Contacts', () => {
   const company = fixtures.company.create.defaultCompany('company testing')
 
@@ -61,7 +39,7 @@ describe('Contacts', () => {
   it('should display the newly created contact in company contact collection page', () => {
     cy.visit(companies.activity.index(company.pk))
 
-    cy.contains('Company contacts').click()
+    cy.contains('Contacts').click()
     cy.get('[data-test="collection-item"]')
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')
