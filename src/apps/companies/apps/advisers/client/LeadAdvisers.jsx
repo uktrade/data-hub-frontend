@@ -95,6 +95,7 @@ export const LeadITA = ({ company, permissions }) => (
               href={urls.companies.accountManagement.advisers.assign(
                 company.id
               )}
+              data-test="add-ita-button"
             >
               Add a Lead ITA
             </Button>
