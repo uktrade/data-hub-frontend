@@ -33,6 +33,7 @@ module.exports = {
   },
   contact: {
     deanCox: require('./contact/dean-cox'),
+    johnnyCakeman: require('./contact/johnny-cakeman'),
   },
   default: require('./default.json'),
   interaction: {
@@ -54,6 +55,10 @@ module.exports = {
     investmentWithNoExistingRequirements: require('./investment/investment-no-existing-requirements.json'),
     investmentWithNoGlobalAccountManager: require('./investment/investment-no-global-account-manager.json'),
     fdiInvestmentWithNoFDIType: require('./investment/investment-fdi-has-no-fdi-type.json'),
+    investmentWithValue: require('./investment/investment-has-existing-value.json'),
+    investmentWithAlternateValue: require('./investment/investment-has-existing-value-alternate.json'),
+    investmentWithRequirements: require('./investment/investment-has-existing-requirements.json'),
+    investmentWithDetails: require('./investment/investment-has-existing-details.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
