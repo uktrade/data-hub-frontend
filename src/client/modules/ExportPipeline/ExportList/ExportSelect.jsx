@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Select } from 'govuk-react'
 import styled from 'styled-components'
@@ -14,9 +14,12 @@ const StyledSelect = styled(Select)({
 const ExportSelect = ({ label, options = [], qsParam }) => {
   const history = useHistory()
   const location = useLocation()
+  const [value, setValue] = useState()
 
   const qsParams = qs.parse(location.search.slice(1))
   const initialValue = get(qsParams, qsParam, '')
+
+  useEffect(() => setValue(initialValue), [initialValue])
 
   const onChange = (e) => {
     history.push({
@@ -33,8 +36,11 @@ const ExportSelect = ({ label, options = [], qsParam }) => {
       label={label}
       data-test={kebabCase(`${qsParam}-select`)}
       input={{
-        onChange,
-        initialValue,
+        onChange: (e) => {
+          setValue(e.target.value)
+          onChange(e)
+        },
+        value,
       }}
     >
       {options.map(({ value, label }, index) => (
