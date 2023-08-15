@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components'
 import { upperFirst } from 'lodash'
 
 import LocalHeader from '../LocalHeader/LocalHeader'
-import { Timeline } from '..'
+import Timeline from '../Timeline'
 
 import { formatMediumDateTime } from '../../utils/date'
 import timelineTheme from './timeline-theme'

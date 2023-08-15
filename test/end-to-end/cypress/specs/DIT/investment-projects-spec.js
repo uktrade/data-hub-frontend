@@ -1,9 +1,9 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
-const { assertKeyValueTable } = require('../../support/assertions')
 const {
   assertFieldRadiosWithoutLabel,
+  assertSummaryTable,
 } = require('../../../../functional/cypress/support/assertions')
 const {
   selectFirstTypeaheadOption,
@@ -94,19 +94,22 @@ describe('Creating an investment project', () => {
         'Investment project created'
       )
 
-      assertKeyValueTable('summaryContainer', {
-        Client: 'Lambda plc',
-        'Investment type': 'FDI, Merger',
-        'Primary sector': data.sector,
-        'Business activity': data.businessActivities,
-        'Client contacts': data.contact,
-        'Project description': data.description,
-        'Anonymised description': data.anonymousDescription,
-        'Estimated land date': 'October 2030',
-        'Actual land date': '5 May 2031',
-        'New or existing investor': 'New Investor',
-        'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.specificInvestmentProgramme,
+      assertSummaryTable({
+        dataTest: 'project-details-table',
+        content: {
+          Client: 'Lambda plc',
+          'Investment type': 'FDI, Merger',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': data.contact,
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': 'New Investor',
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        },
       })
     })
 
@@ -125,17 +128,20 @@ describe('Creating an investment project', () => {
       cy.get(selectors.investment.value.exportRevenueRadioYes).click()
       cy.get(selectors.investment.value.save).click()
 
-      assertKeyValueTable('valueContainer', {
-        'Total investment': '£100,000.00',
-        'Capital expenditure value': '£500,000.00',
-        'Gross Value Added (GVA)': '£31,050.00',
-        'Government assistance': 'Has government assistance',
-        'New jobs': '500 new jobs',
-        'Safeguarded jobs': '600 safeguarded jobs',
-        'R&D budget': 'Has R&D budget',
-        'Non-FDI R&D project': 'Find project',
-        'New-to-world tech': 'Has new-to-world tech, business model or IP',
-        'Export revenue': 'Yes, will create significant export revenue',
+      assertSummaryTable({
+        dataTest: 'project-value-table',
+        content: {
+          'Total investment': '£100,000',
+          'Capital expenditure value': '£500,000',
+          'Gross Value Added (GVA)': '£31,050',
+          'Government assistance': 'Has government assistance',
+          'New jobs': '500 new jobs',
+          'Safeguarded jobs': '600 safeguarded jobs',
+          'R&D budget': 'Has R&D budget',
+          'Non-FDI R&D project': 'Find project',
+          'New-to-world tech': 'Has new-to-world tech, business model or IP',
+          'Export revenue': 'Yes, will create significant export revenue',
+        },
       })
     })
   })
@@ -161,19 +167,22 @@ describe('Creating an investment project', () => {
         'Investment project created'
       )
 
-      assertKeyValueTable('summaryContainer', {
-        Client: 'Lambda plc',
-        'Investment type': 'Non-FDI',
-        'Primary sector': data.sector,
-        'Business activity': data.businessActivities,
-        'Client contacts': data.contact,
-        'Project description': data.description,
-        'Anonymised description': data.anonymousDescription,
-        'Estimated land date': 'October 2030',
-        'Actual land date': '5 May 2031',
-        'New or existing investor': 'New Investor',
-        'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.specificInvestmentProgramme,
+      assertSummaryTable({
+        dataTest: 'project-details-table',
+        content: {
+          Client: 'Lambda plc',
+          'Investment type': 'Non-FDI',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': data.contact,
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': 'New Investor',
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        },
       })
     })
 
@@ -190,16 +199,19 @@ describe('Creating an investment project', () => {
       cy.get(selectors.investment.value.exportRevenueRadioNo).click()
       cy.get(selectors.investment.value.save).click()
 
-      assertKeyValueTable('valueContainer', {
-        'Total investment': 'Client cannot provide this information',
-        'Capital expenditure value': 'Client cannot provide this information',
-        'Government assistance': 'No government assistance',
-        'New jobs': '500 new jobs',
-        'Safeguarded jobs': '600 safeguarded jobs',
-        'R&D budget': 'No R&D budget',
-        'Non-FDI R&D project': 'Not linked to a non-FDI R&D project',
-        'New-to-world tech': 'No new-to-world tech, business model or IP',
-        'Export revenue': 'No, will not create significant export revenue',
+      assertSummaryTable({
+        dataTest: 'project-value-table',
+        content: {
+          'Total investment': 'Client cannot provide this information',
+          'Capital expenditure value': 'Client cannot provide this information',
+          'Government assistance': 'No government assistance',
+          'New jobs': '500 new jobs',
+          'Safeguarded jobs': '600 safeguarded jobs',
+          'R&D budget': 'No R&D budget',
+          'Non-FDI R&D project': 'Not linked to a non-FDI R&D project',
+          'New-to-world tech': 'No new-to-world tech, business model or IP',
+          'Export revenue': 'No, will not create significant export revenue',
+        },
       })
     })
   })
@@ -226,19 +238,22 @@ describe('Creating an investment project', () => {
         'Investment project created'
       )
 
-      assertKeyValueTable('summaryContainer', {
-        Client: 'Lambda plc',
-        'Investment type': 'Commitment to invest',
-        'Primary sector': data.sector,
-        'Business activity': data.businessActivities,
-        'Client contacts': data.contact,
-        'Project description': data.description,
-        'Anonymised description': data.anonymousDescription,
-        'Estimated land date': 'October 2030',
-        'Actual land date': '5 May 2031',
-        'New or existing investor': 'New Investor',
-        'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.specificInvestmentProgramme,
+      assertSummaryTable({
+        dataTest: 'project-details-table',
+        content: {
+          Client: 'Lambda plc',
+          'Investment type': 'Commitment to invest',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': data.contact,
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': 'New Investor',
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        },
       })
     })
 
@@ -293,19 +308,22 @@ describe('Creating an investment project', () => {
         'Investment project created'
       )
 
-      assertKeyValueTable('summaryContainer', {
-        Client: 'Mars Exports Ltd',
-        'Investment type': 'FDI, Merger',
-        'Primary sector': data.sector,
-        'Business activity': data.businessActivities,
-        'Client contacts': 'Fred Peterson',
-        'Project description': data.description,
-        'Anonymised description': data.anonymousDescription,
-        'Estimated land date': 'October 2030',
-        'Actual land date': '5 May 2031',
-        'New or existing investor': 'New Investor',
-        'Level of involvement': data.investorLevel,
-        'Specific investment programme': data.specificInvestmentProgramme,
+      assertSummaryTable({
+        dataTest: 'project-details-table',
+        content: {
+          Client: 'Mars Exports Ltd',
+          'Investment type': 'FDI, Merger',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': 'Fred Peterson',
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': 'New Investor',
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        },
       })
     })
 
@@ -335,19 +353,22 @@ describe('Creating an investment project', () => {
           'Investment project created'
         )
 
-        assertKeyValueTable('summaryContainer', {
-          Client: 'Mars Exports Ltd',
-          'Investment type': 'Non-FDI',
-          'Primary sector': data.sector,
-          'Business activity': data.businessActivities,
-          'Client contacts': 'Fred Peterson',
-          'Project description': data.description,
-          'Anonymised description': data.anonymousDescription,
-          'Estimated land date': 'October 2030',
-          'Actual land date': '5 May 2031',
-          'New or existing investor': 'New Investor',
-          'Level of involvement': data.investorLevel,
-          'Specific investment programme': data.specificInvestmentProgramme,
+        assertSummaryTable({
+          dataTest: 'project-details-table',
+          content: {
+            Client: 'Mars Exports Ltd',
+            'Investment type': 'Non-FDI',
+            'Primary sector': data.sector,
+            'Business activity': data.businessActivities,
+            'Client contacts': 'Fred Peterson',
+            'Project description': data.description,
+            'Anonymised description': data.anonymousDescription,
+            'Estimated land date': 'October 2030',
+            'Actual land date': '5 May 2031',
+            'New or existing investor': 'New Investor',
+            'Level of involvement': data.investorLevel,
+            'Specific investment programme': data.specificInvestmentProgramme,
+          },
         })
       })
     })
@@ -379,19 +400,22 @@ describe('Creating an investment project', () => {
           'Investment project created'
         )
 
-        assertKeyValueTable('summaryContainer', {
-          Client: 'Mars Exports Ltd',
-          'Investment type': 'Commitment to invest',
-          'Primary sector': data.sector,
-          'Business activity': data.businessActivities,
-          'Client contacts': 'Fred Peterson',
-          'Project description': data.description,
-          'Anonymised description': data.anonymousDescription,
-          'Estimated land date': 'October 2030',
-          'Actual land date': '5 May 2031',
-          'New or existing investor': 'New Investor',
-          'Level of involvement': data.investorLevel,
-          'Specific investment programme': data.specificInvestmentProgramme,
+        assertSummaryTable({
+          dataTest: 'project-details-table',
+          content: {
+            Client: 'Mars Exports Ltd',
+            'Investment type': 'Commitment to invest',
+            'Primary sector': data.sector,
+            'Business activity': data.businessActivities,
+            'Client contacts': 'Fred Peterson',
+            'Project description': data.description,
+            'Anonymised description': data.anonymousDescription,
+            'Estimated land date': 'October 2030',
+            'Actual land date': '5 May 2031',
+            'New or existing investor': 'New Investor',
+            'Level of involvement': data.investorLevel,
+            'Specific investment programme': data.specificInvestmentProgramme,
+          },
         })
       })
     })
