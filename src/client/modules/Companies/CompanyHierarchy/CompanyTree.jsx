@@ -522,6 +522,7 @@ const CompanyTree = ({ company, familyTree }) => {
       <Task.Status
         name={TASK_GET_DNB_FAMILY_TREE}
         id={ID}
+        progressMessage="Loading all the related companies in this company tree"
         startOnRender={{
           payload: { companyId: companyId },
           onSuccessDispatch: DNB_FAMILY_TREE_LOADED,
