@@ -88,21 +88,21 @@ describe('urls', () => {
         '/:companyId/activity/data'
       )
 
-      expect(urls.companies.advisers.index(companyId)).to.equal(
-        `/companies/${companyId}/advisers`
+      expect(urls.companies.accountManagement.index(companyId)).to.equal(
+        `/companies/${companyId}/account-management`
       )
-      expect(urls.companies.advisers.index.route).to.equal(
-        '/:companyId/advisers'
+      expect(urls.companies.accountManagement.index.route).to.equal(
+        '/:companyId/account-management'
       )
 
-      expect(urls.companies.advisers.assign(companyId)).to.equal(
-        `/companies/${companyId}/advisers/assign`
-      )
-      expect(urls.companies.advisers.remove(companyId)).to.equal(
-        `/companies/${companyId}/advisers/remove`
-      )
-      expect(urls.companies.advisers.remove.route).to.equal(
-        '/:companyId/advisers/remove'
+      expect(
+        urls.companies.accountManagement.advisers.assign(companyId)
+      ).to.equal(`/companies/${companyId}/account-management/advisers/assign`)
+      expect(
+        urls.companies.accountManagement.advisers.remove(companyId)
+      ).to.equal(`/companies/${companyId}/account-management/advisers/remove`)
+      expect(urls.companies.accountManagement.advisers.remove.route).to.equal(
+        '/:companyId/account-management/advisers/remove'
       )
 
       expect(urls.companies.dnbHierarchy.index.route).to.equal(

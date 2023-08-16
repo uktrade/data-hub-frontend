@@ -24,7 +24,7 @@ const archiveMessage =
   'This company was archived on 06 Jul 2018 by John Rogers.'
 const company = fixtures.company.archivedLtd
 
-const advisersUrl = urls.companies.advisers.index(company.id)
+const accountManagementUrl = urls.companies.accountManagement.index(company.id)
 const addRemoveFromListUrl = urls.companies.lists.addRemove(company.id)
 const detailsUrl = urls.companies.detail(company.id)
 const referralsUrl = urls.companies.referrals.send(company.id)
@@ -77,7 +77,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
@@ -129,18 +129,18 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
       assertArchiveMessage()
     })
   })
-  context('when visting an archived company core team page', () => {
+  context('when visting an archived company account management page', () => {
     before(() => {
-      cy.visit(advisersUrl)
+      cy.visit(accountManagementUrl)
     })
-    assertBreadcrumbs(company.name, detailsUrl, 'Core Team')
+    assertBreadcrumbs(company.name, detailsUrl, 'Account management')
     it('should display the company name', () => {
       assertCompanyName(company.name)
     })
@@ -179,7 +179,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
@@ -231,7 +231,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
@@ -284,7 +284,7 @@ describe('Local header for archived company', () => {
       })
       it('should display the correct description', () => {
         assertOneListTierA(1)
-        assertCoreTeam(2, advisersUrl)
+        assertCoreTeam(2, accountManagementUrl)
       })
 
       it('should display the archived message', () => {
@@ -337,7 +337,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
@@ -389,7 +389,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
@@ -441,7 +441,7 @@ describe('Local header for archived company', () => {
 
     it('should display the correct description', () => {
       assertOneListTierA(1)
-      assertCoreTeam(2, advisersUrl)
+      assertCoreTeam(2, accountManagementUrl)
     })
 
     it('should display the archived message', () => {
