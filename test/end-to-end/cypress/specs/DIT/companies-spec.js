@@ -61,7 +61,7 @@ describe('Contacts', () => {
   it('should display the newly created contact in company contact collection page', () => {
     cy.visit(companies.activity.index(company.pk))
 
-    cy.contains('Company contacts').click()
+    cy.contains('Contacts').click()
     cy.get('[data-test="collection-item"]')
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')

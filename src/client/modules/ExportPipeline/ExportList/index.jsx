@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { HEADING_SIZES, FONT_SIZE } from '@govuk-react/constants'
 import { UnorderedList, ListItem, H2 } from 'govuk-react'
+import { MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -48,10 +49,15 @@ const StyledContent = styled.div({
 })
 
 const FiltersContainer = styled('div')({
-  display: 'flex',
-  flexWrap: 'wrap',
-  rowGap: 25,
-  width: 735,
+  display: 'grid',
+  rowGap: 15,
+  [MEDIA_QUERIES.TABLET]: {
+    columnGap: 2,
+    gridTemplateColumns: '50% 50%',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    gridTemplateColumns: '25% 25% 25% 25%',
+  },
 })
 
 const HeaderContainer = styled('div')({
@@ -113,7 +119,7 @@ const ExportList = ({
                   options={filters.status.options}
                 />
                 <ExportSelect
-                  label="Export potential"
+                  label="Ex. Potential"
                   qsParam="export_potential"
                   options={filters.exportPotential.options}
                 />
@@ -130,7 +136,7 @@ const ExportList = ({
                 <ExportDate
                   type="month"
                   boldLabel={false}
-                  label="Win date from"
+                  label="Win from"
                   name="estimated_win_date_after"
                   qsParamName="estimated_win_date_after"
                   data-test="estimated-win-date-after"
@@ -138,7 +144,7 @@ const ExportList = ({
                 <ExportDate
                   type="month"
                   boldLabel={false}
-                  label="Win date to"
+                  label="Win to"
                   name="estimated_win_date_before"
                   qsParamName="estimated_win_date_before"
                   data-test="estimated-win-date-before"
