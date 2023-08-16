@@ -21,6 +21,7 @@ import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Strategy from './modules/Companies/AccountManagement/Strategy'
 import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import Objective from './modules/Companies/AccountManagement/Objective'
+import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
 
 const routes = {
   companies: [
@@ -58,6 +59,11 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/edit',
       module: 'datahub:companies',
       component: Objective,
+    },
+    {
+      path: '/companies/:companyId/account-management/objective/archived',
+      module: 'datahub:companies',
+      component: ArchivedObjectives,
     },
   ],
   contacts: [
