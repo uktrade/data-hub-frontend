@@ -255,6 +255,16 @@ module.exports = {
           '/:companyId/account-management/objective/:objectiveId/edit'
         ),
       },
+      advisers: {
+        assign: url(
+          '/companies',
+          '/:companyId/account-management/advisers/assign'
+        ),
+        remove: url(
+          '/companies',
+          '/:companyId/account-management/advisers/remove'
+        ),
+      },
     },
   },
   companyLists: {

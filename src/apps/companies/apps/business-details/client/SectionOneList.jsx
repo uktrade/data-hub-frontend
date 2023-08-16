@@ -43,7 +43,9 @@ const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
         </SummaryTable.Row>
       </SummaryTable>
 
-      <StyledSummaryFooterLink href={urls.companies.advisers.index(company.id)}>
+      <StyledSummaryFooterLink
+        href={urls.companies.accountManagement.index(company.id)}
+      >
         See all advisers on the core team
       </StyledSummaryFooterLink>
     </>

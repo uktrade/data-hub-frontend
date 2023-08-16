@@ -6,6 +6,28 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
+describe('Advisors', () => {
+  const company = fixtures.company.create.corp()
+
+  before(() => {
+    cy.loadFixture([company])
+  })
+
+  it('should display advisers for a GHQ for a given company', () => {
+    cy.visit(companies.accountManagement.index(company.pk))
+
+    cy.get('[data-test=core-team-heading]').should(
+      'contain',
+      'Advisers on the core team'
+    )
+
+    cy.get('[data-test=global-acc-manager-table]')
+      .should('contain', 'IST - Sector Advisory Services')
+      .and('contain', 'London')
+      .and('contain', 'Travis Greene')
+  })
+})
+
 describe('Contacts', () => {
   const company = fixtures.company.create.defaultCompany('company testing')
 

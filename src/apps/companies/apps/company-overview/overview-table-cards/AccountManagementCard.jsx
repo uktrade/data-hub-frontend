@@ -76,7 +76,7 @@ const AccountManagementCard = ({ company }) => {
       >
         {buildCellContents(
           company?.oneListGroupGlobalAccountManager,
-          <Link href={urls.companies.advisers.index(company.id)}>
+          <Link href={urls.companies.accountManagement.index(company.id)}>
             {company.oneListGroupGlobalAccountManager?.name}
           </Link>
         )}
@@ -112,7 +112,7 @@ const AccountManagementCard = ({ company }) => {
       <StyledTableRow>
         <StyledLastTableCell colSpan={2}>
           <Link
-            href={urls.companies.advisers.index(company.id)}
+            href={urls.companies.accountManagement.index(company.id)}
             data-test="account-management-page-link"
           >
             View full account management

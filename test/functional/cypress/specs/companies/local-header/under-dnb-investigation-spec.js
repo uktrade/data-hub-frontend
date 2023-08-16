@@ -148,13 +148,13 @@ describe('Local header for company under dnb investigation', () => {
     }
   )
   context(
-    'when visting a company under dnb investigation lead adviser page',
+    'when visting a company under dnb investigation account management page',
     () => {
       before(() => {
-        cy.visit(urls.companies.advisers.index(company.id))
+        cy.visit(urls.companies.accountManagement.index(company.id))
       })
 
-      assertBreadcrumbs(company.name, detailsUrl, 'Lead adviser')
+      assertBreadcrumbs(company.name, detailsUrl, 'Account management')
 
       it('should not display the archive panel', () => {
         assertArchivePanelNotVisible()
