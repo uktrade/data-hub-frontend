@@ -36,7 +36,6 @@ const reactRoutes = [
   '/investments/projects/:investmentId/status',
   '/companies/:companyId/account-management/objective/create',
   '/companies/:companyId/account-management/objective/edit',
-  '/companies/:companyId/account-management/objective/archived',
 ]
 
 reactRoutes.forEach((path) => {
