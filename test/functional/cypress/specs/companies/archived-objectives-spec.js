@@ -17,9 +17,21 @@ context('When visiting the archived objective page with objectives', () => {
     cy.wait('@objectivesApi')
   })
 
-  it('should display an archived objective with correct information', () => {
+  it('should display an archived objective with correct progress', () => {
     cy.get('[data-test="archived-objectives-row"]')
       .children()
+      .children()
       .should('have.length', 2)
+      .first()
+      .should('contain.text', 'Objective incomplete')
+      .next()
+      .should('contain.text', 'Objective complete')
+  })
+
+  xit('should display an archived objective with correct details', () => {
+    cy.get('[data-test="archived-objectives-row"]')
+      .children()
+      .children()
+      .should('contain.text', incompleteObjective.target_date)
   })
 })
