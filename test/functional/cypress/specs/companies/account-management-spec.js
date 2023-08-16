@@ -3,6 +3,7 @@ import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import { format } from 'date-fns'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
+import { assertRequestUrl } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -170,7 +171,13 @@ describe('Company account management', () => {
         results: [...objectives, noBlockersObjective],
       }).as('objectiveApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
-      cy.wait('@objectiveApi')
+    })
+
+    it('should check the objectives endpoint was called with expected values', () => {
+      assertRequestUrl(
+        '@objectiveApi',
+        `/api-proxy/v4/company/${companyId}/objective?sortby=target_date&archived=false`
+      )
     })
 
     it('should display the blocker text when an objective has a blocker', () => {
