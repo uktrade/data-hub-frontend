@@ -51,7 +51,7 @@ const objectiveMetadata = (objective) => {
     },
     {
       label: 'Adviser',
-      value: objective.modifiedBy.name,
+      value: objective.modifiedBy?.name,
     },
   ]
   return rows
@@ -83,7 +83,7 @@ const ArchivedObjectives = () => {
             payload={{ archived: true }}
           >
             {({ results }) => (
-              <SectionGridRow data-test="objectives-row">
+              <SectionGridRow data-test="archived-objectives-row">
                 <GridCol>
                   {results.map((objective, index) => (
                     <BorderContainer

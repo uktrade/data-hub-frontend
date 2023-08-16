@@ -1,30 +1,25 @@
-// import { companyFaker } from '../../fakers/companies'
-// import { objectiveFaker } from '../../fakers/objective'
+import { objectiveFaker } from '../../fakers/objective'
 
-// const {
-//   assertErrorSummary,
-//   assertPayload,
-//   assertFieldDateShort,
-// } = require('../../support/assertions')
+const fixtures = require('../../fixtures')
+const urls = require('../../../../../src/lib/urls')
 
-// const { fill } = require('../../../../functional/cypress/support/form-fillers')
+const companyId = fixtures.company.allActivitiesCompany.id
 
-// const fixtures = require('../../fixtures')
-// const urls = require('../../../../../src/lib/urls')
+const incompleteObjective = objectiveFaker({ archived: true, progress: 50 })
+const completeObjective = objectiveFaker({ archived: true, progress: 100 })
 
-// const companyId = fixtures.company.allActivitiesCompany.id
+context('When visiting the archived objective page with objectives', () => {
+  before(() => {
+    cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
+      results: [incompleteObjective, completeObjective],
+    }).as('objectivesApi')
+    cy.visit(urls.companies.accountManagement.objectives.archived(companyId))
+    cy.wait('@objectivesApi')
+  })
 
-// const assertHeader = (company) => {
-//   cy.get('h1').should('contain', 'Archived Objectives')
-// }
-
-// const assertBreadcrumbs = (company) => {
-//   it('should render breadcrumbs', () => {
-//     assertBreadcrumbs({
-//       Home: urls.dashboard.index(),
-//       Companies: urls.companies.index(),
-//       [company.name]: urls.companies.detail(company.id),
-//       'Account management': null,
-//     })
-//   })
-// }
+  it('should display an archived objective with correct information', () => {
+    cy.get('[data-test="archived-objectives-row"]')
+      .children()
+      .should('have.length', 2)
+  })
+})
