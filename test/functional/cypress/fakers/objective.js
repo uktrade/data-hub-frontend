@@ -4,7 +4,7 @@ import { listFaker } from './utils'
 
 const objectiveFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
-  company: faker.string.uuid(),
+  company: { id: faker.string.uuid(), name: faker.company.name() },
   subject: faker.word.sample(),
   detail: faker.word.words(),
   target_date: faker.date.future(),
