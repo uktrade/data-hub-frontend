@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import Tag from '../../../components/Tag'
@@ -32,8 +31,13 @@ const TagContainer = styled('div')({
   justifyContent: 'space-between',
 })
 
-const Header = styled('h2')({
-  marginBottom: 0,
+const LinkContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+const StyledHeader = styled('h3')({
+  marginBottom: 5,
   marginTop: SPACING.SCALE_4,
   fontSize: FONT_SIZE.SIZE_19,
   fontWeight: FONT_WEIGHTS.bold,
@@ -103,8 +107,14 @@ const ItemRenderer = (item) => {
         <Tag colour="grey">{`${exportPotential} POTENTIAL`}</Tag>
         <Tag colour={statusToColourMap[status]}>{status}</Tag>
       </TagContainer>
-      <Header>{item.company.name}</Header>
-      <Link href={`/export/${item.id}/details`}>{item.title}</Link>
+      <LinkContainer>
+        <StyledHeader>
+          <a href={`/companies/${item.company.id}/overview`}>
+            {item.company.name}
+          </a>
+        </StyledHeader>
+        <a href={`/export/${item.id}/details`}>{item.title}</a>
+      </LinkContainer>
       <DashboardToggleSection
         onOpen={(open) =>
           open ? setToggleLabel('Hide') : setToggleLabel('Show')

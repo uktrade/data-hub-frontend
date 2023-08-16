@@ -44,67 +44,83 @@ const buildAdviserRows = (oneListTeam) => {
   return advisers.length > 0 ? buildRow(advisers) : null
 }
 
+export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
+  <CompanyOneListTeamResource id={company.id}>
+    {(oneListTeam) => (
+      <>
+        <H2 size={LEVEL_SIZE[3]} data-test="core-team-heading">
+          Advisers on the core team
+        </H2>
+        <p data-test="core-team-subheading">{getSubheadingText(company)}</p>
+        <Table data-test="global-acc-manager-table">
+          <Table.Row>
+            <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
+            <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
+            <Table.CellHeader setWidth="33%">
+              Global Account Manager
+            </Table.CellHeader>
+          </Table.Row>
+          {buildGAMRow(oneListTeam)}
+        </Table>
+        {buildAdviserRows(oneListTeam) && (
+          <Table data-test="advisers-table">
+            <Table.Row>
+              <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
+              <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
+              <Table.CellHeader setWidth="33%">
+                Adviser on core team
+              </Table.CellHeader>
+            </Table.Row>
+            {buildAdviserRows(oneListTeam)}
+          </Table>
+        )}
+        <Details
+          summary="Need to find out more, or edit the One List tier information?"
+          data-test="core-team-details"
+        >
+          For more information, or if you need to change the One List tier or
+          account management team for this company, go to the{' '}
+          <NewWindowLink
+            href={urls.external.digitalWorkspace.accountManagement}
+          >
+            Digital Workspace
+          </NewWindowLink>{' '}
+          or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+        </Details>
+      </>
+    )}
+  </CompanyOneListTeamResource>
+)
+
+CoreTeamAdvisers.propTypes = {
+  company: PropTypes.object.isRequired,
+  oneListEmail: PropTypes.string.isRequired,
+}
+
 const CoreTeam = ({
   companyId,
   oneListEmail,
   dnbRelatedCompaniesCount,
   returnUrl,
   localNavItems,
+  permissions,
 }) => (
   <CompanyResource id={companyId}>
     {(company) => (
-      <CompanyOneListTeamResource id={companyId}>
-        {(oneListTeam) => (
-          <CompanyLayout
-            company={company}
-            breadcrumbs={[{ text: 'Core Team' }]}
-            dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-            returnUrl={returnUrl}
-            localNavItems={localNavItems}
-          >
-            <H2 size={LEVEL_SIZE[3]} data-test="core-team-heading">
-              Advisers on the core team
-            </H2>
-            <p data-test="core-team-subheading">{getSubheadingText(company)}</p>
-            <Table data-test="global-acc-manager-table">
-              <Table.Row>
-                <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
-                <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
-                <Table.CellHeader setWidth="33%">
-                  Global Account Manager
-                </Table.CellHeader>
-              </Table.Row>
-              {buildGAMRow(oneListTeam)}
-            </Table>
-            {buildAdviserRows(oneListTeam) && (
-              <Table data-test="advisers-table">
-                <Table.Row>
-                  <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
-                  <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
-                  <Table.CellHeader setWidth="33%">
-                    Adviser on core team
-                  </Table.CellHeader>
-                </Table.Row>
-                {buildAdviserRows(oneListTeam)}
-              </Table>
-            )}
-            <Details
-              summary="Need to find out more, or edit the One List tier information?"
-              data-test="core-team-details"
-            >
-              For more information, or if you need to change the One List tier
-              or account management team for this company, go to the{' '}
-              <NewWindowLink
-                href={urls.external.digitalWorkspace.accountManagement}
-              >
-                Digital Workspace
-              </NewWindowLink>{' '}
-              or email{' '}
-              <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
-            </Details>
-          </CompanyLayout>
-        )}
-      </CompanyOneListTeamResource>
+      <CompanyLayout
+        company={company}
+        breadcrumbs={[{ text: 'Core Team' }]}
+        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+        returnUrl={returnUrl}
+        localNavItems={localNavItems}
+      >
+        <CoreTeamAdvisers
+          company={company}
+          companyId={company.id}
+          oneListEmail={oneListEmail}
+          permissions={permissions}
+        />
+      </CompanyLayout>
     )}
   </CompanyResource>
 )
