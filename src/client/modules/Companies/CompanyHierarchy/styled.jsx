@@ -75,6 +75,7 @@ export const HierarchyItemContents = styled.div`
   `}
   }
   ${({ hierarchy }) =>
+    hierarchy &&
     hierarchy != 1 &&
     `
       transform-style: preserve-3d;
