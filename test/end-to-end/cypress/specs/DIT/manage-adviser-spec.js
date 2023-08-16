@@ -12,7 +12,7 @@ const addOrReplaceTestCase = ({
 }) => {
   it(`should be able to ${replace ? 'replace' : 'add'} an adviser`, () => {
     cy.visit(urls.companies.accountManagement.index(company.pk))
-    cy.get('[data-test="add-ita-button"]')
+    cy.get(`[data-test="${replace ? 'replace' : 'add'}-ita-button"]`)
       .contains(`${replace ? 'Replace Lead ITA' : 'Add a Lead ITA'}`)
       .click()
     cy.get('h1').contains(headline)
@@ -32,19 +32,10 @@ const addOrReplaceTestCase = ({
 }
 
 describe('Manage Lead ITA', () => {
-  const company = fixtures.company.create.corp()
-
+  company = fixtures.company.create.lambda()
   before(() => {
-    cy.loadFixture([company])
-    cy.visit(urls.companies.detail(company.pk))
+    cy.loadFixture([company]).debug()
   })
-
-  // company = fixtures.company.create.lambda()
-  // before(() => {
-  //   console.log('Hello')
-  //   cy.loadFixture([company]).debug()
-  //   cy.wait(100)
-  // })
 
   addOrReplaceTestCase({
     headline: 'Add someone as the Lead ITA',
