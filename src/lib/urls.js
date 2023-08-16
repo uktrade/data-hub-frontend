@@ -254,6 +254,10 @@ module.exports = {
           '/companies',
           '/:companyId/account-management/objective/:objectiveId/edit'
         ),
+        archived: url(
+          '/companies',
+          '/:companyId/account-management/objective/archived'
+        ),
       },
       advisers: {
         assign: url(
