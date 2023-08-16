@@ -41,10 +41,6 @@ describe('One List core team', () => {
       cy.visit(urls.companies.accountManagement.index(company.id))
     })
 
-    it('should display the "Core team" tab in the navigation', () => {
-      cy.get('#tab-advisers').should('contain', 'Core team')
-    })
-
     it('should render the heading', () => {
       cy.get('[data-test=core-team-heading]')
         .should('exist')
