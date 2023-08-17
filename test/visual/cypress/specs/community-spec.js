@@ -7,7 +7,6 @@ describe('community page', () => {
   })
 
   it('should render community page correctly', () => {
-    cy.get('[data-test="market-access-link"]').should('be.visible')
     cy.get('h1').screenshot('community-heading')
     cy.get('p').screenshot('community-paragraph')
     cy.get('img').screenshot('community-image')

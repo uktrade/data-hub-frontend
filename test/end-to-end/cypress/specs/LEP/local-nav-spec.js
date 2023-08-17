@@ -17,7 +17,7 @@ describe('LEP Permission', () => {
     })
 
     it('should not display Market Access in the Datahub Bar', () => {
-      cy.get('[data-test="market-access-link"]').should('not.be.visible')
+      cy.get('[data-test="market-access-link"]').should('not.exist')
     })
 
     it('should display LEP only tabs', () => {

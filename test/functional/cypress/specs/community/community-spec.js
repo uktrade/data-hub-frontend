@@ -22,8 +22,10 @@ describe('Community', () => {
     })
 
     it('should display the correct breadcrumbs', () => {
-      cy.get('[data-test="localHeader"]')
-      assertBreadcrumbs('Home', 'CRM Community')
+      assertBreadcrumbs({
+        Home: urls.dashboard.index(),
+        'CRM Community': null,
+      })
     })
 
     it('should display the roadmap block', () => {

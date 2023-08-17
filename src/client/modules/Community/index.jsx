@@ -55,7 +55,7 @@ const Community = () => {
       }
       breadcrumbs={[
         {
-          link: urls.dashboard,
+          link: urls.dashboard.index(),
           text: 'Home',
         },
         {
