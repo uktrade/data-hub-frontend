@@ -48,3 +48,20 @@ context('When visiting the archived objective page with objectives', () => {
       .should('contain.text', completeObjective.modifiedBy.name)
   })
 })
+
+context('When visiting the archived objective page with no objectives', () => {
+  before(() => {
+    cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
+      results: [],
+    }).as('objectivesApi')
+    cy.visit(urls.companies.accountManagement.objectives.archived(companyId))
+    cy.wait('@objectivesApi')
+  })
+
+  it('should display no archived objectives message', () => {
+    cy.get('[data-test="no-archived-objectives-row"]').should(
+      'have.text',
+      'There are no archived objectives for this company.'
+    )
+  })
+})

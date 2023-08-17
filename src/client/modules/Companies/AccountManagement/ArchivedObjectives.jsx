@@ -82,43 +82,52 @@ const ArchivedObjectives = () => {
             id={company.id}
             payload={{ archived: true }}
           >
-            {({ results }) => (
-              <SectionGridRow data-test="archived-objectives-row">
-                <GridCol>
-                  {results.map((objective, index) => (
-                    <BorderContainer
-                      data-test={`objective-${index + 1}`}
-                      finalItem={index === results.length - 1}
-                    >
-                      <GridRow>
-                        <GridCol>
-                          <H4>{objective.subject}</H4>
-                        </GridCol>
-                      </GridRow>
+            {({ results }) =>
+              results.length > 0 ? (
+                <SectionGridRow data-test="archived-objectives-row">
+                  <GridCol>
+                    {results.map((objective, index) => (
+                      <BorderContainer
+                        key={`objective_${index + 1}`}
+                        data-test={`objective-${index + 1}`}
+                        finalItem={index === results.length - 1}
+                      >
+                        <GridRow>
+                          <GridCol>
+                            <H4>{objective.subject}</H4>
+                          </GridCol>
+                        </GridRow>
 
-                      <GridRow>
-                        <GridCol>
-                          {isComplete(objective.progress) ? (
-                            <LastUpdatedHeading data-test="last-updated-details">
-                              <span>{`Objective complete. Updated by ${
-                                objective?.modifiedBy?.name
-                              }: ${format(objective.modifiedOn)}`}</span>
-                            </LastUpdatedHeading>
-                          ) : (
-                            <LastUpdatedHeading data-test="last-updated-details">
-                              <span>{`Objective incomplete. Archived by ${
-                                objective?.modifiedBy?.name
-                              }: ${format(objective.modifiedOn)}`}</span>
-                            </LastUpdatedHeading>
-                          )}
-                        </GridCol>
-                      </GridRow>
-                      <Metadata rows={objectiveMetadata(objective)} />
-                    </BorderContainer>
-                  ))}
-                </GridCol>
-              </SectionGridRow>
-            )}
+                        <GridRow>
+                          <GridCol>
+                            {isComplete(objective.progress) ? (
+                              <LastUpdatedHeading data-test="last-updated-details">
+                                <span>{`Objective complete. Updated by ${
+                                  objective?.modifiedBy?.name
+                                }: ${format(objective.modifiedOn)}`}</span>
+                              </LastUpdatedHeading>
+                            ) : (
+                              <LastUpdatedHeading data-test="last-updated-details">
+                                <span>{`Objective incomplete. Archived by ${
+                                  objective?.modifiedBy?.name
+                                }: ${format(objective.modifiedOn)}`}</span>
+                              </LastUpdatedHeading>
+                            )}
+                          </GridCol>
+                        </GridRow>
+                        <Metadata rows={objectiveMetadata(objective)} />
+                      </BorderContainer>
+                    ))}
+                  </GridCol>
+                </SectionGridRow>
+              ) : (
+                <SectionGridRow data-test="no-archived-objectives-row">
+                  <GridCol style={{ textAlign: 'center' }}>
+                    <p>There are no archived objectives for this company.</p>
+                  </GridCol>
+                </SectionGridRow>
+              )
+            }
           </CompanyObjectivesResource>
         </DefaultLayout>
       )}
