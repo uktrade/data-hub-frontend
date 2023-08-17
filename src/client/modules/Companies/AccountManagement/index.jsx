@@ -100,7 +100,7 @@ const Strategy = ({ company }) => (
 )
 
 const Objectives = ({ company }) => (
-  <CompanyObjectivesResource id={company.id}>
+  <CompanyObjectivesResource id={company.id} payload={{ archived: false }}>
     {({ results }) => (
       <SectionGridRow data-test="objectives-row">
         <GridCol>
