@@ -156,4 +156,24 @@ describe('Edit One List', () => {
       )
     })
   })
+
+  context('when skipping step 1', () => {
+    const testCompany = fixtures.company.oneListCorp
+
+    before(() => {
+      cy.visit(urls.companies.editOneList(testCompany.id))
+    })
+
+    it('should show the one list advisers step', () => {})
+  })
+
+  context('when needing to override the return url', () => {
+    const testCompany = fixtures.company.oneListCorp
+
+    before(() => {
+      cy.visit(urls.companies.editOneList(testCompany.id))
+    })
+
+    it('should return the user to the requested url', () => {})
+  })
 })

@@ -45,6 +45,7 @@ async function renderEditOneList(req, res) {
       oneListGroupGlobalAccountManager,
       oneListCoreTeam,
       formInitialValues,
+      returnUrl: req.query.returnUrl,
     },
   })
 }
