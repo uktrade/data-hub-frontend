@@ -1,5 +1,6 @@
 import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
 import { camelCase } from 'lodash'
+import { STAGE_ACTIVE } from '../../../../../client/modules/Investments/Projects/constants'
 
 const initialState = {
   results: [],
@@ -43,9 +44,10 @@ export default (state = { initialState }, { type, result }) => {
     const allActiveInvestments = []
     for (const investment of resultList) {
       if (
-        (investment.stage.name === 'Active' &&
+        (investment.stage.name === STAGE_ACTIVE &&
           investment.status === 'delayed') ||
-        (investment.stage.name === 'Active' && investment.status === 'ongoing')
+        (investment.stage.name === STAGE_ACTIVE &&
+          investment.status === 'ongoing')
       ) {
         let newDate = new Date(investment.estimated_land_date)
         investment.estimated_land_date = newDate

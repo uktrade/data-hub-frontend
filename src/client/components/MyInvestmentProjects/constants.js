@@ -105,7 +105,6 @@ export const INCOMPLETE_FIELDS = {
   fdi_type: 'FDI type',
 }
 
-export const STAGES = ['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']
 export const STAGE_TAG_COLOURS = {
   Prospect: 'purple',
   'Assign PM': 'red',

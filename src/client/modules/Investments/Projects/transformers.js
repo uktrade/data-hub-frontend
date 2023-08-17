@@ -4,7 +4,7 @@ import { Link } from 'govuk-react'
 import { transformDateObjectToDateString } from '../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import urls from '../../../../lib/urls'
-import { STAGES } from '../../../components/InvestmentProjectLocalHeader'
+import { INVESTMENT_PROJECT_STAGES } from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
 const checkIfItemHasValue = (item) => (item ? item : null)
@@ -322,7 +322,7 @@ export const mapFieldToUrl = (field, projectId) => {
 }
 
 export const getNextStage = (currentStage) =>
-  STAGES[STAGES.indexOf(currentStage) + 1]
+  INVESTMENT_PROJECT_STAGES[INVESTMENT_PROJECT_STAGES.indexOf(currentStage) + 1]
 
 const getNextStageID = (currentStage, projectStages) => {
   const nextStageName = getNextStage(currentStage)

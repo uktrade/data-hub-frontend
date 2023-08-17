@@ -13,6 +13,7 @@ import {
 import { TASK_UPDATE_INVESTMENT_PROJECT_STAGE } from './state'
 import { INCOMPLETE_FIELDS } from '../../../components/MyInvestmentProjects/constants'
 import { BLUE } from '../../../utils/colours'
+import { STAGE_ACTIVE, STAGE_VERIFY_WIN, STAGE_WON } from './constants'
 
 const StyledListItem = styled(ListItem)`
   color: ${BLUE};
@@ -40,7 +41,7 @@ const getIncompleteFields = (incompleteFields) =>
     .sort()
 
 const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
-  currentStage === 'Active' ? (
+  currentStage === STAGE_ACTIVE ? (
     <>
       <StyledP>Before you move to the Verify win stage:</StyledP>
       <UnorderedList listStyleType="bullet">
@@ -54,7 +55,7 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
         </StyledListItem>
       </UnorderedList>
     </>
-  ) : currentStage === 'Verify win' ? (
+  ) : currentStage === STAGE_VERIFY_WIN ? (
     <>
       <StyledP>Before you move to the Won stage:</StyledP>
       <UnorderedList listStyleType="bullet">
@@ -73,7 +74,7 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
   )
 
 const checkIfUserCanMoveToVerifyWin = (project, currentAdviser) =>
-  project.stage.name === 'Active'
+  project.stage.name === STAGE_ACTIVE
     ? currentAdviser === project.projectManager.id ||
       currentAdviser === project.projectAssuranceAdviser.id
     : true
@@ -83,7 +84,7 @@ const ProjectIncompleteFields = ({
   currentAdviserId,
   projectStages,
 }) =>
-  project.stage.name != 'Won' &&
+  project.stage.name != STAGE_WON &&
   (project.incompleteFields?.length == 0 ? (
     <StatusMessage data-test="move-to-next-stage">
       {checkIfActiveOrVerifyWin(project.stage.name, project.id)}

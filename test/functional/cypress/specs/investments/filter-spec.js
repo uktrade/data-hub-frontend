@@ -20,6 +20,7 @@ import {
   assertQueryParams,
 } from '../../support/assertions'
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
+import { STAGE_PROSPECT } from '../../../../../src/client/modules/Investments/Projects/constants'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -89,7 +90,7 @@ describe('Investments Collections Filter', () => {
         value: prospectStageId,
         checked: true,
       })
-      assertChipExists({ label: 'Prospect', position: 1 })
+      assertChipExists({ label: STAGE_PROSPECT, position: 1 })
     })
 
     it('should filter from user input and remove chips', () => {
@@ -104,7 +105,7 @@ describe('Investments Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('stage[0]', prospectStageId)
-      assertChipExists({ label: 'Prospect', position: 1 })
+      assertChipExists({ label: STAGE_PROSPECT, position: 1 })
 
       removeChip(prospectStageId)
       assertPayload('@apiRequest', minimumPayload)

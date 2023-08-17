@@ -10,8 +10,7 @@ import Timeline from '../Timeline'
 import { formatMediumDateTime } from '../../utils/date'
 import timelineTheme from './timeline-theme'
 import urls from '../../../lib/urls'
-
-export const STAGES = ['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']
+import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/constants'
 
 const MetaList = styled('ul')({})
 
@@ -87,7 +86,10 @@ const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
       )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
-      <Timeline stages={STAGES} currentStage={investment.stage.name} />
+      <Timeline
+        stages={INVESTMENT_PROJECT_STAGES}
+        currentStage={investment.stage.name}
+      />
     </ThemeProvider>
   </LocalHeader>
 )

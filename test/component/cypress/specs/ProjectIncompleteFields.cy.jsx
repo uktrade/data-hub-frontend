@@ -5,6 +5,12 @@ import ProjectIncompleteFields from '../../../../src/client/modules/Investments/
 import { contact } from '../../../functional/cypress/fixtures'
 import urls from '../../../../src/lib/urls'
 import DataHubProvider from './provider'
+import {
+  STAGE_ACTIVE,
+  STAGE_ASSIGN_PM,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} from '../../../../src/client/modules/Investments/Projects/constants'
 
 const projectId = 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977'
 
@@ -133,7 +139,7 @@ describe('ProjectIncompleteFields', () => {
       })
 
       it('should render the component with all incomplete fields', () => {
-        assertToMoveText('Assign PM')
+        assertToMoveText(STAGE_ASSIGN_PM)
         assertLink('Total investment', valueLink)
         assertLink('Strategic drivers behind this investment', requirementsLink)
         assertLink(
@@ -157,18 +163,18 @@ describe('ProjectIncompleteFields', () => {
       before(() => {
         buildAndMountComponent('Prospect')
       })
-      assertReadyToMove('Assign PM')
+      assertReadyToMove(STAGE_ASSIGN_PM)
     }
   )
   context(
     'When the project is at the Assign PM stage and has incomplete fields',
     () => {
       before(() => {
-        buildAndMountComponent('Assign PM', assignPmIncompleteFields)
+        buildAndMountComponent(STAGE_ASSIGN_PM, assignPmIncompleteFields)
       })
 
       it('should render the component with all incomplete fields', () => {
-        assertToMoveText('Active')
+        assertToMoveText(STAGE_ACTIVE)
         assertLink('Project Manager', projectManagementLink)
         assertLink('Project Assurance Adviser', projectManagementLink)
       })
@@ -178,21 +184,21 @@ describe('ProjectIncompleteFields', () => {
     'When the project is at the Assign PM stage and has no incomplete fields',
     () => {
       before(() => {
-        buildAndMountComponent('Assign PM')
+        buildAndMountComponent(STAGE_ASSIGN_PM)
       })
 
-      assertReadyToMove('Active')
+      assertReadyToMove(STAGE_ACTIVE)
     }
   )
   context(
     'When the project is at the Active stage and has incomplete fields',
     () => {
       before(() => {
-        buildAndMountComponent('Active', activeIncompleteFields)
+        buildAndMountComponent(STAGE_ACTIVE, activeIncompleteFields)
       })
 
       it('should render the component with all incomplete fields', () => {
-        assertToMoveText('Verify win')
+        assertToMoveText(STAGE_VERIFY_WIN)
         assertLink('Can client provide capital expenditure value?', valueLink)
         assertLink(
           'Is this project receiving government financial assistance?',
@@ -231,11 +237,11 @@ describe('ProjectIncompleteFields', () => {
     'When the project is at the Active stage and has no incomplete fields',
     () => {
       before(() => {
-        buildAndMountComponent('Active')
+        buildAndMountComponent(STAGE_ACTIVE)
       })
 
       it('should render the correct message and link', () => {
-        assertBeforeYouMoveText('Verify win')
+        assertBeforeYouMoveText(STAGE_VERIFY_WIN)
         assertEvidenceLink()
       })
     }
@@ -244,7 +250,7 @@ describe('ProjectIncompleteFields', () => {
     'When the user does not have permission to move to Verify Win',
     () => {
       before(() => {
-        buildAndMountComponent('Active', [], contact.johnnyCakeman.id)
+        buildAndMountComponent(STAGE_ACTIVE, [], contact.johnnyCakeman.id)
       })
 
       it('should render the PM/PAA message', () => {
@@ -259,16 +265,16 @@ describe('ProjectIncompleteFields', () => {
 
   context('When the project is at the Verify win stage', () => {
     before(() => {
-      buildAndMountComponent('Verify win')
+      buildAndMountComponent(STAGE_VERIFY_WIN)
     })
 
     it('should render the progression message and button', () => {
-      assertBeforeYouMoveText('Won')
+      assertBeforeYouMoveText(STAGE_WON)
       cy.get('[data-test="review-evidence-link"]')
         .should('exist')
         .should('have.text', 'Review the evidence for this investment project')
         .should('have.attr', 'href', evidenceLink)
-      assertSubmitButton('Won')
+      assertSubmitButton(STAGE_WON)
     })
   })
 })

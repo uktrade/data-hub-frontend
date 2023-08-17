@@ -1,6 +1,11 @@
 import React from 'react'
 
 import Timeline from 'Timeline'
+import {
+  INVESTMENT_PROJECT_STAGES,
+  STAGE_PROSPECT,
+  STAGE_WON,
+} from '../../../modules/Investments/Projects/constants'
 
 export default {
   title: 'Timeline',
@@ -10,15 +15,10 @@ export default {
   },
 }
 
-export const Default = () => (
-  <Timeline stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']} />
-)
+export const Default = () => <Timeline stages={INVESTMENT_PROJECT_STAGES} />
 
 export const FirstStage = () => (
-  <Timeline
-    stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']}
-    currentStage="Prospect"
-  />
+  <Timeline stages={INVESTMENT_PROJECT_STAGES} currentStage={STAGE_PROSPECT} />
 )
 
 FirstStage.story = {
@@ -26,8 +26,5 @@ FirstStage.story = {
 }
 
 export const Complete = () => (
-  <Timeline
-    stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']}
-    currentStage="Won"
-  />
+  <Timeline stages={INVESTMENT_PROJECT_STAGES} currentStage={STAGE_WON} />
 )
