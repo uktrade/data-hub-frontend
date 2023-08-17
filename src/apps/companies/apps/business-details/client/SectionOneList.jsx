@@ -38,7 +38,9 @@ const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
 
         <SummaryTable.Row heading="Global Account Manager">
           {company.oneListGroupGlobalAccountManager.name}
-          {company.oneListGroupGlobalAccountManager.ditTeam?.name}
+          {company.oneListGroupGlobalAccountManager.ditTeam
+            ? company.oneListGroupGlobalAccountManager.ditTeam.name
+            : '-'}
           {getLocation(company.oneListGroupGlobalAccountManager.ditTeam)}
         </SummaryTable.Row>
       </SummaryTable>
