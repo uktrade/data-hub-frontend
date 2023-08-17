@@ -110,11 +110,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 // Add investment from Investments
 router.get('/create', create.start.renderCreatePage)
 
-router.get(
-  '/create/investment-type/info',
-  create.investmentType.renderInvestmentInfoPage
-)
-
 router.get('/:investmentId', redirectToFirstNavItem)
 router.get('/:investmentId/details', details.detailsGetHandler)
 

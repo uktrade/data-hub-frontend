@@ -373,10 +373,6 @@ module.exports = {
         '/investments',
         '/projects/:projectId/edit-project-management'
       ),
-      typeInfo: url(
-        '/investments',
-        '/projects/create/investment-type/info/:anchor'
-      ),
       editAssociatedProject: url(
         '/investments',
         '/projects/:projectId/edit-associated'
