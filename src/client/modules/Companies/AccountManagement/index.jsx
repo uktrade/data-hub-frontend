@@ -48,7 +48,7 @@ const Strategy = ({ company }) => (
     <GridCol>
       <GridRow>
         <GridCol>
-          <H3>Strategy</H3>
+          <H3>DBT Strategy</H3>
         </GridCol>
         {company.strategy && (
           <StyledLink
