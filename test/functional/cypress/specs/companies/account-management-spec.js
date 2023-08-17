@@ -334,10 +334,6 @@ describe('One List core Tier D team', () => {
         cy.visit(urls.companies.accountManagement.index(companyTierD.id))
         cy.wait('@companyApi')
       })
-      before(() => {
-        companyTierD.one_list_group_global_account_manager.dit_team = null
-        cy.visit(urls.companies.accountManagement.index(companyTierD.id))
-      })
 
       it('should render the heading', () => {
         cy.get('[data-test=lead-ita-heading]')
