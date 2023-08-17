@@ -7,6 +7,13 @@ import {
   getFinancialYearStart,
   generateFinancialYearLabel,
 } from '../../../../../src/client/utils/date'
+import {
+  STAGE_ACTIVE,
+  STAGE_ASSIGN_PM,
+  STAGE_PROSPECT,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} from '../../../../../src/client/modules/Investments/Projects/constants'
 
 const myAdviser = {
   id: '7d19d407-9aec-4d06-b190-d3f404627f21',
@@ -58,7 +65,7 @@ describe('Dashboard - my projects list filters', () => {
     })
 
     it('should display "No investment projects"', () => {
-      cy.get('[data-test="stage-select"] select').select('Verify win')
+      cy.get('[data-test="stage-select"] select').select(STAGE_VERIFY_WIN)
       cy.wait('@apiRequest')
 
       cy.get('[data-test="tabpanel"] p').should(
@@ -72,14 +79,23 @@ describe('Dashboard - my projects list filters', () => {
       cy.get('[data-test="stage-select"] option').then((stageOptions) => {
         expect(transformOptions(stageOptions)).to.deep.eq([
           { value: 'all-stages', label: 'Show all' },
-          { value: '8a320cc9-ae2e-443e-9d26-2f36452c2ced', label: 'Prospect' },
-          { value: 'c9864359-fb1a-4646-a4c1-97d10189fc03', label: 'Assign PM' },
-          { value: '7606cc19-20da-4b74-aba1-2cec0d753ad8', label: 'Active' },
+          {
+            value: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+            label: STAGE_PROSPECT,
+          },
+          {
+            value: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+            label: STAGE_ASSIGN_PM,
+          },
+          {
+            value: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+            label: STAGE_ACTIVE,
+          },
           {
             value: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
-            label: 'Verify win',
+            label: STAGE_VERIFY_WIN,
           },
-          { value: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6', label: 'Won' },
+          { value: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6', label: STAGE_WON },
         ])
       })
     })
@@ -146,7 +162,7 @@ describe('Dashboard - my projects list filters', () => {
       cy.wait('@apiRequest')
     })
     it('should filter by stage', () => {
-      cy.get('[data-test="stage-select"] select').select('Prospect')
+      cy.get('[data-test="stage-select"] select').select(STAGE_PROSPECT)
       cy.wait('@apiRequest')
       assertPayload('@apiRequest', {
         ...minimumPayload,
@@ -182,13 +198,13 @@ describe('Dashboard - my projects list filters', () => {
     })
 
     it('should persist filter by stage', () => {
-      cy.get('[data-test="stage-select"] select').select('Prospect')
+      cy.get('[data-test="stage-select"] select').select(STAGE_PROSPECT)
       cy.wait('@apiRequest')
       cy.visit('/companies')
       cy.visit(urls.dashboard.investmentProjects())
       cy.get('[data-test="stage-select"] select')
         .find(':selected')
-        .contains('Prospect')
+        .contains(STAGE_PROSPECT)
     })
 
     it('should persist filter by status', () => {

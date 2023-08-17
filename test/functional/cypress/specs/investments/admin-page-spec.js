@@ -4,6 +4,12 @@ const {
 } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures/index')
+const {
+  STAGE_PROSPECT,
+  STAGE_ACTIVE,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} = require('../../../../../src/client/modules/Investments/Projects/constants')
 
 describe('Update the project stage', () => {
   context('When viewing a project details page', () => {
@@ -49,10 +55,10 @@ describe('Update the project stage', () => {
     })
     it('should display heading and radio buttons for the remaining four stages', () => {
       cy.contains('h2', 'Change the stage to')
-      cy.get('label').eq(0).should('contain', 'Prospect')
-      cy.get('label').eq(1).should('contain', 'Active')
-      cy.get('label').eq(2).should('contain', 'Verify win')
-      cy.get('label').eq(3).should('contain', 'Won')
+      cy.get('label').eq(0).should('contain', STAGE_PROSPECT)
+      cy.get('label').eq(1).should('contain', STAGE_ACTIVE)
+      cy.get('label').eq(2).should('contain', STAGE_VERIFY_WIN)
+      cy.get('label').eq(3).should('contain', STAGE_WON)
     })
     it('should display the "Save" button', () => {
       cy.contains('button', 'Save')
@@ -88,7 +94,10 @@ describe('Update the project stage', () => {
         cy.contains('h2', 'There is a problem')
           .next()
           .should('have.text', 'Select a new stage')
-        cy.contains('div', 'Prospect').should('contain', 'Select a new stage')
+        cy.contains('div', STAGE_PROSPECT).should(
+          'contain',
+          'Select a new stage'
+        )
       })
     }
   )

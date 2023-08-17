@@ -42,10 +42,7 @@ describe('Dashboard - Investment project next steps', () => {
       cy.get('@oneStep')
         .find('ul li')
         .eq(0)
-        .should(
-          'have.text',
-          'Includes capital, operational and R&D expenditure'
-        )
+        .should('have.text', 'Can client provide total investment value?')
     })
     it('should display a link to the project details page', () => {
       cy.get('@oneStep')
@@ -70,10 +67,7 @@ describe('Dashboard - Investment project next steps', () => {
       cy.get('@lessThanThreeSteps')
         .find('ul li')
         .eq(0)
-        .should(
-          'have.text',
-          'Includes capital, operational and R&D expenditure'
-        )
+        .should('have.text', 'Can client provide total investment value?')
         .next()
         .should('have.text', 'Number of new jobs')
     })
@@ -100,7 +94,7 @@ describe('Dashboard - Investment project next steps', () => {
         .find('ul li')
         .should(
           'have.text',
-          'Actual land dateAverage salary of new jobsCan client provide capital expenditure value?Plus 23 additional fields'
+          'Actual land dateAverage salary of new jobsCan client provide capital expenditure value?Plus 24 additional fields'
         )
     })
     it('should display a link to the project details page', () => {
@@ -126,7 +120,7 @@ describe('Dashboard - Investment project next steps', () => {
         .find('ul li')
         .should(
           'have.text',
-          'Client requirementsIncludes capital, operational and R&D expenditureNumber of new jobsPlus 1 additional field'
+          'Can client provide total investment value?Client requirementsNumber of new jobsPlus 1 additional field'
         )
     })
     it('should display a link to the project details page', () => {

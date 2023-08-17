@@ -26,9 +26,6 @@ const investmentStatus = {
     url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
   },
   currentStage: {
-    incompleteFields: [],
-    isComplete: false,
-    messages: [],
     name: 'Prospect',
   },
   id: 'f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7',
@@ -56,12 +53,6 @@ const investmentStatus = {
       value: 'Little Britain',
     },
   ],
-  nextStage: {
-    name: 'Assign PM',
-    disabled_on: null,
-    exclude_from_investment_flow: false,
-    id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
-  },
 }
 
 const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {

@@ -12,9 +12,9 @@ const { investments } = require('../../../../../src/lib/urls')
 const projectNoExistingRequirements = require('../../fixtures/investment/investment-no-existing-requirements.json')
 const projectHasExistingRequirements = require('../../fixtures/investment/investment-has-existing-requirements.json')
 
-const navigateToForm = ({ project }) => {
+const navigateToForm = ({ project }, dataTest = 'edit') => {
   cy.visit(investments.projects.details(project.id))
-  cy.get('[data-test="investment-requirements-link"]').click()
+  cy.get(`[data-test="${dataTest}-requirements-button"]`).click()
 }
 
 const checkIfClientConsidering = (valueToCheck) => (valueToCheck ? 3 : 2)
@@ -23,9 +23,9 @@ const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
 const convertBoolToYesNoWithNullCheck = (valueToCheck) =>
   valueToCheck === null ? null : convertBoolToYesNo(valueToCheck)
 
-const testProjectRequirementsForm = ({ project }) => {
+const testProjectRequirementsForm = ({ project }, dataTest) => {
   before(() => {
-    navigateToForm({ project })
+    navigateToForm({ project }, dataTest)
   })
 
   it('should render the header', () => {
@@ -188,7 +188,10 @@ const testProjectRequirementsForm = ({ project }) => {
 
 describe('Edit the requirements of a project', () => {
   context('When editing a project without existing requirements data', () => {
-    testProjectRequirementsForm({ project: projectNoExistingRequirements })
+    testProjectRequirementsForm(
+      { project: projectNoExistingRequirements },
+      'add'
+    )
   })
 
   context(
@@ -211,7 +214,7 @@ describe('Edit the requirements of a project', () => {
 
   context('When making changes to all fields', () => {
     before(() => {
-      navigateToForm({ project: projectNoExistingRequirements })
+      navigateToForm({ project: projectNoExistingRequirements }, 'add')
     })
 
     it('should allow the user to fill in all fields', () => {

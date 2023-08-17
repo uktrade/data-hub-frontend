@@ -5,7 +5,7 @@ describe('Edit the associated FDI R&D project', () => {
   context('When adding a new linked project', () => {
     before(() => {
       cy.visit(investments.projects.details(project.id))
-      cy.get('[data-test="edit-associated-link"]').click()
+      cy.get('[data-test="find-project-link"]').click()
     })
 
     it('should allow users to search for an associated project', () => {

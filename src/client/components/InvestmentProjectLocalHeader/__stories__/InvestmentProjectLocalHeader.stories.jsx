@@ -3,6 +3,14 @@ import React from 'react'
 import InvestmentProjectLocalHeader from 'InvestmentProjectLocalHeader'
 import urls from '../../../../lib/urls'
 
+import {
+  STAGE_ACTIVE,
+  STAGE_ASSIGN_PM,
+  STAGE_PROSPECT,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} from '../../../modules/Investments/Projects/constants'
+
 const investment = {
   id: '123',
   investor_company: {
@@ -19,7 +27,7 @@ const investment = {
     },
   },
   stage: {
-    name: 'Prospect',
+    name: STAGE_PROSPECT,
   },
   status: 'ongoing',
 }
@@ -134,7 +142,7 @@ export const StageAssignPm = () => (
     investment={{
       ...investment,
       stage: {
-        name: 'Assign PM',
+        name: STAGE_ASSIGN_PM,
       },
     }}
     breadcrumbs={breadcrumbs}
@@ -150,7 +158,7 @@ export const StageActive = () => (
     investment={{
       ...investment,
       stage: {
-        name: 'Active',
+        name: STAGE_ACTIVE,
       },
     }}
     breadcrumbs={breadcrumbs}
@@ -166,7 +174,7 @@ export const StageVerifyWin = () => (
     investment={{
       ...investment,
       stage: {
-        name: 'Verify win',
+        name: STAGE_VERIFY_WIN,
       },
     }}
     breadcrumbs={breadcrumbs}
@@ -182,7 +190,7 @@ export const StageWon = () => (
     investment={{
       ...investment,
       stage: {
-        name: 'Won',
+        name: STAGE_WON,
       },
     }}
     breadcrumbs={breadcrumbs}

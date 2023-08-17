@@ -11,7 +11,8 @@ import {
 
 import { BLUE, MID_GREY } from '../../utils/colours'
 import { investments } from '../../../lib/urls'
-import { STAGES, STAGE_TAG_COLOURS } from './constants'
+import { STAGE_TAG_COLOURS } from './constants'
+import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/constants'
 
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
@@ -209,7 +210,11 @@ const InvestmentListItem = ({
             <Col>
               <InvestmentNextSteps
                 nextSteps={incomplete_fields}
-                nextStage={STAGES[STAGES.indexOf(stage.name) + 1]}
+                nextStage={
+                  INVESTMENT_PROJECT_STAGES[
+                    INVESTMENT_PROJECT_STAGES.indexOf(stage.name) + 1
+                  ]
+                }
                 projectId={id}
               />
             </Col>

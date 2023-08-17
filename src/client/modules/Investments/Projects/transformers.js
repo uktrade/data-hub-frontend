@@ -1,5 +1,11 @@
+import React from 'react'
+import { Link } from 'govuk-react'
+
 import { transformDateObjectToDateString } from '../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
+import urls from '../../../../lib/urls'
+import { INVESTMENT_PROJECT_STAGES } from './constants'
+import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
 const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -262,3 +268,127 @@ export const transformProjectStatusForApi = ({ project, values }) => ({
   id: project.id,
   status: values.status,
 })
+
+export const mapFieldToUrl = (field, projectId) => {
+  const detailsFields = ['Actual land date', 'FDI type']
+  const valueFields = [
+    'Can client provide total investment value?',
+    'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+    'Is this project receiving government financial assistance?',
+    'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+    'Number of new jobs',
+    'Number of safeguarded jobs',
+    'Does this project have budget for a research and development?',
+    'Total investment',
+    'Is this project associated with a non-FDI R&D project?',
+    'Average salary of new jobs',
+    'Can client provide capital expenditure value?',
+    'Foreign equity investment',
+  ]
+  const requirementsFields = [
+    'UK regions landed',
+    'Is the client considering other countries?',
+    'Client requirements',
+    'Delivery partners',
+    'Strategic drivers behind this investment',
+    'Possible UK locations for this investment',
+    'Street',
+    'Town',
+    'Postcode',
+    'Competitor countries',
+  ]
+  const projectManagementFields = [
+    'Project Assurance Adviser',
+    'Project Manager',
+  ]
+
+  if (detailsFields.includes(field)) {
+    return urls.investments.projects.editDetails(projectId)
+  }
+
+  if (valueFields.includes(field)) {
+    return urls.investments.projects.editValue(projectId)
+  }
+
+  if (requirementsFields.includes(field)) {
+    return urls.investments.projects.editRequirements(projectId)
+  }
+
+  if (projectManagementFields.includes(field)) {
+    return urls.investments.projects.editProjectManagement(projectId)
+  }
+
+  return urls.investments.projects.editAssociatedProject(projectId)
+}
+
+export const getNextStage = (currentStage) =>
+  INVESTMENT_PROJECT_STAGES[INVESTMENT_PROJECT_STAGES.indexOf(currentStage) + 1]
+
+const getNextStageID = (currentStage, projectStages) => {
+  const nextStageName = getNextStage(currentStage)
+  const nextStage = projectStages.find((stage) => stage.name === nextStageName)
+
+  return nextStage.id
+}
+
+export const transformProjectStageForApi = (values) => {
+  const { project, projectStages } = values
+
+  return {
+    id: project.id,
+    stage: getNextStageID(project.stage.name, projectStages),
+  }
+}
+
+export const transformFdiType = (FDI, FDIType) =>
+  FDIType ? FDI + ', ' + FDIType : FDI + ', None'
+
+export const transformBusinessActivity = (
+  businessActivity,
+  otherBusinessActivity
+) =>
+  otherBusinessActivity
+    ? transformArray(businessActivity) + ', ' + otherBusinessActivity
+    : transformArray(businessActivity)
+
+export const transformFdiRAndDProject = (project) => {
+  if (project.associatedNonFdiRAndDProject) {
+    return (
+      <>
+        {project.associatedNonFdiRAndDProject.name}
+        <br />
+        <br />
+        <Link
+          href={
+            urls.investments.projects.editAssociatedProject(project.id) +
+            '?term=' +
+            project.associatedNonFdiRAndDProject.projectCode
+          }
+          data-test="edit-project-link"
+        >
+          Edit project
+        </Link>
+        <br />
+        <Link
+          href={urls.investments.projects.removeAssociatedProject(project.id)}
+          data-test="remove-project-link"
+        >
+          Remove association
+        </Link>
+      </>
+    )
+  }
+
+  if (project.investmentType?.name === 'FDI' && project.nonFdiRAndDBudget) {
+    return (
+      <Link
+        href={urls.investments.projects.editAssociatedProject(project.id)}
+        data-test="find-project-link"
+      >
+        Find project
+      </Link>
+    )
+  }
+
+  return 'Not linked to a non-FDI R&D project'
+}

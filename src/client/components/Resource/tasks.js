@@ -49,6 +49,7 @@ import DeliveryPartners from './DeliveryPartners'
 import SalaryRanges from './SalaryRanges'
 import FDIValues from './FDIValues'
 import CompanyObjectives from './CompanyObjectives'
+import ProjectStage from './ProjectStage'
 
 export default {
   ...Advisers.tasks,
@@ -102,4 +103,5 @@ export default {
   ...SalaryRanges.tasks,
   ...FDIValues.tasks,
   ...CompanyObjectives.tasks,
+  ...ProjectStage.tasks,
 }

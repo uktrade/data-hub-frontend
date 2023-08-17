@@ -4,6 +4,13 @@ import {
   INVESTMENT_PROJECT_STATUSES_LIST,
 } from '../../fakers/constants'
 import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
+import {
+  STAGE_ACTIVE,
+  STAGE_ASSIGN_PM,
+  STAGE_PROSPECT,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} from '../../../../../src/client/modules/Investments/Projects/constants'
 
 describe('Dashboard - Investment project tags', () => {
   const summary = investmentProjectSummaryFaker()
@@ -27,27 +34,27 @@ describe('Dashboard - Investment project tags', () => {
     cy.get('[data-test="tablist"] button').contains('Investment').click()
     const expected = [
       {
-        label: 'Prospect',
+        label: STAGE_PROSPECT,
         background: 'rgb(219, 213, 233)',
         colour: 'rgb(61, 35, 117)',
       },
       {
-        label: 'Assign PM',
+        label: STAGE_ASSIGN_PM,
         background: 'rgb(246, 215, 210)',
         colour: 'rgb(148, 37, 20)',
       },
       {
-        label: 'Active',
+        label: STAGE_ACTIVE,
         background: 'rgb(210, 226, 241)',
         colour: 'rgb(20, 78, 129)',
       },
       {
-        label: 'Verify win',
+        label: STAGE_VERIFY_WIN,
         background: 'rgb(255, 247, 191)',
         colour: 'rgb(89, 77, 0)',
       },
       {
-        label: 'Won',
+        label: STAGE_WON,
         background: 'rgb(204, 226, 216)',
         colour: 'rgb(0, 90, 48)',
       },
