@@ -1,4 +1,5 @@
 import urls from '../../../../../src/lib/urls'
+import { assertBreadcrumbs } from '../../support/assertions'
 
 describe('Community', () => {
   context('When visiting the Community page', () => {
