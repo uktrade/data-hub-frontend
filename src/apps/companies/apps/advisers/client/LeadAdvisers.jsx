@@ -33,7 +33,7 @@ const RenderHasAccountManager = ({
         <Table.CellHeader setWidth="33%">Email</Table.CellHeader>
       </Table.Row>
       <Table.Row>
-        <Table.Cell>{leadITA.ditTeam.name}</Table.Cell>
+        <Table.Cell>{leadITA.ditTeam ? leadITA.ditTeam.name : '-'}</Table.Cell>
         <Table.Cell>{leadITA.name}</Table.Cell>
         <Table.Cell>
           {leadITA.contactEmail ? (
@@ -71,7 +71,9 @@ const RenderHasAccountManager = ({
 
 export const LeadITA = ({ company, permissions }) => (
   <>
-    <H2 size={LEVEL_SIZE[3]}>Lead ITA for {company.name}</H2>
+    <H2 size={LEVEL_SIZE[3]} data-test="lead-ita-heading">
+      Lead ITA for {company.name}
+    </H2>
     {!!company.oneListGroupGlobalAccountManager ? (
       <RenderHasAccountManager
         leadITA={company.oneListGroupGlobalAccountManager}
