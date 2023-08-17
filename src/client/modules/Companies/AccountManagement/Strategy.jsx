@@ -61,7 +61,7 @@ const Strategy = () => {
                 <>
                   <FieldTextarea
                     name="strategy"
-                    label="Strategy"
+                    label="DBT Strategy"
                     hint="This should outline a plan than provides a concise overview of the
                   business direction and DBT's approach to help them achieve that."
                   />
