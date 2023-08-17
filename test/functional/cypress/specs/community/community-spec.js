@@ -92,7 +92,7 @@ describe('Community', () => {
         .should(
           'have.attr',
           'href',
-          'mailto:crmresearch@trade.gov.uk?subject=Volunteering for user research&body=Hello, I would like to volunteer to take part in future user research around CRM.'
+          'mailto:crmresearch@trade.gov.uk?subject=Volunteering%20for%20user%20research&body=Hello%2C%20I%20would%20like%20to%20volunteer%20to%20take%20part%20in%20future%20user%20research%20around%20CRM.'
         )
     })
   })

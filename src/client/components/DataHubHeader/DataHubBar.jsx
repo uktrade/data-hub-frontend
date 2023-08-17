@@ -169,8 +169,9 @@ const DataHubBar = ({
         <BetaTag>beta</BetaTag>
       </DataHubContainer>
       <Container hasFeatureGroup={hasFeatureGroup}>
-        <ProtectedLink module={'market-access'} data-test="market-access-link">
+        <ProtectedLink module={'market-access'}>
           <NavigationLink
+            data-test="market-access-link"
             hasFeatureGroup={hasFeatureGroup}
             showVerticalNav={showVerticalNav}
             href={MARKET_ACCESS_PATHNAME}
