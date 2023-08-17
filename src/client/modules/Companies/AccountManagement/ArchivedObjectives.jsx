@@ -87,10 +87,7 @@ const ArchivedObjectives = () => {
                 <GridCol>
                   {results.map((objective, index) => (
                     <BorderContainer
-                      key={`objective_${index}`}
-                      data-test={`objective ${
-                        objective.hasBlocker ? 'has-blocker' : 'no-blocker'
-                      }`}
+                      data-test={`objective-${index + 1}`}
                       finalItem={index === results.length - 1}
                     >
                       <GridRow>
