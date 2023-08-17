@@ -350,7 +350,10 @@ describe('One List core Tier D team', () => {
               '-',
               companyTierDNoTeam.one_list_group_global_account_manager.name,
               companyTierDNoTeam.one_list_group_global_account_manager
-                .contact_email,
+                .contact_email
+                ? companyTierDNoTeam.one_list_group_global_account_manager
+                    .contact_email
+                : '-',
             ],
           ],
         })
