@@ -33,7 +33,7 @@ const RenderHasAccountManager = ({
         <Table.CellHeader setWidth="33%">Email</Table.CellHeader>
       </Table.Row>
       <Table.Row>
-        <Table.Cell>{leadITA.ditTeam.name}</Table.Cell>
+        <Table.Cell>{leadITA.ditTeam?.name}</Table.Cell>
         <Table.Cell>{leadITA.name}</Table.Cell>
         <Table.Cell>
           {leadITA.contactEmail ? (
