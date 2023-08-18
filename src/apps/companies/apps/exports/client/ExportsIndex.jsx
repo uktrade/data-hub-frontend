@@ -24,10 +24,6 @@ const StyledLink = styled(Link)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
-const getExportPotential = (exportPotential) =>
-  exportPotentialLabels[exportPotential] &&
-  exportPotentialLabels[exportPotential].text
-
 const ExportsIndex = ({
   companyId,
   returnUrl,
@@ -73,9 +69,7 @@ const ExportsIndex = ({
               heading={exportDetailsLabels.exportPotential}
               key={exportDetailsLabels.exportPotential}
             >
-              {company.exportPotential
-                ? getExportPotential(company.exportPotential)
-                : 'No score given'}
+              Coming soon
             </SummaryTable.Row>
           </SummaryTable>
 

@@ -11,7 +11,6 @@ import {
   ExportExperienceCategoriesResource,
 } from '../../../components/Resource'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
-import { buildExportPotential } from './transformers'
 import { exportDetailsLabels } from '../../../../apps/companies/labels'
 import { buildCompanyBreadcrumbs } from '../utils'
 
@@ -74,7 +73,7 @@ export default ({ companyId }) => (
                   </StyledDd>
 
                   <StyledDt>{exportDetailsLabels.exportPotential}</StyledDt>
-                  <StyledDd>{buildExportPotential(company)}</StyledDd>
+                  <StyledDd>Coming soon</StyledDd>
                 </dl>
                 <FieldInput
                   type="hidden"

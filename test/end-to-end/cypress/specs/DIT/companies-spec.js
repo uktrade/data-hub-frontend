@@ -94,7 +94,7 @@ describe('Export', () => {
           assertTable([
             'Export growth',
             'No profile',
-            'No score given',
+            'Coming soon',
             'None',
             'None',
             'None',
@@ -112,7 +112,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'None',
             'None',
             'None',
@@ -152,7 +152,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'None',
             'None',
             'None',
@@ -175,7 +175,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'France, Germany',
             'None',
             'None',
@@ -191,7 +191,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'France, Germany',
             'None',
             'None',
@@ -218,7 +218,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'Brazil, France, Germany',
             'Honduras',
             'Chile',
@@ -245,7 +245,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Coming soon',
             'None',
             'None',
             'None',
