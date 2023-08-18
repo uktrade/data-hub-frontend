@@ -43,13 +43,15 @@ const LOCAL_NAV = [
   },
   {
     path: 'contacts',
-    label: 'Company contacts',
+    label: 'Contacts',
     search: '?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1',
     permissions: ['company.view_contact'],
+    ariaDescription: 'Company contacts',
   },
   {
-    path: 'advisers',
-    label: 'Lead adviser',
+    path: 'account-management',
+    label: 'Account management',
+    ariaDescription: 'Account management',
   },
   {
     path: 'investments',

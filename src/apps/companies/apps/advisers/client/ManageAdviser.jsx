@@ -69,7 +69,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
         submissionTaskName="Update Lead ITA"
         analyticsFormName="updateLeadITA"
         transformPayload={(values) => ({ ...values, companyId })}
-        redirectTo={() => urls.companies.advisers.index(companyId)}
+        redirectTo={() => urls.companies.accountManagement.index(companyId)}
         flashMessage={({ name, email }) => [
           'Lead adviser information updated.',
           `Send ${name} an email to let them know they've been ` +

@@ -3,6 +3,7 @@ import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import { format } from 'date-fns'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
+import { adviserFaker } from '../../fakers/advisers'
 import { assertRequestUrl } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
@@ -11,6 +12,7 @@ const urls = require('../../../../../src/lib/urls')
 const companyId = fixtures.company.allActivitiesCompany.id
 
 const company = fixtures.company.oneListCorp
+const companyTierD = fixtures.company.oneListTierDita
 const globalAccountManager = company.one_list_group_global_account_manager
 
 const coreTeamResponse = {
@@ -285,85 +287,76 @@ describe('One List core team', () => {
   })
 })
 
-describe('Lead advisers', () => {
-  context('when viewing a non One List tier company', () => {
+describe('One List core Tier D team', () => {
+  context('when viewing a One List Tier D company', () => {
     before(() => {
-      cy.visit(
-        urls.companies.accountManagement.index(
-          fixtures.company.marsExportsLtd.id
-        )
-      )
+      cy.visit(urls.companies.accountManagement.index(companyTierD.id))
     })
 
-    it('should render a meta title', () => {
-      cy.title().should('eq', 'Companies - DBT Data Hub')
+    it('should render the heading', () => {
+      cy.get('[data-test=lead-ita-heading]')
+        .should('exist')
+        .should('have.text', "Lead ITA for Ian's Camper Vans Ltd")
     })
 
-    it('should display a header with the company name', () => {
-      cy.contains('Lead ITA for Mars Exports Ltd')
-    })
-    it('should display help text for adding a lead adviser', () => {
-      cy.contains(
-        'This company record has no Lead International Trade Adviser (ITA).'
-      )
-      cy.contains(
-        'You can add a Lead ITA. This will be visible to all Data Hub users.'
-      )
-    })
-    it('should display a button to add a lead adviser', () => {
-      cy.contains('Add a Lead ITA')
-        .invoke('attr', 'href')
-        .should(
-          'eq',
-          urls.companies.advisers.assign(fixtures.company.marsExportsLtd.id)
-        )
+    it('should render the Lead ITA table', () => {
+      assertTable({
+        element: '[data-test="lead-adviser-table"]',
+        rows: [
+          ['Team', 'Lead ITA', 'Email'],
+          [
+            companyTierD.one_list_group_global_account_manager.dit_team.name,
+            companyTierD.one_list_group_global_account_manager.name,
+            companyTierD.one_list_group_global_account_manager.contact_email,
+          ],
+        ],
+      })
     })
   })
+
   context(
-    'when viewing a One List tier D - ITA company with an allocated Account manager',
+    'when viewing a One List Tier D company without DIT team name for account manager',
     () => {
+      const companyTierDNoTeam = companyFaker({
+        one_list_group_global_account_manager: adviserFaker({
+          dit_team: undefined,
+        }),
+        one_list_group_tier: { id: '1929c808-99b4-4abf-a891-45f2e187b410' },
+        id: companyTierD.id,
+      })
+
       before(() => {
-        cy.visit(
-          urls.companies.accountManagement.index(
-            fixtures.company.oneListTierDita.id
-          )
-        )
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyTierD.id}`,
+          companyTierDNoTeam
+        ).as('companyApi')
+        cy.visit(urls.companies.accountManagement.index(companyTierD.id))
+        cy.wait('@companyApi')
       })
 
-      const globalAccountManager =
-        fixtures.company.oneListTierDita.one_list_group_global_account_manager
-
-      it('should display a header with the company name', () => {
-        cy.contains("Lead ITA for Ian's Camper Vans Ltd")
+      it('should render the heading', () => {
+        cy.get('[data-test=lead-ita-heading]')
+          .should('exist')
+          .should('have.text', `Lead ITA for ${companyTierDNoTeam.name}`)
       })
-      it('should render the global account manager table', () => {
+
+      it('should render the Lead ITA table', () => {
         assertTable({
           element: '[data-test="lead-adviser-table"]',
           rows: [
             ['Team', 'Lead ITA', 'Email'],
             [
-              globalAccountManager.dit_team.name,
-              globalAccountManager.name,
-              globalAccountManager.contact_email,
+              '-',
+              companyTierDNoTeam.one_list_group_global_account_manager.name,
+              companyTierDNoTeam.one_list_group_global_account_manager
+                .contact_email
+                ? companyTierDNoTeam.one_list_group_global_account_manager
+                    .contact_email
+                : '-',
             ],
           ],
         })
-      })
-      it('should display a button to replace the Lead ITA', () => {
-        cy.contains('Replace Lead ITA')
-          .invoke('attr', 'href')
-          .should(
-            'eq',
-            urls.companies.advisers.assign(fixtures.company.oneListTierDita.id)
-          )
-      })
-      it('should display a button to remove the Lead ITA', () => {
-        cy.contains('Remove Lead ITA')
-          .invoke('attr', 'href')
-          .should(
-            'eq',
-            urls.companies.advisers.remove(fixtures.company.oneListTierDita.id)
-          )
       })
     }
   )

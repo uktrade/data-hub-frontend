@@ -6,11 +6,11 @@ export const transformOneListCoreTeamToCollection = (advisers) => {
     const adviserTeam = adviser.ditTeam
     return {
       name: adviser.name,
-      team: adviserTeam.name,
-      location: adviserTeam.ukRegion
-        ? adviserTeam.ukRegion.name
-        : adviserTeam.country
-        ? adviserTeam.country.name
+      team: adviserTeam ? adviserTeam.name : '-',
+      location: adviserTeam?.ukRegion
+        ? adviserTeam?.ukRegion.name
+        : adviserTeam?.country
+        ? adviserTeam?.country.name
         : '-',
     }
   }

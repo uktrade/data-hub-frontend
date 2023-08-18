@@ -38,11 +38,7 @@ const assertTable = ({ element, rows }) => {
 describe('One List core team', () => {
   context('when viewing a One List Tier company', () => {
     before(() => {
-      cy.visit(urls.companies.advisers.index(company.id))
-    })
-
-    it('should display the "Core team" tab in the navigation', () => {
-      cy.get('#tab-advisers').should('contain', 'Core team')
+      cy.visit(urls.companies.accountManagement.index(company.id))
     })
 
     it('should render the heading', () => {
@@ -108,7 +104,7 @@ describe('One List core team', () => {
           body: [coreTeamResponse],
         }
       ).as('apiRequest')
-      cy.visit(urls.companies.advisers.index(company.id))
+      cy.visit(urls.companies.accountManagement.index(company.id))
       cy.wait('@apiRequest')
     })
 

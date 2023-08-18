@@ -25,6 +25,7 @@ const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const {
   redirectToFirstNavItem,
   handleRoutePermissions,
+  setLocalNav,
 } = require('../middleware')
 
 const {
@@ -38,7 +39,6 @@ const {
   removeGlobalHQ,
   addSubsidiary,
 } = require('./middleware/hierarchies')
-const setCompaniesLocalNav = require('./middleware/local-navigation')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 const formatPostcodes = require('./middleware/format-postcodes')
 
@@ -55,7 +55,6 @@ const exportsRouter = require('./apps/exports/router')
 const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
-const advisersRouter = require('./apps/advisers/router')
 const referralsRouter = require('./apps/referrals/router')
 const { companyPipelineRouter } = require('../my-pipeline/router')
 const accountManagementRouter = require('./apps/account-management/router')
@@ -90,7 +89,7 @@ router.get(urls.companies.unarchive.route, unarchiveCompany)
 router.use(
   urls.companies.detail.route,
   handleRoutePermissions(LOCAL_NAV),
-  setCompaniesLocalNav
+  setLocalNav(LOCAL_NAV)
 )
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
@@ -123,7 +122,6 @@ router.use(
   setInteractionsDetails,
   interactionsRouter
 )
-router.use(urls.companies.advisers.index.route, setReturnUrl, advisersRouter)
 
 router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 
