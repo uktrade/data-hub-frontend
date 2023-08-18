@@ -22,6 +22,7 @@ import Strategy from './modules/Companies/AccountManagement/Strategy'
 import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
+import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
 
 const routes = {
   companies: [
@@ -59,6 +60,11 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/:objectiveId/edit',
       module: 'datahub:companies',
       component: ObjectiveEdit,
+    },
+    {
+      path: '/companies/:companyId/account-management/objective/archived',
+      module: 'datahub:companies',
+      component: ArchivedObjectives,
     },
   ],
   contacts: [

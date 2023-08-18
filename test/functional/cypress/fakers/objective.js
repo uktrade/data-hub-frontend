@@ -11,6 +11,13 @@ const objectiveFaker = (overrides = {}) => ({
   has_blocker: true,
   blocker_description: faker.word.words(),
   progress: faker.helpers.rangeToNumber({ min: 0, max: 100 }),
+  archived: false,
+  modifiedBy: {
+    id: faker.string.uuid(),
+    name: faker.person.fullName(),
+  },
+  modifiedOn: faker.date.past(),
+
   ...overrides,
 })
 
