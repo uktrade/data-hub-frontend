@@ -11,6 +11,31 @@ export const SORT_OPTIONS = [
     label: 'Export title Z-A',
     value: '-title',
   },
+  {
+    label: 'Company name A-Z',
+    value: 'company__name',
+  },
+  {
+    label: 'Company name Z-A',
+    value: '-company__name',
+  },
+  {
+    label: 'Earliest expected date for win',
+    value: 'estimated_win_date',
+  },
+  {
+    label: 'Latest expected date for win',
+    value: '-estimated_win_date',
+  },
+
+  {
+    label: 'Value increasing',
+    value: 'estimated_export_value_amount',
+  },
+  {
+    label: 'Value decreasing',
+    value: '-estimated_export_value_amount',
+  },
 ]
 
 export const EXPORT_POTENTIAL_OPTIONS = [
