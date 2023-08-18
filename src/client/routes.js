@@ -23,8 +23,6 @@ import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
-import Objective from './modules/Companies/AccountManagement/Objective'
-import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
 
 const routes = {
   companies: [
