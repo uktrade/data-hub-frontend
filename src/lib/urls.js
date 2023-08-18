@@ -79,7 +79,7 @@ module.exports = {
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
     findExporters: () =>
-      'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c',
+      'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
     digitalWorkspace: {
       teams:
