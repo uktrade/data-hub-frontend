@@ -1,19 +1,18 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-
-import { GridCol, GridRow } from 'govuk-react'
-import { H4 } from 'govuk-react'
+import { GridCol, GridRow, H4 } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+
 import styled from 'styled-components'
 import { DefaultLayout, Metadata } from '../../../components'
-import { buildCompanyBreadcrumbs } from '../utils'
-import { DARK_GREY, GREY_2 } from '../../../utils/colours'
-import urls from '../../../../lib/urls'
 import {
   CompanyObjectivesResource,
   CompanyResource,
 } from '../../../components/Resource'
+import { buildCompanyBreadcrumbs } from '../utils'
+import { DARK_GREY, GREY_2 } from '../../../utils/colours'
 import { format } from '../../../utils/date'
+import urls from '../../../../lib/urls'
 
 const BorderContainer = styled('div')`
   border-top: 1px solid ${GREY_2};
