@@ -2,8 +2,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { GridCol, GridRow, H4 } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-
 import styled from 'styled-components'
+
 import { DefaultLayout, Metadata } from '../../../components'
 import {
   CompanyObjectivesResource,
@@ -36,7 +36,7 @@ const LastUpdatedHeading = styled.div`
 const isComplete = (progress) => progress === 100
 
 const objectiveMetadata = (objective) => {
-  const rows = [
+  return [
     {
       value: objective.detail,
     },
@@ -53,7 +53,6 @@ const objectiveMetadata = (objective) => {
       value: objective.modifiedBy?.name,
     },
   ]
-  return rows
 }
 const ArchivedObjectives = () => {
   const { companyId } = useParams()
