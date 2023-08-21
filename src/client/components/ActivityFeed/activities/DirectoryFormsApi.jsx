@@ -91,14 +91,14 @@ export default class DirectoryFormsApi extends React.PureComponent {
         </ActivityCardWrapper>
       ) : (
         <ActivityCardWrapper dataTest="export-support-service">
+          <ActivityCardSubject dataTest="export-support-service-name">
+            {subject}
+          </ActivityCardSubject>
           <ActivityCardLabels
             theme="export"
             service="Export Support Service"
             kind={kind}
           />
-          <ActivityCardSubject dataTest="export-support-service-name">
-            {subject}
-          </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )

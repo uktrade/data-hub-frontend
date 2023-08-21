@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import styled from 'styled-components'
-import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
@@ -14,32 +12,6 @@ import Tag from '../../Tag'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 const { format } = require('../../../utils/date')
-
-const Row = styled('div')`
-  display: grid;
-  ${MEDIA_QUERIES.TABLET} {
-    display: flex;
-  }
-`
-
-// On mobile the order of the columns are swapped
-const LeftCol = styled('div')`
-  order: 2;
-  ${MEDIA_QUERIES.TABLET} {
-    order: 1;
-    flex: 75%;
-  }
-`
-
-// On mobile the order of the columns are swapped
-const RightCol = styled('div')`
-  order: 1;
-  margin-bottom: ${SPACING.SCALE_1};
-  ${MEDIA_QUERIES.TABLET} {
-    order: 2;
-    flex: 25%;
-  }
-`
 
 export default class Referral extends React.PureComponent {
   static propTypes = {
@@ -116,22 +88,13 @@ export default class Referral extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="referral-activity">
-        <Row>
-          <LeftCol>
-            <ActivityCardSubject
-              margin={{ top: 0, bottom: 10 }}
-              dataTest="referral-activity-card-subject"
-            >
-              {linkedSubject}
-            </ActivityCardSubject>
-            <ActivityCardMetadata metadata={metadata} />
-          </LeftCol>
-          <RightCol>
-            <Tag colour="grey" data-test="activity-kind-label">
-              {badge.text}
-            </Tag>
-          </RightCol>
-        </Row>
+        <ActivityCardSubject dataTest="referral-activity-card-subject">
+          {linkedSubject}
+        </ActivityCardSubject>
+        <Tag colour="grey" data-test="activity-kind-label">
+          {badge.text}
+        </Tag>
+        <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )
   }

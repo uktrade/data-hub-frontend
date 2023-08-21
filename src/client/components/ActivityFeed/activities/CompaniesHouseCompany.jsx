@@ -105,13 +105,13 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="companies-house-company-activity">
+        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardLabels
           isExternalActivity={true}
           theme="Companies House"
           service="Company Record"
           kind="Companies House Update"
         ></ActivityCardLabels>
-        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

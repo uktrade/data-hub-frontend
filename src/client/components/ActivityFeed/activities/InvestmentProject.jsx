@@ -106,14 +106,14 @@ export default class InvestmentProject extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="investment-activity">
+        <ActivityCardSubject dataTest="investment-activity-card-subject">
+          {subject}
+        </ActivityCardSubject>
         <ActivityCardLabels
           theme="Investment"
           service="Project - FDI"
           kind={kind}
         />
-        <ActivityCardSubject dataTest="investment-activity-card-subject">
-          {subject}
-        </ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

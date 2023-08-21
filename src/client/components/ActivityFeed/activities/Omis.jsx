@@ -80,10 +80,10 @@ export default class Omis extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="order-activity">
-        <ActivityCardLabels theme="Orders (OMIS)" service="Event" kind={kind} />
         <ActivityCardSubject dataTest="order-activity-card-subject">
           {subject}
         </ActivityCardSubject>
+        <ActivityCardLabels theme="Orders (OMIS)" service="Event" kind={kind} />
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

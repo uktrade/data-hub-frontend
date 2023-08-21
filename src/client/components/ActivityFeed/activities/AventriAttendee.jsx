@@ -55,12 +55,6 @@ export default function AventriAttendee({ activity: attendee }) {
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
-      <ActivityCardLabels
-        service="event"
-        kind={
-          registrationStatus === 'Attended' ? 'aventri event' : 'interaction'
-        }
-      />
       <ActivityCardSubject>
         <Link href={`/events/aventri/${eventId}/details`}>{eventName}</Link>
 
@@ -70,6 +64,12 @@ export default function AventriAttendee({ activity: attendee }) {
           </StyledSpan>
         )}
       </ActivityCardSubject>
+      <ActivityCardLabels
+        service="event"
+        kind={
+          registrationStatus === 'Attended' ? 'aventri event' : 'interaction'
+        }
+      />
       <ActivityCardMetadata
         metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
       />

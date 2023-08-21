@@ -61,13 +61,13 @@ export default class DataHubEvent extends React.PureComponent {
     ) : (
       <ActivityCardWrapper dataTest="data-hub-event">
         <ActivityCardSubject dataTest="data-hub-event-name">
-          <ActivityCardLabels
-            theme={serviceText}
-            service={serviceOther}
-            kind={typeOfEvent}
-          />
           {subject}
         </ActivityCardSubject>
+        <ActivityCardLabels
+          theme={serviceText}
+          service={serviceOther}
+          kind={typeOfEvent}
+        />
         <ActivityCardMetadata
           metadata={[
             {

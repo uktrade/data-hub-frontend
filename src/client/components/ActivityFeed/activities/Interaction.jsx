@@ -133,8 +133,8 @@ export default class Interaction extends React.PureComponent {
       </ActivityCardWrapper>
     ) : theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
-        <ActivityCardLabels theme={theme} service={service} kind={kind} />
         <ActivityCardSubject>{subject}</ActivityCardSubject>
+        <ActivityCardLabels theme={theme} service={service} kind={kind} />
         {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>

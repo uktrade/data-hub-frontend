@@ -98,11 +98,11 @@ export default class AventriEvent extends React.PureComponent {
       </ActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="aventri-event">
-        <ActivityCardLabels service="Event" kind="Aventri Event" />
         <ActivityCardSubject dataTest="aventri-event-name">
           {subject}
           <RegisteredLabel>: {status}</RegisteredLabel>
         </ActivityCardSubject>
+        <ActivityCardLabels service="Event" kind="Aventri Event" />
         <ActivityCardMetadata
           metadata={[
             {
