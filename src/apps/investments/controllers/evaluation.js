@@ -29,6 +29,9 @@ function renderEvaluationPage(req, res, next) {
         evaluationFdiLabels.view
       ),
       landing: getDataLabels(transformedLanding, evaluationLandingLabels.view),
+      props: {
+        projectId: res.locals.investment.id,
+      },
     })
   }
 

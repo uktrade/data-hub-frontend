@@ -7,7 +7,7 @@ import urls from '../../../../lib/urls'
 import { INVESTMENT_PROJECT_STAGES } from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
-const checkIfItemHasValue = (item) => (item ? item : null)
+export const checkIfItemHasValue = (item) => (item ? item : null)
 
 export const transformArrayForTypeahead = (advisers) =>
   advisers.map((value) => ({
@@ -392,3 +392,16 @@ export const transformFdiRAndDProject = (project) => {
 
   return 'Not linked to a non-FDI R&D project'
 }
+
+export const transformRAndDBudget = (rAndDBudget) =>
+  rAndDBudget ? 'Has R&D budget' : 'No R&D budget'
+
+export const transformNewTech = (newTechToUk) =>
+  newTechToUk
+    ? 'Has new-to-world tech, business model or IP'
+    : 'No new-to-world tech, business model or IP'
+
+export const transformExportRevenue = (exportRevenue) =>
+  exportRevenue
+    ? 'Yes, will create significant export revenue'
+    : 'No, will not create significant export revenue'
