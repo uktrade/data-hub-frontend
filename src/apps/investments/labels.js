@@ -5,40 +5,6 @@ const roleAdviserTeam = {
 }
 
 const labels = {
-  evaluationValueLabels: {
-    view: {
-      sector_name: 'Primary sector',
-      total_investment: 'Total investment',
-      number_new_jobs: 'New jobs',
-      average_salary: 'Average salary of new jobs',
-      r_and_d_budget: 'R&D budget',
-      non_fdi_r_and_d_budget: 'Non-FDI R&D project',
-      new_tech_to_uk: 'New-to-world tech',
-      account_tier: 'Account tier',
-      business_activities: 'New GHQ/EHQ',
-      export_revenue: 'Export revenue',
-    },
-  },
-  evaluationFdiLabels: {
-    view: {
-      type_of_investment: 'Investment type',
-      foreign_investor: 'Foreign investor',
-      foreign_country: 'Foreign country',
-      uk_company: 'UK company',
-      foreign_equity_investment: 'Foreign equity investment',
-      investor_retain_voting_power: 'Investor retains 10% voting power',
-      number_new_jobs: 'New jobs',
-      number_safeguarded_jobs: 'Safeguarded jobs',
-    },
-  },
-  evaluationLandingLabels: {
-    view: {
-      uk_company: 'UK company',
-      company_number: 'Companies House Number',
-      registered_address: 'Registered Address',
-      actual_land_date: 'Actual land date',
-    },
-  },
   projectManagementLabels: {
     view: roleAdviserTeam,
   },
