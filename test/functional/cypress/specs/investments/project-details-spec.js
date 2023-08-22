@@ -5,6 +5,14 @@ const {
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const {
+  EXPORT_REVENUE_FALSE,
+  EXPORT_REVENUE_TRUE,
+  NEW_TECH_TRUE,
+  NEW_TECH_FALSE,
+  R_AND_D_TRUE,
+  R_AND_D_FALSE,
+} = require('../../../../../src/client/modules/Investments/Projects/constants')
 
 describe('Investment project details', () => {
   context('When viewing a project with all the details fields', () => {
@@ -167,10 +175,10 @@ describe('Investment project details', () => {
           'New jobs': '20 new jobs',
           'Average salary of new jobs': 'Below £25,000',
           'Safeguarded jobs': '11234 safeguarded jobs',
-          'R&D budget': 'No R&D budget',
+          'R&D budget': R_AND_D_FALSE,
           'Non-FDI R&D project': 'Find project',
-          'New-to-world tech': 'No new-to-world tech, business model or IP',
-          'Export revenue': 'Yes, will create significant export revenue',
+          'New-to-world tech': NEW_TECH_FALSE,
+          'Export revenue': EXPORT_REVENUE_TRUE,
         },
       })
     })
@@ -222,11 +230,11 @@ describe('Investment project details', () => {
           'Total investment': 'Client cannot provide this information',
           'Capital expenditure value': 'Client cannot provide this information',
           'Government assistance': 'No government assistance',
-          'R&D budget': 'Has R&D budget',
+          'R&D budget': R_AND_D_TRUE,
           'Non-FDI R&D project':
             'New fruit machine research projectEdit projectRemove association',
-          'New-to-world tech': 'Has new-to-world tech, business model or IP',
-          'Export revenue': 'No, will not create significant export revenue',
+          'New-to-world tech': NEW_TECH_TRUE,
+          'Export revenue': EXPORT_REVENUE_FALSE,
         },
       })
     })

@@ -59,6 +59,9 @@ module.exports = {
     investmentWithAlternateValue: require('./investment/investment-has-existing-value-alternate.json'),
     investmentWithRequirements: require('./investment/investment-has-existing-requirements.json'),
     investmentWithDetails: require('./investment/investment-has-existing-details.json'),
+    investmentWithoutEvaluation: require('./investment/investment-evaluation-not-set.json'),
+    investmentWithEvaluation: require('./investment/investment-evaluation-complete.json'),
+    investmentWithAlternateEvaluation: require('./investment/investment-evaluation-complete-with-negative-values.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),

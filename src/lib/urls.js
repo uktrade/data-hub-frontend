@@ -404,6 +404,7 @@ module.exports = {
         '/investments',
         '/projects/:projectId/remove-associated'
       ),
+      evaluation: url('/investments', '/projects/:projectId/evaluation'),
     },
     profiles: {
       index: url('/investments', '/profiles'),

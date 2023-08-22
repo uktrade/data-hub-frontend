@@ -4,10 +4,19 @@ import { Link } from 'govuk-react'
 import { transformDateObjectToDateString } from '../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import urls from '../../../../lib/urls'
-import { INVESTMENT_PROJECT_STAGES } from './constants'
+import {
+  EXPORT_REVENUE_FALSE,
+  EXPORT_REVENUE_TRUE,
+  NEW_TECH_FALSE,
+  NEW_TECH_TRUE,
+  R_AND_D_TRUE,
+  R_AND_D_FALSE,
+  NOT_LINKED_TO_R_AND_D,
+  INVESTMENT_PROJECT_STAGES,
+} from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
-const checkIfItemHasValue = (item) => (item ? item : null)
+export const checkIfItemHasValue = (item) => (item ? item : null)
 
 export const transformArrayForTypeahead = (advisers) =>
   advisers.map((value) => ({
@@ -390,5 +399,14 @@ export const transformFdiRAndDProject = (project) => {
     )
   }
 
-  return 'Not linked to a non-FDI R&D project'
+  return NOT_LINKED_TO_R_AND_D
 }
+
+export const transformRAndDBudget = (rAndDBudget) =>
+  rAndDBudget ? R_AND_D_TRUE : R_AND_D_FALSE
+
+export const transformNewTech = (newTechToUk) =>
+  newTechToUk ? NEW_TECH_TRUE : NEW_TECH_FALSE
+
+export const transformExportRevenue = (exportRevenue) =>
+  exportRevenue ? EXPORT_REVENUE_TRUE : EXPORT_REVENUE_FALSE

@@ -1,8 +1,3 @@
-/* eslint-disable camelcase */
-const { transformInvestmentFDIForView } = require('./fdi')
-const { transformInvestmentLandingForView } = require('./landing')
-const { transformInvestmentValueForView } = require('./value')
-
 const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
@@ -16,9 +11,6 @@ const {
 } = require('./team')
 
 module.exports = {
-  transformInvestmentValueForView,
-  transformInvestmentFDIForView,
-  transformInvestmentLandingForView,
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,

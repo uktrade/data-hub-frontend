@@ -8,6 +8,15 @@ const {
 const {
   selectFirstTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
+const {
+  EXPORT_REVENUE_FALSE,
+  EXPORT_REVENUE_TRUE,
+  NEW_TECH_TRUE,
+  NEW_TECH_FALSE,
+  R_AND_D_TRUE,
+  R_AND_D_FALSE,
+  NOT_LINKED_TO_R_AND_D,
+} = require('../../../../../src/client/modules/Investments/Projects/constants')
 
 const { companies, investments } = require('../../../../../src/lib/urls')
 
@@ -137,10 +146,10 @@ describe('Creating an investment project', () => {
           'Government assistance': 'Has government assistance',
           'New jobs': '500 new jobs',
           'Safeguarded jobs': '600 safeguarded jobs',
-          'R&D budget': 'Has R&D budget',
+          'R&D budget': R_AND_D_TRUE,
           'Non-FDI R&D project': 'Find project',
-          'New-to-world tech': 'Has new-to-world tech, business model or IP',
-          'Export revenue': 'Yes, will create significant export revenue',
+          'New-to-world tech': NEW_TECH_TRUE,
+          'Export revenue': EXPORT_REVENUE_TRUE,
         },
       })
     })
@@ -207,10 +216,10 @@ describe('Creating an investment project', () => {
           'Government assistance': 'No government assistance',
           'New jobs': '500 new jobs',
           'Safeguarded jobs': '600 safeguarded jobs',
-          'R&D budget': 'No R&D budget',
-          'Non-FDI R&D project': 'Not linked to a non-FDI R&D project',
-          'New-to-world tech': 'No new-to-world tech, business model or IP',
-          'Export revenue': 'No, will not create significant export revenue',
+          'R&D budget': R_AND_D_FALSE,
+          'Non-FDI R&D project': NOT_LINKED_TO_R_AND_D,
+          'New-to-world tech': NEW_TECH_FALSE,
+          'Export revenue': EXPORT_REVENUE_FALSE,
         },
       })
     })

@@ -14,6 +14,9 @@ import {
   transformFdiType,
   transformBusinessActivity,
   transformFdiRAndDProject,
+  transformRAndDBudget,
+  transformNewTech,
+  transformExportRevenue,
 } from './transformers'
 import urls from '../../../../lib/urls'
 import { state2props } from './state'
@@ -349,7 +352,7 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
           {project.rAndDBudget != null && (
             <SummaryTable.TextRow
               heading="R&D budget"
-              value={project.rAndDBudget ? 'Has R&D budget' : 'No R&D budget'}
+              value={transformRAndDBudget(project.rAndDBudget)}
             />
           )}
           {checkIfValueStarted(project) && (
@@ -361,21 +364,13 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
           {project.newTechToUk != null && (
             <SummaryTable.TextRow
               heading="New-to-world tech"
-              value={
-                project.newTechToUk
-                  ? 'Has new-to-world tech, business model or IP'
-                  : 'No new-to-world tech, business model or IP'
-              }
+              value={transformNewTech(project.newTechToUk)}
             />
           )}
           {project.exportRevenue != null && (
             <SummaryTable.TextRow
               heading="Export revenue"
-              value={
-                project.exportRevenue
-                  ? 'Yes, will create significant export revenue'
-                  : 'No, will not create significant export revenue'
-              }
+              value={transformExportRevenue(project.exportRevenue)}
             />
           )}
         </SummaryTable>

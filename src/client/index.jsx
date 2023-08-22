@@ -76,6 +76,7 @@ import EditProjectRequirements from './modules/Investments/Projects/EditProjectR
 import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
 import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
+import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -912,6 +913,9 @@ function App() {
         </Mount>
         <Mount selector="#project-details">
           {(props) => <ProjectDetails {...props} />}
+        </Mount>
+        <Mount selector="#project-evaluation">
+          {(props) => <ProjectEvaluation {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
