@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  CompanyObjectivesCountResource,
   CompanyObjectivesResource,
   CompanyResource,
 } from '../../../components/Resource'
@@ -41,6 +42,15 @@ const StyledLink = styled(Link)`
 const SectionGridRow = styled(GridRow)`
   padding-bottom: ${SPACING.SCALE_2};
   padding-top: ${SPACING.SCALE_2};
+`
+
+const AddObjectiveButton = styled(GridCol)`
+  width: fit-content;
+  padding-right: unset;
+`
+
+const ArchivedObjectivesLink = styled(GridCol)`
+  padding-top: 7px;
 `
 
 const Strategy = ({ company }) => (
@@ -142,17 +152,37 @@ const Objectives = ({ company }) => (
             </BorderContainer>
           ))}
 
-          <Button
-            data-test="add-objective-button"
-            as={Link}
-            href={urls.companies.accountManagement.objectives.create(
-              company.id
-            )}
-            buttonColour={GREY_3}
-            buttonTextColour={TEXT_COLOUR}
-          >
-            Add new objective
-          </Button>
+          <GridRow>
+            <AddObjectiveButton setWidth="one-quarter">
+              <Button
+                data-test="add-objective-button"
+                as={Link}
+                href={urls.companies.accountManagement.objectives.create(
+                  company.id
+                )}
+                buttonColour={GREY_3}
+                buttonTextColour={TEXT_COLOUR}
+              >
+                Add new objective
+              </Button>
+            </AddObjectiveButton>
+            <ArchivedObjectivesLink setWidth="one-quarter">
+              <CompanyObjectivesCountResource id={company.id}>
+                {(response) =>
+                  response.archivedCount > 0 && (
+                    <Link
+                      href={urls.companies.accountManagement.objectives.archived(
+                        company.id
+                      )}
+                      data-test="archived-objectives-link"
+                    >
+                      View archived objectives
+                    </Link>
+                  )
+                }
+              </CompanyObjectivesCountResource>
+            </ArchivedObjectivesLink>
+          </GridRow>
         </GridCol>
       </SectionGridRow>
     )}
