@@ -23,7 +23,7 @@ const StyledActivitySubject = styled('h3')`
 const ActivityCardSubject = ({
   children,
   dataTest = 'activity-card-subject',
-  margin = { top: 10, bottom: 10 },
+  margin = { bottom: 10 },
 }) => (
   <StyledActivitySubject data-test={dataTest} margin={margin}>
     {children}

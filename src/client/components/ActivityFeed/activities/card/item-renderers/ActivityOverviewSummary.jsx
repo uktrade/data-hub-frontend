@@ -30,15 +30,15 @@ export default class ActivityOverviewSummary extends React.PureComponent {
 
     return (
       <>
-        <ActivityCardSubject dataTest="activity-summary-subject">
-          {subject}
-        </ActivityCardSubject>
         <Row>
           <LeftCol>{date}</LeftCol>
           <RightCol>
             <ActivityCardLabels kind={kind} isOverview={true} />
           </RightCol>
         </Row>
+        <ActivityCardSubject dataTest="activity-summary-subject">
+          {subject}
+        </ActivityCardSubject>
         <Row>{summary}</Row>
       </>
     )
