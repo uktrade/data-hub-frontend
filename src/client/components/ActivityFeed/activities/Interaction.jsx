@@ -16,6 +16,7 @@ import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardNotes from './card/ActivityCardNotes'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
@@ -116,7 +117,7 @@ export default class Interaction extends React.PureComponent {
       flex: 25%;
     `
     return isOverview ? (
-      <ActivityCardWrapper dataTest="interaction-activity-summary">
+      <OverviewActivityCardWrapper dataTest="interaction-activity-summary">
         <ActivityOverviewSummary
           activity={activity}
           date={date}
@@ -130,7 +131,7 @@ export default class Interaction extends React.PureComponent {
             formattedContacts()
           }
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
         <ActivityCardSubject>{subject}</ActivityCardSubject>

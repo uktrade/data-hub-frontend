@@ -12,6 +12,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -68,7 +69,7 @@ export default class Omis extends React.PureComponent {
     if (adviser) summary.push(' added by ', adviser.name)
 
     return isOverview ? (
-      <ActivityCardWrapper dataTest="omis-activity-summary">
+      <OverviewActivityCardWrapper dataTest="omis-activity-summary">
         <ActivityOverviewSummary
           activity={activity}
           date={date}
@@ -77,7 +78,7 @@ export default class Omis extends React.PureComponent {
           subject={subject}
           summary={summary}
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="order-activity">
         <ActivityCardSubject dataTest="order-activity-card-subject">

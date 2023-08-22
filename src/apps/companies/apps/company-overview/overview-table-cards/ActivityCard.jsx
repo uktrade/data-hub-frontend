@@ -7,7 +7,11 @@ import styled from 'styled-components'
 import { ActivityFeedApp, SummaryTable } from '../../../../../client/components'
 import { companies } from '../../../../../lib/urls'
 import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
-import { StyledLastTableCell, StyledTableRow } from './components'
+import {
+  StyledLastTableCell,
+  StyledTableCell,
+  StyledTableRow,
+} from './components'
 import { FILTER_KEYS } from '../../activity-feed/constants'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -42,7 +46,7 @@ const ActivityCard = (props) => {
         data-test={`${feedTypeText} activityCardContainer`}
       >
         <StyledTableRow>
-          <StyledLastTableCell colspan={2}>
+          <StyledTableCell colspan={2}>
             <ActivityFeedApp
               actions={!company.archived && CompanyActivityFeed.actions}
               isGlobalUltimate={company.isGlobalUltimate}
@@ -54,7 +58,7 @@ const ActivityCard = (props) => {
               feedType={feedType}
               activityType={[FILTER_KEYS.dataHubActivity]}
             />
-          </StyledLastTableCell>
+          </StyledTableCell>
         </StyledTableRow>
         <StyledTableRow>
           <StyledLastTableCell colSpan={2}>

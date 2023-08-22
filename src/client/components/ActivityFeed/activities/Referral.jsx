@@ -10,6 +10,7 @@ import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import Tag from '../../Tag'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -71,7 +72,7 @@ export default class Referral extends React.PureComponent {
     const linkedSubject = <Link href={url}>{subject}</Link>
 
     return isOverview ? (
-      <ActivityCardWrapper dataTest={`referral-summary`}>
+      <OverviewActivityCardWrapper dataTest={`referral-summary`}>
         <ActivityOverviewSummary
           activity={activity}
           date={date}
@@ -85,7 +86,7 @@ export default class Referral extends React.PureComponent {
             AdviserDetails(recipient),
           ]}
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="referral-activity">
         <ActivityCardSubject dataTest="referral-activity-card-subject">
