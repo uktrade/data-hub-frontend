@@ -192,7 +192,7 @@ export const HierarchyTag = styled(Tag)`
 
 export const InlineDescriptionList = styled.dl`
   padding: 15px;
-  background-color: ${GREY_4};
+  background-color: WHITE;
   border-top: 1px solid ${GREY_2};
   dt,
   dd {
