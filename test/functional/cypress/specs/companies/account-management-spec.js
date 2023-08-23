@@ -235,9 +235,7 @@ describe('Company account management', () => {
         cy.get('[data-test="archived-objectives-link"]').should(
           'have.attr',
           'href',
-          urls.companies.accountManagement.objectives.objectives.archived(
-            companyId
-          )
+          urls.companies.accountManagement.objectives.archived(companyId)
         )
       })
     }
