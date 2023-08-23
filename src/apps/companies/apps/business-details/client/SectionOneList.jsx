@@ -13,12 +13,10 @@ const StyledSummaryFooterLink = styled(Link)`
 `
 
 const getLocation = (manager) => {
-  if (!manager) {
+  if (!manager || !manager.ditTeam) {
     return '-'
   }
-  if (!manager.ditTeam) {
-    return '-'
-  }
+
   return manager.ditTeam.ukRegion
     ? manager.ditTeam.ukRegion.name
     : manager.ditTeam.country
