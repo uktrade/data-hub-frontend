@@ -18,6 +18,7 @@ const flexMixin = {
 const Container = styled('div')({
   ...flexMixin,
   justifyContent: 'space-between',
+  paddingBottom: '10px',
 })
 
 const ThemeServiceContainer = styled('div')({
@@ -26,8 +27,13 @@ const ThemeServiceContainer = styled('div')({
 
 const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
   <Container>
-    {(theme || service) && (
+    {(kind || theme || service) && (
       <ThemeServiceContainer>
+        {kind && (
+          <Tag colour="grey" data-test="activity-kind-label">
+            {kind}
+          </Tag>
+        )}
         {theme && (
           <Tag
             colour={isExternalActivity ? 'darkGreen' : 'default'}
@@ -45,11 +51,6 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
           </Tag>
         )}
       </ThemeServiceContainer>
-    )}
-    {kind && (
-      <Tag colour="grey" data-test="activity-kind-label">
-        {kind}
-      </Tag>
     )}
   </Container>
 )

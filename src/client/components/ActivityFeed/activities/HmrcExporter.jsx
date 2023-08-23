@@ -9,6 +9,7 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -48,7 +49,7 @@ export default class HmrcExporter extends React.PureComponent {
     const kind = 'HMRC Update'
 
     return isOverview ? (
-      <ActivityCardWrapper dataTest="hmrc-exporter-activity-summary">
+      <OverviewActivityCardWrapper dataTest="hmrc-exporter-activity-summary">
         <ActivityOverviewSummary
           activity={activity}
           date={date}
@@ -56,7 +57,7 @@ export default class HmrcExporter extends React.PureComponent {
           subject={summary}
           summary={[kind]}
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="hmrc-exporter-activity">
         <ActivityCardLabels

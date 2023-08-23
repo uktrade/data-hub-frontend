@@ -13,6 +13,7 @@ import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 import { getServiceOtherText, getServiceText } from './InteractionUtils'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 // Event index to extract unique uuid from DataHubEvent id string feed by activity-stream
 // e.g. dit:DataHubEvent:b93d4274-36fe-4008-ac40-fbc197916666:Announce
@@ -50,24 +51,24 @@ export default class DataHubEvent extends React.PureComponent {
       </Link>
     )
     return isOverview ? (
-      <ActivityCardWrapper dataTest="data-hub-event-summary">
+      <OverviewActivityCardWrapper dataTest="data-hub-event-summary">
         <ActivityOverviewSummary
           date={date}
           kind={typeOfEvent}
           subject={subject}
           summary={`${organiser} organised ${serviceType}`}
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="data-hub-event">
         <ActivityCardSubject dataTest="data-hub-event-name">
-          <ActivityCardLabels
-            theme={serviceText}
-            service={serviceOther}
-            kind={typeOfEvent}
-          />
           {subject}
         </ActivityCardSubject>
+        <ActivityCardLabels
+          theme={serviceText}
+          service={serviceOther}
+          kind={typeOfEvent}
+        />
         <ActivityCardMetadata
           metadata={[
             {

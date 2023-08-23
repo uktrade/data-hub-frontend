@@ -9,6 +9,7 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -94,7 +95,7 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     ]
 
     return isOverview ? (
-      <ActivityCardWrapper dataTest="companies-house-company-activity">
+      <OverviewActivityCardWrapper dataTest="companies-house-company-activity">
         <ActivityOverviewSummary
           activity={activity}
           date={date}
@@ -102,16 +103,16 @@ export default class CompaniesHouseCompany extends React.PureComponent {
           subject={subject}
           summary="Companies House Updated"
         ></ActivityOverviewSummary>
-      </ActivityCardWrapper>
+      </OverviewActivityCardWrapper>
     ) : (
       <ActivityCardWrapper dataTest="companies-house-company-activity">
+        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardLabels
           isExternalActivity={true}
           theme="Companies House"
           service="Company Record"
           kind="Companies House Update"
         ></ActivityCardLabels>
-        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

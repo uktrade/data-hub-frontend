@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import styled from 'styled-components'
 import { get } from 'lodash'
 
 import { ACTIVITY_TYPE } from '../constants'
@@ -47,29 +46,13 @@ export default class MaxemailCampaign extends React.PureComponent {
       { label: 'Recipients', value: recipients },
     ]
 
-    const Row = styled('div')`
-      display: flex;
-    `
-
-    const LeftCol = styled('div')`
-      flex: 75%;
-    `
-
-    const RightCol = styled('div')`
-      flex: 25%;
-    `
-
     return (
       <ActivityCardWrapper dataTest="maxemail-campaign-activity">
-        <Row>
-          <LeftCol>
-            <ActivityCardSubject>{emailSubject}</ActivityCardSubject>
-            <ActivityCardMetadata metadata={metadata} />
-          </LeftCol>
-          <RightCol>
-            <ActivityCardLabels kind="Email Campaign" />
-          </RightCol>
-        </Row>
+        <ActivityCardSubject dataTest="maxemail-campaign-activity-card-subject">
+          {emailSubject}
+        </ActivityCardSubject>
+        <ActivityCardLabels kind="Email Campaign" />
+        <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )
   }

@@ -8,6 +8,12 @@ import { Table } from 'govuk-react'
 import { SummaryTable } from '../../../../../client/components'
 import { GREY_1 } from '../../../../../client/utils/colours'
 
+export const StyledTableCell = styled(Table.Cell)`
+  border: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+`
+
 export const StyledLastTableCell = styled(Table.Cell)`
   border: 0;
   padding-bottom: 0;
