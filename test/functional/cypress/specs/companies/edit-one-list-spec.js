@@ -2,6 +2,7 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertFieldRadios,
+  assertFieldTypeahead,
 } = require('../../support/assertions')
 
 const fixtures = require('../../fixtures')
@@ -161,19 +162,43 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      cy.visit(
+        `${urls.companies.editOneList(testCompany.id)}?step=oneListAdvisers`
+      )
     })
 
-    it('should show the one list advisers step', () => {})
+    it('should show the one list advisers step', () => {
+      cy.get('[data-test="field-global_account_manager"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Global Account Manager',
+          value: `${testCompany.one_list_group_global_account_manager.name}, ${testCompany.one_list_group_global_account_manager.dit_team.name}`,
+          isMulti: false,
+        })
+      })
+    })
   })
 
   context('when needing to override the return url', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      cy.visit(
+        `${urls.companies.editOneList(
+          testCompany.id
+        )}?step=oneListAdvisers&returnUrl=${urls.companies.accountManagement.index(
+          testCompany.id
+        )}`
+      )
     })
 
-    it('should return the user to the requested url', () => {})
+    it('should return the user to the requested url on form submit', () => {
+      cy.contains('Submit').click()
+
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.accountManagement.index(testCompany.id)
+      )
+    })
   })
 })
