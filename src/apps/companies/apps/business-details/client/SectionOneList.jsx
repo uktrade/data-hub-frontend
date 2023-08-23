@@ -12,12 +12,19 @@ const StyledSummaryFooterLink = styled(Link)`
   display: block;
 `
 
-const getLocation = (managerTeam) =>
-  managerTeam.ukRegion
-    ? managerTeam.ukRegion.name
-    : managerTeam.country
-    ? managerTeam.country.name
+const getLocation = (manager) => {
+  if (!manager) {
+    return '-'
+  }
+  if (!manager.ditTeam) {
+    return '-'
+  }
+  return manager.ditTeam.ukRegion
+    ? manager.ditTeam.ukRegion.name
+    : manager.ditTeam.country
+    ? manager.ditTeam.country.name
     : '-'
+}
 
 const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
   company.oneListGroupGlobalAccountManager ? (
@@ -41,7 +48,7 @@ const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
           {company.oneListGroupGlobalAccountManager.ditTeam
             ? company.oneListGroupGlobalAccountManager.ditTeam.name
             : '-'}
-          {getLocation(company.oneListGroupGlobalAccountManager.ditTeam)}
+          {getLocation(company.oneListGroupGlobalAccountManager)}
         </SummaryTable.Row>
       </SummaryTable>
 
