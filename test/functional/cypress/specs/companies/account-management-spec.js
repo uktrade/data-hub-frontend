@@ -65,8 +65,9 @@ describe('Company account management', () => {
     modifiedOn: faker.date.past(),
   })
 
-  const noBlockersObjective = objectiveFaker({ has_blocker: false })
   const objectives = objectiveListFaker((length = 3))
+  const noBlockersObjective = objectiveFaker({ has_blocker: false })
+  const archivedObjective = objectiveFaker({ archived: true })
 
   context('When visiting the account management page with a strategy', () => {
     before(() => {
@@ -195,6 +196,52 @@ describe('Company account management', () => {
         .should('not.contain', noBlockersObjective.blocker_description)
     })
   })
+
+  context(
+    'When visiting the account management page with no archived objectives',
+    () => {
+      before(() => {
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
+          results: [...objectives],
+        }).as('objectiveApi')
+        cy.visit(urls.companies.accountManagement.index(companyId))
+      })
+
+      it('should not display the archived objectives link', () => {
+        cy.get('[data-test="archived-objectives-link"]').should('not.exist')
+      })
+    }
+  )
+
+  context(
+    'When visiting the account management page with archived objectives',
+    () => {
+      before(() => {
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective?**`, {
+          results: [...objectives, archivedObjective],
+        }).as('objectiveApi')
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyId}/objective/count`,
+          { archived_count: 1, not_archived_count: 1 }
+        ).as('objectiveCountApi')
+        cy.visit(urls.companies.accountManagement.index(companyId))
+        cy.wait('@objectiveApi').then(() => {
+          cy.wait('@objectiveCountApi')
+        })
+      })
+
+      it('should display the archived objectives link', () => {
+        cy.get('[data-test="archived-objectives-link"]').should(
+          'have.attr',
+          'href',
+          urls.companies.accountManagement.objectives.objectives.archived(
+            companyId
+          )
+        )
+      })
+    }
+  )
 })
 
 describe('One List core team', () => {

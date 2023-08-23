@@ -166,10 +166,10 @@ const Objectives = ({ company }) => (
                 Add new objective
               </Button>
             </AddObjectiveButton>
-            <ArchivedObjectivesLink setWidth="one-quarter">
-              <CompanyObjectivesCountResource id={company.id}>
-                {(response) =>
-                  response.archivedCount > 0 && (
+            <CompanyObjectivesCountResource id={company.id}>
+              {(response) => (
+                <ArchivedObjectivesLink setWidth="one-quarter">
+                  {response.archivedCount > 0 && (
                     <Link
                       href={urls.companies.accountManagement.objectives.archived(
                         company.id
@@ -178,10 +178,10 @@ const Objectives = ({ company }) => (
                     >
                       View archived objectives
                     </Link>
-                  )
-                }
-              </CompanyObjectivesCountResource>
-            </ArchivedObjectivesLink>
+                  )}
+                </ArchivedObjectivesLink>
+              )}
+            </CompanyObjectivesCountResource>
           </GridRow>
         </GridCol>
       </SectionGridRow>
