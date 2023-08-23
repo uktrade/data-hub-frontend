@@ -26,6 +26,7 @@ function EditOneListForm({
   companyName,
   oneListTiers,
   formInitialValues,
+  returnUrl,
 }) {
   return (
     <Form
@@ -35,8 +36,11 @@ function EditOneListForm({
       submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
       analyticsFormName="editOneList"
       transformPayload={(values) => ({ values, companyId })}
-      redirectTo={() => urls.companies.businessDetails(companyId)}
+      redirectTo={() =>
+        returnUrl ? returnUrl : urls.companies.businessDetails(companyId)
+      }
       flashMessage={() => 'One List information has been updated.'}
+      showStepInUrl={true}
     >
       {({ values }) => (
         <>
@@ -53,6 +57,8 @@ function EditOneListForm({
             ]}
           />
           <Main>
+            {/* if there is a request to skip the first step, but company is missing a one list tier, need to show the first step */}
+
             <Step name="oneListTier">
               <FieldRadios
                 label="Company One List tier"
