@@ -148,12 +148,6 @@ function renderMetaList(req, res) {
   })
 }
 
-function renderDetailsContainer(req, res) {
-  return res
-    .breadcrumb('Details container')
-    .render('components/views/details-container')
-}
-
 function renderTabbedLocalNav(req, res) {
   return res
     .breadcrumb('Tabbed local nav')
@@ -171,6 +165,5 @@ module.exports = {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
-  renderDetailsContainer,
   renderTabbedLocalNav,
 }

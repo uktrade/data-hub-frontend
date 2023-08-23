@@ -1,40 +1,11 @@
-const {
-  projectManagementLabels,
-  clientRelationshipManagementLabels,
-  teamMembersLabels,
-} = require('../../labels')
-
-const {
-  transformProjectManagementForView,
-  transformClientRelationshipManagementForView,
-  transformTeamMembersForView,
-} = require('../../transformers')
-
-function getDetailsHandler(req, res, next) {
-  try {
-    const { investment } = res.locals
-
-    const clientRelationshipManagementData =
-      transformClientRelationshipManagementForView(investment)
-    const projectManagementData = transformProjectManagementForView(investment)
-    const teamMembersData = investment.team_members.map(
-      transformTeamMembersForView
-    )
-
-    res.breadcrumb('Project team').render('investments/views/team/details', {
-      projectManagementData,
-      projectManagementLabels,
-      clientRelationshipManagementData,
-      clientRelationshipManagementLabels,
-      teamMembersData,
-      teamMembersLabels,
+function getDetailsHandler(req, res) {
+  return res
+    .breadcrumb('Project team')
+    .render('investments/views/team/details', {
       props: {
         projectId: res.locals.investment.id,
       },
     })
-  } catch (error) {
-    next(error)
-  }
 }
 
 module.exports = {

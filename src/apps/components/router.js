@@ -13,7 +13,6 @@ const {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
-  renderDetailsContainer,
   renderTabbedLocalNav,
 } = require('./controllers')
 
@@ -44,7 +43,6 @@ router
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)
   .get('/meta-list', renderMetaList)
-  .get('/details-container', renderDetailsContainer)
   .get('/tabbed-local-nav', renderTabbedLocalNav)
   .all('/form', adviserLookup, renderFormElements)
 
