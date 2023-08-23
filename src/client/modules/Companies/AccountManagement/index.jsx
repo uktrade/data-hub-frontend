@@ -53,6 +53,14 @@ const ArchivedObjectivesLink = styled(GridCol)`
   padding-top: 7px;
 `
 
+const canEditOneList = (permissions) =>
+  permissions &&
+  permissions.includes('company.change_company') &&
+  permissions.includes('company.change_one_list_core_team_member') &&
+  permissions.includes(
+    'company.change_one_list_tier_and_global_account_manager'
+  )
+
 const Strategy = ({ company }) => (
   <SectionGridRow data-test="strategy-row">
     <GridCol>
@@ -238,6 +246,11 @@ const AccountManagement = ({
             <LeadITA company={company} permissions={permissions} />
           ) : (
             <CoreTeamAdvisers company={company} oneListEmail={ONE_LIST_EMAIL} />
+          )}
+          {canEditOneList(permissions) && (
+            <Button as={Link} href={urls.companies.editVirtualTeam(companyId)}>
+              Edit core team
+            </Button>
           )}
         </CompanyLayout>
       )}
