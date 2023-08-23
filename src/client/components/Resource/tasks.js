@@ -50,6 +50,7 @@ import SalaryRanges from './SalaryRanges'
 import FDIValues from './FDIValues'
 import CompanyObjectives from './CompanyObjectives'
 import ProjectStage from './ProjectStage'
+import CompanyObjectivesCount from './CompanyObjectivesCount'
 
 export default {
   ...Advisers.tasks,
@@ -104,4 +105,5 @@ export default {
   ...FDIValues.tasks,
   ...CompanyObjectives.tasks,
   ...ProjectStage.tasks,
+  ...CompanyObjectivesCount.tasks,
 }
