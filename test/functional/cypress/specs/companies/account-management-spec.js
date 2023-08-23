@@ -18,6 +18,7 @@ const globalAccountManager = company.one_list_group_global_account_manager
 const coreTeamResponse = {
   adviser: {
     name: 'Travis Greene',
+    contactEmail: 'travis@example.net',
     ditTeam: {
       name: 'IST - Sector Advisory Services',
       ukRegion: {
@@ -222,11 +223,12 @@ describe('One List core team', () => {
       assertTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
-          ['Team', 'Location', 'Global Account Manager'],
+          ['Team', 'Location', 'Global Account Manager', 'Email'],
           [
             globalAccountManager.dit_team.name,
             globalAccountManager.dit_team.uk_region.name,
             globalAccountManager.name,
+            globalAccountManager.contact_email,
           ],
         ],
       })
@@ -236,12 +238,18 @@ describe('One List core team', () => {
       assertTable({
         element: '[data-test="advisers-table"]',
         rows: [
-          ['Team', 'Location', 'Adviser on core team'],
-          ['Heart of the South West LEP', 'United Kingdom', 'Holly Collins'],
+          ['Team', 'Location', 'Adviser on core team', 'Email'],
+          [
+            'Heart of the South West LEP',
+            'United Kingdom',
+            'Holly Collins',
+            'holly@example.net',
+          ],
           [
             'IG - Specialists - Knowledge Intensive Industry',
             'London',
             'Jenny Carey',
+            '-',
           ],
         ],
       })
@@ -274,11 +282,12 @@ describe('One List core team', () => {
       assertTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
-          ['Team', 'Location', 'Global Account Manager'],
+          ['Team', 'Location', 'Global Account Manager', 'Email'],
           [
             globalAccountManager.dit_team.name,
             globalAccountManager.dit_team.uk_region.name,
             globalAccountManager.name,
+            globalAccountManager.contact_email,
           ],
         ],
       })
