@@ -28,6 +28,9 @@ function getDetailsHandler(req, res, next) {
       clientRelationshipManagementLabels,
       teamMembersData,
       teamMembersLabels,
+      props: {
+        projectId: res.locals.investment.id,
+      },
     })
   } catch (error) {
     next(error)
