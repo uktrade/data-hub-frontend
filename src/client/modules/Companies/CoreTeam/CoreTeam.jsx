@@ -47,6 +47,19 @@ export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
   <CompanyOneListTeamResource id={company.id}>
     {(oneListTeam) => (
       <>
+        <Details
+          summary="Need to find out more, or edit the One List tier information?"
+          data-test="core-team-details"
+        >
+          For more information, or if you need to change the One List tier or
+          account management team for this company, go to the{' '}
+          <NewWindowLink
+            href={urls.external.digitalWorkspace.accountManagement}
+          >
+            Digital Workspace
+          </NewWindowLink>{' '}
+          or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+        </Details>
         <H2 size={LEVEL_SIZE[3]} data-test="core-team-heading">
           Advisers on the core team
         </H2>
@@ -75,19 +88,6 @@ export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
             {buildAdviserRows(oneListTeam)}
           </Table>
         )}
-        <Details
-          summary="Need to find out more, or edit the One List tier information?"
-          data-test="core-team-details"
-        >
-          For more information, or if you need to change the One List tier or
-          account management team for this company, go to the{' '}
-          <NewWindowLink
-            href={urls.external.digitalWorkspace.accountManagement}
-          >
-            Digital Workspace
-          </NewWindowLink>{' '}
-          or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
-        </Details>
       </>
     )}
   </CompanyOneListTeamResource>
