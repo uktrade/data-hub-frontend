@@ -21,7 +21,6 @@ import MatchConfirmation from '../apps/companies/apps/match-company/client/Match
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
-import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
@@ -62,7 +61,6 @@ import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
-import CoreTeam from './modules/Companies/CoreTeam/CoreTeam'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
@@ -723,9 +721,6 @@ function App() {
         <Mount selector="#add-remove-list-form">
           {(props) => <AddRemoveFromListForm {...props} />}
         </Mount>
-        <Mount selector="#lead-advisers">
-          {(props) => <LeadAdvisers {...props} />}
-        </Mount>
         <Mount selector="#dnb-hierarchy">
           {(props) => <CompanyHierarchy {...props} />}
         </Mount>
@@ -878,9 +873,6 @@ function App() {
         </Mount>
         <Mount selector="#attendee-search">
           {(props) => <AttendeeSearch {...props} />}
-        </Mount>
-        <Mount selector="#core-team">
-          {(props) => <CoreTeam {...props} />}
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}

@@ -163,11 +163,6 @@ module.exports = {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
     },
-    advisers: {
-      index: url('/companies', '/:companyId/advisers'),
-      assign: url('/companies', '/:companyId/advisers/assign'),
-      remove: url('/companies', '/:companyId/advisers/remove'),
-    },
     editHistory: {
       index: url('/companies', '/:companyId/edit-history'),
       data: url('/companies', '/:companyId/edit-history/data'),

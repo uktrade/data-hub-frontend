@@ -16,7 +16,7 @@ import {
   FieldTypeahead,
 } from '../../../components'
 import {
-  BusinessActivitiesResourse,
+  BusinessActivitiesResource,
   CompanyContactsResource,
   FDITypesResource,
   InvestmentInvestorTypesResource,
@@ -119,7 +119,7 @@ export const FieldBusinessActivity = ({ initialValue = null }) => (
   <ResourceOptionsField
     name="business_activities"
     label="Business activities"
-    resource={BusinessActivitiesResourse}
+    resource={BusinessActivitiesResource}
     field={FieldTypeahead}
     initialValue={initialValue}
     isMulti={true}
