@@ -226,9 +226,7 @@ describe('Company account management', () => {
           { archived_count: 1, not_archived_count: 1 }
         ).as('objectiveCountApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
-        cy.wait('@objectiveApi').then(() => {
-          cy.wait('@objectiveCountApi')
-        })
+        cy.wait(['@objectiveApi', '@objectiveCountApi'])
       })
 
       it('should display the archived objectives link', () => {
