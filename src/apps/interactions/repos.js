@@ -26,22 +26,7 @@ function saveInteraction(req, interaction, referralId) {
   return authorisedRequest(req, options)
 }
 
-function getInteractionsForEntity({ req, entityQuery, page = 1, sortby }) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v3/interaction`,
-    qs: {
-      ...entityQuery,
-      limit,
-      offset,
-      sortby,
-    },
-  })
-}
-
 module.exports = {
   saveInteraction,
   fetchInteraction,
-  getInteractionsForEntity,
 }

@@ -40,10 +40,7 @@ const { renderEvidenceView } = require('./controllers/evidence')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
 const { postUpload } = require('../documents/middleware/upload')
 
-const {
-  setInteractionsDetails,
-  setCompanyDetails,
-} = require('./middleware/interactions')
+const { setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
 const {
   setEvidenceReturnUrl,
@@ -166,7 +163,6 @@ router
 
 router.use(
   urls.investments.projects.interactions.index.route,
-  setInteractionsDetails,
   setCompanyDetails,
   interactionsRouter
 )
