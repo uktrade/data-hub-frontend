@@ -147,13 +147,12 @@ const Community = () => {
             <StyledParagraph>
               We regularly run user research sessions to find out how our
               current tools are used and to test new solutions. We need your
-              help, if you are interested
+              help, if you are interested{' '}
               <Link
                 href={`mailto:${EMAIL}?subject=${encodeURIComponent(
                   EMAIL_SUBJECT
                 )}&body=${encodeURIComponent(EMAIL_BODY)}`}
               >
-                {' '}
                 sign up to take part in user research
               </Link>
               .
