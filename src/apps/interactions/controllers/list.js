@@ -119,6 +119,9 @@ function renderInteractionsForEntity(req, res, next) {
 
     res.breadcrumb(breadcrumbTitle).render(view, {
       actionButtons,
+      props: {
+        projectId: res.locals.investment.id,
+      },
     })
   } catch (error) {
     next(error)

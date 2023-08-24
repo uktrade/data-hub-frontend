@@ -13,7 +13,7 @@ describe('DA add Investment Project interaction', () => {
     })
 
     it('should have the correct url', () => {
-      cy.get('[data-test="Add interaction"]')
+      cy.get('[data-test="add-collection-item-button"]')
         .click()
         .location('pathname')
         .should(

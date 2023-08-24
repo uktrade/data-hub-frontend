@@ -7,7 +7,10 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-const { assertCollection } = require('../../support/assertions')
+const {
+  assertCollection,
+  assertReactCollection,
+} = require('../../support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -56,7 +59,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        assertCollection()
+        assertReactCollection('collection-count')
       })
     })
 

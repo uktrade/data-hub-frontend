@@ -29,7 +29,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for investment interaction collection', () => {
-      assertCollection()
+      assertReactCollection('collection-header-name', false)
     })
   })
 

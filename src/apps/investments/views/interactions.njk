@@ -1,15 +1,8 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Investment Interactions</h2>
-  <p>
-    An interaction could be a meeting, call, email or another activity associated with this investment.
-  </p>
-
-  {{
-    CollectionContent(results | assignCopy({
-      countLabel: 'interaction',
-      actionButtons: actionButtons
-    }))
-  }}
+    {% component 'react-slot', {
+        id: 'project-interactions',
+        props: props
+      } %}
 {% endblock %}
