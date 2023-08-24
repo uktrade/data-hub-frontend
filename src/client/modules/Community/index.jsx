@@ -40,7 +40,7 @@ const StyledParagraph = styled('p')`
   font-weight: 400;
   padding-bottom: 20px;
 `
-const EMAIL = 'crmresearch@trade.gov.uk'
+const EMAIL = 'crm.research@businessandtrade.gov.uk'
 const EMAIL_SUBJECT = 'Volunteering for user research'
 const EMAIL_BODY =
   'Hello, I would like to volunteer to take part in future user research around CRM.'
