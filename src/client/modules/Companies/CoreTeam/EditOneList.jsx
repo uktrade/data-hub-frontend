@@ -57,10 +57,8 @@ const EditOneListForm = ({
     flashMessage={() => 'One List information has been updated.'}
     showStepInUrl={true}
   >
-    {({ values }) => (
+    {({ values, currentStep, goToStep }) => (
       <>
-        {/* TODO if there is a request to skip the first step, but company is missing a one list tier, need to show the first step */}
-
         <Step name="oneListTier">
           <FieldRadios
             label="Company One List tier"
@@ -83,6 +81,14 @@ const EditOneListForm = ({
                 label="Advisers on the core team (optional)"
                 isMulti={true}
               />
+              <>
+                {/* If there is a request to skip the first step, but company is missing a one list tier, 
+                we need to force them to the first step */}
+                {currentStep === 1 &&
+                  !values[TIER_FIELD_NAME] &&
+                  !company.oneListGroupTier &&
+                  goToStep('oneListTier')}
+              </>
             </Step>
           </FormLayout>
         )}

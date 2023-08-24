@@ -179,7 +179,8 @@ describe('Edit One List', () => {
 
     context('with a company that has a one list tier', () => {
       before(() => {
-        cy.visit(
+        visitWithWait(
+          testCompany.id,
           `${urls.companies.editOneList(testCompany.id)}?step=oneListAdvisers`
         )
       })
@@ -198,7 +199,8 @@ describe('Edit One List', () => {
 
     context('with a company that is missing a one list tier', () => {
       before(() => {
-        cy.visit(
+        visitWithWait(
+          noOneListCompany.id,
           `${urls.companies.editOneList(
             noOneListCompany.id
           )}?step=oneListAdvisers`
