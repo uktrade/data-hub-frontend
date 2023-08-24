@@ -40,16 +40,13 @@ function EditOneListForm({
       redirectTo={() =>
         returnUrl ? returnUrl : urls.companies.businessDetails(companyId)
       }
-      cancelRedirectTo={() =>
-        returnUrl ? returnUrl : urls.companies.businessDetails(companyId)
-      }
-      flashMessage={() => 'One List information has been updated.'}
+      flashMessage={() => 'Core team has been updated.'}
       showStepInUrl={true}
     >
       {({ values, currentStep, goToStep }) => (
         <>
           <LocalHeader
-            heading={`Add or edit ${companyName} One List information`}
+            heading={`Edit core team of ${companyName}`}
             breadcrumbs={[
               { link: urls.dashboard.index(), text: 'Home' },
               {
@@ -57,7 +54,7 @@ function EditOneListForm({
                 text: 'Companies',
               },
               { link: urls.companies.detail(companyId), text: companyName },
-              { text: 'Edit One List information' },
+              { text: 'Edit core team' },
             ]}
           />
           <Main>
