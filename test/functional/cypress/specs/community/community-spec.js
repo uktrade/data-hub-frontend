@@ -94,7 +94,7 @@ describe('Community', () => {
         .should(
           'have.attr',
           'href',
-          'mailto:crmresearch@trade.gov.uk?subject=Volunteering%20for%20user%20research&body=Hello%2C%20I%20would%20like%20to%20volunteer%20to%20take%20part%20in%20future%20user%20research%20around%20CRM.'
+          'mailto:crm.research@businessandtrade.gov.uk?subject=Volunteering%20for%20user%20research&body=Hello%2C%20I%20would%20like%20to%20volunteer%20to%20take%20part%20in%20future%20user%20research%20around%20CRM.'
         )
     })
   })
