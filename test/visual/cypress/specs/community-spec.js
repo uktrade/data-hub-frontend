@@ -7,12 +7,8 @@ describe('community page', () => {
   })
 
   it('should render community page correctly', () => {
-    cy.get('h1').screenshot('community-heading')
-    cy.get('p').screenshot('community-paragraph')
-    cy.get('img').screenshot('community-image')
+    cy.get('[data-test="community-page"]').should('be.visible')
 
-    cy.compareSnapshot('community-heading', 0.0)
-    cy.compareSnapshot('community-paragraph', 0.0)
-    cy.compareSnapshot('community-image', 0.0)
+    cy.compareSnapshot('community-page')
   })
 })
