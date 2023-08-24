@@ -18,6 +18,8 @@ import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdv
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'
+import Details from '@govuk-react/details'
+import { NewWindowLink } from '../../../components'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -52,6 +54,7 @@ const AddObjectiveButton = styled(GridCol)`
 const ArchivedObjectivesLink = styled(GridCol)`
   padding-top: 7px;
 `
+const oneListEmail = 'one.list@invest-trade.uk'
 
 const canEditOneList = (permissions) =>
   permissions &&
@@ -252,6 +255,19 @@ const AccountManagement = ({
               Edit core team
             </Button>
           )}
+          <Details
+            summary="Need to find out more, or edit the One List tier information?"
+            data-test="core-team-details"
+          >
+            For more information, or if you need to change the One List tier or
+            account management team for this company, go to the{' '}
+            <NewWindowLink
+              href={urls.external.digitalWorkspace.accountManagement}
+            >
+              Digital Workspace
+            </NewWindowLink>{' '}
+            or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+          </Details>
         </CompanyLayout>
       )}
     </CompanyResource>
@@ -259,3 +275,5 @@ const AccountManagement = ({
 }
 
 export default AccountManagement
+
+//
