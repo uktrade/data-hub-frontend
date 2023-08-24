@@ -55,7 +55,7 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.index(fixtures.investment.investmentWithDetails.id)
+          urls.companies.overview.index('0f5216e0-849f-11e6-ae22-56b6b6499611')
         )
       cy.get('[data-test="contact-0"]')
         .should('exist')
@@ -63,7 +63,7 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.contacts.index(fixtures.contact.deanCox.id)
+          urls.contacts.contact(fixtures.contact.deanCox.id)
         )
       cy.get('[data-test="contact-1"]')
         .should('exist')
@@ -71,7 +71,7 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.contacts.index(fixtures.contact.johnnyCakeman.id)
+          urls.contacts.contact(fixtures.contact.johnnyCakeman.id)
         )
     })
 
