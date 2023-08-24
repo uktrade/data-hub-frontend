@@ -1,5 +1,4 @@
 export { default as AdviserResource } from './Adviser'
-export { default as AdvisersResource } from './Advisers'
 export { default as AssetClassesResource } from './AssetClasses'
 export { default as BusinessActivitiesResource } from './BusinessActivities'
 export { default as CompanyResource } from './Company'
