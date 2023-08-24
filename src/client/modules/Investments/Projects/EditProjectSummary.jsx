@@ -167,13 +167,11 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.estimatedLandDate
               )}
             />
-            <FieldWrapper autoScroll={true}>
-              <FieldLikelihoodOfLanding
-                initialValue={transformObjectForTypeahead(
-                  project.likelihoodToLand
-                )}
-              />
-            </FieldWrapper>
+            <FieldLikelihoodOfLanding
+              initialValue={transformObjectForTypeahead(
+                project.likelihoodToLand
+              )}
+            />
             <FieldActualLandDate
               initialValue={transformDateStringToDateObject(
                 project.actualLandDate
