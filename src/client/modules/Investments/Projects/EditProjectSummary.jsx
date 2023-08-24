@@ -63,7 +63,7 @@ const checkReferralSourceAdviser = (currentAdviser, referralSourceAdviser) =>
         referralSourceAdviser
       )
 
-const EditProjectSummary = ({ projectId, currentAdviser }) => (
+const EditProjectSummary = ({ projectId, currentAdviser, autoScroll }) => (
   <InvestmentResource id={projectId}>
     {(project) => (
       <>
@@ -167,13 +167,12 @@ const EditProjectSummary = ({ projectId, currentAdviser }) => (
                 project.estimatedLandDate
               )}
             />
-            <FieldWrapper autoScroll={true}>
-              <FieldLikelihoodOfLanding
-                initialValue={transformObjectForTypeahead(
-                  project.likelihoodToLand
-                )}
-              />
-            </FieldWrapper>
+            <FieldLikelihoodOfLanding
+              autoScroll={!!autoScroll}
+              initialValue={transformObjectForTypeahead(
+                project.likelihoodToLand
+              )}
+            />
             <FieldActualLandDate
               initialValue={transformDateStringToDateObject(
                 project.actualLandDate
