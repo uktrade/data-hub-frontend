@@ -1,4 +1,3 @@
-import Advisers from './Advisers'
 import Contact from './Contact'
 import Company from './Company'
 import CompanyContacts from './CompanyContacts'
@@ -54,7 +53,6 @@ import CompanyObjectivesCount from './CompanyObjectivesCount'
 import Adviser from './Adviser'
 
 export default {
-  ...Advisers.tasks,
   ...Company.tasks,
   ...CompanyContacts.tasks,
   ...Contact.tasks,
