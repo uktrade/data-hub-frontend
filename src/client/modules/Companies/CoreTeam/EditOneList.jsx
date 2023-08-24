@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 
 import { TASK_SAVE_ONE_LIST_DETAILS } from './state'
 
@@ -32,79 +32,89 @@ import {
   transformOneListTiers,
 } from './transformers'
 
-function EditOneListForm({
+function useQuery() {
+  const { search } = useLocation()
+
+  return React.useMemo(() => new URLSearchParams(search), [search])
+}
+
+const EditOneListForm = ({
   company,
   oneListTiers,
   formInitialValues,
   returnUrl,
-}) {
-  return (
-    <DefaultLayout
-      pageTitle={`Add or edit ${company.name} One List information`}
-      heading={`Add or edit ${company.name} One List information`}
-      breadcrumbs={buildCompanyBreadcrumbs(
-        [{ text: 'Edit One List information' }],
-        company.id,
-        company.name
-      )}
-      useReactRouter={false}
-    >
-      <Form
-        id="edit-one-list"
-        name={TASK_SAVE_ONE_LIST_DETAILS}
-        initialValues={formInitialValues}
-        submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
-        analyticsFormName="editOneList"
-        transformPayload={(values) => ({ values, companyId: company.id })}
-        redirectTo={() =>
-          returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
-        }
-        flashMessage={() => 'One List information has been updated.'}
-        showStepInUrl={true}
-      >
-        {({ values }) => (
-          <>
-            {/* if there is a request to skip the first step, but company is missing a one list tier, need to show the first step */}
+}) => (
+  <Form
+    id="edit-one-list"
+    name={TASK_SAVE_ONE_LIST_DETAILS}
+    initialValues={formInitialValues}
+    submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
+    analyticsFormName="editOneList"
+    transformPayload={(values) => ({ values, companyId: company.id })}
+    redirectTo={() =>
+      returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
+    }
+    flashMessage={() => 'One List information has been updated.'}
+    showStepInUrl={true}
+  >
+    {({ values }) => (
+      <>
+        {/* TODO if there is a request to skip the first step, but company is missing a one list tier, need to show the first step */}
 
-            <Step name="oneListTier">
-              <FieldRadios
-                label="Company One List tier"
-                name={TIER_FIELD_NAME}
-                options={oneListTiers}
-                required="Select a company One List tier"
+        <Step name="oneListTier">
+          <FieldRadios
+            label="Company One List tier"
+            name={TIER_FIELD_NAME}
+            options={oneListTiers}
+            required="Select a company One List tier"
+          />
+        </Step>
+
+        {values.one_list_tier !== NONE && (
+          <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+            <Step name="oneListAdvisers">
+              <FieldAdvisersTypeahead
+                name={ACCOUNT_MANAGER_FIELD_NAME}
+                label="Global Account Manager"
+                required="Select at least one adviser"
+              />
+              <FieldAdvisersTypeahead
+                name={ONE_LIST_TEAM_FIELD_NAME}
+                label="Advisers on the core team (optional)"
+                isMulti={true}
               />
             </Step>
-
-            {values.one_list_tier !== NONE && (
-              <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-                <Step name="oneListAdvisers">
-                  <FieldAdvisersTypeahead
-                    name={ACCOUNT_MANAGER_FIELD_NAME}
-                    label="Global Account Manager"
-                    required="Select at least one adviser"
-                  />
-                  <FieldAdvisersTypeahead
-                    name={ONE_LIST_TEAM_FIELD_NAME}
-                    label="Advisers on the core team (optional)"
-                    isMulti={true}
-                  />
-                </Step>
-              </FormLayout>
-            )}
-          </>
+          </FormLayout>
         )}
-      </Form>
-    </DefaultLayout>
-  )
-}
+      </>
+    )}
+  </Form>
+)
 
 const EditOneList = ({}) => {
-  const { companyId, returnUrl } = useParams()
+  const { companyId } = useParams()
+  const query = useQuery()
+  const returnUrl = query.get('returnUrl')
+
   const [oneListTeam, setOneListTeam] = useState(undefined)
   const [company, setCompany] = useState(undefined)
   const [oneListTiers, setOneListTiers] = useState(undefined)
+
   return (
-    <>
+    <DefaultLayout
+      pageTitle={`Add or edit ${company && company.name} One List information`}
+      heading={`Add or edit ${company && company.name} One List information`}
+      breadcrumbs={
+        company
+          ? buildCompanyBreadcrumbs(
+              [{ text: 'Edit One List information' }],
+              company.id,
+              company.name
+            )
+          : []
+      }
+      useReactRouter={false}
+    >
       <CompanyOneListTeamResource id={companyId}>
         {(oneListTeam) => (
           <Effect
@@ -140,7 +150,7 @@ const EditOneList = ({}) => {
           }}
         />
       )}
-    </>
+    </DefaultLayout>
   )
 }
 

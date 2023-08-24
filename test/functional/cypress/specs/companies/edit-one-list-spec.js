@@ -11,10 +11,22 @@ const metadataTiers = require('../../../../sandbox/fixtures/metadata/one-list-ti
 const urls = require('../../../../../src/lib/urls')
 
 describe('Edit One List', () => {
+  const visitWithWait = (companyId, url) => {
+    cy.intercept(
+      `/api-proxy/v4/company/${companyId}/one-list-group-core-team`
+    ).as('oneListTeam')
+    cy.intercept(`/api-proxy/v4/metadata/one-list-tier`).as('oneListTiers')
+    cy.intercept(`/api-proxy/v4/company/${companyId}`).as('company')
+
+    cy.visit(url)
+
+    cy.wait(['@oneListTeam', '@oneListTiers', '@company'])
+  }
+
   context('when viewing the "Edit One List" page', () => {
     const testCompany = fixtures.company.oneListCorp
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should render the header', () => {
@@ -35,7 +47,7 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should render One List tier options with tier pre-selected', () => {
@@ -101,7 +113,10 @@ describe('Edit One List', () => {
       const testCompany = fixtures.company.minimallyMinimalLtd
 
       before(() => {
-        cy.visit(urls.companies.editOneList(testCompany.id))
+        visitWithWait(
+          testCompany.id,
+          urls.companies.editOneList(testCompany.id)
+        )
       })
 
       it('should not have a tier pre-selected', () => {
@@ -143,7 +158,7 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should submit the form without manager information stage', () => {
@@ -206,7 +221,8 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(
+      visitWithWait(
+        testCompany.id,
         `${urls.companies.editOneList(
           testCompany.id
         )}?step=oneListAdvisers&returnUrl=${urls.companies.accountManagement.index(

@@ -266,7 +266,7 @@ exports.getOneListGroupCoreTeam = function (req, res) {
   var companyId = req.params.companyId
 
   if (companyId === companyMinimallyMinimal.id) {
-    res.send('')
+    res.send('[]')
   } else {
     res.json(oneListGroupCoreTeam)
   }
