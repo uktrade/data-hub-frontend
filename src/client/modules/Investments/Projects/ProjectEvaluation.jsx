@@ -49,7 +49,7 @@ const landingTable = (ukCompany = null, actualLandDate) => (
       heading="UK company"
       value={
         ukCompany ? (
-          <Link href={urls.companies.index(ukCompany.id)}>
+          <Link href={urls.companies.overview.index(ukCompany.id)}>
             {ukCompany.name}
           </Link>
         ) : (
@@ -179,7 +179,7 @@ const ProjectEvaluation = ({ projectId }) => (
               <SummaryTable.TextRow
                 heading="Foreign investor"
                 value={
-                  <Link href={urls.companies.index(company.id)}>
+                  <Link href={urls.companies.overview.index(company.id)}>
                     {company.name}
                   </Link>
                 }
@@ -192,7 +192,9 @@ const ProjectEvaluation = ({ projectId }) => (
                 heading="UK company"
                 value={
                   project.ukCompany ? (
-                    <Link href={urls.companies.index(project.ukCompany.id)}>
+                    <Link
+                      href={urls.companies.overview.index(project.ukCompany.id)}
+                    >
                       {project.ukCompany.name}
                     </Link>
                   ) : (

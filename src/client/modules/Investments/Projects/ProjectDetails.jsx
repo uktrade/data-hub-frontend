@@ -80,7 +80,9 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
             heading="Client"
             value={
               <Link
-                href={urls.companies.index(project.investorCompany?.id)}
+                href={urls.companies.overview.index(
+                  project.investorCompany?.id
+                )}
                 data-test="company-link"
               >
                 {project.investorCompany?.name}
@@ -121,7 +123,7 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
               heading="Client contacts"
               value={project.clientContacts.map((contact, i) => (
                 <Link
-                  href={urls.contacts.index(contact.id)}
+                  href={urls.contacts.contact(contact.id)}
                   data-test={`contact-` + i}
                 >
                   {contact.name}
