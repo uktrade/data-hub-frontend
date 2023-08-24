@@ -59,14 +59,14 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        assertCollection()
+        assertReactCollection('collection-count')
       })
     })
 
     describe('proposition', () => {
       before(() => {
         cy.visit(
-          investments.projects.interactions.index(
+          investments.projects.propositions(
             fixtures.investmentProject.newZoo.id
           )
         )

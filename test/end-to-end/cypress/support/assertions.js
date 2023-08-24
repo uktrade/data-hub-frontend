@@ -13,17 +13,20 @@ const assertCollection = ({
   itemsSelector = selectors.collection.items,
   pageSummarySelector = selectors.collection.pageSummary,
   pageNextSelector = selectors.collection.pageNext,
+  hasItems = true,
 } = {}) => {
   cy.get(headerCountSelector)
     .invoke('text')
     .then((headerCount) => {
       const hasMoreThanOnePage = headerCount > PAGE_SIZE
 
-      cy.get(itemsSelector).should((items) => {
-        expect(items.length).to.eq(
-          hasMoreThanOnePage ? PAGE_SIZE : Number(headerCount)
-        )
-      })
+      if (hasItems) {
+        cy.get(itemsSelector).should((items) => {
+          expect(items.length).to.eq(
+            hasMoreThanOnePage ? PAGE_SIZE : Number(headerCount)
+          )
+        })
+      }
 
       if (hasMoreThanOnePage) {
         const totalPages = Math.ceil(headerCount / PAGE_SIZE)
@@ -33,12 +36,16 @@ const assertCollection = ({
     })
 }
 
-const assertReactCollection = () => {
+const assertReactCollection = (
+  headerCountSelector = 'collectionCount',
+  hasItems = true
+) => {
   assertCollection({
-    headerCountSelector: '[data-test=collectionCount]',
+    headerCountSelector: `[data-test=${headerCountSelector}]`,
     itemsSelector: '[data-test=collection-item]',
     pageSummarySelector: '[data-test="pagination-summary"]',
     pageNextSelector: '[data-test="next"]',
+    hasItems,
   })
 }
 

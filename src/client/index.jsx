@@ -76,6 +76,7 @@ import AccountManagement from './modules/Companies/AccountManagement'
 import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
+import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -914,6 +915,9 @@ function App() {
         </Mount>
         <Mount selector="#project-team">
           {(props) => <ProjectTeam {...props} />}
+        </Mount>
+        <Mount selector="#project-interactions">
+          {(props) => <ProjectInteractions {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

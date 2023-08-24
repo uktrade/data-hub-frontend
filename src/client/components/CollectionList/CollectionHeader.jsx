@@ -53,7 +53,9 @@ function CollectionHeader({
   return (
     <CollectionHeaderRow primary={true} actions={actions} {...rest}>
       <StyledHeaderText data-test="collection-header-name">
-        <StyledResultCount>{formattedTotal}</StyledResultCount>
+        <StyledResultCount data-test="collection-count">
+          {formattedTotal}
+        </StyledResultCount>
         {` ${counterSuffix}`}
       </StyledHeaderText>
     </CollectionHeaderRow>
