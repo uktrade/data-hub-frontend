@@ -10,8 +10,6 @@ import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/Ex
 import addCompanyPostcodeToRegionTask, {
   createCompany,
 } from '../apps/companies/apps/add-company/client/tasks'
-import { TASK_SAVE_ONE_LIST_DETAILS } from '../apps/companies/apps/edit-one-list/client/state'
-import * as editOneListTasks from '../apps/companies/apps/edit-one-list/client/tasks'
 import { TASK_UPDATE_STAGE } from '../apps/investments/views/admin/client/state'
 import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
 import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
@@ -324,6 +322,15 @@ import {
   saveStrategy,
 } from './modules/Companies/AccountManagement/tasks'
 
+import {
+  getOneListDetails,
+  saveOneListDetails,
+} from './modules/Companies/CoreTeam/tasks'
+import {
+  TASK_GET_ONE_LIST_DETAILS,
+  TASK_SAVE_ONE_LIST_DETAILS,
+} from './modules/Companies/CoreTeam/state'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -343,7 +350,7 @@ export const tasks = {
   'Get send referral initial values': referralsSendTasks.getInitialFormValues,
   'Save contact': saveContact,
   [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
-  [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
+  [TASK_SAVE_ONE_LIST_DETAILS]: saveOneListDetails,
   [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
   [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
   [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
@@ -503,4 +510,5 @@ export const tasks = {
   [TASK_UPDATE_ASSOCIATED_PROJECT]: updateAssociatedProject,
   [TASK_GET_UK_COMPANIES]: getUkCompanies,
   [TASK_UPDATE_RECIPIENT_COMPANY]: updateRecipientCompany,
+  [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
 }

@@ -160,6 +160,9 @@ import {
 import nonFdiReducer from './modules/Investments/Projects/reducer'
 import recipientCompanyReducer from './modules/Investments/Projects/recipientCompanyReducer'
 
+import { ID as ONE_LIST_DETAILS_ID } from './modules/Companies/CoreTeam/state'
+import oneListDetailsReducer from './modules/Companies/CoreTeam/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -254,4 +257,5 @@ export const reducers = {
   [OBJECTIVE_ID]: objectiveReducer,
   [NON_FDI_LIST_ID]: nonFdiReducer,
   [RECIPIENT_COMPANY_LIST_ID]: recipientCompanyReducer,
+  [ONE_LIST_DETAILS_ID]: oneListDetailsReducer,
 }

@@ -27,6 +27,7 @@ import FindAssociatedProject from './modules/Investments/Projects/FindAssociated
 import EditAssociatedProject from './modules/Investments/Projects/EditAssociatedProject'
 import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCompany'
 import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCompany'
+import EditOneList from './modules/Companies/CoreTeam/EditOneList'
 
 const routes = {
   companies: [
@@ -69,6 +70,11 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/archived',
       module: 'datahub:companies',
       component: ArchivedObjectives,
+    },
+    {
+      path: '/companies/:companyId/edit-one-list',
+      module: 'datahub:companies',
+      component: EditOneList,
     },
   ],
   contacts: [

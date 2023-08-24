@@ -53,6 +53,7 @@ import CompanyObjectivesCount from './CompanyObjectivesCount'
 import Adviser from './Adviser'
 import Propositions from './Propositions'
 import InvestmentEvidence from './InvestmentEvidence'
+import OneListTiers from './OneListTiers'
 
 export default {
   ...Company.tasks,
@@ -110,4 +111,5 @@ export default {
   ...Adviser.tasks,
   ...Propositions.tasks,
   ...InvestmentEvidence.tasks,
+  ...OneListTiers.tasks,
 }
