@@ -82,7 +82,7 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
     <EditLink
       href={`${investments.projects.editDetails(
         investmentId
-      )}#field-likelihood_to_land`}
+      )}?autoscroll=likelihood_to_land`}
       data-test={`active-investment-edit-${kebabCase(investmentName)}-link`}
     >
       Edit

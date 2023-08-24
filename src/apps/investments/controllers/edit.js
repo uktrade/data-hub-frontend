@@ -5,6 +5,7 @@ function renderDetailsForm(req, res) {
     props: {
       projectId: investment.id,
       currentAdviser: user.id,
+      autoScroll: req.query.autoscroll,
     },
   })
 }

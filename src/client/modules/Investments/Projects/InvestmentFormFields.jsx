@@ -258,13 +258,17 @@ export const FieldEstimatedLandDate = ({ initialValue = null }) => (
   />
 )
 
-export const FieldLikelihoodOfLanding = ({ initialValue = null }) => (
+export const FieldLikelihoodOfLanding = ({
+  initialValue = null,
+  autoScroll,
+}) => (
   <ResourceOptionsField
     name="likelihood_to_land"
     label="Likelihood of landing (optional)"
     resource={LikelihoodToLandResource}
     field={FieldTypeahead}
     initialValue={initialValue}
+    autoScroll={autoScroll}
     placeholder="Select a likelihood of landing value"
   />
 )
