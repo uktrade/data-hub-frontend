@@ -95,8 +95,6 @@ router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
-// router.use(urls.companies.editOneList.route, editOneListRouter)
-
 router.get(urls.companies.hierarchies.ghq.link.route, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)

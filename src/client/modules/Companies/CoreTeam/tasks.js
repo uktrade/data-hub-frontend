@@ -6,9 +6,9 @@ import {
   TIER_FIELD_NAME,
 } from './constants'
 
-export function saveOneListDetails({ values, companyId }) {
-  function assignOneListTierandGlobalManagerRequest() {
-    return apiProxyAxios.post(
+export async function saveOneListDetails({ values, companyId }) {
+  async function assignOneListTierandGlobalManagerRequest() {
+    return await apiProxyAxios.post(
       `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
       {
         [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
@@ -17,16 +17,18 @@ export function saveOneListDetails({ values, companyId }) {
     )
   }
 
-  function removeFromOneList() {
-    return apiProxyAxios.post(`v4/company/${companyId}/remove-from-one-list`)
+  async function removeFromOneList() {
+    return await apiProxyAxios.post(
+      `v4/company/${companyId}/remove-from-one-list`
+    )
   }
 
-  function assignCoreTeamRequest() {
+  async function assignCoreTeamRequest() {
     const one_list_team = values[ONE_LIST_TEAM_FIELD_NAME].map((member) => ({
       adviser: member.value,
     }))
 
-    return apiProxyAxios.patch(
+    return await apiProxyAxios.patch(
       `v4/company/${companyId}/update-one-list-core-team`,
       {
         [ONE_LIST_TEAM_FIELD_NAME]: one_list_team,
@@ -34,8 +36,8 @@ export function saveOneListDetails({ values, companyId }) {
     )
   }
 
-  function removeCoreTeamRequest() {
-    return apiProxyAxios.patch(
+  async function removeCoreTeamRequest() {
+    return await apiProxyAxios.patch(
       `v4/company/${companyId}/update-one-list-core-team`,
       {
         [ONE_LIST_TEAM_FIELD_NAME]: [],
@@ -59,17 +61,17 @@ export function saveOneListDetails({ values, companyId }) {
     ])
   }
 
-  return request
-    .catch((e) => {
-      return Promise.reject(
-        e.message ||
-          (e.errors &&
-            e.errors.one_list_tier &&
-            Object.values(e.errors.one_list_tier).join(', ')) ||
-          e.toString()
-      )
-    })
-    .then((response) => {
-      response.data
-    })
+  let response
+  try {
+    response = await request
+  } catch (e) {
+    response = await Promise.reject(
+      e.message ||
+        (e.errors &&
+          e.errors.one_list_tier &&
+          Object.values(e.errors.one_list_tier).join(', ')) ||
+        e.toString()
+    )
+  }
+  response.data
 }
