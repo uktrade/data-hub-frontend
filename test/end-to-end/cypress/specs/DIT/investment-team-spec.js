@@ -15,11 +15,7 @@ const assertTable = ({ element, headings, rows }) => {
   cy.get(element).as('table')
 
   if (headings) {
-    cy.get('@table')
-      .find('th')
-      .each((el, i) => {
-        cy.wrap(el).should('have.text', headings[i])
-      })
+    cy.get('@table').find('th')
   }
 
   cy.get('@table')
@@ -45,13 +41,12 @@ const testSubForm = ({ selector, header, checkForm, expectedResults }) => {
 
   assertTable({
     element: teamSelectors[selector].table,
-    headings: ['Role', 'Adviser', 'Team'],
     rows: expectedResults,
   })
 }
 
 describe('Investment team', () => {
-  it('should display investment project team', () => {
+  before(() => {
     const investmentProject = fixtures.investmentProject.create.newHotelFdi()
     cy.loadFixture([investmentProject])
     cy.visit(investments.projects.team(investmentProject.pk))
@@ -70,6 +65,7 @@ describe('Investment team', () => {
         cy.get('[data-test="field-role_0"]').find('input').type('Test role')
       },
       expectedResults: [
+        ['Role', 'Adviser', 'Team'],
         [
           'Test role',
           'Jenny Carey',

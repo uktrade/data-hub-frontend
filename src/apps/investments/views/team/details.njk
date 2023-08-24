@@ -1,64 +1,8 @@
 {% extends "../template.njk" %}
 
 {% block main_grid_right_column %}
-
-  {% call DetailsContainer({ 
-    heading: 'Client relationship management',
-    dataTest: 'client-relationship-management'
-  }) %}
-    {% component 'data-table', {
-      columns: clientRelationshipManagementLabels.view,
-      data: clientRelationshipManagementData
-    } %}
-    <a href="edit-client-relationship-management" class="govuk-button govuk-button--secondary" data-test="client-relationship-management-button">Change</a>
-  {% endcall %}
-
-  {% call DetailsContainer({ 
-    heading: 'Project management',
-    dataTest: 'project-management'
-  }) %}
-    {% if stage == 'Prospect' %}
-      {{ Message({
-        type: 'muted',
-        text: 'Will be assigned during "Assign PM" stage.'
-      }) }}
-    {% elif projectManagementData %}
-      {% component 'data-table', {
-        columns: projectManagementLabels.view,
-        data: projectManagementData
-      } %}
-      <p>
-        <a
-          href="edit-project-management"
-          class="govuk-button govuk-button--secondary"
-          data-test="project-management-button"
-        >
-          Change
-        </a>
-      </p>
-    {% else %}
-      {{ Message({
-        type: 'muted',
-        text: 'Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.'
-      }) }}
-      <p><a href="edit-project-management" class="govuk-button" data-test="project-management-button">Assign</a></p>
-    {% endif %}
-  {% endcall %}
-
-  {% call DetailsContainer({ heading: 'Project specialist and team members', dataTest: 'project-specialist-team-members' }) %}
-    {% component 'data-table', {
-      columns: teamMembersLabels.view,
-      data: teamMembersData
-    } %}
-
-    <a href="edit-team-members" class="govuk-button govuk-button--secondary" data-test="project-specialist-team-members-button">Change</a>
-  {% endcall %}
-
-  {% call DetailsContainer({ heading: 'Success verifier', dataTest: 'success-verifier' }) %}
-    {{ Message({
-      type: 'muted',
-      text: 'Will be assigned during "Verify win" stage.'
-    }) }}
-  {% endcall %}
-
+  {% component 'react-slot', {
+      id: 'project-team',
+      props: props
+  } %}
 {% endblock %}

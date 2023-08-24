@@ -51,6 +51,7 @@ import FDIValues from './FDIValues'
 import CompanyObjectives from './CompanyObjectives'
 import ProjectStage from './ProjectStage'
 import CompanyObjectivesCount from './CompanyObjectivesCount'
+import Adviser from './Adviser'
 
 export default {
   ...Advisers.tasks,
@@ -106,4 +107,5 @@ export default {
   ...CompanyObjectives.tasks,
   ...ProjectStage.tasks,
   ...CompanyObjectivesCount.tasks,
+  ...Adviser.tasks,
 }

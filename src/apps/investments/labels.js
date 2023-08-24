@@ -1,13 +1,4 @@
-const roleAdviserTeam = {
-  role: 'Role',
-  adviser: 'Adviser',
-  team: 'Team',
-}
-
 const labels = {
-  projectManagementLabels: {
-    view: roleAdviserTeam,
-  },
   briefInvestmentSummaryLabels: {
     view: {
       sector: 'Primary sector',
@@ -38,17 +29,6 @@ const labels = {
       investor_company_country: 'Country of company origin',
       likelihood_to_land: 'Likelihood of landing',
     },
-  },
-  clientRelationshipManagementLabels: {
-    view: roleAdviserTeam,
-    edit: {
-      client_relationship_manager: 'Client Relationship Manager',
-      global_account_manager: 'Global Account Manager',
-    },
-  },
-  teamMembersLabels: {
-    view: roleAdviserTeam,
-    edit: roleAdviserTeam,
   },
   investmentProjectMetaItemLabels: {
     stage: 'Stage',
