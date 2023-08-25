@@ -5,6 +5,21 @@ import {
   ONE_LIST_TEAM_FIELD_NAME,
   TIER_FIELD_NAME,
 } from './constants'
+import { transformOneListTiers } from './transformers'
+
+export async function getOneListDetails(companyId) {
+  return Promise.all([
+    apiProxyAxios.get(`v4/company/${companyId}`),
+    apiProxyAxios.get('v4/metadata/one-list-tier'),
+    apiProxyAxios.get(`v4/company/${companyId}/one-list-group-core-team`),
+  ]).then(
+    ([{ data: company }, { data: oneListTiers }, { data: oneListTeam }]) => ({
+      company: company,
+      oneListTiers: transformOneListTiers(oneListTiers),
+      oneListTeam: oneListTeam,
+    })
+  )
+}
 
 export async function saveOneListDetails({ values, companyId }) {
   async function assignOneListTierandGlobalManagerRequest() {

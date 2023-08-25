@@ -9,22 +9,27 @@ export const transformOneListTiers = (tiers) =>
     .filter((tier) => !IGNORED_TIERS.includes(tier.value))
     .concat([{ value: NONE, label: NONE_LABEL }])
 
-export const parseAdviserData = (adviser) => {
-  return {
-    label: `${adviser.name}${
-      adviser.ditTeam ? ', ' + adviser.ditTeam.name : ''
-    }`,
-    value: adviser.id,
-    chipLabel: adviser.name,
+export const transformAdviserData = (adviser) => {
+  if (adviser) {
+    return {
+      label: `${adviser.name}${
+        adviser.dit_team ? ', ' + adviser.dit_team.name : ''
+      }`,
+      value: adviser.id,
+      chipLabel: adviser.name,
+    }
   }
+  return adviser
 }
 
-export const parseTeamMembers = (oneListTeam) =>
-  oneListTeam.filter(isAdviser).map((a) => parseAdviserData(a.adviser))
+export const transformTeamMembers = (oneListTeam) =>
+  oneListTeam
+    ? oneListTeam.filter(isAdviser).map((a) => transformAdviserData(a.adviser))
+    : []
 
 export const transformOneListCoreTeamToCollection = (advisers) => {
   const mapAdviser = ({ adviser }) => {
-    const adviserTeam = adviser.ditTeam
+    const adviserTeam = adviser.dit_team
     return {
       name: adviser.name,
       email: adviser.contactEmail,
