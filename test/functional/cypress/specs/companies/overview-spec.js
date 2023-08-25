@@ -174,6 +174,21 @@ describe('Company overview page', () => {
       })
     }
   )
+  context('when viewing a non-UK business', () => {
+    before(() => {
+      cy.visit(urls.companies.overview.index(usCompany.id))
+    })
+    it('the business detail card should not contain the Company House row', () => {
+      cy.get('[data-test="businessDetailsContainer"]')
+        .children()
+        .first()
+        .contains('Business details')
+        .next()
+        .children()
+        .first()
+        .contains('Trading Address')
+    })
+  })
   context(
     'when viewing the Business details card for a business that has no information added',
     () => {

@@ -15,23 +15,41 @@ import {
 
 const StyledAddressList = styled('ul')``
 
+const countryCode = '80756b9a-5d95-e211-a939-e4115bead28a'
+
 const BusinessDetailsCard = ({ company }) => (
   <StyledSummaryTable
     caption="Business details"
     data-test="businessDetailsContainer"
   >
-    <SummaryTable.Row heading="Companies House">
-      {buildCellContents(
-        company.companyNumber,
-        <NewWindowLink
-          href={urls.external.companiesHouse(company.companyNumber)}
-          aria-label="Opens on Companies House website"
-          data-test="companies-house-link"
-        >
-          {company.companyNumber}
-        </NewWindowLink>
-      )}
-    </SummaryTable.Row>
+    {(company.address.country.id == countryCode && (
+      <SummaryTable.Row heading="Companies House">
+        {buildCellContents(
+          company.companyNumber,
+          <NewWindowLink
+            href={urls.external.companiesHouse(company.companyNumber)}
+            aria-label="Opens on Companies House website"
+            data-test="companies-house-link"
+          >
+            {company.companyNumber}
+          </NewWindowLink>
+        )}
+      </SummaryTable.Row>
+    )) ||
+      (company.registeredAddress.country.id == countryCode && (
+        <SummaryTable.Row heading="Companies House">
+          {buildCellContents(
+            company.companyNumber,
+            <NewWindowLink
+              href={urls.external.companiesHouse(company.companyNumber)}
+              aria-label="Opens on Companies House website"
+              data-test="companies-house-link"
+            >
+              {company.companyNumber}
+            </NewWindowLink>
+          )}
+        </SummaryTable.Row>
+      ))}
     <SummaryTable.Row heading="Trading Address">
       {buildCellContents(
         company.address,
