@@ -5,13 +5,9 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 
-import {
-  CompanyResource,
-  CompanyOneListTeamResource,
-} from '../../../components/Resource'
+import { CompanyOneListTeamResource } from '../../../components/Resource'
 import { transformOneListCoreTeamToCollection } from './transformers'
 import { NewWindowLink } from '../../../components'
-import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import urls from '../../../../lib/urls'
 
 const getSubheadingText = (company) => {
@@ -96,37 +92,3 @@ CoreTeamAdvisers.propTypes = {
   company: PropTypes.object.isRequired,
   oneListEmail: PropTypes.string.isRequired,
 }
-
-const CoreTeam = ({
-  companyId,
-  oneListEmail,
-  dnbRelatedCompaniesCount,
-  returnUrl,
-  localNavItems,
-  permissions,
-}) => (
-  <CompanyResource id={companyId}>
-    {(company) => (
-      <CompanyLayout
-        company={company}
-        breadcrumbs={[{ text: 'Core Team' }]}
-        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-        returnUrl={returnUrl}
-        localNavItems={localNavItems}
-      >
-        <CoreTeamAdvisers
-          company={company}
-          companyId={company.id}
-          oneListEmail={oneListEmail}
-          permissions={permissions}
-        />
-      </CompanyLayout>
-    )}
-  </CompanyResource>
-)
-
-CoreTeam.propTypes = {
-  companyId: PropTypes.string.isRequired,
-}
-
-export default CoreTeam

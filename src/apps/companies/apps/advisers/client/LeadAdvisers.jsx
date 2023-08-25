@@ -8,8 +8,6 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import { FormActions } from '../../../../../client/components'
 import { TEXT_COLOUR, GREY_3 } from '../../../../../client/utils/colours'
-import { CompanyResource } from '../../../../../client/components/Resource'
-import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
 import urls from '../../../../../lib/urls'
 
 const ButtonSecondary = (props) => (
@@ -112,40 +110,3 @@ LeadITA.propTypes = {
   company: PropTypes.object.isRequired,
   permissions: PropTypes.array.isRequired,
 }
-
-const LeadAdvisers = ({
-  companyId,
-  dnbRelatedCompaniesCount,
-  localNavItems,
-  flashMessages,
-  returnUrl,
-  permissions,
-}) => (
-  <CompanyResource id={companyId}>
-    {(company) => (
-      <CompanyLayout
-        company={company}
-        breadcrumbs={[{ text: 'Lead adviser' }]}
-        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-        localNavItems={localNavItems}
-        flashMessages={flashMessages}
-        returnUrl={returnUrl}
-      >
-        <LeadITA company={company} permissions={permissions}></LeadITA>
-      </CompanyLayout>
-    )}
-  </CompanyResource>
-)
-LeadAdvisers.propTypes = {
-  companyId: PropTypes.string.isRequired,
-  permissions: PropTypes.array.isRequired,
-}
-
-RenderHasAccountManager.propTypes = {
-  addUrl: PropTypes.string.isRequired,
-  companyId: PropTypes.string.isRequired,
-  permissions: PropTypes.array.isRequired,
-  leadITA: PropTypes.object.isRequired,
-}
-
-export default LeadAdvisers
