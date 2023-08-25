@@ -29,7 +29,7 @@ export const transformTeamMembers = (oneListTeam) =>
 
 export const transformOneListCoreTeamToCollection = (advisers) => {
   const mapAdviser = ({ adviser }) => {
-    const adviserTeam = adviser.dit_team
+    const adviserTeam = adviser.dit_team ?? adviser.ditTeam
     return {
       name: adviser.name,
       email: adviser.contactEmail,
