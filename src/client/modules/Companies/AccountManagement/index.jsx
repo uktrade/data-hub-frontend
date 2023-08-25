@@ -248,12 +248,22 @@ const AccountManagement = ({
           isItaTierDAccount(company.oneListGroupTier) ? (
             <LeadITA company={company} permissions={permissions} />
           ) : (
-            <CoreTeamAdvisers company={company} oneListEmail={ONE_LIST_EMAIL} />
-          )}
-          {canEditOneList(permissions) && (
-            <Button as={Link} href={urls.companies.editVirtualTeam(companyId)}>
-              Edit core team
-            </Button>
+            <div>
+              <CoreTeamAdvisers
+                company={company}
+                oneListEmail={ONE_LIST_EMAIL}
+              />
+              {canEditOneList(permissions) && (
+                <div>
+                  <Button
+                    as={Link}
+                    href={urls.companies.editVirtualTeam(companyId)}
+                  >
+                    Edit core team
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
           <Details
             summary="Need to find out more, or edit the One List tier information?"
