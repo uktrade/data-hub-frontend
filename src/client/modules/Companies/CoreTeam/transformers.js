@@ -6,6 +6,7 @@ export const transformOneListCoreTeamToCollection = (advisers) => {
     const adviserTeam = adviser.ditTeam
     return {
       name: adviser.name,
+      email: adviser.contactEmail,
       team: adviserTeam ? adviserTeam.name : '-',
       location: adviserTeam?.ukRegion
         ? adviserTeam?.ukRegion.name

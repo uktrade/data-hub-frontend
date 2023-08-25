@@ -22,11 +22,14 @@ const getSubheadingText = (company) => {
 }
 
 const buildRow = (transformedAdvisers) =>
-  transformedAdvisers.map(({ team, location, name }) => (
+  transformedAdvisers.map(({ team, location, name, email }) => (
     <Table.Row>
       <Table.Cell>{team}</Table.Cell>
       <Table.Cell>{location}</Table.Cell>
       <Table.Cell>{name}</Table.Cell>
+      <Table.Cell>
+        {email ? <Link href={`mailto:${email}`}>{email}</Link> : '-'}
+      </Table.Cell>
     </Table.Row>
   ))
 
@@ -50,22 +53,24 @@ export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
         <p data-test="core-team-subheading">{getSubheadingText(company)}</p>
         <Table data-test="global-acc-manager-table">
           <Table.Row>
-            <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
-            <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
-            <Table.CellHeader setWidth="33%">
+            <Table.CellHeader setWidth="25%">Team</Table.CellHeader>
+            <Table.CellHeader setWidth="15%">Location</Table.CellHeader>
+            <Table.CellHeader setWidth="25%">
               Global Account Manager
             </Table.CellHeader>
+            <Table.CellHeader setWidth="35%">Email</Table.CellHeader>
           </Table.Row>
           {buildGAMRow(oneListTeam)}
         </Table>
         {buildAdviserRows(oneListTeam) && (
           <Table data-test="advisers-table">
             <Table.Row>
-              <Table.CellHeader setWidth="33%">Team</Table.CellHeader>
-              <Table.CellHeader setWidth="33%">Location</Table.CellHeader>
-              <Table.CellHeader setWidth="33%">
+              <Table.CellHeader setWidth="25%">Team</Table.CellHeader>
+              <Table.CellHeader setWidth="15%">Location</Table.CellHeader>
+              <Table.CellHeader setWidth="25%">
                 Adviser on core team
               </Table.CellHeader>
+              <Table.CellHeader setWidth="35%">Email</Table.CellHeader>
             </Table.Row>
             {buildAdviserRows(oneListTeam)}
           </Table>
