@@ -66,7 +66,14 @@ const CollectionList = ({
           <ol aria-live="polite">
             {items.map(
               (
-                { headingText, headingUrl, subheading, badges, metadata },
+                {
+                  headingText,
+                  headingUrl,
+                  subheading,
+                  badges,
+                  metadata,
+                  buttons,
+                },
                 index
               ) => (
                 <CollectionItem
@@ -77,6 +84,7 @@ const CollectionList = ({
                   badges={badges}
                   metadata={metadata}
                   metadataRenderer={metadataRenderer}
+                  buttons={buttons}
                 />
               )
             )}

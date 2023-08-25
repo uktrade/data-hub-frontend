@@ -51,6 +51,15 @@ const StyledSubheading = styled('h4')`
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
 
+const StyledButtonWrapper = styled('div')`
+  margin-bottom: -30px;
+  margin-right: 10px;
+
+  ${MEDIA_QUERIES.TABLET} {
+    text-align: right;
+  }
+`
+
 const CollectionItem = ({
   headingText,
   subheading,
@@ -61,6 +70,7 @@ const CollectionItem = ({
   onClick,
   titleRenderer = null,
   useReactRouter = false,
+  buttons,
 }) => (
   <ItemWrapper data-test="collection-item">
     {badges && (
@@ -98,6 +108,8 @@ const CollectionItem = ({
     ) : (
       <Metadata rows={metadata} />
     )}
+
+    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
   </ItemWrapper>
 )
 CollectionItem.propTypes = {
