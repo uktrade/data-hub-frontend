@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { UNITED_KINGDOM_ID } from '../../../../../common/constants'
 
 import { NewWindowLink, SummaryTable } from '../../../../../client/components'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
@@ -15,15 +16,13 @@ import {
 
 const StyledAddressList = styled('ul')``
 
-const countryCode = '80756b9a-5d95-e211-a939-e4115bead28a'
-
 const BusinessDetailsCard = ({ company }) => (
   <StyledSummaryTable
     caption="Business details"
     data-test="businessDetailsContainer"
   >
-    {(company.registeredAddress?.country.id == countryCode ||
-      company.address?.country.id == countryCode) && (
+    {(company.registeredAddress?.country.id == UNITED_KINGDOM_ID ||
+      company.address?.country.id == UNITED_KINGDOM_ID) && (
       <SummaryTable.Row heading="Companies House">
         {buildCellContents(
           company.companyNumber,
