@@ -14,6 +14,7 @@ import { CompanyResource } from '../../../../../client/components/Resource'
 import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
 import { exportDetailsLabels, exportPotentialLabels } from '../../../labels'
 import { transformExportCountries } from '../transformer'
+import WarningText from '@govuk-react/warning-text'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
@@ -69,9 +70,14 @@ const ExportsIndex = ({
               heading={exportDetailsLabels.exportPotential}
               key={exportDetailsLabels.exportPotential}
             >
-              Coming soon
+              Unavailable
             </SummaryTable.Row>
           </SummaryTable>
+
+          <WarningText>
+            The export potential value is unavailable. This is because the
+            previous value was wrong. We are working to fix this.
+          </WarningText>
 
           <Details summary="What is export potential">
             The export potential score is a prediction of a company's likelihood
