@@ -449,6 +449,7 @@ app.patch(
   v4Company.patchOneListCoreTeam
 )
 app.get('/v4/company/:companyId/objective', v4Objective.objectives)
+app.get('/v4/company/:companyId/objective/count', v4Objective.objectivesCount)
 
 // V4 interactions
 app.get('/v4/interaction', v4Interaction.getInteractions)
