@@ -5,9 +5,11 @@ const isAccountManager = (adviser) => adviser.isGlobalAccountManager
 const isAdviser = (adviser) => !adviser.isGlobalAccountManager
 
 export const transformOneListTiers = (tiers) =>
-  transformObjectToTypeahead(tiers)
-    .filter((tier) => !IGNORED_TIERS.includes(tier.value))
-    .concat([{ value: NONE, label: NONE_LABEL }])
+  tiers
+    ? transformObjectToTypeahead(tiers)
+        .filter((tier) => !IGNORED_TIERS.includes(tier.value))
+        .concat([{ value: NONE, label: NONE_LABEL }])
+    : []
 
 export const transformAdviserData = (adviser) => {
   if (adviser) {

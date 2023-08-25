@@ -1,4 +1,8 @@
-import { transformAdviserData, transformTeamMembers } from './transformers'
+import {
+  transformAdviserData,
+  transformOneListTiers,
+  transformTeamMembers,
+} from './transformers'
 
 export const ID = 'oneListDetails'
 
@@ -11,6 +15,7 @@ export const state2props = (state) => {
     globalAccountManager: transformAdviserData(
       state[ID]?.company?.one_list_group_global_account_manager
     ),
+    oneListTiers: transformOneListTiers(state[ID].oneListTiers),
     oneListTeam: transformTeamMembers(state[ID].oneListTeam),
   }
 }
