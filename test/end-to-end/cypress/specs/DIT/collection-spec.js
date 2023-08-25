@@ -1,8 +1,5 @@
 const fixtures = require('../../fixtures')
-const {
-  assertCollection,
-  assertReactCollection,
-} = require('../../support/assertions')
+const { assertCollection } = require('../../support/assertions')
 
 const { companies, investments } = require('../../../../../src/lib/urls')
 
@@ -16,7 +13,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for orders collection', () => {
-      assertReactCollection()
+      assertCollection('collectionCount')
     })
   })
 
@@ -29,7 +26,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for investment interaction collection', () => {
-      assertReactCollection('collection-header-name', false)
+      assertCollection('collection-count', false)
     })
   })
 
@@ -42,7 +39,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for investment proposition collection', () => {
-      assertCollection()
+      assertCollection('collection-header-name', false)
     })
   })
 })

@@ -1,15 +1,8 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Investment Propositions</h2>
-  <p>
-    You can record and manage propositions requested by investors and view the details of previous and current propositions
-  </p>
-
-  {{
-  CollectionContent(propositions | assignCopy({
-    countLabel: 'proposition',
-    actionButtons: actionButtons
-  }))
-  }}
+  {% component 'react-slot', {
+    id: 'project-propositions',
+    props: props
+  } %}
 {% endblock %}

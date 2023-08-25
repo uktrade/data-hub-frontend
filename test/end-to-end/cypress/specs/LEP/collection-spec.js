@@ -7,10 +7,7 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
-const {
-  assertCollection,
-  assertReactCollection,
-} = require('../../support/assertions')
+const { assertCollection } = require('../../support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -45,7 +42,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a investment collection', () => {
-        assertReactCollection()
+        assertCollection('collectionCount', false)
       })
     })
 
@@ -59,7 +56,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        assertReactCollection('collection-count')
+        assertCollection('collection-count')
       })
     })
 
@@ -73,7 +70,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a proposition collection', () => {
-        assertCollection()
+        assertCollection('collection-count')
       })
     })
 

@@ -4,7 +4,7 @@ module.exports = {
   addAttendee: '[data-test="Add attendee"]',
   editEvent: 'a:contains("Edit event")',
   addOrder: '[data-test="Add order"]',
-  addProposition: '[data-test="Add proposition"]',
+  addProposition: '[data-test="add-collection-item-button"]',
   collection: '.c-collection',
   collectionRowMessage: '.c-collection__export-message',
   collectionRowButton: '.c-collection__header-actions > a',

@@ -6,17 +6,17 @@ import qs from 'qs'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { CollectionList } from '../../../components'
-import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
-import { InteractionCollectionResource } from '../../../components/Resource'
+import { PropositionCollectionResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
+import { transformPropositionToListItem } from './transformers'
 
-const ProjectInteractions = ({ projectId }) => {
+const ProjectPropositions = ({ projectId }) => {
   const history = useHistory()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(parsedQueryString.page, 10) || 1
   return (
-    <InteractionCollectionResource
+    <PropositionCollectionResource
       payload={{
         investment_project_id: projectId,
         limit: 10,
@@ -25,28 +25,28 @@ const ProjectInteractions = ({ projectId }) => {
       }}
     >
       {(_, count, rawData) => {
-        const interactions = rawData.results.map(transformInteractionToListItem)
+        const propositions = rawData.results.map(transformPropositionToListItem)
         const sortOptions = [
           {
             name: 'Recently created',
-            value: '-date',
+            value: '-created_on',
           },
           {
             name: 'Oldest',
-            value: 'date',
+            value: 'created_on',
           },
         ]
 
         return (
           <>
-            <H2 size={LEVEL_SIZE[3]}>Investment Interactions</H2>
+            <H2 size={LEVEL_SIZE[3]}>Investment Propositions</H2>
             <p>
-              An interaction could be a meeting, call, email or another activity
-              associated with this investment.
+              You can record and manage propositions requested by investors and
+              view the details of previous and current propositions.
             </p>
             <CollectionList
-              collectionName="interaction"
-              items={interactions}
+              collectionName="proposition"
+              items={propositions}
               count={count}
               isComplete={true}
               onPageClick={(currentPage) =>
@@ -59,21 +59,19 @@ const ProjectInteractions = ({ projectId }) => {
               }
               activePage={activePage}
               sortOptions={count ? sortOptions : null}
-              addItemUrl={urls.investments.projects.interactions.createType(
-                projectId,
-                'investment',
-                'interaction'
+              addItemUrl={urls.investments.projects.proposition.create(
+                projectId
               )}
             />
           </>
         )
       }}
-    </InteractionCollectionResource>
+    </PropositionCollectionResource>
   )
 }
 
-ProjectInteractions.propTypes = {
+ProjectPropositions.propTypes = {
   projectId: PropTypes.string.isRequired,
 }
 
-export default ProjectInteractions
+export default ProjectPropositions

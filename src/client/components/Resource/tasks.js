@@ -51,6 +51,7 @@ import CompanyObjectives from './CompanyObjectives'
 import ProjectStage from './ProjectStage'
 import CompanyObjectivesCount from './CompanyObjectivesCount'
 import Adviser from './Adviser'
+import Propositions from './Propositions'
 
 export default {
   ...Company.tasks,
@@ -106,4 +107,5 @@ export default {
   ...ProjectStage.tasks,
   ...CompanyObjectivesCount.tasks,
   ...Adviser.tasks,
+  ...Propositions.tasks,
 }

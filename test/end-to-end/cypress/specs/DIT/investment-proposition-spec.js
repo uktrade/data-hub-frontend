@@ -53,14 +53,14 @@ describe('Proposition', () => {
     createProposition(data)
     assertFlashMessage('Proposition created')
 
-    cy.get(selectors.collection.items)
+    cy.get('[data-test="collection-item"]')
       .should('contain', todayFormatted)
       .and('contain', data.name)
       .and('contain', 'DIT Staff')
   })
 
   it('should display the proposition details and relevant links', () => {
-    cy.get(`[data-test="item-proposition-0"]:contains("Proposition name")`)
+    cy.get(`[data-test="collection-item"]:contains("Proposition name")`)
       .find('a:contains("Proposition name")')
       .first()
       .click()
@@ -101,7 +101,7 @@ describe('Proposition', () => {
 
     assertFlashMessage('Proposition created')
 
-    cy.get(`${selectors.collection.items}:contains("${data.name}")`)
+    cy.get(`[data-test="collection-item"]:contains(${data.name})`)
       .find('a:contains("Abandon")')
       .first()
       .click()
@@ -113,7 +113,7 @@ describe('Proposition', () => {
   })
 
   it('should render the information for the abandoned proposition', () => {
-    cy.get(`[data-test="item-proposition-0"]:contains("Prospect name 1")`)
+    cy.get(`[data-test="collection-item"]:contains("Prospect name 1")`)
       .find('a:contains("Prospect name 1")')
       .first()
       .click()

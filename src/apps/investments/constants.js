@@ -1,6 +1,8 @@
 const { concat } = require('lodash')
 const { root } = require('./paths')
 
+const { INVESTMENT_LINK_PARAM } = require('../../common/constants')
+
 const GLOBAL_NAV_ITEM = {
   path: root,
   headerKey: 'datahub-investments',
@@ -25,7 +27,7 @@ const LOCAL_NAV = [
     },
   },
   {
-    path: 'interactions',
+    path: 'interactions' + INVESTMENT_LINK_PARAM,
     label: 'Interactions',
     permissions: [
       'interaction.view_associated_investmentproject_interaction',
@@ -34,7 +36,7 @@ const LOCAL_NAV = [
     ariaDescription: 'Investment interactions',
   },
   {
-    path: 'propositions',
+    path: 'propositions' + INVESTMENT_LINK_PARAM,
     label: 'Propositions',
     permissions: [
       'proposition.view_associated_investmentproject_proposition',

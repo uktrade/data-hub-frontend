@@ -1,5 +1,8 @@
 const queryString = require('qs')
-const { PRIMARY_LINK_PARAMS } = require('../../src/common/constants')
+const {
+  INVESTMENT_LINK_PARAM,
+  PRIMARY_LINK_PARAMS,
+} = require('../../src/common/constants')
 
 function getTokens(path) {
   const tokens = []
@@ -346,7 +349,11 @@ module.exports = {
       ),
       editValue: url('/investments', '/projects/:investmentId/edit-value'),
       documents: url('/investments', '/projects/:investmentId/documents'),
-      propositions: url('/investments', '/projects/:investmentId/propositions'),
+      propositions: url(
+        '/investments',
+        '/projects/:investmentId/propositions',
+        INVESTMENT_LINK_PARAM
+      ),
       proposition: {
         details: url(
           '/investments',
@@ -364,6 +371,10 @@ module.exports = {
           '/investments',
           '/projects/:investmentId/propositions/:propositionId/complete'
         ),
+        create: url(
+          '/investments',
+          '/projects/:investmentId/propositions/create/proposition'
+        ),
       },
       team: url('/investments', '/projects/:investmentId/team'),
       clientRelationshipManagement: url(
@@ -372,7 +383,8 @@ module.exports = {
       ),
       interactions: createInteractionsSubApp(
         '/investments/projects',
-        '/:investmentId/interactions'
+        '/:investmentId/interactions',
+        INVESTMENT_LINK_PARAM
       ),
       project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'govuk-react'
+import { Button, Link } from 'govuk-react'
 
 import { transformDateObjectToDateString } from '../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
@@ -13,8 +13,11 @@ import {
   R_AND_D_FALSE,
   NOT_LINKED_TO_R_AND_D,
   INVESTMENT_PROJECT_STAGES,
+  PROPOSITION_STATUSES,
 } from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
+import { format } from '../../../utils/date'
+import { BLACK, GREY_3 } from '../../../utils/colours'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -410,3 +413,60 @@ export const transformNewTech = (newTechToUk) =>
 
 export const transformExportRevenue = (exportRevenue) =>
   exportRevenue ? EXPORT_REVENUE_TRUE : EXPORT_REVENUE_FALSE
+
+export const transformPropositionToListItem = ({
+  id,
+  name,
+  investment_project,
+  created_on,
+  deadline,
+  adviser,
+  status,
+} = {}) => ({
+  id,
+  metadata: [
+    { label: 'Deadline', value: format(deadline, 'dd MMMM yyyy') },
+    { label: 'Created on', value: format(created_on, 'dd MMMM yyyy') },
+    {
+      label: 'Adviser',
+      value: adviser.name,
+    },
+  ].filter(({ value }) => Boolean(value)),
+  headingUrl: urls.investments.projects.proposition.details(
+    investment_project.id,
+    id
+  ),
+  badges: [
+    {
+      text: PROPOSITION_STATUSES[status],
+    },
+  ],
+  headingText: name,
+  buttons:
+    status === 'abandoned' || status === 'completed' ? null : (
+      <>
+        <Button
+          as={Link}
+          href={urls.investments.projects.proposition.abandon(
+            investment_project.id,
+            id
+          )}
+          data-test="abandon-button"
+          buttonColour={GREY_3}
+          buttonTextColour={BLACK}
+        >
+          Abandon
+        </Button>{' '}
+        <Button
+          as={Link}
+          href={urls.investments.projects.proposition.complete(
+            investment_project.id,
+            id
+          )}
+          data-test="complete-button"
+        >
+          Complete
+        </Button>
+      </>
+    ),
+})
