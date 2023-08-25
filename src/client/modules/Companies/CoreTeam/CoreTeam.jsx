@@ -32,7 +32,7 @@ const buildRow = (transformedAdvisers) =>
       <Table.Cell>{location}</Table.Cell>
       <Table.Cell>{name}</Table.Cell>
       <Table.Cell>
-        {email ? <a href={`mailto:${email}`}>{email}</a> : '-'}
+        {email ? <Link href={`mailto:${email}`}>{email}</Link> : '-'}
       </Table.Cell>
     </Table.Row>
   ))
