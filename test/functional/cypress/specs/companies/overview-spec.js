@@ -189,6 +189,28 @@ describe('Company overview page', () => {
         .contains('Trading Address')
     })
   })
+  context('when viewing a UK business with only registered address', () => {
+    const blankAddress = fixtures.company.allOverviewDetails
+    blankAddress.address = {}
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`,
+        fixtures.company.allOverviewDetails
+      )
+      cy.visit(urls.companies.overview.index(blankAddress.id))
+    })
+    it('should contain the Company House row', () => {
+      cy.get('[data-test="businessDetailsContainer"]')
+        .children()
+        .first()
+        .contains('Business details')
+        .next()
+        .children()
+        .first()
+        .contains('Companies House')
+    })
+  })
   context(
     'when viewing the Business details card for a business that has no information added',
     () => {
@@ -205,11 +227,7 @@ describe('Company overview page', () => {
           .contains('Business details')
           .next()
           .children()
-        cy.get('th')
-          .contains('Companies House')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
+          .first()
           .contains('Trading Address')
           .siblings()
           .contains('td', 'Not set')

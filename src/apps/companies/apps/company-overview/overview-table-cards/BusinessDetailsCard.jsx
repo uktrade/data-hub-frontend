@@ -22,7 +22,8 @@ const BusinessDetailsCard = ({ company }) => (
     caption="Business details"
     data-test="businessDetailsContainer"
   >
-    {(company.address.country.id == countryCode && (
+    {(company.registeredAddress?.country.id == countryCode ||
+      company.address?.country.id == countryCode) && (
       <SummaryTable.Row heading="Companies House">
         {buildCellContents(
           company.companyNumber,
@@ -35,21 +36,7 @@ const BusinessDetailsCard = ({ company }) => (
           </NewWindowLink>
         )}
       </SummaryTable.Row>
-    )) ||
-      (company.registeredAddress.country.id == countryCode && (
-        <SummaryTable.Row heading="Companies House">
-          {buildCellContents(
-            company.companyNumber,
-            <NewWindowLink
-              href={urls.external.companiesHouse(company.companyNumber)}
-              aria-label="Opens on Companies House website"
-              data-test="companies-house-link"
-            >
-              {company.companyNumber}
-            </NewWindowLink>
-          )}
-        </SummaryTable.Row>
-      ))}
+    )}
     <SummaryTable.Row heading="Trading Address">
       {buildCellContents(
         company.address,
