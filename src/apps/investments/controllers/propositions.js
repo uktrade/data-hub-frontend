@@ -36,6 +36,9 @@ async function renderPropositionList(req, res, next) {
             url: `${projects}/${investmentId}/propositions/create/proposition`,
           },
         ],
+        props: {
+          projectId: res.locals.investment.id,
+        },
       })
   } catch (error) {
     next(error)

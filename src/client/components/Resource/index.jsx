@@ -39,6 +39,7 @@ export { default as OpportunityValueTypesResource } from './OpportunityValueType
 export { default as OrderAssigneesResource } from './OrderAssignees'
 export { default as OrderSubscribersResource } from './OrderSubscribers'
 export { default as PropositionResource } from './Proposition'
+export { default as PropositionCollectionResource } from './Propositions'
 export { default as PropositionEvidenceResource } from './PropositionEvidence'
 export { default as ReferralSourceActivityResource } from './ReferralSourceActivity'
 export { default as ReferralSourceMarketingResource } from './ReferralSourceMarketing'

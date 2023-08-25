@@ -30,3 +30,10 @@ export const R_AND_D_TRUE = 'Has R&D budget'
 export const R_AND_D_FALSE = 'No R&D budget'
 
 export const NOT_LINKED_TO_R_AND_D = 'Not linked to a non-FDI R&D project'
+
+export const PROPOSITION_STATUSES = {
+  ongoing: 'Ongoing',
+  abandoned: 'Abandoned',
+  completed: 'Completed',
+  late: 'Late',
+}

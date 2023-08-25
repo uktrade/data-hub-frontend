@@ -21,6 +21,7 @@ const PRIMARY_LINK_PARAMS = {
   investments: '?page=1&sortby=created_on:desc',
   omis: '?page=1&sortby=created_on:desc',
 }
+const INVESTMENT_LINK_PARAM = '?sortby=-created_on&page=1'
 const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
 const OPTION_YES = 'yes'
 const OPTION_NO = 'no'
@@ -53,6 +54,7 @@ module.exports = {
   UNITED_STATES_ID,
   CANADA_ID,
   PRIMARY_LINK_PARAMS,
+  INVESTMENT_LINK_PARAM,
   GENERIC_PHONE_NUMBER_REGEX,
   OPTIONS_YES_NO,
   OPTION_YES,
