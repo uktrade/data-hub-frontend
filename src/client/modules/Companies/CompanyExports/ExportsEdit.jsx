@@ -73,7 +73,7 @@ export default ({ companyId }) => (
                   </StyledDd>
 
                   <StyledDt>{exportDetailsLabels.exportPotential}</StyledDt>
-                  <StyledDd>Coming soon</StyledDd>
+                  <StyledDd>Unavailable</StyledDd>
                 </dl>
                 <FieldInput
                   type="hidden"
