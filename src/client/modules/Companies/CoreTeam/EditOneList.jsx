@@ -12,6 +12,7 @@ import { buildCompanyBreadcrumbs } from '../utils'
 import { ONE_LIST_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 import EditOneListForm from './EditOneListForm'
+import urls from '../../../../lib/urls'
 
 function useQuery() {
   const { search } = useLocation()
@@ -43,7 +44,13 @@ const EditOneList = ({
               company.id,
               company.name
             )
-          : []
+          : [
+              { link: urls.dashboard.index(), text: 'Home' },
+              {
+                link: urls.companies.index(),
+                text: 'Companies',
+              },
+            ]
       }
       useReactRouter={false}
     >
