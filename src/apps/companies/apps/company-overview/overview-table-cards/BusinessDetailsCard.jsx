@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { UNITED_KINGDOM_ID } from '../../../../../common/constants'
 
 import { NewWindowLink, SummaryTable } from '../../../../../client/components'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
@@ -20,18 +21,21 @@ const BusinessDetailsCard = ({ company }) => (
     caption="Business details"
     data-test="businessDetailsContainer"
   >
-    <SummaryTable.Row heading="Companies House">
-      {buildCellContents(
-        company.companyNumber,
-        <NewWindowLink
-          href={urls.external.companiesHouse(company.companyNumber)}
-          aria-label="Opens on Companies House website"
-          data-test="companies-house-link"
-        >
-          {company.companyNumber}
-        </NewWindowLink>
-      )}
-    </SummaryTable.Row>
+    {(company.registeredAddress?.country.id == UNITED_KINGDOM_ID ||
+      company.address?.country.id == UNITED_KINGDOM_ID) && (
+      <SummaryTable.Row heading="Companies House">
+        {buildCellContents(
+          company.companyNumber,
+          <NewWindowLink
+            href={urls.external.companiesHouse(company.companyNumber)}
+            aria-label="Opens on Companies House website"
+            data-test="companies-house-link"
+          >
+            {company.companyNumber}
+          </NewWindowLink>
+        )}
+      </SummaryTable.Row>
+    )}
     <SummaryTable.Row heading="Trading Address">
       {buildCellContents(
         company.address,
