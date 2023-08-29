@@ -1,6 +1,8 @@
 var allProjects = require('../../../fixtures/v3/investment/projects.json')
 var project = require('../../../fixtures/v3/investment/project.json')
 var projectAudit = require('../../../fixtures/v3/investment/project-audit.json')
+var projectEvidence = require('../../../fixtures/v3/investment/project-evidence.json')
+var projectNoEvidence = require('../../../fixtures/v3/investment/project-no-evidence.json')
 
 var allProjectsMap = {}
 allProjects.results.forEach(function (project) {
@@ -17,6 +19,14 @@ exports.investmentProjects = function (req, res) {
 
 exports.investmentProjectAudit = function (req, res) {
   res.json(projectAudit)
+}
+
+exports.investmentProjectEvidence = function (req, res) {
+  res.json(
+    req.params.investmentId === '7ee2c85b-8ad9-46cd-8c39-9c9bef74ced0'
+      ? projectNoEvidence
+      : projectEvidence
+  )
 }
 
 exports.patchInvestmentProject = function (req, res) {

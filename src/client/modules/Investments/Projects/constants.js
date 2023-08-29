@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const investmentProjectStatuses = [
   { label: 'Ongoing', value: 'ongoing' },
   { label: 'Delayed', value: 'delayed' },
@@ -36,4 +38,14 @@ export const PROPOSITION_STATUSES = {
   abandoned: 'Abandoned',
   completed: 'Completed',
   late: 'Late',
+}
+
+export const VIRUS_SCAN_STATUSES = {
+  not_virus_scanned: 'File not virus scanned',
+  virus_scanning_scheduled: 'Virus scanning scheduled',
+  virus_scanning_in_progress:
+    'File is being scanned, try again in a few moments',
+  virus_scanning_failed: (
+    <strong>Virus scanning failed, contact your administrator</strong>
+  ),
 }

@@ -47,7 +47,7 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
       <UnorderedList listStyleType="bullet">
         <StyledListItem key={1}>
           <Link
-            href={urls.investments.projects.evidence(projectId)}
+            href={urls.investments.projects.evidence.index(projectId)}
             data-test="upload-evidence-link"
           >
             Upload any evidence documents
@@ -61,7 +61,7 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
       <UnorderedList listStyleType="bullet">
         <StyledListItem key={1}>
           <Link
-            href={urls.investments.projects.evidence(projectId)}
+            href={urls.investments.projects.evidence.index(projectId)}
             data-test="review-evidence-link"
           >
             Review the evidence for this investment project

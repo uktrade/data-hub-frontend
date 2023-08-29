@@ -364,6 +364,10 @@ app.get(
   '/v3/investment/:investmentId/audit',
   v3Investment.investmentProjectAudit
 )
+app.get(
+  '/v3/investment/:investmentId/evidence-document',
+  v3Investment.investmentProjectEvidence
+)
 app.post('/v3/investment', v3Investment.postInvestmentProject)
 app.post('/v3/investment/:id/update-stage', v3Investment.investmentProjectById)
 app.put(

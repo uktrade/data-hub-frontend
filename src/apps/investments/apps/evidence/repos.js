@@ -1,13 +1,6 @@
 const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 
-function getEvidenceForInvestment(req, investmentId) {
-  return authorisedRequest(
-    req,
-    `${config.apiRoot}/v3/investment/${investmentId}/evidence-document`
-  )
-}
-
 function fetchDownloadLink(req, investmentId, evidenceId) {
   return authorisedRequest(
     req,
@@ -26,6 +19,5 @@ function requestDeleteEvidence(req, investmentId, evidenceId) {
 
 module.exports = {
   fetchDownloadLink,
-  getEvidenceForInvestment,
   requestDeleteEvidence,
 }

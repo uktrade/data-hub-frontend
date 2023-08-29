@@ -78,6 +78,7 @@ import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
 import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
+import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -922,6 +923,9 @@ function App() {
         </Mount>
         <Mount selector="#project-propositions">
           {(props) => <ProjectPropositions {...props} />}
+        </Mount>
+        <Mount selector="#project-evidence">
+          {(props) => <ProjectEvidence {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

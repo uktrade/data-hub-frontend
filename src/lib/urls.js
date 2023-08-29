@@ -398,7 +398,18 @@ module.exports = {
         '/investments',
         '/projects/:projectId/edit-associated'
       ),
-      evidence: url('/investments', '/projects/:projectId/evidence'),
+      evidence: {
+        index: url('/investments', '/projects/:projectId/evidence'),
+        add: url('/investments', '/projects/:projectId/evidence/add-new'),
+        download: url(
+          '/investments',
+          '/projects/:projectId/evidence/:evidenceId/download'
+        ),
+        delete: url(
+          '/investments',
+          '/projects/:projectId/evidence/:evidenceId/delete'
+        ),
+      },
       recipientCompany: url(
         '/investments',
         '/projects/:projectId/edit-ukcompany'
