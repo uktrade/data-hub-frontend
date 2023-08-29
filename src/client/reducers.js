@@ -153,12 +153,6 @@ import linkSubsidiaryReducer from './modules/Companies/CompanyBusinessDetails/Li
 import { ID as OBJECTIVE_ID } from './modules/Companies/AccountManagement/state'
 import objectiveReducer from './modules/Companies/AccountManagement/reducer'
 
-import { ID as USER_ID } from './components/User/state'
-import userReducer from './components/User/reducer'
-
-import { ID as APP_ID } from './components/App/state'
-import appReducer from './components/App/reducer'
-
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -248,6 +242,4 @@ export const reducers = {
   [LINK_GLOBAL_HQ_ID]: linkGlobalHQReducer,
   [LINK_SUBSIDIARY_ID]: linkSubsidiaryReducer,
   [OBJECTIVE_ID]: objectiveReducer,
-  [USER_ID]: userReducer,
-  [APP_ID]: appReducer,
 }
