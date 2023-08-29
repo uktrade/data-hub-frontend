@@ -2,13 +2,7 @@ import React from 'react'
 import { Link } from 'govuk-react'
 import { transformValueForAPI } from '../../../../utils/date'
 
-const VIRUS_SCAN_STATUSES = {
-  not_virus_scanned: 'File not virus scanned',
-  virus_scanning_scheduled: 'Virus scanning scheduled',
-  virus_scanning_in_progress:
-    'File is being scanned, try again in a few moments',
-  virus_scanning_failed: 'Virus scanning failed, contact your administrator',
-}
+import { VIRUS_SCAN_STATUSES } from '../constants'
 
 export const buildPropositionUrl = (propositionId, projectId) =>
   `v3/investment/${projectId}/proposition/${propositionId}`

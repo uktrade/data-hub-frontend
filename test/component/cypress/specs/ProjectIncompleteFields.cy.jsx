@@ -21,7 +21,7 @@ const projectManagementLink =
   urls.investments.projects.editProjectManagement(projectId)
 const associatedLink =
   urls.investments.projects.editAssociatedProject(projectId)
-const evidenceLink = urls.investments.projects.evidence(projectId)
+const evidenceLink = urls.investments.projects.evidence.index(projectId)
 
 const prospectIncompleteFields = [
   'client_cannot_provide_total_investment',
