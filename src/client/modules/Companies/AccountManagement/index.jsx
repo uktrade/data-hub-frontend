@@ -256,6 +256,7 @@ const AccountManagement = ({
               {canEditOneList(permissions) && (
                 <div>
                   <Button
+                    data-test="edit-core-team-button"
                     as={Link}
                     href={urls.companies.editVirtualTeam(companyId)}
                   >
@@ -285,5 +286,3 @@ const AccountManagement = ({
 }
 
 export default AccountManagement
-
-//
