@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H2, Table } from 'govuk-react'
+import { H2, Table, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import { CompanyOneListTeamResource } from '../../../components/Resource'
