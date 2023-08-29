@@ -133,6 +133,7 @@ const _Form = ({
     values,
     touched,
     steps,
+    goToStep,
     getStepIndex: (stepName) => {
       const index = steps?.indexOf(stepName)
       return index !== -1 ? index : null
