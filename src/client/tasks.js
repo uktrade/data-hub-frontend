@@ -313,8 +313,6 @@ import {
   saveObjective,
   saveStrategy,
 } from './modules/Companies/AccountManagement/tasks'
-import { getUser } from './components/User/tasks'
-import { TASK_GET_USER } from './components/User/state'
 
 export const tasks = {
   'Create list': createList,
@@ -491,5 +489,4 @@ export const tasks = {
   [TASK_SAVE_OBJECTIVE]: saveObjective,
   [TASK_GET_OBJECTIVE]: getObjective,
   [TASK_UPDATE_INVESTMENT_PROJECT_STAGE]: updateInvestmentProject,
-  [TASK_GET_USER]: getUser,
 }
