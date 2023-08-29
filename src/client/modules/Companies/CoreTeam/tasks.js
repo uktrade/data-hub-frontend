@@ -20,66 +20,67 @@ export async function getOneListDetails(companyId) {
   )
 }
 
+async function assignOneListTierandGlobalManagerRequest({ companyId, values }) {
+  return await apiProxyAxios.post(
+    `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
+    {
+      [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
+      [TIER_FIELD_NAME]: values[TIER_FIELD_NAME],
+    }
+  )
+}
+
+async function removeFromOneList({ companyId }) {
+  return await apiProxyAxios.post(
+    `v4/company/${companyId}/remove-from-one-list`
+  )
+}
+
+async function assignCoreTeamRequest({ companyId, values }) {
+  const one_list_team = values[ONE_LIST_TEAM_FIELD_NAME].map((member) => ({
+    adviser: member.value,
+  }))
+
+  return await apiProxyAxios.patch(
+    `v4/company/${companyId}/update-one-list-core-team`,
+    {
+      [ONE_LIST_TEAM_FIELD_NAME]: one_list_team,
+    }
+  )
+}
+
+async function removeCoreTeamRequest({ companyId }) {
+  return await apiProxyAxios.patch(
+    `v4/company/${companyId}/update-one-list-core-team`,
+    {
+      [ONE_LIST_TEAM_FIELD_NAME]: [],
+    }
+  )
+}
+
 export async function saveOneListDetails({ values, companyId }) {
-  async function assignOneListTierandGlobalManagerRequest() {
-    return await apiProxyAxios.post(
-      `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
-      {
-        [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
-        [TIER_FIELD_NAME]: values[TIER_FIELD_NAME],
-      }
-    )
-  }
-
-  async function removeFromOneList() {
-    return await apiProxyAxios.post(
-      `v4/company/${companyId}/remove-from-one-list`
-    )
-  }
-
-  async function assignCoreTeamRequest() {
-    const one_list_team = values[ONE_LIST_TEAM_FIELD_NAME].map((member) => ({
-      adviser: member.value,
-    }))
-
-    return await apiProxyAxios.patch(
-      `v4/company/${companyId}/update-one-list-core-team`,
-      {
-        [ONE_LIST_TEAM_FIELD_NAME]: one_list_team,
-      }
-    )
-  }
-
-  async function removeCoreTeamRequest() {
-    return await apiProxyAxios.patch(
-      `v4/company/${companyId}/update-one-list-core-team`,
-      {
-        [ONE_LIST_TEAM_FIELD_NAME]: [],
-      }
-    )
-  }
-
   let request
 
   if (values[TIER_FIELD_NAME] === NONE) {
-    request = removeCoreTeamRequest().then(removeFromOneList)
+    request = removeCoreTeamRequest({ companyId, values }).then(
+      removeFromOneList({ companyId })
+    )
   } else if (!values[ONE_LIST_TEAM_FIELD_NAME]) {
     request = Promise.all([
-      assignOneListTierandGlobalManagerRequest(),
-      removeCoreTeamRequest(),
+      assignOneListTierandGlobalManagerRequest({ companyId, values }),
+      removeCoreTeamRequest({ companyId }),
     ])
   } else {
     request = Promise.all([
-      assignOneListTierandGlobalManagerRequest(),
-      assignCoreTeamRequest(),
+      assignOneListTierandGlobalManagerRequest({ companyId, values }),
+      assignCoreTeamRequest({ companyId, values }),
     ])
   }
 
-  let response
   try {
-    response = await request
+    await request
   } catch (e) {
-    response = await Promise.reject(
+    await Promise.reject(
       e.message ||
         (e.errors &&
           e.errors.one_list_tier &&
@@ -87,5 +88,4 @@ export async function saveOneListDetails({ values, companyId }) {
         e.toString()
     )
   }
-  response.data
 }
