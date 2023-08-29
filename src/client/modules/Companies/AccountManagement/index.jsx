@@ -1,25 +1,24 @@
 import React from 'react'
+import { H3, H4, Link, GridCol, GridRow } from 'govuk-react'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import Button from '@govuk-react/button'
+import Details from '@govuk-react/details'
+
+import styled from 'styled-components'
+import { Metadata, NewWindowLink } from '../../../components'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import {
   CompanyObjectivesCountResource,
   CompanyObjectivesResource,
   CompanyResource,
 } from '../../../components/Resource'
-import { H3, H4, Link } from 'govuk-react'
-import Button from '@govuk-react/button'
 import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
-import { GridCol, GridRow } from 'govuk-react'
-import styled from 'styled-components'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-import CompanyLayout from '../../../components/Layout/CompanyLayout'
-import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'
-import Details from '@govuk-react/details'
-import { NewWindowLink } from '../../../components'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
