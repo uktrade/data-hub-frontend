@@ -1,5 +1,6 @@
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
+import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 
 describe('Investment project propositions', () => {
   context('When the project has one proposition linked', () => {
@@ -41,7 +42,10 @@ describe('Investment project propositions', () => {
 
       cy.get('[data-test="collection-item"]')
         .find('[data-test="metadata"]')
-        .should('contain', 'Deadline 25 August 2023')
+        .should(
+          'contain',
+          'Deadline ' + formatWithoutParsing(new Date(), 'dd MMMM yyyy')
+        )
         .and('contain', 'Created on 15 June 2017')
         .and('contain', 'Adviser Paula Churing')
       cy.get('[data-test="badge"]').should('exist').should('contain', 'Ongoing')
