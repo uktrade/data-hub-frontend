@@ -38,6 +38,7 @@ async function renderEditOneList(req, res) {
   res.locals.title = `Edit One List information - ${company.name} - Companies`
   res.render('companies/apps/edit-one-list/views/client-container', {
     props: {
+      company,
       companyId: company.id,
       companyName: company.name,
       oneListTiers: filterOneListTiers(oneListTiers),

@@ -160,20 +160,43 @@ describe('Edit One List', () => {
 
   context('when skipping step 1', () => {
     const testCompany = fixtures.company.oneListCorp
+    const noOneListCompany = fixtures.company.dnbCorp
 
-    before(() => {
-      cy.visit(
-        `${urls.companies.editOneList(testCompany.id)}?step=oneListAdvisers`
-      )
+    context('with a company that has a one list tier', () => {
+      before(() => {
+        cy.visit(
+          `${urls.companies.editOneList(testCompany.id)}?step=oneListAdvisers`
+        )
+      })
+
+      it('should show the one list advisers step', () => {
+        cy.get('[data-test="field-global_account_manager"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Global Account Manager',
+            value: `${testCompany.one_list_group_global_account_manager.name}, ${testCompany.one_list_group_global_account_manager.dit_team.name}`,
+            isMulti: false,
+          })
+        })
+      })
     })
 
-    it('should show the one list advisers step', () => {
-      cy.get('[data-test="field-global_account_manager"]').then((element) => {
-        assertFieldTypeahead({
-          element,
-          label: 'Global Account Manager',
-          value: `${testCompany.one_list_group_global_account_manager.name}, ${testCompany.one_list_group_global_account_manager.dit_team.name}`,
-          isMulti: false,
+    context('with a company that is missing a one list tier', () => {
+      before(() => {
+        cy.visit(
+          `${urls.companies.editOneList(
+            noOneListCompany.id
+          )}?step=oneListAdvisers`
+        )
+      })
+
+      it('should still show step 1 as this field is needed', () => {
+        cy.get(selectors.companyEditOneList.tierField).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Company One List tier',
+            optionsCount: 8,
+          })
         })
       })
     })
