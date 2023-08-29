@@ -1,7 +1,8 @@
 import React from 'react'
 import { useParams, useLocation } from 'react-router-dom'
-import { ID, TASK_GET_ONE_LIST_DETAILS, state2props } from './state'
 import { connect } from 'react-redux'
+
+import { ID, TASK_GET_ONE_LIST_DETAILS, state2props } from './state'
 import {
   ACCOUNT_MANAGER_FIELD_NAME,
   ONE_LIST_TEAM_FIELD_NAME,

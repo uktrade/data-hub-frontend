@@ -32,6 +32,9 @@ const EditOneListForm = ({
     redirectTo={() =>
       returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
     }
+    cancelRedirectTo={() =>
+      returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
+    }
     flashMessage={() => 'One List information has been updated.'}
     showStepInUrl={true}
   >
