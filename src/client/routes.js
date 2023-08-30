@@ -25,6 +25,7 @@ import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/Objec
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
 import FindAssociatedProject from './modules/Investments/Projects/FindAssociatedProject'
 import EditAssociatedProject from './modules/Investments/Projects/EditAssociatedProject'
+import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCompany'
 
 const routes = {
   companies: [
@@ -189,6 +190,11 @@ const routes = {
       path: '/investments/projects/:projectId/remove-associated',
       module: 'datahub:investments',
       component: EditAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/find-ukcompany',
+      module: 'datahub:investments',
+      component: FindRecipientCompany,
     },
   ],
 }

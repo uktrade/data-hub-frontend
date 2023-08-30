@@ -122,7 +122,7 @@ describe('Investment project details', () => {
           'href',
           urls.investments.projects.recipientCompany(
             fixtures.investment.investmentWithRequirements.id
-          ) + '?term=Mercury Ltd'
+          ) + '?name=Mercury Ltd'
         )
 
       cy.get('[data-test="remove-company-link"]')

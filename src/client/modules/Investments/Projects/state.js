@@ -3,11 +3,19 @@ import {
   getFinancialYearStart,
   generateFinancialYearLabel,
 } from '../../../utils/date'
-import { buildSelectedFilters } from './filters'
 import {
-  SORT_OPTIONS,
+  buildSelectedCompanyFilters,
+  buildSelectedInvestmentFilters,
+} from './filters'
+import {
+  SORT_OPTIONS as INVESTMENT_SORT_OPTIONS,
   PROJECT_STATUS_OPTIONS,
 } from '../../../../apps/investments/client/projects/constants'
+import { transformPostcodeToApi } from '../../Companies/CollectionList/transformers'
+import {
+  SORT_OPTIONS as COMPANY_SORT_OPTIONS,
+  COMPANY_STATUS_OPTIONS,
+} from '../../Companies/CollectionList/constants'
 
 export const TASK_EDIT_INVESTMENT_PROJECT_SUMMARY =
   'TASK_EDIT_INVESTMENT_PROJECT_SUMMARY'
@@ -22,9 +30,11 @@ export const TASK_UPDATE_INVESTMENT_PROJECT_STAGE =
 
 export const TASK_GET_NON_FDI_PROJECTS_LIST = 'TASK_GET_NON_FDI_PROJECTS_LIST'
 export const TASK_UPDATE_ASSOCIATED_PROJECT = 'TASK_UPDATE_ASSOCIATED_PROJECT'
+export const TASK_GET_UK_COMPANIES = 'TASK_GET_UK_COMPANIES'
 
 export const NON_FDI_LIST_ID = 'nonFdiProjectsList'
 export const ASSOCIATE_PROJECT_ID = 'associateProject'
+export const RECIPIENT_COMPANY_LIST_ID = 'recipientCompanyList'
 
 export const state2props = (state) => {
   return { currentAdviserId: state.currentAdviserId }
@@ -51,7 +61,7 @@ export const nonFdiState2props = ({ router, ...state }) => {
     },
   ]
 
-  const selectedFilters = buildSelectedFilters(
+  const selectedFilters = buildSelectedInvestmentFilters(
     queryParams,
     metadata,
     financialYearOptions
@@ -62,10 +72,34 @@ export const nonFdiState2props = ({ router, ...state }) => {
     payload: { ...queryParams },
     selectedFilters,
     optionMetadata: {
-      sortOptions: SORT_OPTIONS,
+      sortOptions: INVESTMENT_SORT_OPTIONS,
       projectStatusOptions: PROJECT_STATUS_OPTIONS,
       financialYearOptions,
       ...metadata,
     },
+  }
+}
+
+export const recipientState2props = ({ router, ...state }) => {
+  const queryString = router.location.search.slice(1)
+  const queryParams = parseQueryString(queryString)
+  const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
+
+  const { metadata } = state[RECIPIENT_COMPANY_LIST_ID]
+
+  const selectedFilters = buildSelectedCompanyFilters(queryParams, metadata)
+
+  return {
+    ...state[RECIPIENT_COMPANY_LIST_ID],
+    payload: {
+      ...queryParams,
+      uk_postcode: ukPostcode,
+    },
+    optionMetadata: {
+      sortOptions: COMPANY_SORT_OPTIONS,
+      companyStatusOptions: COMPANY_STATUS_OPTIONS,
+      ...metadata,
+    },
+    selectedFilters,
   }
 }
