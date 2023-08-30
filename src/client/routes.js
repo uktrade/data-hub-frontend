@@ -24,6 +24,7 @@ import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/Object
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
 import FindAssociatedProject from './modules/Investments/Projects/FindAssociatedProject'
+import EditAssociatedProject from './modules/Investments/Projects/EditAssociatedProject'
 
 const routes = {
   companies: [
@@ -170,14 +171,24 @@ const routes = {
   ],
   investments: [
     {
-      path: '/investments/projects/:investmentId/status',
+      path: '/investments/projects/:projectId/status',
       module: 'datahub:investments',
       component: EditProjectStatus,
     },
     {
-      path: '/investments/projects/:investmentId/find-associated',
+      path: '/investments/projects/:projectId/find-associated',
       module: 'datahub:investments',
       component: FindAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-associated/:associatedProjectId',
+      module: 'datahub:investments',
+      component: EditAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/remove-associated',
+      module: 'datahub:investments',
+      component: EditAssociatedProject,
     },
   ],
 }

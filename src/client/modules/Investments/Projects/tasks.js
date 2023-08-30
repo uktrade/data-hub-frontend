@@ -19,3 +19,11 @@ export const getNonFdiProjects = ({ limit = 10, page, ...rest }) => {
       transformNonFdiResponseToCollection(data, rest.projectId)
     )
 }
+
+export const updateAssociatedProject = (values) => {
+  return apiProxyAxios.patch(`v3/investment/${values.projectId}`, {
+    associated_non_fdi_r_and_d_project: values.associatedProjectId
+      ? values.associatedProjectId
+      : null,
+  })
+}

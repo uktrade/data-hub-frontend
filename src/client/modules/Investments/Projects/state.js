@@ -21,8 +21,10 @@ export const TASK_UPDATE_INVESTMENT_PROJECT_STAGE =
   'TASK_UPDATE_INVESTMENT_PROJECT_STAGE'
 
 export const TASK_GET_NON_FDI_PROJECTS_LIST = 'TASK_GET_NON_FDI_PROJECTS_LIST'
+export const TASK_UPDATE_ASSOCIATED_PROJECT = 'TASK_UPDATE_ASSOCIATED_PROJECT'
 
 export const NON_FDI_LIST_ID = 'nonFdiProjectsList'
+export const ASSOCIATE_PROJECT_ID = 'associateProject'
 
 export const state2props = (state) => {
   return { currentAdviserId: state.currentAdviserId }
