@@ -57,7 +57,7 @@ const BusinessDetailsCard = ({ company }) => (
     </SummaryTable.Row>
     <SummaryTable.Row heading="Turnover">
       {buildCellContents(
-        company.turnoverGbp && company.turnoverRange,
+        company.turnoverGbp || company.turnoverRange,
         company.turnoverGbp
           ? currencyGBP(company.turnoverGbp, {
               maximumSignificantDigits: 2,
