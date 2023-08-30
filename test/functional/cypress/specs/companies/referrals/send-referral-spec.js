@@ -58,7 +58,7 @@ describe('Send a referral form', () => {
           .next()
           .should(
             'have.text',
-            'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
+            'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in new tab)'
           )
           .find('a')
           .should(
@@ -78,7 +78,7 @@ describe('Send a referral form', () => {
             element,
             label: 'Adviser',
             placeholder: 'Search for an adviser',
-            hint: "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in a new window or tab).",
+            hint: "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in new tab).",
           })
         })
 

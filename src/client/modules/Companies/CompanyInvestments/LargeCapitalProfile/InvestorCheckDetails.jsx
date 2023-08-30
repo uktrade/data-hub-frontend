@@ -19,7 +19,7 @@ export const InvestorCheckDetails = ({ date, adviser }) => (
       name="adviser"
       label="Person responsible for most recent checks"
       placeholder="Select adviser"
-      arial-label="Select adviser"
+      aria-label="Select adviser"
       initialValue={
         adviser ? [{ value: adviser.id, label: adviser.name }] : undefined
       }

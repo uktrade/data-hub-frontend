@@ -32,7 +32,10 @@ describe('Dashboard', () => {
     it('should display the info feed list', () => {
       cy.get('@dataHubFeed')
         .find('[data-test="data-hub-feed-link-0"]')
-        .should('have.text', 'Using Sectors in the Find Exporters Tool')
+        .should(
+          'have.text',
+          'Using Sectors in the Find Exporters Tool (opens in new tab)'
+        )
         .should('have.attr', 'href', 'https://test-url')
 
       cy.get('@dataHubFeed')
@@ -47,7 +50,7 @@ describe('Dashboard', () => {
     it('should display the view all link', () => {
       cy.get('@infoFeedTopLink')
         .should('exist')
-        .should('have.text', 'View all Data Hub updates')
+        .should('have.text', 'View all Data Hub updates (opens in new tab)')
         .should('have.attr', 'href', urls.external.helpCentre.allUpdates())
     })
   })
