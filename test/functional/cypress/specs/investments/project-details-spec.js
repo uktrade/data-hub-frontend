@@ -213,72 +213,67 @@ describe('Investment project details', () => {
       cy.get('[data-test="add-value-button"]').should('not.exist')
     })
   })
-  context('When viewing a project with all the alternate value fields', () => {
-    before(() => {
-      cy.visit(
-        urls.investments.projects.details(
-          fixtures.investment.investmentWithAlternateValue.id
+  context(
+    'When viewing a Verify Win project with all the alternate value fields',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.investments.projects.details(
+            fixtures.investment.investmentWithAlternateValue.id
+          )
         )
-      )
-    })
-
-    it('should render all the fields of the value table', () => {
-      assertSummaryTable({
-        dataTest: 'project-value-table',
-        showEditLink: true,
-        content: {
-          'Total investment': 'Client cannot provide this information',
-          'Capital expenditure value': 'Client cannot provide this information',
-          'Government assistance': 'No government assistance',
-          'R&D budget': R_AND_D_TRUE,
-          'Non-FDI R&D project':
-            'New fruit machine research projectEdit projectRemove association',
-          'New-to-world tech': NEW_TECH_TRUE,
-          'Export revenue': EXPORT_REVENUE_FALSE,
-        },
       })
-    })
 
-    it('should render the edit and remove project links', () => {
-      cy.get('[data-test="edit-project-link"]')
-        .should('exist')
-        .should('have.text', 'Edit project')
-        .should(
-          'have.attr',
-          'href',
-          urls.investments.projects.findAssociatedProject(
-            fixtures.investment.investmentWithAlternateValue.id
-          ) + '?project_code=DHP-00000204'
-        )
+      it('should render all the fields of the value table', () => {
+        assertSummaryTable({
+          dataTest: 'project-value-table',
+          showEditLink: true,
+          content: {
+            'Total investment': 'Client cannot provide this information',
+            'Capital expenditure value':
+              'Client cannot provide this information',
+            'Government assistance': 'No government assistance',
+            'R&D budget': R_AND_D_TRUE,
+            'Non-FDI R&D project':
+              'New fruit machine research projectEdit project',
+            'New-to-world tech': NEW_TECH_TRUE,
+            'Export revenue': EXPORT_REVENUE_FALSE,
+          },
+        })
+      })
 
-      cy.get('[data-test="remove-project-link"]')
-        .should('exist')
-        .should('have.text', 'Remove association')
-        .should(
-          'have.attr',
-          'href',
-          urls.investments.projects.removeAssociatedProject(
-            fixtures.investment.investmentWithAlternateValue.id
+      it('should only render the edit project links', () => {
+        cy.get('[data-test="edit-project-link"]')
+          .should('exist')
+          .should('have.text', 'Edit project')
+          .should(
+            'have.attr',
+            'href',
+            urls.investments.projects.findAssociatedProject(
+              fixtures.investment.investmentWithAlternateValue.id
+            ) + '?project_code=DHP-00000204'
           )
-        )
-      cy.get('[data-test="add-project-link"]').should('not.exist')
-    })
 
-    it('should render the edit button', () => {
-      cy.get('[data-test="edit-value-button"]')
-        .should('exist')
-        .should('have.text', 'Edit value')
-        .should(
-          'have.attr',
-          'href',
-          urls.investments.projects.editValue(
-            fixtures.investment.investmentWithAlternateValue.id
+        cy.get('[data-test="remove-project-link"]').should('not.exist')
+        cy.get('[data-test="add-project-link"]').should('not.exist')
+      })
+
+      it('should render the edit button', () => {
+        cy.get('[data-test="edit-value-button"]')
+          .should('exist')
+          .should('have.text', 'Edit value')
+          .should(
+            'have.attr',
+            'href',
+            urls.investments.projects.editValue(
+              fixtures.investment.investmentWithAlternateValue.id
+            )
           )
-        )
-      cy.get('[data-test="value-inset"]').should('not.exist')
-      cy.get('[data-test="add-value-button"]').should('not.exist')
-    })
-  })
+        cy.get('[data-test="value-inset"]').should('not.exist')
+        cy.get('[data-test="add-value-button"]').should('not.exist')
+      })
+    }
+  )
   context('When viewing a project with no requirements or value', () => {
     before(() => {
       cy.visit(
