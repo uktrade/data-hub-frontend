@@ -147,6 +147,10 @@ module.exports = {
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
+    editVirtualTeam: url(
+      '/companies',
+      '/:companyId/edit-one-list?step=oneListAdvisers'
+    ),
     interactions: createInteractionsSubApp(
       '/companies',
       '/:companyId/interactions'

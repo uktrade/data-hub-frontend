@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H2, Table } from 'govuk-react'
+import { H2, Table, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import Details from '@govuk-react/details'
-import Link from '@govuk-react/link'
 
 import { CompanyOneListTeamResource } from '../../../components/Resource'
 import { transformOneListCoreTeamToCollection } from './transformers'
-import { NewWindowLink } from '../../../components'
-import urls from '../../../../lib/urls'
 
 const getSubheadingText = (company) => {
   const endText = ` an account managed company on the One List (${company.oneListGroupTier.name})`
@@ -43,7 +39,7 @@ const buildAdviserRows = (oneListTeam) => {
   return advisers.length > 0 ? buildRow(advisers) : null
 }
 
-export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
+export const CoreTeamAdvisers = ({ company }) => (
   <CompanyOneListTeamResource id={company.id}>
     {(oneListTeam) => (
       <>
@@ -75,19 +71,6 @@ export const CoreTeamAdvisers = ({ company, oneListEmail }) => (
             {buildAdviserRows(oneListTeam)}
           </Table>
         )}
-        <Details
-          summary="Need to find out more, or edit the One List tier information?"
-          data-test="core-team-details"
-        >
-          For more information, or if you need to change the One List tier or
-          account management team for this company, go to the{' '}
-          <NewWindowLink
-            href={urls.external.digitalWorkspace.accountManagement}
-          >
-            Digital Workspace
-          </NewWindowLink>{' '}
-          or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
-        </Details>
       </>
     )}
   </CompanyOneListTeamResource>

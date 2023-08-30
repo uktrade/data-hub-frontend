@@ -18,7 +18,7 @@ describe('Edit One List', () => {
     })
 
     it('should render the header', () => {
-      assertLocalHeader(`Add or edit ${testCompany.name} One List information`)
+      assertLocalHeader(`Edit core team of ${testCompany.name}`)
     })
 
     it('should render breadcrumbs', () => {
@@ -26,7 +26,7 @@ describe('Edit One List', () => {
         Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [testCompany.name]: urls.companies.detail(testCompany.id),
-        'Edit One List information': null,
+        'Edit core team': null,
       })
     })
   })
