@@ -101,25 +101,6 @@ function searchCompanies({
   )
 }
 
-function searchInvestments({
-  req,
-  searchTerm,
-  page = 1,
-  limit = 10,
-  filters = {},
-}) {
-  return searchEntity(
-    req,
-    {
-      ...filters,
-      original_query: searchTerm,
-      searchEntity: 'investment_project',
-    },
-    'investment_project',
-    { page, limit }
-  )
-}
-
 function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
   return searchCompanies({
     req,
@@ -201,7 +182,6 @@ module.exports = {
   search,
   searchCompanies,
   searchForeignCompanies,
-  searchInvestments,
   exportSearch,
   searchAutocomplete,
   searchDnbCompanies,
