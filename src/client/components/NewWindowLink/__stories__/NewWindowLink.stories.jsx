@@ -14,7 +14,10 @@ export const Default = () => (
 )
 
 export const CustomAriaLabel = () => (
-  <NewWindowLink href="https://example.com" aria-label="custom help text">
+  <NewWindowLink
+    href="https://example.com"
+    aria-label="custom help text for screen readers which overrides the link text"
+  >
     This is a link
   </NewWindowLink>
 )
