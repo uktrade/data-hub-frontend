@@ -394,9 +394,13 @@ module.exports = {
         '/investments',
         '/projects/:projectId/edit-project-management'
       ),
+      findAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/find-associated'
+      ),
       editAssociatedProject: url(
         '/investments',
-        '/projects/:projectId/edit-associated'
+        '/projects/:projectId/edit-associated/:associatedProjectId'
       ),
       evidence: {
         index: url('/investments', '/projects/:projectId/evidence'),

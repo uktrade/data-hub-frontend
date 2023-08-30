@@ -23,6 +23,7 @@ import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
+import FindAssociatedProject from './modules/Investments/Projects/FindAssociatedProject'
 
 const routes = {
   companies: [
@@ -172,6 +173,11 @@ const routes = {
       path: '/investments/projects/:investmentId/status',
       module: 'datahub:investments',
       component: EditProjectStatus,
+    },
+    {
+      path: '/investments/projects/:investmentId/find-associated',
+      module: 'datahub:investments',
+      component: FindAssociatedProject,
     },
   ],
 }

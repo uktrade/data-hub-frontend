@@ -190,7 +190,7 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.editAssociatedProject(
+          urls.investments.projects.findAssociatedProject(
             fixtures.investment.investmentWithValue.id
           )
         )
@@ -246,9 +246,9 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.editAssociatedProject(
+          urls.investments.projects.findAssociatedProject(
             fixtures.investment.investmentWithAlternateValue.id
-          ) + '?term=DHP-00000204'
+          ) + '?project_code=DHP-00000204'
         )
 
       cy.get('[data-test="remove-project-link"]')

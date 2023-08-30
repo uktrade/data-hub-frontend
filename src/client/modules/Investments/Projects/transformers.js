@@ -14,6 +14,8 @@ import {
   NOT_LINKED_TO_R_AND_D,
   INVESTMENT_PROJECT_STAGES,
   PROPOSITION_STATUSES,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
 } from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 import { format } from '../../../utils/date'
@@ -330,7 +332,7 @@ export const mapFieldToUrl = (field, projectId) => {
     return urls.investments.projects.editProjectManagement(projectId)
   }
 
-  return urls.investments.projects.editAssociatedProject(projectId)
+  return urls.investments.projects.findAssociatedProject(projectId)
 }
 
 export const getNextStage = (currentStage) =>
@@ -372,8 +374,8 @@ export const transformFdiRAndDProject = (project) => {
         <br />
         <Link
           href={
-            urls.investments.projects.editAssociatedProject(project.id) +
-            '?term=' +
+            urls.investments.projects.findAssociatedProject(project.id) +
+            '?project_code=' +
             project.associatedNonFdiRAndDProject.projectCode
           }
           data-test="edit-project-link"
@@ -381,12 +383,17 @@ export const transformFdiRAndDProject = (project) => {
           Edit project
         </Link>
         <br />
-        <Link
-          href={urls.investments.projects.removeAssociatedProject(project.id)}
-          data-test="remove-project-link"
-        >
-          Remove association
-        </Link>
+        {project.stage.name != STAGE_VERIFY_WIN &&
+          project.stage.name != STAGE_WON && (
+            <Link
+              href={urls.investments.projects.removeAssociatedProject(
+                project.id
+              )}
+              data-test="remove-project-link"
+            >
+              Remove association
+            </Link>
+          )}
       </>
     )
   }
@@ -394,7 +401,7 @@ export const transformFdiRAndDProject = (project) => {
   if (project.investmentType?.name === 'FDI' && project.nonFdiRAndDBudget) {
     return (
       <Link
-        href={urls.investments.projects.editAssociatedProject(project.id)}
+        href={urls.investments.projects.findAssociatedProject(project.id)}
         data-test="find-project-link"
       >
         Find project
@@ -470,3 +477,52 @@ export const transformPropositionToListItem = ({
       </>
     ),
 })
+
+const transformNonFdiProjectToListItem = (projectId) => (project) => {
+  const {
+    id,
+    name,
+    project_code,
+    stage,
+    investment_type,
+    status,
+    investor_company,
+    estimated_land_date,
+    sector,
+  } = project
+
+  const badges = [
+    { text: stage.name },
+    { text: investment_type.name },
+    { text: status },
+  ]
+
+  const metadata = [
+    { label: 'Investor', value: investor_company.name },
+    { label: 'Sector', value: sector ? sector.name : '' },
+    {
+      label: 'Estimated land date',
+      value: estimated_land_date && format(estimated_land_date, 'MMMM yyyy'),
+    },
+  ].filter((metadata) => metadata.value)
+
+  return {
+    id,
+    headingUrl: urls.investments.projects.editAssociatedProject(projectId, id),
+    headingText: name,
+    subheading: `Project code ${project_code}`,
+    badges,
+    metadata,
+  }
+}
+
+export const transformNonFdiResponseToCollection = (
+  { count, results = [] },
+  projectId
+) => ({
+  count,
+  results: results.map(transformNonFdiProjectToListItem(projectId)),
+})
+
+export const checkIfAssociatedProjectExists = (hasAssociatedProject) =>
+  hasAssociatedProject ? 'Update associated project' : 'Add associated project'

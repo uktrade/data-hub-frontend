@@ -20,7 +20,7 @@ const requirementsLink = urls.investments.projects.editRequirements(projectId)
 const projectManagementLink =
   urls.investments.projects.editProjectManagement(projectId)
 const associatedLink =
-  urls.investments.projects.editAssociatedProject(projectId)
+  urls.investments.projects.findAssociatedProject(projectId)
 const evidenceLink = urls.investments.projects.evidence.index(projectId)
 
 const prospectIncompleteFields = [
