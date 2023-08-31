@@ -54,7 +54,7 @@ const FindAssociatedProject = ({
   selectedFilters,
   ...props
 }) => {
-  const investmentProject = useParams()
+  const { projectId } = useParams()
   const collectionListTask = {
     name: TASK_GET_NON_FDI_PROJECTS_LIST,
     id: NON_FDI_LIST_ID,
@@ -63,7 +63,7 @@ const FindAssociatedProject = ({
     startOnRender: {
       payload: {
         ...payload,
-        projectId: investmentProject.projectId,
+        projectId: projectId,
       },
       onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
     },
@@ -94,7 +94,7 @@ const FindAssociatedProject = ({
   }
 
   return (
-    <InvestmentResource id={investmentProject.projectId}>
+    <InvestmentResource id={projectId}>
       {(project) => (
         <DefaultLayout
           heading={checkIfAssociatedProjectExists(

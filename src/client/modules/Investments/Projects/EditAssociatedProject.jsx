@@ -14,17 +14,17 @@ const checkIfUpdatingOrRemoving = (checkAssociatedId, associatedProject) =>
     : 'Remove associated project'
 
 const EditAssociatedProject = () => {
-  const investmentProject = useParams()
+  const { projectId, associatedProjectId } = useParams()
   return (
-    <InvestmentResource id={investmentProject.projectId}>
+    <InvestmentResource id={projectId}>
       {(project) => (
         <DefaultLayout
           heading={checkIfUpdatingOrRemoving(
-            investmentProject.associatedProjectId,
+            associatedProjectId,
             project.associatedNonFdiRAndDProject
           )}
           pageTitle={`${checkIfUpdatingOrRemoving(
-            investmentProject.associatedProjectId,
+            associatedProjectId,
             project.associatedNonFdiRAndDProject
           )} - ${project.name} - Projects - Investments`}
           breadcrumbs={[
@@ -43,7 +43,7 @@ const EditAssociatedProject = () => {
             },
             {
               text: checkIfUpdatingOrRemoving(
-                investmentProject.associatedProjectId,
+                associatedProjectId,
                 project.associatedNonFdiRAndDProject
               ),
             },
@@ -54,17 +54,17 @@ const EditAssociatedProject = () => {
             name={TASK_UPDATE_ASSOCIATED_PROJECT}
             id={ASSOCIATE_PROJECT_ID}
             progressMessage={
-              investmentProject.associatedProjectId
+              associatedProjectId
                 ? 'Setting associated project'
                 : 'Removing associated project'
             }
             startOnRender={{
-              payload: investmentProject,
+              payload: { projectId, associatedProjectId },
             }}
           >
             {() =>
               window.location.assign(
-                urls.investments.projects.details(investmentProject.projectId)
+                urls.investments.projects.details(projectId)
               )
             }
           </Task.Status>
