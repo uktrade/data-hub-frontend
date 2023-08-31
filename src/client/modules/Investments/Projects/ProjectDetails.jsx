@@ -237,7 +237,7 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
                   <Link
                     href={
                       urls.investments.projects.recipientCompany(project.id) +
-                      '?term=' +
+                      '?name=' +
                       project.ukCompany.name
                     }
                     data-test="edit-company-link"

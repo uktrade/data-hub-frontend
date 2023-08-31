@@ -167,8 +167,12 @@ import linkSubsidiaryReducer from './modules/Companies/CompanyBusinessDetails/Li
 import { ID as OBJECTIVE_ID } from './modules/Companies/AccountManagement/state'
 import objectiveReducer from './modules/Companies/AccountManagement/reducer'
 
-import { NON_FDI_LIST_ID } from './modules/Investments/Projects/state'
+import {
+  NON_FDI_LIST_ID,
+  RECIPIENT_COMPANY_LIST_ID,
+} from './modules/Investments/Projects/state'
 import nonFdiReducer from './modules/Investments/Projects/reducer'
+import recipientCompanyReducer from './modules/Investments/Projects/recipientCompanyReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -269,6 +273,7 @@ const reducer = {
   [LINK_SUBSIDIARY_ID]: linkSubsidiaryReducer,
   [OBJECTIVE_ID]: objectiveReducer,
   [NON_FDI_LIST_ID]: nonFdiReducer,
+  [RECIPIENT_COMPANY_LIST_ID]: recipientCompanyReducer,
 }
 
 const preloadedState = {

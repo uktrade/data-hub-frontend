@@ -420,7 +420,11 @@ module.exports = {
       },
       recipientCompany: url(
         '/investments',
-        '/projects/:projectId/edit-ukcompany'
+        '/projects/:projectId/find-ukcompany'
+      ),
+      editRecipientCompany: url(
+        '/investments',
+        '/projects/:projectId/edit-ukcompany/:companyId'
       ),
       removeRecipientCompany: url(
         '/investments',
