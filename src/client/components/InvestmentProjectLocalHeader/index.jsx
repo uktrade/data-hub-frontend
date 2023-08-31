@@ -4,13 +4,14 @@ import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled, { ThemeProvider } from 'styled-components'
 import { upperFirst } from 'lodash'
 
-import LocalHeader from '../LocalHeader/LocalHeader'
 import Timeline from '../Timeline'
 
 import { formatMediumDateTime } from '../../utils/date'
 import timelineTheme from './timeline-theme'
 import urls from '../../../lib/urls'
 import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/constants'
+import StatusMessage from '../StatusMessage'
+import { WHITE } from '../../utils/colours'
 
 const MetaList = styled('ul')({})
 
@@ -40,6 +41,14 @@ const StyledChild = styled('span')({
   fontSize: FONT_SIZE.SIZE_16,
 })
 
+const StyledStatusMessage = styled(StatusMessage)({
+  fontSize: FONT_SIZE.SIZE_20,
+  fontWeight: 700,
+  marginBottom: SPACING.SCALE_1,
+  marginTop: SPACING.SCALE_2,
+  backgroundColor: WHITE,
+})
+
 const MetaListItem = ({ text, children }) => (
   <StyledListItem>
     <StyledListItemText>{text}</StyledListItemText>
@@ -50,38 +59,29 @@ const MetaListItem = ({ text, children }) => (
 /**
  * The **InvestmentProjectLocalHeader** contains the following:
  *
- * - A row of breadcrumbs (secondary navigation) that reveals the user's location in Data Hub
- *
  * - Investment metadata such as: Status (Ongoing, Delayed, Abandoned, Lost and Dormant), Project code, Valuation and a Created on date
  *
  * - A list of five stages (Prospect', 'Assign PM', 'Active', 'Verify win' and 'Won') in chronological order where the current stage is clear to see
  */
-const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
-  <LocalHeader
-    headingLink={{
-      url: urls.companies.detail(investment.investor_company.id),
-      text: investment.investor_company.name,
-    }}
-    heading={investment.name}
-    breadcrumbs={breadcrumbs}
-  >
+const InvestmentProjectLocalHeader = ({ investment }) => (
+  <>
     <MetaList data-test="meta-list">
       <MetaListItem text={'Status'}>
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>
       </MetaListItem>
       <MetaListItem text={'Project code'}>
-        {investment.project_code}
+        {investment.projectCode}
       </MetaListItem>
       <MetaListItem text="Valuation">
-        {investment.value_complete ? 'Project valued' : 'Not yet valued'}
+        {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
       <MetaListItem text="Created on">
-        {formatMediumDateTime(investment.created_on)}
+        {formatMediumDateTime(investment.createdOn)}
       </MetaListItem>
-      {investment.created_by?.dit_team?.name && (
+      {investment.createdBy?.ditTeam?.name && (
         <MetaListItem text="Created by">
-          {investment.created_by.dit_team.name}
+          {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
     </MetaList>
@@ -91,7 +91,17 @@ const InvestmentProjectLocalHeader = ({ investment, breadcrumbs }) => (
         currentStage={investment.stage.name}
       />
     </ThemeProvider>
-  </LocalHeader>
+    {investment.stage.name === 'Won' && !investment.archived && (
+      <StyledStatusMessage data-test="project-won-message">
+        This project has been verified as won. You should not make any changes
+        to this project.
+        <br />
+        <br />
+        If you would like to make changes, please contact the Investment
+        Promotion Performance team.
+      </StyledStatusMessage>
+    )}
+  </>
 )
 
 InvestmentProjectLocalHeader.propTypes = {
@@ -99,10 +109,6 @@ InvestmentProjectLocalHeader.propTypes = {
    * An investment project
    */
   investment: PropTypes.object.isRequired,
-  /**
-   * An array of objects containing two fields (link and text)
-   */
-  breadcrumbs: PropTypes.array.isRequired,
 }
 
 export default InvestmentProjectLocalHeader

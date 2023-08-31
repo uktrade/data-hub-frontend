@@ -130,7 +130,7 @@ describe('LEP Permission', () => {
         fixtures.investmentProject.create.newGolfCourseDA()
 
       before(() => {
-        cy.loadFixture([investmentProjectNewZoo])
+        cy.loadFixture([investmentProjectNewGolf])
         cy.visit(
           investments.projects.interactions.index(investmentProjectNewGolf.pk),
           { failOnStatusCode: false }
