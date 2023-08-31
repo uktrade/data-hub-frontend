@@ -6,7 +6,7 @@ export const updateInvestmentProject = (values) =>
   apiProxyAxios.patch(`v3/investment/${values.id}`, values)
 
 export const getNonFdiProjects = ({ limit = 10, page, ...rest }) => {
-  let offset = limit * (parseInt(page, 10) - 1) || 0
+  const offset = limit * (parseInt(page, 10) - 1) || 0
   const transformedRest = transformLandDateFilters(rest)
   return apiProxyAxios
     .post('/v3/search/investment_project', {
