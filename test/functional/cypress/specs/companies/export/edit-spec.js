@@ -115,7 +115,7 @@ describe('Company Export tab - Edit exports', () => {
         assertReadOnlyItems([
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile (opens in a new window or tab)',
+            value: '"Find a supplier" profile (opens in new tab)',
           },
           { label: 'Export potential', value: 'Unavailable' },
         ])

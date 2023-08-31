@@ -49,12 +49,11 @@ describe('Dashboard - Data Hub feed', () => {
 
       cy.get('@dataHubFeed')
         .find('[data-test="data-hub-feed-link-0"]')
-        .should('have.text', 'Using Sectors in the Find Exporters Tool')
+        .should(
+          'have.text',
+          'Using Sectors in the Find Exporters Tool (opens in new tab)'
+        )
         .should('have.attr', 'href', 'https://test-url')
-
-      cy.get('@dataHubFeed')
-        .find('[data-test="data-hub-feed-note-0"]')
-        .should('have.text', '(Link opens in a new window)')
 
       cy.get('@dataHubFeed')
         .find('[data-test="data-hub-feed-date-0"]')

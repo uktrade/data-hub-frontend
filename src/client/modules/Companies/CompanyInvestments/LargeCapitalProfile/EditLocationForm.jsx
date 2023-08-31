@@ -53,7 +53,7 @@ const EditLocationForm = ({ profile }) => {
                     ukRegionLocations
                   )}
                   placeholder="-- Select region --"
-                  arial-label="Uk locations of interest"
+                  aria-label="Uk locations of interest"
                   isMulti={true}
                 />
                 <FieldTypeahead
@@ -64,7 +64,7 @@ const EditLocationForm = ({ profile }) => {
                   )}
                   options={transformArrayIdNameToValueLabel(countries)}
                   placeholder="-- Select country --"
-                  arial-label="Other countries the investor is considering"
+                  aria-label="Other countries the investor is considering"
                   isMulti={true}
                 />
                 <FieldTextarea

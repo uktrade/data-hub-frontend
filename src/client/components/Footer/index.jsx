@@ -120,7 +120,7 @@ export default function Footer() {
               href={urls.support()}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Opens in a new window or tab"
+              aria-label="Request Support (opens in new tab)"
             >
               Request Support
             </FooterLink>
@@ -130,7 +130,7 @@ export default function Footer() {
               href={urls.external.helpCentre.dhHomepage()}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Opens in a new window or tab"
+              aria-label="Help Centre (opens in new tab)"
             >
               Help Centre
             </FooterLink>
@@ -140,7 +140,7 @@ export default function Footer() {
               href={urls.external.helpCentre.privacyNotice()}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Opens in a new window or tab"
+              aria-label="Privacy Notice (opens in new tab)"
             >
               Privacy Notice
             </FooterLink>
@@ -150,7 +150,7 @@ export default function Footer() {
               href={urls.external.helpCentre.cookies()}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Opens in a new window or tab"
+              aria-label="Cookies (opens in new tab)"
             >
               Cookies
             </FooterLink>
@@ -160,7 +160,7 @@ export default function Footer() {
               href={urls.external.helpCentre.accessibilityStatement()}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Opens in a new window or tab"
+              aria-label="Accessibility Statement (opens in new tab)"
             >
               Accessibility Statement
             </FooterLink>
@@ -170,7 +170,7 @@ export default function Footer() {
           href={urls.external.copyright}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Opens in a new window or tab"
+          aria-label="Crown copyright (opens in new tab)"
         >
           &#169; Crown copyright
         </CopyrightLink>

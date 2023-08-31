@@ -433,7 +433,7 @@ describe('Export theme - standard interaction', () => {
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',
-        `Select 'trade agreement' if your interaction deals with a named trade agreement.For more information see recording trade agreement activity (opens in a new window or tab).`
+        `Select 'trade agreement' if your interaction deals with a named trade agreement.For more information see recording trade agreement activity (opens in new tab).`
       )
     })
 

@@ -35,7 +35,7 @@ describe('Event Details', () => {
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK based',
-      Documents: 'View files and documents (opens in a new window or tab)',
+      Documents: 'View files and documents (opens in new tab)',
     })
 
     cy.contains('a', 'View files and documents').should((el) => {
@@ -63,7 +63,7 @@ describe('Event Details', () => {
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK based',
-      Documents: 'View files and documents (opens in a new window or tab)',
+      Documents: 'View files and documents (opens in new tab)',
     })
   })
 
