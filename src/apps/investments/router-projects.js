@@ -51,13 +51,6 @@ const {
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 
-const {
-  selectUKCompany,
-  searchForUKCompany,
-  renderCompanyResults,
-  removeUKCompany,
-} = require('./controllers/ukcompany')
-
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
 
@@ -161,14 +154,6 @@ router.use(
 )
 
 router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
-
-router.get(
-  '/:investmentId/edit-ukcompany',
-  selectUKCompany,
-  searchForUKCompany,
-  renderCompanyResults
-)
-router.get('/:investmentId/remove-ukcompany', removeUKCompany)
 
 router.get('/:investmentId/documents', documents.renderDocuments)
 

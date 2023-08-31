@@ -606,3 +606,6 @@ export const transformResponseToCompanyCollection = (
   count,
   results: results.map(transformCompanyToListItem(projectId)),
 })
+
+export const checkIfRecipientCompanyExists = (hasRecipientCompany) =>
+  hasRecipientCompany ? 'Update recipient company' : 'Add recipient company'

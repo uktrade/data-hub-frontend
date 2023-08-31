@@ -393,12 +393,14 @@ import {
   TASK_GET_NON_FDI_PROJECTS_LIST,
   TASK_UPDATE_ASSOCIATED_PROJECT,
   TASK_GET_UK_COMPANIES,
+  TASK_UPDATE_RECIPIENT_COMPANY,
 } from './modules/Investments/Projects/state'
 import {
   getNonFdiProjects,
   updateInvestmentProject,
   updateAssociatedProject,
   getUkCompanies,
+  updateRecipientCompany,
 } from './modules/Investments/Projects/tasks'
 
 import {
@@ -649,6 +651,7 @@ function App() {
           [TASK_GET_NON_FDI_PROJECTS_LIST]: getNonFdiProjects,
           [TASK_UPDATE_ASSOCIATED_PROJECT]: updateAssociatedProject,
           [TASK_GET_UK_COMPANIES]: getUkCompanies,
+          [TASK_UPDATE_RECIPIENT_COMPANY]: updateRecipientCompany,
         }}
       >
         <Mount selector="#data-hub-header">

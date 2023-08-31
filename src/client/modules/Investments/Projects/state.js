@@ -31,10 +31,12 @@ export const TASK_UPDATE_INVESTMENT_PROJECT_STAGE =
 export const TASK_GET_NON_FDI_PROJECTS_LIST = 'TASK_GET_NON_FDI_PROJECTS_LIST'
 export const TASK_UPDATE_ASSOCIATED_PROJECT = 'TASK_UPDATE_ASSOCIATED_PROJECT'
 export const TASK_GET_UK_COMPANIES = 'TASK_GET_UK_COMPANIES'
+export const TASK_UPDATE_RECIPIENT_COMPANY = 'TASK_UPDATE_RECIPIENT_COMPANY'
 
 export const NON_FDI_LIST_ID = 'nonFdiProjectsList'
 export const ASSOCIATE_PROJECT_ID = 'associateProject'
 export const RECIPIENT_COMPANY_LIST_ID = 'recipientCompanyList'
+export const RECIPIENT_COMPANY_ID = 'RECIPIENT_COMPANY_ID'
 
 export const state2props = (state) => {
   return { currentAdviserId: state.currentAdviserId }
