@@ -30,9 +30,7 @@ const EditOneList = ({
   const { companyId } = useParams()
   const query = useQuery()
   const returnUrl = query.get('returnUrl')
-  const heading = `Add or edit ${
-    company ? company.name : ''
-  } One List information`
+  const heading = `Edit core team of ${company ? company.name : ''}`
 
   return (
     <DefaultLayout
@@ -41,7 +39,7 @@ const EditOneList = ({
       breadcrumbs={
         company
           ? buildCompanyBreadcrumbs(
-              [{ text: 'Edit One List information' }],
+              [{ text: 'Edit core team' }],
               company.id,
               company.name
             )

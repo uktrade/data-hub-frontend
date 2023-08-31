@@ -35,7 +35,7 @@ const EditOneListForm = ({
     cancelRedirectTo={() =>
       returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
     }
-    flashMessage={() => 'One List information has been updated.'}
+    flashMessage={() => 'Core team has been updated.'}
     showStepInUrl={true}
   >
     {({ values, currentStep, goToStep }) => (
