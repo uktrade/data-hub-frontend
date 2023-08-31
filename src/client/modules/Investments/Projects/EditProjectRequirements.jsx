@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
+import { useParams } from 'react-router-dom'
 
 import {
   FieldAddress,
@@ -9,7 +9,6 @@ import {
   FieldTextarea,
   FieldTypeahead,
   Form,
-  Main,
 } from '../../../components'
 import {
   CountriesResource,
@@ -28,18 +27,30 @@ import {
 } from './transformers'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 import { UNITED_KINGDOM_ID } from '../../../../common/constants'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
 const ukObject = {
   name: 'United Kingdom',
   id: UNITED_KINGDOM_ID,
 }
 
-const EditProjectRequirements = ({ projectId }) => (
-  <InvestmentResource id={projectId}>
-    {(project) => (
-      <>
-        <H2 size={LEVEL_SIZE[3]}>Edit requirements and location</H2>
-        <Main>
+const EditProjectRequirements = () => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <ProjectLayout
+          project={project}
+          breadcrumbs={[
+            {
+              link: urls.investments.projects.project(project.id),
+              text: project.name,
+            },
+            { text: 'Edit requirements' },
+          ]}
+          pageTitle="Edit requirements"
+        >
+          <H2 size={LEVEL_SIZE[3]}>Edit requirements and location</H2>
           <Form
             id="edit-project-requirements"
             analyticsFormName="editInvestmentProjectRequirements"
@@ -159,14 +170,10 @@ const EditProjectRequirements = ({ projectId }) => (
               isMulti={true}
             />
           </Form>
-        </Main>
-      </>
-    )}
-  </InvestmentResource>
-)
-
-EditProjectRequirements.propTypes = {
-  projectId: PropTypes.string.isRequired,
+        </ProjectLayout>
+      )}
+    </InvestmentResource>
+  )
 }
 
 export default EditProjectRequirements
