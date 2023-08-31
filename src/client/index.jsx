@@ -71,7 +71,6 @@ import EditProjectSummary from './modules/Investments/Projects/EditProjectSummar
 import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
 import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
-import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
 import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
@@ -408,9 +407,6 @@ function App() {
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
-        </Mount>
-        <Mount selector="#project-details">
-          {(props) => <ProjectDetails {...props} />}
         </Mount>
         <Mount selector="#project-evaluation">
           {(props) => <ProjectEvaluation {...props} />}
