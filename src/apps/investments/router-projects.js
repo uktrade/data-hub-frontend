@@ -26,7 +26,6 @@ const {
   archive,
   editHistory,
   documents,
-  evaluation,
   team,
 } = require('./controllers')
 
@@ -106,8 +105,6 @@ router.get(
   setPropositionsReturnUrl,
   renderPropositionList
 )
-
-router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
 
 router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
 

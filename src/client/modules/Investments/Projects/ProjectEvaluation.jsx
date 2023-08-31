@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'govuk-react'
+import { useParams } from 'react-router-dom'
 
 import { SummaryTable } from '../../../components'
 import {
@@ -19,6 +19,7 @@ import {
 import urls from '../../../../lib/urls'
 import { format } from '../../../utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
 const NOT_KNOWN = 'Not known'
 
@@ -96,148 +97,166 @@ const landingTable = (ukCompany = null, actualLandDate) => (
   </SummaryTable>
 )
 
-const ProjectEvaluation = ({ projectId }) => (
-  <InvestmentResource id={projectId}>
-    {(project) => (
-      <CompanyResource id={project.investorCompany.id}>
-        {(company) => (
-          <>
-            <SummaryTable
-              caption="Project value (Test D)"
-              data-test="project-value-table"
+const ProjectEvaluation = () => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <CompanyResource id={project.investorCompany.id}>
+          {(company) => (
+            <ProjectLayout
+              project={project}
+              breadcrumbs={[
+                {
+                  link: urls.investments.projects.project(project.id),
+                  text: project.name,
+                },
+                { text: 'Evaluation' },
+              ]}
+              pageTitle="Evaluation"
             >
-              <SummaryTable.TextRow
-                heading="Primary sector"
-                value={checkIfValueExists(project.sector?.name)}
-              />
-              <SummaryTable.TextRow
-                heading="Total investment"
-                value={checkIfValueExists(currencyGBP(project.totalInvestment))}
-              />
-              {newJobsRow(project.numberNewJobs)}
-              <SummaryTable.TextRow
-                heading="Average salary"
-                value={checkIfValueExists(project.averageSalary?.name)}
-              />
-              <SummaryTable.TextRow
-                heading="R&D budget"
-                value={
-                  project.rAndDBudget == null
-                    ? NOT_KNOWN
-                    : transformRAndDBudget(project.rAndDBudget)
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Non-FDI R&D project"
-                value={
-                  project.nonFdiRAndDBudget
-                    ? transformFdiRAndDProject(project)
-                    : NOT_KNOWN
-                }
-              />
-              <SummaryTable.TextRow
-                heading="New-to-world tech"
-                value={
-                  project.newTechToUk == null
-                    ? NOT_KNOWN
-                    : transformNewTech(project.newTechToUk)
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Account tier"
-                value={checkIfValueExists(company.oneListGroupTier?.name)}
-              />
-              <SummaryTable.TextRow
-                heading="New GHQ/EHQ"
-                value={
-                  project.businessActivities.length > 0
-                    ? getHQValue(project.businessActivities)
-                    : NOT_KNOWN
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Export revenue"
-                value={
-                  project.exportRevenue != null
-                    ? transformExportRevenue(project.exportRevenue)
-                    : NOT_KNOWN
-                }
-              />
-            </SummaryTable>
-            <SummaryTable caption="FDI (Test A)" data-test="project-fdi-table">
-              <SummaryTable.TextRow
-                heading="Investment type"
-                value={
-                  project.investmentType.name === 'FDI'
-                    ? transformFdiType(
-                        project.investmentType.name,
-                        project.fdiType?.name
-                      )
-                    : project.investmentType.name
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Foreign investor"
-                value={
-                  <Link href={urls.companies.overview.index(company.id)}>
-                    {company.name}
-                  </Link>
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Foreign country"
-                value={project.investorCompanyCountry.name}
-              />
-              <SummaryTable.TextRow
-                heading="UK company"
-                value={
-                  project.ukCompany ? (
-                    <Link
-                      href={urls.companies.overview.index(project.ukCompany.id)}
-                    >
-                      {project.ukCompany.name}
+              <SummaryTable
+                caption="Project value (Test D)"
+                data-test="project-value-table"
+              >
+                <SummaryTable.TextRow
+                  heading="Primary sector"
+                  value={checkIfValueExists(project.sector?.name)}
+                />
+                <SummaryTable.TextRow
+                  heading="Total investment"
+                  value={checkIfValueExists(
+                    currencyGBP(project.totalInvestment)
+                  )}
+                />
+                {newJobsRow(project.numberNewJobs)}
+                <SummaryTable.TextRow
+                  heading="Average salary"
+                  value={checkIfValueExists(project.averageSalary?.name)}
+                />
+                <SummaryTable.TextRow
+                  heading="R&D budget"
+                  value={
+                    project.rAndDBudget == null
+                      ? NOT_KNOWN
+                      : transformRAndDBudget(project.rAndDBudget)
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Non-FDI R&D project"
+                  value={
+                    project.nonFdiRAndDBudget
+                      ? transformFdiRAndDProject(project)
+                      : NOT_KNOWN
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="New-to-world tech"
+                  value={
+                    project.newTechToUk == null
+                      ? NOT_KNOWN
+                      : transformNewTech(project.newTechToUk)
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Account tier"
+                  value={checkIfValueExists(company.oneListGroupTier?.name)}
+                />
+                <SummaryTable.TextRow
+                  heading="New GHQ/EHQ"
+                  value={
+                    project.businessActivities.length > 0
+                      ? getHQValue(project.businessActivities)
+                      : NOT_KNOWN
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Export revenue"
+                  value={
+                    project.exportRevenue != null
+                      ? transformExportRevenue(project.exportRevenue)
+                      : NOT_KNOWN
+                  }
+                />
+              </SummaryTable>
+              <SummaryTable
+                caption="FDI (Test A)"
+                data-test="project-fdi-table"
+              >
+                <SummaryTable.TextRow
+                  heading="Investment type"
+                  value={
+                    project.investmentType.name === 'FDI'
+                      ? transformFdiType(
+                          project.investmentType.name,
+                          project.fdiType?.name
+                        )
+                      : project.investmentType.name
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Foreign investor"
+                  value={
+                    <Link href={urls.companies.overview.index(company.id)}>
+                      {company.name}
                     </Link>
-                  ) : (
-                    NOT_KNOWN
-                  )
-                }
-              />
-              <SummaryTable.TextRow
-                heading="Foreign equity investment"
-                value={checkIfValueExists(
-                  currencyGBP(project.foreignEquityInvestment)
-                )}
-              />
-              <SummaryTable.TextRow
-                heading="Investor retains 10% voting power"
-                value={project.ukCompany ? 'Yes' : 'No'}
-              />
-              {newJobsRow(project.numberNewJobs)}
-              <SummaryTable.TextRow
-                heading="Number of safeguarded jobs"
-                value={
-                  checkIfItemHasValue(project.numberSafeguardedJobs)
-                    ? project.numberSafeguardedJobs + ' safeguarded jobs'
-                    : NOT_KNOWN
-                }
-              />
-            </SummaryTable>
-            {project.ukCompany ? (
-              <CompanyResource id={project.ukCompany?.id}>
-                {(ukCompany) => landingTable(ukCompany, project.actualLandDate)}
-              </CompanyResource>
-            ) : (
-              landingTable(null, project.actualLandDate)
-            )}
-          </>
-        )}
-      </CompanyResource>
-    )}
-  </InvestmentResource>
-)
-
-ProjectEvaluation.propTypes = {
-  projectId: PropTypes.string.isRequired,
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Foreign country"
+                  value={project.investorCompanyCountry.name}
+                />
+                <SummaryTable.TextRow
+                  heading="UK company"
+                  value={
+                    project.ukCompany ? (
+                      <Link
+                        href={urls.companies.overview.index(
+                          project.ukCompany.id
+                        )}
+                      >
+                        {project.ukCompany.name}
+                      </Link>
+                    ) : (
+                      NOT_KNOWN
+                    )
+                  }
+                />
+                <SummaryTable.TextRow
+                  heading="Foreign equity investment"
+                  value={checkIfValueExists(
+                    currencyGBP(project.foreignEquityInvestment)
+                  )}
+                />
+                <SummaryTable.TextRow
+                  heading="Investor retains 10% voting power"
+                  value={project.ukCompany ? 'Yes' : 'No'}
+                />
+                {newJobsRow(project.numberNewJobs)}
+                <SummaryTable.TextRow
+                  heading="Number of safeguarded jobs"
+                  value={
+                    checkIfItemHasValue(project.numberSafeguardedJobs)
+                      ? project.numberSafeguardedJobs + ' safeguarded jobs'
+                      : NOT_KNOWN
+                  }
+                />
+              </SummaryTable>
+              {project.ukCompany ? (
+                <CompanyResource id={project.ukCompany?.id}>
+                  {(ukCompany) =>
+                    landingTable(ukCompany, project.actualLandDate)
+                  }
+                </CompanyResource>
+              ) : (
+                landingTable(null, project.actualLandDate)
+              )}
+            </ProjectLayout>
+          )}
+        </CompanyResource>
+      )}
+    </InvestmentResource>
+  )
 }
 
 export default ProjectEvaluation
