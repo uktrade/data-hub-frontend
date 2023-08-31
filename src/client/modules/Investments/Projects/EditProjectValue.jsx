@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
+import { useParams } from 'react-router-dom'
 
 import {
   FieldCurrency,
@@ -9,7 +9,6 @@ import {
   FieldRadios,
   FieldUneditable,
   Form,
-  Main,
 } from '../../../components'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import {
@@ -28,6 +27,7 @@ import {
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 import { currencyGBP } from '../../../utils/number-utils'
 import { idNamesToValueLabels } from '../../../utils'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
@@ -35,12 +35,23 @@ const showFDIValueField = (project) =>
     (date) => date !== null && new Date(date) < new Date('2020-04-01')
   )
 
-const EditProjectValue = ({ projectId }) => (
-  <InvestmentResource id={projectId}>
-    {(project) => (
-      <>
-        <H2 size={LEVEL_SIZE[3]}>Edit value</H2>
-        <Main>
+const EditProjectValue = () => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <ProjectLayout
+          project={project}
+          breadcrumbs={[
+            {
+              link: urls.investments.projects.project(project.id),
+              text: project.name,
+            },
+            { text: 'Edit value' },
+          ]}
+          pageTitle="Edit value"
+        >
+          <H2 size={LEVEL_SIZE[3]}>Edit value</H2>
           <Form
             id="edit-project-value"
             analyticsFormName="editInvestmentProjectValue"
@@ -207,14 +218,10 @@ const EditProjectValue = ({ projectId }) => (
               }))}
             />
           </Form>
-        </Main>
-      </>
-    )}
-  </InvestmentResource>
-)
-
-EditProjectValue.propTypes = {
-  projectId: PropTypes.string.isRequired,
+        </ProjectLayout>
+      )}
+    </InvestmentResource>
+  )
 }
 
 export default EditProjectValue

@@ -26,7 +26,6 @@ const {
   archive,
   editHistory,
   documents,
-  edit,
   evaluation,
   team,
 } = require('./controllers')
@@ -87,8 +86,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
-
-router.route('/:investmentId/edit-value').get(edit.renderValueForm)
 
 router
   .route('/:investmentId/edit-project-management')
