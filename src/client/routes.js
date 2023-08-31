@@ -228,6 +228,9 @@ const routes = {
       path: '/investments/projects/:projectId/remove-ukcompany',
       module: 'datahub:investments',
       component: EditRecipientCompany,
+      path: '/investments/projects/:projectId/details',
+      module: 'datahub:investments',
+      component: ProjectDetails,
     },
     {
       path: '/investments/projects/:projectId/details',
