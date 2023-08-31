@@ -167,6 +167,9 @@ import linkSubsidiaryReducer from './modules/Companies/CompanyBusinessDetails/Li
 import { ID as OBJECTIVE_ID } from './modules/Companies/AccountManagement/state'
 import objectiveReducer from './modules/Companies/AccountManagement/reducer'
 
+import { NON_FDI_LIST_ID } from './modules/Investments/Projects/state'
+import nonFdiReducer from './modules/Investments/Projects/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -265,6 +268,7 @@ const reducer = {
   [LINK_GLOBAL_HQ_ID]: linkGlobalHQReducer,
   [LINK_SUBSIDIARY_ID]: linkSubsidiaryReducer,
   [OBJECTIVE_ID]: objectiveReducer,
+  [NON_FDI_LIST_ID]: nonFdiReducer,
 }
 
 const preloadedState = {

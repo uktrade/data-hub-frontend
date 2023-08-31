@@ -390,8 +390,14 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_VALUE,
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
+  TASK_GET_NON_FDI_PROJECTS_LIST,
+  TASK_UPDATE_ASSOCIATED_PROJECT,
 } from './modules/Investments/Projects/state'
-import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
+import {
+  getNonFdiProjects,
+  updateInvestmentProject,
+  updateAssociatedProject,
+} from './modules/Investments/Projects/tasks'
 
 import {
   TASK_GET_OBJECTIVE,
@@ -638,6 +644,8 @@ function App() {
           [TASK_SAVE_OBJECTIVE]: saveObjective,
           [TASK_GET_OBJECTIVE]: getObjective,
           [TASK_UPDATE_INVESTMENT_PROJECT_STAGE]: updateInvestmentProject,
+          [TASK_GET_NON_FDI_PROJECTS_LIST]: getNonFdiProjects,
+          [TASK_UPDATE_ASSOCIATED_PROJECT]: updateAssociatedProject,
         }}
       >
         <Mount selector="#data-hub-header">

@@ -12,7 +12,7 @@ import { transformProjectStatusForApi } from './transformers'
 const EditProjectStatus = () => {
   const investmentProject = useParams()
   return (
-    <InvestmentResource id={investmentProject.investmentId}>
+    <InvestmentResource id={investmentProject.projectId}>
       {(project) => (
         <DefaultLayout
           heading={'Change project status'}
