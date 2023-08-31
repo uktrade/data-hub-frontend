@@ -1,15 +1,3 @@
-function renderDetailsForm(req, res) {
-  const { investment } = res.locals
-  const { user } = req.session
-  res.breadcrumb('Edit details').render('investments/views/details-edit', {
-    props: {
-      projectId: investment.id,
-      currentAdviser: user.id,
-      autoScroll: req.query.autoscroll,
-    },
-  })
-}
-
 function renderRequirementsForm(req, res) {
   const { investment } = res.locals
   res
@@ -31,7 +19,6 @@ function renderValueForm(req, res) {
 }
 
 module.exports = {
-  renderDetailsForm,
   renderRequirementsForm,
   renderValueForm,
 }

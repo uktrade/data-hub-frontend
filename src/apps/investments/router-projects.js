@@ -88,8 +88,6 @@ router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
 
-router.route('/:investmentId/edit-details').get(edit.renderDetailsForm)
-
 router.route('/:investmentId/edit-value').get(edit.renderValueForm)
 
 router
