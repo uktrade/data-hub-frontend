@@ -1,9 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
-
 import queryString from 'qs'
-
 import { createBrowserHistory } from 'history'
 
 import { reducers } from './reducers'
