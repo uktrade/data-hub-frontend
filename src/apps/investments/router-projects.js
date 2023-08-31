@@ -20,7 +20,6 @@ const {
   handleRoutePermissions,
 } = require('../middleware')
 const { shared } = require('./middleware')
-const { expandTeamMembers } = require('./middleware/team')
 
 const {
   create,
@@ -96,12 +95,6 @@ router.route('/:investmentId/edit-value').get(edit.renderValueForm)
 router
   .route('/:investmentId/edit-requirements')
   .get(edit.renderRequirementsForm)
-
-router.get(
-  '/:investmentId/team',
-  expandTeamMembers,
-  team.details.getDetailsHandler
-)
 
 router
   .route('/:investmentId/edit-project-management')

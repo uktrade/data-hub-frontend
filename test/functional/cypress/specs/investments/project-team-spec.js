@@ -178,15 +178,4 @@ describe('Viewing the team of a project', () => {
       cy.get('[data-test="edit-pm-button"]').should('not.exist')
     })
   })
-
-  context('When attempting to edit a non-existent project', () => {
-    it('should display an error to the user', () => {
-      cy.request({
-        url: investments.projects.team('Error'),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(500)
-      })
-    })
-  })
 })
