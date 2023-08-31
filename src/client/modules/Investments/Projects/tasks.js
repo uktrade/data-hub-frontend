@@ -74,8 +74,7 @@ export const getUkCompanies = ({
     .then(({ data }) => transformResponseToCompanyCollection(projectId, data))
 }
 
-export const updateRecipientCompany = (values) => {
-  return apiProxyAxios.patch(`v3/investment/${values.projectId}`, {
+export const updateRecipientCompany = (values) =>
+  apiProxyAxios.patch(`v3/investment/${values.projectId}`, {
     uk_company: values.companyId ? values.companyId : null,
   })
-}
