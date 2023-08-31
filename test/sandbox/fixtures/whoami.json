@@ -94,7 +94,10 @@
     "company.change_companyexportcountry",
     "company.change_one_list_tier_and_global_account_manager",
     "company.change_one_list_core_team_member",
-    "company_referral.view_companyreferral"
+    "company_referral.view_companyreferral",
+    "interaction.view_associated_investmentproject_interaction",
+    "proposition.view_all_proposition",
+    "proposition.view_associated_proposition"
   ],
   "features": [],
   "active_features": [],
