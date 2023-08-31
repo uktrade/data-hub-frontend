@@ -46,6 +46,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/remove-ukcompany',
   '/companies/:companyId/edit-one-list',
   '/investments/projects/:projectId/details',
+  '/investments/projects/:projectId/team',
 ]
 
 reactRoutes.forEach((path) => {

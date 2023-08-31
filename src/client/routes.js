@@ -29,6 +29,7 @@ import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCo
 import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCompany'
 import EditOneList from './modules/Companies/CoreTeam/EditOneList'
 import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
+import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
 
 const routes = {
   companies: [
@@ -213,9 +214,16 @@ const routes = {
       path: '/investments/projects/:projectId/remove-ukcompany',
       module: 'datahub:investments',
       component: EditRecipientCompany,
+    },
+    {
       path: '/investments/projects/:projectId/details',
       module: 'datahub:investments',
       component: ProjectDetails,
+    },
+    {
+      path: '/investments/projects/:projectId/team',
+      module: 'datahub:investments',
+      component: ProjectTeam,
     },
   ],
 }

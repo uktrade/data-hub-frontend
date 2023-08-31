@@ -72,7 +72,6 @@ import EditProjectRequirements from './modules/Investments/Projects/EditProjectR
 import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
-import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
 import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
 import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
@@ -410,9 +409,6 @@ function App() {
         </Mount>
         <Mount selector="#project-evaluation">
           {(props) => <ProjectEvaluation {...props} />}
-        </Mount>
-        <Mount selector="#project-team">
-          {(props) => <ProjectTeam {...props} />}
         </Mount>
         <Mount selector="#project-interactions">
           {(props) => <ProjectInteractions {...props} />}
