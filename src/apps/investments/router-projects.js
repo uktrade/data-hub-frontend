@@ -91,10 +91,6 @@ router.get('/:investmentId', redirectToFirstNavItem)
 router.route('/:investmentId/edit-value').get(edit.renderValueForm)
 
 router
-  .route('/:investmentId/edit-requirements')
-  .get(edit.renderRequirementsForm)
-
-router
   .route('/:investmentId/edit-project-management')
   .get(team.editProjectManagement.editProjectManagementHandler)
   .post(

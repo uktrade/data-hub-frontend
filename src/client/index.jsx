@@ -67,8 +67,6 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
-import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
-import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
 import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
@@ -392,12 +390,6 @@ function App() {
         </Mount>
         <Mount selector="#link-subsidiary">
           {(props) => <LinkSubsidiary {...props} />}
-        </Mount>
-        <Mount selector="#edit-project-summary">
-          {(props) => <EditProjectSummary {...props} />}
-        </Mount>
-        <Mount selector="#edit-project-requirements">
-          {(props) => <EditProjectRequirements {...props} />}
         </Mount>
         <Mount selector="#edit-project-value">
           {(props) => <EditProjectValue {...props} />}
