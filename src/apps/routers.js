@@ -49,6 +49,7 @@ const reactRoutes = [
   '/community',
   '/investments/projects/:projectId/details',
   '/investments/projects/:projectId/edit-details',
+  '/investments/projects/:projectId/edit-requirements',
   '/investments/projects/:projectId/team',
 ]
 

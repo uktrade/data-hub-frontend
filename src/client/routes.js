@@ -33,6 +33,7 @@ import ObjectiveArchive from './modules/Companies/AccountManagement/Objective/Ob
 import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
 import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
 import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
+import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
 
 const routes = {
   companies: [
@@ -239,6 +240,11 @@ const routes = {
       path: '/investments/projects/:projectId/edit-details',
       module: 'datahub:investments',
       component: EditProjectSummary,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-requirements',
+      module: 'datahub:investments',
+      component: EditProjectRequirements,
     },
     {
       path: '/investments/projects/:projectId/team',
