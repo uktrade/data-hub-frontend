@@ -26,7 +26,6 @@ const {
   create,
   archive,
   editHistory,
-  details,
   documents,
   edit,
   evaluation,
@@ -68,11 +67,6 @@ router.get(
   exportCollection('investment_project')
 )
 
-router.post(
-  '/:investmentId/details',
-  archive.archiveInvestmentProjectHandler,
-  details.detailsGetHandler
-)
 router.get(
   '/:investmentId/unarchive',
   archive.unarchiveInvestmentProjectHandler
@@ -94,7 +88,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
-router.get('/:investmentId/details', details.detailsGetHandler)
 
 router.route('/:investmentId/edit-details').get(edit.renderDetailsForm)
 
