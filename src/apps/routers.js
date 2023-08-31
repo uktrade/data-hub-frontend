@@ -47,6 +47,7 @@ const reactRoutes = [
   '/companies/:companyId/edit-one-list',
   '/community',
   '/investments/projects/:projectId/details',
+  '/investments/projects/:projectId/edit-details',
   '/investments/projects/:projectId/team',
 ]
 

@@ -31,6 +31,7 @@ import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCo
 import EditOneList from './modules/Companies/CoreTeam/EditOneList'
 import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
 import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
+import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
 
 const routes = {
   companies: [
@@ -227,6 +228,11 @@ const routes = {
       path: '/investments/projects/:projectId/details',
       module: 'datahub:investments',
       component: ProjectDetails,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-details',
+      module: 'datahub:investments',
+      component: EditProjectSummary,
     },
     {
       path: '/investments/projects/:projectId/team',

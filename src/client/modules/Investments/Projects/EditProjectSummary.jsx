@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import {
   FieldInput,
   FieldRadios,
   FieldWrapper,
   Form,
-  Main,
 } from '../../../components'
 import {
   InvestmentResource,
@@ -42,7 +43,8 @@ import {
 import { transformDateStringToDateObject } from '../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
 import { GREY_2 } from '../../../utils/colours'
-import { TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
+import { state2props, TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -63,12 +65,23 @@ const checkReferralSourceAdviser = (currentAdviser, referralSourceAdviser) =>
         referralSourceAdviser
       )
 
-const EditProjectSummary = ({ projectId, currentAdviser, autoScroll }) => (
-  <InvestmentResource id={projectId}>
-    {(project) => (
-      <>
-        <H2 size={LEVEL_SIZE[3]}>Update investment project summary</H2>
-        <Main>
+const EditProjectSummary = ({ currentAdviserId, autoScroll }) => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <ProjectLayout
+          project={project}
+          breadcrumbs={[
+            {
+              link: urls.investments.projects.project(project.id),
+              text: project.name,
+            },
+            { text: 'Edit details' },
+          ]}
+          pageTitle="Edit details"
+        >
+          <H2 size={LEVEL_SIZE[3]}>Update investment project summary</H2>
           <Form
             id="edit-project-summary"
             analyticsFormName="editInvestmentProjectSummary"
@@ -83,7 +96,7 @@ const EditProjectSummary = ({ projectId, currentAdviser, autoScroll }) => (
             transformPayload={(values) =>
               transformProjectSummaryForApi({
                 projectId,
-                currentAdviser,
+                currentAdviserId,
                 values,
               })
             }
@@ -138,14 +151,14 @@ const EditProjectSummary = ({ projectId, currentAdviser, autoScroll }) => (
             <FieldReferralSourceAdviser
               name="is_referral_source"
               initialValue={checkReferralSourceAdviser(
-                currentAdviser,
+                currentAdviserId,
                 project.referralSourceAdviser?.id
               )}
               label="Referral source adviser"
               typeaheadInitialValue={
                 transformRadioOptionToBool(
                   checkReferralSourceAdviser(
-                    currentAdviser,
+                    currentAdviserId,
                     project.referralSourceAdviser?.id
                   )
                 )
@@ -193,13 +206,14 @@ const EditProjectSummary = ({ projectId, currentAdviser, autoScroll }) => (
               )}
             />
           </Form>
-        </Main>
-      </>
-    )}
-  </InvestmentResource>
-)
-EditProjectSummary.propTypes = {
-  projectId: PropTypes.string.isRequired,
+        </ProjectLayout>
+      )}
+    </InvestmentResource>
+  )
 }
 
-export default EditProjectSummary
+EditProjectSummary.propTypes = {
+  currentAdviserId: PropTypes.string.isRequired,
+}
+
+export default connect(state2props)(EditProjectSummary)
