@@ -34,6 +34,7 @@ export { default as LargeCapitalInvestmentTypesResource } from './LargeCapitalIn
 export { default as LargeInvestorProfileResource } from './LargeInvestorProfile'
 export { default as LevelOfInvolvementResource } from './LevelOfInvolvement'
 export { default as LikelihoodToLandResource } from './LikelihoodToLand'
+export { default as OneListTiersResource } from './OneListTiers'
 export { default as OpportunityResource } from './Opportunity'
 export { default as OpportunityStatusesResource } from './OpportunityStatuses'
 export { default as OpportunityValueTypesResource } from './OpportunityValueType'

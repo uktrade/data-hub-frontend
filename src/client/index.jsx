@@ -26,7 +26,6 @@ import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHist
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
-import EditOneListForm from '../apps/companies/apps/edit-one-list/client/EditOneListForm'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
@@ -239,11 +238,6 @@ function App() {
               csrfToken={globalProps.csrfToken}
               {...props}
             />
-          )}
-        </Mount>
-        <Mount selector="#company-edit-one-list">
-          {(props) => (
-            <EditOneListForm {...props} csrfToken={globalProps.csrfToken} />
           )}
         </Mount>
         <Mount selector="#large-capital-profile-collection">
