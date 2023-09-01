@@ -38,6 +38,14 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.sector,
     }),
   },
+  subSectors: {
+    queryParam: 'sub_sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.subSectorOptions,
+      value: queryParams.sub_sector_descends,
+      categoryLabel: LABELS.subSector,
+    }),
+  },
   countries: {
     queryParam: 'country',
     options: buildOptionsFilter({

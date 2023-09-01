@@ -20,7 +20,8 @@ const getCompanies = ({
   page,
   headquarter_type,
   name,
-  sector_descends,
+  sector_descends = [],
+  sub_sector_descends = [],
   country,
   uk_postcode,
   uk_region,
@@ -44,7 +45,7 @@ const getCompanies = ({
       headquarter_type,
       is_global_ultimate: headquarter_type == GLOBAL_HQ_ID ? true : undefined,
       name,
-      sector_descends,
+      sector_descends: [...sector_descends, ...sub_sector_descends],
       country,
       uk_postcode,
       uk_region,
@@ -76,6 +77,11 @@ const getCompaniesMetadata = () =>
         level__lte: '0',
       },
     }),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__gte: '1',
+      },
+    }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
     getMetadataOptions(urls.metadata.administrativeArea(), {
@@ -89,6 +95,7 @@ const getCompaniesMetadata = () =>
     .then(
       ([
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,
@@ -96,6 +103,7 @@ const getCompaniesMetadata = () =>
         countryOptions,
       ]) => ({
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,

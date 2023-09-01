@@ -104,6 +104,16 @@ const CompaniesCollection = ({
               selectedOptions={selectedFilters.sectors.options}
               data-test="sector-filter"
             />
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.subSector}
+              name="sub_sector"
+              qsParam="sub_sector_descends"
+              placeholder="Search sub-sector"
+              options={optionMetadata.subSectorOptions}
+              selectedOptions={selectedFilters.subSectors.options}
+              data-test="sub-sector-filter"
+            />
             <Filters.CheckboxGroup
               legend={LABELS.companyStatus}
               name="archived"
