@@ -39,6 +39,7 @@ const minimumPayload = {
   limit: 10,
   offset: 0,
   sortby: 'date:desc',
+  sector_descends: [],
 }
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'

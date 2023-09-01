@@ -37,6 +37,7 @@ const minimumPayload = {
   limit: 10,
   offset: 0,
   sortby: 'modified_on:desc',
+  sector_descends: [],
 }
 
 const activeStatusFlag = 'false'
