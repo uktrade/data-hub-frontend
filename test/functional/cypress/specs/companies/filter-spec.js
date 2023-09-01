@@ -256,7 +256,7 @@ describe('Companies Collections Filter', () => {
       removeChip(aircraftDesignSubSectorId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
-      assertPayload('@apiRequest', expectedPayload)
+      assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
     })
