@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export const decorators = [
-  (s) => (
+  (Story) => (
     <>
       <GlobalStyle />
       <DataHubProvider
@@ -35,7 +35,7 @@ export const decorators = [
           ...formTasks,
         }}
       >
-        {s()}
+        <Story />
       </DataHubProvider>
     </>
   ),
