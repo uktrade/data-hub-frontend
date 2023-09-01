@@ -20,6 +20,7 @@ module.exports = () => {
       currentAdviserName: req.session?.user?.name,
       activeFeatures: req.session?.user?.active_features || [],
       activeFeatureGroups: req.session?.user?.active_feature_groups || [],
+      userPermissions: req.session?.user?.permissions || [],
     }
     next()
   }
