@@ -168,6 +168,7 @@ const parseProps = (domNode) => {
       currentAdviserName: '',
       activeFeatures: null,
       activeFeatureGroups: null,
+      userPermissions: [],
     }
   }
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
