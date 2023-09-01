@@ -168,6 +168,7 @@ const parseProps = (domNode) => {
       currentAdviserName: '',
       activeFeatures: null,
       activeFeatureGroups: null,
+      userPermissions: [],
     }
   }
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -181,6 +182,7 @@ const {
   currentAdviserName,
   activeFeatures,
   activeFeatureGroups,
+  userPermissions,
 } = parseProps(appWrapper)
 
 export const reducers = {
@@ -189,6 +191,7 @@ export const reducers = {
   activeFeatures: () => activeFeatures,
   activeFeatureGroups: () => activeFeatureGroups,
   modulePermissions: () => modulePermissions,
+  userPermissions: () => userPermissions,
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,
   [COMPANY_LISTS_STATE_ID]: companyListsReducer,
