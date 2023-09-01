@@ -30,7 +30,6 @@ const {
 } = require('./controllers')
 
 const { renderProjectsView } = require('./controllers/projects')
-const { renderPropositionList } = require('./controllers/propositions')
 const { renderAdminView } = require('./controllers/admin')
 const { renderEvidenceView } = require('./controllers/evidence')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
@@ -99,12 +98,6 @@ router
   .get(team.editClientRelationshipManagement.getHandler)
 
 router.route('/:investmentId/edit-team-members').get(renderTeamEdit)
-
-router.get(
-  '/:investmentId/propositions',
-  setPropositionsReturnUrl,
-  renderPropositionList
-)
 
 router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
 
