@@ -68,7 +68,6 @@ import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/Co
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import AccountManagement from './modules/Companies/AccountManagement'
-import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
 import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
 
@@ -393,9 +392,6 @@ function App() {
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
-        </Mount>
-        <Mount selector="#project-interactions">
-          {(props) => <ProjectInteractions {...props} />}
         </Mount>
         <Mount selector="#project-propositions">
           {(props) => <ProjectPropositions {...props} />}
