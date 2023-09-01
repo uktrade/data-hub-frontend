@@ -63,15 +63,20 @@ const getInteractions = ({
   date_before,
   date_after,
   sortby = 'date:desc',
-  sector_descends = [],
-  sub_sector_descends = [],
+  sector_descends,
+  sub_sector_descends,
   was_policy_feedback_provided,
   policy_areas,
   policy_issue_types,
   company_one_list_group_tier,
   dit_participants__team,
-}) =>
-  apiProxyAxios
+}) => {
+  if (sub_sector_descends) {
+    sector_descends = sector_descends
+      ? [...sector_descends, ...sub_sector_descends]
+      : [...sub_sector_descends]
+  }
+  return apiProxyAxios
     .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
@@ -83,7 +88,7 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
-      sector_descends: [...sector_descends, ...sub_sector_descends],
+      sector_descends,
       was_policy_feedback_provided,
       policy_areas,
       policy_issue_types,
@@ -91,5 +96,6 @@ const getInteractions = ({
       dit_participants__team,
     })
     .then(({ data }) => transformResponseToCollection(data))
+}
 
 export { getInteractions, getInteractionsMetadata }
