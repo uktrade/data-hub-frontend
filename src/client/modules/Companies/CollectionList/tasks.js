@@ -40,6 +40,10 @@ const getCompanies = ({
       limit,
       offset: getPageOffset({ limit, page }),
       headquarter_type,
+      is_global_ultimate:
+        headquarter_type == '43281c5e-92a4-4794-867b-b4d5f801e6f3'
+          ? true
+          : undefined,
       name,
       sector_descends,
       country,
