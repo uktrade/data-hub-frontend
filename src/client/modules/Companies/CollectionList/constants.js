@@ -41,3 +41,5 @@ export const SORT_OPTIONS = [
     value: 'latest_interaction_date:desc',
   },
 ]
+
+export const GLOBAL_HQ_ID = '43281c5e-92a4-4794-867b-b4d5f801e6f3'

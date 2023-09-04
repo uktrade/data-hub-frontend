@@ -8,9 +8,10 @@ import { getPageOffset } from '../../../utils/pagination'
 
 import { transformResponseToCompanyCollection } from './transformers'
 
+import { GLOBAL_HQ_ID } from './constants'
+
 const usa = '81756b9a-5d95-e211-a939-e4115bead28a'
 const canada = '5daf72a6-5d95-e211-a939-e4115bead28a'
-const globalHeadquarterId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -41,8 +42,7 @@ const getCompanies = ({
       limit,
       offset: getPageOffset({ limit, page }),
       headquarter_type,
-      is_global_ultimate:
-        headquarter_type == globalHeadquarterId ? true : undefined,
+      is_global_ultimate: headquarter_type == GLOBAL_HQ_ID ? true : undefined,
       name,
       sector_descends,
       country,
