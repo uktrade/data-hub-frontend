@@ -71,11 +71,12 @@ const getInteractions = ({
   company_one_list_group_tier,
   dit_participants__team,
 }) => {
-  if (sub_sector_descends) {
-    sector_descends = sector_descends
-      ? [...sector_descends, ...sub_sector_descends]
-      : [...sub_sector_descends]
-  }
+  const combined_sectors =
+    sub_sector_descends || sector_descends
+      ? (sector_descends ? [...sector_descends] : []).concat(
+          sub_sector_descends ? [...sub_sector_descends] : []
+        )
+      : undefined
   return apiProxyAxios
     .post('/v3/search/interaction', {
       limit,
@@ -88,7 +89,7 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
-      sector_descends,
+      sector_descends: combined_sectors,
       was_policy_feedback_provided,
       policy_areas,
       policy_issue_types,
