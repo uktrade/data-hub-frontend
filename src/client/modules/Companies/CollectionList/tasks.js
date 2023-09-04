@@ -10,6 +10,7 @@ import { transformResponseToCompanyCollection } from './transformers'
 
 const usa = '81756b9a-5d95-e211-a939-e4115bead28a'
 const canada = '5daf72a6-5d95-e211-a939-e4115bead28a'
+const globalHeadquarterId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
 
 const handleError = (error) => Promise.reject(Error(error.response.data.detail))
 
@@ -41,9 +42,7 @@ const getCompanies = ({
       offset: getPageOffset({ limit, page }),
       headquarter_type,
       is_global_ultimate:
-        headquarter_type == '43281c5e-92a4-4794-867b-b4d5f801e6f3'
-          ? true
-          : undefined,
+        headquarter_type == globalHeadquarterId ? true : undefined,
       name,
       sector_descends,
       country,
