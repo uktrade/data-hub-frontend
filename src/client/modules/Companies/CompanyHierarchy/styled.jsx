@@ -10,7 +10,7 @@ import {
 } from '../../../utils/colours'
 import { Tag, ToggleSection } from '../../../components'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 const horizontalLine = css`
   //This is the horizontal line to the left of the div
@@ -187,7 +187,8 @@ export const HierarchyHeaderContents = styled.div`
 
 export const HierarchyTag = styled(Tag)`
   float: right;
-  margin-left: 15px;
+  margin-left: ${SPACING.SCALE_3};
+  margin-top: ${SPACING.SCALE_1};
 `
 
 export const InlineDescriptionList = styled.dl`

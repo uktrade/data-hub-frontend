@@ -293,7 +293,7 @@ const HierarchyItem = ({
         }
       >
         <HierarchyItemHeading>
-          <GridColHeader>
+          <GridColHeader data-test="company-name-header">
             {Object.keys(company).length === 0 ? (
               `No related companies found`
             ) : company?.id ? (
@@ -304,7 +304,7 @@ const HierarchyItem = ({
                 {company.name}
               </Link>
             ) : (
-              `${company.name} (not on Data Hub)`
+              <span>{`${company.name} (not on Data Hub)`}</span>
             )}
             {company?.trading_names?.length > 0 && (
               <TradingNames
@@ -316,6 +316,14 @@ const HierarchyItem = ({
             )}
           </GridColHeader>
           <GridColTags>
+            {company.is_out_of_business && (
+              <HierarchyTag
+                colour="orange"
+                data-test={`${companyName}-out-of-business`}
+              >
+                Out of business
+              </HierarchyTag>
+            )}
             {company.one_list_tier?.name && (
               <HierarchyTag
                 colour="grey"
