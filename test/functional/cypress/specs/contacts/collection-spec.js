@@ -1,4 +1,5 @@
 import {
+  assertRole,
   getCollectionList,
   assertCollectionBreadcrumbs,
   assertBadge,
@@ -75,6 +76,10 @@ describe('Contacts Collections', () => {
   })
 
   assertCollectionBreadcrumbs('Contacts')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Contacts')

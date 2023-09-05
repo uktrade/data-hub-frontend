@@ -1,5 +1,6 @@
 import { assertErrorDialog } from '../../support/assertions'
 import {
+  assertRole,
   assertCollectionBreadcrumbs,
   assertAddItemButton,
   assertPaginationSummary,
@@ -21,6 +22,10 @@ describe('Event Collection List Page - React', () => {
       })
 
       assertCollectionBreadcrumbs('Events')
+
+      it('should contain a status role', () => {
+        assertRole('status')
+      })
 
       it('should display the events result count header', () => {
         cy.get('[data-test="activity-feed-collection-header"]').contains(

@@ -1,8 +1,9 @@
 import { omit } from 'lodash'
 
 import {
-  assertCollectionBreadcrumbs,
+  assertRole,
   assertListLength,
+  assertCollectionBreadcrumbs,
 } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import { interactions } from '../../../../../src/lib/urls'
@@ -175,6 +176,10 @@ describe('Interactions Collections', () => {
   })
 
   assertCollectionBreadcrumbs('Interactions')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Interactions')

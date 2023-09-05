@@ -125,7 +125,7 @@ function FilteredCollectionHeader({
   return (
     <CollectionHeaderRowContainer>
       <CollectionHeaderRow actions={actions}>
-        <StyledDiv>
+        <StyledDiv role="status">
           <StyledHeaderText>
             <StyledResultCount data-test="collectionCount">
               {formattedTotal}
