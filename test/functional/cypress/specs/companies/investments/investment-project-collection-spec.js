@@ -12,6 +12,7 @@ const {
   assertArchiveMessage,
   assertArchiveSummary,
   assertUnarchiveLink,
+  assertRole,
   assertTitle,
 } = require('../../../support/collection-list-assertions')
 const { collectionListRequest } = require('../../../support/actions')
@@ -129,6 +130,10 @@ describe('Company Investments Collection Page', () => {
     assertCompanyCollectionBreadcrumbs(dnbCorp, 'Investment')
     assertTitle('3 investment projects')
     assertRemoveAllFiltersNotPresent()
+
+    it('should contain a status role', () => {
+      assertRole('status')
+    })
 
     it('should render an "Add investment project" button', () => {
       assertAddItemButton(

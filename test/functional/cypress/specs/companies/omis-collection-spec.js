@@ -11,6 +11,7 @@ import {
   assertAddItemButtonNotPresent,
   assertListLength,
   assertBadge,
+  assertRole,
   assertMetadataItem,
   assertMetadataItemNotPresent,
   assertItemLink,
@@ -81,6 +82,10 @@ describe('Company Orders (OMIS) Collection Page', () => {
   })
 
   assertCompanyCollectionBreadcrumbs(oneListCorp, 'Orders (OMIS)')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'One List Corp')

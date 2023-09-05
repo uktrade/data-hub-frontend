@@ -113,6 +113,12 @@ const assertUpdatedOn = (item, text) => {
   cy.get(item).find('h4').should('have.text', text)
 }
 
+const assertRole = (roleType) => {
+  it('should contain a status role', () => {
+    cy.get(`[role="${roleType}"]`).should('exist')
+  })
+}
+
 const assertTitle = (headingText) => {
   it('should render a title', () => {
     cy.get('h2').should('contain', headingText)
@@ -148,6 +154,7 @@ module.exports = {
   assertArchiveMessage,
   assertUnarchiveLink,
   assertUpdatedOn,
+  assertRole,
   assertTitle,
   assertBadgeShouldNotExist,
   assertPaginationSummary,

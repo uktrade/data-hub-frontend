@@ -3,6 +3,7 @@ import {
   assertCollectionBreadcrumbs,
   assertAddItemButton,
   assertBadge,
+  assertRole,
   assertMetadataItem,
   assertListLength,
 } from '../../support/collection-list-assertions'
@@ -72,6 +73,10 @@ describe('Company Collections - React', () => {
   })
 
   assertCollectionBreadcrumbs('Companies')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should have a link to add company', () => {
     assertAddItemButton('Add company', '/companies/create')

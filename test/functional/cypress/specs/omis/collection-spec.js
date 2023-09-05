@@ -10,6 +10,7 @@ import {
   assertOMISSumary,
   assertItemLink,
   assertUpdatedOn,
+  assertRole,
 } from '../../support/collection-list-assertions'
 import { omisCollectionListRequest } from '../../support/actions'
 import { omis } from '../../../../../src/lib/urls'
@@ -55,6 +56,10 @@ describe('Orders (OMIS) Collection List Page', () => {
   })
 
   assertCollectionBreadcrumbs('Orders (OMIS)')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Orders (OMIS)')
