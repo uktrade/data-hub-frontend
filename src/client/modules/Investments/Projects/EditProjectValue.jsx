@@ -124,7 +124,7 @@ const EditProjectValue = ({ projectId }) => (
             />
             <ResourceOptionsFieldDisabled
               name="average_salary"
-              label="Average salary of new jobs here?123"
+              label="Average salary of new jobs here"
               resource={SalaryRangeResource}
               field={FieldRadios}
               initialValue={project.averageSalary?.id}

@@ -49,7 +49,8 @@ const ResourceOptionsField = ({
   taskName,
   date,
   resultToOptions = idNamesToValueLabels,
-  interceptOption = (x) => x.disabledOn === null || x.disabledOn > date,
+  interceptOption = (x) =>
+    x.disabledOn === null || new Date(x.disabledOn) > new Date(date),
   ...props
 }) => (
   <Rsrc {...{ name: taskName, id, payload }} progressBox={true}>
@@ -60,7 +61,7 @@ const ResourceOptionsField = ({
         options={
           result === undefined
             ? []
-            : resultToOptions(result).filter(interceptOption)
+            : resultToOptions(result.filter(interceptOption))
         }
       />
     )}
@@ -73,6 +74,6 @@ ResourceOptionsField.propTypes = {
   resource: PropTypes.func,
   taskName: PropTypes.string,
   resultToOptions: PropTypes.func,
-  date: PropTypes.date,
+  date: PropTypes.string,
 }
 export default ResourceOptionsField
