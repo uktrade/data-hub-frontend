@@ -298,12 +298,18 @@ describe('One List core team', () => {
       })
     })
 
+    it('should render the edit core team button', () => {
+      cy.get('[data-test="edit-core-team-button"]')
+        .should('exist')
+        .should('have.attr', 'href', urls.companies.editVirtualTeam(company.id))
+    })
+
     it('should render the details section', () => {
       cy.get('[data-test=core-team-details]')
         .click()
         .should('exist')
         .contains(
-          'Need to find out more, or edit the One List tier information?For more information, or if you need to change the One List tier or account management team for this company, go to the Digital Workspace (opens in a new window or tab) or email'
+          'Need to find out more, or edit the One List tier information?For more information, or if you need to change the One List tier or account management team for this company, go to the Digital Workspace (opens in new tab) or email'
         )
     })
   })
@@ -363,6 +369,9 @@ describe('One List core Tier D team', () => {
           ],
         ],
       })
+    })
+    it('it should not render a button to edit core team', () => {
+      cy.get('[data-test="edit-core-team-button"]').should('not.exist')
     })
   })
 

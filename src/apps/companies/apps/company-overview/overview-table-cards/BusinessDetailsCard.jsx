@@ -28,7 +28,7 @@ const BusinessDetailsCard = ({ company }) => (
           company.companyNumber,
           <NewWindowLink
             href={urls.external.companiesHouse(company.companyNumber)}
-            aria-label="Opens on Companies House website"
+            aria-label={`Companies House number: ${company.companyNumber} (opens in new tab on Companies House website)`}
             data-test="companies-house-link"
           >
             {company.companyNumber}
@@ -57,7 +57,7 @@ const BusinessDetailsCard = ({ company }) => (
     </SummaryTable.Row>
     <SummaryTable.Row heading="Turnover">
       {buildCellContents(
-        company.turnoverGbp && company.turnoverRange,
+        company.turnoverGbp || company.turnoverRange,
         company.turnoverGbp
           ? currencyGBP(company.turnoverGbp, {
               maximumSignificantDigits: 2,

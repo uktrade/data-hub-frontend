@@ -33,11 +33,18 @@ const reactRoutes = [
   '/companies/:companyId/company-tree',
   '/companies/:companyId/account-management/strategy/create',
   '/companies/:companyId/account-management/strategy/edit',
-  '/investments/projects/:investmentId/status',
+  '/investments/projects/:projectId/status',
   '/companies/:companyId/account-management/objective/create',
   '/companies/:companyId/account-management/objective/:objectiveId/edit',
   '/companies/:companyId/account-management/objective/edit',
   '/companies/:companyId/account-management/objective/archived',
+  '/investments/projects/:projectId/find-associated',
+  '/investments/projects/:projectId/edit-associated/:associatedProjectId',
+  '/investments/projects/:projectId/remove-associated',
+  '/investments/projects/:projectId/find-ukcompany',
+  '/investments/projects/:projectId/edit-ukcompany/:companyId',
+  '/investments/projects/:projectId/remove-ukcompany',
+  '/companies/:companyId/edit-one-list',
 ]
 
 reactRoutes.forEach((path) => {

@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { isArray, assign, compact, pickBy } = require('lodash')
+const { assign, compact, pickBy } = require('lodash')
 
 const labels = require('../labels')
 
@@ -50,19 +50,6 @@ function transformInvestmentProjectToListItem({
   }
 }
 
-function transformInvestmentListItemToDisableMetaLinks(item) {
-  if (!isArray(item.meta)) {
-    return item
-  }
-
-  const meta = item.meta.map((metaItem) => {
-    return assign({}, metaItem, { isInert: true })
-  })
-
-  return assign({}, item, { meta })
-}
-
 module.exports = {
   transformInvestmentProjectToListItem,
-  transformInvestmentListItemToDisableMetaLinks,
 }

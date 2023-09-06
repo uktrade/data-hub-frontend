@@ -258,7 +258,7 @@ describe('Company Export tab', () => {
           { label: 'Export win category', value: 'Increasing export turnover' },
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile (opens in a new window or tab)',
+            value: '"Find a supplier" profile (opens in new tab)',
           },
 
           { label: 'Export potential', value: 'Unavailable' },

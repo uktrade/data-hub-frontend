@@ -115,7 +115,7 @@ const EditProfileDetails = ({ profile }) => {
                         investorTypeOptions
                       )}
                       placeholder="Please select an investor type"
-                      arial-label="Select an investor type"
+                      aria-label="Select an investor type"
                     />
                     <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
                       <FieldCurrency

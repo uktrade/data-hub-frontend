@@ -1,19 +1,20 @@
 import React from 'react'
+import { H3, H4, Link, GridCol, GridRow } from 'govuk-react'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import Button from '@govuk-react/button'
+import Details from '@govuk-react/details'
+
+import styled from 'styled-components'
+import { Metadata, NewWindowLink } from '../../../components'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import {
   CompanyObjectivesCountResource,
   CompanyObjectivesResource,
   CompanyResource,
 } from '../../../components/Resource'
-import { H3, H4, Link } from 'govuk-react'
-import Button from '@govuk-react/button'
 import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
-import { GridCol, GridRow } from 'govuk-react'
-import styled from 'styled-components'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-import CompanyLayout from '../../../components/Layout/CompanyLayout'
-import { Metadata } from '../../../components'
 import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
@@ -52,6 +53,15 @@ const AddObjectiveButton = styled(GridCol)`
 const ArchivedObjectivesLink = styled(GridCol)`
   padding-top: 7px;
 `
+const oneListEmail = 'one.list@invest-trade.uk'
+
+const canEditOneList = (permissions) =>
+  permissions &&
+  permissions.includes('company.change_company') &&
+  permissions.includes('company.change_one_list_core_team_member') &&
+  permissions.includes(
+    'company.change_one_list_tier_and_global_account_manager'
+  )
 
 const Strategy = ({ company }) => (
   <SectionGridRow data-test="strategy-row">
@@ -237,8 +247,37 @@ const AccountManagement = ({
           isItaTierDAccount(company.oneListGroupTier) ? (
             <LeadITA company={company} permissions={permissions} />
           ) : (
-            <CoreTeamAdvisers company={company} oneListEmail={ONE_LIST_EMAIL} />
+            <div>
+              <CoreTeamAdvisers
+                company={company}
+                oneListEmail={ONE_LIST_EMAIL}
+              />
+              {canEditOneList(permissions) && (
+                <div>
+                  <Button
+                    data-test="edit-core-team-button"
+                    as={Link}
+                    href={urls.companies.editVirtualTeam(companyId)}
+                  >
+                    Edit core team
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
+          <Details
+            summary="Need to find out more, or edit the One List tier information?"
+            data-test="core-team-details"
+          >
+            For more information, or if you need to change the One List tier or
+            account management team for this company, go to the{' '}
+            <NewWindowLink
+              href={urls.external.digitalWorkspace.accountManagement}
+            >
+              Digital Workspace
+            </NewWindowLink>{' '}
+            or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+          </Details>
         </CompanyLayout>
       )}
     </CompanyResource>

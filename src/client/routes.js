@@ -23,6 +23,11 @@ import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
+import FindAssociatedProject from './modules/Investments/Projects/FindAssociatedProject'
+import EditAssociatedProject from './modules/Investments/Projects/EditAssociatedProject'
+import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCompany'
+import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCompany'
+import EditOneList from './modules/Companies/CoreTeam/EditOneList'
 
 const routes = {
   companies: [
@@ -65,6 +70,11 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/archived',
       module: 'datahub:companies',
       component: ArchivedObjectives,
+    },
+    {
+      path: '/companies/:companyId/edit-one-list',
+      module: 'datahub:companies',
+      component: EditOneList,
     },
   ],
   contacts: [
@@ -169,9 +179,39 @@ const routes = {
   ],
   investments: [
     {
-      path: '/investments/projects/:investmentId/status',
+      path: '/investments/projects/:projectId/status',
       module: 'datahub:investments',
       component: EditProjectStatus,
+    },
+    {
+      path: '/investments/projects/:projectId/find-associated',
+      module: 'datahub:investments',
+      component: FindAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-associated/:associatedProjectId',
+      module: 'datahub:investments',
+      component: EditAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/remove-associated',
+      module: 'datahub:investments',
+      component: EditAssociatedProject,
+    },
+    {
+      path: '/investments/projects/:projectId/find-ukcompany',
+      module: 'datahub:investments',
+      component: FindRecipientCompany,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-ukcompany/:companyId',
+      module: 'datahub:investments',
+      component: EditRecipientCompany,
+    },
+    {
+      path: '/investments/projects/:projectId/remove-ukcompany',
+      module: 'datahub:investments',
+      component: EditRecipientCompany,
     },
   ],
 }

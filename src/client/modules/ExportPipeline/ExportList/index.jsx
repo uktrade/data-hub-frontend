@@ -162,7 +162,7 @@ const ExportList = ({
               </FiltersContainer>
             )}
           </Task.Status>
-          <HeaderContainer>
+          <HeaderContainer role="status">
             <StyledHeader>
               <StyledResultCount data-test="collectionCount">
                 {count}

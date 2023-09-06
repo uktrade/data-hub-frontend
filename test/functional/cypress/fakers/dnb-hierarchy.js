@@ -32,6 +32,7 @@ const companyTreeItemFaker = (overrides = {}) => ({
   headquarter_type: faker.helpers.arrayElement(HEADQUARTER_TYPE),
   hierarchy: 1,
   subsidiaries: [],
+  is_out_of_business: false,
   ...overrides,
 })
 

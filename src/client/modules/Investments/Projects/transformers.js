@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Link } from 'govuk-react'
+import { get } from 'lodash'
 
 import { transformDateObjectToDateString } from '../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
@@ -14,10 +15,15 @@ import {
   NOT_LINKED_TO_R_AND_D,
   INVESTMENT_PROJECT_STAGES,
   PROPOSITION_STATUSES,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
 } from './constants'
 import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
+import labels from '../../Companies/CollectionList/labels'
+import { addressToString } from '../../../utils/addresses'
+import { formatMediumDateTime } from '../../../utils/date'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -330,7 +336,7 @@ export const mapFieldToUrl = (field, projectId) => {
     return urls.investments.projects.editProjectManagement(projectId)
   }
 
-  return urls.investments.projects.editAssociatedProject(projectId)
+  return urls.investments.projects.findAssociatedProject(projectId)
 }
 
 export const getNextStage = (currentStage) =>
@@ -372,8 +378,8 @@ export const transformFdiRAndDProject = (project) => {
         <br />
         <Link
           href={
-            urls.investments.projects.editAssociatedProject(project.id) +
-            '?term=' +
+            urls.investments.projects.findAssociatedProject(project.id) +
+            '?project_code=' +
             project.associatedNonFdiRAndDProject.projectCode
           }
           data-test="edit-project-link"
@@ -381,12 +387,17 @@ export const transformFdiRAndDProject = (project) => {
           Edit project
         </Link>
         <br />
-        <Link
-          href={urls.investments.projects.removeAssociatedProject(project.id)}
-          data-test="remove-project-link"
-        >
-          Remove association
-        </Link>
+        {project.stage.name != STAGE_VERIFY_WIN &&
+          project.stage.name != STAGE_WON && (
+            <Link
+              href={urls.investments.projects.removeAssociatedProject(
+                project.id
+              )}
+              data-test="remove-project-link"
+            >
+              Remove association
+            </Link>
+          )}
       </>
     )
   }
@@ -394,7 +405,7 @@ export const transformFdiRAndDProject = (project) => {
   if (project.investmentType?.name === 'FDI' && project.nonFdiRAndDBudget) {
     return (
       <Link
-        href={urls.investments.projects.editAssociatedProject(project.id)}
+        href={urls.investments.projects.findAssociatedProject(project.id)}
         data-test="find-project-link"
       >
         Find project
@@ -470,3 +481,131 @@ export const transformPropositionToListItem = ({
       </>
     ),
 })
+
+const transformNonFdiProjectToListItem = (projectId) => (project) => {
+  const {
+    id,
+    name,
+    project_code,
+    stage,
+    investment_type,
+    status,
+    investor_company,
+    estimated_land_date,
+    sector,
+  } = project
+
+  const badges = [
+    { text: stage.name },
+    { text: investment_type.name },
+    { text: status },
+  ]
+
+  const metadata = [
+    { label: 'Investor', value: investor_company.name },
+    { label: 'Sector', value: sector ? sector.name : '' },
+    {
+      label: 'Estimated land date',
+      value: estimated_land_date && format(estimated_land_date, 'MMMM yyyy'),
+    },
+  ].filter((metadata) => metadata.value)
+
+  return {
+    id,
+    headingUrl: urls.investments.projects.editAssociatedProject(projectId, id),
+    headingText: name,
+    subheading: `Project code ${project_code}`,
+    badges,
+    metadata,
+  }
+}
+
+export const transformNonFdiResponseToCollection = (
+  { count, results = [] },
+  projectId
+) => ({
+  count,
+  results: results.map(transformNonFdiProjectToListItem(projectId)),
+})
+
+export const checkIfAssociatedProjectExists = (hasAssociatedProject) =>
+  hasAssociatedProject ? 'Update associated project' : 'Add associated project'
+
+const transformCompanyToListItem =
+  (projectId) =>
+  ({
+    id,
+    name,
+    sector,
+    uk_region,
+    trading_names,
+    address,
+    modified_on,
+    headquarter_type,
+    global_headquarters,
+    latest_interaction_date,
+  } = {}) => {
+    const metadata = [
+      {
+        label: 'Sector',
+        value: get(sector, 'name'),
+      },
+      {
+        label: 'Global HQ',
+        value: get(global_headquarters, 'name'),
+      },
+      {
+        label: labels.address.companyAddress,
+        value: addressToString(address),
+      },
+    ]
+
+    if (trading_names && trading_names.length) {
+      metadata.push({
+        label: labels.hqLabels.trading_names,
+        value: trading_names.join(', '),
+      })
+    }
+
+    if (latest_interaction_date) {
+      metadata.push({
+        label: 'Last interaction date',
+        value: format(latest_interaction_date),
+      })
+    }
+
+    if (headquarter_type) {
+      metadata.push({
+        label: 'Headquarter type',
+        value: labels.hqLabels[get(headquarter_type, 'name')],
+      })
+    }
+
+    const badges = [
+      { text: get(address, 'country.name') },
+      { text: get(uk_region, 'name') },
+      { text: labels.hqLabels[get(headquarter_type, 'name')] },
+    ].filter((item) => item.text)
+
+    return {
+      id,
+      subheading: modified_on
+        ? `Updated on ${formatMediumDateTime(modified_on)}`
+        : undefined,
+      headingText: name,
+      headingUrl: urls.investments.projects.editRecipientCompany(projectId, id),
+      badges,
+      metadata: metadata.filter((item) => item.value),
+    }
+  }
+
+export const transformResponseToCompanyCollection = (
+  projectId,
+  { count, results = [] }
+) => ({
+  count,
+  results: results.map(transformCompanyToListItem(projectId)),
+})
+
+export const checkIfRecipientCompanyExists = (hasRecipientCompany) =>
+  hasRecipientCompany ? 'Update recipient company' : 'Add recipient company'

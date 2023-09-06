@@ -15,6 +15,7 @@ const {
   assertArchiveSummary,
   assertUnarchiveLink,
   assertUpdatedOn,
+  assertRole,
   assertTitle,
 } = require('../../support/collection-list-assertions')
 const { collectionListRequest } = require('../../support/actions')
@@ -114,6 +115,10 @@ describe('Company Contacts Collections', () => {
     assertCompanyCollectionBreadcrumbs(dnbFixture, 'Contacts')
     assertTitle('2 contacts')
     assertRemoveAllFiltersNotPresent()
+
+    it('should contain a status role', () => {
+      assertRole('status')
+    })
 
     it('should render an "Add contact" button', () => {
       assertAddItemButton(

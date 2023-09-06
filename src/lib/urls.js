@@ -147,6 +147,10 @@ module.exports = {
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
+    editVirtualTeam: url(
+      '/companies',
+      '/:companyId/edit-one-list?step=oneListAdvisers'
+    ),
     interactions: createInteractionsSubApp(
       '/companies',
       '/:companyId/interactions'
@@ -394,9 +398,13 @@ module.exports = {
         '/investments',
         '/projects/:projectId/edit-project-management'
       ),
+      findAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/find-associated'
+      ),
       editAssociatedProject: url(
         '/investments',
-        '/projects/:projectId/edit-associated'
+        '/projects/:projectId/edit-associated/:associatedProjectId'
       ),
       evidence: {
         index: url('/investments', '/projects/:projectId/evidence'),
@@ -412,7 +420,11 @@ module.exports = {
       },
       recipientCompany: url(
         '/investments',
-        '/projects/:projectId/edit-ukcompany'
+        '/projects/:projectId/find-ukcompany'
+      ),
+      editRecipientCompany: url(
+        '/investments',
+        '/projects/:projectId/edit-ukcompany/:companyId'
       ),
       removeRecipientCompany: url(
         '/investments',

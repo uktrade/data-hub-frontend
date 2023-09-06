@@ -177,6 +177,7 @@ const DataHubBar = ({
           showVerticalNav={showVerticalNav}
           onClick={() => onShowVerticalNav(!showVerticalNav)}
           role="button"
+          aria-expanded={showVerticalNav}
           aria-label="Show or hide navigation"
           aria-controls="navigation sub-navigation logo-navigation"
         >

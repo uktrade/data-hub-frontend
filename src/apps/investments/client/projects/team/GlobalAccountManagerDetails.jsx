@@ -27,11 +27,7 @@ const GlobalAccountManagerDetails = ({
     >
       If you need to change the Global Account Manager for this company, go to
       the{' '}
-      <NewWindowLink
-        href={urls.external.digitalWorkspace.accountManagement}
-        aria-label="Digital Workspace"
-        showHelpText={false}
-      >
+      <NewWindowLink href={urls.external.digitalWorkspace.accountManagement}>
         Digital Workspace
       </NewWindowLink>
       {' or '}

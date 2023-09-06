@@ -12,8 +12,7 @@ describe('Event Aventri Details', () => {
 
   const aventriLink =
     'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid='
-  const aventriLinkText = 'View in Aventri'
-  const newTabText = 'opens in a new window or tab'
+  const aventriLinkText = 'View in Aventri (opens in new tab)'
 
   context('when it is a valid event ', () => {
     before(() => {
@@ -103,7 +102,6 @@ describe('Event Aventri Details', () => {
       })
       cy.get('[data-test="eventAventriDetails"]').within(() => {
         cy.get('[data-test="newWindowLink"]')
-          .should('have.attr', 'aria-label', 'Opens in a new window or tab')
           .should('have.attr', 'href', aventriLink + eventInPastId)
           .should('have.text', aventriLinkText)
       })
@@ -125,10 +123,8 @@ describe('Event Aventri Details', () => {
           aventriStatusContent
         )
         cy.get('[data-test="newWindowLink"]')
-          .should('have.attr', 'aria-label', 'Opens in a new window or tab')
           .should('have.attr', 'href', aventriLink + eventInPastId)
           .should('have.text', aventriLinkText)
-        cy.contains(newTabText).should('be.visible')
       })
     })
 
@@ -143,7 +139,6 @@ describe('Event Aventri Details', () => {
         })
         cy.get('[data-test="eventAventriDetails"]').within(() => {
           cy.get('[data-test="newWindowLink"]')
-            .should('have.attr', 'aria-label', 'Opens in a new window or tab')
             .should('have.attr', 'href', aventriLink + eventId)
             .should('have.text', aventriLinkText)
         })

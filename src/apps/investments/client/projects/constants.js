@@ -14,6 +14,8 @@ export const LABELS = {
   estimatedLandDateBefore: 'Estimated land date to',
   landDate: 'Land date',
   includeRelatedCompanies: 'Include related companies',
+  name: 'Project name',
+  projectCode: 'Project code',
 }
 
 export const SORT_OPTIONS = [

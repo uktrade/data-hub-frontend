@@ -22,6 +22,7 @@ const reducer = (state, action) =>
     ...Form.reducerSpread,
     activeFeatureGroups: () => [],
     modulePermissions: () => [],
+    userPermissions: () => [],
   })(action.type === 'RESET' ? undefined : state, action)
 
 export const store = legacy_createStore(
