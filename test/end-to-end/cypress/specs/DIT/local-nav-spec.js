@@ -91,7 +91,7 @@ describe('DBT Permission', () => {
     })
 
     it('should display DBT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Project details',
         'Project team',
         'Interactions',
