@@ -36,15 +36,12 @@ const buildProjectBreadcrumbs = (pageBreadcrumbs) => {
 
 const userCanViewInteractions = (permissions) =>
   permissions.includes(
-    'interaction.view_associated_investmentproject_interaction',
-    'interaction.view_all_interaction'
-  )
+    'interaction.view_associated_investmentproject_interaction'
+  ) || permissions.includes('interaction.view_all_interaction')
 
 const userCanViewPropositions = (permissions) =>
-  permissions.includes(
-    'proposition.view_all_proposition',
-    'proposition.view_associated_proposition'
-  )
+  permissions.includes('proposition.view_all_proposition') ||
+  permissions.includes('proposition.view_associated_proposition')
 
 const userCanViewAdmin = (permissions) =>
   permissions.includes('investment.change_to_any_stage_investmentproject')

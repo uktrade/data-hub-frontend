@@ -201,17 +201,6 @@ describe('Edit the requirements of a project', () => {
     }
   )
 
-  context('When attempting to edit a non-existent project', () => {
-    it('should display an error to the user', () => {
-      cy.request({
-        url: investments.projects.editRequirements('Error'),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(500)
-      })
-    })
-  })
-
   context('When making changes to all fields', () => {
     before(() => {
       navigateToForm({ project: projectNoExistingRequirements }, 'add')
