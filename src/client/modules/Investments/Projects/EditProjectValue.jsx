@@ -129,6 +129,10 @@ const EditProjectValue = ({ projectId }) => (
               field={FieldRadios}
               initialValue={project.averageSalary?.id}
               date={project.createdOn}
+              interceptOption={(x) =>
+                x.disabledOn === null ||
+                new Date(x.disabledOn) > new Date(project.createdOn)
+              }
             />
             <FieldInput
               label="Number of safeguarded jobs"
