@@ -11,7 +11,7 @@ import {
   Form,
   Main,
 } from '../../../components'
-import ResourceOptionsFieldDisabled from '../../../components/Form/elements/ResourceOptionsFieldDisabled'
+import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import {
   FDIValuesResource,
   InvestmentResource,
@@ -122,7 +122,7 @@ const EditProjectValue = ({ projectId }) => (
               type="number"
               initialValue={project.numberNewJobs?.toString()}
             />
-            <ResourceOptionsFieldDisabled
+            <ResourceOptionsField
               name="average_salary"
               label="Average salary of new jobs"
               resource={SalaryRangeResource}
