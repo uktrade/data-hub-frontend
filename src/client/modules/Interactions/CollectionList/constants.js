@@ -11,6 +11,7 @@ export const LABELS = {
   service: 'Service',
   teams: 'Teams',
   sector: 'Sector',
+  subSector: 'Sub-sector',
   businessIntelligence: 'Business intelligence',
   policyAreas: 'Policy areas',
   policyIssueType: 'Policy issue type',

@@ -214,6 +214,54 @@ describe('Companies Collections Filter', () => {
     })
   })
 
+  context('Sub-sector', () => {
+    const element = '[data-test="sub-sector-filter"]'
+    const aircraftDesignSubSectorId = 'af22c9d2-5f95-e211-a939-e4115bead28a'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      sortby: 'modified_on:desc',
+      archived: false,
+      sector_descends: [aircraftDesignSubSectorId],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        sub_sector_descends: [aircraftDesignSubSectorId],
+      })
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Aircraft Design')
+      assertChipExists({ label: 'Aerospace : Aircraft Design', position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.visit(`/companies?${queryString}`)
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        label: 'Sub-sector',
+        placeholder: 'Search sub-sector',
+        input: 'air',
+        expectedOption: 'Aerospace : Aircraft Design',
+      })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('sector_descends', [aircraftDesignSubSectorId])
+      assertChipExists({ label: 'Aerospace : Aircraft Design', position: 1 })
+      assertChipExists({ label: 'Active', position: 2 })
+      removeChip(aircraftDesignSubSectorId)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
   context('Country', () => {
     const element = '[data-test="country-filter"]'
     const brazilCountryId = 'b05f66a0-5d95-e211-a939-e4115bead28a'

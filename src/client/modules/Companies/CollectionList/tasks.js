@@ -21,6 +21,7 @@ const getCompanies = ({
   headquarter_type,
   name,
   sector_descends,
+  sub_sector_descends,
   country,
   uk_postcode,
   uk_region,
@@ -37,6 +38,17 @@ const getCompanies = ({
   sortby = 'modified_on:desc',
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
+  const getSectors = (sector_descends, sub_sector_descends) => {
+    if (sector_descends && sub_sector_descends) {
+      return [...sector_descends, ...sub_sector_descends]
+    }
+    if (sub_sector_descends) {
+      return sub_sector_descends
+    }
+    if (sector_descends) {
+      return sector_descends
+    }
+  }
   return apiProxyAxios
     .post('/v4/search/company', {
       limit,
@@ -44,7 +56,7 @@ const getCompanies = ({
       headquarter_type,
       is_global_ultimate: headquarter_type == GLOBAL_HQ_ID ? true : undefined,
       name,
-      sector_descends,
+      sector_descends: getSectors(sector_descends, sub_sector_descends),
       country,
       uk_postcode,
       uk_region,
@@ -76,6 +88,11 @@ const getCompaniesMetadata = () =>
         level__lte: '0',
       },
     }),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__gte: '1',
+      },
+    }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
     getMetadataOptions(urls.metadata.administrativeArea(), {
@@ -89,6 +106,7 @@ const getCompaniesMetadata = () =>
     .then(
       ([
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,
@@ -96,6 +114,7 @@ const getCompaniesMetadata = () =>
         countryOptions,
       ]) => ({
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,
