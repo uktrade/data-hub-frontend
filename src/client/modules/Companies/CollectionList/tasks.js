@@ -38,12 +38,17 @@ const getCompanies = ({
   sortby = 'modified_on:desc',
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
-  const combined_sectors =
-    sub_sector_descends || sector_descends
-      ? (sector_descends ? [...sector_descends] : []).concat(
-          sub_sector_descends ? [...sub_sector_descends] : []
-        )
-      : undefined
+  const getSectors = (sector_descends, sub_sector_descends) => {
+    if (sector_descends && sub_sector_descends) {
+      return [...sector_descends, ...sub_sector_descends]
+    }
+    if (sub_sector_descends) {
+      return sub_sector_descends
+    }
+    if (sector_descends) {
+      return sector_descends
+    }
+  }
   return apiProxyAxios
     .post('/v4/search/company', {
       limit,
@@ -51,7 +56,7 @@ const getCompanies = ({
       headquarter_type,
       is_global_ultimate: headquarter_type == GLOBAL_HQ_ID ? true : undefined,
       name,
-      sector_descends: combined_sectors,
+      sector_descends: getSectors(sector_descends, sub_sector_descends),
       country,
       uk_postcode,
       uk_region,
