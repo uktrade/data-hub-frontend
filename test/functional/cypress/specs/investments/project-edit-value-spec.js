@@ -20,6 +20,7 @@ const projectNotFDI = require('../../fixtures/investment/investment-no-existing-
 const projectWithNoSectorOrCapital = require('../../fixtures/investment/investment-no-sector.json')
 const projectWithCapitalButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
 const projectCreatedEarly = require('../../fixtures/investment/investment-created-early.json')
+const projectCreatedSame = require('../../fixtures/investment/investment-created-same-date.json')
 
 const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
 const convertBoolToInvertedYesNo = (valueToCheck) =>
@@ -490,32 +491,52 @@ describe('Edit the value details of a project', () => {
     })
   })
 
-  context('When viewing a project when a salary range is disabled', () => {
-    before(() => {
-      cy.visit(investments.projects.editValue(projectWithValue.id))
-    })
-    it('should not display the salary range for £25,000 – £29,000', () => {
-      cy.get('[data-test="field-average_salary"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Average salary of new jobs',
-          optionsCount: 3,
+  context(
+    'When viewing a project created after a salary range is disabled',
+    () => {
+      before(() => {
+        cy.visit(investments.projects.editValue(projectWithValue.id))
+      })
+      it('should not display the salary range for £25,000 – £29,000', () => {
+        cy.get('[data-test="field-average_salary"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Average salary of new jobs',
+            optionsCount: 3,
+          })
         })
       })
-    })
-  })
+    }
+  )
   context(
-    'When viewing a project when a salary range is not disabled before the project was created',
+    'When viewing a project created before a salary range is disabled',
     () => {
       before(() => {
         cy.visit(investments.projects.editValue(projectCreatedEarly.id))
       })
-      it('should display the salary range for £25,000 – £29,000', () => {
+      it('should display the salary range for £25,000 – £29,000 when the project was created before the disable date', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
             label: 'Average salary of new jobs',
             optionsCount: 4,
+          })
+        })
+      })
+    }
+  )
+  context(
+    'When viewing a project created on the same day a salary range is disabled',
+    () => {
+      before(() => {
+        cy.visit(investments.projects.editValue(projectCreatedSame.id))
+      })
+      it('should not display the salary range for £25,000 – £29,000', () => {
+        cy.get('[data-test="field-average_salary"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Average salary of new jobs',
+            optionsCount: 3,
           })
         })
       })
