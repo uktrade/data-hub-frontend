@@ -19,8 +19,9 @@ const projectOneLandDateEitherSideApril = require('../../fixtures/investment/inv
 const projectNotFDI = require('../../fixtures/investment/investment-no-existing-requirements.json')
 const projectWithNoSectorOrCapital = require('../../fixtures/investment/investment-no-sector.json')
 const projectWithCapitalButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
-const projectCreatedEarly = require('../../fixtures/investment/investment-created-early.json')
+const projectCreatedBefore = require('../../fixtures/investment/investment-created-before.json')
 const projectCreatedSame = require('../../fixtures/investment/investment-created-same-date.json')
+const projectCreatedAfter = require('../../fixtures/investment/investment-created-after.json')
 
 const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
 const convertBoolToInvertedYesNo = (valueToCheck) =>
@@ -495,7 +496,7 @@ describe('Edit the value details of a project', () => {
     'When viewing a project created after a salary range is disabled',
     () => {
       before(() => {
-        cy.visit(investments.projects.editValue(projectWithValue.id))
+        cy.visit(investments.projects.editValue(projectCreatedAfter.id))
       })
       it('should not display the salary range for £25,000 – £29,000', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
@@ -512,7 +513,7 @@ describe('Edit the value details of a project', () => {
     'When viewing a project created before a salary range is disabled',
     () => {
       before(() => {
-        cy.visit(investments.projects.editValue(projectCreatedEarly.id))
+        cy.visit(investments.projects.editValue(projectCreatedBefore.id))
       })
       it('should display the salary range for £25,000 – £29,000 when the project was created before the disable date', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
