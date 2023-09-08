@@ -8,10 +8,10 @@ const generateTask = () => {
     due_date: faker.date.future(),
     reminder_days: faker.helpers.rangeToNumber({ min: 0, max: 100 }),
     email_reminders_enabled: true,
-    advisers: [generatePerson, generatePerson],
+    advisers: [generatePerson(), generatePerson()],
     archived_by: null,
-    created_by: generatePerson,
-    modified_by: generatePerson,
+    created_by: generatePerson(),
+    modified_by: generatePerson(),
   }
 }
 
