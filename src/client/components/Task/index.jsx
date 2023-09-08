@@ -14,6 +14,7 @@ import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
 
 import styled from 'styled-components'
+import AccessDenied from '../AccessDenied'
 
 const StyledLoadingBox = styled(LoadingBox)({
   paddingBottom: 0,
@@ -251,13 +252,18 @@ Task.Status = ({
             progress &&
             renderProgress({ message: progressMessage })}
           {error &&
-            renderError({
-              noun,
-              errorMessage,
-              retry: () => start({ payload, onSuccessDispatch }),
-              dismiss: dismissError,
-              dismissable,
-            })}
+            (errorMessage ===
+            'You do not have permission to perform this action.' ? (
+              <AccessDenied />
+            ) : (
+              renderError({
+                noun,
+                errorMessage,
+                retry: () => start({ payload, onSuccessDispatch }),
+                dismiss: dismissError,
+                dismissable,
+              })
+            ))}
           <StyledLoadingBox loading={progress && progressOverlay}>
             {(!status || progressOverlay) && children()}
           </StyledLoadingBox>
