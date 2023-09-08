@@ -491,24 +491,6 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
-
-  context(
-    'When viewing a project created after a salary range is disabled',
-    () => {
-      before(() => {
-        cy.visit(investments.projects.editValue(projectCreatedAfter.id))
-      })
-      it('should not display the salary range for £25,000 – £29,000', () => {
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
-            element,
-            label: 'Average salary of new jobs',
-            optionsCount: 3,
-          })
-        })
-      })
-    }
-  )
   context(
     'When viewing a project created before a salary range is disabled',
     () => {
@@ -531,6 +513,23 @@ describe('Edit the value details of a project', () => {
     () => {
       before(() => {
         cy.visit(investments.projects.editValue(projectCreatedSame.id))
+      })
+      it('should not display the salary range for £25,000 – £29,000', () => {
+        cy.get('[data-test="field-average_salary"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Average salary of new jobs',
+            optionsCount: 3,
+          })
+        })
+      })
+    }
+  )
+  context(
+    'When viewing a project created after a salary range is disabled',
+    () => {
+      before(() => {
+        cy.visit(investments.projects.editValue(projectCreatedAfter.id))
       })
       it('should not display the salary range for £25,000 – £29,000', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
