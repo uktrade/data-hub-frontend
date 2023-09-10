@@ -57,7 +57,6 @@ const FieldTypeahead = ({
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
           name={name}
-          aria-label={label || legend}
           onBlur={onBlur}
           onChange={(newValue) =>
             setFieldValue(name, props.isMulti ? newValue : newValue[0])

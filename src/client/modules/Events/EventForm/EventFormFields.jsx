@@ -74,7 +74,6 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.eventTypeOptions}
       placeholder="Select event type"
       required="Select at least one event type"
-      aria-label="Type of event"
       noOptionsMessage="No event type found"
     />
     <FieldDate
@@ -93,7 +92,6 @@ export const EventFormFields = ({ values }) => (
       label="Event location type (optional)"
       options={values?.metadata?.eventLocationTypes}
       placeholder="Select event"
-      aria-label="Event location type (optional)"
       noOptionsMessage="No event location found"
     />
     <FieldInput
@@ -147,7 +145,6 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.teams}
       required="Select at least one team hosting the event"
       placeholder="Select team"
-      aria-label="Team hosting the event"
       noOptionsMessage="No hosting team found"
     />
     <FieldTypeahead
@@ -196,7 +193,6 @@ export const EventFormFields = ({ values }) => (
       name="related_programmes"
       options={values?.metadata?.programmes}
       placeholder="Select programme"
-      aria-label="Related programmes (optional)"
       noOptionsMessage="No programmes found"
     />
   </>
