@@ -15,7 +15,7 @@ import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
 import urls from '../../../lib/urls'
 
-const DATA_WORKSPACE = 'Data Workspace'
+const DATA_WORKSPACE = 'Switch to Data Workspace'
 const CRM_COMMUNITY_LABEL = 'CRM community'
 const COMMUNITY_PATHNAME = urls.community.index()
 
