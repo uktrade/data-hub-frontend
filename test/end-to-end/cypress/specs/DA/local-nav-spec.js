@@ -38,7 +38,6 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only header tabs', () => {
-
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
