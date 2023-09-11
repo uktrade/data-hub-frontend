@@ -25,6 +25,16 @@ describe('DBT Permission', () => {
         'Support',
       ])
     })
+
+    it('should display all four dashboard tabs', () => {
+      cy.get('[data-test="tab-item"]').as('tabItems')
+      assertLocalNav('@tabItems', [
+        'Company lists',
+        'Investment projects',
+        'Export projects',
+        'Referrals',
+      ])
+    })
   })
 
   describe('activity', () => {
