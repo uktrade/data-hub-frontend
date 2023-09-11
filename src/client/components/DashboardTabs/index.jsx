@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
 import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
@@ -9,12 +10,25 @@ import ExportList from '../../modules/ExportPipeline/ExportList'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import ReferralList from '../ReferralList'
+import { state2props } from './state'
 
 const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
+const canViewCompanyLists = (permissions) =>
+  permissions.includes('company_list.view_companylist')
+
+const canViewReferrals = (permissions) =>
+  permissions.includes('company_referral.view_companyreferral')
+
+const DashboardTabs = ({
+  id,
+  adviser,
+  hasInvestmentProjects,
+  onTabChange,
+  userPermissions,
+}) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
@@ -23,10 +37,12 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
-        [urls.dashboard.index()]: {
-          label: 'Company lists',
-          content: <CompanyLists />,
-        },
+        ...(canViewCompanyLists(userPermissions) && {
+          [urls.dashboard.index()]: {
+            label: 'Company lists',
+            content: <CompanyLists />,
+          },
+        }),
         [urls.dashboard.investmentProjects()]: {
           label: 'Investment projects',
           content: hasInvestmentProjects ? (
@@ -39,10 +55,12 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects, onTabChange }) => (
           label: 'Export projects',
           content: <ExportList />,
         },
-        [urls.companies.referrals.list()]: {
-          label: 'Referrals',
-          content: <ReferralList id="ReferralList" />,
-        },
+        ...(canViewReferrals(userPermissions) && {
+          [urls.companies.referrals.list()]: {
+            label: 'Referrals',
+            content: <ReferralList id="ReferralList" />,
+          },
+        }),
       }}
     />
   </StyledDiv>
@@ -54,4 +72,4 @@ DashboardTabs.propTypes = {
   onTabChange: PropTypes.func,
 }
 
-export default DashboardTabs
+export default connect(state2props)(DashboardTabs)

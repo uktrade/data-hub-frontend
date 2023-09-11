@@ -30,14 +30,15 @@ describe('DA Permission', () => {
 
   describe('dashboard', () => {
     before(() => {
-      cy.visit(urls.dashboard.index())
+      cy.visit(urls.dashboard.investmentProjects())
     })
 
     it('should display CRM Community in the Datahub Bar', () => {
       cy.get('[data-test="crm-community-link"]').should('be.visible')
     })
 
-    it('should display DA only tabs', () => {
+    it('should display DA only header tabs', () => {
+
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
@@ -46,6 +47,11 @@ describe('DA Permission', () => {
         'Market access',
         'Support',
       ])
+    })
+
+    it('should display DA only dashboard tabs', () => {
+      cy.get('[data-test="tab-item"]').as('tabItems')
+      assertLocalNav('@tabItems', ['Investment projects', 'Export projects'])
     })
   })
 

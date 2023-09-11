@@ -33,16 +33,21 @@ describe('LEP Permission', () => {
 
   describe('dashboard', () => {
     before(() => {
-      cy.visit(urls.dashboard.index())
+      cy.visit(urls.dashboard.investmentProjects())
     })
 
-    it('should display LEP only tabs', () => {
+    it('should display LEP only header tabs', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
         'Investments',
         'Support',
       ])
+    })
+
+    it('should display LEP only dashboard tabs', () => {
+      cy.get('[data-test="tab-item"]').as('tabItems')
+      assertLocalNav('@tabItems', ['Investment projects', 'Export projects'])
     })
   })
 
