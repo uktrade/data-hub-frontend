@@ -27,6 +27,7 @@ import {
 } from './transformers'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
 import { currencyGBP } from '../../../utils/number-utils'
+import { idNamesToValueLabels } from '../../../utils'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
@@ -128,6 +129,16 @@ const EditProjectValue = ({ projectId }) => (
               resource={SalaryRangeResource}
               field={FieldRadios}
               initialValue={project.averageSalary?.id}
+              resultToOptions={(result) =>
+                idNamesToValueLabels(
+                  result.filter((option) =>
+                    option.disabledOn
+                      ? new Date(option.disabledOn) >
+                        new Date(project.createdOn)
+                      : true
+                  )
+                )
+              }
             />
             <FieldInput
               label="Number of safeguarded jobs"
