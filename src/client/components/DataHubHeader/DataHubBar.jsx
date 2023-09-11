@@ -13,11 +13,11 @@ import {
 
 import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
-import ProtectedLink from '../ProtectedLink'
+import urls from '../../../lib/urls'
 
 const DATA_WORKSPACE = 'Data Workspace'
-const MARKET_ACCESS_LABEL = 'Market Access'
-const MARKET_ACCESS_PATHNAME = 'https://market-access.trade.gov.uk/'
+const CRM_COMMUNITY_LABEL = 'CRM community'
+const COMMUNITY_PATHNAME = urls.community.index()
 
 const googleAnalyticsUTM = qs.stringify({
   utm_source: 'Data Hub',
@@ -169,16 +169,14 @@ const DataHubBar = ({
         <BetaTag>beta</BetaTag>
       </DataHubContainer>
       <Container hasFeatureGroup={hasFeatureGroup}>
-        <ProtectedLink module={'market-access'}>
-          <NavigationLink
-            data-test="market-access-link"
-            hasFeatureGroup={hasFeatureGroup}
-            showVerticalNav={showVerticalNav}
-            href={MARKET_ACCESS_PATHNAME}
-          >
-            {MARKET_ACCESS_LABEL}
-          </NavigationLink>
-        </ProtectedLink>
+        <NavigationLink
+          data-test="crm-community-link"
+          hasFeatureGroup={hasFeatureGroup}
+          showVerticalNav={showVerticalNav}
+          href={COMMUNITY_PATHNAME}
+        >
+          {CRM_COMMUNITY_LABEL}
+        </NavigationLink>
         <NavigationLink
           hasFeatureGroup={hasFeatureGroup}
           showVerticalNav={showVerticalNav}

@@ -135,20 +135,6 @@ const NavBar = ({ onShowVerticalNav, showVerticalNav, disableReactRouter }) => {
           ))}
           <StyledListItem>
             <StyledLink
-              href="/community"
-              className={
-                isActiveLink(location, {
-                  pathname: '/community',
-                })
-                  ? 'active'
-                  : ''
-              }
-            >
-              Community
-            </StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink
               href="/support"
               className={
                 isActiveLink(location, {

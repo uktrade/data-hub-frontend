@@ -16,8 +16,8 @@ describe('LEP Permission', () => {
       cy.visit(urls.companies.detail(company.pk))
     })
 
-    it('should not display Market Access in the Datahub Bar', () => {
-      cy.get('[data-test="market-access-link"]').should('not.exist')
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
     })
 
     it('should display LEP only tabs', () => {
@@ -41,7 +41,6 @@ describe('LEP Permission', () => {
         'Companies',
         'Contacts',
         'Investments',
-        'Community',
         'Support',
       ])
     })

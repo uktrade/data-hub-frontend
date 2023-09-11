@@ -62,4 +62,12 @@ export default [
         'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
     },
   },
+  {
+    label: 'Market access',
+    module: 'market-access',
+    useRouter: false,
+    to: {
+      pathname: 'https://market-access.trade.gov.uk/',
+    },
+  },
 ]

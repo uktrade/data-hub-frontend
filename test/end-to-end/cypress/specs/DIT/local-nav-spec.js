@@ -13,8 +13,8 @@ describe('DBT Permission', () => {
       cy.visit(urls.dashboard.index())
     })
 
-    it('should display Market Access in the Datahub Bar', () => {
-      cy.get('[data-test="market-access-link"]').should('be.visible')
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
     })
 
     it('should display DBT only header nav links', () => {
@@ -25,7 +25,7 @@ describe('DBT Permission', () => {
         'Interactions',
         'Investments',
         'Orders',
-        'Community',
+        'Market access',
         'Support',
       ])
     })
