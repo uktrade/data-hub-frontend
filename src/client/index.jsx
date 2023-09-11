@@ -91,58 +91,6 @@ import ErrorFallback from './components/ErrorFallback'
 import { tasks } from './tasks'
 
 import { store, history, sagaMiddleware } from './middleware'
-import { TASK_GET_COMPANY_DETAIL } from '../client/modules/Companies/CompanyDetails/state'
-import { getCompanyDetails } from '../client/modules/Companies/CompanyDetails/tasks'
-
-import { TASK_GET_EXPORT_DETAIL } from '../client/modules/ExportPipeline/ExportDetails/state'
-import { getExportDetails } from '../client/modules/ExportPipeline/ExportDetails/tasks'
-
-import { TASK_SAVE_EXPORT } from '../client/modules/ExportPipeline/ExportForm/state'
-import { saveExport } from '../client/modules/ExportPipeline/ExportForm/tasks'
-import { TASK_DELETE_EXPORT } from '../client/modules/ExportPipeline/ExportDelete/state'
-import { deleteExport } from '../client/modules/ExportPipeline/ExportDelete/tasks'
-
-import {
-  TASK_GET_EXPORT_PIPELINE_LIST,
-  TASK_GET_EXPORT_PIPELINE_METADATA,
-} from '../client/modules/ExportPipeline/ExportList/state'
-import {
-  getExportPipelineList,
-  getExportPipelineMetadata,
-} from '../client/modules/ExportPipeline/ExportList/task'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from './components/ContactForm/state'
-
-import { getListsCompanyIsIn } from './components/CompanyLocalHeader/task'
-import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/state'
-
-import {
-  TASK_CREATE_INVESTMENT_PROPOSITION,
-  TASK_ABANDON_INVESTMENT_PROPOSITION,
-} from './modules/Investments/Projects/Propositions/state'
-import {
-  createInvestmentProposition,
-  abandonInvestmentProposition,
-} from './modules/Investments/Projects/Propositions/tasks'
-
-import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
-import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
-
-import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
-import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
-
-import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
-import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
-
-import {
-  TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
-  TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
-  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
-  TASK_EDIT_INVESTMENT_PROJECT_STATUS,
-} from './modules/Investments/Projects/state'
-import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
-
-import { TASK_SAVE_STRATEGY } from './modules/Companies/AccountManagement/state'
-import { saveStrategy } from './modules/Companies/AccountManagement/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
