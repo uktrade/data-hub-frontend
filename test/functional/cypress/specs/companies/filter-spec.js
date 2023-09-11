@@ -85,7 +85,6 @@ describe('Companies Collections Filter', () => {
       sortby: 'modified_on:desc',
       archived: false,
       headquarter_type: [globalHqId],
-      is_global_ultimate: true,
     }
 
     it('should filter from the url', () => {
