@@ -1,12 +1,16 @@
 const { faker } = require('@faker-js/faker')
-const { generateTasks } = require('./tasks')
+const { generateTask, generateTasks } = require('./tasks')
 
 exports.getTasks = function (req, res) {
   res.json(generateTasks())
 }
 
 exports.getTask = function (req, res) {
-  res.json(generateTasks().results[0])
+  res.json(
+    generateTask({
+      id: req.params.taskId,
+    })
+  )
 }
 
 exports.createTask = function (req, res) {

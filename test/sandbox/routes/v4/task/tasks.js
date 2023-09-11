@@ -1,6 +1,8 @@
+// TODO - the logic in this should be moved to the fakers folder once there is a real api to call
+
 const { faker } = require('@faker-js/faker')
 
-const generateTask = () => {
+const generateTask = (overrides = {}) => {
   return {
     id: faker.string.uuid(),
     title: faker.word.sample(),
@@ -12,6 +14,7 @@ const generateTask = () => {
     archived_by: null,
     created_by: generatePerson(),
     modified_by: generatePerson(),
+    ...overrides,
   }
 }
 
@@ -35,4 +38,4 @@ const generateTasks = () => {
   }
 }
 
-module.exports = { generateTasks }
+module.exports = { generateTask, generateTasks }
