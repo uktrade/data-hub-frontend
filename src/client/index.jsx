@@ -240,11 +240,6 @@ function App() {
             />
           )}
         </Mount>
-        <Mount selector="#company-edit-one-list">
-          {(props) => (
-            <EditOneListForm {...props} csrfToken={globalProps.csrfToken} />
-          )}
-        </Mount>
         <Mount selector="#large-capital-profile-collection">
           {(props) => <LargeCapitalProfileCollection {...props} />}
         </Mount>
