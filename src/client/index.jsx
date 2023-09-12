@@ -46,7 +46,7 @@ import OpportunityChangeStatusForm from '../apps/investments/client/opportunitie
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
-import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
+import EditProjectManagement from './modules/Investments/Projects/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'

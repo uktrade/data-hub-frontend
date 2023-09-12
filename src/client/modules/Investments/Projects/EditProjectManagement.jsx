@@ -3,29 +3,26 @@ import Link from '@govuk-react/link'
 import { useParams } from 'react-router-dom'
 
 import {
+  Form,
   FieldAdvisersTypeahead,
   SummaryTable,
   NewWindowLink,
-} from '../../../../../client/components'
-import Form from '../../../../../client/components/Form'
-import urls from '../../../../../lib/urls'
+} from '../../../components'
+import urls from '../../../../lib/urls'
 import { TASK_SAVE_INVESTMENT_PROJECT_MANAGERS } from './state'
 import {
+  transformObjectForTypeahead,
+  transformAdviserForAPI,
   transformObjectForTable,
   transformLocationsForTable,
 } from './transformers'
 import {
-  transformObjectForTypeahead,
-  transformAdviserForAPI,
-} from '../../../../../client/modules/Investments/Projects/transformers'
-import {
   CompanyResource,
   InvestmentResource,
-} from '../../../../../client/components/Resource'
-import ProjectLayout from '../../../../../client/components/Layout/ProjectLayout'
-
-const { format } = require('../../../../../client/utils/date')
-const { currencyGBP } = require('../../../../../client/utils/number-utils')
+} from '../../../components/Resource'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { format } from '../../../utils/date'
+import { currencyGBP } from '../../../utils/number-utils'
 
 const EditProjectManagement = () => {
   const { projectId } = useParams()

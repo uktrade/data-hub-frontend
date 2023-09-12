@@ -44,6 +44,12 @@ export const transformObjectForTypeahead = (object) =>
 export const transformAdviserForAPI = (adviser) =>
   adviser ? adviser.value : null
 
+export const transformObjectForTable = (object, emptyText = '') =>
+  object ? object.name : emptyText
+
+export const transformLocationsForTable = (locations) =>
+  locations ? locations.map((location) => location.name).join(', ') : ''
+
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
 
