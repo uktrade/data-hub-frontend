@@ -397,8 +397,7 @@ export const tasks = {
   [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
     editInvestmentProjectTeamTasks.updateTeamMembers,
   [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: updateInvestmentProject,
-  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
-    editInvestmentProjectTeamTasks.saveProjectManagementStaff,
+  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]: updateInvestmentProject,
   [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
   [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
   [TASK_GET_MY_INVESTMENTS_LIST]: myInvestmentProjects.fetchMyInvestmentsList,
