@@ -1,15 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { isBoolean, isNumber } from 'lodash'
+import { useParams } from 'react-router-dom'
+import { H2 } from 'govuk-react'
+import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
-
 import EditHistory from '../../../client/components/EditHistory/EditHistory'
-
-const {
-  formatMediumDateTime,
-  isDateValid,
-} = require('../../../client/utils/date')
+import { InvestmentResource } from '../../../client/components/Resource'
+import urls from '../../../lib/urls'
+import ProjectLayout from '../../../client/components/Layout/ProjectLayout'
+import { formatMediumDateTime, isDateValid } from '../../../client/utils/date'
 
 function getValue(value) {
   if (isBoolean(value)) {
@@ -33,19 +33,35 @@ function getUpdatedBy(timestamp, changedBy) {
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 
-function InvestmentEditHistory({ dataEndpoint }) {
+const InvestmentEditHistory = () => {
+  const { projectId } = useParams()
   return (
-    <EditHistory
-      dataEndpoint={dataEndpoint}
-      changeType={CHANGE_TYPE_TEXT}
-      getUpdatedBy={getUpdatedBy}
-      getValue={getValue}
-    />
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <ProjectLayout
+          project={project}
+          breadcrumbs={[
+            {
+              link: urls.investments.projects.project(project.id),
+              text: project.name,
+            },
+            { text: 'Edit history' },
+          ]}
+          pageTitle="Edit history"
+        >
+          <H2 size={LEVEL_SIZE[3]} data-test="edit-history-heading">
+            Edit history
+          </H2>
+          <EditHistory
+            dataEndpoint={urls.investments.editHistory.data(project.id)}
+            changeType={CHANGE_TYPE_TEXT}
+            getUpdatedBy={getUpdatedBy}
+            getValue={getValue}
+          />
+        </ProjectLayout>
+      )}
+    </InvestmentResource>
   )
-}
-
-InvestmentEditHistory.propTypes = {
-  dataEndpoint: PropTypes.string.isRequired,
 }
 
 export default InvestmentEditHistory
