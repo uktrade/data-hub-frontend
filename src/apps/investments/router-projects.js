@@ -93,10 +93,6 @@ router
     team.editProjectManagement.getHandler
   )
 
-router
-  .route('/:investmentId/edit-client-relationship-management')
-  .get(team.editClientRelationshipManagement.getHandler)
-
 router.route('/:investmentId/edit-team-members').get(renderTeamEdit)
 
 router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)

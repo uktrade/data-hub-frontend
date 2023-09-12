@@ -34,11 +34,11 @@ import {
   FieldSpecificProgramme,
 } from './InvestmentFormFields'
 import urls from '../../../../lib/urls'
-import { transformObjectForTypeahead } from '../../../../apps/investments/client/projects/team/transformers'
 import {
   transformArrayForTypeahead,
   transformRadioOptionToBool,
   transformProjectSummaryForApi,
+  transformObjectForTypeahead,
 } from './transformers'
 import { transformDateStringToDateObject } from '../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
