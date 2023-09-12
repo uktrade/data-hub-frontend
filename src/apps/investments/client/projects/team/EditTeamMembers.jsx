@@ -1,4 +1,5 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 
 import {
   FieldAdvisersTypeahead,
@@ -12,47 +13,77 @@ import {
   transformTeamMembersForFieldAddAnother,
   transformValuesToArray,
 } from './transformers'
+import { InvestmentResource } from '../../../../../client/components/Resource'
+import ProjectLayout from '../../../../../client/components/Layout/ProjectLayout'
 
-export const EditTeamMembers = ({ id, teamMembers }) => (
-  <Form
-    id="project-edit-team-members"
-    analyticsFormName="projectEditTeamMembers"
-    cancelButtonLabel="Return without saving"
-    cancelRedirectTo={() => urls.investments.projects.team(id)}
-    initialValues={transformTeamMembersForFieldAddAnother(teamMembers)}
-    submissionTaskName={TASK_EDIT_PROJECT_TEAM_MEMBERS}
-    submitButtonLabel="Save and return"
-    transformPayload={(values) => ({
-      teamMembers: transformValuesToArray(values),
-      id,
-    })}
-    flashMessage={() => 'Changes saved'}
-    redirectTo={() => urls.investments.projects.team(id)}
-  >
-    <FieldAddAnother
-      name="edit-team-members"
-      itemName="team member"
-      dataTestPrefix="team-member-field-"
-      legend="Assign project specialist and team members"
-      initialChildGroupCount={teamMembers.length === 0 ? 1 : teamMembers.length}
-    >
-      {({ groupIndex }) => (
-        <>
-          <FieldAdvisersTypeahead
-            name={`adviser_${groupIndex}`}
-            label="Team member"
-            placeholder="Search team member"
-            required="Select at least one adviser"
-            aria-label="Select an adviser"
-          />
-          <FieldInput
-            name={`role_${groupIndex}`}
-            type="text"
-            label="Role"
-            required="Enter a role for the adviser"
-          />
-        </>
+export const EditTeamMembers = () => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <ProjectLayout
+          project={project}
+          breadcrumbs={[
+            {
+              link: urls.investments.projects.project(project.id),
+              text: project.name,
+            },
+            {
+              link: urls.investments.projects.team(project.id),
+              text: 'Project team',
+            },
+            { text: 'Team members' },
+          ]}
+          pageTitle="Team members"
+        >
+          <Form
+            id="project-edit-team-members"
+            analyticsFormName="projectEditTeamMembers"
+            cancelButtonLabel="Back"
+            cancelRedirectTo={() => urls.investments.projects.team(project.id)}
+            initialValues={transformTeamMembersForFieldAddAnother(
+              project.teamMembers
+            )}
+            submissionTaskName={TASK_EDIT_PROJECT_TEAM_MEMBERS}
+            transformPayload={(values) => ({
+              teamMembers: transformValuesToArray(values),
+              id: project.id,
+            })}
+            flashMessage={() => 'Investment details updated'}
+            redirectTo={() => urls.investments.projects.team(project.id)}
+          >
+            <FieldAddAnother
+              name="edit-team-members"
+              itemName="team member"
+              dataTestPrefix="team-member-field-"
+              legend="Assign project specialist and team members"
+              initialChildGroupCount={
+                project.teamMembers.length === 0
+                  ? 1
+                  : project.teamMembers.length
+              }
+            >
+              {({ groupIndex }) => (
+                <>
+                  <FieldAdvisersTypeahead
+                    name={`adviser_${groupIndex}`}
+                    label="Team member"
+                    placeholder="Search team member"
+                    required="Select at least one adviser"
+                    aria-label="Select an adviser"
+                  />
+                  <FieldInput
+                    name={`role_${groupIndex}`}
+                    type="text"
+                    label="Role"
+                    required="Enter a role for the adviser"
+                  />
+                </>
+              )}
+            </FieldAddAnother>
+          </Form>
+        </ProjectLayout>
       )}
-    </FieldAddAnother>
-  </Form>
-)
+    </InvestmentResource>
+  )
+}

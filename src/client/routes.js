@@ -39,6 +39,7 @@ import ProjectInteractions from './modules/Investments/Projects/ProjectInteracti
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
 import EditClientRelationshipManagement from './modules/Investments/Projects/EditClientRelationshipManagement'
 import EditProjectManagement from './modules/Investments/Projects/EditProjectManagement'
+import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
 
 const routes = {
   companies: [
@@ -280,6 +281,11 @@ const routes = {
       path: '/investments/projects/:projectId/edit-project-management',
       module: 'datahub:investments',
       component: EditProjectManagement,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-team-members',
+      module: 'datahub:investments',
+      component: EditTeamMembers,
     },
   ],
 }

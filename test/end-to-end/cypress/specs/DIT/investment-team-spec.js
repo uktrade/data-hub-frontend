@@ -36,8 +36,8 @@ const testSubForm = ({ selector, header, checkForm, expectedResults }) => {
 
   checkForm()
 
-  clickButton('Save and return')
-  assertFlashMessage('Changes saved')
+  clickButton('Save')
+  assertFlashMessage('Investment details updated')
 
   assertTable({
     element: teamSelectors[selector].table,
