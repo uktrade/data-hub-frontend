@@ -14,17 +14,3 @@ export const updateTeamMembers = ({ teamMembers, id }) => {
     }
   })
 }
-
-export const saveProjectManagementStaff = ({
-  id,
-  projectAssuranceAdviserId,
-  projectManagerId,
-}) =>
-  apiProxyAxios
-    .patch(`/v3/investment/${id}`, {
-      project_assurance_adviser: projectAssuranceAdviserId,
-      project_manager: projectManagerId,
-    })
-    .then((results) => {
-      results.project_assurance_adviser, results.project_manager
-    })

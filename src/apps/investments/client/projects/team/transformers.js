@@ -25,9 +25,3 @@ export const transformTeamMembersForFieldAddAnother = (teamMembers = []) => {
 
   return transformArrayToObject(teamMemberArray)
 }
-
-export const transformObjectForTable = (object, emptyText = '') =>
-  object ? object.name : emptyText
-
-export const transformLocationsForTable = (locations) =>
-  locations ? locations.map((location) => location.name).join(', ') : ''
