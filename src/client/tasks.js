@@ -396,8 +396,7 @@ export const tasks = {
   [TASK_GET_INVESTMENTS_PROJECTS_METADATA]: investmentProjectTasks.getMetadata,
   [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
     editInvestmentProjectTeamTasks.updateTeamMembers,
-  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
-    editInvestmentProjectTeamTasks.saveClientRelationshipManager,
+  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: updateInvestmentProject,
   [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
     editInvestmentProjectTeamTasks.saveProjectManagementStaff,
   [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
