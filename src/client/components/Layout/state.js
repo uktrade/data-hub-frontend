@@ -1,3 +1,3 @@
-export const state2props = (state) => {
-  return { userPermissions: state.userPermissions }
-}
+export const state2props = (state) => ({
+  userPermissions: state.userPermissions,
+})
