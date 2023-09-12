@@ -649,8 +649,10 @@ describe('D&B Company hierarchy tree', () => {
 
       assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
 
-      it('should have correct count of ultimate global companies in button', () => {
-        cy.get('[data-test="expand-tree-button"]').should('exist').contains('2')
+      it('should have correct text in button', () => {
+        cy.get('[data-test="expand-tree-button"]')
+          .should('exist')
+          .contains('Show all')
       })
 
       it('should show header with count of ultimate global and manually linked companies', () => {
@@ -659,7 +661,7 @@ describe('D&B Company hierarchy tree', () => {
     }
   )
 
-  context('When a company has a reduced companytree', () => {
+  context('When a company has a reduced company tree', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,

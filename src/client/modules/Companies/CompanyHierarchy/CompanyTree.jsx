@@ -57,11 +57,15 @@ const ToggleSubsidiariesButton = ({
       data-test={dataTest}
     >
       <span>{isOpen ? `-` : `+`}</span>
-      <span>
-        {isOpen
-          ? `Hide ${count} ${pluralize(label, count)}`
-          : `Show ${count} ${pluralize(label, count)}`}
-      </span>
+      {dataTest === 'expand-tree-button' ? (
+        <span>{isOpen ? 'Hide all' : 'Show all'}</span>
+      ) : (
+        <span>
+          {isOpen
+            ? `Hide ${count} ${pluralize(label, count)}`
+            : `Show ${count} ${pluralize(label, count)}`}
+        </span>
+      )}
     </StyledButton>
   </ToggleSubsidiariesButtonContent>
 )
