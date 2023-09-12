@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
-import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
-import EditHistory from '../../../client/components/EditHistory/EditHistory'
-import { InvestmentResource } from '../../../client/components/Resource'
-import urls from '../../../lib/urls'
-import ProjectLayout from '../../../client/components/Layout/ProjectLayout'
-import { formatMediumDateTime, isDateValid } from '../../../client/utils/date'
+import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from './constants'
+import EditHistory from '../../../components/EditHistory/EditHistory'
+import { InvestmentResource } from '../../../components/Resource'
+import urls from '../../../../lib/urls'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { formatMediumDateTime, isDateValid } from '../../../utils/date'
 
 function getValue(value) {
   if (isBoolean(value)) {
@@ -33,7 +33,7 @@ function getUpdatedBy(timestamp, changedBy) {
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 
-const InvestmentEditHistory = () => {
+const ProjectEditHistory = () => {
   const { projectId } = useParams()
   return (
     <InvestmentResource id={projectId}>
@@ -64,4 +64,4 @@ const InvestmentEditHistory = () => {
   )
 }
 
-export default InvestmentEditHistory
+export default ProjectEditHistory

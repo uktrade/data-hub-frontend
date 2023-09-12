@@ -22,7 +22,7 @@ import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
-import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
+import ProjectEditHistory from './modules/Investments/Projects/ProjectEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
@@ -162,10 +162,7 @@ function App() {
         </Mount>
         <Mount selector="#investment-edit-history">
           {(props) => (
-            <InvestmentEditHistory
-              csrfToken={globalProps.csrfToken}
-              {...props}
-            />
+            <ProjectEditHistory csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
         <Mount selector="#match-confirmation">
