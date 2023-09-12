@@ -21,13 +21,7 @@ const {
 } = require('../middleware')
 const { shared } = require('./middleware')
 
-const {
-  create,
-  archive,
-  editHistory,
-  documents,
-  team,
-} = require('./controllers')
+const { create, archive, editHistory, documents } = require('./controllers')
 
 const { renderProjectsView } = require('./controllers/projects')
 const { renderAdminView } = require('./controllers/admin')
@@ -84,14 +78,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
-
-router
-  .route('/:investmentId/edit-project-management')
-  .get(team.editProjectManagement.editProjectManagementHandler)
-  .post(
-    team.editProjectManagement.postHandler,
-    team.editProjectManagement.getHandler
-  )
 
 router.route('/:investmentId/edit-team-members').get(renderTeamEdit)
 
