@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import {
   InvestmentResource,
   InvestmentEvidenceResource,
+  ProjectDocumentResource,
 } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import { VIRUS_SCAN_STATUSES } from './constants'
@@ -15,7 +16,6 @@ import ProjectLayout from '../../../components/Layout/ProjectLayout'
 const StyledListItem = styled(ListItem)`
   font-size: 16px;
 `
-
 const ProjectEvidence = () => {
   const { projectId } = useParams()
   return (
@@ -60,14 +60,13 @@ const ProjectEvidence = () => {
                       <Table.Cell>
                         {document.avClean ? (
                           document.status === 'virus_scanned' ? (
-                            <Link
-                              href={urls.investments.projects.evidence.download(
-                                projectId,
-                                document.id
+                            <ProjectDocumentResource id={document.url.slice(1)}>
+                              {(documentDownload) => (
+                                <Link href={documentDownload.documentUrl}>
+                                  Download
+                                </Link>
                               )}
-                            >
-                              Download
-                            </Link>
+                            </ProjectDocumentResource>
                           ) : (
                             VIRUS_SCAN_STATUSES[document.status]
                           )
