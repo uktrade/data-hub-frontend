@@ -64,7 +64,6 @@ import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/Co
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import AccountManagement from './modules/Companies/AccountManagement'
-import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
 
 import Footer from '../client/components/Footer'
 
@@ -370,9 +369,6 @@ function App() {
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
-        </Mount>
-        <Mount selector="#project-evidence">
-          {(props) => <ProjectEvidence {...props} />}
         </Mount>
 
         <Mount selector="#react-app">
