@@ -95,7 +95,7 @@ module.exports = {
     helpCentre: {
       community: {
         roadmap: () =>
-          'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-roadmap',
+          'https://data-services-help.trade.gov.uk/data-hub/updates/roadmap/data-hub-roadmap/ ',
         feedback: () =>
           'https://data-services-help.trade.gov.uk/data-hub/crm-community/feedback-or-propose-changes',
         principles: () =>
