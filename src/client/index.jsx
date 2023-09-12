@@ -46,7 +46,6 @@ import OpportunityChangeStatusForm from '../apps/investments/client/opportunitie
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
-import { EditTeamMembers } from './modules/Investments/Projects/EditTeamMembers'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -327,9 +326,6 @@ function App() {
         </Mount>
         <Mount selector="#edit-subscribers">
           {(props) => <EditSubscribers {...props} />}
-        </Mount>
-        <Mount selector="#edit-team-members">
-          {(props) => <EditTeamMembers {...props} />}
         </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}
