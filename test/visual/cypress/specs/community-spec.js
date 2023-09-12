@@ -7,7 +7,7 @@ describe('community page', () => {
   })
 
   it('should render community page correctly', () => {
-    cy.get('[data-test="community-page"]').should('be.visible')
+    cy.get('[data-test="community-roadmap"]').should('be.visible')
 
     cy.compareSnapshot('community-page')
   })
