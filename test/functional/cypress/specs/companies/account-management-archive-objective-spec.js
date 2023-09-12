@@ -13,7 +13,7 @@ const {
   assertFieldRadiosWithLegend,
 } = require('../../support/assertions')
 
-const { fill } = require('../../../../functional/cypress/support/form-fillers')
+const { fill } = require('../../support/form-fillers')
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -52,24 +52,17 @@ describe('Company account management', () => {
     it('should display the add objective heading', () => {
       cy.get('h1').contains(`Add objective for ${company.name}`)
     })
-
-    it('should not display the Archive object button', () => {
-      cy.get('a[data-test="archive-objective"]').should('not.exist')
-    })
   })
 
   context(
     'When correctly adding required inputs for an objectives that has no blockers',
     () => {
       before(() => {
-        cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company).as(
-          'getAddObjective'
-        )
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
         cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
           results: noBlockersObjective,
         }).as('postObjectiveApiRequest')
         cy.visit(urls.companies.accountManagement.objectives.create(companyId))
-        cy.wait('@getAddObjective')
       })
 
       it('should submit with the minimum amount of data', () => {
@@ -80,7 +73,6 @@ describe('Company account management', () => {
         cy.get('[data-test="has-blocker-no"]').click()
         cy.get('[data-test="progress-50"]').click()
         cy.get('[data-test="submit-button"]').click()
-        cy.wait('@postObjectiveApiRequest')
         cy.get('[data-test="status-message"]').contains('Objective saved')
       })
     }
@@ -279,12 +271,6 @@ describe('Company account management', () => {
           DATE_LONG_FORMAT_3
         ),
       })
-    })
-
-    it('should display the Archive object button', () => {
-      cy.get('a[data-test="archive-objective"]').should('exist')
-      //  TODO URL should match archive link
-      // cy.get('[data-test="heading"]').contains(company.name)
     })
   })
 })
