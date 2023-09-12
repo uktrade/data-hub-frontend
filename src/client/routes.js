@@ -37,7 +37,7 @@ import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
-import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
+import EditClientRelationshipManagement from './modules/Investments/Projects/EditClientRelationshipManagement'
 
 const routes = {
   companies: [

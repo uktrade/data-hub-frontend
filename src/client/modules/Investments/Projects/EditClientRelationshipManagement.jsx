@@ -3,18 +3,18 @@ import styled from 'styled-components'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
-import { Form } from '../../../../../client/components'
-import FieldAdvisersTypeahead from '../../../../../client/components/Form/elements/FieldAdvisersTypeahead'
-import urls from '../../../../../lib/urls'
+import { Form } from '../../../components'
+import FieldAdvisersTypeahead from '../../../components/Form/elements/FieldAdvisersTypeahead'
+import urls from '../../../../lib/urls'
 import { TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER } from './state'
 import { GlobalAccountManagerDetails } from './GlobalAccountManagerDetails'
+import { InvestmentResource } from '../../../components/Resource'
+import { ONE_LIST_EMAIL } from '../../Companies/AccountManagement/constants'
+import ProjectLayout from '../../../components/Layout/ProjectLayout'
 import {
   transformObjectForTypeahead,
   transformAdviserForAPI,
 } from './transformers'
-import { InvestmentResource } from '../../../../../client/components/Resource'
-import { ONE_LIST_EMAIL } from '../../../../../client/modules/Companies/AccountManagement/constants'
-import ProjectLayout from '../../../../../client/components/Layout/ProjectLayout'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};
@@ -40,7 +40,7 @@ const EditClientRelationshipManagement = () => {
             },
             { text: 'Client relationship management' },
           ]}
-          pageTitle="Project team"
+          pageTitle="Client relationship management"
         >
           <Form
             id="edit-client-relationship-management-form"

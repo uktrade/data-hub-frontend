@@ -33,6 +33,17 @@ export const transformArrayForTypeahead = (advisers) =>
     value: value.id,
   }))
 
+export const transformObjectForTypeahead = (object) =>
+  object
+    ? {
+        label: object.name,
+        value: object.id,
+      }
+    : null
+
+export const transformAdviserForAPI = (adviser) =>
+  adviser ? adviser.value : null
+
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
 

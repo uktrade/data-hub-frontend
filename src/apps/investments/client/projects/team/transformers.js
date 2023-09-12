@@ -26,17 +26,6 @@ export const transformTeamMembersForFieldAddAnother = (teamMembers = []) => {
   return transformArrayToObject(teamMemberArray)
 }
 
-export const transformObjectForTypeahead = (object) =>
-  object
-    ? {
-        label: object.name,
-        value: object.id,
-      }
-    : null
-
-export const transformAdviserForAPI = (adviser) =>
-  adviser ? adviser.value : null
-
 export const transformObjectForTable = (object, emptyText = '') =>
   object ? object.name : emptyText
 

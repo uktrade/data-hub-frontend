@@ -3,10 +3,10 @@ import { Details, Link, Paragraph, VisuallyHidden } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
 
-import urls from '../../../../../lib/urls'
-import { NewWindowLink } from '../../../../../client/components'
+import urls from '../../../../lib/urls'
+import { NewWindowLink } from '../../../components'
 import PropTypes from 'prop-types'
-import { CompanyResource } from '../../../../../client/components/Resource'
+import { CompanyResource } from '../../../components/Resource'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};
