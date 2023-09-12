@@ -38,6 +38,7 @@ import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
 import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
 import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
+import EditClientRelationshipManagement from './modules/Investments/Projects/EditClientRelationshipManagement'
 
 const routes = {
   companies: [
@@ -274,6 +275,11 @@ const routes = {
       path: '/investments/projects/:projectId/propositions',
       module: 'datahub:investments',
       component: ProjectPropositions,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-client-relationship-management',
+      module: 'datahub:investments',
+      component: EditClientRelationshipManagement,
     },
   ],
 }

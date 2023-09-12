@@ -83,9 +83,7 @@ describe('Edit client relationship management page', () => {
     it('should render the hidden help text with visually hidden text for screen reader', () => {
       cy.get('[data-test="global-account-manager-links"]').click()
       cy.contains(
-        `If you need to change the Global Account Manager for this company, go to the Digital Workspace (opens in new tab) or opens email client for ${Cypress.env(
-          'one_list_email'
-        )}.`
+        'If you need to change the Global Account Manager for this company, go to the Digital Workspace (opens in new tab) or opens email client for'
       )
     })
 
@@ -111,6 +109,7 @@ describe('Edit client relationship management page', () => {
 
     it('should save and redirect with no changes', () => {
       const expectedBody = {
+        id: investmentWithNoExistingRequirements.id,
         client_relationship_manager: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
       }
 
@@ -176,6 +175,7 @@ describe('Edit client relationship management page', () => {
 
     it('should submit the changes and redirect with a flash message', () => {
       const expectedBody = {
+        id: investmentWithNoExistingRequirements.id,
         client_relationship_manager: '2c42c516-9898-e211-a939-e4115bead28a',
       }
 

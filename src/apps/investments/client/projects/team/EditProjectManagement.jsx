@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import {
   Main,
@@ -12,12 +13,13 @@ import Form from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import { TASK_SAVE_INVESTMENT_PROJECT_MANAGERS } from './state'
 import {
-  transformObjectForTypeahead,
-  transformAdviserForAPI,
   transformObjectForTable,
   transformLocationsForTable,
 } from './transformers'
-import styled from 'styled-components'
+import {
+  transformObjectForTypeahead,
+  transformAdviserForAPI,
+} from '../../../../../client/modules/Investments/Projects/transformers'
 
 const { format } = require('../../../../../client/utils/date')
 const { currencyGBP } = require('../../../../../client/utils/number-utils')

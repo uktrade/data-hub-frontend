@@ -48,7 +48,6 @@ import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
 import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
-import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -332,9 +331,6 @@ function App() {
         </Mount>
         <Mount selector="#edit-team-members">
           {(props) => <EditTeamMembers {...props} />}
-        </Mount>
-        <Mount selector="#edit-client-relationship-management">
-          {(props) => <EditClientRelationshipManagement {...props} />}
         </Mount>
         <Mount selector="#edit-project-management">
           {(props) => <EditProjectManagement {...props} />}
