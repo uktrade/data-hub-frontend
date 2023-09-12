@@ -61,10 +61,6 @@ router.get(
 )
 
 router.get(
-  urls.investments.editHistory.index.route,
-  editHistory.renderProjectsView
-)
-router.get(
   urls.investments.editHistory.data.route,
   editHistory.fetchProjectsHistoryHandler
 )
