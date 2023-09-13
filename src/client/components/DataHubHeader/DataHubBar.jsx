@@ -98,7 +98,7 @@ const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
-    marginRight: hasFeatureGroup ? 65 : 0,
+    marginRight: hasFeatureGroup ? 20 : 0,
   },
   fontWeight: FONT_WEIGHTS.bold,
   textDecoration: 'none',
