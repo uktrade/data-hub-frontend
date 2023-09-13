@@ -27,6 +27,16 @@ else
 	log-command = version
 endif
 
+ifdef CI
+	start-command = up --build --force-recreate -d
+	cypress-spec-args = -- --spec $(SPEC_FILES)
+	log-command = logs --follow
+else
+	start-command = up --build --force-recreate
+	cypress-spec-args =
+	log-command = version
+endif
+
 # Helper commands to execute docker-compose for a specific setup
 # e.g. "`make base` logs"
 base:
@@ -102,7 +112,7 @@ endif
 
 functional-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:functional $(cypress-args)'
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:functional $(cypress-spec-args)'
 
 a11y-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
