@@ -33,6 +33,10 @@ describe('DA Permission', () => {
       cy.visit(urls.dashboard.investmentProjects())
     })
 
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
+    })
+
     it('should display DA only header tabs', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',

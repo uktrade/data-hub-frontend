@@ -16,6 +16,10 @@ describe('LEP Permission', () => {
       cy.visit(urls.companies.detail(company.pk))
     })
 
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
+    })
+
     it('should display LEP only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Overview',

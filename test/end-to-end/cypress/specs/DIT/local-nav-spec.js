@@ -13,6 +13,10 @@ describe('DBT Permission', () => {
       cy.visit(urls.dashboard.index())
     })
 
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
+    })
+
     it('should display DBT only header nav links', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',

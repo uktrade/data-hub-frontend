@@ -93,6 +93,16 @@ module.exports = {
         'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team',
     },
     helpCentre: {
+      community: {
+        roadmap: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/updates/roadmap/data-hub-roadmap/ ',
+        feedback: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/feedback-or-propose-changes',
+        principles: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-principles',
+        training: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/training',
+      },
       accessibilityStatement: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/data-hub-accessibility-statement/data-hub-accessibility-statement/',
       dhHomepage: () => 'https://data-services-help.trade.gov.uk/data-hub/',
@@ -126,6 +136,9 @@ module.exports = {
   },
   company: {
     exportWin: url('/api-proxy/v4/company', '/:companyId/export-win'),
+  },
+  community: {
+    index: url('/community'),
   },
   companies: {
     index: url('/companies', PRIMARY_LINK_PARAMS.companies),

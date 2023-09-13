@@ -13,14 +13,17 @@ import {
 
 import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
+import urls from '../../../lib/urls'
 
-const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
+const DATA_WORKSPACE = 'Switch to Data Workspace'
+const CRM_COMMUNITY_LABEL = 'CRM community'
+const COMMUNITY_PATHNAME = urls.community.index()
 
 const googleAnalyticsUTM = qs.stringify({
   utm_source: 'Data Hub',
   utm_medium: 'referral',
   utm_campaign: 'dataflow',
-  utm_content: SWITCH_TO_DATA_WORKSPACE,
+  utm_content: DATA_WORKSPACE,
 })
 
 const Layout = styled.div({
@@ -91,6 +94,7 @@ const BetaTag = styled.strong({
 const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   color: WHITE,
   display: 'none',
+  marginLeft: '20px',
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
@@ -166,11 +170,19 @@ const DataHubBar = ({
       </DataHubContainer>
       <Container hasFeatureGroup={hasFeatureGroup}>
         <NavigationLink
+          data-test="crm-community-link"
+          hasFeatureGroup={hasFeatureGroup}
+          showVerticalNav={showVerticalNav}
+          href={COMMUNITY_PATHNAME}
+        >
+          {CRM_COMMUNITY_LABEL}
+        </NavigationLink>
+        <NavigationLink
           hasFeatureGroup={hasFeatureGroup}
           showVerticalNav={showVerticalNav}
           href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
         >
-          {SWITCH_TO_DATA_WORKSPACE}
+          {DATA_WORKSPACE}
         </NavigationLink>
         {hasFeatureGroup && <NotificationAlert />}
         <MobileMenuButton
