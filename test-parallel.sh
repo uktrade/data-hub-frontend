@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# Spec directory argument
+SPEC_DIR=$1
+
+if [ -z "$SPEC_DIR" ]; then
+    echo "Error: Spec directory is required."
+    exit 1
+fi
+
 # List all spec files
-SPEC_FILES=$(find test/functional/cypress/specs -name '*.js')
+SPEC_FILES=$(find $SPEC_DIR -name '*.js')
 TOTAL_SPECS=$(echo "$SPEC_FILES" | wc -l)
 
 echo Total number of specs $TOTAL_SPECS
