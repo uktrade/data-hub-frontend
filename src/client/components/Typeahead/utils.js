@@ -82,17 +82,3 @@ export const getNewSelectedOptions = ({ selectedOptions, option, isMulti }) =>
  **/
 export const valueAsArray = (value) =>
   value ? (Array.isArray(value) ? value : [value]) : []
-
-export const maintainScrollVisibility = ({ parent, target }) => {
-  if (!parent || !target) {
-    return
-  }
-  const { offsetHeight: parentOffsetHeight, scrollTop } = parent
-  const { offsetHeight, offsetTop } = target
-
-  if (offsetTop <= scrollTop) {
-    parent.scrollTo(0, offsetTop)
-  } else if (offsetTop + offsetHeight > scrollTop + parentOffsetHeight) {
-    parent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)
-  }
-}
