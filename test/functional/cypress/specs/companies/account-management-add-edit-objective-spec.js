@@ -299,25 +299,30 @@ describe('Company account management', () => {
         'GET',
         `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}`,
         withBlockersObjective
-      )
+      ).as('getWithBlockersObjectives')
       cy.intercept(
         'PATCH',
         `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}/archive`,
         {}
       ).as('patchArchiveObjectiveApiRequest')
+      cy.intercept(
+        'POST',
+        `/api-proxy/v4/company/objective/${withBlockersObjective.id}/archive`,
+        {}
+      ).as('postArchiveObjectiveApiRequest')
+    })
+
+    it('should after archiving redirect to the account management page and display Flash message', () => {
       cy.visit(
         urls.companies.accountManagement.objectives.archive(
           withBlockersObjective.company.id,
           withBlockersObjective.id
         )
       )
-    })
+      cy.get('button[data-test="submit-button"]').click()
+      cy.wait('@getWithBlockersObjectives')
 
-    it('should redirect to the account management page and display Flash message', () => {
-      // assert original number of objectives - 1
-      // assert Flash message
+      cy.get('[data-test="status-message"]').contains('Objective archived')
     })
-
-    it('should not be able to archive an objective that is already archived', () => {})
   })
 })
