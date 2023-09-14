@@ -333,7 +333,7 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
               }
             />
           )}
-          {project.numberNewJobs && (
+          {(project.numberNewJobs || project.numberNewJobs === 0) && (
             <SummaryTable.TextRow
               heading="New jobs"
               value={project.numberNewJobs + ' new jobs'}
@@ -345,7 +345,8 @@ const ProjectDetails = ({ projectId, currentAdviserId }) => (
               value={project.averageSalary?.name}
             />
           )}
-          {project.numberSafeguardedJobs && (
+          {(project.numberSafeguardedJobs ||
+            project.numberSafeguardedJobs === 0) && (
             <SummaryTable.TextRow
               heading="Safeguarded jobs"
               value={project.numberSafeguardedJobs + ' safeguarded jobs'}

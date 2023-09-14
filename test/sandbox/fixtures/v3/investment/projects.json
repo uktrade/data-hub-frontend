@@ -5122,7 +5122,7 @@
       "foreign_equity_investment": "200000",
       "government_assistance": true,
       "some_new_jobs": null,
-      "number_new_jobs": 20,
+      "number_new_jobs": 0,
       "will_new_jobs_last_two_years": null,
       "average_salary": {
         "name": "Below £25,000",
