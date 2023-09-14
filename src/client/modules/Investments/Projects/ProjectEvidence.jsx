@@ -62,7 +62,10 @@ const ProjectEvidence = () => {
                           document.status === 'virus_scanned' ? (
                             <ProjectDocumentResource id={document.url.slice(1)}>
                               {(documentDownload) => (
-                                <Link href={documentDownload.documentUrl}>
+                                <Link
+                                  href={documentDownload.documentUrl}
+                                  data-test="download-link"
+                                >
                                   Download
                                 </Link>
                               )}
@@ -84,6 +87,7 @@ const ProjectEvidence = () => {
                               projectId,
                               document.id
                             )}
+                            data-test="delete-link"
                           >
                             Delete
                           </Link>
