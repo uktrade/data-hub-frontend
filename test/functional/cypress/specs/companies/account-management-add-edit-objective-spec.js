@@ -282,9 +282,42 @@ describe('Company account management', () => {
     })
 
     it('should display the Archive object button', () => {
-      cy.get('a[data-test="archive-objective"]').should('exist')
-      //  TODO URL should match archive link
-      // cy.get('[data-test="heading"]').contains(company.name)
+      cy.get('a[data-test="archive-objective"]').should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.objectives.archive(
+          withBlockersObjective.company.id,
+          withBlockersObjective.id
+        )
+      )
     })
+  })
+
+  context('When archiving an objective', () => {
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}`,
+        withBlockersObjective
+      )
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}/archive`,
+        {}
+      ).as('patchArchiveObjectiveApiRequest')
+      cy.visit(
+        urls.companies.accountManagement.objectives.archive(
+          withBlockersObjective.company.id,
+          withBlockersObjective.id
+        )
+      )
+    })
+
+    it('should redirect to the account management page and display Flash message', () => {
+      // assert original number of objectives - 1
+      // assert Flash message
+    })
+
+    it('should not be able to archive an objective that is already archived', () => {})
   })
 })

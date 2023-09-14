@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { TASK_SAVE_OBJECTIVE } from '../state'
+import { TASK_ARCHIVE_OBJECTIVE, state2props } from '../state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 import { buildCompanyBreadcrumbs } from '../../utils'
+import { connect } from 'react-redux'
 import { DefaultLayout, Form, FormLayout } from '../../../../components'
 
 const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
@@ -37,7 +38,7 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
             )
           }
           redirectTo={() => urls.companies.accountManagement.index(company.id)}
-          submissionTaskName={TASK_SAVE_OBJECTIVE}
+          submissionTaskName={TASK_ARCHIVE_OBJECTIVE}
           transformPayload={(values) => ({
             values,
             companyId: company.id,
@@ -50,6 +51,7 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
         >
           {() => (
             <>
+              <p>Objective subject: {objectiveItem.subject}</p>
               {parseInt(objectiveItem.progress) !== 100 && (
                 <p>
                   The objective is not yet complete. If the objective has been
@@ -76,4 +78,5 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
   )
 }
 
-export default ObjectiveArchiveForm
+//export default ObjectiveArchiveForm
+export default connect(state2props)(ObjectiveArchiveForm)
