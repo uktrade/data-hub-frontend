@@ -178,6 +178,7 @@ const _ContactForm = ({
                         addressSameAsCompany,
                         primary,
                         email,
+                        valid_email,
                         moreDetails,
                         ...values
                       }) => ({
@@ -185,6 +186,7 @@ const _ContactForm = ({
                         values: {
                           ...keysToSnakeCase(values),
                           email,
+                          valid_email: true,
                           notes: moreDetails,
                           accepts_dit_email_marketing:
                             acceptsDitEmailMarketing.includes(YES),
