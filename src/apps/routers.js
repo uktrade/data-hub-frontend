@@ -38,6 +38,7 @@ const reactRoutes = [
   '/companies/:companyId/account-management/objective/:objectiveId/edit',
   '/companies/:companyId/account-management/objective/edit',
   '/companies/:companyId/account-management/objective/archived',
+  '/companies/:companyId/account-management/objective/:objectiveId/archive',
   '/investments/projects/:projectId/find-associated',
   '/investments/projects/:projectId/edit-associated/:associatedProjectId',
   '/investments/projects/:projectId/remove-associated',

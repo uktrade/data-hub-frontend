@@ -315,11 +315,13 @@ import {
   TASK_GET_OBJECTIVE,
   TASK_SAVE_OBJECTIVE,
   TASK_SAVE_STRATEGY,
+  TASK_ARCHIVE_OBJECTIVE,
 } from './modules/Companies/AccountManagement/state'
 import {
   getObjective,
   saveObjective,
   saveStrategy,
+  archiveObjective,
 } from './modules/Companies/AccountManagement/tasks'
 
 import {
@@ -511,4 +513,5 @@ export const tasks = {
   [TASK_GET_UK_COMPANIES]: getUkCompanies,
   [TASK_UPDATE_RECIPIENT_COMPANY]: updateRecipientCompany,
   [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
+  [TASK_ARCHIVE_OBJECTIVE]: archiveObjective,
 }

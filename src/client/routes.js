@@ -29,6 +29,7 @@ import EditAssociatedProject from './modules/Investments/Projects/EditAssociated
 import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCompany'
 import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCompany'
 import EditOneList from './modules/Companies/CoreTeam/EditOneList'
+import ObjectiveArchive from './modules/Companies/AccountManagement/Objective/ObjectiveArchive'
 
 const routes = {
   companies: [
@@ -76,6 +77,11 @@ const routes = {
       path: '/companies/:companyId/edit-one-list',
       module: 'datahub:companies',
       component: EditOneList,
+    },
+    {
+      path: '/companies/:companyId/account-management/objective/:objectiveId/archive',
+      module: 'datahub:companies',
+      component: ObjectiveArchive,
     },
   ],
   contacts: [
