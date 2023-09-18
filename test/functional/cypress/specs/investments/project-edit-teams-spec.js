@@ -38,7 +38,7 @@ describe('View edit team members page', () => {
         Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        [projectWithCompleteTeam.name]: urls.investments.projects.project(
+        [projectWithCompleteTeam.name]: urls.investments.projects.details(
           projectWithCompleteTeam.id
         ),
         'Project team': urls.investments.projects.team(

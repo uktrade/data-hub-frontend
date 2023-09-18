@@ -42,7 +42,7 @@ describe('Edit the value details of a project', () => {
         Home: '/',
         Investments: investments.index(),
         Projects: investments.projects.index(),
-        [projectNoValue.name]: investments.projects.project(projectNoValue.id),
+        [projectNoValue.name]: investments.projects.details(projectNoValue.id),
         'Edit value': null,
       })
     })

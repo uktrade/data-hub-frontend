@@ -42,7 +42,10 @@ describe('Edit client relationship management page', () => {
         Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        [investmentWithNoExistingRequirements.name]: `/investments/projects/${investmentWithNoExistingRequirements.id}`,
+        [investmentWithNoExistingRequirements.name]:
+          urls.investments.projects.details(
+            investmentWithNoExistingRequirements.id
+          ),
         'Project team': urls.investments.projects.team(
           investmentWithNoExistingRequirements.id
         ),

@@ -42,7 +42,7 @@ describe('Edit the management advisers for a project', () => {
           Home: '/',
           Investments: investments.index(),
           Projects: investments.projects.index(),
-          [incompleteProject.name]: investments.projects.project(
+          [incompleteProject.name]: investments.projects.details(
             incompleteProject.id
           ),
           'Project team': investments.projects.team(incompleteProject.id),
@@ -156,7 +156,7 @@ describe('Edit the management advisers for a project', () => {
           Home: '/',
           Investments: investments.index(),
           Projects: investments.projects.index(),
-          [completeProject.name]: investments.projects.project(
+          [completeProject.name]: investments.projects.details(
             completeProject.id
           ),
           'Project team': investments.projects.team(completeProject.id),

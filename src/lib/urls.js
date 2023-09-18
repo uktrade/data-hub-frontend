@@ -402,7 +402,6 @@ module.exports = {
         '/:investmentId/interactions',
         INVESTMENT_LINK_PARAM
       ),
-      project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
