@@ -54,6 +54,7 @@ import Adviser from './Adviser'
 import Propositions from './Propositions'
 import InvestmentEvidence from './InvestmentEvidence'
 import OneListTiers from './OneListTiers'
+import ProjectDocument from './ProjectDocument'
 
 export default {
   ...Company.tasks,
@@ -112,4 +113,5 @@ export default {
   ...Propositions.tasks,
   ...InvestmentEvidence.tasks,
   ...OneListTiers.tasks,
+  ...ProjectDocument.tasks,
 }
