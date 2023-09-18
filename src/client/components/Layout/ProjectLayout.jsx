@@ -66,80 +66,77 @@ const ProjectLayout = ({
   >
     <GridRow>
       <GridCol setWidth="one-quarter">
-        <>
-          <StyledNavWrapper>
-            <LocalNav>
+        <StyledNavWrapper>
+          <LocalNav>
+            <LocalNavLink
+              dataTest="project-details-link"
+              href={urls.investments.projects.details(project.id)}
+            >
+              Project details
+            </LocalNavLink>
+            <LocalNavLink
+              dataTest="project-team-link"
+              href={urls.investments.projects.team(project.id)}
+            >
+              Project team
+            </LocalNavLink>
+            {userCanViewInteractions(userPermissions) && (
               <LocalNavLink
-                dataTest="project-details-link"
-                href={urls.investments.projects.details(project.id)}
+                dataTest="project-interactions-link"
+                href={urls.investments.projects.interactions.index(project.id)}
+                aria-label="Project interactions"
               >
-                Project details
+                Interactions
               </LocalNavLink>
+            )}
+            {userCanViewPropositions(userPermissions) && (
               <LocalNavLink
-                dataTest="project-team-link"
-                href={urls.investments.projects.team(project.id)}
+                dataTest="project-propositions-link"
+                href={urls.investments.projects.propositions(project.id)}
               >
-                Project team
+                Propositions
               </LocalNavLink>
-              {userCanViewInteractions(userPermissions) && (
-                <LocalNavLink
-                  dataTest="project-interactions-link"
-                  href={urls.investments.projects.interactions.index(
-                    project.id
-                  )}
-                  aria-label="Investment interactions"
-                >
-                  Interactions
-                </LocalNavLink>
-              )}
-              {userCanViewPropositions(userPermissions) && (
-                <LocalNavLink
-                  dataTest="project-propositions-link"
-                  href={urls.investments.projects.propositions(project.id)}
-                >
-                  Propositions
-                </LocalNavLink>
-              )}
+            )}
+            <LocalNavLink
+              dataTest="project-evaluation-link"
+              href={urls.investments.projects.evaluation(project.id)}
+            >
+              Evaluations
+            </LocalNavLink>
+            <LocalNavLink
+              dataTest="project-history-link"
+              href={urls.investments.editHistory.index(project.id)}
+            >
+              Edit history
+            </LocalNavLink>
+            <LocalNavLink
+              dataTest="project-evidence-link"
+              href={urls.investments.projects.evidence.index(project.id)}
+            >
+              Evidence
+            </LocalNavLink>
+            {userCanViewAdmin(userPermissions) && (
               <LocalNavLink
-                dataTest="project-evaluation-link"
-                href={urls.investments.projects.evaluation(project.id)}
+                dataTest="project-admin-link"
+                href={urls.investments.projects.admin(project.id)}
               >
-                Evaluations
+                Admin
               </LocalNavLink>
-              <LocalNavLink
-                dataTest="project-history-link"
-                href={urls.investments.editHistory.index(project.id)}
-              >
-                Edit history
-              </LocalNavLink>
-              <LocalNavLink
-                dataTest="project-evidence-link"
-                href={urls.investments.projects.evidence.index(project.id)}
-              >
-                Evidence
-              </LocalNavLink>
-              {userCanViewAdmin(userPermissions) && (
-                <LocalNavLink
-                  dataTest="project-admin-link"
-                  href={urls.investments.projects.admin(project.id)}
-                >
-                  Admin
-                </LocalNavLink>
-              )}
-            </LocalNav>
-          </StyledNavWrapper>
-        </>
+            )}
+          </LocalNav>
+        </StyledNavWrapper>
       </GridCol>
       <GridCol>{children}</GridCol>
     </GridRow>
   </DefaultLayout>
 )
+
 ProjectLayout.propTypes = {
   project: PropTypes.object.isRequired,
-  breadcrumbs: PropTypes.object.isRequired,
+  breadcrumbs: PropTypes.array.isRequired,
   pageTitle: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
-  userPerissions: PropTypes.element.isRequired,
+  children: PropTypes.array.isRequired,
+  userPermissions: PropTypes.array.isRequired,
 }
 
 export default connect(state2props)(ProjectLayout)
