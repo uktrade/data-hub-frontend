@@ -57,6 +57,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/edit-client-relationship-management',
   '/investments/projects/:projectId/edit-project-management',
   '/investments/projects/:projectId/edit-team-members',
+  '/investments/projects/:projectId/edit-history',
 ]
 
 reactRoutes.forEach((path) => {
