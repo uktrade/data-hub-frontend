@@ -35,7 +35,7 @@ const assertViewHeader = ({ project }) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: investments.projects.project(project.id),
+      [project.name]: investments.projects.details(project.id),
       'Project team': null,
     })
   })

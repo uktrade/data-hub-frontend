@@ -34,7 +34,7 @@ describe('Edit History', () => {
         Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        'New hotel (FDI)': urls.investments.projects.project(
+        'New hotel (FDI)': urls.investments.projects.details(
           fixtures.investment.newHotelFdi.id
         ),
         'Edit history': null,

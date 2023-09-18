@@ -31,7 +31,7 @@ const ProjectTeam = () => {
               project={project}
               breadcrumbs={[
                 {
-                  link: urls.investments.projects.project(project.id),
+                  link: urls.investments.projects.details(project.id),
                   text: project.name,
                 },
                 { text: 'Project team' },

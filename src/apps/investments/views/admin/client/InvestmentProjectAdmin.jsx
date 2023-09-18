@@ -32,7 +32,7 @@ const InvestmentProjectAdmin = ({
           { link: urls.investments.index(), text: 'Investments' },
           { link: urls.investments.projects.index(), text: 'Projects' },
           {
-            link: urls.investments.projects.project(projectId),
+            link: urls.investments.projects.details(projectId),
             text: projectName,
           },
           { text: 'Admin' },
@@ -45,11 +45,11 @@ const InvestmentProjectAdmin = ({
           <StyledP>Current stage: {projectStage.name}</StyledP>
         </InsetText>
         <Form
-          cancelRedirectTo={() => urls.investments.projects.project(projectId)}
+          cancelRedirectTo={() => urls.investments.projects.details(projectId)}
           analyticsFormName="investmentProjectAdmin"
           flashMessage={() => 'Project stage saved'}
           id="investmentProjectAdmin"
-          redirectTo={() => urls.investments.projects.project(projectId)}
+          redirectTo={() => urls.investments.projects.details(projectId)}
           submissionTaskName={TASK_UPDATE_STAGE}
           transformPayload={(values) => ({ values, projectId })}
         >

@@ -1,7 +1,4 @@
-const { concat } = require('lodash')
 const { root } = require('./paths')
-
-const { INVESTMENT_LINK_PARAM } = require('../../common/constants')
 
 const GLOBAL_NAV_ITEM = {
   path: root,
@@ -13,60 +10,6 @@ const GLOBAL_NAV_ITEM = {
   key: 'datahub-crm',
   order: 5,
 }
-
-const LOCAL_NAV = [
-  {
-    path: 'details',
-    label: 'Project details',
-  },
-  {
-    path: 'team',
-    label: 'Project team',
-    data: {
-      test: 'project-team',
-    },
-  },
-  {
-    path: 'interactions' + INVESTMENT_LINK_PARAM,
-    label: 'Interactions',
-    permissions: [
-      'interaction.view_associated_investmentproject_interaction',
-      'interaction.view_all_interaction',
-    ],
-    ariaDescription: 'Investment interactions',
-  },
-  {
-    path: 'propositions' + INVESTMENT_LINK_PARAM,
-    label: 'Propositions',
-    permissions: [
-      'proposition.view_associated_investmentproject_proposition',
-      'proposition.view_all_proposition',
-      'proposition.view_associated_proposition',
-    ],
-  },
-  {
-    path: 'evaluation',
-    label: 'Evaluations',
-  },
-  {
-    path: 'edit-history',
-    label: 'Edit history',
-  },
-  {
-    path: 'documents',
-    label: 'CDMS documents',
-    permissions: ['investment.view_investmentproject_document'],
-  },
-  {
-    path: 'evidence',
-    label: 'Evidence',
-  },
-  {
-    path: 'admin',
-    label: 'Admin',
-    permissions: ['investment.change_to_any_stage_investmentproject'],
-  },
-]
 
 const INVESTMENT_TAB_ITEMS = [
   {
@@ -82,8 +25,6 @@ const INVESTMENT_TAB_ITEMS = [
     label: 'UK opportunities',
   },
 ]
-
-const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
 
 const LARGE_INVESTMENT_PROFILE_QUERY_FIELDS = [
   'link',
@@ -172,9 +113,7 @@ const QUERY_DATE_FIELDS = [
 
 module.exports = {
   GLOBAL_NAV_ITEM,
-  LOCAL_NAV,
   INVESTMENT_TAB_ITEMS,
-  APP_PERMISSIONS,
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
   LARGE_INVESTMENT_PROFILE_QUERY_FIELDS,

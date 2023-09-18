@@ -36,7 +36,7 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: investments.projects.project(project.id),
+      [project.name]: investments.projects.details(project.id),
       'Edit requirements': null,
     })
   })
