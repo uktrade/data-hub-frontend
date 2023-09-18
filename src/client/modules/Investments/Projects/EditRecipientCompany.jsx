@@ -7,6 +7,7 @@ import { RECIPIENT_COMPANY_ID, TASK_UPDATE_RECIPIENT_COMPANY } from './state'
 import urls from '../../../../lib/urls'
 import { InvestmentResource } from '../../../components/Resource'
 import { checkIfRecipientCompanyExists } from './transformers'
+import { buildProjectBreadcrumbs } from '../utils'
 
 const checkIfUpdatingOrRemoving = (checkCompanyId, ukCompany) =>
   checkCompanyId
@@ -24,16 +25,7 @@ const EditRecipientCompany = () => {
             companyId,
             project.ukCompany
           )} - ${project.name} - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -41,7 +33,7 @@ const EditRecipientCompany = () => {
             {
               text: checkIfUpdatingOrRemoving(companyId, project.ukCompany),
             },
-          ]}
+          ])}
           useReactRouter={false}
         >
           <Task.Status

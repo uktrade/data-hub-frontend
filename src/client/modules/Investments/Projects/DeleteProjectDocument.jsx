@@ -6,6 +6,7 @@ import Task from '../../../components/Task'
 import { DELETE_DOCUMENT_ID, TASK_DELETE_PROJECT_DOCUMENT } from './state'
 import urls from '../../../../lib/urls'
 import { InvestmentResource } from '../../../components/Resource'
+import { buildProjectBreadcrumbs } from '../utils'
 
 const DeleteProjectDocument = () => {
   const { projectId, documentId } = useParams()
@@ -15,16 +16,7 @@ const DeleteProjectDocument = () => {
         <DefaultLayout
           heading={'Deleting evidence document'}
           pageTitle={`Delete evidence document - ${project.name} - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -36,7 +28,7 @@ const DeleteProjectDocument = () => {
             {
               text: 'Delete evidence document',
             },
-          ]}
+          ])}
           useReactRouter={false}
         >
           <Task.Status

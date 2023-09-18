@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { InsetText, H4 } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
+
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
 import { Main, FieldRadios } from '../../../../../client/components'
 import { TASK_UPDATE_STAGE } from './state'
 import urls from '../../../../../lib/urls'
-
+import { buildProjectBreadcrumbs } from '../../../../../client/modules/Investments/utils.js'
 import Form from '../../../../../client/components/Form'
 
 const StyledP = styled('p')`
@@ -27,16 +27,13 @@ const InvestmentProjectAdmin = ({
     <>
       <LocalHeader
         heading={'Change the project stage'}
-        breadcrumbs={[
-          { link: urls.dashboard.index(), text: 'Home' },
-          { link: urls.investments.index(), text: 'Investments' },
-          { link: urls.investments.projects.index(), text: 'Projects' },
+        breadcrumbs={buildProjectBreadcrumbs([
           {
             link: urls.investments.projects.details(projectId),
             text: projectName,
           },
           { text: 'Admin' },
-        ]}
+        ])}
       />
       <Main>
         <H4 as="h2">Project details</H4>

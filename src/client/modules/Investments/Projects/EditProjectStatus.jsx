@@ -8,6 +8,7 @@ import urls from '../../../../lib/urls'
 import { TASK_EDIT_INVESTMENT_PROJECT_STATUS } from './state'
 import { investmentProjectStatuses } from './constants'
 import { transformProjectStatusForApi } from './transformers'
+import { buildProjectBreadcrumbs } from '../utils'
 
 const EditProjectStatus = () => {
   const investmentProject = useParams()
@@ -17,22 +18,13 @@ const EditProjectStatus = () => {
         <DefaultLayout
           heading={'Change project status'}
           pageTitle={`Change project status - ${project.name} - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
             },
             { text: 'Change project status' },
-          ]}
+          ])}
           useReactRouter={false}
         >
           <Form

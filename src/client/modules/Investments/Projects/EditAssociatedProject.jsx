@@ -7,6 +7,7 @@ import { ASSOCIATE_PROJECT_ID, TASK_UPDATE_ASSOCIATED_PROJECT } from './state'
 import urls from '../../../../lib/urls'
 import { InvestmentResource } from '../../../components/Resource'
 import { checkIfAssociatedProjectExists } from './transformers'
+import { buildProjectBreadcrumbs } from '../utils'
 
 const checkIfUpdatingOrRemoving = (checkAssociatedId, associatedProject) =>
   checkAssociatedId
@@ -27,16 +28,7 @@ const EditAssociatedProject = () => {
             associatedProjectId,
             project.associatedNonFdiRAndDProject
           )} - ${project.name} - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -47,7 +39,7 @@ const EditAssociatedProject = () => {
                 project.associatedNonFdiRAndDProject
               ),
             },
-          ]}
+          ])}
           useReactRouter={false}
         >
           <Task.Status
