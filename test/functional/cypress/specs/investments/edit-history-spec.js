@@ -26,7 +26,7 @@ describe('Edit History', () => {
 
   context('when viewing the "Edit History" page', () => {
     it('should render the header', () => {
-      assertLocalHeader('Edit History')
+      assertLocalHeader('Edit history')
     })
 
     it('should render breadcrumbs', () => {
@@ -37,7 +37,7 @@ describe('Edit History', () => {
         'New hotel (FDI)': urls.investments.projects.project(
           fixtures.investment.newHotelFdi.id
         ),
-        'Edit History': null,
+        'Edit history': null,
       })
     })
   })
