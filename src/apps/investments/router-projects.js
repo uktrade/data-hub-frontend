@@ -38,8 +38,6 @@ const {
   deleteEvidence,
 } = require('./middleware/evidence')
 
-const { renderTeamEdit } = require('./controllers/team/edit-team-members')
-
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
 
@@ -78,8 +76,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
-
-router.route('/:investmentId/edit-team-members').get(renderTeamEdit)
 
 router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
 
