@@ -24,6 +24,7 @@ import { BLACK, GREY_3 } from '../../../utils/colours'
 import labels from '../../Companies/CollectionList/labels'
 import { addressToString } from '../../../utils/addresses'
 import { formatMediumDateTime } from '../../../utils/date'
+import { transformArrayToObject } from '../../../components/Form/elements/FieldAddAnother/utils'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -626,3 +627,29 @@ export const transformResponseToCompanyCollection = (
 
 export const checkIfRecipientCompanyExists = (hasRecipientCompany) =>
   hasRecipientCompany ? 'Update recipient company' : 'Add recipient company'
+
+export const transformValuesToArray = (values) => {
+  let result = []
+
+  Object.entries(values).forEach(([key, value]) => {
+    const prefix = key.split('_')[0]
+    const index = key.split('_')[1]
+    result[index] = {
+      ...result[index],
+      [prefix]: value.value || value,
+    }
+  })
+  return result.filter((item) => item !== null)
+}
+
+export const transformTeamMembersForFieldAddAnother = (teamMembers = []) => {
+  const teamMemberArray = teamMembers.map((teamMember, index) => ({
+    ['adviser' + `_${index}`]: {
+      value: teamMember.adviser?.id,
+      label: teamMember.adviser?.name,
+    },
+    ['role' + `_${index}`]: teamMember.role,
+  }))
+
+  return transformArrayToObject(teamMemberArray)
+}

@@ -103,9 +103,6 @@ import {
 } from '../apps/companies/apps/company-overview/overview-table-cards/state'
 import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
 
-import { TASK_EDIT_PROJECT_TEAM_MEMBERS } from '../apps/investments/client/projects/team/state'
-import * as editInvestmentProjectTeamTasks from '../apps/investments/client/projects/team/tasks'
-
 import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,
@@ -300,6 +297,7 @@ import {
   TASK_UPDATE_RECIPIENT_COMPANY,
   TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
   TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
+  TASK_EDIT_PROJECT_TEAM_MEMBERS,
 } from './modules/Investments/Projects/state'
 import {
   getNonFdiProjects,
@@ -307,6 +305,7 @@ import {
   updateAssociatedProject,
   getUkCompanies,
   updateRecipientCompany,
+  updateTeamMembers,
 } from './modules/Investments/Projects/tasks'
 
 import {
@@ -394,8 +393,7 @@ export const tasks = {
   [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]: getAdviserNames,
   [TASK_GET_INVESTMENTS_PROJECTS_METADATA]: investmentProjectTasks.getMetadata,
-  [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
-    editInvestmentProjectTeamTasks.updateTeamMembers,
+  [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
   [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: updateInvestmentProject,
   [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]: updateInvestmentProject,
   [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
