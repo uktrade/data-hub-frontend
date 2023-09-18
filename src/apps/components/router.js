@@ -21,7 +21,7 @@ const { renderFormElements } = require('./form/controllers')
 
 const {
   transformInvestmentProjectToListItem,
-} = require('../investments/transformers')
+} = require('../investments/transformers/collection')
 const { getCollection } = require('../../modules/search/middleware/collection')
 
 router

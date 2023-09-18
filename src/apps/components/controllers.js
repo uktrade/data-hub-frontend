@@ -4,7 +4,7 @@ const config = require('../../config')
 const { buildPagination } = require('../../lib/pagination')
 const {
   transformInvestmentProjectToListItem,
-} = require('../investments/transformers')
+} = require('../investments/transformers/collection')
 
 function renderIndex(req, res) {
   return res.render('components/views/index', {

@@ -120,7 +120,7 @@ async function getInvestmentDetails(req, res, next) {
 
     res
       .breadcrumb('Projects', investments.projects.index())
-      .breadcrumb(investment.name, investments.projects.project(investment.id))
+      .breadcrumb(investment.name, investments.projects.details(investment.id))
 
     next()
   } catch (error) {
