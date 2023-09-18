@@ -72,7 +72,7 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
                     company.id
                   )}
                 >
-                  company's archived objectives (opens in new tab)
+                  company's archived objectives
                 </NewWindowLink>
               </p>
             </>
