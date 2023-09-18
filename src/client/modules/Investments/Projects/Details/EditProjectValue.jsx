@@ -9,25 +9,25 @@ import {
   FieldRadios,
   FieldUneditable,
   Form,
-} from '../../../components'
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+} from '../../../../components'
+import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField'
 import {
   FDIValuesResource,
   InvestmentResource,
   SalaryRangeResource,
-} from '../../../components/Resource'
-import urls from '../../../../lib/urls'
+} from '../../../../components/Resource'
+import urls from '../../../../../lib/urls'
 import { TASK_EDIT_INVESTMENT_PROJECT_VALUE } from './state'
 import {
   setGVAMessage,
-  transformBoolToRadioOptionWithNullCheck,
   transformBoolToInvertedRadioOptionWithNullCheck,
+  transformBoolToRadioOptionWithNullCheck,
   transformProjectValueForApi,
 } from './transformers'
-import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
-import { currencyGBP } from '../../../utils/number-utils'
-import { idNamesToValueLabels } from '../../../utils'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../apps/constants'
+import { currencyGBP } from '../../../../utils/number-utils'
+import { idNamesToValueLabels } from '../../../../utils'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>

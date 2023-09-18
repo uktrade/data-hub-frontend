@@ -7,10 +7,10 @@ import {
   AdviserResource,
   CompanyResource,
   InvestmentResource,
-} from '../../../components/Resource'
-import urls from '../../../../lib/urls'
-import { BLACK, GREY_3 } from '../../../utils/colours'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+} from '../../../../components/Resource'
+import urls from '../../../../../lib/urls'
+import { BLACK, GREY_3 } from '../../../../utils/colours'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const checkIfAdvisersAreSet = (adviser1, adviser2) => adviser1 || adviser2
 

@@ -2,71 +2,14 @@ import {
   buildDatesFilter,
   buildInputFieldFilter,
   buildOptionsFilter,
-} from '../../../filters'
-import {
-  LABELS as INVESTMENT_LABELS,
-  PROJECT_STATUS_OPTIONS,
-} from '../../../../apps/investments/client/projects/constants'
-import { LABELS as COMPANY_LABELS } from '../../Companies/CollectionList/constants'
+} from '../../../../../filters'
+import { LABELS as COMPANY_LABELS } from '../../../../Companies/CollectionList/constants'
 import {
   export_segments,
   export_sub_segments,
-} from '../../../../apps/companies/apps/edit-company/client/constants'
+} from '../../../../../../apps/companies/apps/edit-company/client/constants'
 
-export const buildSelectedInvestmentFilters = (
-  queryParams,
-  metadata,
-  financialYearOptions
-) => ({
-  name: {
-    queryParam: 'name',
-    options: buildInputFieldFilter({
-      value: queryParams.name,
-      categoryLabel: INVESTMENT_LABELS.name,
-    }),
-  },
-  projectCode: {
-    queryParam: 'project_code',
-    options: buildInputFieldFilter({
-      value: queryParams.project_code,
-      categoryLabel: INVESTMENT_LABELS.projectCode,
-    }),
-  },
-  stages: {
-    queryParam: 'stage',
-    options: buildOptionsFilter({
-      options: metadata.projectStageOptions,
-      value: queryParams.stage,
-      categoryLabel: INVESTMENT_LABELS.stage,
-    }),
-  },
-  sectors: {
-    queryParam: 'sector_descends',
-    options: buildOptionsFilter({
-      options: metadata.sectorOptions,
-      value: queryParams.sector_descends,
-      categoryLabel: INVESTMENT_LABELS.sector,
-    }),
-  },
-  statuses: {
-    queryParam: 'status',
-    options: buildOptionsFilter({
-      options: PROJECT_STATUS_OPTIONS,
-      value: queryParams.status,
-      categoryLabel: INVESTMENT_LABELS.projectStatus,
-    }),
-  },
-  financialYears: {
-    queryParam: 'land_date_financial_year_start',
-    options: buildOptionsFilter({
-      options: financialYearOptions,
-      value: queryParams.land_date_financial_year_start,
-      categoryLabel: INVESTMENT_LABELS.landDate,
-    }),
-  },
-})
-
-export const buildSelectedCompanyFilters = (queryParams, metadata) => ({
+export const buildSelectedFilters = (queryParams, metadata) => ({
   headquarterTypes: {
     queryParam: 'headquarter_type',
     options: buildOptionsFilter({

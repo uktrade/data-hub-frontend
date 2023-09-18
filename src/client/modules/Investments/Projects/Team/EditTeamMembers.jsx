@@ -1,16 +1,20 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { FieldAdvisersTypeahead, FieldInput, Form } from '../../../components'
-import urls from '../../../../lib/urls'
-import FieldAddAnother from '../../../components/Form/elements/FieldAddAnother/index.jsx'
+import {
+  FieldAdvisersTypeahead,
+  FieldInput,
+  Form,
+} from '../../../../components'
+import urls from '../../../../../lib/urls'
+import FieldAddAnother from '../../../../components/Form/elements/FieldAddAnother/index.jsx'
 import { TASK_EDIT_PROJECT_TEAM_MEMBERS } from './state'
 import {
   transformTeamMembersForFieldAddAnother,
   transformValuesToArray,
 } from './transformers'
-import { InvestmentResource } from '../../../components/Resource'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { InvestmentResource } from '../../../../components/Resource'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const EditTeamMembers = () => {
   const { projectId } = useParams()

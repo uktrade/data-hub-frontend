@@ -286,29 +286,44 @@ import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDet
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
 
 import {
-  TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
-  TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
-  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
+} from './modules/Investments/Projects/state'
+import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
+
+import {
+  TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
+  TASK_EDIT_PROJECT_TEAM_MEMBERS,
+  TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
+} from './modules/Investments/Projects/Team/state'
+import { updateTeamMembers } from './modules/Investments/Projects/Team/tasks'
+
+import { TASK_DELETE_PROJECT_DOCUMENT } from './modules/Investments/Projects/Evidence/state'
+import { deleteProjectDocument } from './modules/Investments/Projects/Evidence/tasks'
+
+import {
+  TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
+  TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
+  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
+} from './modules/Investments/Projects/Details/state'
+
+import {
   TASK_GET_NON_FDI_PROJECTS_LIST,
   TASK_UPDATE_ASSOCIATED_PROJECT,
-  TASK_GET_UK_COMPANIES,
-  TASK_UPDATE_RECIPIENT_COMPANY,
-  TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
-  TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
-  TASK_EDIT_PROJECT_TEAM_MEMBERS,
-  TASK_DELETE_PROJECT_DOCUMENT,
-} from './modules/Investments/Projects/state'
+} from './modules/Investments/Projects/Details/EditAssociatedProject/state'
 import {
   getNonFdiProjects,
-  updateInvestmentProject,
   updateAssociatedProject,
+} from './modules/Investments/Projects/Details/EditAssociatedProject/tasks'
+
+import {
+  TASK_GET_UK_COMPANIES,
+  TASK_UPDATE_RECIPIENT_COMPANY,
+} from './modules/Investments/Projects/Details/EditRecipientCompany/state'
+import {
   getUkCompanies,
   updateRecipientCompany,
-  updateTeamMembers,
-  deleteProjectDocument,
-} from './modules/Investments/Projects/tasks'
+} from './modules/Investments/Projects/Details/EditRecipientCompany/tasks'
 
 import {
   TASK_GET_OBJECTIVE,

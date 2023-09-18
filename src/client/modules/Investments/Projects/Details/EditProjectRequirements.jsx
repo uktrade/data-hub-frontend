@@ -9,25 +9,25 @@ import {
   FieldTextarea,
   FieldTypeahead,
   Form,
-} from '../../../components'
+} from '../../../../components'
 import {
   CountriesResource,
   DeliveryPartnersResource,
   InvestmentResource,
   StrategicDriversResource,
-} from '../../../components/Resource'
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { FieldUKRegionTypeahead } from '../../../components/Form/elements/UKRegionOptions'
+} from '../../../../components/Resource'
+import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField'
+import { FieldUKRegionTypeahead } from '../../../../components/Form/elements/UKRegionOptions'
 import { TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS } from './state'
-import urls from '../../../../lib/urls'
+import urls from '../../../../../lib/urls'
+import { transformArrayForTypeahead } from '../transformers'
 import {
-  transformArrayForTypeahead,
-  transformProjectRequirementsForApi,
   transformBoolToRadioOptionWithNullCheck,
+  transformProjectRequirementsForApi,
 } from './transformers'
-import { OPTIONS_YES_NO, OPTION_YES } from '../../../../apps/constants'
-import { UNITED_KINGDOM_ID } from '../../../../common/constants'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../apps/constants'
+import { UNITED_KINGDOM_ID } from '../../../../../common/constants'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const ukObject = {
   name: 'United Kingdom',

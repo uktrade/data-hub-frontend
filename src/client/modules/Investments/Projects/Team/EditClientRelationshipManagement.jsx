@@ -3,18 +3,16 @@ import styled from 'styled-components'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
-import { Form } from '../../../components'
-import FieldAdvisersTypeahead from '../../../components/Form/elements/FieldAdvisersTypeahead'
-import urls from '../../../../lib/urls'
+import { Form } from '../../../../components'
+import FieldAdvisersTypeahead from '../../../../components/Form/elements/FieldAdvisersTypeahead'
+import urls from '../../../../../lib/urls'
 import { TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER } from './state'
-import { GlobalAccountManagerDetails } from './GlobalAccountManagerDetails'
-import { InvestmentResource } from '../../../components/Resource'
-import { ONE_LIST_EMAIL } from '../../Companies/AccountManagement/constants'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
-import {
-  transformObjectForTypeahead,
-  transformAdviserForAPI,
-} from './transformers'
+import GlobalAccountManagerDetails from './GlobalAccountManagerDetails'
+import { InvestmentResource } from '../../../../components/Resource'
+import { ONE_LIST_EMAIL } from '../../../Companies/AccountManagement/constants'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
+import { transformObjectForTypeahead } from '../transformers'
+import { transformAdviserForAPI } from './transformers'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};

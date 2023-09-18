@@ -11,11 +11,11 @@ import {
   FieldRadios,
   FieldWrapper,
   Form,
-} from '../../../components'
+} from '../../../../components'
 import {
   InvestmentResource,
   InvestmentTypesResource,
-} from '../../../components/Resource'
+} from '../../../../components/Resource'
 import {
   FieldActualLandDate,
   FieldAnonDescription,
@@ -32,19 +32,19 @@ import {
   FieldReferralSourceAdviser,
   FieldReferralSourceHierarchy,
   FieldSpecificProgramme,
-} from './InvestmentFormFields'
-import urls from '../../../../lib/urls'
+} from '../InvestmentFormFields'
+import urls from '../../../../../lib/urls'
 import {
+  transformObjectForTypeahead,
   transformArrayForTypeahead,
   transformRadioOptionToBool,
-  transformProjectSummaryForApi,
-  transformObjectForTypeahead,
-} from './transformers'
-import { transformDateStringToDateObject } from '../../../../apps/transformers'
-import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
-import { GREY_2 } from '../../../utils/colours'
+} from '../transformers'
+import { transformProjectSummaryForApi } from './transformers'
+import { transformDateStringToDateObject } from '../../../../../apps/transformers'
+import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { GREY_2 } from '../../../../utils/colours'
 import { state2props, TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};

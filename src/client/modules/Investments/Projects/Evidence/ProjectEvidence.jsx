@@ -8,10 +8,10 @@ import {
   InvestmentResource,
   InvestmentEvidenceResource,
   ProjectDocumentResource,
-} from '../../../components/Resource'
-import urls from '../../../../lib/urls'
-import { VIRUS_SCAN_STATUSES } from './constants'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+} from '../../../../components/Resource'
+import urls from '../../../../../lib/urls'
+import { VIRUS_SCAN_STATUSES } from '../constants'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const StyledListItem = styled(ListItem)`
   font-size: 16px;
