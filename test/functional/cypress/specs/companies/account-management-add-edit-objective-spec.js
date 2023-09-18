@@ -2,6 +2,7 @@ import { format } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
 import { companyFaker } from '../../fakers/companies'
 import { objectiveFaker } from '../../fakers/objective'
+import { clickButton } from '../../support/actions'
 
 const {
   assertErrorSummary,
@@ -11,6 +12,7 @@ const {
   assertFieldTextarea,
   assertFieldDate,
   assertFieldRadiosWithLegend,
+  assertFlashMessage,
 } = require('../../support/assertions')
 
 const { fill } = require('../../../../functional/cypress/support/form-fillers')
@@ -319,10 +321,10 @@ describe('Company account management', () => {
           withBlockersObjective.id
         )
       )
-      cy.get('button[data-test="submit-button"]').click()
+      clickButton('Archive objective')
       cy.wait('@getWithBlockersObjectives')
 
-      cy.get('[data-test="status-message"]').contains('Objective archived')
+      assertFlashMessage('Objective archived')
     })
   })
 })

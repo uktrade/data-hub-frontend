@@ -1,11 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { TASK_ARCHIVE_OBJECTIVE, state2props } from '../state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 import { buildCompanyBreadcrumbs } from '../../utils'
-import { connect } from 'react-redux'
-import { DefaultLayout, Form, FormLayout } from '../../../../components'
+import {
+  DefaultLayout,
+  Form,
+  FormLayout,
+  NewWindowLink,
+} from '../../../../components'
 
 const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
   return (
@@ -62,13 +67,13 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
               <p>
                 If you want to continue and archive the objective you will still
                 be able to view this in the{' '}
-                <a
+                <NewWindowLink
                   href={urls.companies.accountManagement.objectives.archived(
                     company.id
                   )}
                 >
                   company's archived objectives (opens in new tab)
-                </a>
+                </NewWindowLink>
               </p>
             </>
           )}
@@ -78,5 +83,4 @@ const ObjectiveArchiveForm = ({ company, objectiveItem }) => {
   )
 }
 
-//export default ObjectiveArchiveForm
 export default connect(state2props)(ObjectiveArchiveForm)
