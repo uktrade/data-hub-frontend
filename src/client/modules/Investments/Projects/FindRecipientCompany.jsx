@@ -29,6 +29,7 @@ import {
 import { InvestmentResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import { checkIfRecipientCompanyExists } from './transformers'
+import { buildProjectBreadcrumbs } from '../utils'
 
 const StyledPanel = styled(Panel)`
   margin-bottom: ${SPACING.SCALE_3};
@@ -50,16 +51,7 @@ const FindRecipientCompany = ({
           pageTitle={`${checkIfRecipientCompanyExists(project.ukCompany)} - ${
             project.name
           } - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -67,7 +59,7 @@ const FindRecipientCompany = ({
             {
               text: checkIfRecipientCompanyExists(project.ukCompany),
             },
-          ]}
+          ])}
         >
           <StyledPanel>
             <p>Select a company to associate it with {project.name}.</p>

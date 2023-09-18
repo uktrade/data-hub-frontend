@@ -47,7 +47,7 @@ const getCurrentTab = (currentPath) =>
 const currentTab = getCurrentTab(path)
 
 const buildBreadcrumbs = (currentTab, id, name) => {
-  const initalBreadcrumbs = [
+  const initialBreadcrumbs = [
     { link: urls.dashboard.index(), text: 'Home' },
     { link: urls.contacts.index(), text: 'Contacts' },
   ]
@@ -60,7 +60,7 @@ const buildBreadcrumbs = (currentTab, id, name) => {
         { text: currentTab },
       ]
     : [{ text: name }]
-  return initalBreadcrumbs.concat(dynamicBreadcrumbs)
+  return initialBreadcrumbs.concat(dynamicBreadcrumbs)
 }
 
 const ContactLocalHeader = ({ contact, writeFlashMessage }) => {

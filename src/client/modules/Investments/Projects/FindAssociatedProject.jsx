@@ -18,6 +18,7 @@ import {
 import { TASK_GET_INVESTMENTS_PROJECTS_METADATA } from '../../../../apps/investments/client/projects/state'
 import { InvestmentResource } from '../../../components/Resource'
 import { checkIfAssociatedProjectExists } from './transformers'
+import { buildProjectBreadcrumbs } from '../utils'
 
 import {
   CollectionFilters,
@@ -103,16 +104,7 @@ const FindAssociatedProject = ({
           pageTitle={`${checkIfAssociatedProjectExists(
             project.associatedNonFdiRAndDProject
           )} - ${project.name} - Projects - Investments`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -122,7 +114,7 @@ const FindAssociatedProject = ({
                 project.associatedNonFdiRAndDProject
               ),
             },
-          ]}
+          ])}
           useReactRouter={false}
         >
           <StyledPanel data-test="help-panel">

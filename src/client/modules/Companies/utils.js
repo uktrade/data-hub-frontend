@@ -25,7 +25,7 @@ export const buildCompanyBreadcrumbs = (
   companyId,
   companyName
 ) => {
-  const initalBreadcrumbs = [
+  const initialBreadcrumbs = [
     { link: urls.dashboard.index(), text: 'Home' },
     {
       link: urls.companies.index(),
@@ -33,7 +33,7 @@ export const buildCompanyBreadcrumbs = (
     },
     { link: urls.companies.detail(companyId), text: companyName },
   ]
-  return initalBreadcrumbs.concat(pageBreadcrumbs)
+  return initialBreadcrumbs.concat(pageBreadcrumbs)
 }
 
 /**

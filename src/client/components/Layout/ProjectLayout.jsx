@@ -14,25 +14,11 @@ import {
 } from '../../components'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
+import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
 
 const StyledNavWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_5};
 `
-
-const buildProjectBreadcrumbs = (pageBreadcrumbs) => {
-  const initalBreadcrumbs = [
-    { link: urls.dashboard.index(), text: 'Home' },
-    {
-      link: urls.investments.index(),
-      text: 'Investments',
-    },
-    {
-      link: urls.investments.projects.index(),
-      text: 'Projects',
-    },
-  ]
-  return initalBreadcrumbs.concat(pageBreadcrumbs)
-}
 
 const userCanViewInteractions = (permissions) =>
   permissions.includes(
