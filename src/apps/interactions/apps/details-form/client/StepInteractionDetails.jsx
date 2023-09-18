@@ -131,7 +131,9 @@ const buildServicesHierarchy = (services) =>
   )
 
 const validateRequiredCountries = (countries, field, { values }) =>
-  !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
+  !EXPORT_INTEREST_STATUS_VALUES.some(
+    (status) => values[status] && values[status].length
+  )
     ? 'Select at least one country in one of the three fields'
     : null
 
@@ -140,11 +142,11 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
     (status) =>
       countries &&
       values[status] &&
+      values[status].length &&
       countries.some((country) => values[status].includes(country))
   )
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
-
 const exportBarrierTypes = {
   FINANCE: '758c4132-a07b-4e4d-a43d-f2f630113023',
   KNOWLEDGE: 'ef9b19d8-510b-4819-8304-5387e4c6df29',
