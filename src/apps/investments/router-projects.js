@@ -21,7 +21,7 @@ const {
 } = require('../middleware')
 const { shared } = require('./middleware')
 
-const { create, archive, editHistory, documents } = require('./controllers')
+const { create, archive, editHistory } = require('./controllers')
 
 const { renderProjectsView } = require('./controllers/projects')
 const { renderAdminView } = require('./controllers/admin')
@@ -82,8 +82,6 @@ router.use(
 )
 
 router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
-
-router.get('/:investmentId/documents', documents.renderDocuments)
 
 router.get('/:investmentId/admin', renderAdminView)
 

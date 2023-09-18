@@ -49,7 +49,6 @@ import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
-import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
@@ -328,9 +327,6 @@ function App() {
         </Mount>
         <Mount selector="#contact-documents">
           {(props) => <ContactDocuments {...props} />}
-        </Mount>
-        <Mount selector="#investment-documents">
-          {(props) => <InvestmentDocuments {...props} />}
         </Mount>
         <Mount selector="#contact-audit-history">
           {(props) => <ContactAuditHistory {...props} />}

@@ -77,23 +77,6 @@ describe('DA Permission', () => {
   })
 
   context('investment', () => {
-    describe('investment document', () => {
-      investmentProjectNewGolf =
-        fixtures.investmentProject.create.newGolfCourseDA()
-
-      before(() => {
-        cy.loadFixture([investmentProjectNewGolf])
-        cy.visit(investments.projects.documents(investmentProjectNewGolf.pk), {
-          failOnStatusCode: false,
-        })
-      })
-
-      it('should prevent DA users from accessing the page', () => {
-        assertError("You don't have permission to view this page")
-        assertError('403')
-      })
-    })
-
     describe('interaction', () => {
       investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
 
