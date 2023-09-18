@@ -21,7 +21,7 @@ const {
 } = require('../middleware')
 const { shared } = require('./middleware')
 
-const { create, archive, editHistory } = require('./controllers')
+const { create, editHistory } = require('./controllers')
 
 const { renderProjectsView } = require('./controllers/projects')
 const { renderAdminView } = require('./controllers/admin')
@@ -50,11 +50,6 @@ router.get(
   '/export',
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   exportCollection('investment_project')
-)
-
-router.get(
-  '/:investmentId/unarchive',
-  archive.unarchiveInvestmentProjectHandler
 )
 
 router.get(
