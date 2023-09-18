@@ -102,5 +102,25 @@ describe('Investment project evidence', () => {
         ],
       })
     })
+
+    it('should render the download and delete links', () => {
+      cy.get('[data-test="download-link"]').should(
+        'have.attr',
+        'href',
+        fixtures.investment.projectDocumentDownlad.documentUrl
+      )
+
+      cy.get('[data-test="delete-link"]').as('deleteLinks')
+      cy.get('@deleteLinks').should('have.length', 6)
+      cy.get('@deleteLinks').eq('1').as('firstDeleteLink')
+      cy.get('@firstDeleteLink').should(
+        'have.attr',
+        'href',
+        urls.investments.projects.evidence.delete(
+          fixtures.investment.investmentWithLink.id,
+          '3e480927-a1e9-4127-91af-7a155fef5d74'
+        )
+      )
+    })
   })
 })

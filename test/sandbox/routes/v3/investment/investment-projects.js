@@ -3,6 +3,7 @@ var project = require('../../../fixtures/v3/investment/project.json')
 var projectAudit = require('../../../fixtures/v3/investment/project-audit.json')
 var projectEvidence = require('../../../fixtures/v3/investment/project-evidence.json')
 var projectNoEvidence = require('../../../fixtures/v3/investment/project-no-evidence.json')
+var documentDownload = require('../../../fixtures/v3/investment/project-document-download.json')
 
 var allProjectsMap = {}
 allProjects.results.forEach(function (project) {
@@ -27,6 +28,10 @@ exports.investmentProjectEvidence = function (req, res) {
       ? projectNoEvidence
       : projectEvidence
   )
+}
+
+exports.documentDownload = function (req, res) {
+  res.json(documentDownload)
 }
 
 exports.patchInvestmentProject = function (req, res) {

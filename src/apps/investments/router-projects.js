@@ -25,7 +25,6 @@ const { create, archive, editHistory, documents } = require('./controllers')
 
 const { renderProjectsView } = require('./controllers/projects')
 const { renderAdminView } = require('./controllers/admin')
-const { renderEvidenceView } = require('./controllers/evidence')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
 const { postUpload } = require('../documents/middleware/upload')
 
@@ -34,8 +33,6 @@ const { setPropositionsReturnUrl } = require('./middleware/propositions')
 const {
   setEvidenceReturnUrl,
   setEvidenceDocumentsOptions,
-  getDownloadLink,
-  deleteEvidence,
 } = require('./middleware/evidence')
 
 const interactionsRouter = require('../interactions/router.sub-app')
@@ -73,20 +70,10 @@ router.get('/create', create.start.renderCreatePage)
 
 router.get('/:investmentId', redirectToFirstNavItem)
 
-router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
-
 router
   .route('/:investmentId/evidence/add-new')
   .get(setEvidenceReturnUrl, renderAddEvidence)
   .post(setEvidenceReturnUrl, setEvidenceDocumentsOptions, postUpload)
-
-router
-  .route('/:investmentId/evidence/:evidenceId/download')
-  .get(getDownloadLink)
-
-router
-  .route('/:investmentId/evidence/:evidenceId/delete')
-  .get(setEvidenceReturnUrl, deleteEvidence)
 
 router.use(
   urls.investments.projects.interactions.index.route,

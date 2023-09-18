@@ -298,6 +298,7 @@ import {
   TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
   TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
   TASK_EDIT_PROJECT_TEAM_MEMBERS,
+  TASK_DELETE_PROJECT_DOCUMENT,
 } from './modules/Investments/Projects/state'
 import {
   getNonFdiProjects,
@@ -306,6 +307,7 @@ import {
   getUkCompanies,
   updateRecipientCompany,
   updateTeamMembers,
+  deleteProjectDocument,
 } from './modules/Investments/Projects/tasks'
 
 import {
@@ -505,4 +507,5 @@ export const tasks = {
   [TASK_GET_UK_COMPANIES]: getUkCompanies,
   [TASK_UPDATE_RECIPIENT_COMPANY]: updateRecipientCompany,
   [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
+  [TASK_DELETE_PROJECT_DOCUMENT]: deleteProjectDocument,
 }

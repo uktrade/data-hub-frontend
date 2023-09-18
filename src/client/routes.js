@@ -41,6 +41,8 @@ import EditClientRelationshipManagement from './modules/Investments/Projects/Edi
 import EditProjectManagement from './modules/Investments/Projects/EditProjectManagement'
 import EditTeamMembers from './modules/Investments/Projects/EditTeamMembers'
 import ProjectEditHistory from './modules/Investments/Projects/ProjectEditHistory'
+import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
+import DeleteProjectDocument from './modules/Investments/Projects/DeleteProjectDocument'
 
 const routes = {
   companies: [
@@ -292,6 +294,16 @@ const routes = {
       path: '/investments/projects/:projectId/edit-history',
       module: 'datahub:investments',
       component: ProjectEditHistory,
+    },
+    {
+      path: '/investments/projects/:projectId/evidence',
+      module: 'datahub:investments',
+      component: ProjectEvidence,
+    },
+    {
+      path: '/investments/projects/:projectId/evidence/:documentId/delete',
+      module: 'datahub:investments',
+      component: DeleteProjectDocument,
     },
   ],
 }
