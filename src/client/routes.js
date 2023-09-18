@@ -257,6 +257,8 @@ const routes = {
       module: 'datahub:investments',
       component: EditRecipientCompany,
     },
+  ],
+  tasks: [
     {
       path: '/investments/projects/:projectId/details',
       module: 'datahub:investments',
