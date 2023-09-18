@@ -11,25 +11,25 @@ import {
   DefaultLayout,
   Filters,
   Panel,
-} from '../../../components'
-import { LABELS } from '../../Companies/CollectionList/constants'
+} from '../../../../../components'
+import { LABELS } from '../../../../Companies/CollectionList/constants'
 import {
-  recipientState2props,
+  state2props,
   RECIPIENT_COMPANY_LIST_ID,
   TASK_GET_UK_COMPANIES,
 } from './state'
 import {
   export_segments,
   export_sub_segments,
-} from '../../../../apps/companies/apps/edit-company/client/constants'
+} from '../../../../../../apps/companies/apps/edit-company/client/constants'
 import {
   companyCollectionListTask,
   companyCollectionListMetadataTask,
-} from '../../Companies/utils'
-import { InvestmentResource } from '../../../components/Resource'
-import urls from '../../../../lib/urls'
+} from '../../../../Companies/utils'
+import { InvestmentResource } from '../../../../../components/Resource'
+import urls from '../../../../../../lib/urls'
 import { checkIfRecipientCompanyExists } from './transformers'
-import { buildProjectBreadcrumbs } from '../utils'
+import { buildProjectBreadcrumbs } from '../../../utils'
 
 const StyledPanel = styled(Panel)`
   margin-bottom: ${SPACING.SCALE_3};
@@ -211,4 +211,4 @@ const FindRecipientCompany = ({
   )
 }
 
-export default connect(recipientState2props)(FindRecipientCompany)
+export default connect(state2props)(FindRecipientCompany)

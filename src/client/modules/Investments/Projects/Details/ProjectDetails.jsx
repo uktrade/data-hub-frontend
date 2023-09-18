@@ -5,28 +5,28 @@ import { connect } from 'react-redux'
 import { Button, InsetText, Link } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
-import ProjectIncompleteFields from './ProjectIncompleteFields'
-import { SummaryTable } from '../../../components'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
+import ProjectIncompleteFields from '../ProjectIncompleteFields'
+import { SummaryTable } from '../../../../components'
 import {
   InvestmentProjectStageResource,
   InvestmentResource,
-} from '../../../components/Resource'
+} from '../../../../components/Resource'
 import {
   transformFdiType,
-  transformBusinessActivity,
   transformFdiRAndDProject,
   transformRAndDBudget,
   transformNewTech,
   transformExportRevenue,
-} from './transformers'
-import urls from '../../../../lib/urls'
+} from '../transformers'
+import { transformBusinessActivity } from './transformers'
+import urls from '../../../../../lib/urls'
 import { state2props } from './state'
-import { transformArray } from '../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
-import { format } from '../../../utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
-import { GREY_3, BLACK } from '../../../utils/colours'
-import { currencyGBP } from '../../../utils/number-utils'
+import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
+import { format } from '../../../../utils/date'
+import { DATE_LONG_FORMAT_1 } from '../../../../../common/constants'
+import { GREY_3, BLACK } from '../../../../utils/colours'
+import { currencyGBP } from '../../../../utils/number-utils'
 
 const checkIfRequirementsStarted = (project) => {
   const requirementsArrays = [

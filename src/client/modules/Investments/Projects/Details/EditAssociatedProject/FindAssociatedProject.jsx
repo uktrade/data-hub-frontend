@@ -5,20 +5,20 @@ import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import urls from '../../../../lib/urls'
+import urls from '../../../../../../lib/urls'
 import {
-  nonFdiState2props,
+  state2props,
   NON_FDI_LIST_ID,
   TASK_GET_NON_FDI_PROJECTS_LIST,
 } from './state'
 import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__SET_PROJECTS_METADATA,
-} from '../../../actions'
-import { TASK_GET_INVESTMENTS_PROJECTS_METADATA } from '../../../../apps/investments/client/projects/state'
-import { InvestmentResource } from '../../../components/Resource'
+} from '../../../../../actions'
+import { TASK_GET_INVESTMENTS_PROJECTS_METADATA } from '../../../../../../apps/investments/client/projects/state'
+import { InvestmentResource } from '../../../../../components/Resource'
 import { checkIfAssociatedProjectExists } from './transformers'
-import { buildProjectBreadcrumbs } from '../utils'
+import { buildProjectBreadcrumbs } from '../../../utils'
 
 import {
   CollectionFilters,
@@ -27,12 +27,12 @@ import {
   FilterToggleSection,
   Filters,
   Panel,
-} from '../../../components'
+} from '../../../../../components'
 import {
   listSkeletonPlaceholder,
   CheckboxPlaceholder,
   ToggleHeadingPlaceholder,
-} from '../../../components/SkeletonPlaceholder'
+} from '../../../../../components/SkeletonPlaceholder'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -208,4 +208,4 @@ const FindAssociatedProject = ({
     </InvestmentResource>
   )
 }
-export default connect(nonFdiState2props)(FindAssociatedProject)
+export default connect(state2props)(FindAssociatedProject)

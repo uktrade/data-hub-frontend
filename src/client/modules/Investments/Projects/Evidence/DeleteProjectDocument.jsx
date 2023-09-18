@@ -1,12 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout } from '../../../components'
-import Task from '../../../components/Task'
+import { DefaultLayout } from '../../../../components'
+import Task from '../../../../components/Task'
 import { DELETE_DOCUMENT_ID, TASK_DELETE_PROJECT_DOCUMENT } from './state'
-import urls from '../../../../lib/urls'
-import { InvestmentResource } from '../../../components/Resource'
-import { buildProjectBreadcrumbs } from '../utils'
+import urls from '../../../../../lib/urls'
+import { InvestmentResource } from '../../../../components/Resource'
+import { buildProjectBreadcrumbs } from '../../utils'
 
 const DeleteProjectDocument = () => {
   const { projectId, documentId } = useParams()

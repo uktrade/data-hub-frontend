@@ -1,12 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Details, Link, Paragraph, VisuallyHidden } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
 
-import urls from '../../../../lib/urls'
-import { NewWindowLink } from '../../../components'
-import PropTypes from 'prop-types'
-import { CompanyResource } from '../../../components/Resource'
+import urls from '../../../../../lib/urls'
+import { NewWindowLink } from '../../../../components'
+import { CompanyResource } from '../../../../components/Resource'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};
@@ -57,4 +57,4 @@ GlobalAccountManagerDetails.propTypes = {
   }),
 }
 
-export { GlobalAccountManagerDetails }
+export default GlobalAccountManagerDetails

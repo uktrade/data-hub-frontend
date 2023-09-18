@@ -7,11 +7,11 @@ import {
   FieldAdvisersTypeahead,
   SummaryTable,
   NewWindowLink,
-} from '../../../components'
-import urls from '../../../../lib/urls'
+} from '../../../../components'
+import urls from '../../../../../lib/urls'
 import { TASK_SAVE_INVESTMENT_PROJECT_MANAGERS } from './state'
+import { transformObjectForTypeahead } from '../transformers'
 import {
-  transformObjectForTypeahead,
   transformAdviserForAPI,
   transformObjectForTable,
   transformLocationsForTable,
@@ -19,10 +19,10 @@ import {
 import {
   CompanyResource,
   InvestmentResource,
-} from '../../../components/Resource'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
-import { format } from '../../../utils/date'
-import { currencyGBP } from '../../../utils/number-utils'
+} from '../../../../components/Resource'
+import ProjectLayout from '../../../../components/Layout/ProjectLayout'
+import { format } from '../../../../utils/date'
+import { currencyGBP } from '../../../../utils/number-utils'
 
 const EditProjectManagement = () => {
   const { projectId } = useParams()

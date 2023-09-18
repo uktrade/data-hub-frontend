@@ -1,4 +1,7 @@
-import { COMPANIES__LOADED, COMPANIES__METADATA_LOADED } from '../../../actions'
+import {
+  COMPANIES__LOADED,
+  COMPANIES__METADATA_LOADED,
+} from '../../../../../actions'
 
 const initialState = {
   results: [],

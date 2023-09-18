@@ -1,13 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout } from '../../../components'
-import Task from '../../../components/Task'
+import { DefaultLayout } from '../../../../../components'
+import Task from '../../../../../components/Task'
 import { ASSOCIATE_PROJECT_ID, TASK_UPDATE_ASSOCIATED_PROJECT } from './state'
-import urls from '../../../../lib/urls'
-import { InvestmentResource } from '../../../components/Resource'
+import urls from '../../../../../../lib/urls'
+import { InvestmentResource } from '../../../../../components/Resource'
 import { checkIfAssociatedProjectExists } from './transformers'
-import { buildProjectBreadcrumbs } from '../utils'
+import { buildProjectBreadcrumbs } from '../../../utils'
 
 const checkIfUpdatingOrRemoving = (checkAssociatedId, associatedProject) =>
   checkAssociatedId
