@@ -24,12 +24,26 @@ import EditProjectStatus from './modules/Investments/Projects/EditProjectStatus'
 import ObjectiveAdd from './modules/Companies/AccountManagement/Objective/ObjectiveAdd'
 import ObjectiveEdit from './modules/Companies/AccountManagement/Objective/ObjectiveEdit'
 import ArchivedObjectives from './modules/Companies/AccountManagement/ArchivedObjectives'
-import FindAssociatedProject from './modules/Investments/Projects/FindAssociatedProject'
-import EditAssociatedProject from './modules/Investments/Projects/EditAssociatedProject'
-import FindRecipientCompany from './modules/Investments/Projects/FindRecipientCompany'
-import EditRecipientCompany from './modules/Investments/Projects/EditRecipientCompany'
+import FindAssociatedProject from './modules/Investments/Projects/Details/EditAssociatedProject/FindAssociatedProject'
+import EditAssociatedProject from './modules/Investments/Projects/Details/EditAssociatedProject/EditAssociatedProject'
+import FindRecipientCompany from './modules/Investments/Projects/Details/EditRecipientCompany/FindRecipientCompany'
+import EditRecipientCompany from './modules/Investments/Projects/Details/EditRecipientCompany/EditRecipientCompany'
 import EditOneList from './modules/Companies/CoreTeam/EditOneList'
 import ObjectiveArchive from './modules/Companies/AccountManagement/Objective/ObjectiveArchive'
+import ProjectDetails from './modules/Investments/Projects/Details/ProjectDetails'
+import ProjectTeam from './modules/Investments/Projects/Team/ProjectTeam'
+import EditProjectSummary from './modules/Investments/Projects/Details/EditProjectSummary'
+import EditProjectRequirements from './modules/Investments/Projects/Details/EditProjectRequirements'
+import EditProjectValue from './modules/Investments/Projects/Details/EditProjectValue'
+import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
+import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
+import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
+import EditClientRelationshipManagement from './modules/Investments/Projects/Team/EditClientRelationshipManagement'
+import EditProjectManagement from './modules/Investments/Projects/Team/EditProjectManagement'
+import EditTeamMembers from './modules/Investments/Projects/Team/EditTeamMembers'
+import ProjectEditHistory from './modules/Investments/Projects/ProjectEditHistory'
+import ProjectEvidence from './modules/Investments/Projects/Evidence/ProjectEvidence'
+import DeleteProjectDocument from './modules/Investments/Projects/Evidence/DeleteProjectDocument'
 
 const routes = {
   companies: [
@@ -226,6 +240,76 @@ const routes = {
       path: '/investments/projects/:projectId/remove-ukcompany',
       module: 'datahub:investments',
       component: EditRecipientCompany,
+    },
+    {
+      path: '/investments/projects/:projectId/details',
+      module: 'datahub:investments',
+      component: ProjectDetails,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-details',
+      module: 'datahub:investments',
+      component: EditProjectSummary,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-requirements',
+      module: 'datahub:investments',
+      component: EditProjectRequirements,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-value',
+      module: 'datahub:investments',
+      component: EditProjectValue,
+    },
+    {
+      path: '/investments/projects/:projectId/team',
+      module: 'datahub:investments',
+      component: ProjectTeam,
+    },
+    {
+      path: '/investments/projects/:projectId/evaluation',
+      module: 'datahub:investments',
+      component: ProjectEvaluation,
+    },
+    {
+      path: '/investments/projects/:projectId/interactions',
+      module: 'datahub:investments',
+      component: ProjectInteractions,
+    },
+    {
+      path: '/investments/projects/:projectId/propositions',
+      module: 'datahub:investments',
+      component: ProjectPropositions,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-client-relationship-management',
+      module: 'datahub:investments',
+      component: EditClientRelationshipManagement,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-project-management',
+      module: 'datahub:investments',
+      component: EditProjectManagement,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-team-members',
+      module: 'datahub:investments',
+      component: EditTeamMembers,
+    },
+    {
+      path: '/investments/projects/:projectId/edit-history',
+      module: 'datahub:investments',
+      component: ProjectEditHistory,
+    },
+    {
+      path: '/investments/projects/:projectId/evidence',
+      module: 'datahub:investments',
+      component: ProjectEvidence,
+    },
+    {
+      path: '/investments/projects/:projectId/evidence/:documentId/delete',
+      module: 'datahub:investments',
+      component: DeleteProjectDocument,
     },
   ],
 }

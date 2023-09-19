@@ -47,6 +47,20 @@ const reactRoutes = [
   '/investments/projects/:projectId/remove-ukcompany',
   '/companies/:companyId/edit-one-list',
   '/community',
+  '/investments/projects/:projectId/details',
+  '/investments/projects/:projectId/edit-details',
+  '/investments/projects/:projectId/edit-requirements',
+  '/investments/projects/:projectId/edit-value',
+  '/investments/projects/:projectId/team',
+  '/investments/projects/:projectId/evaluation',
+  '/investments/projects/:projectId/interactions',
+  '/investments/projects/:projectId/propositions',
+  '/investments/projects/:projectId/edit-client-relationship-management',
+  '/investments/projects/:projectId/edit-project-management',
+  '/investments/projects/:projectId/edit-team-members',
+  '/investments/projects/:projectId/edit-history',
+  '/investments/projects/:projectId/evidence',
+  '/investments/projects/:projectId/evidence/:documentId/delete',
 ]
 
 reactRoutes.forEach((path) => {

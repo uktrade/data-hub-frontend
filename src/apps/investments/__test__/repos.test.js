@@ -1,13 +1,8 @@
 const config = require('../../../config')
 
-const {
-  getInvestment,
-  archiveInvestmentProject,
-  unarchiveInvestmentProject,
-} = require('../../../apps/investments/repos')
+const { getInvestment } = require('../../../apps/investments/repos')
 
 const investmentData = require('../../../../test/unit/data/investment/investment-data.json')
-const investmentProjectAuditData = require('../../../../test/unit/data/investment/audit-log.json')
 
 const stubRequest = { session: { token: 'token' } }
 
@@ -25,43 +20,6 @@ describe('Investment repository', () => {
 
     it('should return an investment object', () => {
       expect(this.investmentProject).to.deep.equal(investmentData)
-    })
-  })
-
-  describe('#archiveInvestmentProject', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .post(`/v3/investment/${investmentData.id}/archive`, { reason: 'test' })
-        .reply(200, investmentProjectAuditData)
-      this.investmentProjectAuditData = await archiveInvestmentProject(
-        stubRequest,
-        investmentData.id,
-        'test'
-      )
-    })
-
-    it('should call archive url and post reason', () => {
-      expect(this.investmentProjectAuditData).to.deep.equal(
-        investmentProjectAuditData
-      )
-    })
-  })
-
-  describe('#unarchiveInvestmentProject', async () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .post(`/v3/investment/${investmentData.id}/unarchive`)
-        .reply(200, investmentProjectAuditData)
-      this.investmentProjectAuditData = await unarchiveInvestmentProject(
-        stubRequest,
-        investmentData.id
-      )
-    })
-
-    it('should call unarchive url', async () => {
-      expect(this.investmentProjectAuditData).to.deep.equal(
-        investmentProjectAuditData
-      )
     })
   })
 })

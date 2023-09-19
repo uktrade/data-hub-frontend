@@ -22,7 +22,6 @@ import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
-import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
@@ -46,14 +45,10 @@ import OpportunityChangeStatusForm from '../apps/investments/client/opportunitie
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
 import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
-import EditProjectManagement from '../apps/investments/client/projects/team/EditProjectManagement'
-import { EditTeamMembers } from '../apps/investments/client/projects/team/EditTeamMembers'
-import EditClientRelationshipManagement from '../apps/investments/client/projects/team/EditClientRelationshipManagement'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
-import InvestmentDocuments from '../apps/investments/client/projects/ProjectDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
@@ -67,16 +62,7 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
-import EditProjectSummary from './modules/Investments/Projects/EditProjectSummary'
-import EditProjectRequirements from './modules/Investments/Projects/EditProjectRequirements'
-import EditProjectValue from './modules/Investments/Projects/EditProjectValue'
 import AccountManagement from './modules/Companies/AccountManagement'
-import ProjectDetails from './modules/Investments/Projects/ProjectDetails'
-import ProjectEvaluation from './modules/Investments/Projects/ProjectEvaluation'
-import ProjectTeam from './modules/Investments/Projects/ProjectTeam'
-import ProjectInteractions from './modules/Investments/Projects/ProjectInteractions'
-import ProjectPropositions from './modules/Investments/Projects/ProjectPropositions'
-import ProjectEvidence from './modules/Investments/Projects/ProjectEvidence'
 
 import Footer from '../client/components/Footer'
 
@@ -169,14 +155,6 @@ function App() {
         <Mount selector="#company-edit-history">
           {(props) => (
             <CompanyEditHistory csrfToken={globalProps.csrfToken} {...props} />
-          )}
-        </Mount>
-        <Mount selector="#investment-edit-history">
-          {(props) => (
-            <InvestmentEditHistory
-              csrfToken={globalProps.csrfToken}
-              {...props}
-            />
           )}
         </Mount>
         <Mount selector="#match-confirmation">
@@ -338,15 +316,6 @@ function App() {
         <Mount selector="#edit-subscribers">
           {(props) => <EditSubscribers {...props} />}
         </Mount>
-        <Mount selector="#edit-team-members">
-          {(props) => <EditTeamMembers {...props} />}
-        </Mount>
-        <Mount selector="#edit-client-relationship-management">
-          {(props) => <EditClientRelationshipManagement {...props} />}
-        </Mount>
-        <Mount selector="#edit-project-management">
-          {(props) => <EditProjectManagement {...props} />}
-        </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}
         </Mount>
@@ -358,9 +327,6 @@ function App() {
         </Mount>
         <Mount selector="#contact-documents">
           {(props) => <ContactDocuments {...props} />}
-        </Mount>
-        <Mount selector="#investment-documents">
-          {(props) => <InvestmentDocuments {...props} />}
         </Mount>
         <Mount selector="#contact-audit-history">
           {(props) => <ContactAuditHistory {...props} />}
@@ -395,37 +361,10 @@ function App() {
         <Mount selector="#link-subsidiary">
           {(props) => <LinkSubsidiary {...props} />}
         </Mount>
-        <Mount selector="#edit-project-summary">
-          {(props) => <EditProjectSummary {...props} />}
-        </Mount>
-        <Mount selector="#edit-project-requirements">
-          {(props) => <EditProjectRequirements {...props} />}
-        </Mount>
-        <Mount selector="#edit-project-value">
-          {(props) => <EditProjectValue {...props} />}
-        </Mount>
         <Mount selector="#account-management">
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
           )}
-        </Mount>
-        <Mount selector="#project-details">
-          {(props) => <ProjectDetails {...props} />}
-        </Mount>
-        <Mount selector="#project-evaluation">
-          {(props) => <ProjectEvaluation {...props} />}
-        </Mount>
-        <Mount selector="#project-team">
-          {(props) => <ProjectTeam {...props} />}
-        </Mount>
-        <Mount selector="#project-interactions">
-          {(props) => <ProjectInteractions {...props} />}
-        </Mount>
-        <Mount selector="#project-propositions">
-          {(props) => <ProjectPropositions {...props} />}
-        </Mount>
-        <Mount selector="#project-evidence">
-          {(props) => <ProjectEvidence {...props} />}
         </Mount>
 
         <Mount selector="#react-app">

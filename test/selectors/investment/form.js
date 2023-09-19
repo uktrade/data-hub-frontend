@@ -30,5 +30,4 @@ module.exports = {
   levelOfInvolvement: '[data-test="field-level_of_involvement"]',
   specificInvestmentProgramme: '[data-test="field-specific_programme"]',
   submitButton: '[data-test="submit"]',
-  history: '#investment-edit-history',
 }

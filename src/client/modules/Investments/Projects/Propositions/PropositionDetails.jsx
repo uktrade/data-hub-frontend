@@ -16,6 +16,7 @@ import {
 } from './transformers'
 import urls from '../../../../../lib/urls'
 import { formatLongDate } from '../../../../utils/date'
+import { buildProjectBreadcrumbs } from '../../utils'
 
 const buildHeading = (index) => {
   index++
@@ -56,16 +57,7 @@ const PropositionDetails = ({ propositionId, investmentProjectId }) => (
               <>
                 <LocalHeader
                   heading={proposition.name}
-                  breadcrumbs={[
-                    { link: urls.dashboard.index(), text: 'Home' },
-                    {
-                      link: urls.investments.index(),
-                      text: 'Investments',
-                    },
-                    {
-                      link: urls.investments.projects.index(),
-                      text: 'Projects',
-                    },
+                  breadcrumbs={buildProjectBreadcrumbs([
                     {
                       link: urls.investments.projects.details(project.id),
                       text: project.name,
@@ -73,7 +65,7 @@ const PropositionDetails = ({ propositionId, investmentProjectId }) => (
                     {
                       text: proposition.name,
                     },
-                  ]}
+                  ])}
                 />
                 <Main>
                   <SummaryTable data-test="proposition-details-table">

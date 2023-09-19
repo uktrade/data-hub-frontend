@@ -44,7 +44,7 @@ describe('Update the project stage', () => {
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
         [fixtures.investment.newHotelFdi.name]:
-          urls.investments.projects.project(fixtures.investment.newHotelFdi.id),
+          urls.investments.projects.details(fixtures.investment.newHotelFdi.id),
         Admin: null,
       })
     })

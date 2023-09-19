@@ -153,12 +153,11 @@ import linkSubsidiaryReducer from './modules/Companies/CompanyBusinessDetails/Li
 import { ID as OBJECTIVE_ID } from './modules/Companies/AccountManagement/state'
 import objectiveReducer from './modules/Companies/AccountManagement/reducer'
 
-import {
-  NON_FDI_LIST_ID,
-  RECIPIENT_COMPANY_LIST_ID,
-} from './modules/Investments/Projects/state'
-import nonFdiReducer from './modules/Investments/Projects/reducer'
-import recipientCompanyReducer from './modules/Investments/Projects/recipientCompanyReducer'
+import { RECIPIENT_COMPANY_LIST_ID } from './modules/Investments/Projects/Details/EditRecipientCompany/state'
+import recipientCompanyReducer from './modules/Investments/Projects/Details/EditRecipientCompany/reducer'
+
+import { NON_FDI_LIST_ID } from './modules/Investments/Projects/Details/EditAssociatedProject/state'
+import nonFdiReducer from './modules/Investments/Projects/Details/EditAssociatedProject/reducer'
 
 import { ID as ONE_LIST_DETAILS_ID } from './modules/Companies/CoreTeam/state'
 import oneListDetailsReducer from './modules/Companies/CoreTeam/reducer'

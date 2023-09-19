@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 
 const {
   companies,
@@ -8,6 +7,21 @@ const {
 } = require('../../../../../src/lib/urls')
 
 const { assertCollection } = require('../../support/assertions')
+
+const assertTable = ({ element, rows }) => {
+  cy.get(element).as('table')
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
+}
 
 describe('Collection', () => {
   describe('company', () => {
@@ -82,10 +96,17 @@ describe('Collection', () => {
       })
 
       it('should return the investment project team summary', () => {
-        cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
-          .should('contain', 'Client Relationship Manager')
-          .and('contain', 'Marketing - Marketing Team')
-          .and('contain', 'Paula Churing')
+        assertTable({
+          element: '[data-test="crm-table"]',
+          rows: [
+            ['Role', 'Adviser', 'Team'],
+            [
+              'Client Relationship Manager',
+              'Paula Churing',
+              'Marketing - Marketing Team',
+            ],
+          ],
+        })
       })
     })
   })

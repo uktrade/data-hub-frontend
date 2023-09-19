@@ -38,10 +38,12 @@ describe('View edit team members page', () => {
         Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        [projectWithCompleteTeam.name]: urls.investments.projects.project(
+        [projectWithCompleteTeam.name]: urls.investments.projects.details(
           projectWithCompleteTeam.id
         ),
-        'Project team': 'team',
+        'Project team': urls.investments.projects.team(
+          projectWithCompleteTeam.id
+        ),
         'Team members': undefined,
       })
     })
@@ -125,12 +127,12 @@ describe('View edit team members page', () => {
       })
       cy.get('[data-test="field-role_0"]').find('input').type('­­Role')
 
-      clickButton('Save and return')
+      clickButton('Save')
 
       assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertRedirectToProjectsTeamUrl(projectWithIncompleteTeam.id)
-        assertFlashMessage('Changes saved')
+        assertFlashMessage('Investment details updated')
       })
     })
   })
@@ -151,12 +153,12 @@ describe('View edit team members page', () => {
       ]
       removeSecondTeamMember()
 
-      clickButton('Save and return')
+      clickButton('Save')
 
       assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertRedirectToProjectsTeamUrl(projectWithCompleteTeam.id)
-        assertFlashMessage('Changes saved')
+        assertFlashMessage('Investment details updated')
       })
 
       function removeSecondTeamMember() {
@@ -174,12 +176,12 @@ describe('View edit team members page', () => {
 
       removeFirstTeamMember()
 
-      clickButton('Save and return')
+      clickButton('Save')
 
       assertAPIRequest(EDIT_TEAMS_INTERCEPT, (xhr) => {
         assertRequestBody(xhr, expectedBody)
         assertRedirectToProjectsTeamUrl(projectWithCompleteTeam.id)
-        assertFlashMessage('Changes saved')
+        assertFlashMessage('Investment details updated')
       })
 
       function removeFirstTeamMember() {
@@ -209,7 +211,7 @@ describe('View edit team members page', () => {
       })
       cy.get('[data-test="field-role_1"]').find('input').type('­­Role')
 
-      clickButton('Save and return')
+      clickButton('Save')
 
       assertErrorDialog(
         'TASK_EDIT_PROJECT_TEAM_MEMBERS',
@@ -218,7 +220,7 @@ describe('View edit team members page', () => {
     })
 
     it('should fail for no values on role or team member', () => {
-      clickButton('Save and return')
+      clickButton('Save')
 
       assertErrorSummary([
         'Select at least one adviser',

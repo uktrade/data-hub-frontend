@@ -35,7 +35,7 @@ const assertViewHeader = ({ project }) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: investments.projects.project(project.id),
+      [project.name]: investments.projects.details(project.id),
       'Project team': null,
     })
   })
@@ -176,17 +176,6 @@ describe('Viewing the team of a project', () => {
       cy.get('[data-test="pm-inset"]').should('not.exist')
       cy.get('[data-test="add-pm-button"]').should('not.exist')
       cy.get('[data-test="edit-pm-button"]').should('not.exist')
-    })
-  })
-
-  context('When attempting to edit a non-existent project', () => {
-    it('should display an error to the user', () => {
-      cy.request({
-        url: investments.projects.team('Error'),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(500)
-      })
     })
   })
 })

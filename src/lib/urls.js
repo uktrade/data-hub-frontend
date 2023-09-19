@@ -369,7 +369,6 @@ module.exports = {
         '/projects/:investmentId/edit-team-members'
       ),
       editValue: url('/investments', '/projects/:investmentId/edit-value'),
-      documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url(
         '/investments',
         '/projects/:investmentId/propositions',
@@ -407,7 +406,6 @@ module.exports = {
         '/:investmentId/interactions',
         INVESTMENT_LINK_PARAM
       ),
-      project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
@@ -426,10 +424,6 @@ module.exports = {
       evidence: {
         index: url('/investments', '/projects/:projectId/evidence'),
         add: url('/investments', '/projects/:projectId/evidence/add-new'),
-        download: url(
-          '/investments',
-          '/projects/:projectId/evidence/:evidenceId/download'
-        ),
         delete: url(
           '/investments',
           '/projects/:projectId/evidence/:evidenceId/delete'

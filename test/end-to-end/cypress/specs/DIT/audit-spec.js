@@ -95,6 +95,6 @@ describe('Investment Project', () => {
       'have.text',
       'No changes were made to the project in this update'
     )
-    cy.get(selectors.investment.form.history).should('contain', '1 change')
+    cy.get('h3').should('contain', '1 change')
   })
 })
