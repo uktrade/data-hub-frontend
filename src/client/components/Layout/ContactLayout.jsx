@@ -21,9 +21,6 @@ const ContactLayout = ({ contact, flashMessages, permissions, children }) => {
   const canViewActivityLink = permissions.includes(
     'interaction.view_all_interaction'
   )
-  const canViewDocumentsLink = permissions.includes(
-    'company.view_contact_document'
-  )
   return (
     <>
       <ContactLocalHeader contact={contact} writeFlashMessage={flashMessages} />
@@ -52,14 +49,6 @@ const ContactLayout = ({ contact, flashMessages, permissions, children }) => {
                 >
                   Audit history
                 </LocalNavLink>
-                {canViewDocumentsLink && (
-                  <LocalNavLink
-                    dataTest="contact-documents-link"
-                    href={urls.contacts.documents(contact.id)}
-                  >
-                    Documents
-                  </LocalNavLink>
-                )}
               </LocalNav>
             </StyledNavWrapper>
           </GridCol>

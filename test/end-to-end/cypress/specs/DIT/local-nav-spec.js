@@ -82,7 +82,6 @@ describe('DBT Permission', () => {
         'Details',
         'Activity',
         'Audit history',
-        'Documents',
       ])
     })
   })

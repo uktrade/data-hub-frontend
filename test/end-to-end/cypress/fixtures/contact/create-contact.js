@@ -20,7 +20,6 @@ function create(companyId, _first_name, _last_name) {
       notes: 'This is a dummy contact for testing',
       created_on: '2017-02-28T15:00:00Z',
       modified_on: '2017-06-05T00:00:00Z',
-      archived_documents_url_path: '/documents/123',
     },
   }
 }

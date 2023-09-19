@@ -101,7 +101,6 @@ const transformResponseToEventDetails = ({
   related_programmes,
   related_trade_agreements,
   service,
-  archived_documents_url_path,
   disabled_on,
 }) => ({
   name,
@@ -129,7 +128,6 @@ const transformResponseToEventDetails = ({
     transformIdNameToValueLabel
   ),
   service: service.name,
-  archivedDocumentsUrlPath: archived_documents_url_path,
   disabledOn: disabled_on,
 })
 

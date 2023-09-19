@@ -31,9 +31,6 @@ const envSchema = Joi.object({
   // The url for a back end server instance for the service
   API_ROOT: Joi.string().uri().required(),
 
-  // The url for the archived documents store
-  ARCHIVED_DOCUMENTS_BASE_URL: Joi.string().uri().required(),
-
   // If running a server with OAUTH2_BYPASS_SSO=true then this can be used in
   // conjunction with a password to setup basic HTTP auth to protect the server
   BASIC_AUTH_USER: Joi.string(),

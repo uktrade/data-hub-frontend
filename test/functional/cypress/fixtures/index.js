@@ -48,7 +48,6 @@ module.exports = {
     withBusIntel: require('../../../sandbox/fixtures/v4/interaction/interaction-with-business-intelligence.json'),
   },
   investment: {
-    investmentWithNoLink: require('./investment/investment-with-no-link.json'),
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
     stageWon: require('./investment/investment-stage-won.json'),

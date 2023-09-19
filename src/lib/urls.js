@@ -157,7 +157,6 @@ module.exports = {
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('/companies', '/:companyId/contacts'),
     unarchive: url('/companies', '/:companyId/unarchive'),
-    documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
     editVirtualTeam: url(
@@ -306,7 +305,6 @@ module.exports = {
     create: url('/contacts/create?company=', ':companyId'),
     contactActivities: url('/contacts', '/:contactId/interactions'),
     details: url('/contacts', '/:contactId/details'),
-    documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),
     interactions: createInteractionsSubApp(
       '/contacts',
