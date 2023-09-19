@@ -142,7 +142,6 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
     (status) =>
       countries &&
       values[status] &&
-      values[status].length &&
       countries.some((country) => values[status].includes(country))
   )
     ? 'A country that was discussed cannot be entered in multiple fields'

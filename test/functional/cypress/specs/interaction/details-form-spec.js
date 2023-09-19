@@ -1249,6 +1249,47 @@ describe('Editing an interaction without a theme', () => {
   })
 })
 
+describe('Editing an interaction related to were countries disscussed', () => {
+  context('when editing interaction with countries discussed', () => {
+    before(() => {
+      cy.visit(
+        urls.interactions.edit(fixtures.interaction.withExportCountries.id)
+      )
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/interaction/${fixtures.interaction.withExportCountries.id}`
+      ).as('apiRequest')
+    })
+    it('should changed values from were any countries discussed if user select from yes to no', () => {
+      cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('no')
+      cy.contains('button', 'Save interaction').click()
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.were_countries_discussed).to.equal('no')
+        expect(request.body.export_countries).to.empty
+      })
+    })
+  })
+
+  context('when editing interaction with no countries discussed', () => {
+    before(() => {
+      cy.visit(
+        urls.interactions.edit(fixtures.interaction.withoutExportCountries.id)
+      )
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/interaction/${fixtures.interaction.withoutExportCountries.id}`
+      ).as('apiRequest')
+    })
+    it('should changed values from were any countries discussed if user select from no to yes', () => {
+      cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('yes')
+      cy.contains('button', 'Save interaction').click()
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.were_countries_discussed).to.equal('yes')
+      })
+    })
+  })
+})
+
 describe('Interaction landing page error checking', () => {
   beforeEach(() => {
     cy.visit(urls.companies.interactions.create(company.id))

@@ -43,10 +43,10 @@ const FIELDS_TO_OMIT = [
 
 const HTTP_201_CREATED = 201
 
+const isNoneExportCountriesWereDiscussed = (wereCountriesDiscussed) =>
+  wereCountriesDiscussed === OPTION_NO || !wereCountriesDiscussed ? true : false
+
 function transformExportCountries(values) {
-  if (values.were_countries_discussed === OPTION_NO) {
-    return
-  }
   return EXPORT_INTEREST_STATUS_VALUES.filter(
     (status) => values[status]
   ).reduce(
@@ -315,8 +315,20 @@ export function saveInteraction({ values, companyIds, referralId }) {
     ...(values.theme == THEMES.TRADE_AGREEMENT && {
       kind: KINDS.INTERACTION,
     }),
-    // Added export countries object as common payload
-    export_countries: transformExportCountries(values),
+
+    // Added to ensure were_countries_discussed has a valid values
+    were_countries_discussed: !isNoneExportCountriesWereDiscussed(
+      values.were_countries_discussed
+    )
+      ? OPTION_YES
+      : OPTION_NO,
+
+    // Added to ensure export_countries has a valid values
+    export_countries: !isNoneExportCountriesWereDiscussed(
+      values.were_countries_discussed
+    )
+      ? transformExportCountries(values)
+      : [],
   }
 
   const payload = values.id
