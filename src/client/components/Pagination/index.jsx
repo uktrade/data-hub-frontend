@@ -1,13 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {
-  GREY_1,
-  GREY_3,
-  GREY_4,
-  LINK_COLOUR,
-  TEXT_COLOUR,
-} from '../../utils/colours'
+import { GREY_1, GREY_3, BLUE, WHITE, LINK_COLOUR } from '../../utils/colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
@@ -50,7 +44,6 @@ const StyledPaginationLink = styled(Link)`
   font-size: ${FONT_SIZE.SIZE_16};
   display: inline-block;
   padding: ${SPACING.SCALE_1} ${SPACING.SCALE_3};
-  background-color: ${GREY_4};
   line-height: 1.9em;
   color: ${LINK_COLOUR};
   text-decoration: none;
@@ -62,8 +55,8 @@ const StyledPaginationLink = styled(Link)`
 
 const StyledActivePaginationLink = styled(StyledPaginationLink)`
   :link {
-    color: ${TEXT_COLOUR};
-    background-color: transparent;
+    color: ${WHITE};
+    background-color: ${BLUE};
   }
 `
 
