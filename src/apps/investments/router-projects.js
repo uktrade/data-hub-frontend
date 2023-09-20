@@ -9,12 +9,10 @@ const {
   exportCollection,
 } = require('../../modules/search/middleware/collection')
 
-const setInvestmentTabItems = require('./middleware/investments-tab-items')
 const { shared } = require('./middleware')
 
 const { create, editHistory } = require('./controllers')
 
-const { renderProjectsView } = require('./controllers/projects')
 const { renderAdminView } = require('./controllers/admin')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
 const { postUpload } = require('../documents/middleware/upload')
@@ -31,8 +29,6 @@ const propositionsRouter = require('../propositions/router.sub-app')
 
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
-
-router.get('/', setInvestmentTabItems, renderProjectsView)
 
 router.get(
   '/export',

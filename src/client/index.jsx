@@ -20,8 +20,6 @@ import MatchConfirmation from '../apps/companies/apps/match-company/client/Match
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
-import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
-import UnfilteredLargeCapitalOpportunityCollection from '../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
@@ -37,7 +35,6 @@ import InvestmentProjectAdmin from '../apps/investments/views/admin/client/Inves
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
-import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
@@ -217,14 +214,6 @@ function App() {
             />
           )}
         </Mount>
-        <Mount selector="#large-capital-profile-collection">
-          {(props) => <LargeCapitalProfileCollection {...props} />}
-        </Mount>
-        <Mount selector="#unfiltered-large-capital-opportunity-collection">
-          {(props) => (
-            <UnfilteredLargeCapitalOpportunityCollection {...props} />
-          )}
-        </Mount>
         <Mount selector="#opportunity">
           {(props) => <Opportunity {...props} />}
         </Mount>
@@ -274,9 +263,6 @@ function App() {
           {(props) => <FlashMessages {...props} />}
         </Mount>
         <Mount selector="#footer">{() => <Footer />}</Mount>
-        <Mount selector="#investment-projects-collection">
-          {(props) => <InvestmentProjectsCollection {...props} />}
-        </Mount>
         <Mount selector="#investment-project-form">
           {(props) => (
             <InvestmentProjectForm
