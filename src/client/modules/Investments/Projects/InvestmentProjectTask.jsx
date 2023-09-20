@@ -12,8 +12,15 @@ import {
 } from '../../../components'
 import urls from '../../../../lib/urls'
 
-import { DateField } from 'govuk-react'
+import {
+  DateField,
+  Details,
+  FormGroup,
+  ListItem,
+  UnorderedList,
+} from 'govuk-react'
 import { OPTIONS_YES_NO } from '../../../../apps/constants'
+import styled from 'styled-components'
 //import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 
 const InvestmentProjectTask = () => {
@@ -64,7 +71,7 @@ const InvestmentProjectTask = () => {
                 options={taskDueDateOptions.map((option) => ({
                   ...option,
                   ...(option.label === 'Custom date' && {
-                    children: <FieldDate />,
+                    children: <FieldDueDate />,
                   }),
                   ...option,
                   ...option,
@@ -75,9 +82,24 @@ const InvestmentProjectTask = () => {
                 name="taskReminder"
                 legend="Do you want to set a reminder for this task?"
                 required="Specify reminder"
-                options={OPTIONS_YES_NO}
-                bigLegend={true}
+                options={OPTIONS_YES_NO.map((option) => ({
+                  ...option,
+                  ...(option.label === 'Yes' && {
+                    children: <FieldReminder />,
+                  }),
+                  ...option,
+                }))}
               />
+              <Details summary="Find out more about task reminders">
+                <p>
+                  By default reminders are sent at 8am, on the specified date
+                  by:
+                </p>
+                <UnorderedList listStyleType="bullet">
+                  <ListItem>emails to the assignee</ListItem>
+                  <ListItem>Data Hub reminder</ListItem>
+                </UnorderedList>
+              </Details>
             </>
           )}
         </Form>
@@ -86,7 +108,7 @@ const InvestmentProjectTask = () => {
   )
 }
 
-export const FieldDate = ({ initialValue = null }) => (
+const FieldDueDate = ({ initialValue = null }) => (
   <DateField
     name="date"
     label="Date"
@@ -96,7 +118,20 @@ export const FieldDate = ({ initialValue = null }) => (
   />
 )
 
-export const taskDueDateOptions = [
+const StyledFieldInput = styled(FieldInput)({
+  width: '7%',
+})
+
+const FieldReminder = ({ initialValue = null }) => (
+  <FormGroup>
+    <StyledFieldInput
+      name="reminder"
+      defaultValue={initialValue}
+    ></StyledFieldInput>
+  </FormGroup>
+)
+
+const taskDueDateOptions = [
   { label: 'Custom date', value: 'Custom date' },
   { label: '1 week', value: '1 week' },
   { label: '1 month', value: '1 month' },
