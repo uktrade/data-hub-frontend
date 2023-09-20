@@ -13,7 +13,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should provide the id', () => {
-        expect(this.transformedItem.id).to.equal(this.rawItem.id)
+        expect(this.transformedItem.id).to.equal(this.rawItem.id + '/details')
       })
 
       it('should provide the name', () => {

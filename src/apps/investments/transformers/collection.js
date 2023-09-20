@@ -39,7 +39,7 @@ function transformInvestmentProjectToListItem({
   })
 
   return {
-    id,
+    id: id + '/details',
     name,
     type: 'investments/project',
     subTitle: {
