@@ -10,7 +10,7 @@ const event = require('../../../../sandbox/fixtures/v3/event/single-event-missin
 const selectors = require('../../../../selectors')
 
 describe('Event Details', () => {
-  it('should display one day event details with link to documents', () => {
+  it('should display one day event details', () => {
     cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
@@ -35,12 +35,6 @@ describe('Event Details', () => {
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK based',
-      Documents: 'View files and documents (opens in new tab)',
-    })
-
-    cy.contains('a', 'View files and documents').should((el) => {
-      expect(el).to.have.attr('href', '/documents/123')
-      expect(el).to.have.attr('target', '_blank')
     })
   })
 
@@ -63,7 +57,6 @@ describe('Event Details', () => {
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
       Service: 'Events : UK based',
-      Documents: 'View files and documents (opens in new tab)',
     })
   })
 

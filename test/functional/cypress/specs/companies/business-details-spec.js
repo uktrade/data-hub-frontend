@@ -130,14 +130,6 @@ const assertAccountManagerContainer = (showLink) => {
   })
 }
 
-const assertCDMSContainerNotVisible = () => {
-  it('should not display the "Documents from CDMS" details container', () => {
-    cy.get(
-      selectors.detailsContainer('documentsDetailsContainer').container
-    ).should('not.exist')
-  })
-}
-
 const assertArchiveContainerNotVisible = () => {
   it('should not display the "Archive company" details container', () => {
     cy.get('[data-test=archive-company-container]').should('not.exist')
@@ -255,7 +247,6 @@ describe('Companies business details', () => {
         })
       })
 
-      assertCDMSContainerNotVisible()
       assertArchiveContainerNotVisible()
     }
   )
@@ -463,7 +454,6 @@ describe('Companies business details', () => {
         HIERARCHY_STRINGS.dnbEmpty,
       ])
 
-      assertCDMSContainerNotVisible()
       assertArchiveContainerNotVisible()
     }
   )
@@ -554,7 +544,7 @@ describe('Companies business details', () => {
         'Headquarter type': 'Global HQ',
         Subsidiaries: '2 subsidiaries',
       })
-      assertCDMSContainerNotVisible()
+
       assertArchiveContainerNotVisible()
     }
   )
@@ -615,7 +605,7 @@ describe('Companies business details', () => {
         [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
         'Global HQ': 'NoneLink to the Global HQ',
       })
-      assertCDMSContainerNotVisible()
+
       assertArchiveContainerVisible()
     }
   )

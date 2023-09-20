@@ -92,7 +92,6 @@ function newHotelCommitmentToInvest() {
       fdi_type: 'f8447013-cfdc-4f35-a146-6619665388b3',
       sector: '034be3be-5329-e511-b6bc-e4115bead28a',
       business_activities: ['a2dbd807-ae52-421c-8d1d-88adfc7a506b'],
-      archived_documents_url_path: '/documents/123',
       created_on: '2017-06-07T10:00:00Z',
       modified_on: '2017-06-07T10:00:00Z',
     },

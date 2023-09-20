@@ -17,7 +17,6 @@ const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactsView } = require('./controllers/contacts')
 const createAndEdit = require('./controllers/create-and-edit')
 const { unarchiveContact } = require('./controllers/archive')
-const { renderDocuments } = require('./controllers/documents')
 const { getAudit } = require('./controllers/audit')
 const { renderContactActivityForEntity } = require('./controllers/activity')
 
@@ -45,8 +44,6 @@ router.get('/:contactId/details', getDetails)
 router.get('/:id/unarchive', unarchiveContact)
 
 router.get('/:contactId/audit', getAudit)
-
-router.get('/:contactId/documents', renderDocuments)
 
 router.use(
   '/:contactId/interactions',

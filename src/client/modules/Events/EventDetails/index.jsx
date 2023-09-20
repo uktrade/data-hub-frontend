@@ -17,7 +17,6 @@ import {
   LocalNavLink,
   SummaryTable,
   FormActions,
-  NewWindowLink,
   DefaultLayout,
 } from '../../../components'
 
@@ -41,7 +40,6 @@ const EventDetails = ({
   relatedProgrammes,
   relatedTradeAgreements,
   service,
-  archivedDocumentsUrlPath,
   disabledOn,
 }) => {
   const { id } = useParams()
@@ -150,13 +148,6 @@ const EventDetails = ({
                       hideWhenEmpty={false}
                     />
                     <SummaryTable.Row heading="Service" children={service} />
-                    {!!archivedDocumentsUrlPath && (
-                      <SummaryTable.Row heading="Documents">
-                        <NewWindowLink href={archivedDocumentsUrlPath}>
-                          View files and documents
-                        </NewWindowLink>
-                      </SummaryTable.Row>
-                    )}
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>

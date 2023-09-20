@@ -40,8 +40,6 @@ const getCurrentTab = (currentPath) =>
     ? 'Activity'
     : currentPath.includes('/audit')
     ? 'Audit history'
-    : currentPath.includes('/documents')
-    ? 'Documents'
     : null
 
 const currentTab = getCurrentTab(path)

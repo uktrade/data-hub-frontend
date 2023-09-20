@@ -48,7 +48,6 @@ import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
-import ContactDocuments from './modules/Contacts/ContactDocuments/ContactDocuments'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
@@ -324,9 +323,6 @@ function App() {
         </Mount>
         <Mount selector="#contact-details">
           {(props) => <ContactDetails {...props} />}
-        </Mount>
-        <Mount selector="#contact-documents">
-          {(props) => <ContactDocuments {...props} />}
         </Mount>
         <Mount selector="#contact-audit-history">
           {(props) => <ContactAuditHistory {...props} />}

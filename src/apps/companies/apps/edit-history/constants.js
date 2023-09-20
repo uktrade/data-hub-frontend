@@ -10,7 +10,6 @@ const EXCLUDED_FIELDS = ['archived_by', 'archived_on', 'dnb_modified_on']
 const COMPANY_FIELD_NAME_TO_LABEL_MAP = {
   address_1: 'Address line 1',
   address_2: 'Address line 2 (optional)',
-  archived_documents_url_path: 'Archived documents URL path',
   company_number: 'Companies House number',
   description: 'Business description (optional)',
   export_experience_category: 'Export win category',
