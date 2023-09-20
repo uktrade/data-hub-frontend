@@ -13,6 +13,7 @@ import {
 import urls from '../../../../lib/urls'
 
 import { DateField } from 'govuk-react'
+import { OPTIONS_YES_NO } from '../../../../apps/constants'
 //import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 
 const InvestmentProjectTask = () => {
@@ -60,12 +61,21 @@ const InvestmentProjectTask = () => {
                 name="taskDueDate"
                 legend="Task due date"
                 required="Specify task due date"
-                options={[
-                  { label: 'Custom date', children: <DateField /> },
-                  { label: '1 week', value: '1 week' },
-                  { label: '1 month', value: '1 month' },
-                  { label: 'No due date', value: 'No due date' },
-                ]}
+                options={taskDueDateOptions.map((option) => ({
+                  ...option,
+                  ...(option.label === 'Custom date' && {
+                    children: <FieldDate />,
+                  }),
+                  ...option,
+                  ...option,
+                  ...option,
+                }))}
+              />
+              <FieldRadios
+                name="taskReminder"
+                legend="Do you want to set a reminder for this task?"
+                required="Specify reminder"
+                options={OPTIONS_YES_NO}
                 bigLegend={true}
               />
             </>
@@ -75,5 +85,22 @@ const InvestmentProjectTask = () => {
     </DefaultLayout>
   )
 }
+
+export const FieldDate = ({ initialValue = null }) => (
+  <DateField
+    name="date"
+    label="Date"
+    hint="For example, 31 3 2019"
+    required="Enter a date"
+    defaultValue={initialValue}
+  />
+)
+
+export const taskDueDateOptions = [
+  { label: 'Custom date', value: 'Custom date' },
+  { label: '1 week', value: '1 week' },
+  { label: '1 month', value: '1 month' },
+  { label: 'No due date', value: 'No due date' },
+]
 
 export default InvestmentProjectTask
