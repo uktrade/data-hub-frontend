@@ -15,7 +15,9 @@ import urls from '../../../../lib/urls'
 import {
   DateField,
   Details,
-  FormGroup,
+  GridCol,
+  GridRow,
+  Label,
   ListItem,
   UnorderedList,
 } from 'govuk-react'
@@ -112,23 +114,34 @@ const FieldDueDate = ({ initialValue = null }) => (
   <DateField
     name="date"
     label="Date"
-    hint="For example, 31 3 2019"
+    hintText="For example 28 11 2025"
     required="Enter a date"
     defaultValue={initialValue}
   />
 )
 
 const StyledFieldInput = styled(FieldInput)({
-  width: '7%',
+  width: '35%',
+  textAlign: 'center',
+})
+
+const StyledLabel = styled(Label)({
+  textAlign: 'left',
 })
 
 const FieldReminder = ({ initialValue = null }) => (
-  <FormGroup>
-    <StyledFieldInput
-      name="reminder"
-      defaultValue={initialValue}
-    ></StyledFieldInput>
-  </FormGroup>
+  <GridRow>
+    <GridCol setWidth="one-quarter">
+      <StyledFieldInput
+        name="reminder"
+        defaultValue={initialValue}
+      ></StyledFieldInput>
+      {/* investment ${pluralize('project', companyInvestmentCount)} in the UK */}
+    </GridCol>
+    <GridCol setWidth="one-quarter">
+      <StyledLabel>Hello World!</StyledLabel>
+    </GridCol>
+  </GridRow>
 )
 
 const taskDueDateOptions = [
