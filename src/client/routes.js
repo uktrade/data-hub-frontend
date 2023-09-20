@@ -328,6 +328,8 @@ const routes = {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',
       module: 'datahub:investments',
       component: DeleteProjectDocument,
+    },
+    {
       path: '/investments/projects/:projectId/tasks/create',
       module: 'datahub:investments',
       component: InvestmentProjectTask,
