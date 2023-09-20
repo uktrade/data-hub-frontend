@@ -191,7 +191,7 @@ describe('Company overview page', () => {
   })
   context('when viewing a UK business with only registered address', () => {
     const blankAddress = fixtures.company.allOverviewDetails
-    blankAddress.address = {}
+    blankAddress.address = null
     before(() => {
       cy.intercept(
         'GET',
@@ -209,6 +209,18 @@ describe('Company overview page', () => {
         .children()
         .first()
         .contains('Companies House')
+    })
+
+    it('should have address set as "Not set"', () => {
+      cy.get('[data-test="businessDetailsContainer"]')
+        .children()
+        .first()
+        .contains('Business details')
+        .next()
+        .children()
+        .contains('Trading Address')
+        .siblings()
+        .contains('td', 'Not set')
     })
   })
   context(
