@@ -44,6 +44,8 @@ import EditTeamMembers from './modules/Investments/Projects/Team/EditTeamMembers
 import ProjectEditHistory from './modules/Investments/Projects/ProjectEditHistory'
 import ProjectEvidence from './modules/Investments/Projects/Evidence/ProjectEvidence'
 import DeleteProjectDocument from './modules/Investments/Projects/Evidence/DeleteProjectDocument'
+import InvestmentCollections from './modules/Investments/InvestmentCollections'
+import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 
 const routes = {
   companies: [
@@ -310,6 +312,26 @@ const routes = {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',
       module: 'datahub:investments',
       component: DeleteProjectDocument,
+    },
+    {
+      path: '/investments/projects',
+      module: 'datahub:investments',
+      component: InvestmentCollections,
+    },
+    {
+      path: '/investments/profiles',
+      module: 'datahub:investments',
+      component: InvestmentCollections,
+    },
+    {
+      path: '/investments/opportunities',
+      module: 'datahub:investments',
+      component: InvestmentCollections,
+    },
+    {
+      path: '/investments',
+      module: 'datahub:investments',
+      component: InvestmentsRedirect,
     },
   ],
 }

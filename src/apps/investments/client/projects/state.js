@@ -59,6 +59,7 @@ export const projectsState2props = ({ router, ...state }) => {
 
   return {
     ...state[INVESTMENT_PROJECTS_ID],
+    currentAdviserId: state.currentAdviserId,
     payload: { ...queryParams },
     selectedFilters,
     optionMetadata: {
