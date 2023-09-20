@@ -9,6 +9,7 @@ describe('Edit the recipient company', () => {
   context('When searching for a recipient company', () => {
     const company = companyFaker({
       modified_on: '1953-02-21T21:43:57.0Z',
+      name: 'Company name',
       sector: { name: 'example sector' },
     })
 
