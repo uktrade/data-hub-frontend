@@ -36,7 +36,7 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: investments.projects.project(project.id),
+      [project.name]: investments.projects.details(project.id),
       'Edit requirements': null,
     })
   })
@@ -200,17 +200,6 @@ describe('Edit the requirements of a project', () => {
       testProjectRequirementsForm({ project: projectHasExistingRequirements })
     }
   )
-
-  context('When attempting to edit a non-existent project', () => {
-    it('should display an error to the user', () => {
-      cy.request({
-        url: investments.projects.editRequirements('Error'),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(500)
-      })
-    })
-  })
 
   context('When making changes to all fields', () => {
     before(() => {

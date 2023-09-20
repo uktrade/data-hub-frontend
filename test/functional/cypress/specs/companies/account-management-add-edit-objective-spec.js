@@ -2,6 +2,7 @@ import { format } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
 import { companyFaker } from '../../fakers/companies'
 import { objectiveFaker } from '../../fakers/objective'
+import { clickButton } from '../../support/actions'
 
 const {
   assertErrorSummary,
@@ -11,6 +12,7 @@ const {
   assertFieldTextarea,
   assertFieldDate,
   assertFieldRadiosWithLegend,
+  assertFlashMessage,
 } = require('../../support/assertions')
 
 const { fill } = require('../../../../functional/cypress/support/form-fillers')
@@ -52,17 +54,24 @@ describe('Company account management', () => {
     it('should display the add objective heading', () => {
       cy.get('h1').contains(`Add objective for ${company.name}`)
     })
+
+    it('should not display the Archive object button', () => {
+      cy.get('a[data-test="archive-objective"]').should('not.exist')
+    })
   })
 
   context(
     'When correctly adding required inputs for an objectives that has no blockers',
     () => {
       before(() => {
-        cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company)
+        cy.intercept('GET', `/api-proxy/v4/company/${companyId}`, company).as(
+          'getAddObjective'
+        )
         cy.intercept('POST', `/api-proxy/v4/company/${companyId}/objective`, {
           results: noBlockersObjective,
         }).as('postObjectiveApiRequest')
         cy.visit(urls.companies.accountManagement.objectives.create(companyId))
+        cy.wait('@getAddObjective')
       })
 
       it('should submit with the minimum amount of data', () => {
@@ -73,6 +82,7 @@ describe('Company account management', () => {
         cy.get('[data-test="has-blocker-no"]').click()
         cy.get('[data-test="progress-50"]').click()
         cy.get('[data-test="submit-button"]').click()
+        cy.wait('@postObjectiveApiRequest')
         cy.get('[data-test="status-message"]').contains('Objective saved')
       })
     }
@@ -271,6 +281,50 @@ describe('Company account management', () => {
           DATE_LONG_FORMAT_3
         ),
       })
+    })
+
+    it('should display the Archive object button', () => {
+      cy.get('a[data-test="archive-objective"]').should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.objectives.archive(
+          withBlockersObjective.company.id,
+          withBlockersObjective.id
+        )
+      )
+    })
+  })
+
+  context('When archiving an objective', () => {
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}`,
+        withBlockersObjective
+      ).as('getWithBlockersObjectives')
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/company/${withBlockersObjective.company.id}/objective/${withBlockersObjective.id}/archive`,
+        {}
+      ).as('patchArchiveObjectiveApiRequest')
+      cy.intercept(
+        'POST',
+        `/api-proxy/v4/company/objective/${withBlockersObjective.id}/archive`,
+        {}
+      ).as('postArchiveObjectiveApiRequest')
+    })
+
+    it('should after archiving redirect to the account management page and display Flash message', () => {
+      cy.visit(
+        urls.companies.accountManagement.objectives.archive(
+          withBlockersObjective.company.id,
+          withBlockersObjective.id
+        )
+      )
+      clickButton('Archive objective')
+      cy.wait('@getWithBlockersObjectives')
+
+      assertFlashMessage('Objective archived')
     })
   })
 })

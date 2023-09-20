@@ -15,6 +15,7 @@ import urls from '../../../../../lib/urls'
 import { transformPropositionForAPI } from './transformers'
 import { TASK_CREATE_INVESTMENT_PROPOSITION } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { buildProjectBreadcrumbs } from '../../utils'
 
 const CreateProposition = ({ projectId }) => (
   <InvestmentResource id={projectId}>
@@ -22,16 +23,7 @@ const CreateProposition = ({ projectId }) => (
       <>
         <LocalHeader
           heading={`Add proposition for ${project.name}`}
-          breadcrumbs={[
-            { link: urls.dashboard.index(), text: 'Home' },
-            {
-              link: urls.investments.index(),
-              text: 'Investments',
-            },
-            {
-              link: urls.investments.projects.index(),
-              text: 'Projects',
-            },
+          breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
               text: project.name,
@@ -39,7 +31,7 @@ const CreateProposition = ({ projectId }) => (
             {
               text: 'Add proposition',
             },
-          ]}
+          ])}
         />
         <Main>
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>

@@ -275,7 +275,7 @@ describe('Interaction details', () => {
     assertCannotCompleteTextNotVisible()
   })
 
-  context('Complete investment project interaction without documents', () => {
+  context('Complete investment project interaction', () => {
     const params = {}
 
     before(() => {

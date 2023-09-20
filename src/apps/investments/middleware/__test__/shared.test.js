@@ -170,7 +170,7 @@ describe('Investment shared middleware', () => {
       it('should set the breadcrumb', () => {
         expect(resMock.breadcrumb).to.be.calledWithExactly(
           investmentData.name,
-          `/investments/projects/${investmentData.id}`
+          `/investments/projects/${investmentData.id}/details`
         )
         expect(resMock.breadcrumb).to.have.been.calledTwice
       })

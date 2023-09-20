@@ -1,17 +1,12 @@
 /* eslint camelcase: 0 */
 const { assign } = require('lodash')
-const proxyquire = require('proxyquire')
 
 const mockEvent = require('../../../../test/unit/data/events/event-data.json')
 
-const archivedDocumentsBaseUrl = 'http://base'
-
-const { transformEventToListItem, transformEventFormBodyToApiRequest } =
-  proxyquire('../transformers', {
-    '../../config': {
-      archivedDocumentsBaseUrl,
-    },
-  })
+const {
+  transformEventToListItem,
+  transformEventFormBodyToApiRequest,
+} = require('../transformers')
 
 describe('Event transformers', () => {
   describe('#transformEventToListItem', () => {

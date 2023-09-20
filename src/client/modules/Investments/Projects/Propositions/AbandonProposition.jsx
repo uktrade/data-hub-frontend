@@ -20,6 +20,7 @@ import {
 import { TASK_ABANDON_INVESTMENT_PROPOSITION } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import { RED } from '../../../../utils/colours'
+import { buildProjectBreadcrumbs } from '../../utils'
 
 const AbandonProposition = ({ propositionId, investmentProjectId }) => (
   <InvestmentResource id={investmentProjectId}>
@@ -31,16 +32,7 @@ const AbandonProposition = ({ propositionId, investmentProjectId }) => (
           <>
             <LocalHeader
               heading={`Abandon proposition ${proposition.name}`}
-              breadcrumbs={[
-                { link: urls.dashboard.index(), text: 'Home' },
-                {
-                  link: urls.investments.index(),
-                  text: 'Investments',
-                },
-                {
-                  link: urls.investments.projects.index(),
-                  text: 'Projects',
-                },
+              breadcrumbs={buildProjectBreadcrumbs([
                 {
                   link: urls.investments.projects.details(project.id),
                   text: project.name,
@@ -48,7 +40,7 @@ const AbandonProposition = ({ propositionId, investmentProjectId }) => (
                 {
                   text: 'Abandon proposition',
                 },
-              ]}
+              ])}
             />
             <Main>
               <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>

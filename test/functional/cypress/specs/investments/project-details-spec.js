@@ -172,7 +172,7 @@ describe('Investment project details', () => {
           'Capital expenditure value': '£200,000',
           'Gross Value Added (GVA)': '£34,568',
           'Government assistance': 'Has government assistance',
-          'New jobs': '20 new jobs',
+          'New jobs': '0 new jobs',
           'Average salary of new jobs': 'Below £25,000',
           'Safeguarded jobs': '11234 safeguarded jobs',
           'R&D budget': R_AND_D_FALSE,

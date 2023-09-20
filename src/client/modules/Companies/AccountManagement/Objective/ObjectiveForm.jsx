@@ -1,4 +1,6 @@
 import React from 'react'
+import { Button } from 'govuk-react'
+import Link from '@govuk-react/link'
 
 import { TASK_SAVE_OBJECTIVE } from '../state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
@@ -10,10 +12,16 @@ import {
   FieldInput,
   FieldDate,
   FieldRadios,
+  FormActions,
 } from '../../../../components'
 import urls from '../../../../../lib/urls'
 import { buildCompanyBreadcrumbs } from '../../utils'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../apps/constants'
+import { GREY_3, TEXT_COLOUR } from '../../../../utils/colours'
+
+const ButtonSecondary = (props) => (
+  <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />
+)
 
 const ObjectiveForm = ({ company, objectiveItem }) => {
   const OBJECTIVE_PERCENTAGE = [
@@ -129,6 +137,20 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
             </>
           )}
         </Form>
+        {objectiveItem && (
+          <FormActions>
+            <ButtonSecondary
+              as={Link}
+              href={urls.companies.accountManagement.objectives.archive(
+                company?.id,
+                objectiveItem?.id
+              )}
+              data-test="archive-objective"
+            >
+              Archive objective
+            </ButtonSecondary>
+          </FormActions>
+        )}
       </FormLayout>
     </DefaultLayout>
   )

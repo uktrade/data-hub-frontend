@@ -1,17 +1,5 @@
-const { investments } = require('../../../lib/urls')
-
 const { getInvestmentProjectAuditLog } = require('../repos')
 const { transformAuditLog } = require('../transformers/edit-history')
-
-const renderProjectsView = (req, res) => {
-  const { investment } = res.locals
-
-  res.breadcrumb('Edit History').render('investments/views/edit-history', {
-    props: {
-      dataEndpoint: investments.editHistory.data(investment.id),
-    },
-  })
-}
 
 const fetchProjectsHistoryHandler = async (req, res, next) => {
   try {
@@ -33,6 +21,5 @@ const fetchProjectsHistoryHandler = async (req, res, next) => {
 }
 
 module.exports = {
-  renderProjectsView,
   fetchProjectsHistoryHandler,
 }

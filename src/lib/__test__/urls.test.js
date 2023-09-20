@@ -286,9 +286,6 @@ describe('urls', () => {
       expect(urls.investments.projects.index()).to.equal(
         '/investments/projects'
       )
-      expect(urls.investments.projects.project(123)).to.equal(
-        '/investments/projects/123'
-      )
       expect(
         urls.investments.projects.interactions.createType(
           '123',
@@ -300,9 +297,6 @@ describe('urls', () => {
       )
       expect(urls.investments.projects.status(123)).to.equal(
         '/investments/projects/123/status'
-      )
-      expect(urls.investments.projects.documents(123)).to.equal(
-        '/investments/projects/123/documents'
       )
       expect(urls.investments.profiles.index()).to.equal(
         '/investments/profiles'

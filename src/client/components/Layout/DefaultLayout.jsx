@@ -5,7 +5,7 @@ import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
 import Footer from '../Footer'
-import { Main } from '../../components'
+import Main from '../Main'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import DataHubHeader from '../DataHubHeader'
 
@@ -24,6 +24,7 @@ const DefaultLayout = ({
   breadcrumbs,
   children,
   useReactRouter = false,
+  localHeaderChildren,
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   useEffect(() => {
@@ -45,7 +46,9 @@ const DefaultLayout = ({
           breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
         }
         useReactRouter={useReactRouter}
-      />
+      >
+        {localHeaderChildren}
+      </LocalHeader>
       <Main>
         <GridRow>
           <GridCol>{children}</GridCol>

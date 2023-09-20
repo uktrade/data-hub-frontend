@@ -17,26 +17,7 @@ function getInvestmentProjectAuditLog(req, investmentId, page = 1) {
   })
 }
 
-function archiveInvestmentProject(req, investmentId, reason) {
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v3/investment/${investmentId}/archive`,
-    method: 'POST',
-    body: {
-      reason,
-    },
-  })
-}
-
-function unarchiveInvestmentProject(req, investmentId) {
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v3/investment/${investmentId}/unarchive`,
-    method: 'POST',
-  })
-}
-
 module.exports = {
   getInvestment,
   getInvestmentProjectAuditLog,
-  archiveInvestmentProject,
-  unarchiveInvestmentProject,
 }

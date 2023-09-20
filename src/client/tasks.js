@@ -104,13 +104,6 @@ import {
 import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
 
 import {
-  TASK_EDIT_PROJECT_TEAM_MEMBERS,
-  TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
-  TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
-} from '../apps/investments/client/projects/team/state'
-import * as editInvestmentProjectTeamTasks from '../apps/investments/client/projects/team/tasks'
-
-import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,
   TASK_GET_COMPANY_INVESTMENT_COUNT,
@@ -293,33 +286,56 @@ import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDet
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
 
 import {
-  TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
-  TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
-  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
+} from './modules/Investments/Projects/state'
+import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
+
+import {
+  TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
+  TASK_EDIT_PROJECT_TEAM_MEMBERS,
+  TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
+} from './modules/Investments/Projects/Team/state'
+import { updateTeamMembers } from './modules/Investments/Projects/Team/tasks'
+
+import { TASK_DELETE_PROJECT_DOCUMENT } from './modules/Investments/Projects/Evidence/state'
+import { deleteProjectDocument } from './modules/Investments/Projects/Evidence/tasks'
+
+import {
+  TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
+  TASK_EDIT_INVESTMENT_PROJECT_SUMMARY,
+  TASK_EDIT_INVESTMENT_PROJECT_VALUE,
+} from './modules/Investments/Projects/Details/state'
+
+import {
   TASK_GET_NON_FDI_PROJECTS_LIST,
   TASK_UPDATE_ASSOCIATED_PROJECT,
-  TASK_GET_UK_COMPANIES,
-  TASK_UPDATE_RECIPIENT_COMPANY,
-} from './modules/Investments/Projects/state'
+} from './modules/Investments/Projects/Details/EditAssociatedProject/state'
 import {
   getNonFdiProjects,
-  updateInvestmentProject,
   updateAssociatedProject,
+} from './modules/Investments/Projects/Details/EditAssociatedProject/tasks'
+
+import {
+  TASK_GET_UK_COMPANIES,
+  TASK_UPDATE_RECIPIENT_COMPANY,
+} from './modules/Investments/Projects/Details/EditRecipientCompany/state'
+import {
   getUkCompanies,
   updateRecipientCompany,
-} from './modules/Investments/Projects/tasks'
+} from './modules/Investments/Projects/Details/EditRecipientCompany/tasks'
 
 import {
   TASK_GET_OBJECTIVE,
   TASK_SAVE_OBJECTIVE,
   TASK_SAVE_STRATEGY,
+  TASK_ARCHIVE_OBJECTIVE,
 } from './modules/Companies/AccountManagement/state'
 import {
   getObjective,
   saveObjective,
   saveStrategy,
+  archiveObjective,
 } from './modules/Companies/AccountManagement/tasks'
 
 import {
@@ -394,12 +410,9 @@ export const tasks = {
   [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]: getAdviserNames,
   [TASK_GET_INVESTMENTS_PROJECTS_METADATA]: investmentProjectTasks.getMetadata,
-  [TASK_EDIT_PROJECT_TEAM_MEMBERS]:
-    editInvestmentProjectTeamTasks.updateTeamMembers,
-  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
-    editInvestmentProjectTeamTasks.saveClientRelationshipManager,
-  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
-    editInvestmentProjectTeamTasks.saveProjectManagementStaff,
+  [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
+  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: updateInvestmentProject,
+  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]: updateInvestmentProject,
   [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
   [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
   [TASK_GET_MY_INVESTMENTS_LIST]: myInvestmentProjects.fetchMyInvestmentsList,
@@ -511,4 +524,6 @@ export const tasks = {
   [TASK_GET_UK_COMPANIES]: getUkCompanies,
   [TASK_UPDATE_RECIPIENT_COMPANY]: updateRecipientCompany,
   [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
+  [TASK_ARCHIVE_OBJECTIVE]: archiveObjective,
+  [TASK_DELETE_PROJECT_DOCUMENT]: deleteProjectDocument,
 }

@@ -1,0 +1,30 @@
+{
+    "id": "6eeb0656-5d9e-4dd7-86cd-0e0677cf6a24",
+    "tags": [
+      {
+        "name": "Check A - FDI eligibility: Business will last for 3 years",
+        "id": "b7fea6c5-8dce-4f68-b036-0badad43d127"
+      }
+    ],
+    "comment": "",
+    "avClean": true,
+    "createdBy": {
+      "name": "Barry Oling",
+      "firstName": "Barry",
+      "lastName": "Oling",
+      "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5"
+    },
+    "createdOn": "2023-09-14T08:50:46.537415Z",
+    "modifiedBy": null,
+    "modifiedOn": "2023-09-14T08:50:46.537438Z",
+    "uploadedOn": "2023-09-14T08:50:47.174588Z",
+    "investmentProject": {
+      "name": "New zoo (LEP)",
+      "projectCode": "DHP-00000011",
+      "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+    },
+    "originalFilename": "evidence document.docx",
+    "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/6eeb0656-5d9e-4dd7-86cd-0e0677cf6a24/download",
+    "status": "virus_scanned",
+    "documentUrl": "https://www.example.com"
+  }

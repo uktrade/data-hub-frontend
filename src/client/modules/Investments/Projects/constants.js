@@ -49,3 +49,8 @@ export const VIRUS_SCAN_STATUSES = {
     <strong>Virus scanning failed, contact your administrator</strong>
   ),
 }
+
+export const CHANGE_TYPE_TEXT = 'the project'
+export const TRUE = 'True'
+export const FALSE = 'False'
+export const NOT_SET = 'Not set'

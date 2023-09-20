@@ -48,7 +48,6 @@ module.exports = {
     withBusIntel: require('../../../sandbox/fixtures/v4/interaction/interaction-with-business-intelligence.json'),
   },
   investment: {
-    investmentWithNoLink: require('./investment/investment-with-no-link.json'),
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
     stageWon: require('./investment/investment-stage-won.json'),
@@ -63,6 +62,7 @@ module.exports = {
     investmentWithEvaluation: require('./investment/investment-evaluation-complete.json'),
     investmentWithAlternateEvaluation: require('./investment/investment-evaluation-complete-with-negative-values.json'),
     investmentWithoutValue: require('./investment/investment-no-value.json'),
+    projectDocumentDownlad: require('../../../sandbox/fixtures/v3/investment/project-document-download.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),

@@ -82,7 +82,6 @@ describe('DBT Permission', () => {
         'Details',
         'Activity',
         'Audit history',
-        'Documents',
       ])
     })
   })
@@ -91,11 +90,11 @@ describe('DBT Permission', () => {
     before(() => {
       const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
-      cy.visit(urls.investments.projects.project(investmentProject.pk))
+      cy.visit(urls.investments.projects.details(investmentProject.pk))
     })
 
     it('should display DBT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Project details',
         'Project team',
         'Interactions',

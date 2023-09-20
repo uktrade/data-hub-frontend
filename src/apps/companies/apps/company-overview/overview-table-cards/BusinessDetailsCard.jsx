@@ -21,8 +21,8 @@ const BusinessDetailsCard = ({ company }) => (
     caption="Business details"
     data-test="businessDetailsContainer"
   >
-    {(company.registeredAddress?.country.id == UNITED_KINGDOM_ID ||
-      company.address?.country.id == UNITED_KINGDOM_ID) && (
+    {(company.registeredAddress?.country?.id == UNITED_KINGDOM_ID ||
+      company.address?.country?.id == UNITED_KINGDOM_ID) && (
       <SummaryTable.Row heading="Companies House">
         {buildCellContents(
           company.companyNumber,
@@ -41,11 +41,9 @@ const BusinessDetailsCard = ({ company }) => (
         company.address,
         <StyledAddressList>
           {company.address?.line1 && <li>{company.address.line1}</li>}
-          {company.registeredAddress?.line2 && <li>{company.address.line2}</li>}
-          {company.registeredAddress?.town && <li>{company.address.town}</li>}
-          {company.registeredAddress?.postcode && (
-            <li>{company.address.postcode}</li>
-          )}
+          {company.address?.line2 && <li>{company.address.line2}</li>}
+          {company.address?.town && <li>{company.address.town}</li>}
+          {company.address?.postcode && <li>{company.address.postcode}</li>}
         </StyledAddressList>
       )}
     </SummaryTable.Row>
@@ -94,6 +92,7 @@ const BusinessDetailsCard = ({ company }) => (
     </StyledTableRow>
   </StyledSummaryTable>
 )
+
 BusinessDetailsCard.propTypes = {
   company: PropTypes.object.isRequired,
 }

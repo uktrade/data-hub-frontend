@@ -157,7 +157,6 @@ module.exports = {
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('/companies', '/:companyId/contacts'),
     unarchive: url('/companies', '/:companyId/unarchive'),
-    documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
     editVirtualTeam: url(
@@ -273,6 +272,10 @@ module.exports = {
           '/companies',
           '/:companyId/account-management/objective/archived'
         ),
+        archive: url(
+          '/companies',
+          '/:companyId/account-management/objective/:objectiveId/archive'
+        ),
       },
       advisers: {
         assign: url(
@@ -302,7 +305,6 @@ module.exports = {
     create: url('/contacts/create?company=', ':companyId'),
     contactActivities: url('/contacts', '/:contactId/interactions'),
     details: url('/contacts', '/:contactId/details'),
-    documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),
     interactions: createInteractionsSubApp(
       '/contacts',
@@ -365,7 +367,6 @@ module.exports = {
         '/projects/:investmentId/edit-team-members'
       ),
       editValue: url('/investments', '/projects/:investmentId/edit-value'),
-      documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url(
         '/investments',
         '/projects/:investmentId/propositions',
@@ -403,7 +404,6 @@ module.exports = {
         '/:investmentId/interactions',
         INVESTMENT_LINK_PARAM
       ),
-      project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
@@ -422,10 +422,6 @@ module.exports = {
       evidence: {
         index: url('/investments', '/projects/:projectId/evidence'),
         add: url('/investments', '/projects/:projectId/evidence/add-new'),
-        download: url(
-          '/investments',
-          '/projects/:projectId/evidence/:evidenceId/download'
-        ),
         delete: url(
           '/investments',
           '/projects/:projectId/evidence/:evidenceId/delete'

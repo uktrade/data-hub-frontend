@@ -17,7 +17,6 @@ const { renderBusinessDetails } = require('./apps/business-details/controllers')
 const { renderOrders } = require('./controllers/orders')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
-const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
@@ -108,7 +107,6 @@ router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
 
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
-router.get(urls.companies.documents.route, renderDocuments)
 router.use(
   urls.companies.investments.companyInvestment.route,
   setReturnUrl,

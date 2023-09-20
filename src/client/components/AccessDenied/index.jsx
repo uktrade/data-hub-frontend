@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultLayout } from '..'
+import DefaultLayout from '../Layout/DefaultLayout'
 
 const AccessDenied = ({ breadcrumbs }) => (
   <DefaultLayout
