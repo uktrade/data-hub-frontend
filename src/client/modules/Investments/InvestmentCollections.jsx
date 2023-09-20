@@ -3,9 +3,9 @@ import React from 'react'
 import { DefaultLayout } from '../../components'
 import TabNav from '../../components/TabNav'
 import urls from '../../../lib/urls'
-import ProjectsCollection from '../../../apps/investments/client/projects/ProjectsCollection'
-import LargeCapitalProfileCollection from '../../../apps/investments/client/profiles/LargeCapitalProfileCollection'
-import UnfilteredLargeCapitalOpportunityCollection from '../../../apps/investments/client/opportunities/List/UnfilteredLargeCapitalOpportunityCollection'
+import ProjectsCollection from './Projects/ProjectsCollection'
+import ProfilesCollection from './Profiles/ProfilesCollection'
+import OpportunitiesCollection from './Opportunities/OpportunitiesCollection'
 
 const PATH = /([^\/]+$)/
 
@@ -42,11 +42,11 @@ const InvestmentCollections = ({ ...props }) => {
           },
           [urls.investments.profiles.index()]: {
             label: 'Investor profiles',
-            content: <LargeCapitalProfileCollection {...props} />,
+            content: <ProfilesCollection {...props} />,
           },
           [urls.investments.opportunities.index()]: {
             label: 'UK opportunities',
-            content: <UnfilteredLargeCapitalOpportunityCollection {...props} />,
+            content: <OpportunitiesCollection {...props} />,
           },
         }}
       />

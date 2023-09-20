@@ -1,8 +1,5 @@
-import { INCLUDE_RELATED_COMPANIES } from '../../../../client/components/RoutedRelatedCompaniesCheckboxGroup/constants'
-import {
-  buildOptionsFilter,
-  buildDatesFilter,
-} from '../../../../client/filters'
+import { INCLUDE_RELATED_COMPANIES } from '../../../components/RoutedRelatedCompaniesCheckboxGroup/constants'
+import { buildOptionsFilter, buildDatesFilter } from '../../../filters'
 
 import {
   LABELS,

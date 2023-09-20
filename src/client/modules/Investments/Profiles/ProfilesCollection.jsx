@@ -8,11 +8,11 @@ import {
   FilteredCollectionList,
   Filters,
   FilterToggleSection,
-} from '../../../../client/components/'
-import { listSkeletonPlaceholder } from '../../../../client/components/SkeletonPlaceholder'
+} from '../../../components'
+import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
-import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
-import { sanitizeFilter } from '../../../../client/filters'
+import { INVESTMENTS__PROFILES_LOADED } from '../../../actions'
+import { sanitizeFilter } from '../../../filters'
 
 const QS_PARAMS = {
   countryOfOrigin: 'country_of_origin',

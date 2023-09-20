@@ -75,11 +75,11 @@ import {
   getEventsMetadata,
 } from './modules/Events/CollectionList/tasks'
 
-import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
-import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
+import { TASK_GET_PROFILES_LIST } from './modules/Investments/Profiles/state'
+import * as investmentProfilesTasks from './modules/Investments/Profiles/tasks'
 
-import { TASK_GET_OPPORTUNITIES_LIST } from '../apps/investments/client/opportunities/List/state'
-import * as investmentOpportunitiesListTasks from '../apps/investments/client/opportunities/List/tasks'
+import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/state'
+import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/tasks'
 import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
@@ -94,8 +94,8 @@ import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
-} from '../apps/investments/client/projects/state'
-import * as investmentProjectTasks from '../apps/investments/client/projects/tasks'
+} from './modules/Investments/Projects/state'
+import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
 import {
   TASK_GET_LATEST_EXPORT_WINS,

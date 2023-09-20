@@ -7,7 +7,7 @@ const {
 const config = require('../../config')
 const {
   transformLandDateFilters,
-} = require('../../apps/investments/client/projects/transformers')
+} = require('../../client/modules/Investments/Projects/landDateTransformer')
 
 const buildOptions = (isAggregation, searchUrl, body, entity) => {
   if (isAggregation) {

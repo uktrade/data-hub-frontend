@@ -2,7 +2,7 @@ import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
   INVESTMENTS__SET_PROJECTS_METADATA,
-} from '../../../../client/actions'
+} from '../../../actions'
 
 const initialState = {
   results: [],
