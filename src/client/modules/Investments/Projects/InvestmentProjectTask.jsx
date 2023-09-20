@@ -121,7 +121,6 @@ const FieldDueDate = ({ initialValue = null }) => (
 )
 
 const StyledFieldInput = styled(FieldInput)({
-  width: '35%',
   textAlign: 'center',
 })
 
@@ -129,18 +128,22 @@ const StyledLabel = styled(Label)({
   textAlign: 'left',
 })
 
+const StyledGridCol = styled(GridCol)({
+  marginLeft: 'inherit',
+  paddingTop: '5px',
+})
+
 const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
-    <GridCol setWidth="one-quarter">
+    <GridCol setWidth="10%">
       <StyledFieldInput
         name="reminder"
         defaultValue={initialValue}
       ></StyledFieldInput>
-      {/* investment ${pluralize('project', companyInvestmentCount)} in the UK */}
     </GridCol>
-    <GridCol setWidth="one-quarter">
-      <StyledLabel>Hello World!</StyledLabel>
-    </GridCol>
+    <StyledGridCol>
+      <StyledLabel>days before the due date</StyledLabel>
+    </StyledGridCol>
   </GridRow>
 )
 
