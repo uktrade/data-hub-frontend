@@ -2,6 +2,7 @@
 const { get } = require('lodash')
 
 import { formatMediumDateTime } from '../../../utils/date'
+import { BABY_PINK_50 } from '../../../../client/utils/colours'
 
 import urls from '../../../../lib/urls'
 
@@ -20,7 +21,10 @@ export const transformContactToListItem = (companyId) => (contact) => {
   ].filter((item) => !(item.label === 'Company' && companyId))
 
   const badges = [
-    { text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null },
+    {
+      text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null,
+      borderColour: BABY_PINK_50,
+    },
     { text: contact.primary ? 'Primary' : null },
     { text: contact.archived ? 'Archived' : null },
   ]

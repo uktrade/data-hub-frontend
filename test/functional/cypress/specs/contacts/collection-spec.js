@@ -36,6 +36,7 @@ describe('Contacts Collections', () => {
     primary: true,
     full_telephone_number: '+44 02071234567',
     modified_on: '2020-08-10T19:09:35.276Z',
+    valid_email: true,
   })
 
   const foreignContact = contactFaker({
@@ -58,10 +59,16 @@ describe('Contacts Collections', () => {
     archived: true,
   })
 
+  const invalidEmail = contactFaker({
+    id: '4',
+    valid_email: false,
+  })
+
   const contactsList = [
     ukContact,
     foreignContact,
     archivedContact,
+    invalidEmail,
     ...contactsListFaker(7),
   ]
 
@@ -73,6 +80,7 @@ describe('Contacts Collections', () => {
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
+    cy.get('@collectionItems').eq(3).as('forthListItem')
   })
 
   assertCollectionBreadcrumbs('Contacts')
@@ -100,6 +108,10 @@ describe('Contacts Collections', () => {
 
     it('should not contain an archived badge', () => {
       assertBadgeNotPresent('@firstListItem', 'Archived')
+    })
+
+    it('should not contain an unknown email badge', () => {
+      assertBadgeNotPresent('@firstListItem', 'UNKNOWN EMAIL')
     })
 
     it('should render the updated date and time', () => {
@@ -164,6 +176,12 @@ describe('Contacts Collections', () => {
   context('Archived contact', () => {
     it('should contain an archived badge', () => {
       assertBadge('@thirdListItem', 'Archived')
+    })
+  })
+
+  context('Contact with invalid email', () => {
+    it('should contain an unknown email badge', () => {
+      assertBadge('@forthListItem', 'UNKNOWN EMAIL')
     })
   })
 })

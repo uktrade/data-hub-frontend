@@ -4,9 +4,8 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
 import { BLACK, GREY_3 } from '../../../../client/utils/colours'
-import { ErrorSummary } from '../../../components'
 import { ContactResource } from '../../../components/Resource'
-import { SummaryTable } from '../../../components'
+import { SummaryTable, ErrorSummary } from '../../../components'
 import urls from '../../../../lib/urls'
 import {
   EMAIL_CONSENT_NO,
@@ -45,7 +44,7 @@ const getAddress = (contact, companyAddress) => {
   return Object.values(addressCleaned).join(', ')
 }
 
-const errorMsg = 'Emails sent to the current address bounced back as invalid.'
+const errorMsg = 'The email address has been flagged as invalid'
 
 const ContactDetails = ({ contactId, companyAddress, permissions }) => (
   <ContactResource id={contactId}>
