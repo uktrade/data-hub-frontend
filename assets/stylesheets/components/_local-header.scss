@@ -127,6 +127,12 @@
   }
 }
 
+.c-local-header__subheading {
+  @include bold-font(24);
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
 * + .c-local-header__heading-after {
   margin-top: $default-spacing-unit * 0.5;
   margin-bottom: $default-spacing-unit * 0.75;
