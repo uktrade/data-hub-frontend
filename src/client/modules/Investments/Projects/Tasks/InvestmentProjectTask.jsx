@@ -23,90 +23,110 @@ import {
 } from 'govuk-react'
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import styled from 'styled-components'
+import { InvestmentResource } from '../../../../components/Resource'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 //import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 
 const InvestmentProjectTask = () => {
+  const { projectId } = useParams()
   return (
-    <DefaultLayout
-      heading={'Add task for COMPANY'}
-      pageTitle={'Task'}
-      // breadcrumbs={buildCompanyBreadcrumbs(
-      //   [
-      //     {
-      //       text: `Add task for ${company.name}`,
-      //     },
-      //   ],
-      //   company.id,
-      //   company.name
-      // )}
-      useReactRouter={false}
-    >
-      <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-        <Form
-          id="investment-project-task-form"
-          analyticsFormName="createInvestmentTaskForm"
-          cancelRedirectTo={() => urls.dashboard.index()}
-          redirectTo={() => urls.dashboard.index()}
-          submissionTaskName={TASK_SAVE_INVESTMENT_PROJECT_TASK}
-          //transformPayload={({ strategy }) => ({ companyId, strategy })}
-          flashMessage={() => 'Task created'}
-          submitButtonLabel="Add task"
-          cancelButtonLabel="Back"
+    <InvestmentResource id={projectId}>
+      {(investmentProject) => (
+        <DefaultLayout
+          heading={'Add task for COMPANY'}
+          pageTitle={'Task'}
+          // breadcrumbs={buildCompanyBreadcrumbs(
+          //   [
+          //     {
+          //       text: `Add task for ${company.name}`,
+          //     },
+          //   ],
+          //   company.id,
+          //   company.name
+          // )}
+          useReactRouter={false}
         >
-          {() => (
-            <>
-              <FieldInput
-                label="Task title"
-                name="Task title"
-                type="text"
-                required="Enter a task title"
-              />
-              <FieldTextarea
-                name="Task description"
-                label="Task description (optional)"
-                hint="Add details of the task, especially if you intend to assign it to someone else."
-              />
-              <FieldRadios
-                name="taskDueDate"
-                legend="Task due date"
-                required="Specify task due date"
-                options={taskDueDateOptions.map((option) => ({
-                  ...option,
-                  ...(option.label === 'Custom date' && {
-                    children: <FieldDueDate />,
-                  }),
-                  ...option,
-                  ...option,
-                  ...option,
-                }))}
-              />
-              <FieldRadios
-                name="taskReminder"
-                legend="Do you want to set a reminder for this task?"
-                required="Specify reminder"
-                options={OPTIONS_YES_NO.map((option) => ({
-                  ...option,
-                  ...(option.label === 'Yes' && {
-                    children: <FieldReminder />,
-                  }),
-                  ...option,
-                }))}
-              />
-              <Details summary="Find out more about task reminders">
-                <p>
-                  By default reminders are sent at 8am, on the specified date
-                  by:
-                </p>
-                <UnorderedList listStyleType="bullet">
-                  <ListItem>emails to the assignee</ListItem>
-                  <ListItem>Data Hub reminder</ListItem>
-                </UnorderedList>
-              </Details>
-            </>
-          )}
-        </Form>
-      </FormLayout>
-    </DefaultLayout>
+          <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+            <Form
+              id="investment-project-task-form"
+              analyticsFormName="createInvestmentTaskForm"
+              cancelRedirectTo={() =>
+                urls.investments.projects.details(projectId)
+              }
+              redirectTo={() => urls.investments.projects.details(projectId)}
+              submissionTaskName={TASK_SAVE_INVESTMENT_PROJECT_TASK}
+              transformPayload={({
+                taskTitle,
+                taskDescription,
+                taskDueDate,
+                taskReminder,
+              }) => ({
+                investmentProject,
+                taskTitle,
+                taskDescription,
+                taskDueDate,
+                taskReminder,
+              })}
+              flashMessage={() => 'Task created'}
+              submitButtonLabel="Add task"
+              cancelButtonLabel="Back"
+            >
+              {() => (
+                <>
+                  <FieldInput
+                    label="Task title"
+                    name="taskTitle"
+                    type="text"
+                    required="Enter a task title"
+                  />
+                  <FieldTextarea
+                    name="taskDescription"
+                    label="Task description (optional)"
+                    hint="Add details of the task, especially if you intend to assign it to someone else."
+                  />
+                  <FieldRadios
+                    name="taskDueDate"
+                    legend="Task due date"
+                    required="Specify task due date"
+                    options={taskDueDateOptions.map((option) => ({
+                      ...option,
+                      ...(option.label === 'Custom date' && {
+                        children: <FieldDueDate />,
+                      }),
+                      ...option,
+                      ...option,
+                      ...option,
+                    }))}
+                  />
+                  <FieldRadios
+                    name="taskReminder"
+                    legend="Do you want to set a reminder for this task?"
+                    required="Specify reminder"
+                    options={OPTIONS_YES_NO.map((option) => ({
+                      ...option,
+                      ...(option.label === 'Yes' && {
+                        children: <FieldReminder />,
+                      }),
+                      ...option,
+                    }))}
+                  />
+                  <Details summary="Find out more about task reminders">
+                    <p>
+                      By default reminders are sent at 8am, on the specified
+                      date by:
+                    </p>
+                    <UnorderedList listStyleType="bullet">
+                      <ListItem>emails to the assignee</ListItem>
+                      <ListItem>Data Hub reminder</ListItem>
+                    </UnorderedList>
+                  </Details>
+                </>
+              )}
+            </Form>
+          </FormLayout>
+        </DefaultLayout>
+      )}
+    </InvestmentResource>
   )
 }
 

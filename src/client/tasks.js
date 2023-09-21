@@ -343,6 +343,8 @@ import {
   TASK_GET_ONE_LIST_DETAILS,
   TASK_SAVE_ONE_LIST_DETAILS,
 } from './modules/Companies/CoreTeam/state'
+import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './modules/Investments/Projects/Tasks/state'
+import { createInvestmentProjectTask } from './modules/Investments/Projects/Tasks/tasks'
 
 import {
   TASK_EDIT_OMIS_QUOTE_INFORMATION,
@@ -541,4 +543,5 @@ export const tasks = {
   [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
+  [TASK_SAVE_INVESTMENT_PROJECT_TASK]: createInvestmentProjectTask,
 }
