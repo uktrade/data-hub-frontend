@@ -3,9 +3,14 @@ import styled from 'styled-components'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
-import { GREY_2 } from '../../../client/utils/colours'
+import { GREY_2, ERROR_COLOUR } from '../../../client/utils/colours'
 import { typography } from '@govuk-react/lib'
-import { SPACING, FONT_SIZE, LINE_HEIGHT } from '@govuk-react/constants'
+import {
+  SPACING,
+  FONT_SIZE,
+  LINE_HEIGHT,
+  BORDER_WIDTH_FORM_ELEMENT_ERROR,
+} from '@govuk-react/constants'
 
 import { currencyGBP } from '../../utils/number-utils'
 import Tag from '../Tag'
@@ -48,9 +53,18 @@ const StyledTableRow = styled(Table.Row)`
   font-size: ${FONT_SIZE.SIZE_16};
   line-height: ${LINE_HEIGHT.SIZE_24};
   white-space: pre-wrap;
+
+  /* Conditionally apply the red border when flag is false */
+  ${(props) =>
+    props.invalid &&
+    `
+      border-left: ${BORDER_WIDTH_FORM_ELEMENT_ERROR} solid ${ERROR_COLOUR};
+      margin-right: ${SPACING.SCALE_3};
+      padding-left: ${SPACING.SCALE_2};
+    `}
 `
 
-SummaryTable.Row = ({ heading, children, hideWhenEmpty }) => {
+SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag }) => {
   if (hideWhenEmpty && isEmpty(children)) {
     return null
   }
@@ -72,7 +86,7 @@ SummaryTable.Row = ({ heading, children, hideWhenEmpty }) => {
   }
 
   return (
-    <StyledTableRow>
+    <StyledTableRow invalid={flag}>
       {heading && <Table.CellHeader>{heading}</Table.CellHeader>}
       <Table.Cell>{renderChildren()}</Table.Cell>
     </StyledTableRow>

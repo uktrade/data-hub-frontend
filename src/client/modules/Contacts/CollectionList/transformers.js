@@ -20,6 +20,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
   ].filter((item) => !(item.label === 'Company' && companyId))
 
   const badges = [
+    { text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null },
     { text: contact.primary ? 'Primary' : null },
     { text: contact.archived ? 'Archived' : null },
   ]
