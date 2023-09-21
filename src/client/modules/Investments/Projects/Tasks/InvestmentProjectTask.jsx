@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from '../state'
+import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
   DefaultLayout,

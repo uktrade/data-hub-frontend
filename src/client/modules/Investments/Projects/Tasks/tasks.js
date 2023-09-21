@@ -7,7 +7,9 @@ export const createInvestmentProjectTask = ({
   taskDueDate,
   taskReminder,
 }) => {
-  apiProxyAxios.post(`v4/investmentprojecttask/`, {
+  const request = apiProxyAxios.post
+  const endpoint = `/v4/investmentprojecttask/`
+  return request(endpoint, {
     investmentProject: investmentProject,
     task: {
       title: taskTitle,
@@ -18,3 +20,7 @@ export const createInvestmentProjectTask = ({
     },
   })
 }
+
+// const request = apiProxyAxios.patch
+// const endpoint = `/v4/company/${companyId}`
+// return request(endpoint, { strategy: strategy })
