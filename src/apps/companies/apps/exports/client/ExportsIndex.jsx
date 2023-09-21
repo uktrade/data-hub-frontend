@@ -76,7 +76,7 @@ const ExportsIndex = ({
 
           <WarningText>
             The export potential value is unavailable. This is because the
-            previous value was wrong. We are working to fix this.
+            previous values were out of date. We are working to fix this.
           </WarningText>
 
           <Details summary="What is export potential">
