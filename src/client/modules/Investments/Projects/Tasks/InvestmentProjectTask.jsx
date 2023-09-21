@@ -58,14 +58,18 @@ const InvestmentProjectTask = () => {
               transformPayload={({
                 taskTitle,
                 taskDescription,
+                customDate,
                 taskDueDate,
-                taskReminder,
+                taskRemindersEnabled,
+                taskReminderDays,
               }) => ({
                 investmentProject,
                 taskTitle,
                 taskDescription,
+                customDate,
                 taskDueDate,
-                taskReminder,
+                taskRemindersEnabled,
+                taskReminderDays,
               })}
               flashMessage={() => 'Task created'}
               submitButtonLabel="Add task"
@@ -132,7 +136,7 @@ const InvestmentProjectTask = () => {
 
 const FieldDueDate = ({ initialValue = null }) => (
   <DateField
-    name="date"
+    name="customDate"
     label="Date"
     hintText="For example 28 11 2025"
     required="Enter a date"
@@ -157,7 +161,7 @@ const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
     <GridCol setWidth="10%">
       <StyledFieldInput
-        name="reminder"
+        name="taskReminderDays"
         defaultValue={initialValue}
       ></StyledFieldInput>
     </GridCol>
