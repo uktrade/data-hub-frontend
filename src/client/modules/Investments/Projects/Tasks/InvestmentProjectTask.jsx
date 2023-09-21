@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
-import { FORM_LAYOUT } from '../../../../common/constants'
+import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from '../state'
+import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
   DefaultLayout,
   FieldRadios,
@@ -9,8 +9,8 @@ import {
   Form,
   FormLayout,
   FieldTextarea,
-} from '../../../components'
-import urls from '../../../../lib/urls'
+} from '../../../../components'
+import urls from '../../../../../lib/urls'
 
 import {
   DateField,
@@ -21,7 +21,7 @@ import {
   ListItem,
   UnorderedList,
 } from 'govuk-react'
-import { OPTIONS_YES_NO } from '../../../../apps/constants'
+import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import styled from 'styled-components'
 //import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 
