@@ -69,6 +69,7 @@ const ALLOWLIST = [
   '/v4/dnb/:companyId/family-tree',
   '/v4/search/adviser',
   '/v4/dnb/:companyId/related-companies/count',
+  '/v3/omis/order/:id',
 ]
 
 module.exports = (app) => {

@@ -3,7 +3,6 @@ const { cloneDeep, mapValues, merge, omit } = require('lodash')
 const createJourney = require('../create/steps')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
-const EditQuoteDetailsController = require('./controllers/quote-details')
 const EditInternalDetailsController = require('./controllers/internal-details')
 const EditInvoiceDetailsController = require('./controllers/invoice-details')
 const EditBillingAddressController = require('./controllers/billing-address')
@@ -27,11 +26,6 @@ const steps = merge({}, createSteps, {
     controller: EditAssigneeTimeController,
     templatePath: 'omis/apps/edit/views',
     template: 'assignee-time.njk',
-  },
-  '/quote-details': {
-    heading: 'Edit quote information',
-    fields: ['description', 'delivery_date'],
-    controller: EditQuoteDetailsController,
   },
   '/internal-details': {
     heading: 'Edit internal information',
