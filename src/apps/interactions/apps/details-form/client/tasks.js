@@ -43,8 +43,8 @@ const FIELDS_TO_OMIT = [
 
 const HTTP_201_CREATED = 201
 
-const isNoneExportCountriesWereDiscussed = (wereCountriesDiscussed) =>
-  wereCountriesDiscussed === OPTION_NO || !wereCountriesDiscussed ? true : false
+const isWereCountriesDiscussed = (wereCountriesDiscussed) =>
+  wereCountriesDiscussed === OPTION_YES || wereCountriesDiscussed === true
 
 function transformExportCountries(values) {
   return EXPORT_INTEREST_STATUS_VALUES.filter(
@@ -316,17 +316,13 @@ export function saveInteraction({ values, companyIds, referralId }) {
       kind: KINDS.INTERACTION,
     }),
 
-    // Added to ensure were_countries_discussed has a valid values
-    were_countries_discussed: !isNoneExportCountriesWereDiscussed(
-      values.were_countries_discussed
-    )
-      ? OPTION_YES
-      : OPTION_NO,
+    // Added to ensure were_countries_discussed has a valid value
+    were_countries_discussed: transformToYesNo(
+      isWereCountriesDiscussed(values.were_countries_discussed)
+    ),
 
-    // Added to ensure export_countries has a valid values
-    export_countries: !isNoneExportCountriesWereDiscussed(
-      values.were_countries_discussed
-    )
+    // Added to ensure export_countries has a valid value
+    export_countries: isWereCountriesDiscussed(values.were_countries_discussed)
       ? transformExportCountries(values)
       : [],
   }

@@ -12,6 +12,7 @@ import { fillSelect } from '../../support/form-fillers'
 
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
+const selectors = require('../../../../../test/selectors')
 const interactionWithoutTheme = require('../../../../sandbox/fixtures/v3/interaction/interaction-without-theme')
 const {
   assertFieldTextarea,
@@ -1258,19 +1259,33 @@ describe('Editing an interaction related to were countries disscussed', () => {
       cy.intercept(
         'PATCH',
         `/api-proxy/v4/interaction/${fixtures.interaction.withExportCountries.id}`
-      ).as('apiRequest')
+      ).as('apiRequest_1')
     })
     it('should changed values from were any countries discussed if user select from yes to no', () => {
       cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('no')
       cy.contains('button', 'Save interaction').click()
-      cy.wait('@apiRequest').then(({ request }) => {
+      cy.wait('@apiRequest_1').then(({ request }) => {
         expect(request.body.were_countries_discussed).to.equal('no')
-        expect(request.body.export_countries).to.empty
+        expect(request.body.export_countries).to.deep.equal([])
       })
     })
   })
 
   context('when editing interaction with no countries discussed', () => {
+    const exportCountries = [
+      {
+        country: '82756b9a-5d95-e211-a939-e4115bead28a',
+        status: 'currently_exporting',
+      },
+      {
+        country: '83756b9a-5d95-e211-a939-e4115bead28a',
+        status: 'future_interest',
+      },
+      {
+        country: 'a65f66a0-5d95-e211-a939-e4115bead28a',
+        status: 'not_interested',
+      },
+    ]
     before(() => {
       cy.visit(
         urls.interactions.edit(fixtures.interaction.withoutExportCountries.id)
@@ -1278,13 +1293,23 @@ describe('Editing an interaction related to were countries disscussed', () => {
       cy.intercept(
         'PATCH',
         `/api-proxy/v4/interaction/${fixtures.interaction.withoutExportCountries.id}`
-      ).as('apiRequest')
+      ).as('apiRequest_2')
     })
-    it('should changed values from were any countries discussed if user select from no to yes', () => {
+    it('should changed values of were any countries discussed and save related export countries', () => {
       cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('yes')
+      cy.get(selectors.interactionForm.countries.export).selectTypeaheadOption(
+        'Fran'
+      )
+      cy.get(selectors.interactionForm.countries.future).selectTypeaheadOption(
+        'Germ'
+      )
+      cy.get(
+        selectors.interactionForm.countries.noInterest
+      ).selectTypeaheadOption('Rus')
       cy.contains('button', 'Save interaction').click()
-      cy.wait('@apiRequest').then(({ request }) => {
+      cy.wait('@apiRequest_2').then(({ request }) => {
         expect(request.body.were_countries_discussed).to.equal('yes')
+        expect(request.body.export_countries).to.deep.equal(exportCountries)
       })
     })
   })
