@@ -23,6 +23,7 @@ function transformContactToListItem({
   primary,
   full_telephone_number,
   email,
+  valid_email,
 } = {}) {
   if (!id || (!first_name && !last_name)) {
     return
@@ -36,6 +37,11 @@ function transformContactToListItem({
     { key: 'company_uk_region', value: company_uk_region },
     { key: 'telephone', value: full_telephone_number },
     { key: 'email', value: email },
+    {
+      key: 'valid_email',
+      value: valid_email === false ? 'UNKNOWN EMAIL' : null,
+      type: 'badge',
+    },
     {
       key: 'contact_type',
       value: primary ? 'Primary' : null,

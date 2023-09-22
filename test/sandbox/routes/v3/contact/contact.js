@@ -8,6 +8,7 @@ const incompleteUKContact = require('../../../fixtures/v3/contact/contact-incomp
 const contactWithCompanyAddress = require('../../../fixtures/v3/contact/contact-with-company-address.json')
 const contactWithUSAddress = require('../../../fixtures/v3/contact/contact-with-us-address.json')
 const archivedContact = require('../../../fixtures/v3/contact/contact-archived.json')
+const invalidEmailContact = require('../../../fixtures/v3/contact/contact-invalid-email.json')
 const aventriContact = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
 const ditContactforAventri = require('../../../fixtures/v3/contact/contact-aventri.json')
 const noContact = require('../../../fixtures/v3/contact/no-contact.json')
@@ -88,6 +89,7 @@ exports.contactById = function (req, res) {
     'a55af9e5-c53c-4696-9647-065b28ea02de': contactWithCompanyAddress,
     'b0cb178b-49d3-467a-9cd7-90cb0fe0f30a': contactWithUSAddress,
     '1ba51fde-88be-43b3-8701-5c9adcc5cbfb': archivedContact,
+    '2341fb21-ee64-4898-8f2e-ebf924e1e63f': invalidEmailContact,
   }
 
   res.json(contacts[req.params.contactId] || contactByIdUS)
