@@ -1,5 +1,6 @@
-import { addDays, addMonths } from 'date-fns'
 import { apiProxyAxios } from '../../../../components/Task/utils'
+import { transformValueForAPI } from '../../../../utils/date'
+import { OPTION_YES } from '../../../../../apps/constants'
 
 export const createInvestmentProjectTask = ({
   investmentProject,
@@ -11,38 +12,20 @@ export const createInvestmentProjectTask = ({
   taskReminderDays,
 }) => {
   const request = apiProxyAxios.post
-  const endpoint = `/v4/investmentprojecttask/`
-  const dueDaysToDate = (dueDays) => {
-    const today = new Date()
-    const oneWeek = addDays(today, 7)
-    const oneMonth = addMonths(today, 1)
-    if (dueDays === '1 week') {
-      return oneWeek
-    } else if (dueDays === '1 month') {
-      return oneMonth
-    } else if (dueDays === 'Custom date') {
-      return customDate
-    } else {
-      return null
-    }
-  }
+  const endpoint = `/v4/investmentprojecttask`
 
   return request(endpoint, {
-    investmentProject: investmentProject,
+    investment_project: {
+      id: investmentProject.id,
+      name: investmentProject.name,
+    },
     task: {
       title: taskTitle,
       description: taskDescription,
-      due_date: dueDaysToDate(taskDueDate),
-      email_reminders_enabled: taskRemindersEnabled === 'yes',
+      due_date: customDate ? transformValueForAPI(customDate) : taskDueDate,
+      email_reminders_enabled: taskRemindersEnabled === OPTION_YES,
       reminder_days: parseInt(taskReminderDays),
-      advisers: [
-        {
-          name: 'Claudia Gonzalez-Casales',
-          first_name: 'Claudia',
-          last_name: 'Gonzalez-Casales',
-          id: '0a3f1470-24a6-4974-90b0-ffe4cb5e5e3b',
-        },
-      ],
+      advisers: [],
     },
   })
 }

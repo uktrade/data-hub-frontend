@@ -1,4 +1,5 @@
 import React from 'react'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 
 import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
@@ -9,11 +10,10 @@ import {
   Form,
   FormLayout,
   FieldTextarea,
+  FieldDate,
 } from '../../../../components'
 import urls from '../../../../../lib/urls'
-
 import {
-  DateField,
   Details,
   GridCol,
   GridRow,
@@ -24,8 +24,19 @@ import {
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import styled from 'styled-components'
 import { InvestmentResource } from '../../../../components/Resource'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-//import { buildCompanyBreadcrumbs } from '../../Companies/utils'
+
+const StyledFieldInput = styled(FieldInput)({
+  textAlign: 'center',
+})
+
+const StyledLabel = styled(Label)({
+  textAlign: 'left',
+})
+
+const StyledGridCol = styled(GridCol)({
+  marginLeft: 'inherit',
+  paddingTop: '5px',
+})
 
 const InvestmentProjectTask = () => {
   const { projectId } = useParams()
@@ -33,17 +44,17 @@ const InvestmentProjectTask = () => {
     <InvestmentResource id={projectId}>
       {(investmentProject) => (
         <DefaultLayout
-          heading={'Add task for COMPANY'}
+          heading={`Add task for ${investmentProject.investorCompany.name}`}
           pageTitle={'Task'}
-          // breadcrumbs={buildCompanyBreadcrumbs(
-          //   [
-          //     {
-          //       text: `Add task for ${company.name}`,
-          //     },
-          //   ],
-          //   company.id,
-          //   company.name
-          // )}
+          breadcrumbs={[
+            { link: urls.investments.index(), text: 'Investments' },
+            { link: urls.investments.index(), text: 'Projects' },
+            {
+              link: urls.investments.projects.details(investmentProject.id),
+              text: investmentProject.name,
+            },
+            { text: `Add task for ${investmentProject.investorCompany.name}` },
+          ]}
           useReactRouter={false}
         >
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
@@ -103,7 +114,7 @@ const InvestmentProjectTask = () => {
                     }))}
                   />
                   <FieldRadios
-                    name="taskReminder"
+                    name="taskRemindersEnabled"
                     legend="Do you want to set a reminder for this task?"
                     required="Specify reminder"
                     options={OPTIONS_YES_NO.map((option) => ({
@@ -135,7 +146,7 @@ const InvestmentProjectTask = () => {
 }
 
 const FieldDueDate = ({ initialValue = null }) => (
-  <DateField
+  <FieldDate
     name="customDate"
     label="Date"
     hintText="For example 28 11 2025"
@@ -144,24 +155,15 @@ const FieldDueDate = ({ initialValue = null }) => (
   />
 )
 
-const StyledFieldInput = styled(FieldInput)({
-  textAlign: 'center',
-})
-
-const StyledLabel = styled(Label)({
-  textAlign: 'left',
-})
-
-const StyledGridCol = styled(GridCol)({
-  marginLeft: 'inherit',
-  paddingTop: '5px',
-})
-
 const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
-    <GridCol setWidth="10%">
+    <GridCol setWidth="12%">
       <StyledFieldInput
         name="taskReminderDays"
+        type="number"
+        validate={(value) =>
+          value && value.length > 3 ? 'Enter a number between 1 and 365' : null
+        }
         defaultValue={initialValue}
       ></StyledFieldInput>
     </GridCol>
@@ -172,10 +174,10 @@ const FieldReminder = ({ initialValue = null }) => (
 )
 
 const taskDueDateOptions = [
-  { label: 'Custom date', value: 'Custom date' },
-  { label: '1 week', value: '1 week' },
-  { label: '1 month', value: '1 month' },
-  { label: 'No due date', value: 'No due date' },
+  { label: 'Custom date', value: 'custom' },
+  { label: '1 week', value: 'week' },
+  { label: '1 month', value: 'month' },
+  { label: 'No due date', value: 'none' },
 ]
 
 export default InvestmentProjectTask
