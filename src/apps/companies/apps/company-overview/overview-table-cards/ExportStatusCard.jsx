@@ -112,14 +112,7 @@ const ExportStatusDetails = ({
 }) => (
   <StyledSummaryTable caption="Export status" data-test="exportStatusContainer">
     <SummaryTable.Row heading="Export potential">
-      {buildCellContents(
-        company.exportPotential,
-        <StyledTD>
-          <div>
-            <StyledTag colour="green">{company.exportPotential}</StyledTag>
-          </div>
-        </StyledTD>
-      )}
+      <StyledSpan>Unavailable</StyledSpan>
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export sub-segment">
       {buildCellContents(
