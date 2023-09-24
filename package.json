@@ -168,7 +168,7 @@
     "@faker-js/faker": "^8.1.0",
     "@storybook/addon-a11y": "^7.3.1",
     "@storybook/addon-essentials": "^7.3.1",
-    "@storybook/addons": "^7.3.1",
+    "@storybook/addons": "^7.4.5",
     "@storybook/react": "^7.3.1",
     "@storybook/react-webpack5": "^7.3.1",
     "babel-loader": "^9.1.3",
