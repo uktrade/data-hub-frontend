@@ -33,7 +33,10 @@ const userCanViewPropositions = (permissions) =>
 const userCanViewAdmin = (permissions) =>
   permissions.includes('investment.change_to_any_stage_investmentproject')
 
-const ProjectLayout = ({
+const userCanViewTasks = (activeFeatures) =>
+  activeFeatures.includes(adviserTasksFeatureFlag)
+
+export const ProjectLayout = ({
   project,
   breadcrumbs,
   pageTitle,
@@ -68,7 +71,7 @@ const ProjectLayout = ({
             >
               Project team
             </LocalNavLink>
-            {activeFeatures.includes(adviserTasksFeatureFlag) && (
+            {userCanViewTasks(activeFeatures) && (
               <LocalNavLink
                 dataTest="project-tasks-link"
                 href={urls.investments.projects.tasks(project.id)}
