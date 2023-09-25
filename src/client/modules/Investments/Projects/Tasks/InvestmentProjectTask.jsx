@@ -66,22 +66,26 @@ const InvestmentProjectTask = () => {
               }
               redirectTo={() => urls.investments.projects.details(projectId)}
               submissionTaskName={TASK_SAVE_INVESTMENT_PROJECT_TASK}
-              transformPayload={({
-                taskTitle,
-                taskDescription,
-                customDate,
-                taskDueDate,
-                taskRemindersEnabled,
-                taskReminderDays,
-              }) => ({
-                investmentProject,
-                taskTitle,
-                taskDescription,
-                customDate,
-                taskDueDate,
-                taskRemindersEnabled,
-                taskReminderDays,
+              transformPayload={(values) => ({
+                values,
+                investmentProject: investmentProject,
               })}
+              // transformPayload={({
+              //   taskTitle,
+              //   taskDescription,
+              //   customDate,
+              //   taskDueDate,
+              //   taskRemindersEnabled,
+              //   taskReminderDays,
+              // }) => ({
+              //   investmentProject,
+              //   taskTitle,
+              //   taskDescription,
+              //   customDate,
+              //   taskDueDate,
+              //   taskRemindersEnabled,
+              //   taskReminderDays,
+              // })}
               flashMessage={() => 'Task created'}
               submitButtonLabel="Add task"
               cancelButtonLabel="Back"
