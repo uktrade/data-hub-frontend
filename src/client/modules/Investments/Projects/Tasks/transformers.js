@@ -10,10 +10,13 @@ export const transformFormValuesForAPI = ({
   taskRemindersEnabled,
   taskReminderDays,
 }) => ({
-  investment_project: investmentProject,
+  investment_project: {
+    id: investmentProject.id,
+    name: investmentProject.name,
+  },
   task: {
-    task_title: taskTitle,
-    task_description: taskDescription,
+    title: taskTitle,
+    description: taskDescription,
     due_date: customDate ? transformValueForAPI(customDate) : taskDueDate,
     email_reminders_enabled: taskRemindersEnabled === OPTION_YES,
     reminder_days: taskReminderDays ? parseInt(taskReminderDays) : null,
