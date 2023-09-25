@@ -85,6 +85,7 @@ const InvestmentProjectTask = () => {
                   <FieldTextarea
                     name="taskDescription"
                     label="Task description (optional)"
+                    data-test="task-description-input"
                     hint="Add details of the task, especially if you intend to assign it to someone else."
                   />
                   <FieldRadios
