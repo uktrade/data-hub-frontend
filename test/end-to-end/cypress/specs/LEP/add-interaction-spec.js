@@ -27,7 +27,7 @@ describe('LEP add Investment Project interaction', () => {
   })
 
   context('LEP completes the form and clicks "Add interaction"', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v4/interaction').as('post')
 
       cy.visit(
@@ -39,14 +39,17 @@ describe('LEP add Investment Project interaction', () => {
       )
     })
 
+    it('should have the correct headings', () => {
+      cy.get('h1').should('have.text', 'Add interaction')
+      cy.get('h2').eq(0).should('have.text', 'MARS EXPORTS LTD')
+    })
+
     it('should add an interaction', () => {
       const subject = 'The best Investment Project interaction'
       const formSelectors = selectors.interactionForm
 
-      cy.contains('Add interaction for Mars Exports Ltd')
-        .get(formSelectors.service)
+      cy.get(formSelectors.service)
         .select('Investment - services')
-
         .get(formSelectors.contact)
         .selectTypeaheadOption('Mark Halomi')
         .get(formSelectors.communicationChannel)

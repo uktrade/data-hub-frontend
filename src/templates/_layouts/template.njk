@@ -96,7 +96,7 @@
   {% block local_header %}
     {% set pageTitle = getPageTitle() if getPageTitle %}
     {% set heading = heading or pageTitle[0] %}
-    {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
+    {{ LocalHeader({ heading: heading, subHeading: props.subHeading,  modifier: 'light-banner' }) }}
   {% endblock %}
 
 {% endblock %}

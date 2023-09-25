@@ -1,5 +1,5 @@
 const { get } = require('lodash')
-
+const urls = require('../../../../lib/urls')
 const { getActiveEvents } = require('../../../events/repos')
 const {
   transformContactToOption,
@@ -37,11 +37,15 @@ async function renderInteractionDetailsForm(req, res, next) {
     ])
 
     res
-      .breadcrumb(
-        interaction
-          ? `Edit interaction for ${company.name}`
-          : `Add interaction for ${company.name}`
-      )
+      .breadcrumb([
+        {
+          text: `${company.name}`,
+          href: urls.companies.detail(company.id),
+        },
+        {
+          text: `${interaction ? 'Edit' : 'Add'} interaction`,
+        },
+      ])
       .render('interactions/apps/details-form/views/interaction-details-form', {
         props: {
           companyId: get(company, 'id'),
@@ -54,6 +58,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           services,
           serviceDeliveryStatuses,
           communicationChannels,
+          subHeading: company.name,
           countries,
           relatedTradeAgreements,
           exportBarrier,
