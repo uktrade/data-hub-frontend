@@ -9,7 +9,10 @@ import {
   Filters,
   FilterToggleSection,
 } from '../../../components'
-import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
+import {
+  listSkeletonPlaceholder,
+  ToggleHeadingPlaceholder,
+} from '../../../components/SkeletonPlaceholder'
 import { TASK_GET_PROFILES_LIST, ID } from './state'
 import { INVESTMENTS__PROFILES_LOADED } from '../../../actions'
 import { sanitizeFilter } from '../../../filters'
@@ -287,6 +290,11 @@ const LargeCapitalProfileCollection = ({
               name: 'Large investment profiles filters',
               id: 'investments/profiles',
               progressMessage: 'Loading filters',
+              renderProgress: () => (
+                <>
+                  <ToggleHeadingPlaceholder count={4} />
+                </>
+              ),
               startOnRender: {
                 onSuccessDispatch:
                   'INVESTMENTS_PROFILES__FILTER_OPTIONS_LOADED',
