@@ -1,6 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 
+import {
+  Details,
+  GridCol,
+  GridRow,
+  Label,
+  ListItem,
+  UnorderedList,
+} from 'govuk-react'
 import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
@@ -13,16 +22,7 @@ import {
   FieldDate,
 } from '../../../../components'
 import urls from '../../../../../lib/urls'
-import {
-  Details,
-  GridCol,
-  GridRow,
-  Label,
-  ListItem,
-  UnorderedList,
-} from 'govuk-react'
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
-import styled from 'styled-components'
 import { InvestmentResource } from '../../../../components/Resource'
 
 const StyledFieldInput = styled(FieldInput)({
@@ -70,22 +70,6 @@ const InvestmentProjectTask = () => {
                 values,
                 investmentProject: investmentProject,
               })}
-              // transformPayload={({
-              //   taskTitle,
-              //   taskDescription,
-              //   customDate,
-              //   taskDueDate,
-              //   taskRemindersEnabled,
-              //   taskReminderDays,
-              // }) => ({
-              //   investmentProject,
-              //   taskTitle,
-              //   taskDescription,
-              //   customDate,
-              //   taskDueDate,
-              //   taskRemindersEnabled,
-              //   taskReminderDays,
-              // })}
               flashMessage={() => 'Task created'}
               submitButtonLabel="Add task"
               cancelButtonLabel="Back"
