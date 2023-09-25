@@ -58,6 +58,7 @@ import ProjectDocument from './ProjectDocument'
 import Order from './Order'
 import Task from './Task'
 import OrderServiceTypes from './OrderServiceTypes'
+import InvestmentProjectTasks from './InvestmentProjectTasks'
 
 export default {
   ...Company.tasks,
@@ -120,4 +121,5 @@ export default {
   ...Order.tasks,
   ...Task.tasks,
   ...OrderServiceTypes.tasks,
+  ...InvestmentProjectTasks.tasks,
 }

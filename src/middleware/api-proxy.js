@@ -72,6 +72,7 @@ const ALLOWLIST = [
   '/v3/omis/order/:id',
   '/v4/task/:id',
   '/v4/investmentprojecttask',
+  '/v4/investmentprojecttask/:id',
 ]
 
 module.exports = (app) => {

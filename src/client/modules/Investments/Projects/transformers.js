@@ -271,3 +271,18 @@ export const transformInvestmentProjectToListItem = ({
     metadata,
   }
 }
+
+export const transformTaskToListItem = ({
+  id,
+  created_on,
+  task: { title, due_date, advisers },
+} = {}) => ({
+  id,
+  headingUrl: urls.interactions.detail(id), //TODO this needs to go to the task detail
+  headingText: title,
+  metadata: [
+    { label: 'Date created', value: format(created_on, 'dd MMMM yyyy') },
+    { label: 'Due date', value: format(due_date, 'dd MMMM yyyy') },
+    { label: 'Assigned to', value: advisers.map((a) => a.name).join(',') },
+  ],
+})

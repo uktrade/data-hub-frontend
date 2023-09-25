@@ -15,6 +15,7 @@ import {
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
+import { adviserTasksFeatureFlag } from '../../modules/AdviserTasks/constants'
 
 const StyledNavWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_5};
@@ -38,6 +39,7 @@ const ProjectLayout = ({
   pageTitle,
   children,
   userPermissions,
+  activeFeatures,
 }) => (
   <DefaultLayout
     heading={project.name}
@@ -66,6 +68,14 @@ const ProjectLayout = ({
             >
               Project team
             </LocalNavLink>
+            {activeFeatures.includes(adviserTasksFeatureFlag) && (
+              <LocalNavLink
+                dataTest="project-tasks-link"
+                href={urls.investments.projects.tasks(project.id)}
+              >
+                Tasks
+              </LocalNavLink>
+            )}
             {userCanViewInteractions(userPermissions) && (
               <LocalNavLink
                 dataTest="project-interactions-link"

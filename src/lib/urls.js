@@ -447,6 +447,7 @@ module.exports = {
       evaluation: url('/investments', '/projects/:projectId/evaluation'),
       tasks: {
         create: url('/investments', '/projects/:projectId/tasks/create'),
+        index: url('/investments', '/projects/:projectId/tasks'),
       },
     },
     profiles: {

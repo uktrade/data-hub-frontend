@@ -50,6 +50,7 @@ import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
 import InvestmentProjectTask from './modules/Investments/Projects/Tasks/InvestmentProjectTask'
+import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 
 const routes = {
   companies: [
@@ -351,6 +352,11 @@ const routes = {
       path: '/investments',
       module: 'datahub:investments',
       component: InvestmentsRedirect,
+    },
+    {
+      path: '/investments/projects/:projectId/tasks',
+      module: 'datahub:investments',
+      component: ProjectTasks,
     },
   ],
   tasks: [
