@@ -22,10 +22,10 @@ const StepInteractionType = () => {
 
       // If we do not clean up, then the form values object contains keys and values
       // relevant to the initial form interaction, as the user completes the form
-      // some keys and values are overwritten, others are not, the latter causes
-      // problems with API validation when saving the form as the wrong keys are
-      // sent as part of the payload, which ultimately means the user cannot save
-      // the form (HTTP 400), meaning they have to start over - very frustrating.
+      // a second time some keys and values are overwritten, others are not, the
+      // latter causes problems with API validation when saving the form as the
+      // wrong keys are sent as part of the payload, which ultimately means the
+      // user cannot save the form (HTTP 400), meaning they have to start over.
       // Therefore, the cleanest approach is to reset the fields within the form
       // the moment the users lands on the "Add interaction ..." page:
 
