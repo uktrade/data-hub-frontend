@@ -136,7 +136,10 @@ const InteractionDetailsForm = ({
                         {/* Step registered if creating the interaction
                   and haven't come from an investment project */}
                         {!interactionId && !investmentId && (
-                          <Step name="interaction_type">
+                          <Step
+                            name="interaction_type"
+                            cancelUrl={urls.companies.detail(companyId)}
+                          >
                             {() => <StepInteractionType />}
                           </Step>
                         )}
