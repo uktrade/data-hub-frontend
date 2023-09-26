@@ -131,7 +131,9 @@ const buildServicesHierarchy = (services) =>
   )
 
 const validateRequiredCountries = (countries, field, { values }) =>
-  !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
+  !EXPORT_INTEREST_STATUS_VALUES.some(
+    (status) => values[status] && values[status].length
+  )
     ? 'Select at least one country in one of the three fields'
     : null
 
@@ -144,7 +146,6 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
   )
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
-
 const exportBarrierTypes = {
   FINANCE: '758c4132-a07b-4e4d-a43d-f2f630113023',
   KNOWLEDGE: 'ef9b19d8-510b-4819-8304-5387e4c6df29',
@@ -435,7 +436,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {!values.id && values.theme !== THEMES.INVESTMENT && (
+      {values.theme !== THEMES.INVESTMENT && (
         <>
           <FieldRadios
             inline={true}
@@ -443,6 +444,7 @@ const StepInteractionDetails = ({
             legend="Were any countries discussed? (optional)"
             options={OPTIONS_YES_NO}
           />
+
           {values.were_countries_discussed === OPTION_YES && (
             <>
               <FieldTypeahead
@@ -450,6 +452,7 @@ const StepInteractionDetails = ({
                 label="Countries currently exporting to"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.currently_exporting}
                 options={countries}
                 validate={[
                   validateRequiredCountries,
@@ -462,6 +465,7 @@ const StepInteractionDetails = ({
                 label="Future countries of interest"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.future_interest}
                 options={countries}
                 validate={[
                   validateRequiredCountries,
@@ -474,6 +478,7 @@ const StepInteractionDetails = ({
                 label="Countries not interested in"
                 hint="Select all countries discussed"
                 placeholder="-- Search countries --"
+                value={values.not_interested}
                 options={countries}
                 validate={[
                   validateRequiredCountries,

@@ -23,7 +23,7 @@
     "created_by": null,
     "event": null,
     "is_event": null,
-    "status": "complete",
+    "status": "draft",
     "kind": "interaction",
     "modified_by": null,
     "modifiedOn": "2022-10-07T13:24:41.613400Z",
@@ -42,7 +42,7 @@
           }
         }
       ],
-    "communicationChannel": {
+    "communication_channel": {
       "name": "Letter/Fax",
       "id": "74c226d7-5d95-e211-a939-e4115bead28a"
     },
@@ -63,9 +63,9 @@
     "policyAreas": [],
     "policyFeedbackNotes": "",
     "policyIssueTypes": [],
-    "wasPolicyFeedbackProvided": false,
-    "wereCountriesDiscussed": true,
-    "exportCountries": [
+    "was_policy_feedback_provided": false,
+    "were_countries_discussed": true,
+    "export_countries": [
       {
         "country": {
           "name": "Afghanistan",

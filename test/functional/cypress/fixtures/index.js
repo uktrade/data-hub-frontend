@@ -45,6 +45,7 @@ module.exports = {
     withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
     withInvestmentTheme: require('./interaction/investment-theme.json'),
     withExportCountries: require('../../../sandbox/fixtures/v4/interaction/interaction-with-export-countries.json'),
+    withoutExportCountries: require('../../../sandbox/fixtures/v4/interaction/interaction-with-no-countries-discussed.json'),
     withBusIntel: require('../../../sandbox/fixtures/v4/interaction/interaction-with-business-intelligence.json'),
   },
   investment: {

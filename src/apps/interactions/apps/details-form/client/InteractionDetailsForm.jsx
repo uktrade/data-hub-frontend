@@ -164,7 +164,10 @@ const InteractionDetailsForm = ({
                                   },
                                 })
                               }}
-                              {...props}
+                              {
+                                ...props
+                                /** The props contains values object from this form */
+                              }
                             />
                           )}
                         </Step>

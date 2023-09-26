@@ -1,0 +1,82 @@
+{
+    "id": "c58d8d92-5340-436f-a7f0-5ca08d91b079",
+    "company": {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    },
+    "companies": [
+        {
+          "name": "Venus Ltd",
+          "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+        }
+      ],
+    "contacts": [
+        {
+          "name": "Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+          "first_name": "Theodore",
+          "last_name": "Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd",
+          "job_title": "Internal Assurance Officer",
+          "id": "71906039-858e-47ba-8016-f3c80da69ace"
+        }
+    ],
+    "created_on": "2022-10-07T11:32:19.336297Z",
+    "created_by": null,
+    "event": null,
+    "is_event": null,
+    "status": "draft",
+    "kind": "interaction",
+    "modified_by": null,
+    "modifiedOn": "2022-10-07T13:24:41.613400Z",
+    "date": "2022-10-07",
+    "dit_participants": [
+        {
+          "adviser": {
+            "name": "Brendan Smith",
+            "first_name": "Brendan",
+            "last_name": "Smith",
+            "id": "8891ec72-b4ec-4977-9656-839346bc6011"
+          },
+          "team": {
+            "name": "Aberdeen City Council",
+            "id": "cff02898-9698-e211-a939-e4115bead28a"
+          }
+        }
+      ],
+    "communication_channel": {
+      "name": "Letter/Fax",
+      "id": "74c226d7-5d95-e211-a939-e4115bead28a"
+    },
+    "grantAmountOffered": null,
+    "investmentProject": null,
+    "largeCapitalOpportunity": null,
+    "netCompanyReceipt": null,
+    "service": {
+      "name": "Export win",
+      "id": "350bba2b-3499-e211-a939-e4115bead28a"
+    },
+    "serviceAnswers": {},
+    "serviceDeliveryStatus": null,
+    "subject": "Meeting where no countries were discussed",
+    "theme": "export",
+    "notes": "",
+    "archivedDocumentsUrlPath": "",
+    "policyAreas": [],
+    "policyFeedbackNotes": "",
+    "policyIssueTypes": [],
+    "was_policy_feedback_provided": false,
+    "were_countries_discussed": false,
+    "export_countries": [],
+    "archived": false,
+    "archivedBy": null,
+    "archivedOn": null,
+    "archivedReason": "",
+    "companyReferral": null,
+    "hasRelatedTradeAgreements": false,
+    "relatedTradeAgreements": [],
+    "helped_remove_export_barrier": true,
+    "export_barrier_types": [{
+      "name": "Other",
+      "id": "8ef83315-2b0f-4d5e-98da-a16f8b2217a6"
+    }],
+    "export_barrier_notes": "My export barrier notes..."
+  }

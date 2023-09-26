@@ -14,6 +14,7 @@ var interactionWithReferral = require('../../../fixtures/v4/interaction/interact
 var interactionWithoutTheme = require('../../../fixtures/v4/interaction/interaction-without-theme')
 var interactionInvestmentTheme = require('../../../fixtures/v4/interaction/interaction-investment-theme.json')
 var interactionWithExportCountries = require('../../../fixtures/v4/interaction/interaction-with-export-countries.json')
+var interactionWithoutExportCountries = require('../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json')
 var interactionWithBusIntel = require('../../../fixtures/v4/interaction/interaction-with-business-intelligence.json')
 
 var getInteractions = function (req, res) {
@@ -45,6 +46,7 @@ var getInteractionById = function (req, res) {
     '65e984ad-1ad5-4d89-9b12-71cdff5f412c': interactionWithoutTheme,
     '4dcb3748-c097-4f20-b84f-0114bbb1a8e3': interactionInvestmentTheme,
     'c58d8d92-5340-436f-a7f0-5ca08d91b078': interactionWithExportCountries,
+    'c58d8d92-5340-436f-a7f0-5ca08d91b079': interactionWithoutExportCountries,
     '54281b53-ee73-48bc-a09e-281e9b7c5f00': interactionWithBusIntel,
   }
 
