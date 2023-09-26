@@ -3,10 +3,7 @@ import {
   generateFinancialYearLabel,
   getFinancialYearStart,
 } from '../../../../../utils/date'
-import {
-  SORT_OPTIONS,
-  PROJECT_STATUS_OPTIONS,
-} from '../../../../../../apps/investments/client/projects/constants'
+import { SORT_OPTIONS, PROJECT_STATUS_OPTIONS } from '../../constants'
 import { buildSelectedFilters } from './filters'
 
 export const ASSOCIATE_PROJECT_ID = 'associateProject'

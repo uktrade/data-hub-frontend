@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import CollectionList from 'CollectionList'
 import profilesFixture from '../__fixtures__/capitalProfiles.json'
-import { SORT_OPTIONS } from '../../../../apps/investments/client/projects/constants'
+import { SORT_OPTIONS } from '../../../modules/Investments/Projects/constants'
 
 export default {
   title: 'Collection/CollectionList',

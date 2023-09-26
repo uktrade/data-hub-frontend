@@ -1,5 +1,5 @@
 import { apiProxyAxios } from '../../../../../components/Task/utils'
-import { transformLandDateFilters } from '../../../../../../apps/investments/client/projects/transformers'
+import { transformLandDateFilters } from '../../landDateTransformer'
 import { transformNonFdiResponseToCollection } from './transformers'
 
 export const getNonFdiProjects = ({ limit = 10, page, ...rest }) => {

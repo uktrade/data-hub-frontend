@@ -11,21 +11,6 @@ const GLOBAL_NAV_ITEM = {
   order: 5,
 }
 
-const INVESTMENT_TAB_ITEMS = [
-  {
-    path: 'projects/?page=1&sortby=created_on:desc',
-    label: 'Projects',
-  },
-  {
-    path: 'profiles',
-    label: 'Investor profiles',
-  },
-  {
-    path: 'opportunities',
-    label: 'UK opportunities',
-  },
-]
-
 const LARGE_INVESTMENT_PROFILE_QUERY_FIELDS = [
   'link',
   'investor_company__name',
@@ -113,7 +98,6 @@ const QUERY_DATE_FIELDS = [
 
 module.exports = {
   GLOBAL_NAV_ITEM,
-  INVESTMENT_TAB_ITEMS,
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
   LARGE_INVESTMENT_PROFILE_QUERY_FIELDS,

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
-import ProjectsCollection from '../../../../apps/investments/client/projects/ProjectsCollection'
-import { projectsState2props } from '../../../../apps/investments/client/projects/state'
+import ProjectsCollection from '../../Investments/Projects/ProjectsCollection'
+import { state2props } from '../../Investments/Projects/state'
 
 const CompanyProjectsCollection = ({
   companyId,
@@ -29,4 +29,4 @@ const CompanyProjectsCollection = ({
   </CompanyResource>
 )
 
-export default connect(projectsState2props)(CompanyProjectsCollection)
+export default connect(state2props)(CompanyProjectsCollection)

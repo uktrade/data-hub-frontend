@@ -29,8 +29,8 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
-import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/state'
+import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/reducer'
 
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
 import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
@@ -38,20 +38,17 @@ import investmentOpportunitiesDetailsReducer from '../apps/investments/client/op
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
 
-import { ID as INVESTMENT_PROFILES_ID } from '../apps/investments/client/profiles/state'
-import investmentProfileReducer from '../apps/investments/client/profiles/reducer'
+import { ID as INVESTMENT_PROFILES_ID } from './modules/Investments/Profiles/state'
+import investmentProfileReducer from './modules/Investments/Profiles/reducer'
 
-import {
-  INVESTMENT_PROJECTS_ID,
-  COMPANY_PROJECTS_LIST_ID,
-} from '../apps/investments/client/projects/state'
+import { INVESTMENT_PROJECTS_ID } from './modules/Investments/Projects/state'
 
 import {
   OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
   OVERVIEW_COMPANY_PROJECTS_LIST_ID,
 } from '../apps/companies/apps/company-overview/overview-table-cards/state'
 
-import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
+import investmentProjectsReducer from './modules/Investments/Projects/reducer'
 import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
 import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
 
@@ -220,7 +217,6 @@ export const reducers = {
   [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
   [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
   [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
-  [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
   [OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID]: overviewExportWinsReducer,
   [OVERVIEW_COMPANY_PROJECTS_LIST_ID]: overviewInvestmentProjectReducer,
   [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,

@@ -3,10 +3,7 @@ import {
   buildOptionsFilter,
 } from '../../../../../filters'
 
-import {
-  LABELS,
-  PROJECT_STATUS_OPTIONS,
-} from '../../../../../../apps/investments/client/projects/constants'
+import { LABELS, PROJECT_STATUS_OPTIONS } from '../../constants'
 
 export const buildSelectedFilters = (
   queryParams,

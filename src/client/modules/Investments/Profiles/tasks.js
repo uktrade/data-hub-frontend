@@ -1,4 +1,4 @@
-import { apiProxyAxios } from '../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
 import transformLargeCapitalProfiles from './transformers'
 

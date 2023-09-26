@@ -15,7 +15,7 @@ import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__SET_PROJECTS_METADATA,
 } from '../../../../../actions'
-import { TASK_GET_INVESTMENTS_PROJECTS_METADATA } from '../../../../../../apps/investments/client/projects/state'
+import { TASK_GET_INVESTMENTS_PROJECTS_METADATA } from '../../state'
 import { InvestmentResource } from '../../../../../components/Resource'
 import { checkIfAssociatedProjectExists } from './transformers'
 import { buildProjectBreadcrumbs } from '../../../utils'

@@ -1,7 +1,7 @@
 import {
   INVESTMENTS__PROFILES_LOADED,
   INVESTMENTS_PROFILES__FILTER_OPTIONS_LOADED,
-} from '../../../../client/actions'
+} from '../../../actions'
 
 const initialState = {
   page: 1,

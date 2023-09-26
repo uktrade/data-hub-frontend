@@ -9,29 +9,29 @@ import {
   FilteredCollectionList,
   FilterToggleSection,
   Filters,
-} from '../../../../client/components'
+} from '../../../components'
 
 import {
   listSkeletonPlaceholder,
   CheckboxPlaceholder,
   ToggleHeadingPlaceholder,
-} from '../../../../client/components/SkeletonPlaceholder'
+} from '../../../components/SkeletonPlaceholder'
 
 import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
   INVESTMENT_PROJECTS_ID,
-  projectsState2props,
+  state2props,
 } from './state'
 
 import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
   INVESTMENTS__SET_PROJECTS_METADATA,
-} from '../../../../client/actions'
+} from '../../../actions'
 
-import { sanitizeFilter } from '../../../../client/filters'
+import { sanitizeFilter } from '../../../filters'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -322,4 +322,4 @@ const ProjectsCollection = ({
     </>
   )
 }
-export default connect(projectsState2props)(ProjectsCollection)
+export default connect(state2props)(ProjectsCollection)

@@ -1,7 +1,3 @@
-// Todo: once all of Investments has all been built on React (including the tabs)
-// we can then move it to the modules folder and add the missing test but for now
-// its not using React router so there are no tests below.
-
 const links = [
   {
     text: 'Companies',
@@ -57,6 +53,22 @@ const assertNoPermissionsPage = () =>
     .get('h1')
     .should('have.text', "You don't have permission to view this page")
 
+const assertNoAccess = (permission, link, name) => {
+  before(() => {
+    cy.setModulePermissions(filteredPermissions(permission, permissions))
+    cy.visit(link)
+  })
+  after(() => {
+    cy.resetUser()
+  })
+  it('should only show the PERMITTED navigation links', () => {
+    assertNavLinks(filteredLinks(name, links))
+  })
+  it(`should NOT be able to access ${name}`, () => {
+    assertNoPermissionsPage()
+  })
+}
+
 describe('DataHub module access', () => {
   context('Access to all modules', () => {
     before(() => {
@@ -84,94 +96,39 @@ describe('DataHub module access', () => {
       cy.visit('/interactions')
       cy.get('h1').should('have.text', 'Interactions')
     })
+    it('should be able to access Investments', () => {
+      cy.visit('/investments')
+      cy.get('h1').should('have.text', 'Projects')
+    })
     it('should be able to access Orders', () => {
       cy.visit('/omis')
       cy.get('h1').should('have.text', 'Orders (OMIS)')
     })
   })
   context('No access to Companies', () => {
-    before(() => {
-      cy.setModulePermissions(
-        filteredPermissions('company.view_company', permissions)
-      )
-      cy.visit('/companies')
-    })
-    after(() => {
-      cy.resetUser()
-    })
-    it('should only show the PERMITTED navigation links', () => {
-      assertNavLinks(filteredLinks('Companies', links))
-    })
-    it('should NOT be able to access Companies', () => {
-      assertNoPermissionsPage()
-    })
+    assertNoAccess('company.view_company', '/companies', 'Companies')
   })
   context('No access to Contacts', () => {
-    before(() => {
-      cy.setModulePermissions(
-        filteredPermissions('company.view_contact', permissions)
-      )
-      cy.visit('/contacts')
-    })
-    after(() => {
-      cy.resetUser()
-    })
-    it('should only show the PERMITTED navigation links', () => {
-      assertNavLinks(filteredLinks('Contacts', links))
-    })
-    it('should NOT be able to access Contacts', () => {
-      assertNoPermissionsPage()
-    })
+    assertNoAccess('company.view_contact', '/contacts', 'Contacts')
   })
   context('No access to Events', () => {
-    before(() => {
-      cy.setModulePermissions(
-        filteredPermissions('event.view_event', permissions)
-      )
-      cy.visit('/events')
-    })
-    after(() => {
-      cy.resetUser()
-    })
-    it('should only show the PERMITTED navigation links', () => {
-      assertNavLinks(filteredLinks('Events', links))
-    })
-    it('should NOT be able to access Events', () => {
-      assertNoPermissionsPage()
-    })
+    assertNoAccess('event.view_event', '/events', 'Events')
   })
   context('No access to Interactions', () => {
-    before(() => {
-      cy.setModulePermissions(
-        filteredPermissions('interaction.view_all_interaction', permissions)
-      )
-      cy.visit('/interactions')
-    })
-    after(() => {
-      cy.resetUser()
-    })
-    it('should only show the PERMITTED navigation links', () => {
-      assertNavLinks(filteredLinks('Interactions', links))
-    })
-    it('should NOT be able to access Interactions', () => {
-      assertNoPermissionsPage()
-    })
+    assertNoAccess(
+      'interaction.view_all_interaction',
+      '/interactions',
+      'Interactions'
+    )
+  })
+  context('No access to Investments', () => {
+    assertNoAccess(
+      'investment.view_all_investmentproject',
+      '/investments',
+      'Investments'
+    )
   })
   context('No access to Orders', () => {
-    before(() => {
-      cy.setModulePermissions(
-        filteredPermissions('order.view_order', permissions)
-      )
-      cy.visit('/omis')
-    })
-    after(() => {
-      cy.resetUser()
-    })
-    it('should only show the PERMITTED navigation links', () => {
-      assertNavLinks(filteredLinks('Orders', links))
-    })
-    it('should NOT be able to access Orders', () => {
-      assertNoPermissionsPage()
-    })
+    assertNoAccess('order.view_order', '/omis', 'Orders')
   })
 })

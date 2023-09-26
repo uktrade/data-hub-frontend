@@ -12,13 +12,9 @@ const {
 } = require('../../modules/search/middleware/collection')
 
 const {
-  renderOpportunitiesView,
   renderOpportunityView,
   renderOpportunityStatusView,
 } = require('./controllers/opportunities')
-const setInvestmentTabItems = require('./middleware/investments-tab-items')
-
-router.get('/', setInvestmentTabItems, renderOpportunitiesView)
 
 router.get(
   // These paths are handled by react-router
@@ -26,11 +22,7 @@ router.get(
   renderOpportunityView
 )
 
-router.get(
-  '/:opportunityId/status',
-  setInvestmentTabItems,
-  renderOpportunityStatusView
-)
+router.get('/:opportunityId/status', renderOpportunityStatusView)
 
 router.get('/create', (req, res) => {
   const heading = 'Create UK investment opportunity'
