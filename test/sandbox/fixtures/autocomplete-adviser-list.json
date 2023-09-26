@@ -1464,6 +1464,28 @@
          "uk_region":null,
          "country":"a55f66a0-5d95-e211-a939-e4115bead28a"
       }
+   },
+   {
+      "id":"19abd740-d4bd-40c6-a276-b51f7c7b8d33",
+      "is_active":false,
+      "last_login":null,
+      "first_name":"John",
+      "last_name":"Doe",
+      "name": "John Doe",
+      "email":"john.doe@example.com",
+      "contact_email":"",
+      "telephone_number":"",
+      "dit_team":{
+         "id":"08d987f8-6525-e511-b6bc-e4115bead28a",
+         "disabled_on":null,
+         "name":"Heart of the South West LEP",
+         "tags":[
+
+         ],
+         "role":"62329c18-6095-e211-a939-e4115bead28a",
+         "uk_region":null,
+         "country":"a55f66a0-5d95-e211-a939-e4115bead28a"
+      }
    }
   ]
 }
