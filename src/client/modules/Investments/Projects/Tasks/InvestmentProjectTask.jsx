@@ -38,6 +38,13 @@ const StyledGridCol = styled(GridCol)({
   paddingTop: '5px',
 })
 
+const taskDueDateOptions = [
+  { label: 'Custom date', value: 'custom' },
+  { label: '1 week', value: 'week' },
+  { label: '1 month', value: 'month' },
+  { label: 'No due date', value: 'none' },
+]
+
 const InvestmentProjectTask = () => {
   const { projectId } = useParams()
   return (
@@ -160,12 +167,5 @@ const FieldReminder = ({ initialValue = null }) => (
     </StyledGridCol>
   </GridRow>
 )
-
-const taskDueDateOptions = [
-  { label: 'Custom date', value: 'custom' },
-  { label: '1 week', value: 'week' },
-  { label: '1 month', value: 'month' },
-  { label: 'No due date', value: 'none' },
-]
 
 export default InvestmentProjectTask
