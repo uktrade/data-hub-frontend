@@ -344,6 +344,7 @@ const routes = {
   tasks: [
     {
       path: '/tasks/:taskId',
+      // TODO MK: use datahub:tasks or other module.
       module: 'datahub:companies',
       component: TaskDetails,
     },

@@ -56,6 +56,7 @@ import InvestmentEvidence from './InvestmentEvidence'
 import OneListTiers from './OneListTiers'
 import ProjectDocument from './ProjectDocument'
 import Order from './Order'
+import Task from './Task'
 
 export default {
   ...Company.tasks,
@@ -116,4 +117,5 @@ export default {
   ...OneListTiers.tasks,
   ...ProjectDocument.tasks,
   ...Order.tasks,
+  ...Task.tasks,
 }
