@@ -9,6 +9,7 @@ const {
   assertPayload,
   assertFlashMessage,
   assertExactUrl,
+  assertFieldError,
 } = require('../../support/assertions')
 const { fill } = require('../../support/form-fillers')
 const {
@@ -132,6 +133,117 @@ describe('Investment project task', () => {
       clickCancelLink()
 
       assertExactUrl(detailsUrl)
+    })
+  })
+
+  context('When creating a task with no data', () => {
+    before(() => {
+      cy.visit(
+        urls.investments.projects.task.create(
+          fixtures.investment.investmentWithDetails.id
+        )
+      )
+
+      clickButton('Save task')
+    })
+
+    it('should display an error when no task title is entered', () => {
+      assertFieldError(
+        cy.get('[data-test="field-taskTitle"]'),
+        'Enter a task title',
+        false
+      )
+    })
+
+    it('should display an error when no task due date is selected', () => {
+      assertFieldError(
+        cy.get('[data-test="field-taskDueDate"]'),
+        'Specify task due date'
+      )
+    })
+
+    it('should display an error when no task reminder is selected', () => {
+      assertFieldError(
+        cy.get('[data-test="field-taskRemindersEnabled"]'),
+        'Specify reminder'
+      )
+    })
+  })
+
+  context('When creating a task with a custom date', () => {
+    before(() => {
+      cy.visit(
+        urls.investments.projects.task.create(
+          fixtures.investment.investmentWithDetails.id
+        )
+      )
+      fill('[data-test=field-taskTitle]', 'task with some data')
+
+      cy.get('[data-test=task-due-date-custom-date]').click()
+    })
+
+    it('should display an error when no custom date is entered', () => {
+      clickButton('Save task')
+
+      cy.get('[data-test="field-customDate"]').should(
+        'contain.text',
+        'Enter a date'
+      )
+    })
+
+    it('should display an error when invalid date is entered', () => {
+      cy.get('[data-test=custom_date-day]').type(50)
+      cy.get('[data-test=custom_date-month]').type(50)
+      cy.get('[data-test=custom_date-year]').type(50)
+
+      clickButton('Save task')
+
+      cy.get('[data-test="field-customDate"]').should(
+        'contain.text',
+        'Enter a valid date'
+      )
+    })
+  })
+
+  context('When creating a task with task reminders', () => {
+    beforeEach(() => {
+      cy.visit(
+        urls.investments.projects.task.create(
+          fixtures.investment.investmentWithDetails.id
+        )
+      )
+      fill('[data-test=field-taskTitle]', 'task with some data')
+
+      cy.get('[data-test=field-taskRemindersEnabled]').click()
+    })
+
+    it('should display an error when no task reminder days are entered', () => {
+      clickButton('Save task')
+
+      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+        'contain.text',
+        'Enter a number between 1 and 365'
+      )
+    })
+
+    it('should display an error when 0 is entered', () => {
+      cy.get('[data-test=task-reminder-days-input]').type(0)
+      clickButton('Save task')
+
+      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+        'contain.text',
+        'Enter a number between 1 and 365'
+      )
+    })
+
+    it('should display an error when day higher than 365 is entered', () => {
+      cy.get('[data-test=task-reminder-days-input]').type(366)
+      clickButton('Save task')
+
+      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+        'contain.text',
+        'Enter a number between 1 and 365'
+      )
     })
   })
 })

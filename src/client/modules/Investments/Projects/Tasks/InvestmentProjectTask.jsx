@@ -156,8 +156,11 @@ const FieldReminder = ({ initialValue = null }) => (
       <StyledFieldInput
         name="taskReminderDays"
         type="number"
+        required="Enter a number between 1 and 365"
         validate={(value) =>
-          value && value.length > 3 ? 'Enter a number between 1 and 365' : null
+          value && (value < 1 || value > 365)
+            ? 'Enter a number between 1 and 365'
+            : null
         }
         defaultValue={initialValue}
       ></StyledFieldInput>
