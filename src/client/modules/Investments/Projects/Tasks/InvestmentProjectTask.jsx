@@ -48,7 +48,7 @@ const InvestmentProjectTask = () => {
           pageTitle={'Task'}
           breadcrumbs={[
             { link: urls.investments.index(), text: 'Investments' },
-            { link: urls.investments.index(), text: 'Projects' },
+            { link: urls.investments.projects.index(), text: 'Projects' },
             {
               link: urls.investments.projects.details(investmentProject.id),
               text: investmentProject.name,
@@ -71,7 +71,7 @@ const InvestmentProjectTask = () => {
                 investmentProject: investmentProject,
               })}
               flashMessage={() => 'Task created'}
-              submitButtonLabel="Add task"
+              submitButtonLabel="Save task"
               cancelButtonLabel="Back"
             >
               {() => (
@@ -85,7 +85,6 @@ const InvestmentProjectTask = () => {
                   <FieldTextarea
                     name="taskDescription"
                     label="Task description (optional)"
-                    data-test="task-description-input"
                     hint="Add details of the task, especially if you intend to assign it to someone else."
                   />
                   <FieldRadios
