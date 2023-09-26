@@ -7,11 +7,18 @@ const {
   assertFieldTextarea,
   assertFieldRadiosWithLegend,
   assertPayload,
+  assertFlashMessage,
+  assertExactUrl,
 } = require('../../support/assertions')
-const { fill, fillDate } = require('../../support/form-fillers')
+const { fill } = require('../../support/form-fillers')
+const {
+  clickButton,
+} = require('../../../../functional/cypress/support/actions')
 
 describe('Investment project task', () => {
   const fixture = fixtures.investment.investmentWithDetails
+  const endpoint = '/api-proxy/v4/investmentprojecttask**'
+
   context('When visiting the task create page', () => {
     before(() => {
       cy.visit(
@@ -76,33 +83,28 @@ describe('Investment project task', () => {
       })
     })
 
-    // it('should not show an error message when a valid date is set', () => {
-    //   const validPastDate = getDateFromNow({ day: 1, monthAddition: -1 })
-    //   assertRequiredChecks().then((element) => {
-    //     clickRadioGroupOption({
-    //       element,
-    //       label: 'Cleared',
-    //     })
-    //     clearAndInputDateValueObject({
-    //       element,
-    //       value: {
-    //         day: validPastDate.getDate().toString(),
-    //         month: (validPastDate.getMonth() + 1).toString(),
-    //         year: validPastDate.getFullYear().toString(),
-    //       },
-    //     })
-    //   })
-
     it('add task button should link to investments details page', () => {
+      cy.intercept('POST', endpoint, {
+        statusCode: 201,
+      }).as('apiRequest')
+
       fill('[data-test=field-taskTitle]', 'test task')
       fill('[data-test=field-taskDescription]', 'test description')
+
       cy.get('[data-test=task-due-date-custom-date]').click()
-      fillDate('[data-test=field-customDate]', 25, 12, 2023)
-      cy.get('[data-test="submit-button"]').contains('Save task').click()
+      cy.get('[data-test=custom_date-day]').type(25)
+      cy.get('[data-test=custom_date-month]').type(12)
+      cy.get('[data-test=custom_date-year]').type(2023)
+
+      cy.get('[data-test=field-taskRemindersEnabled]').click()
+      cy.get('[data-test=task-reminder-days-input]').type(1)
+
+      clickButton('Save task')
+
       assertPayload('@apiRequest', {
         investment_project: {
-          id: '',
-          name: '',
+          id: fixture.id,
+          name: fixture.name,
         },
         task: {
           title: 'test task',
@@ -113,10 +115,10 @@ describe('Investment project task', () => {
           advisers: [],
         },
       })
-      cy.location('pathname').should(
-        'eq',
-        urls.investments.projects.details(fixture.id)
-      )
+
+      assertExactUrl(urls.investments.projects.details(fixture.id))
+
+      assertFlashMessage('Task created')
     })
 
     // it('cancels form when back link is clicked', () => {
