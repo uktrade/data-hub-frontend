@@ -64,8 +64,10 @@ const StepReferralDetails = ({
                 .then(({ data: { results } }) =>
                   results
                     .filter((adviser) => adviser?.name.trim().length)
-                    .map(({ id, name, dit_team }) => ({
-                      label: `${name}${dit_team ? ', ' + dit_team.name : ''}`,
+                    .map(({ id, name, dit_team, is_active }) => ({
+                      label: `${name}${!is_active ? ' - INACTIVE' : ''}${
+                        dit_team ? ', ' + dit_team.name : ''
+                      }`,
                       value: id,
                     }))
                 ),

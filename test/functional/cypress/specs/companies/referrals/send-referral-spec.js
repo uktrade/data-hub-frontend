@@ -194,6 +194,39 @@ describe('Send a referral form', () => {
     )
   })
 
+  describe('Advisor input fields', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
+    })
+
+    context('When you search advisors', () => {
+      it('should return inactive advisers with text indicating they are inactive next to their name', () => {
+        cy.get(selectors.sendReferral.adviserField).within(() => {
+          cy.intercept('/api-proxy/adviser/?*').as('adviserResults')
+          cy.get('input').clear().type('John Doe')
+          cy.wait('@adviserResults')
+          cy.get('[data-test="typeahead-menu-option"]')
+            .first()
+            .should(
+              'contain',
+              'John Doe - INACTIVE, Heart of the South West LEP'
+            )
+        })
+      })
+
+      it('should return active advisers without an inactive text next to their name', () => {
+        cy.get(selectors.sendReferral.adviserField).within(() => {
+          cy.intercept('/api-proxy/adviser/?*').as('adviserResults')
+          cy.get('input').clear().type('Shawn Cohen')
+          cy.wait('@adviserResults')
+          cy.get('[data-test="typeahead-menu-option"]')
+            .first()
+            .should('contain', 'Shawn Cohen, Charles Gilbert')
+        })
+      })
+    })
+  })
+
   context(
     'when "Continue" button is clicked with just mandatory fields filled in',
     () => {
