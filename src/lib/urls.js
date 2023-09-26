@@ -643,4 +643,7 @@ module.exports = {
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },
+  tasks: {
+    details: url('/tasks', '/:taskId'),
+  },
 }
