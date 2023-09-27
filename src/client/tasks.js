@@ -347,6 +347,9 @@ import {
   TASK_SAVE_ONE_LIST_DETAILS,
 } from './modules/Companies/CoreTeam/state'
 
+import { TASK_EDIT_OMIS_QUOTE_INFORMATION } from './modules/Omis/state'
+import { updateOrder } from './modules/Omis/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -526,4 +529,5 @@ export const tasks = {
   [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
   [TASK_ARCHIVE_OBJECTIVE]: archiveObjective,
   [TASK_DELETE_PROJECT_DOCUMENT]: deleteProjectDocument,
+  [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
 }

@@ -65,6 +65,7 @@ const reactRoutes = [
   '/investments/projects',
   '/investments/profiles',
   '/investments/opportunities',
+  '/omis/:orderId/edit/quote-details',
 ]
 
 reactRoutes.forEach((path) => {

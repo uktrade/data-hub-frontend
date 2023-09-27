@@ -46,6 +46,7 @@ import ProjectEvidence from './modules/Investments/Projects/Evidence/ProjectEvid
 import DeleteProjectDocument from './modules/Investments/Projects/Evidence/DeleteProjectDocument'
 import InvestmentCollections from './modules/Investments/InvestmentCollections'
 import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
+import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 
 const routes = {
   companies: [
@@ -163,6 +164,11 @@ const routes = {
       path: '/omis',
       module: 'datahub:orders',
       component: OmisCollectionList,
+    },
+    {
+      path: '/omis/:orderId/edit/quote-details',
+      module: 'datahub:orders',
+      component: EditQuoteInformation,
     },
   ],
   reminders: [

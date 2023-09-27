@@ -25,6 +25,7 @@ const {
   subYears,
   subWeeks,
   differenceInCalendarMonths,
+  isFuture,
 } = require('date-fns')
 
 const {
@@ -83,6 +84,10 @@ function subtractMonths(date, numberOfMonths) {
 
 function convertMinutesToHours(date) {
   return minutesToHours(date)
+}
+
+function isDateInFuture(date) {
+  return isFuture(parseISO(date))
 }
 
 /**
@@ -305,4 +310,5 @@ module.exports = {
   createDateFromObject,
   formatStartAndEndDate,
   convertDateToFieldShortDateObject,
+  isDateInFuture,
 }
