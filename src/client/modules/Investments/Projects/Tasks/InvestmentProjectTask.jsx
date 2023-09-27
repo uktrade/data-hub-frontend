@@ -151,8 +151,9 @@ const FieldDueDate = ({ initialValue = null }) => (
 
 const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
-    <GridCol setWidth="12%">
+    <GridCol>
       <StyledFieldInput
+        className="govuk-input--width-2"
         name="taskReminderDays"
         type="number"
         required="Enter a number between 1 and 365"
