@@ -1,8 +1,9 @@
 import React from 'react'
-import CardUtils from './card/CardUtils'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
+
+import CardUtils from './card/CardUtils'
 
 import { formatStartAndEndDate } from '../../../utils/date'
 import { ACTIVITY_TYPE } from '../constants'

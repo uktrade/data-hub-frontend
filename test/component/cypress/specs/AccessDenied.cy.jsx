@@ -1,4 +1,5 @@
 import React from 'react'
+
 import AccessDenied from '../../../../src/client/components/AccessDenied'
 import urls from '../../../../src/lib/urls'
 import { assertBreadcrumbs } from '../../../functional/cypress/support/assertions'

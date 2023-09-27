@@ -1,6 +1,6 @@
 import React from 'react'
-import { Form } from '../../../../../src/client/components'
 
+import { Form } from '../../../../../src/client/components'
 import FieldDate from '../../../../../src/client/components/Form/elements/FieldDate'
 import DataHubProvider from '../provider'
 import {

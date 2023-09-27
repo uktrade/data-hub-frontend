@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
 import { TextAreaField } from '@govuk-react/text-area'
 import ErrorText from '@govuk-react/error-text'
 import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
   SPACING,
 } from '@govuk-react/constants'
-import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 
+import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 

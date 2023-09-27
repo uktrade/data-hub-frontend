@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ActivityCardNotes from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardNotes'
 
 describe('ActivityCardNotes', () => {

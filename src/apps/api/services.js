@@ -1,6 +1,6 @@
-const request = require('../../lib/request')
 const { trim } = require('lodash')
 
+const request = require('../../lib/request')
 const hawkRequest = require('../../lib/hawk-request')
 const config = require('../../config')
 

@@ -1,7 +1,7 @@
 const axios = require('axios')
 const { isString } = require('lodash')
-const { StatusCodeError } = require('./errors')
 
+const { StatusCodeError } = require('./errors')
 const logger = require('../config/logger')
 
 /**

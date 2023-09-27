@@ -4,6 +4,7 @@ import LoadingBox from '@govuk-react/loading-box'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { SPACING } from '@govuk-react/constants'
+
 import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 const Pagination = styled('div')`

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+import Label from '@govuk-react/label'
+
 import {
   BLACK,
   BLUE,
@@ -11,8 +14,6 @@ import {
   TEXT_COLOUR,
   WHITE,
 } from '../../utils/colours'
-import { FOCUSABLE, SPACING } from '@govuk-react/constants'
-import Label from '@govuk-react/label'
 import multiInstance from '../../utils/multiinstance'
 
 import {

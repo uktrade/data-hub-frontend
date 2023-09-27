@@ -2,6 +2,7 @@ import React from 'react'
 import { Details, Paragraph } from 'govuk-react'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
+
 import { RelatedCompaniesCountResource } from '../Resource'
 import { FilterToggleSection } from '../ToggleSection'
 

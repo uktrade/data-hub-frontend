@@ -1,6 +1,6 @@
-import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
+import urls from '../../../../../src/lib/urls'
 import { interactionsListFaker } from '../../fakers/interactions'
 
 const downloadHeader = '[data-test="download-data-header"]'

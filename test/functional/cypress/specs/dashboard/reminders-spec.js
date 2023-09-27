@@ -1,15 +1,16 @@
-const {
-  addDays,
-  formatWithoutParsing,
-} = require('../../../../../src/client/utils/date')
-const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
-
 import { faker } from '@faker-js/faker'
+
 import urls from '../../../../../src/lib/urls'
 import {
   propositionFaker,
   propositionListFaker,
 } from '../../fakers/propositions'
+
+const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
+const {
+  addDays,
+  formatWithoutParsing,
+} = require('../../../../../src/client/utils/date')
 
 describe('Dashboard reminders', () => {
   const tomorrow = addDays(new Date(), 1)

@@ -1,10 +1,9 @@
 import React from 'react'
+import Link from '@govuk-react/link'
+import styled from 'styled-components'
 
 import SummaryTable from '../../../../../client/components/SummaryTable'
 import Tag from '../../../../../client/components/Tag'
-
-import Link from '@govuk-react/link'
-import styled from 'styled-components'
 
 const StyledTag = styled(Tag)`
   float: right;

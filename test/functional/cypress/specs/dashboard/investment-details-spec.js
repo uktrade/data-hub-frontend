@@ -1,7 +1,8 @@
+import { faker } from '@faker-js/faker'
+
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { companies, interactions } from '../../../../../src/lib/urls'
-import { faker } from '@faker-js/faker'
 import urls from '../../../../../src/lib/urls'
 
 const todayFormatted = formatWithoutParsing(new Date())

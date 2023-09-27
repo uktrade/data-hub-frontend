@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import { get } from 'lodash'
 
 import Tag from '../../../components/Tag'
 import { ToggleSection } from '../../../components/ToggleSection'
@@ -11,7 +12,6 @@ import {
   formatMediumDateTime,
 } from '../../../../client/utils/date.js'
 import { currencyGBP } from '../../../../client/utils/number-utils'
-import { get } from 'lodash'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
 
 const ListItem = styled('li')({

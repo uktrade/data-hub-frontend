@@ -1,4 +1,5 @@
 import React from 'react'
+
 import NewWindowLink from '../../../../src/client/components/NewWindowLink'
 
 describe('NewWindowLink', () => {

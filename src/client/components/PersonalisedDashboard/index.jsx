@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled, { ThemeProvider } from 'styled-components'
 import { connect } from 'react-redux'
-import { BLUE } from '../../../client/utils/colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
+import { BLUE } from '../../../client/utils/colours'
 import {
   readFromLocalStorage,
   writeToLocalStorage,

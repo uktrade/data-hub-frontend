@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import Link from '@govuk-react/link'
+
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'

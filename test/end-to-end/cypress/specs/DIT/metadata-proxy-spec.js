@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+
 const { metadata } = require('../../../../../src/lib/urls')
 
 describe('Metadata', () => {

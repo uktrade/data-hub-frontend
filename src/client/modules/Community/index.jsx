@@ -1,12 +1,11 @@
 import React from 'react'
-
 import { H4 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
 
 import { DefaultLayout, NewWindowLink } from '../../components'
-import styled from 'styled-components'
 import urls from '../../../lib/urls'
 
 import roadmapImg from './img-roadmap.jpg'

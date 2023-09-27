@@ -1,4 +1,5 @@
 const proxyquire = require('proxyquire')
+
 const mockCompany = require('../../../../../test/unit/data/companies/company-v4.json')
 const oneListTypeDItaCompany = require('../../../../../test/unit/data/companies/one-list-group-tier-d-ita.json')
 const {

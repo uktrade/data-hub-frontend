@@ -1,8 +1,9 @@
 /**
  * Tests for axios version of hawk request
  */
-const config = require('../../config')
 const rewire = require('rewire')
+
+const config = require('../../config')
 const { StatusCodeError } = require('../errors')
 
 const modulePath = '../hawk-request'

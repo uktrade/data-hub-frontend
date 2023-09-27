@@ -6,6 +6,10 @@ import { exportFaker } from '../../fakers/export'
 import { sectorListFaker } from '../../fakers/sectors'
 import { countryListFaker } from '../../fakers/countries'
 
+const { faker } = require('@faker-js/faker')
+
+const { capitalize } = require('lodash')
+
 const urls = require('../../../../../src/lib/urls')
 
 const {
@@ -34,8 +38,6 @@ const {
 } = require('../../support/form-fillers')
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
-const { faker } = require('@faker-js/faker')
-const { capitalize } = require('lodash')
 
 describe('Export pipeline edit', () => {
   before(() => {

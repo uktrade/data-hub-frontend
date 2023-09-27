@@ -1,4 +1,5 @@
 const router = require('express').Router()
+
 const urls = require('../../lib/urls')
 const { renderDashboard } = require('./controllers')
 const spaBasePath = require('../../middleware/spa-base-path')

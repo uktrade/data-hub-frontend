@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_4 } from '../../../client/utils/colours'
 import { SPACING } from '@govuk-react/constants'
 import Main from '@govuk-react/main'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
 import { Link } from 'react-router-dom'
 
+import { GREY_4 } from '../../../client/utils/colours'
 import LocalHeaderHeading from './LocalHeaderHeading'
 import LocalSubHeader from './LocalSubHeader'
 import FlashMessages from './FlashMessages'

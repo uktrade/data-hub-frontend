@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { ERROR_COLOUR } from '../../../../client/utils/colours'
 import StatusMessage from 'StatusMessage'
+
+import { ERROR_COLOUR } from '../../../../client/utils/colours'
 
 export default {
   title: 'StatusMessage',

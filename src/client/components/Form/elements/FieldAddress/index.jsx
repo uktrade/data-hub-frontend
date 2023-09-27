@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { BLACK, GREY_3 } from '../../../../../client/utils/colours'
 import { Search } from '@govuk-react/icons'
 import Select from '@govuk-react/select'
 import { isEmpty } from 'lodash'
@@ -9,6 +8,8 @@ import { MEDIA_QUERIES } from '@govuk-react/constants'
 import FormGroup from '@govuk-react/form-group'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
+
+import { BLACK, GREY_3 } from '../../../../../client/utils/colours'
 
 import { useFormContext } from '../../hooks'
 import useAddressSearch from '../../../AddressSearch/useAddressSearch'

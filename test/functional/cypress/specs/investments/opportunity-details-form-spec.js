@@ -1,3 +1,10 @@
+import { selectFirstMockedTypeaheadOption } from '../../support/actions'
+
+import {
+  assertTypeaheadOptionSelected,
+  assertSingleTypeaheadOptionSelected,
+} from '../../support/assertions'
+
 const { assertPayload } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 const completeOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
@@ -11,12 +18,6 @@ const relationshipManager = require('../../../../sandbox/fixtures/autocomplete-a
 const otherDITContacts = require('../../../../sandbox/fixtures/autocomplete-adviser-list.json')
 const valueType = require('../../../../sandbox/fixtures/metadata/capital-investment-opportunity-value-types.json')
 const assetClasses = require('../../../../sandbox/fixtures/metadata/capital-investment-asset-class-interest.json')
-
-import { selectFirstMockedTypeaheadOption } from '../../support/actions'
-import {
-  assertTypeaheadOptionSelected,
-  assertSingleTypeaheadOptionSelected,
-} from '../../support/assertions'
 
 const filteredUKRegions = ukRegions.filter((region) => !region.disabled_on)
 

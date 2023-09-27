@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { BLACK } from '../../../client/utils/colours'
 import { SkipLink } from 'govuk-react'
+
+import { BLACK } from '../../../client/utils/colours'
 
 import DataHubBar from './DataHubBar'
 import NavBar from './NavBar'

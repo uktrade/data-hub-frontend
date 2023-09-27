@@ -1,6 +1,5 @@
-/* eslint-disable camelcase */
-
 const { get } = require('lodash')
+
 const urls = require('../../../../lib/urls')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 const config = require('../../../../config')

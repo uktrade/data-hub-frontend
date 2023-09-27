@@ -1,7 +1,8 @@
 import React from 'react'
-import ActivityFeed from './ActivityFeed'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+
+import ActivityFeed from './ActivityFeed'
 import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 export default class ActivityFeedApp extends React.Component {

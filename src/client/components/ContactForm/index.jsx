@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import Link from '@govuk-react/link'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
+import Label from '@govuk-react/label'
 
 import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
@@ -32,9 +34,6 @@ import {
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import urls from '../../../lib/urls'
-
-import styled from 'styled-components'
-import Label from '@govuk-react/label'
 
 const YES = 'Yes'
 const NO = 'No'

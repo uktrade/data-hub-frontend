@@ -1,8 +1,7 @@
-/* eslint-disable camelcase */
-const config = require('../../config')
-const request = require('../../lib/request')
 const fs = require('fs')
 
+const config = require('../../config')
+const request = require('../../lib/request')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 async function chainUploadSequence(req, data) {

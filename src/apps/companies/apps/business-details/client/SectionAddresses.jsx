@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
-import { Badge, SummaryTable } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
+
+import { Badge, SummaryTable } from '../../../../../client/components/'
 import urls from '../../../../../lib/urls'
 
 const StyledAddressList = styled('ul')`

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import AventriAttendee from '../../../../../src/client/components/ActivityFeed/activities/AventriAttendee'
 
 const urls = require('../../../../../src/lib/urls')

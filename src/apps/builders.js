@@ -8,6 +8,7 @@ const {
   pick,
   pickBy,
 } = require('lodash')
+
 const { getOptions } = require('../lib/options')
 
 function getDeepObjectValuesForKey(object, keyName, values = []) {

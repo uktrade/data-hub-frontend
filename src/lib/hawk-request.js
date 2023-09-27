@@ -1,4 +1,5 @@
 const Hawk = require('hawk')
+
 const config = require('../config')
 const request = require('./request')
 

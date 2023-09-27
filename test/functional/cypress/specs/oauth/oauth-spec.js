@@ -1,5 +1,6 @@
-const urls = require('../../../../../src/lib/urls')
 const qs = require('qs')
+
+const urls = require('../../../../../src/lib/urls')
 
 /**
  * Test that the OAuth redirect url redirects to the auth server with given state

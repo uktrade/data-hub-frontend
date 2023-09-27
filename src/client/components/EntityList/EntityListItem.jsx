@@ -8,15 +8,15 @@ import {
   MEDIA_QUERIES,
   SPACING,
 } from '@govuk-react/constants'
+import { H3 } from '@govuk-react/heading'
+import InsetText from '@govuk-react/inset-text'
+
 import {
   GREY_2,
   GREY_4,
   LINK_COLOUR,
   LINK_HOVER_COLOUR,
 } from '../../../client/utils/colours'
-import { H3 } from '@govuk-react/heading'
-import InsetText from '@govuk-react/inset-text'
-
 import Metadata from '../../components/Metadata/'
 
 const KEY_ENTER = 13

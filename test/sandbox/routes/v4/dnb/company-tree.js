@@ -1,11 +1,11 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
+const { faker } = require('@faker-js/faker')
+
 var ukRegion = require('../../../fixtures/v4/metadata/uk-region.json')
 var employeeRange = require('../../../fixtures/v4/metadata/employee-range.json')
 var headquarterType = require('../../../fixtures/v4/metadata/headquarter-type.json')
 var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
-
-const { faker } = require('@faker-js/faker')
 
 const address = {
   line_1: faker.location.streetAddress(),

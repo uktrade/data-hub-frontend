@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import {
   COMPANY_ACTIVITIES__LOADED,
@@ -36,7 +37,6 @@ import Activity from '../Activity'
 
 import { CompanyResource } from '../../Resource'
 import CompanyLayout from '../../Layout/CompanyLayout'
-import styled from 'styled-components'
 
 const FiltersCheckboxGroupWithNext = styled(Filters.CheckboxGroup)({
   marginBottom: 0,

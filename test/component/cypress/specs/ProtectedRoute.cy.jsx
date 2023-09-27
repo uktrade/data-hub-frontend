@@ -1,4 +1,5 @@
 import React from 'react'
+
 import DataHubProvider from './provider'
 import { ProtectedRoute } from '../../../../src/client/components/ProtectedRoute'
 

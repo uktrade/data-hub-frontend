@@ -2,6 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import pluralize from 'pluralize'
+import { FONT_SIZE } from '@govuk-react/constants'
+import styled from 'styled-components'
+import Button from '@govuk-react/button'
+import Link from '@govuk-react/link'
+import { Details, SectionBreak } from 'govuk-react'
 
 import { state2props } from './state'
 import {
@@ -15,12 +20,6 @@ import OpportunityDetailsForm from './OpportunityDetailsForm'
 import OpportunityRequirementsForm from './OpportunityRequirementsForm'
 
 import { SummaryTable, ToggleSection } from '../../../../../client/components'
-import { FONT_SIZE } from '@govuk-react/constants'
-
-import styled from 'styled-components'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
-import { Details, SectionBreak } from 'govuk-react'
 
 import { RED } from '../../../../../client/utils/colours'
 

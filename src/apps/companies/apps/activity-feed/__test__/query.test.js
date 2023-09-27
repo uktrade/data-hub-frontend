@@ -1,13 +1,12 @@
+const { faker } = require('@faker-js/faker')
+var { get, has } = require('lodash')
+
 const { EVENT_ACTIVITY_SORT_OPTIONS } = require('../constants')
 const activityFeedEventsQuery = require('../es-queries/activity-feed-all-events-query')
 const aventriAttendeeForCompanyQuery = require('../es-queries/aventri-attendee-for-company-query')
 const externalActivityQuery = require('../es-queries/external-activity-query')
 const dataHubAndActivityStreamServicesQuery = require('../es-queries/data-hub-and-activity-stream-services-query')
 const aventriAttendeeQuery = require('../es-queries/aventri-attendee-query')
-
-const { faker } = require('@faker-js/faker')
-
-var { get, has } = require('lodash')
 
 describe('#activityFeedEventsQuery', () => {
   context('query applies correct sort', () => {

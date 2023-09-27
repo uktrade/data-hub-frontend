@@ -1,10 +1,9 @@
-import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
 
+import urls from '../../../../../src/lib/urls'
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 import { events } from '../../../../../src/lib/urls'
-
 import { testTypeahead, testCheckBoxGroup } from '../../support/tests'
 
 const searchEndpoint = '/api-proxy/v3/search/event'

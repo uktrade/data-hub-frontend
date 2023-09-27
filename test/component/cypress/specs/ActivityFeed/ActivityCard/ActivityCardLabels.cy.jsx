@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ActivityCardLabels from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardLabels'
 
 // this is needed as cypress can only test colours with rgb not hex

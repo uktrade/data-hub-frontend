@@ -1,4 +1,5 @@
 const { get } = require('lodash')
+
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const redisClient = require('../../lib/redis-client')

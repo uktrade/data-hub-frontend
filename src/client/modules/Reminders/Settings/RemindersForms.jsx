@@ -1,9 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { snakeCase } from 'lodash'
 
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
-import { snakeCase } from 'lodash'
 import {
   reminderTypeToLabel,
   INVESTMENTS_ESTIMATED_LAND_DATES,

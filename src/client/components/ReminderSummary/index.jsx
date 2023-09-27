@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { kebabCase } from 'lodash'
-
-import { LINK_COLOUR } from '../../../client/utils/colours'
 import { H5 } from '@govuk-react/heading'
 import { FONT_SIZE, SPACING, FONT_WEIGHTS } from '@govuk-react/constants'
+
+import { LINK_COLOUR } from '../../../client/utils/colours'
 
 import urls from '../../../lib/urls'
 import { state2props } from './state'

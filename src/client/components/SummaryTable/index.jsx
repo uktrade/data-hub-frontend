@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
-import { GREY_2, ERROR_COLOUR } from '../../../client/utils/colours'
 import { typography } from '@govuk-react/lib'
 import {
   SPACING,
@@ -12,6 +11,7 @@ import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
 } from '@govuk-react/constants'
 
+import { GREY_2, ERROR_COLOUR } from '../../../client/utils/colours'
 import { currencyGBP } from '../../utils/number-utils'
 import Tag from '../Tag'
 
