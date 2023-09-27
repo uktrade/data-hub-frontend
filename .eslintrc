@@ -75,7 +75,8 @@
         ],
         "newlines-between": "always-and-inside-groups"
       }
-    ]
+    ],
+    "no-duplicate-imports": "error"
   },
   "overrides": [
     {
