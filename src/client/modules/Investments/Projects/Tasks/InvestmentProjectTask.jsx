@@ -151,7 +151,7 @@ const FieldDueDate = ({ initialValue = null }) => (
 
 const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
-    <GridCol>
+    <GridCol style={{ flexGrow: '0' }}>
       <StyledFieldInput
         className="govuk-input--width-2"
         name="taskReminderDays"
