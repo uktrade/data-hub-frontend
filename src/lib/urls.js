@@ -445,7 +445,7 @@ module.exports = {
         '/projects/:projectId/remove-associated'
       ),
       evaluation: url('/investments', '/projects/:projectId/evaluation'),
-      task: {
+      tasks: {
         create: url('/investments', '/projects/:projectId/tasks/create'),
       },
     },

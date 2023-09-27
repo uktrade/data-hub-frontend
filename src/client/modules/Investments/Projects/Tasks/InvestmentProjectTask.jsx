@@ -51,8 +51,8 @@ const InvestmentProjectTask = () => {
     <InvestmentResource id={projectId}>
       {(investmentProject) => (
         <DefaultLayout
-          heading={`Add task for ${investmentProject.investorCompany.name}`}
-          pageTitle={'Task'}
+          heading={`Add task for ${investmentProject.investorCompany?.name}`}
+          pageTitle={'Add Task'}
           breadcrumbs={[
             { link: urls.investments.index(), text: 'Investments' },
             { link: urls.investments.projects.index(), text: 'Projects' },
@@ -60,7 +60,7 @@ const InvestmentProjectTask = () => {
               link: urls.investments.projects.details(investmentProject.id),
               text: investmentProject.name,
             },
-            { text: `Add task for ${investmentProject.investorCompany.name}` },
+            { text: `Add task for ${investmentProject.investorCompany?.name}` },
           ]}
           useReactRouter={false}
         >
@@ -97,7 +97,7 @@ const InvestmentProjectTask = () => {
                   <FieldRadios
                     name="taskDueDate"
                     legend="Task due date"
-                    required="Specify task due date"
+                    required="Select task due date"
                     options={taskDueDateOptions.map((option) => ({
                       ...option,
                       ...(option.label === 'Custom date' && {
@@ -111,7 +111,7 @@ const InvestmentProjectTask = () => {
                   <FieldRadios
                     name="taskRemindersEnabled"
                     legend="Do you want to set a reminder for this task?"
-                    required="Specify reminder"
+                    required="Select reminder"
                     options={OPTIONS_YES_NO.map((option) => ({
                       ...option,
                       ...(option.label === 'Yes' && {

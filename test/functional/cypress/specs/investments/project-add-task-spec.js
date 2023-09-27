@@ -25,7 +25,7 @@ describe('Investment project task', () => {
   context('When creating a task', () => {
     before(() => {
       cy.visit(
-        urls.investments.projects.task.create(
+        urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
@@ -126,7 +126,7 @@ describe('Investment project task', () => {
 
     it('cancels form and returns to details page when back link is clicked', () => {
       cy.visit(
-        urls.investments.projects.task.create(
+        urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
@@ -139,7 +139,7 @@ describe('Investment project task', () => {
   context('When creating a task with no data', () => {
     before(() => {
       cy.visit(
-        urls.investments.projects.task.create(
+        urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
@@ -158,14 +158,14 @@ describe('Investment project task', () => {
     it('should display an error when no task due date is selected', () => {
       assertFieldError(
         cy.get('[data-test="field-taskDueDate"]'),
-        'Specify task due date'
+        'Select task due date'
       )
     })
 
     it('should display an error when no task reminder is selected', () => {
       assertFieldError(
         cy.get('[data-test="field-taskRemindersEnabled"]'),
-        'Specify reminder'
+        'Select reminder'
       )
     })
   })
@@ -173,7 +173,7 @@ describe('Investment project task', () => {
   context('When creating a task with a custom date', () => {
     before(() => {
       cy.visit(
-        urls.investments.projects.task.create(
+        urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
@@ -208,7 +208,7 @@ describe('Investment project task', () => {
   context('When creating a task with task reminders', () => {
     beforeEach(() => {
       cy.visit(
-        urls.investments.projects.task.create(
+        urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
