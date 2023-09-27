@@ -1,0 +1,49 @@
+{
+    "id": "393dd93f-23ca-415f-a307-5ab66c0ae30d",
+    "reference": "JTJ148/23",
+    "status": "draft",
+    "created_on": "2017-07-26T14:08:36.380979",
+    "created_by": null,
+    "modified_on": "2017-08-16T14:18:28.328729",
+    "modified_by": {
+      "name": "Test CMU 1",
+      "id": "8036f207-ae3e-e611-8d53-e4115bed50dc"
+    },
+    "company": {
+      "name": "Venus Ltd",
+      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    },
+    "contact": {
+      "name": "Jenny Cakeman",
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+    },
+    "primary_market": {
+      "name": "France",
+      "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    "sector": {
+      "name": "Aerospace : Component Manufacturing",
+      "id": "e74171b4-efe9-e511-8ffa-e4115bead28a"
+    },
+    "service_types": [],
+    "description": "",
+    "contacts_not_to_approach": "",
+    "contact_email": "",
+    "contact_phone": "",
+    "product_info": "",
+    "further_info": "",
+    "existing_agents": "",
+    "permission_to_approach_contacts": "",
+    "delivery_date": "",
+    "po_number": "123PO",
+    "vat_status": "eu",
+    "vat_number": "0123456789",
+    "vat_verified": true,
+    "discount_value": 0,
+    "net_cost": 0,
+    "subtotal_cost": 0,
+    "vat_cost": 0,
+    "total_cost": 0,
+    "uk_region": "London"
+  }
+  
