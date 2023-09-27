@@ -10,11 +10,6 @@ import {
 import {
   assertDateInput,
   assertCheckboxGroupNoneSelected,
-} from '../../support/assertions'
-import { testTypeahead } from '../../support/tests'
-import { randomChoice } from '../../fakers/utils'
-
-import {
   assertPayload,
   assertChipExists,
   assertChipsEmpty,
@@ -22,6 +17,8 @@ import {
   assertQueryParams,
   assertCheckboxGroupOption,
 } from '../../support/assertions'
+import { testTypeahead } from '../../support/tests'
+import { randomChoice } from '../../fakers/utils'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({

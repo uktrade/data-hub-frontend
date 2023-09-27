@@ -2,8 +2,7 @@ import { faker } from '@faker-js/faker'
 
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
-import { companies, interactions } from '../../../../../src/lib/urls'
-import urls from '../../../../../src/lib/urls'
+import { companies, dashboard, interactions } from '../../../../../src/lib/urls'
 
 const todayFormatted = formatWithoutParsing(new Date())
 
@@ -40,7 +39,7 @@ describe('Dashboard - Investment details', () => {
         results: investmentProjects,
       },
     }).as('apiRequest')
-    cy.visit(urls.dashboard.investmentProjects())
+    cy.visit(dashboard.investmentProjects())
     cy.wait('@apiRequest')
   })
 

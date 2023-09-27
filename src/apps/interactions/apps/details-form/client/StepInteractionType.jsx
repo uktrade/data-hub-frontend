@@ -4,8 +4,7 @@ import InsetText from '@govuk-react/inset-text'
 import { omitBy, isUndefined } from 'lodash'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
-import { NewWindowLink } from '../../../../../client/components'
-import { FieldRadios } from '../../../../../client/components'
+import { FieldRadios, NewWindowLink } from '../../../../../client/components'
 import { THEMES, KINDS } from '../../../constants'
 import urls from '../../../../../lib/urls'
 

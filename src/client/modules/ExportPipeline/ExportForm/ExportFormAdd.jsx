@@ -5,9 +5,11 @@ import { useLocation, withRouter } from 'react-router-dom'
 import urls from '../../../../lib/urls'
 import { COMPANY_LOADED } from '../../../actions'
 import { DefaultLayout } from '../../../components'
-import { TASK_GET_COMPANY_DETAIL } from '../../Companies/CompanyDetails/state'
+import {
+  ID as COMPANY_DETAILS_ID,
+  TASK_GET_COMPANY_DETAIL,
+} from '../../Companies/CompanyDetails/state'
 import { state2props } from './state'
-import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
 import ExportFormFields from './ExportFormFields'
 
 const DISPLAY_ADD_EXPORT = 'Add export'
