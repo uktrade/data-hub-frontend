@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import {
   Details,
@@ -11,7 +12,7 @@ import {
   UnorderedList,
 } from 'govuk-react'
 
-import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
+import { TASK_SAVE_INVESTMENT_PROJECT_TASK, state2props } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
   DefaultLayout,
@@ -50,7 +51,7 @@ const taskDueDateOptions = [
   { label: 'No due date', value: 'none' },
 ]
 
-const InvestmentProjectTask = () => {
+const InvestmentProjectTask = ({ currentAdviserId }) => {
   const { projectId } = useParams()
   return (
     <InvestmentResource id={projectId}>
@@ -81,6 +82,7 @@ const InvestmentProjectTask = () => {
               transformPayload={(values) => ({
                 values,
                 investmentProject: investmentProject,
+                currentAdviserId: currentAdviserId,
               })}
               flashMessage={() => 'Task created'}
               submitButtonLabel="Save task"
@@ -172,4 +174,4 @@ const FieldReminder = ({ initialValue = null }) => (
   </GridRow>
 )
 
-export default InvestmentProjectTask
+export default connect(state2props)(InvestmentProjectTask)

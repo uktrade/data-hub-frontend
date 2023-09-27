@@ -1,9 +1,16 @@
 import { apiProxyAxios } from '../../../../components/Task/utils'
 import { transformFormValuesForAPI } from './transformers'
 
-export const saveInvestmentProjectTask = ({ values, investmentProject }) => {
-  const request = apiProxyAxios.post
-  const endpoint = '/v4/investmentprojecttask'
+export const saveInvestmentProjectTask = ({
+  values,
+  investmentProject,
+  currentAdviserId,
+}) => {
   values.investmentProject = investmentProject
-  return request(endpoint, transformFormValuesForAPI(values, investmentProject))
+  values.currentAdviserId = currentAdviserId
+
+  return apiProxyAxios.post(
+    '/v4/investmentprojecttask',
+    transformFormValuesForAPI(values, investmentProject, currentAdviserId)
+  )
 }

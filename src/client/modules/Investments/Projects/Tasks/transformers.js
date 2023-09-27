@@ -9,6 +9,7 @@ import {
 
 export const transformFormValuesForAPI = ({
   investmentProject,
+  currentAdviserId,
   taskTitle,
   taskDescription,
   customDate,
@@ -26,7 +27,7 @@ export const transformFormValuesForAPI = ({
     due_date: getDueDate(taskDueDate, customDate),
     email_reminders_enabled: taskRemindersEnabled === OPTION_YES,
     reminder_days: taskReminderDays ? parseInt(taskReminderDays) : null,
-    advisers: [],
+    advisers: [currentAdviserId],
   },
 })
 
