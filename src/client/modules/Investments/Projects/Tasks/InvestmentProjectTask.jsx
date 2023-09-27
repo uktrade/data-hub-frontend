@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { useParams } from 'react-router-dom'
 
 import {
   Details,
@@ -10,6 +10,7 @@ import {
   ListItem,
   UnorderedList,
 } from 'govuk-react'
+
 import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
@@ -103,9 +104,6 @@ const InvestmentProjectTask = () => {
                       ...(option.label === 'Custom date' && {
                         children: <FieldDueDate />,
                       }),
-                      ...option,
-                      ...option,
-                      ...option,
                     }))}
                   />
                   <FieldRadios
@@ -117,7 +115,6 @@ const InvestmentProjectTask = () => {
                       ...(option.label === 'Yes' && {
                         children: <FieldReminder />,
                       }),
-                      ...option,
                     }))}
                   />
                   <Details summary="Find out more about task reminders">
