@@ -143,8 +143,7 @@ const InvestmentProjectTask = () => {
 const FieldDueDate = ({ initialValue = null }) => (
   <FieldDate
     name="customDate"
-    label="Date"
-    hintText="For example 28 11 2025"
+    hint="For example 28 11 2025"
     required="Enter a date"
     defaultValue={initialValue}
   />
