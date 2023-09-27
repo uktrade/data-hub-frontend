@@ -1,5 +1,11 @@
 import { OPTION_YES } from '../../../../../apps/constants'
-import { transformValueForAPI } from '../../../../utils/date'
+import { DATE_LONG_FORMAT_3 } from '../../../../../common/constants'
+import {
+  addDays,
+  addMonths,
+  formatWithoutParsing,
+  transformValueForAPI,
+} from '../../../../utils/date'
 
 export const transformFormValuesForAPI = ({
   investmentProject,
@@ -24,25 +30,14 @@ export const transformFormValuesForAPI = ({
   },
 })
 
-const getOneMonthFromNow = () => {
-  const date = new Date()
-  date.setMonth(date.getMonth() + 1)
-  return date.toISOString().slice(0, 10)
-}
-
-const getOneWeekFromNow = () => {
-  const date = new Date()
-  date.setDate(date.getDate() + 7)
-  return date.toISOString().slice(0, 10)
-}
 const getDueDate = (taskDueDate, customDate) => {
   switch (taskDueDate) {
     case 'custom':
       return transformValueForAPI(customDate)
     case 'month':
-      return getOneMonthFromNow()
+      return formatWithoutParsing(addMonths(new Date(), 1), DATE_LONG_FORMAT_3)
     case 'week':
-      return getOneWeekFromNow()
+      return formatWithoutParsing(addDays(new Date(), 7), DATE_LONG_FORMAT_3)
     default:
       null
   }
