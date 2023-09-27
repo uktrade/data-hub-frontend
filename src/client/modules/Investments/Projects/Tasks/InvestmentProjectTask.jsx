@@ -34,9 +34,13 @@ const StyledLabel = styled(Label)({
   textAlign: 'left',
 })
 
-const StyledGridCol = styled(GridCol)({
+const StyledLabelGridCol = styled(GridCol)({
   marginLeft: 'inherit',
   paddingTop: '5px',
+})
+
+const StyledInputGridCol = styled(GridCol)({
+  flexGrow: '0',
 })
 
 const taskDueDateOptions = [
@@ -148,7 +152,7 @@ const FieldDueDate = ({ initialValue = null }) => (
 
 const FieldReminder = ({ initialValue = null }) => (
   <GridRow>
-    <GridCol style={{ flexGrow: '0' }}>
+    <StyledInputGridCol>
       <StyledFieldInput
         className="govuk-input--width-2"
         name="taskReminderDays"
@@ -161,10 +165,10 @@ const FieldReminder = ({ initialValue = null }) => (
         }
         defaultValue={initialValue}
       ></StyledFieldInput>
-    </GridCol>
-    <StyledGridCol>
+    </StyledInputGridCol>
+    <StyledLabelGridCol>
       <StyledLabel>days before the due date</StyledLabel>
-    </StyledGridCol>
+    </StyledLabelGridCol>
   </GridRow>
 )
 
