@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom'
 
 import { TaskResource } from '../../../components/Resource'
 import { formatLongDate } from '../../../utils/date'
-import { transformAdvisers } from './transformers'
+import { transformAdvisers, transformCompanyToLink } from './transformers'
+import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 
 const TaskDetails = () => {
+  // TODO MK: transform task.investmentProjectTask?.investmentProject?.investorCompany to company variable after loading TaskResource
   const { taskId } = useParams()
 
   return (
@@ -15,11 +17,21 @@ const TaskDetails = () => {
         <DefaultLayout
           heading={task.title}
           pageTitle={task.title}
-          breadcrumbs={[]}
+          breadcrumbs={buildCompanyBreadcrumbs(
+            {
+              text: `${task.title}`,
+            },
+            task.investmentProjectTask?.investmentProject?.investorCompany?.id,
+            task.investmentProjectTask?.investmentProject?.investorCompany?.name
+          )}
           useReactRouter={false}
         >
           <SummaryTable data-test="task-details-table">
-            <SummaryTable.Row heading="Company" children="n/a" />
+            <SummaryTable.Row heading="Company">
+              {transformCompanyToLink(
+                task.investmentProjectTask?.investmentProject?.investorCompany
+              )}
+            </SummaryTable.Row>
             <SummaryTable.Row
               heading="Date due"
               children={formatLongDate(task.dueDate)}
