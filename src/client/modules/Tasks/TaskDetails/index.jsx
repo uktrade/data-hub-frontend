@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DefaultLayout, SummaryTable } from '../../../components'
 import { useParams } from 'react-router-dom'
 
@@ -14,56 +14,61 @@ const getCompany = (task) => {
 const TaskDetails = () => {
   const { taskId } = useParams()
 
+  const [task, setTask] = useState(undefined)
+  const [company, setCompany] = useState(undefined)
+
   return (
-    <TaskResource id={taskId}>
-      {(task) => {
-        const company = getCompany(task)
-        return (
-          <DefaultLayout
-            heading={task.title}
-            pageTitle={task.title}
-            breadcrumbs={buildCompanyBreadcrumbs(
-              {
-                text: `${task.title}`,
-              },
-              company?.id,
-              company?.name
-            )}
-            useReactRouter={false}
-          >
-            <SummaryTable data-test="task-details-table">
-              <SummaryTable.Row heading="Company">
-                {transformCompanyToLink(company)}
-              </SummaryTable.Row>
-              <SummaryTable.Row
-                heading="Date due"
-                children={formatLongDate(task.dueDate)}
-              />
-              <SummaryTable.Row
-                heading="Assigned to"
-                children={transformAdvisers(task.advisers)}
-              />
-              <SummaryTable.Row
-                heading="Task description"
-                children={task.description}
-              />
-              <SummaryTable.Row
-                heading="Reminders set"
-                children={`${task.reminderDays} days before due date`}
-              />
-              <SummaryTable.Row
-                heading="Date created"
-                children={formatLongDate(task.createdOn)}
-              />
-              <SummaryTable.Row
-                heading="Created by"
-                children={task.createdBy.name}
-              />
-            </SummaryTable>
-          </DefaultLayout>
-        )
-      }}
-    </TaskResource>
+    <DefaultLayout
+      heading={task?.title}
+      pageTitle={task?.title}
+      breadcrumbs={buildCompanyBreadcrumbs(
+        {
+          text: task ? task.title : '',
+        },
+        company?.id,
+        company?.name
+      )}
+      useReactRouter={false}
+    >
+      {!task ? (
+        <TaskResource id={taskId}>
+          {(taskResource) => {
+            setTask(taskResource)
+            setCompany(getCompany(taskResource))
+          }}
+        </TaskResource>
+      ) : (
+        <SummaryTable data-test="task-details-table">
+          <SummaryTable.Row heading="Company">
+            {transformCompanyToLink(company)}
+          </SummaryTable.Row>
+          <SummaryTable.Row
+            heading="Date due"
+            children={formatLongDate(task.dueDate)}
+          />
+          <SummaryTable.Row
+            heading="Assigned to"
+            children={transformAdvisers(task.advisers)}
+          />
+          <SummaryTable.Row
+            heading="Task description"
+            children={task.description}
+          />
+          <SummaryTable.Row
+            heading="Reminders set"
+            children={`${task.reminderDays} days before due date`}
+          />
+          <SummaryTable.Row
+            heading="Date created"
+            children={formatLongDate(task.createdOn)}
+          />
+          <SummaryTable.Row
+            heading="Created by"
+            children={task.createdBy.name}
+          />
+        </SummaryTable>
+      )}
+    </DefaultLayout>
   )
 }
 
