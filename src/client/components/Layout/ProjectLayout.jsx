@@ -74,7 +74,7 @@ export const ProjectLayout = ({
             {userCanViewTasks(activeFeatures) && (
               <LocalNavLink
                 dataTest="project-tasks-link"
-                href={urls.investments.projects.tasks(project.id)}
+                href={urls.investments.projects.tasks.index(project.id)}
               >
                 Tasks
               </LocalNavLink>

@@ -27,6 +27,7 @@ const ProjectTasks = () => {
   }
 
   return (
+    // TODO move this into project layout
     <InvestmentResource id={projectId}>
       {(project) => (
         <ProjectLayout
@@ -51,13 +52,14 @@ const ProjectTasks = () => {
               investment_project: projectId,
               limit: ITEMS_PER_PAGE,
               offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
+              sortby: 'task__due_date',
             }}
           >
             {(_, count, rawData) => {
               const tasks = rawData.results.map(transformTaskToListItem)
               return (
                 <CollectionList
-                  //TODO this needs a link to go to the add task page
+                  addItemUrl={'#'} //TODO this needs a link to go to the add task page
                   collectionName="tasks"
                   items={tasks}
                   count={count}
