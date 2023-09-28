@@ -8,7 +8,7 @@ const {
 
 describe('View task details', () => {
   const investmentProjectTask = investmentProjectTaskFaker()
-  const expextedCompany =
+  const expectedCompany =
     investmentProjectTask.investment_project_task.investment_project
       .investor_company
 
@@ -27,7 +27,7 @@ describe('View task details', () => {
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
-        [expextedCompany.name]: urls.companies.detail(expextedCompany.id),
+        [expectedCompany.name]: urls.companies.detail(expectedCompany.id),
         [investmentProjectTask.title]: null,
       })
     })
@@ -43,8 +43,8 @@ describe('View task details', () => {
         showEditLink: false,
         content: {
           Company: {
-            href: urls.companies.detail(expextedCompany.id),
-            name: expextedCompany.name,
+            href: urls.companies.detail(expectedCompany.id),
+            name: expectedCompany.name,
           },
           ['Date due']: formatLongDate(investmentProjectTask.due_date),
           'Assigned to': investmentProjectTask.advisers
