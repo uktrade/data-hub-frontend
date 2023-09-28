@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const whoami = require('../../../../sandbox/fixtures/whoami.json')
 
 const {
   assertFieldInput,
@@ -115,7 +116,7 @@ describe('Investment project task', () => {
           due_date: '2023-12-25',
           email_reminders_enabled: true,
           reminder_days: 1,
-          advisers: [],
+          advisers: [whoami.id],
         },
       })
 

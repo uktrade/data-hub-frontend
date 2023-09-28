@@ -7,26 +7,23 @@ import {
   transformValueForAPI,
 } from '../../../../utils/date'
 
-export const transformFormValuesForAPI = ({
+export const transformFormValuesForAPI = (
+  formValues,
   investmentProject,
-  currentAdviserId,
-  taskTitle,
-  taskDescription,
-  customDate,
-  taskDueDate,
-  taskRemindersEnabled,
-  taskReminderDays,
-}) => ({
+  currentAdviserId
+) => ({
   investment_project: {
     id: investmentProject.id,
     name: investmentProject.name,
   },
   task: {
-    title: taskTitle,
-    description: taskDescription,
-    due_date: getDueDate(taskDueDate, customDate),
-    email_reminders_enabled: taskRemindersEnabled === OPTION_YES,
-    reminder_days: taskReminderDays ? parseInt(taskReminderDays) : null,
+    title: formValues.taskTitle,
+    description: formValues.taskDescription,
+    due_date: getDueDate(formValues.taskDueDate, formValues.customDate),
+    email_reminders_enabled: formValues.taskRemindersEnabled === OPTION_YES,
+    reminder_days: formValues.taskReminderDays
+      ? parseInt(formValues.taskReminderDays)
+      : null,
     advisers: [currentAdviserId],
   },
 })
