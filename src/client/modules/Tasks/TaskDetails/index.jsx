@@ -19,8 +19,8 @@ const TaskDetails = () => {
 
   return (
     <DefaultLayout
-      heading={task?.title}
-      pageTitle={task?.title}
+      heading={task ? task.title : ''}
+      pageTitle={task ? task.title : ''}
       breadcrumbs={buildCompanyBreadcrumbs(
         {
           text: task ? task.title : '',
