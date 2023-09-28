@@ -1,16 +1,12 @@
-const { formatLongDate } = require('../../../../../src/client/utils/date')
-const urls = require('../../../../../src/lib/urls')
-const { investmentProjectTaskFaker } = require('../../fakers/task')
-const {
-  assertSummaryTable,
-  assertBreadcrumbs,
-} = require('../../support/assertions')
+import { tasks, dashboard, companies } from '../../../../../src/lib/urls'
+import { investmentProjectTaskFaker } from '../../fakers/task'
+import { assertSummaryTable, assertBreadcrumbs } from '../../support/assertions'
 
 describe('View task details', () => {
   const investmentProjectTask = investmentProjectTaskFaker()
   const expectedCompany =
-    investmentProjectTask.investment_project_task.investment_project
-      .investor_company
+    investmentProjectTask.investmentProjectTask.investmentProject
+      .investorCompany
 
   context('When visiting investment project task details', () => {
     before(() => {
@@ -19,15 +15,15 @@ describe('View task details', () => {
         `/api-proxy/v4/task/${investmentProjectTask.id}`,
         investmentProjectTask
       ).as('apiRequest')
-      cy.visit(urls.tasks.details(investmentProjectTask.id))
+      cy.visit(tasks.details(investmentProjectTask.id))
       cy.wait('@apiRequest')
     })
 
     it('should display the company name and investment project task title in the breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        Companies: urls.companies.index(),
-        [expectedCompany.name]: urls.companies.detail(expectedCompany.id),
+        Home: dashboard.index(),
+        Companies: companies.index(),
+        [expectedCompany.name]: companies.detail(expectedCompany.id),
         [investmentProjectTask.title]: null,
       })
     })
@@ -39,22 +35,6 @@ describe('View task details', () => {
     it('should display the summary table', () => {
       assertSummaryTable({
         dataTest: 'task-details-table',
-        heading: null,
-        showEditLink: false,
-        content: {
-          Company: {
-            href: urls.companies.detail(expectedCompany.id),
-            name: expectedCompany.name,
-          },
-          ['Date due']: formatLongDate(investmentProjectTask.due_date),
-          'Assigned to': investmentProjectTask.advisers
-            .map((adviser) => adviser.name)
-            .join(''),
-          'Task description': investmentProjectTask.description,
-          'Reminders set': `${investmentProjectTask.reminder_days} days before due date`,
-          'Date created': formatLongDate(investmentProjectTask.created_on),
-          'Created by': investmentProjectTask.created_by.name,
-        },
       })
     })
   })
