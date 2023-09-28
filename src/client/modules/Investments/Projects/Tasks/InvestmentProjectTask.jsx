@@ -20,11 +20,13 @@ import urls from '../../../../../lib/urls'
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import { InvestmentResource } from '../../../../components/Resource'
 
-const StyledFieldInput = styled(FieldInput)``
+const StyledFieldInput = styled(FieldInput)`
+  text-align: center;
+`
 
 const InputFieldWrapper = styled.div`
   ${Input} {
-    width: 47px;
+    width: 50px;
   }
 `
 
