@@ -1,9 +1,8 @@
-import { investments } from '../../../../../src/lib/urls'
-import urls from '../../../../../src/lib/urls'
+import { dashboard, investments } from '../../../../../src/lib/urls'
 
 describe('Dashboard - Investment project next steps', () => {
   before(() => {
-    cy.visit(urls.dashboard.investmentProjects())
+    cy.visit(dashboard.investmentProjects())
   })
 
   after(() => {

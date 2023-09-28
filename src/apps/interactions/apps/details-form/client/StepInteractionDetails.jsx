@@ -1,15 +1,12 @@
 import React from 'react'
-import _, { get, isEmpty, pick } from 'lodash'
+import _, { get, isEmpty, pick, throttle } from 'lodash'
 import qs from 'qs'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import axios from 'axios'
-
 import { SPACING_POINTS } from '@govuk-react/constants'
-
-import { throttle } from 'lodash'
 
 import { GREY_1 } from '../../../../../client/utils/colours'
 import { idNamesToValueLabels } from '../../../../../client/utils'

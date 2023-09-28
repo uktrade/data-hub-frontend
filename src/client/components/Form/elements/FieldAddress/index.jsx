@@ -4,10 +4,9 @@ import { Search } from '@govuk-react/icons'
 import Select from '@govuk-react/select'
 import { isEmpty } from 'lodash'
 import Button from '@govuk-react/button'
-import { MEDIA_QUERIES } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import FormGroup from '@govuk-react/form-group'
 import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 
 import { BLACK, GREY_3 } from '../../../../../client/utils/colours'
 

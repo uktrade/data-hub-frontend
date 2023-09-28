@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Form } from '../../../../../src/client/components'
-import { Step } from '../../../../../src/client/components'
+import { Form, Step } from '../../../../../src/client/components'
 import DataHubProvider from '../provider'
 
 describe('Step', () => {

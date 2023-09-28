@@ -1,6 +1,5 @@
 import urls from '../../../../../../src/lib/urls'
-import { assertChipExists } from '../../../support/assertions'
-import { assertPayload } from '../../../support/assertions'
+import { assertChipExists, assertPayload } from '../../../support/assertions'
 
 const fixtures = require('../../../fixtures')
 

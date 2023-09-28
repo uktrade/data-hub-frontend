@@ -1,6 +1,5 @@
 import qs from 'qs'
 
-import urls from '../../../../../src/lib/urls'
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 import { events } from '../../../../../src/lib/urls'
@@ -26,7 +25,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
+            `${events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
           ).as('nameRequest')
         })
 
@@ -74,7 +73,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&earliestStartDate=2020-11-01&latestStartDate=2020-11-10&page=1`
+            `${events.activity.data()}?sortBy=modified_on:desc&earliestStartDate=2020-11-01&latestStartDate=2020-11-10&page=1`
           ).as('dateRequest')
         })
         beforeEach(() => {
@@ -151,7 +150,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
+            `${events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
           ).as('aventriIdRequest')
         })
 
@@ -215,7 +214,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
           ).as('countryRequest')
         })
 
@@ -267,7 +266,7 @@ describe('events Collections Filter', () => {
         before(() => {
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
+            `${events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
           ).as('ukRegionRequest')
         })
         it('should pass the uk Region to the controller', () => {
@@ -317,7 +316,7 @@ describe('events Collections Filter', () => {
           cy.intercept('POST', searchEndpoint).as('apiRequest')
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
+            `${events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
           ).as('organiserRequest')
           cy.get('[data-test="toggle-section-button"]')
             .contains('Organiser')
@@ -371,7 +370,7 @@ describe('events Collections Filter', () => {
           )
           cy.intercept(
             'GET',
-            `${urls.events.activity.data()}?sortBy=modified_on:desc&page=1&eventType[]=${
+            `${events.activity.data()}?sortBy=modified_on:desc&page=1&eventType[]=${
               eventType.id
             }`
           ).as('eventTypeRequest')
