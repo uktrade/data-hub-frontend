@@ -3,14 +3,7 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import {
-  Details,
-  GridCol,
-  GridRow,
-  Label,
-  ListItem,
-  UnorderedList,
-} from 'govuk-react'
+import { Details, ListItem, UnorderedList, Input } from 'govuk-react'
 
 import { TASK_SAVE_INVESTMENT_PROJECT_TASK, state2props } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
@@ -27,22 +20,13 @@ import urls from '../../../../../lib/urls'
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import { InvestmentResource } from '../../../../components/Resource'
 
-const StyledFieldInput = styled(FieldInput)({
-  textAlign: 'center',
-})
+const StyledFieldInput = styled(FieldInput)``
 
-const StyledLabel = styled(Label)({
-  textAlign: 'left',
-})
-
-const StyledLabelGridCol = styled(GridCol)({
-  marginLeft: 'inherit',
-  paddingTop: '5px',
-})
-
-const StyledInputGridCol = styled(GridCol)({
-  flexGrow: '0',
-})
+const InputFieldWrapper = styled.div`
+  ${Input} {
+    width: 47px;
+  }
+`
 
 const taskDueDateOptions = [
   { label: 'Custom date', value: 'custom' },
@@ -151,27 +135,22 @@ const FieldDueDate = ({ initialValue = null }) => (
     defaultValue={initialValue}
   />
 )
+const validateDaysRange = (value) =>
+  value && (value < 1 || value > 365)
+    ? 'Enter a number between 1 and 365'
+    : null
 
 const FieldReminder = ({ initialValue = null }) => (
-  <GridRow>
-    <StyledInputGridCol>
-      <StyledFieldInput
-        className="govuk-input--width-2"
-        name="taskReminderDays"
-        type="number"
-        required="Enter a number between 1 and 365"
-        validate={(value) =>
-          value && (value < 1 || value > 365)
-            ? 'Enter a number between 1 and 365'
-            : null
-        }
-        defaultValue={initialValue}
-      ></StyledFieldInput>
-    </StyledInputGridCol>
-    <StyledLabelGridCol>
-      <StyledLabel>days before the due date</StyledLabel>
-    </StyledLabelGridCol>
-  </GridRow>
+  <InputFieldWrapper>
+    <StyledFieldInput
+      name="taskReminderDays"
+      type="number"
+      required="Enter a number between 1 and 365"
+      validate={validateDaysRange}
+      defaultValue={initialValue}
+      text={'day(s) before the due date'}
+    ></StyledFieldInput>
+  </InputFieldWrapper>
 )
 
 export default connect(state2props)(InvestmentProjectTask)
