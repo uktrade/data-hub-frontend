@@ -1,6 +1,6 @@
 import React from 'react'
-import { Form } from '../../../../../src/client/components'
 
+import { Form } from '../../../../../src/client/components'
 import FieldCurrency from '../../../../../src/client/components/Form/elements/FieldCurrency'
 import DataHubProvider from '../provider'
 import { decimal } from '../../../../../src/client/utils/number-utils'

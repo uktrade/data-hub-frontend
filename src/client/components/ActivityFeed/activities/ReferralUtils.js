@@ -1,4 +1,5 @@
 import { get } from 'lodash'
+
 import { BADGES } from '../constants'
 
 export default class ReferralUtils {

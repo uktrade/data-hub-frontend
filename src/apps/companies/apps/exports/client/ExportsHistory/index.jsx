@@ -4,9 +4,9 @@ import Details from '@govuk-react/details'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import InsetText from '@govuk-react/inset-text'
-import { CollectionList, Metadata } from '../../../../../../client/components/'
 import { connect } from 'react-redux'
 
+import { CollectionList, Metadata } from '../../../../../../client/components/'
 import { state2props } from './state'
 import {
   EXPORTS_HISTORY__LOADED,

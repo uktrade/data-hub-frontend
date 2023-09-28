@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const paths = require('./paths')
 
+const paths = require('./paths')
 const projectsRouter = require('./router-projects')
 const profilesRouter = require('./router-profiles')
 const opportunitiesRouter = require('./router-opportunities')

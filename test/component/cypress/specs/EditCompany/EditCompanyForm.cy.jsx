@@ -1,4 +1,5 @@
 import React from 'react'
+
 import DataHubProvider from '../provider'
 import EditCompanyForm from '../../../../../src/apps/companies/apps/edit-company/client/EditCompanyForm'
 

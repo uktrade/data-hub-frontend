@@ -1,9 +1,5 @@
 import React from 'react'
 
-import usageReadme from './usage.md'
-import FieldInput from '../../Form/elements/FieldInput'
-import Form from '../../Form'
-
 import NotificationBadge from 'NotificationBadge'
 import {
   DashboardToggleSection,
@@ -11,6 +7,10 @@ import {
   NoHighlightToggleSection,
   ToggleSection,
 } from 'ToggleSection'
+
+import usageReadme from './usage.md'
+import FieldInput from '../../Form/elements/FieldInput'
+import Form from '../../Form'
 
 export default {
   title: 'ToggleSection',

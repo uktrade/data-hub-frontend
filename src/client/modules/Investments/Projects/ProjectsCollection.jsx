@@ -3,6 +3,7 @@ import { Details, Link, Paragraph } from 'govuk-react'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+
 import urls from '../../../../lib/urls'
 import {
   CollectionFilters,

@@ -1,6 +1,6 @@
 const { isNil, isString, pickBy } = require('lodash')
-const request = require('./request')
 
+const request = require('./request')
 const config = require('../config')
 const logger = require('../config/logger')
 const getZipkinHeaders = require('./get-zipkin-headers')

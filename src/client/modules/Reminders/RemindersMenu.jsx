@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import { BLUE, BORDER_COLOUR } from '../../../client/utils/colours'
 import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
+import { BLUE, BORDER_COLOUR } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import {

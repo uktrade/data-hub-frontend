@@ -1,5 +1,6 @@
-import { omis } from '../../../../../src/lib/urls'
 import qs from 'qs'
+
+import { omis } from '../../../../../src/lib/urls'
 
 import {
   removeChip,

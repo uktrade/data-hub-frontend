@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 const { filter, upperFirst } = require('lodash')
+
 const { format, isDateValid } = require('../client/utils/date')
 const { OPTION_NO, OPTION_YES } = require('./constants')
-
 const { hqLabels } = require('./companies/labels')
 const groupExportCountries = require('../lib/group-export-countries')
 

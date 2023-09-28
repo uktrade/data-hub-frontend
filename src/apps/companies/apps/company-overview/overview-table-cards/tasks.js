@@ -1,5 +1,6 @@
-import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import axios from 'axios'
+
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import { NOT_IMPLEMENTED } from '../../exports/client/ExportWins/state'
 
 export const getProjectsWon = async ({ companyId }) => {

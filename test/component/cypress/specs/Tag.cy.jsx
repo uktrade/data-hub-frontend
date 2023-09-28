@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Tag from '../../../../src/client/components/Tag'
 
 const Component = (props) => <Tag {...props} data-test="tag" />

@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import RoutedPagination from '../../../../src/client/components/Pagination/RoutedPagination'
 import { isString } from 'lodash'
+
+import RoutedPagination from '../../../../src/client/components/Pagination/RoutedPagination'
 
 const assertPageLinks = (pageLinks) => {
   cy.get('[data-test="pagination"] ul li a').each(($el, index) => {

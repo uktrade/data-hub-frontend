@@ -3,7 +3,10 @@ import React, { useEffect, useRef } from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { get } from 'lodash'
+import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
+
 import {
+  BLACK,
   GREY_4,
   WHITE,
   LINK_COLOUR,
@@ -11,12 +14,10 @@ import {
   BORDER_COLOUR,
   FOCUS_COLOUR,
 } from '../../../client/utils/colours'
-import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
 import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
 import reducer from './reducer'
-import { BLACK } from '../../../client/utils/colours'
 
 const LEFT_ARROW_KEY = 37
 const RIGHT_ARROW_KEY = 39

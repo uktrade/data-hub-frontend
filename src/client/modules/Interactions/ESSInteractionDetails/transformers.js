@@ -1,4 +1,5 @@
 const { get } = require('lodash')
+
 const { formatLongDate } = require('../../../../client/utils/date')
 
 const transformResponseToESSInteractionDetails = ({ id, object }) => {

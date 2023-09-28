@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-const { get } = require('lodash')
+import { get } from 'lodash'
 
 import { formatMediumDateTime } from '../../../utils/date'
 import { BABY_PINK_50 } from '../../../../client/utils/colours'

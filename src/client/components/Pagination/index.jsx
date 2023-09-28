@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_1, GREY_3, BLUE, WHITE, LINK_COLOUR } from '../../utils/colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
+import { GREY_1, GREY_3, BLUE, WHITE, LINK_COLOUR } from '../../utils/colours'
 import computeVisiblePieces from './computeVisiblePieces'
-
 import {
   PAGINATION_PIECE_ELLIPSIS,
   PAGINATION_PIECE_NEXT,

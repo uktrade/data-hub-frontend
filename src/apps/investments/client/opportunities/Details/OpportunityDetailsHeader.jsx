@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
 import urls from '../../../../../lib/urls'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'

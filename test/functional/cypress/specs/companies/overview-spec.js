@@ -1,10 +1,9 @@
 import { company } from '../../fixtures'
+import { exportFaker } from '../../fakers/export'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
-
-import { exportFaker } from '../../fakers/export'
 
 const { usCompany } = company
 

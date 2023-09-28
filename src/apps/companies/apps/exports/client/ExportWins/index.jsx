@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
-import { CollectionList } from '../../../../../../client/components/'
-
 import { connect } from 'react-redux'
+
+import { CollectionList } from '../../../../../../client/components/'
 import { state2props, NOT_IMPLEMENTED } from './state'
 import {
   EXPORT_WINS__LOADED,

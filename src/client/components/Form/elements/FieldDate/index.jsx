@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { castArray, snakeCase } from 'lodash'
 import styled from 'styled-components'
-import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import ErrorText from '@govuk-react/error-text'
 import Label from '@govuk-react/label'
 import Input from '@govuk-react/input'
@@ -12,6 +11,7 @@ import {
   SPACING,
 } from '@govuk-react/constants'
 
+import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
 import { useFormContext } from '../../hooks'

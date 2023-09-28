@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { Main } from '../../../../../client/components'
 import OpportunityDetails from './OpportunityDetails'
@@ -12,7 +13,6 @@ import Task from '../../../../../client/components/Task/index.jsx'
 import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../../../client/actions'
 import OpportunityInteractions from './OpportunityInteractions'
-import styled from 'styled-components'
 
 const StyledMain = styled(Main)`
   padding-bottom: 40px;

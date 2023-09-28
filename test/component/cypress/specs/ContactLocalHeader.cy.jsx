@@ -1,6 +1,6 @@
 import React from 'react'
-import ContactLocalHeader from '../../../../src/client/components/ContactLocalHeader'
 
+import ContactLocalHeader from '../../../../src/client/components/ContactLocalHeader'
 import DataHubProvider from './provider'
 import urls from '../../../../src/lib/urls'
 

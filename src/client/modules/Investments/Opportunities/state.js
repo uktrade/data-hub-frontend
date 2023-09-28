@@ -1,4 +1,5 @@
 import qs from 'qs'
+
 import { sortOptions } from './metadata'
 
 export const TASK_GET_OPPORTUNITIES_LIST = 'TASK_GET_OPPORTUNITIES_LIST'

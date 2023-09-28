@@ -1,7 +1,4 @@
-const {
-  transformAventriEventStatusCountsToEventStatusCounts,
-} = require('../transformers')
-
+import { transformAventriEventStatusCountsToEventStatusCounts } from '../transformers'
 import {
   EVENT_ATTENDEES_MAPPING,
   EVENT_ATTENDEES_STATUS,

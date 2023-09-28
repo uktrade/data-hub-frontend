@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+
 const urls = require('../../../../../src/lib/urls')
 
 // TODO: With the upgrade of cypress and some dependencies, the below test exposes an issue

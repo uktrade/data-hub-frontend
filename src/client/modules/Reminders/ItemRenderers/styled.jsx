@@ -7,6 +7,7 @@ import {
   HEADING_SIZES,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
+
 import { DARK_GREY, GREY_2 } from '../../../utils/colours'
 
 export const DeleteButton = styled('button')({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'govuk-react'
-import { transformValueForAPI } from '../../../../utils/date'
 
+import { transformValueForAPI } from '../../../../utils/date'
 import { VIRUS_SCAN_STATUSES } from '../constants'
 
 export const buildPropositionUrl = (propositionId, projectId) =>

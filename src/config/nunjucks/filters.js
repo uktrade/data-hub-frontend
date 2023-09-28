@@ -1,17 +1,9 @@
 const nunjucks = require('nunjucks')
-const {
-  formatWithoutParsing,
-  isUnparsedDateValid,
-  isDateValid,
-  format,
-  getDifferenceInWords,
-  convertMinutesToHours,
-} = require('../../client/utils/date')
+
 const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
-const { newlineToBr } = require('../../lib/text-formatting')
-const { joinPaths } = require('../../lib/path')
+
 const {
   assign,
   castArray,
@@ -42,6 +34,17 @@ const {
   kebabCase,
   camelCase,
 } = require('lodash')
+
+const { newlineToBr } = require('../../lib/text-formatting')
+const { joinPaths } = require('../../lib/path')
+const {
+  formatWithoutParsing,
+  isUnparsedDateValid,
+  isDateValid,
+  format,
+  getDifferenceInWords,
+  convertMinutesToHours,
+} = require('../../client/utils/date')
 require('numeral/locales/en-gb')
 const {
   DATE_LONG_FORMAT_1,

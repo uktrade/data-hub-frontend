@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ActivityCardMetadata from '../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardMetadata'
 import { GREY_1 } from '../../../../../../src/client/utils/colours'
 

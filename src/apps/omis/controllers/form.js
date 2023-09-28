@@ -1,5 +1,6 @@
 const { get, filter, flatten, forEach, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
+
 const labels = require('../locales/en/default')
 
 class FormController extends Controller {

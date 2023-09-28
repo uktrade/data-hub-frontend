@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker'
+import { format } from 'date-fns'
+
 import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
-import { format } from 'date-fns'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'
 import { assertRequestUrl } from '../../support/assertions'

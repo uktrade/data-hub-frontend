@@ -1,4 +1,5 @@
 const router = require('express').Router()
+
 const urls = require('../../lib/urls')
 
 const { LOCAL_NAV, QUERY_FIELDS } = require('./constants')

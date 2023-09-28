@@ -1,5 +1,6 @@
-import { apiProxyAxios } from './components/Task/utils'
 import { castArray } from 'lodash'
+
+import { apiProxyAxios } from './components/Task/utils'
 
 export const getAdviserNames = (adviser) => {
   if (!adviser) {

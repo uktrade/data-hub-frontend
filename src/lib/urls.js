@@ -1,4 +1,5 @@
 const queryString = require('qs')
+
 const {
   INVESTMENT_LINK_PARAM,
   PRIMARY_LINK_PARAMS,

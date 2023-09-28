@@ -1,4 +1,5 @@
 const { get } = require('lodash')
+
 const urls = require('../../../../lib/urls')
 const { getActiveEvents } = require('../../../events/repos')
 const {

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Err from '../../../../../src/client/components/Task/Error'
 
 describe('Err', () => {

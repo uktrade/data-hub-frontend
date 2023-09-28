@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import {
-  TEXT_COLOUR,
-  ERROR_COLOUR,
-  FOCUS_COLOUR,
-} from '../../../client/utils/colours'
 import { H2 } from '@govuk-react/heading'
 import {
   BORDER_WIDTH,
@@ -15,10 +10,15 @@ import {
   RESPONSIVE_4,
 } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
+import { isString } from 'lodash'
 
 import FormActions from '../Form/elements/FormActions'
 import SecondaryButton from '../SecondaryButton'
-import { isString } from 'lodash'
+import {
+  TEXT_COLOUR,
+  ERROR_COLOUR,
+  FOCUS_COLOUR,
+} from '../../../client/utils/colours'
 
 const StyledRoot = styled.div(
   {

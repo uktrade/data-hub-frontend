@@ -7,6 +7,7 @@ import Table from '@govuk-react/table'
 import Link from '@govuk-react/link'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
+
 import { useMyCompaniesContext } from './useMyCompaniesContext'
 import Filters from './MyCompaniesFilters'
 

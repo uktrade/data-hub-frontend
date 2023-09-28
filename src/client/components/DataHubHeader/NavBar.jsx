@@ -9,10 +9,9 @@ import {
   SPACING,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
+
 import ProtectedLink from '../ProtectedLink'
-
 import { BLACK, GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colours'
-
 import links from './links'
 
 const StyledNavContainer = styled.div({

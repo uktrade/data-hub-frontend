@@ -1,12 +1,11 @@
-import urls from '../../../../lib/urls'
+import axios from 'axios'
 
+import urls from '../../../../lib/urls'
 import {
   transformResponseToCollection,
   filterServiceNames,
 } from './transformers'
-
 import { getMetadataOptions } from '../../../metadata'
-import axios from 'axios'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 

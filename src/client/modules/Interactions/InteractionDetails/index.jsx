@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
-import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 
+import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 import { InteractionResource } from '../../../components/Resource'
 import InteractionReferralDetails from './InteractionReferralDetails'
 import { SummaryTable } from '../../../components'

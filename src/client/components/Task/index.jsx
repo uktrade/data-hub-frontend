@@ -8,12 +8,11 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { LoadingBox } from 'govuk-react'
+import styled from 'styled-components'
 
 import { TASK__START, TASK__DISMISS_ERROR, TASK__CANCEL } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
-
-import styled from 'styled-components'
 import AccessDenied from '../AccessDenied'
 
 const StyledLoadingBox = styled(LoadingBox)({

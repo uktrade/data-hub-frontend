@@ -1,17 +1,16 @@
 import React from 'react'
 import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import { BLUE, GREEN } from '../../../client/utils/colours'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
+import { BLUE, GREEN } from '../../../client/utils/colours'
 import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
 import { CardHeader } from '../ActivityFeed/activities/card'
 import { Card } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
-import styled from 'styled-components'
 import urls from '../../../lib/urls'
-
-const { format } = require('../../utils/date')
+import { format } from '../../utils/date'
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,

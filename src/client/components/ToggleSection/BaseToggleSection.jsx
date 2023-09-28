@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLACK, BLUE } from '../../../client/utils/colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
+import { BLACK, BLUE } from '../../../client/utils/colours'
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
 import multiInstance from '../../utils/multiinstance'
 

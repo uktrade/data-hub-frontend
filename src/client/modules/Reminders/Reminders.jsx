@@ -1,7 +1,8 @@
 import React from 'react'
 import { useParams, Redirect } from 'react-router-dom'
-import { RemindersLists } from '.'
 import { connect } from 'react-redux'
+
+import { RemindersLists } from '.'
 import { state2props } from './state'
 
 export const Reminders = ({ defaultUrl }) => {

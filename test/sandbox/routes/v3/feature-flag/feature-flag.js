@@ -1,4 +1,5 @@
 const { isEmpty } = require('lodash')
+
 var defaultFeatureFlags = require('../../../fixtures/v3/feature-flag/feature-flag.json')
 
 let featureFlags = [...defaultFeatureFlags]

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ButtonLink from '../../../../src/client/components/ButtonLink'
 
 describe('ButtonLink', () => {

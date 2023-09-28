@@ -1,7 +1,8 @@
 import React from 'react'
+
 import CollectionHeader from '../../../../../src/client/components/CollectionList/CollectionHeader'
 
-describe('AventriAttendee', () => {
+describe('CollectionHeader', () => {
   const Component = (props) => <CollectionHeader {...props} />
 
   context('when the shouldPluralize prop is false', () => {

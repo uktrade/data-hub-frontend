@@ -1,8 +1,8 @@
 import React from 'react'
 import { Details, Link, Paragraph, ListItem, UnorderedList } from 'govuk-react'
 import styled from 'styled-components'
-
 import { SPACING_POINTS } from '@govuk-react/constants'
+
 import urls from '../../../lib/urls'
 
 const StyledDetails = styled(Details)`

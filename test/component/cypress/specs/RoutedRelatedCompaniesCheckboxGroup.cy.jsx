@@ -1,4 +1,5 @@
 import React from 'react'
+
 import RoutedRelatedCompaniesCheckboxGroup from '../../../../src/client/components/RoutedRelatedCompaniesCheckboxGroup/Filter'
 import DataHubProvider from './provider'
 

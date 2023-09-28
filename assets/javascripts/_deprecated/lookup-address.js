@@ -1,5 +1,5 @@
-/* eslint no-new: 0 */
 const axios = require('axios')
+
 const { closest, hide } = require('../lib/helpers')
 
 class LookupAddress {

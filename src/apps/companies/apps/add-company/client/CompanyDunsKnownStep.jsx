@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { get } from 'lodash'
+
 import useDnbSearch from '../../../../../client/components/EntityList/useDnbSearch'
 import useEntitySearch from '../../../../../client/components/EntityList/useEntitySearch'
 import { Step } from '../../../../../client/components'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import ProgressIndicator from '../../../../../client/components/ProgressIndicator'
-import { get } from 'lodash'
 import { getDnbEntityText } from './CompanySearchStep'
 import { ISO_CODE } from './constants'
 

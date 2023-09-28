@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
+const { get } = require('lodash')
 
 const { setLocalNav } = require('../../../middleware')
 const { getGlobalUltimate, getRelatedCompaniesCount } = require('./repos')
 const urls = require('../../../../lib/urls')
-const { get } = require('lodash')
 
 function setCompanyHierarchyLocalNav(req, res, next) {
   const { company } = res.locals

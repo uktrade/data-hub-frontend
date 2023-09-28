@@ -1,7 +1,6 @@
-const selectors = require('../../../../selectors')
-const urls = require('../../../../../src/lib/urls')
-const fixtures = require('../../fixtures')
-
+import selectors from '../../../../selectors'
+import urls from '../../../../../src/lib/urls'
+import fixtures from '../../fixtures'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import {
   testBreadcrumbs,

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import { LABELS } from './constants'
 
 import { CONTACTS__LOADED, CONTACTS__METADATA_LOADED } from '../../../actions'
