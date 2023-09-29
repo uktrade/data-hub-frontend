@@ -59,7 +59,7 @@ const ProjectTasks = () => {
               const tasks = rawData.results.map(transformTaskToListItem)
               return (
                 <CollectionList
-                  addItemUrl={'#'} //TODO this needs a link to go to the add task page
+                  addItemUrl={urls.investments.projects.tasks.create(projectId)}
                   collectionName="tasks"
                   items={tasks}
                   count={count}

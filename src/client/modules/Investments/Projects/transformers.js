@@ -279,7 +279,7 @@ export const transformTaskToListItem = ({
   task: { title, due_date, advisers },
 } = {}) => ({
   id,
-  headingUrl: urls.interactions.detail(id), //TODO this needs to go to the task detail
+  headingUrl: urls.tasks.details(id),
   headingText: title,
   metadata: [
     { label: 'Date created', value: format(created_on, 'dd MMMM yyyy') },
