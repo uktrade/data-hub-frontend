@@ -1,10 +1,11 @@
 import React from 'react'
-import { TaskDetailsTable } from '../../../../../../../../src/client/modules/Tasks/TaskDetails'
+
 import { assertSummaryTable } from '../../../../../../../functional/cypress/support/assertions'
 import { investmentProjectTaskFaker } from '../../../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../../../../src/apps/companies/constants'
+import TaskDetailsTable from '../../../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
 
 describe('ProjectLayout', () => {
   const Component = (props) => <TaskDetailsTable {...props} />
