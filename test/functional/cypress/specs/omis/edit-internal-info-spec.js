@@ -5,6 +5,7 @@ import {
   assertFieldTypeahead,
   assertFlashMessage,
   assertLocalHeader,
+  assertPayload,
 } from '../../support/assertions'
 
 const { emptyOrder } = fixtures.omis
@@ -59,6 +60,9 @@ describe('View edit internal information', () => {
   })
 
   it('should submit form successfully', () => {
+    cy.intercept('PATCH', `/api-proxy/v3/omis/order/${emptyOrder.id}`).as(
+      'apiRequest'
+    )
     cy.get('[data-test="field-service_types"]').selectTypeaheadOption('Event')
     cy.get('[data-test="field-service_types"]').selectTypeaheadOption(
       'Training'
@@ -69,6 +73,17 @@ describe('View edit internal information', () => {
       'Not to approach'
     )
     cy.get('[data-test=submit-button]').click()
+    assertPayload('@apiRequest', {
+      id: emptyOrder.id,
+      service_types: [
+        'bb1d0e51-6de4-47af-bccf-8edbd416aff2',
+        'ca1b5c77-fe52-4f35-aa86-9e36f8575e57',
+      ],
+      sector: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
+      further_info: 'Further information',
+      existing_agents: 'Existing contact',
+      contacts_not_to_approach: 'Not to approach',
+    })
     assertFlashMessage('Internal information updated')
     cy.location('pathname').should('eq', urls.omis.workOrder(emptyOrder.id))
   })
