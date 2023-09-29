@@ -1,4 +1,4 @@
-import { isEmpty, omitBy } from 'lodash'
+import { isEmpty, omitBy, isPlainObject, camelCase } from 'lodash'
 import qs from 'qs'
 
 export const idNameToValueLabel = ({ id, name }) => ({
@@ -15,3 +15,15 @@ export const parseQueryString = (queryString) => {
     page: parseInt(queryParams.page || 1, 10),
   }
 }
+
+export const deepKeysToCamelCase = (x) =>
+  Array.isArray(x)
+    ? x.map(deepKeysToCamelCase)
+    : isPlainObject(x)
+    ? Object.fromEntries(
+        Object.entries(x).map(([k, v]) => [
+          camelCase(k),
+          deepKeysToCamelCase(v),
+        ])
+      )
+    : x

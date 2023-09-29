@@ -6,18 +6,7 @@ import multiInstance from '../../utils/multiinstance'
 import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
 import LoadingBox from '../Task/LoadingBox'
-
-const deepKeysToCamelCase = (x) =>
-  Array.isArray(x)
-    ? x.map(deepKeysToCamelCase)
-    : _.isPlainObject(x)
-    ? Object.fromEntries(
-        Object.entries(x).map(([k, v]) => [
-          _.camelCase(k),
-          deepKeysToCamelCase(v),
-        ])
-      )
-    : x
+import { deepKeysToCamelCase } from '../../utils'
 
 /**
  * @function Resource
