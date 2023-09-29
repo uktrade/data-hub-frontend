@@ -8,14 +8,12 @@ export const transformQuoteInformationForApi = ({
 }) => {
   const { description, delivery_date } = values
 
-  const infoValues = {
+  return {
     id: orderId,
     csrfToken,
     description,
     delivery_date: transformDateObjectToDateString(delivery_date),
   }
-
-  return infoValues
 }
 
 export const transformInternalInformationForApi = ({ orderId, values }) => {
@@ -27,7 +25,7 @@ export const transformInternalInformationForApi = ({ orderId, values }) => {
     contacts_not_to_approach,
   } = values
 
-  const infoValues = {
+  return {
     id: orderId,
     service_types: service_types.map((x) => x.value),
     sector: checkIfItemHasValue(sector?.value),
@@ -35,6 +33,4 @@ export const transformInternalInformationForApi = ({ orderId, values }) => {
     existing_agents,
     contacts_not_to_approach,
   }
-
-  return infoValues
 }
