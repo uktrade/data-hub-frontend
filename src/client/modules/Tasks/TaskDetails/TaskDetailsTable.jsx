@@ -1,7 +1,7 @@
 import React from 'react'
-import { SummaryTable } from '../../../components'
-
 import { Link } from 'govuk-react'
+
+import { SummaryTable } from '../../../components'
 
 import { formatLongDate } from '../../../utils/date'
 import { transformAdvisers } from './transformers'

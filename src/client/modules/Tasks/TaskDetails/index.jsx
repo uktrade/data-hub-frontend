@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { DefaultLayout } from '../../../components'
 import { useParams } from 'react-router-dom'
 
+import { DefaultLayout } from '../../../components'
 import { TaskResource } from '../../../components/Resource'
 import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 import TaskDetailsTable from './TaskDetailsTable'
