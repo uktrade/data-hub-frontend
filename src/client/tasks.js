@@ -96,6 +96,7 @@ import {
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
+  TASK_GET_INVESTMENT_PROJECT,
 } from './modules/Investments/Projects/state'
 import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
@@ -544,4 +545,5 @@ export const tasks = {
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
   [TASK_SAVE_INVESTMENT_PROJECT_TASK]: saveInvestmentProjectTask,
+  [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
 }
