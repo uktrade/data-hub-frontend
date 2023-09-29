@@ -50,7 +50,6 @@ import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
 
-
 const routes = {
   companies: [
     {
