@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-
 import { Details, ListItem, UnorderedList, Input } from 'govuk-react'
 
 import { TASK_SAVE_INVESTMENT_PROJECT_TASK, state2props } from './state'
