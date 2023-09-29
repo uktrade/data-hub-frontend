@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Table from '../../../../../src/client/components/CompanyLists/Table'
 
 const allOptionalData = {

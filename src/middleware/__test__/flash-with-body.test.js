@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker')
+
 const flashWithBody = require('../flash-with-body')
 
 const words = faker.lorem.words

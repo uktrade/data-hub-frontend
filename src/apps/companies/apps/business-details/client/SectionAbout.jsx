@@ -5,6 +5,7 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
+
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
 import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'

@@ -1,5 +1,7 @@
 import { Button, Link, GridCol } from 'govuk-react'
 import styled, { css } from 'styled-components'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+
 import {
   GREY_2,
   GREY_4,
@@ -10,7 +12,6 @@ import {
 } from '../../../utils/colours'
 import { Tag, ToggleSection } from '../../../components'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 const horizontalLine = css`
   //This is the horizontal line to the left of the div

@@ -1,6 +1,7 @@
 const axios = require('axios')
 const getFormData = require('get-form-data').default
 const pickBy = require('lodash/pickBy')
+
 const XHR = require('../lib/xhr')
 
 const AutoSubmit = {

@@ -1,11 +1,12 @@
 import { kebabCase } from 'lodash'
+import hexRgb from 'hex-rgb'
+
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
 import { DARK_BLUE_LEGACY } from '../../../../../src/client/utils/colours'
-import hexRgb from 'hex-rgb'
 import { hqLabels } from '../../../../../src/apps/companies/labels'
 
 const {

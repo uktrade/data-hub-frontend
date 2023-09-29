@@ -1,7 +1,7 @@
+const router = require('express').Router()
+
 const projectsRouter = require('./projects/router')
 const largeCapitalProfileRouter = require('./large-capital-profile/router')
-
-const router = require('express').Router()
 
 router.get('/', (req, res) =>
   res.redirect(`${res.locals.ORIGINAL_URL}/projects`)

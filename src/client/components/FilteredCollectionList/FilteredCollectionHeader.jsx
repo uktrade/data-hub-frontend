@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { BLACK, GREY_3 } from '../../../client/utils/colours'
-import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
-import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
+import {
+  FONT_SIZE,
+  FONT_WEIGHTS,
+  HEADING_SIZES,
+  SPACING,
+} from '@govuk-react/constants'
 import { H2 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { kebabCase } from 'lodash'
 import { Link } from 'react-router-dom'
+
+import { BLACK, GREY_3 } from '../../../client/utils/colours'
 
 import {
   CollectionHeaderRow,

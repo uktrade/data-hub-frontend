@@ -1,4 +1,5 @@
 import qs from 'qs'
+
 import {
   assertQueryParams,
   assertChipExists,

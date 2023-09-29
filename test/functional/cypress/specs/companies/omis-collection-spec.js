@@ -1,4 +1,4 @@
-const qs = require('qs')
+import qs from 'qs'
 
 import { orderFaker } from '../../fakers/orders'
 import { assertPayload } from '../../support/assertions'

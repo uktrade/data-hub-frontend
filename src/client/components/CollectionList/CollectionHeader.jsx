@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { H2 } from '@govuk-react/heading'
 import { HEADING_SIZES } from '@govuk-react/constants'
+
 import CollectionHeaderRow from './CollectionHeaderRow'
 import { BLACK, GREY_3 } from '../../../client/utils/colours'
 import { decimal } from '../../utils/number-utils'

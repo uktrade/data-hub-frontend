@@ -11,7 +11,7 @@ import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import RemindersSettingsTable from './RemindersSettingsTable'
 import Resource from '../../../components/Resource/Resource'
 import urls from '../../../../lib/urls'
-import { state2props } from '../state'
+import { state2props, TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
 
 import {
   INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
@@ -20,7 +20,6 @@ import {
   COMPANIES_NEW_INTERACTIONS_LABEL,
 } from '../constants'
 
-import { TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
 import FooterLink from '../FooterLink'
 
 const ToggleSectionContainer = styled('div')({

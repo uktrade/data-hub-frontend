@@ -1,5 +1,5 @@
-/* eslint-disable camelcase */
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
+
 const { roundToSignificantDigits } = require('../../../../common/number')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [

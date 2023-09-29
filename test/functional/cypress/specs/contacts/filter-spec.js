@@ -1,5 +1,6 @@
-import urls from '../../../../../src/lib/urls'
 import qs from 'qs'
+
+import urls from '../../../../../src/lib/urls'
 
 import { removeChip } from '../../support/actions'
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'

@@ -1,4 +1,4 @@
-const { reduce, isEqual } = require('lodash')
+import { reduce, isEqual } from 'lodash'
 
 import {
   assertErrorSummary,

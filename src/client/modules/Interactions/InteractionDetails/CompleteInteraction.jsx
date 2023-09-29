@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREEN, WHITE } from '../../../../client/utils/colours'
 import { Button, Link } from 'govuk-react'
+
+import { GREEN, WHITE } from '../../../../client/utils/colours'
 
 import ArchiveForm from '../../../components/ArchiveForm'
 import { FieldDate } from '../../../components'

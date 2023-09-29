@@ -1,4 +1,5 @@
 const sinon = require('sinon')
+
 const { allFeaturesOr404, allPermissionsOr403 } = require('../conditionals')
 const { NotFoundError, NotAuthorizedError } = require('../errors')
 

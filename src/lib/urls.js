@@ -1,4 +1,5 @@
 const queryString = require('qs')
+
 const {
   INVESTMENT_LINK_PARAM,
   PRIMARY_LINK_PARAMS,
@@ -602,6 +603,7 @@ module.exports = {
       quote: url('/omis', '/:orderId/edit/quote-details'),
       assignees: url('/omis', '/:orderId/edit/assignees'),
       subscribers: url('/omis', '/:orderId/edit/subscribers'),
+      internalInfo: url('/omis', '/:orderId/edit/internal-details'),
     },
   },
   support: url('/support'),

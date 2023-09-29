@@ -66,7 +66,17 @@
       }
     ],
     "no-undef": "error",
-    "no-console": ["error", {"allow": ["assert"]}]
+    "no-console": ["error", {"allow": ["assert"]}],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external"]
+        ],
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
+    "no-duplicate-imports": "error"
   },
   "overrides": [
     {

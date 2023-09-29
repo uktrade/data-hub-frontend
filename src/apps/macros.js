@@ -1,4 +1,5 @@
 const { sortBy } = require('lodash')
+
 const metadata = require('../lib/metadata')
 const {
   transformObjectToOption,

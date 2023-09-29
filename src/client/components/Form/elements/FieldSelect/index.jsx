@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Select, { SelectInput } from '@govuk-react/select'
+import styled from 'styled-components'
+import { BREAKPOINTS } from '@govuk-react/constants'
+
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
-
-import styled from 'styled-components'
 import { BLACK } from '../../../../utils/colours'
-import { BREAKPOINTS } from '@govuk-react/constants'
 
 const StyledSelect = styled(Select)`
   position: relative;

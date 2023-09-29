@@ -1,21 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
+import { isEmpty, capitalize } from 'lodash'
+import Button from '@govuk-react/button'
+import Link from '@govuk-react/link'
+import { BREAKPOINTS } from '@govuk-react/constants'
+
 import urls from '../../../../lib/urls'
 import { EXPORT_LOADED } from '../../../actions'
 import { DefaultLayout, SummaryTable } from '../../../components'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
-import styled from 'styled-components'
-import { isEmpty, capitalize } from 'lodash'
 import { format } from '../../../../client/utils/date'
 import { currencyGBP } from '../../../../client/utils/number-utils'
-
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { transformIdNameToValueLabel } from '../../../transformers'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
-import { BREAKPOINTS } from '@govuk-react/constants'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,

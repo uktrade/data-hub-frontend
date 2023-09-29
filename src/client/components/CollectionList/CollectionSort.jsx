@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import qs from 'qs'
-
 import styled from 'styled-components'
+
 import { DARK_GREY } from '../../utils/colours'
 import CollectionHeaderRow from './CollectionHeaderRow'
 import RoutedSelect from '../RoutedSelect'

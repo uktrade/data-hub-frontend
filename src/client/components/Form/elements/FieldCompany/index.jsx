@@ -7,12 +7,6 @@ import LoadingBox from '@govuk-react/loading-box'
 import { H3 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
 import {
-  BLACK,
-  GREY_2,
-  GREY_4,
-  YELLOW_25,
-} from '../../../../../client/utils/colours'
-import {
   FONT_SIZE,
   FONT_WEIGHTS,
   BORDER_WIDTH,
@@ -20,6 +14,13 @@ import {
   SPACING,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
+
+import {
+  BLACK,
+  GREY_2,
+  GREY_4,
+  YELLOW_25,
+} from '../../../../../client/utils/colours'
 
 import FormActions from '../FormActions'
 import FieldWrapper from '../FieldWrapper'

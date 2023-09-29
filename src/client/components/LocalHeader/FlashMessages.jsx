@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 import { connect } from 'react-redux'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import UnorderedList from '@govuk-react/unordered-list'
 
 import {
   ERROR_COLOUR,
@@ -12,8 +14,6 @@ import {
   BLACK,
   WHITE,
 } from '../../../client/utils/colours'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import UnorderedList from '@govuk-react/unordered-list'
 import StatusMessage from '../../components/StatusMessage'
 import { state2props } from './state'
 import {

@@ -94,6 +94,8 @@ import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME,
   TASK_GET_INVESTMENTS_PROJECTS_METADATA,
+  TASK_EDIT_INVESTMENT_PROJECT_STATUS,
+  TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
 } from './modules/Investments/Projects/state'
 import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
@@ -127,9 +129,10 @@ import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
 import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
 
 import * as personalisedDashboard from './components/PersonalisedDashboard/tasks'
-import { TASK_CHECK_FOR_INVESTMENTS } from './components/PersonalisedDashboard/state'
-
-import { TASK_DATA_HUB_FEED } from './components/PersonalisedDashboard/state'
+import {
+  TASK_CHECK_FOR_INVESTMENTS,
+  TASK_DATA_HUB_FEED,
+} from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS } from './components/InvestmentReminders/state'
@@ -286,12 +289,6 @@ import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDet
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
 
 import {
-  TASK_EDIT_INVESTMENT_PROJECT_STATUS,
-  TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
-} from './modules/Investments/Projects/state'
-import { updateInvestmentProject } from './modules/Investments/Projects/tasks'
-
-import {
   TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER,
   TASK_EDIT_PROJECT_TEAM_MEMBERS,
   TASK_SAVE_INVESTMENT_PROJECT_MANAGERS,
@@ -347,7 +344,10 @@ import {
   TASK_SAVE_ONE_LIST_DETAILS,
 } from './modules/Companies/CoreTeam/state'
 
-import { TASK_EDIT_OMIS_QUOTE_INFORMATION } from './modules/Omis/state'
+import {
+  TASK_EDIT_OMIS_QUOTE_INFORMATION,
+  TASK_EDIT_OMIS_INTERNAL_INFORMATION,
+} from './modules/Omis/state'
 import { updateOrder } from './modules/Omis/tasks'
 
 export const tasks = {
@@ -414,8 +414,10 @@ export const tasks = {
   [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]: getAdviserNames,
   [TASK_GET_INVESTMENTS_PROJECTS_METADATA]: investmentProjectTasks.getMetadata,
   [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
-  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]: updateInvestmentProject,
-  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]: updateInvestmentProject,
+  [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
+    investmentProjectTasks.updateInvestmentProject,
+  [TASK_SAVE_INVESTMENT_PROJECT_MANAGERS]:
+    investmentProjectTasks.updateInvestmentProject,
   [TASK_CHECK_FOR_INVESTMENTS]: personalisedDashboard.checkForInvestments,
   [TASK_DATA_HUB_FEED]: personalisedDashboard.checkDataHubFeed,
   [TASK_GET_MY_INVESTMENTS_LIST]: myInvestmentProjects.fetchMyInvestmentsList,
@@ -514,14 +516,19 @@ export const tasks = {
   [TASK_GET_DNB_FAMILY_TREE]: getDnbFamilyTree,
   [TASK_GET_GLOBAL_HQ_LIST]: getGlobalHeadquartersCollection,
   [TASK_GET_SUBSIDIARY_LIST]: getSubsidiaryCollection,
-  [TASK_EDIT_INVESTMENT_PROJECT_SUMMARY]: updateInvestmentProject,
-  [TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS]: updateInvestmentProject,
-  [TASK_EDIT_INVESTMENT_PROJECT_VALUE]: updateInvestmentProject,
+  [TASK_EDIT_INVESTMENT_PROJECT_SUMMARY]:
+    investmentProjectTasks.updateInvestmentProject,
+  [TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS]:
+    investmentProjectTasks.updateInvestmentProject,
+  [TASK_EDIT_INVESTMENT_PROJECT_VALUE]:
+    investmentProjectTasks.updateInvestmentProject,
   [TASK_SAVE_STRATEGY]: saveStrategy,
-  [TASK_EDIT_INVESTMENT_PROJECT_STATUS]: updateInvestmentProject,
+  [TASK_EDIT_INVESTMENT_PROJECT_STATUS]:
+    investmentProjectTasks.updateInvestmentProject,
   [TASK_SAVE_OBJECTIVE]: saveObjective,
   [TASK_GET_OBJECTIVE]: getObjective,
-  [TASK_UPDATE_INVESTMENT_PROJECT_STAGE]: updateInvestmentProject,
+  [TASK_UPDATE_INVESTMENT_PROJECT_STAGE]:
+    investmentProjectTasks.updateInvestmentProject,
   [TASK_GET_NON_FDI_PROJECTS_LIST]: getNonFdiProjects,
   [TASK_UPDATE_ASSOCIATED_PROJECT]: updateAssociatedProject,
   [TASK_GET_UK_COMPANIES]: getUkCompanies,
@@ -530,4 +537,5 @@ export const tasks = {
   [TASK_ARCHIVE_OBJECTIVE]: archiveObjective,
   [TASK_DELETE_PROJECT_DOCUMENT]: deleteProjectDocument,
   [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
+  [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
 }

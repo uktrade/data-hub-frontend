@@ -1,8 +1,8 @@
 import React from 'react'
-import { GREY_4 } from '../../../client/utils/colours'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
+import { GREY_4 } from '../../../client/utils/colours'
 import { animation, randomNumberMinToMax } from './utils'
 
 const List = styled('ul')`

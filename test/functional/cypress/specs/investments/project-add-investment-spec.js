@@ -1,7 +1,7 @@
-const urls = require('../../../../../src/lib/urls')
-const { company } = require('../../fixtures')
 const { expect } = require('chai')
 
+const urls = require('../../../../../src/lib/urls')
+const { company } = require('../../fixtures')
 const {
   assertSummaryTable,
   assertFieldTypeahead,

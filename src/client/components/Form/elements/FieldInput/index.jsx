@@ -9,8 +9,8 @@ import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
   SPACING,
 } from '@govuk-react/constants'
-import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 
+import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 

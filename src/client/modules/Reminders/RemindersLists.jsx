@@ -2,8 +2,8 @@ import React from 'react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
-import FooterLink from './FooterLink'
 
+import FooterLink from './FooterLink'
 import { DefaultLayout } from '../../components'
 import RemindersMenu from './RemindersMenu'
 

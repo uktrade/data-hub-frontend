@@ -1,4 +1,6 @@
 const { faker } = require('@faker-js/faker')
+const { get } = require('lodash')
+
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-aventri-attendee-from-es.json')
 const activityFeedMaxemailSentEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-maxemail-sent-from-es.json')
@@ -27,7 +29,6 @@ const {
   augmentEssActivity,
   filterContactListOnEmail,
 } = require('../controllers')
-const { get } = require('lodash')
 const { sortCriteria } = require('../es-queries/sortCriteria')
 
 const realDate = Date

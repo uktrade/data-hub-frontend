@@ -1,5 +1,6 @@
-import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
 import { camelCase } from 'lodash'
+
+import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
 import { STAGE_ACTIVE } from '../../../../../client/modules/Investments/Projects/constants'
 
 const initialState = {

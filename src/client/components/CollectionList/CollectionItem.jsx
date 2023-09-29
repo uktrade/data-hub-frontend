@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link as RouterLink } from 'react-router-dom'
-
 import styled from 'styled-components'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
 import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'

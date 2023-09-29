@@ -1,9 +1,10 @@
 import React from 'react'
 import { GridCol } from 'govuk-react'
-import Task from '../../../client/components/Task'
 import { H2 } from '@govuk-react/heading'
 import { FONT_WEIGHTS, HEADING_SIZES } from '@govuk-react/constants'
 import styled from 'styled-components'
+
+import Task from '../../../client/components/Task'
 
 const FilterHeader = styled(H2)({
   marginTop: 0,

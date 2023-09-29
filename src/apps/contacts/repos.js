@@ -1,4 +1,5 @@
 const { sortBy } = require('lodash')
+
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 

@@ -1,12 +1,14 @@
+import { faker } from '@faker-js/faker'
+
 import { contactFaker, contactsListFaker } from '../../fakers/contacts'
 import { exportFaker } from '../../fakers/export'
 import { companyFaker } from '../../fakers/companies'
 import { addNewContact } from '../../support/actions'
 import { sectorListFaker } from '../../fakers/sectors'
 import { countryListFaker } from '../../fakers/countries'
+import urls from '../../../../../src/lib/urls'
 
-const urls = require('../../../../../src/lib/urls')
-const {
+import {
   assertUrl,
   assertExactUrl,
   assertFlashMessage,
@@ -17,22 +19,20 @@ const {
   assertBreadcrumbs,
   assertFieldEmpty,
   assertTypeaheadOptionSelected,
-} = require('../../support/assertions')
+} from '../../support/assertions'
 
-const {
-  ERROR_MESSAGES,
-} = require('../../../../../src/client/modules/ExportPipeline/ExportForm/constants')
+import { ERROR_MESSAGES } from '../../../../../src/client/modules/ExportPipeline/ExportForm/constants'
 
-const {
+import {
   fill,
   fillTypeahead,
   fillMultiOptionTypeahead,
   fillSelect,
   clearTypeahead,
-} = require('../../support/form-fillers')
+} from '../../support/form-fillers'
+
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
-const { faker } = require('@faker-js/faker')
 
 describe('Export pipeline create', () => {
   before(() => {

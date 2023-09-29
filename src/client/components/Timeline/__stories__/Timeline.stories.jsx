@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Timeline from 'Timeline'
+
 import {
   INVESTMENT_PROJECT_STAGES,
   STAGE_PROSPECT,

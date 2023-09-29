@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import typeaheadTasks from '../../../../src/client/components/Typeahead/tasks'
 

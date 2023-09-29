@@ -1,13 +1,12 @@
 import React from 'react'
-import CardUtils from './card/CardUtils'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import { formatStartAndEndDate } from '../../../utils/date'
 import { ACTIVITY_TYPE } from '../constants'
 
-import styled from 'styled-components'
-
+import CardUtils from './card/CardUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 
 import { GREY_2 } from '../../../../utils/colours'
-import { SPACING } from '@govuk-react/constants'
 
 const StyledCardWrapper = styled('div')`
   border-bottom: 1px solid ${GREY_2};

@@ -1,5 +1,6 @@
-import urls from '../../../../../src/lib/urls'
 import { capitalize } from 'lodash'
+
+import urls from '../../../../../src/lib/urls'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { format } from '../../../../../src/client/utils/date'
 import { exportFaker } from '../../fakers/export'

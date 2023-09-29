@@ -1,6 +1,6 @@
 import React from 'react'
-import { Form } from '../../../../../src/client/components'
 
+import { Form } from '../../../../../src/client/components'
 import FieldSelect from '../../../../../src/client/components/Form/elements/FieldSelect'
 import DataHubProvider from '../provider'
 

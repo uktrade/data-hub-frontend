@@ -1,13 +1,13 @@
+import { investmentProjectFaker } from '../../fakers/investment-projects'
+import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
+import urls from '../../../../../src/lib/urls'
+
+const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
 const {
   addDays,
   formatWithoutParsing,
   subtractDays,
 } = require('../../../../../src/client/utils/date')
-const { DATE_DAY_LONG_FORMAT } = require('../../../../../src/common/constants')
-
-import { investmentProjectFaker } from '../../fakers/investment-projects'
-import { investmentProjectSummaryFaker } from '../../fakers/investment-project-summary'
-import urls from '../../../../../src/lib/urls'
 
 const assertEstimatedLandDate = ({ index, date, countdown, colour }) => {
   cy.get('@projectListItems')

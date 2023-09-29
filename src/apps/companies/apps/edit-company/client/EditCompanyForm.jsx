@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Paragraph } from 'govuk-react'
+
 import CompanyMatched from './CompanyMatched'
 import CompanyUnmatched from './CompanyUnmatched'
 import Form from '../../../../../client/components/Form'
@@ -10,7 +12,6 @@ import {
 } from '../../../../../common/constants'
 import urls from '../../../../../lib/urls'
 import { FormLayout } from '../../../../../client/components'
-import { Paragraph } from 'govuk-react'
 
 function EditCompanyForm({
   csrfToken,

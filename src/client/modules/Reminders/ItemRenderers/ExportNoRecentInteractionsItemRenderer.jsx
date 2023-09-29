@@ -1,6 +1,7 @@
 import React from 'react'
-import { BLACK, GREY_1 } from '../../../utils/colours'
 import styled from 'styled-components'
+
+import { BLACK, GREY_1 } from '../../../utils/colours'
 import { ItemContent } from './styled'
 import { formatMediumDate } from '../../../utils/date'
 import { INTERACTION_NAMES } from '../constants'

@@ -1,5 +1,6 @@
-import { FOCUS_COLOUR } from '../client/utils/colours'
 import { FOCUS_WIDTH } from '@govuk-react/constants'
+
+import { FOCUS_COLOUR } from '../client/utils/colours'
 
 export const focusMixin = {
   '&:focus': {

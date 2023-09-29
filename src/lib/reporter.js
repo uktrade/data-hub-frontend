@@ -1,5 +1,6 @@
-const config = require('../config')
 const Sentry = require('@sentry/node')
+
+const config = require('../config')
 const logger = require('../config/logger')
 
 const useSentry = !!config.sentryDsn

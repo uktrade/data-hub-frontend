@@ -1,10 +1,11 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { BLACK } from '../../../client/utils/colours'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'
+
+import { BLACK } from '../../../client/utils/colours'
 
 import {
   REMINDERS__ESTIMATED_LAND_DATE_REMINDERS_LOADED,

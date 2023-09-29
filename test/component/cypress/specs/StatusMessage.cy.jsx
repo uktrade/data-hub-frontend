@@ -1,4 +1,5 @@
 import React from 'react'
+
 import StatusMessage from '../../../../src/client/components/StatusMessage'
 
 const Component = (props) => <StatusMessage {...props} />

@@ -48,6 +48,8 @@ import InvestmentCollections from './modules/Investments/InvestmentCollections'
 import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
+import EditInternalInformation from './modules/Omis/EditInternalInformation'
+
 
 const routes = {
   companies: [
@@ -170,6 +172,11 @@ const routes = {
       path: '/omis/:orderId/edit/quote-details',
       module: 'datahub:orders',
       component: EditQuoteInformation,
+    },
+    {
+      path: '/omis/:orderId/edit/internal-details',
+      module: 'datahub:orders',
+      component: EditInternalInformation,
     },
   ],
   reminders: [

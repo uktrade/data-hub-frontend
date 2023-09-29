@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
+import { GridCol, GridRow } from 'govuk-react'
+
 import urls from '../../../../lib/urls'
 import {
   CollectionSort,
@@ -12,7 +14,6 @@ import {
   LocalNavLink,
   RoutedPagination,
 } from '../../../components'
-import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
 import {
   ID,

@@ -57,6 +57,8 @@ import OneListTiers from './OneListTiers'
 import ProjectDocument from './ProjectDocument'
 import Order from './Order'
 import Task from './Task'
+import OrderServiceTypes from './OrderServiceTypes'
+
 
 export default {
   ...Company.tasks,
@@ -118,4 +120,5 @@ export default {
   ...ProjectDocument.tasks,
   ...Order.tasks,
   ...Task.tasks,
+  ...OrderServiceTypes.tasks,
 }

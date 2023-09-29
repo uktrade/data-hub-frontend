@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MEDIA_QUERIES } from '@govuk-react/constants'
-import { SPACING } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import Tag from '../../../Tag'

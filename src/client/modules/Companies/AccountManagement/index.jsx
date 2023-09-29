@@ -3,8 +3,8 @@ import { H3, H4, Link, GridCol, GridRow } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
-
 import styled from 'styled-components'
+
 import { Metadata, NewWindowLink } from '../../../components'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import {

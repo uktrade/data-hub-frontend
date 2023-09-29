@@ -8,6 +8,7 @@ const quote = require('../../../fixtures/v3/omis/quote.json')
 const quoteAccepted = require('../../../fixtures/v3/omis/quote-accepted.json')
 const subscribers = require('../../../fixtures/v3/omis/subscribers.json')
 const quoteAwaitOrder = require('../../../fixtures/v3/omis/quote-awaiting-order.json')
+const emptyOrder = require('../../../fixtures/v3/omis/empty-order.json')
 
 exports.assignees = function (req, res) {
   res.json(assignees)
@@ -24,6 +25,7 @@ exports.getOrderById = function (req, res) {
     [draftOrder.id]: draftOrder,
     [quoteAwaitOrder.id]: quoteAwaitOrder,
     [quoteAccepted.id]: quoteAccepted,
+    [emptyOrder.id]: emptyOrder,
   }
 
   res.json(orders[req.params.id] || paidOrder)

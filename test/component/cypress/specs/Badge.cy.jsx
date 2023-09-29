@@ -1,5 +1,6 @@
 import React from 'react'
 import { FONT_SIZE } from '@govuk-react/constants'
+
 import Badge from '../../../../src/client/components/Badge'
 
 describe('Badge', () => {

@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
-import { SummaryTable } from '../../../../../client/components/'
 import { SPACING } from '@govuk-react/constants'
+import WarningText from '@govuk-react/warning-text'
 
+import { SummaryTable } from '../../../../../client/components/'
 import urls from '../../../../../lib/urls'
 import ExportWins from './ExportWins/'
 import GreatProfile from './GreatProfile'
@@ -14,7 +15,6 @@ import { CompanyResource } from '../../../../../client/components/Resource'
 import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
 import { exportDetailsLabels, exportPotentialLabels } from '../../../labels'
 import { transformExportCountries } from '../transformer'
-import WarningText from '@govuk-react/warning-text'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;

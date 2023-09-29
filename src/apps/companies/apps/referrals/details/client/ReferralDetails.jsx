@@ -4,8 +4,9 @@ import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
-import urls from '../../../../../../lib/urls'
 import url from 'url'
+
+import urls from '../../../../../../lib/urls'
 import { ID as STATE_ID } from './state'
 
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'

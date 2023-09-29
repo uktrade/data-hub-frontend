@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { spacing, typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
+
 import {
   FOOTER_BACKGROUND,
   FOOTER_TEXT,

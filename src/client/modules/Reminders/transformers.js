@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash'
+
 import { settings } from './constants'
 import { OPTION_NO, OPTION_YES } from '../../../common/constants'
 

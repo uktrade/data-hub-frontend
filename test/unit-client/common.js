@@ -2,6 +2,7 @@ const chai = require('chai')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 const { TextEncoder, TextDecoder } = require('util')
+const jsdom = require('jsdom')
 
 require('jsdom-global')()
 
@@ -10,7 +11,6 @@ global.rootPath = `${process.cwd()}`
 const { getMacros } = require('../unit/macro-helper')
 
 const formMacros = getMacros('form')
-const jsdom = require('jsdom')
 
 const { JSDOM } = jsdom
 
