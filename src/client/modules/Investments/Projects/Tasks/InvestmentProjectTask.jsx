@@ -41,9 +41,12 @@ const taskDueDateOptions = [
 const InvestmentProjectTask = ({ currentAdviserId }) => {
   const { projectId } = useParams()
   const [investmentProject, setInvestmentProject] = useState(undefined)
+  const investmentCompanyName = investmentProject
+    ? investmentProject.investorCompany?.name
+    : ''
   return (
     <DefaultLayout
-      heading={`Add task for ${investmentProject?.investorCompany?.name}`}
+      heading={`Add task for ${investmentCompanyName}`}
       pageTitle={'Add Task'}
       breadcrumbs={[
         { link: urls.investments.index(), text: 'Investments' },
@@ -52,7 +55,7 @@ const InvestmentProjectTask = ({ currentAdviserId }) => {
           link: urls.investments.projects.details(investmentProject?.id),
           text: investmentProject?.name,
         },
-        { text: `Add task for ${investmentProject?.investorCompany?.name}` },
+        { text: `Add task for ${investmentCompanyName}` },
       ]}
       useReactRouter={false}
     >
