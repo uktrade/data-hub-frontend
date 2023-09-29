@@ -3,18 +3,23 @@ import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 import { useSearchParam } from 'react-use'
+import { connect } from 'react-redux'
 
 import { CollectionList } from '../../../components'
-import {
-  InvestmentProjectTasksResource,
-  InvestmentResource,
-} from '../../../components/Resource'
+import { InvestmentProjectTasksResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import ProjectLayout from '../../../components/Layout/ProjectLayout'
 import { transformTaskToListItem } from './transformers'
 import { ITEMS_PER_PAGE } from './constants'
+import Task from '../../../components/Task'
+import {
+  INVESTMENT_PROJECT_ID,
+  TASK_GET_INVESTMENT_PROJECT,
+  investmentProjectState2props,
+} from './state'
+import { INVESTMENT__PROJECT_LOADED } from '../../../actions'
 
-const ProjectTasks = () => {
+const ProjectTasks = ({ project }) => {
   const { projectId } = useParams()
 
   const activePage = parseInt(useSearchParam('page'), 10) || 1
@@ -27,54 +32,61 @@ const ProjectTasks = () => {
   }
 
   return (
-    // TODO move this into project layout
-    <InvestmentResource id={projectId}>
-      {(project) => (
-        <ProjectLayout
-          project={project}
-          breadcrumbs={[
-            {
-              link: urls.investments.projects.details(project.id),
-              text: project.name,
-            },
-            { text: 'Tasks' },
-          ]}
-          pageTitle="Tasks"
-        >
-          <H2 size={LEVEL_SIZE[3]}>Investment tasks</H2>
-          <p>
-            An investment tasks is an upcoming action that is associated with
-            this investment project. Once a task is marked as complete it will
-            not be visible here.
-          </p>
-          <InvestmentProjectTasksResource
-            payload={{
-              investment_project: projectId,
-              limit: ITEMS_PER_PAGE,
-              offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
-              sortby: 'task__due_date',
-            }}
-          >
-            {(projectTasks, count) => {
-              const tasks = projectTasks.map(transformTaskToListItem)
+    <ProjectLayout
+      project={project}
+      breadcrumbs={
+        project
+          ? [
+              {
+                link: urls.investments.projects.details(project.id),
+                text: project.name,
+              },
+              { text: 'Tasks' },
+            ]
+          : []
+      }
+      pageTitle="Tasks"
+    >
+      <H2 size={LEVEL_SIZE[3]}>Investment tasks</H2>
+      <p>
+        An investment tasks is an upcoming action that is associated with this
+        investment project. Once a task is marked as complete it will not be
+        visible here.
+      </p>
+      <Task.Status
+        name={TASK_GET_INVESTMENT_PROJECT}
+        id={INVESTMENT_PROJECT_ID}
+        startOnRender={{
+          payload: projectId,
+          onSuccessDispatch: INVESTMENT__PROJECT_LOADED,
+        }}
+      />
+      <InvestmentProjectTasksResource
+        payload={{
+          investment_project: projectId,
+          limit: ITEMS_PER_PAGE,
+          offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
+          sortby: 'task__due_date',
+        }}
+      >
+        {(projectTasks, count) => {
+          const tasks = projectTasks.map(transformTaskToListItem)
 
-              return (
-                <CollectionList
-                  addItemUrl={urls.investments.projects.tasks.create(projectId)}
-                  collectionName="tasks"
-                  items={tasks}
-                  count={count}
-                  isComplete={true}
-                  onPageClick={onPageClick}
-                  activePage={activePage}
-                />
-              )
-            }}
-          </InvestmentProjectTasksResource>
-        </ProjectLayout>
-      )}
-    </InvestmentResource>
+          return (
+            <CollectionList
+              addItemUrl={urls.investments.projects.tasks.create(projectId)}
+              collectionName="tasks"
+              items={tasks}
+              count={count}
+              isComplete={true}
+              onPageClick={onPageClick}
+              activePage={activePage}
+            />
+          )
+        }}
+      </InvestmentProjectTasksResource>
+    </ProjectLayout>
   )
 }
 
-export default ProjectTasks
+export default connect(investmentProjectState2props)(ProjectTasks)
