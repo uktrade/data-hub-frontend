@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { assertSummaryTable } from '../../../../../../../functional/cypress/support/assertions'
-import { investmentProjectTaskFaker } from '../../../../../../../functional/cypress/fakers/task'
+import { taskWithInvestmentProjectFaker } from '../../../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../../../../src/apps/companies/constants'
@@ -11,7 +11,7 @@ describe('ProjectLayout', () => {
   const Component = (props) => <TaskDetailsTable {...props} />
 
   context('When a task has all optional fields set', () => {
-    const investmentProjectTask = investmentProjectTaskFaker()
+    const investmentProjectTask = taskWithInvestmentProjectFaker()
     const company =
       investmentProjectTask.investmentProjectTask.investmentProject
         .investorCompany
@@ -42,7 +42,7 @@ describe('ProjectLayout', () => {
   })
 
   context('When a task is missing all optional fields', () => {
-    const investmentProjectTask = investmentProjectTaskFaker({
+    const investmentProjectTask = taskWithInvestmentProjectFaker({
       dueDate: undefined,
       description: undefined,
       emailRemindersEnabled: false,
