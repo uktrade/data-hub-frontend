@@ -19,6 +19,7 @@ import {
 import urls from '../../../../../lib/urls'
 import { OPTIONS_YES_NO } from '../../../../../apps/constants'
 import { InvestmentResource } from '../../../../components/Resource'
+import { validateDaysRange, validateIfDateInFuture } from './validators'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -135,12 +136,9 @@ const FieldDueDate = ({ initialValue = null }) => (
     hint="For example 28 11 2025"
     required="Enter a date"
     defaultValue={initialValue}
+    validate={validateIfDateInFuture}
   />
 )
-const validateDaysRange = (value) =>
-  value && (value < 1 || value > 365)
-    ? 'Enter a number between 1 and 365'
-    : null
 
 const FieldReminder = ({ initialValue = null }) => (
   <InputFieldWrapper>

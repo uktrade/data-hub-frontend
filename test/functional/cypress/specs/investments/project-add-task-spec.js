@@ -204,6 +204,19 @@ describe('Investment project task', () => {
         'Enter a valid date'
       )
     })
+
+    it('should display an error when date in the past is entered', () => {
+      cy.get('[data-test=custom_date-day]').clear().type(1)
+      cy.get('[data-test=custom_date-month]').clear().type(1)
+      cy.get('[data-test=custom_date-year]').clear().type(2000)
+
+      clickButton('Save task')
+
+      cy.get('[data-test="field-customDate"]').should(
+        'contain.text',
+        'Enter a date in the future'
+      )
+    })
   })
 
   context('When creating a task with task reminders', () => {
