@@ -59,7 +59,6 @@ import Order from './Order'
 import Task from './Task'
 import OrderServiceTypes from './OrderServiceTypes'
 
-
 export default {
   ...Company.tasks,
   ...CompanyContacts.tasks,
