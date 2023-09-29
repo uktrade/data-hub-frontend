@@ -2,6 +2,7 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
+import { useSearchParam } from 'react-use'
 
 import { CollectionList } from '../../../components'
 import {
@@ -11,7 +12,6 @@ import {
 import urls from '../../../../lib/urls'
 import ProjectLayout from '../../../components/Layout/ProjectLayout'
 import { transformTaskToListItem } from './transformers'
-import { useSearchParam } from 'react-use'
 import { ITEMS_PER_PAGE } from './constants'
 
 const ProjectTasks = () => {
