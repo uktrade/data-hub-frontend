@@ -98,7 +98,7 @@ describe('Investment project task', () => {
       cy.get('[data-test=task-due-date-custom-date]').click()
       cy.get('[data-test=custom_date-day]').type(25)
       cy.get('[data-test=custom_date-month]').type(12)
-      cy.get('[data-test=custom_date-year]').type(2023)
+      cy.get('[data-test=custom_date-year]').type(3023)
 
       cy.get('[data-test=field-taskRemindersEnabled]').click()
       cy.get('[data-test=task-reminder-days-input]').type(1)
@@ -113,7 +113,7 @@ describe('Investment project task', () => {
         task: {
           title: 'test task',
           description: 'test description',
-          due_date: '2023-12-25',
+          due_date: '3023-12-25',
           email_reminders_enabled: true,
           reminder_days: 1,
           advisers: [whoami.id],

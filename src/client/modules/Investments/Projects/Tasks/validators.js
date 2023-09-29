@@ -1,8 +1,10 @@
-const { transformDateObjectToDateString } = require('../../../../transformers')
-const { isDateInFuture } = require('../../../../utils/date')
+const {
+  isDateInFuture,
+  transformValueForAPI,
+} = require('../../../../utils/date')
 
 export const validateIfDateInFuture = (values) =>
-  isDateInFuture(transformDateObjectToDateString(values))
+  isDateInFuture(transformValueForAPI(values))
     ? null
     : 'Enter a date in the future'
 
