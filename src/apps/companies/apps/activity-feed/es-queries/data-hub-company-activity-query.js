@@ -120,6 +120,10 @@ const dataHubCompanyActivityQuery = ({
         ],
       },
     }
+    shouldCriteria.push(externalActivityCriteria)
+  }
+
+  if (isInternalActivityFilter(activityType)) {
     if (maxemailCampaignIds?.length) {
       const criteria = {
         bool: {
@@ -139,10 +143,7 @@ const dataHubCompanyActivityQuery = ({
       }
       shouldCriteria.push(criteria)
     }
-    shouldCriteria.push(externalActivityCriteria)
-  }
 
-  if (isInternalActivityFilter(activityType)) {
     if (aventriEventIds?.length) {
       const criteria = {
         bool: {

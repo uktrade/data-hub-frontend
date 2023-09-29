@@ -166,6 +166,25 @@ describe('Activity feed controllers', () => {
                     {
                       bool: {
                         must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
                           { term: { 'object.type': 'dit:aventri:Event' } },
                           {
                             terms: {
@@ -370,25 +389,6 @@ describe('Activity feed controllers', () => {
                           must: [
                             {
                               term: {
-                                'object.type': 'dit:maxemail:Campaign',
-                              },
-                            },
-                            {
-                              terms: {
-                                id: [
-                                  'dit:maxemail:Campaign:123:Create',
-                                  'dit:maxemail:Campaign:124:Create',
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        bool: {
-                          must: [
-                            {
-                              term: {
                                 'object.type':
                                   'dit:directoryFormsApi:Submission',
                               },
@@ -492,25 +492,6 @@ describe('Activity feed controllers', () => {
                             must: [
                               {
                                 term: {
-                                  'object.type': 'dit:maxemail:Campaign',
-                                },
-                              },
-                              {
-                                terms: {
-                                  id: [
-                                    'dit:maxemail:Campaign:123:Create',
-                                    'dit:maxemail:Campaign:124:Create',
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          bool: {
-                            must: [
-                              {
-                                term: {
                                   'object.type':
                                     'dit:directoryFormsApi:Submission',
                                 },
@@ -534,6 +515,25 @@ describe('Activity feed controllers', () => {
                                     'fred@acme.org',
                                     'fred@acme.org',
                                     'byvanuwenu@yahoo.com',
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        {
+                          bool: {
+                            must: [
+                              {
+                                term: {
+                                  'object.type': 'dit:maxemail:Campaign',
+                                },
+                              },
+                              {
+                                terms: {
+                                  id: [
+                                    'dit:maxemail:Campaign:123:Create',
+                                    'dit:maxemail:Campaign:124:Create',
                                   ],
                                 },
                               },
@@ -672,6 +672,31 @@ describe('Activity feed controllers', () => {
                                 'fred@acme.org',
                                 'fred@acme.org',
                                 'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
                               ],
                             },
                           },
@@ -845,6 +870,33 @@ describe('Activity feed controllers', () => {
                     {
                       bool: {
                         must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
+                              ],
+                            },
+                          },
+                        ],
+                        must_not: [
+                          {
+                            term: {
+                              'object.attributedTo.id':
+                                'dit:DataHubAdviser:123',
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
                           { term: { 'object.type': 'dit:aventri:Event' } },
                           {
                             terms: {
@@ -992,6 +1044,25 @@ describe('Activity feed controllers', () => {
                     {
                       bool: {
                         must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
                           { term: { 'object.type': 'dit:aventri:Event' } },
                           {
                             terms: {
@@ -1127,6 +1198,37 @@ describe('Activity feed controllers', () => {
                                 'fred@acme.org',
                                 'fred@acme.org',
                                 'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isBefore(dateBefore))",
+                                params: {
+                                  dateBefore: '2015-10-02T03:41:20.000Z',
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
                               ],
                             },
                           },
@@ -1316,6 +1418,37 @@ describe('Activity feed controllers', () => {
                                 'fred@acme.org',
                                 'fred@acme.org',
                                 'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                          {
+                            script: {
+                              script: {
+                                lang: 'painless',
+                                source:
+                                  "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); return (filterDateTime.isAfter(dateAfter))",
+                                params: {
+                                  dateAfter: '2015-10-02T03:41:20.000Z',
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:maxemail:Campaign',
+                            },
+                          },
+                          {
+                            terms: {
+                              id: [
+                                'dit:maxemail:Campaign:123:Create',
+                                'dit:maxemail:Campaign:124:Create',
                               ],
                             },
                           },
@@ -1531,6 +1664,38 @@ describe('Activity feed controllers', () => {
                       {
                         bool: {
                           must: [
+                            {
+                              term: {
+                                'object.type': 'dit:maxemail:Campaign',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:maxemail:Campaign:123:Create',
+                                  'dit:maxemail:Campaign:124:Create',
+                                ],
+                              },
+                            },
+                            {
+                              script: {
+                                script: {
+                                  lang: 'painless',
+                                  source:
+                                    "ZonedDateTime filterDateTime = ((doc['object.startTime'].size() > 0) ? doc['object.startTime'].value : doc['object.published'].value); ZonedDateTime dateAfter = ZonedDateTime.parse(params['dateAfter']); ZonedDateTime dateBefore = ZonedDateTime.parse(params['dateBefore']); return (filterDateTime.isAfter(dateAfter) && filterDateTime.isBefore(dateBefore))",
+                                  params: {
+                                    dateAfter: '2002-06-13T00:00:00.000Z',
+                                    dateBefore: '2022-06-13T23:59:59.999Z',
+                                  },
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
                             { term: { 'object.type': 'dit:aventri:Event' } },
                             {
                               terms: {
@@ -1685,6 +1850,25 @@ describe('Activity feed controllers', () => {
                                   'fred@acme.org',
                                   'fred@acme.org',
                                   'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type': 'dit:maxemail:Campaign',
+                              },
+                            },
+                            {
+                              terms: {
+                                id: [
+                                  'dit:maxemail:Campaign:123:Create',
+                                  'dit:maxemail:Campaign:124:Create',
                                 ],
                               },
                             },

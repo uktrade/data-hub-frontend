@@ -7,7 +7,6 @@ const {
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
   FILTER_FEED_TYPE,
-  FILTER_KEYS,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
@@ -103,13 +102,6 @@ async function getMaxemailEmailsByCampaign(req, next, contacts) {
   } catch (error) {
     next(error)
   }
-}
-
-const isExternalActivityFilter = (activityType) => {
-  return (
-    activityType.includes(FILTER_KEYS.externalActivity) ||
-    activityType.includes(FILTER_KEYS.dataHubAndExternalActivity)
-  )
 }
 
 // Filter Contacts with empty email addresses or Null Emails
@@ -280,9 +272,11 @@ async function fetchActivityFeedHandler(req, res, next) {
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
-    const maxemailCampaigns = isExternalActivityFilter(activityType)
-      ? await getMaxemailEmailsByCampaign(req, next, filteredContacts)
-      : {}
+    const maxemailCampaigns = await getMaxemailEmailsByCampaign(
+      req,
+      next,
+      filteredContacts
+    )
 
     const query = dataHubCompanyActivityQuery({
       from,
