@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker'
+import { pick } from 'lodash'
 
 import { listFaker } from './utils'
+import { investmentProjectFaker } from './investment-projects'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -47,6 +49,14 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
     })
   )
 
+const investmentProjectTaskFaker = (overrides = {}) => ({
+  id: faker.string.uuid(),
+  investment_project: pick(investmentProjectFaker(), ['id', 'name']),
+  task: taskFaker(),
+  createdOn: faker.date.past().toISOString(),
+  ...overrides,
+})
+
 const taskListFaker = (length = 3, overrides) =>
   listFaker({
     fakerFunction: taskWithInvestmentProjectFaker,
@@ -61,11 +71,20 @@ const taskWithInvestmentProjectListFaker = (length = 3, overrides) =>
     overrides,
   })
 
+const investmentProjectTaskListFaker = (length = 3, overrides) =>
+  listFaker({
+    fakerFunction: investmentProjectTaskFaker,
+    length,
+    overrides,
+  })
+
 export {
   taskFaker,
   taskListFaker,
+  investmentProjectTaskFaker,
   taskWithInvestmentProjectFaker,
   taskWithInvestmentProjectListFaker,
+  investmentProjectTaskListFaker,
 }
 
 export default taskListFaker

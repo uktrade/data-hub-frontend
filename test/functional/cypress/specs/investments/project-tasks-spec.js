@@ -5,7 +5,7 @@
 
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { investmentProjectTaskListFaker } from '../../fakers/tasks'
+import { investmentProjectTaskListFaker } from '../../fakers/task'
 
 const tasksList = investmentProjectTaskListFaker(15)
 
