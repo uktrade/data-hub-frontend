@@ -55,8 +55,9 @@ const ProjectTasks = () => {
               sortby: 'task__due_date',
             }}
           >
-            {(_, count, rawData) => {
-              const tasks = rawData.results.map(transformTaskToListItem)
+            {(projectTasks, count) => {
+              const tasks = projectTasks.map(transformTaskToListItem)
+
               return (
                 <CollectionList
                   addItemUrl={urls.investments.projects.tasks.create(projectId)}

@@ -274,19 +274,18 @@ export const transformInvestmentProjectToListItem = ({
 }
 
 export const transformTaskToListItem = ({
-  id,
-  created_on,
-  task: { title, due_date, advisers },
+  createdOn,
+  task: { id, title, dueDate, advisers },
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),
   headingText: title,
   metadata: [
-    { label: 'Date created', value: format(created_on, 'dd MMMM yyyy') },
+    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
     {
       label: 'Due date',
-      value: due_date ? format(due_date, 'dd MMMM yyyy') : NOT_SET_TEXT,
+      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
     },
-    { label: 'Assigned to', value: advisers.map((a) => a.name).join(',') },
+    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
   ],
 })

@@ -1,13 +1,42 @@
-// does the add tasks link appear with the correct link
-// does the task display with the correct values
-//  check multiple advisors, check due date not set, check created dates
-// check the pagination
-
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { investmentProjectTaskListFaker } from '../../fakers/task'
+import { investmentProjectTaskFaker, taskFaker } from '../../fakers/task'
+import { format } from '../../../../../src/client/utils/date'
+import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 
-const tasksList = investmentProjectTaskListFaker(15)
+const investmentProjectTaskWithAllOptionalFields = investmentProjectTaskFaker()
+const investmentProjectTaskMissingAllOptionalFields =
+  investmentProjectTaskFaker({ task: taskFaker({ dueDate: undefined }) })
+
+const assertTaskItem = (index, investmentTask) => {
+  cy.get('[data-test="collection-item"]')
+    .eq(index)
+    .find('a')
+    .should('have.text', `${investmentTask.task.title}`)
+    .and('have.attr', 'href', urls.tasks.details(investmentTask.task.id))
+
+  cy.get('[data-test="collection-item"]')
+    .eq(index)
+    .find('[data-test="metadata"]')
+    .should(
+      'contain',
+      `Date created ${format(investmentTask.createdOn, 'dd MMMM yyyy')}`
+    )
+    .and(
+      'contain',
+      `Due date ${
+        investmentTask.task.dueDate
+          ? format(investmentTask.task.dueDate, 'dd MMMM yyyy')
+          : NOT_SET_TEXT
+      }`
+    )
+    .and(
+      'contain',
+      `Assigned to ${investmentTask.task.advisers
+        .map((a) => a.name)
+        .join(', ')}`
+    )
+}
 
 describe('Investment project tasks', () => {
   context('When the project has tasks', () => {
@@ -17,8 +46,11 @@ describe('Investment project tasks', () => {
         `/api-proxy/v4/investmentprojecttask?investment_project=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=task__due_date`,
         {
           body: {
-            count: tasksList.length,
-            results: tasksList,
+            count: 2,
+            results: [
+              investmentProjectTaskWithAllOptionalFields,
+              investmentProjectTaskMissingAllOptionalFields,
+            ],
           },
         }
       ).as('apiRequest')
@@ -27,11 +59,28 @@ describe('Investment project tasks', () => {
           fixtures.investment.investmentWithDetails.id
         )
       )
+      cy.wait('@apiRequest')
     })
 
-    it('should display the tasks list', () => {
-      cy.wait('@apiRequest')
-      // cy.get('[data-test="collection-header').should('contain', '1 interaction')
+    it('should display the task with all fields', () => {
+      assertTaskItem(0, investmentProjectTaskWithAllOptionalFields)
+    })
+
+    it('should display the task with missing optional fields', () => {
+      assertTaskItem(1, investmentProjectTaskMissingAllOptionalFields)
+    })
+
+    it('should display the add task button', () => {
+      cy.get('[data-test="add-collection-item-button"]')
+        .should('exist')
+        .should('contain', 'Add task')
+        .should(
+          'have.attr',
+          'href',
+          urls.investments.projects.tasks.create(
+            fixtures.investment.investmentWithDetails.id
+          )
+        )
     })
   })
 })
