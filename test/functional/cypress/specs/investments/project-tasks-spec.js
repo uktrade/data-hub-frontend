@@ -43,7 +43,7 @@ describe('Investment project tasks', () => {
     before(() => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/investmentprojecttask?investment_project=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=task__due_date`,
+        `/api-proxy/v4/investmentprojecttask?investment_project=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=task__due_date&archived=false`,
         {
           body: {
             count: 2,
