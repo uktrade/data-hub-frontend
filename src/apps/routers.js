@@ -68,6 +68,7 @@ const reactRoutes = [
   '/tasks/:taskId',
   '/omis/:orderId/edit/internal-details',
   '/investments/projects/:projectId/tasks/create',
+  '/investments/projects/:projectId/tasks',
 ]
 
 reactRoutes.forEach((path) => {

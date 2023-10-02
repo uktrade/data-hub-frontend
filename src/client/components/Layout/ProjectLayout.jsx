@@ -15,6 +15,7 @@ import {
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
+import { adviserTasksFeatureFlag } from '../../modules/AdviserTasks/constants'
 
 const StyledNavWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_5};
@@ -32,23 +33,35 @@ const userCanViewPropositions = (permissions) =>
 const userCanViewAdmin = (permissions) =>
   permissions.includes('investment.change_to_any_stage_investmentproject')
 
-const ProjectLayout = ({
+const userCanViewTasks = (activeFeatures) =>
+  activeFeatures.includes(adviserTasksFeatureFlag)
+
+const localProjectUrl = (url, project) => project && url(project.id)
+
+export const ProjectLayout = ({
   project,
   breadcrumbs,
   pageTitle,
   children,
   userPermissions,
+  activeFeatures,
 }) => (
   <DefaultLayout
-    heading={project.name}
-    headingLink={{
-      url: urls.companies.detail(project.investorCompany.id),
-      text: project.investorCompany.name,
-    }}
-    pageTitle={`${pageTitle} - ${project.name} - Projects - Investments`}
+    heading={project && project.name}
+    headingLink={
+      project && {
+        url: urls.companies.detail(project.investorCompany.id),
+        text: project.investorCompany.name,
+      }
+    }
+    pageTitle={`${pageTitle} - ${
+      project && project.name
+    } - Projects - Investments`}
     breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
     useReactRouter={false}
-    localHeaderChildren={<InvestmentProjectLocalHeader investment={project} />}
+    localHeaderChildren={
+      project && <InvestmentProjectLocalHeader investment={project} />
+    }
   >
     <GridRow>
       <GridCol setWidth="one-quarter">
@@ -56,20 +69,34 @@ const ProjectLayout = ({
           <LocalNav>
             <LocalNavLink
               dataTest="project-details-link"
-              href={urls.investments.projects.details(project.id)}
+              href={localProjectUrl(urls.investments.projects.details, project)}
             >
               Project details
             </LocalNavLink>
             <LocalNavLink
               dataTest="project-team-link"
-              href={urls.investments.projects.team(project.id)}
+              href={localProjectUrl(urls.investments.projects.team, project)}
             >
               Project team
             </LocalNavLink>
+            {userCanViewTasks(activeFeatures) && (
+              <LocalNavLink
+                dataTest="project-tasks-link"
+                href={localProjectUrl(
+                  urls.investments.projects.tasks.index,
+                  project
+                )}
+              >
+                Tasks
+              </LocalNavLink>
+            )}
             {userCanViewInteractions(userPermissions) && (
               <LocalNavLink
                 dataTest="project-interactions-link"
-                href={urls.investments.projects.interactions.index(project.id)}
+                href={localProjectUrl(
+                  urls.investments.projects.interactions.index,
+                  project
+                )}
                 aria-label="Project interactions"
               >
                 Interactions
@@ -78,33 +105,45 @@ const ProjectLayout = ({
             {userCanViewPropositions(userPermissions) && (
               <LocalNavLink
                 dataTest="project-propositions-link"
-                href={urls.investments.projects.propositions(project.id)}
+                href={localProjectUrl(
+                  urls.investments.projects.propositions,
+                  project
+                )}
               >
                 Propositions
               </LocalNavLink>
             )}
             <LocalNavLink
               dataTest="project-evaluation-link"
-              href={urls.investments.projects.evaluation(project.id)}
+              href={localProjectUrl(
+                urls.investments.projects.evaluation,
+                project
+              )}
             >
               Evaluations
             </LocalNavLink>
             <LocalNavLink
               dataTest="project-history-link"
-              href={urls.investments.editHistory.index(project.id)}
+              href={localProjectUrl(
+                urls.investments.editHistory.index,
+                project
+              )}
             >
               Edit history
             </LocalNavLink>
             <LocalNavLink
               dataTest="project-evidence-link"
-              href={urls.investments.projects.evidence.index(project.id)}
+              href={localProjectUrl(
+                urls.investments.projects.evidence.index,
+                project
+              )}
             >
               Evidence
             </LocalNavLink>
             {userCanViewAdmin(userPermissions) && (
               <LocalNavLink
                 dataTest="project-admin-link"
-                href={urls.investments.projects.admin(project.id)}
+                href={localProjectUrl(urls.investments.projects.admin, project)}
               >
                 Admin
               </LocalNavLink>

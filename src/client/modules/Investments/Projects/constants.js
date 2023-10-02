@@ -107,3 +107,5 @@ export const PROJECT_STATUS_OPTIONS = [
   { label: 'Lost', value: 'lost' },
   { label: 'Dormant', value: 'dormant' },
 ]
+
+export const ITEMS_PER_PAGE = 10

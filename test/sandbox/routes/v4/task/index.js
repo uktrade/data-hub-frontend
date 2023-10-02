@@ -21,3 +21,7 @@ exports.createTask = function (req, res) {
 exports.updateTask = function (req, res) {
   res.status(200).json({ ...req.body })
 }
+
+exports.investmentProjectTasks = function (req, res) {
+  res.json({ count: 0, next: null, previous: null, results: [] })
+}

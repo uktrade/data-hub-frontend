@@ -18,6 +18,7 @@ import {
 } from './constants'
 import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -271,3 +272,20 @@ export const transformInvestmentProjectToListItem = ({
     metadata,
   }
 }
+
+export const transformTaskToListItem = ({
+  createdOn,
+  task: { id, title, dueDate, advisers },
+} = {}) => ({
+  id,
+  headingUrl: urls.tasks.details(id),
+  headingText: title,
+  metadata: [
+    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
+    {
+      label: 'Due date',
+      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
+    },
+    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
+  ],
+})
