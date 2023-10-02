@@ -41,9 +41,7 @@ const taskDueDateOptions = [
 
 const InvestmentProjectTask = ({ currentAdviserId, investmentProject }) => {
   const { projectId } = useParams()
-  const investmentCompanyName = investmentProject
-    ? investmentProject.investorCompany?.name
-    : ''
+  const investmentCompanyName = investmentProject?.investorCompany?.name || ''
   return (
     <DefaultLayout
       heading={`Add task for ${investmentCompanyName}`}
@@ -53,7 +51,7 @@ const InvestmentProjectTask = ({ currentAdviserId, investmentProject }) => {
         { link: urls.investments.projects.index(), text: 'Projects' },
         {
           link: urls.investments.projects.details(investmentProject?.id),
-          text: investmentProject?.name,
+          text: investmentProject?.name || '',
         },
         { text: `Add task for ${investmentCompanyName}` },
       ]}
