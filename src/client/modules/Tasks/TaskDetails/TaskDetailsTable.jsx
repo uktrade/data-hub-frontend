@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link } from 'govuk-react'
 
-import { Form, FormLayout, SummaryTable } from '../../../components'
+import { SummaryTable } from '../../../components'
 
 import { formatLongDate } from '../../../utils/date'
 import { transformAdvisers } from './transformers'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK } from './state'
-import { FORM_LAYOUT } from '../../../../common/constants'
+import TaskButtons from './TaskButtons'
 
 const TaskDetailsTable = ({ task, company }) => (
   <>
@@ -49,34 +48,7 @@ const TaskDetailsTable = ({ task, company }) => (
       />
       <SummaryTable.Row heading="Created by" children={task.createdBy.name} />
     </SummaryTable>
-    {!task.archived && (
-      <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-        <Form
-          id="archive-task-form"
-          analyticsFormName="archiveTaskForm"
-          redirectTo={() =>
-            urls.investments.projects.tasks.index(
-              task.investmentProjectTask.investmentProject.id
-            )
-          }
-          cancelRedirectTo={() =>
-            urls.investments.projects.tasks.index(
-              task.investmentProjectTask.investmentProject.id
-            )
-          }
-          submissionTaskName={TASK_ARCHIVE_TASK}
-          transformPayload={(values) => ({
-            values,
-            taskId: task.id,
-          })}
-          flashMessage={() => 'Task marked as complete'}
-          submitButtonLabel="Mark as complete"
-          initialValues={task}
-        >
-          {() => <></>}
-        </Form>
-      </FormLayout>
-    )}
+    <TaskButtons task={task} />
   </>
 )
 

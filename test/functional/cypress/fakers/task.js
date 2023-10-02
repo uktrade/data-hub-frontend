@@ -35,7 +35,6 @@ const taskFaker = (overrides = {}) => ({
 const taskWithInvestmentProjectFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
-      ...overrides,
       investmentProjectTask: {
         investmentProject: {
           investorCompany: {
@@ -46,6 +45,7 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
         },
         id: faker.string.uuid(),
       },
+      ...overrides,
     })
   )
 
