@@ -651,5 +651,6 @@ module.exports = {
   },
   tasks: {
     details: url('/tasks', '/:taskId'),
+    archive: url('/tasks', '/:taskId/archive'),
   },
 }

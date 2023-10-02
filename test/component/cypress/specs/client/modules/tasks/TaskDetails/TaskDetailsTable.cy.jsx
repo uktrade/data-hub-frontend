@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { assertSummaryTable } from '../../../../../../../functional/cypress/support/assertions'
+import {
+  assertFormButtons,
+  assertSummaryTable,
+} from '../../../../../../../functional/cypress/support/assertions'
 import { taskWithInvestmentProjectFaker } from '../../../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../../../src/client/utils/date'
@@ -73,6 +76,35 @@ describe('ProjectLayout', () => {
           'Created by': investmentProjectTask.createdBy.name,
         },
       })
+    })
+  })
+
+  context('When a task is not completed', () => {
+    const investmentProjectTask = taskWithInvestmentProjectFaker()
+    const company =
+      investmentProjectTask.investmentProjectTask.investmentProject
+        .investorCompany
+
+    it('should show the Mark as complete button', () => {
+      cy.mount(<Component task={investmentProjectTask} company={company} />)
+      assertFormButtons(
+        'Mark as complete',
+        'cancel',
+        urls.investments.projects.tasks.index(
+          investmentProjectTask.investmentProject.id
+        )
+      )
+    })
+  })
+
+  context('When a task is completed', () => {
+    const investmentProjectTask = taskWithInvestmentProjectFaker()
+    const company =
+      investmentProjectTask.investmentProjectTask.investmentProject
+        .investorCompany
+
+    it('should not show the Mark as complete button', () => {
+      cy.mount(<Component task={investmentProjectTask} company={company} />)
     })
   })
 })

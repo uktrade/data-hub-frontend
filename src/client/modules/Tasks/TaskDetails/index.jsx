@@ -27,8 +27,8 @@ const TaskDetails = ({ task }) => {
         {
           text: taskTitle,
         },
-        company?.id,
-        company?.name
+        company?.id ? company.id : '',
+        company?.name ? company.name : ''
       )}
       useReactRouter={false}
     >
