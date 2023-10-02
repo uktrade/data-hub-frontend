@@ -51,9 +51,10 @@ import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
-import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
 import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
+import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
+import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/InvestmentProjectTaskEdit'
 
 const routes = {
   companies: [
@@ -357,6 +358,11 @@ const routes = {
       path: '/investments/projects/:projectId/tasks/create',
       module: 'datahub:investments',
       component: InvestmentProjectTaskAdd,
+    },
+    {
+      path: '/investments/projects/:projectId/tasks/:taskId/edit',
+      module: 'datahub:investments',
+      component: InvestmentProjectTaskEdit,
     },
     {
       path: '/investments/projects',
