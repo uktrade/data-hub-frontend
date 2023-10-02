@@ -33,6 +33,25 @@
               "must":[
                 {
                   "term":{
+                    "object.type": "dit:maxemail:Campaign"
+                  }
+                },
+                {
+                  "terms":{
+                    "id":[
+                      "dit:maxemail:Campaign:123:Create",
+                      "dit:maxemail:Campaign:124:Create"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "bool":{
+              "must":[
+                {
+                  "term":{
                     "object.type":"dit:aventri:Event"
                   }
                 },
