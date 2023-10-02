@@ -49,6 +49,7 @@ import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
+import InvestmentProjectTask from './modules/Investments/Projects/Tasks/InvestmentProjectTask'
 
 const routes = {
   companies: [
@@ -325,6 +326,11 @@ const routes = {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',
       module: 'datahub:investments',
       component: DeleteProjectDocument,
+    },
+    {
+      path: '/investments/projects/:projectId/tasks/create',
+      module: 'datahub:investments',
+      component: InvestmentProjectTask,
     },
     {
       path: '/investments/projects',

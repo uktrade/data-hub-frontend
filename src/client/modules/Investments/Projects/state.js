@@ -16,11 +16,14 @@ export const TASK_UPDATE_INVESTMENT_PROJECT_STAGE =
   'TASK_UPDATE_INVESTMENT_PROJECT_STAGE'
 
 export const INVESTMENT_PROJECTS_ID = 'projectsList'
+export const INVESTMENT_PROJECT_ID = 'investmentProject'
+
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME =
   'TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME'
 export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
   'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
+export const TASK_GET_INVESTMENT_PROJECT = 'TASK_GET_INVESTMENT_PROJECT'
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
@@ -73,3 +76,7 @@ export const state2props = ({ router, ...state }) => {
     },
   }
 }
+
+export const investmentProjectState2props = (state) => ({
+  ...state[INVESTMENT_PROJECT_ID],
+})

@@ -71,6 +71,7 @@ const ALLOWLIST = [
   '/v4/dnb/:companyId/related-companies/count',
   '/v3/omis/order/:id',
   '/v4/task/:id',
+  '/v4/investmentprojecttask',
 ]
 
 module.exports = (app) => {
