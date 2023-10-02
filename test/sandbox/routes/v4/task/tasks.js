@@ -14,6 +14,8 @@ const generateTask = (overrides = {}) => {
     archived_by: null,
     created_by: generatePerson(),
     modified_by: generatePerson(),
+    modified_on: faker.date.past().toISOString(),
+    created_on: faker.date.past().toISOString(),
     ...overrides,
   }
 }

@@ -350,6 +350,8 @@ import {
   TASK_EDIT_OMIS_INTERNAL_INFORMATION,
 } from './modules/Omis/state'
 import { updateOrder } from './modules/Omis/tasks'
+import { getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
+import { TASK_GET_TASK_DETAILS } from './modules/Tasks/TaskDetails/state'
 
 export const tasks = {
   'Create list': createList,
@@ -540,4 +542,5 @@ export const tasks = {
   [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
+  [TASK_GET_TASK_DETAILS]: getTaskDetail,
 }

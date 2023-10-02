@@ -6,7 +6,6 @@ const { setHomeBreadcrumb } = require('./middleware')
 const subApps = fs.readdirSync(__dirname, { withFileTypes: true })
 
 const appsRouters = []
-
 const reactRoutes = [
   '/companies',
   '/contacts',
@@ -66,6 +65,7 @@ const reactRoutes = [
   '/investments/profiles',
   '/investments/opportunities',
   '/omis/:orderId/edit/quote-details',
+  '/tasks/:taskId',
   '/omis/:orderId/edit/internal-details',
 ]
 
