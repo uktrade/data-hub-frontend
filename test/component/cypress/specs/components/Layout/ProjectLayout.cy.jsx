@@ -24,9 +24,9 @@ describe('ProjectLayout', () => {
   })
 
   context('When a user is missing the tasks feature flag', () => {
-    it('they should not see the tasks menu item', () => {
+    it('they should see the tasks menu item', () => {
       cy.mount(<Component activeFeatures={[]} />)
-      cy.get('[data-test=project-tasks-link]').should('not.exist')
+      cy.get('[data-test=project-tasks-link]').should('exist')
     })
   })
 })

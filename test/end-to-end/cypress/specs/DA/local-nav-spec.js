@@ -85,6 +85,7 @@ describe('DA Permission', () => {
       assertLocalReactNav('[data-test=local-nav] > ul', [
         'Project details',
         'Project team',
+        'Tasks',
         'Interactions',
         'Evaluations',
         'Propositions',
