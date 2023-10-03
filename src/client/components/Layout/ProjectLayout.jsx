@@ -15,7 +15,6 @@ import {
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
-import { adviserTasksFeatureFlag } from '../../modules/AdviserTasks/constants'
 
 const StyledNavWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_5};
@@ -33,9 +32,6 @@ const userCanViewPropositions = (permissions) =>
 const userCanViewAdmin = (permissions) =>
   permissions.includes('investment.change_to_any_stage_investmentproject')
 
-const userCanViewTasks = (activeFeatures) =>
-  activeFeatures.includes(adviserTasksFeatureFlag)
-
 const localProjectUrl = (url, project) => project && url(project.id)
 
 export const ProjectLayout = ({
@@ -44,7 +40,6 @@ export const ProjectLayout = ({
   pageTitle,
   children,
   userPermissions,
-  activeFeatures,
 }) => (
   <DefaultLayout
     heading={project && project.name}
@@ -79,17 +74,15 @@ export const ProjectLayout = ({
             >
               Project team
             </LocalNavLink>
-            {userCanViewTasks(activeFeatures) && (
-              <LocalNavLink
-                dataTest="project-tasks-link"
-                href={localProjectUrl(
-                  urls.investments.projects.tasks.index,
-                  project
-                )}
-              >
-                Tasks
-              </LocalNavLink>
-            )}
+            <LocalNavLink
+              dataTest="project-tasks-link"
+              href={localProjectUrl(
+                urls.investments.projects.tasks.index,
+                project
+              )}
+            >
+              Tasks
+            </LocalNavLink>
             {userCanViewInteractions(userPermissions) && (
               <LocalNavLink
                 dataTest="project-interactions-link"
