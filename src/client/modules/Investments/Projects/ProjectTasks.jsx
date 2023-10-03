@@ -76,7 +76,7 @@ const ProjectTasks = ({ project }) => {
           return (
             <CollectionList
               addItemUrl={urls.investments.projects.tasks.create(projectId)}
-              collectionName="tasks"
+              collectionName="task"
               items={tasks}
               count={count}
               isComplete={true}
