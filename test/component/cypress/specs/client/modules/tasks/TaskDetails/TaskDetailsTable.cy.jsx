@@ -6,9 +6,14 @@ import urls from '../../../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../../../../src/apps/companies/constants'
 import TaskDetailsTable from '../../../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
+import DataHubProvider from '../../../../provider'
 
-describe('ProjectLayout', () => {
-  const Component = (props) => <TaskDetailsTable {...props} />
+describe('Task details table', () => {
+  const Component = (props) => (
+    <DataHubProvider>
+      <TaskDetailsTable {...props} />
+    </DataHubProvider>
+  )
 
   context('When a task has all optional fields set', () => {
     const investmentProjectTask = taskWithInvestmentProjectFaker()
