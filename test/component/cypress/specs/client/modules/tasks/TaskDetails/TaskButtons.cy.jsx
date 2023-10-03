@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { taskWithInvestmentProjectFaker } from '../../../../../../../functional/cypress/fakers/task'
-import TaskDetailsTable from '../../../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
 import DataHubProvider from '../../../../provider'
+import TaskButtons from '../../../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 
 describe('Task buttons', () => {
   const Component = (props) => (
     <DataHubProvider>
-      <TaskDetailsTable {...props} />
+      <TaskButtons {...props} />
     </DataHubProvider>
   )
 

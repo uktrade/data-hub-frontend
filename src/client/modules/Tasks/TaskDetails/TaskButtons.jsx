@@ -20,8 +20,7 @@ const TaskButtons = ({ task }) => (
           }
           cancelRedirectTo={false}
           submissionTaskName={TASK_ARCHIVE_TASK}
-          transformPayload={(values) => ({
-            values,
+          transformPayload={() => ({
             taskId: task.id,
           })}
           flashMessage={() => 'Task marked as complete'}
