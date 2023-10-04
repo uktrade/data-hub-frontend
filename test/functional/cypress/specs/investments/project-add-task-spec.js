@@ -34,6 +34,10 @@ describe('Investment project task', () => {
       )
     })
 
+    after(() => {
+      cy.resetUser()
+    })
+
     it('should display the header', () => {
       cy.get('h1').should(
         'have.text',
