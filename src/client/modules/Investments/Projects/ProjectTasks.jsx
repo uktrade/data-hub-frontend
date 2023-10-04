@@ -67,6 +67,7 @@ const ProjectTasks = ({ project }) => {
           limit: ITEMS_PER_PAGE,
           offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
           sortby: 'task__due_date',
+          archived: false,
         }}
       >
         {(projectTasks, count) => {
