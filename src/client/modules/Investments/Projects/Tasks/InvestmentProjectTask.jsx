@@ -21,6 +21,7 @@ import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { INVESTMENT_PROJECT_ID, TASK_GET_INVESTMENT_PROJECT } from '../state'
 import { INVESTMENT__PROJECT_LOADED } from '../../../../actions'
 import Task from '../../../../components/Task'
+import { adviserTasksFeatureFlag } from '../../../AdviserTasks/constants'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -39,7 +40,14 @@ const taskDueDateOptions = [
   { label: 'No due date', value: 'none' },
 ]
 
-const InvestmentProjectTask = ({ currentAdviserId, investmentProject }) => {
+const userCanViewTaskReminders = (activeFeatures) =>
+  activeFeatures.includes(adviserTasksFeatureFlag)
+
+const InvestmentProjectTask = ({
+  currentAdviserId,
+  investmentProject,
+  activeFeatures,
+}) => {
   const { projectId } = useParams()
   const investmentCompanyName = investmentProject?.investorCompany?.name || ''
   return (
@@ -108,17 +116,19 @@ const InvestmentProjectTask = ({ currentAdviserId, investmentProject }) => {
                       }),
                     }))}
                   />
-                  <FieldRadios
-                    name="taskRemindersEnabled"
-                    legend="Do you want to set a reminder for this task?"
-                    required="Select reminder"
-                    options={OPTIONS_YES_NO.map((option) => ({
-                      ...option,
-                      ...(option.label === 'Yes' && {
-                        children: <FieldReminder />,
-                      }),
-                    }))}
-                  />
+                  {userCanViewTaskReminders(activeFeatures) && (
+                    <FieldRadios
+                      name="taskRemindersEnabled"
+                      legend="Do you want to set a reminder for this task?"
+                      required="Select reminder"
+                      options={OPTIONS_YES_NO.map((option) => ({
+                        ...option,
+                        ...(option.label === 'Yes' && {
+                          children: <FieldReminder />,
+                        }),
+                      }))}
+                    />
+                  )}
                   <Details summary="Find out more about task reminders">
                     <p>
                       By default reminders are sent at 8am, on the specified

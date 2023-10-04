@@ -25,11 +25,17 @@ describe('Investment project task', () => {
 
   context('When creating a task', () => {
     before(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
         )
       )
+    })
+
+    after(() => {
+      cy.resetUser()
     })
 
     it('should display the header', () => {
@@ -139,6 +145,8 @@ describe('Investment project task', () => {
 
   context('When creating a task with no data', () => {
     before(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
@@ -146,6 +154,10 @@ describe('Investment project task', () => {
       )
 
       clickButton('Save task')
+    })
+
+    after(() => {
+      cy.resetUser()
     })
 
     it('should display an error when no task title is entered', () => {
@@ -221,6 +233,8 @@ describe('Investment project task', () => {
 
   context('When creating a task with task reminders', () => {
     beforeEach(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
@@ -229,6 +243,10 @@ describe('Investment project task', () => {
       fill('[data-test=field-taskTitle]', 'task with some data')
 
       cy.get('[data-test=field-taskRemindersEnabled]').click()
+    })
+
+    afterEach(() => {
+      cy.resetUser()
     })
 
     it('should display an error when no task reminder days are entered', () => {
