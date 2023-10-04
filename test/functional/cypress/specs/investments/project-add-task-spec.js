@@ -152,6 +152,10 @@ describe('Investment project task', () => {
       clickButton('Save task')
     })
 
+    after(() => {
+      cy.resetUser()
+    })
+
     it('should display an error when no task title is entered', () => {
       assertFieldError(
         cy.get('[data-test="field-taskTitle"]'),
@@ -235,6 +239,10 @@ describe('Investment project task', () => {
       fill('[data-test=field-taskTitle]', 'task with some data')
 
       cy.get('[data-test=field-taskRemindersEnabled]').click()
+    })
+
+    afterEach(() => {
+      cy.resetUser()
     })
 
     it('should display an error when no task reminder days are entered', () => {
