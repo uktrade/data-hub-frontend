@@ -25,6 +25,8 @@ describe('Investment project task', () => {
 
   context('When creating a task', () => {
     before(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
@@ -139,6 +141,8 @@ describe('Investment project task', () => {
 
   context('When creating a task with no data', () => {
     before(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
@@ -221,6 +225,8 @@ describe('Investment project task', () => {
 
   context('When creating a task with task reminders', () => {
     beforeEach(() => {
+      cy.setUserFeatures(['adviser-tasks'])
+
       cy.visit(
         urls.investments.projects.tasks.create(
           fixtures.investment.investmentWithDetails.id
