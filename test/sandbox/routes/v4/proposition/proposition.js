@@ -1,6 +1,6 @@
-var outstandingPropositions = require('../../../fixtures/v4/proposition/outstanding_propositions.json')
+import outstandingPropositions from '../../../fixtures/v4/proposition/outstanding_propositions.json' assert { type: 'json' };
 
-exports.propositions = function (req, res) {
+export const propositions = function (req, res) {
   outstandingPropositions.results = outstandingPropositions.results.map(
     ({ deadline, ...rest }, i) => {
       let newDeadline = new Date()
@@ -12,4 +12,4 @@ exports.propositions = function (req, res) {
     }
   )
   res.json(outstandingPropositions)
-}
+};

@@ -1,5 +1,5 @@
-var healthcheck = require('../fixtures/ping.js')
+import { healthcarePing } from '../fixtures/ping.js'
 
-exports.ping = function (req, res) {
-  res.send(healthcheck.ping)
+export const ping = function (req, res) {
+  res.send(healthcarePing)
 }

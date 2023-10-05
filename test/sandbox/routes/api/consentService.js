@@ -1,7 +1,7 @@
-exports.person = function (req, res) {
+export const person = function (req, res) {
   res.json({})
-}
+};
 
-exports.bulkPerson = function (req, res) {
+export const bulkPerson = function (req, res) {
   res.json({ count: 0, next: null, previous: null, results: [] })
-}
+};

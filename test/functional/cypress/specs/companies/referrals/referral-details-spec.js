@@ -1,32 +1,27 @@
-const urls = require('../../../../../../src/lib/urls')
-const {
-  id: companyId,
-} = require('../../../../../sandbox/fixtures/v4/company/company-lambda-plc')
+import { companies, dashboard, contacts } from '../../../../../../src/lib/urls'
+import { id as companyId } from '../../../../../sandbox/fixtures/v4/company/company-lambda-plc'
 
-const selectors = require('../../../../../selectors')
-const { assertBreadcrumbs } = require('../../../support/assertions')
-const {
-  REFERRAL_ID,
-  REFERRAL_ID_NO_CONTACT,
-} = require('../../../../../sandbox/constants/referrals')
+import { localHeader } from '../../../../../selectors'
+import { assertBreadcrumbs } from '../../../support/assertions'
+import { REFERRAL_ID, REFERRAL_ID_NO_CONTACT } from '../../../../../sandbox/constants/referrals'
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
     before(() =>
-      cy.visit(urls.companies.referrals.details(companyId, REFERRAL_ID))
+      cy.visit(companies.referrals.details(companyId, REFERRAL_ID))
     )
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        Companies: urls.companies.index(),
-        'Lambda plc': urls.companies.detail(companyId),
+        Home: dashboard.index(),
+        Companies: companies.index(),
+        'Lambda plc': companies.detail(companyId),
         Referral: null,
       })
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', 'Referral')
+      cy.get(localHeader().heading).should('have.text', 'Referral')
     })
 
     it('should render the content and elements in order', () => {
@@ -43,7 +38,7 @@ describe('Referral details', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.detail(companyId, REFERRAL_ID)
+          companies.detail(companyId, REFERRAL_ID)
         )
 
       cy.get('@row')
@@ -53,7 +48,7 @@ describe('Referral details', () => {
         .and(
           'have.attr',
           'href',
-          urls.contacts.contact('6891d583-7f52-41af-a0d3-d8d527f20d43')
+          contacts.contact('6891d583-7f52-41af-a0d3-d8d527f20d43')
         )
 
       cy.get('@row')
@@ -98,7 +93,7 @@ describe('Referral details', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.referrals.help(companyId, REFERRAL_ID)
+          companies.referrals.help(companyId, REFERRAL_ID)
         )
         .parent()
         .find('a:nth-child(3)')
@@ -109,21 +104,21 @@ describe('Referral details', () => {
   context('when viewing referral details with no contact', () => {
     before(() =>
       cy.visit(
-        urls.companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
+        companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
       )
     )
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.index.route,
-        Companies: urls.companies.index(),
-        'Lambda plc': urls.companies.detail(companyId),
+        Home: dashboard.index.route,
+        Companies: companies.index(),
+        'Lambda plc': companies.detail(companyId),
         Referral: null,
       })
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', 'Referral')
+      cy.get(localHeader().heading).should('have.text', 'Referral')
     })
 
     it('should render the content and elements in order', () => {
@@ -179,7 +174,7 @@ describe('Referral details', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.referrals.help(companyId, REFERRAL_ID_NO_CONTACT)
+          companies.referrals.help(companyId, REFERRAL_ID_NO_CONTACT)
         )
         .parent()
         .find('a:nth-child(3)')
@@ -189,7 +184,7 @@ describe('Referral details', () => {
 
   context('when viewing details of a complete referral', () =>
     it('should display the Referral accepted summary instead of the buttons', () => {
-      cy.visit(urls.companies.referrals.details('any-id-will-do', 'completed'))
+      cy.visit(companies.referrals.details('any-id-will-do', 'completed'))
 
       cy.contains('Complete referral').should('not.exist')
       cy.contains('I cannot complete the referral').should('not.exist')
@@ -237,13 +232,13 @@ describe('Referral details', () => {
   )
   context('When you come to the details page from /my-referrals', () => {
     it('should take you back there when you click "back"', () => {
-      cy.visit(urls.dashboard.index())
+      cy.visit(dashboard.index())
       cy.contains('Referrals').click()
       cy.contains('Andy to Lou').click()
       cy.contains('Back').should(
         'have.attr',
         'href',
-        urls.companies.referrals.list()
+        companies.referrals.list()
       )
     })
   })
@@ -252,12 +247,12 @@ describe('Referral details', () => {
     () => {
       it('should take you to the company page when you click "back"', () => {
         cy.visit(
-          urls.companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
+          companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
         )
         cy.contains('Back').should(
           'have.attr',
           'href',
-          urls.companies.detail(companyId)
+          companies.detail(companyId)
         )
       })
     }

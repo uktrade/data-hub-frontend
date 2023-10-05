@@ -1,10 +1,10 @@
-var referralDetails = require('../../../fixtures/v4/referrals/referral-details.json')
-var referralDetailsNoContact = require('../../../fixtures/v4/referrals/referral-details-no-contact.json')
-var id = require('../../../constants/referrals')
+import referralDetails from '../../../fixtures/v4/referrals/referral-details.json' assert { type: 'json' };
+import referralDetailsNoContact from '../../../fixtures/v4/referrals/referral-details-no-contact.json' assert { type: 'json' };
+import id from '../../../constants/referrals';
 
-exports.referralDetails = function (req, res) {
+export const referralDetails = function (req, res) {
   if (req.params.id === id.REFERRAL_ID_NO_CONTACT) {
     return res.json(referralDetailsNoContact)
   }
   return res.json(referralDetails)
-}
+};

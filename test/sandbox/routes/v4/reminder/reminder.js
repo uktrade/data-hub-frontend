@@ -1,5 +1,5 @@
-var summary = require('../../../fixtures/v4/reminder/summary.json')
+import summaryJson from '../../../fixtures/v4/reminder/summary.json' assert { type: 'json' };
 
-exports.summary = function (req, res) {
-  res.json(summary)
-}
+export const summary = function (req, res) {
+  res.json(summaryJson)
+};

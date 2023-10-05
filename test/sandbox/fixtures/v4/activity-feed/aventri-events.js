@@ -1,6 +1,6 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker';
 
-const generateAventriEvent = (
+export const generateAventriEvent = (
   {
     id,
     name,
@@ -95,7 +95,7 @@ const generateAventriEvent = (
 /**
  * Generate an array of aventri event hits
  */
-const generateAventriEventHits = (additionalEventCount = 0) => {
+export const generateAventriEventHits = (additionalEventCount = 0) => {
   return [
     ...[
       {
@@ -156,7 +156,7 @@ const generateAventriEventHits = (additionalEventCount = 0) => {
 /**
  * Generates a full ES response for aventri events
  */
-const generateAventriEventESResponse = (additionalEventCount = 0) => {
+export const generateAventriEventESResponse = (additionalEventCount = 0) => {
   const events = generateAventriEventHits(additionalEventCount)
   return {
     took: 1930,
@@ -178,8 +178,3 @@ const generateAventriEventESResponse = (additionalEventCount = 0) => {
   }
 }
 
-module.exports = {
-  generateAventriEvent,
-  generateAventriEventESResponse,
-  generateAventriEventHits,
-}

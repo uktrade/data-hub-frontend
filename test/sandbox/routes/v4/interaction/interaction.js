@@ -1,23 +1,23 @@
-var interaction = require('../../../fixtures/v4/interaction/interaction.json')
-var interactionWithDocumentLink = require('../../../fixtures/v4/interaction/interaction-with-document-link.json')
-var interactionWithoutDocumentLink = require('../../../fixtures/v4/interaction/interaction-without-document-link.json')
-var interactions = require('../../../fixtures/v4/interaction/interactions.json')
-var interactionByInvestmentProjectId = require('../../../fixtures/v4/interaction/interaction-by-investment-project-id.json')
-var interactionByCompanyId = require('../../../fixtures/v4/interaction/interaction-by-company-id.json')
-var interactionByContactId = require('../../../fixtures/v4/interaction/interaction-by-contact-id.json')
-var interactionCancelledMeeting = require('../../../fixtures/v4/interaction/interaction-cancelled-meeting.json')
-var interactionCreate = require('../../../fixtures/v4/interaction/interaction-create.json')
-var interactionDraftFutureMeeting = require('../../../fixtures/v4/interaction/interaction-draft-future-meeting.json')
-var interactionDraftPastMeeting = require('../../../fixtures/v4/interaction/interaction-draft-past-meeting.json')
-var interactionValidationError = require('../../../fixtures/v4/interaction/interaction-validation-error.json')
-var interactionWithReferral = require('../../../fixtures/v4/interaction/interaction-with-referral.json')
-var interactionWithoutTheme = require('../../../fixtures/v4/interaction/interaction-without-theme')
-var interactionInvestmentTheme = require('../../../fixtures/v4/interaction/interaction-investment-theme.json')
-var interactionWithExportCountries = require('../../../fixtures/v4/interaction/interaction-with-export-countries.json')
-var interactionWithoutExportCountries = require('../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json')
-var interactionWithBusIntel = require('../../../fixtures/v4/interaction/interaction-with-business-intelligence.json')
+import interactionJson from '../../../fixtures/v4/interaction/interaction.json' assert { type: 'json' }
+import interactionWithDocumentLink from '../../../fixtures/v4/interaction/interaction-with-document-link.json' assert { type: 'json' }
+import interactionWithoutDocumentLink from '../../../fixtures/v4/interaction/interaction-without-document-link.json' assert { type: 'json' }
+import interactions from '../../../fixtures/v4/interaction/interactions.json' assert { type: 'json' }
+import interactionByInvestmentProjectId from '../../../fixtures/v4/interaction/interaction-by-investment-project-id.json' assert { type: 'json' }
+import interactionByCompanyId from '../../../fixtures/v4/interaction/interaction-by-company-id.json' assert { type: 'json' }
+import interactionByContactId from '../../../fixtures/v4/interaction/interaction-by-contact-id.json' assert { type: 'json' }
+import interactionCancelledMeeting from '../../../fixtures/v4/interaction/interaction-cancelled-meeting.json' assert { type: 'json' }
+import interactionCreate from '../../../fixtures/v4/interaction/interaction-create.json' assert { type: 'json' }
+import interactionDraftFutureMeeting from '../../../fixtures/v4/interaction/interaction-draft-future-meeting.json' assert { type: 'json' }
+import interactionDraftPastMeeting from '../../../fixtures/v4/interaction/interaction-draft-past-meeting.json' assert { type: 'json' }
+import interactionValidationError from '../../../fixtures/v4/interaction/interaction-validation-error.json' assert { type: 'json' }
+import interactionWithReferral from '../../../fixtures/v4/interaction/interaction-with-referral.json' assert { type: 'json' }
+import interactionWithoutTheme from '../../../fixtures/v4/interaction/interaction-without-theme.js'
+import interactionInvestmentTheme from '../../../fixtures/v4/interaction/interaction-investment-theme.json' assert { type: 'json' }
+import interactionWithExportCountries from '../../../fixtures/v4/interaction/interaction-with-export-countries.json' assert { type: 'json' }
+import interactionWithoutExportCountries from '../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json' assert { type: 'json' }
+import interactionWithBusIntel from '../../../fixtures/v4/interaction/interaction-with-business-intelligence.json' assert { type: 'json' }
 
-var getInteractions = function (req, res) {
+export const getInteractions = function (req, res) {
   if (req.query.contact_id) {
     return res.json(interactionByContactId)
   }
@@ -35,7 +35,7 @@ var getInteractions = function (req, res) {
   res.json(interactions)
 }
 
-var getInteractionById = function (req, res) {
+export const getInteractionById = function (req, res) {
   var interactions = {
     'ec4a46ef-6e50-4a5c-bba0-e311f0471312': interactionWithDocumentLink,
     '0dcb3748-c097-4f20-b84f-0114bbb1a8e0': interactionWithoutDocumentLink,
@@ -51,7 +51,7 @@ var getInteractionById = function (req, res) {
   }
 
   var interactionResponse =
-    interactions[req.params.interactionId] || interaction
+    interactions[req.params.interactionId] || interactionJson
 
   if (state.interaction) {
     var merged = _.merge({}, interactionResponse, {
@@ -64,7 +64,7 @@ var getInteractionById = function (req, res) {
   return res.json(interactionResponse)
 }
 
-var createInteraction = function (req, res) {
+export const createInteraction = function (req, res) {
   if (_.isEqual(req.body.companies, ['4e6a4edb-55e3-4461-a88d-84d329ee7eb8'])) {
     return res.status(400).json(interactionValidationError)
   }
@@ -85,16 +85,16 @@ var createInteraction = function (req, res) {
   res.status(201).json(interactionCreate)
 }
 
-var archiveInteraction = function (req, res) {
+export const archiveInteraction = function (req, res) {
   return getInteractionById(req, res)
 }
 
-var patchInteraction = function (req, res) {
+export const patchInteraction = function (req, res) {
   return getInteractionById(req, res)
 }
 
-exports.getInteractions = getInteractions
-exports.getInteractionById = getInteractionById
-exports.createInteraction = createInteraction
-exports.archiveInteraction = archiveInteraction
-exports.patchInteraction = patchInteraction
+// exports.getInteractions = getInteractions
+// exports.getInteractionById = getInteractionById
+// exports.createInteraction = createInteraction
+// exports.archiveInteraction = archiveInteraction
+// exports.patchInteraction = patchInteraction

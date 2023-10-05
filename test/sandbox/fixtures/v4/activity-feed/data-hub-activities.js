@@ -1,6 +1,6 @@
-const { generateAventriEventHits } = require('./aventri-events')
+import { generateAventriEventHits } from './aventri-events.js'
 
-const generateInvestment = () => ({
+export const generateInvestment = () => ({
   _index: 'activities__feed_id_datahub',
   _type: '_doc',
   _id: 'dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a:Add',
@@ -43,7 +43,7 @@ const generateInvestment = () => ({
   },
 })
 
-const generateInteraction = () => ({
+export const generateInteraction = () => ({
   _index:
     'activities__feed_id_datahub-interactions__date_2019-06-20__timestamp_1561034480__batch_id_xputyeio__',
   _type: '_doc',
@@ -102,7 +102,7 @@ const generateInteraction = () => ({
   sort: [1560787348796],
 })
 
-const generateDataHubActivitiesESResponse = () => ({
+export const generateDataHubActivitiesESResponse = () => ({
   took: 15,
   timed_out: false,
   _shards: {
@@ -124,9 +124,3 @@ const generateDataHubActivitiesESResponse = () => ({
     ],
   },
 })
-
-module.exports = {
-  generateDataHubActivitiesESResponse,
-  generateInvestment,
-  generateInteraction,
-}

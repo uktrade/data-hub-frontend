@@ -1,6 +1,6 @@
-var contact = require('../../../fixtures/v3/search/contact.json')
+import contact from '../../../fixtures/v3/search/contact.json' assert { type: 'json' };
 
-exports.contacts = function (req, res) {
+export const contacts = function (req, res) {
   if (req.body.original_query === 'no results') {
     return res.json({
       count: 0,
@@ -9,4 +9,4 @@ exports.contacts = function (req, res) {
   }
 
   res.json(contact)
-}
+};

@@ -1,11 +1,11 @@
-var companies = require('../../../fixtures/v4/search/company.json')
-var companyWithAttributes = require('../../../fixtures/v4/search/company-with-attributes.json')
-var companyFilter = require('../../../fixtures/v4/search/filter/company-filter.json')
-var companySortByMostRecent = require('../../../fixtures/v4/search/sort/company-sort-by-most-recent.json')
-var companySortByLeastRecent = require('../../../fixtures/v4/search/sort/company-sort-by-least-recent.json')
-var companySortByAZ = require('../../../fixtures/v4/search/sort/company-sort-by-a-z.json')
+import companiesJson from '../../../fixtures/v4/search/company.json' assert { type: 'json' };
+import companyWithAttributes from '../../../fixtures/v4/search/company-with-attributes.json' assert { type: 'json' };
+import companyFilter from '../../../fixtures/v4/search/filter/company-filter.json' assert { type: 'json' };
+import companySortByMostRecent from '../../../fixtures/v4/search/sort/company-sort-by-most-recent.json' assert { type: 'json' };
+import companySortByLeastRecent from '../../../fixtures/v4/search/sort/company-sort-by-least-recent.json' assert { type: 'json' };
+import companySortByAZ from '../../../fixtures/v4/search/sort/company-sort-by-a-z.json' assert { type: 'json' };
 
-exports.companies = function (req, res) {
+export const companies = function (req, res) {
   var companiesList = {
     collectionTest: companyWithAttributes,
     'modified_on:desc': companySortByMostRecent,
@@ -15,7 +15,7 @@ exports.companies = function (req, res) {
 
   if (req.body.uk_postcode) {
     var postcodeFilteredResults = _.filter(
-      companies.results,
+      companiesJson.results,
       function (company) {
         return _.startsWith(
           _.get(company, 'registered_address.postcode'),
@@ -40,4 +40,4 @@ exports.companies = function (req, res) {
   }
 
   res.json(companiesList[req.body.sortby] || companies)
-}
+};

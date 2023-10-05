@@ -1,5 +1,5 @@
-var referrals = require('../../../fixtures/v4/referrals/referral-list')
+import referrals from '../../../fixtures/v4/referrals/referral-list.js'
 
-module.exports = function (req, res) {
+export default function (req, res) {
   return res.json({ count: referrals.length, results: referrals })
-}
+};

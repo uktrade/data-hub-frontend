@@ -1,29 +1,28 @@
-var companyCreate = require('../../../fixtures/v4/dnb/company-create.json')
-var companySearch = require('../../../fixtures/v4/dnb/company-search.json')
-var companyLink = require('../../../fixtures/v4/dnb/company-link.json')
-var companyChangeRequest = require('../../../fixtures/v4/dnb/company-change-request.json')
-var companySearchMatched = require('../../../fixtures/v4/dnb/company-search-matched.json')
-var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-not-matched.json')
-var companySearchNotMatchedNoCountry = require('../../../fixtures/v4/dnb/company-search-not-matched-no-country.json')
-var companySearchNotMatchedUS = require('../../../fixtures/v4/dnb/company-search-not-matched-us.json')
-var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
-var dnbGlobalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
+import companyCreateJson from '../../../fixtures/v4/dnb/company-create.json' assert { type: 'json' };
+import companySearchJson from '../../../fixtures/v4/dnb/company-search.json' assert { type: 'json' };
+import companyLinkJson from '../../../fixtures/v4/dnb/company-link.json' assert { type: 'json' };
+import companyChangeRequestJson from '../../../fixtures/v4/dnb/company-change-request.json' assert { type: 'json' };
+import companySearchMatched from '../../../fixtures/v4/dnb/company-search-matched.json' assert { type: 'json' };
+import companySearchNotMatched from '../../../fixtures/v4/dnb/company-search-not-matched.json' assert { type: 'json' };
+import companySearchNotMatchedNoCountry from '../../../fixtures/v4/dnb/company-search-not-matched-no-country.json' assert { type: 'json' };
+import companySearchNotMatchedUSJson from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' assert { type: 'json' };
+import companyInvestigationJson from '../../../fixtures/v4/dnb/company-investigation.json' assert { type: 'json' };
+import dnbGlobalUltimate from '../../../fixtures/v4/company/company-dnb-global-ultimate.json' assert { type: 'json' };
+import { fakerCompanyFamilyTree } from './company-tree.js';
 
-const { fakerCompanyFamilyTree } = require('./company-tree')
-
-exports.companyCreate = function (req, res) {
+export const companyCreate = function (req, res) {
   if (req.body.duns_number === '111111111') {
-    res.json(companyCreate)
+    res.json(companyCreateJson)
   }
-}
+};
 
-exports.companySearch = function (req, res) {
+export const companySearch = function (req, res) {
   if (req.body.search_term === 'Simulate 500 Error') {
     return res.sendStatus(500)
   }
 
   if (req.body.duns_number === '268435455') {
-    return res.json(companySearchNotMatchedUS)
+    return res.json(companySearchNotMatchedUSJson)
   } else if (req.body.duns_number === '111111111') {
     return res.json(companySearchNotMatched)
   } else if (req.body.duns_number === '222222222') {
@@ -32,22 +31,22 @@ exports.companySearch = function (req, res) {
     return res.json(companySearchNotMatchedNoCountry)
   }
 
-  return res.json(companySearch)
-}
+  return res.json(companySearchJson)
+};
 
-exports.companyInvestigation = function (req, res) {
-  res.json(companyInvestigation)
-}
+export const companyInvestigation = function (req, res) {
+  res.json(companyInvestigationJson)
+};
 
-exports.companyLink = function (req, res) {
-  res.json(companyLink)
-}
+export const companyLink = function (req, res) {
+  res.json(companyLinkJson)
+};
 
-exports.companyChangeRequest = function (req, res) {
-  res.json(companyChangeRequest)
-}
+export const companyChangeRequest = function (req, res) {
+  res.json(companyChangeRequestJson)
+};
 
-exports.companyFamilyTree = function (req, res) {
+export const companyFamilyTree = function (req, res) {
   res.json(
     fakerCompanyFamilyTree({
       treeDepth: 3,
@@ -55,9 +54,9 @@ exports.companyFamilyTree = function (req, res) {
       maxCompaniesPerLevel: 5,
     })
   )
-}
+};
 
-exports.relatedCompaniesCount = function (req, res) {
+export const relatedCompaniesCount = function (req, res) {
   res.json(
     req.params.companyId === dnbGlobalUltimate.id
       ? {
@@ -73,10 +72,11 @@ exports.relatedCompaniesCount = function (req, res) {
           reduced_tree: false,
         }
   )
-}
-exports.relatedCompanies = function (req, res) {
+};
+
+export const relatedCompanies = function (req, res) {
   res.json({
     related_companies: [],
     reduced_tree: false,
   })
-}
+};

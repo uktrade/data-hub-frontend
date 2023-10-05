@@ -1,5 +1,5 @@
-var advisers = require('../../../fixtures/v4/search/advisers.json')
+import advisersJson from '../../../fixtures/v4/search/advisers.json' assert { type: 'json' };
 
-exports.advisers = function (req, res) {
-  return res.json(advisers)
-}
+export const advisers = function (req, res) {
+  return res.json(advisersJson)
+};

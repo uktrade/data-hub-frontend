@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker';
 
 const futureEventIdWithLargeAttendeeList = 1114
 const pastEventIdWithLargeAttendeeList = 1111
@@ -77,7 +77,7 @@ const generateListOfAttendeesForEvent = (eventId) =>
 /**
  * Generate an array of aventri attendee hits
  */
-const generateAventriAttendeeHits = () => {
+export const generateAventriAttendeeHits = () => {
   return [
     ...[
       {
@@ -216,7 +216,7 @@ const generateAventriAttendeeHits = () => {
 /**
  * Generates a full ES response for aventri attendees
  */
-const generateAventriAttendeeESResponse = () => {
+export const generateAventriAttendeeESResponse = () => {
   const attendees = generateAventriAttendeeHits()
   return {
     took: 1930,
@@ -238,4 +238,3 @@ const generateAventriAttendeeESResponse = () => {
   }
 }
 
-module.exports = { generateAventriAttendeeESResponse }

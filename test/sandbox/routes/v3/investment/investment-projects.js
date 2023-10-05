@@ -1,40 +1,40 @@
-var allProjects = require('../../../fixtures/v3/investment/projects.json')
-var project = require('../../../fixtures/v3/investment/project.json')
-var projectAudit = require('../../../fixtures/v3/investment/project-audit.json')
-var projectEvidence = require('../../../fixtures/v3/investment/project-evidence.json')
-var projectNoEvidence = require('../../../fixtures/v3/investment/project-no-evidence.json')
-var documentDownload = require('../../../fixtures/v3/investment/project-document-download.json')
+import allProjectsJson from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' };
+import projectJson from '../../../fixtures/v3/investment/project.json' assert { type: 'json' };
+import projectAuditJson from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' };
+import projectEvidenceJson from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' };
+import projectNoEvidenceJson from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' };
+import documentDownloadJson from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' };
 
 var allProjectsMap = {}
-allProjects.results.forEach(function (project) {
+allProjectsJson.results.forEach(function (project) {
   allProjectsMap[project.id] = project
 })
 
-exports.investmentProjectById = function (req, res) {
+export const investmentProjectById = function (req, res) {
   res.json(allProjectsMap[req.params.id] || project)
-}
+};
 
-exports.investmentProjects = function (req, res) {
-  res.json(allProjects)
-}
+export const investmentProjects = function (req, res) {
+  res.json(allProjectsJson)
+};
 
-exports.investmentProjectAudit = function (req, res) {
-  res.json(projectAudit)
-}
+export const investmentProjectAudit = function (req, res) {
+  res.json(projectAuditJson)
+};
 
-exports.investmentProjectEvidence = function (req, res) {
+export const investmentProjectEvidence = function (req, res) {
   res.json(
     req.params.investmentId === '7ee2c85b-8ad9-46cd-8c39-9c9bef74ced0'
-      ? projectNoEvidence
-      : projectEvidence
+      ? projectNoEvidenceJson
+      : projectEvidenceJson
   )
-}
+};
 
-exports.documentDownload = function (req, res) {
-  res.json(documentDownload)
-}
+export const documentDownload = function (req, res) {
+  res.json(documentDownloadJson)
+};
 
-exports.patchInvestmentProject = function (req, res) {
+export const patchInvestmentProject = function (req, res) {
   if (req.body) {
     if (req.body.associated_non_fdi_r_and_d_project) {
       res.sendStatus(200)
@@ -51,12 +51,12 @@ exports.patchInvestmentProject = function (req, res) {
   return res.status(400).json({
     client_requirements: ['required'],
   })
-}
+};
 
-exports.postInvestmentProject = function (req, res) {
-  res.json(project)
-}
+export const postInvestmentProject = function (req, res) {
+  res.json(projectJson)
+};
 
-exports.postInvestmentProjectEditTeams = function (req, res) {
+export const postInvestmentProjectEditTeams = function (req, res) {
   res.sendStatus(200).json(allProjectsMap[req.params.id] || project)
-}
+};

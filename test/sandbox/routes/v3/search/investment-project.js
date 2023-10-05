@@ -1,6 +1,6 @@
-let investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
+import investmentProjectsJson from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' };
 
-exports.investmentProjects = function (req, res) {
+export const investmentProjects = function (req, res) {
   const hasFilters = !!(
     req.body.actual_land_date_before ||
     req.body.actual_land_date_after ||
@@ -17,7 +17,7 @@ exports.investmentProjects = function (req, res) {
     req.body.level_of_involvement_simplified ||
     req.body.investor_company
   )
-  const { results, summary } = investmentProjects
+  const { results, summary } = investmentProjectsJson
 
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
@@ -51,13 +51,13 @@ exports.investmentProjects = function (req, res) {
       summary,
     })
   }
-}
+};
 
 /**
  * Mock a simple csv file for export
  */
-exports.export = function (req, res) {
+export const exportCsv = function (req, res) {
   res.header('Content-Type', 'text/csv')
   res.attachment('export.csv')
   res.send('a,b,c\n1,2,3')
-}
+};

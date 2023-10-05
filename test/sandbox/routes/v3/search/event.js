@@ -1,13 +1,13 @@
-var events = require('../../../fixtures/v3/search/event.json')
-var eventFilter = require('../../../fixtures/v3/search/filter/event-filter.json')
-var eventSort = require('../../../fixtures/v3/search/sort/event-sort-by.json')
+import eventsJson from '../../../fixtures/v3/search/event.json' assert { type: 'json' };
+import eventFilterJson from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' };
+import eventSortJson from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' };
 
-exports.events = function (req, res) {
+export const events = function (req, res) {
   var eventList = {
-    'modified_on:asc': eventSort,
-    'start_date:asc': eventSort,
-    'start_date:desc': eventSort,
-    'name:asc': eventSort,
+    'modified_on:asc': eventSortJson,
+    'start_date:asc': eventSortJson,
+    'start_date:desc': eventSortJson,
+    'name:asc': eventSortJson,
   }
 
   if (req.body.uk_region) {
@@ -32,8 +32,8 @@ exports.events = function (req, res) {
     req.body.start_date_before ||
     req.body.event_type
   ) {
-    return res.json(eventFilter)
+    return res.json(eventFilterJson)
   }
 
-  res.json(eventList[req.body.sortby] || events)
-}
+  res.json(eventList[req.body.sortby] || eventsJson)
+};

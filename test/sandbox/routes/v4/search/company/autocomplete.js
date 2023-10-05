@@ -1,5 +1,5 @@
-var filteredCompanies = require('./../../../../fixtures/v4/search/company/autocomplete.json')
+import filteredCompanies from './../../../../fixtures/v4/search/company/autocomplete.json' assert { type: 'json' };
 
-exports.companiesAutocomplete = function (req, res) {
+export const companiesAutocomplete = function (req, res) {
   res.json(filteredCompanies)
-}
+};
