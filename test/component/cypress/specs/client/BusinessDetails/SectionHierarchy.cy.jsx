@@ -139,4 +139,39 @@ describe('Section hierarchy', () => {
       })
     }
   )
+
+  context(
+    'when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK',
+    () => {
+      const company = companyFaker({
+        headquarterType: {
+          name: 'ghq',
+          id: '43281c5e-92a4-4794-867b-b4d5f801e6f3',
+        },
+      })
+
+      it('the table should show all expected values', () => {
+        cy.mount(
+          <Component
+            company={company}
+            isDnbCompany={true}
+            subsidiariesCount={2}
+          />
+        )
+
+        assertSummaryTable({
+          dataTest: 'businessHierarchyDetailsContainer',
+          heading: 'Business hierarchy',
+          showEditLink: true,
+          content: {
+            [HIERARCHY_STRINGS.dnbDescription]: null,
+            [HIERARCHY_STRINGS.dnbEmpty]: null,
+            [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+            'Headquarter type': 'Global HQ',
+            Subsidiaries: '2 subsidiaries',
+          },
+        })
+      })
+    }
+  )
 })
