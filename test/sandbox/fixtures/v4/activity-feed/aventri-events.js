@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
 export const generateAventriEvent = (
   {
@@ -177,4 +177,3 @@ export const generateAventriEventESResponse = (additionalEventCount = 0) => {
     },
   }
 }
-

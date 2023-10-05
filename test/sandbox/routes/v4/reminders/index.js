@@ -3,28 +3,28 @@ export const getEstimatedLandDateSubscriptions = function (req, res) {
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
-};
+}
 
 export const saveEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
-};
+}
 
 export const getNoRecentInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30],
     email_reminders_enabled: false,
   })
-};
+}
 
 export const saveNoRecentInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
-};
+}
 
 export const getReminderSubscriptionsSummary = function (req, res) {
   res.json({
@@ -45,35 +45,35 @@ export const getReminderSubscriptionsSummary = function (req, res) {
       reminder_days: [2, 4, 7],
     },
   })
-};
+}
 
 export const getNoRecentExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [20],
     email_reminders_enabled: false,
   })
-};
+}
 
 export const saveNoRecentExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [20, 40],
     email_reminders_enabled: true,
   })
-};
+}
 
 export const getNewExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [2],
     email_reminders_enabled: false,
   })
-};
+}
 
 export const saveNewExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [2, 4],
     email_reminders_enabled: true,
   })
-};
+}
 
 export const getEstimatedLandDateReminders = function (req, res) {
   res.json({
@@ -93,7 +93,7 @@ export const getEstimatedLandDateReminders = function (req, res) {
       },
     ],
   })
-};
+}
 
 export const getNoRecentExportInteractionReminders = function (req, res) {
   res.json({
@@ -161,7 +161,7 @@ export const getNoRecentExportInteractionReminders = function (req, res) {
       },
     ],
   })
-};
+}
 
 export const getNewExportInteractionReminders = function (req, res) {
   res.json({
@@ -229,7 +229,7 @@ export const getNewExportInteractionReminders = function (req, res) {
       },
     ],
   })
-};
+}
 
 export const getNoRecentInvestmentInteractionReminders = function (req, res) {
   res.json({
@@ -249,4 +249,4 @@ export const getNoRecentInvestmentInteractionReminders = function (req, res) {
       },
     ],
   })
-};
+}
