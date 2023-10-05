@@ -1,7 +1,5 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
 import { BusinessDetailsCard } from '../../../../../src/apps/companies/apps/company-overview/overview-table-cards'
 
 import { companyFaker } from '../../../../functional/cypress/fakers/companies'
@@ -10,6 +8,10 @@ import {
   CANADA_ID,
 } from '../../../../../src/common/constants'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
+import {
+  assertSummaryTable,
+  assertLink,
+} from '../../../../functional/cypress/support/assertions'
 
 const companyGlobalUltimateAllDetails = companyFaker({
   companyNumber: '01261539',
@@ -113,27 +115,6 @@ const companyNonUK = companyFaker({
   globalUltimateCountry: 'Canada',
 })
 
-const CardContainer = styled('div')`
-  border: 1px solid #b1b4b6;
-  padding: 20px;
-  margin-bottom: 20px;
-`
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
-
 describe('BusinessDetailsCard', () => {
   const Component = (props) => <BusinessDetailsCard {...props} />
 
@@ -141,78 +122,47 @@ describe('BusinessDetailsCard', () => {
     'When the company has global headquarter and all information set',
     () => {
       beforeEach(() => {
-        cy.mount(
-          <CardContainer>
-            <Component company={companyGlobalUltimateAllDetails} />
-          </CardContainer>
-        )
+        cy.mount(<Component company={companyGlobalUltimateAllDetails} />)
       })
 
       it('should render the right text', () => {
-        assertTable({
-          element: '[data-test="businessDetailsContainer"]',
-          rows: [
-            [
-              'Companies House',
-              `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            ],
-            [
-              'Trading Address',
+        assertSummaryTable({
+          dataTest: 'businessDetailsContainer',
+          content: {
+            'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading Address':
               companyGlobalUltimateAllDetails.address.line1 +
-                companyGlobalUltimateAllDetails.address.line2 +
-                companyGlobalUltimateAllDetails.address.town +
-                companyGlobalUltimateAllDetails.address.postcode,
-            ],
-            [
-              'Website',
-              `${companyGlobalUltimateAllDetails.website} (opens in new tab)`,
-            ],
-            [
-              'Turnover',
-              currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
-                maximumSignificantDigits: 2,
-              }),
-            ],
-            [
-              'Number of Employees',
+              companyGlobalUltimateAllDetails.address.line2 +
+              companyGlobalUltimateAllDetails.address.town +
+              companyGlobalUltimateAllDetails.address.postcode,
+            Website: `${companyGlobalUltimateAllDetails.website} (opens in new tab)`,
+            Turnover: currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
+              maximumSignificantDigits: 2,
+            }),
+            'Number of Employees':
               companyGlobalUltimateAllDetails.numberOfEmployees,
-            ],
-            ['DBT Sector', companyGlobalUltimateAllDetails.sector.name],
-            [
-              'Headquarter Location',
+            'DBT Sector': companyGlobalUltimateAllDetails.sector.name,
+            'Headquarter Location':
               companyGlobalUltimateAllDetails.globalUltimateCountry +
-                'View company tree',
-            ],
-            ['View full business details'],
-          ],
+              'View company tree',
+          },
         })
       })
 
       it('should contain four links', () => {
-        cy.get('[data-test="companies-house-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            `https://beta.companieshouse.gov.uk/company/${companyGlobalUltimateAllDetails.companyNumber}`
-          )
-        cy.get('[data-test="website-link"]')
-          .should('exist')
-          .should('have.attr', 'href', companyGlobalUltimateAllDetails.website)
-        cy.get('[data-test="company-tree-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            `/companies/${companyGlobalUltimateAllDetails.id}/company-tree`
-          )
-        cy.get('[data-test="business-page-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            `/companies/${companyGlobalUltimateAllDetails.id}/business-details`
-          )
+        assertLink(
+          'companies-house-link',
+          `https://beta.companieshouse.gov.uk/company/${companyGlobalUltimateAllDetails.companyNumber}`
+        )
+        assertLink('website-link', companyGlobalUltimateAllDetails.website)
+        assertLink(
+          'company-tree-link',
+          `/companies/${companyGlobalUltimateAllDetails.id}/company-tree`
+        )
+        assertLink(
+          'business-page-link',
+          `/companies/${companyGlobalUltimateAllDetails.id}/business-details`
+        )
       })
     }
   )
@@ -221,155 +171,103 @@ describe('BusinessDetailsCard', () => {
     'When the company has no global headquarter but all other information is set',
     () => {
       beforeEach(() => {
-        cy.mount(
-          <CardContainer>
-            <Component company={companyNoGlobalUltimateAllDetails} />
-          </CardContainer>
-        )
+        cy.mount(<Component company={companyNoGlobalUltimateAllDetails} />)
       })
 
       it('should render the right text', () => {
-        assertTable({
-          element: '[data-test="businessDetailsContainer"]',
-          rows: [
-            [
-              'Companies House',
-              `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            ],
-            [
-              'Trading Address',
+        assertSummaryTable({
+          dataTest: 'businessDetailsContainer',
+          content: {
+            'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading Address':
               companyNoGlobalUltimateAllDetails.address.line1 +
-                companyNoGlobalUltimateAllDetails.address.line2 +
-                companyNoGlobalUltimateAllDetails.address.town +
-                companyNoGlobalUltimateAllDetails.address.postcode,
-            ],
-            [
-              'Website',
-              `${companyNoGlobalUltimateAllDetails.website} (opens in new tab)`,
-            ],
-            [
-              'Turnover',
-              currencyGBP(companyNoGlobalUltimateAllDetails.turnoverGbp, {
+              companyNoGlobalUltimateAllDetails.address.line2 +
+              companyNoGlobalUltimateAllDetails.address.town +
+              companyNoGlobalUltimateAllDetails.address.postcode,
+            Website: `${companyNoGlobalUltimateAllDetails.website} (opens in new tab)`,
+            Turnover: currencyGBP(
+              companyNoGlobalUltimateAllDetails.turnoverGbp,
+              {
                 maximumSignificantDigits: 2,
-              }),
-            ],
-            [
-              'Number of Employees',
+              }
+            ),
+            'Number of Employees':
               companyNoGlobalUltimateAllDetails.numberOfEmployees,
-            ],
-            ['DBT Sector', companyNoGlobalUltimateAllDetails.sector.name],
-            ['View full business details'],
-          ],
+            'DBT Sector': companyNoGlobalUltimateAllDetails.sector.name,
+          },
         })
       })
 
       it('should contain three links', () => {
-        cy.get('[data-test="companies-house-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            `https://beta.companieshouse.gov.uk/company/${companyNoGlobalUltimateAllDetails.companyNumber}`
-          )
-        cy.get('[data-test="website-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            companyNoGlobalUltimateAllDetails.website
-          )
+        assertLink(
+          'companies-house-link',
+          `https://beta.companieshouse.gov.uk/company/${companyNoGlobalUltimateAllDetails.companyNumber}`
+        )
+        assertLink('website-link', companyNoGlobalUltimateAllDetails.website)
+        assertLink(
+          'business-page-link',
+          `/companies/${companyNoGlobalUltimateAllDetails.id}/business-details`
+        )
         cy.get('[data-test="company-tree-link"]').should('not.exist')
-        cy.get('[data-test="business-page-link"]')
-          .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            `/companies/${companyNoGlobalUltimateAllDetails.id}/business-details`
-          )
       })
     }
   )
 
   context('When the company is not in the UK', () => {
     beforeEach(() => {
-      cy.mount(
-        <CardContainer>
-          <Component company={companyNonUK} />
-        </CardContainer>
-      )
+      cy.mount(<Component company={companyNonUK} />)
     })
 
     it('should render the right text that does not contain the companies house field', () => {
-      assertTable({
-        element: '[data-test="businessDetailsContainer"]',
-        rows: [
-          [
-            'Trading Address',
+      assertSummaryTable({
+        dataTest: 'businessDetailsContainer',
+        content: {
+          'Trading Address':
             companyNonUK.address.line1 +
-              companyNonUK.address.line2 +
-              companyNonUK.address.town +
-              companyNonUK.address.postcode,
-          ],
-          ['Website', `${companyNonUK.website} (opens in new tab)`],
-          [
-            'Turnover',
-            currencyGBP(companyNonUK.turnoverGbp, {
-              maximumSignificantDigits: 2,
-            }),
-          ],
-          ['Number of Employees', companyNonUK.numberOfEmployees],
-          ['DBT Sector', companyNonUK.sector.name],
-          [
-            'Headquarter Location',
+            companyNonUK.address.line2 +
+            companyNonUK.address.town +
+            companyNonUK.address.postcode,
+          Website: `${companyNonUK.website} (opens in new tab)`,
+          Turnover: currencyGBP(companyNonUK.turnoverGbp, {
+            maximumSignificantDigits: 2,
+          }),
+          'Number of Employees': companyNonUK.numberOfEmployees,
+          'DBT Sector': companyNonUK.sector.name,
+          'Headquarter Location':
             companyNonUK.globalUltimateCountry + 'View company tree',
-          ],
-          ['View full business details'],
-        ],
+        },
       })
     })
 
-    it('should contain only three links', () => {
+    it('should contain three links', () => {
+      assertLink('website-link', companyNonUK.website)
+      assertLink(
+        'company-tree-link',
+        `/companies/${companyNonUK.id}/company-tree`
+      )
+      assertLink(
+        'business-page-link',
+        `/companies/${companyNonUK.id}/business-details`
+      )
       cy.get('[data-test="companies-house-link"]').should('not.exist')
-      cy.get('[data-test="website-link"]')
-        .should('exist')
-        .should('have.attr', 'href', companyNonUK.website)
-      cy.get('[data-test="company-tree-link"]')
-        .should('exist')
-        .should(
-          'have.attr',
-          'href',
-          `/companies/${companyNonUK.id}/company-tree`
-        )
-      cy.get('[data-test="business-page-link"]')
-        .should('exist')
-        .should(
-          'have.attr',
-          'href',
-          `/companies/${companyNonUK.id}/business-details`
-        )
     })
   })
 
   context('When the company has no information set', () => {
     beforeEach(() => {
-      cy.mount(
-        <CardContainer>
-          <Component company={companyNoDetails} />
-        </CardContainer>
-      )
+      cy.mount(<Component company={companyNoDetails} />)
     })
 
     it('should render the right text', () => {
-      assertTable({
-        element: '[data-test="businessDetailsContainer"]',
-        rows: [
-          ['Trading Address', `Not set`],
-          ['Website', `Not set`],
-          ['Turnover', `Not set`],
-          ['Number of Employees', `Not set`],
-          ['DBT Sector', `Not set`],
-          ['View full business details'],
-        ],
+      assertSummaryTable({
+        dataTest: 'businessDetailsContainer',
+        content: {
+          'Trading Address': 'Not set',
+          Website: 'Not set',
+          Turnover: 'Not set',
+          'Number of Employees': 'Not set',
+          'DBT Sector': 'Not set',
+        },
       })
     })
 
@@ -377,51 +275,31 @@ describe('BusinessDetailsCard', () => {
       cy.get('[data-test="companies-house-link"]').should('not.exist')
       cy.get('[data-test="website-link"]').should('not.exist')
       cy.get('[data-test="company-tree-link"]').should('not.exist')
-      cy.get('[data-test="business-page-link"]')
-        .should('exist')
-        .should(
-          'have.attr',
-          'href',
-          `/companies/${companyNoDetails.id}/business-details`
-        )
+      assertLink(
+        'business-page-link',
+        `/companies/${companyNoDetails.id}/business-details`
+      )
     })
   })
 
   context('When the company only has a UK registered address', () => {
     beforeEach(() => {
-      cy.mount(
-        <CardContainer>
-          <Component company={companyRegisteredAddressOnly} />
-        </CardContainer>
-      )
+      cy.mount(<Component company={companyRegisteredAddressOnly} />)
     })
 
     it('should still show the Company House field if set', () => {
-      assertTable({
-        element: '[data-test="businessDetailsContainer"]',
-        rows: [
-          [
-            'Companies House',
-            `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
-          ],
-          ['Trading Address', 'Not set'],
-          [
-            'Website',
-            `${companyRegisteredAddressOnly.website} (opens in new tab)`,
-          ],
-          [
-            'Turnover',
-            currencyGBP(companyRegisteredAddressOnly.turnoverGbp, {
-              maximumSignificantDigits: 2,
-            }),
-          ],
-          [
-            'Number of Employees',
-            companyRegisteredAddressOnly.numberOfEmployees,
-          ],
-          ['DBT Sector', companyRegisteredAddressOnly.sector.name],
-          ['View full business details'],
-        ],
+      assertSummaryTable({
+        dataTest: 'businessDetailsContainer',
+        content: {
+          'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
+          'Trading Address': 'Not set',
+          Website: `${companyRegisteredAddressOnly.website} (opens in new tab)`,
+          Turnover: currencyGBP(companyRegisteredAddressOnly.turnoverGbp, {
+            maximumSignificantDigits: 2,
+          }),
+          'Number of Employees': companyRegisteredAddressOnly.numberOfEmployees,
+          'DBT Sector': companyRegisteredAddressOnly.sector.name,
+        },
       })
     })
   })

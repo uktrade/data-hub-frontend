@@ -88,8 +88,7 @@ describe('Company overview page', () => {
           .as('table')
           .first()
           .contains('Business details')
-          .next()
-        cy.get('@table').find('tbody')
+        cy.get('@table').find('tbody').should('exist')
       })
     }
   )
