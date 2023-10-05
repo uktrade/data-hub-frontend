@@ -46,7 +46,7 @@ export const investmentProjects = function (req, res) {
     })
   } else {
     return res.json({
-      ...investmentProjects,
+      ...investmentProjectsJson,
       results,
       summary,
     })
