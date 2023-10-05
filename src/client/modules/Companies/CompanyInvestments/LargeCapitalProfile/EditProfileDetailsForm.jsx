@@ -69,7 +69,7 @@ const buildInvestorCheckOptions = (
   return transformedOptions
 }
 
-const EditProfileDetails = ({ profile }) => {
+const EditProfileDetailsForm = ({ profile }) => {
   const {
     id: profileId,
     globalAssetsUnderManagement,
@@ -163,8 +163,8 @@ const EditProfileDetails = ({ profile }) => {
   )
 }
 
-EditProfileDetails.propTypes = {
+EditProfileDetailsForm.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-export default EditProfileDetails
+export default EditProfileDetailsForm
