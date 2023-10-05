@@ -14,8 +14,7 @@
     "@babel/core": "^7.22.20",
     "@babel/eslint-parser": "^7.22.15",
     "@babel/plugin-syntax-import-assertions": "^7.22.5",
-    "@faker-js/faker": "^8.1.0",
-    "eslint": "^8.50.0"
+    "@faker-js/faker": "^8.1.0"
   },
   "engines": {
     "node": "18.15.0"
