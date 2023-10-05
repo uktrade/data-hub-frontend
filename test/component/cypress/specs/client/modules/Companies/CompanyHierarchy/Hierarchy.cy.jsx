@@ -491,6 +491,11 @@ describe('D&B Company Tree Hierarchy component', () => {
   })
 
   context('When a company has a mix of known and unknown subsidiaries', () => {
+    const formattedDate = formatWithoutParsing(
+      companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
+        .latest_interaction_date
+    )
+
     beforeEach(() => {
       cy.mount(
         <Component
@@ -499,11 +504,6 @@ describe('D&B Company Tree Hierarchy component', () => {
         />
       )
     })
-
-    const formattedDate = formatWithoutParsing(
-      companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
-        .latest_interaction_date
-    )
 
     it('should not display a View more detail link for companies not on Data Hub', () => {
       cy.get('[data-test="related-company"]')

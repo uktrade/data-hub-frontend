@@ -10,6 +10,7 @@ import Form from '../../../../src/client/components/Form'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother/FieldAddAnother'
 import Resource from '../../../../src/client/components/Resource/Resource'
+import { ToggleSection } from '../../../../src/client/components'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -20,6 +21,7 @@ const reducer = (state, action) =>
     ...Typeahead.reducerSpread,
     ...FieldAddAnother.reducerSpread,
     ...Form.reducerSpread,
+    ...ToggleSection.reducerSpread,
     activeFeatureGroups: () => [],
     modulePermissions: () => [],
     userPermissions: () => [],
