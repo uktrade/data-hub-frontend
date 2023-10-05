@@ -39,5 +39,5 @@ export const companies = function (req, res) {
     return res.json(companyFilter)
   }
 
-  res.json(companiesList[req.body.sortby] || companies)
+  res.json(companiesList[req.body.sortby] || companiesJson)
 }
