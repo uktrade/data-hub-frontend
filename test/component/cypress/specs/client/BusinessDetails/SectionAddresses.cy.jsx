@@ -45,8 +45,8 @@ describe('Section addresses', () => {
     'when viewing business details for a Dun and Bradstreet company that has both addresses',
     () => {
       const address = {
-        line_1: "12 St George's Road",
-        line_2: '',
+        line1: "12 St George's Road",
+        line2: '',
         town: 'Paris',
         county: '',
         postcode: '75001',
@@ -61,7 +61,7 @@ describe('Section addresses', () => {
         registeredAddress: address,
       })
 
-      xit('should display the address', () => {
+      it('should display the address', () => {
         cy.mount(<Component company={company} />)
 
         assertAddresses({
@@ -111,8 +111,8 @@ describe('Section addresses', () => {
     () => {
       const company = companyFaker({
         address: {
-          line_1: "12 St George's Road",
-          line_2: '',
+          line1: "12 St George's Road",
+          line2: '',
           town: 'Paris',
           county: '',
           postcode: '75001',
