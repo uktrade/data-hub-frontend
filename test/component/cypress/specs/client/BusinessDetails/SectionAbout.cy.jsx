@@ -1,0 +1,123 @@
+import React from 'react'
+
+import DataHubProvider from '../../provider'
+import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
+
+const {
+  default: SectionAbout,
+} = require('../../../../../../src/apps/companies/apps/business-details/client/SectionAbout')
+const {
+  companyFaker,
+} = require('../../../../../functional/cypress/fakers/companies')
+
+describe('Section about', () => {
+  const Component = (props) => (
+    <DataHubProvider>
+      <SectionAbout {...props} />
+    </DataHubProvider>
+  )
+
+  const companyWithDetails = companyFaker({
+    businessType: {
+      name: 'Company',
+      id: '98d14e94-5d95-e211-a939-e4115bead28a',
+    },
+    vatNumber: '12345',
+    name: 'Venus Ltd',
+    tradingNames: ['Venus company'],
+    referenceCode: 'ORG-10096257',
+    companyNumber: '12345678',
+    turnoverGbp: '1000000',
+    numberOfEmployees: '5',
+    website: 'www.reallyawesomewebsite.com',
+    description: 'This is a dummy company for testing',
+    exportSegment: 'hep',
+    exportSubSegment: 'sustain_nurture_and_grow',
+  })
+
+  const companyWithMinimalDetails = companyFaker({
+    website: null,
+    description: null,
+  })
+
+  context(
+    'when viewing business details for a Data Hub company with about data',
+    () => {
+      it('should display the "About" details container', () => {
+        cy.mount(
+          <Component company={companyWithDetails} isDnbComapny={false} />
+        )
+
+        assertSummaryTable({
+          dataTest: 'aboutDetailsContainer',
+          heading: 'About Venus Ltd',
+          showEditLink: true,
+          content: {
+            'VAT number': '12345',
+            'Business type': 'Company',
+            'Trading name': 'Venus company',
+            'CDMS reference': 'ORG-10096257',
+            'Companies House number':
+              '12345678View on Companies House website (opens in new tab)',
+            'Annual turnover': '£1,000,000',
+            'Number of employees': '5',
+            Website: 'www.reallyawesomewebsite.com (opens in new tab)',
+            'Business description': 'This is a dummy company for testing',
+            Segment: 'High export potential',
+            'Sub-segment': 'Sustain: nurture & grow',
+          },
+        })
+      })
+    }
+  )
+
+  context(
+    'when viewing business details for a Data Hub company with minimal data',
+    () => {
+      it('should display the "About" details container', () => {
+        cy.mount(<Component company={companyWithMinimalDetails} />)
+
+        assertSummaryTable({
+          dataTest: 'aboutDetailsContainer',
+          heading: `About ${companyWithMinimalDetails.name}`,
+          showEditLink: true,
+          content: {
+            'Trading name': 'Not set',
+            'Annual turnover': 'Not set',
+            'Number of employees': 'Not set',
+            Website: 'Not set',
+            'Business description': 'No description has been added',
+            Segment: 'No export segment or not known',
+            'Sub-segment': 'No sub export segment or not known',
+          },
+        })
+      })
+    }
+  )
+
+  context(
+    'when viewing business details for a Data Hub company that is archived',
+    () => {
+      it('should not display edit link', () => {
+        cy.mount(
+          <Component company={companyWithMinimalDetails} isArchived={true} />
+        )
+
+        assertSummaryTable({
+          dataTest: 'aboutDetailsContainer',
+          heading: `About ${companyWithMinimalDetails.name}`,
+          showEditLink: false,
+          content: {
+            'Trading name': 'Not set',
+            'Annual turnover': 'Not set',
+            'Number of employees': 'Not set',
+            Website: 'Not set',
+            'Business description': 'No description has been added',
+            Segment: 'No export segment or not known',
+            'Sub-segment': 'No sub export segment or not known',
+          },
+        })
+      })
+    }
+  )
+})
