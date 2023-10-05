@@ -1,7 +1,4 @@
-import {
-  companyTreeFaker,
-  companyTreeItemFaker,
-} from '../../fakers/dnb-hierarchy'
+import { companyTreeFaker } from '../../fakers/dnb-hierarchy'
 
 const {
   assertErrorDialog,
@@ -15,43 +12,7 @@ const {
   company: { dnbGlobalUltimate },
 } = require('../../fixtures')
 
-const companyNoRelatedRecords = companyTreeFaker({
-  globalCompany: {
-    ultimate_global_company: {},
-    ultimate_global_companies_count: 0,
-    family_tree_companies_count: 0,
-  },
-})
-
-const companyNoSubsidiaries = companyTreeFaker({
-  globalCompany: {
-    ultimate_global_company: companyTreeItemFaker({
-      id: dnbGlobalUltimate.id,
-    }),
-    ultimate_global_companies_count: 1,
-    family_tree_companies_count: 1,
-  },
-})
-
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
-const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
-const companyWith10LevelsOfSubsidiaries = companyTreeFaker({
-  treeDepth: 10,
-  minCompaniesPerLevel: 3,
-  maxCompaniesPerLevel: 4,
-})
-
-const companyManuallyLinkedSubsidiary = companyTreeFaker({
-  mannualVerifiedSubsidiariesCount: 1,
-})
-
-const companyManuallyLinkedSubsidiaries = companyTreeFaker({
-  mannualVerifiedSubsidiariesCount: 5,
-})
-
-const reducedTreeCompanyTree = companyTreeFaker({})
-reducedTreeCompanyTree.reduced_tree = true
-reducedTreeCompanyTree.ultimate_global_companies_count = 15000
 
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
@@ -142,151 +103,11 @@ describe('D&B Company hierarchy tree', () => {
     )
   })
 
-  context('When a company has no related records', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyNoRelatedRecords
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When a company has no subsidiaries', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyNoSubsidiaries
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When a company has only immediate subsidiaries', () => {
-    before(() => {
-      companyOnlyImmediateSubsidiaries.ultimate_global_company.is_out_of_business = true
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyOnlyImmediateSubsidiaries
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When a company has a large number of subsidiaries', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyWith5LevelsOfSubsidiaries
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When the requested company is in the middle of a tree', () => {
-    const getCompanyAtLevel = (ultimate, level) => {
-      let startLevel = 1
-      let company = ultimate
-      while (startLevel !== level) {
-        company = company.subsidiaries[0]
-        startLevel++
-      }
-      return company
-    }
-
-    const middleCompany = getCompanyAtLevel(
-      companyWith10LevelsOfSubsidiaries.ultimate_global_company,
-      5
-    )
-
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${middleCompany.id}/family-tree`,
-        companyWith10LevelsOfSubsidiaries
-      ).as('treeApi')
-      cy.intercept(
-        `api-proxy/v4/company/${middleCompany.id}`,
-        dnbGlobalUltimate
-      ).as('company')
-      cy.visit(`${urls.companies.dnbHierarchy.tree(middleCompany.id)}`)
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When a company has manually linked subsidiary', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyManuallyLinkedSubsidiary
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
   context('When a company is the requested company', () => {
     before(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyNoSubsidiaries
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context('When a company has a mix of known and unknown subsidiaries', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyManuallyLinkedSubsidiaries
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-  })
-
-  context(
-    'When a company has both verified and manually linked subsidiaries',
-    () => {
-      before(() => {
-        cy.intercept(
-          `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-          companyManuallyLinkedSubsidiaries
-        ).as('treeApi')
-        cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-        cy.wait('@treeApi')
-      })
-
-      assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-    }
-  )
-
-  context('When a company has a reduced company tree', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        reducedTreeCompanyTree
+        companyOnlyImmediateSubsidiaries
       ).as('treeApi')
       cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
       cy.wait('@treeApi')

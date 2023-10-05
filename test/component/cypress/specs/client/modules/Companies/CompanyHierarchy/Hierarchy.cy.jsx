@@ -40,7 +40,6 @@ const companyNoSubsidiaries = companyTreeFaker({
 })
 
 const companyOnlyImmediateSubsidiaries = companyTreeFaker({})
-const companyWith5LevelsOfSubsidiaries = companyTreeFaker({ treeDepth: 5 })
 const companyWith10LevelsOfSubsidiaries = companyTreeFaker({
   treeDepth: 10,
   minCompaniesPerLevel: 3,
@@ -350,15 +349,19 @@ describe('D&B Company Tree Hierarchy component', () => {
 
     it('should have a link to add the company to Data Hub', () => {
       cy.get('[data-test="expand-tree-button"]').click()
-      cy.get(`[data-test=add-company-not-on-data-hub-ltd`).click()
-      cy.location().should((loc) => {
-        expect(loc.search).to.eq('?duns_number=123456789')
-      })
-      cy.go('back')
+      cy.get(`[data-test=add-company-not-on-data-hub-ltd`).should(
+        'have.attr',
+        'href',
+        urls.companies.create() + '?duns_number=123456789'
+      )
     })
   })
   context('When a company has a large number of subsidiaries', () => {
     beforeEach(() => {
+      const companyWith5LevelsOfSubsidiaries = companyTreeFaker({
+        treeDepth: 5,
+      })
+
       cy.mount(
         <Component
           familyTree={companyWith5LevelsOfSubsidiaries}
