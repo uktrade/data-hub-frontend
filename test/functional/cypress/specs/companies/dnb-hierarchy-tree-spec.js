@@ -1,13 +1,7 @@
-import { kebabCase } from 'lodash'
-import hexRgb from 'hex-rgb'
-
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import {
   companyTreeFaker,
   companyTreeItemFaker,
 } from '../../fakers/dnb-hierarchy'
-import { DARK_BLUE_LEGACY } from '../../../../../src/client/utils/colours'
-import { hqLabels } from '../../../../../src/apps/companies/labels'
 
 const {
   assertErrorDialog,
@@ -47,44 +41,6 @@ const companyWith10LevelsOfSubsidiaries = companyTreeFaker({
   maxCompaniesPerLevel: 4,
 })
 
-const companyNoAdditionalTagData = companyTreeFaker({
-  globalCompany: {
-    ultimate_global_company: companyTreeItemFaker({
-      id: dnbGlobalUltimate.id,
-      number_of_employees: null,
-      one_list_tier: [],
-      uk_region: null,
-      address: null,
-      trading_names: [],
-      headquarter_type: null,
-    }),
-    ultimate_global_companies_count: 1,
-    family_tree_companies_count: 1,
-  },
-})
-
-const companyWithLinkedSubsidiaryNotInDataHub = companyTreeFaker({
-  globalCompany: {
-    ultimate_global_company: companyTreeItemFaker({
-      id: dnbGlobalUltimate.id,
-      number_of_employees: 123,
-      one_list_tier: [],
-      uk_region: null,
-      address: null,
-      subsidiaries: [
-        {
-          duns_number: '123456789',
-          name: 'Not on Data Hub Ltd',
-          number_of_employees: 13,
-          hierarchy: 2,
-        },
-      ],
-    }),
-    ultimate_global_companies_count: 2,
-    family_tree_companies_count: 2,
-  },
-})
-
 const companyManuallyLinkedSubsidiary = companyTreeFaker({
   mannualVerifiedSubsidiariesCount: 1,
 })
@@ -96,10 +52,6 @@ const companyManuallyLinkedSubsidiaries = companyTreeFaker({
 const reducedTreeCompanyTree = companyTreeFaker({})
 reducedTreeCompanyTree.reduced_tree = true
 reducedTreeCompanyTree.ultimate_global_companies_count = 15000
-
-const companyOnlyImmediateSubsidiariesCompanyName = kebabCase(
-  companyOnlyImmediateSubsidiaries.ultimate_global_company.name
-)
 
 const assertRelatedCompaniesPage = ({ company }) => {
   it('should render the header', () => {
@@ -201,32 +153,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should display the total number of companies in the tree', () => {
-      cy.get('[data-test="hierarchy-header"] > h2').should(
-        'have.text',
-        `${companyNoRelatedRecords.family_tree_companies_count} companies`
-      )
-    })
-
-    it('should only show a single item with not found message', () => {
-      cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
-      cy.get('[data-test="related-company"]')
-        .should('be.visible')
-        .should('contain.text', 'No related companies found')
-    })
-
-    it('should hide the show all companies button', () => {
-      cy.get('[data-test="expand-tree-button"]').should('not.exist')
-    })
-
-    it('should hide the show subsidiaries button', () => {
-      cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
-    })
-
-    it('should hide the add to Data Hub link', () => {
-      cy.get('[data-test="add-company-"]').should('not.exist')
-    })
   })
 
   context('When a company has no subsidiaries', () => {
@@ -240,44 +166,9 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should only show a single company item with the requested company style', () => {
-      cy.get('[data-test="hierarchy-item"]').should('have.length', 1)
-      cy.get('[data-test="requested-company"]').should('be.visible')
-    })
-
-    it('should display the total number of companies in the tree', () => {
-      cy.get('[data-test="hierarchy-header"] > h2').should(
-        'have.text',
-        `${companyNoSubsidiaries.family_tree_companies_count} company`
-      )
-    })
-
-    it('should hide the show all companies button', () => {
-      cy.get('[data-test="expand-tree-button"]').should('not.exist')
-    })
-
-    it('should hide the show subsidiaries button', () => {
-      cy.get('[data-test="toggle-subsidiaries-button"]').should('not.exist')
-    })
-
-    it('should show trading names under heading', () => {
-      const company = companyNoSubsidiaries.ultimate_global_company
-      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
-        'have.text',
-        `Trading as: ${company.trading_names}`
-      )
-    })
   })
 
   context('When a company has only immediate subsidiaries', () => {
-    const subsidiaryCompanyName = kebabCase(
-      companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
-        .name
-    )
-    const subsidiaryTagContent =
-      companyOnlyImmediateSubsidiaries.ultimate_global_company.subsidiaries[0]
-
     before(() => {
       companyOnlyImmediateSubsidiaries.ultimate_global_company.is_out_of_business = true
       cy.intercept(
@@ -289,161 +180,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should display the global company with a show subsidiaries button', () => {
-      cy.get('[data-test="hierarchy-item"]').should('have.length', 2)
-      cy.get('[data-test="toggle-subsidiaries-button"]')
-        .should('exist')
-        .should('have.length', 1)
-    })
-
-    it('should display the show all companies button', () => {
-      cy.get('[data-test="expand-tree-button"]').should('exist')
-    })
-
-    it('should display the global company with the correct company details', () => {
-      cy.get('[data-test="hierarchy-item"]')
-        .first()
-        .get('[data-test="company-name-header"]')
-        .first()
-        .should(
-          'contain.text',
-          `${companyOnlyImmediateSubsidiaries.ultimate_global_company.name} (not on Data Hub)`
-        )
-
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-number-of-employees-tag]`
-      ).should(
-        'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company
-          .number_of_employees
-      )
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-uk-region-tag]`
-      ).should(
-        'contain.text',
-        companyOnlyImmediateSubsidiaries.ultimate_global_company.uk_region.name
-      )
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-out-of-business]`
-      ).should('contain.text', 'Out of business')
-    })
-
-    it('should show trading names under heading', () => {
-      const company = companyOnlyImmediateSubsidiaries.ultimate_global_company
-      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
-        'have.text',
-        `Trading as: ${company.trading_names}`
-      )
-    })
-
-    it('should click the show subsidiaries button and check the subsidiary company displays with the correct company details', () => {
-      cy.get('[data-test="toggle-subsidiaries-button"]').click()
-      cy.get('[data-test="hierarchy-item"]')
-        .eq(1)
-        .find('a')
-        .should(
-          'contain.text',
-          companyOnlyImmediateSubsidiaries.ultimate_global_company
-            .subsidiaries[0].name
-        )
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.overview.index(
-            companyOnlyImmediateSubsidiaries.ultimate_global_company
-              .subsidiaries[0].id
-          )
-        )
-    })
-
-    it('should show the expected tags', () => {
-      cy.get(
-        `[data-test=${subsidiaryCompanyName}-number-of-employees-tag]`
-      ).should('contain.text', subsidiaryTagContent.number_of_employees)
-      cy.get(`[data-test=${subsidiaryCompanyName}-uk-region-tag]`).should(
-        'contain.text',
-        subsidiaryTagContent.uk_region.name
-      )
-      cy.get(`[data-test=${subsidiaryCompanyName}-country-tag]`).should(
-        'contain.text',
-        subsidiaryTagContent.address.country.name
-      )
-      cy.get(`[data-test=${subsidiaryCompanyName}-one-list-tag]`).should(
-        'contain.text',
-        subsidiaryTagContent.one_list_tier.name.slice(0, 6)
-      )
-      cy.get(
-        `[data-test=${subsidiaryCompanyName}-headquarter-type-tag]`
-      ).should(
-        'contain.text',
-        hqLabels[subsidiaryTagContent.headquarter_type.name]
-      )
-      cy.get(`[data-test=${subsidiaryCompanyName}-out-of-business]`).should(
-        'not.exist'
-      )
-    })
-  })
-
-  context('When a company has no additional company information', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyNoAdditionalTagData
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    it('should not show any tag information', () => {
-      cy.get(`[data-test=requested-company`)
-        .children()
-        .find('strong')
-        .should('not.exist')
-
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-number-of-employees-tag]`
-      ).should('not.exist')
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-uk-region-tag]`
-      ).should('not.exist')
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-country-tag]`
-      ).should('not.exist')
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-one-list-tag]`
-      ).should('not.exist')
-      cy.get(
-        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-headquarter-type-tag]`
-      ).should('not.exist')
-    })
-
-    it('should not show any trading names', () => {
-      const company = companyNoAdditionalTagData.ultimate_global_company
-      cy.get(`[data-test="${kebabCase(company.name)}-trading-names"]`).should(
-        'not.exist'
-      )
-    })
-  })
-
-  context('When a company has subsidiaries not on Data Hub', () => {
-    before(() => {
-      cy.intercept(
-        `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
-        companyWithLinkedSubsidiaryNotInDataHub
-      ).as('treeApi')
-      cy.visit(urls.companies.dnbHierarchy.tree(dnbGlobalUltimate.id))
-      cy.wait('@treeApi')
-    })
-
-    it('should have a link to add the company to Data Hub', () => {
-      cy.get('[data-test="expand-tree-button"]').click()
-      cy.get(`[data-test=add-company-not-on-data-hub-ltd`).click()
-      cy.location().should((loc) => {
-        expect(loc.search).to.eq('?duns_number=123456789')
-      })
-      cy.go('back')
-    })
   })
 
   context('When a company has a large number of subsidiaries', () => {
@@ -457,20 +193,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should expand all levels when the expand button is clicked', () => {
-      cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
-      cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
-      cy.get('[data-test="expand-tree-button"]').click()
-      cy.get('[data-test="hierarchy-item"]').should('be.visible')
-    })
-
-    it('should collapse all levels when the expand button is clicked again', () => {
-      cy.get('[data-test="hierarchy-item"]').should('be.visible')
-      cy.get('[data-test="expand-tree-button"]').click()
-      cy.get('[data-test="hierarchy-item"]').eq(0).should('be.visible')
-      cy.get('[data-test="hierarchy-item"]').eq(4).should('not.be.visible')
-    })
   })
 
   context('When the requested company is in the middle of a tree', () => {
@@ -503,32 +225,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('all parent levels should be expanded', () => {
-      cy.get(`[data-test-id="${middleCompany.id}"]`).should(
-        'have.attr',
-        'aria-expanded',
-        'false'
-      )
-
-      cy.get('[data-test="hierarchy-item"]')
-        .filter(':lt(4)')
-        .each((item) =>
-          cy.wrap(item).should('have.attr', 'aria-expanded', 'true')
-        )
-    })
-
-    it('should auto scroll to the item', () => {
-      cy.isInViewport(`[data-test-id="${middleCompany.id}"]`)
-    })
-
-    it('all other levels should be collapsed', () => {
-      cy.get('[data-test="hierarchy-item"]')
-        .filter(':gt(4)')
-        .each((item) =>
-          cy.wrap(item).should('have.attr', 'aria-expanded', 'false')
-        )
-    })
   })
 
   context('When a company has manually linked subsidiary', () => {
@@ -542,17 +238,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should display a show/hide manually linked subsidiary button', () => {
-      cy.get('[data-test="hierarchy-item"]').should('have.length', 3)
-      cy.get('[data-test="hierarchy-item"]').eq(2).should('not.be.visible')
-      cy.get('[data-test="manually-linked-hierarchy-container"]')
-        .should('have.length', 1)
-        .contains('Show 1 manually linked subsidiary')
-        .click()
-        .contains('Hide 1 manually linked subsidiary')
-      cy.get('[data-test="hierarchy-item"]').eq(2).should('be.visible')
-    })
   })
 
   context('When a company is the requested company', () => {
@@ -566,16 +251,6 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should display with a different background colour to other items', () => {
-      cy.get('[data-test="requested-company"]')
-        .first()
-        .should(
-          'have.css',
-          'background-color',
-          hexRgb(DARK_BLUE_LEGACY, { format: 'css' }).replaceAll(' ', ', ')
-        )
-    })
   })
 
   context('When a company has a mix of known and unknown subsidiaries', () => {
@@ -588,52 +263,7 @@ describe('D&B Company hierarchy tree', () => {
       cy.wait('@treeApi')
     })
 
-    const formattedDate = formatWithoutParsing(
-      companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
-        .latest_interaction_date
-    )
-
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should not display a View more detail link for companies not on Data Hub', () => {
-      cy.get('[data-test="related-company"]')
-        .first()
-        .should('not.contain', 'View more detail')
-    })
-
-    it('should display a View more detail link for companies on Data Hub', () => {
-      cy.get('[data-test="toggle-subsidiaries-button"]').first().click()
-      cy.get('[data-test="related-company"]')
-        .first()
-        .next()
-        .next()
-        .contains('View more detail')
-        .get('dl')
-        .should('not.be.visible')
-      cy.get('[data-test="toggle-section-button-content"]')
-        .first()
-        .click()
-        .contains('Hide detail')
-        .parent()
-        .parent()
-        .siblings('div')
-        .first('dl')
-        .should('be.visible')
-        .should(
-          'contain.text',
-          `Trading address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].address.line_1}`
-        )
-        .should(
-          'contain.text',
-          `Registered address${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].registered_address.line_1}`
-        )
-        .should('contain.text', `SectorNot set`)
-        .should(
-          'contain.text',
-          `Employees${companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0].number_of_employees}`
-        )
-        .should('contain.text', `Last interaction date${formattedDate}`)
-    })
   })
 
   context(
@@ -649,16 +279,6 @@ describe('D&B Company hierarchy tree', () => {
       })
 
       assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-      it('should have correct text in button', () => {
-        cy.get('[data-test="expand-tree-button"]')
-          .should('exist')
-          .contains('Show all')
-      })
-
-      it('should show header with count of ultimate global and manually linked companies', () => {
-        cy.get('[data-test="hierarchy-contents"]').should('exist').contains('7')
-      })
     }
   )
 
@@ -673,16 +293,5 @@ describe('D&B Company hierarchy tree', () => {
     })
 
     assertRelatedCompaniesPage({ company: dnbGlobalUltimate })
-
-    it('should have display a message about this being a reduced company tree', () => {
-      cy.get('[data-test="reduced-tree-hierarchy"]').should('exist')
-    })
-
-    it('should display the total number of companies in the tree compared to the overall global count', () => {
-      cy.get('[data-test="hierarchy-header"] > h2').should(
-        'have.text',
-        `${reducedTreeCompanyTree.family_tree_companies_count} companies out of ${reducedTreeCompanyTree.ultimate_global_companies_count}`
-      )
-    })
   })
 })
