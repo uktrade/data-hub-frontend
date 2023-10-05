@@ -1,10 +1,10 @@
 {
   "parserOptions": {
-    "ecmaVersion": 5,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "env": {
-    "es6": false,
+    "es6": true,
     "node": true
   },
   "globals": {
@@ -16,5 +16,8 @@
     "no-var": 0,
     "func-names": 0,
     "global-require": 0
-  }
+  },
+  "plugins": [
+    "@babel/plugin-syntax-import-assertions"
+  ]
 }
