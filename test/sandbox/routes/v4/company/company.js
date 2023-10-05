@@ -161,7 +161,7 @@ export const company = function (req, res) {
     return res.json(companyCreateInvestigation)
   }
 
-  res.json(companies[req.params.companyId] || company)
+  res.json(companies[req.params.companyId] || companyJson)
 }
 
 export const companyPatched = function (req, res) {
@@ -174,7 +174,7 @@ export const companyPatched = function (req, res) {
     return res.sendStatus(504)
   }
 
-  res.json(company)
+  res.json(companyJson)
 }
 
 export const getCompanyList = function (req, res) {

@@ -1,8 +1,7 @@
 import express from 'express'
-import pkg from 'body-parser'
-import _ from 'lodash'
+import bodyParser from 'body-parser'
 
-const { urlencoded, json } = pkg
+import _ from 'lodash'
 
 const config = {
   PORT: process.env.SANDBOX_PORT || 8000,
@@ -10,8 +9,8 @@ const config = {
 
 const app = express()
 
-app.use(urlencoded({ extended: true }))
-app.use(json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // TODO: Remove these legacy Sandbox vars after all the mocks are refactored
 global.state = {}
