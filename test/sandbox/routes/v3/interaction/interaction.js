@@ -12,7 +12,7 @@ import interactionDraftFutureMeetingJson from '../../../fixtures/v3/interaction/
 import interactionDraftPastMeetingJson from '../../../fixtures/v3/interaction/interaction-draft-past-meeting.json' assert { type: 'json' }
 import interactionValidationErrorJson from '../../../fixtures/v3/interaction/interaction-validation-error.json' assert { type: 'json' }
 import interactionWithReferralJson from '../../../fixtures/v3/interaction/interaction-with-referral.json' assert { type: 'json' }
-// import interactionWithoutThemeJson from '../../../fixtures/v3/interaction/interaction-without-theme';
+import interactionWithoutThemeJson from '../../../fixtures/v3/interaction/interaction-without-theme.js'
 
 export const getInteractions = function (req, res) {
   if (req.query.contact_id) {

@@ -1,13 +1,13 @@
-import advisersListJson from '../fixtures/adviser-list.json' assert { type: 'json' };
-import autoCompleteAdvisers from '../fixtures/autocomplete-adviser-list.json' assert { type: 'json' };
-import singleAdviserJson from '../fixtures/single-adviser.json'assert { type: 'json' };
+import advisersListJson from '../fixtures/adviser-list.json' assert { type: 'json' }
+import autoCompleteAdvisers from '../fixtures/autocomplete-adviser-list.json' assert { type: 'json' }
+import singleAdviserJson from '../fixtures/single-adviser.json' assert { type: 'json' }
 
 export const advisers = function (req, res) {
   if (req.query.autocomplete) {
     return res.json(autoCompleteAdvisers)
   }
   res.json(advisersListJson)
-};
+}
 
 /**
  * Return a single adviser
@@ -25,4 +25,4 @@ export const singleAdviser = function (req, res) {
     }
   }
   res.json(adviser)
-};
+}

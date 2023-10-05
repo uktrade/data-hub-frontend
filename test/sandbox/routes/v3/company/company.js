@@ -1,5 +1,5 @@
-import companiesNoResults from '../../../fixtures/v3/company/companies-no-results.json' assert { type: 'json' };
-import companyArchivedSubsidiaries from '../../../fixtures/v3/company/company-archived-subsidiaries';
+import companiesNoResults from '../../../fixtures/v3/company/companies-no-results.json' assert { type: 'json' }
+import companyArchivedSubsidiaries from '../../../fixtures/v3/company/company-archived-subsidiaries'
 
 export const companies = function (req, res) {
   var subsidiaries = {
@@ -7,4 +7,4 @@ export const companies = function (req, res) {
   }
 
   res.json(subsidiaries[req.query.global_headquarters_id] || companiesNoResults)
-};
+}

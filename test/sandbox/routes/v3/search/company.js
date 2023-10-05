@@ -1,9 +1,9 @@
-import companiesJson from '../../../fixtures/v3/search/company.json' assert { type: 'json' };
-import companyWithAttributesJson from '../../../fixtures/v3/search/company-with-attributes.json' assert { type: 'json' };
-import companyFilterJson from '../../../fixtures/v3/search/filter/company-filter.json' assert { type: 'json' };
-import companySortByMostRecentJson from '../../../fixtures/v3/search/sort/company-sort-by-most-recent.json' assert { type: 'json' };
-import companySortByLeastRecentJson from '../../../fixtures/v3/search/sort/company-sort-by-least-recent.json' assert { type: 'json' };
-import companySortByAZJson from '../../../fixtures/v3/search/sort/company-sort-by-a-z.json' assert { type: 'json' };
+import companiesJson from '../../../fixtures/v3/search/company.json' assert { type: 'json' }
+import companyWithAttributesJson from '../../../fixtures/v3/search/company-with-attributes.json' assert { type: 'json' }
+import companyFilterJson from '../../../fixtures/v3/search/filter/company-filter.json' assert { type: 'json' }
+import companySortByMostRecentJson from '../../../fixtures/v3/search/sort/company-sort-by-most-recent.json' assert { type: 'json' }
+import companySortByLeastRecentJson from '../../../fixtures/v3/search/sort/company-sort-by-least-recent.json' assert { type: 'json' }
+import companySortByAZJson from '../../../fixtures/v3/search/sort/company-sort-by-a-z.json' assert { type: 'json' }
 
 export const companies = function (req, res) {
   var companiesList = {
@@ -24,4 +24,4 @@ export const companies = function (req, res) {
   }
 
   res.json(companiesList[req.body.sortby] || companiesJson)
-};
+}

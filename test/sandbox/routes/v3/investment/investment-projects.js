@@ -1,9 +1,9 @@
-import allProjectsJson from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' };
-import projectJson from '../../../fixtures/v3/investment/project.json' assert { type: 'json' };
-import projectAuditJson from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' };
-import projectEvidenceJson from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' };
-import projectNoEvidenceJson from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' };
-import documentDownloadJson from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' };
+import allProjectsJson from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' }
+import projectJson from '../../../fixtures/v3/investment/project.json' assert { type: 'json' }
+import projectAuditJson from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' }
+import projectEvidenceJson from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
+import projectNoEvidenceJson from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
+import documentDownloadJson from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
 
 var allProjectsMap = {}
 allProjectsJson.results.forEach(function (project) {
@@ -11,16 +11,16 @@ allProjectsJson.results.forEach(function (project) {
 })
 
 export const investmentProjectById = function (req, res) {
-  res.json(allProjectsMap[req.params.id] || project)
-};
+  res.json(allProjectsMap[req.params.id] || projectJson)
+}
 
 export const investmentProjects = function (req, res) {
   res.json(allProjectsJson)
-};
+}
 
 export const investmentProjectAudit = function (req, res) {
   res.json(projectAuditJson)
-};
+}
 
 export const investmentProjectEvidence = function (req, res) {
   res.json(
@@ -28,11 +28,11 @@ export const investmentProjectEvidence = function (req, res) {
       ? projectNoEvidenceJson
       : projectEvidenceJson
   )
-};
+}
 
 export const documentDownload = function (req, res) {
   res.json(documentDownloadJson)
-};
+}
 
 export const patchInvestmentProject = function (req, res) {
   if (req.body) {
@@ -51,12 +51,12 @@ export const patchInvestmentProject = function (req, res) {
   return res.status(400).json({
     client_requirements: ['required'],
   })
-};
+}
 
 export const postInvestmentProject = function (req, res) {
   res.json(projectJson)
-};
+}
 
 export const postInvestmentProjectEditTeams = function (req, res) {
-  res.sendStatus(200).json(allProjectsMap[req.params.id] || project)
-};
+  res.sendStatus(200).json(allProjectsMap[req.params.id] || projectJson)
+}

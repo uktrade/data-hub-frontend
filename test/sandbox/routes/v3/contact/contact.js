@@ -1,23 +1,23 @@
-import contactJson from '../../../fixtures/v3/contact/contact.json' assert { type: 'json' };
-import contactByIdUKJson from '../../../fixtures/v3/contact/contact-by-id-uk.json' assert { type: 'json' };
-import contactByIdUSJson from '../../../fixtures/v3/contact/contact-by-id-us.json' assert { type: 'json' };
-import contactByIdWithNoDocumentJson from '../../../fixtures/v3/contact/contact-by-id-with-no-document.json' assert { type: 'json' };
-import contactsForReferralJson from '../../../fixtures/v3/contact/contacts-for-referral.json' assert { type: 'json' };
-import completeUKContactJson from '../../../fixtures/v3/contact/contact-complete-details-uk.json' assert { type: 'json' };
-import incompleteUKContactJson from '../../../fixtures/v3/contact/contact-incomplete-details-uk.json' assert { type: 'json' };
-import contactWithCompanyAddressJson from '../../../fixtures/v3/contact/contact-with-company-address.json' assert { type: 'json' };
-import contactWithUSAddressJson from '../../../fixtures/v3/contact/contact-with-us-address.json' assert { type: 'json' };
-import archivedContactJson from '../../../fixtures/v3/contact/contact-archived.json' assert { type: 'json' };
-import invalidEmailContactJson from '../../../fixtures/v3/contact/contact-invalid-email.json' assert { type: 'json' };
-import aventriContactJson from '../../../fixtures/v4/activity-feed/aventri-attendees.json' assert { type: 'json' };
-import ditContactforAventriJson from '../../../fixtures/v3/contact/contact-aventri.json' assert { type: 'json' };
-import noContactJson from '../../../fixtures/v3/contact/no-contact.json' assert { type: 'json' };
-import auditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history.json' assert { type: 'json' };
-import shortAuditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history-short.json' assert { type: 'json' };
-import emptyAuditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history-empty.json' assert { type: 'json' };
-import lambdaPlcJson from '../../../fixtures/v4/company/company-lambda-plc.json' assert { type: 'json' };
-import contactCreateJson from '../../../fixtures/v3/contact/contact-create.json' assert { type: 'json' };
-import contactManyContactsCompanyJson from '../../../fixtures/v3/contact/contact-company-with-many-contacts.json' assert { type: 'json' };
+import contactJson from '../../../fixtures/v3/contact/contact.json' assert { type: 'json' }
+import contactByIdUKJson from '../../../fixtures/v3/contact/contact-by-id-uk.json' assert { type: 'json' }
+import contactByIdUSJson from '../../../fixtures/v3/contact/contact-by-id-us.json' assert { type: 'json' }
+import contactByIdWithNoDocumentJson from '../../../fixtures/v3/contact/contact-by-id-with-no-document.json' assert { type: 'json' }
+import contactsForReferralJson from '../../../fixtures/v3/contact/contacts-for-referral.json' assert { type: 'json' }
+import completeUKContactJson from '../../../fixtures/v3/contact/contact-complete-details-uk.json' assert { type: 'json' }
+import incompleteUKContactJson from '../../../fixtures/v3/contact/contact-incomplete-details-uk.json' assert { type: 'json' }
+import contactWithCompanyAddressJson from '../../../fixtures/v3/contact/contact-with-company-address.json' assert { type: 'json' }
+import contactWithUSAddressJson from '../../../fixtures/v3/contact/contact-with-us-address.json' assert { type: 'json' }
+import archivedContactJson from '../../../fixtures/v3/contact/contact-archived.json' assert { type: 'json' }
+import invalidEmailContactJson from '../../../fixtures/v3/contact/contact-invalid-email.json' assert { type: 'json' }
+import aventriContactJson from '../../../fixtures/v4/activity-feed/aventri-attendees.json' assert { type: 'json' }
+import ditContactforAventriJson from '../../../fixtures/v3/contact/contact-aventri.json' assert { type: 'json' }
+import noContactJson from '../../../fixtures/v3/contact/no-contact.json' assert { type: 'json' }
+import auditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history.json' assert { type: 'json' }
+import shortAuditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history-short.json' assert { type: 'json' }
+import emptyAuditHistoryJson from '../../../fixtures/v3/contact/contact-audit-history-empty.json' assert { type: 'json' }
+import lambdaPlcJson from '../../../fixtures/v4/company/company-lambda-plc.json' assert { type: 'json' }
+import contactCreateJson from '../../../fixtures/v3/contact/contact-create.json' assert { type: 'json' }
+import contactManyContactsCompanyJson from '../../../fixtures/v3/contact/contact-company-with-many-contacts.json' assert { type: 'json' }
 
 const validateContactForm = function (formData) {
   const requiredFields = ['first_name', 'last_name', 'job_title', 'email']
@@ -60,7 +60,7 @@ export const contact = function (req, res) {
   } else {
     res.json(contactJson)
   }
-};
+}
 
 export const contactCreate = function (req, res) {
   const fieldErrors = validateContactForm(req.body)
@@ -76,7 +76,7 @@ export const contactCreate = function (req, res) {
   } else {
     res.json(contactCreateJson)
   }
-};
+}
 
 export const contactById = function (req, res) {
   const contacts = {
@@ -91,7 +91,7 @@ export const contactById = function (req, res) {
   }
 
   res.json(contacts[req.params.contactId] || contactByIdUSJson)
-};
+}
 
 export const updateContactById = function (req, res) {
   const fieldErrors = validateContactForm(req.body)
@@ -108,11 +108,11 @@ export const updateContactById = function (req, res) {
   } else {
     res.json(contactByIdUSJson)
   }
-};
+}
 
 export const archiveContact = function (req, res) {
   res.sendStatus(200)
-};
+}
 
 export const auditHistory = function (req, res) {
   const auditHistories = {
@@ -120,4 +120,4 @@ export const auditHistory = function (req, res) {
     'e74f0a25-aeee-48bd-a483-ac29c47e81a4': shortAuditHistoryJson,
   }
   res.json(auditHistories[req.params.contactId] || emptyAuditHistoryJson)
-};
+}

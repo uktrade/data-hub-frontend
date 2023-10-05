@@ -1,7 +1,7 @@
-import eventByIdJson from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' };
-import missingTeamsJson from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' };
-import emptyEventJson from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' };
-import disabledEventJson from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' };
+import eventByIdJson from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' }
+import missingTeamsJson from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' }
+import emptyEventJson from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' }
+import disabledEventJson from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' }
 
 export const eventById = function (req, res) {
   var events = {
@@ -12,4 +12,4 @@ export const eventById = function (req, res) {
   }
 
   res.json(events[req.params.eventId] || eventByIdJson)
-};
+}

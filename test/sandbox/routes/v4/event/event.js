@@ -1,8 +1,8 @@
-import eventByIdJson from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' };
-import missingTeams from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' };
-import emptyEvent from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' };
-import disabledEvent from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' };
-import eventCreate from '../../../fixtures/v4/event/event-create.json' assert { type: 'json' };
+import eventByIdJson from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' }
+import missingTeams from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' }
+import emptyEvent from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' }
+import disabledEvent from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' }
+import eventCreate from '../../../fixtures/v4/event/event-create.json' assert { type: 'json' }
 
 function getEventById(res, req) {
   var events = {
@@ -16,12 +16,12 @@ function getEventById(res, req) {
 
 export const eventById = function (req, res) {
   return getEventById(res, req)
-};
+}
 
 export const createEvent = function (req, res) {
   return res.status(201).json(eventCreate)
-};
+}
 
 export const patchEvent = function (req, res) {
   return getEventById(res, req)
-};
+}

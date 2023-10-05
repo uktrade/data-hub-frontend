@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
 const futureEventIdWithLargeAttendeeList = 1114
 const pastEventIdWithLargeAttendeeList = 1111
@@ -237,4 +237,3 @@ export const generateAventriAttendeeESResponse = () => {
     },
   }
 }
-

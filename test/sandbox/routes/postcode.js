@@ -1,4 +1,4 @@
-import postcodeToRegion from '../fixtures/postcodeToRegion.json' assert { type: 'json' };
+import postcodeToRegion from '../fixtures/postcodeToRegion.json' assert { type: 'json' }
 
 export const toRegion = function (req, res) {
   if (req.query.postcode === 'UNK N0WN') {
@@ -8,7 +8,7 @@ export const toRegion = function (req, res) {
   }
 
   res.json(postcodeToRegion)
-};
+}
 
 export const lookup = function (req, res) {
   return res.json({
@@ -24,4 +24,4 @@ export const lookup = function (req, res) {
       'National Probation Service, 102 Petty France, Westminster, , , London, Greater London',
     ],
   })
-};
+}

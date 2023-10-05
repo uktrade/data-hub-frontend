@@ -1,4 +1,4 @@
-import contact from '../../../fixtures/v3/search/contact.json' assert { type: 'json' };
+import contact from '../../../fixtures/v3/search/contact.json' assert { type: 'json' }
 
 export const contacts = function (req, res) {
   if (req.body.original_query === 'no results') {
@@ -9,4 +9,4 @@ export const contacts = function (req, res) {
   }
 
   res.json(contact)
-};
+}

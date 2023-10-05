@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty.js'
+
 import defaultFeatureFlagsJson from '../../../fixtures/v3/feature-flag/feature-flag.json' assert { type: 'json' }
 
 let featureFlags = [...defaultFeatureFlagsJson]

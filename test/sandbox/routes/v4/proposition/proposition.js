@@ -1,4 +1,4 @@
-import outstandingPropositions from '../../../fixtures/v4/proposition/outstanding_propositions.json' assert { type: 'json' };
+import outstandingPropositions from '../../../fixtures/v4/proposition/outstanding_propositions.json' assert { type: 'json' }
 
 export const propositions = function (req, res) {
   outstandingPropositions.results = outstandingPropositions.results.map(
@@ -12,4 +12,4 @@ export const propositions = function (req, res) {
     }
   )
   res.json(outstandingPropositions)
-};
+}

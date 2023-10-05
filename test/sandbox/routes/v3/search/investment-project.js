@@ -1,4 +1,4 @@
-import investmentProjectsJson from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' };
+import investmentProjectsJson from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' }
 
 export const investmentProjects = function (req, res) {
   const hasFilters = !!(
@@ -51,7 +51,7 @@ export const investmentProjects = function (req, res) {
       summary,
     })
   }
-};
+}
 
 /**
  * Mock a simple csv file for export
@@ -60,4 +60,4 @@ export const exportCsv = function (req, res) {
   res.header('Content-Type', 'text/csv')
   res.attachment('export.csv')
   res.send('a,b,c\n1,2,3')
-};
+}

@@ -1,6 +1,6 @@
-import eventsJson from '../../../fixtures/v3/search/event.json' assert { type: 'json' };
-import eventFilterJson from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' };
-import eventSortJson from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' };
+import eventsJson from '../../../fixtures/v3/search/event.json' assert { type: 'json' }
+import eventFilterJson from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' }
+import eventSortJson from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' }
 
 export const events = function (req, res) {
   var eventList = {
@@ -36,4 +36,4 @@ export const events = function (req, res) {
   }
 
   res.json(eventList[req.body.sortby] || eventsJson)
-};
+}
