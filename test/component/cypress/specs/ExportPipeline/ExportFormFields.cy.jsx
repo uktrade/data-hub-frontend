@@ -3,17 +3,13 @@ import React from 'react'
 import ExportFormFields from '../../../../../src/client/modules/ExportPipeline/ExportForm/ExportFormFields'
 import DataHubProvider from '../provider'
 
-const RESET_ACTION = {
-  type: 'RESET',
-}
-
 describe('ExportFormFields', () => {
   const Component = (props) => (
     <DataHubProvider>
       <ExportFormFields
         {...props}
         taskProps={{
-          name: RESET_ACTION,
+          // name: RESET_ACTION,
           id: 'test',
           progressMessage: 'Loading company details',
         }}
