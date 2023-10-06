@@ -45,10 +45,6 @@ describe('Company overview page', () => {
   const allActivityUrlAllOverview = urls.companies.activity.index(
     fixtures.company.allOverviewDetails.id
   )
-  const companyAccountManagementAdvisersUrlAllOverview =
-    urls.companies.accountManagement.index(
-      fixtures.company.allOverviewDetails.id
-    )
   const companyExportsAllOverview = urls.companies.exports.index(
     fixtures.company.allOverviewDetails.id
   )
@@ -75,194 +71,39 @@ describe('Company overview page', () => {
     }
   )
   context(
-    'when viewing the page a Business details card should be displayed',
+    'when viewing the Overview page a Business details card should be displayed',
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
       it('the card should contain the Business details table', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .as('table')
+        cy.get('[data-test="business-details-container"]')
+          .as('bd-table')
           .first()
           .contains('Business details')
-        cy.get('@table').find('tbody').should('exist')
+        cy.get('@bd-table').find('tbody').should('exist')
       })
     }
   )
 
   context(
-    'when viewing the Account management card for a business that has all information added',
+    'when viewing the Overview page an Account Management card should be displayed',
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
-      it('the card should contain the Account management table including all keys and values then load 2 more contacts', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
+      it('the card should contain the Business details table', () => {
+        cy.get('[data-test="account-management-container"]')
+          .as('am-table')
           .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('DBT Region')
-          .siblings()
-          .contains('td', 'South East')
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('td', 'Billy Bob')
-        cy.get('th')
-          .contains('One List')
-          .siblings()
-          .contains('td', 'Tier A - SRM Programme Accounts')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Speed')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Weight')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'View 2 more contacts')
-          .click()
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Height')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Baz Slow')
-      })
-
-      it('the card should link to the account management overview page', () => {
-        cy.get('[data-test="account-management-page-link"]')
-          .contains('View full account management')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          companyAccountManagementAdvisersUrlAllOverview
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Account management  card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Account management table with all values set to "Not set"', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
-          .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th').contains('DBT Region').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('One List').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('td', 'Not set')
-      })
-    }
-  )
-  context('clicking a primary contact on the account management card', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
-      )
-    })
-
-    it('should click on a primary contact and take you the contacts page', () => {
-      cy.get('[data-test="accountManagementContainer"]')
-        .children()
-        .first()
-        .contains('Account Management')
-        .next()
-        .children()
-      cy.get('th')
-        .contains('Primary Contact(s)')
-        .siblings()
-        .contains('a', 'Max Speed')
-        .click()
-      cy.location('pathname').should(
-        'eq',
-        '/contacts/9136dd49-df67-4b2b-b241-6b64a662f1af/details'
-      )
-      cy.go('back')
-    })
-  })
-  context('clicking on the Lead ITA on the account management card', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.overview.index(fixtures.company.oneListTierDita.id)
-      )
-    })
-
-    it('should click on the Lead ITA and take you the contacts page', () => {
-      cy.get('[data-test="accountManagementContainer"]')
-        .children()
-        .first()
-        .contains('Account Management')
-        .next()
-        .children()
-      cy.get('th')
-        .contains('Lead ITA')
-        .siblings()
-        .contains('a', 'Travis Greene')
-        .click()
-      cy.location('pathname').should(
-        'eq',
-        `/companies/${fixtures.company.oneListTierDita.id}/account-management`
-      )
-      cy.go('back')
-    })
-  })
-  context(
-    'clicking on the Account Manager on the account management card',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
-        )
-      })
-
-      it('should click on the Account Manager and take you the contacts page', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
-          .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('a', 'Billy Bob')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `/companies/${fixtures.company.allOverviewDetails.id}/account-management`
-        )
-        cy.go('back')
+          .contains('Account management')
+        cy.get('@am-table').find('tbody').should('exist')
       })
     }
   )

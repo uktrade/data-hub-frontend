@@ -19,7 +19,7 @@ const StyledAddressList = styled('ul')``
 const BusinessDetailsCard = ({ company }) => (
   <StyledSummaryTable
     caption="Business details"
-    data-test="businessDetailsContainer"
+    data-test="business-details-container"
   >
     {(company.registeredAddress?.country?.id == UNITED_KINGDOM_ID ||
       company.address?.country?.id == UNITED_KINGDOM_ID) && (
