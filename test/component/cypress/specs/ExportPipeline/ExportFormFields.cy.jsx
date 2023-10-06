@@ -9,7 +9,6 @@ describe('ExportFormFields', () => {
       <ExportFormFields
         {...props}
         taskProps={{
-          // name: RESET_ACTION,
           id: 'test',
           progressMessage: 'Loading company details',
         }}
