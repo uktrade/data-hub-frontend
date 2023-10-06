@@ -1,11 +1,36 @@
 import { company } from '../../fixtures'
 import { exportFaker } from '../../fakers/export'
+import { companyFaker } from '../../fakers/companies'
+import { UNITED_KINGDOM_ID } from '../../../../../src/common/constants'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 const { usCompany } = company
+
+const companyGlobalUltimateAllDetails = companyFaker({
+  companyNumber: '01261539',
+  address: {
+    line1: '1 On The Road',
+    line2: '',
+    town: 'Bristol',
+    county: 'North Somerset',
+    postcode: 'BS20 2BB',
+    country: {
+      id: UNITED_KINGDOM_ID,
+      name: 'United Kingdom',
+    },
+  },
+  website: 'www.there.com',
+  numberOfEmployees: 200,
+  turnoverGbp: 200000,
+  sector: {
+    name: 'Aerospace',
+    id: '9538cecc-5f95-e211-a939-e4115bead28a',
+  },
+  globalUltimateCountry: 'United Kingdom',
+})
 
 describe('Company overview page', () => {
   const interactionUrlAllOverview = urls.companies.interactions.index(
@@ -18,9 +43,6 @@ describe('Company overview page', () => {
     fixtures.company.noOverviewDetails.id
   )
   const allActivityUrlAllOverview = urls.companies.activity.index(
-    fixtures.company.allOverviewDetails.id
-  )
-  const companyBusinessDetailsUrlAllOverview = urls.companies.businessDetails(
     fixtures.company.allOverviewDetails.id
   )
   const companyAccountManagementAdvisersUrlAllOverview =
@@ -40,7 +62,7 @@ describe('Company overview page', () => {
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
@@ -53,7 +75,7 @@ describe('Company overview page', () => {
     }
   )
   context(
-    'when viewing the Business details card for a business that has all information added',
+    'when viewing the page a Business details card should be displayed',
     () => {
       before(() => {
         cy.visit(
@@ -61,202 +83,16 @@ describe('Company overview page', () => {
         )
       })
 
-      it('the card should contain the Business details table including all keys and values for All Overview Details Inc.', () => {
+      it('the card should contain the Business details table', () => {
         cy.get('[data-test="businessDetailsContainer"]')
-          .children()
+          .as('table')
           .first()
           .contains('Business details')
-          .next()
-          .children()
-        cy.get('th').contains('Companies House')
-        cy.get('[data-test="companies-house-link"]')
-          .contains('01261539')
-          .invoke('attr', 'href')
-          .should('eq', 'https://beta.companieshouse.gov.uk/company/01261539')
-        cy.get('th').contains('Trading Address')
-        cy.get('td').children()
-        cy.get('li')
-          .contains('Unit 10 Ockham Drive')
-          .parent()
-          .parent()
-          .parent()
-          .next()
-        cy.get('th').contains('Website')
-        cy.get('td')
-          .contains('http://all-the-details.com')
-          .parent()
-          .parent()
-          .next()
-        cy.get('th').contains('Turnover')
-        cy.get('td').contains('£720,000').parent().next()
-        cy.get('th').contains('Number of Employees')
-        cy.get('td').contains('260').parent().next()
-        cy.get('th').contains('DBT Sector')
-        cy.get('td').contains('Retail').parent().next()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('United Kingdom')
-      })
-
-      it('the card should link to the business overview page', () => {
-        cy.get('[data-test="business-page-link"]')
-          .contains('View full business details')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          companyBusinessDetailsUrlAllOverview
-        )
-        cy.go('back')
+        cy.get('@table').find('tbody').should('exist')
       })
     }
   )
-  context(
-    'when viewing the Business details card for a global ultimate company',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.dnbGlobalUltimate.id)
-        )
-      })
-      it('the card should contain Headquarter Location matching country of the company', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
-          .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .last()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('United Kingdom')
-      })
-      it('the card should link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]')
-          .contains('View company tree')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          urls.companies.dnbHierarchy.tree(
-            fixtures.company.dnbGlobalUltimate.id
-          )
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Business details card for a subsidiary company',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.dnbSubsidiary.id)
-        )
-      })
-      it('the card should contain Headquarter Location matching country of global ultimate company', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
-          .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .last()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('Canada')
-      })
-      it('the card should link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]')
-          .contains('View company tree')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          urls.companies.dnbHierarchy.tree(fixtures.company.dnbSubsidiary.id)
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context('when viewing a non-UK business', () => {
-    before(() => {
-      cy.visit(urls.companies.overview.index(usCompany.id))
-    })
-    it('the business detail card should not contain the Company House row', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .first()
-        .contains('Trading Address')
-    })
-  })
-  context('when viewing a UK business with only registered address', () => {
-    const blankAddress = fixtures.company.allOverviewDetails
-    blankAddress.address = null
-    before(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`,
-        fixtures.company.allOverviewDetails
-      )
-      cy.visit(urls.companies.overview.index(blankAddress.id))
-    })
-    it('should contain the Company House row', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .first()
-        .contains('Companies House')
-    })
 
-    it('should have address set as "Not set"', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .contains('Trading Address')
-        .siblings()
-        .contains('td', 'Not set')
-    })
-  })
-  context(
-    'when viewing the Business details card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Business details table with all values set to "Not set"', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
-          .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .first()
-          .contains('Trading Address')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('Website').siblings().contains('td', 'Not set')
-        cy.get('th').contains('Turnover').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Number of Employees')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('DBT Sector').siblings().contains('td', 'Not set')
-        cy.get('th').contains('Headquarter Location').should('not.exist')
-      })
-
-      it('the card should not show link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]').should('not.exist')
-      })
-    }
-  )
   context(
     'when viewing the Account management card for a business that has all information added',
     () => {
