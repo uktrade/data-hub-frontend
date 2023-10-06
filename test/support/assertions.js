@@ -1,41 +1,37 @@
-const { keys, forEach, isObject } = require('lodash')
-const qs = require('qs')
+import { keys, forEach, isObject } from 'lodash'
+import { stringify } from 'qs'
 
-const selectors = require('../../../selectors')
-const urls = require('../../../../src/lib/urls')
+import { keyValueTable, localHeader, tabbedLocalNav } from '../selectors'
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertKeyValueTable = (dataTest, expected) => {
   forEach(keys(expected), (key, i) => {
     const rowNumber = i + 1
 
     if (expected[key] === null) {
-      cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).valueCell(rowNumber)).should(
         'have.text',
         key
       )
     } else if (expected[key].href) {
-      cy.get(selectors.keyValueTable(dataTest).keyCell(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).keyCell(rowNumber)).should(
         'have.text',
         key
       )
-      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).valueCellLink(rowNumber)).should(
         'have.attr',
         'href',
         expected[key].href
       )
-      cy.get(selectors.keyValueTable(dataTest).valueCellLink(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).valueCellLink(rowNumber)).should(
         'have.text',
         expected[key].name
       )
     } else {
-      cy.get(selectors.keyValueTable(dataTest).keyCell(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).keyCell(rowNumber)).should(
         'have.text',
         key
       )
-      cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
+      cy.get(keyValueTable(dataTest).valueCell(rowNumber)).should(
         'have.text',
         expected[key]
       )
@@ -43,36 +39,24 @@ const assertKeyValueTable = (dataTest, expected) => {
   })
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertValueTable = (dataTest, expected) => {
   forEach(expected, (expectedValue, i) => {
     const rowNumber = i + 1
-    cy.get(selectors.keyValueTable(dataTest).valueCell(rowNumber)).should(
+    cy.get(keyValueTable(dataTest).valueCell(rowNumber)).should(
       'have.text',
       expectedValue
     )
   })
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
-const assertSummaryTable = ({
-  dataTest,
-  heading,
-  showEditLink,
-  content,
-  editLinkText = 'Edit',
-}) => {
+const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
   const summaryTableSelector = `[data-test="${dataTest}"]`
 
   if (heading) {
     cy.get(summaryTableSelector).find('caption').should('contain', heading)
   }
   cy.get(summaryTableSelector)
-    .contains(editLinkText)
+    .contains('Edit')
     .should(showEditLink ? 'be.visible' : 'not.exist')
 
   if (typeof content !== 'undefined') {
@@ -82,27 +66,7 @@ const assertSummaryTable = ({
   }
 }
 
-const assertGovReactTable = ({ element, headings, rows }) => {
-  cy.get(element).as('table')
-
-  if (headings) {
-    cy.get('@table').find('th')
-  }
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
-
 /**
- * @deprecated Use the version in /test/support folder
  * @description Asserts the presence of breadcrumbs with minimal knowledge about
  * implementation details e.g. class names and ids.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
@@ -133,29 +97,12 @@ const assertBreadcrumbs = (specs) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * @description Same as assertBreadcrumbs but already wrapped in an `it` block.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
  */
 const testBreadcrumbs = (specs) =>
   it('should render breadcrumbs', () => assertBreadcrumbs(specs))
 
-/**
- * @deprecated Use the version in /test/support folder
- * Asserts that the breadcrumbs on company pages appear correctly
- */
-const assertCompanyBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
-  testBreadcrumbs({
-    Home: urls.dashboard.index(),
-    Companies: urls.companies.index(),
-    [companyName]: detailsUrl,
-    [lastCrumb]: null,
-  })
-}
-
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
     .wrap(element)
@@ -165,9 +112,6 @@ const assertFieldUneditable = ({ element, label, value = null }) =>
     .parent()
     .then(($el) => value && cy.wrap($el).should('contain', value))
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldSelect = ({
   element,
   label,
@@ -203,7 +147,6 @@ const assertFieldSelect = ({
     })
 
 /**
- * @deprecated Use the version in /test/support folder
  * @description Asserts a list of <select> options
  * @param {String} element - the CSS <select> selector
  * @param {Array} options - an array of options to assert
@@ -238,9 +181,6 @@ const assertSelectOptions = (element, expectedOptions) =>
     ).to.deep.eq(expectedOptions)
   })
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
     .wrap(element)
@@ -264,9 +204,6 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
 
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
 // Use this assertion for radios which have legends applied.
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldRadiosWithLegend = ({
   element,
   legend,
@@ -292,9 +229,6 @@ const assertFieldRadiosWithLegend = ({
           .should('have.text', value)
     )
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldRadiosWithoutLabel = ({ element, value, optionsCount }) =>
   cy
     .wrap(element)
@@ -311,9 +245,6 @@ const assertFieldRadiosWithoutLabel = ({ element, value, optionsCount }) =>
           .should('have.text', value)
     )
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldCheckbox = ({ element, label, value, checked }) => {
   cy.wrap(element)
     .as('fieldCheckbox')
@@ -326,9 +257,6 @@ const assertFieldCheckbox = ({ element, label, value, checked }) => {
     .should(checked ? 'be.checked' : 'not.be.checked')
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldTypeahead = ({
   element,
   label,
@@ -352,15 +280,9 @@ const assertFieldTypeahead = ({
     hint && expect($typeahead).to.contain(hint)
   })
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldSingleTypeahead = (props) =>
   assertFieldTypeahead({ ...props, isMulti: false })
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldInputWithLegend = ({
   element,
   label,
@@ -389,9 +311,6 @@ const assertFieldInputWithLegend = ({
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldInput = ({
   element,
   label,
@@ -424,27 +343,9 @@ const assertFieldInput = ({
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
-/**
- * @deprecated Use the version in /test/support folder
- */
-const assertFieldInputNoLabel = ({ element, value = undefined }) =>
-  cy
-    .wrap(element)
-    .find('input')
-    .then(
-      ($el) =>
-        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
-    )
-
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldTextarea = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
@@ -464,9 +365,6 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   const isUKBased = value.country.name === 'United Kingdom'
   const isUSBased = value.country.name === 'United States'
@@ -544,9 +442,6 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
     })
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldDate = ({ element, label, value = {} }) => {
   const inputs = element.find('input')
 
@@ -560,9 +455,6 @@ const assertFieldDate = ({ element, label, value = {} }) => {
   value.year && expect(inputs[2]).to.have.value(value.year)
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFieldDateShort = ({ element, label, value = {} }) => {
   const labels = element.find('label')
   const inputs = element.find('input')
@@ -576,9 +468,6 @@ const assertFieldDateShort = ({ element, label, value = {} }) => {
   value.year && expect(inputs[1]).to.have.value(value.year)
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFormActions = ({ element, buttons }) =>
   cy
     .wrap(element)
@@ -587,9 +476,6 @@ const assertFormActions = ({ element, buttons }) =>
       cy.wrap(element).should('have.text', buttons[i]).should('match', 'button')
     })
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFormFields = (formElement, specs) =>
   formElement.children().each((element, i) => {
     if (specs[i]) {
@@ -603,9 +489,6 @@ const assertFormFields = (formElement, specs) =>
     }
   })
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertDetails = ({ element, summary, content }) =>
   cy
     .wrap(element)
@@ -614,23 +497,14 @@ const assertDetails = ({ element, summary, content }) =>
     .next()
     .should('have.text', content)
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertLocalHeader = (header) => {
-  cy.get(selectors.localHeader).contains(header)
+  cy.get(localHeader).contains(header)
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertTabbedLocalNav = (nav) => {
-  cy.get(selectors.tabbedLocalNav).contains(nav)
+  cy.get(tabbedLocalNav).contains(nav)
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertSummaryList = (listElement, specs) => {
   const entries = Object.entries(specs)
   cy.wrap(listElement)
@@ -643,24 +517,17 @@ const assertSummaryList = (listElement, specs) => {
     })
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertAriaTablistTabSelected = (tabListLabel, tabLabel) =>
   cy
     .getDhTablistTab(tabListLabel, tabLabel)
     .should('have.attr', 'aria-selected', 'true')
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertFormButtons = ({ submitText, cancelText, cancelLink }) => {
   cy.contains('button', submitText)
   cy.contains('a', cancelText).should('have.attr', 'href', cancelLink)
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that a checkbox is checked or unchecked
  */
 const assertCheckboxGroupOption = ({ element, value, checked = true }) => {
@@ -673,7 +540,6 @@ const assertCheckboxGroupOption = ({ element, value, checked = true }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that none of the options in a checkbox group are selected
  */
 const assertCheckboxGroupNoneSelected = (element) => {
@@ -683,7 +549,6 @@ const assertCheckboxGroupNoneSelected = (element) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that all of the options in a checkbox group are selected
  */
 const assertCheckboxGroupAllSelected = (element) => {
@@ -693,7 +558,6 @@ const assertCheckboxGroupAllSelected = (element) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
 const assertTypeaheadHints = ({
@@ -711,7 +575,6 @@ const assertTypeaheadHints = ({
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts that the typeahead `element` has the `expectedOption` selected
  */
 const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
@@ -719,7 +582,6 @@ const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts that a single-select typeahead `element` has the `expectedOption` selected
  */
 const assertSingleTypeaheadOptionSelected = ({ element, expectedOption }) => {
@@ -727,7 +589,6 @@ const assertSingleTypeaheadOptionSelected = ({ element, expectedOption }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts that a chip indicator exists in the specified position
  */
 const assertChipExists = ({ label, position }) => {
@@ -737,7 +598,6 @@ const assertChipExists = ({ label, position }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts there are no chips
  */
 const assertChipsEmpty = () => {
@@ -745,7 +605,6 @@ const assertChipsEmpty = () => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts the field is empty
  */
 const assertFieldEmpty = (element) => {
@@ -753,33 +612,30 @@ const assertFieldEmpty = (element) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts the key-value pair are defined within the query params
  */
 const assertQueryParams = (key, value) => {
   cy.url().should(
     'include',
-    qs.stringify({
+    stringify({
       [key]: value,
     })
   )
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts the key-value pair are defined within the query params
  */
 const assertNotQueryParams = (key, value) => {
   cy.url().should(
     'not.include',
-    qs.stringify({
+    stringify({
       [key]: value,
     })
   )
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert the expected payload to the API
  */
 
@@ -790,7 +646,6 @@ const assertPayload = (apiRequest, expectedParams) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Asserts the url (no domain name) is contained within the API request url
  */
 const assertRequestUrl = (apiRequest, url) => {
@@ -800,9 +655,9 @@ const assertRequestUrl = (apiRequest, url) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that the label and value exist on the date input
  */
+
 const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
@@ -813,7 +668,6 @@ const assertDateInput = ({ element, label, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that the label and value exist on the date input where a hint is provided
  */
 const assertDateInputWithHint = ({ element, label, value }) => {
@@ -827,7 +681,6 @@ const assertDateInputWithHint = ({ element, label, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert error summary passing in a list of errors as as an array
  */
 const assertErrorSummary = (errors) => {
@@ -837,7 +690,6 @@ const assertErrorSummary = (errors) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert by selector if it is visible
  */
 const assertVisible = (selector) => {
@@ -845,7 +697,6 @@ const assertVisible = (selector) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert by selector if it does not exist
  */
 const assertNotExists = (selector) => {
@@ -853,7 +704,6 @@ const assertNotExists = (selector) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert if the text is visible
  */
 const assertTextVisible = (text) => {
@@ -861,7 +711,6 @@ const assertTextVisible = (text) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert url is contained in current url
  */
 const assertUrl = (url) => {
@@ -869,7 +718,6 @@ const assertUrl = (url) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert url is exactly matches the current url
  */
 const assertExactUrl = (url) => {
@@ -877,7 +725,6 @@ const assertExactUrl = (url) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert flash message is contained
  */
 const assertFlashMessage = (message) => {
@@ -885,22 +732,17 @@ const assertFlashMessage = (message) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that a given param is either present or not present in a URL
  */
 const assertParamContainedInUrl = (xhr, param) => {
   expect(xhr.response.url).to.contain(param)
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 const assertParamNotContainedInUrl = (xhr, param) => {
   expect(xhr.response.url).to.not.contain(param)
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that the body of an intercepted request is as expected
  */
 const assertRequestBody = (xhr, expectedBody) => {
@@ -908,7 +750,6 @@ const assertRequestBody = (xhr, expectedBody) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert that the error dialog contains a task name and error message
  */
 const assertErrorDialog = (taskName, errorMessage) => {
@@ -922,7 +763,6 @@ const assertErrorDialog = (taskName, errorMessage) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert an endpoint value where a wait has been setup
  * @@param endPointAlias defined with wait and no need to assign the @ value
  * @@param assertCallback callback function to assert
@@ -931,7 +771,6 @@ const assertAPIRequest = (endPointAlias, assertCallback) =>
   cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert the field element contains the expected error message
  * @param {*} element the field element that contains the error
  * @param {*} errorMessage the error message that should be displayed
@@ -945,7 +784,6 @@ const assertFieldError = (element, errorMessage, hasHint = true) =>
     .should('have.text', errorMessage)
 
 /**
- * @deprecated Use the version in /test/support folder
  * Assert the typeahead element contains a chip for each of the values
  * @param {*} selector the selector for the typeahead component
  * @param {*} values the list of values that should exist in the chips
@@ -959,36 +797,16 @@ const assertTypeaheadValues = (selector, values) => {
   })
 }
 
-/**
- * Assert that a link exists and that the href url is correct
- */
-const assertLink = (dataTest, expected) => {
-  cy.get(`[data-test=${dataTest}]`)
-    .should('exist')
-    .should('have.attr', 'href', expected)
-}
-
-/**
- * A wrapper around assertLink that also checks the text
- */
-const assertLinkWithText = (dataTest, expectedLink, expectedText) => {
-  cy.get(`[data-test=${dataTest}]`).should('have.text', expectedText)
-  assertLink(dataTest, expectedLink)
-}
-
-module.exports = {
+export default {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
-  assertGovReactTable,
   assertBreadcrumbs,
   testBreadcrumbs,
-  assertCompanyBreadcrumbs,
   assertFieldTypeahead,
   assertFieldSingleTypeahead,
   assertFieldInput,
   assertFieldInputWithLegend,
-  assertFieldInputNoLabel,
   assertFieldTextarea,
   assertFieldSelect,
   assertSelectOptions,
@@ -1038,6 +856,4 @@ module.exports = {
   assertExactUrl,
   assertFieldError,
   assertTypeaheadValues,
-  assertLink,
-  assertLinkWithText,
 }

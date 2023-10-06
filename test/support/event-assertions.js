@@ -94,9 +94,6 @@ const assertUkRegionOrNotesFields = ({ element, country, ukRegion, notes }) => {
   }
 }
 
-/**
- * @deprecated
- */
 export const assertEventFormFields = ({
   hasRelatedTradeAgreement,
   relatedTradeAgrements,
@@ -224,9 +221,6 @@ export const assertEventFormFields = ({
 
 // Generic Assertions
 
-/**
- * @deprecated
- */
 export const assertMultiOptionTypeaheadValues = (
   selector,
   label,
@@ -235,9 +229,6 @@ export const assertMultiOptionTypeaheadValues = (
   dataArray.map((value) => assertTypeaheadValue(selector, label, value))
 }
 
-/**
- * @deprecated
- */
 export const assertTypeaheadValue = (selector, label, value) => {
   cy.get(selector).then((element) =>
     assertFieldTypeahead({
@@ -248,9 +239,6 @@ export const assertTypeaheadValue = (selector, label, value) => {
   )
 }
 
-/**
- * @deprecated
- */
 export const assertEventRequestBody = (expectedBody, callback) => {
   cy.wait('@eventHttpRequest').then((xhr) => {
     expect(xhr.request.body).to.deep.equal(expectedBody)

@@ -12,7 +12,6 @@ import {
 } from './assertions'
 
 /**
- * @deprecated
  * Tests that a typeahead functions correctly by inputing a value and selecting
  */
 export const testTypeahead = ({
@@ -29,7 +28,6 @@ export const testTypeahead = ({
 }
 
 /**
- * @deprecated
  * Test that a typeahead has the correct number of options
  */
 export const testTypeaheadOptionsLength = ({ element, length }) => {
@@ -40,7 +38,6 @@ export const testTypeaheadOptionsLength = ({ element, length }) => {
 }
 
 /**
- * @deprecated
  * Tests that clicking the first indicator button clears a filter element
  */
 export const testRemoveChip = ({ element, placeholder = null }) => {
@@ -53,7 +50,6 @@ export const testRemoveChip = ({ element, placeholder = null }) => {
 }
 
 /**
- * @deprecated
  * Tests that finding the checkbox option matching the value and clicking it will mark that option as selected
  */
 export const testCheckBoxGroup = ({ element, value, checked = true }) => {
