@@ -45,24 +45,25 @@ describe('Section about', () => {
     () => {
       it('should display the "About" details container', () => {
         cy.mount(
-          <Component company={companyWithDetails} isDnbComapny={false} />
+          <Component company={companyWithDetails} isDnbCompany={false} />
         )
 
         assertSummaryTable({
           dataTest: 'aboutDetailsContainer',
-          heading: 'About Venus Ltd',
+          heading: 'About ' + companyWithDetails.name,
           showEditLink: true,
           content: {
-            'VAT number': '12345',
-            'Business type': 'Company',
-            'Trading name': 'Venus company',
-            'CDMS reference': 'ORG-10096257',
+            'VAT number': companyWithDetails.vatNumber,
+            'Business type': companyWithDetails.businessType.name,
+            'Trading name': companyWithDetails.tradingNames[0],
+            'CDMS reference': companyWithDetails.referenceCode,
             'Companies House number':
-              '12345678View on Companies House website (opens in new tab)',
+              companyWithDetails.companyNumber +
+              'View on Companies House website (opens in new tab)',
             'Annual turnover': '£1,000,000',
-            'Number of employees': '5',
-            Website: 'www.reallyawesomewebsite.com (opens in new tab)',
-            'Business description': 'This is a dummy company for testing',
+            'Number of employees': companyWithDetails.numberOfEmployees,
+            Website: companyWithDetails.website + ' (opens in new tab)',
+            'Business description': companyWithDetails.description,
             Segment: 'High export potential',
             'Sub-segment': 'Sustain: nurture & grow',
           },
