@@ -69,9 +69,13 @@ const buildInvestorCheckOptions = (
   return transformedOptions
 }
 
-const EditProfileDetailsForm = ({ profile }) => {
+export const ProfileDetailsForm = ({
+  profile,
+  requiredCheckOptions,
+  investorTypeOptions,
+}) => {
   const {
-    id: profileId,
+    id,
     globalAssetsUnderManagement,
     investableCapital,
     investorCompany,
@@ -81,87 +85,92 @@ const EditProfileDetailsForm = ({ profile }) => {
     requiredChecksConductedOn,
     requiredChecksConductedBy,
   } = profile
-
   return (
-    <RequiredChecksConductedResource>
-      {(requiredCheckOptions) => (
-        <InvestorTypesResource>
-          {(investorTypeOptions) => (
-            <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-              <Form
-                id="edit-large-capital-investor-details"
-                analyticsFormName="editLargeCapitalInvestorDetails"
-                cancelButtonLabel="Return without saving"
-                cancelRedirectTo={() => getReturnLink(investorCompany.id)}
-                flashMessage={() => 'Investor details changes saved'}
-                submitButtonLabel="Save and return"
-                submissionTaskName={TASK_UPDATE_LARGE_CAPITAL_PROFILE}
-                redirectTo={() => getReturnLink(investorCompany.id)}
-                transformPayload={(values) =>
-                  transformInvestorDetailsToApi({
-                    profileId,
-                    companyId: investorCompany.id,
-                    values,
-                  })
-                }
-              >
-                {() => (
-                  <>
-                    <FieldTypeahead
-                      name="investor_type"
-                      label="Investor type"
-                      initialValue={transformIdNameToValueLabel(investorType)}
-                      options={transformArrayIdNameToValueLabel(
-                        investorTypeOptions
-                      )}
-                      placeholder="Please select an investor type"
-                      aria-label="Select an investor type"
-                    />
-                    <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
-                      <FieldCurrency
-                        name="global_assets_under_management"
-                        label="Global assets under management"
-                        hint="Enter value in US dollars"
-                        currencySymbol="$"
-                        initialValue={globalAssetsUnderManagement}
-                        type="text"
-                      />
-                      <FieldCurrency
-                        name="investable_capital"
-                        label="Investable capital"
-                        hint="Enter value in US dollars"
-                        currencySymbol="$"
-                        initialValue={investableCapital}
-                        type="text"
-                      />
-                    </FormLayout>
-                    <FieldTextarea
-                      name="investor_notes"
-                      label="Investor description"
-                      initialValue={investorDescription}
-                      type="text"
-                      hint={<InvestorDescriptionHint />}
-                    />
-                    <FieldRadios
-                      legend="Has this investor cleared the required checks within the last 12 months?"
-                      name="required_checks"
-                      initialValue={requiredChecksConducted?.id}
-                      options={buildInvestorCheckOptions(
-                        requiredCheckOptions,
-                        requiredChecksConductedOn,
-                        requiredChecksConductedBy
-                      )}
-                    />
-                  </>
-                )}
-              </Form>
+    <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
+      <Form
+        id="edit-large-capital-investor-details"
+        analyticsFormName="editLargeCapitalInvestorDetails"
+        cancelButtonLabel="Return without saving"
+        cancelRedirectTo={() => getReturnLink(investorCompany.id)}
+        flashMessage={() => 'Investor details changes saved'}
+        submitButtonLabel="Save and return"
+        submissionTaskName={TASK_UPDATE_LARGE_CAPITAL_PROFILE}
+        redirectTo={() => getReturnLink(investorCompany.id)}
+        transformPayload={(values) =>
+          transformInvestorDetailsToApi({
+            profileId: id,
+            companyId: investorCompany.id,
+            values,
+          })
+        }
+      >
+        {() => (
+          <>
+            <FieldTypeahead
+              name="investor_type"
+              label="Investor type"
+              initialValue={transformIdNameToValueLabel(investorType)}
+              options={transformArrayIdNameToValueLabel(investorTypeOptions)}
+              placeholder="Please select an investor type"
+              aria-label="Select an investor type"
+            />
+            <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
+              <FieldCurrency
+                name="global_assets_under_management"
+                label="Global assets under management"
+                hint="Enter value in US dollars"
+                currencySymbol="$"
+                initialValue={globalAssetsUnderManagement}
+                type="text"
+              />
+              <FieldCurrency
+                name="investable_capital"
+                label="Investable capital"
+                hint="Enter value in US dollars"
+                currencySymbol="$"
+                initialValue={investableCapital}
+                type="text"
+              />
             </FormLayout>
-          )}
-        </InvestorTypesResource>
-      )}
-    </RequiredChecksConductedResource>
+            <FieldTextarea
+              name="investor_notes"
+              label="Investor description"
+              initialValue={investorDescription}
+              type="text"
+              hint={<InvestorDescriptionHint />}
+            />
+            <FieldRadios
+              legend="Has this investor cleared the required checks within the last 12 months?"
+              name="required_checks"
+              initialValue={requiredChecksConducted?.id}
+              options={buildInvestorCheckOptions(
+                requiredCheckOptions,
+                requiredChecksConductedOn,
+                requiredChecksConductedBy
+              )}
+            />
+          </>
+        )}
+      </Form>
+    </FormLayout>
   )
 }
+
+const EditProfileDetailsForm = ({ profile }) => (
+  <RequiredChecksConductedResource>
+    {(requiredCheckOptions) => (
+      <InvestorTypesResource>
+        {(investorTypeOptions) => (
+          <ProfileDetailsForm
+            profile={profile}
+            requiredCheckOptions={requiredCheckOptions}
+            investorTypeOptions={investorTypeOptions}
+          />
+        )}
+      </InvestorTypesResource>
+    )}
+  </RequiredChecksConductedResource>
+)
 
 EditProfileDetailsForm.propTypes = {
   profile: PropTypes.object.isRequired,
