@@ -2,118 +2,19 @@ import React from 'react'
 
 import { BusinessDetailsCard } from '../../../../../src/apps/companies/apps/company-overview/overview-table-cards'
 
-import { companyFaker } from '../../../../functional/cypress/fakers/companies'
-import {
-  UNITED_KINGDOM_ID,
-  CANADA_ID,
-} from '../../../../../src/common/constants'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import {
   assertSummaryTable,
   assertLink,
 } from '../../../../functional/cypress/support/assertions'
 
-const companyGlobalUltimateAllDetails = companyFaker({
-  companyNumber: '01261539',
-  address: {
-    line1: '1 On The Road',
-    line2: '',
-    town: 'Bristol',
-    county: 'North Somerset',
-    postcode: 'BS20 2BB',
-    country: {
-      id: UNITED_KINGDOM_ID,
-      name: 'United Kingdom',
-    },
-  },
-  website: 'www.there.com',
-  numberOfEmployees: 200,
-  turnoverGbp: 200000,
-  sector: {
-    name: 'Aerospace',
-    id: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  globalUltimateCountry: 'United Kingdom',
-})
-
-const companyNoGlobalUltimateAllDetails = companyFaker({
-  companyNumber: '01261539',
-  address: {
-    line1: '1 On The Road',
-    line2: '',
-    town: 'Bristol',
-    county: 'North Somerset',
-    postcode: 'BS20 2BB',
-    country: {
-      id: UNITED_KINGDOM_ID,
-      name: 'United Kingdom',
-    },
-  },
-  website: 'www.there.com',
-  numberOfEmployees: 200,
-  turnoverGbp: 200000,
-  sector: {
-    name: 'Aerospace',
-    id: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  globalUltimateCountry: null,
-})
-
-const companyRegisteredAddressOnly = companyFaker({
-  companyNumber: '01261539',
-  address: null,
-  registeredAddress: {
-    line1: '1 On The Road',
-    line2: '',
-    town: 'Bristol',
-    county: 'North Somerset',
-    postcode: 'BS20 2BB',
-    country: {
-      id: UNITED_KINGDOM_ID,
-      name: 'United Kingdom',
-    },
-  },
-  website: 'www.there.com',
-  numberOfEmployees: 200,
-  turnoverGbp: 200000,
-  sector: {
-    name: 'Aerospace',
-    id: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  globalUltimateCountry: null,
-})
-
-const companyNoDetails = companyFaker({
-  companyNumber: null,
-  address: null,
-  website: null,
-  numberOfEmployees: null,
-  turnoverGbp: null,
-  sector: null,
-})
-
-const companyNonUK = companyFaker({
-  companyNumber: '01261539',
-  address: {
-    line1: '1 Off The Road',
-    line2: '',
-    town: 'Montreal',
-    county: 'QC',
-    postcode: 'H3Z 2Y7',
-    country: {
-      id: CANADA_ID,
-      name: 'Canada',
-    },
-  },
-  website: 'www.there.com',
-  numberOfEmployees: 200,
-  turnoverGbp: 200000,
-  sector: {
-    name: 'Aerospace',
-    id: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  globalUltimateCountry: 'Canada',
-})
+import {
+  companyGlobalUltimateAllDetails,
+  companyNoGlobalUltimateAllDetails,
+  companyRegisteredAddressOnly,
+  companyNoDetails,
+  companyNonUK,
+} from './FakerItems'
 
 describe('BusinessDetailsCard', () => {
   const Component = (props) => <BusinessDetailsCard {...props} />
@@ -127,7 +28,7 @@ describe('BusinessDetailsCard', () => {
 
       it('should render the right text', () => {
         assertSummaryTable({
-          dataTest: 'businessDetailsContainer',
+          dataTest: 'business-details-container',
           content: {
             'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
@@ -176,7 +77,7 @@ describe('BusinessDetailsCard', () => {
 
       it('should render the right text', () => {
         assertSummaryTable({
-          dataTest: 'businessDetailsContainer',
+          dataTest: 'business-details-container',
           content: {
             'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
@@ -220,7 +121,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should render the right text that does not contain the companies house field', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Trading Address':
             companyNonUK.address.line1 +
@@ -260,7 +161,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should render the right text', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Trading Address': 'Not set',
           Website: 'Not set',
@@ -289,7 +190,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should still show the Company House field if set', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
           'Trading Address': 'Not set',
