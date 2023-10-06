@@ -28,8 +28,10 @@ describe('Section about', () => {
     companyNumber: '12345678',
     turnoverGbp: '1000000',
     numberOfEmployees: '5',
+    website: 'www.example.com',
     exportSegment: 'hep',
     exportSubSegment: 'sustain_nurture_and_grow',
+    description: 'This is a dummy company for testing',
   })
 
   const companyWithMinimalDetails = companyFaker({
