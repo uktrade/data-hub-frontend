@@ -8,7 +8,7 @@ import {
 import CompanyLayout from '../../../../components/Layout/CompanyLayout'
 
 import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
-import EditLargeLapitalProfile from './EditLargeLapitalProfile'
+import EditLargeCapitalProfile from './EditLargeCapitalProfile'
 
 const LargeCapitalProfile = ({
   companyId,
@@ -31,7 +31,7 @@ const LargeCapitalProfile = ({
               isLCP={true}
             >
               {profile.results.length != 0 ? (
-                <EditLargeLapitalProfile profile={profile} />
+                <EditLargeCapitalProfile profile={profile} />
               ) : (
                 <CreateLargeCapitalProfile companyId={companyId} />
               )}

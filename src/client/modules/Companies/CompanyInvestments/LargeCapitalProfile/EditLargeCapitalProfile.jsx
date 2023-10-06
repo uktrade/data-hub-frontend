@@ -35,7 +35,7 @@ const IncompleteFieldsBadge = (incompleteFieldCount, id) => {
   )
 }
 
-const EditLargeLapitalProfile = ({ profile }) => {
+const EditLargeCapitalProfile = ({ profile }) => {
   const [detailsFormIsOpen, setDetailsFormIsOpen] = useState(false)
   const [requirementsFormIsOpen, setRequirementsFormIsOpen] = useState(false)
   const [locationFormIsOpen, setLocationFormIsOpen] = useState(false)
@@ -107,4 +107,4 @@ const ProfileSection = ({
   </>
 )
 
-export default EditLargeLapitalProfile
+export default EditLargeCapitalProfile
