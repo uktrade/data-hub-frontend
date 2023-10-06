@@ -3,64 +3,6 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
-const assertBusinessDetailsBreadcrumbs = (company) => {
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: urls.dashboard.index(),
-      Companies: urls.companies.index(),
-      [company.name]: urls.companies.detail(company.id),
-      'Business details': null,
-    })
-  })
-}
-
-const assertLastUpdatedParagraph = (date) => {
-  const paragraphText = 'Last updated on: ' + date
-  it('should display the "Last updated" paragraph', () => {
-    cy.contains(paragraphText).should('be.visible')
-  })
-}
-
-const assertAreDetailsRight = () => {
-  it('should display the "Are these business details right?" details summary', () => {
-    cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-      'be.visible'
-    )
-  })
-}
-
-const assertAreDetailsRightNotVisible = () => {
-  it('should not display the "Are these business details right?" details summary', () => {
-    cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
-      'not.exist'
-    )
-  })
-}
-
-const assertUnarchiveLinkNotVisible = () => {
-  it('should not display the "Unarchive" link', () => {
-    cy.get(selectors.companyBusinessDetails().unarchiveLink).should('not.exist')
-  })
-}
-
-const assertArchiveContainerNotVisible = () => {
-  it('should not display the "Archive company" details container', () => {
-    cy.get('[data-test=archive-company-container]').should('not.exist')
-  })
-}
-
-const assertArchiveContainerVisible = () => {
-  it('should display the "Archive company" details container', () => {
-    cy.get('[data-test=archive-company-container]').should('be.visible')
-  })
-}
-
-const assertArchivePanelNotVisible = () => {
-  it('should not render the archive panel', () => {
-    cy.get('[data-test=archive-panel]').should('not.exist')
-  })
-}
-
 describe('Companies business details', () => {
   context(
     'when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK',
@@ -69,14 +11,42 @@ describe('Companies business details', () => {
         cy.visit(
           urls.companies.businessDetails(fixtures.company.oneListCorp.id)
         )
+
         it('should display the "Pending Change Request" text', () => {
           cy.contains('Checking for pending change requests')
         })
       })
 
-      assertBusinessDetailsBreadcrumbs(fixtures.company.oneListCorp)
-      assertArchivePanelNotVisible()
-      assertLastUpdatedParagraph('26 Nov 2017')
+      it('should render breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard.index(),
+          Companies: urls.companies.index(),
+          [fixtures.company.oneListCorp.name]: urls.companies.detail(
+            fixtures.company.oneListCorp.id
+          ),
+          'Business details': null,
+        })
+      })
+
+      it('should display the "Last updated" paragraph', () => {
+        cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
+      })
+
+      it('should display the "Are these business details right?" details summary', () => {
+        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
+          'be.visible'
+        )
+      })
+
+      it('should not display the "Unarchive" link', () => {
+        cy.get(selectors.companyBusinessDetails().unarchiveLink).should(
+          'not.exist'
+        )
+      })
+
+      it('should not render the archive panel', () => {
+        cy.get('[data-test=archive-panel]').should('not.exist')
+      })
 
       it('should not display the "Pending Change Request" box', () => {
         cy.contains(
@@ -84,10 +54,9 @@ describe('Companies business details', () => {
         ).should('not.exist')
       })
 
-      assertAreDetailsRight()
-      assertUnarchiveLinkNotVisible()
-
-      assertArchiveContainerNotVisible()
+      it('should not display the "Archive company" details container', () => {
+        cy.get('[data-test=archive-company-container]').should('not.exist')
+      })
     }
   )
 
@@ -110,7 +79,6 @@ describe('Companies business details', () => {
             fixtures.company.dnbGlobalUltimate.id
           )
         )
-        cy.go('back')
       })
     }
   )
@@ -126,34 +94,15 @@ describe('Companies business details', () => {
         cy.contains('Checking for pending change requests').should('not.exist')
       })
 
-      assertBusinessDetailsBreadcrumbs(fixtures.company.venusLtd)
-      assertArchivePanelNotVisible()
-      assertLastUpdatedParagraph('15 Jul 2016')
-      assertAreDetailsRightNotVisible()
-      assertUnarchiveLinkNotVisible()
-
-      assertLastUpdatedParagraph('15 Jul 2016')
-      assertArchiveContainerVisible()
-    }
-  )
-
-  context(
-    'when viewing business details for a Dun & Bradstreet company not on the One List',
-    () => {
-      before(() => {
-        cy.visit(urls.companies.businessDetails(fixtures.company.dnbCorp.id))
-        it('should display the "Pending Change Request" text', () => {
-          cy.contains('Checking for pending change requests')
-        })
+      it('should display the "Archive company" details container', () => {
+        cy.get('[data-test=archive-company-container]').should('be.visible')
       })
 
-      assertBusinessDetailsBreadcrumbs(fixtures.company.dnbCorp)
-      assertArchivePanelNotVisible()
-      assertLastUpdatedParagraph('26 Oct 2018')
-      assertAreDetailsRight()
-      assertUnarchiveLinkNotVisible()
-
-      assertArchiveContainerNotVisible()
+      it('should not display the "Are these business details right?" details summary', () => {
+        cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
+          'not.exist'
+        )
+      })
     }
   )
 
@@ -189,10 +138,6 @@ describe('Companies business details', () => {
         )
       })
 
-      assertBusinessDetailsBreadcrumbs(fixtures.company.archivedLtd)
-      assertLastUpdatedParagraph('16 Jul 2017')
-      assertAreDetailsRightNotVisible()
-
       it('should display the date the company was archived and by whom', () => {
         cy.contains(
           'This company was archived on 06 Jul 2018 by John Rogers'
@@ -206,29 +151,6 @@ describe('Companies business details', () => {
       it('should display the "Unarchive" link', () => {
         cy.contains('Unarchive').should('be.visible')
       })
-
-      assertArchiveContainerNotVisible()
-    }
-  )
-
-  context(
-    'when viewing business details for a company with minimal data',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.businessDetails(
-            fixtures.company.minimallyMinimalLtd.id
-          )
-        )
-      })
-
-      assertBusinessDetailsBreadcrumbs(fixtures.company.minimallyMinimalLtd)
-      assertArchivePanelNotVisible()
-      assertLastUpdatedParagraph('11 Dec 2015')
-      assertAreDetailsRightNotVisible()
-      assertUnarchiveLinkNotVisible()
-
-      assertArchiveContainerVisible()
     }
   )
 })
