@@ -15,7 +15,7 @@ import {
   DARK_BLUE_LEGACY,
   hexToRgb,
 } from '../../../../../../../../src/client/utils/colours'
-import { formatWithoutParsing } from '../../../../../../../../src/client/utils/date'
+import { format } from '../../../../../../../../src/client/utils/date'
 
 const {
   company: { dnbGlobalUltimate },
@@ -491,7 +491,7 @@ describe('D&B Company Tree Hierarchy component', () => {
   })
 
   context('When a company has a mix of known and unknown subsidiaries', () => {
-    const formattedDate = formatWithoutParsing(
+    const formattedDate = format(
       companyManuallyLinkedSubsidiaries.ultimate_global_company.subsidiaries[0]
         .latest_interaction_date
     )
