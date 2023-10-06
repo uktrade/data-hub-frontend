@@ -797,6 +797,15 @@ const assertTypeaheadValues = (selector, values) => {
   })
 }
 
+/**
+ * Assert that a link exists and that the href url is correct
+ */
+const assertLink = (dataTest, expected) => {
+  cy.get(`[data-test=${dataTest}]`)
+    .should('exist')
+    .should('have.attr', 'href', expected)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -856,4 +865,5 @@ module.exports = {
   assertExactUrl,
   assertFieldError,
   assertTypeaheadValues,
+  assertLink,
 }
