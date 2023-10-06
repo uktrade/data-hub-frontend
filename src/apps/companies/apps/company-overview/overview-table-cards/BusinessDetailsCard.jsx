@@ -50,7 +50,9 @@ const BusinessDetailsCard = ({ company }) => (
     <SummaryTable.Row heading="Website">
       {buildCellContents(
         company.website,
-        <NewWindowLink href={company.website}>{company.website}</NewWindowLink>
+        <NewWindowLink data-test="website-link" href={company.website}>
+          {company.website}
+        </NewWindowLink>
       )}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Turnover">
