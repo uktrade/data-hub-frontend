@@ -22,7 +22,7 @@ describe('AccountManagementCard', () => {
 
     it('should render the right text', () => {
       assertSummaryTable({
-        dataTest: 'accountManagementContainer',
+        dataTest: 'account-management-container',
         content: {
           'DBT Region': companyGlobalUltimateAllDetails.ukRegion.name,
           'Account Manager':
@@ -66,7 +66,7 @@ describe('AccountManagementCard', () => {
 
     it('should render the right text', () => {
       assertSummaryTable({
-        dataTest: 'accountManagementContainer',
+        dataTest: 'account-management-container',
         content: {
           'DBT Region': companyNoGlobalUltimateAllDetails.ukRegion.name,
           'Lead ITA':
@@ -110,7 +110,7 @@ describe('AccountManagementCard', () => {
 
     it('should render the right text', () => {
       assertSummaryTable({
-        dataTest: 'accountManagementContainer',
+        dataTest: 'account-management-container',
         content: {
           'DBT Region': 'Not set',
           'Account Manager': 'Not set',

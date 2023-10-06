@@ -28,7 +28,7 @@ describe('BusinessDetailsCard', () => {
 
       it('should render the right text', () => {
         assertSummaryTable({
-          dataTest: 'businessDetailsContainer',
+          dataTest: 'business-details-container',
           content: {
             'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
@@ -77,7 +77,7 @@ describe('BusinessDetailsCard', () => {
 
       it('should render the right text', () => {
         assertSummaryTable({
-          dataTest: 'businessDetailsContainer',
+          dataTest: 'business-details-container',
           content: {
             'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
@@ -121,7 +121,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should render the right text that does not contain the companies house field', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Trading Address':
             companyNonUK.address.line1 +
@@ -161,7 +161,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should render the right text', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Trading Address': 'Not set',
           Website: 'Not set',
@@ -190,7 +190,7 @@ describe('BusinessDetailsCard', () => {
 
     it('should still show the Company House field if set', () => {
       assertSummaryTable({
-        dataTest: 'businessDetailsContainer',
+        dataTest: 'business-details-container',
         content: {
           'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
           'Trading Address': 'Not set',
