@@ -23,14 +23,11 @@ describe('Section about', () => {
       id: '98d14e94-5d95-e211-a939-e4115bead28a',
     },
     vatNumber: '12345',
-    name: 'Venus Ltd',
     tradingNames: ['Venus company'],
     referenceCode: 'ORG-10096257',
     companyNumber: '12345678',
     turnoverGbp: '1000000',
     numberOfEmployees: '5',
-    website: 'www.reallyawesomewebsite.com',
-    description: 'This is a dummy company for testing',
     exportSegment: 'hep',
     exportSubSegment: 'sustain_nurture_and_grow',
   })
@@ -50,7 +47,7 @@ describe('Section about', () => {
 
         assertSummaryTable({
           dataTest: 'aboutDetailsContainer',
-          heading: 'About ' + companyWithDetails.name,
+          heading: `About ${companyWithDetails.name}`,
           showEditLink: true,
           content: {
             'VAT number': companyWithDetails.vatNumber,
