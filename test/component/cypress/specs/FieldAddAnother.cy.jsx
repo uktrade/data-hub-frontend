@@ -1,15 +1,11 @@
 import React from 'react'
 
 import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother'
-import DataHubProvider, { store } from './provider'
-
-const RESET_ACTION = {
-  type: 'RESET',
-}
+import DataHubProvider, { dispatchResetAction } from './provider'
 
 describe('FieldAddAnother', () => {
   beforeEach(() => {
-    store.dispatch(RESET_ACTION)
+    dispatchResetAction()
     cy.mount(
       <DataHubProvider>
         <FieldAddAnother

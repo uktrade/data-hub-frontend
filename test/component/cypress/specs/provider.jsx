@@ -23,6 +23,8 @@ export const store = legacy_createStore(
   applyMiddleware(sagaMiddleware)
 )
 
+export const dispatchResetAction = () => store.dispatch({ type: 'RESET' })
+
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
 export default ({ children, tasks = appTasks, resetTasks = false }) => {

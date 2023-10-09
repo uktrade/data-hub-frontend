@@ -3,11 +3,7 @@ import React from 'react'
 import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
 import typeaheadTasks from '../../../../src/client/components/Typeahead/tasks'
 
-import DataHubProvider, { store } from './provider'
-
-const RESET_ACTION = {
-  type: 'RESET',
-}
+import DataHubProvider, { dispatchResetAction } from './provider'
 
 const options = [
   { value: '0001', label: 'Apple' },
@@ -55,7 +51,7 @@ export const mockLoadOptions = (query = '') =>
 describe('Typeahead2', () => {
   context('static single-select', () => {
     beforeEach(() => {
-      store.dispatch(RESET_ACTION)
+      dispatchResetAction()
       cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
@@ -146,7 +142,7 @@ describe('Typeahead2', () => {
 
   context('static multi-select', () => {
     beforeEach(() => {
-      store.dispatch(RESET_ACTION)
+      dispatchResetAction()
       cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
@@ -265,7 +261,7 @@ describe('Typeahead2', () => {
 
   context('async single-select', () => {
     beforeEach(() => {
-      store.dispatch(RESET_ACTION)
+      dispatchResetAction()
       cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
@@ -357,7 +353,7 @@ describe('Typeahead2', () => {
 
   context('async multi-select', () => {
     beforeEach(() => {
-      store.dispatch(RESET_ACTION)
+      dispatchResetAction()
       cy.mount(
         <DataHubProvider tasks={typeaheadTasks}>
           <Typeahead
