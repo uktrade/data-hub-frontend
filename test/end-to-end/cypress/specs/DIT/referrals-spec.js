@@ -4,9 +4,11 @@ const selectors = require('../../../../selectors')
 const {
   selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const formSelectors = selectors.interactionForm
-const companyLocalHeader = selectors.companyLocalHeader()
 
 describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
@@ -35,13 +37,12 @@ describe('Referrals', () => {
         .find('button')
         .eq(2)
         .click()
-      cy.get(companyLocalHeader.flashMessageList)
-      cy.contains('Referral sent')
+      assertFlashMessage('Referral sent')
     })
   })
   context('when viewing a referral', () => {
     it('should display the new referral on the homepage', () => {
-      cy.get(companyLocalHeader.flashMessageList).find('a').eq(0).click()
+      cy.get('[data-test="flash"]').find('a').eq(0).click()
       cy.get(selectors.tabbedNav().item(2)).click()
       cy.selectDhTablistTab('Dashboard', 'Referrals').within(() => {
         cy.get('select').select('Sent referrals')

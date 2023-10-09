@@ -1,6 +1,8 @@
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 let company
 
@@ -24,10 +26,7 @@ const addOrReplaceTestCase = ({
       .parents('form')
       .find('button')
       .click()
-    cy.get(selectors.companyLocalHeader().flashMessageList).should(
-      'have.text',
-      successMessage
-    )
+    assertFlashMessage(successMessage)
   })
 }
 
@@ -68,8 +67,6 @@ xdescribe('Manage Lead ITA', () => {
     cy.visit(urls.companies.accountManagement.index(company.pk))
     cy.get('[data-test="remove-ita-button"]').click()
     cy.get('form button').click()
-    cy.get(selectors.companyLocalHeader().flashMessageList).contains(
-      'Lead adviser information updated'
-    )
+    assertFlashMessage('Lead adviser information updated')
   })
 })

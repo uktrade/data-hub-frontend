@@ -1,4 +1,4 @@
-const { assertBreadcrumbs } = require('../../support/assertions')
+const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
@@ -17,16 +17,11 @@ describe('Companies business details', () => {
         })
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard.index(),
-          Companies: urls.companies.index(),
-          [fixtures.company.oneListCorp.name]: urls.companies.detail(
-            fixtures.company.oneListCorp.id
-          ),
-          'Business details': null,
-        })
-      })
+      assertCompanyBreadcrumbs(
+        fixtures.company.oneListCorp.name,
+        urls.companies.detail(fixtures.company.oneListCorp.id),
+        'Business details'
+      )
 
       it('should display the "Last updated" paragraph', () => {
         cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
