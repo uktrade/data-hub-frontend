@@ -3,18 +3,27 @@ const urls = require('../../../../../src/lib/urls')
 const selectors = require('../../../../selectors')
 const {
   assertLocalHeader,
-  assertBreadcrumbs,
+  assertCompanyBreadcrumbs,
   assertSummaryList,
+  assertFlashMessage,
 } = require('../../support/assertions')
 
 const DUNS_NUMBER_NOT_MATCHED = '111111111'
 const DUNS_NUMBER_MATCHED = '222222222'
 
-const companyLocalHeader = selectors.companyLocalHeader()
+const company = fixtures.company.venusLtd
 
 const performSearch = (companyName = 'some company') => {
   cy.get(selectors.companyMatch.find.companyNameInput).clear().type(companyName)
   cy.get(selectors.companyMatch.find.button).click()
+}
+
+const assertBreadcrumbs = (crumbText) => {
+  assertCompanyBreadcrumbs(
+    company.name,
+    urls.companies.detail(company.id),
+    crumbText
+  )
 }
 
 describe('Match a company', () => {
@@ -107,17 +116,10 @@ describe('Match a company', () => {
 
   context('when viewing "Search for verified business details" page', () => {
     before(() => {
-      cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+      cy.visit(urls.companies.match.index(company.id))
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        Companies: urls.companies.index(),
-        'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
-        'Search for verified business details': null,
-      })
-    })
+    assertBreadcrumbs('Search for verified business details')
 
     it('should render the header', () => {
       assertLocalHeader('Search for verified business details')
@@ -167,12 +169,12 @@ describe('Match a company', () => {
       cy.get(selectors.companyMatch.find.companyNameInput).should(
         'have.attr',
         'value',
-        fixtures.company.venusLtd.name
+        company.name
       )
       cy.get(selectors.companyMatch.find.postcodeField).should(
         'have.attr',
         'value',
-        fixtures.company.venusLtd.address.postcode
+        company.address.postcode
       )
     })
   })
@@ -181,7 +183,7 @@ describe('Match a company', () => {
     'when the "Find company" button is clicked without providing a company name',
     () => {
       before(() => {
-        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.index(company.id))
       })
 
       it('should display error message', () => {
@@ -207,7 +209,7 @@ describe('Match a company', () => {
     'when the "Find company" button is clicked providing a company name',
     () => {
       before(() => {
-        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.index(company.id))
         performSearch()
       })
 
@@ -224,7 +226,7 @@ describe('Match a company', () => {
 
   context(`when "I still can't find what I'm looking for" is clicked`, () => {
     before(() => {
-      cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+      cy.visit(urls.companies.match.index(company.id))
       performSearch()
       cy.contains("I can't find what I'm looking for").click()
       cy.contains("I still can't find what I'm looking for").click()
@@ -233,7 +235,7 @@ describe('Match a company', () => {
     it('should redirect to the cannot find match page', () => {
       cy.location('pathname').should(
         'eq',
-        urls.companies.match.cannotFind(fixtures.company.venusLtd.id)
+        urls.companies.match.cannotFind(company.id)
       )
     })
 
@@ -244,16 +246,7 @@ describe('Match a company', () => {
       )
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        Companies: urls.companies.index(),
-        [fixtures.company.venusLtd.name]: urls.companies.detail(
-          fixtures.company.venusLtd.id
-        ),
-        'Send business details': null,
-      })
-    })
+    assertBreadcrumbs('Send business details')
 
     it('should contain the Data Hub record', () => {
       cy.contains('Data Hub business details (un-verified)')
@@ -318,11 +311,7 @@ describe('Match a company', () => {
         .and('match', 'button')
         .next()
         .contains('Back')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.match.index(fixtures.company.venusLtd.id)
-        )
+        .should('have.attr', 'href', urls.companies.match.index(company.id))
     })
   })
 
@@ -330,7 +319,7 @@ describe('Match a company', () => {
     `when the "Send" button is clicked without completing either field`,
     () => {
       before(() => {
-        cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.cannotFind(company.id))
         cy.get('main button').click()
       })
 
@@ -352,7 +341,7 @@ describe('Match a company', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.companies.match.cannotFind(fixtures.company.venusLtd.id)
+          urls.companies.match.cannotFind(company.id)
         )
       })
     }
@@ -362,7 +351,7 @@ describe('Match a company', () => {
     `when the "Send" button is clicked after completing both fields`,
     () => {
       before(() => {
-        cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.cannotFind(company.id))
       })
 
       it('should submit both fields', () => {
@@ -383,12 +372,10 @@ describe('Match a company', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.companies.overview.index(fixtures.company.venusLtd.id)
+          urls.companies.overview.index(company.id)
         )
 
-        cy.get(companyLocalHeader.flashMessageList).contains(
-          'Verification request sent for third party review'
-        )
+        assertFlashMessage('Verification request sent for third party review')
       })
     }
   )
@@ -397,7 +384,7 @@ describe('Match a company', () => {
     'when an unmatched company from the search results is clicked',
     () => {
       before(() => {
-        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.index(company.id))
         performSearch()
         cy.contains('Some unmatched company').click()
       })
@@ -405,10 +392,7 @@ describe('Match a company', () => {
       it('should redirect to the the match confirmation page', () => {
         cy.location('pathname').should(
           'eq',
-          urls.companies.match.confirmation(
-            fixtures.company.venusLtd.id,
-            DUNS_NUMBER_NOT_MATCHED
-          )
+          urls.companies.match.confirmation(company.id, DUNS_NUMBER_NOT_MATCHED)
         )
       })
 
@@ -416,16 +400,7 @@ describe('Match a company', () => {
         assertLocalHeader('Verify business details')
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard.index(),
-          Companies: urls.companies.index(),
-          [fixtures.company.venusLtd.name]: urls.companies.detail(
-            fixtures.company.venusLtd.id
-          ),
-          'Send request': null,
-        })
-      })
+      assertBreadcrumbs('Send request')
 
       it('should display matching confirmation details', () => {
         cy.contains('Data Hub business details (un-verified)')
@@ -488,11 +463,7 @@ describe('Match a company', () => {
           .and('match', 'button')
           .next()
           .contains('Back')
-          .should(
-            'have.attr',
-            'href',
-            urls.companies.match.index(fixtures.company.venusLtd.id)
-          )
+          .should('have.attr', 'href', urls.companies.match.index(company.id))
       })
     }
   )
@@ -500,10 +471,7 @@ describe('Match a company', () => {
   context('when company matching is confirmed', () => {
     before(() => {
       cy.visit(
-        urls.companies.match.confirmation(
-          fixtures.company.venusLtd.id,
-          DUNS_NUMBER_NOT_MATCHED
-        )
+        urls.companies.match.confirmation(company.id, DUNS_NUMBER_NOT_MATCHED)
       )
 
       cy.get('button:contains("Verify")').click()
@@ -512,14 +480,13 @@ describe('Match a company', () => {
     it('should redirect to the company page', () => {
       cy.location('pathname').should(
         'eq',
-        urls.companies.overview.index(fixtures.company.venusLtd.id)
+        urls.companies.overview.index(company.id)
       )
     })
 
     it('displays the "Business details verified" flash message and the ID used in GA', () => {
-      cy.get(companyLocalHeader.flashMessageList).contains(
-        'Business details verified.Thanks for helping to improve ' +
-          'the quality of records on Data Hub!'
+      assertFlashMessage(
+        'Business details verified.Thanks for helping to improve the quality of records on Data Hub!'
       )
     })
   })
@@ -528,7 +495,7 @@ describe('Match a company', () => {
     'when an already matched company from the search results is clicked',
     () => {
       before(() => {
-        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        cy.visit(urls.companies.match.index(company.id))
         performSearch()
         cy.contains('Some matched company').click()
       })
@@ -536,23 +503,11 @@ describe('Match a company', () => {
       it('should redirect to the the duplicated match page', () => {
         cy.location('pathname').should(
           'eq',
-          urls.companies.match.confirmation(
-            fixtures.company.venusLtd.id,
-            DUNS_NUMBER_MATCHED
-          )
+          urls.companies.match.confirmation(company.id, DUNS_NUMBER_MATCHED)
         )
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: urls.dashboard.index(),
-          Companies: urls.companies.index(),
-          [fixtures.company.venusLtd.name]: urls.companies.detail(
-            fixtures.company.venusLtd.id
-          ),
-          'Request merge': null,
-        })
-      })
+      assertBreadcrumbs('Request merge')
 
       it('should render the header', () => {
         assertLocalHeader(
@@ -593,11 +548,7 @@ describe('Match a company', () => {
           .and('match', 'button')
           .next()
           .contains('Back')
-          .should(
-            'have.attr',
-            'href',
-            urls.companies.match.index(fixtures.company.venusLtd.id)
-          )
+          .should('have.attr', 'href', urls.companies.match.index(company.id))
       })
     }
   )
@@ -605,10 +556,7 @@ describe('Match a company', () => {
   context('when company merge request is confirmed', () => {
     before(() => {
       cy.visit(
-        urls.companies.match.confirmation(
-          fixtures.company.venusLtd.id,
-          DUNS_NUMBER_MATCHED
-        )
+        urls.companies.match.confirmation(company.id, DUNS_NUMBER_MATCHED)
       )
       cy.get('button:contains("Request merge")').click()
     })
@@ -616,12 +564,12 @@ describe('Match a company', () => {
     it('should redirect to the company page', () => {
       cy.location('pathname').should(
         'eq',
-        urls.companies.overview.index(fixtures.company.venusLtd.id)
+        urls.companies.overview.index(company.id)
       )
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(companyLocalHeader.flashMessageList).contains(
+      assertFlashMessage(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )
     })

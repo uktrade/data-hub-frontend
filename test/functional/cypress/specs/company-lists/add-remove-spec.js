@@ -1,9 +1,6 @@
 const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
-const {
-  assertAddButton,
-} = require('../../../cypress/support/company-local-header-assertions')
 
 const listA = '70513f19-0df6-4c8d-bef1-f11b65641ae4'
 const listB = '75e14e32-292e-4d1b-a361-992d548251f7'
@@ -20,7 +17,13 @@ describe('Adding and removing a company to a list', () => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
     it('should display the add to list button', () => {
-      assertAddButton(addRemoveFromListUrl, detailsUrl)
+      cy.get('[data-test="add-to-list-button"]').contains('+ Add to list')
+      cy.get('[data-test="add-to-list-button"]').click()
+      cy.location().should((loc) => {
+        expect(loc.pathname).to.eq(addRemoveFromListUrl)
+        expect(loc.search).contains(detailsUrl)
+      })
+      cy.go('back')
     })
   })
   context('when viewing the add/remove from lists form', () => {

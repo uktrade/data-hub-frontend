@@ -582,9 +582,7 @@ describe('Add company form', () => {
       cy.contains('Company added to Data Hub')
     })
     it('should display the pending D&B investigation message', () => {
-      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
-        'be.visible'
-      )
+      cy.get('[data-test="investigation-message"]').should('be.visible')
     })
   })
 
