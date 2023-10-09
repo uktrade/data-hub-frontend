@@ -16,6 +16,7 @@ import {
 import { fill } from '../../../../../../../../functional/cypress/support/form-fillers'
 import urls from '../../../../../../../../../src/lib/urls'
 import { objectiveFaker } from '../../../../../../../../functional/cypress/fakers/objective'
+import { transformAPIValuesForForm } from '../../../../../../../../../src/client/modules/Companies/AccountManagement/transformers'
 
 const assertObjectiveBreadcrumbs = (company, objective) => {
   it('should render breadcrumbs', () => {
@@ -101,7 +102,10 @@ describe('Objective form', () => {
   })
 
   context('When the objective form does have an objective item', () => {
-    const objective = objectiveFaker({ progress: 75 })
+    const objective = transformAPIValuesForForm(
+      objectiveFaker({ progress: 75 })
+    )
+
     beforeEach(() => {
       cy.mount(
         <Component company={objective.company} objectiveItem={objective} />
