@@ -11,6 +11,13 @@ import {
   fillMultiOptionTypeaheadWithLegend,
 } from './form-fillers'
 
+/**
+ * @deprecated
+ * THE LOGIC IN THIS FILE HAS BEEN MOVED TO THE /test/support FOLDER AS THE LOGIC IS SHARED BETWEEN
+ *  THE COMPONENT AND FUNCTIONAL TESTS. THIS FILE IS ONLY HERE TO AVOID BREAKING ANY TESTS, NO
+ * ADDITIONAL LOGIC SHOULD BE ADDED
+ */
+
 const selectors = require('../../../selectors/event/createOrEdit')
 
 const UK = 'United Kingdom'

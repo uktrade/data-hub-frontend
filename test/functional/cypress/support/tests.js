@@ -1,15 +1,16 @@
-/**
- * Resuable test functions - these combine an action with an assertion.
- *
- * These are distinct from assertions because unlike an assertion, these have
- * side effects as a result of the action taken.
- */
 import { selectFirstTypeaheadOption } from './actions'
 import {
   assertTypeaheadHints,
   assertTypeaheadOptionSelected,
   assertCheckboxGroupOption,
 } from './assertions'
+
+/**
+ * @deprecated
+ * THE LOGIC IN THIS FILE HAS BEEN MOVED TO THE /test/support FOLDER AS THE LOGIC IS SHARED BETWEEN
+ *  THE COMPONENT AND FUNCTIONAL TESTS. THIS FILE IS ONLY HERE TO AVOID BREAKING ANY TESTS, NO
+ * ADDITIONAL LOGIC SHOULD BE ADDED
+ */
 
 /**
  * @deprecated
