@@ -101,7 +101,7 @@ const Countries = ({ countries, company, divDataTest, linkDataTest }) => (
   </StyledDiv>
 )
 
-const ExportStatusDetails = ({
+export const ExportStatusDetails = ({
   company,
   count,
   latestExportWin,
@@ -195,7 +195,12 @@ const unableToLoadExportWinsErrorMessage = {
   error: 'Unable to load export wins',
 }
 
-const ExportStatusCard = ({ activePage, company, count, latestExportWin }) => (
+export const ExportStatusCard = ({
+  activePage,
+  company,
+  count,
+  latestExportWin,
+}) => (
   <Task.Status
     name={TASK_GET_LATEST_EXPORT_WINS}
     id={OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID}

@@ -1,36 +1,12 @@
 import { company } from '../../fixtures'
 import { exportFaker } from '../../fakers/export'
-import { companyFaker } from '../../fakers/companies'
-import { UNITED_KINGDOM_ID } from '../../../../../src/common/constants'
+import { companyGlobalUltimateAllDetails } from '../../fakers/companies'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 const { usCompany } = company
-
-const companyGlobalUltimateAllDetails = companyFaker({
-  companyNumber: '01261539',
-  address: {
-    line1: '1 On The Road',
-    line2: '',
-    town: 'Bristol',
-    county: 'North Somerset',
-    postcode: 'BS20 2BB',
-    country: {
-      id: UNITED_KINGDOM_ID,
-      name: 'United Kingdom',
-    },
-  },
-  website: 'www.there.com',
-  numberOfEmployees: 200,
-  turnoverGbp: 200000,
-  sector: {
-    name: 'Aerospace',
-    id: '9538cecc-5f95-e211-a939-e4115bead28a',
-  },
-  globalUltimateCountry: 'United Kingdom',
-})
 
 describe('Company overview page', () => {
   const interactionUrlAllOverview = urls.companies.interactions.index(
