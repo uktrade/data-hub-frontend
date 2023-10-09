@@ -121,7 +121,7 @@ describe('Company account management', () => {
         progress: withBlockersObjective.progress,
         subject: withBlockersObjective.subject,
         target_date: format(
-          withBlockersObjective.target_date.toISOString(),
+          withBlockersObjective.target_date,
           DATE_LONG_FORMAT_3
         ),
       })
