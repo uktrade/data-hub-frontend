@@ -6,6 +6,7 @@ const {
   assertBreadcrumbs,
   assertFieldTypeahead,
   assertFieldTextarea,
+  assertFlashMessage,
 } = require('../../../support/assertions')
 
 const selectTypeahead = (field, input) =>
@@ -358,9 +359,7 @@ describe('Send a referral form', () => {
           'contain',
           urls.companies.overview.index(fixtures.company.withContacts.id)
         )
-        cy.get(selectors.companyLocalHeader().flashMessageList).contains(
-          'Referral sent'
-        )
+        assertFlashMessage('Referral sent')
         cy.contains('You can see all of your referrals on your Homepage.')
           .contains('see all of your referrals on your Homepage')
           .should('have.attr', 'href', urls.companies.referrals.list())

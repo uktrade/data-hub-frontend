@@ -5,12 +5,12 @@ const {
   assertLocalHeader,
   assertCompanyBreadcrumbs,
   assertSummaryList,
+  assertFlashMessage,
 } = require('../../support/assertions')
 
 const DUNS_NUMBER_NOT_MATCHED = '111111111'
 const DUNS_NUMBER_MATCHED = '222222222'
 
-const companyLocalHeader = selectors.companyLocalHeader()
 const company = fixtures.company.venusLtd
 
 const performSearch = (companyName = 'some company') => {
@@ -375,9 +375,7 @@ describe('Match a company', () => {
           urls.companies.overview.index(company.id)
         )
 
-        cy.get(companyLocalHeader.flashMessageList).contains(
-          'Verification request sent for third party review'
-        )
+        assertFlashMessage('Verification request sent for third party review')
       })
     }
   )
@@ -487,9 +485,8 @@ describe('Match a company', () => {
     })
 
     it('displays the "Business details verified" flash message and the ID used in GA', () => {
-      cy.get(companyLocalHeader.flashMessageList).contains(
-        'Business details verified.Thanks for helping to improve ' +
-          'the quality of records on Data Hub!'
+      assertFlashMessage(
+        'Business details verified.Thanks for helping to improve the quality of records on Data Hub!'
       )
     })
   })
@@ -572,7 +569,7 @@ describe('Match a company', () => {
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(companyLocalHeader.flashMessageList).contains(
+      assertFlashMessage(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )
     })
