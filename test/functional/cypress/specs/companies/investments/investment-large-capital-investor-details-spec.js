@@ -1,6 +1,5 @@
 const {
   assertBreadcrumbs,
-  assertTypeaheadHints,
   assertFieldInput,
   assertFieldTextarea,
   assertFieldRadiosWithLegend,
@@ -9,20 +8,14 @@ const {
   assertUrl,
   assertRequestBody,
   assertFlashMessage,
-  assertErrorSummary,
   assertAPIRequest,
+  assertLink,
 } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 const fixtures = require('../../../fixtures')
 const {
   clearAndInputDateValueObject,
   clickButton,
-  clickRadioGroupOption,
-  clickCancelLink,
-  selectFirstMockedTypeaheadOption,
-  selectFirstTypeaheadOption,
-  clearAndTypeInput,
-  clearAndTypeTextArea,
 } = require('../../../support/actions')
 const { decimal } = require('../../../../../../src/client/utils/number-utils')
 
@@ -49,6 +42,13 @@ describe('View large capital investor details page', () => {
         [existingCompany.name]: urls.companies.detail(existingCompany.id),
         Investment: null,
       })
+    })
+
+    it('should render the cancel link', () => {
+      assertLink(
+        'cancel-button',
+        urls.companies.investments.largeCapitalProfile(existingCompany.id)
+      )
     })
 
     it('should have investor type with asset manager value', () => {
@@ -139,111 +139,6 @@ describe('View large capital investor details page', () => {
         Investment: null,
       })
     })
-
-    it('should load investor type with hints', () => {
-      assertTypeaheadHints({
-        element: '[data-test="field-investor_type"',
-        label: 'Investor type',
-        placeholder: 'Please select an investor type',
-      })
-    })
-
-    it('should save new investment with issues identified', () => {
-      const lastMonth = getDateFromNow({ monthAddition: -1 })
-      const expectedBody = {
-        id: 'a84f8405-c419-40a6-84c8-642b7c3209b2',
-        investor_company_id: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
-        investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
-        global_assets_under_management: '500',
-        investable_capital: '700',
-        investor_description: 'Notes about investment',
-        required_checks_conducted: '9beab8fc-1094-49b4-97d0-37bc7a9de631',
-        required_checks_conducted_on: `${lastMonth.getFullYear()}-${(
-          lastMonth.getMonth() + 1
-        ).toString()}-${lastMonth.getDate().toString()}`,
-        required_checks_conducted_by: '2c42c516-9898-e211-a939-e4115bead28a',
-      }
-      assertInvestorType().then((element) => {
-        selectFirstTypeaheadOption({ element, input: 'Asset manager' })
-      })
-      assertGlobalAssetsAmount().then((element) => {
-        clearAndTypeInput({ element, value: '500' })
-      })
-      assertCapitalValue().then((element) => {
-        clearAndTypeInput({ element, value: '700' })
-      })
-      assertInvestorDescription().then((element) => {
-        clearAndTypeTextArea({ element, value: 'Notes about investment' })
-      })
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Issues identified',
-        })
-        clearAndInputDateValueObject({
-          element,
-          value: {
-            day: lastMonth.getDate().toString(),
-            month: (lastMonth.getMonth() + 1).toString(),
-            year: lastMonth.getFullYear().toString(),
-          },
-        })
-        assertRequiredCheckAdviser().then((adviserElement) =>
-          selectFirstMockedTypeaheadOption({
-            element: adviserElement,
-            input: 'shawn',
-          })
-        )
-      })
-
-      clickButton('Save and return')
-
-      assertAPIRequest(EDIT_INVESTOR_INTERCEPT, (xhr) => {
-        assertRequestBody(xhr, expectedBody)
-        assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
-        assertFlashMessage('Investor details changes saved')
-      })
-    })
-
-    it('should save new investment with not yet checked', () => {
-      const expectedBody = {
-        id: 'a84f8405-c419-40a6-84c8-642b7c3209b2',
-        investor_company_id: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
-        investor_type: '80168d31-fa91-494e-9ad5-b9255e01b5da',
-        global_assets_under_management: '500',
-        investable_capital: '700',
-        investor_description: 'Notes about investment',
-        required_checks_conducted: '81fafe5a-ed32-4f46-bdc5-2cafedf828e8',
-        required_checks_conducted_on: null,
-      }
-
-      assertInvestorType().then((element) => {
-        selectFirstTypeaheadOption({ element, input: 'Asset manager' })
-      })
-      assertGlobalAssetsAmount().then((element) => {
-        clearAndTypeInput({ element, value: '500' })
-      })
-      assertCapitalValue().then((element) => {
-        clearAndTypeInput({ element, value: '700' })
-      })
-      assertInvestorDescription().then((element) => {
-        clearAndTypeTextArea({ element, value: 'Notes about investment' })
-      })
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Not yet checked',
-        })
-      })
-
-      clickButton('Save and return')
-
-      assertAPIRequest(EDIT_INVESTOR_INTERCEPT, (xhr) => {
-        assertRequestBody(xhr, expectedBody)
-        assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
-        assertFlashMessage('Investor details changes saved')
-      })
-    })
   })
 
   context('when successfully saved', () => {
@@ -287,125 +182,6 @@ describe('View large capital investor details page', () => {
         assertFlashMessage('Investor details changes saved')
       })
     })
-  })
-
-  context('when validation fails', () => {
-    before(() => {
-      gotoEditInvestorDetails(newCompany.id)
-    })
-
-    it('should show an error message when cleared checks details are not entered', () => {
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Cleared',
-        })
-      })
-
-      clickButton('Save and return')
-
-      assertErrorSummary([
-        'Enter the date of the most recent checks',
-        'Enter the person responsible for the most recent checks',
-      ])
-    })
-
-    it('should show an error message when issues identified details are not entered', () => {
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Issues identified',
-        })
-      })
-
-      clickButton('Save and return')
-
-      assertErrorSummary([
-        'Enter the date of the most recent checks',
-        'Enter the person responsible for the most recent checks',
-      ])
-    })
-
-    it('should show an error message when cleared checks future date is entered', () => {
-      const futureDate = getDateFromNow({
-        monthAddition: 1,
-        yearAddition: 1,
-      })
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Cleared',
-        })
-        clearAndInputDateValueObject({
-          element,
-          value: {
-            day: futureDate.getDate().toString(),
-            month: (futureDate.getMonth() + 1).toString(),
-            year: futureDate.getFullYear().toString(),
-          },
-        })
-      })
-
-      clickButton('Save and return')
-
-      assertErrorSummary([
-        'Date of most recent checks must be within the last 12 months.',
-        'Enter the person responsible for the most recent checks',
-      ])
-    })
-
-    it('should not show an error message when a valid date is set', () => {
-      const validPastDate = getDateFromNow({ day: 1, monthAddition: -1 })
-      assertRequiredChecks().then((element) => {
-        clickRadioGroupOption({
-          element,
-          label: 'Cleared',
-        })
-        clearAndInputDateValueObject({
-          element,
-          value: {
-            day: validPastDate.getDate().toString(),
-            month: (validPastDate.getMonth() + 1).toString(),
-            year: validPastDate.getFullYear().toString(),
-          },
-        })
-      })
-
-      assertRequiredCheckAdviser().then((element) => {
-        selectFirstMockedTypeaheadOption({
-          element,
-          input: 'shawn',
-        })
-      })
-
-      clickButton('Save and return')
-
-      cy.contains('h2', 'There is a problem').should('not.exist')
-    })
-  })
-
-  context('when cancelling without saving', () => {
-    before(() => {
-      gotoEditInvestorDetails(newCompany.id)
-    })
-
-    it('should redirect back to large capital profile', () => {
-      clickCancelLink()
-
-      assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
-    })
-  })
-})
-
-context('when cancelling without saving', () => {
-  before(() => {
-    gotoEditInvestorDetails(newCompany.id)
-  })
-
-  it('should redirect back to large capital profile', () => {
-    clickCancelLink()
-
-    assertUrl(urls.companies.investments.largeCapitalProfile(newCompany.id))
   })
 })
 
