@@ -28,6 +28,39 @@ describe('Send a referral form', () => {
     cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
   })
 
+  describe('All but successful completion', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
+    })
+
+    context(
+      'when "Continue" button is clicked without specifying a subject',
+      () => {
+        it('should display error message', () => {
+          enterAdviserDefault()
+          enterNotesDefault()
+          cy.contains('button', 'Continue').click()
+          cy.get('form').should(
+            'contain',
+            'Enter a subject for the referral (Max 255 characters)'
+          )
+        })
+      }
+    )
+
+    context(
+      'when "Continue" button is clicked without specifying notes',
+      () => {
+        it('should display error message', () => {
+          enterAdviserDefault()
+          enterSubjectDefault()
+          cy.contains('button', 'Continue').click()
+          cy.get('form').should('contain', 'Enter notes for the referral')
+        })
+      }
+    )
+  })
+
   describe('Advisor input fields', () => {
     beforeEach(() => {
       cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
