@@ -56,19 +56,19 @@ const maximumTenCountries = (countries, maxCount) =>
 const getCountries = (transformedCountries, index) =>
   transformedCountries[index]?.values?.length || 0
 
-const getMaxTenCountries = (transformedCountries, index) =>
+export const getMaxTenCountries = (transformedCountries, index) =>
   maximumTenCountries(transformedCountries[index]?.values || [], 10)
 
-const numberOfCurrentExportCountries = (exportCountries) =>
+export const numberOfCurrentExportCountries = (exportCountries) =>
   getCountries(transformExportCountries(exportCountries), 0)
 
-const maximumTenCurrentExportCountries = (exportCountries) =>
+export const maximumTenCurrentExportCountries = (exportCountries) =>
   getMaxTenCountries(transformExportCountries(exportCountries), 0)
 
-const numberOfFutureInterestCountries = (exportCountries) =>
+export const numberOfFutureInterestCountries = (exportCountries) =>
   getCountries(transformExportCountries(exportCountries), 1)
 
-const maximumTenFutureInterestCountries = (exportCountries) =>
+export const maximumTenFutureInterestCountries = (exportCountries) =>
   getMaxTenCountries(transformExportCountries(exportCountries), 1)
 
 export const SUBSEGMENT = {
@@ -86,7 +86,12 @@ export const SUBSEGMENT = {
   challenge: 'Challenge',
 }
 
-const Countries = ({ countries, company, divDataTest, linkDataTest }) => (
+export const Countries = ({
+  countries,
+  company,
+  divDataTest,
+  linkDataTest,
+}) => (
   <StyledDiv data-test={divDataTest}>
     {countries.map((country) => (
       <div key={country.id}>
@@ -101,7 +106,7 @@ const Countries = ({ countries, company, divDataTest, linkDataTest }) => (
   </StyledDiv>
 )
 
-const ExportStatusDetails = ({
+export const ExportStatusDetails = ({
   company,
   count,
   latestExportWin,
@@ -110,7 +115,10 @@ const ExportStatusDetails = ({
   numberOfCurrentExportCountries,
   numberOfFutureInterestCountries,
 }) => (
-  <StyledSummaryTable caption="Export status" data-test="exportStatusContainer">
+  <StyledSummaryTable
+    caption="Export status"
+    data-test="export-status-container"
+  >
     <SummaryTable.Row heading="Export potential">
       <StyledSpan>Unavailable</StyledSpan>
     </SummaryTable.Row>
@@ -195,7 +203,12 @@ const unableToLoadExportWinsErrorMessage = {
   error: 'Unable to load export wins',
 }
 
-const ExportStatusCard = ({ activePage, company, count, latestExportWin }) => (
+export const ExportStatusCard = ({
+  activePage,
+  company,
+  count,
+  latestExportWin,
+}) => (
   <Task.Status
     name={TASK_GET_LATEST_EXPORT_WINS}
     id={OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID}
