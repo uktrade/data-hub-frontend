@@ -27,6 +27,6 @@ describe('View edit quote information', () => {
     cy.get('[data-test="delivery_date-month"]').type('02')
     cy.get('[data-test="delivery_date-year"]').type('2000')
     cy.get('[data-test=submit-button]').click()
-    assertErrorSummary(['Delivery date of work must be in the future'])
+    assertErrorSummary(['Delivery date must be at least 21 days in the future'])
   })
 })
