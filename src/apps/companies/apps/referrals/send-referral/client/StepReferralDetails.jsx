@@ -5,7 +5,7 @@ import { H2, Button, Link } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { ID as STORE_ID } from './state'
-import { contacts } from '../../../../../../lib/urls'
+import urls, { contacts } from '../../../../../../lib/urls'
 import {
   Panel,
   NewWindowLink,
@@ -39,7 +39,7 @@ const StepReferralDetails = ({
         <br />
         <NewWindowLink
           data-test="referral-guidance"
-          href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/"
+          href={urls.external.referrals}
         >
           Read more guidance here
         </NewWindowLink>

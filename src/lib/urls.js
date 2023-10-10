@@ -122,6 +122,8 @@ module.exports = {
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
+    referrals:
+      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/',
     reminderAndSettings:
       'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
   },

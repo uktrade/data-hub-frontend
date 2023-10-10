@@ -9,6 +9,7 @@ import { taskFaker } from '../../../../functional/cypress/fakers/task'
 
 import { Form } from '../../../../../src/client/components'
 
+const urls = require('../../../../../src/lib/urls')
 const selectors = require('../../../../../test/selectors')
 const {
   assertFieldTypeahead,
@@ -61,10 +62,7 @@ describe('StepReferralDetails component', () => {
             'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in new tab)'
           )
 
-        assertLink(
-          'referral-guidance',
-          `https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/`
-        )
+        assertLink('referral-guidance', urls.external.referrals)
       })
 
       it('should display the headings and four fields', () => {
