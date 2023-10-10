@@ -290,6 +290,7 @@ export const companyGlobalUltimateAllDetails = companyFaker({
 })
 
 export const companyNoGlobalUltimateAllDetails = companyFaker({
+  id: 'ba8fae21-2895-47cf-90ba-9273c94dab88',
   companyNumber: '01261539',
   address: {
     line1: '1 On The Road',
@@ -340,6 +341,58 @@ export const companyNoGlobalUltimateAllDetails = companyFaker({
       url: '/contacts/33-33-33/details',
     },
   ],
+  exportSubSegment: 'reassure_change_the_game',
+  exportCountries: [
+    {
+      country: {
+        id: '12341',
+        name: 'France',
+      },
+      status: 'currently_exporting',
+    },
+    {
+      country: {
+        id: '12342',
+        name: 'Germany',
+      },
+      status: 'currently_exporting',
+    },
+    {
+      country: {
+        id: '12343',
+        name: 'Netherlands',
+      },
+      status: 'currently_exporting',
+    },
+    {
+      country: {
+        name: 'Samoa',
+        id: '37afd8d0-5d95-e211-a939-e4115bead28a',
+      },
+      status: 'future_interest',
+    },
+    {
+      country: {
+        name: 'San Marino',
+        id: '37afd8d0-5d95-e211-a939-e4115bead28a',
+      },
+      status: 'future_interest',
+    },
+    {
+      country: {
+        name: 'Saudi Arabia',
+        id: '37afd8d0-5d95-e211-a939-e4115bead28a',
+      },
+      status: 'future_interest',
+    },
+    {
+      country: {
+        id: '4123',
+        name: 'Sweden',
+      },
+      status: 'not_interested',
+    },
+  ],
 })
 
 export const companyRegisteredAddressOnly = companyFaker({
@@ -377,6 +430,7 @@ export const companyNoDetails = companyFaker({
   oneListGroupGlobalAccountManager: null,
   oneListGroupTier: null,
   contacts: [{}],
+  id: '1111ae21-2895-47cf-90ba-9273c94dab88',
 })
 
 export const companyNonUK = companyFaker({

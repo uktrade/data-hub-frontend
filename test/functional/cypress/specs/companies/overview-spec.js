@@ -1,6 +1,9 @@
 import { company } from '../../fixtures'
 import { exportFaker } from '../../fakers/export'
-import { companyGlobalUltimateAllDetails } from '../../fakers/companies'
+import {
+  companyGlobalUltimateAllDetails,
+  companyNoDetails,
+} from '../../fakers/companies'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
@@ -19,9 +22,6 @@ describe('Company overview page', () => {
     fixtures.company.noOverviewDetails.id
   )
   const allActivityUrlAllOverview = urls.companies.activity.index(
-    fixtures.company.allOverviewDetails.id
-  )
-  const companyExportsAllOverview = urls.companies.exports.index(
     fixtures.company.allOverviewDetails.id
   )
   const noActiveInvestments = exportFaker({
@@ -74,7 +74,7 @@ describe('Company overview page', () => {
         )
       })
 
-      it('the card should contain the Business details table', () => {
+      it('the card should contain the Account management table', () => {
         cy.get('[data-test="account-management-container"]')
           .as('am-table')
           .first()
@@ -89,34 +89,20 @@ describe('Company overview page', () => {
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
-      it('the card should contain the export status table including all keys and value', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
+      it('the card should contain the Export status table', () => {
+        cy.get('[data-test="export-status-container"]')
+          .as('es-table')
           .first()
           .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Sustain: Nurture & grow')
-        cy.get('[data-test="current-export-list"]')
-          .children()
-          .should('have.length.of.at.most', 10)
-        cy.get('[data-test="export-status-currently-exporting-to-link"]')
-          .contains('View 2 more')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-        cy.get('[data-test="exportStatusContainer"]').children()
+        cy.get('@es-table').find('tbody').should('exist')
+      })
+
+      it('the card should contain the export status table including the last export win and total exports won', () => {
+        cy.get('[data-test="export-status-container"]').children()
         cy.get('th')
           .contains('Last export win')
           .siblings()
@@ -125,87 +111,6 @@ describe('Company overview page', () => {
           .contains('Total exports won')
           .siblings()
           .contains('td', '8')
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Saint Helena')
-        cy.get('[data-test="export-status-future-exporting-to-link"]')
-          .contains('View 4 more')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-      })
-
-      it('the card should link to the export status overview page', () => {
-        cy.get('[data-test="export-status-page-link"]')
-          .contains('View full export details')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-      })
-      it('the card should link to the export history page of the specific country', () => {
-        cy.get('[data-test="current-export-country-algeria-link"]')
-          .contains('Algeria')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${companyExportsAllOverview}/history/955f66a0-5d95-e211-a939-e4115bead28a`
-        )
-        cy.go('back')
-      })
-      it('the card should link to the future countries of interest', () => {
-        cy.get('[data-test="future-export-country-saint-helena-link"]')
-          .contains('Saint Helena')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${companyExportsAllOverview}/history/dec8d80f-efe5-4190-a8e9-c8ccc38e7724`
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Export Status Card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Export Status table with all values set to "Not set"', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
-          .first()
-          .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Not set')
-
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Last export win')
-          .siblings()
-          .contains('td', 'No export wins recorded')
-        cy.get('th')
-          .contains('Total exports won')
-          .siblings()
-          .contains('td', '0')
       })
     }
   )
@@ -213,50 +118,18 @@ describe('Company overview page', () => {
     'when viewing the Export Status Card and an error occurs during the Export Wins lookup',
     () => {
       before(() => {
-        cy.intercept(
-          'GET',
-          urls.company.exportWin(fixtures.company.noOverviewDetails.id),
-          {
-            statusCode: 500,
-            body: {
-              detail:
-                "('The Company matching service returned an error status: 401',)",
-            },
-          }
-        )
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
+        cy.intercept('GET', urls.company.exportWin(companyNoDetails.id), {
+          statusCode: 500,
+          body: {
+            detail:
+              "('The Company matching service returned an error status: 401',)",
+          },
+        })
+        cy.visit(urls.companies.overview.index(companyNoDetails.id))
       })
 
       it('the card should contain the Export Status table', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
-          .first()
-          .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Not set')
-
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Last export win')
-          .siblings()
-          .contains('td', 'Unable to load export wins')
+        cy.get('[data-test="export-status-container"]')
         cy.get('th')
           .contains('Total exports won')
           .siblings()
