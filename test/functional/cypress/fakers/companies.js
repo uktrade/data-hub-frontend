@@ -6,6 +6,7 @@ import apiSchema from '../../../api-schema.json'
 import { addressFaker } from './addresses'
 import { listFaker } from './utils'
 import { adviserFaker } from './advisers'
+import { UNITED_KINGDOM_ID, CANADA_ID } from '../../../../src/common/constants'
 
 /**
  * Generate fake data for a single company.
