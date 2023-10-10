@@ -40,7 +40,7 @@ function checkListOfCountriesLinks(listOfCountries, company_id, category) {
   }
 }
 
-describe('AccountManagementCard', () => {
+describe('ExportStatusCard', () => {
   const Component = (props) => <ExportStatusDetails {...props} />
   context('When the company has no export details set', () => {
     beforeEach(() => {
