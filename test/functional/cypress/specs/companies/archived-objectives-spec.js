@@ -1,4 +1,4 @@
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
+import { format } from '../../../../../src/client/utils/date'
 import { objectiveFaker } from '../../fakers/objective'
 
 const fixtures = require('../../fixtures')
@@ -32,18 +32,12 @@ context('When visiting the archived objective page with objectives', () => {
   it('should display 2 archived objectives with correct details', () => {
     cy.get('[data-test="objective-1"]')
       .should('contain.text', incompleteObjective.detail)
-      .should(
-        'contain.text',
-        formatWithoutParsing(incompleteObjective.target_date)
-      )
+      .should('contain.text', format(incompleteObjective.target_date))
       .should('contain.text', incompleteObjective.progress)
       .should('contain.text', incompleteObjective.modifiedBy.name)
     cy.get('[data-test="objective-2"]')
       .should('contain.text', completeObjective.detail)
-      .should(
-        'contain.text',
-        formatWithoutParsing(completeObjective.target_date)
-      )
+      .should('contain.text', format(completeObjective.target_date))
       .should('contain.text', completeObjective.progress)
       .should('contain.text', completeObjective.modifiedBy.name)
   })
