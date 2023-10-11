@@ -163,7 +163,7 @@ const HierarchyHeader = ({
   </HierarchyHeaderContents>
 )
 
-const Hierarchy = ({ requestedCompanyId, familyTree }) => {
+export const Hierarchy = ({ requestedCompanyId, familyTree }) => {
   const [fullTreeExpanded, setFullTreeExpanded] = useState(undefined)
   const manuallyVerifiedSubsidiariesCount =
     familyTree.manually_verified_subsidiaries?.length

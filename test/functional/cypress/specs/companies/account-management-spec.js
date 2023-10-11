@@ -5,7 +5,10 @@ import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'
-import { assertRequestUrl } from '../../support/assertions'
+import {
+  assertCompanyBreadcrumbs,
+  assertRequestUrl,
+} from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -49,18 +52,16 @@ const assertTable = ({ element, rows }) => {
 }
 
 const assertBreadcrumbs = (company) => {
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: urls.dashboard.index(),
-      Companies: urls.companies.index(),
-      [company.name]: urls.companies.detail(company.id),
-      'Account management': null,
-    })
-  })
+  assertCompanyBreadcrumbs(
+    company.name,
+    urls.companies.detail(company.id),
+    'Account management'
+  )
 }
 
 describe('Company account management', () => {
   const companyWithStrategy = companyFaker({
+    name: 'Best Ever Company',
     strategy: 'ABC',
     id: companyId,
     modifiedBy: userFaker(),
@@ -123,7 +124,11 @@ describe('Company account management', () => {
         cy.intercept(
           'GET',
           `/api-proxy/v4/company/${companyId}`,
-          companyFaker({ strategy: undefined, id: companyId })
+          companyFaker({
+            name: 'Best Ever Company',
+            strategy: undefined,
+            id: companyId,
+          })
         ).as('companyApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
         cy.wait('@companyApi')

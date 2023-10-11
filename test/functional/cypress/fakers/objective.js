@@ -1,13 +1,15 @@
 import { faker } from '@faker-js/faker'
 
 import { listFaker } from './utils'
+import { formatWithoutParsing } from '../../../../src/client/utils/date'
+import { DATE_LONG_FORMAT_3 } from '../../../../src/common/constants'
 
 const objectiveFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   company: { id: faker.string.uuid(), name: faker.company.name() },
   subject: faker.word.sample(),
   detail: faker.word.words(),
-  target_date: faker.date.future(),
+  target_date: formatWithoutParsing(faker.date.future(), DATE_LONG_FORMAT_3),
   has_blocker: true,
   blocker_description: faker.word.words(),
   progress: faker.helpers.rangeToNumber({ min: 0, max: 100 }),

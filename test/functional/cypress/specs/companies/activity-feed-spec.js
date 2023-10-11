@@ -1,12 +1,19 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const { assertCompanyBreadcrumbs } = require('../../support/assertions')
+
+const company = fixtures.company.allActivitiesCompany
 
 describe('Company activity feed', () => {
   before(() => {
-    cy.visit(
-      urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
-    )
+    cy.visit(urls.companies.activity.index(company.id))
   })
+
+  assertCompanyBreadcrumbs(
+    company.name,
+    urls.companies.detail(company.id),
+    'Activity Feed'
+  )
 
   context('Companies House Company', () => {
     it('displays the correct activity type label', () => {

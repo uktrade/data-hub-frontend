@@ -2,6 +2,7 @@ const { keys, forEach, isObject } = require('lodash')
 const qs = require('qs')
 
 const selectors = require('../../../selectors')
+const urls = require('../../../../src/lib/urls')
 
 const assertKeyValueTable = (dataTest, expected) => {
   forEach(keys(expected), (key, i) => {
@@ -102,6 +103,18 @@ const assertBreadcrumbs = (specs) => {
  */
 const testBreadcrumbs = (specs) =>
   it('should render breadcrumbs', () => assertBreadcrumbs(specs))
+
+/**
+ * Asserts that the breadcrumbs on company pages appear correctly
+ */
+const assertCompanyBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
+  testBreadcrumbs({
+    Home: urls.dashboard.index(),
+    Companies: urls.companies.index(),
+    [companyName]: detailsUrl,
+    [lastCrumb]: null,
+  })
+}
 
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
@@ -797,12 +810,22 @@ const assertTypeaheadValues = (selector, values) => {
   })
 }
 
+/**
+ * Assert that a link exists and that the href url is correct
+ */
+const assertLink = (dataTest, expected) => {
+  cy.get(`[data-test=${dataTest}]`)
+    .should('exist')
+    .should('have.attr', 'href', expected)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
   assertBreadcrumbs,
   testBreadcrumbs,
+  assertCompanyBreadcrumbs,
   assertFieldTypeahead,
   assertFieldSingleTypeahead,
   assertFieldInput,
@@ -856,4 +879,5 @@ module.exports = {
   assertExactUrl,
   assertFieldError,
   assertTypeaheadValues,
+  assertLink,
 }
