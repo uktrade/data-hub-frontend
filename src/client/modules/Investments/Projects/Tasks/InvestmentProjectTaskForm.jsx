@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { Details, ListItem, UnorderedList, Input } from 'govuk-react'
 
-import { TASK_SAVE_INVESTMENT_PROJECT_TASK, state2props } from './state'
+import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
   FieldRadios,
@@ -39,21 +37,25 @@ const InvestmentProjectTaskForm = ({
   currentAdviserId,
   investmentProject,
   task,
+  analyticsFormName,
 }) => {
-  const { projectId } = useParams()
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Form
         id="investment-project-task-form"
-        analyticsFormName="createInvestmentTaskForm"
-        cancelRedirectTo={() => urls.investments.projects.details(projectId)}
-        redirectTo={() => urls.investments.projects.details(projectId)}
+        analyticsFormName={analyticsFormName}
+        cancelRedirectTo={() =>
+          urls.investments.projects.tasks.index(investmentProject.id)
+        }
+        redirectTo={() =>
+          urls.investments.projects.tasks.index(investmentProject.id)
+        }
         submissionTaskName={TASK_SAVE_INVESTMENT_PROJECT_TASK}
         transformPayload={(values) => ({
           values,
-          investmentProject: investmentProject,
-          currentAdviserId: currentAdviserId,
-          task: task,
+          investmentProject,
+          currentAdviserId,
+          task,
         })}
         initialValues={task}
         flashMessage={() => 'Task saved'}
@@ -133,4 +135,4 @@ const FieldReminder = ({ initialValue = null }) => (
   </InputFieldWrapper>
 )
 
-export default connect(state2props)(InvestmentProjectTaskForm)
+export default InvestmentProjectTaskForm

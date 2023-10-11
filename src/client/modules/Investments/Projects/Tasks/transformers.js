@@ -3,6 +3,7 @@ import { DATE_LONG_FORMAT_3 } from '../../../../../common/constants'
 import {
   addDays,
   addMonths,
+  convertDateToFieldDateObject,
   formatWithoutParsing,
   transformValueForAPI,
 } from '../../../../utils/date'
@@ -16,19 +17,10 @@ export const transformFormValuesForAPI = (
     id: investmentProject.id,
     name: investmentProject.name,
   },
-  task: {
-    title: formValues.taskTitle,
-    description: formValues.taskDescription,
-    due_date: getDueDate(formValues.taskDueDate, formValues.customDate),
-    email_reminders_enabled: formValues.taskRemindersEnabled === OPTION_YES,
-    reminder_days: formValues.taskReminderDays
-      ? parseInt(formValues.taskReminderDays)
-      : null,
-    advisers: [currentAdviserId],
-  },
+  task: transformTaskFormValuesForAPI(formValues, currentAdviserId),
 })
 
-export const transformFormValuesForAPIEdit = (
+export const transformTaskFormValuesForAPI = (
   formValues,
   currentAdviserId
 ) => ({
@@ -48,7 +40,7 @@ export const transformAPIValuesForForm = (task) => ({
   taskTitle: task.title,
   taskDescription: task.description,
   taskDueDate: task.dueDate ? 'custom' : 'none',
-  customDate: task.dueDate ? getCustomDate(task.dueDate) : null,
+  customDate: task.dueDate ? convertDateToFieldDateObject(task.dueDate) : null,
   taskRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
   taskReminderDays: task.reminderDays,
 })
@@ -63,14 +55,5 @@ const getDueDate = (taskDueDate, customDate) => {
       return formatWithoutParsing(addDays(new Date(), 7), DATE_LONG_FORMAT_3)
     default:
       null
-  }
-}
-
-const getCustomDate = (customDate) => {
-  const values = customDate.split('-')
-  return {
-    year: values[0],
-    month: values[1],
-    day: values[2],
   }
 }

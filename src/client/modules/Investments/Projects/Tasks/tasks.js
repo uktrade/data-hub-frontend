@@ -1,7 +1,7 @@
 import { apiProxyAxios } from '../../../../components/Task/utils'
 import {
   transformFormValuesForAPI,
-  transformFormValuesForAPIEdit,
+  transformTaskFormValuesForAPI,
 } from './transformers'
 
 export const saveInvestmentProjectTask = ({
@@ -13,7 +13,7 @@ export const saveInvestmentProjectTask = ({
   if (task) {
     return apiProxyAxios.patch(
       `/v4/task/${task.id}`,
-      transformFormValuesForAPIEdit(values, currentAdviserId)
+      transformTaskFormValuesForAPI(values, currentAdviserId)
     )
   } else {
     return apiProxyAxios.post(

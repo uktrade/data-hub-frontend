@@ -13,6 +13,6 @@ export const state2props = (state) => {
   return {
     investmentProject: project,
     currentAdviserId,
-    task: task ? transformAPIValuesForForm(task) : '',
+    task: task && transformAPIValuesForForm(task),
   }
 }

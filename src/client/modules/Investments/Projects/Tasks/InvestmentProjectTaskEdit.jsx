@@ -41,13 +41,16 @@ const TaskEdit = ({ currentAdviserId, task }) => {
           onSuccessDispatch: TASK_DETAILS_LOADED,
         }}
       >
-        {() => (
-          <InvestmentProjectTaskForm
-            investmentProject={investmentProject}
-            currentAdviserId={currentAdviserId}
-            task={task}
-          />
-        )}
+        {() =>
+          task && (
+            <InvestmentProjectTaskForm
+              investmentProject={investmentProject}
+              currentAdviserId={currentAdviserId}
+              task={task}
+              analyticsFormName="editInvestmentTaskForm"
+            />
+          )
+        }
       </Task.Status>
     </DefaultLayout>
   )
