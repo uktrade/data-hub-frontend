@@ -90,6 +90,10 @@ function isDateInFuture(date) {
   return isFuture(parseISO(date))
 }
 
+function parseDateISO(date) {
+  return parseISO(date)
+}
+
 /**
  * Date validation functions
  */
@@ -311,4 +315,5 @@ module.exports = {
   formatStartAndEndDate,
   convertDateToFieldShortDateObject,
   isDateInFuture,
+  parseDateISO,
 }

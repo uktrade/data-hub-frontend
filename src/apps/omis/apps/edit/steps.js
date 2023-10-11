@@ -26,6 +26,20 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'assignee-time.njk',
   },
+  '/quote-details': {
+    heading: 'Edit quote information',
+    fields: ['description', 'delivery_date'],
+  },
+  '/internal-details': {
+    heading: 'Edit internal information',
+    fields: [
+      'service_types',
+      'sector',
+      'further_info',
+      'existing_agents',
+      'contacts_not_to_approach',
+    ],
+  },
   '/invoice-details': {
     heading: 'Edit invoice details',
     fields: ['vat_status', 'vat_number', 'vat_verified', 'po_number'],
