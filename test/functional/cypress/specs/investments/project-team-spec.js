@@ -1,6 +1,7 @@
 const {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertGovReactTable,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
@@ -10,21 +11,6 @@ const prospectProject = require('../../fixtures/investment/investment-has-existi
 
 const investmentTeams = require('../../fixtures/investment/investment-teams.json')
 const globalAccountManager = require('../../fixtures/investment/investment-global-manager.json')
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
 
 const assertViewHeader = ({ project }) => {
   it('should render the header', () => {
@@ -56,7 +42,7 @@ describe('Viewing the team of a project', () => {
         'Client relationship management'
       )
 
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="crm-table"]',
         rows: [
           ['Role', 'Adviser', 'Team'],
@@ -76,7 +62,7 @@ describe('Viewing the team of a project', () => {
         'Project management'
       )
 
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="pm-table"]',
         rows: [
           ['Role', 'Adviser', 'Team'],
@@ -100,7 +86,7 @@ describe('Viewing the team of a project', () => {
         'Project specialist and team members'
       )
 
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="team-table"]',
         rows: [
           ['Role', 'Adviser', 'Team'],
@@ -135,7 +121,7 @@ describe('Viewing the team of a project', () => {
         'Client relationship management'
       )
 
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="crm-table"]',
         rows: [
           ['Role', 'Adviser', 'Team'],

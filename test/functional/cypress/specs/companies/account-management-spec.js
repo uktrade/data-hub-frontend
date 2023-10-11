@@ -7,6 +7,7 @@ import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'
 import {
   assertCompanyBreadcrumbs,
+  assertGovReactTable,
   assertRequestUrl,
 } from '../../support/assertions'
 
@@ -34,21 +35,6 @@ const coreTeamResponse = {
     },
   },
   isGlobalAccountManager: true,
-}
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table').find('th')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
 }
 
 const assertBreadcrumbs = (company) => {
@@ -269,7 +255,7 @@ describe('One List core team', () => {
     })
 
     it('should render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],
@@ -284,7 +270,7 @@ describe('One List core team', () => {
     })
 
     it('should render the advisers table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="advisers-table"]',
         rows: [
           ['Team', 'Location', 'Adviser on core team', 'Email'],
@@ -334,7 +320,7 @@ describe('One List core team', () => {
     })
 
     it('should only render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],
@@ -364,7 +350,7 @@ describe('One List core Tier D team', () => {
     })
 
     it('should render the Lead ITA table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="lead-adviser-table"]',
         rows: [
           ['Team', 'Lead ITA', 'Email'],
@@ -409,7 +395,7 @@ describe('One List core Tier D team', () => {
       })
 
       it('should render the Lead ITA table', () => {
-        assertTable({
+        assertGovReactTable({
           element: '[data-test="lead-adviser-table"]',
           rows: [
             ['Team', 'Lead ITA', 'Email'],
