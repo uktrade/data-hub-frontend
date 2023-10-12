@@ -17,5 +17,11 @@ const getEditUrl = ({ task }) => {
 export const state2props = (state) => {
   const task = state[ID]
 
-  return { ...task, editUrl: getEditUrl(task) }
+  return { ...task }
+}
+
+export const buttonState2props = (state) => {
+  const task = state[ID]
+
+  return { editUrl: getEditUrl(task) }
 }

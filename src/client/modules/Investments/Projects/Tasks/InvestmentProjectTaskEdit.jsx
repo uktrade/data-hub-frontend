@@ -48,9 +48,7 @@ const TaskEdit = ({ currentAdviserId, task }) => {
               currentAdviserId={currentAdviserId}
               task={task}
               analyticsFormName="editInvestmentTaskForm"
-              cancelRedirectUrl={urls.investments.projects.tasks.index(
-                investmentProject.id
-              )}
+              cancelRedirectUrl={urls.tasks.details(taskId)}
               redirectToUrl={urls.investments.projects.tasks.index(
                 investmentProject.id
               )}

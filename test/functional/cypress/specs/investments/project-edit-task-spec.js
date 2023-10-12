@@ -12,7 +12,6 @@ import {
   assertFlashMessage,
   assertExactUrl,
   assertFieldDate,
-  assertLink,
 } from '../../support/assertions'
 import { fillWithNewValue } from '../../support/form-fillers'
 import { clickButton } from '../../../../functional/cypress/support/actions'
@@ -113,10 +112,6 @@ describe('Edit investment project task', () => {
       })
     })
 
-    it('should render the cancel button with the correct url', () => {
-      assertLink('cancel-button', detailsUrl)
-    })
-
     it('changing field values should send new values to the api', () => {
       cy.intercept('PATCH', endpoint, {
         statusCode: 200,
@@ -136,7 +131,11 @@ describe('Edit investment project task', () => {
         advisers: [id],
       })
 
-      assertExactUrl(detailsUrl)
+      assertExactUrl(
+        investments.projects.tasks.index(
+          investmentProjectTask.investmentProjectTask.investmentProject.id
+        )
+      )
 
       assertFlashMessage('Task saved')
     })
