@@ -1,4 +1,9 @@
-import { addDays, isDateAfter, parseDateISO } from '../../utils/date'
+import {
+  addDays,
+  isDateAfter,
+  isDateInFuture,
+  parseDateISO,
+} from '../../utils/date'
 import { transformDateObjectToDateString } from '../../transformers'
 
 export const validateIfDateInFuture = (values) => {
@@ -11,4 +16,17 @@ export const validateIfDateInFuture = (values) => {
       : 'Delivery date must be at least 21 days in the future'
   }
   return null
+}
+
+export const validateIfDateInPast = (values) =>
+  isDateInFuture(transformDateObjectToDateString(values))
+    ? 'Payment received date must be in the past'
+    : null
+
+export const validateAmountRecieved = (value, totalCost) => {
+  const transformedValue = value * 100
+
+  return transformedValue < totalCost
+    ? 'The amount must be equal to or larger than the invoice amount'
+    : null
 }

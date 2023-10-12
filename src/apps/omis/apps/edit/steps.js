@@ -6,7 +6,6 @@ const EditContactController = require('./controllers/contact')
 const EditInvoiceDetailsController = require('./controllers/invoice-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditVatStatusController = require('./controllers/vat-status')
-const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
 const CancelOrderController = require('./controllers/cancel-order')
 
@@ -75,9 +74,6 @@ const steps = merge({}, createSteps, {
   '/payment-reconciliation': {
     heading: 'Reconcile a payment',
     fields: ['amount', 'received_on'],
-    templatePath: 'omis/apps/edit/views',
-    template: 'payment-reconciliation.njk',
-    controller: EditPaymentReconciliationController,
   },
   '/complete-order': {
     heading: 'Complete order',

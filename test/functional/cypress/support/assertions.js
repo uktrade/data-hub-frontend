@@ -67,6 +67,25 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
   }
 }
 
+const assertGovReactTable = ({ element, headings, rows }) => {
+  cy.get(element).as('table')
+
+  if (headings) {
+    cy.get('@table').find('th')
+  }
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
+}
+
 /**
  * @description Asserts the presence of breadcrumbs with minimal knowledge about
  * implementation details e.g. class names and ids.
@@ -823,6 +842,7 @@ module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
+  assertGovReactTable,
   assertBreadcrumbs,
   testBreadcrumbs,
   assertCompanyBreadcrumbs,
