@@ -44,6 +44,7 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
           id: faker.string.uuid(),
         },
         id: faker.string.uuid(),
+        name: faker.word.adjective(),
       },
       ...overrides,
     })

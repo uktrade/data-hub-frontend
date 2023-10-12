@@ -269,14 +269,25 @@ function formatStartAndEndDate(startDate, endDate) {
  * @returns an object of the format {month:'', year:''}
  */
 function convertDateToFieldShortDateObject(date) {
+  const { month, year } = convertDateToFieldDateObject(date)
+  return { month, year }
+}
+
+/**
+ * Convert a date to an object format required by the FieldDate component
+ * @param {*} date a string representing a date or a Date type
+ * @returns an object of the format {day:'', month:'', year:''}
+ */
+function convertDateToFieldDateObject(date) {
   const parsedTime = parseISO(date)
   if (isValid(parsedTime)) {
     return {
+      day: parsedTime.getDate(),
       month: parsedTime.getMonth() + 1, //getMonth is zero based
       year: parsedTime.getFullYear(),
     }
   }
-  return { month: '', year: '' }
+  return { day: '', month: '', year: '' }
 }
 
 module.exports = {
@@ -316,4 +327,5 @@ module.exports = {
   convertDateToFieldShortDateObject,
   isDateInFuture,
   parseDateISO,
+  convertDateToFieldDateObject,
 }
