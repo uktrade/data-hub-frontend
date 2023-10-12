@@ -9,7 +9,6 @@ import { ID, TASK_GET_TASK_DETAILS, state2props } from './state'
 import { TASK_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 
-//TODO move this into the state2props
 const getCompany = (task) => {
   return task?.investmentProjectTask?.investmentProject?.investorCompany
 }
