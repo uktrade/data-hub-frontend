@@ -12,7 +12,7 @@ import { clickButton } from '../../../../../functional/cypress/support/actions'
 import urls from '../../../../../../src/lib/urls'
 import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
 
-describe('Edit large capital profile', () => {
+describe('Task form', () => {
   const Component = (props) => (
     <DataHubProvider>
       <TaskForm {...props} />
