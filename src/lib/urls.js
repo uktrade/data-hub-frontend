@@ -207,6 +207,11 @@ module.exports = {
         country: url('/companies', '/:companyId/exports/history/:countryId'),
       },
     },
+    exportWins: {
+      index: url('/exportwins'),
+      confirmed: url('/exportwins/confirmed'),
+      unconfirmed: url('/exportwins/unconfirmed'),
+    },
     overview: {
       index: url('/companies', '/:companyId/overview'),
     },
