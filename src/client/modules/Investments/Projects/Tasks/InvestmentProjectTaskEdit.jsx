@@ -6,13 +6,14 @@ import { state2props } from './state'
 
 import urls from '../../../../../lib/urls'
 import Task from '../../../../components/Task'
-import InvestmentProjectTaskForm from './InvestmentProjectTaskForm'
 import {
   ID as TASK_ID,
   TASK_GET_TASK_DETAILS,
 } from '../../../Tasks/TaskDetails/state'
 import { TASK_DETAILS_LOADED } from '../../../../actions'
 import { DefaultLayout } from '../../../../components'
+import TaskForm from '../../../Tasks/TaskForm'
+import { TASK_SAVE_TASK_DETAILS } from '../../../Tasks/TaskForm/state'
 
 const TaskEdit = ({ currentAdviserId, task }) => {
   const { taskId } = useParams()
@@ -42,12 +43,18 @@ const TaskEdit = ({ currentAdviserId, task }) => {
         }}
       >
         {() =>
-          task && (
-            <InvestmentProjectTaskForm
-              investmentProject={investmentProject}
+          investmentProject && (
+            <TaskForm
               currentAdviserId={currentAdviserId}
               task={task}
               analyticsFormName="editInvestmentTaskForm"
+              cancelRedirectUrl={urls.investments.projects.tasks.index(
+                investmentProject.id
+              )}
+              redirectToUrl={urls.investments.projects.tasks.index(
+                investmentProject.id
+              )}
+              submissionTaskName={TASK_SAVE_TASK_DETAILS}
             />
           )
         }
