@@ -5,9 +5,8 @@ export const saveInvestmentProjectTask = ({
   values,
   investmentProject,
   currentAdviserId,
-}) => {
-  return apiProxyAxios.post(
+}) =>
+  apiProxyAxios.post(
     '/v4/investmentprojecttask',
     transformFormValuesForAPI(values, investmentProject, currentAdviserId)
   )
-}
