@@ -1,7 +1,6 @@
 import { capitalize } from 'lodash'
 
 import { investments } from '../../../../../src/lib/urls'
-import { id } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
   assertFieldInput,
@@ -33,7 +32,7 @@ describe('Edit investment project task', () => {
     investmentProjectTask.investmentProjectTask.investmentProject.id
   )
 
-  context('When editing a task', () => {
+  context('When visiting the edit task page', () => {
     before(() => {
       cy.intercept(
         'GET',
@@ -111,6 +110,22 @@ describe('Edit investment project task', () => {
         })
       })
     })
+  })
+
+  context('When editing a task', () => {
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/task/${investmentProjectTask.id}`,
+        investmentProjectTask
+      )
+      cy.visit(
+        investments.projects.tasks.edit(
+          investmentProjectTask.investmentProjectTask.investmentProject.id,
+          investmentProjectTask.id
+        )
+      )
+    })
 
     it('changing field values should send new values to the api', () => {
       cy.intercept('PATCH', endpoint, {
@@ -128,7 +143,7 @@ describe('Edit investment project task', () => {
         due_date: format(investmentProjectTask.dueDate, DATE_LONG_FORMAT_3),
         email_reminders_enabled: investmentProjectTask.emailRemindersEnabled,
         reminder_days: investmentProjectTask.reminderDays,
-        advisers: [id],
+        advisers: investmentProjectTask.advisers.map((a) => a.id),
       })
 
       assertExactUrl(

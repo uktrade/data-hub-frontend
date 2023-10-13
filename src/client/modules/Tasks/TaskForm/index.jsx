@@ -9,10 +9,12 @@ import {
   FormLayout,
   FieldTextarea,
   FieldDate,
+  FieldAdvisersTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
+import { OPTIONS_ASSIGNED_TO } from './constants'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -72,6 +74,26 @@ const TaskForm = ({
               label="Task description (optional)"
               hint="Add details of the task, especially if you intend to assign it to someone else."
             />
+            <FieldRadios
+              name="taskAssignedTo"
+              legend="Task assigned to"
+              required="Select who this task is assigned to"
+              options={OPTIONS_ASSIGNED_TO.map((option) => ({
+                ...option,
+                ...(option.label === 'Someone else' && {
+                  children: (
+                    <FieldAdvisersTypeahead
+                      name="taskAdvisers"
+                      required="Select an adviser"
+                      isMulti={true}
+                    />
+                  ),
+                }),
+              }))}
+            />
+            <Details summary="What happens when I assign someone a task">
+              <p>When you assign TODO</p>
+            </Details>
             <FieldRadios
               name="taskDueDate"
               legend="Task due date"

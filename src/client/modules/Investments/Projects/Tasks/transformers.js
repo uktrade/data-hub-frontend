@@ -1,5 +1,10 @@
 import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { idNamesToValueLabels } from '../../../../utils'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
+import {
+  OPTION_ME,
+  OPTION_SOMEONE_ELSE,
+} from '../../../Tasks/TaskForm/constants'
 import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
 
 export const transformFormValuesForAPI = (
@@ -14,7 +19,12 @@ export const transformFormValuesForAPI = (
   task: transformTaskFormValuesForAPI(formValues, currentAdviserId),
 })
 
-export const transformAPIValuesForForm = (task) => ({
+const transformAdvisor = (advisers, currentAdviserId) =>
+  advisers.length === 1 && advisers.filter((a) => a.id === currentAdviserId)
+    ? OPTION_ME
+    : OPTION_SOMEONE_ELSE
+
+export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   id: task.id,
   investmentProject: task.investmentProjectTask.investmentProject,
   taskTitle: task.title,
@@ -23,4 +33,6 @@ export const transformAPIValuesForForm = (task) => ({
   customDate: task.dueDate ? convertDateToFieldDateObject(task.dueDate) : null,
   taskRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
   taskReminderDays: task.reminderDays,
+  taskAssignedTo: transformAdvisor(task.advisers, currentAdviserId),
+  taskAdvisers: idNamesToValueLabels(task.advisers),
 })

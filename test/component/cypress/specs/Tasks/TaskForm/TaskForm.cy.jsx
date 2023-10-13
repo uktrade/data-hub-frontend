@@ -11,6 +11,9 @@ import {
 import { clickButton } from '../../../../../functional/cypress/support/actions'
 import urls from '../../../../../../src/lib/urls'
 import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
+import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
+import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Investments/Projects/Tasks/transformers'
+import { adviserFaker } from '../../../../../functional/cypress/fakers/advisers'
 
 describe('Task form', () => {
   const Component = (props) => (
@@ -19,7 +22,7 @@ describe('Task form', () => {
     </DataHubProvider>
   )
 
-  context('When a task is missing all mandatory fields', () => {
+  context('When a task form renders without initial values', () => {
     beforeEach(() => {
       cy.mount(<Component cancelRedirectUrl={urls.companies.index()} />)
     })
@@ -39,6 +42,16 @@ describe('Task form', () => {
           element,
           label: 'Task description (optional)',
           hint: 'Add details of the task, especially if you intend to assign it to someone else.',
+        })
+      })
+    })
+
+    it('should display the task assigned to field radios', () => {
+      cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Task assigned to',
+          optionsCount: 2,
         })
       })
     })
@@ -68,6 +81,124 @@ describe('Task form', () => {
     })
   })
 
+  context('When a task form renders with existing data', () => {
+    const investmentProjectTask = taskWithInvestmentProjectFaker({})
+
+    beforeEach(() => {
+      cy.mount(
+        <Component
+          cancelRedirectUrl={urls.companies.index()}
+          task={transformAPIValuesForForm(investmentProjectTask)}
+        />
+      )
+    })
+
+    it('should display the task title field', () => {
+      cy.dataTest('field-taskTitle').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Task title',
+          value: investmentProjectTask.title,
+        })
+      })
+    })
+
+    it('should display the task description field', () => {
+      cy.get('[data-test="field-taskDescription"]').then((element) => {
+        assertFieldTextarea({
+          element,
+          label: 'Task description (optional)',
+          hint: 'Add details of the task, especially if you intend to assign it to someone else.',
+          value: investmentProjectTask.description,
+        })
+      })
+    })
+
+    it('should display the task due date field radios', () => {
+      cy.get('[data-test="field-taskDueDate"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Task due date',
+          optionsCount: 7,
+        })
+      })
+    })
+
+    it('should display the task reminder field radios', () => {
+      cy.get('[data-test="field-taskRemindersEnabled"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Do you want to set a reminder for this task?',
+          optionsCount: 3,
+        })
+      })
+    })
+
+    it('should render the cancel button with the correct url', () => {
+      assertLink('cancel-button', urls.companies.index())
+    })
+  })
+
+  context(
+    'When a task form renders with existing data that is assigned to me',
+    () => {
+      const currentAdviser = adviserFaker()
+      const investmentProjectTask = taskWithInvestmentProjectFaker({
+        advisers: [currentAdviser],
+      })
+
+      beforeEach(() => {
+        cy.mount(
+          <Component
+            cancelRedirectUrl={urls.companies.index()}
+            task={transformAPIValuesForForm(
+              investmentProjectTask,
+              currentAdviser.id
+            )}
+          />
+        )
+      })
+
+      it('should display the task assigned to field radios', () => {
+        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+          assertFieldRadiosWithLegend({
+            element,
+            legend: 'Task assigned to',
+            optionsCount: 2,
+            value: 'Me',
+          })
+        })
+      })
+    }
+  )
+
+  context(
+    'When a task form renders with existing data that is assigned to someone else',
+    () => {
+      const investmentProjectTask = taskWithInvestmentProjectFaker({})
+
+      beforeEach(() => {
+        cy.mount(
+          <Component
+            cancelRedirectUrl={urls.companies.index()}
+            task={transformAPIValuesForForm(investmentProjectTask)}
+          />
+        )
+      })
+
+      it('should display the task assigned to field radios', () => {
+        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+          assertFieldRadiosWithLegend({
+            element,
+            legend: 'Task assigned to',
+            optionsCount: 3,
+            value: 'Someone else',
+          })
+        })
+      })
+    }
+  )
+
   context('When a task is missing all mandatory fields', () => {
     beforeEach(() => {
       cy.mount(<Component />)
@@ -82,6 +213,11 @@ describe('Task form', () => {
       )
 
       assertFieldError(
+        cy.get('[data-test="field-taskAssignedTo"]'),
+        'Select who this task is assigned to'
+      )
+
+      assertFieldError(
         cy.get('[data-test="field-taskDueDate"]'),
         'Select task due date'
       )
@@ -89,6 +225,23 @@ describe('Task form', () => {
       assertFieldError(
         cy.get('[data-test="field-taskRemindersEnabled"]'),
         'Select reminder'
+      )
+    })
+  })
+
+  context('When creating a task assigned to someone else', () => {
+    beforeEach(() => {
+      cy.mount(<Component />)
+
+      cy.get('[data-test=task-assigned-to-someone-else]').click()
+    })
+
+    it('should display an error when no advisers are selected', () => {
+      clickButton('Save task')
+
+      cy.get('[data-test="field-taskAdvisers"]').should(
+        'contain.text',
+        'Select an adviser'
       )
     })
   })
