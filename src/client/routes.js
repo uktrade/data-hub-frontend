@@ -51,7 +51,7 @@ import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
-import InvestmentProjectTask from './modules/Investments/Projects/Tasks/InvestmentProjectTask'
+import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
 import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
 
@@ -356,7 +356,7 @@ const routes = {
     {
       path: '/investments/projects/:projectId/tasks/create',
       module: 'datahub:investments',
-      component: InvestmentProjectTask,
+      component: InvestmentProjectTaskAdd,
     },
     {
       path: '/investments/projects',
