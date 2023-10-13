@@ -13,12 +13,7 @@ const getEditUrl = ({ task }) => {
     ? urls.investments.projects.tasks.edit(investmentProject.id, task.id)
     : undefined
 }
-
-export const state2props = (state) => {
-  const task = state[ID]
-
-  return { ...task }
-}
+export const state2props = (state) => ({ ...state[ID] })
 
 export const buttonState2props = (state) => {
   const task = state[ID]
