@@ -18,7 +18,10 @@ export const transformTaskFormValuesForAPI = (
   reminder_days: formValues.taskReminderDays
     ? parseInt(formValues.taskReminderDays)
     : null,
-  advisers: [currentAdviserId],
+  advisers:
+    Array.isArray(formValues.taskAdvisers) && formValues.taskAdvisers.length > 0
+      ? formValues.taskAdvisers.map((a) => a.value)
+      : [currentAdviserId],
 })
 
 const getDueDate = (taskDueDate, customDate) => {

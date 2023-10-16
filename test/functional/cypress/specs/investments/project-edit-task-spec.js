@@ -1,5 +1,4 @@
 import { investments } from '../../../../../src/lib/urls'
-import { id } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
   assertBreadcrumbs,
@@ -69,7 +68,7 @@ describe('Edit investment project task', () => {
         due_date: format(investmentProjectTask.dueDate, DATE_LONG_FORMAT_3),
         email_reminders_enabled: investmentProjectTask.emailRemindersEnabled,
         reminder_days: investmentProjectTask.reminderDays,
-        advisers: [id],
+        advisers: investmentProjectTask.advisers.map((a) => a.id),
       })
 
       assertExactUrl(

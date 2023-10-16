@@ -1,4 +1,5 @@
 import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { idNamesToValueLabels } from '../../../../utils'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
 import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
 
@@ -23,4 +24,5 @@ export const transformAPIValuesForForm = (task) => ({
   customDate: task.dueDate ? convertDateToFieldDateObject(task.dueDate) : null,
   taskRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
   taskReminderDays: task.reminderDays,
+  taskAdvisers: idNamesToValueLabels(task.advisers),
 })
