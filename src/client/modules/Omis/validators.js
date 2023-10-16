@@ -5,6 +5,7 @@ import {
   parseDateISO,
 } from '../../utils/date'
 import { transformDateObjectToDateString } from '../../transformers'
+import { EU_VAT_NUMBER_REGEX } from './constants'
 
 export const validateIfDateInFuture = (values) => {
   if (values?.year) {
@@ -29,4 +30,11 @@ export const validateAmountRecieved = (value, totalCost) => {
   return transformedValue < totalCost
     ? 'The amount must be equal to or larger than the invoice amount'
     : null
+}
+
+export const validateVATNumber = (value) => {
+  if (value != '' && !EU_VAT_NUMBER_REGEX.test(value)) {
+    return 'VAT number must be a valid EU VAT number starting with the country code, for example IT12345678901 for Italy where "IT" is the country code'
+  }
+  return null
 }

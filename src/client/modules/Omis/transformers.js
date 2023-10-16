@@ -1,5 +1,8 @@
 import { transformDateObjectToDateString } from '../../transformers'
-import { checkIfItemHasValue } from '../Investments/Projects/transformers'
+import {
+  checkIfItemHasValue,
+  transformRadioOptionToBool,
+} from '../Investments/Projects/transformers'
 
 export const transformQuoteInformationForApi = ({
   orderId,
@@ -46,5 +49,17 @@ export const transformPaymentInformationForApi = ({ orderId, values }) => {
         received_on: transformDateObjectToDateString(received_on),
       },
     ],
+  }
+}
+
+export const transformInvoiceDetailsForApi = ({ orderId, values }) => {
+  const { po_number, vat_status, vat_number, vat_verified } = values
+
+  return {
+    id: orderId,
+    vat_status,
+    vat_number,
+    vat_verified: transformRadioOptionToBool(vat_verified),
+    po_number,
   }
 }

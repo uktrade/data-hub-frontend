@@ -55,6 +55,7 @@ import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
 import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
 import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/InvestmentProjectTaskEdit'
+import EditInvoiceDetails from './modules/Omis/EditInvoiceDetails'
 
 const routes = {
   companies: [
@@ -187,6 +188,11 @@ const routes = {
       path: '/omis/:orderId/edit/payment-reconciliation',
       module: 'datahub:orders',
       component: PaymentReconciliation,
+    },
+    {
+      path: '/omis/:orderId/edit/invoice-details',
+      module: 'datahub:orders',
+      component: EditInvoiceDetails,
     },
   ],
   reminders: [
