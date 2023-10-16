@@ -3,6 +3,7 @@ import urls from '../../../../../src/lib/urls'
 import { investmentProjectTaskFaker, taskFaker } from '../../fakers/task'
 import { format } from '../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
+import { assertQueryParams } from '../../support/assertions'
 
 const investmentProjectTaskWithAllOptionalFields = investmentProjectTaskFaker()
 const investmentProjectTaskMissingAllOptionalFields =
@@ -40,10 +41,10 @@ const assertTaskItem = (index, investmentTask) => {
 
 describe('Investment project tasks', () => {
   context('When the project has tasks', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
-        `/api-proxy/v4/investmentprojecttask?investment_project=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=task__due_date&archived=false`,
+        `/api-proxy/v4/investmentprojecttask?investment_project=${fixtures.investment.investmentWithDetails.id}**`,
         {
           body: {
             count: 2,
@@ -81,6 +82,21 @@ describe('Investment project tasks', () => {
             fixtures.investment.investmentWithDetails.id
           )
         )
+    })
+
+    it('should sort by oldest tasks', () => {
+      cy.get('[data-test="sortby"] select').select('task__created_on')
+      assertQueryParams('sortby', 'task__created_on')
+    })
+
+    it('should sort by due date', () => {
+      cy.get('[data-test="sortby"] select').select('task__due_date')
+      assertQueryParams('sortby', 'task__due_date')
+    })
+
+    it('should sort by recently created tasks', () => {
+      cy.get('[data-test="sortby"] select').select('-task__created_on')
+      assertQueryParams('sortby', '-task__created_on')
     })
   })
 })
