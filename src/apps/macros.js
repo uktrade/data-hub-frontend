@@ -6,7 +6,7 @@ const {
   transformStringToOption,
   transformHQCodeToLabelledOption,
 } = require('./transformers')
-const { US_COUNTRY_ID, CANADA_COUNTRY_ID } = require('./constants.js')
+const { CANADA_ID, UNITED_STATES_ID } = require('../common/constants')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -46,7 +46,7 @@ const globalFields = {
     initialOption: '-- Select US state --',
     options() {
       return metadata.administrativeAreaOptions
-        .filter((states) => states.country.id === US_COUNTRY_ID)
+        .filter((states) => states.country.id === UNITED_STATES_ID)
         .filter((area) => area.disabled_on === null)
         .map(transformObjectToOption)
     },
@@ -59,7 +59,7 @@ const globalFields = {
     initialOption: '-- Select Canadian Province --',
     options() {
       return metadata.administrativeAreaOptions
-        .filter((states) => states.country.id === CANADA_COUNTRY_ID)
+        .filter((states) => states.country.id === CANADA_ID)
         .filter((area) => area.disabled_on === null)
         .map(transformObjectToOption)
     },
