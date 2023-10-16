@@ -26,10 +26,13 @@ import {
   FieldReferralSourceHierarchy,
   FieldSpecificProgramme,
 } from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
-import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
 import Task from '../../../../../client/components/Task'
 import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
-import { FORM_LAYOUT } from '../../../../../common/constants'
+import {
+  FORM_LAYOUT,
+  OPTION_NO,
+  OPTIONS_YES_NO,
+} from '../../../../../common/constants'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 
 const findSelectedItem = (items, value) =>

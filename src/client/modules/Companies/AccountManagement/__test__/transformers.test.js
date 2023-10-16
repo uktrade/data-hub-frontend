@@ -1,5 +1,5 @@
 import { transformFormValuesForAPI } from '../transformers'
-import { OPTION_YES } from '../../../../../apps/constants'
+import { OPTION_YES } from '../../../../../common/constants'
 
 describe('transformFormValuesForAPI', () => {
   context('When a values object is passed as a prop', () => {
