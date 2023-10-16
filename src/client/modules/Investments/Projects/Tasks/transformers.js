@@ -20,7 +20,8 @@ export const transformFormValuesForAPI = (
 })
 
 const transformAdvisor = (advisers, currentAdviserId) =>
-  advisers.length === 1 && advisers.filter((a) => a.id === currentAdviserId)
+  advisers.length === 1 &&
+  advisers.filter((a) => a.id === currentAdviserId).length == 1
     ? OPTION_ME
     : OPTION_SOMEONE_ELSE
 

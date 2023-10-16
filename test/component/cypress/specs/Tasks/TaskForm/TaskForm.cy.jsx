@@ -1,7 +1,9 @@
 import React from 'react'
+import { capitalize } from 'lodash'
 
 import DataHubProvider from '../../provider'
 import {
+  assertFieldDate,
   assertFieldError,
   assertFieldInput,
   assertFieldRadiosWithLegend,
@@ -13,7 +15,11 @@ import urls from '../../../../../../src/lib/urls'
 import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
 import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Investments/Projects/Tasks/transformers'
-import { adviserFaker } from '../../../../../functional/cypress/fakers/advisers'
+import advisersListFaker, {
+  adviserFaker,
+} from '../../../../../functional/cypress/fakers/advisers'
+import { OPTION_NO, OPTION_YES } from '../../../../../../src/apps/constants'
+import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 
 describe('Task form', () => {
   const Component = (props) => (
@@ -114,6 +120,16 @@ describe('Task form', () => {
       })
     })
 
+    it('should display the custom date', () => {
+      cy.get('[data-test="field-customDate"]').then((element) => {
+        assertFieldDate({
+          element,
+          label: 'For example 28 11 2025',
+          value: convertDateToFieldDateObject(investmentProjectTask.dueDate),
+        })
+      })
+    })
+
     it('should display the task due date field radios', () => {
       cy.get('[data-test="field-taskDueDate"]').then((element) => {
         assertFieldRadiosWithLegend({
@@ -130,6 +146,9 @@ describe('Task form', () => {
           element,
           legend: 'Do you want to set a reminder for this task?',
           optionsCount: 3,
+          value: investmentProjectTask.emailRemindersEnabled
+            ? capitalize(OPTION_YES)
+            : capitalize(OPTION_NO),
         })
       })
     })
@@ -171,28 +190,39 @@ describe('Task form', () => {
       })
     }
   )
+  var adviserAssignedToTestRuns = [
+    {
+      advisers: advisersListFaker(),
+    },
+    {
+      advisers: advisersListFaker((length = 2)),
+    },
+  ]
 
   context(
     'When a task form renders with existing data that is assigned to someone else',
     () => {
-      const investmentProjectTask = taskWithInvestmentProjectFaker({})
+      adviserAssignedToTestRuns.forEach(function (run) {
+        beforeEach(() => {
+          const investmentProjectTask = taskWithInvestmentProjectFaker({
+            advisers: run.advisers,
+          })
 
-      beforeEach(() => {
-        cy.mount(
-          <Component
-            cancelRedirectUrl={urls.companies.index()}
-            task={transformAPIValuesForForm(investmentProjectTask)}
-          />
-        )
-      })
-
-      it('should display the task assigned to field radios', () => {
-        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
-          assertFieldRadiosWithLegend({
-            element,
-            legend: 'Task assigned to',
-            optionsCount: 3,
-            value: 'Someone else',
+          cy.mount(
+            <Component
+              cancelRedirectUrl={urls.companies.index()}
+              task={transformAPIValuesForForm(investmentProjectTask)}
+            />
+          )
+        })
+        it('should display the task assigned to field radios with someone else selected', () => {
+          cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+            assertFieldRadiosWithLegend({
+              element,
+              legend: 'Task assigned to',
+              optionsCount: 3,
+              value: 'Someone else',
+            })
           })
         })
       })
