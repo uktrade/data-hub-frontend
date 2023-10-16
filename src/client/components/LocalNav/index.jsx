@@ -59,7 +59,9 @@ export const LocalNavLink = ({
 }) => (
   <Route>
     {({ location: { pathname } }) => {
-      const NavLink = pathname === href ? StyledActiveLink : StyledInactiveLink
+      const NavLink = href?.includes(pathname)
+        ? StyledActiveLink
+        : StyledInactiveLink
       return (
         <NavLink href={href} data-test={dataTest} {...rest}>
           {children}
