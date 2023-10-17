@@ -359,6 +359,8 @@ import {
   TASK_ARCHIVE_TASK,
   TASK_GET_TASK_DETAILS,
 } from './modules/Tasks/TaskDetails/state'
+import { saveTaskDetail } from './modules/Tasks/TaskForm/tasks'
+import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
 
 export const tasks = {
   'Create list': createList,
@@ -553,4 +555,5 @@ export const tasks = {
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
   [TASK_ARCHIVE_TASK]: archiveTask,
   [TASK_RECONCILE_OMIS_PAYMENT]: savePayment,
+  [TASK_SAVE_TASK_DETAILS]: saveTaskDetail,
 }

@@ -72,6 +72,7 @@ const TaskForm = ({
               label="Task description (optional)"
               hint="Add details of the task, especially if you intend to assign it to someone else."
             />
+            <FieldInput type="hidden" name="taskAdvisers" />
             <FieldRadios
               name="taskDueDate"
               legend="Task due date"

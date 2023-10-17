@@ -459,6 +459,7 @@ module.exports = {
           '/projects/:projectId/tasks',
           '?sortby=-task__created_on'
         ),
+        edit: url('/investments', '/projects/:projectId/tasks/:taskId/edit'),
       },
     },
     profiles: {

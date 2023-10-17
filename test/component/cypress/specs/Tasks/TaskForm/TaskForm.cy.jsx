@@ -1,7 +1,9 @@
 import React from 'react'
+import { capitalize } from 'lodash'
 
 import DataHubProvider from '../../provider'
 import {
+  assertFieldDate,
   assertFieldError,
   assertFieldInput,
   assertFieldRadiosWithLegend,
@@ -11,6 +13,10 @@ import {
 import { clickButton } from '../../../../../functional/cypress/support/actions'
 import urls from '../../../../../../src/lib/urls'
 import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
+import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
+import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Investments/Projects/Tasks/transformers'
+import { OPTION_NO, OPTION_YES } from '../../../../../../src/apps/constants'
+import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 
 describe('Task form', () => {
   const Component = (props) => (
@@ -19,7 +25,7 @@ describe('Task form', () => {
     </DataHubProvider>
   )
 
-  context('When a task is missing all mandatory fields', () => {
+  context('When a task form renders without initial values', () => {
     beforeEach(() => {
       cy.mount(<Component cancelRedirectUrl={urls.companies.index()} />)
     })
@@ -68,6 +74,77 @@ describe('Task form', () => {
     })
   })
 
+  context('When a task form renders with existing data', () => {
+    const investmentProjectTask = taskWithInvestmentProjectFaker({})
+
+    beforeEach(() => {
+      cy.mount(
+        <Component
+          cancelRedirectUrl={urls.companies.index()}
+          task={transformAPIValuesForForm(investmentProjectTask)}
+        />
+      )
+    })
+
+    it('should display the task title field', () => {
+      cy.dataTest('field-taskTitle').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Task title',
+          value: investmentProjectTask.title,
+        })
+      })
+    })
+
+    it('should display the task description field', () => {
+      cy.get('[data-test="field-taskDescription"]').then((element) => {
+        assertFieldTextarea({
+          element,
+          label: 'Task description (optional)',
+          hint: 'Add details of the task, especially if you intend to assign it to someone else.',
+          value: investmentProjectTask.description,
+        })
+      })
+    })
+
+    it('should display the custom date', () => {
+      cy.get('[data-test="field-customDate"]').then((element) => {
+        assertFieldDate({
+          element,
+          label: 'For example 28 11 2025',
+          value: convertDateToFieldDateObject(investmentProjectTask.dueDate),
+        })
+      })
+    })
+
+    it('should display the task due date field radios', () => {
+      cy.get('[data-test="field-taskDueDate"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Task due date',
+          optionsCount: 7,
+        })
+      })
+    })
+
+    it('should display the task reminder field radios', () => {
+      cy.get('[data-test="field-taskRemindersEnabled"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Do you want to set a reminder for this task?',
+          optionsCount: 3,
+          value: investmentProjectTask.emailRemindersEnabled
+            ? capitalize(OPTION_YES)
+            : capitalize(OPTION_NO),
+        })
+      })
+    })
+
+    it('should render the cancel button with the correct url', () => {
+      assertLink('cancel-button', urls.companies.index())
+    })
+  })
+
   context('When a task is missing all mandatory fields', () => {
     beforeEach(() => {
       cy.mount(<Component />)
@@ -93,7 +170,7 @@ describe('Task form', () => {
     })
   })
 
-  context('When a task is creating a task with a custom date', () => {
+  context('When a task is created a task with a custom date', () => {
     beforeEach(() => {
       cy.mount(<Component />)
       cy.get('[data-test=task-due-date-custom-date]').click()
