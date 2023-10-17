@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 
 import { investment } from '../../fixtures'
 import { investments } from '../../../../../src/lib/urls'
-import { id as _id } from '../../../../sandbox/fixtures/whoami.json'
+import { id as myAdviserId } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
   assertBreadcrumbs,
@@ -55,7 +55,7 @@ describe('Add investment project task', () => {
     it('add task button should send expected values to the api', () => {
       cy.get('[data-test=task-assigned-to-me]').click()
 
-      assertTaskForm(endpoint, fixture, [_id])
+      assertTaskForm(endpoint, fixture, [myAdviserId])
     })
   })
 

@@ -178,7 +178,7 @@ describe('Task form', () => {
         )
       })
 
-      it('should display the task assigned to field radios', () => {
+      it('should display the task assigned to field radios with me selected', () => {
         cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
           assertFieldRadiosWithLegend({
             element,
@@ -190,18 +190,19 @@ describe('Task form', () => {
       })
     }
   )
-  var adviserAssignedToTestRuns = [
-    {
-      advisers: advisersListFaker(),
-    },
-    {
-      advisers: advisersListFaker((length = 2)),
-    },
-  ]
 
   context(
     'When a task form renders with existing data that is assigned to someone else',
     () => {
+      var adviserAssignedToTestRuns = [
+        {
+          advisers: advisersListFaker(),
+        },
+        {
+          advisers: advisersListFaker((length = 2)),
+        },
+      ]
+
       adviserAssignedToTestRuns.forEach(function (run) {
         beforeEach(() => {
           const investmentProjectTask = taskWithInvestmentProjectFaker({

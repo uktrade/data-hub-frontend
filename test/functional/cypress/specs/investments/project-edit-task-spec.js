@@ -1,5 +1,4 @@
 import { investments } from '../../../../../src/lib/urls'
-
 import {
   assertBreadcrumbs,
   assertPayload,
