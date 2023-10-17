@@ -10,11 +10,13 @@ import {
   FieldTextarea,
   FieldDate,
   FieldAdvisersTypeahead,
+  NewWindowLink,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
 import { OPTIONS_ASSIGNED_TO } from './constants'
+import urls from '../../../../lib/urls'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -95,10 +97,15 @@ const TaskForm = ({
               <p>
                 When you assign a task the assignee will be sent a reminder,
                 according to their Data Hub reminder preferences. They will be
-                able to edit, re-assign or complete the task. As the creator of
-                the task you will be sent a reminder when the task is changed,
-                re-assigned or completed. You can change when you receive these
-                updates in your
+                able to edit, re-assign or complete the task.
+              </p>
+              <p>
+                As the creator of the task you will be sent a reminder when the
+                task is changed, re-assigned or completed. You can change when
+                you receive these updates in your{' '}
+                <NewWindowLink href={urls.reminders.settings.index()}>
+                  reminder settings
+                </NewWindowLink>
               </p>
             </Details>
             <FieldRadios
