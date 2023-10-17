@@ -158,6 +158,7 @@ describe('Task form', () => {
     })
   })
 
+
   context(
     'When a task form renders with existing data that is assigned to me',
     () => {
@@ -229,6 +230,7 @@ describe('Task form', () => {
     }
   )
 
+
   context('When a task is missing all mandatory fields', () => {
     beforeEach(() => {
       cy.mount(<Component />)
@@ -259,6 +261,7 @@ describe('Task form', () => {
     })
   })
 
+
   context('When creating a task assigned to someone else', () => {
     beforeEach(() => {
       cy.mount(<Component />)
@@ -276,7 +279,9 @@ describe('Task form', () => {
     })
   })
 
-  context('When a task is creating a task with a custom date', () => {
+
+  context('When a task is created a task with a custom date', () => {
+
     beforeEach(() => {
       cy.mount(<Component />)
       cy.get('[data-test=task-due-date-custom-date]').click()

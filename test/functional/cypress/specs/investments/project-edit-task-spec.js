@@ -51,7 +51,7 @@ describe('Edit investment project task', () => {
           null,
       })
     })
-  })
+
 
   context('When editing a task', () => {
     before(() => {
