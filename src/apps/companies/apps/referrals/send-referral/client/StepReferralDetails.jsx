@@ -5,7 +5,7 @@ import { H2, Button, Link } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { ID as STORE_ID } from './state'
-import { contacts } from '../../../../../../lib/urls'
+import urls, { contacts } from '../../../../../../lib/urls'
 import {
   Panel,
   NewWindowLink,
@@ -37,7 +37,10 @@ const StepReferralDetails = ({
         Referrals are for when you want to ask another DBT advisor to help out{' '}
         an account you are working on.
         <br />
-        <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/">
+        <NewWindowLink
+          data-test="referral-guidance"
+          href={urls.external.referrals}
+        >
           Read more guidance here
         </NewWindowLink>
       </StyledPanel>
@@ -146,7 +149,9 @@ const StepReferralDetails = ({
       />
       <FormActions>
         <Button name="forward">Continue</Button>
-        <Link href={cancelUrl}>Cancel</Link>
+        <Link data-test="referral-details-cancel" href={cancelUrl}>
+          Cancel
+        </Link>
       </FormActions>
     </>
   )

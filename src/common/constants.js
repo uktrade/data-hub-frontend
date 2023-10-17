@@ -34,6 +34,7 @@ const FORM_LAYOUT = {
   THREE_QUARTERS: 'three-quarters',
   ONE_THIRD: 'one-third',
   TWO_THIRDS: 'two-thirds',
+  ONE_HALF: 'one-half',
 }
 
 const METHOD_PATCH = 'PATCH'

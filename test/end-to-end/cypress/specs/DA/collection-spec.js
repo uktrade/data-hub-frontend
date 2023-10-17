@@ -7,21 +7,9 @@ const {
 } = require('../../../../../src/lib/urls')
 
 const { assertCollection } = require('../../support/assertions')
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
+const {
+  assertGovReactTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -96,7 +84,7 @@ describe('Collection', () => {
       })
 
       it('should return the investment project team summary', () => {
-        assertTable({
+        assertGovReactTable({
           element: '[data-test="crm-table"]',
           rows: [
             ['Role', 'Adviser', 'Team'],

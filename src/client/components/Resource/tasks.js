@@ -59,6 +59,7 @@ import Order from './Order'
 import Task from './Task'
 import OrderServiceTypes from './OrderServiceTypes'
 import InvestmentProjectTasks from './InvestmentProjectTasks'
+import OrderInvoice from './OrderInvoice'
 
 export default {
   ...Company.tasks,
@@ -122,4 +123,5 @@ export default {
   ...Task.tasks,
   ...OrderServiceTypes.tasks,
   ...InvestmentProjectTasks.tasks,
+  ...OrderInvoice.tasks,
 }

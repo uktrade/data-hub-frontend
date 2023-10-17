@@ -1,20 +1,6 @@
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table').find('th')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
+const { assertGovReactTable } = require('../../../support/assertions')
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
@@ -70,7 +56,7 @@ describe('Lead advisers', () => {
         cy.contains("Lead ITA for Ian's Camper Vans Ltd")
       })
       it('should render the global account manager table', () => {
-        assertTable({
+        assertGovReactTable({
           element: '[data-test="lead-adviser-table"]',
           rows: [
             ['Team', 'Lead ITA', 'Email'],

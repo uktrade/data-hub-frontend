@@ -1,20 +1,6 @@
 import urls from '../../../../../src/lib/urls'
 import fixtures from '../../fixtures'
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
+import { assertGovReactTable } from '../../support/assertions'
 
 describe('Investment project evidence', () => {
   context('When viewing a project with no evidence', () => {
@@ -59,7 +45,7 @@ describe('Investment project evidence', () => {
     })
 
     it('should render the evidence table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="evidence-table"]',
         rows: [
           ['Verification criteria', 'Comment', '', ''],

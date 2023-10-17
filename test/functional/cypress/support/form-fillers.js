@@ -4,6 +4,15 @@ export const fill = (selector, value) => {
   }
 }
 
+/**
+ * This function first clears the input before typing the new value
+ */
+export const fillWithNewValue = (selector, value) => {
+  if (selector && value) {
+    cy.get(selector).clear().type(value)
+  }
+}
+
 export const fillYesNoRadio = (selector, isYes) => {
   cy.get(selector)
     .eq(isYes === true ? 0 : 1)

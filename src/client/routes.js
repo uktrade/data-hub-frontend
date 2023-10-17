@@ -16,6 +16,8 @@ import {
 } from './modules/ExportPipeline/ExportForm'
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
+import ExportWins from './modules/ExportWins/'
+import ExportWinsRedirect from './modules/ExportWins/Redirect'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Community from './modules/Community'
@@ -49,8 +51,10 @@ import InvestmentsRedirect from './modules/Investments/InvestmentsRedirect'
 import EditQuoteInformation from './modules/Omis/EditQuoteInformation'
 import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
-import InvestmentProjectTask from './modules/Investments/Projects/Tasks/InvestmentProjectTask'
 import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
+import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
+import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
+import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/InvestmentProjectTaskEdit'
 
 const routes = {
   companies: [
@@ -179,6 +183,11 @@ const routes = {
       module: 'datahub:orders',
       component: EditInternalInformation,
     },
+    {
+      path: '/omis/:orderId/edit/payment-reconciliation',
+      module: 'datahub:orders',
+      component: PaymentReconciliation,
+    },
   ],
   reminders: [
     {
@@ -220,6 +229,23 @@ const routes = {
       path: '/export/:exportId/delete',
       module: 'datahub:companies',
       component: ExportFormDelete,
+    },
+  ],
+  exportWins: [
+    {
+      path: '/exportwins/unconfirmed',
+      module: 'datahub:companies',
+      component: ExportWins,
+    },
+    {
+      path: '/exportwins/confirmed',
+      module: 'datahub:companies',
+      component: ExportWins,
+    },
+    {
+      path: '/exportwins',
+      module: 'datahub:companies',
+      component: ExportWinsRedirect,
     },
   ],
   investments: [
@@ -331,7 +357,12 @@ const routes = {
     {
       path: '/investments/projects/:projectId/tasks/create',
       module: 'datahub:investments',
-      component: InvestmentProjectTask,
+      component: InvestmentProjectTaskAdd,
+    },
+    {
+      path: '/investments/projects/:projectId/tasks/:taskId/edit',
+      module: 'datahub:investments',
+      component: InvestmentProjectTaskEdit,
     },
     {
       path: '/investments/projects',

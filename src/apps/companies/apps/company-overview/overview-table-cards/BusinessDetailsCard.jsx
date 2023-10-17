@@ -19,7 +19,7 @@ const StyledAddressList = styled('ul')``
 const BusinessDetailsCard = ({ company }) => (
   <StyledSummaryTable
     caption="Business details"
-    data-test="businessDetailsContainer"
+    data-test="business-details-container"
   >
     {(company.registeredAddress?.country?.id == UNITED_KINGDOM_ID ||
       company.address?.country?.id == UNITED_KINGDOM_ID) && (
@@ -50,7 +50,9 @@ const BusinessDetailsCard = ({ company }) => (
     <SummaryTable.Row heading="Website">
       {buildCellContents(
         company.website,
-        <NewWindowLink href={company.website}>{company.website}</NewWindowLink>
+        <NewWindowLink data-test="website-link" href={company.website}>
+          {company.website}
+        </NewWindowLink>
       )}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Turnover">

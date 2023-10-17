@@ -18,14 +18,6 @@ const Order = {
     })
   },
 
-  saveSubscribers(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`,
-      method: 'PUT',
-      body,
-    })
-  },
-
   getAssignees(req, id) {
     return authorisedRequest(
       req,
@@ -89,14 +81,6 @@ const Order = {
       req,
       `${config.apiRoot}/v3/omis/order/${id}/payment`
     )
-  },
-
-  savePayments(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/payment`,
-      method: 'POST',
-      body,
-    })
   },
 
   complete(req, id, body) {

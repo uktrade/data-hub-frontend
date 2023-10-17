@@ -34,3 +34,17 @@ export const transformInternalInformationForApi = ({ orderId, values }) => {
     contacts_not_to_approach,
   }
 }
+
+export const transformPaymentInformationForApi = ({ orderId, values }) => {
+  const { amount, received_on } = values
+
+  return {
+    id: orderId,
+    payment: [
+      {
+        amount: parseFloat(amount.replace(',', '')) * 100,
+        received_on: transformDateObjectToDateString(received_on),
+      },
+    ],
+  }
+}

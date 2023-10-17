@@ -6,3 +6,4 @@ applications:
     health-check-http-endpoint: /healthcheck
     memory: 5G
     disk_quota: 8G
+    stack: cflinuxfs4
