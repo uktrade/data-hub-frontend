@@ -164,7 +164,7 @@
     "@babel/preset-typescript": "^7.23.0",
     "@babel/runtime": "^7.23.1",
     "@cypress/code-coverage": "^3.11.0",
-    "@faker-js/faker": "^8.1.0",
+    "@faker-js/faker": "^8.2.0",
     "@storybook/addon-a11y": "^7.4.5",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addons": "^7.4.5",
