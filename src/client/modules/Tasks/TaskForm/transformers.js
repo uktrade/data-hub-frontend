@@ -6,7 +6,7 @@ import {
   addMonths,
   addDays,
 } from '../../../utils/date'
-import { OPTION_ME } from './constants'
+import { OPTIONS } from './constants'
 
 export const transformTaskFormValuesForAPI = (
   formValues,
@@ -20,7 +20,7 @@ export const transformTaskFormValuesForAPI = (
     ? parseInt(formValues.taskReminderDays)
     : null,
   advisers:
-    formValues.taskAssignedTo === OPTION_ME
+    formValues.taskAssignedTo === OPTIONS.ME
       ? [currentAdviserId]
       : formValues.taskAdvisers.map((a) => a.value),
 })

@@ -192,6 +192,40 @@ describe('Task form', () => {
   )
 
   context(
+    'When a task form renders with existing data that is assigned to me and others',
+    () => {
+      const currentAdviser = adviserFaker()
+      const otherAdviser = adviserFaker()
+      const investmentProjectTask = taskWithInvestmentProjectFaker({
+        advisers: [currentAdviser, otherAdviser],
+      })
+
+      beforeEach(() => {
+        cy.mount(
+          <Component
+            cancelRedirectUrl={urls.companies.index()}
+            task={transformAPIValuesForForm(
+              investmentProjectTask,
+              currentAdviser.id
+            )}
+          />
+        )
+      })
+
+      it('should display the task assigned to field radios with me selected', () => {
+        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+          assertFieldRadiosWithLegend({
+            element,
+            legend: 'Task assigned to',
+            optionsCount: 3,
+            value: 'Someone else',
+          })
+        })
+      })
+    }
+  )
+
+  context(
     'When a task form renders with existing data that is assigned to someone else',
     () => {
       var adviserAssignedToTestRuns = [

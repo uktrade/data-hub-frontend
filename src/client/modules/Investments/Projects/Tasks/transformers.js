@@ -2,10 +2,7 @@ import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transform
 import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
 import { idNamesToValueLabels } from '../../../../utils'
-import {
-  OPTION_ME,
-  OPTION_SOMEONE_ELSE,
-} from '../../../Tasks/TaskForm/constants'
+import { OPTIONS } from '../../../Tasks/TaskForm/constants'
 
 export const transformFormValuesForAPI = (
   formValues,
@@ -21,9 +18,9 @@ export const transformFormValuesForAPI = (
 
 const transformAdvisor = (advisers, currentAdviserId) =>
   advisers.length === 1 &&
-  advisers.filter((a) => a.id === currentAdviserId).length == 1
-    ? OPTION_ME
-    : OPTION_SOMEONE_ELSE
+  advisers.find((adviser) => adviser.id === currentAdviserId)
+    ? OPTIONS.ME
+    : OPTIONS.SOMEONE_ELSE
 
 export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   id: task.id,

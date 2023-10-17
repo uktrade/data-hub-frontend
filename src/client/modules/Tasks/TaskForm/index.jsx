@@ -15,7 +15,7 @@ import {
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
-import { OPTIONS_ASSIGNED_TO } from './constants'
+import { OPTIONS } from './constants'
 import urls from '../../../../lib/urls'
 
 const StyledFieldInput = styled(FieldInput)`
@@ -80,7 +80,7 @@ const TaskForm = ({
               name="taskAssignedTo"
               legend="Task assigned to"
               required="Select who this task is assigned to"
-              options={OPTIONS_ASSIGNED_TO.map((option) => ({
+              options={OPTIONS.ASSIGNED_TO.map((option) => ({
                 ...option,
                 ...(option.label === 'Someone else' && {
                   children: (
