@@ -13,12 +13,9 @@ export const searchEvents = function (req, res) {
   if (req.body.uk_region) {
     var regionQuery = req.body.uk_region
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
-    var ukRegionFilteredResults = _.filter(
-      searchEvents.results,
-      function (contact) {
-        return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
-      }
-    )
+    var ukRegionFilteredResults = _.filter(events.results, function (contact) {
+      return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
+    })
     return res.json({
       count: ukRegionFilteredResults.length,
       results: ukRegionFilteredResults,
