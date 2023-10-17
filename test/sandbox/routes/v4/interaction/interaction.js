@@ -92,9 +92,3 @@ export const archiveInteraction = function (req, res) {
 export const patchInteraction = function (req, res) {
   return getInteractionById(req, res)
 }
-
-// exports.getInteractions = getInteractions
-// exports.getInteractionById = getInteractionById
-// exports.createInteraction = createInteraction
-// exports.archiveInteraction = archiveInteraction
-// exports.patchInteraction = patchInteraction
