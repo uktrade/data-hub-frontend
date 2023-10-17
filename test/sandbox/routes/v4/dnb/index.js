@@ -8,6 +8,7 @@ import companySearchNotMatchedNoCountry from '../../../fixtures/v4/dnb/company-s
 import companySearchNotMatchedUSJson from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' assert { type: 'json' }
 import companyInvestigationJson from '../../../fixtures/v4/dnb/company-investigation.json' assert { type: 'json' }
 import dnbGlobalUltimate from '../../../fixtures/v4/company/company-dnb-global-ultimate.json' assert { type: 'json' }
+
 import { fakerCompanyFamilyTree } from './company-tree.js'
 
 export const companyCreate = function (req, res) {
