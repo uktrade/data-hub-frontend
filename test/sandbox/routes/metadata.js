@@ -1,244 +1,244 @@
-import likelihoodToLandJson from '../fixtures/metadata/likelihood-to-land.json' assert { type: 'json' }
-import investmentInvestorTypeJson from '../fixtures/metadata/investment-investor-type.json' assert { type: 'json' }
-import investmentInvolvementJson from '../fixtures/metadata/investment-involvement.json' assert { type: 'json' }
-import investmentSpecificProgrammeJson from '../fixtures/metadata/investment-specific-programme.json' assert { type: 'json' }
-import investmentProjectStageJson from '../fixtures/metadata/investment-project-stage.json' assert { type: 'json' }
-import investmentBusinessActivityJson from '../fixtures/metadata/investment-business-activity.json' assert { type: 'json' }
-import investmentTypeJson from '../fixtures/metadata/investment-type.json' assert { type: 'json' }
-import investmentStrategicDriverJson from '../fixtures/metadata/investment-strategic-driver.json' assert { type: 'json' }
-import exportExperienceCategoryJson from '../fixtures/metadata/export-experience-category.json' assert { type: 'json' }
-import orderServiceTypeJson from '../fixtures/metadata/order-service-type.json' assert { type: 'json' }
-import orderCancellationReasonJson from '../fixtures/metadata/order-cancellation-reason.json' assert { type: 'json' }
-import omisMarketJson from '../fixtures/metadata/omis-market.json' assert { type: 'json' }
-import fdiValueJson from '../fixtures/metadata/fdi-value.json' assert { type: 'json' }
-import fdiTypeJson from '../fixtures/metadata/fdi-type.json' assert { type: 'json' }
-import salaryRangeJson from '../fixtures/metadata/salary-range.json' assert { type: 'json' }
-import turnoverJson from '../fixtures/metadata/turnover.json' assert { type: 'json' }
-import sectorJson from '../fixtures/metadata/sector.json' assert { type: 'json' }
-import sectorLte0Json from '../fixtures/metadata/sector-lte0.json' assert { type: 'json' }
-import locationTypeJson from '../fixtures/metadata/location-type.json' assert { type: 'json' }
-import eventTypeJson from '../fixtures/metadata/event-type.json' assert { type: 'json' }
-import programmeJson from '../fixtures/metadata/programme.json' assert { type: 'json' }
-import businessTypeJson from '../fixtures/metadata/business-type.json' assert { type: 'json' }
-import evidenceTagJson from '../fixtures/metadata/evidence-tag.json' assert { type: 'json' }
-import employeeRangeJson from '../fixtures/metadata/employee-range.json' assert { type: 'json' }
-import countryJson from '../fixtures/metadata/country.json' assert { type: 'json' }
-import ukRegionJson from '../fixtures/metadata/uk-region.json' assert { type: 'json' }
-import administrativeAreaJson from '../fixtures/metadata/administrative-area.json' assert { type: 'json' }
-import referralSourceWebsiteJson from '../fixtures/metadata/referral-source-website.json' assert { type: 'json' }
-import referralSourceMarketingJson from '../fixtures/metadata/referral-source-marketing.json' assert { type: 'json' }
-import referralSourceActivityJson from '../fixtures/metadata/referral-source-activity.json' assert { type: 'json' }
-import headquarterTypeJson from '../fixtures/metadata/headquarter-type.json' assert { type: 'json' }
-import serviceJson from '../fixtures/metadata/service.json' assert { type: 'json' }
-import communicationChannelJson from '../fixtures/metadata/communication-channel.json' assert { type: 'json' }
-import teamJson from '../fixtures/metadata/team.json' assert { type: 'json' }
-import policyAreaJson from '../fixtures/metadata/policy-area.json' assert { type: 'json' }
-import policyIssueTypeJson from '../fixtures/metadata/policy-issue-type.json' assert { type: 'json' }
-import serviceDeliveryStatusJson from '../fixtures/metadata/service-delivery-status.json' assert { type: 'json' }
-import capitalInvestmentInvestorTypeJson from '../fixtures/metadata/capital-investment-investor-type.json' assert { type: 'json' }
-import capitalInvestmentRequiredChecksJson from '../fixtures/metadata/capital-investment-required-checks.json' assert { type: 'json' }
-import capitalInvestmentDealTicketSizeJson from '../fixtures/metadata/capital-investment-deal-ticket-size.json' assert { type: 'json' }
-import capitalInvestmentInvestmentTypesJson from '../fixtures/metadata/capital-investment-investment-types.json' assert { type: 'json' }
-import capitalInvestmentMinimumReturnRateJson from '../fixtures/metadata/capital-investment-return-rate.json' assert { type: 'json' }
-import capitalInvestmentTimeHorizonsJson from '../fixtures/metadata/capital-investment-time-horizons.json' assert { type: 'json' }
-import capitalInvestmentRestrictionsJson from '../fixtures/metadata/capital-investment-restrictions.json' assert { type: 'json' }
-import capitalInvestmentConstructionRisksJson from '../fixtures/metadata/capital-investment-construction-risks.json' assert { type: 'json' }
-import capitalInvestmentEquityPercentageJson from '../fixtures/metadata/capital-investment-equity-percentage.json' assert { type: 'json' }
-import capitalInvestmentDesiredDealRolesJson from '../fixtures/metadata/capital-investment-desired-deal-roles.json' assert { type: 'json' }
-import capitalInvestmentAssetClassInterestJson from '../fixtures/metadata/capital-investment-asset-class-interest.json' assert { type: 'json' }
-import oneListTierJson from '../fixtures/metadata/one-list-tier.json' assert { type: 'json' }
+import likelihoodToLand from '../fixtures/metadata/likelihood-to-land.json' assert { type: 'json' }
+import investmentInvestorType from '../fixtures/metadata/investment-investor-type.json' assert { type: 'json' }
+import investmentInvolvement from '../fixtures/metadata/investment-involvement.json' assert { type: 'json' }
+import investmentSpecificProgramme from '../fixtures/metadata/investment-specific-programme.json' assert { type: 'json' }
+import investmentProjectStage from '../fixtures/metadata/investment-project-stage.json' assert { type: 'json' }
+import investmentBusinessActivity from '../fixtures/metadata/investment-business-activity.json' assert { type: 'json' }
+import investmentType from '../fixtures/metadata/investment-type.json' assert { type: 'json' }
+import investmentStrategicDriver from '../fixtures/metadata/investment-strategic-driver.json' assert { type: 'json' }
+import exportExperienceCategory from '../fixtures/metadata/export-experience-category.json' assert { type: 'json' }
+import orderServiceType from '../fixtures/metadata/order-service-type.json' assert { type: 'json' }
+import orderCancellationReason from '../fixtures/metadata/order-cancellation-reason.json' assert { type: 'json' }
+import omisMarket from '../fixtures/metadata/omis-market.json' assert { type: 'json' }
+import fdiValue from '../fixtures/metadata/fdi-value.json' assert { type: 'json' }
+import fdiType from '../fixtures/metadata/fdi-type.json' assert { type: 'json' }
+import salaryRange from '../fixtures/metadata/salary-range.json' assert { type: 'json' }
+import turnover from '../fixtures/metadata/turnover.json' assert { type: 'json' }
+import sector from '../fixtures/metadata/sector.json' assert { type: 'json' }
+import sectorLte0 from '../fixtures/metadata/sector-lte0.json' assert { type: 'json' }
+import locationType from '../fixtures/metadata/location-type.json' assert { type: 'json' }
+import eventType from '../fixtures/metadata/event-type.json' assert { type: 'json' }
+import programme from '../fixtures/metadata/programme.json' assert { type: 'json' }
+import businessType from '../fixtures/metadata/business-type.json' assert { type: 'json' }
+import evidenceTag from '../fixtures/metadata/evidence-tag.json' assert { type: 'json' }
+import employeeRange from '../fixtures/metadata/employee-range.json' assert { type: 'json' }
+import country from '../fixtures/metadata/country.json' assert { type: 'json' }
+import ukRegion from '../fixtures/metadata/uk-region.json' assert { type: 'json' }
+import administrativeArea from '../fixtures/metadata/administrative-area.json' assert { type: 'json' }
+import referralSourceWebsite from '../fixtures/metadata/referral-source-website.json' assert { type: 'json' }
+import referralSourceMarketing from '../fixtures/metadata/referral-source-marketing.json' assert { type: 'json' }
+import referralSourceActivity from '../fixtures/metadata/referral-source-activity.json' assert { type: 'json' }
+import headquarterType from '../fixtures/metadata/headquarter-type.json' assert { type: 'json' }
+import service from '../fixtures/metadata/service.json' assert { type: 'json' }
+import communicationChannel from '../fixtures/metadata/communication-channel.json' assert { type: 'json' }
+import team from '../fixtures/metadata/team.json' assert { type: 'json' }
+import policyArea from '../fixtures/metadata/policy-area.json' assert { type: 'json' }
+import policyIssueType from '../fixtures/metadata/policy-issue-type.json' assert { type: 'json' }
+import serviceDeliveryStatus from '../fixtures/metadata/service-delivery-status.json' assert { type: 'json' }
+import capitalInvestmentInvestorType from '../fixtures/metadata/capital-investment-investor-type.json' assert { type: 'json' }
+import capitalInvestmentRequiredChecks from '../fixtures/metadata/capital-investment-required-checks.json' assert { type: 'json' }
+import capitalInvestmentDealTicketSize from '../fixtures/metadata/capital-investment-deal-ticket-size.json' assert { type: 'json' }
+import capitalInvestmentInvestmentTypes from '../fixtures/metadata/capital-investment-investment-types.json' assert { type: 'json' }
+import capitalInvestmentMinimumReturnRate from '../fixtures/metadata/capital-investment-return-rate.json' assert { type: 'json' }
+import capitalInvestmentTimeHorizons from '../fixtures/metadata/capital-investment-time-horizons.json' assert { type: 'json' }
+import capitalInvestmentRestrictions from '../fixtures/metadata/capital-investment-restrictions.json' assert { type: 'json' }
+import capitalInvestmentConstructionRisks from '../fixtures/metadata/capital-investment-construction-risks.json' assert { type: 'json' }
+import capitalInvestmentEquityPercentage from '../fixtures/metadata/capital-investment-equity-percentage.json' assert { type: 'json' }
+import capitalInvestmentDesiredDealRoles from '../fixtures/metadata/capital-investment-desired-deal-roles.json' assert { type: 'json' }
+import capitalInvestmentAssetClassInterest from '../fixtures/metadata/capital-investment-asset-class-interest.json' assert { type: 'json' }
+import oneListTier from '../fixtures/metadata/one-list-tier.json' assert { type: 'json' }
 
-export const likelihoodToLand = function (req, res) {
-  res.json(likelihoodToLandJson)
+export const getLikelihoodToLand = function (req, res) {
+  res.json(likelihoodToLand)
 }
 
-export const investmentInvestorType = function (req, res) {
-  res.json(investmentInvestorTypeJson)
+export const getInvestmentInvestorType = function (req, res) {
+  res.json(investmentInvestorType)
 }
 
-export const investmentSpecificProgramme = function (req, res) {
-  res.json(investmentSpecificProgrammeJson)
+export const getInvestmentSpecificProgramme = function (req, res) {
+  res.json(investmentSpecificProgramme)
 }
 
-export const investmentInvolvement = function (req, res) {
-  res.json(investmentInvolvementJson)
+export const getInvestmentInvolvement = function (req, res) {
+  res.json(investmentInvolvement)
 }
 
-export const investmentProjectStage = function (req, res) {
-  res.json(investmentProjectStageJson)
+export const getInvestmentProjectStage = function (req, res) {
+  res.json(investmentProjectStage)
 }
 
-export const investmentBusinessActivity = function (req, res) {
-  res.json(investmentBusinessActivityJson)
+export const getInvestmentBusinessActivity = function (req, res) {
+  res.json(investmentBusinessActivity)
 }
 
-export const investmentType = function (req, res) {
-  res.json(investmentTypeJson)
+export const getInvestmentType = function (req, res) {
+  res.json(investmentType)
 }
 
-export const investmentStrategicDriver = function (req, res) {
-  res.json(investmentStrategicDriverJson)
+export const getInvestmentStrategicDriver = function (req, res) {
+  res.json(investmentStrategicDriver)
 }
 
-export const exportExperienceCategory = function (req, res) {
-  res.json(exportExperienceCategoryJson)
+export const getExportExperienceCategory = function (req, res) {
+  res.json(exportExperienceCategory)
 }
 
-export const orderServiceType = function (req, res) {
-  res.json(orderServiceTypeJson)
+export const getOrderServiceType = function (req, res) {
+  res.json(orderServiceType)
 }
 
-export const orderCancellationReason = function (req, res) {
-  res.json(orderCancellationReasonJson)
+export const getOrderCancellationReason = function (req, res) {
+  res.json(orderCancellationReason)
 }
 
-export const omisMarket = function (req, res) {
-  res.json(omisMarketJson)
+export const getOmisMarket = function (req, res) {
+  res.json(omisMarket)
 }
 
-export const fdiValue = function (req, res) {
-  res.json(fdiValueJson)
+export const getFdiValue = function (req, res) {
+  res.json(fdiValue)
 }
 
-export const fdiType = function (req, res) {
-  res.json(fdiTypeJson)
+export const getFdiType = function (req, res) {
+  res.json(fdiType)
 }
 
-export const salaryRange = function (req, res) {
-  res.json(salaryRangeJson)
+export const getSalaryRange = function (req, res) {
+  res.json(salaryRange)
 }
 
-export const turnover = function (req, res) {
-  res.json(turnoverJson)
+export const getTurnover = function (req, res) {
+  res.json(turnover)
 }
 
-export const sector = function (req, res) {
+export const getSector = function (req, res) {
   if (req.query.level__lte === '0') {
-    return res.json(sectorLte0Json)
+    return res.json(sectorLte0)
   }
-  res.json(sectorJson)
+  res.json(sector)
 }
 
-export const locationType = function (req, res) {
-  res.json(locationTypeJson)
+export const getLocationType = function (req, res) {
+  res.json(locationType)
 }
 
-export const eventType = function (req, res) {
-  res.json(eventTypeJson)
+export const getEventType = function (req, res) {
+  res.json(eventType)
 }
 
-export const programme = function (req, res) {
-  res.json(programmeJson)
+export const getProgramme = function (req, res) {
+  res.json(programme)
 }
 
-export const businessType = function (req, res) {
-  res.json(businessTypeJson)
+export const getBusinessType = function (req, res) {
+  res.json(businessType)
 }
 
-export const evidenceTag = function (req, res) {
-  res.json(evidenceTagJson)
+export const getEvidenceTag = function (req, res) {
+  res.json(evidenceTag)
 }
 
-export const employeeRange = function (req, res) {
-  res.json(employeeRangeJson)
+export const getEmployeeRange = function (req, res) {
+  res.json(employeeRange)
 }
 
-export const country = function (req, res) {
-  res.json(countryJson)
+export const getCountry = function (req, res) {
+  res.json(country)
 }
 
-export const ukRegion = function (req, res) {
-  res.json(ukRegionJson)
+export const getUkRegion = function (req, res) {
+  res.json(ukRegion)
 }
 
-export const administrativeArea = function (req, res) {
-  res.json(administrativeAreaJson)
+export const getAdministrativeArea = function (req, res) {
+  res.json(administrativeArea)
 }
 
-export const referralSourceWebsite = function (req, res) {
-  res.json(referralSourceWebsiteJson)
+export const getReferralSourceWebsite = function (req, res) {
+  res.json(referralSourceWebsite)
 }
 
-export const referralSourceMarketing = function (req, res) {
-  res.json(referralSourceMarketingJson)
+export const getReferralSourceMarketing = function (req, res) {
+  res.json(referralSourceMarketing)
 }
 
-export const referralSourceActivity = function (req, res) {
-  res.json(referralSourceActivityJson)
+export const getReferralSourceActivity = function (req, res) {
+  res.json(referralSourceActivity)
 }
 
-export const headquarterType = function (req, res) {
-  res.json(headquarterTypeJson)
+export const getHeadquarterType = function (req, res) {
+  res.json(headquarterType)
 }
 
-export const service = function (req, res) {
-  res.json(serviceJson)
+export const getService = function (req, res) {
+  res.json(service)
 }
 
-export const communicationChannel = function (req, res) {
-  res.json(communicationChannelJson)
+export const getCommunicationChannel = function (req, res) {
+  res.json(communicationChannel)
 }
 
-export const team = function (req, res) {
-  res.json(teamJson)
+export const getTeam = function (req, res) {
+  res.json(team)
 }
 
-export const policyArea = function (req, res) {
-  res.json(policyAreaJson)
+export const getPolicyArea = function (req, res) {
+  res.json(policyArea)
 }
 
-export const policyIssueType = function (req, res) {
-  res.json(policyIssueTypeJson)
+export const getPolicyIssueType = function (req, res) {
+  res.json(policyIssueType)
 }
 
-export const serviceDeliveryStatus = function (req, res) {
-  res.json(serviceDeliveryStatusJson)
+export const getServiceDeliveryStatus = function (req, res) {
+  res.json(serviceDeliveryStatus)
 }
 
-export const capitalInvestmentInvestorType = function (req, res) {
-  res.json(capitalInvestmentInvestorTypeJson)
+export const getCapitalInvestmentInvestorType = function (req, res) {
+  res.json(capitalInvestmentInvestorType)
 }
 
-export const capitalInvestmentRequiredChecks = function (req, res) {
-  res.json(capitalInvestmentRequiredChecksJson)
+export const getCapitalInvestmentRequiredChecks = function (req, res) {
+  res.json(capitalInvestmentRequiredChecks)
 }
 
-export const capitalInvestmentDealTicketSize = function (req, res) {
-  res.json(capitalInvestmentDealTicketSizeJson)
+export const getCapitalInvestmentDealTicketSize = function (req, res) {
+  res.json(capitalInvestmentDealTicketSize)
 }
 
-export const capitalInvestmentInvestmentTypes = function (req, res) {
-  res.json(capitalInvestmentInvestmentTypesJson)
+export const getCapitalInvestmentInvestmentTypes = function (req, res) {
+  res.json(capitalInvestmentInvestmentTypes)
 }
 
-export const capitalInvestmentMinimumReturnRate = function (req, res) {
-  res.json(capitalInvestmentMinimumReturnRateJson)
+export const getCapitalInvestmentMinimumReturnRate = function (req, res) {
+  res.json(capitalInvestmentMinimumReturnRate)
 }
 
-export const capitalInvestmentTimeHorizons = function (req, res) {
-  res.json(capitalInvestmentTimeHorizonsJson)
+export const getCapitalInvestmentTimeHorizons = function (req, res) {
+  res.json(capitalInvestmentTimeHorizons)
 }
 
-export const capitalInvestmentRestrictions = function (req, res) {
-  res.json(capitalInvestmentRestrictionsJson)
+export const getCapitalInvestmentRestrictions = function (req, res) {
+  res.json(capitalInvestmentRestrictions)
 }
 
-export const capitalInvestmentConstructionRisks = function (req, res) {
-  res.json(capitalInvestmentConstructionRisksJson)
+export const getCapitalInvestmentConstructionRisks = function (req, res) {
+  res.json(capitalInvestmentConstructionRisks)
 }
 
-export const capitalInvestmentEquityPercentage = function (req, res) {
-  res.json(capitalInvestmentEquityPercentageJson)
+export const getCapitalInvestmentEquityPercentage = function (req, res) {
+  res.json(capitalInvestmentEquityPercentage)
 }
 
-export const capitalInvestmentDesiredDealRoles = function (req, res) {
-  res.json(capitalInvestmentDesiredDealRolesJson)
+export const getCapitalInvestmentDesiredDealRoles = function (req, res) {
+  res.json(capitalInvestmentDesiredDealRoles)
 }
 
-export const capitalInvestmentAssetClassInterest = function (req, res) {
-  res.json(capitalInvestmentAssetClassInterestJson)
+export const getCapitalInvestmentAssetClassInterest = function (req, res) {
+  res.json(capitalInvestmentAssetClassInterest)
 }
 
-export const oneListTier = function (req, res) {
-  res.json(oneListTierJson)
+export const getOneListTier = function (req, res) {
+  res.json(oneListTier)
 }

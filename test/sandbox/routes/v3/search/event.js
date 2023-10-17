@@ -1,21 +1,24 @@
-import eventsJson from '../../../fixtures/v3/search/event.json' assert { type: 'json' }
-import eventFilterJson from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' }
-import eventSortJson from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' }
+import events from '../../../fixtures/v3/search/event.json' assert { type: 'json' }
+import eventFilter from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' }
+import eventSort from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' }
 
-export const events = function (req, res) {
+export const searchEvents = function (req, res) {
   var eventList = {
-    'modified_on:asc': eventSortJson,
-    'start_date:asc': eventSortJson,
-    'start_date:desc': eventSortJson,
-    'name:asc': eventSortJson,
+    'modified_on:asc': eventSort,
+    'start_date:asc': eventSort,
+    'start_date:desc': eventSort,
+    'name:asc': eventSort,
   }
 
   if (req.body.uk_region) {
     var regionQuery = req.body.uk_region
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
-    var ukRegionFilteredResults = _.filter(events.results, function (contact) {
-      return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
-    })
+    var ukRegionFilteredResults = _.filter(
+      searchEvents.results,
+      function (contact) {
+        return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
+      }
+    )
     return res.json({
       count: ukRegionFilteredResults.length,
       results: ukRegionFilteredResults,
@@ -32,8 +35,8 @@ export const events = function (req, res) {
     req.body.start_date_before ||
     req.body.event_type
   ) {
-    return res.json(eventFilterJson)
+    return res.json(eventFilter)
   }
 
-  res.json(eventList[req.body.sortby] || eventsJson)
+  res.json(eventList[req.body.sortby] || events)
 }

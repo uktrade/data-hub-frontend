@@ -1,37 +1,37 @@
-import allProjectsJson from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' }
-import projectJson from '../../../fixtures/v3/investment/project.json' assert { type: 'json' }
-import projectAuditJson from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' }
-import projectEvidenceJson from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
-import projectNoEvidenceJson from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
-import documentDownloadJson from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
+import allProjects from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' }
+import project from '../../../fixtures/v3/investment/project.json' assert { type: 'json' }
+import projectAudit from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' }
+import projectEvidence from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
+import projectNoEvidence from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
+import projectDocumentDownload from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
 
 var allProjectsMap = {}
-allProjectsJson.results.forEach(function (project) {
+allProjects.results.forEach(function (project) {
   allProjectsMap[project.id] = project
 })
 
 export const investmentProjectById = function (req, res) {
-  res.json(allProjectsMap[req.params.id] || projectJson)
+  res.json(allProjectsMap[req.params.id] || project)
 }
 
 export const investmentProjects = function (req, res) {
-  res.json(allProjectsJson)
+  res.json(allProjects)
 }
 
 export const investmentProjectAudit = function (req, res) {
-  res.json(projectAuditJson)
+  res.json(projectAudit)
 }
 
 export const investmentProjectEvidence = function (req, res) {
   res.json(
     req.params.investmentId === '7ee2c85b-8ad9-46cd-8c39-9c9bef74ced0'
-      ? projectNoEvidenceJson
-      : projectEvidenceJson
+      ? projectNoEvidence
+      : projectEvidence
   )
 }
 
 export const documentDownload = function (req, res) {
-  res.json(documentDownloadJson)
+  res.json(projectDocumentDownload)
 }
 
 export const patchInvestmentProject = function (req, res) {
@@ -54,9 +54,9 @@ export const patchInvestmentProject = function (req, res) {
 }
 
 export const postInvestmentProject = function (req, res) {
-  res.json(projectJson)
+  res.json(project)
 }
 
 export const postInvestmentProjectEditTeams = function (req, res) {
-  res.sendStatus(200).json(allProjectsMap[req.params.id] || projectJson)
+  res.sendStatus(200).json(allProjectsMap[req.params.id] || project)
 }

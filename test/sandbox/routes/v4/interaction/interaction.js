@@ -1,4 +1,4 @@
-import interactionJson from '../../../fixtures/v4/interaction/interaction.json' assert { type: 'json' }
+import interaction from '../../../fixtures/v4/interaction/interaction.json' assert { type: 'json' }
 import interactionWithDocumentLink from '../../../fixtures/v4/interaction/interaction-with-document-link.json' assert { type: 'json' }
 import interactionWithoutDocumentLink from '../../../fixtures/v4/interaction/interaction-without-document-link.json' assert { type: 'json' }
 import interactions from '../../../fixtures/v4/interaction/interactions.json' assert { type: 'json' }
@@ -51,7 +51,7 @@ export const getInteractionById = function (req, res) {
   }
 
   var interactionResponse =
-    interactions[req.params.interactionId] || interactionJson
+    interactions[req.params.interactionId] || interaction
 
   if (state.interaction) {
     var merged = _.merge({}, interactionResponse, {

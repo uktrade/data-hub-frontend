@@ -1,50 +1,50 @@
-import cancelledOrderJson from '../../../fixtures/v3/omis/cancelled-order.json' assert { type: 'json' }
-import draftOrderJson from '../../../fixtures/v3/omis/draft-order.json' assert { type: 'json' }
-import paidOrderJson from '../../../fixtures/v3/omis/paid-order.json' assert { type: 'json' }
-import assigneesJson from '../../../fixtures/v3/omis/assignees.json' assert { type: 'json' }
-import invoiceJson from '../../../fixtures/v3/omis/invoice.json' assert { type: 'json' }
-import paymentsJson from '../../../fixtures/v3/omis/payments.json' assert { type: 'json' }
-import quoteJson from '../../../fixtures/v3/omis/quote.json' assert { type: 'json' }
-import quoteAcceptedJson from '../../../fixtures/v3/omis/quote-accepted.json' assert { type: 'json' }
-import subscribersJson from '../../../fixtures/v3/omis/subscribers.json' assert { type: 'json' }
-import quoteAwaitOrderJson from '../../../fixtures/v3/omis/quote-awaiting-order.json' assert { type: 'json' }
-import emptyOrderJson from '../../../fixtures/v3/omis/empty-order.json' assert { type: 'json' }
+import cancelledOrder from '../../../fixtures/v3/omis/cancelled-order.json' assert { type: 'json' }
+import draftOrder from '../../../fixtures/v3/omis/draft-order.json' assert { type: 'json' }
+import paidOrder from '../../../fixtures/v3/omis/paid-order.json' assert { type: 'json' }
+import assignees from '../../../fixtures/v3/omis/assignees.json' assert { type: 'json' }
+import invoice from '../../../fixtures/v3/omis/invoice.json' assert { type: 'json' }
+import payments from '../../../fixtures/v3/omis/payments.json' assert { type: 'json' }
+import quote from '../../../fixtures/v3/omis/quote.json' assert { type: 'json' }
+import quoteAccepted from '../../../fixtures/v3/omis/quote-accepted.json' assert { type: 'json' }
+import subscribers from '../../../fixtures/v3/omis/subscribers.json' assert { type: 'json' }
+import quoteAwaitOrder from '../../../fixtures/v3/omis/quote-awaiting-order.json' assert { type: 'json' }
+import emptyOrder from '../../../fixtures/v3/omis/empty-order.json' assert { type: 'json' }
 
-export const assignees = function (req, res) {
-  res.json(assigneesJson)
+export const getAssignees = function (req, res) {
+  res.json(assignees)
 }
 
-export const invoice = function (req, res) {
-  res.json(invoiceJson)
+export const getInvoice = function (req, res) {
+  res.json(invoice)
 }
 
 export const getOrderById = function (req, res) {
   const orders = {
-    [cancelledOrderJson.id]: cancelledOrderJson,
-    [paidOrderJson.id]: paidOrderJson,
-    [draftOrderJson.id]: draftOrderJson,
-    [quoteAwaitOrderJson.id]: quoteAwaitOrderJson,
-    [quoteAcceptedJson.id]: quoteAcceptedJson,
-    [emptyOrderJson.id]: emptyOrderJson,
+    [cancelledOrder.id]: cancelledOrder,
+    [paidOrder.id]: paidOrder,
+    [draftOrder.id]: draftOrder,
+    [quoteAwaitOrder.id]: quoteAwaitOrder,
+    [quoteAccepted.id]: quoteAccepted,
+    [emptyOrder.id]: emptyOrder,
   }
 
-  res.json(orders[req.params.id] || paidOrderJson)
+  res.json(orders[req.params.id] || paidOrder)
 }
 
-export const payments = function (req, res) {
-  res.json(req.params.id === draftOrderJson.id ? [] : paymentsJson)
+export const getPayments = function (req, res) {
+  res.json(req.params.id === draftOrder.id ? [] : payments)
 }
 
 export const createPayments = function (req, res) {
   res.json({})
 }
 
-export const quote = function (req, res) {
-  res.json(quoteJson)
+export const getQuote = function (req, res) {
+  res.json(quote)
 }
 
 export const subscriberList = function (req, res) {
-  res.json(subscribersJson)
+  res.json(subscribers)
 }
 
 export const editQuoteDetail = function (req, res) {

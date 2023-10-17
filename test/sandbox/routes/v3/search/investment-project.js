@@ -1,6 +1,6 @@
-import investmentProjectsJson from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' }
+import investmentProjects from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' }
 
-export const investmentProjects = function (req, res) {
+export const searchInvestmentProjects = function (req, res) {
   const hasFilters = !!(
     req.body.actual_land_date_before ||
     req.body.actual_land_date_after ||
@@ -17,7 +17,7 @@ export const investmentProjects = function (req, res) {
     req.body.level_of_involvement_simplified ||
     req.body.investor_company
   )
-  const { results, summary } = investmentProjectsJson
+  const { results, summary } = investmentProjects
 
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
@@ -46,7 +46,7 @@ export const investmentProjects = function (req, res) {
     })
   } else {
     return res.json({
-      ...investmentProjectsJson,
+      ...investmentProjects,
       results,
       summary,
     })

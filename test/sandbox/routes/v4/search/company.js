@@ -1,11 +1,11 @@
-import companiesJson from '../../../fixtures/v4/search/company.json' assert { type: 'json' }
+import companies from '../../../fixtures/v4/search/company.json' assert { type: 'json' }
 import companyWithAttributes from '../../../fixtures/v4/search/company-with-attributes.json' assert { type: 'json' }
 import companyFilter from '../../../fixtures/v4/search/filter/company-filter.json' assert { type: 'json' }
 import companySortByMostRecent from '../../../fixtures/v4/search/sort/company-sort-by-most-recent.json' assert { type: 'json' }
 import companySortByLeastRecent from '../../../fixtures/v4/search/sort/company-sort-by-least-recent.json' assert { type: 'json' }
 import companySortByAZ from '../../../fixtures/v4/search/sort/company-sort-by-a-z.json' assert { type: 'json' }
 
-export const companies = function (req, res) {
+export const searchCompanies = function (req, res) {
   var companiesList = {
     collectionTest: companyWithAttributes,
     'modified_on:desc': companySortByMostRecent,
@@ -15,7 +15,7 @@ export const companies = function (req, res) {
 
   if (req.body.uk_postcode) {
     var postcodeFilteredResults = _.filter(
-      companiesJson.results,
+      companies.results,
       function (company) {
         return _.startsWith(
           _.get(company, 'registered_address.postcode'),
@@ -39,5 +39,5 @@ export const companies = function (req, res) {
     return res.json(companyFilter)
   }
 
-  res.json(companiesList[req.body.sortby] || companiesJson)
+  res.json(companiesList[req.body.sortby] || companies)
 }

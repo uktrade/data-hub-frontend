@@ -2,7 +2,7 @@ import companyNoOverviewDetails from '../../../fixtures/v4/company/company-no-ov
 import companyAllOverviewDetails from '../../../fixtures/v4/company/company-all-overview-details.json' assert { type: 'json' }
 import companiesNoResults from '../../../fixtures/v4/company/companies-no-results.json' assert { type: 'json' }
 import companyArchivedSubsidiaries from '../../../fixtures/v4/company/company-archived-subsidiaries.js'
-import companyJson from '../../../fixtures/v4/company/company.json' assert { type: 'json' }
+import company from '../../../fixtures/v4/company/company.json' assert { type: 'json' }
 import companyArchived from '../../../fixtures/v4/company/company-archived.json' assert { type: 'json' }
 import companyAutomaticallyArchived from '../../../fixtures/v4/company/company-archived-automatically.json' assert { type: 'json' }
 import companyDnBCorp from '../../../fixtures/v4/company/company-dnb-corp.json' assert { type: 'json' }
@@ -23,10 +23,10 @@ import companyWithContacts from '../../../fixtures/v4/company/company-with-conta
 import companyList from '../../../fixtures/v4/user/company-list.json' assert { type: 'json' }
 import companyOneListTierDIta from '../../../fixtures/v4/company/company-one-list-tier-d-ita.json' assert { type: 'json' }
 import companyWithValidationError from '../../../fixtures/v4/company/company-validation-error.json' assert { type: 'json' }
-import companyAuditJson from '../../../fixtures/v4/company-audit/company-audit.json' assert { type: 'json' }
+import companyAudit from '../../../fixtures/v4/company-audit/company-audit.json' assert { type: 'json' }
 import companyUsState from '../../../fixtures/v4/company/company-us-state.json' assert { type: 'json' }
 import companyCanadianProvince from '../../../fixtures/v4/company/company-canada-province.json' assert { type: 'json' }
-import exportWinsJson from '../../../fixtures/v4/company-export-wins/export-wins.json' assert { type: 'json' }
+import exportWins from '../../../fixtures/v4/company-export-wins/export-wins.json' assert { type: 'json' }
 import exportWinsPage1 from '../../../fixtures/v4/company-export-wins/export-wins-page-1.json' assert { type: 'json' }
 import exportWinsPage2 from '../../../fixtures/v4/company-export-wins/export-wins-page-2.json' assert { type: 'json' }
 import exportWinsNoWins from '../../../fixtures/v4/company-export-wins/export-wins-no-wins.json' assert { type: 'json' }
@@ -42,9 +42,9 @@ import largeCapitalProfileCreateError from '../../../fixtures/v4/company/large-c
 import largeCapitalProfileCreateSuccess from '../../../fixtures/v4/company/large-capital-profile-post-create-success.json' assert { type: 'json' }
 import largeCapitalProfileList10 from '../../../fixtures/v4/investment/large-capital-profile-list10.json' assert { type: 'json' }
 import largeCapitalProfileList20 from '../../../fixtures/v4/investment/large-capital-profile-list20.json' assert { type: 'json' }
-import referralDetailsJson from '../../../fixtures/v4/referrals/referral-details.json' assert { type: 'json' }
+import referralDetails from '../../../fixtures/v4/referrals/referral-details.json' assert { type: 'json' }
 import referralDetailsNoContact from '../../../fixtures/v4/referrals/referral-details-no-contact.json' assert { type: 'json' }
-import oneListGroupCoreTeamJson from '../../../fixtures/v4/company/one-list-group-core-team.json' assert { type: 'json' }
+import oneListGroupCoreTeam from '../../../fixtures/v4/company/one-list-group-core-team.json' assert { type: 'json' }
 import { REFERRAL_ID_NO_CONTACT } from '../../../constants/referrals.js'
 import companyWithExternalActivities from '../../../fixtures/v4/company/company-with-external-activities.json' assert { type: 'json' }
 
@@ -99,9 +99,9 @@ export const companies = function (req, res) {
   }
 }
 
-export const company = function (req, res) {
+export const getCompany = function (req, res) {
   var companies = {
-    '4cd4128b-1bad-4f1e-9146-5d4678c6a018': companyJson,
+    '4cd4128b-1bad-4f1e-9146-5d4678c6a018': company,
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchived,
     '246g78a5-1d43-4213-b4c2-bf48246a13c4': companyAutomaticallyArchived,
     'cc7e2f19-7251-4a41-a27a-f98437720532': companyDnBSubsidiary,
@@ -129,11 +129,11 @@ export const company = function (req, res) {
     'c79ba298-106e-4629-aa12-61ec6e2e47ce': companyWithAllActivities,
     '57c41268-26be-4335-a873-557e8b0deb29': companyWithManyContacts,
     'c79ba298-106e-4629-aa12-61ec6e2e47be': companyWithEssInteractionNoTitle,
-    'not-managed': _.assign({}, company, {
+    'not-managed': _.assign({}, getCompany, {
       name: 'Not Managed Company',
       id: 'not-managed',
     }),
-    managed: _.assign({}, company, {
+    managed: _.assign({}, getCompany, {
       name: 'Managed Company',
       id: 'managed',
       one_list_group_global_account_manager: {
@@ -143,7 +143,7 @@ export const company = function (req, res) {
         },
       },
     }),
-    'managed-no-team': _.assign({}, company, {
+    'managed-no-team': _.assign({}, getCompany, {
       name: 'Managed Company With No Team',
       id: 'managed-no-team',
       one_list_group_global_account_manager: {
@@ -161,7 +161,7 @@ export const company = function (req, res) {
     return res.json(companyCreateInvestigation)
   }
 
-  res.json(companies[req.params.companyId] || companyJson)
+  res.json(companies[req.params.companyId] || company)
 }
 
 export const companyPatched = function (req, res) {
@@ -174,7 +174,7 @@ export const companyPatched = function (req, res) {
     return res.sendStatus(504)
   }
 
-  res.json(companyJson)
+  res.json(company)
 }
 
 export const getCompanyList = function (req, res) {
@@ -190,11 +190,11 @@ export const manageAdviser = function (req, res) {
   return res.status(204).json({})
 }
 
-export const companyAudit = function (req, res) {
-  res.json(companyAuditJson)
+export const getCompanyAudit = function (req, res) {
+  res.json(companyAudit)
 }
 
-export const exportWins = function (req, res) {
+export const getExportWins = function (req, res) {
   var companyId = req.params.companyId
 
   if (companyId === companyLambdaPlc.id) {
@@ -213,11 +213,11 @@ export const exportWins = function (req, res) {
     }
     res.json(exportWinsPage1)
   } else {
-    res.json(exportWinsJson)
+    res.json(exportWins)
   }
 }
 
-export const referralDetails = function (req, res) {
+export const getReferralDetails = function (req, res) {
   if (req.params.id === REFERRAL_ID_NO_CONTACT) {
     return res.json(referralDetailsNoContact)
   }
@@ -240,7 +240,7 @@ export const referralDetails = function (req, res) {
       })
     )
   }
-  return res.json(referralDetailsJson)
+  return res.json(referralDetails)
 }
 
 export const exportDetail = function (req, res) {
@@ -261,7 +261,7 @@ export const getOneListGroupCoreTeam = function (req, res) {
   if (companyId === companyMinimallyMinimal.id) {
     res.send('[]')
   } else {
-    res.json(oneListGroupCoreTeamJson)
+    res.json(oneListGroupCoreTeam)
   }
 }
 

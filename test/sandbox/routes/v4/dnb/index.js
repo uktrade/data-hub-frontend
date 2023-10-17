@@ -1,29 +1,29 @@
-import companyCreateJson from '../../../fixtures/v4/dnb/company-create.json' assert { type: 'json' }
-import companySearchJson from '../../../fixtures/v4/dnb/company-search.json' assert { type: 'json' }
-import companyLinkJson from '../../../fixtures/v4/dnb/company-link.json' assert { type: 'json' }
-import companyChangeRequestJson from '../../../fixtures/v4/dnb/company-change-request.json' assert { type: 'json' }
+import companyCreate from '../../../fixtures/v4/dnb/company-create.json' assert { type: 'json' }
+import companySearch from '../../../fixtures/v4/dnb/company-search.json' assert { type: 'json' }
+import companyLink from '../../../fixtures/v4/dnb/company-link.json' assert { type: 'json' }
+import companyChangeRequest from '../../../fixtures/v4/dnb/company-change-request.json' assert { type: 'json' }
 import companySearchMatched from '../../../fixtures/v4/dnb/company-search-matched.json' assert { type: 'json' }
 import companySearchNotMatched from '../../../fixtures/v4/dnb/company-search-not-matched.json' assert { type: 'json' }
 import companySearchNotMatchedNoCountry from '../../../fixtures/v4/dnb/company-search-not-matched-no-country.json' assert { type: 'json' }
-import companySearchNotMatchedUSJson from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' assert { type: 'json' }
-import companyInvestigationJson from '../../../fixtures/v4/dnb/company-investigation.json' assert { type: 'json' }
+import companySearchNotMatchedUS from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' assert { type: 'json' }
+import companyInvestigation from '../../../fixtures/v4/dnb/company-investigation.json' assert { type: 'json' }
 import dnbGlobalUltimate from '../../../fixtures/v4/company/company-dnb-global-ultimate.json' assert { type: 'json' }
 
 import { fakerCompanyFamilyTree } from './company-tree.js'
 
-export const companyCreate = function (req, res) {
+export const createDnbCompany = function (req, res) {
   if (req.body.duns_number === '111111111') {
-    res.json(companyCreateJson)
+    res.json(companyCreate)
   }
 }
 
-export const companySearch = function (req, res) {
+export const dnbCompanySearch = function (req, res) {
   if (req.body.search_term === 'Simulate 500 Error') {
     return res.sendStatus(500)
   }
 
   if (req.body.duns_number === '268435455') {
-    return res.json(companySearchNotMatchedUSJson)
+    return res.json(companySearchNotMatchedUS)
   } else if (req.body.duns_number === '111111111') {
     return res.json(companySearchNotMatched)
   } else if (req.body.duns_number === '222222222') {
@@ -32,19 +32,19 @@ export const companySearch = function (req, res) {
     return res.json(companySearchNotMatchedNoCountry)
   }
 
-  return res.json(companySearchJson)
+  return res.json(companySearch)
 }
 
-export const companyInvestigation = function (req, res) {
-  res.json(companyInvestigationJson)
+export const dnbCompanyInvestigation = function (req, res) {
+  res.json(companyInvestigation)
 }
 
-export const companyLink = function (req, res) {
-  res.json(companyLinkJson)
+export const dnbCompanyLink = function (req, res) {
+  res.json(companyLink)
 }
 
-export const companyChangeRequest = function (req, res) {
-  res.json(companyChangeRequestJson)
+export const dnbCompanyChangeRequest = function (req, res) {
+  res.json(companyChangeRequest)
 }
 
 export const companyFamilyTree = function (req, res) {

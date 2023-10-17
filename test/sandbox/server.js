@@ -16,82 +16,82 @@ app.use(bodyParser.json())
 global.state = {}
 global._ = _
 
-import { advisers, singleAdviser } from './routes/adviser.js'
-import { homePage } from './routes/dashboard.js'
+import { advisers, adviser } from './routes/adviser.js'
+import { dashboardHomepage } from './routes/dashboard.js'
 import { ping } from './routes/ping.js'
 
 // TODO: `/metadata/*` endpoints are deprecated and should be removed or on after 17th October 2019
 import {
-  likelihoodToLand,
-  exportExperienceCategory,
-  investmentInvestorType,
-  investmentInvolvement,
-  investmentSpecificProgramme,
-  investmentProjectStage,
-  investmentBusinessActivity,
-  investmentType,
-  investmentStrategicDriver,
-  orderServiceType,
-  orderCancellationReason,
-  omisMarket,
-  salaryRange,
-  fdiValue,
-  fdiType,
-  turnover,
-  sector,
-  locationType,
-  eventType,
-  programme,
-  businessType,
-  evidenceTag,
-  employeeRange,
-  country,
-  ukRegion,
-  referralSourceWebsite,
-  referralSourceMarketing,
-  referralSourceActivity,
-  headquarterType,
-  service,
-  communicationChannel,
-  team,
-  policyArea,
-  policyIssueType,
-  serviceDeliveryStatus,
-  capitalInvestmentInvestorType,
-  capitalInvestmentRequiredChecks,
-  capitalInvestmentDealTicketSize,
-  capitalInvestmentInvestmentTypes,
-  capitalInvestmentMinimumReturnRate,
-  capitalInvestmentTimeHorizons,
-  capitalInvestmentRestrictions,
-  capitalInvestmentConstructionRisks,
-  capitalInvestmentEquityPercentage,
-  capitalInvestmentDesiredDealRoles,
-  capitalInvestmentAssetClassInterest,
-  oneListTier,
+  getLikelihoodToLand,
+  getExportExperienceCategory,
+  getInvestmentInvestorType,
+  getInvestmentInvolvement,
+  getInvestmentSpecificProgramme,
+  getInvestmentProjectStage,
+  getInvestmentBusinessActivity,
+  getInvestmentType,
+  getInvestmentStrategicDriver,
+  getOrderServiceType,
+  getOrderCancellationReason,
+  getOmisMarket,
+  getSalaryRange,
+  getFdiValue,
+  getFdiType,
+  getTurnover,
+  getSector,
+  getLocationType,
+  getEventType,
+  getProgramme,
+  getBusinessType,
+  getEvidenceTag,
+  getEmployeeRange,
+  getCountry,
+  getUkRegion,
+  getReferralSourceWebsite,
+  getReferralSourceMarketing,
+  getReferralSourceActivity,
+  getHeadquarterType,
+  getService,
+  getCommunicationChannel,
+  getTeam,
+  getPolicyArea,
+  getPolicyIssueType,
+  getServiceDeliveryStatus,
+  getCapitalInvestmentInvestorType,
+  getCapitalInvestmentRequiredChecks,
+  getCapitalInvestmentDealTicketSize,
+  getCapitalInvestmentInvestmentTypes,
+  getCapitalInvestmentMinimumReturnRate,
+  getCapitalInvestmentTimeHorizons,
+  getCapitalInvestmentRestrictions,
+  getCapitalInvestmentConstructionRisks,
+  getCapitalInvestmentEquityPercentage,
+  getCapitalInvestmentDesiredDealRoles,
+  getCapitalInvestmentAssetClassInterest,
+  getOneListTier,
 } from './routes/metadata.js'
-import { whoami, setWhoami, resetWhoami } from './routes/whoami.js'
+import { getWhoami, setWhoami, resetWhoami } from './routes/whoami.js'
 import { tickets } from './routes/zendesk.js'
 import { toRegion, lookup } from './routes/postcode.js'
 
 // V3
 import {
-  contact,
+  getContact,
   contactCreate,
-  contactById,
+  getContactById,
   updateContactById,
   archiveContact,
-  auditHistory,
+  getAuditHistory,
 } from './routes/v3/contact/contact.js'
-import { eventById } from './routes/v3/event/event.js'
+import { getEventById } from './routes/v3/event/event.js'
 import {
   getOrderById,
-  assignees,
-  invoice,
+  getAssignees,
+  getInvoice,
   subscriberList,
-  payments,
+  getPayments,
   createPayments,
-  quote,
+  getQuote,
 } from './routes/v3/omis/omis.js'
 import {
   featureFlag,
@@ -114,28 +114,28 @@ import {
   postInvestmentProject,
   postInvestmentProjectEditTeams,
 } from './routes/v3/investment/investment-projects.js'
-import { companies } from './routes/v3/search/company.js'
+import { getCompanies } from './routes/v3/search/company.js'
 import { contacts } from './routes/v3/search/contact.js'
-import { events } from './routes/v3/search/event.js'
+import { searchEvents } from './routes/v3/search/event.js'
 import {
-  investmentProjects as _investmentProjects,
+  searchInvestmentProjects as _investmentProjects,
   exportCsv,
 } from './routes/v3/search/investment-project.js'
 
 import { order } from './routes/v3/search/order.js'
-import { interaction } from './routes/v3/search/interaction.js'
+import { searchInteraction } from './routes/v3/search/interaction.js'
 
 // V4
 import { activityFeed } from './routes/v4/activity-feed/activity-feed.js'
 import { company } from './routes/v4/ch-company/company.js'
 import {
-  referralDetails,
-  company as _company,
+  getReferralDetails,
+  getCompany as _company,
   companyPatched,
   companies as _companies,
   manageAdviser,
-  companyAudit,
-  exportWins,
+  getCompanyAudit,
+  getExportWins,
   exportDetail,
   getOneListGroupCoreTeam,
   postOneListTierAndGlobalAccountManager,
@@ -157,17 +157,17 @@ import {
   removeCompanyFromList,
 } from './routes/v4/company-list/companyList.js'
 import {
-  companyCreate,
-  companyInvestigation,
-  companySearch,
-  companyLink,
-  companyChangeRequest,
+  createDnbCompany,
+  dnbCompanyInvestigation,
+  dnbCompanySearch,
+  dnbCompanyLink,
+  dnbCompanyChangeRequest,
   companyFamilyTree,
   relatedCompaniesCount,
   relatedCompanies,
 } from './routes/v4/dnb/index.js'
 import {
-  eventById as _eventById,
+  getEventById as _eventById,
   patchEvent,
   createEvent,
 } from './routes/v4/event/event.js'
@@ -184,63 +184,63 @@ import {
   archiveInteraction as _archiveInteraction,
 } from './routes/v4/interaction/interaction.js'
 import {
-  likelihoodToLand as _likelihoodToLand,
-  exportExperienceCategory as _exportExperienceCategory,
-  investmentInvestorType as _investmentInvestorType,
-  investmentInvolvement as _investmentInvolvement,
-  investmentSpecificProgramme as _investmentSpecificProgramme,
-  investmentProjectStage as _investmentProjectStage,
-  investmentBusinessActivity as _investmentBusinessActivity,
-  investmentType as _investmentType,
-  investmentStrategicDriver as _investmentStrategicDriver,
-  investmentDeliveryPartner,
-  orderServiceType as _orderServiceType,
-  orderCancellationReason as _orderCancellationReason,
-  omisMarket as _omisMarket,
-  salaryRange as _salaryRange,
-  fdiValue as _fdiValue,
-  fdiType as _fdiType,
-  turnover as _turnover,
-  sector as _sector,
-  locationType as _locationType,
-  eventType as _eventType,
-  programme as _programme,
-  businessType as _businessType,
-  evidenceTag as _evidenceTag,
-  employeeRange as _employeeRange,
-  country as _country,
-  ukRegion as _ukRegion,
-  administrativeArea,
-  referralSourceWebsite as _referralSourceWebsite,
-  referralSourceMarketing as _referralSourceMarketing,
-  referralSourceActivity as _referralSourceActivity,
-  headquarterType as _headquarterType,
-  service as _service,
-  communicationChannel as _communicationChannel,
-  team as _team,
-  policyArea as _policyArea,
-  policyIssueType as _policyIssueType,
-  exportBarrier,
-  serviceDeliveryStatus as _serviceDeliveryStatus,
-  capitalInvestmentInvestorType as _capitalInvestmentInvestorType,
-  capitalInvestmentRequiredChecks as _capitalInvestmentRequiredChecks,
-  capitalInvestmentDealTicketSize as _capitalInvestmentDealTicketSize,
-  capitalInvestmentInvestmentTypes as _capitalInvestmentInvestmentTypes,
-  capitalInvestmentValueTypes,
-  capitalInvestmentStatusTypes,
-  capitalInvestmentMinimumReturnRate as _capitalInvestmentMinimumReturnRate,
-  capitalInvestmentTimeHorizons as _capitalInvestmentTimeHorizons,
-  capitalInvestmentRestrictions as _capitalInvestmentRestrictions,
-  capitalInvestmentConstructionRisks as _capitalInvestmentConstructionRisks,
-  capitalInvestmentEquityPercentage as _capitalInvestmentEquityPercentage,
-  capitalInvestmentDesiredDealRoles as _capitalInvestmentDesiredDealRoles,
-  capitalInvestmentAssetClassInterest as _capitalInvestmentAssetClassInterest,
-  oneListTier as _oneListTier,
-  tradeAgreement,
-  exportYears,
-  exportExperience,
+  getLikelihoodToLand as _likelihoodToLand,
+  getExportExperienceCategory as _exportExperienceCategory,
+  getInvestmentInvestorType as _investmentInvestorType,
+  getInvestmentInvolvement as _investmentInvolvement,
+  getInvestmentSpecificProgramme as _investmentSpecificProgramme,
+  getInvestmentProjectStage as _investmentProjectStage,
+  getInvestmentBusinessActivity as _investmentBusinessActivity,
+  getInvestmentType as _investmentType,
+  getInvestmentStrategicDriver as _investmentStrategicDriver,
+  getInvestmentDeliveryPartner,
+  getOrderServiceType as _orderServiceType,
+  getOrderCancellationReason as _orderCancellationReason,
+  getOmisMarket as _omisMarket,
+  getSalaryRange as _salaryRange,
+  getFdiValue as _fdiValue,
+  getFdiType as _fdiType,
+  getTurnover as _turnover,
+  getSector as _sector,
+  getLocationType as _locationType,
+  getEventType as _eventType,
+  getProgramme as _programme,
+  getBusinessType as _businessType,
+  getEvidenceTag as _evidenceTag,
+  getEmployeeRange as _employeeRange,
+  getCountry as _country,
+  getUkRegion as _ukRegion,
+  getAdministrativeArea,
+  getReferralSourceWebsite as _referralSourceWebsite,
+  getReferralSourceMarketing as _referralSourceMarketing,
+  getReferralSourceActivity as _referralSourceActivity,
+  getHeadquarterType as _headquarterType,
+  getService as _service,
+  getCommunicationChannel as _communicationChannel,
+  getTeam as _team,
+  getPolicyArea as _policyArea,
+  getPolicyIssueType as _policyIssueType,
+  getExportBarrier,
+  getServiceDeliveryStatus as _serviceDeliveryStatus,
+  getCapitalInvestmentInvestorType as _capitalInvestmentInvestorType,
+  getCapitalInvestmentRequiredChecks as _capitalInvestmentRequiredChecks,
+  getCapitalInvestmentDealTicketSize as _capitalInvestmentDealTicketSize,
+  getCapitalInvestmentInvestmentTypes as _capitalInvestmentInvestmentTypes,
+  getCapitalInvestmentValueTypes,
+  getCapitalInvestmentStatusTypes,
+  getCapitalInvestmentMinimumReturnRate as _capitalInvestmentMinimumReturnRate,
+  getCapitalInvestmentTimeHorizons as _capitalInvestmentTimeHorizons,
+  getCapitalInvestmentRestrictions as _capitalInvestmentRestrictions,
+  getCapitalInvestmentConstructionRisks as _capitalInvestmentConstructionRisks,
+  getCapitalInvestmentEquityPercentage as _capitalInvestmentEquityPercentage,
+  getCapitalInvestmentDesiredDealRoles as _capitalInvestmentDesiredDealRoles,
+  getCapitalInvestmentAssetClassInterest as _capitalInvestmentAssetClassInterest,
+  getOneListTier as _oneListTier,
+  getTradeAgreement,
+  getExportYears,
+  getExportExperience,
 } from './routes/v4/metadata/index.js'
-import { companies as __companies } from './routes/v4/search/company.js'
+import { searchCompanies as __companies } from './routes/v4/search/company.js'
 import { companiesAutocomplete } from './routes/v4/search/company/autocomplete.js'
 import { largeInvestorProfile as _largeInvestorProfile } from './routes/v4/search/large-investor-profile/results.js'
 import { fetchExportHistory } from './routes/v4/search/exportHistory.js'
@@ -261,8 +261,8 @@ import {
   getNoRecentInvestmentInteractionReminders,
   getNewExportInteractionReminders,
 } from './routes/v4/reminders/index.js'
-import { summary } from './routes/v4/reminder/reminder.js'
-import { advisers as _advisers } from './routes/v4/search/adviser.js'
+import { getSummary } from './routes/v4/reminder/reminder.js'
+import { searchAdvisers as _advisers } from './routes/v4/search/adviser.js'
 import { objectives, objectivesCount } from './routes/v4/objective/index.js'
 import {
   getTasks,
@@ -275,7 +275,7 @@ import {
 // Datahub API 3rd party dependencies
 import { person, bulkPerson } from './routes/api/consentService.js'
 
-import { companiesSearch } from './routes/api/dnbService.js'
+import { createCompaniesSearch } from './routes/api/dnbService.js'
 
 // Data store service (github.com/uktrade/data-store-service)
 app.get('/api/v1/get-postcode-data/', toRegion)
@@ -285,9 +285,9 @@ app.get('/api/v1/get-postcode-data/:postCode', toRegion)
 app.get('/sandbox/postcodelookup/', lookup)
 
 // Referral details
-app.get('/v4/company-referral/:id', referralDetails)
+app.get('/v4/company-referral/:id', getReferralDetails)
 // Send a referral
-app.post('/v4/company-referral', referralDetails)
+app.post('/v4/company-referral', getReferralDetails)
 
 // Complete referral
 app.post('/v4/company-referral/:id/complete', createInteraction)
@@ -295,93 +295,99 @@ app.get('/v4/company-referral', v4referralList)
 
 // Adviser endpoint
 app.get('/adviser/', advisers)
-app.get('/adviser/:id/', singleAdviser)
+app.get('/adviser/:id/', adviser)
 
 // Dashboard endpoint
-app.get('/dashboard/homepage/', homePage)
+app.get('/dashboard/homepage/', dashboardHomepage)
 
 // Metadata endpoint
 // TODO: Metadata `/metadata/*` endpoints are deprecated and should be removed on or after 17th October 2019
-app.get('/metadata/likelihood-to-land/', likelihoodToLand)
-app.get('/metadata/export-experience-category/', exportExperienceCategory)
-app.get('/metadata/investment-investor-type/', investmentInvestorType)
-app.get('/metadata/investment-involvement/', investmentInvolvement)
-app.get('/metadata/investment-specific-programme/', investmentSpecificProgramme)
-app.get('/metadata/investment-project-stage/', investmentProjectStage)
-app.get('/metadata/investment-business-activity/', investmentBusinessActivity)
-app.get('/metadata/investment-type/', investmentType)
-app.get('/metadata/investment-strategic-driver/', investmentStrategicDriver)
-app.get('/metadata/order-service-type/', orderServiceType)
-app.get('/metadata/order-cancellation-reason/', orderCancellationReason)
-app.get('/metadata/omis-market/', omisMarket)
-app.get('/metadata/salary-range/', salaryRange)
-app.get('/metadata/fdi-value/', fdiValue)
-app.get('/metadata/fdi-type/', fdiType)
-app.get('/metadata/turnover/', turnover)
-app.get('/metadata/sector/', sector)
-app.get('/metadata/location-type/', locationType)
-app.get('/metadata/event-type/', eventType)
-app.get('/metadata/programme/', programme)
-app.get('/metadata/business-type/', businessType)
-app.get('/metadata/evidence-tag/', evidenceTag)
-app.get('/metadata/employee-range/', employeeRange)
-app.get('/metadata/country/', country)
-app.get('/metadata/uk-region/', ukRegion)
-app.get('/metadata/referral-source-website/', referralSourceWebsite)
-app.get('/metadata/referral-source-marketing/', referralSourceMarketing)
-app.get('/metadata/referral-source-activity/', referralSourceActivity)
-app.get('/metadata/headquarter-type/', headquarterType)
-app.get('/metadata/service/', service)
-app.get('/metadata/communication-channel/', communicationChannel)
-app.get('/metadata/team/', team)
-app.get('/metadata/policy-area/', policyArea)
-app.get('/metadata/policy-issue-type/', policyIssueType)
-app.get('/metadata/service-delivery-status/', serviceDeliveryStatus)
+app.get('/metadata/likelihood-to-land/', getLikelihoodToLand)
+app.get('/metadata/export-experience-category/', getExportExperienceCategory)
+app.get('/metadata/investment-investor-type/', getInvestmentInvestorType)
+app.get('/metadata/investment-involvement/', getInvestmentInvolvement)
+app.get(
+  '/metadata/investment-specific-programme/',
+  getInvestmentSpecificProgramme
+)
+app.get('/metadata/investment-project-stage/', getInvestmentProjectStage)
+app.get(
+  '/metadata/investment-business-activity/',
+  getInvestmentBusinessActivity
+)
+app.get('/metadata/investment-type/', getInvestmentType)
+app.get('/metadata/investment-strategic-driver/', getInvestmentStrategicDriver)
+app.get('/metadata/order-service-type/', getOrderServiceType)
+app.get('/metadata/order-cancellation-reason/', getOrderCancellationReason)
+app.get('/metadata/omis-market/', getOmisMarket)
+app.get('/metadata/salary-range/', getSalaryRange)
+app.get('/metadata/fdi-value/', getFdiValue)
+app.get('/metadata/fdi-type/', getFdiType)
+app.get('/metadata/turnover/', getTurnover)
+app.get('/metadata/sector/', getSector)
+app.get('/metadata/location-type/', getLocationType)
+app.get('/metadata/event-type/', getEventType)
+app.get('/metadata/programme/', getProgramme)
+app.get('/metadata/business-type/', getBusinessType)
+app.get('/metadata/evidence-tag/', getEvidenceTag)
+app.get('/metadata/employee-range/', getEmployeeRange)
+app.get('/metadata/country/', getCountry)
+app.get('/metadata/uk-region/', getUkRegion)
+app.get('/metadata/referral-source-website/', getReferralSourceWebsite)
+app.get('/metadata/referral-source-marketing/', getReferralSourceMarketing)
+app.get('/metadata/referral-source-activity/', getReferralSourceActivity)
+app.get('/metadata/headquarter-type/', getHeadquarterType)
+app.get('/metadata/service/', getService)
+app.get('/metadata/communication-channel/', getCommunicationChannel)
+app.get('/metadata/team/', getTeam)
+app.get('/metadata/policy-area/', getPolicyArea)
+app.get('/metadata/policy-issue-type/', getPolicyIssueType)
+app.get('/metadata/service-delivery-status/', getServiceDeliveryStatus)
 app.get(
   '/metadata/capital-investment/investor-type/',
-  capitalInvestmentInvestorType
+  getCapitalInvestmentInvestorType
 )
 app.get(
   '/metadata/capital-investment/required-checks-conducted/',
-  capitalInvestmentRequiredChecks
+  getCapitalInvestmentRequiredChecks
 )
 app.get(
   '/metadata/capital-investment/deal-ticket-size/',
-  capitalInvestmentDealTicketSize
+  getCapitalInvestmentDealTicketSize
 )
 app.get(
   '/metadata/capital-investment/large-capital-investment-type/',
-  capitalInvestmentInvestmentTypes
+  getCapitalInvestmentInvestmentTypes
 )
 app.get(
   '/metadata/capital-investment/return-rate/',
-  capitalInvestmentMinimumReturnRate
+  getCapitalInvestmentMinimumReturnRate
 )
 app.get(
   '/metadata/capital-investment/time-horizon/',
-  capitalInvestmentTimeHorizons
+  getCapitalInvestmentTimeHorizons
 )
 app.get(
   '/metadata/capital-investment/restriction/',
-  capitalInvestmentRestrictions
+  getCapitalInvestmentRestrictions
 )
 app.get(
   '/metadata/capital-investment/construction-risk/',
-  capitalInvestmentConstructionRisks
+  getCapitalInvestmentConstructionRisks
 )
 app.get(
   '/metadata/capital-investment/equity-percentage/',
-  capitalInvestmentEquityPercentage
+  getCapitalInvestmentEquityPercentage
 )
 app.get(
   '/metadata/capital-investment/desired-deal-role/',
-  capitalInvestmentDesiredDealRoles
+  getCapitalInvestmentDesiredDealRoles
 )
 app.get(
   '/metadata/capital-investment/asset-class-interest/',
-  capitalInvestmentAssetClassInterest
+  getCapitalInvestmentAssetClassInterest
 )
-app.get('/metadata/one-list-tier/', oneListTier)
+app.get('/metadata/one-list-tier/', getOneListTier)
 
 // V4 Metadata endpoints
 app.get('/v4/metadata/likelihood-to-land', _likelihoodToLand)
@@ -399,7 +405,10 @@ app.get(
 )
 app.get('/v4/metadata/investment-type', _investmentType)
 app.get('/v4/metadata/investment-strategic-driver', _investmentStrategicDriver)
-app.get('/v4/metadata/investment-delivery-partner', investmentDeliveryPartner)
+app.get(
+  '/v4/metadata/investment-delivery-partner',
+  getInvestmentDeliveryPartner
+)
 app.get('/v4/metadata/order-service-type', _orderServiceType)
 app.get('/v4/metadata/order-cancellation-reason', _orderCancellationReason)
 app.get('/v4/metadata/omis-market', _omisMarket)
@@ -416,7 +425,7 @@ app.get('/v4/metadata/evidence-tag', _evidenceTag)
 app.get('/v4/metadata/employee-range', _employeeRange)
 app.get('/v4/metadata/country', _country)
 app.get('/v4/metadata/uk-region', _ukRegion)
-app.get('/v4/metadata/administrative-area', administrativeArea)
+app.get('/v4/metadata/administrative-area', getAdministrativeArea)
 app.get('/v4/metadata/referral-source-website', _referralSourceWebsite)
 app.get('/v4/metadata/referral-source-marketing', _referralSourceMarketing)
 app.get('/v4/metadata/referral-source-activity', _referralSourceActivity)
@@ -426,7 +435,7 @@ app.get('/v4/metadata/communication-channel', _communicationChannel)
 app.get('/v4/metadata/team', _team)
 app.get('/v4/metadata/policy-area', _policyArea)
 app.get('/v4/metadata/policy-issue-type', _policyIssueType)
-app.get('/v4/metadata/export-barrier', exportBarrier)
+app.get('/v4/metadata/export-barrier', getExportBarrier)
 app.get('/v4/metadata/service-delivery-status', _serviceDeliveryStatus)
 app.get(
   '/v4/metadata/capital-investment/investor-type',
@@ -446,11 +455,11 @@ app.get(
 )
 app.get(
   '/v4/metadata/large-capital-opportunity/opportunity-value-type',
-  capitalInvestmentValueTypes
+  getCapitalInvestmentValueTypes
 )
 app.get(
   '/v4/metadata/large-capital-opportunity/opportunity-status',
-  capitalInvestmentStatusTypes
+  getCapitalInvestmentStatusTypes
 )
 app.get(
   '/v4/metadata/capital-investment/return-rate',
@@ -481,23 +490,23 @@ app.get(
   _capitalInvestmentAssetClassInterest
 )
 app.get('/v4/metadata/one-list-tier', _oneListTier)
-app.get('/v4/metadata/trade-agreement', tradeAgreement)
-app.get('/v4/metadata/export-years', exportYears)
-app.get('/v4/metadata/export-experience', exportExperience)
+app.get('/v4/metadata/trade-agreement', getTradeAgreement)
+app.get('/v4/metadata/export-years', getExportYears)
+app.get('/v4/metadata/export-experience', getExportExperience)
 
 // Ping
 app.get('/ping.xml', ping)
 
 // V3 Contact
-app.get('/v3/contact', contact)
+app.get('/v3/contact', getContact)
 app.post('/v3/contact', contactCreate)
-app.get('/v3/contact/:contactId', contactById)
+app.get('/v3/contact/:contactId', getContactById)
 app.patch('/v3/contact/:contactId', updateContactById)
 app.post('/v3/contact/:contactId/archive', archiveContact)
-app.get('/v3/contact/:contactId/audit', auditHistory)
+app.get('/v3/contact/:contactId/audit', getAuditHistory)
 
 // V3 Event
-app.get('/v3/event/:eventId', eventById)
+app.get('/v3/event/:eventId', getEventById)
 
 // V4 Event
 app.get('/v4/event/:eventId', _eventById)
@@ -536,32 +545,32 @@ app.put('/v3/investment/:id/team-member', postInvestmentProjectEditTeams)
 // V3 Omis
 app.get('/v3/omis/order/:id', getOrderById)
 app.patch('/v3/omis/order/:id', getOrderById)
-app.get('/v3/omis/order/:id/assignee', assignees)
-app.get('/v3/omis/order/:id/invoice', invoice)
+app.get('/v3/omis/order/:id/assignee', getAssignees)
+app.get('/v3/omis/order/:id/invoice', getInvoice)
 app.get('/v3/omis/order/:id/subscriber-list', subscriberList)
 app.put('/v3/omis/order/:id/subscriber-list', subscriberList)
-app.get('/v3/omis/order/:id/payment', payments)
+app.get('/v3/omis/order/:id/payment', getPayments)
 app.post('/v3/omis/order/:id/payment', createPayments)
-app.get('/v3/omis/order/:id/quote', quote)
-app.patch('/v3/omis/order/:id/assignee', assignees)
+app.get('/v3/omis/order/:id/quote', getQuote)
+app.patch('/v3/omis/order/:id/assignee', getAssignees)
 
 // V3 Search
-app.get('/v3/search', companies)
-app.post('/v3/search/company', companies)
+app.get('/v3/search', getCompanies)
+app.post('/v3/search/company', getCompanies)
 app.post('/v3/search/contact', contacts)
-app.post('/v3/search/event', events)
+app.post('/v3/search/event', searchEvents)
 app.post('/v3/search/order', order)
 app.post('/v3/search/investment_project', _investmentProjects)
 app.post('/v3/search/investment_project/export', exportCsv)
 app.post('/v4/search/large-investor-profile/export', exportCsv)
 app.post('/v4/search/large-capital-opportunity/export', exportCsv)
-app.post('/v3/search/interaction', interaction)
+app.post('/v3/search/interaction', searchInteraction)
 
 // V4 contact - same functionality as v3 in the mock
 //just different endpoints since on the real API the only difference is validation
-app.get('/v4/contact', contact)
+app.get('/v4/contact', getContact)
 app.post('/v4/contact', contactCreate)
-app.get('/v4/contact/:contactId', contactById)
+app.get('/v4/contact/:contactId', getContactById)
 app.patch('/v4/contact/:contactId', updateContactById)
 
 // V4 activity feed
@@ -576,8 +585,8 @@ app.patch('/v4/company/:companyId', companyPatched)
 app.post('/v4/company', _company)
 app.get('/v4/company', _companies)
 app.post('/v4/company/:companyId/:action-account-manager', manageAdviser)
-app.get('/v4/company/:companyId/audit', companyAudit)
-app.get('/v4/company/:companyId/export-win', exportWins)
+app.get('/v4/company/:companyId/audit', getCompanyAudit)
+app.get('/v4/company/:companyId/export-win', getExportWins)
 app.patch('/v4/company/:companyId/export-detail', exportDetail)
 app.get(
   '/v4/company/:companyId/one-list-group-core-team',
@@ -603,12 +612,12 @@ app.post('/v4/interaction/:interactionId/archive', _archiveInteraction)
 app.patch('/v4/interaction/:interactionId', _archiveInteraction)
 
 // V4 DnB
-app.post('/v4/dnb/company-create', companyCreate)
-app.post('/v4/dnb/company-investigation', companyInvestigation)
-app.post('/v4/dnb/company-search', companySearch)
-app.post('/v4/dnb/company-link', companyLink)
-app.post('/v4/dnb/company-change-request', companyChangeRequest)
-app.get('/v4/dnb/company-change-request', companyChangeRequest)
+app.post('/v4/dnb/company-create', createDnbCompany)
+app.post('/v4/dnb/company-investigation', dnbCompanyInvestigation)
+app.post('/v4/dnb/company-search', dnbCompanySearch)
+app.post('/v4/dnb/company-link', dnbCompanyLink)
+app.post('/v4/dnb/company-change-request', dnbCompanyChangeRequest)
+app.get('/v4/dnb/company-change-request', dnbCompanyChangeRequest)
 app.get('/v4/dnb/:companyId/family-tree', companyFamilyTree)
 app.get('/v4/dnb/:companyId/related-companies/count', relatedCompaniesCount)
 app.get('/v4/dnb/:companyId/related-companies', relatedCompanies)
@@ -707,7 +716,7 @@ app.post('/v4/search/large-capital-opportunity', getLargeCapitalOpportunityList)
 app.get('/v4/proposition', propositions)
 
 // V4 Reminder
-app.get('/v4/reminder/summary', summary)
+app.get('/v4/reminder/summary', getSummary)
 
 // V4 Search
 app.post('/v4/search/company', __companies)
@@ -724,7 +733,7 @@ app.patch('/v4/task/:taskId', updateTask)
 app.get('/v4/investmentprojecttask', investmentProjectTasks)
 
 // Whoami endpoint
-app.get('/whoami', whoami)
+app.get('/whoami', getWhoami)
 app.put('/whoami', setWhoami)
 app.post('/whoami', resetWhoami)
 
@@ -734,7 +743,7 @@ app.post('/zendesk/tickets', tickets)
 app.post('/api/v1/person', person)
 app.get('/api/v1/person/bulk_lookup', bulkPerson)
 
-app.post('/companies/search', companiesSearch)
+app.post('/companies/search', createCompaniesSearch)
 
 app.post('/v4/large-capital-opportunity', (req, res) =>
   res.json({ id: 'new-large-capital-uk-opportunity-id' })
