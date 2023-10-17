@@ -8,7 +8,6 @@ import {
 } from '../../../utils/date'
 import { OPTION_ME } from './constants'
 
-
 export const transformTaskFormValuesForAPI = (
   formValues,
   currentAdviserId

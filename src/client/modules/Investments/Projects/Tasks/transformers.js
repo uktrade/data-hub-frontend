@@ -1,13 +1,11 @@
+import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
-import { idNamesToValueLabels } from '../../../../utils'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
-
+import { idNamesToValueLabels } from '../../../../utils'
 import {
   OPTION_ME,
   OPTION_SOMEONE_ELSE,
 } from '../../../Tasks/TaskForm/constants'
-
-import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
 
 export const transformFormValuesForAPI = (
   formValues,

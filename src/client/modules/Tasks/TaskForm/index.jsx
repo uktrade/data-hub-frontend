@@ -74,7 +74,6 @@ const TaskForm = ({
               label="Task description (optional)"
               hint="Add details of the task, especially if you intend to assign it to someone else."
             />
-            <FieldInput type="hidden" name="taskAdvisers" />
             <FieldRadios
               name="taskAssignedTo"
               legend="Task assigned to"
@@ -93,7 +92,14 @@ const TaskForm = ({
               }))}
             />
             <Details summary="What happens when I assign someone a task">
-              <p>When you assign TODO</p>
+              <p>
+                When you assign a task the assignee will be sent a reminder,
+                according to their Data Hub reminder preferences. They will be
+                able to edit, re-assign or complete the task. As the creator of
+                the task you will be sent a reminder when the task is changed,
+                re-assigned or completed. You can change when you receive these
+                updates in your
+              </p>
             </Details>
             <FieldRadios
               name="taskDueDate"
