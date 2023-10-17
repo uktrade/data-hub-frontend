@@ -142,7 +142,7 @@
     "redux-saga": "^1.2.3",
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.69.0",
+    "sass": "^1.69.3",
     "sass-loader": "^13.3.2",
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.2.0",
