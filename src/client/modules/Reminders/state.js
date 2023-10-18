@@ -59,6 +59,10 @@ export const TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS =
 export const TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS =
   'TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS'
 
+// My tasks lists
+export const TASK_GET_DUE_DATE_APPROACHING_REMINDERS =
+  'TASK_GET_DUE_DATE_APPROACHING_REMINDERS'
+
 export const state2props = (state) => {
   const reminderSummary = state[REMINDER_SUMMARY_ID]
   const activeFeatureGroups = state.activeFeatureGroups

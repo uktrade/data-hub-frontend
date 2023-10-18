@@ -637,7 +637,7 @@ module.exports = {
       newInteractions: url('/reminders/companies-new-interactions'),
     },
     myTasks: {
-      dueDateApproaching: url('/reminders/tasks-due-date-approaching'),
+      dueDateApproaching: url('/reminders/my-tasks-due-date-approaching'),
     },
     settings: {
       index: url('/reminders/settings'),

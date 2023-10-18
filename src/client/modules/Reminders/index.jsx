@@ -15,6 +15,7 @@ import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractio
 import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
 import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 import ExportsNewInteractionsList from './ExportsNewInteractionsList'
+import MyTasksDueDateApproachingList from './MyTasksDueDateApproachingList'
 
 export {
   RemindersSettings,
@@ -29,4 +30,5 @@ export {
   InvestmentsOutstandingPropositionsList,
   ExportsNoRecentInteractionsList,
   ExportsNewInteractionsList,
+  MyTasksDueDateApproachingList,
 }

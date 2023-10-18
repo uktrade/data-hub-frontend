@@ -146,6 +146,19 @@ export const getNextExportsNewInteractionReminder = ({
 export const deleteExportNewInteractionReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/new-export-interaction/${id}`)
 
+// *************************** My tasks lists ***************************
+
+export const getMyTasksDueDateApproachingReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/my-tasks-due-date-approaching', {
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
+    })
+    .then(({ data }) => data)
+
 // ********************** Summary ***************************
 
 const transformSubscriptionSummary = ({ data }) => ({
