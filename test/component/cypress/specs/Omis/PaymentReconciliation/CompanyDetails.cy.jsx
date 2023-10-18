@@ -1,49 +1,16 @@
 import React from 'react'
 
 import { CompanyDetails } from '../../../../../../src/client/modules/Omis/PaymentReconciliation'
-
-const address = {
-  country: {
-    name: 'Test Country',
-  },
-  county: 'Test County',
-  line1: 'Address line 1',
-  line2: 'Address line 2',
-  postcode: 'postcode',
-  town: 'town',
-}
-
-const registeredAddress = {
-  country: {
-    name: 'Test Registered Country',
-  },
-  county: 'Test Registered County',
-  line1: 'Registered Address line 1',
-  line2: 'Registered Address line 2',
-  postcode: 'Registered postcode',
-  town: 'Registered town',
-}
-
-const addressCompany = {
-  name: 'Company with address',
-  address: address,
-}
-
-const regAddressCompany = {
-  name: 'Company with reg address',
-  registeredAddress: registeredAddress,
-}
-
-const bothAddressCompany = {
-  name: 'Company with both addresses',
-  address: address,
-  registeredAddress: registeredAddress,
-}
+import {
+  COMPANY_ADDRESS,
+  COMPANY_REGISTERED_ADDRESS,
+  COMPANY_BOTH_ADDRESSES,
+} from '../constants'
 
 describe('PaymentReconciliation company details', () => {
   context('When viewing a company with a non-registered address', () => {
     beforeEach(() => {
-      cy.mount(<CompanyDetails company={addressCompany} />)
+      cy.mount(<CompanyDetails company={COMPANY_ADDRESS} />)
     })
 
     it('should render the heading', () => {
@@ -55,7 +22,7 @@ describe('PaymentReconciliation company details', () => {
     it('should render the company name', () => {
       cy.get('[data-test="company-name"]')
         .should('exist')
-        .should('have.text', addressCompany.name)
+        .should('have.text', COMPANY_ADDRESS.name)
     })
 
     it('should render the company address', () => {
@@ -70,7 +37,7 @@ describe('PaymentReconciliation company details', () => {
 
   context('When viewing a company with a registered address', () => {
     beforeEach(() => {
-      cy.mount(<CompanyDetails company={regAddressCompany} />)
+      cy.mount(<CompanyDetails company={COMPANY_REGISTERED_ADDRESS} />)
     })
 
     it('should render the heading', () => {
@@ -82,7 +49,7 @@ describe('PaymentReconciliation company details', () => {
     it('should render the company name', () => {
       cy.get('[data-test="company-name"]')
         .should('exist')
-        .should('have.text', regAddressCompany.name)
+        .should('have.text', COMPANY_REGISTERED_ADDRESS.name)
     })
 
     it('should render the company address', () => {
@@ -97,7 +64,7 @@ describe('PaymentReconciliation company details', () => {
 
   context('When viewing a company with both address types', () => {
     beforeEach(() => {
-      cy.mount(<CompanyDetails company={bothAddressCompany} />)
+      cy.mount(<CompanyDetails company={COMPANY_BOTH_ADDRESSES} />)
     })
 
     it('should render the heading', () => {
@@ -109,7 +76,7 @@ describe('PaymentReconciliation company details', () => {
     it('should render the company name', () => {
       cy.get('[data-test="company-name"]')
         .should('exist')
-        .should('have.text', bothAddressCompany.name)
+        .should('have.text', COMPANY_BOTH_ADDRESSES.name)
     })
 
     it('should render the registered address', () => {

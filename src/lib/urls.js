@@ -126,6 +126,7 @@ module.exports = {
       'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/',
     reminderAndSettings:
       'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
+    euVIES: 'http://ec.europa.eu/taxation_customs/vies/',
   },
 
   dashboard: {
@@ -620,6 +621,8 @@ module.exports = {
       assignees: url('/omis', '/:orderId/edit/assignees'),
       subscribers: url('/omis', '/:orderId/edit/subscribers'),
       internalInfo: url('/omis', '/:orderId/edit/internal-details'),
+      invoiceDetails: url('/omis', '/:orderId/edit/invoice-details'),
+      billingAddress: url('/omis', '/:orderId/edit/billing-address'),
     },
   },
   support: url('/support'),

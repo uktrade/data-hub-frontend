@@ -351,6 +351,7 @@ import {
   TASK_EDIT_OMIS_QUOTE_INFORMATION,
   TASK_EDIT_OMIS_INTERNAL_INFORMATION,
   TASK_RECONCILE_OMIS_PAYMENT,
+  TASK_EDIT_INVOICE_DETAILS,
 } from './modules/Omis/state'
 import { savePayment, updateOrder } from './modules/Omis/tasks'
 
@@ -556,4 +557,5 @@ export const tasks = {
   [TASK_ARCHIVE_TASK]: archiveTask,
   [TASK_RECONCILE_OMIS_PAYMENT]: savePayment,
   [TASK_SAVE_TASK_DETAILS]: saveTaskDetail,
+  [TASK_EDIT_INVOICE_DETAILS]: updateOrder,
 }

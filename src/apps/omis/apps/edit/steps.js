@@ -3,7 +3,6 @@ const { cloneDeep, mapValues, merge, omit } = require('lodash')
 const createJourney = require('../create/steps')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
-const EditInvoiceDetailsController = require('./controllers/invoice-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditVatStatusController = require('./controllers/vat-status')
 const CompleteOrderController = require('./controllers/complete-order')
@@ -42,9 +41,6 @@ const steps = merge({}, createSteps, {
   '/invoice-details': {
     heading: 'Edit invoice details',
     fields: ['vat_status', 'vat_number', 'vat_verified', 'po_number'],
-    templatePath: 'omis/apps/edit/views',
-    template: 'invoice-details.njk',
-    controller: EditInvoiceDetailsController,
   },
   '/billing-address': {
     heading: 'Edit billing address',
