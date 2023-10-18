@@ -20,6 +20,9 @@ import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
+import { PropositionEvidenceResource } from '../../../components/Resource'
+import { buildEvidenceUrl } from '../Projects/Propositions/transformers'
+
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
 export const transformArrayForTypeahead = (advisers) =>
@@ -211,28 +214,40 @@ export const transformPropositionToListItem = ({
   buttons:
     status === 'abandoned' || status === 'completed' ? null : (
       <>
-        <Button
-          as={Link}
-          href={urls.investments.projects.proposition.abandon(
-            investment_project.id,
-            id
-          )}
-          data-test="abandon-button"
-          buttonColour={GREY_3}
-          buttonTextColour={BLACK}
+        <PropositionEvidenceResource
+          id={buildEvidenceUrl(id, investment_project.id)}
         >
-          Abandon
-        </Button>{' '}
-        <Button
-          as={Link}
-          href={urls.investments.projects.proposition.complete(
-            investment_project.id,
-            id
+          {(evidence) => (
+            <>
+              <Button
+                as={Link}
+                href={urls.investments.projects.proposition.abandon(
+                  investment_project.id,
+                  id
+                )}
+                data-test="abandon-button"
+                buttonColour={GREY_3}
+                buttonTextColour={BLACK}
+              >
+                Abandon
+              </Button>{' '}
+              {evidence.count > 0 ? (
+                <Button
+                  as={Link}
+                  href={urls.investments.projects.proposition.complete(
+                    investment_project.id,
+                    id
+                  )}
+                  data-test="complete-button"
+                >
+                  Complete
+                </Button>
+              ) : (
+                ''
+              )}
+            </>
           )}
-          data-test="complete-button"
-        >
-          Complete
-        </Button>
+        </PropositionEvidenceResource>
       </>
     ),
 })
