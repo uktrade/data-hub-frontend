@@ -42,6 +42,8 @@ export const COMPANIES_NO_RECENT_INTERACTIONS_LABEL =
 export const COMPANIES_NEW_INTERACTIONS_LABEL =
   'Companies with new interactions'
 
+export const TASKS_DUE_DATE_APPROACHING_LABEL = 'Due date approaching'
+
 export const reminderTypeToLabel = {
   [INVESTMENTS_ESTIMATED_LAND_DATES]: INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
   [INVESTMENTS_NO_RECENT_INTERACTIONS]:

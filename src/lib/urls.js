@@ -636,6 +636,9 @@ module.exports = {
       noRecentInteractions: url('/reminders/companies-no-recent-interactions'),
       newInteractions: url('/reminders/companies-new-interactions'),
     },
+    myTasks: {
+      dueDateApproaching: url('/reminders/tasks-due-date-approaching'),
+    },
     settings: {
       index: url('/reminders/settings'),
       investments: {

@@ -11,6 +11,9 @@ const initialState = {
     no_recent_interaction: 0,
     new_interaction: 0,
   },
+  myTasks: {
+    due_date_approaching: 0,
+  },
 }
 
 export default (state = initialState, { type, result }) => {
