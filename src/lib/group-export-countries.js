@@ -1,4 +1,4 @@
-const { EXPORT_INTEREST_STATUS_VALUES } = require('../apps/constants')
+const { EXPORT_INTEREST_STATUS_VALUES } = require('../common/constants')
 
 module.exports = (countries) => {
   const buckets = {}

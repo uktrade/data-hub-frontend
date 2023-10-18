@@ -3,7 +3,7 @@ import {
   exportPotentialLabels,
 } from '../../../../apps/companies/labels'
 import groupExportCountries from '../../../../lib/group-export-countries'
-import { EXPORT_INTEREST_STATUS } from '../../../../apps/constants'
+import { EXPORT_INTEREST_STATUS } from '../../../../common/constants'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 
 export const buildExportPotential = (company) => {

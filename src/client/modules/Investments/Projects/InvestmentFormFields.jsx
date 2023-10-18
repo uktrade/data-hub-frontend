@@ -31,7 +31,7 @@ import {
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { transformArrayForTypeahead } from './transformers'
 import { GREY_2 } from '../../../utils/colours'
-import { OPTIONS_YES_NO, OPTION_NO } from '../../../../apps/constants'
+import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;

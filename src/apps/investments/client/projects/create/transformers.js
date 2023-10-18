@@ -1,4 +1,4 @@
-import { OPTION_NO } from '../../../../constants'
+import { OPTION_NO } from '../../../../../common/constants'
 
 const formatEstimatedLandDate = ({ year, month }) =>
   year && month ? `${year}-${month}-01` : null

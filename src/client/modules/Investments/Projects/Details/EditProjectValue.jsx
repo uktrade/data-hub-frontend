@@ -24,7 +24,7 @@ import {
   transformBoolToRadioOptionWithNullCheck,
   transformProjectValueForApi,
 } from './transformers'
-import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../apps/constants'
+import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../common/constants'
 import { currencyGBP } from '../../../../utils/number-utils'
 import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayout from '../../../../components/Layout/ProjectLayout'

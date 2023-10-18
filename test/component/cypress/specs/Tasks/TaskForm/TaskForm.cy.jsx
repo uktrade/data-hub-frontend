@@ -15,7 +15,7 @@ import urls from '../../../../../../src/lib/urls'
 import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
 import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Investments/Projects/Tasks/transformers'
-import { OPTION_NO, OPTION_YES } from '../../../../../../src/apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 
 describe('Task form', () => {

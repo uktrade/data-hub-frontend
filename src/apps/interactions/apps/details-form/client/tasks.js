@@ -16,7 +16,7 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_NO,
   OPTION_YES,
-} from '../../../../constants'
+} from '../../../../../common/constants'
 import { ID as STORE_ID } from './state'
 
 import {
