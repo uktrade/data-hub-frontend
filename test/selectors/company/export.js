@@ -1,4 +1,4 @@
-const { EXPORT_INTEREST_STATUS } = require('../../../src/apps/constants')
+const { EXPORT_INTEREST_STATUS } = require('../../../src/common/constants')
 
 module.exports = {
   winCategory: '#export_experience_category',

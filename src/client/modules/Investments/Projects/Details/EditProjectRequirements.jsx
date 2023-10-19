@@ -25,8 +25,11 @@ import {
   transformBoolToRadioOptionWithNullCheck,
   transformProjectRequirementsForApi,
 } from './transformers'
-import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../apps/constants'
-import { UNITED_KINGDOM_ID } from '../../../../../common/constants'
+import {
+  OPTIONS_YES_NO,
+  OPTION_YES,
+  UNITED_KINGDOM_ID,
+} from '../../../../../common/constants'
 import ProjectLayout from '../../../../components/Layout/ProjectLayout'
 
 const ukObject = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Link } from 'govuk-react'
 
-import { OPTION_NO, OPTION_YES } from '../../../../apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 import {
   EXPORT_REVENUE_FALSE,

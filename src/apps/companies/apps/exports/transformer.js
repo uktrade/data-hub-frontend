@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const { exportDetailsLabels } = require('../../labels')
-const { EXPORT_INTEREST_STATUS } = require('../../../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../../../common/constants')
 
 function getCountriesFields(companyExportCountries) {
   const groupedExportCountries = groupExportCountries(companyExportCountries)

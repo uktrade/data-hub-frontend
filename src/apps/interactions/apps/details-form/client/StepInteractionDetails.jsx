@@ -38,7 +38,7 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_YES,
   OPTIONS_YES_NO,
-} from '../../../../constants'
+} from '../../../../../common/constants'
 
 import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
 

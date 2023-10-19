@@ -1,4 +1,4 @@
-import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { idNamesToValueLabels } from '../../../../utils'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
 import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
