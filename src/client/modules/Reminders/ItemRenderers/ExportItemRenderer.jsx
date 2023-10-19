@@ -1,9 +1,6 @@
 import React from 'react'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import { Link } from 'govuk-react'
-import styled from 'styled-components'
 
 import {
   ListItem,
@@ -11,14 +8,11 @@ import {
   ItemContent,
   DeleteButton,
   RightCol,
+  ItemHeaderLink,
 } from './styled'
 import { formatMediumDate } from '../../../utils/date'
 import { DARK_GREY } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
-
-const ItemHeaderLink = styled(Link)({
-  fontWeight: FONT_WEIGHTS.regular,
-})
 
 export const ExportItemRenderer = ({
   item,

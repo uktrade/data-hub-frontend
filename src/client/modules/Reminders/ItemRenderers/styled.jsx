@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import GridCol from '@govuk-react/grid-col'
-import { H3 } from '@govuk-react/heading'
+import { GridCol, H3, Link } from 'govuk-react'
 import {
   SPACING,
   FONT_SIZE,
   HEADING_SIZES,
   MEDIA_QUERIES,
+  FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
 import { DARK_GREY, GREY_2 } from '../../../utils/colours'
@@ -50,6 +50,10 @@ export const ItemHeader = styled(H3)({
   fontSize: HEADING_SIZES.SMALL,
   marginTop: SPACING.SCALE_3,
   marginBottom: SPACING.SCALE_4,
+})
+
+export const ItemHeaderLink = styled(Link)({
+  fontWeight: FONT_WEIGHTS.regular,
 })
 
 export const ItemContent = styled('div')({

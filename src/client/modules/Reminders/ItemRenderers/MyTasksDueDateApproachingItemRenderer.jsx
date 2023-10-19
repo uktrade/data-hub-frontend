@@ -1,20 +1,14 @@
 import React from 'react'
-import { SPACING } from '@govuk-react/constants'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
-import { ListItem, ItemHeader } from './styled'
+import { ListItem, ItemHeader, ItemContent, ItemHeaderLink } from './styled'
 import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
 import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 import { GREY_1 } from '../../../utils/colours'
-
-const ItemContent = styled('div')({
-  marginBottom: SPACING.SCALE_2,
-  marginTop: SPACING.SCALE_2,
-})
 
 const ItemHint = styled('span')({
   color: GREY_1,
@@ -25,9 +19,14 @@ const MyTasksDueDateApproachingItemRenderer = (item) => (
     <GridRow>
       <GridCol>
         <ItemHeader data-test="item-header">
-          Received {format(item.created_on, DATE_LONG_FORMAT_1)}
-          <br />
-          <Link href={`${urls.tasks.details(item.id)}`}>{item.event}</Link>
+          <ul>
+            <li>Received {format(item.created_on, DATE_LONG_FORMAT_1)}</li>
+            <li>
+              <ItemHeaderLink href={`${urls.tasks.details(item.id)}`}>
+                {item.event}
+              </ItemHeaderLink>
+            </li>
+          </ul>
         </ItemHeader>
         <ItemContent data-test="item-content">
           <ul>
