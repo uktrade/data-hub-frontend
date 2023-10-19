@@ -19,6 +19,9 @@ describe('RemindersMenu', () => {
           no_recent_interaction: 4,
           new_interaction: 8,
         },
+        myTasks: {
+          due_date_approaching: 5,
+        },
       }}
       {...props}
     />
@@ -49,6 +52,13 @@ describe('RemindersMenu', () => {
     },
   ]
 
+  const myTasksLinks = [
+    {
+      title: 'Due date approaching (5)',
+      url: urls.reminders.myTasks.dueDateApproaching(),
+    },
+  ]
+
   context('When hasInvestmentFeatureGroup is true', () => {
     beforeEach(() => {
       cy.mount(
@@ -64,7 +74,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all investment menu items', () => {
-      cy.get('@listItems').should('have.length', 3)
+      cy.get('@listItems').should('have.length', 4)
 
       investmentLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -92,7 +102,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 2)
+      cy.get('@listItems').should('have.length', 3)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -119,7 +129,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should not render Companies with new interactions', () => {
-        cy.get('@listItems').should('have.length', 1)
+        cy.get('@listItems').should('have.length', 2)
 
         cy.get('@listItems')
           .eq(0)
@@ -147,17 +157,47 @@ describe('RemindersMenu', () => {
         cy.get('[data-test="link-list-item"]').as('listItems')
       })
 
-      it('should render all investment menu items', () => {
-        cy.get('@listItems').should('have.length', 5)
+      it('should render all menu items', () => {
+        cy.get('@listItems').should('have.length', 6)
 
-        investmentLinks.concat(exportLinks).forEach((item, index) => {
-          cy.get('@listItems')
-            .eq(index)
-            .find('a')
-            .should('have.text', item.title)
-            .should('have.attr', 'href', item.url)
-        })
+        investmentLinks
+          .concat(exportLinks)
+          .concat(myTasksLinks)
+          .forEach((item, index) => {
+            cy.get('@listItems')
+              .eq(index)
+              .find('a')
+              .should('have.text', item.title)
+              .should('have.attr', 'href', item.url)
+          })
       })
     }
   )
+
+  context('When only My Tasks is displayed', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component
+            hasInvestmentFeatureGroup={false}
+            hasExportFeatureGroup={false}
+          />
+        </DataHubProvider>
+      )
+
+      cy.get('[data-test="link-list-item"]').as('listItems')
+    })
+
+    it('should render all my tasks menu items', () => {
+      cy.get('@listItems').should('have.length', 1)
+
+      myTasksLinks.forEach((item, index) => {
+        cy.get('@listItems')
+          .eq(index)
+          .find('a')
+          .should('have.text', item.title)
+          .should('have.attr', 'href', item.url)
+      })
+    })
+  })
 })
