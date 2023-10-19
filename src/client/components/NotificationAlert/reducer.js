@@ -11,7 +11,7 @@ const initialState = {
     no_recent_interaction: 0,
     new_interaction: 0,
   },
-  myTasks: {
+  my_tasks: {
     due_date_approaching: 0,
   },
 }

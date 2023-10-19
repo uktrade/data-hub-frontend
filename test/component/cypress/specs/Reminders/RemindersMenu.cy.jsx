@@ -19,7 +19,7 @@ describe('RemindersMenu', () => {
           no_recent_interaction: 4,
           new_interaction: 8,
         },
-        myTasks: {
+        my_tasks: {
           due_date_approaching: 5,
         },
       }}

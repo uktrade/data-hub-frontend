@@ -111,7 +111,7 @@ export const RemindersMenu = ({
           to={urls.reminders.myTasks.dueDateApproaching()}
           pathname={location.pathname}
         >
-          {`${MY_TASKS_DUE_DATE_APPROACHING_LABEL} (${reminderSummary.myTasks.due_date_approaching})`}
+          {`${MY_TASKS_DUE_DATE_APPROACHING_LABEL} (${reminderSummary.my_tasks.due_date_approaching})`}
         </MenuItem>
       </Menu>
     </>

@@ -34,7 +34,7 @@ describe('Dashboard reminder summary', () => {
           export: {
             no_recent_interaction: 4,
           },
-          myTasks: {
+          my_tasks: {
             due_date_approaching: 7,
           },
         },
@@ -122,7 +122,7 @@ describe('Dashboard reminder summary', () => {
             no_recent_interaction: 0,
             new_interaction: 0,
           },
-          myTasks: {
+          my_tasks: {
             due_date_approaching: 0,
           },
         },
