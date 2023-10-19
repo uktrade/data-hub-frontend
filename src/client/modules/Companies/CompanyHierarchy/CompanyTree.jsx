@@ -344,20 +344,21 @@ const HierarchyItem = ({
                 {hqLabels[company.headquarter_type.name]}
               </HierarchyTag>
             )}
-            {company.address?.country.name && (
-              <HierarchyTag
-                colour="blue"
-                data-test={`${companyName}-country-tag`}
-              >
-                {company.address.country.name}
-              </HierarchyTag>
-            )}
+            {company.address?.country.name !== 'United Kingdom' &&
+              company.address?.country.name && (
+                <HierarchyTag
+                  colour="blue"
+                  data-test={`${companyName}-country-tag`}
+                >
+                  {company.address.country.name}
+                </HierarchyTag>
+              )}
             {company.uk_region?.name && (
               <HierarchyTag
                 colour="blue"
                 data-test={`${companyName}-uk-region-tag`}
               >
-                {company.uk_region.name}
+                {company.uk_region.name}, UK
               </HierarchyTag>
             )}
             {(company.number_of_employees || company.employee_range?.name) && (
