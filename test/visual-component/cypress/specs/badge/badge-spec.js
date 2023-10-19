@@ -1,5 +1,7 @@
 describe('Default', () => {
   it('should render the default component correctly', () => {
+    // Temporary fix on flaky test
+    cy.wait(1000)
     cy.visit('/iframe.html?id=badge--default')
     cy.get('#storybook-root').should('be.visible').compareSnapshot('default')
   })
