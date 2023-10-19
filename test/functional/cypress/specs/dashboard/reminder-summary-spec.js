@@ -25,7 +25,7 @@ describe('Dashboard reminder summary', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/reminder/summary', {
         body: {
-          count: 12,
+          count: 19,
           investment: {
             estimated_land_date: 1,
             no_recent_interaction: 2,
@@ -33,6 +33,9 @@ describe('Dashboard reminder summary', () => {
           },
           export: {
             no_recent_interaction: 4,
+          },
+          myTasks: {
+            due_date_approaching: 7,
           },
         },
       }).as('apiRequest')
@@ -118,6 +121,9 @@ describe('Dashboard reminder summary', () => {
           export: {
             no_recent_interaction: 0,
             new_interaction: 0,
+          },
+          myTasks: {
+            due_date_approaching: 0,
           },
         },
       }).as('apiRequest')
