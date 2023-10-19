@@ -39,8 +39,9 @@ const ReminderSummary = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
-  const showInvestment = hasInvestmentFeatureGroup && !!summary
-  const showExport = hasExportFeatureGroup && !!summary
+  const hasSummary = !!summary
+  const showInvestment = hasInvestmentFeatureGroup && hasSummary
+  const showExport = hasExportFeatureGroup && hasSummary
   return (
     <div data-test="reminder-summary">
       {showInvestment && (
@@ -71,6 +72,26 @@ const ReminderSummary = ({
               <StyledListItem
                 key={reminder.name}
                 data-test={`export-${kebabCase(reminder.name)}`}
+              >
+                <StyledReminderLink href={reminder.url}>
+                  {reminder.name}
+                </StyledReminderLink>
+                &nbsp;({reminder.count})
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </>
+      )}
+      {hasSummary && (
+        <>
+          <StyledSubHeading data-test="my-tasks-heading">
+            My Tasks
+          </StyledSubHeading>
+          <StyledList>
+            {summary.myTasks.map((reminder) => (
+              <StyledListItem
+                key={reminder.name}
+                data-test={`my-tasks-${kebabCase(reminder.name)}`}
               >
                 <StyledReminderLink href={reminder.url}>
                   {reminder.name}
