@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash'
+import { isEmpty, isNull } from 'lodash'
 import { connect } from 'react-redux'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
@@ -75,7 +75,9 @@ const FlashMessages = ({
           and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
           */
         const parts = String(type).split(':')
-        return parts.length > 1
+        return isNull(messages[0])
+          ? null
+          : parts.length > 1
           ? messages.map(({ body, heading }) => (
               <li key={body}>
                 <StyledStatusMessage colour={messageColours[parts[0]]}>
