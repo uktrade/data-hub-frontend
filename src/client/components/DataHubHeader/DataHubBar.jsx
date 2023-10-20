@@ -184,7 +184,7 @@ const DataHubBar = ({
         >
           {DATA_WORKSPACE}
         </NavigationLink>
-        {hasFeatureGroup && <NotificationAlert />}
+        <NotificationAlert />
         <MobileMenuButton
           showVerticalNav={showVerticalNav}
           onClick={() => onShowVerticalNav(!showVerticalNav)}

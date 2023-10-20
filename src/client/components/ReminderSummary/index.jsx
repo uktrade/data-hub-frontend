@@ -122,6 +122,7 @@ ReminderSummary.propTypes = {
     count: PropTypes.number,
     investment: reminderType,
     export: reminderType,
+    my_tasks: reminderType,
   }),
   hasExportFeatureGroup: PropTypes.bool.isRequired,
   hasInvestmentFeatureGroup: PropTypes.bool.isRequired,

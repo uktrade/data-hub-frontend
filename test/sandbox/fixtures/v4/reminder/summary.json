@@ -1,5 +1,5 @@
 {
-  "count": 289,
+  "count": 307,
   "investment": {
     "estimated_land_date": 230,
     "no_recent_interaction": 10,
@@ -10,6 +10,6 @@
     "new_interaction": 16
   },
   "my_tasks": {
-    "due_date_approaching": 16
+    "due_date_approaching": 2
   }
 }

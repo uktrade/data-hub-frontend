@@ -84,7 +84,9 @@ export const state2props = (state) => {
       ? urls.reminders.investments.estimatedLandDate()
       : hasInvestmentFeatureGroup
       ? urls.reminders.investments.estimatedLandDate()
-      : urls.reminders.exports.noRecentInteractions()
+      : hasExportFeatureGroup
+      ? urls.reminders.exports.noRecentInteractions()
+      : urls.reminders.myTasks.dueDateApproaching()
 
   return {
     reminderSummary,
