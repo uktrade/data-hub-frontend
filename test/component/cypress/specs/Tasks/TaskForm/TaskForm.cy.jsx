@@ -18,7 +18,7 @@ import { transformAPIValuesForForm } from '../../../../../../src/client/modules/
 import advisersListFaker, {
   adviserFaker,
 } from '../../../../../functional/cypress/fakers/advisers'
-import { OPTION_NO, OPTION_YES } from '../../../../../../src/apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 
 describe('Task form', () => {

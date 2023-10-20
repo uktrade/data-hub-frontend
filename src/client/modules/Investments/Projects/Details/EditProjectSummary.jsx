@@ -41,7 +41,7 @@ import {
 } from '../transformers'
 import { transformProjectSummaryForApi } from './transformers'
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
-import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
 import { state2props, TASK_EDIT_INVESTMENT_PROJECT_SUMMARY } from './state'
 import ProjectLayout from '../../../../components/Layout/ProjectLayout'

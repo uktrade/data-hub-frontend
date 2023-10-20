@@ -1,5 +1,4 @@
-import { OPTION_YES } from '../../../../apps/constants'
-import { DATE_LONG_FORMAT_3 } from '../../../../common/constants'
+import { OPTION_YES, DATE_LONG_FORMAT_3 } from '../../../../common/constants'
 import {
   formatWithoutParsing,
   transformValueForAPI,

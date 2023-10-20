@@ -5,7 +5,7 @@ import groupExportCountries from '../../../../../../lib/group-export-countries'
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} from '../../../../../constants'
+} from '../../../../../../common/constants'
 import { groupHistoryItems } from '../group-history-items'
 import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 

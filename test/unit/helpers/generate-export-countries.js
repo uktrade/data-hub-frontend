@@ -1,6 +1,6 @@
 const { faker } = require('@faker-js/faker')
 
-const { EXPORT_INTEREST_STATUS } = require('../../../src/apps/constants')
+const { EXPORT_INTEREST_STATUS } = require('../../../src/common/constants')
 
 function generateCountries(length) {
   return Array.from({ length }).map(() => ({

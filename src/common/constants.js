@@ -40,6 +40,14 @@ const FORM_LAYOUT = {
 const METHOD_PATCH = 'PATCH'
 const METHOD_POST = 'POST'
 
+// The order here controls the order they are displayed to the user
+// either on a form or when displaying the values
+const EXPORT_INTEREST_STATUS = {
+  EXPORTING_TO: 'currently_exporting',
+  FUTURE_INTEREST: 'future_interest',
+  NOT_INTERESTED: 'not_interested',
+}
+
 module.exports = {
   DATE_DAY_LONG_FORMAT,
   DATE_DAY_MONTH,
@@ -63,4 +71,6 @@ module.exports = {
   FORM_LAYOUT,
   METHOD_PATCH,
   METHOD_POST,
+  EXPORT_INTEREST_STATUS,
+  EXPORT_INTEREST_STATUS_VALUES: Object.values(EXPORT_INTEREST_STATUS),
 }

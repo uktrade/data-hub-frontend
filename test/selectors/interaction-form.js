@@ -1,5 +1,5 @@
 const typeaheadId = '#group-field-dit_participants'
-const { EXPORT_INTEREST_STATUS } = require('../../src/apps/constants')
+const { EXPORT_INTEREST_STATUS } = require('../../src/common/constants')
 
 module.exports = {
   form: 'form',

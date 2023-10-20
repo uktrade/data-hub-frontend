@@ -5,7 +5,7 @@ import {
   checkIfItemHasValue,
 } from '../transformers'
 import { transformDateObjectToDateString } from '../../../../transformers'
-import { OPTION_NO, OPTION_YES } from '../../../../../apps/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
 const setConditionalArrayValue = (radioValue, array) =>

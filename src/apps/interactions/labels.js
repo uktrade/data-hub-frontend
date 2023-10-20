@@ -1,4 +1,4 @@
-const { EXPORT_INTEREST_STATUS } = require('../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../common/constants')
 
 const countriesDiscussed = {
   were_countries_discussed: 'Were any countries discussed?',
