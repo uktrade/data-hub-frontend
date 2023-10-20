@@ -1,4 +1,3 @@
-
 import { transformTaskFormValuesForAPI } from '../../../Tasks/TaskForm/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { convertDateToFieldDateObject } from '../../../../utils/date'
