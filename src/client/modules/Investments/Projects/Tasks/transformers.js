@@ -17,8 +17,7 @@ export const transformFormValuesForAPI = (
 })
 
 const transformAdvisor = (advisers, currentAdviserId) =>
-  advisers.length === 1 &&
-  advisers.find((adviser) => adviser.id === currentAdviserId)
+  advisers.length === 1 && advisers[0].id === currentAdviserId
     ? OPTIONS.ME
     : OPTIONS.SOMEONE_ELSE
 
