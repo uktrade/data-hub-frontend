@@ -20,11 +20,6 @@ import { transformBoolToRadioOptionWithNullCheck } from '../Investments/Projects
 import { TASK_EDIT_INVOICE_DETAILS } from './state'
 import { transformInvoiceDetailsForApi } from './transformers'
 
-const billingAddressUrl = (orderId) =>
-  `${urls.omis.edit.billingAddress(
-    orderId
-  )}?returnUrl=${urls.omis.edit.invoiceDetails(orderId)}`
-
 export const BillingAddress = ({ company, order }) => {
   const address = order.billingAddressCountry
     ? {
@@ -65,7 +60,7 @@ export const BillingAddress = ({ company, order }) => {
           <br />
           <br />
           <Link
-            href={billingAddressUrl(order.id)}
+            href={urls.omis.edit.billingAddress(order.id)}
             data-test="billing-address-link"
           >
             Add a different billing address
@@ -73,7 +68,7 @@ export const BillingAddress = ({ company, order }) => {
         </InsetText>
       ) : (
         <Link
-          href={billingAddressUrl(order.id)}
+          href={urls.omis.edit.billingAddress(order.id)}
           data-test="order-billing-address"
         >
           Change billing address
