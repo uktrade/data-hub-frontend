@@ -22,7 +22,11 @@ const MyTasksDueDateApproachingItemRenderer = (item) => (
           <ul>
             <li>Received {format(item.created_on, DATE_LONG_FORMAT_1)}</li>
             <li>
-              <ItemHeaderLink href={`${urls.tasks.details(item.id)}`}>
+              <ItemHeaderLink
+                href={`${urls.tasks.details(
+                  item.investment_project_task.task.id
+                )}`}
+              >
                 {item.event}
               </ItemHeaderLink>
             </li>
@@ -32,13 +36,24 @@ const MyTasksDueDateApproachingItemRenderer = (item) => (
           <ul>
             <li>
               <ItemHint>Company:</ItemHint>{' '}
-              <Link href={`${urls.companies.detail(item.company.id)}`}>
-                {item.company.name}
+              <Link
+                href={`${urls.companies.detail(
+                  item.investment_project_task.investment_project
+                    .investor_company.id
+                )}`}
+              >
+                {
+                  item.investment_project_task.investment_project
+                    .investor_company.name
+                }
               </Link>
             </li>
             <li>
               <ItemHint>Date due:</ItemHint>{' '}
-              {format(item.due_date, DATE_LONG_FORMAT_1)}
+              {format(
+                item.investment_project_task.task.due_date,
+                DATE_LONG_FORMAT_1
+              )}
             </li>
           </ul>
         </ItemContent>

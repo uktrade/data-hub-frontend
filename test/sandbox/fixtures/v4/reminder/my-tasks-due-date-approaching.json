@@ -4,23 +4,45 @@
   "previous": null,
   "results": [
     {
-      "id": "147b9e60-d500-49b5-9cf2-d24a80711dff",
-      "created_on": "2023-12-25T13:38:06.423535Z",
-      "event": "Super Awesome Task",
-      "due_date": "2024-12-25",
-      "company": {
-        "id": "b3f2c1f4-0c43-4739-86e2-f9d12556a497",
-        "name": "Super Awesome Company"
+      "id": "1114c095-eac6-452f-a78e-2884b1f447be",
+      "created_on": "2023-10-20T10:34:31.479632Z",
+      "event": "Super Awesome Party",
+      "investment_project_task": {
+        "id": "5aae2e38-0e75-4481-9cd9-3e6eb41f8523",
+        "investment_project": {
+          "name": "New airport",
+          "project_code": "DHP-00000010",
+          "investor_company": {
+            "name": "Venus Ltd",
+            "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+          },
+          "id": "fbac25ef-8437-4db6-97db-551210daf9a6"
+        },
+        "task": {
+          "due_date": "2023-10-27",
+          "id": "6a00b5aa-77f7-4fc2-a9f0-4b03abe4cf53"
+        }
       }
     },
     {
       "id": "abf2c1f4-0c43-4739-86e2-f9d12556a497",
       "created_on": "2023-05-10T14:00:06.423535Z",
       "event": "Super Amazing Task",
-      "due_date": "2023-12-31",
-      "company": {
-        "id": "17537c2c-4b47-4910-a3ed-e89ac2d9338a",
-        "name": "Super Amazing Company"
+      "investment_project_task": {
+        "id": "5aae2e38-0e75-4481-9cd9-3e6eb41f8523",
+        "investment_project": {
+          "name": "New Planes",
+          "project_code": "DHP-00000010",
+          "investor_company": {
+            "name": "Super Amazing Company",
+            "id": "17537c2c-4b47-4910-a3ed-e89ac2d9338a"
+          },
+          "id": "fbac25ef-8437-4db6-97db-551210daf9a6"
+        },
+        "task": {
+          "due_date": "2023-12-31",
+          "id": "6a00b5aa-77f7-4fc2-a9f0-4b03abe4cf53"
+        }
       }
     }
   ]
