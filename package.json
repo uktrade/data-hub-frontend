@@ -114,7 +114,7 @@
     "http-proxy-middleware": "^2.0.4",
     "joi": "^17.10.2",
     "lodash": "^4.17.21",
-    "markdown-it": "^13.0.0",
+    "markdown-it": "^13.0.2",
     "mini-css-extract-plugin": "^2.7.6",
     "morgan": "^1.10.0",
     "numeral": "^2.0.6",
