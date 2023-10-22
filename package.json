@@ -112,7 +112,7 @@
     "history": "^4.10.1",
     "hmpo-form-wizard": "^13.0.0",
     "http-proxy-middleware": "^2.0.4",
-    "joi": "^17.10.2",
+    "joi": "^17.11.0",
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.0",
     "mini-css-extract-plugin": "^2.7.6",
