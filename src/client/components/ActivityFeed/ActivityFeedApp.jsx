@@ -77,7 +77,8 @@ export default class ActivityFeedApp extends React.Component {
           apiEndpoint,
           from,
           numberOfItems,
-          queryParams
+          queryParams,
+          this.props.isOverview
         )
 
       const allActivities = activities.concat(newActivities)
@@ -98,7 +99,13 @@ export default class ActivityFeedApp extends React.Component {
     }
   }
 
-  static async fetchActivities(apiEndpoint, from, numberOfItems, queryParams) {
+  static async fetchActivities(
+    apiEndpoint,
+    from,
+    numberOfItems,
+    queryParams,
+    isOverview
+  ) {
     const { activityType, feedType } = queryParams
 
     const params = {
@@ -109,6 +116,12 @@ export default class ActivityFeedApp extends React.Component {
     }
 
     const { data } = await axios.get(apiEndpoint, { params })
+
+    if (isOverview && data.activities && data.activities.length) {
+      data.activities = data.activities.filter(
+        (activity) => activity['dit:application'] !== 'maxemail'
+      )
+    }
 
     const { total, activities } = data
 
