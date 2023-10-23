@@ -48,10 +48,11 @@ exports.summary = function (req, res) {
 }
 
 exports.myTasksDueDateApproaching = function (req, res) {
+  const count = 11
   res.json({
-    count: 1,
+    count: count,
     next: null,
     previous: null,
-    results: myTasksDueDateApproachingReminderListFaker(),
+    results: myTasksDueDateApproachingReminderListFaker(count),
   })
 }
