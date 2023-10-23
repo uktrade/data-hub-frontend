@@ -57,4 +57,31 @@ export const exportReminderFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+export const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
+  id: faker.string.uuid(),
+  created_on: relativeDateFaker({ minDays: -365, maxDays: 0 }),
+  event: faker.lorem.words(),
+  investment_project_task: {
+    id: faker.string.uuid(),
+    investment_project: {
+      id: faker.string.uuid(),
+      name: faker.lorem.words(),
+      project_code: investmentProjectCodeFaker(),
+      investor_company: nestedCompanyFaker(),
+    },
+    task: {
+      id: faker.string.uuid(),
+      due_date: relativeDateFaker({ minDays: 0, maxDays: 365 }),
+    },
+  },
+  ...overrides,
+})
+
+export const myTasksReminderListFaker = (length = 1, overrides) =>
+  listFaker({
+    fakerFunction: myTasksDueDateApproachingReminderFaker,
+    length,
+    overrides,
+  })
+
 export default reminderListFaker

@@ -4,60 +4,107 @@ import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
-import { ListItem, ItemHeader, ItemContent, ItemHeaderLink } from './styled'
+import {
+  ListItem,
+  ItemHeader,
+  ItemContent,
+  ItemHeaderLink,
+  DeleteButton,
+  RightCol,
+  ItemFooter,
+} from './styled'
 import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
 import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
-import { GREY_1 } from '../../../utils/colours'
+import { DARK_GREY, GREY_1 } from '../../../utils/colours'
 
 const ItemHint = styled('span')({
   color: GREY_1,
 })
 
-const MyTasksDueDateApproachingItemRenderer = (item) => (
+const MyTasksDueDateApproachingItemRenderer = (
+  item,
+  onDeleteReminder,
+  disableDelete
+) => (
   <ListItem key={item.id} data-test="reminders-list-item">
     <GridRow>
-      <GridCol>
-        <ItemHeader data-test="item-header">
-          <ul>
-            <li>Received {format(item.created_on, DATE_LONG_FORMAT_1)}</li>
-            <li>
-              <ItemHeaderLink
-                href={`${urls.tasks.details(
-                  item.investment_project_task.task.id
-                )}`}
+      {item.deleted ? (
+        <GridCol>
+          <ItemHeader data-test="item-header">Reminder deleted</ItemHeader>
+          <ItemContent colour={DARK_GREY} data-test="item-content">
+            {item.event} for{' '}
+            {item.investment_project_task.investment_project.name}
+          </ItemContent>
+          <ItemFooter data-test="item-footer"></ItemFooter>
+        </GridCol>
+      ) : (
+        <>
+          <GridCol>
+            <ItemHeader data-test="item-header">
+              <ul>
+                <li>Received {format(item.created_on, DATE_LONG_FORMAT_1)}</li>
+                <li>
+                  <ItemHeaderLink
+                    href={`${urls.tasks.details(
+                      item.investment_project_task.task.id
+                    )}`}
+                  >
+                    {item.event}
+                  </ItemHeaderLink>
+                </li>
+              </ul>
+            </ItemHeader>
+            <ItemContent data-test="item-content">
+              <ul>
+                <li>
+                  <ItemHint>Company:</ItemHint>{' '}
+                  <Link
+                    href={`${urls.companies.detail(
+                      item.investment_project_task.investment_project
+                        .investor_company.id
+                    )}`}
+                  >
+                    {
+                      item.investment_project_task.investment_project
+                        .investor_company.name
+                    }
+                  </Link>
+                </li>
+                <li>
+                  <ItemHint>Date due:</ItemHint>{' '}
+                  {format(
+                    item.investment_project_task.task.due_date,
+                    DATE_LONG_FORMAT_1
+                  )}
+                </li>
+              </ul>
+            </ItemContent>
+            {onDeleteReminder && (
+              <DeleteButton
+                isMobile={true}
+                data-test="delete-button"
+                onClick={() => onDeleteReminder(item.id)}
+                disabled={disableDelete}
               >
-                {item.event}
-              </ItemHeaderLink>
-            </li>
-          </ul>
-        </ItemHeader>
-        <ItemContent data-test="item-content">
-          <ul>
-            <li>
-              <ItemHint>Company:</ItemHint>{' '}
-              <Link
-                href={`${urls.companies.detail(
-                  item.investment_project_task.investment_project
-                    .investor_company.id
-                )}`}
+                Delete reminder
+              </DeleteButton>
+            )}
+          </GridCol>
+          {/* Display on Tablet and Desktop only */}
+          {onDeleteReminder && (
+            <RightCol setWidth="one-quarter">
+              <DeleteButton
+                data-test="delete-button"
+                onClick={() => onDeleteReminder(item.id)}
+                disabled={disableDelete}
               >
-                {
-                  item.investment_project_task.investment_project
-                    .investor_company.name
-                }
-              </Link>
-            </li>
-            <li>
-              <ItemHint>Date due:</ItemHint>{' '}
-              {format(
-                item.investment_project_task.task.due_date,
-                DATE_LONG_FORMAT_1
-              )}
-            </li>
-          </ul>
-        </ItemContent>
-      </GridCol>
+                Delete reminder
+              </DeleteButton>
+            </RightCol>
+          )}
+        </>
+      )}
     </GridRow>
   </ListItem>
 )

@@ -226,6 +226,8 @@ import {
   TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
   TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
   TASK_GET_DUE_DATE_APPROACHING_REMINDERS,
+  TASK_DELETE_DUE_DATE_APPROACHING_REMINDER,
+  TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -513,6 +515,10 @@ export const tasks = {
     reminders.getOutstandingPropositions,
   [TASK_GET_DUE_DATE_APPROACHING_REMINDERS]:
     reminders.getMyTasksDueDateApproachingReminders,
+  [TASK_DELETE_DUE_DATE_APPROACHING_REMINDER]:
+    reminders.deleteMyTasksDueDateApproachingReminder,
+  [TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER]:
+    reminders.getNextMyTasksDueDateApproachingReminder,
   [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
   [TASK_ARCHIVE_CONTACT]: archiveContact,
   [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,

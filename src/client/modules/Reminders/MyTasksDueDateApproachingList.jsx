@@ -7,9 +7,18 @@ import qs from 'qs'
 
 import { BLACK } from '../../../client/utils/colours'
 
-import { REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED } from '../../actions'
+import {
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED,
+} from '../../actions'
 
-import { ID, TASK_GET_DUE_DATE_APPROACHING_REMINDERS } from './state'
+import {
+  ID,
+  TASK_DELETE_DUE_DATE_APPROACHING_REMINDER,
+  TASK_GET_DUE_DATE_APPROACHING_REMINDERS,
+  TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
+} from './state'
 
 import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
@@ -18,6 +27,7 @@ import { CollectionSort, RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
 import CollectionList from './CollectionList'
 import Task from '../../components/Task'
+import Effect from '../../components/Effect'
 
 const Summary = styled('p')({
   color: BLACK,
@@ -26,7 +36,7 @@ const Summary = styled('p')({
 })
 
 const MyTasksDueDateApproachingList = ({ dueDateApproachingReminders }) => {
-  const { results, count } = dueDateApproachingReminders
+  const { results, count, nextPending } = dueDateApproachingReminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
@@ -56,13 +66,46 @@ const MyTasksDueDateApproachingList = ({ dueDateApproachingReminders }) => {
         }}
       >
         {() => (
-          <>
-            <CollectionList
-              results={results}
-              itemRenderer={MyTasksDueDateApproachingItemRenderer}
-            />
-            <RoutedPagination initialPage={page} items={count || 0} />
-          </>
+          <Task>
+            {(getTask) => {
+              const deleteTask = getTask(
+                TASK_DELETE_DUE_DATE_APPROACHING_REMINDER,
+                ID
+              )
+              const getNextTask = getTask(
+                TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
+                ID
+              )
+              return (
+                <>
+                  <Effect
+                    dependencyList={[nextPending]}
+                    effect={() =>
+                      nextPending &&
+                      getNextTask.start({
+                        payload: { page, sortby: qsParams.sortby },
+                        onSuccessDispatch:
+                          REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT,
+                      })
+                    }
+                  />
+                  <CollectionList
+                    results={results}
+                    itemRenderer={MyTasksDueDateApproachingItemRenderer}
+                    disableDelete={deleteTask.status || nextPending}
+                    onDeleteReminder={(reminderId) => {
+                      deleteTask.start({
+                        payload: { id: reminderId },
+                        onSuccessDispatch:
+                          REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED,
+                      })
+                    }}
+                  />
+                  <RoutedPagination initialPage={page} items={count || 0} />
+                </>
+              )
+            }}
+          </Task>
         )}
       </Task.Status>
     </>

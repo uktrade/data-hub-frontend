@@ -159,6 +159,24 @@ export const getMyTasksDueDateApproachingReminders = ({
     })
     .then(({ data }) => data)
 
+export const getMyTasksNextDueDateApproachingReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/my-tasks-due-date-approaching', {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
+
+export const deleteMyTasksDueDateApproachingReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-due-date-approaching/${id}`)
+
 // ********************** Summary ***************************
 
 const transformSubscriptionSummary = ({ data }) => ({
