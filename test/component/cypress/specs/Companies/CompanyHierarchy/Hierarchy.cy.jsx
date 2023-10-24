@@ -18,7 +18,7 @@ import {
 import { format } from '../../../../../../src/client/utils/date'
 
 const {
-  company: { dnbGlobalUltimate },
+  company: { dnbGlobalUltimate, allOverviewDetails },
 } = require('../../../../../functional/cypress/fixtures')
 
 const companyNoRelatedRecords = companyTreeFaker({
@@ -33,6 +33,17 @@ const companyNoSubsidiaries = companyTreeFaker({
   globalCompany: {
     ultimate_global_company: companyTreeItemFaker({
       id: dnbGlobalUltimate.id,
+    }),
+    ultimate_global_companies_count: 1,
+    family_tree_companies_count: 1,
+  },
+})
+
+const companyNoUkRegion = companyTreeFaker({
+  globalCompany: {
+    ultimate_global_company: companyTreeItemFaker({
+      id: dnbGlobalUltimate.id,
+      uk_region: null,
     }),
     ultimate_global_companies_count: 1,
     family_tree_companies_count: 1,
@@ -98,6 +109,12 @@ reducedTreeCompanyTree.ultimate_global_companies_count = 15000
 
 const companyOnlyImmediateSubsidiariesCompanyName = kebabCase(
   companyOnlyImmediateSubsidiaries.ultimate_global_company.name
+)
+
+const companyWithAllDetailsCompanyName = kebabCase(allOverviewDetails.name)
+
+const companyNoUkRegionCompanyName = kebabCase(
+  companyNoUkRegion.ultimate_global_company.name
 )
 
 describe('D&B Company Tree Hierarchy component', () => {
@@ -275,10 +292,6 @@ describe('D&B Company Tree Hierarchy component', () => {
       cy.get(`[data-test=${subsidiaryCompanyName}-uk-region-tag]`).should(
         'contain.text',
         subsidiaryTagContent.uk_region.name
-      )
-      cy.get(`[data-test=${subsidiaryCompanyName}-country-tag]`).should(
-        'contain.text',
-        subsidiaryTagContent.address.country.name
       )
       cy.get(`[data-test=${subsidiaryCompanyName}-one-list-tag]`).should(
         'contain.text',
@@ -589,6 +602,50 @@ describe('D&B Company Tree Hierarchy component', () => {
         'have.text',
         `${reducedTreeCompanyTree.family_tree_companies_count} companies out of ${reducedTreeCompanyTree.ultimate_global_companies_count}`
       )
+    })
+  })
+
+  context('When a company only has UK region and a country set', () => {
+    beforeEach(() => {
+      cy.mount(
+        <Component
+          familyTree={companyOnlyImmediateSubsidiaries}
+          requestedCompanyId={allOverviewDetails.id}
+        />
+      )
+    })
+
+    it('should only display the UK region tag', () => {
+      cy.get(
+        `[data-test=${companyOnlyImmediateSubsidiariesCompanyName}-uk-region-tag]`
+      ).should(
+        'have.text',
+        `${companyOnlyImmediateSubsidiaries.ultimate_global_company.uk_region.name}, UK`
+      )
+      cy.get(
+        `[data-test=${companyWithAllDetailsCompanyName}-country-tag]`
+      ).should('not.exist')
+    })
+  })
+
+  context('When a company only has country and no Uk region set', () => {
+    beforeEach(() => {
+      cy.mount(
+        <Component
+          familyTree={companyNoUkRegion}
+          requestedCompanyId={dnbGlobalUltimate.id}
+        />
+      )
+    })
+
+    it('should only display the country tag', () => {
+      cy.get(`[data-test=${companyNoUkRegionCompanyName}-country-tag]`).should(
+        'have.text',
+        `${companyNoUkRegion.ultimate_global_company.address.country.name}`
+      )
+      cy.get(
+        `[data-test=${companyNoUkRegionCompanyName}-uk-region-tag]`
+      ).should('not.exist')
     })
   })
 })
