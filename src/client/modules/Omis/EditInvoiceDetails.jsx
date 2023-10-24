@@ -83,7 +83,7 @@ export const FieldVATStatus = ({ order }) => (
     name="vat_status"
     label="VAT category"
     hint="Choose a VAT category based on the billing address country"
-    initialValue={order.vatStatus}
+    initialValue={order ? order.vatStatus : null}
     options={[
       {
         label: 'Non-EU company',
@@ -113,7 +113,7 @@ export const FieldVATStatus = ({ order }) => (
                   Validate the EU VAT number
                 </NewWindowLink>
               }
-              initialValue={order.vatNumber}
+              initialValue={order ? order.vatNumber : null}
               validate={validateVATNumber}
             />
 
@@ -121,9 +121,11 @@ export const FieldVATStatus = ({ order }) => (
               name="vat_verified"
               label="Has a valid VAT number been supplied?"
               required="Has a valid VAT number been supplied?"
-              initialValue={transformBoolToRadioOptionWithNullCheck(
-                order.vatVerified
-              )}
+              initialValue={
+                order
+                  ? transformBoolToRadioOptionWithNullCheck(order.vatVerified)
+                  : null
+              }
               options={OPTIONS_YES_NO.map((option) => ({
                 ...option,
               }))}

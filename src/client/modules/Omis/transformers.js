@@ -77,3 +77,14 @@ export const transformBillingAddressForApi = ({ orderId, values }) => {
     billing_address_country: country,
   }
 }
+
+export const transformVatStatusForApi = ({ orderId, values }) => {
+  const { vat_status, vat_number, vat_verified } = values
+
+  return {
+    id: orderId,
+    vat_status,
+    vat_number,
+    vat_verified: transformRadioOptionToBool(vat_verified),
+  }
+}
