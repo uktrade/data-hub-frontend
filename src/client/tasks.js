@@ -518,7 +518,7 @@ export const tasks = {
   [TASK_DELETE_DUE_DATE_APPROACHING_REMINDER]:
     reminders.deleteMyTasksDueDateApproachingReminder,
   [TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER]:
-    reminders.getNextMyTasksDueDateApproachingReminder,
+    reminders.getMyTasksNextDueDateApproachingReminder,
   [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
   [TASK_ARCHIVE_CONTACT]: archiveContact,
   [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,

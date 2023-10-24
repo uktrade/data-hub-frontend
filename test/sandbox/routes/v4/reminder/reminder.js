@@ -1,14 +1,10 @@
 const { faker } = require('@faker-js/faker')
 
-const { addDays } = require('../../../../../src/client/utils/date')
 var summary = require('../../../fixtures/v4/reminder/summary.json')
 
 const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
-  created_on: faker.date.between({
-    from: addDays(new Date(), 0),
-    to: addDays(new Date(), 365),
-  }),
+  created_on: faker.date.past({ years: 1 }),
   event: faker.lorem.words(),
   investment_project_task: {
     id: faker.string.uuid(),
@@ -23,10 +19,7 @@ const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
     },
     task: {
       id: faker.string.uuid(),
-      due_date: faker.date.between({
-        from: addDays(new Date(), 0),
-        to: addDays(new Date(), 365),
-      }),
+      due_date: faker.date.future({ years: 1 }),
     },
   },
   ...overrides,

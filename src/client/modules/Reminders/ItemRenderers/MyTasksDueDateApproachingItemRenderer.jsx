@@ -11,7 +11,6 @@ import {
   ItemHeaderLink,
   DeleteButton,
   RightCol,
-  ItemFooter,
 } from './styled'
 import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
 import { format } from '../../../utils/date'
@@ -36,7 +35,6 @@ const MyTasksDueDateApproachingItemRenderer = (
             {item.event} for{' '}
             {item.investment_project_task.investment_project.name}
           </ItemContent>
-          <ItemFooter data-test="item-footer"></ItemFooter>
         </GridCol>
       ) : (
         <>
