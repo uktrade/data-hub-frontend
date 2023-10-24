@@ -3,8 +3,6 @@ const { cloneDeep, mapValues, merge, omit } = require('lodash')
 const createJourney = require('../create/steps')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
-const EditBillingAddressController = require('./controllers/billing-address')
-const EditVatStatusController = require('./controllers/vat-status')
 const CompleteOrderController = require('./controllers/complete-order')
 const CancelOrderController = require('./controllers/cancel-order')
 
@@ -52,20 +50,10 @@ const steps = merge({}, createSteps, {
       'billing_address_postcode',
       'billing_address_country',
     ],
-    next: [{ fn: 'nextCondition', next: 'vat-status' }, 'invoice-details'],
-    successMessage: 'Billing address saved',
-    controller: EditBillingAddressController,
   },
   '/vat-status': {
     heading: 'Confirm VAT status',
     fields: ['vat_status', 'vat_number', 'vat_verified'],
-    templatePath: 'omis/apps/edit/views',
-    template: 'vat-status.njk',
-    buttonText: 'Confirm VAT status',
-    backLink: null,
-    next: 'invoice-details',
-    successMessage: 'Billing address and VAT status saved',
-    controller: EditVatStatusController,
   },
   '/payment-reconciliation': {
     heading: 'Reconcile a payment',
