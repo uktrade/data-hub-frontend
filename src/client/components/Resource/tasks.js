@@ -60,6 +60,7 @@ import Task from './Task'
 import OrderServiceTypes from './OrderServiceTypes'
 import InvestmentProjectTasks from './InvestmentProjectTasks'
 import OrderInvoice from './OrderInvoice'
+import OrderCancellationReasons from './OrderCancellationReasons'
 
 export default {
   ...Company.tasks,
@@ -124,4 +125,5 @@ export default {
   ...OrderServiceTypes.tasks,
   ...InvestmentProjectTasks.tasks,
   ...OrderInvoice.tasks,
+  ...OrderCancellationReasons.tasks,
 }
