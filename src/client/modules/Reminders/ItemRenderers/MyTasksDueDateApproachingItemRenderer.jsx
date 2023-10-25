@@ -33,7 +33,7 @@ const MyTasksDueDateApproachingItemRenderer = (
           <ItemHeader data-test="item-header">Reminder deleted</ItemHeader>
           <ItemContent colour={DARK_GREY} data-test="item-content">
             {item.event} for{' '}
-            {item.investment_project_task.investment_project.name}
+            {item.task.investment_project_task.investment_project.name}
           </ItemContent>
         </GridCol>
       ) : (
@@ -43,11 +43,7 @@ const MyTasksDueDateApproachingItemRenderer = (
               <ul>
                 <li>Received {format(item.created_on, DATE_LONG_FORMAT_1)}</li>
                 <li>
-                  <ItemHeaderLink
-                    href={`${urls.tasks.details(
-                      item.investment_project_task.task.id
-                    )}`}
-                  >
+                  <ItemHeaderLink href={`${urls.tasks.details(item.task.id)}`}>
                     {item.event}
                   </ItemHeaderLink>
                 </li>
@@ -59,22 +55,19 @@ const MyTasksDueDateApproachingItemRenderer = (
                   <ItemHint>Company:</ItemHint>{' '}
                   <Link
                     href={`${urls.companies.detail(
-                      item.investment_project_task.investment_project
+                      item.task.investment_project_task.investment_project
                         .investor_company.id
                     )}`}
                   >
                     {
-                      item.investment_project_task.investment_project
+                      item.task.investment_project_task.investment_project
                         .investor_company.name
                     }
                   </Link>
                 </li>
                 <li>
                   <ItemHint>Date due:</ItemHint>{' '}
-                  {format(
-                    item.investment_project_task.task.due_date,
-                    DATE_LONG_FORMAT_1
-                  )}
+                  {format(item.task.due_date, DATE_LONG_FORMAT_1)}
                 </li>
               </ul>
             </ItemContent>

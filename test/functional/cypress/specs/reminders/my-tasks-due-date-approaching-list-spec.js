@@ -125,21 +125,17 @@ describe('My Tasks Due Date Approaching Reminders', () => {
         .should('contain', 'Received 1 January 2022')
         .should('contain', 'Super awesome title')
         .find('a')
-        .should(
-          'have.attr',
-          'href',
-          urls.tasks.details(reminders[0].investment_project_task.task.id)
-        )
+        .should('have.attr', 'href', urls.tasks.details(reminders[0].task.id))
       cy.get('@reminder')
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Company: ${reminders[0].investment_project_task.investment_project.investor_company.name}`
+          `Company: ${reminders[0].task.investment_project_task.investment_project.investor_company.name}`
         )
         .should(
           'contain',
           `Date due: ${formatWithoutParsing(
-            reminders[0].investment_project_task.task.due_date,
+            reminders[0].task.due_date,
             DATE_LONG_FORMAT_1
           )}`
         )
@@ -271,7 +267,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${reminders[4].event} for ${reminders[4].investment_project_task.investment_project.name}`
+          `${reminders[4].event} for ${reminders[4].task.investment_project_task.investment_project.name}`
         )
         .find('a')
         .should('not.exist')
@@ -286,20 +282,20 @@ describe('My Tasks Due Date Approaching Reminders', () => {
         .should(
           'contain',
           `Date due: ${formatWithoutParsing(
-            nextReminder.investment_project_task.task.due_date,
+            nextReminder.task.due_date,
             DATE_LONG_FORMAT_1
           )}`
         )
         .should(
           'contain',
-          `Company: ${nextReminder.investment_project_task.investment_project.investor_company.name}`
+          `Company: ${nextReminder.task.investment_project_task.investment_project.investor_company.name}`
         )
         .find('a')
         .should(
           'have.attr',
           'href',
           urls.companies.detail(
-            nextReminder.investment_project_task.investment_project
+            nextReminder.task.investment_project_task.investment_project
               .investor_company.id
           )
         )

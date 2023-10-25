@@ -6,20 +6,20 @@ const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   created_on: faker.date.past({ years: 1 }),
   event: faker.lorem.words(),
-  investment_project_task: {
+  task: {
     id: faker.string.uuid(),
-    investment_project: {
+    due_date: faker.date.future({ years: 1 }),
+    investment_project_task: {
       id: faker.string.uuid(),
-      name: faker.lorem.words(),
-      project_code: 'DHP-12345678',
-      investor_company: {
+      investment_project: {
         id: faker.string.uuid(),
-        name: faker.company.name(),
+        name: faker.lorem.words(),
+        project_code: 'DHP-12345678',
+        investor_company: {
+          id: faker.string.uuid(),
+          name: faker.company.name(),
+        },
       },
-    },
-    task: {
-      id: faker.string.uuid(),
-      due_date: faker.date.future({ years: 1 }),
     },
   },
   ...overrides,
