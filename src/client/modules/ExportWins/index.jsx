@@ -3,8 +3,8 @@ import { capitalize } from 'lodash'
 
 import { DefaultLayout } from '../../components'
 import TabNav from '../../components/TabNav'
-import Unconfirmed from './Unconfirmed'
-import Confirmed from './Confirmed'
+import UnconfirmedWinsList from './Unconfirmed/UnconfirmedWinsList'
+import ConfirmedWinsTable from './Confirmed/ConfirmedWinsTable'
 import urls from '../../../lib/urls'
 
 const TITLE = /([^\/]+$)/
@@ -27,11 +27,11 @@ const ExportWins = ({ location }) => {
         tabs={{
           [urls.companies.exportWins.unconfirmed()]: {
             label: 'Unconfirmed',
-            content: <Unconfirmed />,
+            content: <UnconfirmedWinsList />,
           },
           [urls.companies.exportWins.confirmed()]: {
             label: 'Confirmed',
-            content: <Confirmed />,
+            content: <ConfirmedWinsTable />,
           },
         }}
       />

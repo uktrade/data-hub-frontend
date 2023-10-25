@@ -166,6 +166,12 @@ import oneListDetailsReducer from './modules/Companies/CoreTeam/reducer'
 import { ID as TASK_DETAILS_ID } from './modules/Tasks/TaskDetails/state'
 import taskDetailsReducer from './modules/Tasks/TaskDetails/reducer'
 
+import { ID as EXPORT_WINS_CONFIRMED_ID } from './modules/ExportWins/Confirmed/state'
+import exportWinsConfirmedTaskReducer from './modules/ExportWins/Confirmed/reducer'
+
+import { ID as EXPORT_WINS_UNCONFIRMED_ID } from './modules/ExportWins/Unconfirmed/state'
+import exportWinsUnconfirmedTaskReducer from './modules/ExportWins/Unconfirmed/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -265,4 +271,6 @@ export const reducers = {
   [RECIPIENT_COMPANY_LIST_ID]: recipientCompanyReducer,
   [ONE_LIST_DETAILS_ID]: oneListDetailsReducer,
   [TASK_DETAILS_ID]: taskDetailsReducer,
+  [EXPORT_WINS_CONFIRMED_ID]: exportWinsConfirmedTaskReducer,
+  [EXPORT_WINS_UNCONFIRMED_ID]: exportWinsUnconfirmedTaskReducer,
 }
