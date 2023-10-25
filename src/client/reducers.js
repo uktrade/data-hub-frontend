@@ -44,6 +44,7 @@ import investmentProfileReducer from './modules/Investments/Profiles/reducer'
 import {
   INVESTMENT_PROJECTS_ID,
   INVESTMENT_PROJECT_ID,
+  ID as PROPOSITION_COMPLETE_ID,
 } from './modules/Investments/Projects/state'
 
 import {
@@ -285,4 +286,5 @@ export const reducers = {
   [OMIS_COMPANY_SELECT_ID]: omisCompanyReducer,
   [GET_MY_TASKS_ID]: getMyTasksReducer,
   [INTERACTION_ID]: getInteractionReducer,
+  [PROPOSITION_COMPLETE_ID]: investmentProjectsReducer,
 }

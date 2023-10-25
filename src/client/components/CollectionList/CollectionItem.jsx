@@ -51,7 +51,6 @@ const StyledSubheading = styled('h4')`
   font-weight: normal;
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
-
 const StyledButtonWrapper = styled('div')`
   margin-bottom: -30px;
   margin-right: 10px;
@@ -60,7 +59,9 @@ const StyledButtonWrapper = styled('div')`
     text-align: right;
   }
 `
-
+const StyledFooterWrapper = styled('div')`
+  margin-right: 10px;
+`
 const CollectionItem = ({
   headingText,
   subheading,
@@ -120,11 +121,20 @@ const CollectionItem = ({
     )}
     {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-    {metadataRenderer ? (
-      metadataRenderer(metadata)
-    ) : (
-      <Metadata rows={metadata} />
-    )}
+      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
+
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
+      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+      {footerRenderer && (
+        <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
+      )}
+    </ItemWrapper>
+  )
+}
 
     {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
   </ItemWrapper>
@@ -155,6 +165,7 @@ CollectionItem.propTypes = {
   type: PropTypes.string,
   metadataRenderer: PropTypes.func,
   titleRenderer: PropTypes.func,
+  footerRenderer: PropTypes.func,
 }
 
 export default CollectionItem

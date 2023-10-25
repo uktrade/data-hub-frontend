@@ -26,6 +26,9 @@ export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
   'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
 export const TASK_GET_INVESTMENT_PROJECT = 'TASK_GET_INVESTMENT_PROJECT'
 
+export const ID = 'propositionComplete'
+export const TASK_PROPOSITION_COMPLETE = 'TASK_PROPOSITION_COMPLETE'
+
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
 
@@ -77,6 +80,10 @@ export const state2props = ({ router, ...state }) => {
     },
   }
 }
+
+export const propositionState2props = (state) => ({
+  ...state[ID],
+})
 
 export const investmentProjectState2props = (state) => ({
   ...state[INVESTMENT_PROJECT_ID],
