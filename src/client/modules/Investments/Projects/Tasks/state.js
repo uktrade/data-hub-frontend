@@ -9,10 +9,12 @@ export const state2props = (state) => {
   const { project } = state[INVESTMENT_PROJECT_ID]
   const { task } = state[TASK_ID]
   const currentAdviserId = state.currentAdviserId
+  const activeFeatures = state.activeFeatures
 
   return {
     investmentProject: project,
     currentAdviserId,
     task: task && transformAPIValuesForForm(task, currentAdviserId),
+    activeFeatures: activeFeatures,
   }
 }
