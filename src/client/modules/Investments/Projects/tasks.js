@@ -58,3 +58,9 @@ export const getMetadata = (metadataUrls) => {
 
 export const getInvestmentProject = (id) =>
   apiProxyAxios.get(`v3/investment/${id}`).then(({ data }) => data)
+
+export const completeInvestmentProposition = (values) =>
+  apiProxyAxios.post(
+    `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/complete`,
+    values
+  )

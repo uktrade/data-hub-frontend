@@ -1,6 +1,8 @@
+const { get } = require('lodash')
 import React from 'react'
 import { Button, Link } from 'govuk-react'
 
+import { completeInvestmentProposition } from './tasks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 import {
@@ -191,6 +193,24 @@ export const transformNewTech = (newTechToUk) =>
 export const transformExportRevenue = (exportRevenue) =>
   exportRevenue ? EXPORT_REVENUE_TRUE : EXPORT_REVENUE_FALSE
 
+function transformErrorMessage(error) {
+  return get(error, 'non_field_errors', ['There has been an error'])[0]
+}
+
+async function handleCompleteClick(investmentProjectId, propositionId, writeFlashMessage) {
+  try {
+    await completeInvestmentProposition({
+      investmentProjectId,
+      propositionId
+    });
+    writeFlashMessage('success', 'Proposition completed');
+    window.location.href = urls.investments.projects.propositions(investmentProjectId);
+  } catch (error) {
+    writeFlashMessage('error', error.error || 'An error occurred');
+    window.location.href = urls.investments.projects.propositions(investmentProjectId);
+  }
+}
+
 export const transformPropositionToListItem = ({
   id,
   name,
@@ -199,7 +219,7 @@ export const transformPropositionToListItem = ({
   deadline,
   adviser,
   status,
-} = {}) => ({
+}, writeFlashMessage = {}) => ({
   id,
   metadata: [
     { label: 'Deadline', value: format(deadline, 'dd MMMM yyyy') },
@@ -236,10 +256,7 @@ export const transformPropositionToListItem = ({
         </Button>{' '}
         <Button
           as={Link}
-          href={urls.investments.projects.proposition.complete(
-            investment_project.id,
-            id
-          )}
+          onClick={() => handleCompleteClick(investment_project.id, id, writeFlashMessage)}
           data-test="complete-button"
         >
           Complete

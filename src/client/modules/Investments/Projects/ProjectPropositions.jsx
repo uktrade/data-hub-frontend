@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
@@ -13,7 +14,16 @@ import urls from '../../../../lib/urls'
 import { transformPropositionToListItem } from './transformers'
 import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
-const ProjectPropositions = () => {
+const mapDispatchToProps = (dispatch) => ({
+  writeFlashMessage: (messageType, message) =>
+    dispatch({
+      type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
+      messageType,
+      message,
+    }),
+});
+
+const ProjectPropositions = ({ writeFlashMessage }) => {
   const history = useHistory()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
@@ -30,7 +40,7 @@ const ProjectPropositions = () => {
       }}
     >
       {(_, count, rawData) => {
-        const propositions = rawData.results.map(transformPropositionToListItem)
+        const propositions = rawData.results.map(item => transformPropositionToListItem(item, writeFlashMessage));
         const sortOptions = [
           {
             name: 'Recently created',
@@ -89,4 +99,4 @@ const ProjectPropositions = () => {
   )
 }
 
-export default ProjectPropositions
+export default connect(null, mapDispatchToProps)(ProjectPropositions)
