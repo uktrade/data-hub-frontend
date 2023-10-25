@@ -400,3 +400,31 @@ describe('Task form', () => {
     })
   })
 })
+
+describe('Task form feature flag', () => {
+  const Component = (props) => (
+    <DataHubProvider>
+      <TaskForm {...props} />
+    </DataHubProvider>
+  )
+
+  context('When advisers-task feature flag is disabled', () => {
+    beforeEach(() => {
+      cy.mount(<Component activeFeatures={[]} />)
+    })
+
+    it('should not display the task reminder field radios', () => {
+      cy.get('[data-test="field-taskRemindersEnabled"]').should('not.exist')
+    })
+  })
+
+  context('When advisers-task feature flag is enabled', () => {
+    beforeEach(() => {
+      cy.mount(<Component activeFeatures={[adviserTasksFeatureFlag]} />)
+    })
+
+    it('should display the task reminder field radios', () => {
+      cy.get('[data-test="field-taskRemindersEnabled"]').should('exist')
+    })
+  })
+})
