@@ -12,6 +12,7 @@ import {
 } from '../../support/assertions'
 import { fill, fillMultiOptionTypeahead } from '../../support/form-fillers'
 import { clickButton } from '../../../../functional/cypress/support/actions'
+import { adviserTasksFeatureFlag } from '../../../../../src/client/modules/AdviserTasks/constants'
 
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
@@ -47,6 +48,7 @@ describe('Add investment project task', () => {
 
   context('When creating a task for me', () => {
     before(() => {
+      cy.setUserFeatures([adviserTasksFeatureFlag])
       cy.visit(
         investments.projects.tasks.create(investment.investmentWithDetails.id)
       )
@@ -61,6 +63,7 @@ describe('Add investment project task', () => {
 
   context('When creating a task for someone else', () => {
     before(() => {
+      cy.setUserFeatures([adviserTasksFeatureFlag])
       cy.visit(
         investments.projects.tasks.create(investment.investmentWithDetails.id)
       )
