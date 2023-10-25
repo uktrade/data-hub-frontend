@@ -54,6 +54,10 @@ describe('Add investment project task', () => {
       )
     })
 
+    after(() => {
+      cy.resetUser()
+    })
+
     it('add task button should send expected values to the api', () => {
       cy.get('[data-test=task-assigned-to-me]').click()
 
@@ -67,6 +71,10 @@ describe('Add investment project task', () => {
       cy.visit(
         investments.projects.tasks.create(investment.investmentWithDetails.id)
       )
+    })
+
+    after(() => {
+      cy.resetUser()
     })
 
     it('add task button should send expected values to the api', () => {
