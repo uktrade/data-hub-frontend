@@ -20,6 +20,7 @@ import advisersListFaker, {
 } from '../../../../../functional/cypress/fakers/advisers'
 import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
+import { adviserTasksFeatureFlag } from '../../../../../../src/client/modules/AdviserTasks/constants'
 
 describe('Task form', () => {
   const Component = (props) => (
@@ -30,7 +31,12 @@ describe('Task form', () => {
 
   context('When a task form renders without initial values', () => {
     beforeEach(() => {
-      cy.mount(<Component cancelRedirectUrl={urls.companies.index()} />)
+      cy.mount(
+        <Component
+          cancelRedirectUrl={urls.companies.index()}
+          activeFeatures={[adviserTasksFeatureFlag]}
+        />
+      )
     })
 
     it('should display the task title field', () => {
@@ -95,6 +101,7 @@ describe('Task form', () => {
         <Component
           cancelRedirectUrl={urls.companies.index()}
           task={transformAPIValuesForForm(investmentProjectTask)}
+          activeFeatures={[adviserTasksFeatureFlag]}
         />
       )
     })
@@ -174,6 +181,7 @@ describe('Task form', () => {
               investmentProjectTask,
               currentAdviser.id
             )}
+            activeFeatures={[adviserTasksFeatureFlag]}
           />
         )
       })
@@ -208,6 +216,7 @@ describe('Task form', () => {
               investmentProjectTask,
               currentAdviser.id
             )}
+            activeFeatures={[adviserTasksFeatureFlag]}
           />
         )
       })
@@ -247,6 +256,7 @@ describe('Task form', () => {
             <Component
               cancelRedirectUrl={urls.companies.index()}
               task={transformAPIValuesForForm(investmentProjectTask)}
+              activeFeatures={[adviserTasksFeatureFlag]}
             />
           )
         })
@@ -266,7 +276,7 @@ describe('Task form', () => {
 
   context('When a task is missing all mandatory fields', () => {
     beforeEach(() => {
-      cy.mount(<Component />)
+      cy.mount(<Component activeFeatures={[adviserTasksFeatureFlag]} />)
       clickButton('Save task')
     })
 
@@ -296,7 +306,7 @@ describe('Task form', () => {
 
   context('When creating a task assigned to someone else', () => {
     beforeEach(() => {
-      cy.mount(<Component />)
+      cy.mount(<Component activeFeatures={[adviserTasksFeatureFlag]} />)
 
       cy.get('[data-test=task-assigned-to-someone-else]').click()
     })
@@ -313,7 +323,7 @@ describe('Task form', () => {
 
   context('When a task is created a task with a custom date', () => {
     beforeEach(() => {
-      cy.mount(<Component />)
+      cy.mount(<Component activeFeatures={[adviserTasksFeatureFlag]} />)
       cy.get('[data-test=task-due-date-custom-date]').click()
     })
 
@@ -355,7 +365,7 @@ describe('Task form', () => {
 
   context('When creating a task with task reminders', () => {
     beforeEach(() => {
-      cy.mount(<Component />)
+      cy.mount(<Component activeFeatures={[adviserTasksFeatureFlag]} />)
 
       cy.get('[data-test=field-taskRemindersEnabled]').click()
     })
