@@ -107,7 +107,7 @@ describe('Company Collections - React', () => {
   })
 
   it('should contain UK Region Badge', () => {
-    assertBadge('@secondListItem', 'London')
+    assertBadge('@secondListItem', 'London, UK')
   })
 
   it('should contain Global HQ Badge', () => {
