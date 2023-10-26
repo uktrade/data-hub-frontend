@@ -625,6 +625,7 @@ module.exports = {
       billingAddress: url('/omis', '/:orderId/edit/billing-address'),
       vatStatus: url('/omis', '/:orderId/edit/vat-status'),
     },
+    cancel: url('/omis', '/:orderId/edit/cancel-order'),
   },
   support: url('/support'),
   reminders: {
