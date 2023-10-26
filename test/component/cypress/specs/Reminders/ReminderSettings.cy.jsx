@@ -3,6 +3,7 @@ import React from 'react'
 import {
   InvestmentReminderSettings,
   ExportReminderSettings,
+  TasksAssignedToMeSettings,
 } from '../../../../../src/client/modules/Reminders/Settings/RemindersSettings.jsx'
 import DataHubProvider from '../provider'
 import {
@@ -14,6 +15,8 @@ import {
   INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+  MY_TASKS_DUE_DATE_APPROACHING,
+  MY_TASKS_DUE_DATE_APPROACHING_LABEL,
 } from '../../../../../src/client/modules/Reminders/constants.js'
 import { assertKeyValueTable } from '../../../../functional/cypress/support/assertions.js'
 
@@ -224,6 +227,46 @@ describe('ExportReminderSettings', () => {
     assertToggleSection(
       COMPANIES_NEW_INTERACTIONS,
       COMPANIES_NEW_INTERACTIONS_LABEL
+    )
+  })
+})
+
+describe('TasksAssignedToMeSettings', () => {
+  const Component = (props) => <TasksAssignedToMeSettings {...props} />
+
+  context('When component loads', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component upcomingTaskReminder={{}} />
+        </DataHubProvider>
+      )
+    })
+
+    it('should return all my tasks reminder setting sections', () => {
+      cy.get(getToggle(MY_TASKS_DUE_DATE_APPROACHING)).should('be.visible')
+    })
+  })
+
+  context('When due date approaching setting is open', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component
+            openSettingsSections={[{ id: MY_TASKS_DUE_DATE_APPROACHING }]}
+            upcomingTaskReminder={setting}
+          />
+        </DataHubProvider>
+      )
+    })
+
+    assertSettingsSectionExpanded(MY_TASKS_DUE_DATE_APPROACHING)
+
+    assertEmailTableData(MY_TASKS_DUE_DATE_APPROACHING, setting)
+
+    assertToggleSection(
+      MY_TASKS_DUE_DATE_APPROACHING,
+      MY_TASKS_DUE_DATE_APPROACHING_LABEL
     )
   })
 })

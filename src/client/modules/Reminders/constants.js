@@ -80,6 +80,12 @@ export const REMINDERS_SETTINGS = [
     settingsQSParam: snakeCase(COMPANIES_NEW_INTERACTIONS),
     url: urls.reminders.exports.newInteractions(),
   },
+  {
+    id: MY_TASKS_DUE_DATE_APPROACHING,
+    label: MY_TASKS_DUE_DATE_APPROACHING_LABEL,
+    settingsQSParam: snakeCase(MY_TASKS_DUE_DATE_APPROACHING),
+    url: urls.reminders.myTasks.dueDateApproaching(),
+  },
 ]
 
 export const reminderTypeToLabel = {
