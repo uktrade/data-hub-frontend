@@ -4,7 +4,6 @@ const createJourney = require('../create/steps')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
 const CompleteOrderController = require('./controllers/complete-order')
-const CancelOrderController = require('./controllers/cancel-order')
 
 const createSteps = mapValues(cloneDeep(createJourney), (step) => {
   return omit(step, ['next', 'backLink'])
@@ -66,12 +65,6 @@ const steps = merge({}, createSteps, {
     template: 'complete-order.njk',
     successMessage: 'Order completed',
     controller: CompleteOrderController,
-  },
-  '/cancel-order': {
-    heading: 'Cancel an order',
-    fields: ['cancellation_reason'],
-    successMessage: 'Order cancelled',
-    controller: CancelOrderController,
   },
 })
 
