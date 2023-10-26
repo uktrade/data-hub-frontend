@@ -344,7 +344,7 @@ const HierarchyItem = ({
                 {hqLabels[company.headquarter_type.name]}
               </HierarchyTag>
             )}
-            {company.address?.country.name && (
+            {!company.uk_region?.name && company.address?.country.name && (
               <HierarchyTag
                 colour="blue"
                 data-test={`${companyName}-country-tag`}
@@ -357,7 +357,7 @@ const HierarchyItem = ({
                 colour="blue"
                 data-test={`${companyName}-uk-region-tag`}
               >
-                {company.uk_region.name}
+                {company.uk_region.name}, UK
               </HierarchyTag>
             )}
             {(company.number_of_employees || company.employee_range?.name) && (
