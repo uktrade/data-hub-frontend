@@ -32,8 +32,7 @@ const MyTasksDueDateApproachingItemRenderer = (
         <GridCol>
           <ItemHeader data-test="item-header">Reminder deleted</ItemHeader>
           <ItemContent colour={DARK_GREY} data-test="item-content">
-            {item.event} for{' '}
-            {item.task.investment_project_task.investment_project.name}
+            {`${item.event} for ${item.task.investment_project_task.investment_project.name}`}
           </ItemContent>
         </GridCol>
       ) : (
@@ -52,7 +51,7 @@ const MyTasksDueDateApproachingItemRenderer = (
             <ItemContent data-test="item-content">
               <ul>
                 <li>
-                  <ItemHint>Company:</ItemHint>
+                  <ItemHint>Company: </ItemHint>
                   <Link
                     href={urls.companies.detail(
                       item.task.investment_project_task.investment_project
@@ -66,7 +65,7 @@ const MyTasksDueDateApproachingItemRenderer = (
                   </Link>
                 </li>
                 <li>
-                  <ItemHint>Date due:</ItemHint>
+                  <ItemHint>Date due: </ItemHint>
                   {format(item.task.due_date, DATE_LONG_FORMAT_1)}
                 </li>
               </ul>
