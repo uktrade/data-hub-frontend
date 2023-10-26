@@ -63,3 +63,28 @@ export const transformInvoiceDetailsForApi = ({ orderId, values }) => {
     po_number,
   }
 }
+
+export const transformBillingAddressForApi = ({ orderId, values }) => {
+  const { address1, address2, city, country, county, postcode } = values
+
+  return {
+    id: orderId,
+    billing_address_1: address1,
+    billing_address_2: address2,
+    billing_address_town: city,
+    billing_address_county: county,
+    billing_address_postcode: postcode,
+    billing_address_country: country,
+  }
+}
+
+export const transformVatStatusForApi = ({ orderId, values }) => {
+  const { vat_status, vat_number, vat_verified } = values
+
+  return {
+    id: orderId,
+    vat_status,
+    vat_number,
+    vat_verified: transformRadioOptionToBool(vat_verified),
+  }
+}

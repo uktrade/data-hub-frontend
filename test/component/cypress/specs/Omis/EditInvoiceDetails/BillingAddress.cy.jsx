@@ -63,9 +63,7 @@ describe('EditInvoiceDetails billing address', () => {
         .should(
           'have.attr',
           'href',
-          `${urls.omis.edit.billingAddress(
-            orderNoAddress.id
-          )}?returnUrl=${urls.omis.edit.invoiceDetails(orderNoAddress.id)}`
+          urls.omis.edit.billingAddress(orderNoAddress.id)
         )
     })
   })
@@ -110,9 +108,7 @@ describe('EditInvoiceDetails billing address', () => {
         .should(
           'have.attr',
           'href',
-          `${urls.omis.edit.billingAddress(
-            orderNoAddress.id
-          )}?returnUrl=${urls.omis.edit.invoiceDetails(orderNoAddress.id)}`
+          urls.omis.edit.billingAddress(orderNoAddress.id)
         )
     })
   })
@@ -157,9 +153,7 @@ describe('EditInvoiceDetails billing address', () => {
         .should(
           'have.attr',
           'href',
-          `${urls.omis.edit.billingAddress(
-            orderNoAddress.id
-          )}?returnUrl=${urls.omis.edit.invoiceDetails(orderNoAddress.id)}`
+          urls.omis.edit.billingAddress(orderNoAddress.id)
         )
     })
   })
@@ -201,9 +195,7 @@ describe('EditInvoiceDetails billing address', () => {
         .should(
           'have.attr',
           'href',
-          `${urls.omis.edit.billingAddress(
-            orderNoAddress.id
-          )}?returnUrl=${urls.omis.edit.invoiceDetails(orderNoAddress.id)}`
+          urls.omis.edit.billingAddress(orderNoAddress.id)
         )
     })
   })

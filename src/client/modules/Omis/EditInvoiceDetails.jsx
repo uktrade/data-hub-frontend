@@ -20,11 +20,6 @@ import { transformBoolToRadioOptionWithNullCheck } from '../Investments/Projects
 import { TASK_EDIT_INVOICE_DETAILS } from './state'
 import { transformInvoiceDetailsForApi } from './transformers'
 
-const billingAddressUrl = (orderId) =>
-  `${urls.omis.edit.billingAddress(
-    orderId
-  )}?returnUrl=${urls.omis.edit.invoiceDetails(orderId)}`
-
 export const BillingAddress = ({ company, order }) => {
   const address = order.billingAddressCountry
     ? {
@@ -65,7 +60,7 @@ export const BillingAddress = ({ company, order }) => {
           <br />
           <br />
           <Link
-            href={billingAddressUrl(order.id)}
+            href={urls.omis.edit.billingAddress(order.id)}
             data-test="billing-address-link"
           >
             Add a different billing address
@@ -73,7 +68,7 @@ export const BillingAddress = ({ company, order }) => {
         </InsetText>
       ) : (
         <Link
-          href={billingAddressUrl(order.id)}
+          href={urls.omis.edit.billingAddress(order.id)}
           data-test="order-billing-address"
         >
           Change billing address
@@ -88,7 +83,7 @@ export const FieldVATStatus = ({ order }) => (
     name="vat_status"
     label="VAT category"
     hint="Choose a VAT category based on the billing address country"
-    initialValue={order.vatStatus}
+    initialValue={order ? order.vatStatus : null}
     options={[
       {
         label: 'Non-EU company',
@@ -118,7 +113,7 @@ export const FieldVATStatus = ({ order }) => (
                   Validate the EU VAT number
                 </NewWindowLink>
               }
-              initialValue={order.vatNumber}
+              initialValue={order ? order.vatNumber : null}
               validate={validateVATNumber}
             />
 
@@ -126,9 +121,11 @@ export const FieldVATStatus = ({ order }) => (
               name="vat_verified"
               label="Has a valid VAT number been supplied?"
               required="Has a valid VAT number been supplied?"
-              initialValue={transformBoolToRadioOptionWithNullCheck(
-                order.vatVerified
-              )}
+              initialValue={
+                order
+                  ? transformBoolToRadioOptionWithNullCheck(order.vatVerified)
+                  : null
+              }
               options={OPTIONS_YES_NO.map((option) => ({
                 ...option,
               }))}

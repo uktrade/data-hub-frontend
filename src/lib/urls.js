@@ -623,6 +623,7 @@ module.exports = {
       internalInfo: url('/omis', '/:orderId/edit/internal-details'),
       invoiceDetails: url('/omis', '/:orderId/edit/invoice-details'),
       billingAddress: url('/omis', '/:orderId/edit/billing-address'),
+      vatStatus: url('/omis', '/:orderId/edit/vat-status'),
     },
   },
   support: url('/support'),

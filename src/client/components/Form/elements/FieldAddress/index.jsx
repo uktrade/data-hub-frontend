@@ -52,6 +52,10 @@ const StyledRowDiv = styled('div')`
   align-items: center;
 `
 
+const ZIP_CODE_LABEL = 'ZIP code'
+const POSTAL_CODE_LABEL = 'Postal code'
+const POSTCODE_LABEL = 'Postcode'
+
 const FieldAddress = ({
   label,
   legend,
@@ -64,6 +68,9 @@ const FieldAddress = ({
   hideCountyField = false,
   initialValue = null,
   useStaticPostcodeField = false,
+  isPostcodeRequired = false,
+  showBorder = true,
+  useStaticCountyField = false,
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
   const {
@@ -151,8 +158,8 @@ const FieldAddress = ({
     }
   }
 
-  const renderUsStateField = () => {
-    if (isUS && usStates?.length > 0) {
+  const renderUsStateField = (useStaticCountyField) => {
+    if (isUS && usStates?.length > 0 && !useStaticCountyField) {
       return (
         <FieldSelect
           type="text"
@@ -166,8 +173,8 @@ const FieldAddress = ({
     }
   }
 
-  const renderCanadaProvinceField = () => {
-    if (isCanada && canadaProvinces?.length > 0) {
+  const renderCanadaProvinceField = (useStaticCountyField) => {
+    if (isCanada && canadaProvinces?.length > 0 && !useStaticCountyField) {
       return (
         <FieldSelect
           type="text"
@@ -181,11 +188,15 @@ const FieldAddress = ({
     }
   }
 
-  const postcodeLabel = () => {
-    if (isUS) return 'ZIP code (optional)'
-    if (isCanada) return 'Postal code (optional)'
-    if (isUK) return 'Postcode'
-    return 'Postcode (optional)'
+  const buildPostcodeLabel = (isRequired, isUK, label) =>
+    isRequired || isUK ? label : `${label} (optional)`
+
+  const postcodeLabel = (isPostcodeRequired) => {
+    if (isUS)
+      return buildPostcodeLabel(isPostcodeRequired, isUK, ZIP_CODE_LABEL)
+    if (isCanada)
+      return buildPostcodeLabel(isPostcodeRequired, isUK, POSTAL_CODE_LABEL)
+    return buildPostcodeLabel(isPostcodeRequired, isUK, POSTCODE_LABEL)
   }
 
   const usZipCodeRegex = /^\d{5}(-\d{4})?$/i
@@ -219,17 +230,18 @@ const FieldAddress = ({
     return null
   }
 
-  const postcodeErrorMessage = () => {
-    if (isUK) return 'Enter a postcode'
+  const postcodeErrorMessage = (isPostcodeRequired) => {
+    if (isUK || isPostcodeRequired) return 'Enter a postcode'
   }
 
   return (
-    <FieldWrapper {...{ label, legend, hint, name }} showBorder={true}>
+    <FieldWrapper {...{ label, legend, hint, name }} showBorder={showBorder}>
       {isCountrySelectable ? (
         <SyledDiv>
           <FieldCountrySelect
             name="country"
             required="Select a country"
+            initialValue={country?.id}
             onChange={() => {
               setFieldValue('country_form_value', country_form_value)
             }}
@@ -248,8 +260,8 @@ const FieldAddress = ({
                 <StyledFieldPostcode
                   type="search"
                   name="postcode"
-                  label={postcodeLabel()}
-                  required={postcodeErrorMessage()}
+                  label={postcodeLabel(isPostcodeRequired)}
+                  required={postcodeErrorMessage(isPostcodeRequired)}
                   maxLength={10}
                   validate={postcodeValidator}
                 />
@@ -305,39 +317,46 @@ const FieldAddress = ({
             required="Enter a town or city"
             initialValue={initialValue?.town}
           />
-          {useStaticPostcodeField && (
+          {(!(isUS || isCanada || hideCountyField) || useStaticCountyField) && (
             <FieldInput
               type="text"
-              name="postcode"
-              label={postcodeLabel()}
-              required={postcodeErrorMessage()}
-              maxLength={10}
-              validate={postcodeValidator}
-              initialValue={initialValue?.postcode}
+              name="county"
+              label="County (optional)"
+              initialValue={initialValue?.county}
             />
           )}
-          {!(isUS || isCanada || hideCountyField) && (
-            <FieldInput type="text" name="county" label="County (optional)" />
-          )}
           <>
-            {renderUsStateField()}
-            {renderCanadaProvinceField()}
+            {renderUsStateField(useStaticCountyField)}
+            {renderCanadaProvinceField(useStaticCountyField)}
             {administrativeAreaSearchError && (
               <StatusMessage>
                 Error occurred while retrieving Administrative Areas.
               </StatusMessage>
             )}
           </>
-          {!isUK && country_form_value !== UNITED_KINGDOM_ID && (
-            <StyledFieldPostcode
+          {useStaticPostcodeField && (
+            <FieldInput
               type="text"
               name="postcode"
-              label={postcodeLabel()}
-              required={postcodeErrorMessage()}
-              maxLength={null}
+              label={postcodeLabel(isPostcodeRequired)}
+              required={postcodeErrorMessage(isPostcodeRequired)}
+              maxLength={10}
               validate={postcodeValidator}
+              initialValue={initialValue?.postcode}
             />
           )}
+          {!isUK &&
+            country_form_value !== UNITED_KINGDOM_ID &&
+            !useStaticPostcodeField && (
+              <StyledFieldPostcode
+                type="text"
+                name="postcode"
+                label={postcodeLabel(isPostcodeRequired)}
+                required={postcodeErrorMessage(isPostcodeRequired)}
+                maxLength={null}
+                validate={postcodeValidator}
+              />
+            )}
         </>
       )}
     </FieldWrapper>
