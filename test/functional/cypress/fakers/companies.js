@@ -6,6 +6,7 @@ import apiSchema from '../../../api-schema.json'
 import { addressFaker } from './addresses'
 import { listFaker } from './utils'
 import { adviserFaker } from './advisers'
+import { ukRegionFaker } from './regions'
 import { UNITED_KINGDOM_ID, CANADA_ID } from '../../../../src/common/constants'
 
 /**
@@ -24,6 +25,7 @@ const companyFaker = (overrides = {}) => ({
     id: faker.string.uuid(),
     name: faker.word.adjective(),
   },
+  uk_region: ukRegionFaker(),
   ...overrides,
 })
 

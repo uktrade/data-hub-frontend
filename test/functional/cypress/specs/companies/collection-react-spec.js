@@ -28,6 +28,7 @@ describe('Company Collections - React', () => {
       id: 'b1959812-6095-e211-a939-e4115bead28a',
       name: 'Energy',
     },
+    uk_region: null,
   })
   const company2 = companyFaker({
     trading_names: ['Company Corp', 'Company Ltd'],
