@@ -12,6 +12,9 @@ import {
   REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED,
   REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED,
   REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED,
 } from '../../actions'
 
 const initialState = {
@@ -35,6 +38,11 @@ const initialState = {
     nextPending: false,
   },
   exportsNewInteractionReminders: {
+    results: [],
+    count: 0,
+    nextPending: false,
+  },
+  dueDateApproachingReminders: {
     results: [],
     count: 0,
     nextPending: false,
@@ -159,6 +167,33 @@ export default (state = initialState, { type, result, payload }) => {
           ...state.exportsNewInteractionReminders,
           results: [...state.exportsNewInteractionReminders.results, ...result],
           nextPending: false,
+        },
+      }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED:
+      return {
+        ...state,
+        dueDateApproachingReminders: result,
+      }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT:
+      return {
+        ...state,
+        dueDateApproachingReminders: {
+          ...state.dueDateApproachingReminders,
+          results: [...state.dueDateApproachingReminders.results, ...result],
+          nextPending: false,
+        },
+      }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED:
+      return {
+        ...state,
+        dueDateApproachingReminders: {
+          ...state.dueDateApproachingReminders,
+          results: state.dueDateApproachingReminders.results.map((item) => ({
+            ...item,
+            deleted: item.deleted || item.id === payload.id,
+          })),
+          count: state.dueDateApproachingReminders.count - 1,
+          nextPending: true,
         },
       }
     default:

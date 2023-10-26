@@ -6,6 +6,7 @@ import {
   INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+  MY_TASKS_DUE_DATE_APPROACHING_LABEL,
 } from '../../modules/Reminders/constants'
 
 const transformReminderSummary = (data) => ({
@@ -37,6 +38,13 @@ const transformReminderSummary = (data) => ({
       name: COMPANIES_NEW_INTERACTIONS_LABEL,
       url: urls.reminders.exports.newInteractions(),
       count: data.export.new_interaction,
+    },
+  ],
+  myTasks: [
+    {
+      name: MY_TASKS_DUE_DATE_APPROACHING_LABEL,
+      url: urls.reminders.myTasks.dueDateApproaching(),
+      count: data.my_tasks.due_date_approaching,
     },
   ],
 })

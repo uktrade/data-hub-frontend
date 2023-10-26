@@ -25,7 +25,7 @@ describe('Dashboard reminder summary', () => {
     before(() => {
       cy.intercept('GET', '/api-proxy/v4/reminder/summary', {
         body: {
-          count: 12,
+          count: 20,
           investment: {
             estimated_land_date: 1,
             no_recent_interaction: 2,
@@ -33,6 +33,10 @@ describe('Dashboard reminder summary', () => {
           },
           export: {
             no_recent_interaction: 4,
+            new_interaction: 1,
+          },
+          my_tasks: {
+            due_date_approaching: 7,
           },
         },
       }).as('apiRequest')
@@ -54,11 +58,12 @@ describe('Dashboard reminder summary', () => {
         'Investment'
       )
       cy.get('[data-test="export-heading"]').should('have.text', 'Export')
+      cy.get('[data-test="my-tasks-heading"]').should('have.text', 'My Tasks')
     })
 
     it('should contain a notification badge in the reminders heading', () => {
       cy.get('@reminderSummaryHeading').should('contain.text', 'Reminders')
-      cy.get('@notificationBadge').should('have.text', '12')
+      cy.get('@notificationBadge').should('have.text', '20')
     })
 
     it('should contain summary entries', () => {
@@ -97,6 +102,11 @@ describe('Dashboard reminder summary', () => {
           'href',
           '/reminders/companies-no-recent-interactions'
         )
+
+      cy.get('[data-test="my-tasks-due-date-approaching"]')
+        .contains('Due date approaching (7)')
+        .find('a')
+        .should('have.attr', 'href', '/reminders/my-tasks-due-date-approaching')
     })
 
     it('should be in a togglable section that starts open', () => {
@@ -119,6 +129,9 @@ describe('Dashboard reminder summary', () => {
             no_recent_interaction: 0,
             new_interaction: 0,
           },
+          my_tasks: {
+            due_date_approaching: 0,
+          },
         },
       }).as('apiRequest')
       cy.visit('/')
@@ -131,6 +144,7 @@ describe('Dashboard reminder summary', () => {
         'Investment'
       )
       cy.get('[data-test="export-heading"]').should('have.text', 'Export')
+      cy.get('[data-test="my-tasks-heading"]').should('have.text', 'My Tasks')
     })
 
     it('should contain summary entries', () => {
@@ -148,6 +162,10 @@ describe('Dashboard reminder summary', () => {
       cy.get(
         '[data-test="export-companies-with-no-recent-interactions"]'
       ).contains('Companies with no recent interactions (0)')
+
+      cy.get('[data-test="my-tasks-due-date-approaching"]').contains(
+        'Due date approaching (0)'
+      )
     })
 
     it('should not contain a notification badge in the reminders heading', () => {

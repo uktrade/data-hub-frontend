@@ -75,6 +75,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/tasks',
   '/omis/:orderId/edit/payment-reconciliation',
   '/investments/projects/:projectId/tasks/:taskId/edit',
+  '/reminders/my-tasks-due-date-approaching',
   '/omis/:orderId/edit/invoice-details',
   '/omis/:orderId/edit/billing-address',
   '/omis/:orderId/edit/vat-status',

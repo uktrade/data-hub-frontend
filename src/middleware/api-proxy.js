@@ -32,6 +32,7 @@ const ALLOWLIST = [
   '/v4/reminder/no-recent-export-interaction',
   '/v4/reminder/no-recent-investment-interaction',
   '/v4/reminder/new-export-interaction',
+  '/v4/reminder/my-tasks-due-date-approaching',
   '/v4/company/:id/remove-from-one-list',
   '/v4/company/:id/update-one-list-core-team',
   '/v4/proposition',

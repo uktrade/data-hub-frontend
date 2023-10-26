@@ -574,6 +574,11 @@ app.get(
   v4Reminders.getNewExportInteractionReminders
 )
 
+app.get(
+  '/v4/reminder/my-tasks-due-date-approaching',
+  v4Reminder.myTasksDueDateApproaching
+)
+
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)
 app.patch(

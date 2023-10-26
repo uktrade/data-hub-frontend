@@ -39,8 +39,9 @@ const ReminderSummary = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
-  const showInvestment = hasInvestmentFeatureGroup && !!summary
-  const showExport = hasExportFeatureGroup && !!summary
+  const hasSummary = !!summary
+  const showInvestment = hasInvestmentFeatureGroup && hasSummary
+  const showExport = hasExportFeatureGroup && hasSummary
   return (
     <div data-test="reminder-summary">
       {showInvestment && (
@@ -81,6 +82,26 @@ const ReminderSummary = ({
           </StyledList>
         </>
       )}
+      {hasSummary && (
+        <>
+          <StyledSubHeading data-test="my-tasks-heading">
+            My Tasks
+          </StyledSubHeading>
+          <StyledList>
+            {summary.myTasks.map((reminder) => (
+              <StyledListItem
+                key={reminder.name}
+                data-test={`my-tasks-${kebabCase(reminder.name)}`}
+              >
+                <StyledReminderLink href={reminder.url}>
+                  {reminder.name}
+                </StyledReminderLink>
+                &nbsp;({reminder.count})
+              </StyledListItem>
+            ))}
+          </StyledList>
+        </>
+      )}
       <StyledReminderLink href={urls.reminders.settings.index()}>
         Settings: reminders and email notifications
       </StyledReminderLink>
@@ -101,6 +122,7 @@ ReminderSummary.propTypes = {
     count: PropTypes.number,
     investment: reminderType,
     export: reminderType,
+    my_tasks: reminderType,
   }),
   hasExportFeatureGroup: PropTypes.bool.isRequired,
   hasInvestmentFeatureGroup: PropTypes.bool.isRequired,
