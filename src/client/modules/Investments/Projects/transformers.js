@@ -19,6 +19,7 @@ import {
 import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import { idNamesToValueLabels } from '../../../utils'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -27,6 +28,16 @@ export const transformArrayForTypeahead = (advisers) =>
     label: value.name,
     value: value.id,
   }))
+
+export const transformAndFilterArrayForTypeahead = (array) => {
+  const filteredArray = idNamesToValueLabels(
+    array.filter((option) => !option.disabledOn)
+  )
+  return filteredArray.map((element) => ({
+    label: element.label,
+    value: element.value,
+  }))
+}
 
 export const transformObjectForTypeahead = (object) =>
   object

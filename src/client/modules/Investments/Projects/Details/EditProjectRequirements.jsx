@@ -31,6 +31,7 @@ import {
   UNITED_KINGDOM_ID,
 } from '../../../../../common/constants'
 import ProjectLayout from '../../../../components/Layout/ProjectLayout'
+import { idNamesToValueLabels } from '../../../../utils'
 
 const ukObject = {
   name: 'United Kingdom',
@@ -171,6 +172,11 @@ const EditProjectRequirements = () => {
               )}
               placeholder="Select a delivery partner"
               isMulti={true}
+              resultToOptions={(result) =>
+                idNamesToValueLabels(
+                  result.filter((option) => !option.disabledOn)
+                )
+              }
             />
           </Form>
         </ProjectLayout>
