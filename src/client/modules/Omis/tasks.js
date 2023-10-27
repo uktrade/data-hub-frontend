@@ -7,3 +7,6 @@ export const updateOrder = (values) => {
 
 export const savePayment = (values) =>
   apiProxyAxios.post(`v3/omis/order/${values.id}/payment`, values.payment)
+
+export const cancelOrder = (values) =>
+  apiProxyAxios.post(`v3/omis/order/${values.id}/cancel`, values)

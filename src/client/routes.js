@@ -58,6 +58,7 @@ import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/Inve
 import EditInvoiceDetails from './modules/Omis/EditInvoiceDetails'
 import EditBillingAddress from './modules/Omis/EditBillingAddress'
 import EditVATStatus from './modules/Omis/EditVATStatus'
+import CancelOrder from './modules/Omis/CancelOrder'
 
 const routes = {
   companies: [
@@ -205,6 +206,11 @@ const routes = {
       path: '/omis/:orderId/edit/vat-status',
       module: 'datahub:orders',
       component: EditVATStatus,
+    },
+    {
+      path: '/omis/:orderId/edit/cancel-order',
+      module: 'datahub:orders',
+      component: CancelOrder,
     },
   ],
   reminders: [

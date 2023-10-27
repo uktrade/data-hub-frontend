@@ -88,3 +88,8 @@ export const transformVatStatusForApi = ({ orderId, values }) => {
     vat_verified: transformRadioOptionToBool(vat_verified),
   }
 }
+
+export const transformCancellationForApi = ({ orderId, values }) => ({
+  id: orderId,
+  cancellation_reason: values.cancellation_reason,
+})

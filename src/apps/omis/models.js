@@ -90,14 +90,6 @@ const Order = {
       body,
     })
   },
-
-  cancel(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/cancel`,
-      method: 'POST',
-      body,
-    })
-  },
 }
 
 module.exports = {
