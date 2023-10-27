@@ -29,9 +29,13 @@ import {
   SpecificInvestmentProgrammesResource,
 } from '../../../components/Resource'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { transformArrayForTypeahead } from './transformers'
+import {
+  transformArrayForTypeahead,
+  transformAndFilterArrayForTypeahead,
+} from './transformers'
 import { GREY_2 } from '../../../utils/colours'
 import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
+import { idNamesToValueLabels } from '../../../utils'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -189,57 +193,57 @@ export const FieldReferralSourceHierarchy = ({
           required="Choose a referral source activity"
           initialValue={initialValue}
           fullWidth={true}
-          options={transformArrayForTypeahead(referralSourceActivities).map(
-            (option) => ({
-              ...option,
-              ...(option.label === 'Marketing' && {
-                children: (
-                  <StyledContainer>
-                    <ResourceOptionsField
-                      name="referral_source_activity_marketing"
-                      label="Marketing"
-                      resource={ReferralSourceMarketingResource}
-                      field={FieldSelect}
-                      initialValue={marketingInitialValue}
-                      placeholder="Choose a marketing type"
-                      required="Choose the marketing type"
-                      fullWidth={true}
-                    />
-                  </StyledContainer>
-                ),
-              }),
-              ...(option.label === 'Website' && {
-                children: (
-                  <StyledContainer>
-                    <ResourceOptionsField
-                      name="referral_source_activity_website"
-                      label="Website"
-                      resource={ReferralSourceWebsiteResource}
-                      field={FieldSelect}
-                      initialValue={websiteInitialValue}
-                      placeholder="Choose a website"
-                      required="Choose the website"
-                      fullWidth={true}
-                    />
-                  </StyledContainer>
-                ),
-              }),
-              ...(option.label === 'Event' && {
-                children: (
-                  <StyledContainer>
-                    <StyledFieldInput
-                      label="Event"
-                      name="referral_source_activity_event"
-                      type="text"
-                      initialValue={eventInitialValue}
-                      placeholder={eventPlaceholder}
-                      required="Enter the event details"
-                    />
-                  </StyledContainer>
-                ),
-              }),
-            })
-          )}
+          options={transformAndFilterArrayForTypeahead(
+            referralSourceActivities
+          ).map((option) => ({
+            ...option,
+            ...(option.label === 'Marketing' && {
+              children: (
+                <StyledContainer>
+                  <ResourceOptionsField
+                    name="referral_source_activity_marketing"
+                    label="Marketing"
+                    resource={ReferralSourceMarketingResource}
+                    field={FieldSelect}
+                    initialValue={marketingInitialValue}
+                    placeholder="Choose a marketing type"
+                    required="Choose the marketing type"
+                    fullWidth={true}
+                  />
+                </StyledContainer>
+              ),
+            }),
+            ...(option.label === 'Website' && {
+              children: (
+                <StyledContainer>
+                  <ResourceOptionsField
+                    name="referral_source_activity_website"
+                    label="Website"
+                    resource={ReferralSourceWebsiteResource}
+                    field={FieldSelect}
+                    initialValue={websiteInitialValue}
+                    placeholder="Choose a website"
+                    required="Choose the website"
+                    fullWidth={true}
+                  />
+                </StyledContainer>
+              ),
+            }),
+            ...(option.label === 'Event' && {
+              children: (
+                <StyledContainer>
+                  <StyledFieldInput
+                    label="Event"
+                    name="referral_source_activity_event"
+                    type="text"
+                    initialValue={eventInitialValue}
+                    placeholder={eventPlaceholder}
+                    required="Enter the event details"
+                  />
+                </StyledContainer>
+              ),
+            }),
+          }))}
         />
       </StyledReferralSourceWrapper>
     )}
@@ -313,5 +317,8 @@ export const FieldSpecificProgramme = ({ initialValue = null }) => (
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a specific programme"
+    resultToOptions={(result) =>
+      idNamesToValueLabels(result.filter((option) => !option.disabledOn))
+    }
   />
 )
