@@ -43,6 +43,13 @@ const assertReminderAndEmailTableData = (dataTest, setting) => {
     })
   })
 }
+const assertEmailTableData = (dataTest, setting) => {
+  it('should show the table with expected data', () => {
+    assertKeyValueTable(`${dataTest}-table`, {
+      'Email notifications': setting.emailRemindersOnOff,
+    })
+  })
+}
 
 const assertEditLink = (dataTest) => {
   it('should show the edit link', () => {
