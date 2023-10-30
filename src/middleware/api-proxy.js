@@ -23,6 +23,7 @@ const ALLOWLIST = [
   '/v4/company/:id/export-win',
   '/v4/company/:id',
   '/v4/company/:id/assign-one-list-tier-and-global-account-manager',
+  '/v4/reminder/subscription/summary',
   '/v4/reminder/estimated-land-date',
   '/v4/reminder/no-recent-export-interaction',
   '/v4/reminder/no-recent-investment-interaction',
