@@ -1,3 +1,7 @@
+import { snakeCase } from 'lodash'
+
+import urls from '../../../lib/urls'
+
 export const settings = {
   OFF: 'Off',
   ON: 'On',
@@ -44,6 +48,39 @@ export const COMPANIES_NEW_INTERACTIONS_LABEL =
   'Companies with new interactions'
 
 export const MY_TASKS_DUE_DATE_APPROACHING_LABEL = 'Due date approaching'
+
+export const REMINDERS_SETTINGS = [
+  {
+    id: INVESTMENTS_ESTIMATED_LAND_DATES,
+    label: INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
+    settingsQSParam: snakeCase(INVESTMENTS_ESTIMATED_LAND_DATES),
+    url: urls.reminders.investments.estimatedLandDate(),
+  },
+  {
+    id: INVESTMENTS_NO_RECENT_INTERACTIONS,
+    label: INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
+    settingsQSParam: snakeCase(INVESTMENTS_NO_RECENT_INTERACTIONS),
+    url: urls.reminders.investments.noRecentInteraction(),
+  },
+  {
+    id: INVESTMENTS_OUTSTANDING_PROPOSITIONS,
+    label: INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+    settingsQSParam: snakeCase(INVESTMENTS_OUTSTANDING_PROPOSITIONS),
+    url: urls.reminders.investments.outstandingPropositions(),
+  },
+  {
+    id: COMPANIES_NO_RECENT_INTERACTIONS,
+    label: COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
+    settingsQSParam: snakeCase(COMPANIES_NO_RECENT_INTERACTIONS),
+    url: urls.reminders.exports.noRecentInteractions(),
+  },
+  {
+    id: COMPANIES_NEW_INTERACTIONS,
+    label: COMPANIES_NEW_INTERACTIONS_LABEL,
+    settingsQSParam: snakeCase(COMPANIES_NEW_INTERACTIONS),
+    url: urls.reminders.exports.newInteractions(),
+  },
+]
 
 export const reminderTypeToLabel = {
   [INVESTMENTS_ESTIMATED_LAND_DATES]: INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
