@@ -213,7 +213,7 @@
     "reqres": "^3.0.1",
     "rewire": "^6.0.0",
     "sharp": "^0.32.5",
-    "sinon": "^16.0.0",
+    "sinon": "^17.0.0",
     "sinon-chai": "^3.7.0",
     "storybook": "^7.5.1",
     "supertest": "^6.3.3",
