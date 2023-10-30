@@ -202,6 +202,7 @@ import {
 } from './modules/Interactions/CollectionList/state'
 
 import * as reminders from '../client/modules/Reminders/tasks'
+import * as reminderSettings from '../client/modules/Reminders/Settings/tasks'
 import {
   TASK_GET_SUBSCRIPTION_SUMMARY,
   TASK_GET_ELD_REMINDER_SUBSCRIPTIONS,
@@ -483,19 +484,19 @@ export const tasks = {
   [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
   [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
   [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
-  [TASK_GET_SUBSCRIPTION_SUMMARY]: reminders.getSubscriptionSummary,
-  [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminders.getEldSubscriptions,
-  [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminders.saveEldSubscriptions,
-  [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminders.getNriSubscriptions,
-  [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]: reminders.saveNriSubscriptions,
+  [TASK_GET_SUBSCRIPTION_SUMMARY]: reminderSettings.getSubscriptionSummary,
+  [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminderSettings.getEldSubscriptions,
+  [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminderSettings.saveEldSubscriptions,
+  [TASK_GET_NRI_REMINDER_SUBSCRIPTIONS]: reminderSettings.getNriSubscriptions,
+  [TASK_SAVE_NRI_REMINDER_SUBSCRIPTIONS]: reminderSettings.saveNriSubscriptions,
   [TASK_GET_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
-    reminders.getNriExportSubscriptions,
+    reminderSettings.getNriExportSubscriptions,
   [TASK_SAVE_EXPORT_NRI_REMINDER_SUBSCRIPTIONS]:
-    reminders.saveNriExportSubscriptions,
+    reminderSettings.saveNriExportSubscriptions,
   [TASK_GET_EXPORT_NI_REMINDER_SUBSCRIPTIONS]:
-    reminders.getNIExportSubscriptions,
+    reminderSettings.getNIExportSubscriptions,
   [TASK_SAVE_EXPORT_NI_REMINDER_SUBSCRIPTIONS]:
-    reminders.saveNIExportSubscriptions,
+    reminderSettings.saveNIExportSubscriptions,
   [TASK_GET_ESTIMATED_LAND_DATE_REMINDERS]:
     reminders.getEstimatedLandDateReminders,
   [TASK_GET_NO_RECENT_INTERACTION_REMINDERS]:
