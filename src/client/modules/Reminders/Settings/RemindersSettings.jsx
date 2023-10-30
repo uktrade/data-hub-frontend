@@ -8,7 +8,10 @@ import qs from 'qs'
 import { connect } from 'react-redux'
 
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
-import { RemindersSettingsTable } from './RemindersSettingsTable'
+import {
+  RemindersSettingsTable,
+  EmailRemindersSettingsTable,
+} from './RemindersSettingsTable'
 import Resource from '../../../components/Resource/Resource'
 import urls from '../../../../lib/urls'
 import { state2props, TASK_GET_SUBSCRIPTION_SUMMARY } from '../state'
@@ -18,9 +21,11 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   COMPANIES_NO_RECENT_INTERACTIONS_LABEL,
   COMPANIES_NEW_INTERACTIONS_LABEL,
+  MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   REMINDERS_SETTINGS,
   INVESTMENTS_ESTIMATED_LAND_DATES,
   INVESTMENTS_NO_RECENT_INTERACTIONS,
+  MY_TASKS_DUE_DATE_APPROACHING,
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
 } from '../constants'
@@ -167,6 +172,32 @@ export const ExportReminderSettings = ({
     </>
   )
 
+export const TasksAssignedToMeSettings = ({
+  upcomingTaskReminder,
+  openSettingsSections,
+}) => (
+  <>
+    <H2 size={LEVEL_SIZE[3]}>Tasks assigned to me</H2>
+    <ToggleSectionContainer>
+      <RemindersToggleSection
+        label={MY_TASKS_DUE_DATE_APPROACHING_LABEL}
+        id={`${MY_TASKS_DUE_DATE_APPROACHING}-toggle`}
+        data-test={`${MY_TASKS_DUE_DATE_APPROACHING}-toggle`}
+        isOpen={isSettingOpen(
+          openSettingsSections,
+          MY_TASKS_DUE_DATE_APPROACHING
+        )}
+        borderBottom={false}
+      >
+        <EmailRemindersSettingsTable
+          dataName={MY_TASKS_DUE_DATE_APPROACHING}
+          data={upcomingTaskReminder}
+        />
+      </RemindersToggleSection>
+    </ToggleSectionContainer>
+  </>
+)
+
 export const RemindersSettings = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
@@ -192,6 +223,7 @@ export const RemindersSettings = ({
           noRecentInteraction,
           exportNoRecentInteractions,
           exportNewInteractions,
+          upcomingTaskReminder,
         }) => (
           <>
             <InvestmentReminderSettings
@@ -205,6 +237,11 @@ export const RemindersSettings = ({
               hasExportFeatureGroup={hasExportFeatureGroup}
               exportNoRecentInteractions={exportNoRecentInteractions}
               exportNewInteractions={exportNewInteractions}
+              openSettingsSections={openSettingsSections}
+            />
+
+            <TasksAssignedToMeSettings
+              upcomingTaskReminder={upcomingTaskReminder}
               openSettingsSections={openSettingsSections}
             />
 

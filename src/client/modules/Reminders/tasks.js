@@ -200,6 +200,10 @@ const transformSubscriptionSummary = ({ data }) => ({
     data.new_export_interaction,
     'days after a new interaction was posted'
   ),
+  upcomingTaskReminder: transformDaysAndEmailReminders(
+    data.upcoming_task_reminder,
+    'days before the task due date'
+  ),
 })
 
 const transformDaysAndEmailReminders = (

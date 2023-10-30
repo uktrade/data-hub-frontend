@@ -5,6 +5,7 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
+  MY_TASKS_DUE_DATE_APPROACHING,
 } from '../../../../../../src/client/modules/Reminders/constants'
 
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
@@ -13,6 +14,7 @@ const eslDataTest = INVESTMENTS_ESTIMATED_LAND_DATES
 const nriDataTest = INVESTMENTS_NO_RECENT_INTERACTIONS
 const enriDataTest = COMPANIES_NO_RECENT_INTERACTIONS
 const eniDataTest = COMPANIES_NEW_INTERACTIONS
+const ddaDataTest = MY_TASKS_DUE_DATE_APPROACHING
 
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
 const getLink = (dataTest) => `[data-test="${dataTest}-link"]`
@@ -26,6 +28,8 @@ const interceptAPICalls = ({
   enri_email_reminders_enabled = true,
   eni_reminder_days = [2, 4, 7],
   eni_email_reminders_enabled = true,
+  dda_reminder_days = [10],
+  dda_email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
@@ -44,6 +48,10 @@ const interceptAPICalls = ({
       new_export_interaction: {
         email_reminders_enabled: eni_email_reminders_enabled,
         reminder_days: eni_reminder_days,
+      },
+      upcoming_task_reminder: {
+        email_reminders_enabled: dda_email_reminders_enabled,
+        reminder_days: dda_reminder_days,
       },
     },
   }).as('summaryRequest')
@@ -108,5 +116,6 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('NRI', nriDataTest)
     assertSettingsTableVisible('ENRI', enriDataTest)
     assertSettingsTableVisible('ENI', eniDataTest)
+    assertSettingsTableVisible('DDA', ddaDataTest, false)
   })
 })
