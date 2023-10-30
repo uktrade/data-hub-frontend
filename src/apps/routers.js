@@ -21,10 +21,6 @@ const reactRoutes = [
   '/reminders/companies-no-recent-interactions',
   '/reminders/companies-new-interactions',
   '/reminders/settings',
-  '/reminders/settings/investments-estimated-land-dates',
-  '/reminders/settings/investments-no-recent-interactions',
-  '/reminders/settings/companies-no-recent-interactions',
-  '/reminders/settings/companies-new-interactions',
   '/export/create',
   '/export/:exportId/edit',
   '/export/:exportId/details',
@@ -80,6 +76,7 @@ const reactRoutes = [
   '/omis/:orderId/edit/billing-address',
   '/omis/:orderId/edit/vat-status',
   '/omis/:orderId/edit/cancel-order',
+  '/reminders/settings/:reminderType',
 ]
 
 reactRoutes.forEach((path) => {

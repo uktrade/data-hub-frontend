@@ -23,11 +23,6 @@ const ALLOWLIST = [
   '/v4/company/:id/export-win',
   '/v4/company/:id',
   '/v4/company/:id/assign-one-list-tier-and-global-account-manager',
-  '/v4/reminder/subscription/estimated-land-date',
-  '/v4/reminder/subscription/no-recent-investment-interaction',
-  '/v4/reminder/subscription/no-recent-export-interaction',
-  '/v4/reminder/subscription/new-export-interaction',
-  '/v4/reminder/subscription/summary',
   '/v4/reminder/estimated-land-date',
   '/v4/reminder/no-recent-export-interaction',
   '/v4/reminder/no-recent-investment-interaction',
@@ -75,6 +70,7 @@ const ALLOWLIST = [
   '/v4/investmentprojecttask',
   '/v4/investmentprojecttask/:id',
   '/v3/omis/order/:id/invoice',
+  '/v4/reminder/subscription/:reminderType',
 ]
 
 module.exports = (app) => {
