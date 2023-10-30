@@ -179,46 +179,50 @@ export const deleteMyTasksDueDateApproachingReminder = ({ id } = {}) =>
 
 // ********************** Summary ***************************
 
+const defaultDaysSort = (a, b) => a - b
+const reversedDaysSort = (a, b) => b - a
+
 const transformSubscriptionSummary = ({ data }) => ({
-  estimatedLandDate: {
-    formattedReminderDays: formatDays(
-      data.estimated_land_date.reminder_days.sort((a, b) => a - b).reverse(),
-      'days before the estimated land date'
-    ),
-    emailRemindersOnOff: data.estimated_land_date.email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  noRecentInteraction: {
-    formattedReminderDays: formatDays(
-      data.no_recent_investment_interaction.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: data.no_recent_investment_interaction
-      .email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  exportNoRecentInteractions: {
-    formattedReminderDays: formatDays(
-      data.no_recent_export_interaction.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: data.no_recent_export_interaction
-      .email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  exportNewInteractions: {
-    formattedReminderDays: formatDays(
-      data.new_export_interaction.reminder_days.sort((a, b) => a - b),
-      'days after a new interaction was posted'
-    ),
-    emailRemindersOnOff: data.new_export_interaction.email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
+  estimatedLandDate: transformDaysAndEmailReminders(
+    data.estimated_land_date,
+    'days before the estimated land date',
+    reversedDaysSort
+  ),
+  noRecentInteraction: transformDaysAndEmailReminders(
+    data.no_recent_investment_interaction,
+    'days after the last interaction'
+  ),
+  exportNoRecentInteractions: transformDaysAndEmailReminders(
+    data.no_recent_export_interaction,
+    'days after the last interaction'
+  ),
+  exportNewInteractions: transformDaysAndEmailReminders(
+    data.new_export_interaction,
+    'days after a new interaction was posted'
+  ),
 })
+
+const transformDaysAndEmailReminders = (
+  data,
+  suffixLabel,
+  daysSort = defaultDaysSort
+) => ({
+  formattedReminderDays: transformFormattedReminderDays(
+    data,
+    suffixLabel,
+    daysSort
+  ),
+  emailRemindersOnOff: transformEmailReminders(data),
+})
+
+const transformFormattedReminderDays = (
+  data,
+  suffixLabel,
+  sort = defaultDaysSort
+) => formatDays(data.reminder_days.sort(sort), suffixLabel)
+
+const transformEmailReminders = (data) =>
+  data.email_reminders_enabled ? settings.ON : settings.OFF
 
 export const getSubscriptionSummary = () =>
   apiProxyAxios
