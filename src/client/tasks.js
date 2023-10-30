@@ -229,6 +229,7 @@ import {
   TASK_GET_DUE_DATE_APPROACHING_REMINDERS,
   TASK_DELETE_DUE_DATE_APPROACHING_REMINDER,
   TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
+  TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -582,4 +583,6 @@ export const tasks = {
   [TASK_CANCEL_ORDER]: cancelOrder,
   [TASK_GET_EXPORT_WINS_CONFIRMED]: getExportWinsConfirmed,
   [TASK_GET_EXPORT_WINS_UNCONFIRMED]: getExportWinsUnconfirmed,
+  [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
+    reminderSettings.saveUpcomingDueDateExportSubscriptions,
 }

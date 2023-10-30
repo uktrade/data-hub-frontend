@@ -187,11 +187,12 @@ export const TasksAssignedToMeSettings = ({
           openSettingsSections,
           MY_TASKS_DUE_DATE_APPROACHING
         )}
-        borderBottom={false}
+        borderBottom={true}
       >
         <EmailRemindersSettingsTable
           dataName={MY_TASKS_DUE_DATE_APPROACHING}
           data={upcomingTaskReminder}
+          to={urls.reminders.settings.myTasks.dueDateApproaching()}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>

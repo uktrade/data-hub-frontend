@@ -660,6 +660,11 @@ module.exports = {
         ),
         newInteraction: url('/reminders/settings/companies-new-interactions'),
       },
+      myTasks: {
+        dueDateApproaching: url(
+          '/reminders/settings/my-tasks-due-date-approaching'
+        ),
+      },
     },
   },
   exportPipeline: {

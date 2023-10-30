@@ -555,6 +555,16 @@ app.patch(
   v4Reminders.saveNewExportInteractionsSubscriptions
 )
 
+app.get(
+  '/v4/reminder/subscription/my-tasks-due-date-approaching',
+  v4Reminders.getMyTasksUpcomingDueDateSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-due-date-approaching',
+  v4Reminders.saveMyTasksUpcomingDueDateSubscriptions
+)
+
 // Reminders lists
 
 app.get(

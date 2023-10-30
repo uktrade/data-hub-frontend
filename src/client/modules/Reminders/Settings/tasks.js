@@ -126,3 +126,10 @@ export const saveNIExportSubscriptions = (payload) =>
     '/v4/reminder/subscription/new-export-interaction',
     payload
   )
+
+// **********************  My Tasks subscriptions ***************************
+export const saveUpcomingDueDateExportSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/my-tasks-due-date-approaching',
+    payload
+  )
