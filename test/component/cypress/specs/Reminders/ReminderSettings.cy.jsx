@@ -271,6 +271,8 @@ describe('TasksAssignedToMeSettings', () => {
 
     assertEmailTableData(MY_TASKS_DUE_DATE_APPROACHING, setting)
 
+    assertEditLink(MY_TASKS_DUE_DATE_APPROACHING)
+
     assertToggleSection(
       MY_TASKS_DUE_DATE_APPROACHING,
       MY_TASKS_DUE_DATE_APPROACHING_LABEL
