@@ -375,6 +375,15 @@ const assertFieldInput = ({
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
+const assertFieldInputNoLabel = ({ element, value = undefined }) =>
+  cy
+    .wrap(element)
+    .find('input')
+    .then(
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    )
+
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
@@ -850,6 +859,7 @@ module.exports = {
   assertFieldSingleTypeahead,
   assertFieldInput,
   assertFieldInputWithLegend,
+  assertFieldInputNoLabel,
   assertFieldTextarea,
   assertFieldSelect,
   assertSelectOptions,
