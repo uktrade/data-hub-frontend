@@ -1,3 +1,5 @@
+import { filter } from 'lodash'
+
 import { transformDateObjectToDateString } from '../../transformers'
 import {
   checkIfItemHasValue,
@@ -93,3 +95,15 @@ export const transformCancellationForApi = ({ orderId, values }) => ({
   id: orderId,
   cancellation_reason: values.cancellation_reason,
 })
+
+export const transformAssigneeTimeForApi = ({ orderId, values }) => {
+  const transformedAssignees = Object.entries(values).map((element) => ({
+    adviser: { id: element[0] },
+    estimated_time: element[1] * 60,
+  }))
+
+  return {
+    id: orderId,
+    assignees: filter(transformedAssignees),
+  }
+}
