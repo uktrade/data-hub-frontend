@@ -10,6 +10,7 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
+  MY_TASKS_DUE_DATE_APPROACHING,
 } from '../constants'
 
 import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
@@ -17,6 +18,7 @@ import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractio
 import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
 import ExportsNewInteractionsForm from './ExportsNewInteractionsForm'
 import FooterLink from '../FooterLink'
+import DueDateApproachingForm from './DueDateApproachingForm'
 
 const RemindersForms = () => {
   const { reminderType } = useParams()
@@ -58,6 +60,9 @@ const RemindersForms = () => {
         )}
         {reminderType === COMPANIES_NEW_INTERACTIONS && (
           <ExportsNewInteractionsForm />
+        )}
+        {reminderType === MY_TASKS_DUE_DATE_APPROACHING && (
+          <DueDateApproachingForm />
         )}
       </>
       <FooterLink

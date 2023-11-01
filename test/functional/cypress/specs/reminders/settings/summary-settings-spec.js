@@ -65,6 +65,7 @@ const assertSettingsTableVisible = (title, dataTest, includeLink = true) => {
   it(`should show the ${title} settings table and edit link`, () => {
     cy.get(getTable(dataTest)).should('be.visible')
     includeLink && cy.get(getLink(dataTest)).should('be.visible')
+    !includeLink && cy.get(getLink(dataTest)).should('not.exist')
   })
 }
 
@@ -116,6 +117,6 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('NRI', nriDataTest)
     assertSettingsTableVisible('ENRI', enriDataTest)
     assertSettingsTableVisible('ENI', eniDataTest)
-    assertSettingsTableVisible('DDA', ddaDataTest, false)
+    assertSettingsTableVisible('DDA', ddaDataTest)
   })
 })

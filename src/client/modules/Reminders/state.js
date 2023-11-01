@@ -67,6 +67,10 @@ export const TASK_DELETE_DUE_DATE_APPROACHING_REMINDER =
 export const TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER =
   'TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER'
 
+// My task subscriptions
+export const TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS =
+  'TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS'
+
 export const state2props = (state) => {
   const reminderSummary = state[REMINDER_SUMMARY_ID]
   const activeFeatureGroups = state.activeFeatureGroups

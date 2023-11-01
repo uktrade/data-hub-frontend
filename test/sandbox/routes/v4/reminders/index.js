@@ -254,3 +254,15 @@ exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
     ],
   })
 }
+
+exports.getMyTasksUpcomingDueDateSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveMyTasksUpcomingDueDateSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: true,
+  })
+}
