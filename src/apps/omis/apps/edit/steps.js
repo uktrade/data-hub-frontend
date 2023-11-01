@@ -2,7 +2,6 @@ const { cloneDeep, mapValues, merge, omit } = require('lodash')
 
 const createJourney = require('../create/steps')
 const EditContactController = require('./controllers/contact')
-const CompleteOrderController = require('./controllers/complete-order')
 
 const createSteps = mapValues(cloneDeep(createJourney), (step) => {
   return omit(step, ['next', 'backLink'])
@@ -53,14 +52,6 @@ const steps = merge({}, createSteps, {
   '/payment-reconciliation': {
     heading: 'Reconcile a payment',
     fields: ['amount', 'received_on'],
-  },
-  '/complete-order': {
-    heading: 'Complete order',
-    fields: ['assignee_actual_time', 'verify_work_sent'],
-    templatePath: 'omis/apps/edit/views',
-    template: 'complete-order.njk',
-    successMessage: 'Order completed',
-    controller: CompleteOrderController,
   },
 })
 
