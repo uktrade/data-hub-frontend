@@ -31,6 +31,11 @@ const StyledText = styled('span')({
   paddingLeft: SPACING.SCALE_2,
 })
 
+const setDataTest = (dataTest, name) => {
+  const element = dataTest ? dataTest : name
+  return kebabCase(`${element}-'input'`)
+}
+
 /**
  * A basic input field for numbers and text.
  */
@@ -45,6 +50,7 @@ const FieldInput = ({
   hint,
   initialValue,
   reduced,
+  dataTest = null,
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -66,7 +72,7 @@ const FieldInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          data-test={kebabCase(`${name}-'input'`)}
+          data-test={setDataTest(dataTest, name)}
           {...rest}
         />
         {text && <StyledText>{text}</StyledText>}
@@ -115,6 +121,10 @@ FieldInput.propTypes = {
    * Toggles wether the element is a filter or not
    */
   reduced: PropTypes.bool,
+  /**
+   * Sets the data-test ID if the name isn't suitable
+   */
+  dataTest: PropTypes.string,
 }
 
 FieldInput.defaultProps = {

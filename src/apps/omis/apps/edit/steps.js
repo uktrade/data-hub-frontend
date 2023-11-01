@@ -1,7 +1,6 @@
 const { cloneDeep, mapValues, merge, omit } = require('lodash')
 
 const createJourney = require('../create/steps')
-const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditContactController = require('./controllers/contact')
 const CompleteOrderController = require('./controllers/complete-order')
 
@@ -17,9 +16,6 @@ const steps = merge({}, createSteps, {
   '/assignee-time': {
     heading: 'Edit estimated hours of work',
     fields: ['assignee_time'],
-    controller: EditAssigneeTimeController,
-    templatePath: 'omis/apps/edit/views',
-    template: 'assignee-time.njk',
   },
   '/quote-details': {
     heading: 'Edit quote information',

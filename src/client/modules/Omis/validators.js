@@ -38,3 +38,10 @@ export const validateVATNumber = (value) => {
   }
   return null
 }
+
+export const validateNumber = (value) => {
+  if (!Number.isInteger(Number(value)) && value !== null) {
+    return 'Enter a whole number'
+  }
+  return null
+}

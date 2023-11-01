@@ -360,8 +360,14 @@ import {
   TASK_EDIT_ORDER_BILLING_ADDRESS,
   TASK_EDIT_ORDER_VAT_STATUS,
   TASK_CANCEL_ORDER,
+  TASK_EDIT_ORDER_ASSIGNEE_TIME,
 } from './modules/Omis/state'
-import { cancelOrder, savePayment, updateOrder } from './modules/Omis/tasks'
+import {
+  cancelOrder,
+  savePayment,
+  updateAssignees,
+  updateOrder,
+} from './modules/Omis/tasks'
 
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
@@ -583,6 +589,7 @@ export const tasks = {
   [TASK_CANCEL_ORDER]: cancelOrder,
   [TASK_GET_EXPORT_WINS_CONFIRMED]: getExportWinsConfirmed,
   [TASK_GET_EXPORT_WINS_UNCONFIRMED]: getExportWinsUnconfirmed,
+  [TASK_EDIT_ORDER_ASSIGNEE_TIME]: updateAssignees,
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
 }
