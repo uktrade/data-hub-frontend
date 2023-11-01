@@ -77,6 +77,7 @@ const reactRoutes = [
   '/omis/:orderId/edit/vat-status',
   '/omis/:orderId/edit/cancel-order',
   '/reminders/settings/:reminderType',
+  '/omis/:orderId/edit/assignee-time',
 ]
 
 reactRoutes.forEach((path) => {
