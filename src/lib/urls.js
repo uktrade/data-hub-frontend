@@ -107,8 +107,6 @@ module.exports = {
       accessibilityStatement: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/data-hub-accessibility-statement/data-hub-accessibility-statement/',
       dhHomepage: () => 'https://data-services-help.trade.gov.uk/data-hub/',
-      pipeline: () =>
-        'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
       policyFeedback: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
       tradeagreementGuidance: () =>
