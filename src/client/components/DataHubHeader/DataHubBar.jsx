@@ -95,6 +95,7 @@ const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   color: WHITE,
   display: 'none',
   marginLeft: '20px',
+  marginRight: '20px',
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
