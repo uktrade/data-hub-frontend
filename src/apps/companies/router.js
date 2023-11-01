@@ -54,7 +54,6 @@ const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const referralsRouter = require('./apps/referrals/router')
-const { companyPipelineRouter } = require('../my-pipeline/router')
 const accountManagementRouter = require('./apps/account-management/router')
 
 const {
@@ -130,7 +129,6 @@ router.use(businessDetailsRouter)
 router.use(matchCompanyRouter)
 router.use(exportsRouter)
 router.use(referralsRouter)
-router.use(companyPipelineRouter)
 router.use(companyOverviewRouter)
 router.use(accountManagementRouter)
 
