@@ -2,13 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import {
-  DefaultLayout,
-  FieldDate,
-  FieldTextarea,
-  Form,
-  FormLayout,
-} from '../../components'
+import { FieldDate, FieldTextarea, Form, FormLayout } from '../../components'
 import { OrderResource } from '../../components/Resource'
 import urls from '../../../lib/urls'
 import { state2props, TASK_EDIT_OMIS_QUOTE_INFORMATION } from './state'
@@ -16,31 +10,14 @@ import { FORM_LAYOUT } from '../../../common/constants'
 import { transformQuoteInformationForApi } from './transformers'
 import { transformDateStringToDateObject } from '../../../apps/transformers'
 import { validateIfDateInFuture } from './validators'
+import OMISLayout from './OMISLayout'
 
 const EditQuoteInformation = ({ csrfToken }) => {
   const { orderId } = useParams()
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Edit quote information"
-          pageTitle={`Edit quote information - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Edit quote information' },
-          ]}
-        >
+        <OMISLayout heading="Edit quote information" order={order}>
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Form
               id="edit-order-quote-information"
@@ -76,7 +53,7 @@ const EditQuoteInformation = ({ csrfToken }) => {
               />
             </Form>
           </FormLayout>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

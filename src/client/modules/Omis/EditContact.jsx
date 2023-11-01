@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { Details, Link } from 'govuk-react'
 
 import {
-  DefaultLayout,
   FieldTypeahead,
   Form,
   FormLayout,
@@ -24,6 +23,7 @@ import { STATUS } from './constants'
 import { FORM_LAYOUT } from '../../../common/constants'
 import { TASK_EDIT_ORDER_CONTACT, EDIT_CONTACT_ID } from './state'
 import { transformContactForApi } from './transformers'
+import OMISLayout from './OMISLayout'
 
 const AddNewContact = ({ order }) => (
   <Task>
@@ -74,25 +74,7 @@ const EditContact = () => {
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Edit contact"
-          pageTitle={`Edit contact - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Edit contact' },
-          ]}
-        >
+        <OMISLayout heading="Edit contact" order={order}>
           <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
             <Form
               id="edit-order-contact"
@@ -137,7 +119,7 @@ const EditContact = () => {
               )}
             </Form>
           </FormLayout>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )
