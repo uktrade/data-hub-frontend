@@ -60,4 +60,12 @@ export const EmailRemindersSettingsTable = ({ dataName, data, to }) => (
   </SettingsTable>
 )
 
+// This will be removed once the edit functionality is added
+export const NoEditEmailRemindersSettingsTable = ({ data }) => (
+  <Table.Row>
+    <StyledCellHeader>Email notifications</StyledCellHeader>
+    <Table.Cell>{data.emailRemindersOnOff}</Table.Cell>
+  </Table.Row>
+)
+
 export default RemindersSettingsTable
