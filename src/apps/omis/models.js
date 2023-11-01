@@ -82,14 +82,6 @@ const Order = {
       `${config.apiRoot}/v3/omis/order/${id}/payment`
     )
   },
-
-  complete(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/complete`,
-      method: 'POST',
-      body,
-    })
-  },
 }
 
 module.exports = {

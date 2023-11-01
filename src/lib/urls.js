@@ -625,6 +625,7 @@ module.exports = {
       assigneeTime: url('/omis', '/:orderId/edit/assignee-time'),
     },
     cancel: url('/omis', '/:orderId/edit/cancel-order'),
+    complete: url('/omis', '/:orderId/edit/complete-order'),
   },
   support: url('/support'),
   reminders: {
