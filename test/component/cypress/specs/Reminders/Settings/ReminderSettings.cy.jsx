@@ -4,8 +4,8 @@ import {
   InvestmentReminderSettings,
   ExportReminderSettings,
   TasksAssignedToMeSettings,
-} from '../../../../../src/client/modules/Reminders/Settings/RemindersSettings.jsx'
-import DataHubProvider from '../provider'
+} from '../../../../../../src/client/modules/Reminders/Settings/RemindersSettings.jsx'
+import DataHubProvider from '../../provider'
 import {
   COMPANIES_NEW_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS_LABEL,
@@ -17,8 +17,8 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   MY_TASKS_DUE_DATE_APPROACHING,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
-} from '../../../../../src/client/modules/Reminders/constants.js'
-import { assertKeyValueTable } from '../../../../functional/cypress/support/assertions.js'
+} from '../../../../../../src/client/modules/Reminders/constants.js'
+import { assertKeyValueTable } from '../../../../../functional/cypress/support/assertions.js'
 
 const getToggle = (dataTest) => `[data-test="${dataTest}-toggle"]`
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
