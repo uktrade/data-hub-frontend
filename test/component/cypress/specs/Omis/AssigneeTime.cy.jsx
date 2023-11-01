@@ -10,6 +10,7 @@ import {
   assertErrorSummary,
   assertFieldInputNoLabel,
   assertGovReactTable,
+  assertLink,
 } from '../../../../functional/cypress/support/assertions'
 
 const order = {
@@ -48,15 +49,11 @@ describe('AssigneeTime', () => {
     })
 
     it('should render the add advisers link', () => {
-      cy.get('[data-test="add-advisers-link"]')
-        .should('exist')
-        .should('have.attr', 'href', urls.omis.edit.assignees(order.id))
+      assertLink('add-advisers-link', urls.omis.edit.assignees(order.id))
     })
 
     it('should render the return link', () => {
-      cy.get('[data-test="return-link"]')
-        .should('exist')
-        .should('have.attr', 'href', urls.omis.order(order.id))
+      assertLink('return-link', urls.omis.order(order.id))
     })
   })
 
@@ -131,9 +128,7 @@ describe('AssigneeTime', () => {
       })
 
       it('should render the edit advisers link', () => {
-        cy.get('[data-test="edit-advisers-link"]')
-          .should('exist')
-          .should('have.attr', 'href', urls.omis.edit.assignees(order.id))
+        assertLink('edit-advisers-link', urls.omis.edit.assignees(order.id))
       })
     })
 
@@ -201,9 +196,7 @@ describe('AssigneeTime', () => {
       })
 
       it('should render the edit advisers link', () => {
-        cy.get('[data-test="edit-advisers-link"]')
-          .should('exist')
-          .should('have.attr', 'href', urls.omis.edit.assignees(order.id))
+        assertLink('edit-advisers-link', urls.omis.edit.assignees(order.id))
       })
 
       it('should not allow invalid values to be entered', () => {
