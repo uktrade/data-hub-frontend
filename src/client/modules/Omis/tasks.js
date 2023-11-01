@@ -13,3 +13,9 @@ export const cancelOrder = (values) =>
 
 export const updateAssignees = (values) =>
   apiProxyAxios.patch(`v3/omis/order/${values.id}/assignee`, values.assignees)
+
+export const completeOrder = (values) =>
+  apiProxyAxios.patch(
+    `v3/omis/order/${values.id}/assignee`,
+    values.assignees
+  ) && apiProxyAxios.post(`v3/omis/order/${values.id}/complete`)

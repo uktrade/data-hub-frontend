@@ -361,9 +361,11 @@ import {
   TASK_EDIT_ORDER_VAT_STATUS,
   TASK_CANCEL_ORDER,
   TASK_EDIT_ORDER_ASSIGNEE_TIME,
+  TASK_COMPLETE_ORDER,
 } from './modules/Omis/state'
 import {
   cancelOrder,
+  completeOrder,
   savePayment,
   updateAssignees,
   updateOrder,
@@ -592,4 +594,5 @@ export const tasks = {
   [TASK_EDIT_ORDER_ASSIGNEE_TIME]: updateAssignees,
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
+  [TASK_COMPLETE_ORDER]: completeOrder,
 }

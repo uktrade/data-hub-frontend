@@ -107,3 +107,16 @@ export const transformAssigneeTimeForApi = ({ orderId, values }) => {
     assignees: filter(transformedAssignees),
   }
 }
+
+export const transformActualAssigneeTimeForApi = ({ orderId, values }) => {
+  delete values.hasWorkBeenSentToContact
+  const transformedAssignees = Object.entries(values).map((element) => ({
+    adviser: { id: element[0] },
+    actual_time: element[1] * 60,
+  }))
+
+  return {
+    id: orderId,
+    assignees: filter(transformedAssignees),
+  }
+}
