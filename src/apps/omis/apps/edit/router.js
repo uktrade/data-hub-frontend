@@ -1,7 +1,7 @@
 const { get } = require('lodash')
 const router = require('express').Router()
 
-const { editRedirect, editHandler, editLeadAssignee } = require('./controllers')
+const { editRedirect, editLeadAssignee } = require('./controllers')
 const { setCompany } = require('../../middleware')
 
 const { editAssigneesHandler } = require('./controllers/assignees')
@@ -20,7 +20,6 @@ router.use((req, res, next) => {
 router.get('/', editRedirect)
 router.get('/assignees', editAssigneesHandler)
 router.get('/subscribers', editSubscribersHandler)
-router.all('/:step', editHandler)
 
 router.post('/lead-assignee', editLeadAssignee)
 
