@@ -209,7 +209,10 @@ export const TasksAssignedToMeSettings = ({
         )}
         borderBottom={true}
       >
-        <NoEditEmailRemindersSettingsTable data={taskAssignedToMeFromOthers} />
+        <NoEditEmailRemindersSettingsTable
+          dataName={TASK_ASSIGNED_TO_ME_FROM_OTHERS}
+          data={taskAssignedToMeFromOthers}
+        />
       </RemindersToggleSection>
     </ToggleSectionContainer>
   </>
