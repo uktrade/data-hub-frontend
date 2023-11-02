@@ -6,10 +6,10 @@ import { transformAdvisersForTypeahead } from './transformers'
 import {
   OrderAssigneesResource,
   OrderResource,
-} from '../../../../../client/components/Resource'
+} from '../../components/Resource'
 import { EditAdvisersForm } from './EditAdvisersForm'
-import OMISLayout from '../../../../../client/modules/Omis/OMISLayout'
-import { STATUS } from '../../../../../client/modules/Omis/constants'
+import OMISLayout from './OMISLayout'
+import { STATUS } from './constants'
 
 const EditAssignees = () => {
   const { orderId } = useParams()

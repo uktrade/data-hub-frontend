@@ -63,8 +63,8 @@ import CancelOrder from './modules/Omis/CancelOrder'
 import AssigneeTime from './modules/Omis/AssigneeTime'
 import CompleteOrder from './modules/Omis/CompleteOrder'
 import EditContact from './modules/Omis/EditContact'
-import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
-import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
+import EditAssignees from './modules/Omis/EditAssignees'
+import EditSubscribers from './modules/Omis/EditSubscribers'
 
 const routes = {
   companies: [

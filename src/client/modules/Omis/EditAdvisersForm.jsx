@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { FieldAdvisersTypeahead, Form } from '../../../../../client/components'
-import urls from '../../../../../lib/urls'
+import { FieldAdvisersTypeahead, Form } from '../../components'
+import urls from '../../../lib/urls'
 
 export const EditAdvisersForm = ({
   id,
