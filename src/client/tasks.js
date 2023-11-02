@@ -385,6 +385,9 @@ import { getExportWinsConfirmed } from './modules/ExportWins/Confirmed/tasks'
 import { TASK_GET_EXPORT_WINS_UNCONFIRMED } from './modules/ExportWins/Unconfirmed/state'
 import { getExportWinsUnconfirmed } from './modules/ExportWins/Unconfirmed/tasks'
 
+import { TASK_GET_EXPORT_WIN_DETAILS } from './modules/ExportWins/Details/state'
+import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -595,4 +598,5 @@ export const tasks = {
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
   [TASK_COMPLETE_ORDER]: completeOrder,
+  [TASK_GET_EXPORT_WIN_DETAILS]: getExportWinDetails,
 }
