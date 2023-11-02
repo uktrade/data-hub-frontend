@@ -35,6 +35,7 @@ export const EditAdvisersForm = ({
   typeaheadName,
   typeaheadHint,
   orderId,
+  flashMessage,
 }) => (
   <Form
     id={id}
@@ -45,7 +46,7 @@ export const EditAdvisersForm = ({
     initialValues={initialValues}
     submissionTaskName={submissionTaskName}
     redirectTo={() => urls.omis.workOrder(orderId)}
-    flashMessage={() => 'Changes saved'}
+    flashMessage={() => flashMessage}
     transformPayload={transformPayload}
   >
     <FieldAdvisersTypeahead
