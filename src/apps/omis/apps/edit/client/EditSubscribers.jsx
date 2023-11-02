@@ -1,50 +1,52 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
-import Main from '../../../../../client/components/Main'
 import { TASK_SAVE_ORDER_SUBSCRIBERS } from './state'
 import { transformSubscribersForTypeahead } from './transformers'
-import { OrderSubscribersResource } from '../../../../../client/components/Resource'
-import { EditAdvisersLocalHeader, EditAdvisersForm } from './EditAdvisersForm'
+import {
+  OrderSubscribersResource,
+  OrderResource,
+} from '../../../../../client/components/Resource'
+import { EditAdvisersForm } from './EditAdvisersForm'
+import OMISLayout from '../../../../../client/modules/Omis/OMISLayout'
+import { STATUS } from '../../../../../client/modules/Omis/constants'
 
-const EditSubscribers = ({ reference, id, canRemoveSubscribers }) => (
-  <OrderSubscribersResource id={id}>
-    {(orderSubscribers) => (
-      <>
-        <EditAdvisersLocalHeader
-          orderId={id}
-          reference={reference}
-          heading="Add or remove advisers in the UK"
-          lastFieldText="Add or remove advisers in the UK"
-        />
-        <Main>
-          <EditAdvisersForm
-            id="order-subsrcibers-form"
-            analyticsFormName="editOrderSubscribers"
-            initialValues={{
-              subscribers: transformSubscribersForTypeahead(orderSubscribers),
-            }}
-            submissionTaskName={TASK_SAVE_ORDER_SUBSCRIBERS}
-            transformPayload={(values) => ({
-              values,
-              id,
-              canRemoveSubscribers,
-            })}
-            orderAdvisers={orderSubscribers}
-            orderId={id}
-            typeaheadName="subscribers"
-            typeaheadHint="People who need to be kept informed about this order, for example, international trade advisers or language advisors."
-          />
-        </Main>
-      </>
-    )}
-  </OrderSubscribersResource>
-)
-
-EditSubscribers.propTypes = {
-  reference: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  canRemoveSubscribers: PropTypes.bool.isRequired,
+const EditSubscribers = () => {
+  const { orderId } = useParams()
+  return (
+    <OrderResource id={orderId}>
+      {(order) => (
+        <OrderSubscribersResource id={order.id}>
+          {(orderSubscribers) => (
+            <OMISLayout
+              heading="Add or remove advisers in the UK"
+              order={order}
+            >
+              <EditAdvisersForm
+                id="order-subsrcibers-form"
+                analyticsFormName="editOrderSubscribers"
+                initialValues={{
+                  subscribers:
+                    transformSubscribersForTypeahead(orderSubscribers),
+                }}
+                submissionTaskName={TASK_SAVE_ORDER_SUBSCRIBERS}
+                transformPayload={(values) => ({
+                  values,
+                  id: order.id,
+                  canRemoveSubscribers: order.status === STATUS.DRAFT,
+                })}
+                orderAdvisers={orderSubscribers}
+                orderId={order.id}
+                typeaheadName="subscribers"
+                typeaheadHint="People who need to be kept informed about this order, for example, international trade advisers or language advisors."
+                flashMessage="Advisers in the UK updated"
+              />
+            </OMISLayout>
+          )}
+        </OrderSubscribersResource>
+      )}
+    </OrderResource>
+  )
 }
 
 export default EditSubscribers

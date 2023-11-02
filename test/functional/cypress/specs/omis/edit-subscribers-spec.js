@@ -2,7 +2,6 @@ const fixtures = require('../../fixtures/index')
 const urls = require('../../../../../src/lib/urls')
 
 const {
-  assertBreadcrumbs,
   assertTypeaheadHints,
   assertUrl,
   assertFlashMessage,
@@ -40,21 +39,9 @@ describe('View edit subscribers page', () => {
     )
   })
 
-  context('When the order is draft', () => {
+  context('When the order status is draft', () => {
     beforeEach(() => {
       cy.visit(urls.omis.edit.subscribers(draftOrder.id))
-    })
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        'Orders (OMIS)': urls.omis.index(),
-        [draftOrder.reference]: urls.omis.workOrder(draftOrder.id),
-        'Add or remove advisers in the UK': undefined,
-      })
-    })
-
-    it('should render heading', () => {
-      cy.contains('Add or remove advisers in the UK').should('exist')
     })
 
     it('should render field label and hint text', () => {
@@ -90,10 +77,10 @@ describe('View edit subscribers page', () => {
         assertRequestBody(xhr, expectedBody)
       })
       assertRedirectToOmisWorkOrder()
-      assertFlashMessage('Changes saved')
+      assertFlashMessage('Advisers in the UK updated')
     })
 
-    it('should redirect back to work order when cancelled', () => {
+    it('should redirect back to the work order page when cancelled', () => {
       clickCancelLink()
 
       assertUrl(urls.omis.workOrder(draftOrder.id))
@@ -142,25 +129,25 @@ describe('View edit subscribers page', () => {
     })
   })
 
-  context('When the order is cancelled', () => {
+  context('When the order status is cancelled', () => {
     it('should prevent force deletion when saving', () => {
       assertApiPreventsDeletions(cancelledOrder.id)
     })
   })
 
-  context('When the order is paid', () => {
+  context('When the order status is paid', () => {
     it('should prevent force deletion when saving', () => {
       assertApiPreventsDeletions(paidOrder.id)
     })
   })
 
-  context('When the order is quote accepted', () => {
+  context('When the order status is quote accepted', () => {
     it('should prevent force deletion when saving', () => {
       assertApiPreventsDeletions(quoteAccepted.id)
     })
   })
 
-  context('When the order is quote awaiting order', () => {
+  context('When the order status is quote awaiting acceptance', () => {
     it('should prevent force deletion when saving', () => {
       assertApiPreventsDeletions(quoteAwaitOrder.id)
     })

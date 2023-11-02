@@ -82,6 +82,7 @@ const reactRoutes = [
   '/omis/:orderId/edit/complete-order',
   '/omis/:orderId/edit/contact',
   '/omis/:orderId/edit/assignees',
+  '/omis/:orderId/edit/subscribers',
 ]
 
 reactRoutes.forEach((path) => {
