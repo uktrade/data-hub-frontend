@@ -28,6 +28,8 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING,
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS,
 } from '../constants'
 
 import FooterLink from '../FooterLink'
@@ -174,6 +176,7 @@ export const ExportReminderSettings = ({
 
 export const TasksAssignedToMeSettings = ({
   upcomingTaskReminder,
+  taskAssignedToMeFromOthers,
   openSettingsSections,
 }) => (
   <>
@@ -193,6 +196,21 @@ export const TasksAssignedToMeSettings = ({
           dataName={MY_TASKS_DUE_DATE_APPROACHING}
           data={upcomingTaskReminder}
           to={urls.reminders.settings.myTasks.dueDateApproaching()}
+        />
+      </RemindersToggleSection>
+      <RemindersToggleSection
+        label={TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL}
+        id={`${TASK_ASSIGNED_TO_ME_FROM_OTHERS}-toggle`}
+        data-test={`${TASK_ASSIGNED_TO_ME_FROM_OTHERS}-toggle`}
+        isOpen={isSettingOpen(
+          openSettingsSections,
+          TASK_ASSIGNED_TO_ME_FROM_OTHERS
+        )}
+        borderBottom={false}
+      >
+        <EmailRemindersSettingsTable
+          dataName={TASK_ASSIGNED_TO_ME_FROM_OTHERS}
+          data={taskAssignedToMeFromOthers}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>
@@ -225,6 +243,7 @@ export const RemindersSettings = ({
           exportNoRecentInteractions,
           exportNewInteractions,
           upcomingTaskReminder,
+          taskAssignedToMeFromOthers,
         }) => (
           <>
             <InvestmentReminderSettings
@@ -243,6 +262,7 @@ export const RemindersSettings = ({
 
             <TasksAssignedToMeSettings
               upcomingTaskReminder={upcomingTaskReminder}
+              taskAssignedToMeFromOthers={taskAssignedToMeFromOthers}
               openSettingsSections={openSettingsSections}
             />
 

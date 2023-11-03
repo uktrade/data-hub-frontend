@@ -644,6 +644,9 @@ module.exports = {
     },
     myTasks: {
       dueDateApproaching: url('/reminders/my-tasks-due-date-approaching'),
+      taskAssignedToMeFromOthers: url(
+        '/reminders/task-assigned-to-me-from-others'
+      ),
     },
     settings: {
       index: url('/reminders/settings'),
@@ -664,6 +667,9 @@ module.exports = {
       myTasks: {
         dueDateApproaching: url(
           '/reminders/settings/my-tasks-due-date-approaching'
+        ),
+        taskAssignedToMeFromOthers: url(
+          '/reminders/settings/task-assigned-to-me-from-others'
         ),
       },
     },

@@ -30,6 +30,11 @@ const transformSubscriptionSummary = ({ data }) => ({
     data.upcoming_task_reminder,
     'days before the task due date'
   ),
+  taskAssignedToMeFromOthers: {
+    emailRemindersOnOff: transformEmailReminders(
+      data.task_assigned_to_me_from_others
+    ),
+  },
 })
 
 const transformDaysAndEmailReminders = (
