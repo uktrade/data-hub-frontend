@@ -15,6 +15,7 @@ const nriDataTest = INVESTMENTS_NO_RECENT_INTERACTIONS
 const enriDataTest = COMPANIES_NO_RECENT_INTERACTIONS
 const eniDataTest = COMPANIES_NEW_INTERACTIONS
 const ddaDataTest = MY_TASKS_DUE_DATE_APPROACHING
+// const tatmfoDataTest = TASK_ASSIGNED_TO_ME_FROM_OTHERS To be added in next ticket (edit functionality)
 
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
 const getLink = (dataTest) => `[data-test="${dataTest}-link"]`
@@ -30,6 +31,7 @@ const interceptAPICalls = ({
   eni_email_reminders_enabled = true,
   dda_reminder_days = [10],
   dda_email_reminders_enabled = true,
+  tatmfo_email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
@@ -52,6 +54,9 @@ const interceptAPICalls = ({
       upcoming_task_reminder: {
         email_reminders_enabled: dda_email_reminders_enabled,
         reminder_days: dda_reminder_days,
+      },
+      task_assigned_to_me_from_others: {
+        email_reminders_enabled: tatmfo_email_reminders_enabled,
       },
     },
   }).as('summaryRequest')
@@ -118,5 +123,6 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('ENRI', enriDataTest)
     assertSettingsTableVisible('ENI', eniDataTest)
     assertSettingsTableVisible('DDA', ddaDataTest)
+    // assertSettingsTableVisible('TATMFO', tatmfoDataTest) To be added in next ticket (edit functionality)
   })
 })

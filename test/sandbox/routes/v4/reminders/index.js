@@ -48,6 +48,13 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
       email_reminders_enabled: true,
       reminder_days: [10],
     },
+    my_tasks_due_date_approaching: {
+      email_reminders_enabled: true,
+      reminder_days: [10],
+    },
+    task_assigned_to_me_from_others: {
+      reminder_days: [10],
+    },
   })
 }
 
