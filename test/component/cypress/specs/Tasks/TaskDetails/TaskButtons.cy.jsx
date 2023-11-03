@@ -29,6 +29,12 @@ describe('Task buttons', () => {
     it('should show the Edit link with expected url', () => {
       assertLink('edit-form-button', '/1/2/3')
     })
+    it('should show the Back link with expected url', () => {
+      assertLink(
+        'back-button',
+        `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks?sortby=-task__created_on`
+      )
+    })
   })
 
   context('When a task is completed', () => {
@@ -46,6 +52,12 @@ describe('Task buttons', () => {
 
     it('should show the Edit link with expected url', () => {
       assertLink('edit-form-button', '/1/2/3')
+    })
+    it('should show the Back link with expected url', () => {
+      assertLink(
+        'back-button',
+        `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks?sortby=-task__created_on`
+      )
     })
   })
 })
