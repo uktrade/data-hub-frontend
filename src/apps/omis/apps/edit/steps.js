@@ -1,17 +1,12 @@
 const { cloneDeep, mapValues, merge, omit } = require('lodash')
 
 const createJourney = require('../create/steps')
-const EditContactController = require('./controllers/contact')
 
 const createSteps = mapValues(cloneDeep(createJourney), (step) => {
   return omit(step, ['next', 'backLink'])
 })
 
 const steps = merge({}, createSteps, {
-  '/contact': {
-    heading: 'Edit contact',
-    controller: EditContactController,
-  },
   '/assignee-time': {
     heading: 'Edit estimated hours of work',
     fields: ['assignee_time'],

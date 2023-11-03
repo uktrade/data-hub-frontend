@@ -624,6 +624,7 @@ module.exports = {
       billingAddress: url('/omis', '/:orderId/edit/billing-address'),
       vatStatus: url('/omis', '/:orderId/edit/vat-status'),
       assigneeTime: url('/omis', '/:orderId/edit/assignee-time'),
+      contact: url('/omis', '/:orderId/edit/contact'),
     },
     cancel: url('/omis', '/:orderId/edit/cancel-order'),
     complete: url('/omis', '/:orderId/edit/complete-order'),
