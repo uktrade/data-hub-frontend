@@ -11,7 +11,6 @@ import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import {
   RemindersSettingsTable,
   EmailRemindersSettingsTable,
-  NoEditEmailRemindersSettingsTable,
 } from './RemindersSettingsTable'
 import Resource from '../../../components/Resource/Resource'
 import urls from '../../../../lib/urls'
@@ -207,9 +206,9 @@ export const TasksAssignedToMeSettings = ({
           openSettingsSections,
           TASK_ASSIGNED_TO_ME_FROM_OTHERS
         )}
-        borderBottom={true}
+        borderBottom={false}
       >
-        <NoEditEmailRemindersSettingsTable
+        <EmailRemindersSettingsTable
           dataName={TASK_ASSIGNED_TO_ME_FROM_OTHERS}
           data={taskAssignedToMeFromOthers}
         />

@@ -18,6 +18,7 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
 } from '../../../../../../src/client/modules/Reminders/constants.js'
 import { assertKeyValueTable } from '../../../../../functional/cypress/support/assertions.js'
 
@@ -282,6 +283,29 @@ describe('TasksAssignedToMeSettings', () => {
     assertToggleSection(
       MY_TASKS_DUE_DATE_APPROACHING,
       MY_TASKS_DUE_DATE_APPROACHING_LABEL
+    )
+  })
+
+  context('When task assigned to me from others setting is open', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component
+            openSettingsSections={[{ id: TASK_ASSIGNED_TO_ME_FROM_OTHERS }]}
+            upcomingTaskReminder={setting}
+            taskAssignedToMeFromOthers={setting}
+          />
+        </DataHubProvider>
+      )
+    })
+
+    assertSettingsSectionExpanded(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
+
+    assertEmailTableData(TASK_ASSIGNED_TO_ME_FROM_OTHERS, setting)
+
+    assertToggleSection(
+      TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+      TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
     )
   })
 })

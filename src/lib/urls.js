@@ -669,7 +669,7 @@ module.exports = {
           '/reminders/settings/my-tasks-due-date-approaching'
         ),
         taskAssignedToMeFromOthers: url(
-          '/reminders/task-assigned-to-me-from-others'
+          '/reminders/settings/task-assigned-to-me-from-others'
         ),
       },
     },

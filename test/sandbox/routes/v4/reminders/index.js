@@ -53,7 +53,7 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
       reminder_days: [10],
     },
     task_assigned_to_me_from_others: {
-      reminder_days: [10],
+      email_reminders_enabled: true,
     },
   })
 }
