@@ -14,10 +14,18 @@ import urls from '../../../../lib/urls'
 import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
-const GreyButton = styled(Button)`
-  background-color: ${GREY_3};
-  color: ${TEXT_COLOUR};
-  margin-left: ${SPACING.SCALE_5};
+// const GreyButton = styled(Button)`
+//   background-color: ${GREY_3};
+//   color: ${TEXT_COLOUR};
+//   margin-left: ${SPACING.SCALE_5};
+// `
+
+const NestedButton = styled(Button)`
+  ${Link} {
+    background-color: ${GREY_3};
+    color: ${TEXT_COLOUR};
+    margin-left: ${SPACING.SCALE_5};
+  }
 `
 
 export const TaskButtons = ({ task, editUrl }) => (
@@ -67,13 +75,13 @@ export const TaskButtons = ({ task, editUrl }) => (
         Back
       </Button>
 
-      <GreyButton
+      <NestedButton
         as={Link}
         buttonColour={GREY_3}
         buttonTextColour={TEXT_COLOUR}
       >
         Messin' Button
-      </GreyButton>
+      </NestedButton>
     </GridRow>
   </>
 )
