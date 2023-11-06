@@ -32,6 +32,7 @@ export const COMPANIES_NO_RECENT_INTERACTIONS =
 export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 export const MY_TASKS_DUE_DATE_APPROACHING = 'my-tasks-due-date-approaching'
 export const TASK_ASSIGNED_TO_ME_FROM_OTHERS = 'task-assigned-to-me-from-others'
+export const TASK_OVERDUE = 'task-overdue'
 
 export const INVESTMENTS_ESTIMATED_LAND_DATES_LABEL =
   'Approaching estimated land dates'
@@ -52,6 +53,8 @@ export const MY_TASKS_DUE_DATE_APPROACHING_LABEL = 'Due date approaching'
 
 export const TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL =
   'Task assigned to me from others'
+
+export const TASK_OVERDUE_LABEL = 'Task overdue'
 
 export const REMINDERS_SETTINGS = [
   {
@@ -95,6 +98,12 @@ export const REMINDERS_SETTINGS = [
     label: TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
     settingsQSParam: snakeCase(TASK_ASSIGNED_TO_ME_FROM_OTHERS),
     url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
+  },
+  {
+    id: TASK_OVERDUE,
+    label: TASK_OVERDUE_LABEL,
+    settingsQSParam: snakeCase(TASK_OVERDUE),
+    url: urls.reminders.myTasks.taskOverDue(),
   },
 ]
 
