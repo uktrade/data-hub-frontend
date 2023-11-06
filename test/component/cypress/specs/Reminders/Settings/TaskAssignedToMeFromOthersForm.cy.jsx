@@ -4,7 +4,7 @@ import DataHubProvider from '../../provider'
 import { TaskAssignedToMeFromOthersFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskAssignedToMeFromOthersForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
-describe('InvestmentReminderSettings', () => {
+describe('TaskAssignedToMeFromOthersSettings', () => {
   const Component = (props) => (
     <TaskAssignedToMeFromOthersFormFields {...props} />
   )

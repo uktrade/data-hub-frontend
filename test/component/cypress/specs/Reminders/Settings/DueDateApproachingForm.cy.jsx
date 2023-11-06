@@ -4,7 +4,7 @@ import DataHubProvider from '../../provider'
 import { DueDateApproachingFormFields } from '../../../../../../src/client/modules/Reminders/Settings/DueDateApproachingForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
-describe('InvestmentReminderSettings', () => {
+describe('DueDateApproachingFormFields', () => {
   const Component = (props) => <DueDateApproachingFormFields {...props} />
 
   context('Display the reminder settings form', () => {

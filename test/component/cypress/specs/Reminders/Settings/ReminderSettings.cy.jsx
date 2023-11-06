@@ -303,6 +303,8 @@ describe('TasksAssignedToMeSettings', () => {
 
     assertEmailTableData(TASK_ASSIGNED_TO_ME_FROM_OTHERS, setting)
 
+    assertEditLink(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
+
     assertToggleSection(
       TASK_ASSIGNED_TO_ME_FROM_OTHERS,
       TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
