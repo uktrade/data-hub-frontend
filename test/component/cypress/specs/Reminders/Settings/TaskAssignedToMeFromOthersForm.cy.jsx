@@ -1,11 +1,13 @@
 import React from 'react'
 
 import DataHubProvider from '../../provider'
-import { DueDateApproachingFormFields } from '../../../../../../src/client/modules/Reminders/Settings/DueDateApproachingForm'
+import { TaskAssignedToMeFromOthersFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskAssignedToMeFromOthersForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
-describe('DueDateApproachingFormFields', () => {
-  const Component = (props) => <DueDateApproachingFormFields {...props} />
+describe('TaskAssignedToMeFromOthersSettings', () => {
+  const Component = (props) => (
+    <TaskAssignedToMeFromOthersFormFields {...props} />
+  )
 
   context('Display the reminder settings form', () => {
     beforeEach(() => {
@@ -20,7 +22,7 @@ describe('DueDateApproachingFormFields', () => {
       cy.get('[data-test="field-emailRemindersEnabled"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
-          legend: 'Due date approaching email notifications',
+          legend: 'Task assigned to me from others email notifications',
           optionsCount: 2,
           value: 'Yes',
         })

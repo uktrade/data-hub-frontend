@@ -566,6 +566,16 @@ app.patch(
   v4Reminders.saveMyTasksUpcomingDueDateSubscriptions
 )
 
+app.get(
+  '/v4/reminder/subscription/task-assigned-to-me-from-others',
+  v4Reminders.getTaskAssignedToMeFromOthersSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/task-assigned-to-me-from-others',
+  v4Reminders.saveTaskAssignedToMeFromOthersSubscriptions
+)
+
 // Reminders lists
 
 app.get(

@@ -273,3 +273,15 @@ exports.saveMyTasksUpcomingDueDateSubscriptions = function (req, res) {
     email_reminders_enabled: true,
   })
 }
+
+exports.getTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: true,
+  })
+}
