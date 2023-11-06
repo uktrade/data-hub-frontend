@@ -19,6 +19,8 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_OVERDUE,
+  TASK_OVERDUE_LABEL,
 } from '../../../../../../src/client/modules/Reminders/constants.js'
 import { assertKeyValueTable } from '../../../../../functional/cypress/support/assertions.js'
 
@@ -250,6 +252,7 @@ describe('TasksAssignedToMeSettings', () => {
           <Component
             upcomingTaskReminder={{}}
             taskAssignedToMeFromOthers={{}}
+            taskOverdue={{}}
           />
         </DataHubProvider>
       )
@@ -258,6 +261,7 @@ describe('TasksAssignedToMeSettings', () => {
     it('should return all my tasks reminder setting sections', () => {
       cy.get(getToggle(MY_TASKS_DUE_DATE_APPROACHING)).should('be.visible')
       cy.get(getToggle(TASK_ASSIGNED_TO_ME_FROM_OTHERS)).should('be.visible')
+      cy.get(getToggle(TASK_OVERDUE)).should('be.visible')
     })
   })
 
@@ -269,6 +273,7 @@ describe('TasksAssignedToMeSettings', () => {
             openSettingsSections={[{ id: MY_TASKS_DUE_DATE_APPROACHING }]}
             upcomingTaskReminder={setting}
             taskAssignedToMeFromOthers={setting}
+            taskOverdue={setting}
           />
         </DataHubProvider>
       )
@@ -294,6 +299,7 @@ describe('TasksAssignedToMeSettings', () => {
             openSettingsSections={[{ id: TASK_ASSIGNED_TO_ME_FROM_OTHERS }]}
             upcomingTaskReminder={setting}
             taskAssignedToMeFromOthers={setting}
+            taskOverdue={setting}
           />
         </DataHubProvider>
       )
@@ -309,5 +315,26 @@ describe('TasksAssignedToMeSettings', () => {
       TASK_ASSIGNED_TO_ME_FROM_OTHERS,
       TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
     )
+  })
+
+  context('When task overdue setting is open', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component
+            openSettingsSections={[{ id: TASK_OVERDUE }]}
+            upcomingTaskReminder={setting}
+            taskAssignedToMeFromOthers={setting}
+            taskOverdue={setting}
+          />
+        </DataHubProvider>
+      )
+    })
+
+    assertSettingsSectionExpanded(TASK_OVERDUE)
+
+    assertEmailTableData(TASK_OVERDUE, setting)
+
+    assertToggleSection(TASK_OVERDUE, TASK_OVERDUE_LABEL)
   })
 })
