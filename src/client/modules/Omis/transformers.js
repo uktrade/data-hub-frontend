@@ -120,3 +120,8 @@ export const transformActualAssigneeTimeForApi = ({ orderId, values }) => {
     assignees: filter(transformedAssignees),
   }
 }
+
+export const transformContactForApi = ({ orderId, values }) => ({
+  id: orderId,
+  contact: values.contact.value,
+})

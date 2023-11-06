@@ -80,6 +80,7 @@ const reactRoutes = [
   '/reminders/settings/:reminderType',
   '/omis/:orderId/edit/assignee-time',
   '/omis/:orderId/edit/complete-order',
+  '/omis/:orderId/edit/contact',
 ]
 
 reactRoutes.forEach((path) => {

@@ -363,6 +363,7 @@ import {
   TASK_CANCEL_ORDER,
   TASK_EDIT_ORDER_ASSIGNEE_TIME,
   TASK_COMPLETE_ORDER,
+  TASK_EDIT_ORDER_CONTACT,
 } from './modules/Omis/state'
 import {
   cancelOrder,
@@ -602,4 +603,5 @@ export const tasks = {
   [TASK_GET_EXPORT_WIN_DETAILS]: getExportWinDetails,
   [TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAssignedToMeFromOthersExportSubscriptions,
+  [TASK_EDIT_ORDER_CONTACT]: updateOrder,
 }

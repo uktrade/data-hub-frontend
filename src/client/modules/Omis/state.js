@@ -9,6 +9,9 @@ export const TASK_EDIT_ORDER_VAT_STATUS = 'TASK_EDIT_ORDER_VAT_STATUS'
 export const TASK_CANCEL_ORDER = 'TASK_CANCEL_ORDER'
 export const TASK_EDIT_ORDER_ASSIGNEE_TIME = 'TASK_EDIT_ORDER_ASSIGNEE_TIME'
 export const TASK_COMPLETE_ORDER = 'TASK_COMPLETE_ORDER'
+export const TASK_EDIT_ORDER_CONTACT = 'TASK_EDIT_ORDER_CONTACT'
+
+export const EDIT_CONTACT_ID = 'editOmisContactId'
 
 export const state2props = (state) => ({
   csrfToken: state.csrfToken,
