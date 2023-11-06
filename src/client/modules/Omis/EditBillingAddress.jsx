@@ -1,12 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout, FieldAddress, Form, FormLayout } from '../../components'
+import { FieldAddress, Form, FormLayout } from '../../components'
 import { OrderResource } from '../../components/Resource'
 import { TASK_EDIT_ORDER_BILLING_ADDRESS } from './state'
 import { transformBillingAddressForApi } from './transformers'
 import { FORM_LAYOUT } from '../../../common/constants'
 import urls from '../../../lib/urls'
+import OMISLayout from './OMISLayout'
 
 const checkIfCountryHasChanged = (order, values) =>
   order.billingAddressCountry.id === values.country
@@ -16,25 +17,7 @@ const EditBillingAddress = () => {
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Edit billing address"
-          pageTitle={`Edit billing address - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Edit billing address' },
-          ]}
-        >
+        <OMISLayout heading="Edit billing address" order={order}>
           <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
             <Form
               id="edit-order-billing-address"
@@ -79,7 +62,7 @@ const EditBillingAddress = () => {
               />
             </Form>
           </FormLayout>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

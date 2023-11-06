@@ -63,6 +63,8 @@ import CancelOrder from './modules/Omis/CancelOrder'
 import AssigneeTime from './modules/Omis/AssigneeTime'
 import CompleteOrder from './modules/Omis/CompleteOrder'
 import EditContact from './modules/Omis/EditContact'
+import EditAssignees from './modules/Omis/EditAssignees'
+import EditSubscribers from './modules/Omis/EditSubscribers'
 
 const routes = {
   companies: [
@@ -230,6 +232,16 @@ const routes = {
       path: '/omis/:orderId/edit/contact',
       module: 'datahub:orders',
       component: EditContact,
+    },
+    {
+      path: '/omis/:orderId/edit/assignees',
+      module: 'datahub:orders',
+      component: EditAssignees,
+    },
+    {
+      path: '/omis/:orderId/edit/subscribers',
+      module: 'datahub:orders',
+      component: EditSubscribers,
     },
   ],
   reminders: [

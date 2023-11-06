@@ -125,3 +125,27 @@ export const transformContactForApi = ({ orderId, values }) => ({
   id: orderId,
   contact: values.contact.value,
 })
+
+export const transformAdvisersForTypeahead = (advisers) =>
+  advisers.map((value) => ({
+    label: value.adviser.name,
+    value: value.adviser.id,
+  }))
+
+export const transformAdvisersForAPI = (values) =>
+  values.assignees.map((assignee) => ({
+    adviser: {
+      id: assignee.value,
+    },
+  }))
+
+export const transformSubscribersForTypeahead = (subscribers) =>
+  subscribers.map((value) => ({
+    label: value.name,
+    value: value.id,
+  }))
+
+export const transformSubscribersForAPI = (values) =>
+  values.subscribers.map((subscriber) => ({
+    id: subscriber.value,
+  }))

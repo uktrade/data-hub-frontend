@@ -1,29 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  FieldAdvisersTypeahead,
-  Form,
-  LocalHeader,
-} from '../../../../../client/components'
-import urls from '../../../../../lib/urls.js'
-
-export const EditAdvisersLocalHeader = ({
-  orderId,
-  heading,
-  lastFieldText,
-  reference,
-}) => (
-  <LocalHeader
-    heading={heading}
-    breadcrumbs={[
-      { link: urls.dashboard.index(), text: 'Home' },
-      { link: urls.omis.index(), text: 'Orders (OMIS)' },
-      { link: urls.omis.workOrder(orderId), text: reference },
-      { text: lastFieldText },
-    ]}
-  />
-)
+import { FieldAdvisersTypeahead, Form } from '../../components'
+import urls from '../../../lib/urls'
 
 export const EditAdvisersForm = ({
   id,
@@ -35,6 +14,7 @@ export const EditAdvisersForm = ({
   typeaheadName,
   typeaheadHint,
   orderId,
+  flashMessage,
 }) => (
   <Form
     id={id}
@@ -45,7 +25,7 @@ export const EditAdvisersForm = ({
     initialValues={initialValues}
     submissionTaskName={submissionTaskName}
     redirectTo={() => urls.omis.workOrder(orderId)}
-    flashMessage={() => 'Changes saved'}
+    flashMessage={() => flashMessage}
     transformPayload={transformPayload}
   >
     <FieldAdvisersTypeahead
@@ -72,11 +52,4 @@ EditAdvisersForm.propTypes = {
   orderId: PropTypes.string.isRequired,
   typeaheadName: PropTypes.string.isRequired,
   typeaheadHint: PropTypes.string.isRequired,
-}
-
-EditAdvisersLocalHeader.propTypes = {
-  orderId: PropTypes.string.isRequired,
-  reference: PropTypes.string.isRequired,
-  heading: PropTypes.string.isRequired,
-  lastFieldText: PropTypes.string.isRequired,
 }

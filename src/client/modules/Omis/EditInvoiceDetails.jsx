@@ -4,7 +4,6 @@ import { H2, InsetText, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import {
-  DefaultLayout,
   FieldInput,
   FieldRadios,
   Form,
@@ -19,6 +18,7 @@ import { validateVATNumber } from './validators'
 import { transformBoolToRadioOptionWithNullCheck } from '../Investments/Projects/Details/transformers'
 import { TASK_EDIT_INVOICE_DETAILS } from './state'
 import { transformInvoiceDetailsForApi } from './transformers'
+import OMISLayout from './OMISLayout'
 
 export const BillingAddress = ({ company, order }) => {
   const address = order.billingAddressCountry
@@ -142,25 +142,7 @@ const EditInvoiceDetails = () => {
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Edit invoice details"
-          pageTitle={`Edit invoice details - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Edit invoice details' },
-          ]}
-        >
+        <OMISLayout heading="Edit invoice details" order={order}>
           <Form
             id="edit-order-invoice-details"
             analyticsFormName="editOrderInvoiceDetails"
@@ -191,7 +173,7 @@ const EditInvoiceDetails = () => {
               />
             </FormLayout>
           </Form>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

@@ -4,13 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Link, Table } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 
-import {
-  DefaultLayout,
-  FieldInput,
-  Form,
-  FormLayout,
-  StatusMessage,
-} from '../../components'
+import { FieldInput, Form, FormLayout, StatusMessage } from '../../components'
 import {
   OrderResource,
   OrderAssigneesResource,
@@ -21,6 +15,7 @@ import { validateNumber } from './validators'
 import { TASK_EDIT_ORDER_ASSIGNEE_TIME } from './state'
 import { transformAssigneeTimeForApi } from './transformers'
 import { RED } from '../../utils/colours'
+import OMISLayout from './OMISLayout'
 
 const StyledLink = styled(Link)`
   display: inline-block;
@@ -112,31 +107,13 @@ const AssigneeTime = () => {
       {(order) => (
         <OrderAssigneesResource id={orderId}>
           {(assignees) => (
-            <DefaultLayout
-              heading="Edit estimated hours of work"
-              pageTitle={`Edit estimated hours of work - ${order.reference} - Orders (OMIS)`}
-              breadcrumbs={[
-                {
-                  link: urls.dashboard.index(),
-                  text: 'Home',
-                },
-                {
-                  link: urls.omis.index(),
-                  text: 'Orders (OMIS)',
-                },
-                {
-                  link: urls.omis.order(order.id),
-                  text: order.reference,
-                },
-                { text: 'Edit estimated hours of work' },
-              ]}
-            >
+            <OMISLayout heading="Edit estimated hours of work" order={order}>
               {assignees.length > 0 ? (
                 <AssigneeTimeTable order={order} assignees={assignees} />
               ) : (
                 <NoAssigneesMessage order={order} />
               )}
-            </DefaultLayout>
+            </OMISLayout>
           )}
         </OrderAssigneesResource>
       )}

@@ -5,7 +5,6 @@ import { Button, Details, H2, Link, Table } from 'govuk-react'
 import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 
 import {
-  DefaultLayout,
   FieldCurrency,
   FieldDate,
   Form,
@@ -25,6 +24,7 @@ import { validateAmountRecieved, validateIfDateInPast } from './validators'
 import { TASK_RECONCILE_OMIS_PAYMENT } from './state'
 import { transformPaymentInformationForApi } from './transformers'
 import { STATUS } from './constants'
+import OMISLayout from './OMISLayout'
 
 const StyledLink = styled(Link)`
   display: inline-block;
@@ -134,25 +134,7 @@ const PaymentReconciliation = () => {
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Reconcile a payment"
-          pageTitle={`Reconcile a payment - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Reconcile a payment' },
-          ]}
-        >
+        <OMISLayout heading="Reconcile a payment" order={order}>
           {(order.status === STATUS.DRAFT ||
             order.status === STATUS.QUOTE_AWAITING_ACCEPTANCE) && (
             <QuoteNotAcceptedMessage orderId={order.id} />
@@ -232,7 +214,7 @@ const PaymentReconciliation = () => {
               )}
             </OrderInvoiceResource>
           )}
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

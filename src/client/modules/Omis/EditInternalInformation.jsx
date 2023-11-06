@@ -2,7 +2,6 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
-  DefaultLayout,
   FieldTextarea,
   FieldTypeahead,
   Form,
@@ -23,31 +22,14 @@ import {
 } from '../Investments/Projects/transformers'
 import { transformInternalInformationForApi } from './transformers'
 import { idNamesToValueLabels } from '../../utils'
+import OMISLayout from './OMISLayout'
 
 const EditInternalInformation = () => {
   const { orderId } = useParams()
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Edit internal information"
-          pageTitle={`Edit internal information - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Edit internal information' },
-          ]}
-        >
+        <OMISLayout heading="Edit internal information" order={order}>
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Form
               id="edit-order-internal-information"
@@ -108,7 +90,7 @@ const EditInternalInformation = () => {
               />
             </Form>
           </FormLayout>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

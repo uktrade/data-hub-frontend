@@ -120,12 +120,6 @@ import {
 } from './modules/Companies/CompanyInvestments/LargeCapitalProfile/state'
 import * as largeCapitalProfileTasks from './modules/Companies/CompanyInvestments/LargeCapitalProfile/tasks'
 
-import {
-  TASK_SAVE_ORDER_ASSIGNEES,
-  TASK_SAVE_ORDER_SUBSCRIBERS,
-} from '../apps/omis/apps/edit/client/state'
-import * as editOMISTasks from '../apps/omis/apps/edit/client/tasks'
-
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
 import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
 
@@ -363,6 +357,8 @@ import {
   TASK_EDIT_ORDER_ASSIGNEE_TIME,
   TASK_COMPLETE_ORDER,
   TASK_EDIT_ORDER_CONTACT,
+  TASK_SAVE_ORDER_ASSIGNEES,
+  TASK_SAVE_ORDER_SUBSCRIBERS,
 } from './modules/Omis/state'
 import {
   cancelOrder,
@@ -370,6 +366,8 @@ import {
   savePayment,
   updateAssignees,
   updateOrder,
+  saveOrderAssignees,
+  saveOrderSubscribers,
 } from './modules/Omis/tasks'
 
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
@@ -495,8 +493,8 @@ export const tasks = {
   [TASK_ARCHIVE_COMPANY]: businessDetails.archiveSubmitCallback,
   'Exports Edit': exportsEdit.saveWinCategory,
   [TASK_GET_TYPEAHEAD_OPTIONS]: getTypeaheadOptions,
-  [TASK_SAVE_ORDER_ASSIGNEES]: editOMISTasks.saveOrderAssignees,
-  [TASK_SAVE_ORDER_SUBSCRIBERS]: editOMISTasks.saveOrderSubscribers,
+  [TASK_SAVE_ORDER_ASSIGNEES]: saveOrderAssignees,
+  [TASK_SAVE_ORDER_SUBSCRIBERS]: saveOrderSubscribers,
   [TASK_GET_SUBSCRIPTION_SUMMARY]: reminderSettings.getSubscriptionSummary,
   [TASK_GET_ELD_REMINDER_SUBSCRIPTIONS]: reminderSettings.getEldSubscriptions,
   [TASK_SAVE_ELD_REMINDER_SUBSCRIPTIONS]: reminderSettings.saveEldSubscriptions,

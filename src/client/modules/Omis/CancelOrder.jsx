@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout, FieldRadios, Form } from '../../components'
+import { FieldRadios, Form } from '../../components'
 import {
   OrderResource,
   OrderCancellationReasonsResource,
@@ -12,31 +12,14 @@ import { idNamesToValueLabels } from '../../utils'
 import { RED_2 } from '../../utils/colours'
 import { TASK_CANCEL_ORDER } from './state'
 import { transformCancellationForApi } from './transformers'
+import OMISLayout from './OMISLayout'
 
 const CancelOrder = () => {
   const { orderId } = useParams()
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Cancel an order"
-          pageTitle={`Cancel an order - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Cancel an order' },
-          ]}
-        >
+        <OMISLayout heading="Cancel an order" order={order}>
           <Form
             id="cancel-order"
             analyticsFormName="cancelOrder"
@@ -67,7 +50,7 @@ const CancelOrder = () => {
               }
             />
           </Form>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

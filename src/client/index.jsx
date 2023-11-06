@@ -40,8 +40,6 @@ import Opportunity from '../apps/investments/client/opportunities/Details/Opport
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
 import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
-import EditAssignees from '../apps/omis/apps/edit/client/EditAssignees'
-import EditSubscribers from '../apps/omis/apps/edit/client/EditSubscribers'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -294,12 +292,6 @@ function App() {
         </Mount>
         <Mount selector="#company-orders-collection">
           {(props) => <CompanyOrdersCollection {...props} />}
-        </Mount>
-        <Mount selector="#edit-assignees">
-          {(props) => <EditAssignees {...props} />}
-        </Mount>
-        <Mount selector="#edit-subscribers">
-          {(props) => <EditSubscribers {...props} />}
         </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}

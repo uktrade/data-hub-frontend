@@ -1,37 +1,20 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout, Form, StatusMessage } from '../../components'
+import { Form, StatusMessage } from '../../components'
 import { OrderResource } from '../../components/Resource'
 import { TASK_EDIT_ORDER_VAT_STATUS } from './state'
 import { transformVatStatusForApi } from './transformers'
 import { FieldVATStatus } from './EditInvoiceDetails'
 import urls from '../../../lib/urls'
+import OMISLayout from './OMISLayout'
 
 const EditBillingAddress = () => {
   const { orderId } = useParams()
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Confirm VAT status"
-          pageTitle={`Confirm VAT status - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(order.id),
-              text: order.reference,
-            },
-            { text: 'Confirm VAT status' },
-          ]}
-        >
+        <OMISLayout heading="Confirm VAT status" order={order}>
           <Form
             id="edit-order-vat-status"
             analyticsFormName="editOrderVatStatus"
@@ -54,7 +37,7 @@ const EditBillingAddress = () => {
             </StatusMessage>
             <FieldVATStatus />
           </Form>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )

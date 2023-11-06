@@ -2,13 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Details, Table } from 'govuk-react'
 
-import {
-  DefaultLayout,
-  FieldCheckboxes,
-  FieldInput,
-  Form,
-  FormLayout,
-} from '../../components'
+import { FieldCheckboxes, FieldInput, Form, FormLayout } from '../../components'
 import {
   OrderResource,
   OrderAssigneesResource,
@@ -18,6 +12,7 @@ import { FORM_LAYOUT } from '../../../common/constants'
 import { validateNumber } from './validators'
 import { TASK_COMPLETE_ORDER } from './state'
 import { transformActualAssigneeTimeForApi } from './transformers'
+import OMISLayout from './OMISLayout'
 
 const transformEstimatedTime = (time) => {
   const estimatedTime = time / 60
@@ -113,27 +108,9 @@ const CompleteOrder = () => {
       {(order) => (
         <OrderAssigneesResource id={orderId}>
           {(assignees) => (
-            <DefaultLayout
-              heading="Complete order"
-              pageTitle={`Complete order - ${order.reference} - Orders (OMIS)`}
-              breadcrumbs={[
-                {
-                  link: urls.dashboard.index(),
-                  text: 'Home',
-                },
-                {
-                  link: urls.omis.index(),
-                  text: 'Orders (OMIS)',
-                },
-                {
-                  link: urls.omis.order(order.id),
-                  text: order.reference,
-                },
-                { text: 'Complete order' },
-              ]}
-            >
+            <OMISLayout heading="Complete order" order={order}>
               <CompleteAssigneesTable order={order} assignees={assignees} />
-            </DefaultLayout>
+            </OMISLayout>
           )}
         </OrderAssigneesResource>
       )}
