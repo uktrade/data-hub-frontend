@@ -6,6 +6,7 @@ import {
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS,
 } from '../../../../../../src/client/modules/Reminders/constants'
 
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
@@ -15,7 +16,7 @@ const nriDataTest = INVESTMENTS_NO_RECENT_INTERACTIONS
 const enriDataTest = COMPANIES_NO_RECENT_INTERACTIONS
 const eniDataTest = COMPANIES_NEW_INTERACTIONS
 const ddaDataTest = MY_TASKS_DUE_DATE_APPROACHING
-// const tatmfoDataTest = TASK_ASSIGNED_TO_ME_FROM_OTHERS To be added in next ticket (edit functionality)
+const tatmfoDataTest = TASK_ASSIGNED_TO_ME_FROM_OTHERS
 
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
 const getLink = (dataTest) => `[data-test="${dataTest}-link"]`
@@ -111,7 +112,7 @@ describe('Settings: reminders and email notifications', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true&companies_new_interactions=true&my_tasks_due_date_approaching=true'
+      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true&companies_new_interactions=true&my_tasks_due_date_approaching=true&task_assigned_to_me_from_others=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -123,6 +124,6 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('ENRI', enriDataTest)
     assertSettingsTableVisible('ENI', eniDataTest)
     assertSettingsTableVisible('DDA', ddaDataTest)
-    // assertSettingsTableVisible('TATMFO', tatmfoDataTest) To be added in next ticket (edit functionality)
+    assertSettingsTableVisible('TATMFO', tatmfoDataTest)
   })
 })
