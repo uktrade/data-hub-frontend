@@ -211,6 +211,7 @@ export const TasksAssignedToMeSettings = ({
         <EmailRemindersSettingsTable
           dataName={TASK_ASSIGNED_TO_ME_FROM_OTHERS}
           data={taskAssignedToMeFromOthers}
+          to={urls.reminders.settings.myTasks.taskAssignedToMeFromOthers()}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>

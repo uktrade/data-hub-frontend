@@ -138,3 +138,9 @@ export const saveUpcomingDueDateExportSubscriptions = (payload) =>
     '/v4/reminder/subscription/my-tasks-due-date-approaching',
     payload
   )
+
+export const saveTaskAssignedToMeFromOthersExportSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/task-assigned-to-me-from-others',
+    payload
+  )

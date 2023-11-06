@@ -62,6 +62,7 @@ import InvestmentProjectTasks from './InvestmentProjectTasks'
 import OrderInvoice from './OrderInvoice'
 import OrderCancellationReasons from './OrderCancellationReasons'
 import MyTasksDueDateApproachingSettings from './MyTasksDueDateApproachingSettings'
+import TaskAssignedToMeFromOthersSettings from './TaskAssignedToMeFromOthersSettings'
 
 export default {
   ...Company.tasks,
@@ -128,4 +129,5 @@ export default {
   ...OrderInvoice.tasks,
   ...OrderCancellationReasons.tasks,
   ...MyTasksDueDateApproachingSettings.tasks,
+  ...TaskAssignedToMeFromOthersSettings.tasks,
 }
