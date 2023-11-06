@@ -14,17 +14,9 @@ import urls from '../../../../lib/urls'
 import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
-// const GreyButton = styled(Button)`
-//   background-color: ${GREY_3};
-//   color: ${TEXT_COLOUR};
-//   margin-left: ${SPACING.SCALE_5};
-// `
-
-const NestedButton = styled(Button)`
-  ${Link} {
-    background-color: ${GREY_3};
-    color: ${TEXT_COLOUR};
-    margin-left: ${SPACING.SCALE_5};
+const ButtonWrapper = styled.div`
+  * {
+    margin-left: ${SPACING.SCALE_4};
   }
 `
 
@@ -52,36 +44,29 @@ export const TaskButtons = ({ task, editUrl }) => (
           {() => <></>}
         </Form>
       )}
+      <ButtonWrapper>
+        <Button
+          buttonColour={GREY_3}
+          buttonTextColour={TEXT_COLOUR}
+          as={Link}
+          href={editUrl}
+          data-test="edit-form-button"
+        >
+          Edit
+        </Button>
 
-      <Button
-        buttonColour={GREY_3}
-        buttonTextColour={TEXT_COLOUR}
-        as={Link}
-        href={editUrl}
-        data-test="edit-form-button"
-      >
-        Edit
-      </Button>
-
-      <Button
-        buttonColour={GREY_3}
-        buttonTextColour={TEXT_COLOUR}
-        as={Link}
-        href={urls.investments.projects.tasks.index(
-          task.investmentProjectTask.investmentProject.id
-        )}
-        data-test="back-button"
-      >
-        Back
-      </Button>
-
-      <NestedButton
-        as={Link}
-        buttonColour={GREY_3}
-        buttonTextColour={TEXT_COLOUR}
-      >
-        Messin' Button
-      </NestedButton>
+        <Button
+          buttonColour={GREY_3}
+          buttonTextColour={TEXT_COLOUR}
+          as={Link}
+          href={urls.investments.projects.tasks.index(
+            task.investmentProjectTask.investmentProject.id
+          )} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
+          data-test="back-button"
+        >
+          Back
+        </Button>
+      </ButtonWrapper>
     </GridRow>
   </>
 )
