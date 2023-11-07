@@ -32,7 +32,7 @@ export const TaskOverdueFormFields = ({ settings }) => (
       <FieldRadios
         name="emailRemindersEnabled"
         showBorder={true}
-        legend="Task Overdue"
+        legend="Task overdue email notifications"
         label="Do you want to get emails as well as on-line reminders?"
         options={OPTIONS_NO_YES}
         initialValue={settings.emailRemindersEnabled ? OPTION_YES : OPTION_NO}
