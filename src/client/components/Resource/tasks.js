@@ -63,6 +63,7 @@ import OrderInvoice from './OrderInvoice'
 import OrderCancellationReasons from './OrderCancellationReasons'
 import MyTasksDueDateApproachingSettings from './MyTasksDueDateApproachingSettings'
 import TaskAssignedToMeFromOthersSettings from './TaskAssignedToMeFromOthersSettings'
+import TaskOverdueSettings from './TaskOverdueSettings'
 
 export default {
   ...Company.tasks,
@@ -130,4 +131,5 @@ export default {
   ...OrderCancellationReasons.tasks,
   ...MyTasksDueDateApproachingSettings.tasks,
   ...TaskAssignedToMeFromOthersSettings.tasks,
+  ...TaskOverdueSettings.tasks,
 }
