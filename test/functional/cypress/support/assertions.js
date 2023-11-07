@@ -847,6 +847,14 @@ const assertLink = (dataTest, expected) => {
     .should('have.attr', 'href', expected)
 }
 
+/**
+ * A wrapper around assertLink that also checks the text
+ */
+const assertLinkWithText = (dataTest, expectedLink, expectedText) => {
+  cy.get(`[data-test=${dataTest}]`).should('have.text', expectedText)
+  assertLink(dataTest, expectedLink)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -910,4 +918,5 @@ module.exports = {
   assertFieldError,
   assertTypeaheadValues,
   assertLink,
+  assertLinkWithText,
 }
