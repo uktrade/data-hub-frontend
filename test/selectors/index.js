@@ -36,7 +36,6 @@ exports.eventCreate = require('./event/createOrEdit')
 
 exports.omisCreate = require('./omis/create')
 exports.omisSummary = require('./omis/summary')
-exports.omisWorkOrder = require('./omis/work-order')
 
 exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')
