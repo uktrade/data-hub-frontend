@@ -35,6 +35,10 @@ const transformSubscriptionSummary = ({ data }) => ({
       data.task_assigned_to_me_from_others
     ),
   },
+  taskOverdue: transformDaysAndEmailReminders(
+    data.task_overdue,
+    'days after the task due date'
+  ),
 })
 
 const transformDaysAndEmailReminders = (

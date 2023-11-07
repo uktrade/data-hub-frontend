@@ -33,6 +33,8 @@ const interceptAPICalls = ({
   dda_reminder_days = [10],
   dda_email_reminders_enabled = true,
   tatmfo_email_reminders_enabled = true,
+  to_reminder_days = [10],
+  to_email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
@@ -58,6 +60,10 @@ const interceptAPICalls = ({
       },
       task_assigned_to_me_from_others: {
         email_reminders_enabled: tatmfo_email_reminders_enabled,
+      },
+      task_overdue: {
+        email_reminders_enabled: to_email_reminders_enabled,
+        reminder_days: to_reminder_days,
       },
     },
   }).as('summaryRequest')
@@ -112,7 +118,13 @@ describe('Settings: reminders and email notifications', () => {
 
   context('When all settings are visible', () => {
     const queryParams =
-      'investments_estimated_land_dates=true&investments_no_recent_interactions=true&companies_no_recent_interactions=true&companies_new_interactions=true&my_tasks_due_date_approaching=true&task_assigned_to_me_from_others=true'
+      'investments_estimated_land_dates=true' +
+      '&investments_no_recent_interactions=true' +
+      '&companies_no_recent_interactions=true' +
+      '&companies_new_interactions=true' +
+      '&my_tasks_due_date_approaching=true' +
+      '&task_assigned_to_me_from_others=true' +
+      '&task_overdue=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
