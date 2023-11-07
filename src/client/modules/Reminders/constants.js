@@ -103,7 +103,7 @@ export const REMINDERS_SETTINGS = [
     id: TASK_OVERDUE,
     label: TASK_OVERDUE_LABEL,
     settingsQSParam: snakeCase(TASK_OVERDUE),
-    url: urls.reminders.myTasks.taskOverDue(),
+    url: urls.reminders.myTasks.taskOverdue(),
   },
 ]
 

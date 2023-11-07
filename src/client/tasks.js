@@ -225,6 +225,7 @@ import {
   TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
   TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS,
+  TASK_OVERDUE_REMINDER_SUBSCRIPTIONS,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -602,4 +603,6 @@ export const tasks = {
   [TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAssignedToMeFromOthersExportSubscriptions,
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,
+  [TASK_OVERDUE_REMINDER_SUBSCRIPTIONS]:
+    reminderSettings.saveTaskOverdueSubscriptions,
 }
