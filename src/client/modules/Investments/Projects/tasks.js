@@ -64,3 +64,11 @@ export const completeInvestmentProposition = (values) =>
     `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/complete`,
     values
   )
+export const completeInvestmentPropositions = (values) =>
+  apiProxyAxios
+    .post(
+      `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/complete`
+    )
+    .then((data) => ({
+      results: data,
+    }))

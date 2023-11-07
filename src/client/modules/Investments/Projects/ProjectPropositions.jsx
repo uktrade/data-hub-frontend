@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import React from 'react'
-import { H2 } from 'govuk-react'
+import { H2, Button, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
@@ -13,23 +13,73 @@ import {
 import urls from '../../../../lib/urls'
 import { transformPropositionToListItem } from './transformers'
 import ProjectLayout from '../../../components/Layout/ProjectLayout'
+// import button from './ButtonRenderer'
 
-const mapDispatchToProps = (dispatch) => ({
-  writeFlashMessage: (messageType, message) =>
-    dispatch({
-      type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
-      messageType,
-      message,
-    }),
-});
+import { ID, TASK_PROPOSITION_COMPLETE, propositionState2props } from './state'
+import { PROPOSITION_COMPLETE } from '../../../../client/actions'
+import { BLACK, GREY_3 } from '../../../utils/colours'
+import Task from '../../../../client/components/Task'
 
-const ProjectPropositions = ({ writeFlashMessage }) => {
+const errorMessage = ''
+
+const buttonRenderer = ({ id, investment_project_id, status }) => {
+  if (status === 'abandoned' || status === 'completed') {
+    return null
+  }
+  return (
+    <>
+      <Button
+        as={Link}
+        href={urls.investments.projects.proposition.abandon(
+          investment_project_id,
+          id
+        )}
+        data-test="abandon-button"
+        buttonColour={GREY_3}
+        buttonTextColour={BLACK}
+      >
+        Abandon
+      </Button>{' '}
+      <Task>
+        {(getTask) => {
+          const postCompleteTask = getTask(TASK_PROPOSITION_COMPLETE, ID)
+          return (
+            <Button
+              onClick={() =>
+                postCompleteTask.start({
+                  payload: {
+                    investmentProjectId: investment_project_id,
+                    propositionId: id,
+                  },
+                  onSuccessDispatch: PROPOSITION_COMPLETE,
+                })
+              }
+              data-test="complete-button"
+            >
+              {postCompleteTask.error
+                ? (errorMessage = postCompleteTask.errorMessage)
+                : null}
+              Complete
+            </Button>
+          )
+        }}
+      </Task>
+    </>
+  )
+}
+
+// function transformErrorMessage(error) {
+//   return get(error, 'non_field_errors', ['There has been an error'])[0]
+// }
+
+const ProjectPropositions = () => {
   const history = useHistory()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(parsedQueryString.page, 10) || 1
 
   const { projectId } = useParams()
+
   return (
     <PropositionCollectionResource
       payload={{
@@ -40,7 +90,9 @@ const ProjectPropositions = ({ writeFlashMessage }) => {
       }}
     >
       {(_, count, rawData) => {
-        const propositions = rawData.results.map(item => transformPropositionToListItem(item, writeFlashMessage));
+        const propositions = rawData.results.map((item) =>
+          transformPropositionToListItem(item)
+        )
         const sortOptions = [
           {
             name: 'Recently created',
@@ -57,6 +109,7 @@ const ProjectPropositions = ({ writeFlashMessage }) => {
             {(project) => (
               <ProjectLayout
                 project={project}
+                flashMessages={{ error: [errorMessage], success: [] }}
                 breadcrumbs={[
                   {
                     link: urls.investments.projects.details(project.id),
@@ -72,6 +125,7 @@ const ProjectPropositions = ({ writeFlashMessage }) => {
                   and view the details of previous and current propositions.
                 </p>
                 <CollectionList
+                  footerRenderer={buttonRenderer}
                   collectionName="proposition"
                   items={propositions}
                   count={count}
@@ -99,4 +153,4 @@ const ProjectPropositions = ({ writeFlashMessage }) => {
   )
 }
 
-export default connect(null, mapDispatchToProps)(ProjectPropositions)
+export default connect(propositionState2props)(ProjectPropositions)
