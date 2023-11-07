@@ -32,7 +32,7 @@ describe('Order', () => {
       .parent()
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'johnny@cakeman.com')
-    cy.get(selectors.omisSummary.header)
+    cy.get('[data-test="localHeaderDetails"]')
       .should('contain', 'order testing')
       .and('contain', 'Brazil')
       .and('contain', today)
