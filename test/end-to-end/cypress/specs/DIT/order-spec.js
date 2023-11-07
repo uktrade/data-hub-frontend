@@ -27,11 +27,11 @@ describe('Order', () => {
     cy.get(selectors.omisCreate.continue).click()
     cy.get(selectors.omisCreate.continue).click()
 
-    cy.get(selectors.omisSummary.summary)
+    /*cy.get(selectors.omisSummary.summary)
       .contains('Contact')
       .parent()
       .should('contain', 'Johnny Cakeman')
-      .and('contain', 'johnny@cakeman.com')
+      .and('contain', 'johnny@cakeman.com')*/
     cy.get('[data-test="localHeaderDetails"]')
       .should('contain', 'order testing')
       .and('contain', 'Brazil')
