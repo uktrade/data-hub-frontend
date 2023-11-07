@@ -51,67 +51,62 @@ const StyledSubheading = styled('h4')`
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
 
-const StyledButtonWrapper = styled('div')`
-  margin-bottom: -30px;
-  margin-right: 10px;
+const CollectionItem = (item) => {
+  const {
+    headingText,
+    subheading,
+    headingUrl,
+    badges,
+    metadata,
+    metadataRenderer,
+    onClick,
+    titleRenderer = null,
+    useReactRouter = false,
+    footerRenderer = null,
+    footerdata,
+  } = item
+  return (
+    <ItemWrapper data-test="collection-item">
+      {badges && (
+        <StyledBadgesWrapper>
+          {badges.map((badge) => (
+            <Badge key={badge.text} borderColour={badge.borderColour}>
+              {badge.text}
+            </Badge>
+          ))}
+        </StyledBadgesWrapper>
+      )}
 
-  ${MEDIA_QUERIES.TABLET} {
-    text-align: right;
-  }
-`
+      {titleRenderer ? (
+        titleRenderer(headingText, headingUrl)
+      ) : headingUrl ? (
+        <StyledLinkHeader>
+          {useReactRouter ? (
+            <Link as={RouterLink} to={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          ) : (
+            <Link href={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          )}
+        </StyledLinkHeader>
+      ) : (
+        <StyledHeader>{headingText}</StyledHeader>
+      )}
 
-const CollectionItem = ({
-  headingText,
-  subheading,
-  headingUrl,
-  badges,
-  metadata,
-  metadataRenderer,
-  onClick,
-  titleRenderer = null,
-  useReactRouter = false,
-  buttons,
-}) => (
-  <ItemWrapper data-test="collection-item">
-    {badges && (
-      <StyledBadgesWrapper>
-        {badges.map((badge) => (
-          <Badge key={badge.text} borderColour={badge.borderColour}>
-            {badge.text}
-          </Badge>
-        ))}
-      </StyledBadgesWrapper>
-    )}
+      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-    {titleRenderer ? (
-      titleRenderer(headingText, headingUrl)
-    ) : headingUrl ? (
-      <StyledLinkHeader>
-        {useReactRouter ? (
-          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        ) : (
-          <Link href={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        )}
-      </StyledLinkHeader>
-    ) : (
-      <StyledHeader>{headingText}</StyledHeader>
-    )}
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
+      {footerRenderer ? footerRenderer(footerdata) : null}
+    </ItemWrapper>
+  )
+}
 
-    {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
-
-    {metadataRenderer ? (
-      metadataRenderer(metadata)
-    ) : (
-      <Metadata rows={metadata} />
-    )}
-
-    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-  </ItemWrapper>
-)
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
@@ -131,6 +126,7 @@ CollectionItem.propTypes = {
   type: PropTypes.string,
   metadataRenderer: PropTypes.func,
   titleRenderer: PropTypes.func,
+  footerRenderer: PropTypes.func,
 }
 
 export default CollectionItem

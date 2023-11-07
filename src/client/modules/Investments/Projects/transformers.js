@@ -1,10 +1,9 @@
-const { get } = require('lodash')
 import React from 'react'
-import { Button, Link } from 'govuk-react'
 
-import { completeInvestmentProposition } from './tasks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
+
 import urls from '../../../../lib/urls'
+
 import {
   EXPORT_REVENUE_FALSE,
   EXPORT_REVENUE_TRUE,
@@ -19,7 +18,7 @@ import {
   STAGE_WON,
 } from './constants'
 import { format } from '../../../utils/date'
-import { BLACK, GREY_3 } from '../../../utils/colours'
+
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
@@ -182,24 +181,6 @@ export const transformNewTech = (newTechToUk) =>
 export const transformExportRevenue = (exportRevenue) =>
   exportRevenue ? EXPORT_REVENUE_TRUE : EXPORT_REVENUE_FALSE
 
-function transformErrorMessage(error) {
-  return get(error, 'non_field_errors', ['There has been an error'])[0]
-}
-
-async function handleCompleteClick(investmentProjectId, propositionId, writeFlashMessage) {
-  try {
-    await completeInvestmentProposition({
-      investmentProjectId,
-      propositionId
-    });
-    writeFlashMessage('success', 'Proposition completed');
-    window.location.href = urls.investments.projects.propositions(investmentProjectId);
-  } catch (error) {
-    writeFlashMessage('error', error.error || 'An error occurred');
-    window.location.href = urls.investments.projects.propositions(investmentProjectId);
-  }
-}
-
 export const transformPropositionToListItem = ({
   id,
   name,
@@ -208,7 +189,7 @@ export const transformPropositionToListItem = ({
   deadline,
   adviser,
   status,
-}, writeFlashMessage = {}) => ({
+}) => ({
   id,
   metadata: [
     { label: 'Deadline', value: format(deadline, 'dd MMMM yyyy') },
@@ -228,30 +209,11 @@ export const transformPropositionToListItem = ({
     },
   ],
   headingText: name,
-  buttons:
-    status === 'abandoned' || status === 'completed' ? null : (
-      <>
-        <Button
-          as={Link}
-          href={urls.investments.projects.proposition.abandon(
-            investment_project.id,
-            id
-          )}
-          data-test="abandon-button"
-          buttonColour={GREY_3}
-          buttonTextColour={BLACK}
-        >
-          Abandon
-        </Button>{' '}
-        <Button
-          as={Link}
-          onClick={() => handleCompleteClick(investment_project.id, id, writeFlashMessage)}
-          data-test="complete-button"
-        >
-          Complete
-        </Button>
-      </>
-    ),
+  footerdata: {
+    investment_project_id: investment_project.id,
+    status: status,
+    id,
+  },
 })
 
 export const transformInvestmentProjectToListItem = ({
