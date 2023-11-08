@@ -14,7 +14,7 @@ import urls from '../../../../lib/urls'
 import { TaskOverdueSettingsResource } from '../../../components/Resource'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-const redirectUrl = `${urls.reminders.settings.index()}?task_overdue=true`
+const redirectUrl = `${urls.reminders.settings.index()}?my_tasks_task_overdue=true`
 
 export const TaskOverdueFormFields = ({ settings }) => (
   <Form
