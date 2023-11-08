@@ -576,6 +576,16 @@ app.patch(
   v4Reminders.saveTaskAssignedToMeFromOthersSubscriptions
 )
 
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-overdue',
+  v4Reminders.getTaskOverdueSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-overdue',
+  v4Reminders.saveTaskOverdueSubscriptions
+)
+
 // Reminders lists
 
 app.get(

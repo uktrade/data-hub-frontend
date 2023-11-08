@@ -7,6 +7,7 @@ import {
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_OVERDUE,
 } from '../../../../../../src/client/modules/Reminders/constants'
 
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
@@ -17,6 +18,7 @@ const enriDataTest = COMPANIES_NO_RECENT_INTERACTIONS
 const eniDataTest = COMPANIES_NEW_INTERACTIONS
 const ddaDataTest = MY_TASKS_DUE_DATE_APPROACHING
 const tatmfoDataTest = TASK_ASSIGNED_TO_ME_FROM_OTHERS
+const toDataTest = TASK_OVERDUE
 
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
 const getLink = (dataTest) => `[data-test="${dataTest}-link"]`
@@ -124,7 +126,7 @@ describe('Settings: reminders and email notifications', () => {
       '&companies_new_interactions=true' +
       '&my_tasks_due_date_approaching=true' +
       '&task_assigned_to_me_from_others=true' +
-      '&task_overdue=true'
+      '&my_tasks_task_overdue=true'
     before(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
@@ -137,5 +139,6 @@ describe('Settings: reminders and email notifications', () => {
     assertSettingsTableVisible('ENI', eniDataTest)
     assertSettingsTableVisible('DDA', ddaDataTest)
     assertSettingsTableVisible('TATMFO', tatmfoDataTest)
+    assertSettingsTableVisible('TO', toDataTest)
   })
 })

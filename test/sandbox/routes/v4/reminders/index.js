@@ -289,3 +289,15 @@ exports.saveTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
     email_reminders_enabled: true,
   })
 }
+
+exports.getTaskOverdueSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveTaskOverdueSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: true,
+  })
+}

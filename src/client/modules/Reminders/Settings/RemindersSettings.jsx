@@ -227,6 +227,7 @@ export const TasksAssignedToMeSettings = ({
         <EmailRemindersSettingsTable
           dataName={TASK_OVERDUE}
           data={taskOverdue}
+          to={urls.reminders.settings.myTasks.taskOverdue()}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>
