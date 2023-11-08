@@ -155,3 +155,8 @@ export const transformAssignees = (values) => ({
   assignees: values.values.assignees,
   canRemove: values.canRemoveAssignees,
 })
+
+export const transformEstimatedTime = (time) => {
+  const estimatedTime = time / 60
+  return estimatedTime > 1 ? estimatedTime + ' hours' : estimatedTime + ' hour'
+}
