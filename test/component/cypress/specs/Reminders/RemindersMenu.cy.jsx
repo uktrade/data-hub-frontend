@@ -74,7 +74,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all investment menu items', () => {
-      cy.get('@listItems').should('have.length', 4)
+      cy.get('@listItems').should('have.length', 5)
 
       investmentLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -102,7 +102,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 3)
+      cy.get('@listItems').should('have.length', 4)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -129,7 +129,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should not render Companies with new interactions', () => {
-        cy.get('@listItems').should('have.length', 2)
+        cy.get('@listItems').should('have.length', 3)
 
         cy.get('@listItems')
           .eq(0)
@@ -158,7 +158,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should render all menu items', () => {
-        cy.get('@listItems').should('have.length', 6)
+        cy.get('@listItems').should('have.length', 7)
 
         investmentLinks
           .concat(exportLinks)
@@ -189,7 +189,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all my tasks menu items', () => {
-      cy.get('@listItems').should('have.length', 1)
+      cy.get('@listItems').should('have.length', 2)
 
       myTasksLinks.forEach((item, index) => {
         cy.get('@listItems')
