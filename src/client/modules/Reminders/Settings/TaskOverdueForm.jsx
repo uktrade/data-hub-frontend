@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form, FieldRadios } from '../../../components'
 
-import { TASK_OVERDUE_REMINDER_SUBSCRIPTIONS } from '../state'
+import { TASK_SAVE_OVERDUE_REMINDER_SUBSCRIPTIONS } from '../state'
 
 import {
   OPTION_NO,
@@ -19,7 +19,7 @@ const redirectUrl = `${urls.reminders.settings.index()}?my_tasks_task_overdue=tr
 export const TaskOverdueFormFields = ({ settings }) => (
   <Form
     id="reminders-settings-task-overdue"
-    submissionTaskName={TASK_OVERDUE_REMINDER_SUBSCRIPTIONS}
+    submissionTaskName={TASK_SAVE_OVERDUE_REMINDER_SUBSCRIPTIONS}
     redirectTo={() => redirectUrl}
     transformPayload={({ emailRemindersEnabled }) => ({
       email_reminders_enabled: emailRemindersEnabled === OPTION_YES,
