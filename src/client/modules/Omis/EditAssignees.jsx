@@ -2,7 +2,10 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TASK_SAVE_ORDER_ASSIGNEES } from './state'
-import { transformAdvisersForTypeahead } from './transformers'
+import {
+  transformAdvisersForTypeahead,
+  transformAssignees,
+} from './transformers'
 import {
   OrderAssigneesResource,
   OrderResource,
@@ -29,11 +32,13 @@ const EditAssignees = () => {
                   assignees: transformAdvisersForTypeahead(orderAssignees),
                 }}
                 submissionTaskName={TASK_SAVE_ORDER_ASSIGNEES}
-                transformPayload={(values) => ({
-                  values,
-                  orderId,
-                  canRemoveAssignees: order.status === STATUS.DRAFT,
-                })}
+                transformPayload={(values) =>
+                  transformAssignees({
+                    values,
+                    orderId: order.id,
+                    canRemoveAssignees: order.status === STATUS.DRAFT,
+                  })
+                }
                 orderId={order.id}
                 orderAdvisers={orderAssignees}
                 typeaheadName="assignees"

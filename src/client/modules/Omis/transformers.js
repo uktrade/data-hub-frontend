@@ -132,8 +132,8 @@ export const transformAdvisersForTypeahead = (advisers) =>
     value: value.adviser.id,
   }))
 
-export const transformAdvisersForAPI = (values) =>
-  values.assignees.map((assignee) => ({
+export const transformAdvisersForAPI = (assignees) =>
+  assignees.map((assignee) => ({
     adviser: {
       id: assignee.value,
     },
@@ -149,3 +149,9 @@ export const transformSubscribersForAPI = (values) =>
   values.subscribers.map((subscriber) => ({
     id: subscriber.value,
   }))
+
+export const transformAssignees = (values) => ({
+  id: values.orderId,
+  assignees: values.values.assignees,
+  canRemove: values.canRemoveAssignees,
+})

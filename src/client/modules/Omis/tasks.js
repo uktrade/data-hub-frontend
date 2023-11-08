@@ -24,11 +24,11 @@ export const completeOrder = (values) =>
     values.assignees
   ) && apiProxyAxios.post(`v3/omis/order/${values.id}/complete`)
 
-export function saveOrderAssignees({ values, id, canRemoveAssignees }) {
-  const url = canRemoveAssignees
-    ? `/v3/omis/order/${id}/assignee?force-delete=1`
-    : `/v3/omis/order/${id}/assignee`
-  return apiProxyAxios.patch(url, transformAdvisersForAPI(values))
+export const saveOrderAssignees = (values) => {
+  const url = values.canRemove
+    ? `/v3/omis/order/${values.id}/assignee?force-delete=1`
+    : `/v3/omis/order/${values.id}/assignee`
+  return apiProxyAxios.patch(url, transformAdvisersForAPI(values.assignees))
 }
 
 export function saveOrderSubscribers({ values, id, canRemoveSubscribers }) {
