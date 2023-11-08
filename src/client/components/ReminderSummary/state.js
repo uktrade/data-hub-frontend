@@ -7,6 +7,7 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
 } from '../../modules/Reminders/constants'
 
 const transformReminderSummary = (data) => ({
@@ -45,6 +46,11 @@ const transformReminderSummary = (data) => ({
       name: MY_TASKS_DUE_DATE_APPROACHING_LABEL,
       url: urls.reminders.myTasks.dueDateApproaching(),
       count: data.my_tasks.due_date_approaching,
+    },
+    {
+      name: TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+      url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
+      count: data.my_tasks.task_assigned_to_me_from_others,
     },
   ],
 })

@@ -13,6 +13,7 @@ const initialState = {
   },
   my_tasks: {
     due_date_approaching: 0,
+    task_assigned_to_me_from_others: 0,
   },
 }
 

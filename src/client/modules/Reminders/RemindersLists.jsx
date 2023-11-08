@@ -13,6 +13,7 @@ import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingProp
 import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 import ExportsNewInteractionsList from './ExportsNewInteractionsList'
 import MyTasksDueDateApproachingList from './MyTasksDueDateApproachingList'
+import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
 
 import urls from '../../../lib/urls'
 import {
@@ -23,6 +24,7 @@ import {
   COMPANIES_NO_RECENT_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS,
 } from './constants'
 
 const Container = styled('div')({
@@ -102,6 +104,9 @@ const RemindersLists = ({ reminderType }) => {
             )}
             {reminderType === MY_TASKS_DUE_DATE_APPROACHING && (
               <MyTasksDueDateApproachingList />
+            )}
+            {reminderType === TASK_ASSIGNED_TO_ME_FROM_OTHERS && (
+              <TaskAssignedToMeFromOthersList />
             )}
           </ListContainer>
         </Container>
