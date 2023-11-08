@@ -30,10 +30,8 @@ const PaginationSummary = styled(Summary)({
   borderBottom: `solid 1px ${GREY_2}`,
 })
 
-const InvestmentsOutstandingPropositionsList = ({
-  outstandingPropositionsReminders,
-}) => {
-  const { results, count } = outstandingPropositionsReminders
+const InvestmentsOutstandingPropositionsList = ({ reminders }) => {
+  const { results, count } = reminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
