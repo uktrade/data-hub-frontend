@@ -15,6 +15,9 @@ import {
   REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED,
   REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT,
   REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_LOADED,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_DELETED,
 } from '../../actions'
 
 const initialState = {
@@ -43,6 +46,11 @@ const initialState = {
     nextPending: false,
   },
   dueDateApproachingReminders: {
+    results: [],
+    count: 0,
+    nextPending: false,
+  },
+  taskAssignedToMeFromOthersReminders: {
     results: [],
     count: 0,
     nextPending: false,
@@ -193,6 +201,38 @@ export default (state = initialState, { type, result, payload }) => {
             deleted: item.deleted || item.id === payload.id,
           })),
           count: state.dueDateApproachingReminders.count - 1,
+          nextPending: true,
+        },
+      }
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_LOADED:
+      return {
+        ...state,
+        taskAssignedToMeFromOthersReminders: result,
+      }
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT:
+      return {
+        ...state,
+        taskAssignedToMeFromOthersReminders: {
+          ...state.taskAssignedToMeFromOthersReminders,
+          results: [
+            ...state.taskAssignedToMeFromOthersReminders.results,
+            ...result,
+          ],
+          nextPending: false,
+        },
+      }
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_DELETED:
+      return {
+        ...state,
+        taskAssignedToMeFromOthersReminders: {
+          ...state.taskAssignedToMeFromOthersReminders,
+          results: state.taskAssignedToMeFromOthersReminders.results.map(
+            (item) => ({
+              ...item,
+              deleted: item.deleted || item.id === payload.id,
+            })
+          ),
+          count: state.taskAssignedToMeFromOthersReminders.count - 1,
           nextPending: true,
         },
       }

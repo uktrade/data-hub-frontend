@@ -226,6 +226,9 @@ import {
   TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS,
   TASK_OVERDUE_REMINDER_SUBSCRIPTIONS,
+  TASK_GET_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS,
+  TASK_DELETE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
+  TASK_GET_NEXT_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -542,6 +545,12 @@ export const tasks = {
     reminders.deleteMyTasksDueDateApproachingReminder,
   [TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER]:
     reminders.getMyTasksNextDueDateApproachingReminder,
+  [TASK_GET_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS]:
+    reminders.getTaskAssignedToMeFromOthersReminders,
+  [TASK_DELETE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER]:
+    reminders.deleteTaskAssignedToMeFromOthersReminder,
+  [TASK_GET_NEXT_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER]:
+    reminders.getNextTaskAssignedToMeFromOthersReminder,
   [TASK_GET_CONTACT_ACTIVITIES]: getContactActivities,
   [TASK_ARCHIVE_CONTACT]: archiveContact,
   [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
