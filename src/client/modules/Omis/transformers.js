@@ -160,3 +160,27 @@ export const transformEstimatedTime = (time) => {
   const estimatedTime = time / 60
   return estimatedTime > 1 ? estimatedTime + ' hours' : estimatedTime + ' hour'
 }
+
+export const getAddress = (order, company) =>
+  order.billingAddressCountry
+    ? {
+        line1: order.billingAddress1,
+        line2: order.billingAddress2,
+        town: order.billingAddressTown,
+        county: order.billingAddressCounty,
+        postcode: order.billingAddressPostcode,
+        country: order.billingAddressCountry,
+      }
+    : company.registeredAddress
+    ? company.registeredAddress
+    : company.address
+
+export const transformAddress = (address) =>
+  [
+    address.line1,
+    address.line2,
+    address.town,
+    address.county,
+    address.postcode,
+    address.country?.name,
+  ].filter((item) => item.length)
