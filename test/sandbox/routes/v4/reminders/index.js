@@ -1,3 +1,7 @@
+exports.deleteReminder = function (req, res) {
+  res.sendStatus(204)
+}
+
 exports.getEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
