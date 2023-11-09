@@ -33,13 +33,6 @@ const Order = {
     })
   },
 
-  getSubscribers(req, id) {
-    return authorisedRequest(
-      req,
-      `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`
-    )
-  },
-
   getById(req, id) {
     return authorisedRequest(req, `${config.apiRoot}/v3/omis/order/${id}`)
   },
