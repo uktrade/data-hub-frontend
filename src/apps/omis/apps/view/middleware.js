@@ -36,32 +36,6 @@ async function setContact(req, res, next) {
   }
 }
 
-async function setAssignees(req, res, next) {
-  const orderId = get(res.locals, 'order.id')
-
-  if (orderId) {
-    try {
-      res.locals.assignees = await Order.getAssignees(req, orderId)
-    } catch (error) {
-      return next(error)
-    }
-  }
-  next()
-}
-
-async function setSubscribers(req, res, next) {
-  const orderId = get(res.locals, 'order.id')
-
-  if (orderId) {
-    try {
-      res.locals.subscribers = await Order.getSubscribers(req, orderId)
-    } catch (error) {
-      return next(error)
-    }
-  }
-  next()
-}
-
 async function setQuoteSummary(req, res, next) {
   const orderId = get(res.locals, 'order.id')
   const orderStatus = get(res.locals, 'order.status')
@@ -265,8 +239,6 @@ function setQuoteForm(req, res, next) {
 module.exports = {
   setCompany,
   setContact,
-  setAssignees,
-  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,
