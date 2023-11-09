@@ -50,7 +50,7 @@ const TaskAssignedToMeFromOthersList = ({
     <>
       <CollectionHeader
         totalItems={count}
-        pageOrigin="tasks_assigned_to_me_from_others"
+        pageOrigin="task_assigned_to_me_from_others"
       />
       {results.length === 0 ? (
         <Summary data-test="my-tasks-no-reminders">

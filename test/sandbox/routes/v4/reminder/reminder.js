@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker')
 
 var summary = require('../../../fixtures/v4/reminder/summary.json')
 
-const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
+const myTasksReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   created_on: faker.date.past({ years: 1 }),
   event: faker.lorem.words(),
@@ -25,13 +25,10 @@ const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-const myTasksDueDateApproachingReminderListFaker = (
-  length = 10,
-  overrides = {}
-) => {
+const myTasksReminderListFaker = (length = 10, overrides = {}) => {
   let list = []
   for (let i = 0; i < length; i++) {
-    list.push(myTasksDueDateApproachingReminderFaker(overrides))
+    list.push(myTasksReminderFaker(overrides))
   }
   return list
 }
@@ -40,12 +37,12 @@ exports.summary = function (req, res) {
   res.json(summary)
 }
 
-exports.myTasksDueDateApproaching = function (req, res) {
+exports.myTasks = function (req, res) {
   const count = 11
   res.json({
     count: count,
     next: null,
     previous: null,
-    results: myTasksDueDateApproachingReminderListFaker(count),
+    results: myTasksReminderListFaker(count),
   })
 }
