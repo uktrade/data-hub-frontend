@@ -13,8 +13,9 @@ import {
   TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
   TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
 } from './state'
-import { ExportNewInteractionsItemRenderer } from './ItemRenderers/ExportNewInteractionsItemRenderer'
+
 import RemindersLists from './RemindersLists'
+import { ExportNewInteractionsItemRenderer } from './ItemRenderers/Exports/ExportNewInteractionsItemRenderer'
 
 const ExportsNewInteractionsList = ({ reminders }) => {
   return (

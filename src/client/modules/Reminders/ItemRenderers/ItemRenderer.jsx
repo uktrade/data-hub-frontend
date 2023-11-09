@@ -9,17 +9,20 @@ import {
   DeleteButton,
   RightCol,
   ItemHeaderLink,
+  ItemFooter,
 } from './styled'
 import { formatMediumDate } from '../../../utils/date'
-import { DARK_GREY } from '../../../utils/colours'
-import urls from '../../../../lib/urls'
+import { BLACK, DARK_GREY } from '../../../utils/colours'
 
-export const ExportItemRenderer = ({
+export const ItemRenderer = ({
   item,
   onDeleteReminder,
   disableDelete,
+  deletedText,
+  headerLinkHref,
   headerLinkTitle,
-  itemInteractionContent,
+  itemContent,
+  itemFooterContent,
 }) => {
   return (
     <ListItem key={item.id} data-test="reminders-list-item">
@@ -28,8 +31,7 @@ export const ExportItemRenderer = ({
           <GridCol>
             <ItemHeader data-test="item-header">Reminder deleted</ItemHeader>
             <ItemContent colour={DARK_GREY} data-test="item-content">
-              Received {formatMediumDate(item.created_on)} for{' '}
-              {item.company.name}
+              {deletedText}
             </ItemContent>
           </GridCol>
         ) : (
@@ -38,17 +40,25 @@ export const ExportItemRenderer = ({
               <ItemHeader data-test="item-header">
                 <ul>
                   <li>Received {formatMediumDate(item.created_on)}</li>
-                  <li>
-                    <ItemHeaderLink
-                      href={`${urls.companies.detail(item.company.id)}`}
-                    >
-                      {headerLinkTitle}
-                    </ItemHeaderLink>
-                  </li>
+                  {headerLinkHref && (
+                    <li>
+                      <ItemHeaderLink href={headerLinkHref}>
+                        {headerLinkTitle}
+                      </ItemHeaderLink>
+                    </li>
+                  )}
                 </ul>
               </ItemHeader>
 
-              {itemInteractionContent}
+              <ItemContent colour={BLACK} data-test="item-content">
+                {itemContent}
+              </ItemContent>
+
+              {itemFooterContent && (
+                <ItemFooter data-test="item-footer">
+                  {itemFooterContent}
+                </ItemFooter>
+              )}
 
               {/* Display on mobile only */}
               {onDeleteReminder && (
@@ -81,4 +91,4 @@ export const ExportItemRenderer = ({
   )
 }
 
-export default ExportItemRenderer
+export default ItemRenderer
