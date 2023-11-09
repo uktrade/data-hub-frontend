@@ -3,6 +3,9 @@ const selectors = require('../../../../selectors')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { omis } = require('../../../../../src/lib/urls')
 const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
+const {
+  assertSummaryTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 const today = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 
@@ -27,11 +30,16 @@ describe('Order', () => {
     cy.get(selectors.omisCreate.continue).click()
     cy.get(selectors.omisCreate.continue).click()
 
-    /*cy.get(selectors.omisSummary.summary)
-      .contains('Contact')
-      .parent()
-      .should('contain', 'Johnny Cakeman')
-      .and('contain', 'johnny@cakeman.com')*/
+    assertSummaryTable({
+      dataTest: 'contact-table',
+      heading: 'Contact',
+      showEditLink: true,
+      content: {
+        Name: 'Johnny Cakeman',
+        Phone: '44 67890123432',
+        Email: 'johnny@cakeman.com',
+      },
+    })
     cy.get('[data-test="localHeaderDetails"]')
       .should('contain', 'order testing')
       .and('contain', 'Brazil')
