@@ -15,6 +15,7 @@ import OMISLocalHeader from './OMISLocalHeader'
 import ContactTable from './WorkOrderTables/ContactTable'
 import SubscribersTable from './WorkOrderTables/SubscribersTable'
 import QuoteInformationTable from './WorkOrderTables/QuoteInformationTable'
+import InternalUseTable from './WorkOrderTables/InternalUseTable'
 
 const WorkOrder = () => {
   const { orderId } = useParams()
@@ -59,6 +60,8 @@ const WorkOrder = () => {
             </OrderSubscribersResource>
 
             <QuoteInformationTable order={order} />
+
+            <InternalUseTable order={order} />
           </>
         </DefaultLayout>
       )}
