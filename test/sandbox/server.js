@@ -592,21 +592,41 @@ app.get(
   '/v4/reminder/estimated-land-date',
   v4Reminders.getEstimatedLandDateReminders
 )
+app.delete('/v4/reminder/estimated-land-date/:id', v4Reminders.deleteReminder)
+
 app.get(
   '/v4/reminder/no-recent-export-interaction',
   v4Reminders.getNoRecentExportInteractionReminders
 )
+app.delete(
+  '/v4/reminder/no-recent-export-interaction/:id',
+  v4Reminders.deleteReminder
+)
+
 app.get(
   '/v4/reminder/no-recent-investment-interaction',
   v4Reminders.getNoRecentInvestmentInteractionReminders
+)
+app.delete(
+  '/v4/reminder/no-recent-investment-interaction/:id',
+  v4Reminders.deleteReminder
 )
 
 app.get(
   '/v4/reminder/new-export-interaction',
   v4Reminders.getNewExportInteractionReminders
 )
+app.delete(
+  '/v4/reminder/new-export-interaction/:id',
+  v4Reminders.deleteReminder
+)
 
 app.get('/v4/reminder/my-tasks-due-date-approaching', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-due-date-approaching/:id',
+  v4Reminders.deleteReminder
+)
 
 app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
 
