@@ -10,8 +10,6 @@
 - Ensure your branch contains logical atomic commits before sending a pull request
 - Pull requests are automatically tested, where applicable using [CircleCI](https://circleci.com/),
   which will report back on whether the tests still pass on your branch
-- Pull requests deploy a heroku [review app](https://devcenter.heroku.com/articles/github-integration-review-apps)
-  with those changes. Details of the review app will be reported in the pull request.
 - You _may_ rebase your branch after feedback if it's to include relevant
   updates from the main branch. We prefer a rebase here to a merge commit
   as we prefer a clean and straight history on main with discrete merge
