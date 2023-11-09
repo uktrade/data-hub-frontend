@@ -41,7 +41,7 @@ const transformCompanyAddress = (company) => {
     address.town,
     address.county,
     address.postcode,
-    address.country.name,
+    address.country?.name,
   ]
     .filter((item) => item.length)
     .join(', ')
