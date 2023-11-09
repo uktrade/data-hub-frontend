@@ -5,6 +5,7 @@ import {
   checkIfItemHasValue,
   transformRadioOptionToBool,
 } from '../Investments/Projects/transformers'
+import { STATUS } from './constants'
 
 export const transformQuoteInformationForApi = ({
   orderId,
@@ -184,3 +185,7 @@ export const transformAddress = (address) =>
     address.postcode,
     address.country?.name,
   ].filter((item) => item.length)
+
+export const canEditOrder = (order) => order.status === STATUS.DRAFT
+export const isOrderActive = (order) =>
+  ![STATUS.CANCELLED, STATUS.COMPLETE].includes(order.status)
