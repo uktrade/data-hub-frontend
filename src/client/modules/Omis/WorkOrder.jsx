@@ -6,12 +6,14 @@ import {
   ContactResource,
   OrderResource,
   OrderQuoteResource,
+  OrderSubscribersResource,
 } from '../../components/Resource'
 import urls from '../../../lib/urls'
 import { STATUS } from './constants'
 import OMISLocalHeader from './OMISLocalHeader'
 
 import ContactTable from './WorkOrderTables/ContactTable'
+import SubscribersTable from './WorkOrderTables/SubscribersTable'
 
 const WorkOrder = () => {
   const { orderId } = useParams()
@@ -48,6 +50,12 @@ const WorkOrder = () => {
             <ContactResource id={order.contact.id}>
               {(contact) => <ContactTable order={order} contact={contact} />}
             </ContactResource>
+
+            <OrderSubscribersResource id={order.id}>
+              {(subscribers) => (
+                <SubscribersTable subscribers={subscribers} order={order} />
+              )}
+            </OrderSubscribersResource>
           </>
         </DefaultLayout>
       )}
