@@ -2,10 +2,16 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { DefaultLayout } from '../../components'
-import { OrderResource, OrderQuoteResource } from '../../components/Resource'
+import {
+  ContactResource,
+  OrderResource,
+  OrderQuoteResource,
+} from '../../components/Resource'
 import urls from '../../../lib/urls'
 import { STATUS } from './constants'
 import OMISLocalHeader from './OMISLocalHeader'
+
+import ContactTable from './WorkOrderTables/ContactTable'
 
 const WorkOrder = () => {
   const { orderId } = useParams()
@@ -38,7 +44,11 @@ const WorkOrder = () => {
             )
           }
         >
-          <p>{order.id}</p>
+          <>
+            <ContactResource id={order.contact.id}>
+              {(contact) => <ContactTable order={order} contact={contact} />}
+            </ContactResource>
+          </>
         </DefaultLayout>
       )}
     </OrderResource>
