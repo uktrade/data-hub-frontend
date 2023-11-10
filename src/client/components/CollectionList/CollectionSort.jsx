@@ -12,7 +12,7 @@ const StyledSpan = styled('span')`
   color: ${DARK_GREY};
 `
 
-const CollectionSort = ({ sortOptions, totalPages }) => {
+const CollectionSort = ({ sortOptions, totalPages, ...props }) => {
   const actions = sortOptions ? (
     <RoutedSelect
       data-test="sortby"
@@ -31,7 +31,7 @@ const CollectionSort = ({ sortOptions, totalPages }) => {
   ) : null
 
   return (
-    <CollectionHeaderRow actions={actions}>
+    <CollectionHeaderRow {...props} actions={actions}>
       <Route>
         {({ location: { search } }) => {
           const searchParams = qs.parse(search.slice(1))
