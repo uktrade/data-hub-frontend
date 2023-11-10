@@ -95,8 +95,7 @@ const Pagination = ({
   items,
   pageSize = 10,
   onChangePage = () => {},
-  // initialPage = 1,
-  initialPage,
+  initialPage = 1,
 }) => {
   const linkRefs = useRef([])
   const [pager, setPagerState] = useState({})
@@ -185,8 +184,6 @@ const Pagination = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        initialPage ??= parseInt(qsParams.page, 10)
-
         const handleOnClick = (pageNumber, e) => {
           e.preventDefault()
           setPage(pageNumber)
