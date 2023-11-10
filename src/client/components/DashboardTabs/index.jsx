@@ -7,6 +7,7 @@ import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
 import ExportList from '../../modules/ExportPipeline/ExportList'
+import MyTasks from '../Dashboard/my-tasks/MyTasks'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import ReferralList from '../ReferralList'
@@ -40,7 +41,7 @@ const DashboardTabs = ({
         ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.myTasks()]: {
             label: 'My tasks',
-            content: <h1>Hello Tasks</h1>,
+            content: <MyTasks />,
           },
         }),
         ...(canViewCompanyLists(userPermissions) && {

@@ -389,6 +389,9 @@ import { getExportWinsUnconfirmed } from './modules/ExportWins/Unconfirmed/tasks
 import { TASK_GET_EXPORT_WIN_DETAILS } from './modules/ExportWins/Details/state'
 import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 
+import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
+import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -605,4 +608,5 @@ export const tasks = {
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,
   [TASK_OVERDUE_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskOverdueSubscriptions,
+  [TASK_GET_MY_TASKS]: getMyTasks,
 }
