@@ -50,14 +50,20 @@ const assertValueTable = (dataTest, expected) => {
   })
 }
 
-const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
+const assertSummaryTable = ({
+  dataTest,
+  heading,
+  showEditLink,
+  content,
+  editLinkText = 'Edit',
+}) => {
   const summaryTableSelector = `[data-test="${dataTest}"]`
 
   if (heading) {
     cy.get(summaryTableSelector).find('caption').should('contain', heading)
   }
   cy.get(summaryTableSelector)
-    .contains('Edit')
+    .contains(editLinkText)
     .should(showEditLink ? 'be.visible' : 'not.exist')
 
   if (typeof content !== 'undefined') {
