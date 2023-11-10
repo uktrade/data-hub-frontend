@@ -174,3 +174,32 @@ export const getMyTasksNextDueDateApproachingReminder = ({
 
 export const deleteMyTasksDueDateApproachingReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/my-tasks-due-date-approaching/${id}`)
+
+export const getTaskAssignedToMeFromOthersReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/task-assigned-to-me-from-others', {
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
+    })
+    .then(({ data }) => data)
+
+export const getNextTaskAssignedToMeFromOthersReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  apiProxyAxios
+    .get('/v4/reminder/task-assigned-to-me-from-others', {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
+
+export const deleteTaskAssignedToMeFromOthersReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/task-assigned-to-me-from-others/${id}`)

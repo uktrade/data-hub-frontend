@@ -621,14 +621,14 @@ app.delete(
   v4Reminders.deleteReminder
 )
 
-app.get(
-  '/v4/reminder/my-tasks-due-date-approaching',
-  v4Reminder.myTasksDueDateApproaching
-)
+app.get('/v4/reminder/my-tasks-due-date-approaching', v4Reminder.myTasks)
+
 app.delete(
   '/v4/reminder/my-tasks-due-date-approaching/:id',
   v4Reminders.deleteReminder
 )
+
+app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
 
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)

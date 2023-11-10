@@ -15,6 +15,7 @@ import {
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
 } from './constants'
 
 const LinkList = styled('ul')({
@@ -112,6 +113,12 @@ export const RemindersMenu = ({
           pathname={location.pathname}
         >
           {`${MY_TASKS_DUE_DATE_APPROACHING_LABEL} (${reminderSummary.my_tasks.due_date_approaching})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskAssignedToMeFromOthers()}
+          pathname={location.pathname}
+        >
+          {`${TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL} (${reminderSummary.my_tasks.task_assigned_to_me_from_others})`}
         </MenuItem>
       </Menu>
     </>

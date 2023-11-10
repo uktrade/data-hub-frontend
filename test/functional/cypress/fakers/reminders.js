@@ -57,7 +57,7 @@ export const exportReminderFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-export const myTasksDueDateApproachingReminderFaker = (overrides = {}) => ({
+export const myTasksReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   created_on: faker.date.past({ years: 1 }),
   event: faker.lorem.words(),
