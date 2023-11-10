@@ -116,7 +116,7 @@ import ordersReducer from './modules/Omis/CollectionList/reducer'
 
 import RoutedInput from './components/RoutedInput'
 
-import Resource from './components/Resource/Resource'
+import Resource, { PaginatedResource } from './components/Resource/Resource'
 
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
@@ -226,6 +226,7 @@ export const reducers = {
   ...Typeahead.reducerSpread,
   ...RoutedInput.reducerSpread,
   ...Resource.reducerSpread,
+  ...PaginatedResource.reducerSpread,
   ...ContactForm.reducerSpread,
   ...Form.reducerSpread,
   ...FieldAddAnother.reducerSpread,
