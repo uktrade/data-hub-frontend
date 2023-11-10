@@ -91,7 +91,7 @@ const startOnRenderPropTypes = {
  * <Task>
  *   {getTask => {
  *     const task = getTask('square', 'foo')
- *     return (d
+ *     return (
  *       <button
  *         disabled={task.progress}
  *         onClick={() => task.start({
