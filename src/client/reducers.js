@@ -116,7 +116,8 @@ import ordersReducer from './modules/Omis/CollectionList/reducer'
 
 import RoutedInput from './components/RoutedInput'
 
-import Resource, { PaginatedResource } from './components/Resource/Resource'
+import Resource from './components/Resource/Resource'
+import PaginatedResource from './components/Resource/Paginated'
 
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
