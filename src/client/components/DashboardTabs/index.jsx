@@ -38,6 +38,12 @@ const DashboardTabs = ({
       onTabChange={onTabChange}
       tabs={{
         ...(canViewCompanyLists(userPermissions) && {
+          [urls.dashboard.myTasks()]: {
+            label: 'My tasks',
+            content: <h1>Hello Tasks</h1>,
+          },
+        }),
+        ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.index()]: {
             label: 'Company lists',
             content: <CompanyLists />,
