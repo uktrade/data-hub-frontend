@@ -46,6 +46,7 @@ var v4Company = require('./routes/v4/company/company.js')
 var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
 var v4Event = require('./routes/v4/event/event.js')
+var v4ExportWin = require('./routes/v4/export-win/export-win.js')
 
 var v4Investment = require('./routes/v4/investment/investment.js')
 var v4Interaction = require('./routes/v4/interaction/interaction.js')
@@ -341,6 +342,9 @@ app.get('/v3/event/:eventId', v3Event.eventById)
 app.get('/v4/event/:eventId', v4Event.eventById)
 app.patch('/v4/event/:eventId', v4Event.patchEvent)
 app.post('/v4/event', v4Event.createEvent)
+
+// V4 Export Win
+app.get('/v4/export-win', v4ExportWin.getExportWinCollection)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', v3FeatureFlag.featureFlag)
