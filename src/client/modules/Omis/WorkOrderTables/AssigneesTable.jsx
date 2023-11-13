@@ -1,0 +1,132 @@
+import React from 'react'
+import styled from 'styled-components'
+import { Link, Table } from 'govuk-react'
+import { typography } from '@govuk-react/lib'
+import { SPACING } from '@govuk-react/constants'
+
+import { Badge } from '../../../components'
+import {
+  canEditOrder,
+  isOrderActive,
+  transformEstimatedTime,
+} from '../transformers'
+import urls from '../../../../lib/urls'
+import { GREY_2 } from '../../../utils/colours'
+
+const StyledTable = styled(Table)`
+  & > tbody th {
+    width: 30%;
+  }
+  & > caption {
+    ${typography.font({ size: 24, weight: 'bold' })};
+    margin-bottom: ${SPACING.SCALE_4};
+  }
+  & > tbody > tr:first-child {
+    border-top: 1px solid ${GREY_2};
+  }
+  & > caption > * {
+    ${typography.font({ size: 19, weight: 'bold' })};
+    float: right;
+    margin-left: ${SPACING.SCALE_3};
+  }
+`
+
+const StyledEndCell = styled(Table.Cell)`
+  text-align: right;
+`
+
+const setAssigneeNameText = (assignee, isLead) =>
+  isLead ? (
+    <>
+      {assignee.name} <Badge>Lead adviser</Badge>
+    </>
+  ) : (
+    assignee.name
+  )
+
+const setAdviserEditText = (advisers, canEdit) =>
+  advisers.length > 0 && canEdit ? 'Add or remove' : 'Add'
+
+const calculateTotalEstimatedHours = (assignees) => {
+  let total = 0
+  assignees.forEach((assignee) => {
+    total += assignee.estimatedTime
+  })
+
+  return transformEstimatedTime(total)
+}
+
+const buildAssigneeRows = (assignees, orderId) =>
+  assignees.map(({ adviser, estimatedTime, isLead }) => (
+    <Table.Row>
+      <Table.Cell setWidth="one-half">
+        {setAssigneeNameText(adviser, isLead)}
+      </Table.Cell>
+      <Table.Cell setWidth="35%">
+        {isLead ? (
+          ''
+        ) : (
+          <Link href={urls.omis.edit.setLeadAssignee(orderId, adviser.id)}>
+            Set as lead adviser
+          </Link>
+        )}
+      </Table.Cell>
+      <StyledEndCell>
+        {estimatedTime > 0
+          ? transformEstimatedTime(estimatedTime)
+          : 'No hours estimated'}
+      </StyledEndCell>
+    </Table.Row>
+  ))
+
+const AssigneesTable = ({ assignees, order }) => (
+  <StyledTable
+    caption={[
+      'Advisers in the market',
+      [
+        isOrderActive(order) && (
+          <Link
+            href={urls.omis.edit.assignees(order.id)}
+            aria-label={`${setAdviserEditText(
+              assignees,
+              canEditOrder(order)
+            )} advisers in the market`}
+            data-test="add-assignees-link"
+          >
+            {setAdviserEditText(assignees, canEditOrder(order))}
+          </Link>
+        ),
+        canEditOrder(order) && (
+          <Link
+            href={urls.omis.edit.assigneeTime(order.id)}
+            data-test="assignee-time-link"
+          >
+            Estimate hours
+          </Link>
+        ),
+      ],
+    ]}
+    data-test="assignees-table"
+  >
+    {assignees.length > 0 ? (
+      buildAssigneeRows(assignees, order.id)
+    ) : (
+      <Table.Row>
+        <Table.Cell>No advisers added</Table.Cell>
+      </Table.Row>
+    )}
+    {calculateTotalEstimatedHours(assignees).replace(/[^0-9]/g, '') > 0 && (
+      <Table.Row>
+        <Table.Cell setWidth="one-half" />
+        <Table.Cell setWidth="35%" />
+        <StyledEndCell bold={true}>
+          {calculateTotalEstimatedHours(assignees)}
+          <br />
+          estimated in total
+        </StyledEndCell>
+      </Table.Row>
+    )}
+  </StyledTable>
+)
+
+export default AssigneesTable

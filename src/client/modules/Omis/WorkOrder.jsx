@@ -6,6 +6,7 @@ import {
   CompanyResource,
   ContactResource,
   OrderResource,
+  OrderAssigneesResource,
   OrderQuoteResource,
   OrderSubscribersResource,
 } from '../../components/Resource'
@@ -14,6 +15,7 @@ import { STATUS } from './constants'
 import OMISLocalHeader from './OMISLocalHeader'
 
 import ContactTable from './WorkOrderTables/ContactTable'
+import AssigneesTable from './WorkOrderTables/AssigneesTable'
 import SubscribersTable from './WorkOrderTables/SubscribersTable'
 import QuoteInformationTable from './WorkOrderTables/QuoteInformationTable'
 import InternalUseTable from './WorkOrderTables/InternalUseTable'
@@ -54,6 +56,12 @@ const WorkOrder = () => {
             <ContactResource id={order.contact.id}>
               {(contact) => <ContactTable order={order} contact={contact} />}
             </ContactResource>
+
+            <OrderAssigneesResource id={order.id}>
+              {(assignees) => (
+                <AssigneesTable assignees={assignees} order={order} />
+              )}
+            </OrderAssigneesResource>
 
             <OrderSubscribersResource id={order.id}>
               {(subscribers) => (
