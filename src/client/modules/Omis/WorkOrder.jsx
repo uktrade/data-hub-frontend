@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { DefaultLayout } from '../../components'
 import {
+  CompanyResource,
   ContactResource,
   OrderResource,
   OrderQuoteResource,
@@ -16,6 +17,7 @@ import ContactTable from './WorkOrderTables/ContactTable'
 import SubscribersTable from './WorkOrderTables/SubscribersTable'
 import QuoteInformationTable from './WorkOrderTables/QuoteInformationTable'
 import InternalUseTable from './WorkOrderTables/InternalUseTable'
+import InvoiceDetailsTable from './WorkOrderTables/InvoiceDetailsTable'
 
 const WorkOrder = () => {
   const { orderId } = useParams()
@@ -62,6 +64,12 @@ const WorkOrder = () => {
             <QuoteInformationTable order={order} />
 
             <InternalUseTable order={order} />
+
+            <CompanyResource id={order.company.id}>
+              {(company) => (
+                <InvoiceDetailsTable order={order} company={company} />
+              )}
+            </CompanyResource>
           </>
         </DefaultLayout>
       )}
