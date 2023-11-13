@@ -34,6 +34,7 @@ const StyledCollectionSort = styled(CollectionSort)`
  *    <pre>{JSON.stringify(currentPage, null, 2)}</pre>
  *  }
  * </CompanyResource.Paginated>
+ *
  * @param {Object} props
  * @param {string} props.name - The name of the task which loads the resource
  * @param {string} props.id - The unique ID of the resource for the given name.
