@@ -195,7 +195,7 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^10.0.1",
-    "js-beautify": "^1.14.9",
+    "js-beautify": "^1.14.11",
     "jsdom": "^20.0.3",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.3",
