@@ -229,6 +229,9 @@ import {
   TASK_GET_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS,
   TASK_DELETE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
   TASK_GET_NEXT_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
+  TASK_GET_TASK_OVERDUE_REMINDERS,
+  TASK_DELETE_TASK_OVERDUE_REMINDER,
+  TASK_GET_NEXT_TASK_OVERDUE_REMINDER,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -614,4 +617,7 @@ export const tasks = {
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,
   [TASK_SAVE_OVERDUE_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskOverdueSubscriptions,
+  [TASK_GET_TASK_OVERDUE_REMINDERS]: reminders.getTaskOverdueReminders,
+  [TASK_DELETE_TASK_OVERDUE_REMINDER]: reminders.deleteTaskOverdueReminder,
+  [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
 }

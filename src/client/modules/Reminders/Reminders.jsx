@@ -18,6 +18,7 @@ import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingProp
 import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 import ExportsNewInteractionsList from './ExportsNewInteractionsList'
 import MyTasksDueDateApproachingList from './MyTasksDueDateApproachingList'
+import TaskOverdueList from './TaskOverdueList'
 
 import urls from '../../../lib/urls'
 import {
@@ -29,6 +30,7 @@ import {
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_OVERDUE,
 } from './constants'
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
 
@@ -118,6 +120,7 @@ export const Reminders = ({ defaultUrl }) => {
             {reminderType === TASK_ASSIGNED_TO_ME_FROM_OTHERS && (
               <TaskAssignedToMeFromOthersList />
             )}
+            {reminderType === TASK_OVERDUE && <TaskOverdueList />}
           </ListContainer>
         </Container>
         <FooterLink

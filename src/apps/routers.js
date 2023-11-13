@@ -84,6 +84,7 @@ const reactRoutes = [
   '/omis/:orderId/edit/assignees',
   '/omis/:orderId/edit/subscribers',
   '/reminders/task-assigned-to-me-from-others',
+  '/reminders/my-tasks-task-overdue',
 ]
 
 reactRoutes.forEach((path) => {
