@@ -1,6 +1,6 @@
-export const TASK_GET_MY_TASKS = 'TASK_GET_MY_TASKS'
+export const TASK_CHECK_FOR_MY_TASKS = 'TASK_CHECK_FOR_MY_TASKS'
 
-export const ID = 'my_tasks'
+export const ID = 'myTasks'
 
 export const state2props = (state) => {
   const { adviserId } = state

@@ -1,13 +1,13 @@
-import { MY_TASKS_LOADED } from '../../../actions'
+import { MY_TASKS_CHECK_COMPLETE } from '../../../actions'
 
-const initialState = { myTasks: null }
+const initialState = { checkCompleteCount: null }
 
 export default (state = initialState, { type, result }) => {
   switch (type) {
-    case MY_TASKS_LOADED:
+    case MY_TASKS_CHECK_COMPLETE:
       return {
         ...state,
-        myTasks: result,
+        checkCompleteCount: result,
       }
     default:
       return state
