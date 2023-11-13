@@ -117,6 +117,7 @@ import ordersReducer from './modules/Omis/CollectionList/reducer'
 import RoutedInput from './components/RoutedInput'
 
 import Resource from './components/Resource/Resource'
+import PaginatedResource from './components/Resource/Paginated'
 
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
@@ -168,9 +169,6 @@ import taskDetailsReducer from './modules/Tasks/TaskDetails/reducer'
 
 import { ID as EXPORT_WINS_CONFIRMED_ID } from './modules/ExportWins/Confirmed/state'
 import exportWinsConfirmedTaskReducer from './modules/ExportWins/Confirmed/reducer'
-
-import { ID as EXPORT_WINS_UNCONFIRMED_ID } from './modules/ExportWins/Unconfirmed/state'
-import exportWinsUnconfirmedTaskReducer from './modules/ExportWins/Unconfirmed/reducer'
 
 import { ID as EXPORT_WINS_DETAILS_ID } from './modules/ExportWins/Details/state'
 import exportWinDetailsTaskReducer from './modules/ExportWins/Details/reducer'
@@ -226,6 +224,7 @@ export const reducers = {
   ...Typeahead.reducerSpread,
   ...RoutedInput.reducerSpread,
   ...Resource.reducerSpread,
+  ...PaginatedResource.reducerSpread,
   ...ContactForm.reducerSpread,
   ...Form.reducerSpread,
   ...FieldAddAnother.reducerSpread,
@@ -275,7 +274,5 @@ export const reducers = {
   [ONE_LIST_DETAILS_ID]: oneListDetailsReducer,
   [TASK_DETAILS_ID]: taskDetailsReducer,
   [EXPORT_WINS_CONFIRMED_ID]: exportWinsConfirmedTaskReducer,
-  [EXPORT_WINS_UNCONFIRMED_ID]: exportWinsUnconfirmedTaskReducer,
-  [EXPORT_WINS_UNCONFIRMED_ID]: exportWinsUnconfirmedTaskReducer,
   [EXPORT_WINS_DETAILS_ID]: exportWinDetailsTaskReducer,
 }

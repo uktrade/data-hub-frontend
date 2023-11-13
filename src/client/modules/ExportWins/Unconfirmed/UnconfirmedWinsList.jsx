@@ -1,25 +1,47 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { Button } from 'govuk-react'
 
-import { EXPORT_WINS__UNCONFIRMED_LOADED } from '../../../actions'
-import { ID, TASK_GET_EXPORT_WINS_UNCONFIRMED, state2props } from './state'
-import Task from '../../../components/Task'
+import { SecondaryButton, CollectionItem } from '../../../components'
+import { formatMediumDate } from '../../../utils/date'
+import { currencyGBP } from '../../../utils/number-utils'
+import ExportWinsResource from '../../../components/Resource/ExportWins'
 
-const UnconfirmedWinsList = ({ results }) => (
-  <Task.Status
-    name={TASK_GET_EXPORT_WINS_UNCONFIRMED}
-    id={ID}
-    progressMessage="Loading export details"
-    startOnRender={{
-      onSuccessDispatch: EXPORT_WINS__UNCONFIRMED_LOADED,
-    }}
+export default () => (
+  <ExportWinsResource.Paginated
+    id="unconfirmed-export-wins"
+    payload={{ filter: 'unconfirmed' }}
   >
-    {() => (
-      <pre>
-        <code>{JSON.stringify(results, null, 2)}</code>
-      </pre>
+    {(page) => (
+      <ul>
+        {page.map((item) => (
+          <li key={item.id}>
+            <CollectionItem
+              headingText={item.company.name}
+              headingUrl={`company-url/${item.company.id}`}
+              metadata={[
+                { label: 'Destination', value: item.country.name },
+                { label: 'Contact name', value: item.customer_name },
+                {
+                  label: 'Export amount',
+                  value: currencyGBP(item.total_expected_export_value),
+                },
+                { label: 'Date won', value: formatMediumDate(item.date) },
+                { label: 'Date modified', value: '???' },
+              ]}
+              buttons={
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <Button as="a" href={`review/${item.id}`}>
+                    Review export win
+                  </Button>
+                  <SecondaryButton as="a" href={`edit/${item.id}`}>
+                    Edit export win
+                  </SecondaryButton>
+                </div>
+              }
+            />
+          </li>
+        ))}
+      </ul>
     )}
-  </Task.Status>
+  </ExportWinsResource.Paginated>
 )
-
-export default connect(state2props)(UnconfirmedWinsList)

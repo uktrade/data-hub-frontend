@@ -7,6 +7,7 @@ import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
 import LoadingBox from '../Task/LoadingBox'
 import { deepKeysToCamelCase } from '../../utils'
+import PaginatedResource from './Paginated'
 
 /**
  * @function Resource
@@ -154,6 +155,8 @@ export const createEntityResource = (name, endpoint) => {
  * API task to the specified {endpoint}. The total collection count is passed
  * as the second argument to the component's {children} function and the raw
  * response data as third.
+ * The component also comes with a {PaginatedResource} subcomponent preconfigured
+ * in the same way accessible as a `Paginated` property of the created component.
  * @example
  * // Create a Resource component pre-bound to name="Company"
  * const CompaniesResource = createCollectionResource('Companies', 'v4/company')
@@ -169,6 +172,13 @@ export const createEntityResource = (name, endpoint) => {
  *     <pre>{JSON.stringify(camelCasedCompanies, null, 2)}</pre>
  *   }
  * </CompaniesResource>
+ *
+ * // Use the PaginatedResource subcomponent
+ * <CompanyResource.Paginated id="my-paginated-company-view">
+ *  {currentPage =>
+ *    <pre>{JSON.stringify(currentPage, null, 2)}</pre>
+ *  }
+ * </CompanyResource.Paginated>
  */
 export const createCollectionResource = (name, endpoint) => {
   const EntityResource = createEntityResource(name, () => endpoint)
@@ -177,14 +187,19 @@ export const createCollectionResource = (name, endpoint) => {
     rawResult.count,
     rawResult,
   ]
-  const Component = (props) => (
-    <EntityResource transformer={transformer} {...props} id="__COLLECTION__" />
+
+  const Component = ({ id = '__COLLECTION__', ...props }) => (
+    <EntityResource transformer={transformer} id={id} {...props} />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')
   Component.tasks = EntityResource.tasks
   Component.transformer = transformer
   Component.taskName = name
+  Component.resourceName = name
+
+  Component.Paginated = (props) => <PaginatedResource {...props} name={name} />
+
   return Component
 }
 
