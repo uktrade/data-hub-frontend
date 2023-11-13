@@ -25,6 +25,7 @@ import {
 import {
   MY_INVESTMENTS__CHECK_COMPLETE,
   DATA_HUB_FEED__FETCHED,
+  MY_TASKS_LOADED,
 } from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
@@ -45,6 +46,7 @@ import {
   DataHubFeed,
 } from '../../components'
 import FlashMessages from '../LocalHeader/FlashMessages'
+import { ID, TASK_GET_MY_TASKS } from '../Dashboard/my-tasks/state'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -115,6 +117,8 @@ const PersonalisedDashboard = ({
   const hasAtLeastOneModule =
     showOutstandingPropositions || showReminders || hasInvestmentProjects
 
+  const adviserId = adviser.id
+
   return (
     <ThemeProvider theme={blueTheme}>
       <Banner items={dataHubFeed} />
@@ -125,6 +129,16 @@ const PersonalisedDashboard = ({
       </SearchBackground>
       <CustomContainer width="1180">
         <FlashMessages />
+        <Task.Status
+          name={TASK_GET_MY_TASKS}
+          id={ID}
+          startOnRender={{
+            payload: {
+              adviserId,
+            },
+            onSuccessDispatch: MY_TASKS_LOADED,
+          }}
+        />
         <Task.Status
           name={TASK_CHECK_FOR_INVESTMENTS}
           id={CHECK_FOR_INVESTMENTS_ID}

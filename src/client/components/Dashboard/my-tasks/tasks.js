@@ -1,13 +1,13 @@
 import { apiProxyAxios } from '../../Task/utils'
 import { transformMyTasksToListItem } from './transformers'
 
-export const getMyTasks = ({ currentAdviserId }) =>
+export const getMyTasks = ({ adviserId }) =>
   apiProxyAxios
     .post('/v4/search/task', {
       limit: 10,
       offset: 0,
-      created_by: [currentAdviserId.currentAdviserId],
-      adviser: [currentAdviserId.currentAdviserId],
+      created_by: [adviserId],
+      adviser: [adviserId],
     })
     .then(({ data }) => ({
       count: data.count,
