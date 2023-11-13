@@ -14,8 +14,8 @@ import {
   TASK_GET_NEXT_TASK_OVERDUE_REMINDER,
 } from './state'
 
-import MyTasksItemRenderer from './ItemRenderers/Tasks/MyTasksItemRenderer'
 import RemindersLists from './RemindersLists'
+import MyTasksDueDateApproachingItemRenderer from './ItemRenderers/MyTasksDueDateApproachingItemRenderer'
 
 const MyTasksOverdueList = ({ reminders }) => (
   <RemindersLists
@@ -32,7 +32,7 @@ const MyTasksOverdueList = ({ reminders }) => (
     getNextReminderTaskOnSuccessDispatch={
       REMINDERS__TASK_OVERDUE_REMINDERS_GOT_NEXT
     }
-    itemRenderer={MyTasksItemRenderer}
+    itemRenderer={MyTasksDueDateApproachingItemRenderer}
   />
 )
 
