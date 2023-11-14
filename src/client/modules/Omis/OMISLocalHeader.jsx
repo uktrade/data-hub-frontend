@@ -108,16 +108,26 @@ const ViewReceiptLink = ({ orderId }) => (
   </StyledLink>
 )
 
-const DraftActions = ({ orderId }) => (
+const DraftActions = ({ orderId, incompleteFields }) => (
   <StyledWrapper>
     <StyledButtonWrapper>
-      <Button
-        as={Link}
-        href={urls.omis.quote(orderId)}
-        data-test="preview-quote-button"
-      >
-        Preview quote
-      </Button>
+      {incompleteFields.length === 0 ? (
+        <Button
+          as={Link}
+          href={urls.omis.quote(orderId)}
+          data-test="preview-quote-button"
+        >
+          Preview quote
+        </Button>
+      ) : (
+        <Button
+          href={urls.omis.quote(orderId)}
+          data-test="preview-quote-button-disabled"
+          disabled={true}
+        >
+          Preview quote
+        </Button>
+      )}
     </StyledButtonWrapper>
     <br />
     <CancelLink orderId={orderId} />
@@ -173,13 +183,15 @@ const CancelledActions = ({ orderId }) => (
   </StyledWrapper>
 )
 
-const OMISLocalHeader = ({ order, quote }) => (
+const OMISLocalHeader = ({ order, quote, incompleteFields }) => (
   <GridRow>
     <GridCol setWidth="75%">
       <LocalHeaderDetails items={setHeaderItems(order, quote)} />
     </GridCol>
     <GridCol>
-      {order.status === STATUS.DRAFT && <DraftActions orderId={order.id} />}
+      {order.status === STATUS.DRAFT && (
+        <DraftActions orderId={order.id} incompleteFields={incompleteFields} />
+      )}
       {order.status === STATUS.QUOTE_AWAITING_ACCEPTANCE && (
         <QuoteAwaitingAcceptanceActions orderId={order.id} />
       )}
