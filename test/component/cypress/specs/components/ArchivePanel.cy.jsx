@@ -9,6 +9,8 @@ const archivist = {
   last_name: 'Archivist',
 }
 
+const archivistString = 'String Archivist'
+
 const archivistWithAlternateKey = {
   firstName: 'Inter',
   lastName: 'Action',
@@ -49,6 +51,26 @@ describe('ArchivePanel', () => {
     it('should render the panel with the archivist name visible', () => {
       assertArchiveMessage(
         'This company was archived on 10 Dec 2019 by Example Archivist.'
+      )
+    })
+
+    it('should render the archive reason', () => {
+      assertArchiveReason()
+    })
+
+    it('should render the unarchive link', () => {
+      assertUnarchiveLink()
+    })
+  })
+
+  context('When the archived record uses a string for the name', () => {
+    beforeEach(() => {
+      cy.mount(<Component type="order" archivedBy={archivistString} />)
+    })
+
+    it('should render the panel with the archivist name visible', () => {
+      assertArchiveMessage(
+        'This order was archived on 10 Dec 2019 by String Archivist.'
       )
     })
 
