@@ -5,7 +5,9 @@ import {
   checkIfItemHasValue,
   transformRadioOptionToBool,
 } from '../Investments/Projects/transformers'
-import { STATUS } from './constants'
+import { INCOMPLETE_FIELD_MESSAGES, STATUS, VAT_STATUS } from './constants'
+import { addDays, isDateAfter, parseDateISO } from '../../utils/date'
+import { omis } from '../../../lib/urls'
 
 export const transformQuoteInformationForApi = ({
   orderId,
@@ -197,4 +199,93 @@ export const transformLeadAdviserForApi = (values) => {
   }))
 
   return filter(transformedAssignees)
+}
+
+const checkIfAssigneeHasHours = (assignees) =>
+  assignees.some((assignee) => assignee.estimatedHours != 0)
+
+const checkIfLeadAssigneeExists = (assignees) =>
+  assignees.some((assignee) => assignee.isLead)
+
+export const getIncompleteFields = (order, assignees) => {
+  const incompleteFields = []
+
+  if (!order.description) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.DESCRIPTION)
+  }
+
+  if (
+    !order.deliveryDate ||
+    !isDateAfter(parseDateISO(order.deliveryDate), addDays(new Date(), 20))
+  ) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.DELIVERY_DATE)
+  }
+
+  if (order.serviceTypes?.length == 0) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.SERVICE_TYPES)
+  }
+
+  if (!order.vatStatus) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.VAT_STATUS)
+  }
+
+  if (order.vatStatus === VAT_STATUS.EU_COMPANY && !order.vatNumber) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.VAT_NUMBER)
+  }
+
+  if (
+    order.vatStatus === VAT_STATUS.EU_COMPANY &&
+    order.vatVerified === false
+  ) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.VAT_VERIFIED)
+  }
+
+  if (assignees.length === 0) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.ASSIGNEES)
+  }
+
+  if (checkIfAssigneeHasHours(assignees) === false) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.ASSIGNEE_TIME)
+  }
+
+  if (checkIfLeadAssigneeExists(assignees) === false) {
+    incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.LEAD_ASSIGNEE)
+  }
+
+  return incompleteFields
+}
+
+export const mapFieldToUrl = (field, orderId) => {
+  const quoteInfoFields = [
+    INCOMPLETE_FIELD_MESSAGES.DESCRIPTION,
+    INCOMPLETE_FIELD_MESSAGES.DELIVERY_DATE,
+  ]
+
+  const invoiceFields = [
+    INCOMPLETE_FIELD_MESSAGES.VAT_STATUS,
+    INCOMPLETE_FIELD_MESSAGES.VAT_VERIFIED,
+    INCOMPLETE_FIELD_MESSAGES.VAT_NUMBER,
+  ]
+
+  if (quoteInfoFields.includes(field)) {
+    return omis.edit.quote(orderId)
+  }
+
+  if (invoiceFields.includes(field)) {
+    return omis.edit.invoiceDetails(orderId)
+  }
+
+  if (field === INCOMPLETE_FIELD_MESSAGES.SERVICE_TYPES) {
+    return omis.edit.internalInfo(orderId)
+  }
+
+  if (field === INCOMPLETE_FIELD_MESSAGES.ASSIGNEES) {
+    return omis.edit.assignees(orderId)
+  }
+
+  if (field === INCOMPLETE_FIELD_MESSAGES.ASSIGNEE_TIME) {
+    return omis.edit.assigneeTime(orderId)
+  }
+
+  return null
 }

@@ -148,7 +148,7 @@ describe('OMISLocalHeader', () => {
         heading="TMY947/21"
         breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'This is a test' }]}
       >
-        <OMISLocalHeader {...props} />
+        <OMISLocalHeader incompleteFields={[]} {...props} />
       </LocalHeader>
     </DataHubProvider>
   )
@@ -175,6 +175,40 @@ describe('OMISLocalHeader', () => {
         .should('exist')
         .should('have.text', 'Preview quote')
         .should('have.attr', 'href', urls.omis.quote(draftOrder.id))
+    })
+
+    assertCancelLink(draftOrder.id), 'Cancel order'
+  })
+
+  context('When the order status is draft and has incomplete fields', () => {
+    beforeEach(() => {
+      cy.viewport(1024, 768)
+      dispatchResetAction()
+      cy.mount(
+        <Component
+          order={draftOrder}
+          quote={null}
+          incompleteFields={['test']}
+        />
+      )
+    })
+
+    it('should render the order details', () => {
+      assertCompany(draftOrder.company.name)
+      assertMarket(draftOrder.primaryMarket.name)
+      assertUkRegion(draftOrder.ukRegion.name)
+      assertCreatedOn(3, draftOrder.createdOn)
+      assertUpdatedOn(4, draftOrder.modifiedOn)
+      assertStatus(5, 'Draft')
+    })
+
+    assertCompanyLink(draftOrder.company.id)
+
+    it('should render the disabled preview quote button', () => {
+      cy.get('[data-test="preview-quote-button-disabled"]')
+        .should('exist')
+        .should('have.text', 'Preview quote')
+        .should('have.attr', 'disabled', 'disabled')
     })
 
     assertCancelLink(draftOrder.id), 'Cancel order'
