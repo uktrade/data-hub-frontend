@@ -79,6 +79,7 @@ const state2props = (state) => {
   const hasExportFeatureGroup = state.activeFeatureGroups.includes(
     'export-notifications'
   )
+  const myTaskCount = state.myTasks.checkCompleteCount
 
   return {
     hasInvestmentProjects,
@@ -87,6 +88,7 @@ const state2props = (state) => {
     reminderSummaryCount,
     hasExportFeatureGroup,
     hasInvestmentFeatureGroup,
+    myTaskCount,
   }
 }
 
@@ -100,6 +102,7 @@ const PersonalisedDashboard = ({
   dataHubFeed,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
+  myTaskCount,
 }) => {
   const history = useHistory()
 
@@ -221,6 +224,7 @@ const PersonalisedDashboard = ({
                     onTabChange={({ path }) =>
                       writeToLocalStorage(DASHBOARD_TAB, path)
                     }
+                    myTaskCount={myTaskCount}
                   />
                 </Main>
               </GridCol>
