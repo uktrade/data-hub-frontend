@@ -15,6 +15,7 @@ const QuoteInformationTable = ({ order }) => (
         <Link
           href={urls.omis.edit.quote(order.id)}
           data-test="edit-quote-info-link"
+          noVisitedState={true}
         >
           Edit
         </Link>
