@@ -63,6 +63,7 @@ const InvoiceDetailsTable = ({ order, company }) => (
         <Link
           href={urls.omis.edit.invoiceDetails(order.id)}
           data-test="edit-invoice-details-link"
+          noVisitedState={true}
         >
           Edit
         </Link>
