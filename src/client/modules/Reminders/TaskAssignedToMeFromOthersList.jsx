@@ -14,7 +14,7 @@ import {
   TASK_GET_NEXT_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
 } from './state'
 
-import TaskAssignedToMeFromOthersItemRenderer from './ItemRenderers/TaskAssignedToMeFromOthersItemRenderer'
+import MyTasksItemRenderer from './ItemRenderers/Tasks/MyTasksItemRenderer'
 import RemindersLists from './RemindersLists'
 
 const TaskAssignedToMeFromOthersList = ({ reminders }) => (
@@ -34,7 +34,7 @@ const TaskAssignedToMeFromOthersList = ({ reminders }) => (
     getNextReminderTaskOnSuccessDispatch={
       REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT
     }
-    itemRenderer={TaskAssignedToMeFromOthersItemRenderer}
+    itemRenderer={MyTasksItemRenderer}
   />
 )
 

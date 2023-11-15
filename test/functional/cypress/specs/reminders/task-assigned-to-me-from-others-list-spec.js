@@ -120,7 +120,7 @@ describe('My Tasks Task Assigned To Me From Others Reminders', () => {
       cy.get('[data-test="reminders-list-item"]').eq(0).as('reminder')
       cy.get('@reminder')
         .find('[data-test="item-header"]')
-        .should('contain', 'Received 1 January 2022')
+        .should('contain', 'Received 1 Jan 2022')
         .should('contain', 'Super awesome title')
         .find('a')
         .should('have.attr', 'href', urls.tasks.details(reminders[0].task.id))

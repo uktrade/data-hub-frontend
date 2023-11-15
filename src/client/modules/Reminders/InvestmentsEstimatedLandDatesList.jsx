@@ -14,7 +14,7 @@ import {
   TASK_GET_NEXT_ESTIMATED_LAND_DATE_REMINDER,
 } from './state'
 
-import InvestmentItemRenderer from './ItemRenderers/InvestmentItemRenderer'
+import InvestmentItemRenderer from './ItemRenderers/Investments/InvestmentItemRenderer'
 import RemindersLists from './RemindersLists'
 
 const InvestmentsEstimatedLandDatesList = ({ reminders }) => {

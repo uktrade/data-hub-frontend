@@ -14,7 +14,7 @@ import {
   TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
 } from './state'
 
-import MyTasksDueDateApproachingItemRenderer from './ItemRenderers/MyTasksDueDateApproachingItemRenderer'
+import MyTasksItemRenderer from './ItemRenderers/Tasks/MyTasksItemRenderer'
 import RemindersLists from './RemindersLists'
 
 const MyTasksDueDateApproachingList = ({ reminders }) => (
@@ -34,7 +34,7 @@ const MyTasksDueDateApproachingList = ({ reminders }) => (
     getNextReminderTaskOnSuccessDispatch={
       REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT
     }
-    itemRenderer={MyTasksDueDateApproachingItemRenderer}
+    itemRenderer={MyTasksItemRenderer}
   />
 )
 

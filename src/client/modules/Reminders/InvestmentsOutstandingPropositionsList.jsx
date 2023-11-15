@@ -11,7 +11,7 @@ import { REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED } from '../../actions'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS, ID } from './state'
 import { maxItemsToPaginate, itemsPerPage } from './constants'
 
-import InvestmentOPListItemRenderer from './ItemRenderers/InvestmentOPListItemRenderer'
+import InvestmentOPListItemRenderer from './ItemRenderers/Investments/InvestmentOPListItemRenderer'
 import { RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
 import CollectionList from './CollectionList'

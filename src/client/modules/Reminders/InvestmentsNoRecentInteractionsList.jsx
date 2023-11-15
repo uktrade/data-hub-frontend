@@ -14,7 +14,7 @@ import {
   TASK_DELETE_NO_RECENT_INTERACTION_REMINDER,
 } from './state'
 
-import InvestmentItemRenderer from './ItemRenderers/InvestmentItemRenderer'
+import InvestmentItemRenderer from './ItemRenderers/Investments/InvestmentItemRenderer'
 import RemindersLists from './RemindersLists'
 
 const InvestmentsNoRecentInteractionsList = ({ reminders }) => {

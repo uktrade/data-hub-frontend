@@ -133,27 +133,14 @@ export const getTaskAssignedToMeFromOthersReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/task-assigned-to-me-from-others', {
-      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
-    })
-    .then(({ data }) => data)
+} = {}) => getReminders(sortby, page, limit, 'task-assigned-to-me-from-others')
 
 export const getNextTaskAssignedToMeFromOthersReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
 } = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/task-assigned-to-me-from-others', {
-      params: {
-        sortby,
-        limit: 1,
-        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
-      },
-    })
-    .then(({ data }) => data.results)
+  getNextReminder(sortby, page, limit, 'task-assigned-to-me-from-others')
 
 export const deleteTaskAssignedToMeFromOthersReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/task-assigned-to-me-from-others/${id}`)
@@ -162,27 +149,13 @@ export const getTaskOverdueReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/my-tasks-task-overdue', {
-      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
-    })
-    .then(({ data }) => data)
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-overdue')
 
 export const getNextTaskOverdueReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/my-tasks-task-overdue', {
-      params: {
-        sortby,
-        limit: 1,
-        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
-      },
-    })
-    .then(({ data }) => data.results)
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-task-overdue')
 
 export const deleteTaskOverdueReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/my-tasks-task-overdue/${id}`)
