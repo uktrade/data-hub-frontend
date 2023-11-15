@@ -56,20 +56,24 @@ const calculateTotalEstimatedHours = (assignees) => {
   return transformEstimatedTime(total)
 }
 
-const buildAssigneeRows = (assignees, orderId) =>
+const buildAssigneeRows = (assignees, order) =>
   assignees.map(({ adviser, estimatedTime, isLead }) => (
     <Table.Row>
       <Table.Cell setWidth="one-half">
         {setAssigneeNameText(adviser, isLead)}
       </Table.Cell>
       <Table.Cell setWidth="35%">
-        {isLead ? (
-          ''
-        ) : (
-          <Link href={urls.omis.edit.setLeadAssignee(orderId, adviser.id)}>
-            Set as lead adviser
-          </Link>
-        )}
+        {isOrderActive(order) &&
+          (isLead ? (
+            ''
+          ) : (
+            <Link
+              href={urls.omis.edit.setLeadAssignee(order.id, adviser.id)}
+              data-test={`set-lead-adviser-link-${adviser.id}`}
+            >
+              Set as lead adviser
+            </Link>
+          ))}
       </Table.Cell>
       <StyledEndCell>
         {estimatedTime > 0
@@ -109,7 +113,7 @@ const AssigneesTable = ({ assignees, order }) => (
     data-test="assignees-table"
   >
     {assignees.length > 0 ? (
-      buildAssigneeRows(assignees, order.id)
+      buildAssigneeRows(assignees, order)
     ) : (
       <Table.Row>
         <Table.Cell>No advisers added</Table.Cell>

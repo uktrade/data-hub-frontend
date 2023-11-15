@@ -3,6 +3,7 @@ import React from 'react'
 import AssigneesTable from '../../../../../../src/client/modules/Omis/WorkOrderTables/AssigneesTable'
 import {
   assertGovReactTable,
+  assertLink,
   assertLinkWithText,
 } from '../../../../../functional/cypress/support/assertions'
 import { STATUS } from '../../../../../../src/client/modules/Omis/constants'
@@ -20,6 +21,7 @@ const inactiveOrder = {
 const assignees = [
   {
     adviser: {
+      id: '1',
       name: 'Andreas Test',
     },
     estimatedTime: 60,
@@ -27,6 +29,7 @@ const assignees = [
   },
   {
     adviser: {
+      id: '2',
       name: 'Andrew Test',
     },
     estimatedTime: 120,
@@ -34,6 +37,7 @@ const assignees = [
   },
   {
     adviser: {
+      id: '3',
       name: 'Andras Test',
     },
     estimatedTime: 0,
@@ -109,16 +113,30 @@ describe('AssigneesTable', () => {
         'Add or remove'
       )
     })
+
+    it('should render the lead adviser links', () => {
+      assertLink(
+        'set-lead-adviser-link-2',
+        urls.omis.edit.setLeadAssignee(order.id, assignees[1].adviser.id)
+      )
+      assertLink(
+        'set-lead-adviser-link-3',
+        urls.omis.edit.setLeadAssignee(order.id, assignees[2].adviser.id)
+      )
+    })
   })
 
   context('When viewing an inactive order', () => {
     beforeEach(() => {
-      cy.mount(<AssigneesTable order={inactiveOrder} assignees={[]} />)
+      cy.mount(<AssigneesTable order={inactiveOrder} assignees={assignees} />)
     })
 
     it('should not render the links', () => {
       cy.get('[data-test="assignee-time-link"]').should('not.exist')
       cy.get('[data-test="add-assignees-link"]').should('not.exist')
+      cy.get('[data-test="set-lead-adviser-link-1"]').should('not.exist')
+      cy.get('[data-test="set-lead-adviser-link-2"]').should('not.exist')
+      cy.get('[data-test="set-lead-adviser-link-3"]').should('not.exist')
     })
   })
 })
