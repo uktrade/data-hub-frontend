@@ -61,6 +61,7 @@ var v4Reminder = require('./routes/v4/reminder/reminder.js')
 var v4SearchAdviser = require('./routes/v4/search/adviser.js')
 var v4Objective = require('./routes/v4/objective/index.js')
 var v4Task = require('./routes/v4/task/index.js')
+var v4SearchMyTasks = require('./routes/v4/search/myTasks.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -675,6 +676,7 @@ app.post(
   v4SearchExports.fetchExportHistory
 )
 app.post('/v4/search/adviser', v4SearchAdviser.advisers)
+app.post('/v4/search/task', v4SearchMyTasks.myTasks)
 
 // V4 Tasks
 app.get('/v4/task', v4Task.getTasks)
