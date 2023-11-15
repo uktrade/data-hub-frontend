@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout } from '../../components'
+import OMISLayout from './OMISLayout'
 import Task from '../../components/Task'
 import {
   OrderAssigneesResource,
@@ -15,28 +15,7 @@ const SetLeadAdviser = () => {
   return (
     <OrderResource id={orderId}>
       {(order) => (
-        <DefaultLayout
-          heading="Set lead adviser in the market"
-          pageTitle={`Set lead adviser in the market - ${order.reference} - Orders (OMIS)`}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.omis.index(),
-              text: 'Orders (OMIS)',
-            },
-            {
-              link: urls.omis.order(orderId),
-              text: order.reference,
-            },
-            {
-              text: 'Set lead adviser in the market',
-            },
-          ]}
-          useReactRouter={false}
-        >
+        <OMISLayout heading="Set lead adviser in the market" order={order}>
           <OrderAssigneesResource id={orderId}>
             {(assignees) => (
               <Task.Status
@@ -51,7 +30,7 @@ const SetLeadAdviser = () => {
               </Task.Status>
             )}
           </OrderAssigneesResource>
-        </DefaultLayout>
+        </OMISLayout>
       )}
     </OrderResource>
   )
