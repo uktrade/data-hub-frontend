@@ -127,6 +127,7 @@ import * as personalisedDashboard from './components/PersonalisedDashboard/tasks
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   TASK_DATA_HUB_FEED,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
@@ -389,8 +390,7 @@ import { getExportWinsUnconfirmed } from './modules/ExportWins/Unconfirmed/tasks
 import { TASK_GET_EXPORT_WIN_DETAILS } from './modules/ExportWins/Details/state'
 import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 
-import { TASK_CHECK_FOR_MY_TASKS } from './components/Dashboard/my-tasks/state'
-import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
+import { checkForMyTasks } from './components/PersonalisedDashboard/tasks'
 
 export const tasks = {
   'Create list': createList,
@@ -608,5 +608,5 @@ export const tasks = {
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,
   [TASK_OVERDUE_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskOverdueSubscriptions,
-  [TASK_CHECK_FOR_MY_TASKS]: getMyTasks,
+  [TASK_CHECK_FOR_MY_TASKS]: checkForMyTasks,
 }

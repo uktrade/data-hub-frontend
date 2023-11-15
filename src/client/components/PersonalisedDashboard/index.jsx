@@ -21,6 +21,8 @@ import {
   ID as CHECK_FOR_INVESTMENTS_ID,
   DATA_HUB_FEED_ID,
   TASK_DATA_HUB_FEED,
+  CHECK_FOR_MY_TASKS_ID,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './state'
 import {
   MY_INVESTMENTS__CHECK_COMPLETE,
@@ -46,10 +48,6 @@ import {
   DataHubFeed,
 } from '../../components'
 import FlashMessages from '../LocalHeader/FlashMessages'
-import {
-  ID as MY_TASKS_ID,
-  TASK_CHECK_FOR_MY_TASKS,
-} from '../Dashboard/my-tasks/state'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -71,6 +69,7 @@ const state2props = (state) => {
   const { count: remindersCount } = state[INVESTMENT_REMINDERS_ID]
   const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
+  const { checkCompleteCount } = state[CHECK_FOR_MY_TASKS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
 
   const hasInvestmentFeatureGroup = state.activeFeatureGroups.includes(
@@ -79,7 +78,6 @@ const state2props = (state) => {
   const hasExportFeatureGroup = state.activeFeatureGroups.includes(
     'export-notifications'
   )
-  const myTaskCount = state.myTasks.checkCompleteCount
 
   return {
     hasInvestmentProjects,
@@ -88,7 +86,7 @@ const state2props = (state) => {
     reminderSummaryCount,
     hasExportFeatureGroup,
     hasInvestmentFeatureGroup,
-    myTaskCount,
+    checkCompleteCount,
   }
 }
 
@@ -102,7 +100,7 @@ const PersonalisedDashboard = ({
   dataHubFeed,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
-  myTaskCount,
+  checkCompleteCount,
 }) => {
   const history = useHistory()
 
@@ -137,7 +135,7 @@ const PersonalisedDashboard = ({
         <FlashMessages />
         <Task.Status
           name={TASK_CHECK_FOR_MY_TASKS}
-          id={MY_TASKS_ID}
+          id={CHECK_FOR_MY_TASKS_ID}
           startOnRender={{
             payload: {
               adviserId,
@@ -224,7 +222,7 @@ const PersonalisedDashboard = ({
                     onTabChange={({ path }) =>
                       writeToLocalStorage(DASHBOARD_TAB, path)
                     }
-                    myTaskCount={myTaskCount}
+                    checkForMyTasks={checkCompleteCount}
                   />
                 </Main>
               </GridCol>
@@ -262,6 +260,7 @@ PersonalisedDashboard.propTypes = {
   remindersCount: PropTypes.number.isRequired,
   reminderSummaryCount: PropTypes.number.isRequired,
   hasInvestmentProjects: PropTypes.bool.isRequired,
+  checkForMyTasks: PropTypes.number.isRequired,
   dataHubFeed: PropTypes.array.isRequired,
 }
 

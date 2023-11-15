@@ -29,7 +29,7 @@ const DashboardTabs = ({
   hasInvestmentProjects,
   onTabChange,
   userPermissions,
-  myTaskCount,
+  checkForMyTasks,
 }) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
@@ -39,7 +39,7 @@ const DashboardTabs = ({
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
-        ...(myTaskCount > 0 && {
+        ...(checkForMyTasks && {
           [urls.dashboard.myTasks()]: {
             label: 'My tasks',
             content: <MyTasks />,
