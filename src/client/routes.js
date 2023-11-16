@@ -67,6 +67,7 @@ import EditContact from './modules/Omis/EditContact'
 import EditAssignees from './modules/Omis/EditAssignees'
 import EditSubscribers from './modules/Omis/EditSubscribers'
 import WorkOrder from './modules/Omis/WorkOrder'
+import SetLeadAdviser from './modules/Omis/SetLeadAdviser'
 
 const routes = {
   companies: [
@@ -249,6 +250,11 @@ const routes = {
       path: '/omis/:orderId/work-order',
       module: 'datahub:orders',
       component: WorkOrder,
+    },
+    {
+      path: '/omis/:orderId/edit/lead-adviser/:adviserId',
+      module: 'datahub:orders',
+      component: SetLeadAdviser,
     },
   ],
   reminders: [

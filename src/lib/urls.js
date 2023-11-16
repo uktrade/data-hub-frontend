@@ -626,6 +626,7 @@ module.exports = {
       vatStatus: url('/omis', '/:orderId/edit/vat-status'),
       assigneeTime: url('/omis', '/:orderId/edit/assignee-time'),
       contact: url('/omis', '/:orderId/edit/contact'),
+      setLeadAssignee: url('/omis', '/:orderId/edit/lead-adviser/:adviserId'),
     },
     cancel: url('/omis', '/:orderId/edit/cancel-order'),
     complete: url('/omis', '/:orderId/edit/complete-order'),

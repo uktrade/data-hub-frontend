@@ -367,6 +367,7 @@ import {
   TASK_EDIT_ORDER_CONTACT,
   TASK_SAVE_ORDER_ASSIGNEES,
   TASK_SAVE_ORDER_SUBSCRIBERS,
+  TASK_SET_LEAD_ADVISER,
 } from './modules/Omis/state'
 import {
   cancelOrder,
@@ -376,6 +377,7 @@ import {
   updateOrder,
   saveOrderAssignees,
   saveOrderSubscribers,
+  setLeadAdviser,
 } from './modules/Omis/tasks'
 
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
@@ -620,4 +622,5 @@ export const tasks = {
   [TASK_GET_TASK_OVERDUE_REMINDERS]: reminders.getTaskOverdueReminders,
   [TASK_DELETE_TASK_OVERDUE_REMINDER]: reminders.deleteTaskOverdueReminder,
   [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
+  [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
 }

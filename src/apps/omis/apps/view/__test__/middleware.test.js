@@ -10,7 +10,6 @@ describe('OMIS View middleware', () => {
     this.setCompanySpy = sinon.spy()
     this.loggerErrorSpy = sinon.spy()
     this.getContactStub = sinon.stub()
-    this.getAssigneesStub = sinon.stub()
     this.previewQuoteStub = sinon.stub()
     this.getQuoteStub = sinon.stub()
     this.getInvoiceStub = sinon.stub()
@@ -50,7 +49,6 @@ describe('OMIS View middleware', () => {
       },
       '../../models': {
         Order: {
-          getAssignees: this.getAssigneesStub,
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
           getInvoice: this.getInvoiceStub,

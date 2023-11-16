@@ -189,3 +189,12 @@ export const transformAddress = (address) =>
 export const canEditOrder = (order) => order.status === STATUS.DRAFT
 export const isOrderActive = (order) =>
   ![STATUS.CANCELLED, STATUS.COMPLETE].includes(order.status)
+
+export const transformLeadAdviserForApi = (values) => {
+  const transformedAssignees = values.assignees.map((element) => ({
+    adviser: { id: element.adviser.id },
+    is_lead: element.adviser.id === values.adviserId,
+  }))
+
+  return filter(transformedAssignees)
+}
