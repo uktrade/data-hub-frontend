@@ -69,6 +69,7 @@ import EditSubscribers from './modules/Omis/EditSubscribers'
 import WorkOrder from './modules/Omis/WorkOrder'
 import SetLeadAdviser from './modules/Omis/SetLeadAdviser'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
+import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 
 const routes = {
   companies: [
@@ -126,6 +127,16 @@ const routes = {
       path: '/companies/:companyId/hierarchies/ghq/search',
       module: 'datahub:companies',
       component: LinkGlobalHQ,
+    },
+    {
+      path: '/companies/:companyId/subsidiaries/link',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/subsidiaries/search',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
     },
   ],
   contacts: [
