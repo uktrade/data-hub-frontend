@@ -72,6 +72,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
 import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
+import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 
 const routes = {
   companies: [
@@ -149,6 +150,11 @@ const routes = {
       path: '/companies/:companyId/exports/edit',
       module: 'datahub:companies',
       component: ExportsEdit,
+    },
+    {
+      path: '/companies/:companyId/referrals/:referralId/help',
+      module: 'datahub:companies',
+      component: ReferralHelp,
     },
   ],
   contacts: [
