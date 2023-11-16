@@ -62,6 +62,7 @@ import companiesReducer from './modules/Companies/CollectionList/reducer'
 import {
   DATA_HUB_FEED_ID,
   ID as CHECK_FOR_INVESTMENTS_ID,
+  CHECK_FOR_MY_TASKS_ID,
 } from './components/PersonalisedDashboard/state'
 import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
 
@@ -240,6 +241,7 @@ export const reducers = {
   [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
   [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
   [DATA_HUB_FEED_ID]: personalDashboardReducer,
+  [CHECK_FOR_MY_TASKS_ID]: personalDashboardReducer,
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
