@@ -86,6 +86,8 @@ const reactRoutes = [
   '/reminders/task-assigned-to-me-from-others',
   '/reminders/my-tasks-task-overdue',
   '/companies/:companyId/hierarchies/ghq/search',
+  '/companies/:companyId/subsidiaries/link',
+  '/companies/:companyId/hierarchies/subsidiaries/search',
 ]
 
 reactRoutes.forEach((path) => {
