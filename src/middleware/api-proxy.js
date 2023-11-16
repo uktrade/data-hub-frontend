@@ -77,6 +77,7 @@ const ALLOWLIST = [
   '/v4/reminder/subscription/:reminderType',
   '/v3/omis/order/:id/complete',
   '/v3/omis/order',
+  '/v4/search/task',
 ]
 
 module.exports = (app) => {

@@ -21,10 +21,13 @@ import {
   ID as CHECK_FOR_INVESTMENTS_ID,
   DATA_HUB_FEED_ID,
   TASK_DATA_HUB_FEED,
+  CHECK_FOR_MY_TASKS_ID,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './state'
 import {
   MY_INVESTMENTS__CHECK_COMPLETE,
   DATA_HUB_FEED__FETCHED,
+  MY_TASKS_CHECK_COMPLETE,
 } from '../../actions'
 
 import NotificationBadge from '../NotificationBadge'
@@ -66,6 +69,7 @@ const state2props = (state) => {
   const { count: remindersCount } = state[INVESTMENT_REMINDERS_ID]
   const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
+  const { hasTasks } = state[CHECK_FOR_MY_TASKS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
 
   const hasInvestmentFeatureGroup = state.activeFeatureGroups.includes(
@@ -82,6 +86,7 @@ const state2props = (state) => {
     reminderSummaryCount,
     hasExportFeatureGroup,
     hasInvestmentFeatureGroup,
+    hasTasks,
   }
 }
 
@@ -95,6 +100,7 @@ const PersonalisedDashboard = ({
   dataHubFeed,
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
+  hasTasks,
 }) => {
   const history = useHistory()
 
@@ -125,6 +131,16 @@ const PersonalisedDashboard = ({
       </SearchBackground>
       <CustomContainer width="1180">
         <FlashMessages />
+        <Task.Status
+          name={TASK_CHECK_FOR_MY_TASKS}
+          id={CHECK_FOR_MY_TASKS_ID}
+          startOnRender={{
+            payload: {
+              adviser,
+            },
+            onSuccessDispatch: MY_TASKS_CHECK_COMPLETE,
+          }}
+        />
         <Task.Status
           name={TASK_CHECK_FOR_INVESTMENTS}
           id={CHECK_FOR_INVESTMENTS_ID}
@@ -204,6 +220,7 @@ const PersonalisedDashboard = ({
                     onTabChange={({ path }) =>
                       writeToLocalStorage(DASHBOARD_TAB, path)
                     }
+                    hasTasks={hasTasks}
                   />
                 </Main>
               </GridCol>
@@ -241,6 +258,7 @@ PersonalisedDashboard.propTypes = {
   remindersCount: PropTypes.number.isRequired,
   reminderSummaryCount: PropTypes.number.isRequired,
   hasInvestmentProjects: PropTypes.bool.isRequired,
+  hasTasks: PropTypes.bool.isRequired,
   dataHubFeed: PropTypes.array.isRequired,
 }
 

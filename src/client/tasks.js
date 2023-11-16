@@ -128,6 +128,7 @@ import * as personalisedDashboard from './components/PersonalisedDashboard/tasks
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   TASK_DATA_HUB_FEED,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
@@ -637,4 +638,5 @@ export const tasks = {
     reminderSettings.saveTaskCompletedSubscriptions,
   [TASK_GET_COMPANIES]: getOmisCompanies,
   [TASK_CREATE_ORDER]: createOrder,
+  [TASK_CHECK_FOR_MY_TASKS]: personalisedDashboard.checkForMyTasks,
 }
