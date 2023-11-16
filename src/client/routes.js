@@ -68,6 +68,7 @@ import EditAssignees from './modules/Omis/EditAssignees'
 import EditSubscribers from './modules/Omis/EditSubscribers'
 import WorkOrder from './modules/Omis/WorkOrder'
 import SetLeadAdviser from './modules/Omis/SetLeadAdviser'
+import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 
 const routes = {
   companies: [
@@ -120,6 +121,11 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/:objectiveId/archive',
       module: 'datahub:companies',
       component: ObjectiveArchive,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/ghq/search',
+      module: 'datahub:companies',
+      component: LinkGlobalHQ,
     },
   ],
   contacts: [
