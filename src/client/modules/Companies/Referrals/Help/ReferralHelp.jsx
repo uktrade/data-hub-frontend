@@ -5,18 +5,15 @@ import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
-import {
-  DefaultLayout,
-  NewWindowLink,
-} from '../../../../../../client/components/'
-import urls from '../../../../../../lib/urls'
+import { DefaultLayout, NewWindowLink } from '../../../../components'
+import urls from '../../../../../lib/urls'
 
-import Task from '../../../../../../client/components/Task'
+import Task from '../../../../components/Task'
 import { state2props } from './state'
 
-import { REFERRAL_DETAILS } from '../../../../../../client/actions'
+import { REFERRAL_DETAILS } from '../../../../actions'
 
-import { buildCompanyBreadcrumbs } from '../../../../../../client/modules/Companies/utils'
+import { buildCompanyBreadcrumbs } from '../../utils'
 
 const AdviserDetails = ({ name, email }) => (
   <>
