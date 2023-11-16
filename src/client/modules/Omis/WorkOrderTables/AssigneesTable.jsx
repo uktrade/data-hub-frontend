@@ -48,10 +48,10 @@ const setAdviserEditText = (advisers, canEdit) =>
   advisers.length > 0 && canEdit ? 'Add or remove' : 'Add'
 
 const calculateTotalEstimatedHours = (assignees) => {
-  let total = 0
-  assignees.forEach((assignee) => {
-    total += assignee.estimatedTime
-  })
+  const total = assignees.reduce(
+    (acc, assignee) => acc + assignee.estimatedTime,
+    0
+  )
 
   return transformEstimatedTime(total)
 }

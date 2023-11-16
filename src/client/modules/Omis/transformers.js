@@ -193,7 +193,7 @@ export const isOrderActive = (order) =>
 export const transformLeadAdviserForApi = (values) => {
   const transformedAssignees = values.assignees.map((element) => ({
     adviser: { id: element.adviser.id },
-    is_lead: element.adviser.id === values.adviserId ? true : false,
+    is_lead: element.adviser.id === values.adviserId,
   }))
 
   return filter(transformedAssignees)
