@@ -54,7 +54,8 @@ const PropositionDetails = ({
 }) => {
   useEffect(() => {
     if (completeStatus === 'completed') {
-      window.location.href = urls.investments.projects.propositions(investmentProjectId)
+      window.location.href =
+        urls.investments.projects.propositions(investmentProjectId)
     }
   }, [completeStatus, investmentProjectId])
 
