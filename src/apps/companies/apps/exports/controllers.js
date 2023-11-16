@@ -1,7 +1,5 @@
 const metadataRepo = require('../../../../lib/metadata')
 
-const urls = require('../../../../lib/urls')
-
 function getCountry(id) {
   return metadataRepo.countryOptions.find((country) => country.id === id)
 }
@@ -42,22 +40,7 @@ function renderExportHistory(req, res) {
   })
 }
 
-function renderExportEdit(req, res) {
-  const { company } = res.locals
-
-  res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports', urls.companies.exports.index(company.id))
-    .breadcrumb('Edit')
-    .render('companies/apps/exports/views/edit', {
-      props: {
-        companyId: company.id,
-      },
-    })
-}
-
 module.exports = {
   renderExports,
-  renderExportEdit,
   renderExportHistory,
 }
