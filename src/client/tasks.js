@@ -127,6 +127,7 @@ import * as personalisedDashboard from './components/PersonalisedDashboard/tasks
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   TASK_DATA_HUB_FEED,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
@@ -605,4 +606,5 @@ export const tasks = {
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,
   [TASK_OVERDUE_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskOverdueSubscriptions,
+  [TASK_CHECK_FOR_MY_TASKS]: personalisedDashboard.checkForMyTasks,
 }

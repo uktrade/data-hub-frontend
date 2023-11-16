@@ -1,12 +1,14 @@
 import {
   MY_INVESTMENTS__CHECK_COMPLETE,
   DATA_HUB_FEED__FETCHED,
+  MY_TASKS_CHECK_COMPLETE,
 } from '../../actions'
 
 const initialState = {
   hasInvestmentProjects: false,
   summary: [],
   dataHubFeed: [],
+  hasTasks: false,
 }
 
 export default (state = initialState, { type, result }) => {
@@ -23,6 +25,11 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         dataHubFeed,
+      }
+    case MY_TASKS_CHECK_COMPLETE:
+      return {
+        ...state,
+        hasTasks: result,
       }
     default:
       return state

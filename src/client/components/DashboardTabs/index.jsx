@@ -7,6 +7,7 @@ import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
 import ExportList from '../../modules/ExportPipeline/ExportList'
+import MyTasks from '../Dashboard/my-tasks/MyTasks'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import ReferralList from '../ReferralList'
@@ -28,6 +29,7 @@ const DashboardTabs = ({
   hasInvestmentProjects,
   onTabChange,
   userPermissions,
+  hasTasks,
 }) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
@@ -37,6 +39,12 @@ const DashboardTabs = ({
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
+        ...(hasTasks && {
+          [urls.dashboard.myTasks()]: {
+            label: 'My tasks',
+            content: <MyTasks />,
+          },
+        }),
         ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.index()]: {
             label: 'Company lists',
