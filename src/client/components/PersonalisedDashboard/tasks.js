@@ -29,4 +29,4 @@ export const checkForMyTasks = ({ adviserId }) =>
       created_by: [adviserId],
       adviser: [adviserId],
     })
-    .then(({ data }) => data.count)
+    .then(({ data }) => (data.count ? true : false))
