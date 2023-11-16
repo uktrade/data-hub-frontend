@@ -26,7 +26,6 @@ import CompanyOverview from '../apps/companies/apps/company-overview/client/Comp
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
-import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
@@ -237,9 +236,6 @@ function App() {
         </Mount>
         <Mount selector="#referral-details">
           {(props) => <ReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#referral-help">
-          {(props) => <ReferralHelp {...props} />}
         </Mount>
         <Mount selector="#interaction-referral-details">
           {(props) => <InteractionReferralDetails {...props} />}
