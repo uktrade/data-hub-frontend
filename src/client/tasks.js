@@ -392,6 +392,9 @@ import { getExportWinsConfirmed } from './modules/ExportWins/Confirmed/tasks'
 import { TASK_GET_EXPORT_WIN_DETAILS } from './modules/ExportWins/Details/state'
 import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 
+import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
+import { saveExportWin } from './modules/ExportWins/Form/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -603,6 +606,7 @@ export const tasks = {
   [TASK_EDIT_ORDER_VAT_STATUS]: updateOrder,
   [TASK_CANCEL_ORDER]: cancelOrder,
   [TASK_GET_EXPORT_WINS_CONFIRMED]: getExportWinsConfirmed,
+  [TASK_GET_EXPORT_WINS_SAVE_FORM]: saveExportWin,
   [TASK_EDIT_ORDER_ASSIGNEE_TIME]: updateAssignees,
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
