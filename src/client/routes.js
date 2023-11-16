@@ -69,7 +69,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
 import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
-import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
+import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 
 const routes = {
   companies: [
