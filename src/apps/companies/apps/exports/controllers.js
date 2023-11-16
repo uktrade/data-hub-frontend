@@ -56,23 +56,8 @@ function renderExportEdit(req, res) {
     })
 }
 
-function renderExportEditCountries(req, res) {
-  const { company } = res.locals
-
-  res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports', urls.companies.exports.index(company.id))
-    .breadcrumb('Edit export countries')
-    .render('companies/apps/exports/views/edit-countries', {
-      props: {
-        companyId: company.id,
-      },
-    })
-}
-
 module.exports = {
   renderExports,
   renderExportEdit,
   renderExportHistory,
-  renderExportEditCountries,
 }

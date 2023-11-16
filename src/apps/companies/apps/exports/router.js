@@ -7,16 +7,10 @@ const {
   renderExports,
   renderExportEdit,
   renderExportHistory,
-  renderExportEditCountries,
 } = require('./controllers')
 
 router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
 router.get(urls.companies.exports.edit.route, renderExportEdit)
-
-router
-  .route(urls.companies.exports.editCountries.route)
-  .get(renderExportEditCountries)
-  .post(renderExportEditCountries)
 
 router.get(
   urls.companies.exports.history.index.route,

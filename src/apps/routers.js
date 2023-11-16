@@ -88,6 +88,7 @@ const reactRoutes = [
   '/companies/:companyId/hierarchies/ghq/search',
   '/companies/:companyId/subsidiaries/link',
   '/companies/:companyId/hierarchies/subsidiaries/search',
+  '/companies/:companyId/exports/edit-countries',
 ]
 
 reactRoutes.forEach((path) => {

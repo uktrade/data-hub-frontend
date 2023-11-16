@@ -67,6 +67,7 @@ import EditAssignees from './modules/Omis/EditAssignees'
 import EditSubscribers from './modules/Omis/EditSubscribers'
 import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
+import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
 
 const routes = {
   companies: [
@@ -134,6 +135,11 @@ const routes = {
       path: '/companies/:companyId/hierarchies/subsidiaries/search',
       module: 'datahub:companies',
       component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/exports/edit-countries',
+      module: 'datahub:companies',
+      component: ExportCountriesEdit,
     },
   ],
   contacts: [
