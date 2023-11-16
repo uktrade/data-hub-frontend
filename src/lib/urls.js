@@ -132,6 +132,7 @@ module.exports = {
   dashboard: {
     index: url('/'),
     investmentProjects: url('/investment-projects'),
+    myTasks: url('/my-tasks'),
   },
   oauth: {
     redirect: url('/oauth'),

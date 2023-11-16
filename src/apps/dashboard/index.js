@@ -13,6 +13,7 @@ module.exports = {
       urls.dashboard.investmentProjects(),
       urls.companies.referrals.list(),
       urls.exportPipeline.index(),
+      urls.dashboard.myTasks(),
     ],
     spaBasePath(urls.dashboard.index.route),
     renderDashboard
