@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { FieldInput, FieldSelect, LocalHeader, Main } from '../../../components'
+import { DefaultLayout, FieldInput, FieldSelect } from '../../../components'
 import GreatProfile from '../../../../apps/companies/apps/exports/client/GreatProfile'
 import urls from '../../../../lib/urls'
 import Form from '../../../components/Form'
@@ -21,14 +22,16 @@ const StyledDd = styled.dd`
   margin-bottom: ${SPACING_POINTS[6]}px;
 `
 
-export default ({ companyId }) => (
-  <CompanyResource id={companyId}>
-    {(company) => (
-      <ExportExperienceCategoriesResource>
-        {(exportWinCategories) => (
-          <>
-            <LocalHeader
-              heading={'Edit exports'}
+const ExportsEdit = () => {
+  const { companyId } = useParams()
+  return (
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <ExportExperienceCategoriesResource>
+          {(exportWinCategories) => (
+            <DefaultLayout
+              heading="Edit exports"
+              pageTitle={`Edit exports - Exports - ${company.name} - Companies`}
               breadcrumbs={buildCompanyBreadcrumbs(
                 [
                   {
@@ -40,8 +43,7 @@ export default ({ companyId }) => (
                 company.id,
                 company.name
               )}
-            />
-            <Main>
+            >
               <Form
                 id="exports-edit"
                 submissionTaskName="Exports Edit"
@@ -81,10 +83,12 @@ export default ({ companyId }) => (
                   initialValue={companyId}
                 />
               </Form>
-            </Main>
-          </>
-        )}
-      </ExportExperienceCategoriesResource>
-    )}
-  </CompanyResource>
-)
+            </DefaultLayout>
+          )}
+        </ExportExperienceCategoriesResource>
+      )}
+    </CompanyResource>
+  )
+}
+
+export default ExportsEdit
