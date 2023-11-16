@@ -106,7 +106,7 @@ describe('Dashboard', () => {
   context('When My Tasks returns no results', () => {
     before(() => {
       cy.intercept('POST', '/api-proxy/v4/search/task', {
-        body: { count: null },
+        body: { count: false },
       }).as('myTaskCount')
       cy.visit('/')
     })

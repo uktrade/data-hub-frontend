@@ -8,7 +8,7 @@ const initialState = {
   hasInvestmentProjects: false,
   summary: [],
   dataHubFeed: [],
-  checkCompleteCount: 1,
+  hasTasks: false,
 }
 
 export default (state = initialState, { type, result }) => {
@@ -29,7 +29,7 @@ export default (state = initialState, { type, result }) => {
     case MY_TASKS_CHECK_COMPLETE:
       return {
         ...state,
-        checkCompleteCount: result,
+        hasTasks: result,
       }
     default:
       return state

@@ -3,12 +3,6 @@ import { connect } from 'react-redux'
 
 import { state2props } from './state'
 
-const MyTasks = () => {
-  return (
-    <>
-      <h1>Hello Tasks</h1>
-    </>
-  )
-}
+const MyTasks = () => <h1>Hello Tasks</h1>
 
 export default connect(state2props)(MyTasks)
