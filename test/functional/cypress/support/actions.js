@@ -145,6 +145,20 @@ export const clickCancelLink = () => {
 }
 
 /**
+ * Click on a Continue button
+ */
+export const clickContinueButton = () => {
+  cy.get('[data-test="continue"]').click()
+}
+
+/**
+ * Click on a Submit button
+ */
+export const clickSubmitButton = () => {
+  cy.get('[data-test="submit"]').click()
+}
+
+/**
  * Generic search request for a CollectionList
  * @param {*} endpoint The search endpoint
  * @param {*} fakeList The fake list of items to display

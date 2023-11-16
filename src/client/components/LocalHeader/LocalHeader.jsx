@@ -133,7 +133,7 @@ LocalHeader.propTypes = {
   /**
    * Contains the subheading text to be displayed
    */
-  subheading: PropTypes.string,
+  subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   /**
    * Contains a link that appears above the heading
    */

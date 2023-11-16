@@ -17,6 +17,7 @@ import {
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import ExportWins from './modules/ExportWins/'
+import AddExportWinForm from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Redirect'
 import ExportWinDetails from './modules/ExportWins/Details'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
@@ -341,6 +342,11 @@ const routes = {
       path: '/exportwins/:winId/details',
       module: 'datahub:companies',
       component: ExportWinDetails,
+    },
+    {
+      path: '/exportwins/create',
+      module: 'datahub:companies',
+      component: AddExportWinForm,
     },
   ],
   investments: [
