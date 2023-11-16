@@ -121,8 +121,6 @@ const PersonalisedDashboard = ({
   const hasAtLeastOneModule =
     showOutstandingPropositions || showReminders || hasInvestmentProjects
 
-  const adviserId = adviser.id
-
   return (
     <ThemeProvider theme={blueTheme}>
       <Banner items={dataHubFeed} />
@@ -138,7 +136,7 @@ const PersonalisedDashboard = ({
           id={CHECK_FOR_MY_TASKS_ID}
           startOnRender={{
             payload: {
-              adviserId,
+              adviser,
             },
             onSuccessDispatch: MY_TASKS_CHECK_COMPLETE,
           }}
