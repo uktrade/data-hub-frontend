@@ -70,6 +70,7 @@ const buildAssigneeRows = (assignees, order) =>
             <Link
               href={urls.omis.edit.setLeadAssignee(order.id, adviser.id)}
               data-test={`set-lead-adviser-link-${adviser.id}`}
+              noVisitedState={true}
             >
               Set as lead adviser
             </Link>
@@ -96,6 +97,7 @@ const AssigneesTable = ({ assignees, order }) => (
               canEditOrder(order)
             )} advisers in the market`}
             data-test="add-assignees-link"
+            noVisitedState={true}
           >
             {setAdviserEditText(assignees, canEditOrder(order))}
           </Link>
@@ -104,6 +106,7 @@ const AssigneesTable = ({ assignees, order }) => (
           <Link
             href={urls.omis.edit.assigneeTime(order.id)}
             data-test="assignee-time-link"
+            noVisitedState={true}
           >
             Estimate hours
           </Link>

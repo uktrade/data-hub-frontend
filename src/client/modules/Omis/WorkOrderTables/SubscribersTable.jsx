@@ -24,6 +24,7 @@ const SubscribersTable = ({ subscribers, order }) => (
           href={urls.omis.edit.subscribers(order.id)}
           aria-label="Add or remove advisers in the UK"
           data-test="add-subscribers-link"
+          noVisitedState={true}
         >
           Add or remove
         </Link>

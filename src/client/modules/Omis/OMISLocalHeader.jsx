@@ -51,6 +51,7 @@ const setHeaderItems = (order, quote) => {
         <Link
           href={urls.companies.details(order.company.id)}
           data-test="company-link"
+          noVisitedState={true}
         >
           {order.company.name}
         </Link>
@@ -78,19 +79,31 @@ const setHeaderItems = (order, quote) => {
 }
 
 const CancelLink = ({ orderId }) => (
-  <StyledLink href={urls.omis.cancel(orderId)} data-test="cancel-link">
+  <StyledLink
+    href={urls.omis.cancel(orderId)}
+    data-test="cancel-link"
+    noVisitedState={true}
+  >
     Cancel order
   </StyledLink>
 )
 
 const ViewQuoteLink = ({ orderId }) => (
-  <StyledLink href={urls.omis.quote(orderId)} data-test="quote-link">
+  <StyledLink
+    href={urls.omis.quote(orderId)}
+    data-test="quote-link"
+    noVisitedState={true}
+  >
     View quote
   </StyledLink>
 )
 
 const ViewReceiptLink = ({ orderId }) => (
-  <StyledLink href={urls.omis.paymentReceipt(orderId)} data-test="receipt-link">
+  <StyledLink
+    href={urls.omis.paymentReceipt(orderId)}
+    data-test="receipt-link"
+    noVisitedState={true}
+  >
     View payment receipt
   </StyledLink>
 )

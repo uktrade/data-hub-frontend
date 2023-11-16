@@ -24,6 +24,7 @@ const ContactTable = ({ order, contact }) => (
         <Link
           href={urls.omis.edit.contact(order.id)}
           data-test="edit-contact-link"
+          noVisitedState={true}
         >
           Edit
         </Link>
@@ -32,7 +33,11 @@ const ContactTable = ({ order, contact }) => (
   >
     <SummaryTable.Row heading="Name">
       <>
-        <Link href={urls.contacts.contact(contact.id)} data-test="contact-link">
+        <Link
+          href={urls.contacts.contact(contact.id)}
+          data-test="contact-link"
+          noVisitedState={true}
+        >
           {contact.name}
         </Link>
         {setJobTitle(contact.jobTitle)}
