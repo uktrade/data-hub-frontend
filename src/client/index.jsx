@@ -54,7 +54,6 @@ import AbandonProposition from './modules/Investments/Projects/Propositions/Aban
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
-import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import AccountManagement from './modules/Companies/AccountManagement'
 
@@ -328,9 +327,6 @@ function App() {
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
-        </Mount>
-        <Mount selector="#link-global-hq">
-          {(props) => <LinkGlobalHQ {...props} />}
         </Mount>
         <Mount selector="#link-subsidiary">
           {(props) => <LinkSubsidiary {...props} />}
