@@ -46,7 +46,6 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
-import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
@@ -304,9 +303,6 @@ function App() {
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}
-        </Mount>
-        <Mount selector="#create-proposition">
-          {(props) => <CreateProposition {...props} />}
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}

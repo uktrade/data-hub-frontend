@@ -1,14 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 import {
+  DefaultLayout,
   FieldAdvisersTypeahead,
   FieldDate,
   FieldInput,
   Form,
   FormLayout,
-  LocalHeader,
-  Main,
 } from '../../../../components'
 import { InvestmentResource } from '../../../../components/Resource'
 import urls from '../../../../../lib/urls'
@@ -17,12 +16,14 @@ import { TASK_CREATE_INVESTMENT_PROPOSITION } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import { buildProjectBreadcrumbs } from '../../utils'
 
-const CreateProposition = ({ projectId }) => (
-  <InvestmentResource id={projectId}>
-    {(project) => (
-      <>
-        <LocalHeader
+const CreateProposition = () => {
+  const { projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <DefaultLayout
           heading={`Add proposition for ${project.name}`}
+          pageTitle={`Add proposition for ${project.name} - ${project.name} - Projects - Investments`}
           breadcrumbs={buildProjectBreadcrumbs([
             {
               link: urls.investments.projects.details(project.id),
@@ -32,8 +33,7 @@ const CreateProposition = ({ projectId }) => (
               text: 'Add proposition',
             },
           ])}
-        />
-        <Main>
+        >
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Form
               id="create-investment-proposition"
@@ -79,14 +79,10 @@ const CreateProposition = ({ projectId }) => (
               />
             </Form>
           </FormLayout>
-        </Main>
-      </>
-    )}
-  </InvestmentResource>
-)
-
-CreateProposition.propTypes = {
-  projectId: PropTypes.string.isRequired,
+        </DefaultLayout>
+      )}
+    </InvestmentResource>
+  )
 }
 
 export default CreateProposition
