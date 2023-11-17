@@ -17,8 +17,14 @@ const fakeExportWin = (_, i) => ({
   customer_name: faker.person.fullName(),
   customer_job_title: faker.person.jobTitle(),
   customer_email_address: faker.internet.email(),
-  total_expected_export_value: faker.number.int(),
+  total_expected_export_value: faker.number.int({
+    min: 10_000,
+    max: 10_000_000,
+  }),
   date: faker.date.anytime(),
+  customer_response: {
+    created_on: faker.date.anytime(),
+  },
 })
 
 const CONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
