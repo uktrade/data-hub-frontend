@@ -36,7 +36,6 @@ import InvestmentProjectForm from '../apps/investments/client/projects/create/In
 import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
-import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -208,11 +207,6 @@ function App() {
         </Mount>
         <Mount selector="#opportunity-status">
           {(props) => <OpportunityChangeStatusForm {...props} />}
-        </Mount>
-        <Mount selector="#create-uk-investment-opportunity">
-          {() => (
-            <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
-          )}
         </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (

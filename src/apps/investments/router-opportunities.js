@@ -24,15 +24,6 @@ router.get(
 
 router.get('/:opportunityId/status', renderOpportunityStatusView)
 
-router.get('/create', (req, res) => {
-  const heading = 'Create UK investment opportunity'
-  res
-    .breadcrumb(heading)
-    .render('investments/views/create/uk-investment-opportunity', {
-      heading,
-    })
-})
-
 router.get(
   '/export',
   getRequestBody(
