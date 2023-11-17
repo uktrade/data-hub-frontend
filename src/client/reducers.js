@@ -32,8 +32,8 @@ import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-compan
 import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/CollectionList/state'
 import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/CollectionList/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
-import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from './modules/Investments/Opportunities/state'
+import investmentOpportunitiesDetailsReducer from './modules/Investments/Opportunities/reducer'
 
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'

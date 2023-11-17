@@ -12,16 +12,16 @@ import { state2props } from './state'
 import {
   INVESTMENT_OPPORTUNITY__EDIT_DETAILS,
   INVESTMENT_OPPORTUNITY__EDIT_REQUIREMENTS,
-} from '../../../../../client/actions'
+} from '../../../actions'
 
 import OpportunityDetailsTable from './OpportunityDetailsTable'
 import OpportunityRequirementsTable from './OpportunityRequirementsTable'
 import OpportunityDetailsForm from './OpportunityDetailsForm'
 import OpportunityRequirementsForm from './OpportunityRequirementsForm'
 
-import { SummaryTable, ToggleSection } from '../../../../../client/components'
+import { SummaryTable, ToggleSection } from '../../../components'
 
-import { RED } from '../../../../../client/utils/colours'
+import { RED } from '../../../utils/colours'
 
 const StyledLabel = styled('label')`
   display: inline-table;

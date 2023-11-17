@@ -78,7 +78,7 @@ import CreateProposition from './modules/Investments/Projects/Propositions/Creat
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
 import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
-import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
+import Opportunity from './modules/Investments/Opportunities/Opportunity'
 
 const routes = {
   companies: [

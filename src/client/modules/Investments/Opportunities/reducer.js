@@ -6,7 +6,7 @@ import {
   INVESTMENT_OPPORTUNITY__CANCEL_EDIT,
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_CHANGE,
   INVESTMENT_OPPORTUNITY__UPDATED,
-} from '../../../../../client/actions'
+} from '../../../actions'
 
 const initialState = {
   incompleteDetailsFields: 0,

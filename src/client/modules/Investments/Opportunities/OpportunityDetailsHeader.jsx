@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import urls from '../../../../../lib/urls'
-import { currencyGBP } from '../../../../../client/utils/number-utils'
-import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
-import { state2props } from '../Details/state'
+import urls from '../../../../lib/urls'
+import { currencyGBP } from '../../../utils/number-utils'
+import LocalHeaderDetails from '../../../components/LocalHeaderDetails'
+import { state2props } from './state'
 
 const OpportunityDetailsHeader = ({
   opportunity: {
