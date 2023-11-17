@@ -1,6 +1,5 @@
 const router = require('express').Router()
 
-const { renderEssDetails } = require('./controllers/essDetails')
 const urls = require('../../lib/urls')
 const {
   fetchESSDetails,
@@ -23,7 +22,6 @@ const subAppRouter = require('./router.sub-app')
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 // Ess Location
-router.get('/ess/:essInteractionId/details', renderEssDetails)
 router.get(
   urls.interactions.exportSupportService.detailsData.route,
   fetchESSDetails
