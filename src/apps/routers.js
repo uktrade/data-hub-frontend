@@ -99,6 +99,7 @@ const reactRoutes = [
   '/events/:eventId/attendees/find-new',
   '/interactions/ess/:essInteractionId/details',
   '/investments/opportunities/create',
+  '/investments/opportunities/:opportunityId/status',
 ]
 
 reactRoutes.forEach((path) => {
