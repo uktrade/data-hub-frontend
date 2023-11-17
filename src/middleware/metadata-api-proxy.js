@@ -61,6 +61,21 @@ const ALLOWLIST = [
   '/v4/metadata/capital-investment/return-rate',
   '/v4/metadata/capital-investment/equity-percentage',
   '/v4/metadata/investment-delivery-partner',
+  '/v4/metadata/team-type',
+  '/v4/metadata/hq-team-region-or-post',
+  '/v4/metadata/win-type',
+  '/v4/metadata/business-potential',
+  '/v4/metadata/support-type',
+  '/v4/metadata/expected-value-relation',
+  '/v4/metadata/experience-categories',
+  '/v4/metadata/breakdown-type',
+  '/v4/metadata/rating',
+  '/v4/metadata/experience',
+  '/v4/metadata/marketing-source',
+  '/v4/metadata/without-our-support',
+  '/v4/metadata/hvo-programmes',
+  '/v4/metadata/associated-programme',
+  '/v4/metadata/hvc',
 ]
 
 module.exports = (app) => {

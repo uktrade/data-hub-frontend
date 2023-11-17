@@ -1,3 +1,6 @@
+import AssociatedProgramme from './AssociatedProgramme'
+import BreakdownType from './BreakdownType'
+import BusinessPotential from './BusinessPotential'
 import Contact from './Contact'
 import Company from './Company'
 import CompanyContacts from './CompanyContacts'
@@ -20,9 +23,16 @@ import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWins from './ExportWins'
 import Sector from './Sector'
+import Export from './Export'
+import ExpectedValueRelation from './ExpectedValueRelation'
+import Experience from './Experience'
+import ExperienceCategories from './ExperienceCategories'
 import ExportExperienceCategories from './ExportExperienceCategories'
 import ExportExperience from './ExportExperience'
 import LargeInvestorProfile from './LargeInvestorProfile'
+import HQTeamRegionOrPost from './HQTeamRegionOrPost'
+import HvoProgramme from './HvoProgramme'
+import Hvc from './Hvc'
 import InvestorTypes from './InvestorTypes'
 import DealTicketSizes from './DealTicketSizes'
 import LargeCapitalInvestmentTypes from './LargeCapitalInvestmentTypes'
@@ -36,15 +46,18 @@ import PropositionEvidence from './PropositionEvidence'
 import ReferralSourceActivity from './ReferralSourceActivity'
 import LikelihoodToLand from './LikelihoodToLand'
 import LevelOfInvolvement from './LevelOfInvolvement'
+import MarketingSource from './MarketingSource'
 import InvestmentInvestorTypes from './InvestmentInvestorTypes'
 import SpecificInvestmentProgrammes from './SpecificInvestmentProgrammes'
 import InvestmentTypes from './InvestmentTypes'
 import FDITypes from './FDITypes'
 import BusinessActivities from './BusinessActivities'
+import Rating from './Rating'
 import ReferralSourceMarketing from './ReferralSourceMarketing'
 import ReferralSourceWebsite from './ReferralSourceWebsite'
 import RelatedCompaniesCount from './RelatedCompaniesCount'
 import StrategicDrivers from './StrategicDrivers'
+import SupportType from './SupportType'
 import DeliveryPartners from './DeliveryPartners'
 import SalaryRanges from './SalaryRanges'
 import FDIValues from './FDIValues'
@@ -65,33 +78,46 @@ import OrderCancellationReasons from './OrderCancellationReasons'
 import MyTasksDueDateApproachingSettings from './MyTasksDueDateApproachingSettings'
 import TaskAssignedToMeFromOthersSettings from './TaskAssignedToMeFromOthersSettings'
 import TaskOverdueSettings from './TaskOverdueSettings'
+import TeamType from './TeamType'
+import WinType from './WinType'
+import WithoutOurSupport from './WithoutOurSupport'
 
 export default {
+  ...AssociatedProgramme.tasks,
+  ...AssetClasses.tasks,
+  ...BreakdownType.tasks,
+  ...BusinessPotential.tasks,
   ...Company.tasks,
   ...CompanyContacts.tasks,
+  ...CompanyOneListTeam.tasks,
   ...Contact.tasks,
+  ...ContactAuditHistory.tasks,
   ...Countries.tasks,
   ...Interactions.tasks,
   ...Opportunity.tasks,
   ...OpportunityStatuses.tasks,
-  ...UKRegions.tasks,
   ...CapitalInvestmentRequiredChecksConducted.tasks,
   ...ConstructionRisks.tasks,
-  ...AssetClasses.tasks,
   ...OpportunityValueType.tasks,
   ...OrderAssignees.tasks,
   ...OrderSubscribers.tasks,
   ...Investment.tasks,
-  ...ContactAuditHistory.tasks,
+  ...HQTeamRegionOrPost.tasks,
+  ...HvoProgramme.tasks,
+  ...Hvc.tasks,
   ...Interaction.tasks,
+  ...ExpectedValueRelation.tasks,
+  ...Experience.tasks,
+  ...ExportExperience.tasks,
+  ...ExperienceCategories.tasks,
+  ...ExportExperienceCategories.tasks,
   ...Event.tasks,
-  ...CompanyOneListTeam.tasks,
   ...ExportYears.tasks,
   ...ExportWins.tasks,
   ...Sector.tasks,
-  ...ExportExperienceCategories.tasks,
-  ...ExportExperience.tasks,
+  ...Export.tasks,
   ...LargeInvestorProfile.tasks,
+  ...MarketingSource.tasks,
   ...InvestorTypes.tasks,
   ...DealTicketSizes.tasks,
   ...LargeCapitalInvestmentTypes.tasks,
@@ -125,8 +151,11 @@ export default {
   ...InvestmentEvidence.tasks,
   ...OneListTiers.tasks,
   ...ProjectDocument.tasks,
+  ...Rating.tasks,
   ...Order.tasks,
   ...Task.tasks,
+  ...SupportType.tasks,
+  ...TeamType.tasks,
   ...OrderServiceTypes.tasks,
   ...InvestmentProjectTasks.tasks,
   ...OrderInvoice.tasks,
@@ -134,4 +163,7 @@ export default {
   ...MyTasksDueDateApproachingSettings.tasks,
   ...TaskAssignedToMeFromOthersSettings.tasks,
   ...TaskOverdueSettings.tasks,
+  ...UKRegions.tasks,
+  ...WinType.tasks,
+  ...WithoutOurSupport.tasks,
 }
