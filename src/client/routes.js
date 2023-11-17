@@ -73,6 +73,7 @@ import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsi
 import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
 import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
 import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
+import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 
 const routes = {
   companies: [
@@ -501,6 +502,13 @@ const routes = {
       path: '/investments/projects/:projectId/tasks',
       module: 'datahub:investments',
       component: ProjectTasks,
+    },
+  ],
+  propositions: [
+    {
+      path: '/investments/projects/:projectId/propositions/:propositionId/abandon',
+      module: 'datahub:investments',
+      component: AbandonProposition,
     },
   ],
   tasks: [

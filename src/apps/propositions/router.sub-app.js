@@ -2,7 +2,6 @@ const router = require('express').Router()
 
 const { renderCreatePage } = require('./controllers/create')
 const { renderDetailsPage } = require('./controllers/details')
-const { renderAbandon } = require('./controllers/abandon')
 const { renderUpload } = require('./controllers/upload')
 
 const {
@@ -18,11 +17,6 @@ const {
 const { postUpload } = require('../documents/middleware/upload')
 
 router.param('propositionId', getPropositionDetails)
-
-router
-  .route('/propositions/:propositionId/abandon')
-  .post(renderAbandon)
-  .get(renderAbandon)
 
 router.route('/propositions/:propositionId/complete').get(postComplete)
 

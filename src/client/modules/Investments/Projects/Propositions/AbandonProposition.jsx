@@ -1,12 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 import {
+  DefaultLayout,
   FieldTextarea,
   Form,
   FormLayout,
-  LocalHeader,
-  Main,
 } from '../../../../components'
 import {
   InvestmentResource,
@@ -22,16 +21,16 @@ import { FORM_LAYOUT } from '../../../../../common/constants'
 import { RED } from '../../../../utils/colours'
 import { buildProjectBreadcrumbs } from '../../utils'
 
-const AbandonProposition = ({ propositionId, investmentProjectId }) => (
-  <InvestmentResource id={investmentProjectId}>
-    {(project) => (
-      <PropositionResource
-        id={buildPropositionUrl(propositionId, investmentProjectId)}
-      >
-        {(proposition) => (
-          <>
-            <LocalHeader
+const AbandonProposition = () => {
+  const { propositionId, projectId } = useParams()
+  return (
+    <InvestmentResource id={projectId}>
+      {(project) => (
+        <PropositionResource id={buildPropositionUrl(propositionId, projectId)}>
+          {(proposition) => (
+            <DefaultLayout
               heading={`Abandon proposition ${proposition.name}`}
+              pageTitle={`Abandon proposition ${proposition.name} - ${project.name} - Projects - Investments`}
               breadcrumbs={buildProjectBreadcrumbs([
                 {
                   link: urls.investments.projects.details(project.id),
@@ -41,25 +40,24 @@ const AbandonProposition = ({ propositionId, investmentProjectId }) => (
                   text: 'Abandon proposition',
                 },
               ])}
-            />
-            <Main>
+            >
               <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
                 <Form
                   id="abandon-investment-proposition"
                   analyticsFormName="abandonInvestmentProposition"
                   cancelRedirectTo={() =>
-                    urls.investments.projects.propositions(investmentProjectId)
+                    urls.investments.projects.propositions(projectId)
                   }
                   flashMessage={() => 'Proposition abandoned'}
                   submitButtonLabel="Abandon proposition"
                   submitButtonColour={RED}
                   submissionTaskName={TASK_ABANDON_INVESTMENT_PROPOSITION}
                   redirectTo={() =>
-                    urls.investments.projects.propositions(investmentProjectId)
+                    urls.investments.projects.propositions(projectId)
                   }
                   transformPayload={(values) =>
                     transformAbandonedPropositionForAPI({
-                      investmentProjectId,
+                      projectId,
                       propositionId,
                       values,
                     })
@@ -74,17 +72,12 @@ const AbandonProposition = ({ propositionId, investmentProjectId }) => (
                   />
                 </Form>
               </FormLayout>
-            </Main>
-          </>
-        )}
-      </PropositionResource>
-    )}
-  </InvestmentResource>
-)
-
-AbandonProposition.propTypes = {
-  investmentProjectId: PropTypes.string.isRequired,
-  propositionId: PropTypes.string.isRequired,
+            </DefaultLayout>
+          )}
+        </PropositionResource>
+      )}
+    </InvestmentResource>
+  )
 }
 
 export default AbandonProposition

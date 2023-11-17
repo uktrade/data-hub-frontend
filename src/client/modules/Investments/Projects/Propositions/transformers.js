@@ -34,13 +34,13 @@ export const transformPropositionForAPI = ({ projectId, values }) => {
 }
 
 export const transformAbandonedPropositionForAPI = ({
-  investmentProjectId,
+  projectId,
   propositionId,
   values,
 }) => {
   return {
     propositionId,
-    investmentProjectId,
+    projectId,
     details: values.reason,
   }
 }
