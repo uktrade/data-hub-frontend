@@ -93,6 +93,7 @@ const reactRoutes = [
   '/companies/:companyId/exports/edit',
   '/companies/:companyId/referrals/:referralId/help',
   '/investments/projects/:projectId/propositions/:propositionId/abandon',
+  '/investments/projects/:projectId/propositions/create/proposition',
 ]
 
 reactRoutes.forEach((path) => {
