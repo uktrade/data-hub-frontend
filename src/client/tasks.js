@@ -81,13 +81,15 @@ import * as investmentProfilesTasks from './modules/Investments/Profiles/tasks'
 import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/CollectionList/state'
 import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/CollectionList/tasks'
 
-import { TASK_CREATE_INVESTMENT_OPPORTUNITY } from './modules/Investments/Opportunities/state'
+import {
+  TASK_CREATE_INVESTMENT_OPPORTUNITY,
+  TASK_SAVE_OPPORTUNITY_STATUS,
+} from './modules/Investments/Opportunities/state'
 import * as investmentOpportunitiesDetailsTasksModules from './modules/Investments/Opportunities/tasks'
 
 import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
-  TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
 } from '../apps/investments/client/opportunities/Details/state'
@@ -427,7 +429,7 @@ export const tasks = {
   [TASK_SAVE_OPPORTUNITY_DETAILS]:
     investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
   [TASK_SAVE_OPPORTUNITY_STATUS]:
-    investmentOpportunitiesDetailsTasks.saveOpportunityStatus,
+    investmentOpportunitiesDetailsTasksModules.saveOpportunityStatus,
   [TASK_SAVE_OPPORTUNITY_REQUIREMENTS]:
     investmentOpportunitiesDetailsTasks.saveOpportunityRequirements,
   [TASK_GET_OPPORTUNITY_DETAILS]:

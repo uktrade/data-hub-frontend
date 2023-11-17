@@ -1,10 +1,10 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import urls from '../../../../../lib/urls'
-import { DefaultLayout, Form } from '../../../../../client/components'
-import { OpportunityResource } from '../../../../../client/components/Resource'
-import FieldOpportunityStatuses from '../../../../../client/components/Form/elements/FieldOpportunityStatuses'
+import urls from '../../../../lib/urls'
+import { DefaultLayout, Form } from '../../../components'
+import { OpportunityResource } from '../../../components/Resource'
+import FieldOpportunityStatuses from '../../../components/Form/elements/FieldOpportunityStatuses'
 import { TASK_SAVE_OPPORTUNITY_STATUS } from './state'
 
 const OpportunityChangeStatusForm = () => {
