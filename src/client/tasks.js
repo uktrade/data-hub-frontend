@@ -78,15 +78,18 @@ import {
 import { TASK_GET_PROFILES_LIST } from './modules/Investments/Profiles/state'
 import * as investmentProfilesTasks from './modules/Investments/Profiles/tasks'
 
-import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/state'
-import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/tasks'
+import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/CollectionList/state'
+import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/CollectionList/tasks'
+
+import { TASK_CREATE_INVESTMENT_OPPORTUNITY } from './modules/Investments/Opportunities/state'
+import * as investmentOpportunitiesDetailsTasksModules from './modules/Investments/Opportunities/tasks'
+
 import {
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
   TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
-  TASK_CREATE_INVESTMENT_OPPORTUNITY,
 } from '../apps/investments/client/opportunities/Details/state'
 import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
 
@@ -434,7 +437,7 @@ export const tasks = {
   [TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA]:
     investmentOpportunitiesDetailsTasks.getRequirementsMetadata,
   [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
-    investmentOpportunitiesDetailsTasks.createOpportunity,
+    investmentOpportunitiesDetailsTasksModules.createOpportunity,
   [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
   [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
   [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,

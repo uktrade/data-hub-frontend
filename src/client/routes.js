@@ -76,7 +76,7 @@ import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
-import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
+import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
 
 const routes = {
   companies: [

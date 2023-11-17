@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { ID, TASK_CREATE_INVESTMENT_OPPORTUNITY } from './state'
-import { DefaultLayout, FieldInput } from '../../../../../client/components'
-import Form from '../../../../../client/components/Form'
+import { DefaultLayout, FieldInput } from '../../../components'
+import Form from '../../../components/Form'
 
-import urls from '../../../../../lib/urls'
+import urls from '../../../../lib/urls'
 
 const CreateUKInvestmentOpportunity = () => (
   <DefaultLayout

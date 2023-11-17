@@ -29,8 +29,8 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/state'
-import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/CollectionList/state'
+import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/CollectionList/reducer'
 
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
 import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'

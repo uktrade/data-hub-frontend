@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'govuk-react'
 
-import { CollectionList } from '../../../components'
-import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
+import { CollectionList } from '../../../../components'
+import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
 import { TASK_GET_OPPORTUNITIES_LIST, ID, state2props } from './state'
 import {
   INVESTMENTS__OPPORTUNITIES_LOADED,
   INVESTMENTS__OPPORTUNITIES_SELECT_PAGE,
-} from '../../../actions'
+} from '../../../../actions'
 
 const LargeCapitalOpportunityCollection = ({
   count,

@@ -1,7 +1,7 @@
 import {
   INVESTMENTS__OPPORTUNITIES_LOADED,
   INVESTMENTS__OPPORTUNITIES_SELECT_PAGE,
-} from '../../../actions'
+} from '../../../../actions'
 
 const initialState = {
   results: [],
