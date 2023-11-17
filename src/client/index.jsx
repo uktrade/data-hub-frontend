@@ -44,7 +44,6 @@ import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactA
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
-import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
@@ -297,9 +296,6 @@ function App() {
         </Mount>
         <Mount selector="#orders-reconciliation-collection">
           {(props) => <OrdersReconciliationCollection {...props} />}
-        </Mount>
-        <Mount selector="#attendee-search">
-          {(props) => <AttendeeSearch {...props} />}
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}

@@ -75,6 +75,7 @@ import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
 import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
+import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 
 const routes = {
   companies: [
@@ -203,6 +204,11 @@ const routes = {
       path: '/events/aventri/:aventriEventId/registration/:status',
       module: 'datahub:events',
       component: EventAventriRegistrationStatus,
+    },
+    {
+      path: '/events/:eventId/attendees/find-new',
+      module: 'datahub:events',
+      component: AttendeeSearch,
     },
   ],
   interactions: [
