@@ -4,9 +4,9 @@ import { myTasksReminderFaker, reminderListFaker } from '../../fakers/reminders'
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
 
-const remindersEndpoint = '/api-proxy/v4/reminder/my-tasks-due-date-approaching'
+const remindersEndpoint = '/api-proxy/v4/reminder/my-tasks-task-overdue'
 
-describe('My Tasks Due Date Approaching Reminders', () => {
+describe('My Tasks Task Overdue Reminders', () => {
   after(() => {
     cy.resetUser()
   })
@@ -79,7 +79,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
   context('Reminders List', () => {
     before(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.myTasks.dueDateApproaching())
+      cy.visit(urls.reminders.myTasks.taskOverdue())
       cy.wait('@remindersApiRequest')
     })
 
@@ -87,16 +87,13 @@ describe('My Tasks Due Date Approaching Reminders', () => {
       assertBreadcrumbs({
         Home: '/',
         Reminders: urls.reminders.index(),
-        'Due date approaching': null,
+        'Task overdue': null,
       })
     })
 
     it('should render the headings', () => {
       cy.get('[data-test="heading"]').should('have.text', 'Reminders')
-      cy.get('[data-test="subheading"]').should(
-        'have.text',
-        'Due date approaching'
-      )
+      cy.get('[data-test="subheading"]').should('have.text', 'Task overdue')
     })
 
     it('should render the list heading with the total number of reminders', () => {
@@ -156,7 +153,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
           },
         }
       ).as('remindersApiRequest')
-      cy.visit(urls.reminders.myTasks.dueDateApproaching())
+      cy.visit(urls.reminders.myTasks.taskOverdue())
       cy.wait('@remindersApiRequest')
     })
 
@@ -171,7 +168,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
   context('Pagination', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.myTasks.dueDateApproaching())
+      cy.visit(urls.reminders.myTasks.taskOverdue())
       cy.wait('@remindersApiRequest')
     })
 
@@ -202,7 +199,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
   context('Sort', () => {
     beforeEach(() => {
       cy.intercept('GET', `${remindersEndpoint}*`).as('remindersApiRequest')
-      cy.visit(urls.reminders.myTasks.dueDateApproaching())
+      cy.visit(urls.reminders.myTasks.taskOverdue())
     })
 
     it('should apply the default sort', () => {
@@ -238,7 +235,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
   context('Delete', () => {
     beforeEach(() => {
       interceptApiCalls()
-      cy.visit(urls.reminders.myTasks.dueDateApproaching())
+      cy.visit(urls.reminders.myTasks.taskOverdue())
       cy.wait('@remindersApiRequest')
     })
 

@@ -2,8 +2,6 @@
 
 Commits to `main` are automatically deployed to dev and staging environments.
 
-Opening a pull request creates a temporary instance on Heroku called [review app](https://devcenter.heroku.com/articles/github-integration-review-apps) which is pointing to the staging API.
-
 Deployments to production are done manually through Jenkins where a Git tag can be used.
 
 ## Deploying to production

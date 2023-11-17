@@ -5,10 +5,10 @@ import GridCol from '@govuk-react/grid-col'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
-import { ListItem, ItemHeader, ItemFooter } from './styled'
-import { DATE_DAY_LONG_FORMAT } from '../../../../common/constants'
-import { format } from '../../../utils/date'
-import urls from '../../../../lib/urls'
+import { ListItem, ItemHeader, ItemFooter } from '../styled'
+import { DATE_DAY_LONG_FORMAT } from '../../../../../common/constants'
+import { format } from '../../../../utils/date'
+import urls from '../../../../../lib/urls'
 
 const ItemContent = styled('div')({
   marginBottom: SPACING.SCALE_2,

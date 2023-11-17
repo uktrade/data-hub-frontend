@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import ExportsList from './ExportsList'
 import {
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED,
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED,
@@ -14,27 +13,29 @@ import {
   TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
   TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
 } from './state'
-import { ExportNoRecentInteractionsItemRenderer } from './ItemRenderers/ExportNoRecentInteractionsItemRenderer'
 
-const ExportsNoRecentInteractionsList = ({
-  exportsNoRecentInteractionReminders,
-}) => {
+import RemindersLists from './RemindersLists'
+import { ExportNoRecentInteractionsItemRenderer } from './ItemRenderers/Exports/ExportNoRecentInteractionsItemRenderer'
+
+const ExportsNoRecentInteractionsList = ({ reminders }) => {
   return (
-    <ExportsList
-      reminders={exportsNoRecentInteractionReminders}
+    <RemindersLists
+      reminders={reminders}
       pageOrigin="companies_no_recent_interactions"
-      summaryDataTest="investments-no-reminders"
-      taskStatusName={TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS}
-      taskStatusSuccessFunction={
+      dataTest="investments-no-reminders"
+      getReminderTask={TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS}
+      getReminderTaskOnSuccessDispatch={
         REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED
       }
-      deleteTaskName={TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER}
-      getNextTaskName={TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS}
-      effectSuccessFunction={
-        REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT
-      }
-      deleteTaskSuccessFunction={
+      deleteReminderTask={TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER}
+      deleteReminderTaskOnSuccessDispatch={
         REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED
+      }
+      getNextReminderTask={
+        TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS
+      }
+      getNextReminderTaskOnSuccessDispatch={
+        REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT
       }
       itemRenderer={ExportNoRecentInteractionsItemRenderer}
     />

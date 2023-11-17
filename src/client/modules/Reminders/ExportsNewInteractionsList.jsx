@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import ExportsList from './ExportsList'
 import {
   REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED,
   REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED,
@@ -14,25 +13,27 @@ import {
   TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER,
   TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS,
 } from './state'
-import { ExportNewInteractionsItemRenderer } from './ItemRenderers/ExportNewInteractionsItemRenderer'
 
-const ExportsNewInteractionsList = ({ exportsNewInteractionReminders }) => {
+import RemindersLists from './RemindersLists'
+import { ExportNewInteractionsItemRenderer } from './ItemRenderers/Exports/ExportNewInteractionsItemRenderer'
+
+const ExportsNewInteractionsList = ({ reminders }) => {
   return (
-    <ExportsList
-      reminders={exportsNewInteractionReminders}
+    <RemindersLists
+      reminders={reminders}
       pageOrigin="companies_new_interactions"
-      summaryDataTest="exports-new-reminders"
-      taskStatusName={TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS}
-      taskStatusSuccessFunction={
+      dataTest="exports-new-reminders"
+      getReminderTask={TASK_GET_EXPORTS_NEW_INTERACTION_REMINDERS}
+      getReminderTaskOnSuccessDispatch={
         REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED
       }
-      deleteTaskName={TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER}
-      getNextTaskName={TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS}
-      effectSuccessFunction={
-        REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT
-      }
-      deleteTaskSuccessFunction={
+      deleteReminderTask={TASK_DELETE_EXPORT_NEW_INTERACTION_REMINDER}
+      deleteReminderTaskOnSuccessDispatch={
         REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED
+      }
+      getNextReminderTask={TASK_GET_EXPORTS_NEXT_NEW_INTERACTION_REMINDERS}
+      getNextReminderTaskOnSuccessDispatch={
+        REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT
       }
       itemRenderer={ExportNewInteractionsItemRenderer}
     />
