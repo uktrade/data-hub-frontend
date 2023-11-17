@@ -33,17 +33,6 @@ router.get(
   exportCollection('interaction')
 )
 
-router.get('/', (req, res, next) => {
-  try {
-    const { user } = req.session
-    return res.render('interactions/views/interactions', {
-      props: { currentAdviserId: user.id },
-    })
-  } catch (error) {
-    next(error)
-  }
-})
-
 router.use(subAppRouter)
 
 module.exports = router
