@@ -33,7 +33,6 @@ import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
-import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
@@ -200,9 +199,6 @@ function App() {
               {...props}
             />
           )}
-        </Mount>
-        <Mount selector="#opportunity">
-          {(props) => <Opportunity {...props} />}
         </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (

@@ -78,6 +78,7 @@ import CreateProposition from './modules/Investments/Projects/Propositions/Creat
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
 import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
+import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 
 const routes = {
   companies: [
@@ -521,6 +522,16 @@ const routes = {
       path: '/investments/opportunities/:opportunityId/status',
       module: 'datahub:investments',
       component: OpportunityChangeStatusForm,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/details',
+      module: 'datahub:investments',
+      component: Opportunity,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/interactions',
+      module: 'datahub:investments',
+      component: Opportunity,
     },
   ],
   propositions: [

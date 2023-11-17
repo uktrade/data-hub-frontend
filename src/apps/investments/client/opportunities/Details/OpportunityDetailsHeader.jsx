@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import urls from '../../../../../lib/urls'
 import { currencyGBP } from '../../../../../client/utils/number-utils'
-import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderDetails from '../../../../../client/components/LocalHeaderDetails'
 import { state2props } from '../Details/state'
 
@@ -12,15 +11,8 @@ const OpportunityDetailsHeader = ({
   opportunity: {
     id,
     status: { label: statusLabel },
-    detailsFields: {
-      createdOn,
-      name,
-      ukRegions,
-      assetClasses,
-      opportunityValue,
-    },
+    detailsFields: { createdOn, ukRegions, assetClasses, opportunityValue },
   },
-  currentPath,
 }) => {
   const getArrayFieldValue = (arrayData) => {
     if (!arrayData.length) {
@@ -62,23 +54,7 @@ const OpportunityDetailsHeader = ({
       value: createdOn,
     },
   ]
-
-  const getCurrentTab = (currentPath) =>
-    currentPath.includes('/interactions') ? 'Interactions' : 'Details'
-
-  const breadcrumbs = [
-    { link: urls.dashboard.index(), text: 'Home' },
-    { link: urls.investments.index(), text: 'Investments' },
-    { link: urls.investments.opportunities.index(), text: 'UK opportunities' },
-    { link: urls.investments.opportunities.details(id), text: name },
-    { text: getCurrentTab(currentPath) },
-  ]
-
-  return (
-    <LocalHeader breadcrumbs={breadcrumbs} heading={name}>
-      <LocalHeaderDetails items={itemCollection} />
-    </LocalHeader>
-  )
+  return <LocalHeaderDetails items={itemCollection} />
 }
 
 OpportunityDetailsHeader.propTypes = {

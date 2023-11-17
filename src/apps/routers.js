@@ -100,6 +100,8 @@ const reactRoutes = [
   '/interactions/ess/:essInteractionId/details',
   '/investments/opportunities/create',
   '/investments/opportunities/:opportunityId/status',
+  '/investments/opportunities/:opportunityId/details',
+  '/investments/opportunities/:opportunityId/interactions',
 ]
 
 reactRoutes.forEach((path) => {

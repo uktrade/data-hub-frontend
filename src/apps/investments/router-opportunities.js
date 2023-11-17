@@ -11,14 +11,6 @@ const {
   exportCollection,
 } = require('../../modules/search/middleware/collection')
 
-const { renderOpportunityView } = require('./controllers/opportunities')
-
-router.get(
-  // These paths are handled by react-router
-  ['/:opportunityId/details', '/:opportunityId/interactions'],
-  renderOpportunityView
-)
-
 router.get(
   '/export',
   getRequestBody(
