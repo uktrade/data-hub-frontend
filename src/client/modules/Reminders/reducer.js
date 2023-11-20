@@ -23,6 +23,9 @@ import {
   REMINDERS__TASK_OVERDUE_REMINDERS_LOADED,
   REMINDERS__TASK_OVERDUE_REMINDERS_GOT_NEXT,
   REMINDERS__TASK_OVERDUE_REMINDERS_DELETED,
+  REMINDERS__TASK_COMPLETED_REMINDERS_LOADED,
+  REMINDERS__TASK_COMPLETED_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_COMPLETED_REMINDERS_DELETED,
 } from '../../actions'
 
 const initialState = {
@@ -47,6 +50,7 @@ export default (state = initialState, { type, result, payload }) => {
     case REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED:
     case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_LOADED:
     case REMINDERS__TASK_OVERDUE_REMINDERS_LOADED:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_LOADED:
       return {
         ...state,
         reminders: result,
@@ -58,6 +62,7 @@ export default (state = initialState, { type, result, payload }) => {
     case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED:
     case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_DELETED:
     case REMINDERS__TASK_OVERDUE_REMINDERS_DELETED:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_DELETED:
       return {
         ...state,
         reminders: {
@@ -77,6 +82,7 @@ export default (state = initialState, { type, result, payload }) => {
     case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT:
     case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT:
     case REMINDERS__TASK_OVERDUE_REMINDERS_GOT_NEXT:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_GOT_NEXT:
       return {
         ...state,
         reminders: {

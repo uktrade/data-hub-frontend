@@ -232,6 +232,9 @@ import {
   TASK_GET_TASK_OVERDUE_REMINDERS,
   TASK_DELETE_TASK_OVERDUE_REMINDER,
   TASK_GET_NEXT_TASK_OVERDUE_REMINDER,
+  TASK_GET_TASK_COMPLETED_REMINDERS,
+  TASK_DELETE_TASK_COMPLETED_REMINDER,
+  TASK_GET_NEXT_TASK_COMPLETED_REMINDER,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -620,4 +623,8 @@ export const tasks = {
   [TASK_GET_TASK_OVERDUE_REMINDERS]: reminders.getTaskOverdueReminders,
   [TASK_DELETE_TASK_OVERDUE_REMINDER]: reminders.deleteTaskOverdueReminder,
   [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
+  [TASK_GET_TASK_COMPLETED_REMINDERS]: reminders.getTaskCompletedReminders,
+  [TASK_DELETE_TASK_COMPLETED_REMINDER]: reminders.deleteTaskCompletedReminder,
+  [TASK_GET_NEXT_TASK_COMPLETED_REMINDER]:
+    reminders.getNextTaskCompletedReminder,
 }

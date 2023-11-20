@@ -15,7 +15,7 @@ const initialState = {
     due_date_approaching: 0,
     task_assigned_to_me_from_others: 0,
     task_overdue: 0,
-    completed_task: 0,
+    task_completed: 0,
   },
 }
 

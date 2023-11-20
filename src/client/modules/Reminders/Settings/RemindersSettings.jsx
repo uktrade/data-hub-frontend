@@ -7,8 +7,6 @@ import { first, get } from 'lodash'
 import qs from 'qs'
 import { connect } from 'react-redux'
 
-import { taskCompleted } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions'
-
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import {
   RemindersSettingsTable,
@@ -184,6 +182,7 @@ export const TasksAssignedToMeSettings = ({
   upcomingTaskReminder,
   taskAssignedToMeFromOthers,
   taskOverdue,
+  taskCompleted,
   openSettingsSections,
 }) => (
   <>
@@ -226,7 +225,7 @@ export const TasksAssignedToMeSettings = ({
         id={`${TASK_OVERDUE}-toggle`}
         data-test={`${TASK_OVERDUE}-toggle`}
         isOpen={isSettingOpen(openSettingsSections, TASK_OVERDUE)}
-        borderBottom={false}
+        borderBottom={true}
       >
         <EmailRemindersSettingsTable
           dataName={TASK_OVERDUE}
@@ -234,19 +233,20 @@ export const TasksAssignedToMeSettings = ({
           to={urls.reminders.settings.myTasks.taskOverdue()}
         />
       </RemindersToggleSection>
+      <RemindersToggleSection
+        label={TASK_COMPLETED_LABEL}
+        id={`${TASK_COMPLETED}-toggle`}
+        data-test={`${TASK_COMPLETED}-toggle`}
+        isOpen={isSettingOpen(openSettingsSections, TASK_COMPLETED)}
+        borderBottom={false}
+      >
+        <EmailRemindersSettingsTable
+          dataName={TASK_COMPLETED}
+          data={taskCompleted}
+          to={urls.reminders.settings.myTasks.taskCompleted()}
+        />
+      </RemindersToggleSection>
     </ToggleSectionContainer>
-    <RemindersToggleSection
-      label={TASK_COMPLETED_LABEL}
-      id={`${TASK_COMPLETED}-toggle`}
-      data-test={`${TASK_COMPLETED}-toggle`}
-      isOpen={isSettingOpen(openSettingsSections, TASK_COMPLETED)}
-      borderBottom={false}
-    >
-      <EmailRemindersSettingsTable
-        dataName={TASK_COMPLETED}
-        data={taskCompleted}
-      />
-    </RemindersToggleSection>
   </>
 )
 
@@ -277,6 +277,7 @@ export const RemindersSettings = ({
           exportNewInteractions,
           upcomingTaskReminder,
           taskAssignedToMeFromOthers,
+          taskCompleted,
           taskOverdue,
         }) => (
           <>
