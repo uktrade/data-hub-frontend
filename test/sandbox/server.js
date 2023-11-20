@@ -633,6 +633,7 @@ app.delete(
 )
 
 app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
+
 app.delete(
   '/v4/reminder/task-assigned-to-me-from-others/:id',
   v4Reminders.deleteReminder
@@ -641,6 +642,13 @@ app.delete(
 app.get('/v4/reminder/my-tasks-task-overdue', v4Reminder.myTasks)
 
 app.delete('/v4/reminder/my-tasks-task-overdue/:id', v4Reminders.deleteReminder)
+
+app.get('/v4/reminder/my-tasks-task-completed', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-completed/:id',
+  v4Reminders.deleteReminder
+)
 
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)

@@ -21,6 +21,8 @@ import {
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
   TASK_OVERDUE,
   TASK_OVERDUE_LABEL,
+  TASK_COMPLETED,
+  TASK_COMPLETED_LABEL,
 } from '../../../../../../src/client/modules/Reminders/constants.js'
 import { assertKeyValueTable } from '../../../../../functional/cypress/support/assertions.js'
 
@@ -253,6 +255,7 @@ describe('TasksAssignedToMeSettings', () => {
             upcomingTaskReminder={{}}
             taskAssignedToMeFromOthers={{}}
             taskOverdue={{}}
+            taskCompleted={{}}
           />
         </DataHubProvider>
       )
@@ -262,6 +265,7 @@ describe('TasksAssignedToMeSettings', () => {
       cy.get(getToggle(MY_TASKS_DUE_DATE_APPROACHING)).should('be.visible')
       cy.get(getToggle(TASK_ASSIGNED_TO_ME_FROM_OTHERS)).should('be.visible')
       cy.get(getToggle(TASK_OVERDUE)).should('be.visible')
+      cy.get(getToggle(TASK_COMPLETED)).should('be.visible')
     })
   })
 
@@ -274,6 +278,7 @@ describe('TasksAssignedToMeSettings', () => {
             upcomingTaskReminder={setting}
             taskAssignedToMeFromOthers={setting}
             taskOverdue={setting}
+            taskCompleted={setting}
           />
         </DataHubProvider>
       )
@@ -300,6 +305,7 @@ describe('TasksAssignedToMeSettings', () => {
             upcomingTaskReminder={setting}
             taskAssignedToMeFromOthers={setting}
             taskOverdue={setting}
+            taskCompleted={setting}
           />
         </DataHubProvider>
       )
@@ -326,6 +332,7 @@ describe('TasksAssignedToMeSettings', () => {
             upcomingTaskReminder={setting}
             taskAssignedToMeFromOthers={setting}
             taskOverdue={setting}
+            taskCompleted={setting}
           />
         </DataHubProvider>
       )
@@ -338,5 +345,27 @@ describe('TasksAssignedToMeSettings', () => {
     assertEditLink(TASK_OVERDUE)
 
     assertToggleSection(TASK_OVERDUE, TASK_OVERDUE_LABEL)
+  })
+
+  context('When task completed setting is open', () => {
+    beforeEach(() => {
+      cy.mount(
+        <DataHubProvider>
+          <Component
+            openSettingsSections={[{ id: TASK_COMPLETED }]}
+            upcomingTaskReminder={setting}
+            taskAssignedToMeFromOthers={setting}
+            taskOverdue={setting}
+            taskCompleted={setting}
+          />
+        </DataHubProvider>
+      )
+    })
+
+    assertSettingsSectionExpanded(TASK_COMPLETED)
+
+    assertEmailTableData(TASK_COMPLETED, setting)
+
+    assertToggleSection(TASK_COMPLETED, TASK_COMPLETED_LABEL)
   })
 })

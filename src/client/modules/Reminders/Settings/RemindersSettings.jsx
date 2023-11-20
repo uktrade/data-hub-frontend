@@ -243,7 +243,6 @@ export const TasksAssignedToMeSettings = ({
         <EmailRemindersSettingsTable
           dataName={TASK_COMPLETED}
           data={taskCompleted}
-          to={urls.reminders.settings.myTasks.taskCompleted()}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>
