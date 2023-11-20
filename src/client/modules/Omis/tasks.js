@@ -2,6 +2,7 @@ import { apiProxyAxios } from '../../components/Task/utils'
 import {
   transformAdvisersForAPI,
   transformSubscribersForAPI,
+  transformLeadAdviserForApi,
 } from './transformers'
 
 export const updateOrder = (values) => {
@@ -37,3 +38,9 @@ export function saveOrderSubscribers({ values, id, canRemoveSubscribers }) {
     : `/v3/omis/order/${id}/subscriber-list`
   return apiProxyAxios.put(url, transformSubscribersForAPI(values))
 }
+
+export const setLeadAdviser = (values) =>
+  apiProxyAxios.patch(
+    `v3/omis/order/${values.orderId}/assignee`,
+    transformLeadAdviserForApi(values)
+  )

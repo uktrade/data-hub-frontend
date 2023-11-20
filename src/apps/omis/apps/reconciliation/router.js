@@ -13,7 +13,6 @@ const { renderPaymentReceipt } = require('../view/controllers')
 const { renderList } = require('./controllers')
 const { setReconciliationJourney } = require('./middleware')
 const { transformOrderToTableItem } = require('../../transformers')
-const editApp = require('../edit')
 
 const DEFAULT_QUERY_RECONCILIATION = {
   sortby: 'payment_due_date:asc',
@@ -36,7 +35,5 @@ router.get(
   setReconciliationJourney,
   renderPaymentReceipt
 )
-
-router.use(editApp.mountpath, editApp.router)
 
 module.exports = router
