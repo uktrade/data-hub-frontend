@@ -18,6 +18,11 @@ const assertTaskItem = (index, investmentTask) => {
 
   cy.get('[data-test="collection-item"]')
     .eq(index)
+    .find('[data-test="activity-kind-label"]')
+    .should('contain', 'COMPLETED')
+
+  cy.get('[data-test="collection-item"]')
+    .eq(index)
     .find('[data-test="metadata"]')
     .should(
       'contain',
