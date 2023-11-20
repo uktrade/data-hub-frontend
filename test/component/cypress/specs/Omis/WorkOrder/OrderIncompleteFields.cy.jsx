@@ -48,7 +48,7 @@ const draftOrderAllFields = {
   ...{ vatNumber: 'test', vatVerified: true },
 }
 
-const assignees = [{ estimatedHours: 60, isLead: true }]
+const assignees = [{ estimatedTime: 60, isLead: true }]
 
 describe('OrderIncompleteFields', () => {
   context('When the order status is quote awaiting acceptance', () => {

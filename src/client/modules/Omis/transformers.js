@@ -202,7 +202,7 @@ export const transformLeadAdviserForApi = (values) => {
 }
 
 const checkIfAssigneeHasHours = (assignees) =>
-  assignees.some((assignee) => assignee.estimatedHours != 0)
+  assignees.some((assignee) => assignee.estimatedTime != 0)
 
 const checkIfLeadAssigneeExists = (assignees) =>
   assignees.some((assignee) => assignee.isLead)
