@@ -21,7 +21,7 @@ const taskFaker = (overrides = {}) => ({
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
-  archived: false,
+  archived: true,
   archivedBy: null,
   createdBy: basicAdviserFaker(),
   modifiedBy: basicAdviserFaker(),
