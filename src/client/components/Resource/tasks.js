@@ -81,6 +81,7 @@ import TaskOverdueSettings from './TaskOverdueSettings'
 import TeamType from './TeamType'
 import WinType from './WinType'
 import WithoutOurSupport from './WithoutOurSupport'
+import OrderQuote from './OrderQuote'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -166,4 +167,5 @@ export default {
   ...UKRegions.tasks,
   ...WinType.tasks,
   ...WithoutOurSupport.tasks,
+  ...OrderQuote.tasks,
 }

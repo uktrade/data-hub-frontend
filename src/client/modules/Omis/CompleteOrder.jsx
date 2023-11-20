@@ -11,13 +11,11 @@ import urls from '../../../lib/urls'
 import { FORM_LAYOUT } from '../../../common/constants'
 import { validateNumber } from './validators'
 import { TASK_COMPLETE_ORDER } from './state'
-import { transformActualAssigneeTimeForApi } from './transformers'
+import {
+  transformActualAssigneeTimeForApi,
+  transformEstimatedTime,
+} from './transformers'
 import OMISLayout from './OMISLayout'
-
-const transformEstimatedTime = (time) => {
-  const estimatedTime = time / 60
-  return estimatedTime > 1 ? estimatedTime + ' hours' : estimatedTime + ' hour'
-}
 
 const buildRows = (assignees) =>
   assignees.map(({ adviser, estimatedTime }, index) => (

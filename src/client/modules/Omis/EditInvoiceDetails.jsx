@@ -17,31 +17,16 @@ import urls from '../../../lib/urls'
 import { validateVATNumber } from './validators'
 import { transformBoolToRadioOptionWithNullCheck } from '../Investments/Projects/Details/transformers'
 import { TASK_EDIT_INVOICE_DETAILS } from './state'
-import { transformInvoiceDetailsForApi } from './transformers'
+import {
+  transformInvoiceDetailsForApi,
+  getAddress,
+  transformAddress,
+} from './transformers'
 import OMISLayout from './OMISLayout'
 
 export const BillingAddress = ({ company, order }) => {
-  const address = order.billingAddressCountry
-    ? {
-        line1: order.billingAddress1,
-        line2: order.billingAddress2,
-        town: order.billingAddressTown,
-        county: order.billingAddressCounty,
-        postcode: order.billingAddressPostcode,
-        country: order.billingAddressCountry,
-      }
-    : company.registeredAddress
-    ? company.registeredAddress
-    : company.address
-
-  const transformedAddress = [
-    address.line1,
-    address.line2,
-    address.town,
-    address.county,
-    address.postcode,
-    address.country.name,
-  ].filter((item) => item.length)
+  const address = getAddress(order, company)
+  const transformedAddress = transformAddress(address)
 
   return (
     <>

@@ -10,36 +10,6 @@ const Order = {
     })
   },
 
-  update(req, id, data) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}`,
-      method: 'PATCH',
-      body: data,
-    })
-  },
-
-  getAssignees(req, id) {
-    return authorisedRequest(
-      req,
-      `${config.apiRoot}/v3/omis/order/${id}/assignee`
-    )
-  },
-
-  saveAssignees(req, id, body) {
-    return authorisedRequest(req, {
-      url: `${config.apiRoot}/v3/omis/order/${id}/assignee`,
-      method: 'PATCH',
-      body,
-    })
-  },
-
-  getSubscribers(req, id) {
-    return authorisedRequest(
-      req,
-      `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`
-    )
-  },
-
   getById(req, id) {
     return authorisedRequest(req, `${config.apiRoot}/v3/omis/order/${id}`)
   },

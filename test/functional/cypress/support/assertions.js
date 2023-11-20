@@ -50,14 +50,20 @@ const assertValueTable = (dataTest, expected) => {
   })
 }
 
-const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
+const assertSummaryTable = ({
+  dataTest,
+  heading,
+  showEditLink,
+  content,
+  editLinkText = 'Edit',
+}) => {
   const summaryTableSelector = `[data-test="${dataTest}"]`
 
   if (heading) {
     cy.get(summaryTableSelector).find('caption').should('contain', heading)
   }
   cy.get(summaryTableSelector)
-    .contains('Edit')
+    .contains(editLinkText)
     .should(showEditLink ? 'be.visible' : 'not.exist')
 
   if (typeof content !== 'undefined') {
@@ -847,6 +853,14 @@ const assertLink = (dataTest, expected) => {
     .should('have.attr', 'href', expected)
 }
 
+/**
+ * A wrapper around assertLink that also checks the text
+ */
+const assertLinkWithText = (dataTest, expectedLink, expectedText) => {
+  cy.get(`[data-test=${dataTest}]`).should('have.text', expectedText)
+  assertLink(dataTest, expectedLink)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -910,4 +924,5 @@ module.exports = {
   assertFieldError,
   assertTypeaheadValues,
   assertLink,
+  assertLinkWithText,
 }
