@@ -13,6 +13,7 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_OVERDUE,
+  TASK_COMPLETED,
 } from '../constants'
 
 import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
@@ -23,6 +24,7 @@ import FooterLink from '../FooterLink'
 import DueDateApproachingForm from './DueDateApproachingForm'
 import TaskAssignedToMeFromOthersForm from './TaskAssignedToMeFromOthersForm'
 import TaskOverdueForm from './TaskOverdueForm'
+import TaskCompletedForm from './TaskCompletedForm'
 
 const RemindersForms = () => {
   const { reminderType } = useParams()
@@ -72,6 +74,7 @@ const RemindersForms = () => {
           <TaskAssignedToMeFromOthersForm />
         )}
         {reminderType === TASK_OVERDUE && <TaskOverdueForm />}
+        {reminderType === TASK_COMPLETED && <TaskCompletedForm />}
       </>
       <FooterLink
         headingText="Need Help?"

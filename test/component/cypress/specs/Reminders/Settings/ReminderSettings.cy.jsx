@@ -366,6 +366,8 @@ describe('TasksAssignedToMeSettings', () => {
 
     assertEmailTableData(TASK_COMPLETED, setting)
 
+    assertEditLink(TASK_COMPLETED)
+
     assertToggleSection(TASK_COMPLETED, TASK_COMPLETED_LABEL)
   })
 })

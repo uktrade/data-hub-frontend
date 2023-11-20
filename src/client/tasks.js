@@ -235,6 +235,7 @@ import {
   TASK_GET_TASK_COMPLETED_REMINDERS,
   TASK_DELETE_TASK_COMPLETED_REMINDER,
   TASK_GET_NEXT_TASK_COMPLETED_REMINDER,
+  TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -626,4 +627,6 @@ export const tasks = {
   [TASK_GET_NEXT_TASK_COMPLETED_REMINDER]:
     reminders.getNextTaskCompletedReminder,
   [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
+  [TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS]:
+    reminderSettings.saveTaskCompletedSubscriptions,
 }
