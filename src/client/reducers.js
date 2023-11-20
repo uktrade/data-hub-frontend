@@ -176,6 +176,9 @@ import exportWinsUnconfirmedTaskReducer from './modules/ExportWins/Unconfirmed/r
 import { ID as EXPORT_WINS_DETAILS_ID } from './modules/ExportWins/Details/state'
 import exportWinDetailsTaskReducer from './modules/ExportWins/Details/reducer'
 
+import { ID as GET_MY_TASKS_ID } from './components/Dashboard/my-tasks/state'
+import getMyTasksReducer from './components/Dashboard/my-tasks/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -280,4 +283,5 @@ export const reducers = {
   [EXPORT_WINS_UNCONFIRMED_ID]: exportWinsUnconfirmedTaskReducer,
   [EXPORT_WINS_UNCONFIRMED_ID]: exportWinsUnconfirmedTaskReducer,
   [EXPORT_WINS_DETAILS_ID]: exportWinDetailsTaskReducer,
+  [GET_MY_TASKS_ID]: getMyTasksReducer,
 }

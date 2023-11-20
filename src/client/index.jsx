@@ -71,6 +71,7 @@ import ErrorFallback from './components/ErrorFallback'
 import { tasks } from './tasks'
 
 import { store, history, sagaMiddleware } from './middleware'
+import MyTasks from './components/Dashboard/my-tasks/MyTasks.jsx'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -335,6 +336,7 @@ function App() {
         <Mount selector="#link-subsidiary">
           {(props) => <LinkSubsidiary {...props} />}
         </Mount>
+        <Mount selector="#my-tasks">{(props) => <MyTasks {...props} />}</Mount>
         <Mount selector="#account-management">
           {(props) => (
             <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
