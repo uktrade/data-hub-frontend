@@ -8,25 +8,27 @@ import { MY_TASKS_LOADED } from '../../../actions'
 import Task from '../../Task'
 import ContentWithHeading from '../../ContentWithHeading'
 
+const header = (
+  <Table.Row>
+    <Table.CellHeader>Date due</Table.CellHeader>
+    <Table.CellHeader>Task title</Table.CellHeader>
+    <Table.CellHeader>Project</Table.CellHeader>
+    <Table.CellHeader>Assigned to</Table.CellHeader>
+  </Table.Row>
+)
+
+const rows = (myTasks) => {
+  return myTasks.results.map((task) => (
+    <Table.Row>
+      <Table.Cell>{task.due_date}</Table.Cell>
+      <Table.Cell>{task.title}</Table.Cell>
+      <Table.Cell>{task.investment_project.name}</Table.Cell>
+      <Table.Cell>{task.advisers[0].name}</Table.Cell>
+    </Table.Row>
+  ))
+}
+
 const MyTasks = ({ adviser, myTasks }) => {
-  const header = (
-    <Table.Row>
-      <Table.CellHeader>Date due</Table.CellHeader>
-      <Table.CellHeader>Task title</Table.CellHeader>
-      <Table.CellHeader>Project</Table.CellHeader>
-      <Table.CellHeader>Assigned to</Table.CellHeader>
-    </Table.Row>
-  )
-
-  const rows = (
-    <Table.Row>
-      <Table.Cell>myResults</Table.Cell>
-      <Table.Cell>A title would go here</Table.Cell>
-      <Table.Cell>This is the project</Table.Cell>
-      <Table.Cell>It is assigned to</Table.Cell>
-    </Table.Row>
-  )
-
   return (
     <>
       <Task.Status
@@ -41,7 +43,9 @@ const MyTasks = ({ adviser, myTasks }) => {
       />
       <ContentWithHeading heading={`${myTasks.count} tasks`}>
         {myTasks.count ? (
-          <Table head={header}>{rows}</Table>
+          <Table head={header} myTasks={myTasks}>
+            {rows(myTasks)}
+          </Table>
         ) : (
           <HintText>You do not have any tasks at this time.</HintText>
         )}
