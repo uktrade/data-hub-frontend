@@ -7,8 +7,6 @@ import { first, get } from 'lodash'
 import qs from 'qs'
 import { connect } from 'react-redux'
 
-import { taskCompleted } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions'
-
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import {
   RemindersSettingsTable,
@@ -249,18 +247,6 @@ export const TasksAssignedToMeSettings = ({
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>
-    <RemindersToggleSection
-      label={TASK_COMPLETED_LABEL}
-      id={`${TASK_COMPLETED}-toggle`}
-      data-test={`${TASK_COMPLETED}-toggle`}
-      isOpen={isSettingOpen(openSettingsSections, TASK_COMPLETED)}
-      borderBottom={false}
-    >
-      <EmailRemindersSettingsTable
-        dataName={TASK_COMPLETED}
-        data={taskCompleted}
-      />
-    </RemindersToggleSection>
   </>
 )
 
