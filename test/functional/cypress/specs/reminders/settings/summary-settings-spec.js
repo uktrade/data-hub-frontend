@@ -37,6 +37,7 @@ const interceptAPICalls = ({
   tatmfo_email_reminders_enabled = true,
   to_reminder_days = [10],
   to_email_reminders_enabled = true,
+  tc_email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
@@ -66,6 +67,9 @@ const interceptAPICalls = ({
       task_overdue: {
         email_reminders_enabled: to_email_reminders_enabled,
         reminder_days: to_reminder_days,
+      },
+      task_completed: {
+        email_reminders_enabled: tc_email_reminders_enabled,
       },
     },
   }).as('summaryRequest')
