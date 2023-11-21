@@ -35,12 +35,12 @@ const rows = (myTasks) => {
   )
   return orderedMyTasks.map((task) => (
     <Table.Row>
-      <Table.Cell>{formatMediumDate(task.due_date)}</Table.Cell>
-      <Table.Cell>
+      <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
+      <Table.Cell setWidth="40%">
         <Link href={urls.tasks.details(task.id)}>{task.title}</Link>
       </Table.Cell>
-      <Table.Cell>{task.investment_project.name}</Table.Cell>
-      <Table.Cell>{task.advisers[0].name}</Table.Cell>
+      <Table.Cell setWidth="20%">{task.investment_project.name}</Table.Cell>
+      <Table.Cell setWidth="25%">{task.advisers[0].name}</Table.Cell>
     </Table.Row>
   ))
 }
