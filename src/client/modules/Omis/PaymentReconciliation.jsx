@@ -22,7 +22,10 @@ import { format, getDifferenceInWords } from '../../utils/date'
 import { DATE_LONG_FORMAT_1, FORM_LAYOUT } from '../../../common/constants'
 import { validateAmountRecieved, validateIfDateInPast } from './validators'
 import { TASK_RECONCILE_OMIS_PAYMENT } from './state'
-import { transformPaymentInformationForApi } from './transformers'
+import {
+  transformPaymentInformationForApi,
+  transformCompanyAddress,
+} from './transformers'
 import { STATUS } from './constants'
 import OMISLayout from './OMISLayout'
 
@@ -30,22 +33,6 @@ const StyledLink = styled(Link)`
   display: inline-block;
   margin-bottom: ${SPACING.SCALE_5};
 `
-
-const transformCompanyAddress = (company) => {
-  const address = company.registeredAddress
-    ? company.registeredAddress
-    : company.address
-  return [
-    address.line1,
-    address.line2,
-    address.town,
-    address.county,
-    address.postcode,
-    address.country.name,
-  ]
-    .filter((item) => item.length)
-    .join(', ')
-}
 
 export const QuoteNotAcceptedMessage = ({ orderId }) => (
   <>
