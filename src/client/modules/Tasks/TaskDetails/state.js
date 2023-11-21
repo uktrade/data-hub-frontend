@@ -8,7 +8,7 @@ export const TASK_GET_TASK_DETAILS = 'TASK_GET_TASK_DETAILS'
 export const TASK_ARCHIVE_TASK = 'TASK_ARCHIVE_TASK'
 
 const getEditUrl = ({ task }) => {
-  const investmentProject = get(task, 'investmentProjectTask.investmentProject')
+  const investmentProject = get(task, 'investmentProject')
   return investmentProject
     ? urls.investments.projects.tasks.edit(investmentProject.id, task.id)
     : undefined

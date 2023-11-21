@@ -11,8 +11,7 @@ import {
 describe('View task details', () => {
   const investmentProjectTask = taskWithInvestmentProjectFaker()
   const expectedCompany =
-    investmentProjectTask.investmentProjectTask.investmentProject
-      .investorCompany
+    investmentProjectTask.investmentProject.investorCompany
 
   context(
     'When visiting task details that is assigned to an investment project',
@@ -55,7 +54,7 @@ describe('View task details', () => {
         clickButton('Mark as complete')
         assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
         assertUrl(
-          `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks`
+          `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks`
         )
       })
     }

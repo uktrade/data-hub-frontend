@@ -35,29 +35,28 @@ const taskFaker = (overrides = {}) => ({
 const taskWithInvestmentProjectFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
-      investmentProjectTask: {
-        investmentProject: {
-          investorCompany: {
-            name: faker.company.name(),
-            id: faker.string.uuid(),
-          },
+      investmentProject: {
+        investorCompany: {
+          name: faker.company.name(),
           id: faker.string.uuid(),
-          name: faker.word.adjective(),
         },
         id: faker.string.uuid(),
         name: faker.word.adjective(),
       },
+      id: faker.string.uuid(),
+      name: faker.word.adjective(),
       ...overrides,
     })
   )
 
-const investmentProjectTaskFaker = (overrides = {}) => ({
-  id: faker.string.uuid(),
-  investment_project: pick(investmentProjectFaker(), ['id', 'name']),
-  task: taskFaker(),
-  createdOn: faker.date.past().toISOString(),
-  ...overrides,
-})
+const investmentProjectTaskFaker = (overrides = {}) =>
+  taskFaker(
+    (overrides = {
+      investment_project: pick(investmentProjectFaker(), ['id', 'name']),
+      createdOn: faker.date.past().toISOString(),
+      ...overrides,
+    })
+  )
 
 const taskListFaker = (length = 3, overrides) =>
   listFaker({

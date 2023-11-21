@@ -8,13 +8,14 @@ export const transformFormValuesForAPI = (
   formValues,
   investmentProject,
   currentAdviserId
-) => ({
-  investment_project: {
+) => {
+  const task = transformTaskFormValuesForAPI(formValues, currentAdviserId)
+  task.investment_project = {
     id: investmentProject.id,
     name: investmentProject.name,
-  },
-  task: transformTaskFormValuesForAPI(formValues, currentAdviserId),
-})
+  }
+  return task
+}
 
 const transformAdvisor = (advisers, currentAdviserId) =>
   advisers.length === 1 && advisers[0].id === currentAdviserId
@@ -23,7 +24,7 @@ const transformAdvisor = (advisers, currentAdviserId) =>
 
 export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   id: task.id,
-  investmentProject: task.investmentProjectTask.investmentProject,
+  investmentProject: task.investmentProject,
   taskTitle: task.title,
   taskDescription: task.description,
   taskDueDate: task.dueDate ? 'custom' : 'none',

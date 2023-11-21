@@ -28,9 +28,7 @@ export const TaskButtons = ({ task, editUrl }) => (
           id="archive-task-form"
           analyticsFormName="archiveTaskForm"
           redirectTo={() =>
-            urls.investments.projects.tasks.index(
-              task.investmentProjectTask.investmentProject.id
-            )
+            urls.investments.projects.tasks.index(task.investmentProject.id)
           }
           cancelRedirectTo={false}
           submissionTaskName={TASK_ARCHIVE_TASK}
@@ -60,7 +58,7 @@ export const TaskButtons = ({ task, editUrl }) => (
           buttonTextColour={TEXT_COLOUR}
           as={Link}
           href={urls.investments.projects.tasks.index(
-            task.investmentProjectTask.investmentProject.id
+            task.investmentProject.id
           )} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
           data-test="back-button"
         >

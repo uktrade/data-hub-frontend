@@ -19,7 +19,7 @@ const autoCompleteAdvisers =
 
 describe('Add investment project task', () => {
   const fixture = investment.investmentWithDetails
-  const endpoint = '/api-proxy/v4/investmentprojecttask'
+  const endpoint = '/api-proxy/v4/task'
   const detailsUrl = investments.projects.details(fixture.id)
 
   context('When visiting the create a task page', () => {
@@ -118,14 +118,12 @@ function assertTaskForm(endpoint, fixture, advisers) {
       id: fixture.id,
       name: fixture.name,
     },
-    task: {
-      title: 'test task',
-      description: 'test description',
-      due_date: '3023-12-25',
-      email_reminders_enabled: true,
-      reminder_days: 1,
-      advisers: advisers,
-    },
+    title: 'test task',
+    description: 'test description',
+    due_date: '3023-12-25',
+    email_reminders_enabled: true,
+    reminder_days: 1,
+    advisers: advisers,
   })
 
   assertExactUrl(

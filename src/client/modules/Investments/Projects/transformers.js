@@ -286,7 +286,10 @@ export const transformInvestmentProjectToListItem = ({
 
 export const transformTaskToListItem = ({
   createdOn,
-  task: { id, title, dueDate, advisers },
+  id,
+  title,
+  dueDate,
+  advisers,
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),

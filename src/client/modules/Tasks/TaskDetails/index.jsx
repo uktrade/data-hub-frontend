@@ -10,7 +10,7 @@ import { TASK_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 
 const getCompany = (task) => {
-  return task?.investmentProjectTask?.investmentProject?.investorCompany
+  return task?.investmentProject?.investorCompany
 }
 
 const TaskDetails = ({ task }) => {
