@@ -25,10 +25,7 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
-import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
-import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
-import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
@@ -49,13 +46,9 @@ import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
-import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
-import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
-import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
-import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import AccountManagement from './modules/Companies/AccountManagement'
 
 import Footer from '../client/components/Footer'
@@ -242,17 +235,8 @@ function App() {
         <Mount selector="#referral-details">
           {(props) => <ReferralDetails {...props} />}
         </Mount>
-        <Mount selector="#referral-help">
-          {(props) => <ReferralHelp {...props} />}
-        </Mount>
-        <Mount selector="#company-export-exports-edit">
-          {(props) => <ExportsEdit {...props} />}
-        </Mount>
         <Mount selector="#interaction-referral-details">
           {(props) => <InteractionReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#company-export-countries-edit">
-          {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
         <Mount selector="#investment-project-admin">
           {(props) => <InvestmentProjectAdmin {...props} />}
@@ -320,20 +304,8 @@ function App() {
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}
         </Mount>
-        <Mount selector="#create-proposition">
-          {(props) => <CreateProposition {...props} />}
-        </Mount>
-        <Mount selector="#abandon-proposition">
-          {(props) => <AbandonProposition {...props} />}
-        </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
-        </Mount>
-        <Mount selector="#link-global-hq">
-          {(props) => <LinkGlobalHQ {...props} />}
-        </Mount>
-        <Mount selector="#link-subsidiary">
-          {(props) => <LinkSubsidiary {...props} />}
         </Mount>
         <Mount selector="#account-management">
           {(props) => (

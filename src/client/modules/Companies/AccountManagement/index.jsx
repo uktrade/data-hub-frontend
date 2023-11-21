@@ -15,7 +15,7 @@ import {
 import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
+import { LeadITA } from './LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'

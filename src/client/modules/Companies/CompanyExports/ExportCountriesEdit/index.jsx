@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
 import { ERROR_COLOUR } from '../../../../utils/colours'
 import Task from '../../../../components/Task'
@@ -10,8 +11,7 @@ import {
   StatusMessage,
   FieldTypeahead,
   FormLayout,
-  LocalHeader,
-  Main,
+  DefaultLayout,
 } from '../../../../components'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import {
@@ -56,14 +56,16 @@ function ErrorHandler({ errorMessage }) {
   )
 }
 
-export default ({ companyId }) => (
-  <CompanyResource id={companyId}>
-    {(company) => (
-      <CountriesResource>
-        {(countryOptions) => (
-          <>
-            <LocalHeader
-              heading={'Edit export countries'}
+const ExportCountriesEdit = () => {
+  const { companyId } = useParams()
+  return (
+    <CompanyResource id={companyId}>
+      {(company) => (
+        <CountriesResource>
+          {(countryOptions) => (
+            <DefaultLayout
+              heading="Edit export countries"
+              pageTitle={`Edit export countries - Exports - ${company.name} - Companies`}
               breadcrumbs={buildCompanyBreadcrumbs(
                 [
                   {
@@ -75,8 +77,7 @@ export default ({ companyId }) => (
                 company.id,
                 company.name
               )}
-            />
-            <Main>
+            >
               <Task.Status
                 name={TASK_NAME}
                 id={TASK_ID}
@@ -124,10 +125,12 @@ export default ({ companyId }) => (
                   </Form>
                 )}
               </Task.Status>
-            </Main>
-          </>
-        )}
-      </CountriesResource>
-    )}
-  </CompanyResource>
-)
+            </DefaultLayout>
+          )}
+        </CountriesResource>
+      )}
+    </CompanyResource>
+  )
+}
+
+export default ExportCountriesEdit

@@ -6,9 +6,9 @@ import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
-import { FormActions } from '../../../../../client/components'
-import { TEXT_COLOUR, GREY_3 } from '../../../../../client/utils/colours'
-import urls from '../../../../../lib/urls'
+import { FormActions } from '../../../components'
+import { TEXT_COLOUR, GREY_3 } from '../../../utils/colours'
+import urls from '../../../../lib/urls'
 
 const ButtonSecondary = (props) => (
   <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />

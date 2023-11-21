@@ -68,6 +68,13 @@ import EditAssignees from './modules/Omis/EditAssignees'
 import EditSubscribers from './modules/Omis/EditSubscribers'
 import WorkOrder from './modules/Omis/WorkOrder'
 import SetLeadAdviser from './modules/Omis/SetLeadAdviser'
+import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
+import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
+import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
+import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
+import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
+import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
+import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 
 const routes = {
   companies: [
@@ -120,6 +127,36 @@ const routes = {
       path: '/companies/:companyId/account-management/objective/:objectiveId/archive',
       module: 'datahub:companies',
       component: ObjectiveArchive,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/ghq/search',
+      module: 'datahub:companies',
+      component: LinkGlobalHQ,
+    },
+    {
+      path: '/companies/:companyId/subsidiaries/link',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/subsidiaries/search',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/exports/edit-countries',
+      module: 'datahub:companies',
+      component: ExportCountriesEdit,
+    },
+    {
+      path: '/companies/:companyId/exports/edit',
+      module: 'datahub:companies',
+      component: ExportsEdit,
+    },
+    {
+      path: '/companies/:companyId/referrals/:referralId/help',
+      module: 'datahub:companies',
+      component: ReferralHelp,
     },
   ],
   contacts: [
@@ -466,6 +503,18 @@ const routes = {
       path: '/investments/projects/:projectId/tasks',
       module: 'datahub:investments',
       component: ProjectTasks,
+    },
+  ],
+  propositions: [
+    {
+      path: '/investments/projects/:projectId/propositions/:propositionId/abandon',
+      module: 'datahub:investments',
+      component: AbandonProposition,
+    },
+    {
+      path: '/investments/projects/:projectId/propositions/create/proposition',
+      module: 'datahub:investments',
+      component: CreateProposition,
     },
   ],
   tasks: [

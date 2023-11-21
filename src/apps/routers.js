@@ -88,6 +88,14 @@ const reactRoutes = [
   '/reminders/my-tasks-task-overdue',
   '/omis/:orderId/work-order',
   '/omis/:orderId/edit/lead-adviser/:adviserId',
+  '/companies/:companyId/hierarchies/ghq/search',
+  '/companies/:companyId/subsidiaries/link',
+  '/companies/:companyId/hierarchies/subsidiaries/search',
+  '/companies/:companyId/exports/edit-countries',
+  '/companies/:companyId/exports/edit',
+  '/companies/:companyId/referrals/:referralId/help',
+  '/investments/projects/:projectId/propositions/:propositionId/abandon',
+  '/investments/projects/:projectId/propositions/create/proposition',
 ]
 
 reactRoutes.forEach((path) => {

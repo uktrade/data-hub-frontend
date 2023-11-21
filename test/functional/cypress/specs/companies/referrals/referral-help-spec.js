@@ -30,22 +30,22 @@ describe('Referral help', () => {
     })
 
     it('should render the content and conform to design', () => {
-      cy.get('#referral-help')
-        .contains('h2', 'I need more information')
+      cy.get('h2')
+        .should('contain', 'I need more information')
         .next()
         .should('match', 'p')
         .should(
-          'have.text',
+          'contain',
           'Contact the sender for more info: Ian Leggett, caravans@campervans.com'
         )
         .next()
         .should(
-          'have.text',
+          'contain',
           'Or find their contact details on Digital Workspace (opens in new tab)'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')
-        .should('have.text', "I'm not the right adviser for this")
+        .should('contain', "I'm not the right adviser for this")
         .next()
         .should('have.prop', 'tagName', 'P')
         .should(
@@ -63,7 +63,7 @@ describe('Referral help', () => {
           'href',
           urls.companies.referrals.details(companyId, '1')
         )
-        .should('have.text', 'Back to the referral')
+        .should('contain', 'Back to the referral')
     })
 
     it("should link to digital workspace's people finder", () => {
