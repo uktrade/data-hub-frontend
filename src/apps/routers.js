@@ -96,6 +96,7 @@ const reactRoutes = [
   '/companies/:companyId/referrals/:referralId/help',
   '/investments/projects/:projectId/propositions/:propositionId/abandon',
   '/investments/projects/:projectId/propositions/create/proposition',
+  '/omis/create',
 ]
 
 reactRoutes.forEach((path) => {

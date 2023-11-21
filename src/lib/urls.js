@@ -605,7 +605,10 @@ module.exports = {
   omis: {
     index: url('/omis', PRIMARY_LINK_PARAMS.omis),
     export: url('/omis', '/export'),
-    create: url('/omis/create?company=', ':companyId'),
+    create: {
+      companySelect: url('/omis', '/create'),
+      form: url('/omis', '/create/:companyId'),
+    },
     reconciliation: url('/omis/reconciliation'),
     order: url('/omis', '/:orderId'),
     paymentReconciliation: url(

@@ -380,6 +380,9 @@ import {
   setLeadAdviser,
 } from './modules/Omis/tasks'
 
+import { TASK_GET_COMPANIES } from './modules/Omis/CreateOrder/CompanySelect/state'
+import { getOmisCompanies } from './modules/Omis/CreateOrder/CompanySelect/tasks.js'
+
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
   TASK_ARCHIVE_TASK,
@@ -619,4 +622,5 @@ export const tasks = {
   [TASK_DELETE_TASK_OVERDUE_REMINDER]: reminders.deleteTaskOverdueReminder,
   [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
   [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
+  [TASK_GET_COMPANIES]: getOmisCompanies,
 }

@@ -75,6 +75,7 @@ import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
 import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
+import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect/index'
 
 const routes = {
   companies: [
@@ -292,6 +293,11 @@ const routes = {
       path: '/omis/:orderId/edit/lead-adviser/:adviserId',
       module: 'datahub:orders',
       component: SetLeadAdviser,
+    },
+    {
+      path: '/omis/create',
+      module: 'datahub:orders',
+      component: SelectOrderCompany,
     },
   ],
   reminders: [
