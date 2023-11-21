@@ -5,6 +5,8 @@ import { HintText, Link, Table } from 'govuk-react'
 
 import styled from 'styled-components'
 
+import { orderBy } from 'lodash'
+
 import { GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
 import { MY_TASKS_LOADED } from '../../../actions'
 import Task from '../../Task'
@@ -26,7 +28,12 @@ const header = (
 )
 
 const rows = (myTasks) => {
-  return myTasks.results.map((task) => (
+  const orderedMyTasks = orderBy(
+    myTasks.results,
+    [(c) => c.due_date || ''],
+    ['asc']
+  )
+  return orderedMyTasks.map((task) => (
     <Table.Row>
       <Table.Cell>{formatMediumDate(task.due_date)}</Table.Cell>
       <Table.Cell>
