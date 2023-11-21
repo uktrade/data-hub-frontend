@@ -1,6 +1,6 @@
 import { createEntityResource } from './Resource'
 
 export default createEntityResource(
-  'TaskOverdueSettings',
+  'TaskCompletedSettings',
   () => `v4/reminder/subscription/my-tasks-task-completed`
 )
