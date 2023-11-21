@@ -247,6 +247,27 @@ describe('ExportReminderSettings', () => {
 describe('TasksAssignedToMeSettings', () => {
   const Component = (props) => <TasksAssignedToMeSettings {...props} />
 
+  function mountComponent(id) {
+    cy.mount(
+      <DataHubProvider>
+        <Component
+          openSettingsSections={[{ id: id }]}
+          upcomingTaskReminder={setting}
+          taskAssignedToMeFromOthers={setting}
+          taskOverdue={setting}
+          taskCompleted={setting}
+        />
+      </DataHubProvider>
+    )
+  }
+
+  function assertMyTasks(dataTest, label) {
+    assertSettingsSectionExpanded(dataTest)
+    assertEmailTableData(dataTest, setting)
+    assertEditLink(dataTest)
+    assertToggleSection(dataTest, label)
+  }
+
   context('When component loads', () => {
     beforeEach(() => {
       cy.mount(
@@ -271,26 +292,10 @@ describe('TasksAssignedToMeSettings', () => {
 
   context('When due date approaching setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: MY_TASKS_DUE_DATE_APPROACHING }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-            taskCompleted={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(MY_TASKS_DUE_DATE_APPROACHING)
     })
 
-    assertSettingsSectionExpanded(MY_TASKS_DUE_DATE_APPROACHING)
-
-    assertEmailTableData(MY_TASKS_DUE_DATE_APPROACHING, setting)
-
-    assertEditLink(MY_TASKS_DUE_DATE_APPROACHING)
-
-    assertToggleSection(
+    assertMyTasks(
       MY_TASKS_DUE_DATE_APPROACHING,
       MY_TASKS_DUE_DATE_APPROACHING_LABEL
     )
@@ -298,26 +303,10 @@ describe('TasksAssignedToMeSettings', () => {
 
   context('When task assigned to me from others setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: TASK_ASSIGNED_TO_ME_FROM_OTHERS }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-            taskCompleted={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
     })
 
-    assertSettingsSectionExpanded(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
-
-    assertEmailTableData(TASK_ASSIGNED_TO_ME_FROM_OTHERS, setting)
-
-    assertEditLink(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
-
-    assertToggleSection(
+    assertMyTasks(
       TASK_ASSIGNED_TO_ME_FROM_OTHERS,
       TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
     )
@@ -325,49 +314,17 @@ describe('TasksAssignedToMeSettings', () => {
 
   context('When task overdue setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: TASK_OVERDUE }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-            taskCompleted={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(TASK_OVERDUE)
     })
 
-    assertSettingsSectionExpanded(TASK_OVERDUE)
-
-    assertEmailTableData(TASK_OVERDUE, setting)
-
-    assertEditLink(TASK_OVERDUE)
-
-    assertToggleSection(TASK_OVERDUE, TASK_OVERDUE_LABEL)
+    assertMyTasks(TASK_OVERDUE, TASK_OVERDUE_LABEL)
   })
 
   context('When task completed setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: TASK_COMPLETED }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-            taskCompleted={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(TASK_COMPLETED)
     })
 
-    assertSettingsSectionExpanded(TASK_COMPLETED)
-
-    assertEmailTableData(TASK_COMPLETED, setting)
-
-    assertEditLink(TASK_COMPLETED)
-
-    assertToggleSection(TASK_COMPLETED, TASK_COMPLETED_LABEL)
+    assertMyTasks(TASK_COMPLETED, TASK_COMPLETED_LABEL)
   })
 })

@@ -563,42 +563,42 @@ app.patch(
 // Subscriptions for My Tasks
 app.get(
   '/v4/reminder/subscription/my-tasks-due-date-approaching',
-  v4Reminders.getMyTasksUpcomingDueDateSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/my-tasks-due-date-approaching',
-  v4Reminders.saveMyTasksUpcomingDueDateSubscriptions
+  v4Reminders.saveSubscriptions
 )
 
 app.get(
   '/v4/reminder/subscription/task-assigned-to-me-from-others',
-  v4Reminders.getTaskAssignedToMeFromOthersSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/task-assigned-to-me-from-others',
-  v4Reminders.saveTaskAssignedToMeFromOthersSubscriptions
+  v4Reminders.saveSubscriptions
 )
 
 app.get(
   '/v4/reminder/subscription/my-tasks-task-overdue',
-  v4Reminders.getTaskOverdueSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/my-tasks-task-overdue',
-  v4Reminders.saveTaskOverdueSubscriptions
+  v4Reminders.saveSubscriptions
 )
 
 app.get(
   '/v4/reminder/subscription/my-tasks-task-completed',
-  v4Reminders.getTaskCompletedSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/my-tasks-task-completed',
-  v4Reminders.saveTaskCompletedSubscriptions
+  v4Reminders.saveSubscriptions
 )
 
 // Reminders lists
