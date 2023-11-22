@@ -1,31 +1,17 @@
-import qs from 'qs'
+export const TASK_CREATE_INVESTMENT_OPPORTUNITY =
+  'TASK_CREATE_INVESTMENT_OPPORTUNITY'
+export const TASK_SAVE_OPPORTUNITY_STATUS = 'TASK_SAVE_OPPORTUNITY_STATUS'
 
-import { sortOptions } from './metadata'
+export const TASK_GET_OPPORTUNITY_DETAILS = 'TASK_GET_OPPORTUNITY_DETAILS'
+export const TASK_GET_OPPORTUNITY_DETAILS_METADATA =
+  'TASK_GET_OPPORTUNITY_DETAILS_METADATA'
+export const TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA =
+  'TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA'
 
-export const TASK_GET_OPPORTUNITIES_LIST = 'TASK_GET_OPPORTUNITIES_LIST'
+export const TASK_SAVE_OPPORTUNITY_DETAILS = 'TASK_SAVE_OPPORTUNITY_DETAILS'
+export const TASK_SAVE_OPPORTUNITY_REQUIREMENTS =
+  'TASK_SAVE_OPPORTUNITY_REQUIREMENTS'
 
-export const ID = 'opportunitiesList'
+export const ID = 'opportunityDetails'
 
-const searchParamProps = ({ sortby = 'created_on:desc', page = 1 }) => ({
-  sortby,
-  page,
-})
-
-const collectionListPayload = (paramProps) => {
-  return Object.fromEntries(
-    Object.entries(searchParamProps(paramProps)).filter((v) => v[1])
-  )
-}
-
-export const state2props = ({ router, ...state }) => {
-  const { metadata } = state.opportunitiesList
-  const queryProps = qs.parse(router.location.search.slice(1))
-  const filteredQueryProps = collectionListPayload(queryProps)
-
-  return {
-    ...state[ID],
-    payload: filteredQueryProps,
-    optionMetadata: { sortOptions, ...metadata },
-    router,
-  }
-}
+export const state2props = (state) => state[ID]

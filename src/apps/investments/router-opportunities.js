@@ -11,28 +11,6 @@ const {
   exportCollection,
 } = require('../../modules/search/middleware/collection')
 
-const {
-  renderOpportunityView,
-  renderOpportunityStatusView,
-} = require('./controllers/opportunities')
-
-router.get(
-  // These paths are handled by react-router
-  ['/:opportunityId/details', '/:opportunityId/interactions'],
-  renderOpportunityView
-)
-
-router.get('/:opportunityId/status', renderOpportunityStatusView)
-
-router.get('/create', (req, res) => {
-  const heading = 'Create UK investment opportunity'
-  res
-    .breadcrumb(heading)
-    .render('investments/views/create/uk-investment-opportunity', {
-      heading,
-    })
-})
-
 router.get(
   '/export',
   getRequestBody(

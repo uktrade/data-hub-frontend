@@ -1,4 +1,4 @@
-const { formatMediumDateTime } = require('../../../../../client/utils/date')
+const { formatMediumDateTime } = require('../../../utils/date')
 
 const getNameAndId = (data) =>
   data ? { value: data.id, label: data.name } : {}

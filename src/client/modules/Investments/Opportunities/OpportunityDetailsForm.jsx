@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 import { throttle } from 'lodash'
 
 import { TASK_SAVE_OPPORTUNITY_DETAILS, state2props } from './state'
-import urls from '../../../../../lib/urls'
+import urls from '../../../../lib/urls'
 
-import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../../../client/actions'
+import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../actions'
 
-import { transformDateStringToDateObject } from '../../../../transformers'
+import { transformDateStringToDateObject } from '../../../../apps/transformers'
 
-import Form from '../../../../../client/components/Form'
+import Form from '../../../components/Form'
 import {
   Main,
   FieldInput,
@@ -20,19 +20,19 @@ import {
   FieldTypeahead,
   FieldAdvisersTypeahead,
   FormLayout,
-} from '../../../../../client/components'
-import { FieldUKRegionTypeahead } from '../../../../../client/components/Form/elements/UKRegionOptions'
-import { FieldRequiredChecksRadios } from '../../../../../client/components/Form/elements/RequiredChecksOptions'
-import { FieldConstructionRiskRadios } from '../../../../../client/components/Form/elements/ConstructionRiskOptions'
-import { FieldAssetClassTypeahead } from '../../../../../client/components/Form/elements/AssetClassOptions'
+} from '../../../components'
+import { FieldUKRegionTypeahead } from '../../../components/Form/elements/UKRegionOptions'
+import { FieldRequiredChecksRadios } from '../../../components/Form/elements/RequiredChecksOptions'
+import { FieldConstructionRiskRadios } from '../../../components/Form/elements/ConstructionRiskOptions'
+import { FieldAssetClassTypeahead } from '../../../components/Form/elements/AssetClassOptions'
 
 import { CLEARED_REFERENCE, ISSUES_IDENTIFIED_REFERENCE } from './constants'
-import { idNamesToValueLabels } from '../../../../../client/utils'
+import { idNamesToValueLabels } from '../../../utils'
 
-import { FieldOpportunityValueTypeRadios } from '../../../../../client/components/Form/elements/FieldOpportunityValueType'
-import { apiProxyAxios } from '../../../../../client/components/Task/utils'
-import { FORM_LAYOUT } from '../../../../../common/constants'
-import { number } from '../../../../../client/components/Form/validators'
+import { FieldOpportunityValueTypeRadios } from '../../../components/Form/elements/FieldOpportunityValueType'
+import { apiProxyAxios } from '../../../components/Task/utils'
+import { FORM_LAYOUT } from '../../../../common/constants'
+import { number } from '../../../components/Form/validators'
 
 function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
   const {

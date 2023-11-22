@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
-import urls from '../../../../../lib/urls'
+import urls from '../../../../lib/urls'
 
 import {
   ID,
@@ -16,26 +16,26 @@ import {
 import {
   INVESTMENT_OPPORTUNITY__REQUIREMENTS_METADATA_LOADED,
   INVESTMENT_OPPORTUNITY__UPDATED,
-} from '../../../../../client/actions'
+} from '../../../actions'
 
-import Task from '../../../../../client/components/Task'
-import Form from '../../../../../client/components/Form'
+import Task from '../../../components/Task'
+import Form from '../../../components/Form'
 import {
   Main,
   FieldInput,
   FieldCheckboxes,
   FieldRadios,
   FormLayout,
-} from '../../../../../client/components'
+} from '../../../components'
 import {
   TOTAL_INVESTMENT_SOUGHT_FIELD_NAME,
   CURRENT_INVESTMENT_SECURED_FIELD_NAME,
   INVESTMENT_TYPES_FIELD_NAME,
   ESTIMATED_RETURN_RATE_FIELD_NAME,
   TIME_HORIZONS_FIELD_NAME,
-} from '../Details/constants'
-import { FORM_LAYOUT } from '../../../../../common/constants'
-import { number } from '../../../../../client/components/Form/validators'
+} from './constants'
+import { FORM_LAYOUT } from '../../../../common/constants'
+import { number } from '../../../components/Form/validators'
 
 const StyledFieldCheckboxes = styled(FieldCheckboxes)`
   margin-bottom: 0;

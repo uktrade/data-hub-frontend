@@ -33,18 +33,13 @@ import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
-import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
-import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
-import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
-import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
-import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
@@ -205,17 +200,6 @@ function App() {
             />
           )}
         </Mount>
-        <Mount selector="#opportunity">
-          {(props) => <Opportunity {...props} />}
-        </Mount>
-        <Mount selector="#opportunity-status">
-          {(props) => <OpportunityChangeStatusForm {...props} />}
-        </Mount>
-        <Mount selector="#create-uk-investment-opportunity">
-          {() => (
-            <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
-          )}
-        </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (
             <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
@@ -292,14 +276,8 @@ function App() {
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
         </Mount>
-        <Mount selector="#ess-interaction-details">
-          {(props) => <ESSInteractionDetails {...props} />}
-        </Mount>
         <Mount selector="#orders-reconciliation-collection">
           {(props) => <OrdersReconciliationCollection {...props} />}
-        </Mount>
-        <Mount selector="#attendee-search">
-          {(props) => <AttendeeSearch {...props} />}
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}

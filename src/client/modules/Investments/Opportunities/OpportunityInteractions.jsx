@@ -2,9 +2,9 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import qs from 'qs'
 
-import { CollectionList } from '../../../../../client/components'
-import { transformInteractionToListItem } from '../../../../interactions/client/transformers'
-import { InteractionCollectionResource } from '../../../../../client/components/Resource'
+import { CollectionList } from '../../../components'
+import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
+import { InteractionCollectionResource } from '../../../components/Resource'
 
 const OpportunityInteractions = ({ opportunityId }) => {
   const history = useHistory()

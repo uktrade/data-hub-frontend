@@ -75,6 +75,10 @@ import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
 import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
+import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
+import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
+import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
+import Opportunity from './modules/Investments/Opportunities/Opportunity'
 
 const routes = {
   companies: [
@@ -203,6 +207,11 @@ const routes = {
       path: '/events/aventri/:aventriEventId/registration/:status',
       module: 'datahub:events',
       component: EventAventriRegistrationStatus,
+    },
+    {
+      path: '/events/:eventId/attendees/find-new',
+      module: 'datahub:events',
+      component: AttendeeSearch,
     },
   ],
   interactions: [
@@ -503,6 +512,26 @@ const routes = {
       path: '/investments/projects/:projectId/tasks',
       module: 'datahub:investments',
       component: ProjectTasks,
+    },
+    {
+      path: '/investments/opportunities/create',
+      module: 'datahub:investments',
+      component: CreateUKInvestmentOpportunity,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/status',
+      module: 'datahub:investments',
+      component: OpportunityChangeStatusForm,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/details',
+      module: 'datahub:investments',
+      component: Opportunity,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/interactions',
+      module: 'datahub:investments',
+      component: Opportunity,
     },
   ],
   propositions: [
