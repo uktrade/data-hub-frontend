@@ -57,7 +57,7 @@ export const CompanyDetails = ({ company }) => (
   </FieldWrapper>
 )
 
-export const WhatHappensNext = (ukRegion) => (
+export const WhatHappensNext = ({ ukRegion }) => (
   <FieldWrapper>
     <StyledLabel>What happens next?</StyledLabel>
     <p>{`Continuing with the order will notify the post manager for the chosen country${
