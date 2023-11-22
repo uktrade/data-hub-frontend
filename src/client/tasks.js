@@ -382,6 +382,8 @@ import {
 
 import { TASK_GET_COMPANIES } from './modules/Omis/CreateOrder/CompanySelect/state'
 import { getOmisCompanies } from './modules/Omis/CreateOrder/CompanySelect/tasks.js'
+import { TASK_CREATE_ORDER } from './modules/Omis/CreateOrder/state'
+import { createOrder } from './modules/Omis/CreateOrder/tasks'
 
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
@@ -623,4 +625,5 @@ export const tasks = {
   [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
   [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
   [TASK_GET_COMPANIES]: getOmisCompanies,
+  [TASK_CREATE_ORDER]: createOrder,
 }
