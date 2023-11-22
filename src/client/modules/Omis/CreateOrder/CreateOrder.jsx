@@ -40,6 +40,35 @@ const StyledInsetText = styled(InsetText)`
   margin-top: ${SPACING.SCALE_3};
 `
 
+export const CompanyDetails = ({ company }) => (
+  <FieldWrapper>
+    <StyledLabel>Company</StyledLabel>
+    <StyledInsetText>
+      {company.name}
+      <br />
+      <br />
+      {transformCompanyAddress(company)}
+      <br />
+      <br />
+      <Link href={urls.omis.create.companySelect()} noVisitedState={true}>
+        Change company
+      </Link>
+    </StyledInsetText>
+  </FieldWrapper>
+)
+
+export const WhatHappensNext = (ukRegion) => (
+  <FieldWrapper>
+    <StyledLabel>What happens next?</StyledLabel>
+    <p>{`Continuing with the order will notify the post manager for the chosen country${
+      ukRegion ? ` and the region manager for ${ukRegion.name}.` : '.'
+    }`}</p>
+    <WarningText>
+      You will not be able to edit the company or country after this point.
+    </WarningText>
+  </FieldWrapper>
+)
+
 const CreateOrder = () => {
   const { companyId } = useParams()
   return (
@@ -68,23 +97,7 @@ const CreateOrder = () => {
                 transformOrderForApi({ company, values })
               }
             >
-              <FieldWrapper>
-                <StyledLabel>Company</StyledLabel>
-                <StyledInsetText>
-                  {company.name}
-                  <br />
-                  <br />
-                  {transformCompanyAddress(company)}
-                  <br />
-                  <br />
-                  <Link
-                    href={urls.omis.create.companySelect()}
-                    noVisitedState={true}
-                  >
-                    Change company
-                  </Link>
-                </StyledInsetText>
-              </FieldWrapper>
+              <CompanyDetails company={company} />
               <FieldWrapper name="omis-contact">
                 <ResourceOptionsField
                   id={company.id}
@@ -151,18 +164,9 @@ const CreateOrder = () => {
                     }),
                   }))}
                 />
-
-                <StyledLabel>What happens next?</StyledLabel>
-                <p>{`Continuing with the order will notify the post manager for the chosen country${
-                  company.ukRegion
-                    ? ` and the region manager for ${company.ukRegion.name}.`
-                    : '.'
-                }`}</p>
-                <WarningText>
-                  You will not be able to edit the company or country after this
-                  point.
-                </WarningText>
               </FieldWrapper>
+
+              <WhatHappensNext ukRegion={company.ukRegion} />
             </Form>
           </FormLayout>
         )}
