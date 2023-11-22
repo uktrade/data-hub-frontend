@@ -110,7 +110,6 @@
     "govuk-react": "^0.10.6",
     "hawk": "^9.0.1",
     "history": "^4.10.1",
-    "hmpo-form-wizard": "^13.0.0",
     "http-proxy-middleware": "^2.0.4",
     "joi": "^17.11.0",
     "lodash": "^4.17.21",
