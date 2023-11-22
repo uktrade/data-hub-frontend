@@ -273,49 +273,13 @@ exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
   })
 }
 
-exports.getMyTasksUpcomingDueDateSubscriptions = function (req, res) {
+exports.getSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: false,
   })
 }
 
-exports.saveMyTasksUpcomingDueDateSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: true,
-  })
-}
-
-exports.getTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: false,
-  })
-}
-
-exports.saveTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: true,
-  })
-}
-
-exports.getTaskOverdueSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: false,
-  })
-}
-
-exports.saveTaskOverdueSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: true,
-  })
-}
-
-exports.getTaskCompletedSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: false,
-  })
-}
-
-exports.saveTaskCompletedSubscriptions = function (req, res) {
+exports.saveSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: true,
   })

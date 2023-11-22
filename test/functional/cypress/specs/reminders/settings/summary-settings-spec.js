@@ -13,65 +13,44 @@ import {
 
 const summaryEndpoint = '/api-proxy/v4/reminder/subscription/summary'
 
-const eslDataTest = INVESTMENTS_ESTIMATED_LAND_DATES
-const nriDataTest = INVESTMENTS_NO_RECENT_INTERACTIONS
-const enriDataTest = COMPANIES_NO_RECENT_INTERACTIONS
-const eniDataTest = COMPANIES_NEW_INTERACTIONS
-const ddaDataTest = MY_TASKS_DUE_DATE_APPROACHING
-const tatmfoDataTest = TASK_ASSIGNED_TO_ME_FROM_OTHERS
-const toDataTest = TASK_OVERDUE
-const tcDataTest = TASK_COMPLETED
-
 const getTable = (dataTest) => `[data-test="${dataTest}-table"]`
 const getLink = (dataTest) => `[data-test="${dataTest}-link"]`
 
 const interceptAPICalls = ({
-  esl_reminder_days = [30, 60],
-  esl_email_reminders_enabled = true,
-  nri_reminder_days = [50, 30, 70],
-  nri_email_reminders_enabled = true,
-  enri_reminder_days = [10, 40, 30],
-  enri_email_reminders_enabled = true,
-  eni_reminder_days = [2, 4, 7],
-  eni_email_reminders_enabled = true,
-  dda_reminder_days = [10],
-  dda_email_reminders_enabled = true,
-  tatmfo_email_reminders_enabled = true,
-  to_reminder_days = [10],
-  to_email_reminders_enabled = true,
-  tc_email_reminders_enabled = true,
+  reminder_days = [10],
+  email_reminders_enabled = true,
 } = {}) => {
   cy.intercept('GET', summaryEndpoint, {
     body: {
       estimated_land_date: {
-        email_reminders_enabled: esl_email_reminders_enabled,
-        reminder_days: esl_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       no_recent_investment_interaction: {
-        email_reminders_enabled: nri_email_reminders_enabled,
-        reminder_days: nri_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       no_recent_export_interaction: {
-        email_reminders_enabled: enri_email_reminders_enabled,
-        reminder_days: enri_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       new_export_interaction: {
-        email_reminders_enabled: eni_email_reminders_enabled,
-        reminder_days: eni_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       upcoming_task_reminder: {
-        email_reminders_enabled: dda_email_reminders_enabled,
-        reminder_days: dda_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       task_assigned_to_me_from_others: {
-        email_reminders_enabled: tatmfo_email_reminders_enabled,
+        email_reminders_enabled: email_reminders_enabled,
       },
       task_overdue: {
-        email_reminders_enabled: to_email_reminders_enabled,
-        reminder_days: to_reminder_days,
+        email_reminders_enabled: email_reminders_enabled,
+        reminder_days: reminder_days,
       },
       task_completed: {
-        email_reminders_enabled: tc_email_reminders_enabled,
+        email_reminders_enabled: email_reminders_enabled,
       },
     },
   }).as('summaryRequest')
@@ -140,13 +119,31 @@ describe('Settings: reminders and email notifications', () => {
       waitForAPICalls()
     })
 
-    assertSettingsTableVisible('ELD', eslDataTest)
-    assertSettingsTableVisible('NRI', nriDataTest)
-    assertSettingsTableVisible('ENRI', enriDataTest)
-    assertSettingsTableVisible('ENI', eniDataTest)
-    assertSettingsTableVisible('DDA', ddaDataTest)
-    assertSettingsTableVisible('TATMFO', tatmfoDataTest)
-    assertSettingsTableVisible('TO', toDataTest)
-    assertSettingsTableVisible('TC', tcDataTest)
+    assertSettingsTableVisible(
+      'Estimated Land Dates',
+      INVESTMENTS_ESTIMATED_LAND_DATES
+    )
+    assertSettingsTableVisible(
+      'No Recent Investment Interactions',
+      INVESTMENTS_NO_RECENT_INTERACTIONS
+    )
+    assertSettingsTableVisible(
+      'No Recent Export Interactions',
+      COMPANIES_NO_RECENT_INTERACTIONS
+    )
+    assertSettingsTableVisible(
+      'New Export Interactions',
+      COMPANIES_NEW_INTERACTIONS
+    )
+    assertSettingsTableVisible(
+      'Due Date Approaching',
+      MY_TASKS_DUE_DATE_APPROACHING
+    )
+    assertSettingsTableVisible(
+      'Task Assigned To Me From Others',
+      TASK_ASSIGNED_TO_ME_FROM_OTHERS
+    )
+    assertSettingsTableVisible('Task Overdue', TASK_OVERDUE)
+    assertSettingsTableVisible('Task Completed', TASK_COMPLETED)
   })
 })
