@@ -21,6 +21,7 @@ const REGISTERED_ADDRESS = {
 }
 
 export const COMPANY_ADDRESS = {
+  id: '123',
   name: 'Company with address',
   address: ADDRESS,
 }
