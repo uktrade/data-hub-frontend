@@ -82,6 +82,7 @@ import TeamType from './TeamType'
 import WinType from './WinType'
 import WithoutOurSupport from './WithoutOurSupport'
 import OrderQuote from './OrderQuote'
+import TaskCompletedSettings from './TaskCompletedSettings'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -168,4 +169,5 @@ export default {
   ...WinType.tasks,
   ...WithoutOurSupport.tasks,
   ...OrderQuote.tasks,
+  ...TaskCompletedSettings.tasks,
 }
