@@ -42,15 +42,19 @@ const StyledInsetText = styled(InsetText)`
 
 export const CompanyDetails = ({ company }) => (
   <FieldWrapper>
-    <StyledLabel>Company</StyledLabel>
-    <StyledInsetText>
+    <StyledLabel data-test="company-label">Company</StyledLabel>
+    <StyledInsetText data-test="company-details">
       {company.name}
       <br />
       <br />
       {transformCompanyAddress(company)}
       <br />
       <br />
-      <Link href={urls.omis.create.companySelect()} noVisitedState={true}>
+      <Link
+        href={urls.omis.create.companySelect()}
+        noVisitedState={true}
+        data-test="company-change-link"
+      >
         Change company
       </Link>
     </StyledInsetText>
