@@ -1,5 +1,3 @@
-const queryString = require('qs')
-
 const {
   authorisedRequest,
   authorisedRawRequest,
@@ -52,62 +50,6 @@ function search({
   return authorisedRequest(req, options).then((result) => {
     result.page = page
     return result
-  })
-}
-
-function searchEntity(
-  req,
-  body,
-  route,
-  { apiVersion = 'v3', page = 1, limit = 10 }
-) {
-  const queryParams = {
-    offset: page * limit - limit,
-    limit,
-  }
-
-  const options = {
-    body,
-    url: `${
-      config.apiRoot
-    }/${apiVersion}/search/${route}?${queryString.stringify(queryParams)}`,
-    method: 'POST',
-  }
-
-  return authorisedRequest(req, options).then((result) => {
-    result.page = page
-    return result
-  })
-}
-
-function searchCompanies({
-  req,
-  searchTerm,
-  isUkBased,
-  page = 1,
-  limit = 10,
-  requestBody = {},
-}) {
-  return searchEntity(
-    req,
-    {
-      ...requestBody,
-      original_query: searchTerm,
-      uk_based: isUkBased,
-      isAggregation: false,
-    },
-    'company',
-    { apiVersion: 'v4', page, limit }
-  )
-}
-
-function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
-  return searchCompanies({
-    req,
-    searchTerm,
-    page,
-    limit,
-    isUkBased: false,
   })
 }
 
@@ -180,8 +122,6 @@ function searchDnbCompanies({ req, requestBody = {} }) {
 
 module.exports = {
   search,
-  searchCompanies,
-  searchForeignCompanies,
   exportSearch,
   searchAutocomplete,
   searchDnbCompanies,
