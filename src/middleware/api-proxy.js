@@ -31,6 +31,7 @@ const ALLOWLIST = [
   '/v4/reminder/my-tasks-due-date-approaching',
   '/v4/reminder/task-assigned-to-me-from-others',
   '/v4/reminder/my-tasks-task-overdue',
+  '/v4/reminder/my-tasks-task-completed',
   '/v4/company/:id/remove-from-one-list',
   '/v4/company/:id/update-one-list-core-team',
   '/v4/proposition',

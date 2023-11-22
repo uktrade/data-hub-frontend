@@ -32,6 +32,8 @@ import {
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_OVERDUE,
   TASK_OVERDUE_LABEL,
+  TASK_COMPLETED,
+  TASK_COMPLETED_LABEL,
 } from '../constants'
 
 import FooterLink from '../FooterLink'
@@ -180,6 +182,7 @@ export const TasksAssignedToMeSettings = ({
   upcomingTaskReminder,
   taskAssignedToMeFromOthers,
   taskOverdue,
+  taskCompleted,
   openSettingsSections,
 }) => (
   <>
@@ -222,12 +225,24 @@ export const TasksAssignedToMeSettings = ({
         id={`${TASK_OVERDUE}-toggle`}
         data-test={`${TASK_OVERDUE}-toggle`}
         isOpen={isSettingOpen(openSettingsSections, TASK_OVERDUE)}
-        borderBottom={false}
+        borderBottom={true}
       >
         <EmailRemindersSettingsTable
           dataName={TASK_OVERDUE}
           data={taskOverdue}
           to={urls.reminders.settings.myTasks.taskOverdue()}
+        />
+      </RemindersToggleSection>
+      <RemindersToggleSection
+        label={TASK_COMPLETED_LABEL}
+        id={`${TASK_COMPLETED}-toggle`}
+        data-test={`${TASK_COMPLETED}-toggle`}
+        isOpen={isSettingOpen(openSettingsSections, TASK_COMPLETED)}
+        borderBottom={false}
+      >
+        <EmailRemindersSettingsTable
+          dataName={TASK_COMPLETED}
+          data={taskCompleted}
         />
       </RemindersToggleSection>
     </ToggleSectionContainer>
@@ -261,6 +276,7 @@ export const RemindersSettings = ({
           exportNewInteractions,
           upcomingTaskReminder,
           taskAssignedToMeFromOthers,
+          taskCompleted,
           taskOverdue,
         }) => (
           <>
@@ -282,6 +298,7 @@ export const RemindersSettings = ({
               upcomingTaskReminder={upcomingTaskReminder}
               taskAssignedToMeFromOthers={taskAssignedToMeFromOthers}
               taskOverdue={taskOverdue}
+              taskCompleted={taskCompleted}
               openSettingsSections={openSettingsSections}
             />
 

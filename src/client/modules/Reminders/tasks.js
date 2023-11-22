@@ -159,3 +159,18 @@ export const getNextTaskOverdueReminder = ({
 
 export const deleteTaskOverdueReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/my-tasks-task-overdue/${id}`)
+
+export const getTaskCompletedReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-completed')
+
+export const getNextTaskCompletedReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-task-completed')
+
+export const deleteTaskCompletedReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-completed/${id}`)

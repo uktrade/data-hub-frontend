@@ -31,8 +31,10 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_OVERDUE,
+  TASK_COMPLETED,
 } from './constants'
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
+import TaskCompletedList from './TaskCompletedList'
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -121,6 +123,7 @@ export const Reminders = ({ defaultUrl }) => {
               <TaskAssignedToMeFromOthersList />
             )}
             {reminderType === TASK_OVERDUE && <TaskOverdueList />}
+            {reminderType === TASK_COMPLETED && <TaskCompletedList />}
           </ListContainer>
         </Container>
         <FooterLink

@@ -651,6 +651,7 @@ module.exports = {
         '/reminders/task-assigned-to-me-from-others'
       ),
       taskOverdue: url('/reminders/my-tasks-task-overdue'),
+      taskCompleted: url('/reminders/my-tasks-task-completed'),
     },
     settings: {
       index: url('/reminders/settings'),
@@ -676,6 +677,7 @@ module.exports = {
           '/reminders/settings/task-assigned-to-me-from-others'
         ),
         taskOverdue: url('/reminders/settings/my-tasks-task-overdue'),
+        taskCompleted: url('/reminders/settings/my-tasks-task-completed'),
       },
     },
   },

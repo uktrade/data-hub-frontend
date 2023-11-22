@@ -63,6 +63,9 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
       email_reminders_enabled: true,
       reminder_days: [10],
     },
+    task_completed: {
+      email_reminders_enabled: true,
+    },
   })
 }
 

@@ -17,6 +17,7 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
   TASK_OVERDUE_LABEL,
+  TASK_COMPLETED_LABEL,
 } from './constants'
 
 const LinkList = styled('ul')({
@@ -126,6 +127,12 @@ export const RemindersMenu = ({
           pathname={location.pathname}
         >
           {`${TASK_OVERDUE_LABEL} (${reminderSummary.my_tasks.task_overdue})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskCompleted()}
+          pathname={location.pathname}
+        >
+          {`${TASK_COMPLETED_LABEL} (${reminderSummary.my_tasks.task_completed})`}
         </MenuItem>
       </Menu>
     </>
