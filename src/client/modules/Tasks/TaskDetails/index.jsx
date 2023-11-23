@@ -13,15 +13,21 @@ const getCompany = (task) => {
   return task?.investmentProject?.investorCompany
 }
 
+const getArchivedStatus = (task) => {
+  return task?.archived
+}
+
 const TaskDetails = ({ task }) => {
   const { taskId } = useParams()
 
   const company = getCompany(task)
   const taskTitle = task ? task.title : ''
+  const archived = getArchivedStatus(task)
 
   return (
     <DefaultLayout
       heading={taskTitle}
+      archived={archived}
       pageTitle={taskTitle}
       breadcrumbs={buildCompanyBreadcrumbs(
         {
