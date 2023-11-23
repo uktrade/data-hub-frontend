@@ -21,7 +21,6 @@ const CollectionList = ({
   sortOptions,
   taskProps,
   count = 0,
-  isComplete,
   collectionName = 'result',
   items,
   activePage = 1,
@@ -41,14 +40,12 @@ const CollectionList = ({
     <GridRow>
       <GridCol setWidth="full">
         <article>
-          {isComplete && (
-            <CollectionHeader
-              totalItems={count}
-              collectionName={collectionName}
-              addItemUrl={addItemUrl}
-              data-test="collection-header"
-            />
-          )}
+          <CollectionHeader
+            totalItems={count}
+            collectionName={collectionName}
+            addItemUrl={addItemUrl}
+            data-test="collection-header"
+          />
 
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
@@ -73,6 +70,7 @@ const CollectionList = ({
                   badges,
                   metadata,
                   buttons,
+                  archived,
                 },
                 index
               ) => (
@@ -85,27 +83,26 @@ const CollectionList = ({
                   metadata={metadata}
                   metadataRenderer={metadataRenderer}
                   buttons={buttons}
+                  archived={archived}
                 />
               )
             )}
           </ol>
           <Task.Status {...taskProps}>
-            {() =>
-              isComplete && (
-                <>
-                  <ol>
-                    {results.map((item, i) => (
-                      <CollectionItem {...item} key={i} />
-                    ))}
-                  </ol>
-                  <Pagination
-                    totalPages={totalPages}
-                    onPageClick={onPageClick}
-                    activePage={activePage}
-                  />
-                </>
-              )
-            }
+            {() => (
+              <>
+                <ol>
+                  {results.map((item, i) => (
+                    <CollectionItem {...item} key={i} />
+                  ))}
+                </ol>
+                <Pagination
+                  totalPages={totalPages}
+                  onPageClick={onPageClick}
+                  activePage={activePage}
+                />
+              </>
+            )}
           </Task.Status>
         </article>
       </GridCol>
