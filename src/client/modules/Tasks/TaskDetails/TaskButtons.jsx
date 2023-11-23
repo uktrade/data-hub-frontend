@@ -43,27 +43,26 @@ export const TaskButtons = ({ task, editUrl }) => (
         </Form>
       )}
       <ButtonWrapper>
-        <Button
-          buttonColour={GREY_3}
-          buttonTextColour={TEXT_COLOUR}
-          as={Link}
-          href={editUrl}
-          data-test="edit-form-button"
-        >
-          Edit
-        </Button>
-
-        <Button
-          buttonColour={GREY_3}
-          buttonTextColour={TEXT_COLOUR}
-          as={Link}
+        {!task.archived && (
+          <Button
+            buttonColour={GREY_3}
+            buttonTextColour={TEXT_COLOUR}
+            as={Link}
+            href={editUrl}
+            data-test="edit-form-button"
+          >
+            Edit
+          </Button>
+        )}
+        <Link
           href={urls.investments.projects.tasks.index(
             task.investmentProject.id
           )} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
           data-test="back-button"
+          aria-label={`Go back to the previous page`}
         >
           Back
-        </Button>
+        </Link>
       </ButtonWrapper>
     </GridRow>
   </>
