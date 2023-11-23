@@ -15,7 +15,7 @@ describe('Edit investment project task', () => {
   const investmentProjectTask = taskWithInvestmentProjectFaker()
   const endpoint = `/api-proxy/v4/task/${investmentProjectTask.id}`
   const detailsUrl = investments.projects.details(
-    investmentProjectTask.investmentProjectTask.investmentProject.id
+    investmentProjectTask.investmentProject.id
   )
 
   context('When visiting the edit task page', () => {
@@ -27,7 +27,7 @@ describe('Edit investment project task', () => {
       )
       cy.visit(
         investments.projects.tasks.edit(
-          investmentProjectTask.investmentProjectTask.investmentProject.id,
+          investmentProjectTask.investmentProject.id,
           investmentProjectTask.id
         )
       )
@@ -36,7 +36,7 @@ describe('Edit investment project task', () => {
     it('should display the header', () => {
       cy.get('h1').should(
         'have.text',
-        `Edit task for ${investmentProjectTask.investmentProjectTask.investmentProject.investorCompany.name}`
+        `Edit task for ${investmentProjectTask.investmentProject.investorCompany.name}`
       )
     })
 
@@ -44,9 +44,8 @@ describe('Edit investment project task', () => {
       assertBreadcrumbs({
         Investments: investments.index(),
         Projects: investments.projects.index(),
-        [investmentProjectTask.investmentProjectTask.investmentProject.name]:
-          detailsUrl,
-        [`Edit task for ${investmentProjectTask.investmentProjectTask.investmentProject.investorCompany.name}`]:
+        [investmentProjectTask.investmentProject.name]: detailsUrl,
+        [`Edit task for ${investmentProjectTask.investmentProject.investorCompany.name}`]:
           null,
       })
     })
@@ -60,7 +59,7 @@ describe('Edit investment project task', () => {
         )
         cy.visit(
           investments.projects.tasks.edit(
-            investmentProjectTask.investmentProjectTask.investmentProject.id,
+            investmentProjectTask.investmentProject.id,
             investmentProjectTask.id
           )
         )
@@ -87,7 +86,7 @@ describe('Edit investment project task', () => {
 
         assertExactUrl(
           investments.projects.tasks.index(
-            investmentProjectTask.investmentProjectTask.investmentProject.id
+            investmentProjectTask.investmentProject.id
           )
         )
 

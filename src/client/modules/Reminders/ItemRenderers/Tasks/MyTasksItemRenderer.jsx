@@ -18,14 +18,10 @@ const ItemContent = ({ item }) => (
       <ItemHint>Company: </ItemHint>
       <Link
         href={urls.companies.detail(
-          item.task.investment_project_task.investment_project.investor_company
-            .id
+          item.task.investment_project.investor_company.id
         )}
       >
-        {
-          item.task.investment_project_task.investment_project.investor_company
-            .name
-        }
+        {item.task.investment_project.investor_company.name}
       </Link>
     </li>
     <li>
@@ -40,7 +36,7 @@ const MyTasksItemRenderer = (item, onDeleteReminder, disableDelete) => (
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}
-    deletedText={`${item.event} for ${item.task.investment_project_task.investment_project.name}`}
+    deletedText={`${item.event} for ${item.task.investment_project.name}`}
     headerLinkHref={urls.tasks.details(item.task.id)}
     headerLinkTitle={item.event}
     itemContent={<ItemContent item={item} />}

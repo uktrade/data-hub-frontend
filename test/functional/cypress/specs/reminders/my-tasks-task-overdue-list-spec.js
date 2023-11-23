@@ -124,7 +124,7 @@ describe('My Tasks Task Overdue Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Company: ${reminders[0].task.investment_project_task.investment_project.investor_company.name}`
+          `Company: ${reminders[0].task.investment_project.investor_company.name}`
         )
         .should(
           'contain',
@@ -261,7 +261,7 @@ describe('My Tasks Task Overdue Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${reminders[4].event} for ${reminders[4].task.investment_project_task.investment_project.name}`
+          `${reminders[4].event} for ${reminders[4].task.investment_project.name}`
         )
         .find('a')
         .should('not.exist')
@@ -282,15 +282,14 @@ describe('My Tasks Task Overdue Reminders', () => {
         )
         .should(
           'contain',
-          `Company: ${nextReminder.task.investment_project_task.investment_project.investor_company.name}`
+          `Company: ${nextReminder.task.investment_project.investor_company.name}`
         )
         .find('a')
         .should(
           'have.attr',
           'href',
           urls.companies.detail(
-            nextReminder.task.investment_project_task.investment_project
-              .investor_company.id
+            nextReminder.task.investment_project.investor_company.id
           )
         )
     })

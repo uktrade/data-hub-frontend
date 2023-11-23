@@ -64,14 +64,11 @@ export const myTasksReminderFaker = (overrides = {}) => ({
   task: {
     id: faker.string.uuid(),
     due_date: faker.date.future({ years: 1 }),
-    investment_project_task: {
+    investment_project: {
       id: faker.string.uuid(),
-      investment_project: {
-        id: faker.string.uuid(),
-        name: faker.lorem.words(),
-        project_code: investmentProjectCodeFaker(),
-        investor_company: nestedCompanyFaker(),
-      },
+      name: faker.lorem.words(),
+      project_code: investmentProjectCodeFaker(),
+      investor_company: nestedCompanyFaker(),
     },
   },
   ...overrides,

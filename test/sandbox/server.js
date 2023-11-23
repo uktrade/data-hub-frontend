@@ -712,7 +712,6 @@ app.get('/v4/task', v4Task.getTasks)
 app.get('/v4/task/:taskId', v4Task.getTask)
 app.post('/v4/task', v4Task.createTask)
 app.patch('/v4/task/:taskId', v4Task.updateTask)
-app.get('/v4/investmentprojecttask', v4Task.investmentProjectTasks)
 
 // Whoami endpoint
 app.get('/whoami', user.whoami)

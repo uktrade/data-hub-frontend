@@ -77,15 +77,15 @@ const ProjectTasks = ({ project }) => {
           const sortOptions = [
             {
               name: 'Recently created',
-              value: '-task__created_on',
+              value: '-created_on',
             },
             {
               name: 'Oldest',
-              value: 'task__created_on',
+              value: 'created_on',
             },
             {
               name: 'Due date',
-              value: 'task__due_date',
+              value: 'due_date',
             },
           ]
 

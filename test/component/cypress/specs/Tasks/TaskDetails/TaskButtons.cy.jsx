@@ -32,7 +32,7 @@ describe('Task buttons', () => {
     it('should show the Back link with expected url', () => {
       assertLink(
         'back-button',
-        `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks?sortby=-task__created_on`
+        `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks?sortby=-created_on`
       )
     })
   })
@@ -56,7 +56,7 @@ describe('Task buttons', () => {
     it('should show the Back link with expected url', () => {
       assertLink(
         'back-button',
-        `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks?sortby=-task__created_on`
+        `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks?sortby=-created_on`
       )
     })
   })
