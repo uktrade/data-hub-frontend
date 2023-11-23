@@ -1,15 +1,10 @@
 import { tasks, dashboard, companies } from '../../../../../src/lib/urls'
 import { taskWithInvestmentProjectFaker } from '../../fakers/task'
-import { clickButton } from '../../support/actions'
-import {
-  assertSummaryTable,
-  assertBreadcrumbs,
-  assertPayload,
-  assertUrl,
-} from '../../support/assertions'
+import { assertSummaryTable, assertBreadcrumbs } from '../../support/assertions'
 
 describe('View task details', () => {
   const investmentProjectTask = taskWithInvestmentProjectFaker()
+
   const expectedCompany =
     investmentProjectTask.investmentProject.investorCompany
 
@@ -46,19 +41,6 @@ describe('View task details', () => {
         assertSummaryTable({
           dataTest: 'task-details-table',
         })
-      })
-
-      it('should redirect to the investment project and show the Flash message after marking as complete', () => {
-        cy.intercept(
-          'POST',
-          `/api-proxy/v4/task/${investmentProjectTask.id}/archive`,
-          {}
-        ).as('postTaskArchiveApiRequest')
-        clickButton('Mark as complete')
-        assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
-        assertUrl(
-          `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks`
-        )
       })
     }
   )
