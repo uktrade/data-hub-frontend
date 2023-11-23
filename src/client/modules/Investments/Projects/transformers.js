@@ -290,10 +290,12 @@ export const transformTaskToListItem = ({
   title,
   dueDate,
   advisers,
+  archived,
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),
   headingText: title,
+  archived: archived,
   metadata: [
     { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
     {

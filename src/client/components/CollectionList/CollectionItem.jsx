@@ -9,6 +9,7 @@ import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
+import Tag from '../Tag'
 
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
@@ -60,6 +61,10 @@ const StyledButtonWrapper = styled('div')`
   }
 `
 
+const StyledTag = styled(Tag)`
+  margin-bottom: ${SPACING.SCALE_2};
+`
+
 const CollectionItem = ({
   headingText,
   subheading,
@@ -71,47 +76,54 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
-}) => (
-  <ItemWrapper data-test="collection-item">
-    {badges && (
-      <StyledBadgesWrapper>
-        {badges.map((badge) => (
-          <Badge key={badge.text} borderColour={badge.borderColour}>
-            {badge.text}
-          </Badge>
-        ))}
-      </StyledBadgesWrapper>
-    )}
+  archived,
+}) => {
+  return (
+    <ItemWrapper data-test="collection-item">
+      {badges && (
+        <StyledBadgesWrapper>
+          {badges.map((badge) => (
+            <Badge key={badge.text} borderColour={badge.borderColour}>
+              {badge.text}
+            </Badge>
+          ))}
+        </StyledBadgesWrapper>
+      )}
 
-    {titleRenderer ? (
-      titleRenderer(headingText, headingUrl)
-    ) : headingUrl ? (
-      <StyledLinkHeader>
-        {useReactRouter ? (
-          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        ) : (
-          <Link href={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        )}
-      </StyledLinkHeader>
-    ) : (
-      <StyledHeader>{headingText}</StyledHeader>
-    )}
+      {titleRenderer ? (
+        titleRenderer(headingText, headingUrl)
+      ) : headingUrl ? (
+        <StyledLinkHeader>
+          {useReactRouter ? (
+            <Link as={RouterLink} to={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          ) : (
+            <Link href={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          )}
+        </StyledLinkHeader>
+      ) : (
+        <StyledHeader>{headingText}</StyledHeader>
+      )}
+      {archived && (
+        <StyledTag colour="green" data-test="activity-kind-label">
+          COMPLETED
+        </StyledTag>
+      )}
+      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-    {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
 
-    {metadataRenderer ? (
-      metadataRenderer(metadata)
-    ) : (
-      <Metadata rows={metadata} />
-    )}
-
-    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-  </ItemWrapper>
-)
+      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+    </ItemWrapper>
+  )
+}
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
