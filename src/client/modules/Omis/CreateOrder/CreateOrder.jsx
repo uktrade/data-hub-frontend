@@ -63,11 +63,13 @@ export const CompanyDetails = ({ company }) => (
 
 export const WhatHappensNext = ({ ukRegion }) => (
   <FieldWrapper>
-    <StyledLabel>What happens next?</StyledLabel>
-    <p>{`Continuing with the order will notify the post manager for the chosen country${
+    <StyledLabel data-test="what-happens-next-label">
+      What happens next?
+    </StyledLabel>
+    <p data-test="what-happens-next-body">{`Continuing with the order will notify the post manager for the chosen country${
       ukRegion ? ` and the region manager for ${ukRegion.name}.` : '.'
     }`}</p>
-    <WarningText>
+    <WarningText data-test="what-happens-next-warning">
       You will not be able to edit the company or country after this point.
     </WarningText>
   </FieldWrapper>
