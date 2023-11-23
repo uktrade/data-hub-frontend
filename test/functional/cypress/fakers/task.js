@@ -87,6 +87,7 @@ export {
   taskWithInvestmentProjectFaker,
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
+  basicAdviserFaker,
 }
 
 export default taskListFaker
