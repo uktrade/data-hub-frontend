@@ -49,14 +49,22 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
     })
   )
 
-const investmentProjectTaskFaker = (overrides = {}) =>
-  taskFaker(
+const taskWithInvestmentProjectNotCompleteFaker = (overrides = {}) =>
+  taskWithInvestmentProjectFaker(
     (overrides = {
-      investment_project: pick(investmentProjectFaker(), ['id', 'name']),
-      createdOn: faker.date.past().toISOString(),
+      archived: false,
+
       ...overrides,
     })
   )
+
+const investmentProjectTaskFaker = (overrides = {}) => ({
+  id: faker.string.uuid(),
+  investment_project: pick(investmentProjectFaker(), ['id', 'name']),
+  task: taskFaker(),
+  createdOn: faker.date.past().toISOString(),
+  ...overrides,
+})
 
 const taskListFaker = (length = 3, overrides) =>
   listFaker({
@@ -84,6 +92,7 @@ export {
   taskListFaker,
   investmentProjectTaskFaker,
   taskWithInvestmentProjectFaker,
+  taskWithInvestmentProjectNotCompleteFaker,
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
 }
