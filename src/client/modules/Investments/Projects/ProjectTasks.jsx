@@ -69,7 +69,6 @@ const ProjectTasks = ({ project }) => {
           limit: ITEMS_PER_PAGE,
           offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
           sortby: parsedQueryString.sortby,
-          archived: false,
         }}
       >
         {(projectTasks, count) => {
