@@ -19,7 +19,7 @@ import PaginatedResource from './Paginated'
  * @param {Object} props
  * @param {string} props.name - The name of the task which loads the resource
  * @param {string} props.id - The unique ID of the resource for the given name.
- * The ID will be the task's payload.e
+ * The ID will be the task's payload.
  * @param {any} props.payload - A payload with which the task will be called.
  * @param {(result: any) => React.ReactNode} props.children - The single child should be
  * a function to whose arguments will be spread the return value of the
@@ -29,7 +29,7 @@ import PaginatedResource from './Paginated'
  * be spread to the {props.children} function. Defaults to `x => [x]`.
  * @param {any} [progressBox] - If truthy, the {LoadingBox} will be used as
  * the task status component. Note that in such case {props.children} will be
- * also called before the task resolves with the resut being {undefined}.
+ * also called before the task resolves with the result being {undefined}.
  * @example
  * <Resource name="My task name" id="foo" payload={123}>
  *   {result =>
@@ -265,7 +265,7 @@ export const createMetadataResource = (name, endpoint) => {
     rawResult,
   ]
   const Component = (props) => (
-    <EntityResource transformer={transformer} {...props} id="__METADATA__" />
+    <EntityResource transformer={transformer} id="__METADATA__" {...props} />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')

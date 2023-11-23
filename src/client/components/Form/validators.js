@@ -4,9 +4,14 @@ const EMAIL_PATTERN =
 const IS_NUMBER = /^[0-9]*$/
 
 export const email = (x) =>
-  EMAIL_PATTERN.test(x)
-    ? null
-    : 'Enter an email address in the correct format, like name@example.com'
+  x && !EMAIL_PATTERN.test(x)
+    ? 'Enter an email address in the correct format, like name@example.com'
+    : null
 
 export const number = (x, errorMessage) =>
   !x || IS_NUMBER.test(x) ? null : errorMessage
+
+export const validateTeamMembers = (team_members) =>
+  Array.isArray(team_members) && team_members.length > 5
+    ? 'You can only add 5 team members'
+    : null

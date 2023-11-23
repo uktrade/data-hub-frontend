@@ -5,9 +5,9 @@ import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
+import { DefaultLayout, Form, FormLayout } from '../../../components'
 import { CompanyResource } from '../../../components/Resource'
-import { DefaultLayout, Form } from '../../../components'
+import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
 import OfficerDetailsStep from './OfficerDetailsStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
@@ -17,7 +17,8 @@ import CheckBeforeSendingStep from './CheckBeforeSending'
 import urls from '../../../../lib/urls'
 
 const StyledLoadingBox = styled(LoadingBox)({
-  height: SPACING.SCALE_5,
+  height: 16,
+  width: SPACING.SCALE_5,
 })
 
 const AddExportWinForm = () => {
@@ -36,33 +37,31 @@ const AddExportWinForm = () => {
           }}
           id={queryParams.company}
         >
-          {(company) => company.name}
+          {(company) => company.name.toUpperCase()}
         </CompanyResource>
       }
       pageTitle="Add export win"
       breadcrumbs={[]}
     >
-      <Form
-        id="add-export-win"
-        showStepInUrl={true}
-        cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
-        redirectTo={() => urls.companies.exportWins.unconfirmed()}
-        analyticsFormName="addExportWin"
-        submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
-      >
-        {() => {
-          return (
-            <>
-              <OfficerDetailsStep />
-              <CreditForThisWinStep />
-              <CustomerDetailsStep />
-              <WinDetailsStep />
-              <SupportProvidedStep />
-              <CheckBeforeSendingStep />
-            </>
-          )
-        }}
-      </Form>
+      <FormLayout setWidth="three-quarters">
+        <Form
+          id="add-export-win"
+          showStepInUrl={true}
+          cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
+          redirectTo={() => urls.companies.exportWins.unconfirmed()}
+          analyticsFormName="addExportWin"
+          submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
+        >
+          <>
+            <OfficerDetailsStep />
+            <CreditForThisWinStep />
+            <CustomerDetailsStep />
+            <WinDetailsStep />
+            <SupportProvidedStep />
+            <CheckBeforeSendingStep />
+          </>
+        </Form>
+      </FormLayout>
     </DefaultLayout>
   )
 }
