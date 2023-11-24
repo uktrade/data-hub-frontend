@@ -35,7 +35,7 @@ describe('My Tasks on the Dashboard', () => {
     count: 3,
     results: [
       {
-        investment_project: shortest_due_date.investmentProjectTask,
+        investment_project: shortest_due_date.investmentProject,
         advisers: [
           {
             name: adviser1.name,
@@ -52,7 +52,7 @@ describe('My Tasks on the Dashboard', () => {
         },
       },
       {
-        investment_project: middle_due_date.investmentProjectTask,
+        investment_project: middle_due_date.investmentProject,
         advisers: [
           {
             name: adviser1.name,
@@ -69,7 +69,7 @@ describe('My Tasks on the Dashboard', () => {
         },
       },
       {
-        investment_project: longest_due_date.investmentProjectTask,
+        investment_project: longest_due_date.investmentProject,
         advisers: [
           {
             name: adviser2.name,
@@ -104,19 +104,19 @@ describe('My Tasks on the Dashboard', () => {
           [
             formatMediumDate(shortest_due_date.dueDate),
             shortest_due_date.title,
-            shortest_due_date.investmentProjectTask.name,
+            shortest_due_date.investmentProject.name,
             shortest_due_date.advisers[0].name,
           ],
           [
             formatMediumDate(middle_due_date.dueDate),
             middle_due_date.title,
-            middle_due_date.investmentProjectTask.name,
+            middle_due_date.investmentProject.name,
             middle_due_date.advisers[0].name,
           ],
           [
             formatMediumDate(longest_due_date.dueDate),
             longest_due_date.title,
-            longest_due_date.investmentProjectTask.name,
+            longest_due_date.investmentProject.name,
             longest_due_date.advisers[0].name,
           ],
         ],
@@ -178,7 +178,7 @@ describe('My Tasks on the Dashboard', () => {
     count: 1,
     results: [
       {
-        investment_project: shortest_due_date.investmentProjectTask,
+        investment_project: shortest_due_date.investmentProject,
         advisers: [
           {
             name: adviser1.name,
@@ -213,7 +213,7 @@ describe('My Tasks on the Dashboard', () => {
           [
             formatMediumDate(shortest_due_date.dueDate),
             shortest_due_date.title,
-            shortest_due_date.investmentProjectTask.name,
+            shortest_due_date.investmentProject.name,
             shortest_due_date.advisers[0].name,
           ],
         ],

@@ -22,7 +22,7 @@ const header = (
 )
 
 const rows = (myTasks) => {
-  return myTasks.map((task) => (
+  return myTasks.results.map((task) => (
     <Table.Row>
       <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
       <Table.Cell setWidth="40%">
@@ -42,10 +42,10 @@ const rows = (myTasks) => {
 export const MyTasksTable = ({ myTasks }) => {
   return (
     <ContentWithHeading
-      heading={`${myTasks.count} ${myTasks.count == 1 ? 'task' : 'tasks'}`}
+      heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
       data-test="my-tasks-heading"
     >
-      {myTasks.count ? (
+      {myTasks?.count ? (
         <Table head={header} myTasks={myTasks} data-test="my-tasks-table">
           {rows(myTasks)}
         </Table>
