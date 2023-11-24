@@ -1,7 +1,7 @@
 import { MY_TASKS_LOADED } from '../../../actions'
 
 const initialState = {
-  myTasks: {},
+  myTasks: null,
 }
 
 export default (state = initialState, { type, result }) => {

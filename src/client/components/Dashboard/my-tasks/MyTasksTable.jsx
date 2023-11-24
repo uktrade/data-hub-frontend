@@ -4,8 +4,6 @@ import { HintText, Link, Table } from 'govuk-react'
 
 import styled from 'styled-components'
 
-import { orderBy } from 'lodash'
-
 import ContentWithHeading from '../../ContentWithHeading'
 import { formatMediumDate } from '../../../utils/date'
 import urls from '../../../../lib/urls'
@@ -24,12 +22,7 @@ const header = (
 )
 
 const rows = (myTasks) => {
-  const orderedMyTasks = orderBy(
-    myTasks.results,
-    [(c) => c.due_date || ''],
-    ['asc']
-  )
-  return orderedMyTasks.map((task) => (
+  return myTasks.map((task) => (
     <Table.Row>
       <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
       <Table.Cell setWidth="40%">

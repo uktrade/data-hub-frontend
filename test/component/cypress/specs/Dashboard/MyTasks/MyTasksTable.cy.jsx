@@ -18,22 +18,39 @@ describe('My Tasks on the Dashboard', () => {
   const adviser2 = basicAdviserFaker()
   const shortest_due_date = taskWithInvestmentProjectFaker({
     advisers: [adviser1],
-    dueDate: '2024-01-01',
+    dueDate: '2025-01-01',
     createdBy: adviser1,
   })
   const middle_due_date = taskWithInvestmentProjectFaker({
     advisers: [adviser1],
-    dueDate: '2025-01-01',
+    dueDate: '2026-01-01',
     createdBy: adviser2,
   })
   const longest_due_date = taskWithInvestmentProjectFaker({
     advisers: [adviser2],
-    dueDate: '2026-01-01',
+    dueDate: '2027-01-01',
     createdBy: adviser1,
   })
   const myTasks = {
     count: 3,
     results: [
+      {
+        investment_project: shortest_due_date.investmentProjectTask,
+        advisers: [
+          {
+            name: adviser1.name,
+          },
+        ],
+        due_date: shortest_due_date.dueDate,
+        company: {
+          name: 'Mars Exports Ltd',
+        },
+        id: shortest_due_date.id,
+        title: shortest_due_date.title,
+        created_by: {
+          name: adviser1.name,
+        },
+      },
       {
         investment_project: middle_due_date.investmentProjectTask,
         advisers: [
@@ -64,23 +81,6 @@ describe('My Tasks on the Dashboard', () => {
         },
         id: longest_due_date.id,
         title: longest_due_date.title,
-        created_by: {
-          name: adviser1.name,
-        },
-      },
-      {
-        investment_project: shortest_due_date.investmentProjectTask,
-        advisers: [
-          {
-            name: adviser1.name,
-          },
-        ],
-        due_date: shortest_due_date.dueDate,
-        company: {
-          name: 'Mars Exports Ltd',
-        },
-        id: shortest_due_date.id,
-        title: shortest_due_date.title,
         created_by: {
           name: adviser1.name,
         },

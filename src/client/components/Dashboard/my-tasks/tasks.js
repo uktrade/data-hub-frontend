@@ -8,7 +8,4 @@ export const getMyTasks = ({ adviser }) =>
       created_by: adviser.id,
       adviser: [adviser.id],
     })
-    .then(({ data }) => ({
-      count: data.count,
-      results: data.results,
-    }))
+    .then(({ data }) => data)
