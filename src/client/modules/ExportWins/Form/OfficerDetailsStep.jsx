@@ -61,26 +61,26 @@ const FormFields = ({ owner, teamType, teamMembers, values }) => (
       name="owner"
       label="Owner name"
       required="Enter an owner"
-      initialValue={values.owner || owner}
+      initialValue={[values.owner || owner]}
     />
     <ResourceOptionsField
+      name="team_type"
       id={`officer-team-type`}
       resource={TeamTypeResource}
       field={FieldSelect}
       fullWidth={true}
-      name="team_type"
       label="Team type"
       required="Enter a team type"
       initialValue={values.team_type || teamType}
     />
     {values.team_type && (
       <ResourceOptionsField
+        name="hq_team_region_or_post"
         id={`officer-hq-team-region-or-post`}
         resource={HQTeamRegionOrPostsResource}
         field={FieldSelect}
         fullWidth={true}
         payload={{ team_type: values.team_type }}
-        name="hq_team_region_or_post"
         label="HQ team, Region or Post"
         required="Enter a HQ team, Region or Post"
         initialValue={values.hq_team_region_or_post}
@@ -94,9 +94,9 @@ const FormFields = ({ owner, teamType, teamMembers, values }) => (
       initialValue={values.team_members || teamMembers}
       isMulti={true}
     />
-    <pre>{JSON.stringify(values, null, 2)}</pre>
   </>
 )
+
 const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
   <ExportResource id={id}>
     {(exportProject) => (
