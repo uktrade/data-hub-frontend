@@ -6,7 +6,11 @@ import styled from 'styled-components'
 import { DARK_GREY, MID_GREY } from '../../../../client/utils/colours'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { OPTION_YES, OPTIONS_YES_NO } from '../../../../common/constants'
+import {
+  OPTION_YES,
+  OPTION_NO,
+  OPTIONS_YES_NO,
+} from '../../../../common/constants'
 import {
   TeamTypeResource,
   HQTeamRegionOrPostsResource,
@@ -52,12 +56,12 @@ const CreditForThisWinStep = () => {
         credited, this will not reduce your credit for this win.
       </StyledParagraph>
       <StyledFieldRadios
-        name="credit_for_this_win"
-        showBorder={true}
+        name="credit_for_win"
         label="Did any other teams help with this win?"
         options={OPTIONS_NO_YES}
+        initialValue={values.credit_for_win || OPTION_NO}
       />
-      {values.credit_for_this_win === OPTION_YES && (
+      {values.credit_for_win === OPTION_YES && (
         <Container>
           <FieldAddAnother
             name="addAnother"
@@ -110,7 +114,6 @@ const CreditForThisWinStep = () => {
           </FieldAddAnother>
         </Container>
       )}
-      <pre>{JSON.stringify(values, null, 2)}</pre>
     </Step>
   )
 }
