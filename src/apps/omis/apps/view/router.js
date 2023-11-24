@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
 const { setOrderBreadcrumb } = require('../../middleware')
-const { renderQuote, renderPaymentReceipt } = require('./controllers')
+const { renderQuote } = require('./controllers')
 const {
   setCompany,
   setContact,
@@ -10,8 +10,6 @@ const {
   setQuotePreview,
   setQuote,
   setQuoteForm,
-  setInvoice,
-  setPayments,
   generateQuote,
   cancelQuote,
 } = require('./middleware')
@@ -24,7 +22,6 @@ router.use(setOrderBreadcrumb)
 router.use(setQuoteSummary)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
   .get(setContact, setQuotePreview, setQuote, setQuoteForm, renderQuote)
