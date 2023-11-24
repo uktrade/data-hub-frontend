@@ -609,7 +609,10 @@ module.exports = {
       companySelect: url('/omis', '/create'),
       form: url('/omis', '/create/:companyId'),
     },
-    reconciliation: url('/omis/reconciliation'),
+    reconciliation: url(
+      '/omis/reconciliation',
+      PRIMARY_LINK_PARAMS.reconciliation
+    ),
     order: url('/omis', '/:orderId'),
     paymentReconciliation: url(
       '/omis',
@@ -633,6 +636,10 @@ module.exports = {
     },
     cancel: url('/omis', '/:orderId/edit/cancel-order'),
     complete: url('/omis', '/:orderId/edit/complete-order'),
+    paymentReceiptReconciliation: url(
+      '/omis',
+      '/:orderId/reconciliation/payment-receipt'
+    ),
   },
   support: url('/support'),
   reminders: {

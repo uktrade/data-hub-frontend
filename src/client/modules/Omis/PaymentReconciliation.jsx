@@ -155,7 +155,9 @@ const PaymentReconciliation = () => {
                       flashMessage={() =>
                         `Payment for ${order.reference} reconciled`
                       }
-                      redirectTo={() => urls.omis.paymentReceipt(order.id)}
+                      redirectTo={() =>
+                        urls.omis.paymentReceiptReconciliation(order.id)
+                      }
                       submissionTaskName={TASK_RECONCILE_OMIS_PAYMENT}
                       transformPayload={(values) =>
                         transformPaymentInformationForApi({
