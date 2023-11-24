@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { Step } from '../../../components'
+import { Step, FieldInput } from '../../../components'
 import { steps } from './constants'
 
 const SupportProvidedStep = () => {
@@ -10,6 +10,7 @@ const SupportProvidedStep = () => {
   return (
     <Step name={steps.SUPPORT_PROVIDED}>
       <h1>Support provided</h1>
+      <FieldInput name="test3" label="Test3" type="text" />
     </Step>
   )
 }

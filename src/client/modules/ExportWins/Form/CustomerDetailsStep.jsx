@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { Step } from '../../../components'
+import { Step, FieldInput } from '../../../components'
 import { steps } from './constants'
 
 const CustomerDetailsStep = () => {
@@ -10,6 +10,7 @@ const CustomerDetailsStep = () => {
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
       <h1>Customer details</h1>
+      <FieldInput name="test1" label="Test 1" type="text" />
     </Step>
   )
 }
