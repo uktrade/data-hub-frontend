@@ -52,14 +52,19 @@ const AddExportWinForm = () => {
           analyticsFormName="addExportWin"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
         >
-          <>
-            <OfficerDetailsStep />
-            <CreditForThisWinStep />
-            <CustomerDetailsStep />
-            <WinDetailsStep />
-            <SupportProvidedStep />
-            <CheckBeforeSendingStep />
-          </>
+          {({ values }) => {
+            return (
+              <>
+                <OfficerDetailsStep />
+                <CreditForThisWinStep />
+                <CustomerDetailsStep />
+                <WinDetailsStep />
+                <SupportProvidedStep />
+                <CheckBeforeSendingStep />
+                <pre>{JSON.stringify(values, null, 2)}</pre>
+              </>
+            )
+          }}
         </Form>
       </FormLayout>
     </DefaultLayout>
