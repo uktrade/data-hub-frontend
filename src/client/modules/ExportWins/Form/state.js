@@ -1,1 +1,2 @@
 export const TASK_GET_EXPORT_WINS_SAVE_FORM = 'TASK_GET_EXPORT_WINS_SAVE_FORM'
+export const ID = 'exportWinForm'
