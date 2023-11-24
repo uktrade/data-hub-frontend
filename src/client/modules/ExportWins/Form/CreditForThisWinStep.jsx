@@ -110,6 +110,7 @@ const CreditForThisWinStep = () => {
           </FieldAddAnother>
         </Container>
       )}
+      <pre>{JSON.stringify(values, null, 2)}</pre>
     </Step>
   )
 }

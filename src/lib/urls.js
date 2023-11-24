@@ -212,6 +212,7 @@ module.exports = {
     exportWins: {
       index: url('/exportwins'),
       create: url('/exportwins/create'),
+      checkBeforeSending: url('/exportwins/create?step=check_before_sending'),
       details: url('/exportwins/:winId/details'),
       confirmed: url('/exportwins/confirmed'),
       unconfirmed: url('/exportwins/unconfirmed'),
