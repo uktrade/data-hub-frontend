@@ -43,6 +43,7 @@ const DashboardTabs = ({
           [urls.dashboard.myTasks()]: {
             label: 'My tasks',
             content: <MyTasks />,
+            content: <MyTasks adviser={adviser} />,
           },
         }),
         ...(canViewCompanyLists(userPermissions) && {

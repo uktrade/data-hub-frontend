@@ -400,6 +400,9 @@ import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
 import { saveExportWin } from './modules/ExportWins/Form/tasks'
 
+import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
+import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -632,4 +635,5 @@ export const tasks = {
   [TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskCompletedSubscriptions,
   [TASK_CHECK_FOR_MY_TASKS]: personalisedDashboard.checkForMyTasks,
+  [TASK_GET_MY_TASKS]: getMyTasks,
 }
