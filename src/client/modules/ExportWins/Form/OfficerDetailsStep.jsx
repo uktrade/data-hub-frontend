@@ -61,7 +61,7 @@ const FormFields = ({ owner, teamType, teamMembers, values }) => (
       name="owner"
       label="Owner name"
       required="Enter an owner"
-      initialValue={[values.owner || owner]}
+      initialValue={values.owner || owner}
     />
     <ResourceOptionsField
       name="team_type"
