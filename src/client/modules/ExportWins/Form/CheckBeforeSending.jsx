@@ -1,16 +1,30 @@
 import React from 'react'
 
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { Step, FieldInput } from '../../../components'
+import { Step, ButtonLink, FieldInput } from '../../../components'
 import { steps } from './constants'
 
 const CheckBeforeSendingStep = () => {
   // eslint-disable-next-line no-unused-vars
-  const { values } = useFormContext()
+  const { values, goToStep } = useFormContext()
   return (
     <Step name={steps.CHECK_BEFORE_SENDING}>
       <h1>Check before sending</h1>
       <FieldInput name="test4" label="Test4" type="text" />
+      <ButtonLink
+        onClick={() => {
+          goToStep(steps.OFFICER_DETAILS)
+        }}
+      >
+        Change Officer details
+      </ButtonLink>
+      <ButtonLink
+        onClick={() => {
+          goToStep(steps.CREDIT_FOR_THIS_WIN)
+        }}
+      >
+        Change credit for this win
+      </ButtonLink>
     </Step>
   )
 }
