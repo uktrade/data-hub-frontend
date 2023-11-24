@@ -10,7 +10,7 @@ import Task from '../../../../components/Task'
 import { DefaultLayout } from '../../../../components'
 import TaskForm from '../../../Tasks/TaskForm'
 
-const TaskAdd = ({ currentAdviserId, investmentProject, activeFeatures }) => {
+const TaskAdd = ({ currentAdviserId, investmentProject }) => {
   const { projectId } = useParams()
   const investorCompanyName = investmentProject?.investorCompany?.name || ''
   return (
@@ -49,7 +49,6 @@ const TaskAdd = ({ currentAdviserId, investmentProject, activeFeatures }) => {
               )}
               submissionTaskName={TASK_SAVE_INVESTMENT_PROJECT_TASK}
               additionalPayloadData={{ investmentProject: investmentProject }}
-              activeFeatures={activeFeatures}
             />
           )
         }

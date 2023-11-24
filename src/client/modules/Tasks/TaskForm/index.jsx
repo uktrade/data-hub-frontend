@@ -17,7 +17,6 @@ import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
 import { OPTIONS } from './constants'
 import urls from '../../../../lib/urls'
-import { adviserTasksFeatureFlag } from '../../AdviserTasks/constants'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -36,9 +35,6 @@ const taskDueDateOptions = [
   { label: 'No due date', value: 'none' },
 ]
 
-const userCanViewTaskReminders = (activeFeatures) =>
-  activeFeatures.includes(adviserTasksFeatureFlag)
-
 const TaskForm = ({
   currentAdviserId,
   task,
@@ -47,7 +43,6 @@ const TaskForm = ({
   redirectToUrl,
   submissionTaskName,
   additionalPayloadData,
-  activeFeatures,
 }) => {
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
@@ -124,19 +119,17 @@ const TaskForm = ({
                 }),
               }))}
             />
-            {userCanViewTaskReminders(activeFeatures) && (
-              <FieldRadios
-                name="taskRemindersEnabled"
-                legend="Do you want to set a reminder for this task?"
-                required="Select reminder"
-                options={OPTIONS_YES_NO.map((option) => ({
-                  ...option,
-                  ...(option.label === 'Yes' && {
-                    children: <FieldReminder />,
-                  }),
-                }))}
-              />
-            )}
+            <FieldRadios
+              name="taskRemindersEnabled"
+              legend="Do you want to set a reminder for this task?"
+              required="Select reminder"
+              options={OPTIONS_YES_NO.map((option) => ({
+                ...option,
+                ...(option.label === 'Yes' && {
+                  children: <FieldReminder />,
+                }),
+              }))}
+            />
             <Details summary="Find out more about task reminders">
               <p>
                 By default reminders are sent at 8am, on the specified date by:
