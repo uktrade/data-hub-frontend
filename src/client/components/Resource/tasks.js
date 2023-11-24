@@ -83,6 +83,7 @@ import WinType from './WinType'
 import WithoutOurSupport from './WithoutOurSupport'
 import OrderQuote from './OrderQuote'
 import TaskCompletedSettings from './TaskCompletedSettings'
+import OmisMarkets from './OmisMarkets'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -170,4 +171,5 @@ export default {
   ...WithoutOurSupport.tasks,
   ...OrderQuote.tasks,
   ...TaskCompletedSettings.tasks,
+  ...OmisMarkets.tasks,
 }

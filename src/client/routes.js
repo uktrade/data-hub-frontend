@@ -79,6 +79,8 @@ import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
 import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
 import Opportunity from './modules/Investments/Opportunities/Opportunity'
+import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
+import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
 
 const routes = {
   companies: [
@@ -301,6 +303,16 @@ const routes = {
       path: '/omis/:orderId/edit/lead-adviser/:adviserId',
       module: 'datahub:orders',
       component: SetLeadAdviser,
+    },
+    {
+      path: '/omis/create',
+      module: 'datahub:orders',
+      component: SelectOrderCompany,
+    },
+    {
+      path: '/omis/create/:companyId',
+      module: 'datahub:orders',
+      component: CreateOrder,
     },
   ],
   reminders: [

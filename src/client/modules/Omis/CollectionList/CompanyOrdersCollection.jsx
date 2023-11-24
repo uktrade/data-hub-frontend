@@ -18,6 +18,7 @@ import {
   COMPANY_ORDERS_LIST_ID,
   TASK_GET_ORDERS_LIST,
 } from './state'
+import urls from '../../../../lib/urls'
 
 const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
@@ -92,9 +93,7 @@ const CompanyOrdersCollection = ({
             taskProps={collectionListTask}
             selectedFilters={selectedFilters}
             addItemUrl={
-              company.archived
-                ? null
-                : `/omis/create?company=${company.id}&skip-company=true`
+              company.archived ? null : urls.omis.create.form(company.id)
             }
             entityName="order"
             entityNamePlural="orders"

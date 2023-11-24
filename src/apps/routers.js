@@ -103,6 +103,8 @@ const reactRoutes = [
   '/investments/opportunities/:opportunityId/status',
   '/investments/opportunities/:opportunityId/details',
   '/investments/opportunities/:opportunityId/interactions',
+  '/omis/create',
+  '/omis/create/:companyId',
 ]
 
 reactRoutes.forEach((path) => {

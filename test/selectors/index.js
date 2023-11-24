@@ -34,9 +34,6 @@ exports.companyDnbHierarchy = {
 exports.contactCreate = require('./contact/create')
 exports.eventCreate = require('./event/createOrEdit')
 
-exports.omisCreate = require('./omis/create')
-exports.omisSummary = require('./omis/summary')
-
 exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')
 exports.editHistory = require('./edit-history')

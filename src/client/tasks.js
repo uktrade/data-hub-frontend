@@ -385,6 +385,11 @@ import {
   setLeadAdviser,
 } from './modules/Omis/tasks'
 
+import { TASK_GET_COMPANIES } from './modules/Omis/CreateOrder/CompanySelect/state'
+import { getOmisCompanies } from './modules/Omis/CreateOrder/CompanySelect/tasks.js'
+import { TASK_CREATE_ORDER } from './modules/Omis/CreateOrder/state'
+import { createOrder } from './modules/Omis/CreateOrder/tasks'
+
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
   TASK_ARCHIVE_TASK,
@@ -630,4 +635,6 @@ export const tasks = {
   [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
   [TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskCompletedSubscriptions,
+  [TASK_GET_COMPANIES]: getOmisCompanies,
+  [TASK_CREATE_ORDER]: createOrder,
 }

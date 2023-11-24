@@ -98,10 +98,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
   assertRemoveAllFiltersNotPresent()
 
   it('should render an "Add order" button', () => {
-    assertAddItemButton(
-      'Add order',
-      `/omis/create?company=${oneListCorp.id}&skip-company=true`
-    )
+    assertAddItemButton('Add order', urls.omis.create.form(oneListCorp.id))
   })
 
   it('should render the sort options', () => {
