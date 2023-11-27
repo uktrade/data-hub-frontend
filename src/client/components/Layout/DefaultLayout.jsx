@@ -17,7 +17,6 @@ const GlobalStyles = createGlobalStyle`
 
 const DefaultLayout = ({
   heading,
-  archived = false,
   headingLink,
   subheading,
   pageTitle,
@@ -40,7 +39,6 @@ const DefaultLayout = ({
       />
       <LocalHeader
         heading={heading}
-        archived={archived}
         headingLink={headingLink}
         subheading={subheading}
         flashMessages={flashMessages}

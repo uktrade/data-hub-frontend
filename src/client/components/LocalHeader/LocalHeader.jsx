@@ -10,7 +10,6 @@ import { GREY_4 } from '../../../client/utils/colours'
 import LocalHeaderHeading from './LocalHeaderHeading'
 import LocalSubHeader from './LocalSubHeader'
 import FlashMessages from './FlashMessages'
-import Tag from '../Tag'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -42,11 +41,6 @@ const StyledLink = styled('a')({
   marginBottom: 8,
 })
 
-const StyledTag = styled(Tag)`
-  display: 'block',
-  margin-bottom: ${SPACING.SCALE_2};
-`
-
 /**
  * The generic local header component.
  */
@@ -54,7 +48,6 @@ const LocalHeader = ({
   breadcrumbs,
   flashMessages,
   heading,
-  archived = false,
   subheading,
   headingLink,
   superheading,
@@ -97,16 +90,7 @@ const LocalHeader = ({
         </StyledLink>
       )}
       {heading && (
-        <LocalHeaderHeading data-test="heading">
-          {heading}
-          {archived && (
-            <div>
-              <StyledTag colour="green" data-test="activity-kind-label">
-                COMPLETED
-              </StyledTag>
-            </div>
-          )}
-        </LocalHeaderHeading>
+        <LocalHeaderHeading data-test="heading">{heading}</LocalHeaderHeading>
       )}
       {subheading && (
         <LocalSubHeader data-test="subheading">{subheading}</LocalSubHeader>
