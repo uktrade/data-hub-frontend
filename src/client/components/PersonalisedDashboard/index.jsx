@@ -30,18 +30,18 @@ import {
   MY_TASKS_CHECK_COMPLETE,
 } from '../../actions'
 
-import NotificationBadge from '../NotificationBadge'
-import { DashboardToggleSection } from '../ToggleSection'
+// import NotificationBadge from '../NotificationBadge'
+// import { DashboardToggleSection } from '../ToggleSection'
 import Task from '../Task'
 
-import Aside from './Aside'
+// import Aside from './Aside'
 import Main from './Main'
 import blueTheme from './blue-theme'
 
-import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
+// import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
-  InvestmentReminders,
-  ReminderSummary,
+  // InvestmentReminders,
+  // ReminderSummary,
   Search,
   DashboardTabs,
   CustomContainer,
@@ -94,11 +94,11 @@ const PersonalisedDashboard = ({
   id,
   adviser,
   csrfToken,
-  remindersCount,
-  reminderSummaryCount,
+  // remindersCount,
+  // reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
-  hasInvestmentFeatureGroup,
+  // hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
   hasTasks,
 }) => {
@@ -109,17 +109,17 @@ const PersonalisedDashboard = ({
     history.push(previouslySelectedTabPath)
   }
 
-  const showOutstandingPropositions =
-    hasInvestmentProjects &&
-    !hasInvestmentFeatureGroup &&
-    !hasExportFeatureGroup
+  // const showOutstandingPropositions =
+  //   hasInvestmentProjects &&
+  //   !hasInvestmentFeatureGroup &&
+  //   !hasExportFeatureGroup
 
-  const showReminders =
-    (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
-    hasExportFeatureGroup
+  // const showReminders =
+  //   (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
+  //   hasExportFeatureGroup
 
-  const hasAtLeastOneModule =
-    showOutstandingPropositions || showReminders || hasInvestmentProjects
+  // const hasAtLeastOneModule =
+  //   showOutstandingPropositions || showReminders || hasInvestmentProjects
 
   return (
     <ThemeProvider theme={blueTheme}>
@@ -153,7 +153,7 @@ const PersonalisedDashboard = ({
         >
           {() => (
             <GridRow data-test="dashboard">
-              {hasAtLeastOneModule && (
+              {/* {hasAtLeastOneModule && (
                 <GridCol setWidth="one-third">
                   <Aside>
                     {showOutstandingPropositions && (
@@ -190,7 +190,6 @@ const PersonalisedDashboard = ({
                       </DashboardToggleSection>
                     )}
 
-                    {/* Investment projects wheel */}
                     {hasInvestmentProjects && (
                       <DashboardToggleSection
                         label="Investment projects summary"
@@ -202,14 +201,10 @@ const PersonalisedDashboard = ({
                       </DashboardToggleSection>
                     )}
                   </Aside>
-                </GridCol>
-              )}
-
+                </GridCol> */}
               <GridCol
                 setWidth={
-                  hasInvestmentProjects || hasExportFeatureGroup
-                    ? 'two-thirds'
-                    : 'full'
+                  hasInvestmentProjects || hasExportFeatureGroup ? 'full' : null
                 }
               >
                 <Main>
