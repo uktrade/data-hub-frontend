@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { HintText, Link, Table } from 'govuk-react'
+import { Link, Table } from 'govuk-react'
 
 import styled from 'styled-components'
 
-import ContentWithHeading from '../../ContentWithHeading'
 import { formatMediumDate } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 
@@ -39,19 +38,10 @@ const rows = (myTasks) => {
   ))
 }
 
-export const MyTasksTable = ({ myTasks }) => {
-  return (
-    <ContentWithHeading
-      heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
-      data-test="my-tasks-heading"
-    >
-      {myTasks?.count ? (
-        <Table head={header} myTasks={myTasks} data-test="my-tasks-table">
-          {rows(myTasks)}
-        </Table>
-      ) : (
-        <HintText>You do not have any tasks at this time.</HintText>
-      )}
-    </ContentWithHeading>
-  )
-}
+const MyTasksTable = ({ myTasks }) => (
+  <Table head={header} myTasks={myTasks} data-test="my-tasks-table">
+    {rows(myTasks)}
+  </Table>
+)
+
+export default MyTasksTable

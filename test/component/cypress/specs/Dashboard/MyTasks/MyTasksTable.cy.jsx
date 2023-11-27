@@ -9,11 +9,12 @@ import {
   taskWithInvestmentProjectFaker,
   basicAdviserFaker,
 } from '../../../../../functional/cypress/fakers/task'
-import { MyTasksTable } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasksTable'
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
+import { MyTasksTable } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasksTable'
+import { TaskContentWithHeading } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksTable {...props} />
+  const Component = (props) => <TaskContentWithHeading {...props} />
   const adviser1 = basicAdviserFaker()
   const adviser2 = basicAdviserFaker()
   const shortest_due_date = taskWithInvestmentProjectFaker({
@@ -151,7 +152,7 @@ describe('My Tasks on the Dashboard', () => {
     beforeEach(() => {
       cy.mount(<Component myTasks={myTasks} />)
     })
-    it('should display the heading 3 tasks', () => {
+    it('should display the heading 0 tasks', () => {
       cy.get('h3').should('contain', '0 tasks')
     })
     it('should render three table rows in due date asc order', () => {
