@@ -14,7 +14,7 @@ export const MyTasksContent = ({ myTasks }) => (
     heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
     data-test="my-tasks-heading"
   >
-    {myTasks.count ? (
+    {myTasks?.count ? (
       <MyTasksTable myTasks={myTasks} />
     ) : (
       <HintText>You do not have any tasks at this time.</HintText>
