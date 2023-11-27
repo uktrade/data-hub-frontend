@@ -10,7 +10,6 @@ const {
 const { setOrder, translate } = require('./middleware')
 
 const viewApp = require('./apps/view')
-const createApp = require('./apps/create')
 const listApp = require('./apps/list')
 const reconciliationApp = require('./apps/reconciliation')
 
@@ -25,11 +24,6 @@ router.use(
   removeBreadcrumb,
   setHomeBreadcrumb(reconciliationApp.displayName),
   reconciliationApp.router
-)
-router.use(
-  createApp.mountpath,
-  setHomeBreadcrumb(createApp.displayName),
-  createApp.router
 )
 router.use(viewApp.mountpath, viewApp.router)
 
