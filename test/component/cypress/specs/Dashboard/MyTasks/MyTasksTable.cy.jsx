@@ -10,11 +10,11 @@ import {
   basicAdviserFaker,
 } from '../../../../../functional/cypress/fakers/task'
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
-import { MyTasksTable } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasksTable'
-import { TaskContentWithHeading } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
+import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
+import urls from '../../../../../../src/lib/urls'
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <TaskContentWithHeading {...props} />
+  const Component = (props) => <MyTasksContent {...props} />
   const adviser1 = basicAdviserFaker()
   const adviser2 = basicAdviserFaker()
   const shortest_due_date = taskWithInvestmentProjectFaker({
@@ -127,22 +127,22 @@ describe('My Tasks on the Dashboard', () => {
     it('The task title should link to the Task details page', () => {
       assertLink(
         `${shortest_due_date.id}-task-link`,
-        `/tasks/${shortest_due_date.id}`
+        urls.tasks.details(shortest_due_date.id)
       )
       assertLink(
         `${middle_due_date.id}-task-link`,
-        `/tasks/${middle_due_date.id}`
+        urls.tasks.details(middle_due_date.id)
       )
       assertLink(
         `${longest_due_date.id}-task-link`,
-        `/tasks/${longest_due_date.id}`
+        urls.tasks.details(longest_due_date.id)
       )
     })
   })
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksTable {...props} />
+  const Component = (props) => <MyTasksContent {...props} />
   const myTasks = {
     count: 0,
     results: [],
@@ -155,7 +155,7 @@ describe('My Tasks on the Dashboard', () => {
     it('should display the heading 0 tasks', () => {
       cy.get('h3').should('contain', '0 tasks')
     })
-    it('should render three table rows in due date asc order', () => {
+    it('should not render the table', () => {
       cy.get('[data-test="my-tasks-table"]').should('not.exist')
     })
     it('should contain text notifying there are no tasks', () => {
@@ -168,7 +168,7 @@ describe('My Tasks on the Dashboard', () => {
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksTable {...props} />
+  const Component = (props) => <MyTasksContent {...props} />
   const adviser1 = basicAdviserFaker()
   const shortest_due_date = taskWithInvestmentProjectFaker({
     advisers: [adviser1],
@@ -207,7 +207,7 @@ describe('My Tasks on the Dashboard', () => {
       cy.get('h3').should('contain', '1 task').should('not.contain', '1 tasks')
     })
 
-    it('should render three table rows in due date asc order', () => {
+    it('should render one table row', () => {
       assertGovReactTable({
         element: '[data-test="my-tasks-table"]',
         rows: [
@@ -224,7 +224,7 @@ describe('My Tasks on the Dashboard', () => {
     it('The task title should link to the Task details page', () => {
       assertLink(
         `${shortest_due_date.id}-task-link`,
-        `/tasks/${shortest_due_date.id}`
+        urls.tasks.details(shortest_due_date.id)
       )
     })
   })

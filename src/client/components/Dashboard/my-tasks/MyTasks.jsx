@@ -9,6 +9,19 @@ import Task from '../../Task'
 import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
 
+export const MyTasksContent = ({ myTasks }) => (
+  <ContentWithHeading
+    heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
+    data-test="my-tasks-heading"
+  >
+    {myTasks.count ? (
+      <MyTasksTable myTasks={myTasks} />
+    ) : (
+      <HintText>You do not have any tasks at this time.</HintText>
+    )}
+  </ContentWithHeading>
+)
+
 const MyTasks = ({ adviser, myTasks }) => (
   <Task.Status
     name={TASK_GET_MY_TASKS}
@@ -21,18 +34,7 @@ const MyTasks = ({ adviser, myTasks }) => (
       onSuccessDispatch: MY_TASKS_LOADED,
     }}
   >
-    {() => (
-      <ContentWithHeading
-        heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
-        data-test="my-tasks-heading"
-      >
-        {myTasks ? (
-          <MyTasksTable myTasks={myTasks} />
-        ) : (
-          <HintText>You do not have any tasks at this time.</HintText>
-        )}
-      </ContentWithHeading>
-    )}
+    {() => <MyTasksContent myTasks={myTasks} />}
   </Task.Status>
 )
 
