@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Route, useLocation } from 'react-router-dom'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled, { ThemeProvider } from 'styled-components'
@@ -30,18 +30,14 @@ import {
   MY_TASKS_CHECK_COMPLETE,
 } from '../../actions'
 
-// import NotificationBadge from '../NotificationBadge'
-// import { DashboardToggleSection } from '../ToggleSection'
+import { DashboardToggleSection } from '../ToggleSection'
 import Task from '../Task'
 
-// import Aside from './Aside'
 import Main from './Main'
 import blueTheme from './blue-theme'
 
-// import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
+import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
-  // InvestmentReminders,
-  // ReminderSummary,
   Search,
   DashboardTabs,
   CustomContainer,
@@ -64,7 +60,23 @@ const SearchContainer = styled(CustomContainer)`
     padding: ${SPACING.SCALE_4} 0;
   }
 `
+const DisplayInvestmentSummary = ({ adviser }) => {
+  const location = useLocation()
+  console.log(location.pathname)
 
+  return (
+    location.pathname === '/investment-projects' && (
+      <DashboardToggleSection
+        label="Investment projects summary"
+        id="investment-project-summary-section"
+        isOpen={true}
+        data-test="investment-project-summary-section"
+      >
+        <InvestmentProjectSummary adviser={adviser} />
+      </DashboardToggleSection>
+    )
+  )
+}
 const state2props = (state) => {
   const { count: remindersCount } = state[INVESTMENT_REMINDERS_ID]
   const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
@@ -94,11 +106,9 @@ const PersonalisedDashboard = ({
   id,
   adviser,
   csrfToken,
-  // remindersCount,
-  // reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
-  // hasInvestmentFeatureGroup,
+  hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
   hasTasks,
 }) => {
@@ -109,17 +119,17 @@ const PersonalisedDashboard = ({
     history.push(previouslySelectedTabPath)
   }
 
-  // const showOutstandingPropositions =
-  //   hasInvestmentProjects &&
-  //   !hasInvestmentFeatureGroup &&
-  //   !hasExportFeatureGroup
+  const showOutstandingPropositions =
+    hasInvestmentProjects &&
+    !hasInvestmentFeatureGroup &&
+    !hasExportFeatureGroup
 
-  // const showReminders =
-  //   (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
-  //   hasExportFeatureGroup
+  const showReminders =
+    (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
+    hasExportFeatureGroup
 
-  // const hasAtLeastOneModule =
-  //   showOutstandingPropositions || showReminders || hasInvestmentProjects
+  const hasAtLeastOneModule =
+    showOutstandingPropositions || showReminders || hasInvestmentProjects
 
   return (
     <ThemeProvider theme={blueTheme}>
@@ -153,72 +163,28 @@ const PersonalisedDashboard = ({
         >
           {() => (
             <GridRow data-test="dashboard">
-              {/* {hasAtLeastOneModule && (
-                <GridCol setWidth="one-third">
-                  <Aside>
-                    {showOutstandingPropositions && (
-                      <DashboardToggleSection
-                        label="Reminders"
-                        id="investment-reminders-section"
-                        badge={
-                          !!remindersCount && (
-                            <NotificationBadge value={remindersCount} />
-                          )
+              {hasAtLeastOneModule && (
+                <>
+                  <GridCol setWidth="one-third">
+                    {hasInvestmentProjects ? (
+                      <DisplayInvestmentSummary adviser={adviser} />
+                    ) : null}
+                  </GridCol>
+                  <GridCol setWidth="full">
+                    <Main>
+                      <DashboardTabs
+                        id={id}
+                        adviser={adviser}
+                        hasInvestmentProjects={hasInvestmentProjects}
+                        onTabChange={({ path }) =>
+                          writeToLocalStorage(DASHBOARD_TAB, path)
                         }
-                        major={true}
-                        isOpen={false}
-                        data-test="investment-reminders-section"
-                      >
-                        <InvestmentReminders adviser={adviser} />
-                      </DashboardToggleSection>
-                    )}
-
-                    {showReminders && (
-                      <DashboardToggleSection
-                        label="Reminders"
-                        id="reminder-summary-section"
-                        badge={
-                          !!reminderSummaryCount && (
-                            <NotificationBadge value={reminderSummaryCount} />
-                          )
-                        }
-                        major={true}
-                        isOpen={reminderSummaryCount > 0}
-                        data-test="reminder-summary-section"
-                      >
-                        <ReminderSummary />
-                      </DashboardToggleSection>
-                    )}
-
-                    {hasInvestmentProjects && (
-                      <DashboardToggleSection
-                        label="Investment projects summary"
-                        id="investment-project-summary-section"
-                        isOpen={true}
-                        data-test="investment-project-summary-section"
-                      >
-                        <InvestmentProjectSummary adviser={adviser} />
-                      </DashboardToggleSection>
-                    )}
-                  </Aside>
-                </GridCol> */}
-              <GridCol
-                setWidth={
-                  hasInvestmentProjects || hasExportFeatureGroup ? 'full' : null
-                }
-              >
-                <Main>
-                  <DashboardTabs
-                    id={id}
-                    adviser={adviser}
-                    hasInvestmentProjects={hasInvestmentProjects}
-                    onTabChange={({ path }) =>
-                      writeToLocalStorage(DASHBOARD_TAB, path)
-                    }
-                    hasTasks={hasTasks}
-                  />
-                </Main>
-              </GridCol>
+                        hasTasks={hasTasks}
+                      />
+                    </Main>
+                  </GridCol>
+                </>
+              )}
             </GridRow>
           )}
         </Task.Status>
