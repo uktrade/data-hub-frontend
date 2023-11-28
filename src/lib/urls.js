@@ -85,6 +85,8 @@ module.exports = {
     findExporters: () =>
       'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
+    dataWorkspace: (id) =>
+      `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',

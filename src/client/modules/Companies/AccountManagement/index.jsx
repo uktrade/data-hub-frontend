@@ -63,6 +63,29 @@ const canEditOneList = (permissions) =>
     'company.change_one_list_tier_and_global_account_manager'
   )
 
+const Plan = ({ company }) => (
+  <SectionGridRow data-test="account-plan-row">
+    <GridCol>
+      <GridRow>
+        <GridCol>
+          <H3>Account plan</H3>
+        </GridCol>
+      </GridRow>
+      <GridCol>
+        <GridRow>
+          An account plan is a forward thinking dashboard of the company,
+          summarising the wider company's scale, their investment and export
+          ambitions alongside DBT's relationships and progress with them.
+        </GridRow>
+      </GridCol>
+      <br />
+      <NewWindowLink href={urls.external.dataWorkspace(company.id)}>
+        View {company.name}'s account plan
+      </NewWindowLink>
+    </GridCol>
+  </SectionGridRow>
+)
+
 const Strategy = ({ company }) => (
   <SectionGridRow data-test="strategy-row">
     <GridCol>
@@ -241,6 +264,7 @@ const AccountManagement = ({
           flashMessages={flashMessages}
           csrfToken={csrfToken}
         >
+          <Plan company={company} />
           <Strategy company={company} />
           <Objectives company={company} />
           {!company.oneListGroupTier ||
