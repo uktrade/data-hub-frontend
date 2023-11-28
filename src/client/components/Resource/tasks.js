@@ -84,6 +84,7 @@ import WithoutOurSupport from './WithoutOurSupport'
 import OrderQuote from './OrderQuote'
 import TaskCompletedSettings from './TaskCompletedSettings'
 import OmisMarkets from './OmisMarkets'
+import OrderPayment from './OrderPayment'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -172,4 +173,5 @@ export default {
   ...OrderQuote.tasks,
   ...TaskCompletedSettings.tasks,
   ...OmisMarkets.tasks,
+  ...OrderPayment.tasks,
 }

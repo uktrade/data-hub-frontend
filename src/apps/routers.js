@@ -105,6 +105,8 @@ const reactRoutes = [
   '/investments/opportunities/:opportunityId/interactions',
   '/omis/create',
   '/omis/create/:companyId',
+  '/omis/:orderId/payment-receipt',
+  '/omis/:orderId/reconciliation/payment-receipt',
 ]
 
 reactRoutes.forEach((path) => {

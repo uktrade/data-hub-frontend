@@ -81,6 +81,7 @@ import OpportunityChangeStatusForm from './modules/Investments/Opportunities/Opp
 import Opportunity from './modules/Investments/Opportunities/Opportunity'
 import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
 import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
+import PaymentReceipt from './modules/Omis/PaymentReceipt'
 
 const routes = {
   companies: [
@@ -313,6 +314,16 @@ const routes = {
       path: '/omis/create/:companyId',
       module: 'datahub:orders',
       component: CreateOrder,
+    },
+    {
+      path: '/omis/:orderId/payment-receipt',
+      module: 'datahub:orders',
+      component: PaymentReceipt,
+    },
+    {
+      path: '/omis/:orderId/reconciliation/payment-receipt',
+      module: 'datahub:orders',
+      component: PaymentReceipt,
     },
   ],
   reminders: [

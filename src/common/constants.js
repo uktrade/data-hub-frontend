@@ -20,6 +20,7 @@ const PRIMARY_LINK_PARAMS = {
   interactions: '?page=1&sortby=date:desc',
   investments: '?page=1&sortby=created_on:desc',
   omis: '?page=1&sortby=created_on:desc',
+  reconciliation: '?page=1&sortby=payment_due_date:asc&status=quote_accepted',
 }
 const INVESTMENT_LINK_PARAM = '?sortby=-created_on&page=1'
 const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/

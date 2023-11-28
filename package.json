@@ -135,6 +135,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "react-string-replace": "^1.1.1",
+    "react-to-print": "^2.14.15",
     "react-use": "^17.4.0",
     "redis": "4.6.10",
     "redux": "^4.2.1",

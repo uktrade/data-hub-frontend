@@ -30,20 +30,6 @@ const Order = {
       method: 'POST',
     })
   },
-
-  getInvoice(req, id) {
-    return authorisedRequest(
-      req,
-      `${config.apiRoot}/v3/omis/order/${id}/invoice`
-    )
-  },
-
-  getPayments(req, id) {
-    return authorisedRequest(
-      req,
-      `${config.apiRoot}/v3/omis/order/${id}/payment`
-    )
-  },
 }
 
 module.exports = {

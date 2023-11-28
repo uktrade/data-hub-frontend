@@ -8,10 +8,7 @@ const {
 
 const { setDefaultQuery } = require('../../../middleware')
 const { setOrder } = require('../../middleware')
-const { setInvoice, setPayments } = require('../view/middleware')
-const { renderPaymentReceipt } = require('../view/controllers')
 const { renderList } = require('./controllers')
-const { setReconciliationJourney } = require('./middleware')
 const { transformOrderToTableItem } = require('../../transformers')
 
 const DEFAULT_QUERY_RECONCILIATION = {
@@ -26,14 +23,6 @@ router.get(
   setDefaultQuery(DEFAULT_QUERY_RECONCILIATION),
   getCollection('order', ENTITIES, transformOrderToTableItem),
   renderList
-)
-
-router.get(
-  '/:orderId/payment-receipt',
-  setInvoice,
-  setPayments,
-  setReconciliationJourney,
-  renderPaymentReceipt
 )
 
 module.exports = router
