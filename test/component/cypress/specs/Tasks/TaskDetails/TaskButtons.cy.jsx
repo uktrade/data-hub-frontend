@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
+import {
+  taskWithInvestmentProjectFaker,
+  taskWithInvestmentProjectNotCompleteFaker,
+} from '../../../../../functional/cypress/fakers/task'
 import DataHubProvider from '../../provider'
 import { TaskButtons } from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 import { assertLink } from '../../../../../functional/cypress/support/assertions'
@@ -13,7 +16,7 @@ describe('Task buttons', () => {
   )
 
   context('When a task is not completed', () => {
-    const investmentProjectTask = taskWithInvestmentProjectFaker()
+    const investmentProjectTask = taskWithInvestmentProjectNotCompleteFaker()
 
     beforeEach(() => {
       cy.mount(<Component task={investmentProjectTask} editUrl={'/1/2/3'} />)
@@ -47,12 +50,13 @@ describe('Task buttons', () => {
     })
 
     it('should not show the Mark as complete button', () => {
+      cy.get('[data-test="edit-form-button"]').should('not.exist')
+    })
+
+    it('should not show the Edit link', () => {
       cy.get('[data-test="submit-button"]').should('not.exist')
     })
 
-    it('should show the Edit link with expected url', () => {
-      assertLink('edit-form-button', '/1/2/3')
-    })
     it('should show the Back link with expected url', () => {
       assertLink(
         'back-button',
