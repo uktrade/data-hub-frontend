@@ -9,7 +9,6 @@ import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
-import Tag from '../Tag'
 
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
@@ -61,10 +60,6 @@ const StyledButtonWrapper = styled('div')`
   }
 `
 
-const StyledTag = styled(Tag)`
-  margin-bottom: ${SPACING.SCALE_2};
-`
-
 const CollectionItem = ({
   headingText,
   subheading,
@@ -76,7 +71,6 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
-  archived,
 }) => {
   return (
     <ItemWrapper data-test="collection-item">
@@ -106,11 +100,6 @@ const CollectionItem = ({
         </StyledLinkHeader>
       ) : (
         <StyledHeader>{headingText}</StyledHeader>
-      )}
-      {archived && (
-        <StyledTag colour="green" data-test="activity-kind-label">
-          COMPLETED
-        </StyledTag>
       )}
       {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 

@@ -70,7 +70,6 @@ const CollectionList = ({
                   badges,
                   metadata,
                   buttons,
-                  archived,
                 },
                 index
               ) => (
@@ -83,7 +82,6 @@ const CollectionList = ({
                   metadata={metadata}
                   metadataRenderer={metadataRenderer}
                   buttons={buttons}
-                  archived={archived}
                 />
               )
             )}
