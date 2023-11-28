@@ -1,6 +1,10 @@
 import React from 'react'
 import { Button, Link } from 'govuk-react'
 
+import styled from 'styled-components'
+
+import { SPACING } from '@govuk-react/constants'
+
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 import {
@@ -20,6 +24,7 @@ import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
+import { Tag } from '../../../components'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -284,6 +289,9 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
+const StyledTag = styled(Tag)`
+  margin-bottom: ${SPACING.SCALE_2};
+`
 export const transformTaskToListItem = ({
   createdOn,
   id,
@@ -295,8 +303,16 @@ export const transformTaskToListItem = ({
   id,
   headingUrl: urls.tasks.details(id),
   headingText: title,
-  archived: archived,
   metadata: [
+    {
+      value: archived ? (
+        <StyledTag colour="green" data-test="activity-kind-label">
+          COMPLETED
+        </StyledTag>
+      ) : (
+        ''
+      ),
+    },
     { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
     {
       label: 'Due date',
