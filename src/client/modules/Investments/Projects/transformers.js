@@ -1,10 +1,6 @@
 import React from 'react'
 import { Button, Link } from 'govuk-react'
 
-import styled from 'styled-components'
-
-import { SPACING } from '@govuk-react/constants'
-
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import urls from '../../../../lib/urls'
 import {
@@ -289,9 +285,31 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
-const StyledTag = styled(Tag)`
-  margin-bottom: ${SPACING.SCALE_2};
-`
+const getTaskMetadata = (archived, createdOn, dueDate, advisers) => {
+  const completedTag = archived
+    ? [
+        {
+          value: (
+            <Tag colour="green" data-test="activity-kind-label">
+              COMPLETED
+            </Tag>
+          ),
+        },
+      ]
+    : []
+
+  const metadata = [
+    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
+    {
+      label: 'Due date',
+      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
+    },
+    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
+  ]
+
+  return completedTag.concat(metadata)
+}
+
 export const transformTaskToListItem = ({
   createdOn,
   id,
@@ -303,21 +321,5 @@ export const transformTaskToListItem = ({
   id,
   headingUrl: urls.tasks.details(id),
   headingText: title,
-  metadata: [
-    {
-      value: archived ? (
-        <StyledTag colour="green" data-test="activity-kind-label">
-          COMPLETED
-        </StyledTag>
-      ) : (
-        ''
-      ),
-    },
-    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
-    {
-      label: 'Due date',
-      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
-    },
-    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
-  ],
+  metadata: getTaskMetadata(archived, createdOn, dueDate, advisers),
 })
