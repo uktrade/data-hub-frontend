@@ -18,10 +18,8 @@ import {
   FieldRadios,
   FieldSelect,
 } from '../../../components'
-import {
-  TASK_REDIRECT_TO_CONTACT_FORM,
-  ID,
-} from '../../../components/ContactForm/state'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+import { ID } from './state'
 
 const CustomerDetailsStep = () => {
   const { values } = useFormContext()
