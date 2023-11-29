@@ -84,7 +84,6 @@ const config = {
   },
   sentryDsn: envVars.SENTRY_DSN,
   sentryEnvironment: envVars.SENTRY_ENVIRONMENT,
-  currencyFormat: '$0,0.00',
   paginationMaxResults: 10000,
   paginationDefaultSize: 10,
   oauth: {

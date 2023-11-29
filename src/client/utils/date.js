@@ -17,7 +17,6 @@ const {
   formatDistanceToNowStrict,
   isAfter,
   isValid,
-  minutesToHours,
   parse,
   parseISO,
   subDays,
@@ -80,10 +79,6 @@ function getYesterday() {
 
 function subtractMonths(date, numberOfMonths) {
   return subMonths(date, numberOfMonths)
-}
-
-function convertMinutesToHours(date) {
-  return minutesToHours(date)
 }
 
 function isDateInFuture(date) {
@@ -294,7 +289,6 @@ module.exports = {
   addDays,
   addMonths,
   addYears,
-  convertMinutesToHours,
   createAndFormatDateObject,
   format,
   formatMediumDate,
