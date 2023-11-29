@@ -21,7 +21,7 @@ const taskFaker = (overrides = {}) => ({
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
-  archived: true,
+  archived: false,
   archivedBy: null,
   createdBy: basicAdviserFaker(),
   modifiedBy: basicAdviserFaker(),
@@ -58,13 +58,14 @@ const taskWithInvestmentProjectNotCompleteFaker = (overrides = {}) =>
     })
   )
 
-const investmentProjectTaskFaker = (overrides = {}) => ({
-  id: faker.string.uuid(),
-  investment_project: pick(investmentProjectFaker(), ['id', 'name']),
-  task: taskFaker(),
-  createdOn: faker.date.past().toISOString(),
-  ...overrides,
-})
+const investmentProjectTaskFaker = (overrides = {}) =>
+  taskFaker(
+    (overrides = {
+      investment_project: pick(investmentProjectFaker(), ['id', 'name']),
+      createdOn: faker.date.past().toISOString(),
+      ...overrides,
+    })
+  )
 
 const taskListFaker = (length = 3, overrides) =>
   listFaker({
