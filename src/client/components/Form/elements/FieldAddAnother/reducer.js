@@ -1,31 +1,31 @@
+import _ from 'lodash'
+
 import {
   FIELD_ADD_ANOTHER__ADD,
   FIELD_ADD_ANOTHER__REMOVE,
 } from '../../../../actions'
 
-export default (state = { currentId: 0, items: {} }, action) => {
-  const currentId = Object.keys(action.initialItems).length
+export default (state = {}, { type, initialChildGroupCount, fieldGroupId }) => {
+  const {
+    items = _(initialChildGroupCount).range().keyBy().value(),
+    currentId = initialChildGroupCount,
+  } = state
 
-  switch (action.type) {
+  switch (type) {
     case FIELD_ADD_ANOTHER__ADD: {
       return {
         currentId: currentId + 1,
         items: {
-          ...state.items,
-          ...action.initialItems,
-          [currentId]: 'whatever',
+          ...items,
+          [currentId]: currentId,
         },
       }
     }
     case FIELD_ADD_ANOTHER__REMOVE:
-      const itemsCopy = {
-        ...state.items,
-        ...action.initialItems,
-      }
-      delete itemsCopy[action.fieldGroupId]
+      const itemsCopy = { ...items }
+      delete itemsCopy[fieldGroupId]
       return {
         ...state,
-        currentId: currentId - 1,
         items: itemsCopy,
       }
     default:

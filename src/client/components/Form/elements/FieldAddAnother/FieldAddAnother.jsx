@@ -47,16 +47,13 @@ const FieldAddAnother = ({
   add,
   remove,
   // State props
-  nextId,
-  items = Object.fromEntries(
-    _.range(initialChildGroupCount).map((x) => [x, null])
-  ),
+  items = _(initialChildGroupCount).range().keyBy().value(),
 }) => {
   const fieldGroupIds = Object.keys(items)
 
   const addAnotherHandler = (event) => {
     event.preventDefault()
-    add(nextId ? undefined : items)
+    add(initialChildGroupCount)
   }
 
   return (
@@ -81,7 +78,7 @@ const FieldAddAnother = ({
                   aria-label={`Remove ${indexToOrdinal(index)} ${itemName}`}
                   onClick={(event) => {
                     event.preventDefault()
-                    remove(fieldGroupId, nextId ? undefined : items)
+                    remove(fieldGroupId, initialChildGroupCount)
                   }}
                 >
                   Remove
@@ -125,16 +122,16 @@ export default multiInstance({
   name: 'FieldAddAnother',
   actionPattern: 'FIELD_ADD_ANOTHER__',
   dispatchToProps: (dispatch) => ({
-    add: (initialItems) =>
+    add: (initialChildGroupCount) =>
       dispatch({
         type: FIELD_ADD_ANOTHER__ADD,
-        initialItems,
+        initialChildGroupCount,
       }),
-    remove: (fieldGroupId, initialItems) =>
+    remove: (fieldGroupId, initialChildGroupCount) =>
       dispatch({
         type: FIELD_ADD_ANOTHER__REMOVE,
         fieldGroupId,
-        initialItems,
+        initialChildGroupCount,
       }),
   }),
   component: FieldAddAnother,
