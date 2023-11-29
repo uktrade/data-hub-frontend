@@ -43,7 +43,7 @@ const AddExportWinForm = () => {
       pageTitle="Add export win"
       breadcrumbs={[]}
     >
-      <FormLayout setWidth="three-quarters">
+      <FormLayout>
         <Form
           id="add-export-win"
           showStepInUrl={true}

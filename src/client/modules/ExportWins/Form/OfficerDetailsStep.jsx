@@ -82,7 +82,7 @@ const FormFields = ({ owner, teamType, teamMembers, values }) => (
         fullWidth={true}
         payload={{ team_type: values.team_type }}
         label="HQ team, Region or Post"
-        required="Enter a HQ team, Region or Post"
+        required="Enter a HQ team, region or post"
         initialValue={values.hq_team_region_or_post}
       />
     )}

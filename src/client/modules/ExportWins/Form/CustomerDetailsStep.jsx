@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import BusinessPotential from '../../../components/Resource/BusinessPotential'
@@ -28,7 +29,7 @@ const CustomerDetailsStep = () => {
 
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
-      <h1>Customer details</h1>
+      <H3>Customer details</H3>
       <ResourceOptionsField
         name="contacts"
         id={queryParams.company}

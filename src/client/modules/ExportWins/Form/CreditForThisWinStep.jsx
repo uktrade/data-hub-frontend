@@ -103,7 +103,7 @@ const CreditForThisWinStep = () => {
                       team_type: values[`team_type_${groupIndex}`],
                     }}
                     label="HQ team, Region or Post"
-                    required="Enter a HQ team, Region or Post"
+                    required="Enter a HQ team, region or post"
                     initialValue={
                       values[`hq_team_region_or_post_${groupIndex}`]
                     }

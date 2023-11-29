@@ -91,6 +91,7 @@ const FieldCheckboxes = ({
             {
               value: optionValue,
               label: optionLabel,
+              link: optionLink,
               children,
               ...optionProps
             },
@@ -110,6 +111,7 @@ const FieldCheckboxes = ({
                 {...optionProps}
               >
                 {optionLabel}
+                {optionLink && <>{optionLink}</>}
               </Checkbox>
               {value.includes(optionValue) && !!children ? children : null}
             </>

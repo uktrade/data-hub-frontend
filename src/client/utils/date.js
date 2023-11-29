@@ -201,8 +201,8 @@ function getFinancialYearStart(date) {
   return date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear()
 }
 
-function generateFinancialYearLabel(yearStart) {
-  return `${yearStart}-${(yearStart + 1).toString().slice(-2)}`
+function generateFinancialYearLabel(yearStart, separator = '-') {
+  return `${yearStart}${separator}${(yearStart + 1).toString().slice(-2)}`
 }
 
 function getInteractionTimestamp({ offset }) {
