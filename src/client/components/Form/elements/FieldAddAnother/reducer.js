@@ -1,45 +1,32 @@
 import {
   FIELD_ADD_ANOTHER__ADD,
-  FIELD_ADD_ANOTHER__INITIALISE,
   FIELD_ADD_ANOTHER__REMOVE,
 } from '../../../../actions'
 
-export default (
-  state = { fieldGroupIds: [] },
-  { type, fieldGroupId, initialChildGroupCount }
-) => {
-  switch (type) {
-    case FIELD_ADD_ANOTHER__INITIALISE:
+export default (state = { currentId: 0, items: {} }, action) => {
+  const currentId = Object.keys(action.initialItems).length
+
+  switch (action.type) {
+    case FIELD_ADD_ANOTHER__ADD: {
       return {
-        ...state,
-        childCount: initialChildGroupCount,
-        fieldGroupIds: [...Array(initialChildGroupCount)].map(
-          (value, index) => ({
-            fieldGroupId: index,
-          })
-        ),
+        currentId: currentId + 1,
+        items: {
+          ...state.items,
+          ...action.initialItems,
+          [currentId]: 'whatever',
+        },
       }
-    case FIELD_ADD_ANOTHER__ADD:
-      const maximumFieldIdValue = state.fieldGroupIds
-        .map((item) => item.fieldGroupId)
-        .reduce((previous, current) => {
-          return current > previous ? current : previous
-        }, 0)
-      return {
-        ...state,
-        childCount: state.childCount + 1,
-        fieldGroupIds: [
-          ...state.fieldGroupIds,
-          { fieldGroupId: maximumFieldIdValue + 1 },
-        ],
-      }
+    }
     case FIELD_ADD_ANOTHER__REMOVE:
+      const itemsCopy = {
+        ...state.items,
+        ...action.initialItems,
+      }
+      delete itemsCopy[action.fieldGroupId]
       return {
         ...state,
-        childCount: state.childCount - 1,
-        fieldGroupIds: state.fieldGroupIds.filter(
-          (item) => item.fieldGroupId !== fieldGroupId
-        ),
+        currentId: currentId - 1,
+        items: itemsCopy,
       }
     default:
       return state
