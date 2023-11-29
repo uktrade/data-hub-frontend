@@ -4,7 +4,6 @@ module.exports = {
   continueButton: 'form button:contains("Continue")',
   submitButton: 'form button:contains("Add company")',
   backButton: 'form button:contains("Back")',
-  subheader: 'form p',
   stepHeader: 'form h3',
   summary: 'form dl',
   regionSelect: 'form select#uk_region',
@@ -12,7 +11,6 @@ module.exports = {
 
   entitySearch: {
     companyNameField: 'input[name="dnbCompanyName"]',
-    postalCodeField: 'input[name="dnbPostalCode"]',
     searchButton: 'form button:contains("Find company")',
     results: {
       someCompanyName: 'form ol li:nth-child(1)',
@@ -58,8 +56,5 @@ module.exports = {
     companyLocation: '[data-test="field-companyLocation"]',
     dbtRegion: '[data-test="field-uk_region"]',
     dbtSector: '[data-test="field-sector"]',
-  },
-  companyDetails: {
-    subheader: 'form h2',
   },
 }
