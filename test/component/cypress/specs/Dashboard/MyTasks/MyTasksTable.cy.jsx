@@ -10,7 +10,7 @@ import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
 
-const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
+import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
