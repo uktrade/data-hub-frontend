@@ -21,6 +21,7 @@ const CollectionList = ({
   sortOptions,
   taskProps,
   count = 0,
+  isComplete,
   collectionName = 'result',
   items,
   activePage = 1,
@@ -40,12 +41,14 @@ const CollectionList = ({
     <GridRow>
       <GridCol setWidth="full">
         <article>
-          <CollectionHeader
-            totalItems={count}
-            collectionName={collectionName}
-            addItemUrl={addItemUrl}
-            data-test="collection-header"
-          />
+          {isComplete && (
+            <CollectionHeader
+              totalItems={count}
+              collectionName={collectionName}
+              addItemUrl={addItemUrl}
+              data-test="collection-header"
+            />
+          )}
 
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
@@ -87,20 +90,22 @@ const CollectionList = ({
             )}
           </ol>
           <Task.Status {...taskProps}>
-            {() => (
-              <>
-                <ol>
-                  {results.map((item, i) => (
-                    <CollectionItem {...item} key={i} />
-                  ))}
-                </ol>
-                <Pagination
-                  totalPages={totalPages}
-                  onPageClick={onPageClick}
-                  activePage={activePage}
-                />
-              </>
-            )}
+            {() =>
+              isComplete && (
+                <>
+                  <ol>
+                    {results.map((item, i) => (
+                      <CollectionItem {...item} key={i} />
+                    ))}
+                  </ol>
+                  <Pagination
+                    totalPages={totalPages}
+                    onPageClick={onPageClick}
+                    activePage={activePage}
+                  />
+                </>
+              )
+            }
           </Task.Status>
         </article>
       </GridCol>

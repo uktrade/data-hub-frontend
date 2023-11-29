@@ -71,48 +71,47 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
-}) => {
-  return (
-    <ItemWrapper data-test="collection-item">
-      {badges && (
-        <StyledBadgesWrapper>
-          {badges.map((badge) => (
-            <Badge key={badge.text} borderColour={badge.borderColour}>
-              {badge.text}
-            </Badge>
-          ))}
-        </StyledBadgesWrapper>
-      )}
+}) => (
+  <ItemWrapper data-test="collection-item">
+    {badges && (
+      <StyledBadgesWrapper>
+        {badges.map((badge) => (
+          <Badge key={badge.text} borderColour={badge.borderColour}>
+            {badge.text}
+          </Badge>
+        ))}
+      </StyledBadgesWrapper>
+    )}
 
-      {titleRenderer ? (
-        titleRenderer(headingText, headingUrl)
-      ) : headingUrl ? (
-        <StyledLinkHeader>
-          {useReactRouter ? (
-            <Link as={RouterLink} to={headingUrl} onClick={onClick}>
-              {headingText}
-            </Link>
-          ) : (
-            <Link href={headingUrl} onClick={onClick}>
-              {headingText}
-            </Link>
-          )}
-        </StyledLinkHeader>
-      ) : (
-        <StyledHeader>{headingText}</StyledHeader>
-      )}
-      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
+    {titleRenderer ? (
+      titleRenderer(headingText, headingUrl)
+    ) : headingUrl ? (
+      <StyledLinkHeader>
+        {useReactRouter ? (
+          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
+            {headingText}
+          </Link>
+        ) : (
+          <Link href={headingUrl} onClick={onClick}>
+            {headingText}
+          </Link>
+        )}
+      </StyledLinkHeader>
+    ) : (
+      <StyledHeader>{headingText}</StyledHeader>
+    )}
+    {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-      {metadataRenderer ? (
-        metadataRenderer(metadata)
-      ) : (
-        <Metadata rows={metadata} />
-      )}
+    {metadataRenderer ? (
+      metadataRenderer(metadata)
+    ) : (
+      <Metadata rows={metadata} />
+    )}
 
-      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-    </ItemWrapper>
-  )
-}
+    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+  </ItemWrapper>
+)
+
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
