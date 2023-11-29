@@ -28,7 +28,7 @@ describe('View task details', () => {
         clickButton('Mark as complete')
         assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
         assertUrl(
-          `/investments/projects/${investmentProjectTask.investmentProjectTask.investmentProject.id}/tasks`
+          `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks`
         )
       })
     }

@@ -38,13 +38,13 @@ const TaskDetails = ({ task }) => {
       heading={{
         ...(archived ? (
           <div>
-            <h1>{taskTitle}</h1>
+            <p>{taskTitle}</p>
             <StyledTag colour="green" data-test="activity-kind-label">
               COMPLETED
             </StyledTag>
           </div>
         ) : (
-          <h1>{taskTitle}</h1>
+          <p>{taskTitle}</p>
         )),
       }}
       pageTitle={taskTitle}
