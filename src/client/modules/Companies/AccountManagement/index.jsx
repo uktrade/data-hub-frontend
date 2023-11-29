@@ -63,7 +63,7 @@ const canEditOneList = (permissions) =>
     'company.change_one_list_tier_and_global_account_manager'
   )
 
-const Plan = ({ company }) => (
+const DataWorkspaceAccountPlan = ({ company }) => (
   <SectionGridRow data-test="account-plan-row">
     <GridCol>
       <GridRow>
@@ -264,7 +264,7 @@ const AccountManagement = ({
           flashMessages={flashMessages}
           csrfToken={csrfToken}
         >
-          <Plan company={company} />
+          <DataWorkspaceAccountPlan company={company} />
           <Strategy company={company} />
           <Objectives company={company} />
           {!company.oneListGroupTier ||
