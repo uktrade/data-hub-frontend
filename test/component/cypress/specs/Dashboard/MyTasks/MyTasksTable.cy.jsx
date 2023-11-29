@@ -15,10 +15,7 @@ import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
   const myTasksList = taskWithInvestmentProjectListFaker()
-  let myTaskResults = []
-  myTasksList.forEach(function (task) {
-    myTaskResults.push(keysToSnakeCase(task))
-  })
+  const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
     count: 3,
     results: myTaskResults,
@@ -41,19 +38,25 @@ describe('My Tasks on the Dashboard', () => {
             formatMediumDate(myTaskResults[0].due_date),
             myTaskResults[0].title,
             myTaskResults[0].investment_project.name,
-            myTaskResults[0].advisers[0].name,
+            myTaskResults[0].advisers[0].name +
+              myTaskResults[0].advisers[1].name +
+              myTaskResults[0].advisers[2].name,
           ],
           [
             formatMediumDate(myTaskResults[1].due_date),
             myTaskResults[1].title,
             myTaskResults[1].investment_project.name,
-            myTaskResults[1].advisers[0].name,
+            myTaskResults[1].advisers[0].name +
+              myTaskResults[1].advisers[1].name +
+              myTaskResults[1].advisers[2].name,
           ],
           [
             formatMediumDate(myTaskResults[2].due_date),
             myTaskResults[2].title,
             myTaskResults[2].investment_project.name,
-            myTaskResults[2].advisers[0].name,
+            myTaskResults[2].advisers[0].name +
+              myTaskResults[2].advisers[1].name +
+              myTaskResults[2].advisers[2].name,
           ],
         ],
       })
@@ -105,10 +108,7 @@ describe('My Tasks on the Dashboard', () => {
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
-  let myTaskResults = []
-  myTasksList.forEach(function (task) {
-    myTaskResults.push(keysToSnakeCase(task))
-  })
+  const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
     count: 1,
     results: myTaskResults,
@@ -119,29 +119,8 @@ describe('My Tasks on the Dashboard', () => {
       cy.mount(<Component myTasks={myTasks} />)
     })
 
-    it('should display the heading 1 task and not 1 tasks', () => {
+    it('should display the heading 1 task (singular) and not 1 tasks (plural)', () => {
       cy.get('h3').should('contain', '1 task').should('not.contain', '1 tasks')
-    })
-
-    it('should render one table row', () => {
-      assertGovReactTable({
-        element: '[data-test="my-tasks-table"]',
-        rows: [
-          [
-            formatMediumDate(myTaskResults[0].due_date),
-            myTaskResults[0].title,
-            myTaskResults[0].investment_project.name,
-            myTaskResults[0].advisers[0].name,
-          ],
-        ],
-      })
-    })
-
-    it('The task title should link to the Task details page', () => {
-      assertLink(
-        `${myTaskResults[0].id}-task-link`,
-        urls.tasks.details(myTaskResults[0].id)
-      )
     })
   })
 })
