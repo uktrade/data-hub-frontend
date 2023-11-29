@@ -285,29 +285,16 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
-const getTaskMetadata = (archived, createdOn, dueDate, advisers) => {
-  const completedTag = archived
-    ? [
-        {
-          value: (
-            <Tag colour="green" data-test="activity-kind-label">
-              COMPLETED
-            </Tag>
-          ),
-        },
-      ]
-    : []
+const getTaskHeading = (archived, title) => {
+  const completedTag = archived ? (
+    <Tag colour="green" data-test="activity-kind-label">
+      COMPLETED
+    </Tag>
+  ) : (
+    ''
+  )
 
-  const metadata = [
-    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
-    {
-      label: 'Due date',
-      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
-    },
-    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
-  ]
-
-  return completedTag.concat(metadata)
+  return [<p>{title}</p>, completedTag]
 }
 
 export const transformTaskToListItem = ({
@@ -320,6 +307,13 @@ export const transformTaskToListItem = ({
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),
-  headingText: title,
-  metadata: getTaskMetadata(archived, createdOn, dueDate, advisers),
+  headingText: getTaskHeading(archived, title),
+  metadata: [
+    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
+    {
+      label: 'Due date',
+      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
+    },
+    { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
+  ],
 })
