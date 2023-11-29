@@ -31,10 +31,14 @@ describe('View task details', () => {
       })
 
       it('should display the title of the investment project task and completed tag', () => {
-        cy.get('h1')
-          .contains(investmentProjectTask.title)
-          .find('[data-test="activity-kind-label"]')
-          .should('contain', 'COMPLETED')
+        cy.get('[data-test="heading"]')
+          .find('div > p')
+          .should('contain', investmentProjectTask.title)
+
+        cy.get('[data-test="activity-kind-label"]').should(
+          'contain',
+          'COMPLETED'
+        )
       })
 
       it('should display the summary table', () => {
