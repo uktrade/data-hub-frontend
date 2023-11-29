@@ -22,31 +22,23 @@ const getCompany = (task) => {
   return task?.investmentProject?.investorCompany
 }
 
-const getArchivedStatus = (task) => {
-  return task?.archived
-}
-
 const TaskDetails = ({ task }) => {
   const { taskId } = useParams()
 
   const company = getCompany(task)
   const taskTitle = task ? task.title : ''
-  const archived = getArchivedStatus(task)
+  const archivedTag = task?.archived ? (
+    <StyledTag colour="green" data-test="activity-kind-label">
+      COMPLETED
+    </StyledTag>
+  ) : (
+    false
+  )
 
   return (
     <DefaultLayout
-      heading={{
-        ...(archived ? (
-          <div>
-            <p>{taskTitle}</p>
-            <StyledTag colour="green" data-test="activity-kind-label">
-              COMPLETED
-            </StyledTag>
-          </div>
-        ) : (
-          <p>{taskTitle}</p>
-        )),
-      }}
+      heading={taskTitle}
+      subheading={archivedTag}
       pageTitle={taskTitle}
       breadcrumbs={buildCompanyBreadcrumbs(
         {
