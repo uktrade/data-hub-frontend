@@ -285,16 +285,16 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
-const getTaskHeading = (archived, title) => {
+const getTaskSubheading = (archived) => {
   const completedTag = archived ? (
     <Tag colour="green" data-test="activity-kind-label">
       COMPLETED
     </Tag>
   ) : (
-    ''
+    false
   )
 
-  return [<p>{title}</p>, completedTag]
+  return completedTag
 }
 
 export const transformTaskToListItem = ({
@@ -307,7 +307,8 @@ export const transformTaskToListItem = ({
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),
-  headingText: getTaskHeading(archived, title),
+  headingText: title,
+  subheading: getTaskSubheading(archived),
   metadata: [
     { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
     {
