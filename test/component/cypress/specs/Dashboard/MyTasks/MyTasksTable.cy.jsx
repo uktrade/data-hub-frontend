@@ -5,88 +5,23 @@ import {
   assertLink,
 } from '../../../../../functional/cypress/support/assertions'
 
-import {
-  taskWithInvestmentProjectFaker,
-  basicAdviserFaker,
-} from '../../../../../functional/cypress/fakers/task'
+import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cypress/fakers/task'
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
 
+const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
+
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
-  const adviser1 = basicAdviserFaker()
-  const adviser2 = basicAdviserFaker()
-  const shortest_due_date = taskWithInvestmentProjectFaker({
-    advisers: [adviser1],
-    dueDate: '2025-01-01',
-    createdBy: adviser1,
-  })
-  const middle_due_date = taskWithInvestmentProjectFaker({
-    advisers: [adviser1],
-    dueDate: '2026-01-01',
-    createdBy: adviser2,
-  })
-  const longest_due_date = taskWithInvestmentProjectFaker({
-    advisers: [adviser2],
-    dueDate: '2027-01-01',
-    createdBy: adviser1,
+  const myTasksList = taskWithInvestmentProjectListFaker()
+  let myTaskResults = []
+  myTasksList.forEach(function (task) {
+    myTaskResults.push(keysToSnakeCase(task))
   })
   const myTasks = {
     count: 3,
-    results: [
-      {
-        investment_project: shortest_due_date.investmentProject,
-        advisers: [
-          {
-            name: adviser1.name,
-          },
-        ],
-        due_date: shortest_due_date.dueDate,
-        company: {
-          name: 'Mars Exports Ltd',
-        },
-        id: shortest_due_date.id,
-        title: shortest_due_date.title,
-        created_by: {
-          name: adviser1.name,
-        },
-      },
-      {
-        investment_project: middle_due_date.investmentProject,
-        advisers: [
-          {
-            name: adviser1.name,
-          },
-        ],
-        due_date: middle_due_date.dueDate,
-        company: {
-          name: 'Mars Exports Ltd',
-        },
-        id: middle_due_date.id,
-        title: middle_due_date.title,
-        created_by: {
-          name: adviser1.name,
-        },
-      },
-      {
-        investment_project: longest_due_date.investmentProject,
-        advisers: [
-          {
-            name: adviser2.name,
-          },
-        ],
-        due_date: longest_due_date.dueDate,
-        company: {
-          name: 'Mars Exports Ltd',
-        },
-        id: longest_due_date.id,
-        title: longest_due_date.title,
-        created_by: {
-          name: adviser1.name,
-        },
-      },
-    ],
+    results: myTaskResults,
   }
 
   context('When the logged in adviser has three tasks', () => {
@@ -98,27 +33,27 @@ describe('My Tasks on the Dashboard', () => {
       cy.get('h3').should('contain', '3 tasks')
     })
 
-    it('should render three table rows in due date asc order', () => {
+    it('should render three table rows in due date ascending order as this is the default', () => {
       assertGovReactTable({
         element: '[data-test="my-tasks-table"]',
         rows: [
           [
-            formatMediumDate(shortest_due_date.dueDate),
-            shortest_due_date.title,
-            shortest_due_date.investmentProject.name,
-            shortest_due_date.advisers[0].name,
+            formatMediumDate(myTaskResults[0].due_date),
+            myTaskResults[0].title,
+            myTaskResults[0].investment_project.name,
+            myTaskResults[0].advisers[0].name,
           ],
           [
-            formatMediumDate(middle_due_date.dueDate),
-            middle_due_date.title,
-            middle_due_date.investmentProject.name,
-            middle_due_date.advisers[0].name,
+            formatMediumDate(myTaskResults[1].due_date),
+            myTaskResults[1].title,
+            myTaskResults[1].investment_project.name,
+            myTaskResults[1].advisers[0].name,
           ],
           [
-            formatMediumDate(longest_due_date.dueDate),
-            longest_due_date.title,
-            longest_due_date.investmentProject.name,
-            longest_due_date.advisers[0].name,
+            formatMediumDate(myTaskResults[2].due_date),
+            myTaskResults[2].title,
+            myTaskResults[2].investment_project.name,
+            myTaskResults[2].advisers[0].name,
           ],
         ],
       })
@@ -126,16 +61,16 @@ describe('My Tasks on the Dashboard', () => {
 
     it('The task title should link to the Task details page', () => {
       assertLink(
-        `${shortest_due_date.id}-task-link`,
-        urls.tasks.details(shortest_due_date.id)
+        `${myTaskResults[0].id}-task-link`,
+        urls.tasks.details(myTaskResults[0].id)
       )
       assertLink(
-        `${middle_due_date.id}-task-link`,
-        urls.tasks.details(middle_due_date.id)
+        `${myTaskResults[1].id}-task-link`,
+        urls.tasks.details(myTaskResults[1].id)
       )
       assertLink(
-        `${longest_due_date.id}-task-link`,
-        urls.tasks.details(longest_due_date.id)
+        `${myTaskResults[2].id}-task-link`,
+        urls.tasks.details(myTaskResults[2].id)
       )
     })
   })
@@ -169,33 +104,14 @@ describe('My Tasks on the Dashboard', () => {
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
-  const adviser1 = basicAdviserFaker()
-  const shortest_due_date = taskWithInvestmentProjectFaker({
-    advisers: [adviser1],
-    dueDate: '2024-01-01',
-    createdBy: adviser1,
+  const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
+  let myTaskResults = []
+  myTasksList.forEach(function (task) {
+    myTaskResults.push(keysToSnakeCase(task))
   })
   const myTasks = {
     count: 1,
-    results: [
-      {
-        investment_project: shortest_due_date.investmentProject,
-        advisers: [
-          {
-            name: adviser1.name,
-          },
-        ],
-        due_date: shortest_due_date.dueDate,
-        company: {
-          name: 'Mars Exports Ltd',
-        },
-        id: shortest_due_date.id,
-        title: shortest_due_date.title,
-        created_by: {
-          name: adviser1.name,
-        },
-      },
-    ],
+    results: myTaskResults,
   }
 
   context('When the logged in adviser has three tasks', () => {
@@ -203,7 +119,7 @@ describe('My Tasks on the Dashboard', () => {
       cy.mount(<Component myTasks={myTasks} />)
     })
 
-    it('should display the heading 1 task', () => {
+    it('should display the heading 1 task and not 1 tasks', () => {
       cy.get('h3').should('contain', '1 task').should('not.contain', '1 tasks')
     })
 
@@ -212,10 +128,10 @@ describe('My Tasks on the Dashboard', () => {
         element: '[data-test="my-tasks-table"]',
         rows: [
           [
-            formatMediumDate(shortest_due_date.dueDate),
-            shortest_due_date.title,
-            shortest_due_date.investmentProject.name,
-            shortest_due_date.advisers[0].name,
+            formatMediumDate(myTaskResults[0].due_date),
+            myTaskResults[0].title,
+            myTaskResults[0].investment_project.name,
+            myTaskResults[0].advisers[0].name,
           ],
         ],
       })
@@ -223,8 +139,8 @@ describe('My Tasks on the Dashboard', () => {
 
     it('The task title should link to the Task details page', () => {
       assertLink(
-        `${shortest_due_date.id}-task-link`,
-        urls.tasks.details(shortest_due_date.id)
+        `${myTaskResults[0].id}-task-link`,
+        urls.tasks.details(myTaskResults[0].id)
       )
     })
   })
