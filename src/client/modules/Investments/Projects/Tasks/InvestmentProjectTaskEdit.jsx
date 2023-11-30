@@ -15,7 +15,7 @@ import { DefaultLayout } from '../../../../components'
 import TaskForm from '../../../Tasks/TaskForm'
 import { TASK_SAVE_TASK_DETAILS } from '../../../Tasks/TaskForm/state'
 
-const TaskEdit = ({ currentAdviserId, task, activeFeatures }) => {
+const TaskEdit = ({ currentAdviserId, task }) => {
   const { taskId } = useParams()
   const investmentProject = task?.investmentProject
   const investorCompanyName = investmentProject?.investorCompany.name || ''
@@ -53,7 +53,6 @@ const TaskEdit = ({ currentAdviserId, task, activeFeatures }) => {
                 investmentProject.id
               )}
               submissionTaskName={TASK_SAVE_TASK_DETAILS}
-              activeFeatures={activeFeatures}
             />
           )
         }
