@@ -20,7 +20,7 @@ import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
-import { Tag } from '../../../components'
+import Tag from '../../../components/Tag'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
