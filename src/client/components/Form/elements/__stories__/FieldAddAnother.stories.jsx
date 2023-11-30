@@ -4,6 +4,7 @@ import FieldAddAnother from '../FieldAddAnother'
 import FieldTypeahead from '../FieldTypeahead'
 import FieldInput from '../FieldInput'
 import Form from '../../../Form'
+import Step from '../Step'
 import { transformArrayToObject } from '../FieldAddAnother/utils'
 
 import usageReadme from '../FieldAddAnother/usage.md'
@@ -161,6 +162,49 @@ export const New = () => (
           When sending data back to the database
           {JSON.stringify(transformObjectBackToArray(state.values), null, 2)}
         </pre>
+      </>
+    )}
+  </Form>
+)
+
+export const MultiStep = () => (
+  <Form
+    id="fieldAddAnotherMultiStepExample"
+    submissionTaskName="Submit Form example"
+    initialValues={{
+      'added-another-input_0': 'Initial value 0',
+      'added-another-input_1': 'Initial value 1',
+      'added-another-input_2': 'Initial value 2',
+    }}
+  >
+    {({ values }) => (
+      <>
+        <Step name="step-1">
+          Step 1
+          <FieldInput label="Step 1 input" name="step-1-input" />
+        </Step>
+        <Step name="step-2">
+          Step 2
+          <FieldInput label="Step 2 input" name="step-2-input" />
+          <FieldAddAnother
+            itemName="thing"
+            initialChildGroupCount={3}
+            limitChildGroupCount={7}
+          >
+            {({ groupIndex }) => (
+              <FieldInput
+                name={`added-another-input_${groupIndex}`}
+                type="text"
+                label="Added another"
+              />
+            )}
+          </FieldAddAnother>
+        </Step>
+        <Step name="step-3">
+          Step 3
+          <FieldInput label="Step 3 input" name="step-3-input" />
+        </Step>
+        <pre>{JSON.stringify(values, null, 2)}</pre>
       </>
     )}
   </Form>

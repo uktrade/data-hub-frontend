@@ -134,6 +134,7 @@ const FieldInner = ({
   groupId,
 }) =>
   legend ? (
+    // FIXME: This shouldn't be a fieldset
     <StyledFieldset showBorder={showBorder}>
       <StyledLegend
         className="govuk-heading-m"
