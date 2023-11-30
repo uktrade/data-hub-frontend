@@ -22,7 +22,7 @@ describe('Task buttons', () => {
     it('should show the Mark as complete button', () => {
       cy.get('[data-test="submit-button"]').should(
         'contain.text',
-        'Mark as complete'
+        'Mark as completed'
       )
     })
 

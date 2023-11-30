@@ -36,7 +36,7 @@ export const TaskButtons = ({ task, editUrl }) => (
             taskId: task.id,
           })}
           flashMessage={() => 'Task marked as complete'}
-          submitButtonLabel="Mark as complete"
+          submitButtonLabel="Mark as completed"
           initialValues={task}
         >
           {() => <></>}

@@ -51,7 +51,7 @@ describe('View task details', () => {
           `/api-proxy/v4/task/${investmentProjectTask.id}/archive`,
           {}
         ).as('postTaskArchiveApiRequest')
-        clickButton('Mark as complete')
+        clickButton('Mark as completed')
         assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
         assertUrl(
           `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks`
