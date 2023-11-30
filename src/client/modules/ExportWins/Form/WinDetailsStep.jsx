@@ -136,7 +136,7 @@ const WinTypeValues = ({ label, name, values }) => {
           <FieldCurrency
             type="text"
             name={`${name}${index}`}
-            index={`${name}${index}`}
+            key={`${name}${index}`}
             label={generateFinancialYearLabel(financialYearStart + index, '/')}
             boldLabel={true}
           />
@@ -306,6 +306,7 @@ const FormFields = ({
     />
 
     <ResourceOptionsField
+      id="sector"
       name="sector"
       label="Sector"
       required="Enter a sector"
