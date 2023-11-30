@@ -1,1 +1,71 @@
-{ "count": 2, "results": [] }
+{
+  "count": 2,
+  "results": [
+    {
+      "investment_project": {
+        "name": "FDI Auto Project",
+        "project_code": "DHP-00000001",
+        "id": "11111111-7c46-4f14-99d6-654ca26750f8"
+      },
+      "advisers": [
+        {
+          "name": "Anne Adviser",
+          "last_name": "Adviser",
+          "id": "11111111-2a15-4ebb-b69c-e7e1fff18783",
+          "first_name": "Anne"
+        }
+      ],
+      "reminder_days": null,
+      "due_date": "2024-11-01",
+      "reminder_date": null,
+      "description": "",
+      "company": {
+        "name": "Mars Exports Ltd",
+        "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd"
+      },
+      "id": "162ba2d6-8b78-4720-b644-626b010be30b",
+      "title": "Conduct the research survey",
+      "task_type": "InvestmentProjectTask",
+      "created_by": {
+        "name": "Anne Adviser",
+        "last_name": "Adviser",
+        "id": "11111111-2a15-4ebb-b69c-e7e1fff18783",
+        "first_name": "Anne"
+      },
+      "email_reminders_enabled": false
+    },
+    {
+      "investment_project": {
+        "name": "Disco Documents",
+        "project_code": "DHP-00000002",
+        "id": "222222-98ef-42ae-ad6a-ef5cbc913ea8"
+      },
+      "advisers": [
+        {
+          "name": "Adam Visor",
+          "last_name": "Visor",
+          "id": "22222222-a306-449c-91eb-c46b128e1844",
+          "first_name": "Adam"
+        }
+      ],
+      "reminder_days": 1,
+      "due_date": "2024-11-27",
+      "reminder_date": "2023-11-26",
+      "description": "",
+      "company": {
+        "name": "One List Corp",
+        "id": "375094ac-f79a-43e5-9c88-059a7caa17f0"
+      },
+      "id": "35f04ddd-312a-40ca-ba9c-e8cdd585226f",
+      "title": "Obtain list of off-shore development companies and send email",
+      "task_type": "InvestmentProjectTask",
+      "created_by": {
+        "name": "Anne Adviser",
+        "last_name": "Adviser",
+        "id": "11111111-2a15-4ebb-b69c-e7e1fff18783",
+        "first_name": "Anne"
+      },
+      "email_reminders_enabled": true
+    }
+  ]
+}

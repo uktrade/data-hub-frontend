@@ -174,6 +174,9 @@ import exportWinDetailsTaskReducer from './modules/ExportWins/Details/reducer'
 import { ID as OMIS_COMPANY_SELECT_ID } from './modules/Omis/CreateOrder/CompanySelect/state'
 import omisCompanyReducer from './modules/Omis/CreateOrder/CompanySelect/reducer.js'
 
+import { ID as GET_MY_TASKS_ID } from './components/Dashboard/my-tasks/state'
+import getMyTasksReducer from './components/Dashboard/my-tasks/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -277,4 +280,5 @@ export const reducers = {
   [TASK_DETAILS_ID]: taskDetailsReducer,
   [EXPORT_WINS_DETAILS_ID]: exportWinDetailsTaskReducer,
   [OMIS_COMPANY_SELECT_ID]: omisCompanyReducer,
+  [GET_MY_TASKS_ID]: getMyTasksReducer,
 }
