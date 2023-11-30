@@ -1,6 +1,6 @@
 const { get, merge } = require('lodash')
 const { title } = require('case')
-const Sniffr = require('sniffr')
+const Sniffr = require('sniffr').default
 
 const { feedbackFormConfig } = require('./macros')
 const { buildFormWithStateAndErrors } = require('../builders')
