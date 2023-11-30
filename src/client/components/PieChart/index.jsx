@@ -7,7 +7,10 @@ import pluralize from 'pluralize'
 
 import Legend from './Legend'
 
-const StyledFigure = styled('figure')({})
+const StyledFigure = styled('figure')({
+  border: '1px solid rgba(0, 0, 0, 0)',
+  outline: '0.5px solid #CCC',
+})
 
 const StyledPieContainer = styled('div')(({ height }) => ({
   paddingTop: SPACING.SCALE_3,
