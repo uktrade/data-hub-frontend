@@ -10,7 +10,7 @@ const FormLayout = ({ setWidth, children }) => (
 )
 
 FormLayout.propTypes = {
-  setWidth: PropTypes.string.isRequired,
+  setWidth: PropTypes.string,
   children: PropTypes.element.isRequired,
 }
 

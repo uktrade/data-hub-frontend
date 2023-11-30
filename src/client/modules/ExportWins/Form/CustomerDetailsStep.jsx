@@ -65,6 +65,7 @@ const CustomerDetailsStep = () => {
         name="uk_region"
         id="uk-region"
         label="HQ Location"
+        required="Choose a HQ location"
         field={FieldSelect}
         resource={UKRegions}
       />
@@ -72,6 +73,7 @@ const CustomerDetailsStep = () => {
         name="business_potential"
         id="business-potential"
         label="Export potential"
+        required="Select export potential"
         field={FieldRadios}
         resource={BusinessPotential}
       />
@@ -79,6 +81,7 @@ const CustomerDetailsStep = () => {
         name="experience"
         id="experience"
         label="Export experience"
+        required="Select export experience"
         hint="You customer will be asked to confirm this information"
         field={FieldRadios}
         resource={Experience}
