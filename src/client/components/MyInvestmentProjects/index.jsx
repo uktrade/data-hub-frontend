@@ -50,6 +50,10 @@ const StyledListContainer = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
+const StyledCol = styled(GridCol)(() => ({
+  paddingBottom: SPACING.SCALE_3,
+}))
+
 const MyInvestmentProjects = ({
   results,
   count,
@@ -76,9 +80,9 @@ const MyInvestmentProjects = ({
   return (
     <>
       <GridRow>
-        <GridCol setWidth="one-third">
+        <StyledCol setWidth="one-third">
           <InvestmentProjectSummary adviser={adviser} />
-        </GridCol>
+        </StyledCol>
 
         <GridCol>
           <article>
