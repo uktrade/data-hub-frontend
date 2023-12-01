@@ -256,6 +256,7 @@ describe('TasksAssignedToMeSettings', () => {
           openSettingsSections={[{ id: id }]}
           upcomingTaskReminder={setting}
           taskAssignedToMeFromOthers={setting}
+          taskAmendedByOthers={setting}
           taskOverdue={setting}
           taskCompleted={setting}
         />
@@ -277,6 +278,7 @@ describe('TasksAssignedToMeSettings', () => {
           <Component
             upcomingTaskReminder={{}}
             taskAssignedToMeFromOthers={{}}
+            taskAmendedByOthers={{}}
             taskOverdue={{}}
             taskCompleted={{}}
           />

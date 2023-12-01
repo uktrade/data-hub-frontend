@@ -22,7 +22,7 @@ describe('RemindersMenu', () => {
         my_tasks: {
           due_date_approaching: 6,
           task_assigned_to_me_from_others: 4,
-          task_assigned_to_me_from_others: 5,
+          task_amended_by_others: 5,
           task_overdue: 7,
           task_completed: 8,
         },
@@ -66,7 +66,7 @@ describe('RemindersMenu', () => {
       url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
     },
     {
-      title: 'Task amended by (5)',
+      title: 'Task amended by others (5)',
       url: urls.reminders.myTasks.taskAmendedByOthers(),
     },
     {
@@ -94,7 +94,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all investment menu items', () => {
-      cy.get('@listItems').should('have.length', 7)
+      cy.get('@listItems').should('have.length', 8)
 
       investmentLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -122,7 +122,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 6)
+      cy.get('@listItems').should('have.length', 8)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -149,7 +149,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should not render Companies with new interactions', () => {
-        cy.get('@listItems').should('have.length', 5)
+        cy.get('@listItems').should('have.length', 6)
 
         cy.get('@listItems')
           .eq(0)
@@ -178,7 +178,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should render all menu items', () => {
-        cy.get('@listItems').should('have.length', 9)
+        cy.get('@listItems').should('have.length', 10)
 
         investmentLinks
           .concat(exportLinks)
@@ -209,7 +209,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all my tasks menu items', () => {
-      cy.get('@listItems').should('have.length', 4)
+      cy.get('@listItems').should('have.length', 5)
 
       myTasksLinks.forEach((item, index) => {
         cy.get('@listItems')
