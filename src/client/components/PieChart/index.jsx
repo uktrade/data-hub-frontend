@@ -6,10 +6,10 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 
 import Legend from './Legend'
+import { MID_GREY } from '../../utils/colours'
 
 const StyledFigure = styled('figure')({
-  border: '1px solid rgba(0, 0, 0, 0)',
-  outline: '0.5px solid #CCC',
+  border: `1px solid ${MID_GREY}`,
 })
 
 const StyledPieContainer = styled('div')(({ height }) => ({

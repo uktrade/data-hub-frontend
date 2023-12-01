@@ -7,6 +7,7 @@ import styled from 'styled-components'
 const StyledLegend = styled('figcaption')({})
 const StyledList = styled('ul')({
   listStyle: 'none',
+  paddingLeft: SPACING.SCALE_2,
 })
 const StyledListItem = styled('li')(({ colour }) => ({
   margin: `${SPACING.SCALE_2} 0`,
