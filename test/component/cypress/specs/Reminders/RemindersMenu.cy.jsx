@@ -122,7 +122,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 8)
+      cy.get('@listItems').should('have.length', 7)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
