@@ -662,6 +662,13 @@ app.delete(
   v4Reminders.deleteReminder
 )
 
+app.get('/v4/reminder/my-tasks-amendments-by-others', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-amendments-by-others/:id',
+  v4Reminders.deleteReminder
+)
+
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)
 app.patch(

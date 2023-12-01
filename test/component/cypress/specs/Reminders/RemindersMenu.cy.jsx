@@ -22,6 +22,7 @@ describe('RemindersMenu', () => {
         my_tasks: {
           due_date_approaching: 5,
           task_assigned_to_me_from_others: 4,
+          task_amendments_by_others: 3,
           task_overdue: 6,
           task_completed: 7,
         },
@@ -65,6 +66,10 @@ describe('RemindersMenu', () => {
       url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
     },
     {
+      title: 'Task amendments by others (3)',
+      url: urls.reminders.myTasks.taskAmendmentsByOthers(),
+    },
+    {
       title: 'Task overdue (6)',
       url: urls.reminders.myTasks.taskOverdue(),
     },
@@ -89,7 +94,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all investment menu items', () => {
-      cy.get('@listItems').should('have.length', 7)
+      cy.get('@listItems').should('have.length', 8)
 
       investmentLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -117,7 +122,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all export menu items', () => {
-      cy.get('@listItems').should('have.length', 6)
+      cy.get('@listItems').should('have.length', 7)
 
       exportLinks.forEach((item, index) => {
         cy.get('@listItems')
@@ -144,7 +149,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should not render Companies with new interactions', () => {
-        cy.get('@listItems').should('have.length', 5)
+        cy.get('@listItems').should('have.length', 6)
 
         cy.get('@listItems')
           .eq(0)
@@ -173,7 +178,7 @@ describe('RemindersMenu', () => {
       })
 
       it('should render all menu items', () => {
-        cy.get('@listItems').should('have.length', 9)
+        cy.get('@listItems').should('have.length', 10)
 
         investmentLinks
           .concat(exportLinks)
@@ -204,7 +209,7 @@ describe('RemindersMenu', () => {
     })
 
     it('should render all my tasks menu items', () => {
-      cy.get('@listItems').should('have.length', 4)
+      cy.get('@listItems').should('have.length', 5)
 
       myTasksLinks.forEach((item, index) => {
         cy.get('@listItems')

@@ -21,6 +21,7 @@ import MyTasksDueDateApproachingList from './MyTasksDueDateApproachingList'
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
 import TaskOverdueList from './TaskOverdueList'
 import TaskCompletedList from './TaskCompletedList'
+import TaskAmendmentsByOthersList from './TaskAmendmentsByOthersList'
 
 export {
   RemindersSettings,
@@ -39,6 +40,7 @@ export {
   ExportsNewInteractionsList,
   MyTasksDueDateApproachingList,
   TaskAssignedToMeFromOthersList,
+  TaskAmendmentsByOthersList,
   TaskOverdueList,
   TaskCompletedList,
 }

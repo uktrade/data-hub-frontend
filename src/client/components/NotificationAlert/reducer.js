@@ -16,6 +16,7 @@ const initialState = {
     task_assigned_to_me_from_others: 0,
     task_overdue: 0,
     task_completed: 0,
+    task_amendments_by_others: 0,
   },
 }
 

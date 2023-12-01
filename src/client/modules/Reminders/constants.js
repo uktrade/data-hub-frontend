@@ -32,6 +32,7 @@ export const COMPANIES_NO_RECENT_INTERACTIONS =
 export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 export const MY_TASKS_DUE_DATE_APPROACHING = 'my-tasks-due-date-approaching'
 export const TASK_ASSIGNED_TO_ME_FROM_OTHERS = 'task-assigned-to-me-from-others'
+export const TASK_AMENDMENTS_BY_OTHERS = 'task-amendments-by-others'
 export const TASK_OVERDUE = 'my-tasks-task-overdue'
 export const TASK_COMPLETED = 'my-tasks-task-completed'
 
@@ -54,6 +55,8 @@ export const MY_TASKS_DUE_DATE_APPROACHING_LABEL = 'Due date approaching'
 
 export const TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL =
   'Task assigned to me from others'
+
+export const TASK_AMENDMENTS_BY_OTHERS_LABEL = 'Task amendments by others'
 
 export const TASK_OVERDUE_LABEL = 'Task overdue'
 
@@ -100,6 +103,12 @@ export const REMINDERS_SETTINGS = [
     id: TASK_ASSIGNED_TO_ME_FROM_OTHERS,
     label: TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
     settingsQSParam: snakeCase(TASK_ASSIGNED_TO_ME_FROM_OTHERS),
+    url: urls.reminders.myTasks.taskAmendmentsByOthers(),
+  },
+  {
+    id: TASK_AMENDMENTS_BY_OTHERS,
+    label: TASK_AMENDMENTS_BY_OTHERS_LABEL,
+    settingsQSParam: snakeCase(TASK_AMENDMENTS_BY_OTHERS),
     url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
   },
   {
@@ -126,6 +135,7 @@ export const reminderTypeToLabel = {
   [COMPANIES_NEW_INTERACTIONS]: COMPANIES_NEW_INTERACTIONS_LABEL,
   [MY_TASKS_DUE_DATE_APPROACHING]: MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   [TASK_ASSIGNED_TO_ME_FROM_OTHERS]: TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  [TASK_AMENDMENTS_BY_OTHERS]: TASK_AMENDMENTS_BY_OTHERS_LABEL,
   [TASK_OVERDUE]: TASK_OVERDUE_LABEL,
   [TASK_COMPLETED]: TASK_COMPLETED_LABEL,
 }

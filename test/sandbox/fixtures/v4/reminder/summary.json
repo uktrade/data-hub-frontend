@@ -12,6 +12,7 @@
   "my_tasks": {
     "due_date_approaching": 2,
     "task_assigned_to_me_from_others": 2,
+    "task_amendments_by_others": 2,
     "task_overdue": 2,
     "task_completed": 2
   }
