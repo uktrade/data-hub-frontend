@@ -4,7 +4,10 @@
 
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const {
+  assertBreadcrumbs,
+  assertErrorDialog,
+} = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
 const goToOverseasCompanySearchPage = () => {
@@ -398,6 +401,26 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.sectorSelect).select('Water')
       cy.get(selectors.companyAdd.submitButton).click()
       cy.location('pathname').should('eq', urls.companies.create())
+    })
+
+    it('should display error dialog when DnB company creation fails', () => {
+      const apiErrorMessage = 'website: Enter a valid URL.'
+
+      cy.intercept('POST', '/companies/create/dnb/company-create*', {
+        statusCode: 400,
+        body: {
+          error: {
+            message: [apiErrorMessage],
+            status: 400,
+          },
+        },
+      })
+
+      cy.get(selectors.companyAdd.sectorSelect).select('Aerospace')
+      cy.get(selectors.companyAdd.submitButton).click()
+      cy.location('pathname').should('eq', urls.companies.create())
+
+      assertErrorDialog('Create company', apiErrorMessage)
     })
   })
 

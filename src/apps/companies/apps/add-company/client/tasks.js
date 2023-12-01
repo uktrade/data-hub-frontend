@@ -13,6 +13,8 @@ export const createCompany = ({ csrfToken, ...values }) => {
   const postUrl = `/companies/create/dnb/${path}?_csrf=${csrfToken}`
   return axios
     .post(postUrl, values)
-    .catch((e) => Promise.reject(e.message))
+    .catch((err) => {
+      return Promise.reject(err.response.data.error.message)
+    })
     .then((response) => response.data)
 }

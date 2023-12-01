@@ -10,7 +10,7 @@ import {
   RESPONSIVE_4,
 } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
-import { isString } from 'lodash'
+import { isString, isArray } from 'lodash'
 
 import FormActions from '../Form/elements/FormActions'
 import SecondaryButton from '../SecondaryButton'
@@ -47,6 +47,8 @@ const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
   <StyledRoot data-test="error-dialog">
     <H2 size="MEDIUM">Could not load {noun}</H2>
     {isString(errorMessage) && <p>Error: {errorMessage}</p>}
+    {isArray(errorMessage) &&
+      errorMessage.map((error) => <p key={error}>{error}</p>)}
     <FormActions>
       <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
       {dismissable && (
