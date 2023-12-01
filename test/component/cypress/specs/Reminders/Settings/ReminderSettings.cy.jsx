@@ -19,6 +19,8 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS,
+  TASK_AMENDED_BY_OTHERS_LABEL,
   TASK_OVERDUE,
   TASK_OVERDUE_LABEL,
   TASK_COMPLETED,
@@ -285,6 +287,7 @@ describe('TasksAssignedToMeSettings', () => {
     it('should return all my tasks reminder setting sections', () => {
       cy.get(getToggle(MY_TASKS_DUE_DATE_APPROACHING)).should('be.visible')
       cy.get(getToggle(TASK_ASSIGNED_TO_ME_FROM_OTHERS)).should('be.visible')
+      cy.get(getToggle(TASK_AMENDED_BY_OTHERS)).should('be.visible')
       cy.get(getToggle(TASK_OVERDUE)).should('be.visible')
       cy.get(getToggle(TASK_COMPLETED)).should('be.visible')
     })
@@ -310,6 +313,14 @@ describe('TasksAssignedToMeSettings', () => {
       TASK_ASSIGNED_TO_ME_FROM_OTHERS,
       TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
     )
+  })
+
+  context('When task amended by others setting is open', () => {
+    beforeEach(() => {
+      mountComponent(TASK_AMENDED_BY_OTHERS)
+    })
+
+    assertMyTasks(TASK_AMENDED_BY_OTHERS, TASK_AMENDED_BY_OTHERS_LABEL)
   })
 
   context('When task overdue setting is open', () => {
