@@ -286,15 +286,11 @@ export const transformInvestmentProjectToListItem = ({
 }
 
 const getTaskSubheading = (archived) => {
-  const completedTag = archived ? (
+  archived && (
     <Tag colour="green" data-test="activity-kind-label">
       COMPLETED
     </Tag>
-  ) : (
-    false
   )
-
-  return completedTag
 }
 
 export const transformTaskToListItem = ({

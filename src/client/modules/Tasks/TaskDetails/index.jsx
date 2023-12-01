@@ -27,12 +27,10 @@ const TaskDetails = ({ task }) => {
 
   const company = getCompany(task)
   const taskTitle = task ? task.title : ''
-  const archivedTag = task?.archived ? (
+  const archivedTag = task?.archived && (
     <StyledTag colour="green" data-test="activity-kind-label">
       COMPLETED
     </StyledTag>
-  ) : (
-    false
   )
 
   return (
