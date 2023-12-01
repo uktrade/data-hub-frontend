@@ -17,13 +17,14 @@ describe('RemindersMenu', () => {
         },
         export: {
           no_recent_interaction: 4,
-          new_interaction: 8,
+          new_interaction: 9,
         },
         my_tasks: {
-          due_date_approaching: 5,
+          due_date_approaching: 6,
           task_assigned_to_me_from_others: 4,
-          task_overdue: 6,
-          task_completed: 7,
+          task_assigned_to_me_from_others: 5,
+          task_overdue: 7,
+          task_completed: 8,
         },
       }}
       {...props}
@@ -50,14 +51,14 @@ describe('RemindersMenu', () => {
       url: urls.reminders.exports.noRecentInteractions(),
     },
     {
-      title: 'Companies with new interactions (8)',
+      title: 'Companies with new interactions (9)',
       url: urls.reminders.exports.newInteractions(),
     },
   ]
 
   const myTasksLinks = [
     {
-      title: 'Due date approaching (5)',
+      title: 'Due date approaching (6)',
       url: urls.reminders.myTasks.dueDateApproaching(),
     },
     {
@@ -65,11 +66,15 @@ describe('RemindersMenu', () => {
       url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
     },
     {
-      title: 'Task overdue (6)',
+      title: 'Task amended by (5)',
+      url: urls.reminders.myTasks.taskAmendedByOthers(),
+    },
+    {
+      title: 'Task overdue (7)',
       url: urls.reminders.myTasks.taskOverdue(),
     },
     {
-      title: 'Task completed (7)',
+      title: 'Task completed (8)',
       url: urls.reminders.myTasks.taskCompleted(),
     },
   ]

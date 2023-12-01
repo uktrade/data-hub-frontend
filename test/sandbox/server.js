@@ -584,6 +584,16 @@ app.patch(
 )
 
 app.get(
+  '/v4/reminder/subscription/task-amended-by-others',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/task-amended-by-others',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
   '/v4/reminder/subscription/my-tasks-task-overdue',
   v4Reminders.getSubscriptions
 )
@@ -649,6 +659,13 @@ app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
 
 app.delete(
   '/v4/reminder/task-assigned-to-me-from-others/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get('/v4/reminder/task-amended-by-others', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/task-amended-by-others/:id',
   v4Reminders.deleteReminder
 )
 
