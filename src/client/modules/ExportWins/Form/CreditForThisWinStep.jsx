@@ -102,7 +102,7 @@ const CreditForThisWinStep = () => {
                     payload={{
                       team_type: values[`team_type_${groupIndex}`],
                     }}
-                    label="HQ team, Region or Post"
+                    label="HQ team, region or post"
                     required="Enter a HQ team, region or post"
                     initialValue={
                       values[`hq_team_region_or_post_${groupIndex}`]
