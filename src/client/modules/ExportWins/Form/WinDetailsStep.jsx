@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Label from '@govuk-react/label'
+import { isEmpty } from 'lodash'
+import pluralize from 'pluralize'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
@@ -17,10 +19,6 @@ import {
   BLACK,
   WHITE,
 } from '../../../../client/utils/colours'
-import {
-  getFinancialYearStart,
-  generateFinancialYearLabel,
-} from '../../../../client/utils/date'
 import {
   ExportResource,
   SectorResource,
@@ -110,10 +108,7 @@ const WinDetailsStep = () => {
 const calculateSumFromValues = (name, values) =>
   Object.keys(values)
     .filter((key) => key.startsWith(name))
-    .reduce(
-      (accumulator, currentValue) => accumulator + Number(values[currentValue]),
-      0
-    )
+    .reduce((acc, value) => acc + parseInt(values[value], 10), 0)
 
 const sumWinTypeValues = (winTypes, values) =>
   winTypes.reduce(
@@ -122,11 +117,15 @@ const sumWinTypeValues = (winTypes, values) =>
     0
   )
 
+const getYearCountFromValues = (name, values) =>
+  Object.keys(values)
+    .filter((key) => key.startsWith(name))
+    .filter((key) => !isEmpty(values[key])).length
+
 const formatSum = (sum) => currencyGBP(sum)
 
-const WinTypeValues = ({ label, name, values }) => {
-  const financialYearStart = getFinancialYearStart(new Date())
-  const years = 5
+const WinTypeValues = ({ label, name, years = 5, values }) => {
+  const yearCount = getYearCountFromValues(name, values)
   return (
     <WinTypeContainer>
       <StyledLabel>{label}</StyledLabel>
@@ -137,13 +136,13 @@ const WinTypeValues = ({ label, name, values }) => {
             type="text"
             name={`${name}${index}`}
             key={`${name}${index}`}
-            label={generateFinancialYearLabel(financialYearStart + index, '/')}
+            label={`Year ${index + 1}`}
             boldLabel={true}
           />
         ))}
       </FieldCurrencyContainer>
       <StyledParagraph>
-        Totalling over 5 years:{' '}
+        Totalling over {yearCount} {pluralize('year', yearCount)}:{' '}
         {formatSum(calculateSumFromValues(name, values))}
       </StyledParagraph>
     </WinTypeContainer>
@@ -155,6 +154,7 @@ const FormFields = ({
   winDate,
   summaryOfSupport,
   businessType,
+  sector,
   values,
 }) => (
   <>
@@ -174,7 +174,7 @@ const FormFields = ({
       hint="For example 06 2023, date of win must be in the last 12 months."
       required="Enter the win date"
       invalid="Enter a valid date"
-      initialValue={values.win_date || winDate}
+      initialValue={{ year: winDate.year, month: winDate.month }}
     />
     <FieldTextarea
       name="summary_of_support"
@@ -291,7 +291,7 @@ const FormFields = ({
     <FieldCheckboxes
       name="goods_and_services"
       legend="What does the value relate to?"
-      hint="Select all that apply"
+      hint="Select goods or services"
       required="Select at least one option"
       options={goodsServicesOptions}
     />
@@ -312,38 +312,53 @@ const FormFields = ({
       required="Enter a sector"
       resource={SectorResource}
       field={FieldTypeahead}
+      initialValue={sector}
     />
   </>
 )
 
+const isEstimatedWinDateValid = (estimatedWinDate) => {
+  // Business date logic
+  const today = new Date()
+  const from = new Date(today.getFullYear() - 1, today.getMonth(), 1)
+  return estimatedWinDate >= from && estimatedWinDate <= today
+}
+
 const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
   <ExportResource id={id}>
-    {(exportProject) => (
-      <FormFields
-        destinationCountry={idNameToValueLabel(
-          exportProject.destinationCountry
-        )}
-        // The ACs state to use the estimated win date to pre-populate the win date.
-        // I have questioned this as they could very easily be two different dates.
-        winDate={exportProject.estimated_win_date}
-        exportProject={exportProject}
-        values={values}
-      />
-    )}
+    {(exportProject) => {
+      const date = new Date(exportProject.estimatedWinDate) // "YYYY-MM-DD"
+      const winDate = isEstimatedWinDateValid(date) && {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+      }
+      return (
+        <FormFields
+          destinationCountry={idNameToValueLabel(
+            exportProject.destinationCountry
+          )}
+          winDate={winDate}
+          exportProject={exportProject}
+          sector={idNameToValueLabel(exportProject.sector)}
+          values={values}
+        />
+      )
+    }}
   </ExportResource>
 )
 
 const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
   <ExportWinsResource id={id}>
-    {(exportWin) => (
-      <FormFields
-        destinationCountry={idNameToValueLabel(exportWin.country)}
-        winDate={exportWin.date}
-        summaryOfSupport={exportWin.description}
-        nameOfCustomer={exportWin.name_of_customer}
-        values={values}
-      />
-    )}
+    {(exportWin) => {
+      return (
+        <FormFields
+          destinationCountry={idNameToValueLabel(exportWin.country)}
+          winDate={exportWin.date}
+          summaryOfSupport={exportWin.description}
+          values={values}
+        />
+      )
+    }}
   </ExportWinsResource>
 )
 
