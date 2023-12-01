@@ -30,10 +30,12 @@ import {
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_AMENDED_BY_OTHERS,
   TASK_OVERDUE,
   TASK_COMPLETED,
 } from './constants'
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
+import TaskAmendedByOthersList from './TaskAmendedByOthersList'
 import TaskCompletedList from './TaskCompletedList'
 
 const Container = styled('div')({
@@ -121,6 +123,9 @@ export const Reminders = ({ defaultUrl }) => {
             )}
             {reminderType === TASK_ASSIGNED_TO_ME_FROM_OTHERS && (
               <TaskAssignedToMeFromOthersList />
+            )}
+            {reminderType === TASK_AMENDED_BY_OTHERS && (
+              <TaskAmendedByOthersList />
             )}
             {reminderType === TASK_OVERDUE && <TaskOverdueList />}
             {reminderType === TASK_COMPLETED && <TaskCompletedList />}

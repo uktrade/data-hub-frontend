@@ -16,6 +16,7 @@ import {
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS_LABEL,
   TASK_OVERDUE_LABEL,
   TASK_COMPLETED_LABEL,
 } from './constants'
@@ -121,6 +122,12 @@ export const RemindersMenu = ({
           pathname={location.pathname}
         >
           {`${TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL} (${reminderSummary.my_tasks.task_assigned_to_me_from_others})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskAmendedByOthers()}
+          pathname={location.pathname}
+        >
+          {`${TASK_AMENDED_BY_OTHERS_LABEL} (${reminderSummary.my_tasks.task_amended_by_others})`}
         </MenuItem>
         <MenuItem
           to={urls.reminders.myTasks.taskOverdue()}

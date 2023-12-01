@@ -19,6 +19,7 @@ import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
 import ExportsNewInteractionsList from './ExportsNewInteractionsList'
 import MyTasksDueDateApproachingList from './MyTasksDueDateApproachingList'
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
+import TaskAmendedByOthersList from './TaskAmendedByOthersList'
 import TaskOverdueList from './TaskOverdueList'
 import TaskCompletedList from './TaskCompletedList'
 
@@ -39,6 +40,7 @@ export {
   ExportsNewInteractionsList,
   MyTasksDueDateApproachingList,
   TaskAssignedToMeFromOthersList,
+  TaskAmendedByOthersList,
   TaskOverdueList,
   TaskCompletedList,
 }
