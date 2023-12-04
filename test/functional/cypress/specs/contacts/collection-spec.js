@@ -2,14 +2,14 @@ import {
   assertRole,
   getCollectionList,
   assertCollectionBreadcrumbs,
-  assertBadge,
-  assertBadgeNotPresent,
+  assertTag,
+  assertTagNotPresent,
   assertMetadataItem,
   assertListLength,
   assertItemLink,
   assertUpdatedOn,
   assertMetadataItemNotPresent,
-  assertBadgeShouldNotExist,
+  assertTagShouldNotExist,
 } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import { contacts } from '../../../../../src/lib/urls'
@@ -102,16 +102,16 @@ describe('Contacts Collections', () => {
       assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
-    it('should contain a primary contact badge', () => {
-      assertBadge('@firstListItem', 'Primary')
+    it('should contain a primary contact tag', () => {
+      assertTag('@firstListItem', 'Primary')
     })
 
-    it('should not contain an archived badge', () => {
-      assertBadgeNotPresent('@firstListItem', 'Archived')
+    it('should not contain an archived tag', () => {
+      assertTagNotPresent('@firstListItem', 'Archived')
     })
 
-    it('should not contain an unknown email badge', () => {
-      assertBadgeNotPresent('@firstListItem', 'UNKNOWN EMAIL')
+    it('should not contain an unknown email tag', () => {
+      assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
     })
 
     it('should render the updated date and time', () => {
@@ -158,8 +158,8 @@ describe('Contacts Collections', () => {
       assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
     })
 
-    it('should not contain a primary contact badge', () => {
-      assertBadgeShouldNotExist('@secondListItem')
+    it('should not contain a primary contact tag', () => {
+      assertTagShouldNotExist('@secondListItem')
     })
 
     it('should render the foreign country', () => {
@@ -174,14 +174,14 @@ describe('Contacts Collections', () => {
   })
 
   context('Archived contact', () => {
-    it('should contain an archived badge', () => {
-      assertBadge('@thirdListItem', 'Archived')
+    it('should contain an archived tag', () => {
+      assertTag('@thirdListItem', 'Archived')
     })
   })
 
   context('Contact with invalid email', () => {
-    it('should contain an unknown email badge', () => {
-      assertBadge('@forthListItem', 'UNKNOWN EMAIL')
+    it('should contain an unknown email tag', () => {
+      assertTag('@forthListItem', 'UNKNOWN EMAIL')
     })
   })
 })

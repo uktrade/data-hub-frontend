@@ -1,7 +1,6 @@
 import { get } from 'lodash'
 
 import { formatMediumDateTime } from '../../../utils/date'
-import { BABY_PINK_50 } from '../../../../client/utils/colours'
 
 import urls from '../../../../lib/urls'
 
@@ -22,10 +21,10 @@ export const transformContactToListItem = (companyId) => (contact) => {
   const badges = [
     {
       text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null,
-      borderColour: BABY_PINK_50,
+      colour: 'pink',
     },
-    { text: contact.primary ? 'Primary' : null },
-    { text: contact.archived ? 'Archived' : null },
+    { text: contact.primary ? 'Primary' : null, colour: 'turquoise' },
+    { text: contact.archived ? 'Archived' : null, colour: 'grey' },
   ]
 
   return {
@@ -33,6 +32,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
     metadata: metadata.filter((item) => item.value),
     headingUrl: urls.contacts.details(contact.id),
     badges: badges.filter((item) => item.text),
+    tags: badges.filter((item) => item.text),
     headingText: `${contact.first_name} ${contact.last_name}`.trim(),
     subheading: `Updated on ${formatMediumDateTime(contact.modified_on)}`,
   }
