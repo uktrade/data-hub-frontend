@@ -42,19 +42,17 @@ export const MyTasksContent = ({ myTasks, filters }) => (
   </>
 )
 
-const MyTasks = ({ adviser, myTasks }) => (
+const MyTasks = ({ myTasks, filters, payload }) => (
   <Task.Status
     name={TASK_GET_MY_TASKS}
     id={GET_MY_TASKS_ID}
     progressMessage="Loading your tasks"
     startOnRender={{
-      payload: {
-        adviser,
-      },
+      payload: payload,
       onSuccessDispatch: MY_TASKS_LOADED,
     }}
   >
-    {() => <MyTasksContent myTasks={myTasks} />}
+    {() => <MyTasksContent myTasks={myTasks} filters={filters} />}
   </Task.Status>
 )
 
