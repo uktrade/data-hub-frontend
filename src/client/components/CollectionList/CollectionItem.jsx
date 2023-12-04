@@ -136,6 +136,12 @@ CollectionItem.propTypes = {
       borderColour: PropTypes.string,
     })
   ),
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      colour: PropTypes.string,
+    })
+  ),
   metadata: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
