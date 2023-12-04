@@ -75,7 +75,8 @@ const CollectionItem = ({
   buttons,
 }) => (
   <ItemWrapper data-test="collection-item">
-    {/* tags take precidence over badges as they are the newer style, however not all components have been updated */}
+    {/* tags take precidence over badges as they are the newer style, however not all components
+     have been updated so the component needs to handle rendering both props */}
     {tags && (
       <StyledBadgesWrapper data-test="collection-item-tags">
         {tags.map((tag) => (
