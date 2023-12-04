@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { HintText } from 'govuk-react'
 
@@ -8,18 +10,36 @@ import { MY_TASKS_LOADED } from '../../../actions'
 import Task from '../../Task'
 import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
+import TaskListSelect from './TaskListSelect'
 
-export const MyTasksContent = ({ myTasks }) => (
-  <ContentWithHeading
-    heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
-    data-test="my-tasks-heading"
-  >
-    {myTasks?.count ? (
-      <MyTasksTable myTasks={myTasks} />
-    ) : (
-      <HintText>You do not have any tasks at this time.</HintText>
-    )}
-  </ContentWithHeading>
+const StyledHeader = styled('header')({
+  [MEDIA_QUERIES.DESKTOP]: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: `-${SPACING.SCALE_1} -${SPACING.SCALE_2}`,
+  },
+})
+
+export const MyTasksContent = ({ myTasks, filters }) => (
+  <>
+    <StyledHeader>
+      <TaskListSelect
+        label="Created by"
+        qsParam="created_by"
+        options={filters.createdBy.options}
+      />
+    </StyledHeader>
+    <ContentWithHeading
+      heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
+      data-test="my-tasks-heading"
+    >
+      {myTasks?.count ? (
+        <MyTasksTable myTasks={myTasks} />
+      ) : (
+        <HintText>You do not have any tasks at this time.</HintText>
+      )}
+    </ContentWithHeading>
+  </>
 )
 
 const MyTasks = ({ adviser, myTasks }) => (
