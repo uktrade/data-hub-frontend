@@ -65,14 +65,16 @@ const transformCompanyToListItem = ({
     })
   }
 
-  const badges = [{ text: labels.hqLabels[get(headquarter_type, 'name')] }]
+  const tags = [
+    { text: labels.hqLabels[get(headquarter_type, 'name')], colour: 'grey' },
+  ]
 
   if (uk_region) {
-    badges.push({ text: `${get(uk_region, 'name')}, UK` })
+    tags.push({ text: `${get(uk_region, 'name')}, UK`, colour: 'blue' })
   } else {
-    badges.push({ text: get(address, 'country.name') })
+    tags.push({ text: get(address, 'country.name'), colour: 'blue' })
   }
-  const filteredBadges = badges.filter((item) => item.text)
+  const filteredTags = tags.filter((item) => item.text)
 
   return {
     id,
@@ -81,7 +83,8 @@ const transformCompanyToListItem = ({
       : undefined,
     headingText: name,
     headingUrl: urls.companies.detail(id),
-    badges: filteredBadges,
+    badges: filteredTags,
+    tags: filteredTags,
     metadata: metadata.filter((item) => item.value),
   }
 }

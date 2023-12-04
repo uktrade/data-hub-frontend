@@ -9,6 +9,7 @@ import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
+import Tag from '../Tag'
 
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
@@ -65,6 +66,7 @@ const CollectionItem = ({
   subheading,
   headingUrl,
   badges,
+  tags,
   metadata,
   metadataRenderer,
   onClick,
@@ -73,8 +75,17 @@ const CollectionItem = ({
   buttons,
 }) => (
   <ItemWrapper data-test="collection-item">
-    {badges && (
-      <StyledBadgesWrapper>
+    {/* tags take precidence over badges as they are the newer style, however not all components have been updated */}
+    {tags && (
+      <StyledBadgesWrapper data-test="collection-item-tags">
+        {tags.map((tag) => (
+          <Tag colour={tag.colour}>{tag.text}</Tag>
+        ))}
+      </StyledBadgesWrapper>
+    )}
+
+    {!tags && badges && (
+      <StyledBadgesWrapper data-test="collection-item-badges">
         {badges.map((badge) => (
           <Badge key={badge.text} borderColour={badge.borderColour}>
             {badge.text}
