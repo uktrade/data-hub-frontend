@@ -285,15 +285,12 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
-const getTaskSubheading = (archived) => {
-  return (
-    archived && (
-      <Tag colour="green" data-test="activity-kind-label">
-        COMPLETED
-      </Tag>
-    )
+const getTaskSubheading = (archived) =>
+  archived && (
+    <Tag colour="green" data-test="activity-kind-label">
+      COMPLETED
+    </Tag>
   )
-}
 
 export const transformTaskToListItem = ({
   createdOn,
