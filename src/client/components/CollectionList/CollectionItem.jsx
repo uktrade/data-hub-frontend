@@ -80,7 +80,9 @@ const CollectionItem = ({
     {tags && (
       <StyledBadgesWrapper data-test="collection-item-tags">
         {tags.map((tag) => (
-          <Tag colour={tag.colour}>{tag.text}</Tag>
+          <Tag colour={tag.colour} data-test="collection-item-tag">
+            {tag.text}
+          </Tag>
         ))}
       </StyledBadgesWrapper>
     )}
