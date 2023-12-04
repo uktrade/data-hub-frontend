@@ -137,7 +137,7 @@
     "react-string-replace": "^1.1.1",
     "react-to-print": "^2.14.15",
     "react-use": "^17.4.0",
-    "redis": "4.6.10",
+    "redis": "4.6.11",
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
     "request-promise": "^4.2.6",
