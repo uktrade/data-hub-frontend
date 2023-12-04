@@ -20,13 +20,26 @@ const areFiltersActive = (queryParams) => {
 
 // export const state2props = (state) => state[ID]
 
-export const state2props = ({ router }) => {
+export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
+  const { currentAdviserId } = state
+  const payload = {
+    ...queryParams,
+    page: parsePage(queryParams.page),
+    created_by: currentAdviserId,
+    adviser: [currentAdviserId],
+  }
+  if (queryParams.created_by === 'me') {
+    payload.adviser = []
+  }
+
+  if (queryParams.created_by === 'others') {
+    payload.created_by = undefined
+    payload.adviser = [currentAdviserId]
+  }
   return {
-    payload: {
-      ...queryParams,
-      page: parsePage(queryParams.page),
-    },
+    ...state[ID],
+    payload: payload,
     filters: {
       areActive: areFiltersActive(queryParams),
       status: {
