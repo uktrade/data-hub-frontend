@@ -2,7 +2,7 @@ import {
   getCollectionList,
   assertCollectionBreadcrumbs,
   assertAddItemButton,
-  assertBadge,
+  assertTag,
   assertRole,
   assertMetadataItem,
   assertListLength,
@@ -87,8 +87,8 @@ describe('Company Collections - React', () => {
     assertListLength(companyList)
   })
 
-  it('should contain country badge', () => {
-    assertBadge('@firstListItem', 'Malaysia')
+  it('should contain country tag', () => {
+    assertTag('@firstListItem', 'Malaysia')
   })
 
   it('should contain company sector and primary address', () => {
@@ -104,15 +104,15 @@ describe('Company Collections - React', () => {
   })
 
   it('should contain UK HQ Badge', () => {
-    assertBadge('@secondListItem', 'UK HQ')
+    assertTag('@secondListItem', 'UK HQ')
   })
 
   it('should contain UK Region Badge', () => {
-    assertBadge('@secondListItem', 'London, UK')
+    assertTag('@secondListItem', 'London, UK')
   })
 
   it('should contain Global HQ Badge', () => {
-    assertBadge('@thirdListItem', 'Global HQ')
+    assertTag('@thirdListItem', 'Global HQ')
     assertMetadataItem('@thirdListItem', company3.global_headquarters.name)
   })
 })
