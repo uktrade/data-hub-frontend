@@ -20,6 +20,7 @@ import { format } from '../../../utils/date'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
+import Tag from '../../../components/Tag'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -284,16 +285,25 @@ export const transformInvestmentProjectToListItem = ({
   }
 }
 
+const getTaskSubheading = (archived) =>
+  archived && (
+    <Tag colour="green" data-test="activity-kind-label">
+      COMPLETED
+    </Tag>
+  )
+
 export const transformTaskToListItem = ({
   createdOn,
   id,
   title,
   dueDate,
   advisers,
+  archived,
 } = {}) => ({
   id,
   headingUrl: urls.tasks.details(id),
   headingText: title,
+  subheading: getTaskSubheading(archived),
   metadata: [
     { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
     {

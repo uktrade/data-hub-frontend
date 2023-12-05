@@ -43,16 +43,17 @@ export const TaskButtons = ({ task, editUrl }) => (
         </Form>
       )}
       <ButtonWrapper>
-        <Button
-          buttonColour={GREY_3}
-          buttonTextColour={TEXT_COLOUR}
-          as={Link}
-          href={editUrl}
-          data-test="edit-form-button"
-        >
-          Edit
-        </Button>
-
+        {!task.archived && (
+          <Button
+            buttonColour={GREY_3}
+            buttonTextColour={TEXT_COLOUR}
+            as={Link}
+            href={editUrl}
+            data-test="edit-form-button"
+          >
+            Edit
+          </Button>
+        )}
         <Button
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}

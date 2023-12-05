@@ -1,20 +1,30 @@
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { investmentProjectTaskFaker, taskFaker } from '../../fakers/task'
+import { investmentProjectTaskFaker } from '../../fakers/task'
 import { format } from '../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 import { assertQueryParams } from '../../support/assertions'
 
-const investmentProjectTaskWithAllOptionalFields = investmentProjectTaskFaker()
+const investmentProjectTaskWithAllOptionalFields = investmentProjectTaskFaker({
+  archived: true,
+})
 const investmentProjectTaskMissingAllOptionalFields =
-  investmentProjectTaskFaker({ task: taskFaker({ dueDate: undefined }) })
+  investmentProjectTaskFaker({
+    dueDate: undefined,
+    archived: true,
+  })
 
 const assertTaskItem = (index, investmentTask) => {
   cy.get('[data-test="collection-item"]')
-    .eq(index)
     .find('a')
-    .should('have.text', `${investmentTask.title}`)
+    .eq(index)
+    .should('contain', `${investmentTask.title}`)
     .and('have.attr', 'href', urls.tasks.details(investmentTask.id))
+
+  cy.get('[data-test="collection-item"]')
+    .eq(index)
+    .find('[data-test="activity-kind-label"]')
+    .should('contain', 'COMPLETED')
 
   cy.get('[data-test="collection-item"]')
     .eq(index)

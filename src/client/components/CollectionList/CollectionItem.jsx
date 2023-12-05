@@ -114,7 +114,6 @@ const CollectionItem = ({
     ) : (
       <StyledHeader>{headingText}</StyledHeader>
     )}
-
     {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
     {metadataRenderer ? (
@@ -126,6 +125,7 @@ const CollectionItem = ({
     {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
   </ItemWrapper>
 )
+
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
