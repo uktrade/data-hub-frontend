@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import { TASK__START, TASK__DISMISS_ERROR, TASK__CANCEL } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
-import AccessDenied from '../AccessDenied'
+// import AccessDenied from '../AccessDenied'
 
 const StyledLoadingBox = styled(LoadingBox)({
   paddingBottom: 0,
@@ -228,12 +228,12 @@ Task.Status = ({
   progressOverlay = false,
   dismissable = true,
   children = () => null,
+  noRetry,
 }) => (
   <Task>
     {(getTask) => {
       const {
         start,
-        status,
         progress,
         error,
         payload,
@@ -247,27 +247,67 @@ Task.Status = ({
           {!!startOnRender && (
             <Task.StartOnRender {...startOnRender} {...{ name, id }} />
           )}
-          {!progressOverlay &&
-            progress &&
-            renderProgress({ message: progressMessage })}
-          {error &&
-            (errorMessage ===
-            'You do not have permission to perform this action.' ? (
-              <AccessDenied />
-            ) : (
-              renderError({
-                noun,
-                errorMessage,
-                retry: () => start({ payload, onSuccessDispatch }),
-                dismiss: dismissError,
-                dismissable,
-              })
-            ))}
-          <StyledLoadingBox loading={progress && progressOverlay}>
-            {(!status || progressOverlay) && children()}
-          </StyledLoadingBox>
+          {progressOverlay ? (
+            <StyledLoadingBox loading={progress || error}>
+              {children()}
+            </StyledLoadingBox>
+          ) : progress ? (
+            renderProgress({ message: progressMessage, noun })
+          ) : error ? (
+            renderError({
+              noun,
+              errorMessage,
+              noRetry,
+              retry: () =>
+                start({
+                  payload,
+                  onSuccessDispatch,
+                  ignoreIfInProgress: true,
+                }),
+              dismiss: dismissError,
+              dismissable,
+            })
+          ) : (
+            children()
+          )}
         </>
       )
+
+      // return (
+      //   <>
+      //     {!!startOnRender && (
+      //       <Task.StartOnRender {...startOnRender} {...{ name, id }} />
+      //     )}
+      //     {!progressOverlay &&
+      //       progress &&
+      //       renderProgress({ message: progressMessage, noun })}
+      //     {error &&
+      //       (errorMessage ===
+      //       'You do not have permission to perform this action.' ? (
+      //         <AccessDenied />
+      //       ) : (
+      //         renderError({
+      //           noun,
+      //           errorMessage,
+      //           noRetry,
+      //           retry: () =>
+      //             start({
+      //               payload,
+      //               onSuccessDispatch,
+      //               ignoreIfInProgress: true,
+      //             }),
+      //           dismiss: dismissError,
+      //           dismissable,
+      //         })
+      //       ))}
+      //     {progressOverlay
+      //       ?  <StyledLoadingBox loading={progress}>
+      //           {!status && children()}
+      //         </StyledLoadingBox>
+      //       : !status && children()
+      //     }
+      //   </>
+      // )
     }}
   </Task>
 )
