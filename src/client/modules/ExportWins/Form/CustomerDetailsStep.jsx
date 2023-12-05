@@ -63,7 +63,6 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
         id={companyId}
         label="Company contacts"
         required="Select a contact"
-        isMulti={true}
         placeholder="Select contact"
         resource={CompanyContactsResource}
         field={FieldTypeahead}
@@ -97,6 +96,7 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
         required="Choose a HQ location"
         field={FieldSelect}
         resource={UKRegionsResource}
+        fullWidth={true}
       />
       <ResourceOptionsField
         name="business_potential"
