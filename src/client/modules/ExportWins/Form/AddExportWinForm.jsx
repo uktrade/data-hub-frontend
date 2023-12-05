@@ -12,7 +12,7 @@ import OfficerDetailsStep from './OfficerDetailsStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
-import SupportProvidedStep from './SupportProvidedStep'
+import SupportGivenStep from './SupportGivenStep'
 import CheckBeforeSendingStep from './CheckBeforeSending'
 import urls from '../../../../lib/urls'
 
@@ -59,7 +59,7 @@ const AddExportWinForm = () => {
                 <CreditForThisWinStep />
                 <CustomerDetailsStep />
                 <WinDetailsStep />
-                <SupportProvidedStep />
+                <SupportGivenStep />
                 <CheckBeforeSendingStep />
                 <pre>{JSON.stringify(values, null, 2)}</pre>
               </>

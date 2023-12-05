@@ -13,12 +13,8 @@ import { useFormContext } from '../../../../client/components/Form/hooks'
 import CountriesResource from '../../../components/Resource/Countries'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { idNameToValueLabel } from '../../../../client/utils'
-import {
-  LIGHT_GREY,
-  DARK_GREY,
-  BLACK,
-  WHITE,
-} from '../../../../client/utils/colours'
+import { StyledHintParagraph } from './styled'
+import { LIGHT_GREY, BLACK, WHITE } from '../../../../client/utils/colours'
 import {
   ExportResource,
   SectorResource,
@@ -59,10 +55,6 @@ const StyledParagraph = styled('p')({
   padding: 10,
   fontWeight: 'bold',
   backgroundColor: LIGHT_GREY,
-})
-
-const StyledHintParagraph = styled('p')({
-  color: DARK_GREY,
 })
 
 const StyledDetails = styled(Details)({

@@ -55,13 +55,13 @@ const OfficerDetailsStep = () => {
   )
 }
 
-const FormFields = ({ owner, teamType, teamMembers, values }) => (
+const FormFields = ({ adviser, teamType, teamMembers, values }) => (
   <>
     <FieldAdvisersTypeahead
-      name="owner"
-      label="Owner name"
-      required="Enter an owner"
-      initialValue={values.owner || owner}
+      name="adviser"
+      label="Lead Officer name"
+      required="Enter a lead officer"
+      initialValue={values.adviser || adviser}
     />
     <ResourceOptionsField
       name="team_type"
@@ -101,7 +101,7 @@ const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
   <ExportResource id={id}>
     {(exportProject) => (
       <FormFields
-        owner={idNameToValueLabel(exportProject.owner)}
+        adviser={idNameToValueLabel(exportProject.owner)}
         teamMembers={exportProject.teamMembers.map(idNameToValueLabel)}
         values={values}
       />
@@ -113,7 +113,7 @@ const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
   <ExportWinsResource id={id}>
     {(exportWin) => (
       <FormFields
-        owner={exportWin.adviser}
+        adviser={exportWin.adviser}
         teamType={exportWin.team_type}
         values={values}
       />

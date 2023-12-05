@@ -1,9 +1,8 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
-import Paragraph from '@govuk-react/paragraph'
 import styled from 'styled-components'
 
-import { DARK_GREY, MID_GREY } from '../../../../client/utils/colours'
+import { MID_GREY } from '../../../../client/utils/colours'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import {
@@ -23,12 +22,9 @@ import {
   FieldAdvisersTypeahead,
 } from '../../../components'
 import { steps } from './constants'
+import { StyledHintParagraph } from './styled'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-
-const StyledParagraph = styled(Paragraph)({
-  color: DARK_GREY,
-})
 
 const Container = styled('div')({
   borderLeft: `3px solid ${MID_GREY}`,
@@ -51,10 +47,10 @@ const CreditForThisWinStep = () => {
   return (
     <Step name={steps.CREDIT_FOR_THIS_WIN}>
       <H3>Credit for this win</H3>
-      <StyledParagraph>
+      <StyledHintParagraph>
         Other teams that helped with this win should be added so they can be
         credited, this will not reduce your credit for this win.
-      </StyledParagraph>
+      </StyledHintParagraph>
       <StyledFieldRadios
         name="credit_for_win"
         label="Did any other teams help with this win?"
