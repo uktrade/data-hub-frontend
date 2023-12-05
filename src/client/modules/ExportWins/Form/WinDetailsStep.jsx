@@ -108,7 +108,7 @@ const WinDetailsStep = () => {
 const calculateSumFromValues = (name, values) =>
   Object.keys(values)
     .filter((key) => key.startsWith(name))
-    .reduce((acc, value) => acc + parseInt(values[value], 10), 0)
+    .reduce((acc, value) => acc + Number(values[value]), 0)
 
 const sumWinTypeValues = (winTypes, values) =>
   winTypes.reduce(
@@ -329,8 +329,8 @@ const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
     {(exportProject) => {
       const date = new Date(exportProject.estimatedWinDate) // "YYYY-MM-DD"
       const winDate = isEstimatedWinDateValid(date) && {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
+        year: String(date.getFullYear()),
+        month: String(date.getMonth() + 1),
       }
       return (
         <FormFields
