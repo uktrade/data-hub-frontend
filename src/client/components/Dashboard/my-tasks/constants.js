@@ -14,4 +14,4 @@ export const SHOW_ALL_OPTION = {
   value: 'all-statuses',
 }
 
-export const STATUS_LIST_OPTIONS = [SHOW_ALL_OPTION, ...CREATED_BY_OPTIONS]
+export const CREATED_BY_LIST_OPTIONS = [SHOW_ALL_OPTION, ...CREATED_BY_OPTIONS]
