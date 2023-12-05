@@ -102,9 +102,7 @@ function* subscribeToStart(registry) {
       get(state, ['tasks', name, id, 'status'])
     )
     if (status === 'progress') {
-      throw Error(
-        `Cannot start task "${name}.${id}" because it is already in progress. Cancel it first!`
-      )
+      continue
     }
     yield spawn(manageTask, task, action)
   }
