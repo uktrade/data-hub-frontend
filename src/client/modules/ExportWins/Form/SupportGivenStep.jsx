@@ -5,12 +5,15 @@ import { useLocation } from 'react-router-dom'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { useFormContext } from '../../../components/Form/hooks'
+import { OPTION_YES } from '../../../../common/constants'
+import { idNameToValueLabel } from '../../../utils'
+import { StyledHintParagraph } from './styled'
+import { steps } from './constants'
 import {
   HvcResource,
   SupportTypeResource,
   AssociatedProgrammeResource,
 } from '../../../components/Resource'
-import { idNameToValueLabel } from '../../../utils'
 import {
   Step,
   FieldTypeahead,
@@ -18,10 +21,6 @@ import {
   FieldCheckboxes,
   FieldSelect,
 } from '../../../components'
-import { StyledHintParagraph } from './styled'
-import { steps } from './constants'
-
-import { OPTION_YES } from '../../../../common/constants'
 
 const SupportGivenStep = () => {
   const { values } = useFormContext()
