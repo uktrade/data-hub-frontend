@@ -1,9 +1,9 @@
 export const state2props = (state) => {
   const activeFeatureGroups = state.activeFeatureGroups
-  const hasInvestmentFeatureGroup = activeFeatureGroups.includes(
+  const hasInvestmentFeatureGroup = activeFeatureGroups?.includes(
     'investment-notifications'
   )
-  const hasExportFeatureGroup = activeFeatureGroups.includes(
+  const hasExportFeatureGroup = activeFeatureGroups?.includes(
     'export-notifications'
   )
 
