@@ -13,10 +13,13 @@ import {
   Step,
   FieldTypeahead,
   FieldAddAnother,
+  FieldCheckboxes,
   FieldSelect,
 } from '../../../components'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
+
+import { OPTION_YES } from '../../../../common/constants'
 
 const SupportGivenStep = () => {
   // eslint-disable-next-line no-unused-vars
@@ -77,6 +80,27 @@ const SupportGivenStep = () => {
           />
         )}
       </FieldAddAnother>
+      <FieldCheckboxes
+        name="confirm_accurate"
+        required="Confirm that this information is complete and accurate"
+        options={[
+          {
+            value: OPTION_YES,
+            label: 'I confirm that this information is complete and accurate',
+          },
+        ]}
+      />
+      <FieldCheckboxes
+        name="manager_agreed"
+        required="Confirm your line manager has agreed that this win should be recorded"
+        options={[
+          {
+            value: OPTION_YES,
+            label:
+              'My line manager has agreed that this win should be recorded',
+          },
+        ]}
+      />
     </Step>
   )
 }
