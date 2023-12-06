@@ -77,6 +77,7 @@ import OrderInvoice from './OrderInvoice'
 import OrderCancellationReasons from './OrderCancellationReasons'
 import MyTasksDueDateApproachingSettings from './MyTasksDueDateApproachingSettings'
 import TaskAssignedToMeFromOthersSettings from './TaskAssignedToMeFromOthersSettings'
+import TaskAmendedByOthersSettings from './TaskAmendedByOthersSettings'
 import TaskOverdueSettings from './TaskOverdueSettings'
 import TeamType from './TeamType'
 import WinType from './WinType'
@@ -166,6 +167,7 @@ export default {
   ...OrderCancellationReasons.tasks,
   ...MyTasksDueDateApproachingSettings.tasks,
   ...TaskAssignedToMeFromOthersSettings.tasks,
+  ...TaskAmendedByOthersSettings.tasks,
   ...TaskOverdueSettings.tasks,
   ...UKRegions.tasks,
   ...WinType.tasks,

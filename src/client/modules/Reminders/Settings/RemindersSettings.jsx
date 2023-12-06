@@ -30,6 +30,8 @@ import {
   COMPANIES_NEW_INTERACTIONS,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_AMENDED_BY_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS,
   TASK_OVERDUE,
   TASK_OVERDUE_LABEL,
   TASK_COMPLETED,
@@ -181,6 +183,7 @@ export const ExportReminderSettings = ({
 export const TasksAssignedToMeSettings = ({
   upcomingTaskReminder,
   taskAssignedToMeFromOthers,
+  taskAmendedByOthers,
   taskOverdue,
   taskCompleted,
   openSettingsSections,
@@ -218,6 +221,19 @@ export const TasksAssignedToMeSettings = ({
           dataName={TASK_ASSIGNED_TO_ME_FROM_OTHERS}
           data={taskAssignedToMeFromOthers}
           to={urls.reminders.settings.myTasks.taskAssignedToMeFromOthers()}
+        />
+      </RemindersToggleSection>
+      <RemindersToggleSection
+        label={TASK_AMENDED_BY_OTHERS_LABEL}
+        id={`${TASK_AMENDED_BY_OTHERS}-toggle`}
+        data-test={`${TASK_AMENDED_BY_OTHERS}-toggle`}
+        isOpen={isSettingOpen(openSettingsSections, TASK_AMENDED_BY_OTHERS)}
+        borderBottom={true}
+      >
+        <EmailRemindersSettingsTable
+          dataName={TASK_AMENDED_BY_OTHERS}
+          data={taskAmendedByOthers}
+          to={urls.reminders.settings.myTasks.taskAmendedByOthers()}
         />
       </RemindersToggleSection>
       <RemindersToggleSection
@@ -277,6 +293,7 @@ export const RemindersSettings = ({
           exportNewInteractions,
           upcomingTaskReminder,
           taskAssignedToMeFromOthers,
+          taskAmendedByOthers,
           taskCompleted,
           taskOverdue,
         }) => (
@@ -298,6 +315,7 @@ export const RemindersSettings = ({
             <TasksAssignedToMeSettings
               upcomingTaskReminder={upcomingTaskReminder}
               taskAssignedToMeFromOthers={taskAssignedToMeFromOthers}
+              taskAmendedByOthers={taskAmendedByOthers}
               taskOverdue={taskOverdue}
               taskCompleted={taskCompleted}
               openSettingsSections={openSettingsSections}

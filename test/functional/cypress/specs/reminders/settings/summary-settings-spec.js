@@ -7,6 +7,7 @@ import {
   COMPANIES_NEW_INTERACTIONS,
   MY_TASKS_DUE_DATE_APPROACHING,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_AMENDED_BY_OTHERS,
   TASK_OVERDUE,
   TASK_COMPLETED,
 } from '../../../../../../src/client/modules/Reminders/constants'
@@ -43,6 +44,9 @@ const interceptAPICalls = ({
         reminder_days: reminder_days,
       },
       task_assigned_to_me_from_others: {
+        email_reminders_enabled: email_reminders_enabled,
+      },
+      task_amended_by_others: {
         email_reminders_enabled: email_reminders_enabled,
       },
       task_overdue: {
@@ -111,6 +115,7 @@ describe('Settings: reminders and email notifications', () => {
       '&companies_new_interactions=true' +
       '&my_tasks_due_date_approaching=true' +
       '&task_assigned_to_me_from_others=true' +
+      '&my_tasks_task_amended_by_others=true' +
       '&my_tasks_task_overdue=true' +
       '&my_tasks_task_completed=true'
     before(() => {
@@ -143,6 +148,7 @@ describe('Settings: reminders and email notifications', () => {
       'Task Assigned To Me From Others',
       TASK_ASSIGNED_TO_ME_FROM_OTHERS
     )
+    assertSettingsTableVisible('Task Amended By Others', TASK_AMENDED_BY_OTHERS)
     assertSettingsTableVisible('Task Overdue', TASK_OVERDUE)
     assertSettingsTableVisible('Task Completed', TASK_COMPLETED)
   })
