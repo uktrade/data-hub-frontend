@@ -29,6 +29,10 @@ const SupportGivenStep = () => {
 
   return (
     <Step name={steps.SUPPORT_PROVIDED}>
+      <H3>Support given</H3>
+      <StyledHintParagraph>
+        Did any of these help the customer achieve this win?
+      </StyledHintParagraph>
       {queryParams.exportwin ? (
         <PrepopulateFormFieldsFromExportWin
           id={queryParams.exportwin}
@@ -48,10 +52,6 @@ const FormFields = ({
   values,
 }) => (
   <>
-    <H3>Support given</H3>
-    <StyledHintParagraph>
-      Did any of these help the customer achieve this win?
-    </StyledHintParagraph>
     <ResourceOptionsField
       id="hvc"
       name="hvc"
