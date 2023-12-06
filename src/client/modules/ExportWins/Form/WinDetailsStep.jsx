@@ -8,13 +8,14 @@ import { isEmpty } from 'lodash'
 import pluralize from 'pluralize'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import { LIGHT_GREY, BLACK, WHITE } from '../../../../client/utils/colours'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import CountriesResource from '../../../components/Resource/Countries'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { idNameToValueLabel } from '../../../../client/utils'
+import { OPTION_YES } from '../../../../common/constants'
 import { StyledHintParagraph } from './styled'
-import { LIGHT_GREY, BLACK, WHITE } from '../../../../client/utils/colours'
 import {
   ExportResource,
   SectorResource,
@@ -145,6 +146,7 @@ const FormFields = ({
   destinationCountry,
   winDate,
   summaryOfSupport,
+  nameOfCustomer,
   businessType,
   sector,
   values,
@@ -178,10 +180,25 @@ const FormFields = ({
       initialValue={values.summary_of_support || summaryOfSupport}
     />
 
-    {/* 
-        Overseas customer (input + checkbox) to go here when we have ACs,
-        the API only has one field defined: name_of_customer
-    */}
+    <FieldInput
+      type="text"
+      name="name_of_customer"
+      label="Overseas customer"
+      required="Enter the name of the overseas customer"
+      initialValue={values.name_of_customer || nameOfCustomer}
+      placeholder="Add name"
+    />
+
+    <FieldCheckboxes
+      name="name_of_customer_confidential"
+      hint="Check this box if your customer has asked for this not to be public (optional)."
+      options={[
+        {
+          value: OPTION_YES,
+          label: 'Confidential',
+        },
+      ]}
+    />
 
     <FieldInput
       type="text"
@@ -330,7 +347,6 @@ const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
             exportProject.destinationCountry
           )}
           winDate={winDate}
-          exportProject={exportProject}
           sector={idNameToValueLabel(exportProject.sector)}
           values={values}
         />
@@ -346,6 +362,7 @@ const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
         <FormFields
           destinationCountry={idNameToValueLabel(exportWin.country)}
           winDate={exportWin.date}
+          nameOfCustomer={exportWin.nameOfCustomer}
           summaryOfSupport={exportWin.description}
           values={values}
         />
