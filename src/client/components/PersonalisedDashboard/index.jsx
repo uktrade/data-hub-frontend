@@ -14,8 +14,6 @@ import {
   DASHBOARD_TAB,
 } from '../../../client/utils/localStorage'
 import Banner from '../LocalHeader/Banner'
-import { ID as INVESTMENT_REMINDERS_ID } from '../InvestmentReminders/state'
-import { ID as REMINDER_SUMMARY_ID } from '../NotificationAlert/state'
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   ID as CHECK_FOR_INVESTMENTS_ID,
@@ -30,18 +28,12 @@ import {
   MY_TASKS_CHECK_COMPLETE,
 } from '../../actions'
 
-import NotificationBadge from '../NotificationBadge'
-import { DashboardToggleSection } from '../ToggleSection'
 import Task from '../Task'
 
-import Aside from './Aside'
 import Main from './Main'
 import blueTheme from './blue-theme'
 
-import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 import {
-  InvestmentReminders,
-  ReminderSummary,
   Search,
   DashboardTabs,
   CustomContainer,
@@ -64,28 +56,14 @@ const SearchContainer = styled(CustomContainer)`
     padding: ${SPACING.SCALE_4} 0;
   }
 `
-
 const state2props = (state) => {
-  const { count: remindersCount } = state[INVESTMENT_REMINDERS_ID]
-  const { count: reminderSummaryCount } = state[REMINDER_SUMMARY_ID]
   const { hasInvestmentProjects } = state[CHECK_FOR_INVESTMENTS_ID]
   const { hasTasks } = state[CHECK_FOR_MY_TASKS_ID]
   const { dataHubFeed } = state[DATA_HUB_FEED_ID]
 
-  const hasInvestmentFeatureGroup = state.activeFeatureGroups.includes(
-    'investment-notifications'
-  )
-  const hasExportFeatureGroup = state.activeFeatureGroups.includes(
-    'export-notifications'
-  )
-
   return {
     hasInvestmentProjects,
     dataHubFeed,
-    remindersCount,
-    reminderSummaryCount,
-    hasExportFeatureGroup,
-    hasInvestmentFeatureGroup,
     hasTasks,
   }
 }
@@ -94,12 +72,8 @@ const PersonalisedDashboard = ({
   id,
   adviser,
   csrfToken,
-  remindersCount,
-  reminderSummaryCount,
   hasInvestmentProjects,
   dataHubFeed,
-  hasInvestmentFeatureGroup,
-  hasExportFeatureGroup,
   hasTasks,
 }) => {
   const history = useHistory()
@@ -108,18 +82,6 @@ const PersonalisedDashboard = ({
   if (previouslySelectedTabPath) {
     history.push(previouslySelectedTabPath)
   }
-
-  const showOutstandingPropositions =
-    hasInvestmentProjects &&
-    !hasInvestmentFeatureGroup &&
-    !hasExportFeatureGroup
-
-  const showReminders =
-    (hasInvestmentProjects && hasInvestmentFeatureGroup) ||
-    hasExportFeatureGroup
-
-  const hasAtLeastOneModule =
-    showOutstandingPropositions || showReminders || hasInvestmentProjects
 
   return (
     <ThemeProvider theme={blueTheme}>
@@ -153,65 +115,7 @@ const PersonalisedDashboard = ({
         >
           {() => (
             <GridRow data-test="dashboard">
-              {hasAtLeastOneModule && (
-                <GridCol setWidth="one-third">
-                  <Aside>
-                    {showOutstandingPropositions && (
-                      <DashboardToggleSection
-                        label="Reminders"
-                        id="investment-reminders-section"
-                        badge={
-                          !!remindersCount && (
-                            <NotificationBadge value={remindersCount} />
-                          )
-                        }
-                        major={true}
-                        isOpen={false}
-                        data-test="investment-reminders-section"
-                      >
-                        <InvestmentReminders adviser={adviser} />
-                      </DashboardToggleSection>
-                    )}
-
-                    {showReminders && (
-                      <DashboardToggleSection
-                        label="Reminders"
-                        id="reminder-summary-section"
-                        badge={
-                          !!reminderSummaryCount && (
-                            <NotificationBadge value={reminderSummaryCount} />
-                          )
-                        }
-                        major={true}
-                        isOpen={reminderSummaryCount > 0}
-                        data-test="reminder-summary-section"
-                      >
-                        <ReminderSummary />
-                      </DashboardToggleSection>
-                    )}
-
-                    {/* Investment projects wheel */}
-                    {hasInvestmentProjects && (
-                      <DashboardToggleSection
-                        label="Investment projects summary"
-                        id="investment-project-summary-section"
-                        isOpen={true}
-                        data-test="investment-project-summary-section"
-                      >
-                        <InvestmentProjectSummary adviser={adviser} />
-                      </DashboardToggleSection>
-                    )}
-                  </Aside>
-                </GridCol>
-              )}
-
-              <GridCol
-                setWidth={
-                  hasInvestmentProjects || hasExportFeatureGroup
-                    ? 'two-thirds'
-                    : 'full'
-                }
-              >
+              <GridCol setWidth="full">
                 <Main>
                   <DashboardTabs
                     id={id}
@@ -255,8 +159,6 @@ PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
   csrfToken: PropTypes.string.isRequired,
-  remindersCount: PropTypes.number.isRequired,
-  reminderSummaryCount: PropTypes.number.isRequired,
   hasInvestmentProjects: PropTypes.bool.isRequired,
   hasTasks: PropTypes.bool.isRequired,
   dataHubFeed: PropTypes.array.isRequired,
