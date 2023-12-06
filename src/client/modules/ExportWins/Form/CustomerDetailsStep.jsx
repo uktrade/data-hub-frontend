@@ -36,14 +36,14 @@ const CustomerDetailsStep = () => {
 
       {queryParams.export && (
         <PrepopulateFormFieldsFromExportProject
-          id={queryParams.export}
+          exportProjectId={queryParams.export}
           companyId={queryParams.company}
           values={values}
         />
       )}
       {queryParams.exportwin && (
         <PrepopulateFormFieldsFromExportWin
-          id={queryParams.exportwin}
+          exportWinId={queryParams.exportwin}
           companyId={queryParams.company}
           values={values}
         />
@@ -120,8 +120,12 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
   )
 }
 
-const PrepopulateFormFieldsFromExportProject = ({ id, companyId, values }) => (
-  <ExportResource id={id}>
+const PrepopulateFormFieldsFromExportProject = ({
+  exportProjectId,
+  companyId,
+  values,
+}) => (
+  <ExportResource id={exportProjectId}>
     {(exportProject) => {
       return (
         <FormFields
@@ -141,8 +145,8 @@ const PrepopulateFormFieldsFromExportProject = ({ id, companyId, values }) => (
   </ExportResource>
 )
 
-const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
-  <ExportWinsResource id={id}>
+const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
+  <ExportWinsResource id={exportWinId}>
     {(exportWin) => {
       return (
         <FormFields

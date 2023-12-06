@@ -35,7 +35,7 @@ const SupportGivenStep = () => {
       </StyledHintParagraph>
       {queryParams.exportwin ? (
         <PrepopulateFormFieldsFromExportWin
-          id={queryParams.exportwin}
+          exportWinId={queryParams.exportwin}
           values={values}
         />
       ) : (
@@ -128,8 +128,8 @@ const FormFields = ({
   </>
 )
 
-const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
-  <ExportWinsResource id={id}>
+const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
+  <ExportWinsResource id={exportWinId}>
     {(exportWin) => {
       return (
         <FormFields

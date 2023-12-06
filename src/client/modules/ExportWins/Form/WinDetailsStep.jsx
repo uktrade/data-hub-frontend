@@ -81,13 +81,13 @@ const WinDetailsStep = () => {
       </StyledHintParagraph>
       {queryParams.export && (
         <PrepopulateFormFieldsFromExportProject
-          id={queryParams.export}
+          exportProjectId={queryParams.export}
           values={values}
         />
       )}
       {queryParams.exportwin && (
         <PrepopulateFormFieldsFromExportWin
-          id={queryParams.exportwin}
+          exportWinId={queryParams.exportwin}
           values={values}
         />
       )}
@@ -333,8 +333,11 @@ const isEstimatedWinDateValid = (estimatedWinDate) => {
   return estimatedWinDate >= from && estimatedWinDate <= today
 }
 
-const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
-  <ExportResource id={id}>
+const PrepopulateFormFieldsFromExportProject = ({
+  exportProjectId,
+  values,
+}) => (
+  <ExportResource id={exportProjectId}>
     {(exportProject) => {
       const date = new Date(exportProject.estimatedWinDate) // "YYYY-MM-DD"
       const winDate = isEstimatedWinDateValid(date) && {
@@ -355,8 +358,8 @@ const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
   </ExportResource>
 )
 
-const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
-  <ExportWinsResource id={id}>
+const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
+  <ExportWinsResource id={exportWinId}>
     {(exportWin) => {
       return (
         <FormFields

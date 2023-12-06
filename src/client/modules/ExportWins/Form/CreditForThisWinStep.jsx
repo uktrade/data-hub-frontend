@@ -57,7 +57,7 @@ const CreditForThisWinStep = () => {
       </StyledHintParagraph>
       {queryParams.exportwin ? (
         <PrepopulateFormFieldsFromExportWin
-          id={queryParams.exportwin}
+          exportWinId={queryParams.exportwin}
           values={values}
         />
       ) : (
@@ -129,8 +129,8 @@ const FormFields = ({ officerCount, values }) => (
   </>
 )
 
-const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
-  <ExportWinsResource id={id}>
+const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
+  <ExportWinsResource id={exportWinId}>
     {(exportWin) => {
       return <FormFields exportWin={exportWin} values={values} />
     }}

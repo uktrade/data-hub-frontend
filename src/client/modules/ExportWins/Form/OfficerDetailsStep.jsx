@@ -38,13 +38,13 @@ const OfficerDetailsStep = () => {
       <H3>Officer details</H3>
       {queryParams.export && (
         <PrepopulateFormFieldsFromExportProject
-          id={queryParams.export}
+          exportProjectId={queryParams.export}
           values={values}
         />
       )}
       {queryParams.exportwin && (
         <PrepopulateFormFieldsFromExportWin
-          id={queryParams.exportwin}
+          exportWinId={queryParams.exportwin}
           values={values}
         />
       )}
@@ -97,8 +97,11 @@ const FormFields = ({ adviser, teamType, teamMembers, values }) => (
   </>
 )
 
-const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
-  <ExportResource id={id}>
+const PrepopulateFormFieldsFromExportProject = ({
+  exportProjectId,
+  values,
+}) => (
+  <ExportResource id={exportProjectId}>
     {(exportProject) => (
       <FormFields
         adviser={idNameToValueLabel(exportProject.owner)}
@@ -109,8 +112,8 @@ const PrepopulateFormFieldsFromExportProject = ({ id, values }) => (
   </ExportResource>
 )
 
-const PrepopulateFormFieldsFromExportWin = ({ id, values }) => (
-  <ExportWinsResource id={id}>
+const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
+  <ExportWinsResource id={exportWinId}>
     {(exportWin) => (
       <FormFields
         adviser={exportWin.adviser}
