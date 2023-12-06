@@ -4,7 +4,8 @@ import { myTasksReminderFaker, reminderListFaker } from '../../fakers/reminders'
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
 
-const remindersEndpoint = '/api-proxy/v4/reminder/task-amended-by-others'
+const remindersEndpoint =
+  '/api-proxy/v4/reminder/my-tasks-task-amended-by-others'
 
 describe('Task Amended By Others Reminders', () => {
   after(() => {

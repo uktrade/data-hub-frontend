@@ -1,7 +1,8 @@
 import { assertBreadcrumbs, assertPayload } from '../../../support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
-const endpoint = '/api-proxy/v4/reminder/subscription/task-amended-by-others'
+const endpoint =
+  '/api-proxy/v4/reminder/subscription/my-tasks-task-amended-by-others'
 
 describe('Settings - Task amended by others', () => {
   context('Page breadcrumbs and title', () => {

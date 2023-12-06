@@ -158,7 +158,7 @@ export const getNextTaskAmendedByOthersReminder = ({
 } = {}) => getNextReminder(sortby, page, limit, 'task-amended-by-others')
 
 export const deleteTaskAmendedByOthersReminder = ({ id } = {}) =>
-  apiProxyAxios.delete(`/v4/reminder/task-amended-by-others/${id}`)
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-amended-by-others/${id}`)
 
 export const getTaskOverdueReminders = ({
   sortby = '-created_on',
