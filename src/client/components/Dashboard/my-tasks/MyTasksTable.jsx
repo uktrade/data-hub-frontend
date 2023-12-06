@@ -36,7 +36,7 @@ const rows = ({ results }) => {
           {task.title}
         </Link>
       </Table.Cell>
-      <Table.Cell setWidth="20%">{task.investment_project.name}</Table.Cell>
+      <Table.Cell setWidth="20%">{task.investment_project?.name}</Table.Cell>
       <Table.Cell setWidth="25%">
         <ul>{transformAdvisersListItem(task.advisers)}</ul>
       </Table.Cell>
