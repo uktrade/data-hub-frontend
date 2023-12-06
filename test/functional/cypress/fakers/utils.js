@@ -4,6 +4,11 @@
 const randomChoice = (list) => list[Math.floor(Math.random() * list.length)]
 
 /**
+ * Snake case an object created by a faker
+ */
+const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
+
+/**
  * Fakes a list of items using a faker function on each
  */
 const listFaker = ({ fakerFunction, length = 1, overrides = {} }) => {
@@ -14,4 +19,4 @@ const listFaker = ({ fakerFunction, length = 1, overrides = {} }) => {
   return list
 }
 
-export { listFaker, randomChoice }
+export { listFaker, randomChoice, keysToSnakeCase }

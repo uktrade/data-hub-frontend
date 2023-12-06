@@ -128,6 +128,7 @@ import * as personalisedDashboard from './components/PersonalisedDashboard/tasks
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   TASK_DATA_HUB_FEED,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
@@ -404,6 +405,9 @@ import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
 import { saveExportWin } from './modules/ExportWins/Form/tasks'
 
+import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
+import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -637,4 +641,6 @@ export const tasks = {
     reminderSettings.saveTaskCompletedSubscriptions,
   [TASK_GET_COMPANIES]: getOmisCompanies,
   [TASK_CREATE_ORDER]: createOrder,
+  [TASK_CHECK_FOR_MY_TASKS]: personalisedDashboard.checkForMyTasks,
+  [TASK_GET_MY_TASKS]: getMyTasks,
 }

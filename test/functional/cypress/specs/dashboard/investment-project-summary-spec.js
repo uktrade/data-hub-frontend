@@ -35,13 +35,6 @@ describe('Investment projects summary', () => {
   })
 
   context('after initial load', () => {
-    it('should display an "Investment projects summary" toggle', () => {
-      cy.get('[data-test=toggle-section-button-content]').should(
-        'contain',
-        'Investment projects summary'
-      )
-    })
-
     it('should display an SVG representing a chart', () => {
       cy.get('[data-test="pie-chart"]').find('svg').should('exist')
     })

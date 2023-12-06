@@ -1,10 +1,6 @@
 const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard - no investment projects', () => {
-  after(() => {
-    cy.resetUser()
-  })
-
   beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
@@ -16,7 +12,6 @@ describe('Dashboard - no investment projects', () => {
     cy.wait('@apiRequest')
     cy.get('[data-test="tablist"]').as('tabList')
     cy.get('[data-test="tabpanel"]').as('tabPanel')
-    cy.resetFeatureFlags()
   })
 
   context('Tabbed navigation', () => {

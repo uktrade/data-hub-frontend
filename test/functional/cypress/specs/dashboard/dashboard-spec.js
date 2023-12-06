@@ -89,6 +89,39 @@ describe('Dashboard', () => {
         .eq(0)
         .should('exist')
         .children()
+        .should('have.length', 5)
+        .first()
+        .should('have.text', 'My tasks')
+        .next()
+        .should('have.text', 'Company lists')
+        .next()
+        .should('have.text', 'Investment projects')
+        .next()
+        .should('have.text', 'Export projects')
+        .next()
+        .should('have.text', 'Referrals')
+    })
+  })
+
+  context('When My Tasks returns no results', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v4/search/task', {
+        body: { count: false },
+      }).as('myTaskCount')
+      cy.visit('/')
+    })
+
+    after(() => {
+      cy.resetUser()
+    })
+
+    it('should display tabs in the right order not including the My tasks tab', () => {
+      cy.get('[data-test="dashboard-tabs"]')
+        .should('exist')
+        .find('[data-test="tablist"]')
+        .eq(0)
+        .should('exist')
+        .children()
         .should('have.length', 4)
         .first()
         .should('have.text', 'Company lists')
