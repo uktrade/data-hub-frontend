@@ -59,7 +59,7 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
     task_assigned_to_me_from_others: {
       email_reminders_enabled: true,
     },
-    task_amended_by_others: {
+    my_tasks_task_amended_by_others: {
       email_reminders_enabled: true,
     },
     task_overdue: {

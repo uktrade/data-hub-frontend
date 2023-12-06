@@ -14,7 +14,7 @@ import urls from '../../../../lib/urls'
 import { TaskAmendedByOthersSettingsResource } from '../../../components/Resource'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-const redirectUrl = `${urls.reminders.settings.index()}?task_amended_by_others=true`
+const redirectUrl = `${urls.reminders.settings.index()}?my_tasks_task_amended_by_others=true`
 
 export const TaskAmendedByOthersFormFields = ({ settings }) => (
   <Form

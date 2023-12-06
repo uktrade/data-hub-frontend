@@ -14,7 +14,7 @@ describe('Settings - Task amended by others', () => {
       assertBreadcrumbs({
         Home: '/',
         Reminders: urls.reminders.myTasks.taskAmendedByOthers(),
-        Settings: `${urls.reminders.settings.index()}?task_amended_by_others=true`,
+        Settings: `${urls.reminders.settings.index()}?my_tasks_task_amended_by_others=true`,
         'Task amended by others': null,
       })
     })
