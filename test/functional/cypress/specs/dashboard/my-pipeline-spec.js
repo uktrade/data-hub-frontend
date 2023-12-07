@@ -1,4 +1,4 @@
-fdescribe('Dashboard', () => {
+describe('Dashboard', () => {
   context('Tabs - default', () => {
     before(() => {
       cy.visit('/')
