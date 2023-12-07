@@ -41,7 +41,7 @@ const DashboardTabs = ({
       tabs={{
         ...(hasTasks && {
           [urls.dashboard.myTasks()]: {
-            label: 'My tasks',
+            label: 'Tasks',
             content: <MyTasks adviser={adviser} />,
           },
         }),

@@ -91,7 +91,7 @@ describe('Dashboard', () => {
         .children()
         .should('have.length', 5)
         .first()
-        .should('have.text', 'My tasks')
+        .should('have.text', 'Tasks')
         .next()
         .should('have.text', 'Company lists')
         .next()
