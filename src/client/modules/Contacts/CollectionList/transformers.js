@@ -18,7 +18,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
     { label: 'Email', value: contact.email },
   ].filter((item) => !(item.label === 'Company' && companyId))
 
-  const badges = [
+  const tags = [
     {
       text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null,
       colour: 'pink',
@@ -31,8 +31,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
     id: contact.id,
     metadata: metadata.filter((item) => item.value),
     headingUrl: urls.contacts.details(contact.id),
-    badges: badges.filter((item) => item.text),
-    tags: badges.filter((item) => item.text),
+    tags: tags.filter((item) => item.text),
     headingText: `${contact.first_name} ${contact.last_name}`.trim(),
     subheading: `Updated on ${formatMediumDateTime(contact.modified_on)}`,
   }
