@@ -79,7 +79,11 @@ const PersonalisedDashboard = ({
   const history = useHistory()
 
   const previouslySelectedTabPath = readFromLocalStorage(DASHBOARD_TAB)
-  if (previouslySelectedTabPath) {
+
+  if (
+    previouslySelectedTabPath &&
+    previouslySelectedTabPath !== window.location.pathname
+  ) {
     history.push(previouslySelectedTabPath)
   }
 
