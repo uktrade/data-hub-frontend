@@ -79,8 +79,12 @@ const CollectionItem = ({
      have been updated so the component needs to handle rendering both props */}
     {tags && (
       <StyledBadgesWrapper data-test="collection-item-tags">
-        {tags.map((tag) => (
-          <Tag colour={tag.colour} data-test="collection-item-tag">
+        {tags.map((tag, index) => (
+          <Tag
+            key={`tag_${index}`}
+            colour={tag.colour}
+            data-test="collection-item-tag"
+          >
             {tag.text}
           </Tag>
         ))}

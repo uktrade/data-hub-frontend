@@ -103,15 +103,15 @@ describe('Company Collections - React', () => {
     assertMetadataItem('@secondListItem', 'Company Corp, Company Ltd')
   })
 
-  it('should contain UK HQ Badge', () => {
+  it('should contain UK HQ tag', () => {
     assertTag('@secondListItem', 'UK HQ')
   })
 
-  it('should contain UK Region Badge', () => {
+  it('should contain UK Region tag', () => {
     assertTag('@secondListItem', 'London, UK')
   })
 
-  it('should contain Global HQ Badge', () => {
+  it('should contain Global HQ tag', () => {
     assertTag('@thirdListItem', 'Global HQ')
     assertMetadataItem('@thirdListItem', company3.global_headquarters.name)
   })

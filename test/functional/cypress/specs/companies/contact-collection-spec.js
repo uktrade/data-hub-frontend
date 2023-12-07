@@ -6,8 +6,8 @@ const {
   assertAddItemButton,
   assertAddItemButtonNotPresent,
   assertListLength,
-  assertBadge,
-  assertBadgeNotPresent,
+  assertTag,
+  assertTagNotPresent,
   assertMetadataItem,
   assertMetadataItemNotPresent,
   assertItemLink,
@@ -167,12 +167,12 @@ describe('Company Contacts Collections', () => {
       assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
-    it('should contain a primary contact badge', () => {
-      assertBadge('@firstListItem', 'Primary')
+    it('should contain a primary contact tag', () => {
+      assertTag('@firstListItem', 'Primary')
     })
 
-    it('should not contain an archived badge', () => {
-      assertBadgeNotPresent('@firstListItem', 'Archived')
+    it('should not contain an archived tag', () => {
+      assertTagNotPresent('@firstListItem', 'Archived')
     })
 
     it('should render the updated date and time', () => {
