@@ -25,6 +25,7 @@ export const state2props = ({ router, ...state }) => {
     ...queryParams,
     page: parsePage(queryParams.page),
     created_by: undefined,
+    not_created_by: undefined,
     adviser: [currentAdviserId],
   }
   if (queryParams.created_by === 'me') {
@@ -32,7 +33,7 @@ export const state2props = ({ router, ...state }) => {
   }
 
   if (queryParams.created_by === 'others') {
-    payload.created_by = undefined
+    payload.not_created_by = currentAdviserId
   }
   return {
     ...state[ID],
