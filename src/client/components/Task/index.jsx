@@ -206,6 +206,9 @@ Task.StartOnRender.propTypes = {
  * error view
  * @param {StartOptions} [props.startOnRender=] - If set to a {StartOptions}
  * object, it will also behave like the {StartOnRender} component
+ * @param {boolean} [props.noDismiss=] - If {true}, the error view won't show the _dismiss_button.
+ * @param {boolean} [props.noRetry=] - If {true}, the error view won't show the
+ * _retry_ and and _dismiss_ buttons.
  * @param {() => ReactNode} [props.children] - A function whose return value
  * will be rendered if the task is not in progress or error
  * @example
@@ -227,6 +230,8 @@ Task.Status = ({
   renderProgress = ProgressIndicator,
   progressOverlay = false,
   dismissable = true,
+  noRetry,
+  noDismiss,
   children = () => null,
 }) => (
   <Task>
@@ -242,6 +247,13 @@ Task.Status = ({
         dismissError,
       } = getTask(name, id)
 
+      const retry = () =>
+        start({
+          payload,
+          onSuccessDispatch,
+          ignoreIfInProgress: true,
+        })
+
       return (
         <>
           {!!startOnRender && (
@@ -249,7 +261,7 @@ Task.Status = ({
           )}
           {!progressOverlay &&
             progress &&
-            renderProgress({ message: progressMessage })}
+            renderProgress({ message: progressMessage, noun })}
           {error &&
             (errorMessage ===
             'You do not have permission to perform this action.' ? (
@@ -258,14 +270,19 @@ Task.Status = ({
               renderError({
                 noun,
                 errorMessage,
-                retry: () => start({ payload, onSuccessDispatch }),
-                dismiss: dismissError,
+                retry: !noRetry && retry,
+                dismiss: !noDismiss && dismissError,
                 dismissable,
               })
             ))}
-          <StyledLoadingBox loading={progress && progressOverlay}>
-            {(!status || progressOverlay) && children()}
-          </StyledLoadingBox>
+          {/* FIXME: Is this needed when we have the LoadingBox component? */}
+          {progressOverlay ? (
+            <StyledLoadingBox loading={progress}>
+              {!status && children()}
+            </StyledLoadingBox>
+          ) : (
+            !status && children()
+          )}
         </>
       )
     }}

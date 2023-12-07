@@ -1,3 +1,25 @@
+const CONTACT = {
+  id: 'some-random-contact-id',
+  companyId: '008ba003-b528-4e79-b209-49fcfcceb371',
+  companyName: 'Little Britain',
+  firstName: 'Andy',
+  lastName: 'Pipkin',
+  jobTitle: 'Unemployed',
+  primary: false,
+  telephoneCountrycode: '123',
+  telephoneNumber: '456789',
+  email: 'andy.pipkin@littlebritain.co.uk',
+  acceptsDitEmailMarketing: true,
+  addressSameAsCompany: true,
+  address1: 'Foo',
+  address2: 'Bar',
+  addressTown: 'Town',
+  addressCounty: 'County',
+  addressPostcode: null,
+  addressCountry: '87756b9a-5d95-e211-a939-e4115bead28a',
+  notes: 'Notes',
+}
+
 export default {
   'Resource example': (payload, id) =>
     new Promise((resolve, reject) =>
@@ -9,36 +31,20 @@ export default {
             payload,
           })
     ),
-  Contact: (id) => {
-    return new Promise((resolve) =>
-      setTimeout(
-        () =>
-          resolve({
-            id,
-            companyId: '008ba003-b528-4e79-b209-49fcfcceb371',
-            companyName: 'Little Britain',
-            firstName: 'Andy',
-            lastName: 'Pipkin',
-            jobTitle: 'Unemployed',
-            primary: false,
-            telephoneCountrycode: '123',
-            telephoneNumber: '456789',
-            email: 'andy.pipkin@littlebritain.co.uk',
-            acceptsDitEmailMarketing: true,
-            addressSameAsCompany: true,
-            address1: 'Foo',
-            address2: 'Bar',
-            addressTown: 'Town',
-            addressCounty: 'County',
-            addressPostcode: null,
-            addressCountry: '87756b9a-5d95-e211-a939-e4115bead28a',
-            notes: 'Notes',
-          }),
-        2000
-      )
-    )
+  TASK_GET_REMINDER_SUMMARY: () => Promise.resolve('???'),
+  Contact: () => {
+    return new Promise((resolve, reject) => {
+      Math.random() > 0.5
+        ? setTimeout(reject, 2000, 'You broke the internet')
+        : setTimeout(resolve, 2000, CONTACT)
+    })
   },
-  Company: (id) => {
+  Company: (payload, id) => {
+    if (payload?.reject) {
+      return new Promise((resolve, reject) =>
+        setTimeout(reject, 2000, 'World went down')
+      )
+    }
     return new Promise((resolve) =>
       setTimeout(
         () =>

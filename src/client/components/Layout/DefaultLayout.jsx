@@ -67,7 +67,7 @@ DefaultLayout.propTypes = {
   }),
   subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   pageTitle: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 
 export default DefaultLayout
