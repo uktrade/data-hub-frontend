@@ -20,7 +20,7 @@ import MyTasksItemRenderer from './ItemRenderers/Tasks/MyTasksItemRenderer'
 const MyTasksAmendedByOthersList = ({ reminders }) => (
   <RemindersLists
     reminders={reminders}
-    pageOrigin="my_tasks_task_completed"
+    pageOrigin="my_tasks_task_amended_by_others"
     dataTest="my-tasks-no-reminders"
     getReminderTask={TASK_GET_TASK_AMENDED_BY_OTHERS_REMINDERS}
     getReminderTaskOnSuccessDispatch={
