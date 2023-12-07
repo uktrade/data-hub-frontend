@@ -27,6 +27,16 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
       visit(urls.dashboard.myTasks())
       assertTabSelected(TASKS)
     })
+
+    it('should keep the query params on page refresh', () => {
+      cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard.myTasks())
+      visit(`${urls.dashboard.myTasks()}?a=1&b=2`)
+      assertTabSelected(TASKS)
+      cy.reload()
+      cy.location().should((loc) => {
+        expect(loc.search).to.include('?a=1&b=2')
+      })
+    })
   })
 
   context('Company lists', () => {

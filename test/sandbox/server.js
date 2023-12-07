@@ -733,6 +733,8 @@ app.get('/v4/task/:taskId', v4Task.getTask)
 app.post('/v4/task', v4Task.createTask)
 app.patch('/v4/task/:taskId', v4Task.updateTask)
 
+app.get('/v4/export', (req, res) => res.json({ count: 0, results: [] }))
+
 // Whoami endpoint
 app.get('/whoami', user.whoami)
 app.put('/whoami', user.setWhoami)
