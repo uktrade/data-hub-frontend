@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { HintText } from 'govuk-react'
+import { HintText, GridCol, GridRow } from 'govuk-react'
 
 import { GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
 import { MY_TASKS_LOADED } from '../../../actions'
@@ -11,6 +11,7 @@ import Task from '../../Task'
 import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
+import SpacedSectionBreak from '../../SpacedSectionBreak'
 
 const StyledHeader = styled('header')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -20,15 +21,26 @@ const StyledHeader = styled('header')({
   },
 })
 
+const StyledGridCol = styled(GridCol)({
+  marginBottom: SPACING.SCALE_3,
+  paddingBottom: SPACING.SCALE_3,
+  paddingLeft: '25px',
+})
+
 export const MyTasksContent = ({ myTasks, filters }) => (
   <>
     <StyledHeader>
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters.createdBy.options}
-      />
+      <GridRow>
+        <StyledGridCol>
+          <TaskListSelect
+            label="Created by"
+            qsParam="created_by"
+            options={filters.createdBy.options}
+          />
+        </StyledGridCol>
+      </GridRow>
     </StyledHeader>
+    <SpacedSectionBreak />
     <ContentWithHeading
       heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
       data-test="my-tasks-heading"
@@ -41,7 +53,6 @@ export const MyTasksContent = ({ myTasks, filters }) => (
     </ContentWithHeading>
   </>
 )
-
 const MyTasks = ({ myTasks, filters, payload }) => (
   <Task.Status
     name={TASK_GET_MY_TASKS}
