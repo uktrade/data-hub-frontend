@@ -5,6 +5,14 @@ const LOCAL_STORAGE_KEY = 'dashboard-tab'
 describe('Selecting a dashboard tab based on localstorage when the advisers has tasks', () => {
   before(() => cy.clearLocalStorage())
   after(() => cy.clearLocalStorage())
+  beforeEach(() => {
+    cy.intercept('/api-proxy/v4/search/task').as('taskLookup')
+  })
+
+  const visit = (url) => {
+    cy.visit(url)
+    cy.wait('@taskLookup')
+  }
 
   const assertTabSelected = (tabIndex) => {
     cy.get('[data-test="tablist"] button')
@@ -13,11 +21,11 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
   }
 
   context('My tasks', () => {
-    const COMPANY_LISTS = 0
+    const TASKS = 0
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard.myTasks())
-      cy.visit(urls.dashboard.myTasks())
-      assertTabSelected(COMPANY_LISTS)
+      visit(urls.dashboard.myTasks())
+      assertTabSelected(TASKS)
     })
   })
 
@@ -25,7 +33,7 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
     const COMPANY_LISTS = 1
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard.index())
-      cy.visit(urls.dashboard.index())
+      visit(urls.dashboard.index())
       assertTabSelected(COMPANY_LISTS)
     })
   })
@@ -34,7 +42,7 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
     const INVESTMENT_PROJECTS = 2
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.dashboard.investmentProjects())
-      cy.visit(urls.dashboard.index())
+      visit(urls.dashboard.index())
       assertTabSelected(INVESTMENT_PROJECTS)
     })
   })
@@ -43,7 +51,7 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
     const EXPORT_PROJECTS = 3
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.exportPipeline.index())
-      cy.visit(urls.dashboard.index())
+      visit(urls.dashboard.index())
       assertTabSelected(EXPORT_PROJECTS)
     })
   })
@@ -52,7 +60,7 @@ describe('Selecting a dashboard tab based on localstorage when the advisers has 
     const MY_REFERRALS = 4
     it('should select the tab', () => {
       cy.localStorage(LOCAL_STORAGE_KEY, urls.companies.referrals.list())
-      cy.visit(urls.dashboard.index())
+      visit(urls.dashboard.index())
       assertTabSelected(MY_REFERRALS)
     })
   })
