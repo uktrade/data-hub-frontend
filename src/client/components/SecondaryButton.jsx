@@ -13,6 +13,11 @@ const SecondaryButton = React.forwardRef((props, ref) => (
   />
 ))
 
+/**
+ * @function SecondaryButton.Inline
+ * @description {SecondaryButton} which displays inline and inherits the
+ * sizing from the inline context.
+ */
 SecondaryButton.Inline = styled(SecondaryButton)`
   display: inline-block;
   width: auto;
