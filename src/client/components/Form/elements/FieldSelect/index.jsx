@@ -4,7 +4,7 @@ import Select, { SelectInput } from '@govuk-react/select'
 import styled from 'styled-components'
 import { BREAKPOINTS } from '@govuk-react/constants'
 
-import { useField } from '../../hooks'
+import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 import { BLACK } from '../../../../utils/colours'
 
@@ -55,18 +55,31 @@ const FieldSelect = ({
   boldLabel,
   ...rest
 }) => {
-  const { error, touched, value, onChange, onBlur } = useField({
+  const {
+    error,
+    touched,
+    value: { value },
+    onBlur,
+  } = useField({
     name,
     validate,
     required,
     initialValue,
   })
+
+  const { setFieldValue } = useFormContext()
+
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, boldLabel }}>
       <StyledSelect
         fullWidth={fullWidth}
-        name={name}
-        onChange={onChange}
+        onChange={(e) => {
+          const selectedOption = e.target.options[e.target.selectedIndex]
+          setFieldValue(name, {
+            label: selectedOption.text,
+            value: selectedOption.value,
+          })
+        }}
         onBlur={onBlur}
         meta={{ error, touched }}
         key={Array.isArray(options) && options.length > 0 ? value : undefined}
@@ -123,7 +136,10 @@ FieldSelect.propTypes = {
   /**
    * Sets initial value of the input
    */
-  initialValue: PropTypes.string,
+  initialValue: PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
   /**
    * Items for the list
    */
