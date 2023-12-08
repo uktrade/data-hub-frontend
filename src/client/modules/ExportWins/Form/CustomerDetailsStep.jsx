@@ -59,7 +59,7 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
   return (
     <>
       <ResourceOptionsField
-        name="contacts"
+        name="contact"
         id={companyId}
         label="Company contacts"
         required="Select a contact"
@@ -107,8 +107,8 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
         resource={BusinessPotentialResource}
       />
       <ResourceOptionsField
-        name="experience"
-        id="experience"
+        name="export_experience"
+        id="export-experience"
         label="Export experience"
         required="Select export experience"
         hint="You customer will be asked to confirm this information"
