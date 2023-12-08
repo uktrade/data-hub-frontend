@@ -17,7 +17,7 @@ describe('Task details table', () => {
 
   context('When a task has all optional fields set', () => {
     const investmentProjectTask = taskWithInvestmentProjectFaker()
-    const company = investmentProjectTask.investmentProject.investorCompany
+    const company = investmentProjectTask.company
 
     it('the table should show all expected values', () => {
       cy.mount(<Component task={investmentProjectTask} company={company} />)
@@ -50,7 +50,7 @@ describe('Task details table', () => {
       description: undefined,
       emailRemindersEnabled: false,
     })
-    const company = investmentProjectTask.investmentProject.investorCompany
+    const company = investmentProjectTask.company
 
     it('the table should show all expected values', () => {
       cy.mount(<Component task={investmentProjectTask} company={company} />)
