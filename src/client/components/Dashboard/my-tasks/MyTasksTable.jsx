@@ -26,7 +26,7 @@ const header = (
 
 const rows = ({ results }) => {
   return results.map((task) => (
-    <Table.Row>
+    <Table.Row data-test="task-item">
       <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
       <Table.Cell setWidth="40%">
         <Link
