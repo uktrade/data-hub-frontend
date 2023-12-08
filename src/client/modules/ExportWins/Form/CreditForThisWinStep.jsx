@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { useFormContext } from '../../../../client/components/Form/hooks'
+import { OPTION_YES, OPTIONS_YES_NO } from '../../../../common/constants'
 import { MID_GREY } from '../../../../client/utils/colours'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
@@ -13,11 +14,6 @@ import {
   TeamTypeResource,
   HQTeamRegionOrPostsResource,
 } from '../../../components/Resource'
-import {
-  OPTION_YES,
-  OPTION_NO,
-  OPTIONS_YES_NO,
-} from '../../../../common/constants'
 import {
   Step,
   FieldSelect,
@@ -73,7 +69,7 @@ const FormFields = ({ officerCount, values }) => (
       name="credit_for_win"
       label="Did any other teams help with this win?"
       options={OPTIONS_NO_YES}
-      initialValue={values.credit_for_win || OPTION_NO}
+      required="Choose Yes or No"
     />
     {values.credit_for_win === OPTION_YES && (
       <Container>
