@@ -86,7 +86,7 @@ describe('Investment project tasks', () => {
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.tasks.create(
+          urls.tasks.createInvestmentProject(
             fixtures.investment.investmentWithDetails.id
           )
         )

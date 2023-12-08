@@ -1,9 +1,15 @@
-import { OPTION_YES, DATE_LONG_FORMAT_3 } from '../../../../common/constants'
+import {
+  OPTION_YES,
+  DATE_LONG_FORMAT_3,
+  OPTION_NO,
+} from '../../../../common/constants'
+import { idNamesToValueLabels } from '../../../utils'
 import {
   formatWithoutParsing,
   transformValueForAPI,
   addMonths,
   addDays,
+  convertDateToFieldDateObject,
 } from '../../../utils/date'
 import { OPTIONS } from './constants'
 
@@ -11,21 +17,26 @@ export const transformTaskFormValuesForAPI = (
   formValues,
   currentAdviserId
 ) => ({
-  title: formValues.taskTitle,
-  description: formValues.taskDescription,
-  due_date: getDueDate(formValues.taskDueDate, formValues.customDate),
-  email_reminders_enabled: formValues.taskRemindersEnabled === OPTION_YES,
-  reminder_days: formValues.taskReminderDays
-    ? parseInt(formValues.taskReminderDays)
+  title: formValues.title,
+  description: formValues.description,
+  due_date: getDueDate(formValues.dueDate, formValues.customDate),
+  email_reminders_enabled: formValues.emailRemindersEnabled === OPTION_YES,
+  reminder_days: formValues.reminderDays
+    ? parseInt(formValues.reminderDays)
     : null,
   advisers:
-    formValues.taskAssignedTo === OPTIONS.ME
+    formValues.assignedTo === OPTIONS.ME
       ? [currentAdviserId]
-      : formValues.taskAdvisers.map((a) => a.value),
+      : formValues.advisers.map((a) => a.value),
+  investment_project: formValues.investmentProject
+    ? formValues.investmentProject.id
+    : null,
 })
 
-const getDueDate = (taskDueDate, customDate) => {
-  switch (taskDueDate) {
+// const getAdvisers()
+
+const getDueDate = (dueDate, customDate) => {
+  switch (dueDate) {
     case 'custom':
       return transformValueForAPI(customDate)
     case 'month':
@@ -36,3 +47,22 @@ const getDueDate = (taskDueDate, customDate) => {
       null
   }
 }
+
+const transformAdvisor = (advisers, currentAdviserId) =>
+  advisers.length === 1 && advisers[0].id === currentAdviserId
+    ? OPTIONS.ME
+    : OPTIONS.SOMEONE_ELSE
+
+export const transformAPIValuesForForm = (task, currentAdviserId) => ({
+  id: task.id,
+  investmentProject: task.investmentProject,
+  title: task.title,
+  description: task.description,
+  dueDate: task.dueDate ? 'custom' : 'none',
+  customDate: task.dueDate ? convertDateToFieldDateObject(task.dueDate) : null,
+  emailRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
+  reminderDays: task.reminderDays,
+  assignedTo: transformAdvisor(task.advisers, currentAdviserId),
+  advisers: idNamesToValueLabels(task.advisers),
+  company: task.company,
+})

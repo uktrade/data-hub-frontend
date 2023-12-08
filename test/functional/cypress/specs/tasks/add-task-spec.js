@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 import { investment } from '../../fixtures'
-import { investments } from '../../../../../src/lib/urls'
+import { investments, tasks } from '../../../../../src/lib/urls'
 import { id as myAdviserId } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
@@ -24,7 +24,7 @@ describe('Add investment project task', () => {
   context('When visiting the create a task page', () => {
     before(() => {
       cy.visit(
-        investments.projects.tasks.create(investment.investmentWithDetails.id)
+        tasks.createInvestmentProject(investment.investmentWithDetails.id)
       )
     })
 
@@ -48,12 +48,12 @@ describe('Add investment project task', () => {
   context('When creating a task for me', () => {
     before(() => {
       cy.visit(
-        investments.projects.tasks.create(investment.investmentWithDetails.id)
+        tasks.createInvestmentProject(investment.investmentWithDetails.id)
       )
     })
 
     it('add task button should send expected values to the api', () => {
-      cy.get('[data-test=task-assigned-to-me]').click()
+      cy.get('[data-test=assigned-to-me]').click()
 
       assertTaskForm(endpoint, fixture, [myAdviserId])
     })
@@ -62,16 +62,16 @@ describe('Add investment project task', () => {
   context('When creating a task for someone else', () => {
     before(() => {
       cy.visit(
-        investments.projects.tasks.create(investment.investmentWithDetails.id)
+        tasks.createInvestmentProject(investment.investmentWithDetails.id)
       )
     })
 
     it('add task button should send expected values to the api', () => {
       const advisers = faker.helpers.arrayElements(autoCompleteAdvisers, 2)
 
-      cy.get('[data-test=task-assigned-to-someone-else]').click()
+      cy.get('[data-test=assigned-to-someone-else]').click()
       fillMultiOptionTypeahead(
-        '[data-test=field-taskAdvisers]',
+        '[data-test=field-advisers]',
         advisers.map((adviser) => adviser.name)
       )
 
@@ -89,24 +89,21 @@ function assertTaskForm(endpoint, fixture, advisers) {
     statusCode: 201,
   }).as('apiRequest')
 
-  fill('[data-test=field-taskTitle]', 'test task')
-  fill('[data-test=field-taskDescription]', 'test description')
+  fill('[data-test=field-title]', 'test task')
+  fill('[data-test=field-description]', 'test description')
 
-  cy.get('[data-test=task-due-date-custom-date]').click()
+  cy.get('[data-test=due-date-custom-date]').click()
   cy.get('[data-test=custom_date-day]').type(25)
   cy.get('[data-test=custom_date-month]').type(12)
   cy.get('[data-test=custom_date-year]').type(3023)
 
-  cy.get('[data-test=field-taskRemindersEnabled]').click()
-  cy.get('[data-test=task-reminder-days-input]').type(1)
+  cy.get('[data-test=field-emailRemindersEnabled]').click()
+  cy.get('[data-test=reminder-days-input]').type(1)
 
   clickButton('Save task')
 
   assertPayload('@apiRequest', {
-    investment_project: {
-      id: fixture.id,
-      name: fixture.name,
-    },
+    investment_project: fixture.id,
     title: 'test task',
     description: 'test description',
     due_date: '3023-12-25',
