@@ -35,7 +35,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
           <TaskListSelect
             label="Created by"
             qsParam="created_by"
-            options={filters.createdBy.options}
+            options={filters?.createdBy?.options}
           />
         </StyledGridCol>
       </GridRow>
