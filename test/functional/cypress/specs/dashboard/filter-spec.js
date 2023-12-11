@@ -49,11 +49,15 @@ describe('Task filters', () => {
       }).as('apiRequestCreatedBy')
       cy.visit(`${tasksTab}?created_by=me&page=1`)
 
+      // This ignores the checkForMyTasks API call which happens on page load
+      cy.wait('@apiRequestCreatedBy')
+
       assertPayload('@apiRequestCreatedBy', {
         created_by: myAdviserId,
-        limit: 10,
+        limit: 50,
         offset: 0,
         adviser: [myAdviserId],
+        sortby: 'due_date:asc',
       })
       assertListItems({ length: 1 })
       cy.get(`${element} select`).find(':selected').contains('Me')
@@ -78,7 +82,7 @@ describe('Task filters', () => {
       cy.get(`${element} select`).select('Me')
       assertPayload('@apiRequestCreatedBy', {
         created_by: myAdviserId,
-        limit: 10,
+        limit: 50,
         offset: 0,
         adviser: [myAdviserId],
         sortby: 'due_date:asc',
