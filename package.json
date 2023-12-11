@@ -120,7 +120,7 @@
     "nunjucks": "^3.2.4",
     "nunjucks-markdown": "^2.0.1",
     "pluralize": "^8.0.0",
-    "postcss-cli": "^10.1.0",
+    "postcss-cli": "^11.0.0",
     "postcss-loader": "^7.3.3",
     "prop-types": "^15.8.1",
     "pure-uuid": "^1.8.1",
