@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 import {
   assertGovReactTable,
@@ -14,7 +15,11 @@ import { CREATED_BY_LIST_OPTIONS } from '../../../../../../src/client/components
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksContent {...props} />
+  const Component = (props) => (
+    <BrowserRouter>
+      <MyTasksContent {...props} />
+    </BrowserRouter>
+  )
   // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
   myTasksList[1].archived = true
@@ -24,6 +29,7 @@ describe('My Tasks on the Dashboard', () => {
     count: 3,
     results: myTaskResults,
   }
+
   const filtersList = {
     areActive: false,
     createdBy: {
@@ -97,7 +103,11 @@ describe('My Tasks on the Dashboard', () => {
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksContent {...props} />
+  const Component = (props) => (
+    <BrowserRouter>
+      <MyTasksContent {...props} />
+    </BrowserRouter>
+  )
   const myTasks = {
     count: 0,
     results: [],
@@ -124,7 +134,11 @@ describe('My Tasks on the Dashboard', () => {
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => <MyTasksContent {...props} />
+  const Component = (props) => (
+    <BrowserRouter>
+      <MyTasksContent {...props} />
+    </BrowserRouter>
+  )
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
