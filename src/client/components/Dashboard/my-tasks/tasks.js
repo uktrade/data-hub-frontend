@@ -8,7 +8,7 @@ export const getMyTasks = ({
 }) =>
   apiProxyAxios
     .post('/v4/search/task', {
-      limit: 50,
+      limit: 10,
       offset: 0,
       created_by: created_by,
       not_created_by: not_created_by,
