@@ -9,6 +9,7 @@ import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cy
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
+import { CREATED_BY_LIST_OPTIONS } from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 
@@ -23,11 +24,17 @@ describe('My Tasks on the Dashboard', () => {
     count: 3,
     results: myTaskResults,
   }
+  const filtersList = {
+    areActive: false,
+    createdBy: {
+      options: [CREATED_BY_LIST_OPTIONS],
+    },
+  }
 
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mount(<Component myTasks={myTasks} filters={filtersList} />)
     })
 
     it('should display the heading 3 tasks', () => {
