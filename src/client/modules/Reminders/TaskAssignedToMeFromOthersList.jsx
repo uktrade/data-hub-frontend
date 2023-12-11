@@ -20,7 +20,7 @@ import RemindersLists from './RemindersLists'
 const TaskAssignedToMeFromOthersList = ({ reminders }) => (
   <RemindersLists
     reminders={reminders}
-    pageOrigin="task_assigned_to_me_from_others"
+    pageOrigin="my_tasks_task_assigned_to_me_from_others"
     dataTest="my-tasks-no-reminders"
     getReminderTask={TASK_GET_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS}
     getReminderTaskOnSuccessDispatch={

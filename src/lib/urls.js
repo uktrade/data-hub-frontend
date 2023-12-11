@@ -661,7 +661,7 @@ module.exports = {
     myTasks: {
       dueDateApproaching: url('/reminders/my-tasks-due-date-approaching'),
       taskAssignedToMeFromOthers: url(
-        '/reminders/task-assigned-to-me-from-others'
+        '/reminders/my-tasks-task-assigned-to-me-from-others'
       ),
       taskAmendedByOthers: url('/reminders/my-tasks-task-amended-by-others'),
       taskOverdue: url('/reminders/my-tasks-task-overdue'),
@@ -688,7 +688,7 @@ module.exports = {
           '/reminders/settings/my-tasks-due-date-approaching'
         ),
         taskAssignedToMeFromOthers: url(
-          '/reminders/settings/task-assigned-to-me-from-others'
+          '/reminders/settings/my-tasks-task-assigned-to-me-from-others'
         ),
         taskAmendedByOthers: url(
           '/reminders/settings/my-tasks-task-amended-by-others'

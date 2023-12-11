@@ -31,7 +31,8 @@ export const COMPANIES_NO_RECENT_INTERACTIONS =
   'companies-no-recent-interactions'
 export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 export const MY_TASKS_DUE_DATE_APPROACHING = 'my-tasks-due-date-approaching'
-export const TASK_ASSIGNED_TO_ME_FROM_OTHERS = 'task-assigned-to-me-from-others'
+export const TASK_ASSIGNED_TO_ME_FROM_OTHERS =
+  'my-tasks-task-assigned-to-me-from-others'
 export const TASK_AMENDED_BY_OTHERS = 'my-tasks-task-amended-by-others'
 export const TASK_OVERDUE = 'my-tasks-task-overdue'
 export const TASK_COMPLETED = 'my-tasks-task-completed'
