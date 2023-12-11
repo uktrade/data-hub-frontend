@@ -1,6 +1,6 @@
 import { assertPayload } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
-import { taskFaker } from '../../fakers/task'
+import taskListFaker from '../../fakers/task'
 
 const transformOptions = (options) =>
   [...options].map((o) => ({
@@ -13,31 +13,13 @@ const assertListItems = ({ length }) => {
 }
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 
-describe('Export filters', () => {
+describe('Task filters', () => {
   const endpoint = '/api-proxy/v4/search/task'
   const tasksTab = urls.dashboard.myTasks()
-  const TaskList = [taskFaker(), taskFaker(), taskFaker()]
-
-  beforeEach(() => {
-    cy.intercept('POST', endpoint, {
-      body: {
-        count: TaskList.length,
-        results: TaskList,
-      },
-    })
-  })
+  const TaskList = taskListFaker()
 
   context('Created by', () => {
     const element = '[data-test="created-by-select"]'
-
-    beforeEach(() => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestCreatedBy')
-    })
 
     it('should have a "Created by" filter', () => {
       cy.intercept('POST', endpoint, {
@@ -47,6 +29,7 @@ describe('Export filters', () => {
         },
       }).as('apiRequestCreatedBy')
       cy.visit(`${tasksTab}?created_by=me&page=1`)
+
       cy.get(element).find('span').should('have.text', 'Created by')
       cy.get(`${element} option`).then((createdByOptions) => {
         expect(transformOptions(createdByOptions)).to.deep.eq([
@@ -65,6 +48,7 @@ describe('Export filters', () => {
         },
       }).as('apiRequestCreatedBy')
       cy.visit(`${tasksTab}?created_by=me&page=1`)
+
       assertPayload('@apiRequestCreatedBy', {
         created_by: myAdviserId,
         limit: 10,
@@ -84,6 +68,7 @@ describe('Export filters', () => {
       })
       cy.visit(tasksTab)
       assertListItems({ length: 3 })
+
       cy.intercept('POST', endpoint, {
         body: {
           count: 1,
@@ -93,7 +78,7 @@ describe('Export filters', () => {
       cy.get(`${element} select`).select('Me')
       assertPayload('@apiRequestCreatedBy', {
         created_by: myAdviserId,
-        limit: 50,
+        limit: 10,
         offset: 0,
         adviser: [myAdviserId],
         sortby: 'due_date:asc',
