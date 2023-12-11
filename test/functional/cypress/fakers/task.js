@@ -69,7 +69,7 @@ const taskListFaker = (length = 3, overrides) =>
     fakerFunction: taskWithInvestmentProjectFaker,
     length,
     overrides,
-  }).concat(listFaker({ fakerFunction: taskFaker, length, overrides }))
+  })
 
 const taskWithInvestmentProjectListFaker = (length = 3, overrides) =>
   listFaker({
