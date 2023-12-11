@@ -1,8 +1,5 @@
 import { tasks, dashboard, companies } from '../../../../../src/lib/urls'
-import {
-  taskWithInvestmentProjectFaker,
-  taskWithInvestmentProjectNotCompleteFaker,
-} from '../../fakers/task'
+import { taskWithInvestmentProjectFaker } from '../../fakers/task'
 import {
   assertSummaryTable,
   assertBreadcrumbs,
@@ -16,8 +13,6 @@ describe('View details for task that is assigned to an investment project', () =
   const investmentProjectTaskCompleted = taskWithInvestmentProjectFaker({
     archived: true,
   })
-
-  taskWithInvestmentProjectNotCompleteFaker()
 
   context('When visiting a completed task details', () => {
     before(() => {

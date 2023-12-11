@@ -1,9 +1,6 @@
 import React from 'react'
 
-import {
-  taskWithInvestmentProjectFaker,
-  taskWithInvestmentProjectNotCompleteFaker,
-} from '../../../../../functional/cypress/fakers/task'
+import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
 import DataHubProvider from '../../provider'
 import { TaskButtons } from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 import { assertLink } from '../../../../../functional/cypress/support/assertions'
@@ -16,7 +13,7 @@ describe('Task buttons', () => {
   )
 
   context('When a task is not completed', () => {
-    const investmentProjectTask = taskWithInvestmentProjectNotCompleteFaker()
+    const investmentProjectTask = taskWithInvestmentProjectFaker()
 
     beforeEach(() => {
       cy.mount(<Component task={investmentProjectTask} editUrl={'/1/2/3'} />)

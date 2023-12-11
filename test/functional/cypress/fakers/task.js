@@ -49,15 +49,6 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
     })
   )
 
-const taskWithInvestmentProjectNotCompleteFaker = (overrides = {}) =>
-  taskWithInvestmentProjectFaker(
-    (overrides = {
-      archived: false,
-
-      ...overrides,
-    })
-  )
-
 const investmentProjectTaskFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
@@ -93,7 +84,6 @@ export {
   taskListFaker,
   investmentProjectTaskFaker,
   taskWithInvestmentProjectFaker,
-  taskWithInvestmentProjectNotCompleteFaker,
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
   basicAdviserFaker,
