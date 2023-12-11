@@ -2,7 +2,7 @@ import { assertBreadcrumbs, assertPayload } from '../../../support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
 const endpoint =
-  '/api-proxy/v4/reminder/subscription/task-assigned-to-me-from-others'
+  '/api-proxy/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others'
 
 describe('Settings - task assigned to me from others', () => {
   context('Page breadcrumbs and title', () => {

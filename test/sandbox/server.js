@@ -574,12 +574,12 @@ app.patch(
 )
 
 app.get(
-  '/v4/reminder/subscription/task-assigned-to-me-from-others',
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
   v4Reminders.getSubscriptions
 )
 
 app.patch(
-  '/v4/reminder/subscription/task-assigned-to-me-from-others',
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
   v4Reminders.saveSubscriptions
 )
 
@@ -655,10 +655,13 @@ app.delete(
   v4Reminders.deleteReminder
 )
 
-app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
+app.get(
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others',
+  v4Reminder.myTasks
+)
 
 app.delete(
-  '/v4/reminder/task-assigned-to-me-from-others/:id',
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others/:id',
   v4Reminders.deleteReminder
 )
 
