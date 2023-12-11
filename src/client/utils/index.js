@@ -20,10 +20,10 @@ export const deepKeysToCamelCase = (x) =>
   Array.isArray(x)
     ? x.map(deepKeysToCamelCase)
     : isPlainObject(x)
-    ? Object.fromEntries(
-        Object.entries(x).map(([k, v]) => [
-          camelCase(k),
-          deepKeysToCamelCase(v),
-        ])
-      )
-    : x
+      ? Object.fromEntries(
+          Object.entries(x).map(([k, v]) => [
+            camelCase(k),
+            deepKeysToCamelCase(v),
+          ])
+        )
+      : x

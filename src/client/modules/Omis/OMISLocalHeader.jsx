@@ -39,8 +39,8 @@ const transformStatus = (order, quote) => {
   return order.status === STATUS.QUOTE_AWAITING_ACCEPTANCE
     ? transformedStatus + getExpiryDate(quote.expiresOn)
     : order.status === STATUS.COMPLETE
-    ? transformedStatus + getCompletionDate(order.completedOn)
-    : transformedStatus
+      ? transformedStatus + getCompletionDate(order.completedOn)
+      : transformedStatus
 }
 
 const setHeaderItems = (order, quote) => {

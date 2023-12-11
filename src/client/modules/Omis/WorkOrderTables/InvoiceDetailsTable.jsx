@@ -25,18 +25,18 @@ const setPrice = (order) => {
         order.subtotalCost / 100
       )} excluding VAT)`
     : order.discountValue
-    ? `${formattedPrice} (includes a net discount of ${currencyGBP(
-        order.discountValue
-      )})`
-    : `${formattedPrice} (No VAT applies)`
+      ? `${formattedPrice} (includes a net discount of ${currencyGBP(
+          order.discountValue
+        )})`
+      : `${formattedPrice} (No VAT applies)`
 }
 
 const transformVATStatus = (vatStatus) =>
   vatStatus === VAT_STATUS.EU_COMPANY
     ? 'Inside EU'
     : vatStatus === VAT_STATUS.UK_COMPANY
-    ? 'Inside UK'
-    : 'Outside EU'
+      ? 'Inside UK'
+      : 'Outside EU'
 
 const transformOrderAddress = (company, order) => {
   const address = getAddress(order, company)

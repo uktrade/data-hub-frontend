@@ -183,8 +183,8 @@ const TabNav = ({
                   focusIndex !== undefined
                     ? focusIndex
                     : selectedIndex === undefined || foundIndex === -1
-                    ? 0
-                    : foundIndex
+                      ? 0
+                      : foundIndex
 
                 if (keyCode === RIGHT_ARROW_KEY) {
                   onFocusChange((currentFocusIndex + 1) % totalTabs)
@@ -218,9 +218,9 @@ const TabNav = ({
                           ? // ...only the first tab participates in the tabindex
                             0
                           : // Otherwise, only the selected tab participates in tabindex
-                          selected
-                          ? 0
-                          : -1
+                            selected
+                            ? 0
+                            : -1
                       }
                       onClick={() => {
                         onChange(key, index)

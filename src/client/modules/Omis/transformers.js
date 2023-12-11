@@ -175,8 +175,8 @@ export const getAddress = (order, company) =>
         country: order.billingAddressCountry,
       }
     : company.registeredAddress
-    ? company.registeredAddress
-    : company.address
+      ? company.registeredAddress
+      : company.address
 
 export const transformAddress = (address) =>
   [

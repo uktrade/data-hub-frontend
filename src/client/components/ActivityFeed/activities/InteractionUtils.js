@@ -45,12 +45,12 @@ export const getServiceText = (service) => {
     service.includes('introductions')
       ? 'Introduction'
       : service.includes('Advice & Information') ||
-        service.includes('advice and information')
-      ? 'Advice and information'
-      : service.includes('Investment Enquiry') ||
-        service.includes('Investment enquiry')
-      ? 'Enquiry'
-      : INTERACTION_SERVICES[serviceType]
+          service.includes('advice and information')
+        ? 'Advice and information'
+        : service.includes('Investment Enquiry') ||
+            service.includes('Investment enquiry')
+          ? 'Enquiry'
+          : INTERACTION_SERVICES[serviceType]
   return serviceText
 }
 
@@ -67,12 +67,12 @@ const getThemeText = (activity) => {
   const themeText = includes(themeTypes, 'dit:datahub:theme:export')
     ? 'export'
     : includes(themeTypes, 'dit:datahub:theme:investment')
-    ? 'investment'
-    : includes(themeTypes, 'dit:datahub:theme:trade_agreement')
-    ? 'trade agreement'
-    : includes(themeTypes, 'dit:datahub:theme:other')
-    ? 'other'
-    : null
+      ? 'investment'
+      : includes(themeTypes, 'dit:datahub:theme:trade_agreement')
+        ? 'trade agreement'
+        : includes(themeTypes, 'dit:datahub:theme:other')
+          ? 'other'
+          : null
   return themeText
 }
 

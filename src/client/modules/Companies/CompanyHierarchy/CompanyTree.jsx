@@ -449,8 +449,8 @@ const CompanyNumberOfEmployees = ({ company }) => (
     {company.employee_range?.name
       ? company.employee_range.name
       : company.number_of_employees
-      ? company.number_of_employees
-      : 'Not set'}
+        ? company.number_of_employees
+        : 'Not set'}
   </>
 )
 

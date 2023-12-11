@@ -34,10 +34,10 @@ const CompanyMatched = ({
       {!company.turnover_gbp && !company.turnover_range
         ? 'Not set'
         : company.turnover_gbp
-        ? currencyGBP(company.turnover_gbp, {
-            maximumSignificantDigits: 2,
-          })
-        : company.turnover_range.name}
+          ? currencyGBP(company.turnover_gbp, {
+              maximumSignificantDigits: 2,
+            })
+          : company.turnover_range.name}
     </FieldUneditable>
 
     <FieldUneditable
@@ -48,8 +48,8 @@ const CompanyMatched = ({
       {!company.number_of_employees && !company.employee_range
         ? 'Not set'
         : company.number_of_employees
-        ? company.number_of_employees.toString()
-        : company.employee_range.name}
+          ? company.number_of_employees.toString()
+          : company.employee_range.name}
     </FieldUneditable>
 
     {isOnOneList ? (
