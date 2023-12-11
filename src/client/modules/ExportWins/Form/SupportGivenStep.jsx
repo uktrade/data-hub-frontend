@@ -19,7 +19,6 @@ import {
   FieldTypeahead,
   FieldAddAnother,
   FieldCheckboxes,
-  FieldSelect,
 } from '../../../components'
 
 const SupportGivenStep = () => {
@@ -75,7 +74,7 @@ const FormFields = ({
         <ResourceOptionsField
           id={`support_type_${groupIndex}`}
           name={`support_type_${groupIndex}`}
-          field={FieldSelect}
+          field={FieldTypeahead}
           resource={SupportTypeResource}
           resultToOptions={(results) => results.map(idNameToValueLabel)}
           fullWidth={true}
@@ -95,7 +94,7 @@ const FormFields = ({
         <ResourceOptionsField
           id={`campaign_${groupIndex}`}
           name={`campaign_${groupIndex}`}
-          field={FieldSelect}
+          field={FieldTypeahead}
           resource={AssociatedProgrammeResource}
           resultToOptions={(results) => results.map(idNameToValueLabel)}
           fullWidth={true}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
@@ -7,6 +8,7 @@ import { steps } from './constants'
 import {
   transformTeamsAndAdvisers,
   transformGoodsAndServices,
+  transformKeyValuePairToList,
   transformCustomerConfidential,
 } from './transformers'
 
@@ -30,7 +32,7 @@ const CheckBeforeSendingStep = () => {
   }
   return (
     <Step name={steps.CHECK_BEFORE_SENDING}>
-      <h1>Check before sending</h1>
+      <H3>Check before sending</H3>
       <OfficerDetailsTable {...props} />
       <CreditForThisWinTable {...props} />
       <CustomerDetailsTable {...props} />
@@ -184,6 +186,33 @@ const WinDetailsTable = ({ values, goToStep }) => (
     <SummaryTable.Row heading="Sector">{values.sector?.label}</SummaryTable.Row>
   </SummaryTable>
 )
-const SupportGivenTable = () => <>Support Given</>
+
+const SupportGivenTable = ({ values, goToStep }) => (
+  <SummaryTable
+    caption="Support given"
+    data-test="support-given"
+    actions={
+      <StyledButtonLink
+        onClick={() => {
+          goToStep(steps.SUPPORT_PROVIDED)
+        }}
+      >
+        Change
+      </StyledButtonLink>
+    }
+  >
+    <SummaryTable.Row heading="HVC code">{values?.hvc?.label}</SummaryTable.Row>
+    <SummaryTable.ListRow
+      heading="What type of support was given?"
+      value={transformKeyValuePairToList(values, 'support_type')}
+      emptyValue="Not set"
+    />
+    <SummaryTable.ListRow
+      heading="Was there a DBT campaign or event that contributed to this win?"
+      value={transformKeyValuePairToList(values, 'campaign')}
+      emptyValue="Not set"
+    />
+  </SummaryTable>
+)
 
 export default CheckBeforeSendingStep
