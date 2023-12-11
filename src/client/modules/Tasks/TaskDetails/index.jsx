@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
 import { DefaultLayout, Tag } from '../../../components'
-import { buildCompanyBreadcrumbs } from '../../Companies/utils'
 import TaskDetailsTable from './TaskDetailsTable'
 import { ID, TASK_GET_TASK_DETAILS, state2props } from './state'
 import { TASK_DETAILS_LOADED } from '../../../actions'
@@ -22,7 +21,7 @@ const getCompany = (task) => {
   return task?.investmentProject?.investorCompany
 }
 
-const TaskDetails = ({ task }) => {
+const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
 
   const company = getCompany(task)
@@ -38,13 +37,7 @@ const TaskDetails = ({ task }) => {
       heading={taskTitle}
       subheading={archivedTag}
       pageTitle={taskTitle}
-      breadcrumbs={buildCompanyBreadcrumbs(
-        {
-          text: taskTitle,
-        },
-        company?.id || '',
-        company?.name || ''
-      )}
+      breadcrumbs={breadcrumbs}
       useReactRouter={false}
     >
       <Task.Status

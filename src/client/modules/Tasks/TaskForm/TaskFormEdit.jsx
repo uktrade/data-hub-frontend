@@ -11,35 +11,24 @@ import { DefaultLayout } from '../../../components'
 
 import TaskFormFields from './TaskFormFields'
 
-const getBreadcrumbs = (task, companyName) => {
-  const defaultBreadcrumbs = [
-    { link: urls.investments.index(), text: 'Investments' },
-    { link: urls.investments.projects.index(), text: 'Projects' },
-  ]
-  if (task && task.investmentProject) {
-    return [
-      ...defaultBreadcrumbs,
-
-      {
-        link: urls.investments.projects.details(task.investmentProject.id),
-        text: task.investmentProject.name,
-      },
-      { text: `Edit task for ${companyName}` },
-    ]
+const getTitle = (task) => {
+  if (!task) {
+    return 'Edit task'
   }
-  return defaultBreadcrumbs
+  if (!task.company) {
+    return `Edit task for ${task.title}`
+  }
+  return `Edit task for ${task.company.label}`
 }
 
-const TaskFormEdit = ({ currentAdviserId, task }) => {
+const TaskFormEdit = ({ currentAdviserId, task, breadcrumbs }) => {
   const { taskId } = useParams()
-
-  const companyName = task?.company?.name || ''
 
   return (
     <DefaultLayout
-      heading={`Edit task for ${companyName}`}
+      heading={getTitle(task)}
       pageTitle={'Edit Task'}
-      breadcrumbs={getBreadcrumbs(task, companyName)}
+      breadcrumbs={breadcrumbs}
       useReactRouter={false}
     >
       <Task.Status
@@ -57,9 +46,7 @@ const TaskFormEdit = ({ currentAdviserId, task }) => {
               task={task}
               analyticsFormName="editTaskForm"
               cancelRedirectUrl={urls.tasks.details(taskId)}
-              redirectToUrl={urls.investments.projects.tasks.index(
-                task?.investmentProject?.id
-              )}
+              redirectToUrl={urls.tasks.details(taskId)}
               submissionTaskName={TASK_SAVE_TASK_DETAILS}
             />
           )

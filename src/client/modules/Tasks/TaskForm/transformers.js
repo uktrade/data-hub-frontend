@@ -1,9 +1,13 @@
+import { transformOptionToValue } from '../../../../apps/transformers'
 import {
   OPTION_YES,
   DATE_LONG_FORMAT_3,
   OPTION_NO,
 } from '../../../../common/constants'
-import { idNamesToValueLabels } from '../../../utils'
+import {
+  transformArrayIdNameToValueLabel,
+  transformIdNameToValueLabel,
+} from '../../../transformers'
 import {
   formatWithoutParsing,
   transformValueForAPI,
@@ -28,12 +32,18 @@ export const transformTaskFormValuesForAPI = (
     formValues.assignedTo === OPTIONS.ME
       ? [currentAdviserId]
       : formValues.advisers.map((a) => a.value),
-  investment_project: formValues.investmentProject
-    ? formValues.investmentProject.id
-    : null,
+  ...getUniquePKValue(formValues),
 })
 
-// const getAdvisers()
+const getUniquePKValue = (formValues) => {
+  if (formValues.investmentProject) {
+    return { investment_project: formValues.investmentProject.id }
+  }
+  if (formValues.company) {
+    return { company: transformOptionToValue(formValues.company) }
+  }
+  return { investment_project: null, company: null }
+}
 
 const getDueDate = (dueDate, customDate) => {
   switch (dueDate) {
@@ -63,6 +73,6 @@ export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   emailRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
   reminderDays: task.reminderDays,
   assignedTo: transformAdvisor(task.advisers, currentAdviserId),
-  advisers: idNamesToValueLabels(task.advisers),
-  company: task.company,
+  advisers: transformArrayIdNameToValueLabel(task.advisers),
+  company: task.company && transformIdNameToValueLabel(task.company),
 })

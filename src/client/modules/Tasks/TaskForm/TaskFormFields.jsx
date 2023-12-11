@@ -11,6 +11,7 @@ import {
   FieldDate,
   FieldAdvisersTypeahead,
   NewWindowLink,
+  FieldCompaniesTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
@@ -105,6 +106,13 @@ const TaskFormFields = ({
               </NewWindowLink>
             </p>
           </Details>
+          {!task?.investmentProject && (
+            <FieldCompaniesTypeahead
+              name="company"
+              isMulti={false}
+              label="Company name"
+            />
+          )}
           <FieldRadios
             name="dueDate"
             legend="Task due date"
