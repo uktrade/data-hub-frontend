@@ -16,9 +16,6 @@ describe('View details for task that is assigned to an investment project', () =
   const investmentProjectNotCompleteTask =
     taskWithInvestmentProjectNotCompleteFaker()
 
-  const expectedCompany =
-    investmentProjectTask.investmentProject.investorCompany
-
   context('When visiting a completed task details', () => {
     before(() => {
       cy.intercept(
@@ -34,7 +31,9 @@ describe('View details for task that is assigned to an investment project', () =
       assertBreadcrumbs({
         Home: dashboard.index(),
         Companies: companies.index(),
-        [expectedCompany.name]: companies.detail(expectedCompany.id),
+        [investmentProjectTask.company.name]: companies.detail(
+          investmentProjectTask.company.id
+        ),
         [investmentProjectTask.title]: null,
       })
     })

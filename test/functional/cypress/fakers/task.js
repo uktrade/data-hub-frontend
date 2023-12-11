@@ -3,6 +3,7 @@ import { pick } from 'lodash'
 
 import { listFaker } from './utils'
 import { investmentProjectFaker } from './investment-projects'
+import { companyFaker } from './companies'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -32,23 +33,17 @@ const taskFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+const company = pick(companyFaker(), ['id', 'name'])
+
 const taskWithInvestmentProjectFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
       investmentProject: {
+        investorCompany: company,
         id: faker.string.uuid(),
         name: faker.word.adjective(),
       },
-      id: faker.string.uuid(),
-      name: faker.word.adjective(),
-      company: {
-        name: faker.company.name(),
-        id: faker.string.uuid(),
-      },
-      company: {
-        name: faker.company.name(),
-        id: faker.string.uuid(),
-      },
+      company: company,
       archived: false,
       ...overrides,
     })
