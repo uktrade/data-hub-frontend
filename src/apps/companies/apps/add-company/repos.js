@@ -4,7 +4,7 @@ const { getOptions } = require('../../../../lib/options')
 
 const COMPANY_LABEL = 'Company'
 const LIMITED_COMPANY_LABEL = 'Limited company'
-const BUSINESS_TYPE_WHITELIST = {
+const BUSINESS_TYPE_ALLOWLIST = {
   charity: '9dd14e94-5d95-e211-a939-e4115bead28a',
   company: '98d14e94-5d95-e211-a939-e4115bead28a',
   governmentDepartmentOrOtherPublicBody: '9cd14e94-5d95-e211-a939-e4115bead28a',
@@ -18,7 +18,7 @@ async function fetchOrganisationTypes(req) {
   const filteredBusinessTypeOptions = filter(
     businessTypeOptions,
     ({ value }) => {
-      return includes(BUSINESS_TYPE_WHITELIST, value)
+      return includes(BUSINESS_TYPE_ALLOWLIST, value)
     }
   )
 

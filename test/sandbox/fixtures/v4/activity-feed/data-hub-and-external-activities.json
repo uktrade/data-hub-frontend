@@ -316,7 +316,7 @@
             "dit:blackListedReason": null,
             "dit:emailAddress": "gary.james@fish.com",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:26731",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
@@ -375,7 +375,7 @@
             "dit:blackListedReason": null,
             "dit:emailAddress": "superglue@gov.uk",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:1111",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
