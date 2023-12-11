@@ -26,9 +26,7 @@ export const TaskButtons = ({ task }) => (
         <Form
           id="archive-task-form"
           analyticsFormName="archiveTaskForm"
-          redirectTo={() =>
-            urls.investments.projects.tasks.index(task.investmentProject.id)
-          }
+          redirectTo={() => urls.dashboard.myTasks()}
           cancelRedirectTo={false}
           submissionTaskName={TASK_ARCHIVE_TASK}
           transformPayload={() => ({

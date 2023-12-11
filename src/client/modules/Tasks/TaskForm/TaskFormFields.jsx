@@ -52,7 +52,8 @@ const TaskFormFields = ({
       redirectTo={() => redirectToUrl}
       submissionTaskName={TASK_SAVE_TASK_DETAILS}
       transformPayload={(values) => ({
-        values,
+        //hidden fields do not get added to the values, include investment project here for now until it gets converted into a FieldSelect in future PRs
+        values: { ...values, investmentProject: task?.investmentProject },
         currentAdviserId,
         taskId: values.id,
       })}
@@ -144,7 +145,11 @@ const TaskFormFields = ({
               <ListItem>Data Hub reminder</ListItem>
             </UnorderedList>
           </Details>
-          <FieldInput type="hidden" name="investmentProject" />
+          <FieldInput
+            type="hidden"
+            name="investmentProject"
+            initialValue={task?.investmentProject?.value}
+          />
         </>
       )}
     </Form>

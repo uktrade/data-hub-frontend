@@ -32,10 +32,7 @@ describe('Task buttons', () => {
     })
 
     it('should show the Back link with expected url', () => {
-      assertLink(
-        'back-button',
-        urls.investments.projects.tasks.index(task.investmentProject.id)
-      )
+      assertLink('back-button', urls.dashboard.myTasks())
     })
   })
 
@@ -55,10 +52,7 @@ describe('Task buttons', () => {
     })
 
     it('should show the Back link with expected url', () => {
-      assertLink(
-        'back-button',
-        urls.investments.projects.tasks.index(task.investmentProject.id)
-      )
+      assertLink('back-button', urls.dashboard.myTasks())
     })
   })
 })

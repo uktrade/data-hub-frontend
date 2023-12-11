@@ -19,7 +19,7 @@ const getTitle = (task) => {
     return 'Add task'
   }
   if (task.investmentProject) {
-    return `Add task for ${task.investmentProject.name}`
+    return `Add task for ${task.investmentProject.label}`
   }
   return `Add task for ${task.company}`
 }
@@ -29,7 +29,7 @@ const getRedirectUrl = (task) => {
     return urls.dashboard.myTasks()
   }
   if (task.investmentProject) {
-    return urls.investments.projects.tasks.index(task?.investmentProject?.id)
+    return urls.investments.projects.tasks.index(task?.investmentProject?.value)
   }
   return urls.tasks.details(task.id)
 }
@@ -39,7 +39,7 @@ const getCancelUrl = (task) => {
     return urls.dashboard.myTasks()
   }
   if (task.investmentProject) {
-    return urls.investments.projects.tasks.index(task?.investmentProject?.id)
+    return urls.investments.projects.tasks.index(task?.investmentProject?.value)
   }
   return urls.tasks.details(task.id)
 }

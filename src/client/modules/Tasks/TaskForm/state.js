@@ -1,4 +1,5 @@
 import urls from '../../../../lib/urls'
+import { transformIdNameToValueLabel } from '../../../transformers'
 import { INVESTMENT_PROJECT_ID } from '../../Investments/Projects/state'
 import { ID as TASK_DETAILS_ID } from '../TaskDetails/state'
 import { transformAPIValuesForForm } from './transformers'
@@ -38,8 +39,8 @@ const getInvestmentProjectBreadcumbs = (investmentProject) => {
     return [
       ...defaultBreadcrumbs,
       {
-        link: urls.investments.projects.tasks.index(investmentProject.id),
-        text: investmentProject.name,
+        link: urls.investments.projects.tasks.index(investmentProject.value),
+        text: investmentProject.label,
       },
       { text: 'Task' },
     ]
@@ -71,10 +72,10 @@ export const getTaskBreadcrumbs = (task) => {
   return getGenericBreadcumbs(task)
 }
 
-export const state2props = ({ router, ...state }) => {
+export const state2props = (state) => {
   const currentAdviserId = state.currentAdviserId
   const { task } = state[TASK_DETAILS_ID]
-  const { project } = state[INVESTMENT_PROJECT_ID]
+  const { project } = transformIdNameToValueLabel(state[INVESTMENT_PROJECT_ID])
 
   if (task) {
     const transformedTask = transformAPIValuesForForm(task, currentAdviserId)

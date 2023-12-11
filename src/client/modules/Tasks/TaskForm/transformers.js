@@ -37,10 +37,16 @@ export const transformTaskFormValuesForAPI = (
 
 const getUniquePKValue = (formValues) => {
   if (formValues.investmentProject) {
-    return { investment_project: formValues.investmentProject.id }
+    return {
+      investment_project: formValues.investmentProject.value,
+      company: null,
+    }
   }
   if (formValues.company) {
-    return { company: transformOptionToValue(formValues.company) }
+    return {
+      investment_project: null,
+      company: transformOptionToValue(formValues.company),
+    }
   }
   return { investment_project: null, company: null }
 }
@@ -65,7 +71,9 @@ const transformAdvisor = (advisers, currentAdviserId) =>
 
 export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   id: task.id,
-  investmentProject: task.investmentProject,
+  investmentProject:
+    task.investmentProject &&
+    transformIdNameToValueLabel(task.investmentProject),
   title: task.title,
   description: task.description,
   dueDate: task.dueDate ? 'custom' : 'none',
