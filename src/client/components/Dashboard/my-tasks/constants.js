@@ -9,6 +9,29 @@ export const CREATED_BY_OPTIONS = [
   },
 ]
 
+export const SORT_BY_LIST_OPTIONS = [
+  {
+    label: 'Due date',
+    value: 'due_date',
+  },
+  {
+    label: 'Recently updated',
+    value: 'recently_updated',
+  },
+  {
+    label: 'Least recently updated',
+    value: 'least_recently_updated',
+  },
+  {
+    label: 'Company A-Z',
+    value: 'company_ascending',
+  },
+  {
+    label: 'Project A-Z',
+    value: 'project_ascending',
+  },
+]
+
 export const SHOW_ALL_OPTION = {
   label: 'Show all',
   value: 'all-statuses',
