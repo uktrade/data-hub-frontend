@@ -90,4 +90,76 @@ describe('Task filters', () => {
       assertListItems({ length: 1 })
     })
   })
+  context('Sort by', () => {
+    const element = '[data-test="sortby-select"]'
+
+    it('should have a "Sort by" filter', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestSortBy')
+      cy.visit(tasksTab)
+
+      cy.get(element).find('span').should('have.text', 'Sort by')
+      cy.get(`${element} option`).then((sortByOptions) => {
+        expect(transformOptions(sortByOptions)).to.deep.eq([
+          { value: 'due_date', label: 'Due date' },
+          { value: 'recently_updated', label: 'Recently updated' },
+          { value: 'least_recently_updated', label: 'Least recently updated' },
+          { value: 'company_ascending', label: 'Company A-Z' },
+          { value: 'project_ascending', label: 'Project A-Z' },
+        ])
+      })
+    })
+
+    it('should filter from the url', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestSortBy')
+      cy.visit(`${tasksTab}?sortby=due_date&page=1`)
+
+      // This ignores the checkForMyTasks API call which happens on page load
+      cy.wait('@apiRequestSortBy')
+
+      assertPayload('@apiRequestSortBy', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+      cy.get(`${element} select`).find(':selected').contains('Due date')
+    })
+
+    it('should filter from user input', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 3,
+          results: TaskList,
+        },
+      })
+      cy.visit(tasksTab)
+      assertListItems({ length: 3 })
+
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestSortBy')
+      cy.get(`${element} select`).select('Recently updated')
+      assertPayload('@apiRequestSortBy', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        sortby: 'modified_on:desc',
+      })
+      assertListItems({ length: 1 })
+    })
+  })
 })
