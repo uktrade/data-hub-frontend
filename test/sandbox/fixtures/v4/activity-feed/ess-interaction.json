@@ -24,7 +24,7 @@
             "dit:blackListedReason": null,
             "dit:emailAddress": "contact@bob.com",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:1111",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },

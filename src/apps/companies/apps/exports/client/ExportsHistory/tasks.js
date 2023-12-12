@@ -9,7 +9,7 @@ import {
 import { groupHistoryItems } from '../group-history-items'
 import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
-const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
+const ALLOWLISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
@@ -108,7 +108,7 @@ function transformFullExportHistory({ results }, activePage) {
     results.filter(
       (item) =>
         isInteraction(item) ||
-        WHITELISTED_HISTORY_TYPES.includes(item.history_type)
+        ALLOWLISTED_HISTORY_TYPES.includes(item.history_type)
     )
   )
 
