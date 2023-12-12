@@ -38,6 +38,13 @@ export const MyTasksContent = ({ myTasks, filters }) => (
             options={filters?.createdBy?.options}
           />
         </StyledGridCol>
+        <StyledGridCol>
+          <TaskListSelect
+            label="Sort by"
+            qsParam="sortby"
+            options={filters?.sortby?.options}
+          />
+        </StyledGridCol>
       </GridRow>
     </StyledHeader>
     <SpacedSectionBreak />
