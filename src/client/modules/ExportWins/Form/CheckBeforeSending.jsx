@@ -24,6 +24,10 @@ const StyledOrderedList = styled('ol')({
   marginTop: 10,
 })
 
+const StyledFieldInput = styled(FieldInput)({
+  display: 'none',
+})
+
 const CheckBeforeSendingStep = () => {
   const { values, goToStep } = useFormContext()
   const props = {
@@ -31,14 +35,21 @@ const CheckBeforeSendingStep = () => {
     goToStep,
   }
   return (
-    <Step name={steps.CHECK_BEFORE_SENDING}>
+    <Step
+      name={steps.CHECK_BEFORE_SENDING}
+      submitButtonLabel="Confirm and send to customer"
+    >
       <H3>Check before sending</H3>
       <OfficerDetailsTable {...props} />
       <CreditForThisWinTable {...props} />
       <CustomerDetailsTable {...props} />
       <WinDetailsTable {...props} />
       <SupportGivenTable {...props} />
-      <FieldInput name="test4" label="Test4" type="text" />
+      {/* 
+          TODO: FIX THIS BUG! We have to keep this in otherwise we
+          lose the keys in the values object from the previous step
+      */}
+      <StyledFieldInput name="hidden" type="text" />
     </Step>
   )
 }
