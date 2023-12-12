@@ -11,7 +11,6 @@ import Task from '../../../components/Task'
 import { ID } from './state'
 import { steps } from './constants'
 import {
-  ExportResource,
   UKRegionsResource,
   CompanyContactsResource,
   ExportExperienceResource,
@@ -29,35 +28,11 @@ const CustomerDetailsStep = () => {
   const { values } = useFormContext()
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
+  const companyId = queryParams.company
 
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
       <H3>Customer details</H3>
-
-      {queryParams.export && (
-        <PrepopulateFormFieldsFromExportProject
-          exportProjectId={queryParams.export}
-          companyId={queryParams.company}
-          values={values}
-        />
-      )}
-      {queryParams.exportwin && (
-        <PrepopulateFormFieldsFromExportWin
-          exportWinId={queryParams.exportwin}
-          companyId={queryParams.company}
-          values={values}
-        />
-      )}
-      {!queryParams.export && !queryParams.exportwin && (
-        <FormFields values={values} />
-      )}
-    </Step>
-  )
-}
-
-const FormFields = ({ companyId, contact, exporterExperience, values }) => {
-  return (
-    <>
       <ResourceOptionsField
         name="contact"
         id={companyId}
@@ -68,7 +43,6 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
         field={FieldTypeahead}
         autoScroll={true}
         resultToOptions={({ results }) => results.map(idNameToValueLabel)}
-        initialValue={contact}
       />
       <Task>
         {(getTask) => {
@@ -106,56 +80,18 @@ const FormFields = ({ companyId, contact, exporterExperience, values }) => {
         field={FieldRadios}
         resource={BusinessPotentialResource}
       />
+      {values.exporter_experience?.value}
       <ResourceOptionsField
-        name="export_experience"
-        id="export-experience"
+        name="exporter_experience"
+        id="exporter-experience"
         label="Export experience"
         required="Select export experience"
         hint="You customer will be asked to confirm this information"
         field={FieldRadios}
         resource={ExportExperienceResource}
-        initialValue={exporterExperience.value}
       />
-    </>
+    </Step>
   )
 }
-
-const PrepopulateFormFieldsFromExportProject = ({
-  exportProjectId,
-  companyId,
-  values,
-}) => (
-  <ExportResource id={exportProjectId}>
-    {(exportProject) => {
-      return (
-        <FormFields
-          companyId={companyId}
-          contact={
-            exportProject.contacts.length === 1
-              ? idNameToValueLabel(exportProject.contacts[0])
-              : null
-          }
-          exporterExperience={idNameToValueLabel(
-            exportProject.exporterExperience
-          )}
-          values={values}
-        />
-      )
-    }}
-  </ExportResource>
-)
-
-const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
-  <ExportWinsResource id={exportWinId}>
-    {(exportWin) => {
-      return (
-        <FormFields
-          exportExperience={exportWin.exportExperience}
-          values={values}
-        />
-      )
-    }}
-  </ExportWinsResource>
-)
 
 export default CustomerDetailsStep

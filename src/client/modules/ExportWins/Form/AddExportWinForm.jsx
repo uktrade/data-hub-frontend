@@ -7,7 +7,10 @@ import styled from 'styled-components'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { DefaultLayout, Form, FormLayout } from '../../../components'
 import { CompanyResource } from '../../../components/Resource'
-import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
+import {
+  TASK_GET_EXPORT_PROJECT,
+  TASK_GET_EXPORT_WINS_SAVE_FORM,
+} from './state'
 import OfficerDetailsStep from './OfficerDetailsStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
@@ -51,6 +54,10 @@ const AddExportWinForm = () => {
           redirectTo={() => urls.companies.exportWins.unconfirmed()}
           analyticsFormName="addExportWin"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
+          initialValuesTaskName={TASK_GET_EXPORT_PROJECT}
+          initialValuesPayload={{
+            id: queryParams.export,
+          }}
         >
           {({ values }) => {
             return (

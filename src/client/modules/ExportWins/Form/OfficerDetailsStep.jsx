@@ -7,12 +7,9 @@ import { Step, FieldAdvisersTypeahead, FieldSelect } from '../../../components'
 import * as validators from '../../../../client/components/Form/validators'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { idNameToValueLabel } from '../../../../client/utils'
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
 import {
-  ExportResource,
-  ExportWinsResource,
   TeamTypeResource,
   HQTeamRegionOrPostsResource,
 } from '../../../components/Resource'
@@ -29,99 +26,50 @@ const OfficerDetailsStep = () => {
         queryParams.export
           ? urls.exportPipeline.details(queryParams.export)
           : queryParams.companywin
-          ? urls.companies.exportWins.checkBeforeSending(queryParams.companywin)
-          : queryParams.company
-          ? urls.companies.overview.index(queryParams.company)
-          : null
+            ? urls.companies.exportWins.checkBeforeSending(
+                queryParams.companywin
+              )
+            : queryParams.company
+              ? urls.companies.overview.index(queryParams.company)
+              : null
       }
     >
       <H3>Officer details</H3>
-      {queryParams.export && (
-        <PrepopulateFormFieldsFromExportProject
-          exportProjectId={queryParams.export}
-          values={values}
+      <FieldAdvisersTypeahead
+        name="adviser"
+        label="Lead Officer name"
+        required="Enter a lead officer"
+      />
+      <ResourceOptionsField
+        name="team_type"
+        id={`officer-team-type`}
+        resource={TeamTypeResource}
+        field={FieldSelect}
+        fullWidth={true}
+        label="Team type"
+        required="Enter a team type"
+      />
+      {values.team_type && (
+        <ResourceOptionsField
+          name="hq_team_region_or_post"
+          id={`officer-hq-team-region-or-post`}
+          resource={HQTeamRegionOrPostsResource}
+          field={FieldSelect}
+          fullWidth={true}
+          payload={{ team_type: values.team_type }}
+          label="HQ team, region or post"
+          required="Enter a HQ team, region or post"
         />
       )}
-      {queryParams.exportwin && (
-        <PrepopulateFormFieldsFromExportWin
-          exportWinId={queryParams.exportwin}
-          values={values}
-        />
-      )}
-      {!queryParams.export && !queryParams.exportwin && (
-        <FormFields values={values} />
-      )}
+      <FieldAdvisersTypeahead
+        name="team_members"
+        label="Team members (optional)"
+        hint="You can add up to 5 team members. They will be notified when this win is updated"
+        validate={validators.validateTeamMembers}
+        isMulti={true}
+      />
     </Step>
   )
 }
-
-const FormFields = ({ adviser, teamType, teamMembers, values }) => (
-  <>
-    <FieldAdvisersTypeahead
-      name="adviser"
-      label="Lead Officer name"
-      required="Enter a lead officer"
-      initialValue={values.adviser || adviser}
-    />
-    <ResourceOptionsField
-      name="team_type"
-      id={`officer-team-type`}
-      resource={TeamTypeResource}
-      field={FieldSelect}
-      fullWidth={true}
-      label="Team type"
-      required="Enter a team type"
-      initialValue={values.team_type || teamType}
-    />
-    {values.team_type && (
-      <ResourceOptionsField
-        name="hq_team_region_or_post"
-        id={`officer-hq-team-region-or-post`}
-        resource={HQTeamRegionOrPostsResource}
-        field={FieldSelect}
-        fullWidth={true}
-        payload={{ team_type: values.team_type }}
-        label="HQ team, region or post"
-        required="Enter a HQ team, region or post"
-        initialValue={values.hq_team_region_or_post}
-      />
-    )}
-    <FieldAdvisersTypeahead
-      name="team_members"
-      label="Team members (optional)"
-      hint="You can add up to 5 team members. They will be notified when this win is updated"
-      validate={validators.validateTeamMembers}
-      initialValue={values.team_members || teamMembers}
-      isMulti={true}
-    />
-  </>
-)
-
-const PrepopulateFormFieldsFromExportProject = ({
-  exportProjectId,
-  values,
-}) => (
-  <ExportResource id={exportProjectId}>
-    {(exportProject) => (
-      <FormFields
-        adviser={idNameToValueLabel(exportProject.owner)}
-        teamMembers={exportProject.teamMembers.map(idNameToValueLabel)}
-        values={values}
-      />
-    )}
-  </ExportResource>
-)
-
-const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
-  <ExportWinsResource id={exportWinId}>
-    {(exportWin) => (
-      <FormFields
-        adviser={exportWin.adviser}
-        teamType={exportWin.team_type}
-        values={values}
-      />
-    )}
-  </ExportWinsResource>
-)
 
 export default OfficerDetailsStep

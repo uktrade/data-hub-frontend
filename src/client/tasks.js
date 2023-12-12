@@ -419,6 +419,15 @@ import { saveExportWin } from './modules/ExportWins/Form/tasks'
 import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
 import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
 
+import {
+  TASK_GET_EXPORT_PROJECT,
+  TASK_GET_EXPORT_WIN,
+} from '../client/modules/ExportWins/Form/state'
+import {
+  getExportProject,
+  getExportWin,
+} from '../client/modules/ExportWins/Form/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -663,4 +672,6 @@ export const tasks = {
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
   [TASK_GET_INTERACTION]: getInteraction,
   [TASK_PROPOSITION_COMPLETE]: completeInvestmentPropositions,
+  [TASK_GET_EXPORT_PROJECT]: getExportProject,
+  [TASK_GET_EXPORT_WIN]: getExportWin,
 }

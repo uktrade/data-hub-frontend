@@ -1,10 +1,7 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
-import { useLocation } from 'react-router-dom'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { useFormContext } from '../../../components/Form/hooks'
 import { OPTION_YES } from '../../../../common/constants'
 import { idNameToValueLabel } from '../../../utils'
 import { StyledHintParagraph } from './styled'
@@ -21,36 +18,12 @@ import {
   FieldCheckboxes,
 } from '../../../components'
 
-const SupportGivenStep = () => {
-  const { values } = useFormContext()
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
-
-  return (
-    <Step name={steps.SUPPORT_PROVIDED}>
-      <H3>Support given</H3>
-      <StyledHintParagraph>
-        Did any of these help the customer achieve this win?
-      </StyledHintParagraph>
-      {queryParams.exportwin ? (
-        <PrepopulateFormFieldsFromExportWin
-          exportWinId={queryParams.exportwin}
-          values={values}
-        />
-      ) : (
-        <FormFields values={values} />
-      )}
-    </Step>
-  )
-}
-
-const FormFields = ({
-  hvc,
-  isPersonallyConfirmed,
-  isLineManagerConfirmed,
-  values,
-}) => (
-  <>
+const SupportGivenStep = () => (
+  <Step name={steps.SUPPORT_PROVIDED}>
+    <H3>Support given</H3>
+    <StyledHintParagraph>
+      Did any of these help the customer achieve this win?
+    </StyledHintParagraph>
     <ResourceOptionsField
       id="hvc"
       name="hvc"
@@ -60,7 +33,6 @@ const FormFields = ({
       resource={HvcResource}
       resultToOptions={(results) => results.map(idNameToValueLabel)}
       field={FieldTypeahead}
-      initialValue={values.hvc || hvc}
     />
     <FieldAddAnother
       name="support"
@@ -111,7 +83,6 @@ const FormFields = ({
           label: 'I confirm that this information is complete and accurate',
         },
       ]}
-      initialValue={values.confirm_accurate || isPersonallyConfirmed}
     />
     <FieldCheckboxes
       name="is_line_manager_confirmed"
@@ -122,24 +93,8 @@ const FormFields = ({
           label: 'My line manager has agreed that this win should be recorded',
         },
       ]}
-      initialValue={values.confirm_accurate || isLineManagerConfirmed}
     />
-  </>
-)
-
-const PrepopulateFormFieldsFromExportWin = ({ exportWinId, values }) => (
-  <ExportWinsResource id={exportWinId}>
-    {(exportWin) => {
-      return (
-        <FormFields
-          hvc={idNameToValueLabel(exportWin.hvc)}
-          isPersonallyConfirmed={exportWin.isPersonallyConfirmed}
-          isLineManagerConfirmed={exportWin.isPersonallyConfirmed}
-          values={values}
-        />
-      )
-    }}
-  </ExportWinsResource>
+  </Step>
 )
 
 export default SupportGivenStep
