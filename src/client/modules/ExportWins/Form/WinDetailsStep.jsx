@@ -267,7 +267,7 @@ const WinDetailsStep = () => {
         name="goods_and_services_name"
         label="Name of goods or services"
         required="Enter the name of goods or services"
-        hint="For instance `shortbread biscuits`"
+        hint="For instance 'shortbread biscuits'"
         placeholder="Enter a name for goods or services"
       />
 

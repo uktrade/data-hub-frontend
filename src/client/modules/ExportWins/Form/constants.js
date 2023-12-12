@@ -20,12 +20,6 @@ export const winTypeOptions = [
 ]
 
 export const goodsServicesOptions = [
-  {
-    value: 'goods',
-    label: 'Goods',
-  },
-  {
-    value: 'services',
-    label: 'Services',
-  },
+  { value: 'goods', label: 'Goods' },
+  { value: 'services', label: 'Services' },
 ]
