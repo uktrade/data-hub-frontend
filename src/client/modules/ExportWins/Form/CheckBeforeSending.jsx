@@ -12,6 +12,8 @@ import {
   transformCustomerConfidential,
 } from './transformers'
 
+import { formatValue, sumTotalValue, sumWinType } from './utils'
+
 const StyledButtonLink = styled(ButtonLink)({
   margin: 0,
 })
@@ -185,7 +187,18 @@ const WinDetailsTable = ({ values, goToStep }) => (
     <SummaryTable.Row heading="Type of win">
       {values.business_type}
     </SummaryTable.Row>
-    <SummaryTable.Row heading="Total value">0</SummaryTable.Row>
+    <SummaryTable.Row heading="Total value">
+      {formatValue(sumTotalValue(values.win_type, values))}
+    </SummaryTable.Row>
+    <SummaryTable.Row heading="Export value">
+      {formatValue(sumWinType('export_win', values))}
+    </SummaryTable.Row>
+    <SummaryTable.Row heading="Business success value">
+      {formatValue(sumWinType('business_success_win', values))}
+    </SummaryTable.Row>
+    <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
+      {formatValue(sumWinType('odi_win', values))}
+    </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="What does the value relate to?"
       value={transformGoodsAndServices(values.goods_and_services)}

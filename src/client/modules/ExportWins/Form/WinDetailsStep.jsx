@@ -3,14 +3,12 @@ import { Details, ListItem, UnorderedList } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Label from '@govuk-react/label'
-import { isEmpty } from 'lodash'
 import pluralize from 'pluralize'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { LIGHT_GREY, BLACK, WHITE } from '../../../../client/utils/colours'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import CountriesResource from '../../../components/Resource/Countries'
-import { currencyGBP } from '../../../../client/utils/number-utils'
 import { SectorResource } from '../../../components/Resource'
 import { OPTION_YES } from '../../../../common/constants'
 import { StyledHintParagraph } from './styled'
@@ -29,6 +27,12 @@ import {
   goodsServicesOptions,
   winTypes,
 } from './constants'
+import {
+  sumWinType,
+  formatValue,
+  sumTotalValue,
+  getYearCountFromValues,
+} from './utils'
 
 const MAX_WORDS = 100
 
@@ -61,25 +65,6 @@ const StyledExportTotal = styled('p')({
   backgroundColor: BLACK,
 })
 
-const calculateSumFromValues = (name, values) =>
-  Object.keys(values)
-    .filter((key) => key.startsWith(name))
-    .reduce((acc, value) => acc + Number(values[value]), 0)
-
-const sumWinTypeValues = (winTypes, values) =>
-  winTypes.reduce(
-    (accumulator, currentValue) =>
-      accumulator + calculateSumFromValues(`${currentValue}_`, values),
-    0
-  )
-
-const getYearCountFromValues = (name, values) =>
-  Object.keys(values)
-    .filter((key) => key.startsWith(name))
-    .filter((key) => !isEmpty(values[key])).length
-
-const formatSum = (sum) => currencyGBP(sum)
-
 const WinTypeValues = ({ label, name, years = 5, values }) => {
   const yearCount = getYearCountFromValues(name, values)
   return (
@@ -90,8 +75,8 @@ const WinTypeValues = ({ label, name, years = 5, values }) => {
         {[...Array(years).keys()].map((index) => (
           <FieldCurrency
             type="text"
-            name={`${name}${index}`}
-            key={`${name}${index}`}
+            name={`${name}_${index}`}
+            key={`${name}_${index}`}
             label={`Year ${index + 1}`}
             boldLabel={true}
           />
@@ -99,7 +84,7 @@ const WinTypeValues = ({ label, name, years = 5, values }) => {
       </FieldCurrencyContainer>
       <StyledParagraph>
         Totalling over {yearCount} {pluralize('year', yearCount)}:{' '}
-        {formatSum(calculateSumFromValues(name, values))}
+        {formatValue(sumWinType(name, values))}
       </StyledParagraph>
     </WinTypeContainer>
   )
@@ -177,7 +162,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Export value over the next 5 years"
-                name="export_"
+                name="export_win"
                 values={values}
               />
             ),
@@ -211,7 +196,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Business success over the next 5 years"
-                name="business_success_"
+                name="business_success_win"
                 values={values}
               />
             ),
@@ -239,7 +224,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Outward Direct Investment over the next 5 years"
-                name="odi_"
+                name="odi_win"
                 values={values}
               />
             ),
@@ -250,7 +235,7 @@ const WinDetailsStep = () => {
       {values?.win_type?.length > 1 && (
         <StyledExportTotal>
           Total export value:{' '}
-          {formatSum(sumWinTypeValues(values?.win_type, values))}
+          {formatValue(sumTotalValue(values?.win_type, values))}
         </StyledExportTotal>
       )}
 
