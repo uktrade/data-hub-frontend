@@ -19,16 +19,18 @@ const header = (
   <Table.Row>
     <StyledTableCellHeader>Date due</StyledTableCellHeader>
     <StyledTableCellHeader>Task title</StyledTableCellHeader>
+    <StyledTableCellHeader>Company name</StyledTableCellHeader>
     <StyledTableCellHeader>Project</StyledTableCellHeader>
     <StyledTableCellHeader>Assigned to</StyledTableCellHeader>
+    <StyledTableCellHeader>Status</StyledTableCellHeader>
   </Table.Row>
 )
 
 const rows = ({ results }) => {
   return results.map((task) => (
     <Table.Row>
-      <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
-      <Table.Cell setWidth="40%">
+      <Table.Cell setWidth="12%">{formatMediumDate(task.due_date)}</Table.Cell>
+      <Table.Cell setWidth="23%">
         <Link
           href={urls.tasks.details(task.id)}
           data-test={`${task.id}-task-link`}
@@ -36,9 +38,13 @@ const rows = ({ results }) => {
           {task.title}
         </Link>
       </Table.Cell>
+      <Table.Cell setWidth="20%">{task.company?.name}</Table.Cell>
       <Table.Cell setWidth="20%">{task.investment_project?.name}</Table.Cell>
-      <Table.Cell setWidth="25%">
+      <Table.Cell setWidth="15%">
         <ul>{transformAdvisersListItem(task.advisers)}</ul>
+      </Table.Cell>
+      <Table.Cell setWidth="10%">
+        {task.archived ? 'Completed' : 'Active'}
       </Table.Cell>
     </Table.Row>
   ))

@@ -3,6 +3,7 @@ import { pick } from 'lodash'
 
 import { listFaker } from './utils'
 import { investmentProjectFaker } from './investment-projects'
+import { companyFaker } from './companies'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -21,7 +22,7 @@ const taskFaker = (overrides = {}) => ({
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
-  archived: true,
+  archived: false,
   archivedBy: null,
   createdBy: basicAdviserFaker(),
   modifiedBy: basicAdviserFaker(),
@@ -32,28 +33,17 @@ const taskFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+const company = pick(companyFaker(), ['id', 'name'])
+
 const taskWithInvestmentProjectFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
       investmentProject: {
-        investorCompany: {
-          name: faker.company.name(),
-          id: faker.string.uuid(),
-        },
+        investorCompany: company,
         id: faker.string.uuid(),
         name: faker.word.adjective(),
       },
-      id: faker.string.uuid(),
-      name: faker.word.adjective(),
-      ...overrides,
-    })
-  )
-
-const taskWithInvestmentProjectNotCompleteFaker = (overrides = {}) =>
-  taskWithInvestmentProjectFaker(
-    (overrides = {
-      archived: false,
-
+      company: company,
       ...overrides,
     })
   )
@@ -93,7 +83,6 @@ export {
   taskListFaker,
   investmentProjectTaskFaker,
   taskWithInvestmentProjectFaker,
-  taskWithInvestmentProjectNotCompleteFaker,
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
   basicAdviserFaker,

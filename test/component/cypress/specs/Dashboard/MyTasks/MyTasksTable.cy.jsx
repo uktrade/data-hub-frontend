@@ -14,7 +14,10 @@ import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => <MyTasksContent {...props} />
+  // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
+  myTasksList[1].archived = true
+
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
     count: 3,
@@ -23,6 +26,7 @@ describe('My Tasks on the Dashboard', () => {
 
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
+      cy.viewport(1024, 768)
       cy.mount(<Component myTasks={myTasks} />)
     })
 
@@ -30,33 +34,39 @@ describe('My Tasks on the Dashboard', () => {
       cy.get('h3').should('contain', '3 tasks')
     })
 
-    it('should render three table rows in due date ascending order as this is the default', () => {
+    it('should render three table rows in due date in default ascending order', () => {
       assertGovReactTable({
         element: '[data-test="my-tasks-table"]',
         rows: [
           [
             formatMediumDate(myTaskResults[0].due_date),
             myTaskResults[0].title,
+            myTaskResults[0].company.name,
             myTaskResults[0].investment_project.name,
             myTaskResults[0].advisers[0].name +
               myTaskResults[0].advisers[1].name +
               myTaskResults[0].advisers[2].name,
+            'Active',
           ],
           [
             formatMediumDate(myTaskResults[1].due_date),
             myTaskResults[1].title,
+            myTaskResults[1].company.name,
             myTaskResults[1].investment_project.name,
             myTaskResults[1].advisers[0].name +
               myTaskResults[1].advisers[1].name +
               myTaskResults[1].advisers[2].name,
+            'Completed',
           ],
           [
             formatMediumDate(myTaskResults[2].due_date),
             myTaskResults[2].title,
+            myTaskResults[2].company.name,
             myTaskResults[2].investment_project.name,
             myTaskResults[2].advisers[0].name +
               myTaskResults[2].advisers[1].name +
               myTaskResults[2].advisers[2].name,
+            'Active',
           ],
         ],
       })
@@ -88,6 +98,7 @@ describe('My Tasks on the Dashboard', () => {
 
   context('When the logged in adviser has no tasks', () => {
     beforeEach(() => {
+      cy.viewport(1024, 768)
       cy.mount(<Component myTasks={myTasks} />)
     })
     it('should display the heading 0 tasks', () => {
@@ -116,6 +127,7 @@ describe('My Tasks on the Dashboard', () => {
 
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
+      cy.viewport(1024, 768)
       cy.mount(<Component myTasks={myTasks} />)
     })
 
