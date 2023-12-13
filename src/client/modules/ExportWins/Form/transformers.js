@@ -10,8 +10,8 @@ export const transformTeamsAndAdvisers = (values) =>
       const index = key[key.length - 1]
       return {
         officer: values[`contributing_officer_${index}`]?.label,
-        teamType: values[`team_type_${index}`],
-        hqTeamRegionOrPost: values[`hq_team_region_or_post_${index}`],
+        teamType: values[`team_type_${index}`].label,
+        hqTeamRegionOrPost: values[`hq_team_region_or_post_${index}`].label,
       }
     })
 

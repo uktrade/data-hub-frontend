@@ -14,8 +14,8 @@ import {
 } from '../../../components/Resource'
 import {
   Step,
-  FieldSelect,
   FieldRadios,
+  FieldTypeahead,
   FieldAddAnother,
   FieldAdvisersTypeahead,
 } from '../../../components'
@@ -70,35 +70,35 @@ const CreditForThisWinStep = () => {
                   name={`contributing_officer_${groupIndex}`}
                   label="Contributing officer"
                   required="Enter a contributing officer"
-                  initialValue={values[`contributing_officer_${groupIndex}`]}
                 />
                 <ResourceOptionsField
-                  id={`contributors-${groupIndex}`}
                   name={`team_type_${groupIndex}`}
-                  emptyOption="Please choose"
+                  id={`contributors-${groupIndex}`}
                   resource={TeamTypeResource}
-                  field={FieldSelect}
+                  field={FieldTypeahead}
                   fullWidth={true}
                   label="Team type"
                   required="Enter a team type"
-                  initialValue={values[`team_type_${groupIndex}`]}
                 />
                 {values[`team_type_${groupIndex}`] && (
+                  // Should a user choose a team type, then choose a HQ team, region or post
+                  // then change their mind and change the team type for a second time we
+                  // want the component below to rerender and display 'Start typing'. We don't
+                  // want the previous selection displayed after they've changed the team type.
+                  // To ensure this happens we've added a key prop and set it to the team type
+                  // id, when the id changes the component updates.
                   <ResourceOptionsField
-                    id={`contributors-${groupIndex}`}
+                    key={values[`team_type_${groupIndex}`].value}
                     name={`hq_team_region_or_post_${groupIndex}`}
-                    emptyOption="Please choose"
+                    id={`contributors-${groupIndex}`}
                     resource={HQTeamRegionOrPostsResource}
-                    field={FieldSelect}
+                    field={FieldTypeahead}
                     fullWidth={true}
-                    payload={{
-                      team_type: values[`team_type_${groupIndex}`],
-                    }}
                     label="HQ team, region or post"
                     required="Enter a HQ team, region or post"
-                    initialValue={
-                      values[`hq_team_region_or_post_${groupIndex}`]
-                    }
+                    payload={{
+                      team_type: values[`team_type_${groupIndex}`].value,
+                    }}
                   />
                 )}
               </>
