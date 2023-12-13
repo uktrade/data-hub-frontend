@@ -9,6 +9,7 @@ import {
   assertPayload,
   assertFlashMessage,
   assertExactUrl,
+  assertSingleTypeaheadOptionSelected,
 } from '../../support/assertions'
 import { fillWithNewValue } from '../../support/form-fillers'
 import { clickButton } from '../../../../functional/cypress/support/actions'
@@ -175,6 +176,13 @@ describe('Edit company task', () => {
         Companies: companies.index(),
         [companyTask.company.name]: detailsUrl,
         Task: null,
+      })
+    })
+
+    it('should show the current company pre selected', () => {
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test="field-company"]',
+        expectedOption: companyTask.company.name,
       })
     })
   })
