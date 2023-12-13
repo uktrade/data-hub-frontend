@@ -107,13 +107,7 @@ const TaskFormFields = ({
               </NewWindowLink>
             </p>
           </Details>
-          {!task?.investmentProject && (
-            <FieldCompaniesTypeahead
-              name="company"
-              isMulti={false}
-              label="Company name"
-            />
-          )}
+
           <FieldRadios
             name="dueDate"
             legend="Task due date"
@@ -145,6 +139,15 @@ const TaskFormFields = ({
               <ListItem>Data Hub reminder</ListItem>
             </UnorderedList>
           </Details>
+
+          {!task?.investmentProject && (
+            <FieldCompaniesTypeahead
+              name="company"
+              isMulti={false}
+              label="Company name (optional)"
+              hint="This will link the task to the company selected and display on your task list on the homepage."
+            />
+          )}
           <FieldInput
             type="hidden"
             name="investmentProject"
