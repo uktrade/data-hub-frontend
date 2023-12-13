@@ -5,7 +5,7 @@ import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
 
 const remindersEndpoint =
-  '/api-proxy/v4/reminder/task-assigned-to-me-from-others'
+  '/api-proxy/v4/reminder/my-tasks-task-assigned-to-me-from-others'
 
 describe('My Tasks Task Assigned To Me From Others Reminders', () => {
   after(() => {
