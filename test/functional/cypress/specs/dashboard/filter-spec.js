@@ -93,6 +93,34 @@ describe('Task filters', () => {
   context('Sort by', () => {
     const element = '[data-test="sortby-select"]'
 
+    const sortbyOptionsData = [
+      {
+        label: 'Due date',
+        value: 'due_date',
+        sortBy: 'due_date:asc',
+      },
+      {
+        label: 'Recently updated',
+        value: 'recently_updated',
+        sortBy: 'modified_on:desc',
+      },
+      {
+        label: 'Least recently updated',
+        value: 'least_recently_updated',
+        sortBy: 'modified_on:asc',
+      },
+      {
+        label: 'Company A-Z',
+        value: 'company_ascending',
+        sortBy: 'company.name:asc',
+      },
+      {
+        label: 'Project A-Z',
+        value: 'project_ascending',
+        sortBy: 'investment_project.name:asc',
+      },
+    ]
+
     it('should have a "Sort by" filter', () => {
       cy.intercept('POST', endpoint, {
         body: {
@@ -104,13 +132,9 @@ describe('Task filters', () => {
 
       cy.get(element).find('span').should('have.text', 'Sort by')
       cy.get(`${element} option`).then((sortByOptions) => {
-        expect(transformOptions(sortByOptions)).to.deep.eq([
-          { value: 'due_date', label: 'Due date' },
-          { value: 'recently_updated', label: 'Recently updated' },
-          { value: 'least_recently_updated', label: 'Least recently updated' },
-          { value: 'company_ascending', label: 'Company A-Z' },
-          { value: 'project_ascending', label: 'Project A-Z' },
-        ])
+        expect(transformOptions(sortByOptions)).to.deep.eq(
+          transformOptions(sortbyOptionsData)
+        )
       })
     })
 
@@ -136,30 +160,7 @@ describe('Task filters', () => {
       cy.get(`${element} select`).find(':selected').contains('Due date')
     })
 
-    const testData = [
-      {
-        label: 'Due date',
-        sortBy: 'due_date:asc',
-      },
-      {
-        label: 'Recently updated',
-        sortBy: 'modified_on:desc',
-      },
-      {
-        label: 'Least recently updated',
-        sortBy: 'modified_on:asc',
-      },
-      {
-        label: 'Company A-Z',
-        sortBy: 'company.name:asc',
-      },
-      {
-        label: 'Project A-Z',
-        sortBy: 'investment_project.name:asc',
-      },
-    ]
-
-    testData.forEach(({ label, sortBy }) => {
+    sortbyOptionsData.forEach(({ label, sortBy }) => {
       it(`should filter ${label} from user input`, () => {
         cy.intercept('POST', endpoint, {
           body: {
