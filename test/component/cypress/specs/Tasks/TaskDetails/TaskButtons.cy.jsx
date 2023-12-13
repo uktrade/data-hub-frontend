@@ -2,8 +2,9 @@ import React from 'react'
 
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
 import DataHubProvider from '../../provider'
-import { TaskButtons } from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
+import TaskButtons from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 import { assertLink } from '../../../../../functional/cypress/support/assertions'
+import urls from '../../../../../../src/lib/urls'
 
 describe('Task buttons', () => {
   const Component = (props) => (
@@ -13,10 +14,10 @@ describe('Task buttons', () => {
   )
 
   context('When a task is not completed', () => {
-    const investmentProjectTask = taskWithInvestmentProjectFaker()
+    const task = taskWithInvestmentProjectFaker()
 
     beforeEach(() => {
-      cy.mount(<Component task={investmentProjectTask} editUrl={'/1/2/3'} />)
+      cy.mount(<Component task={task} />)
     })
 
     it('should show the Mark as complete button', () => {
@@ -27,23 +28,22 @@ describe('Task buttons', () => {
     })
 
     it('should show the Edit link with expected url', () => {
-      assertLink('edit-form-button', '/1/2/3')
+      assertLink('edit-form-button', urls.tasks.edit(task.id))
     })
+
     it('should show the Back link with expected url', () => {
       assertLink(
         'back-button',
-        `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks?sortby=-created_on`
+        urls.investments.projects.tasks.index(task.investmentProject.id)
       )
     })
   })
 
   context('When a task is completed', () => {
-    const investmentProjectTask = taskWithInvestmentProjectFaker({
-      archived: true,
-    })
+    const task = taskWithInvestmentProjectFaker({ archived: true })
 
     beforeEach(() => {
-      cy.mount(<Component task={investmentProjectTask} editUrl={'/1/2/3'} />)
+      cy.mount(<Component task={task} />)
     })
 
     it('should not show the Mark as complete button', () => {
@@ -57,7 +57,7 @@ describe('Task buttons', () => {
     it('should show the Back link with expected url', () => {
       assertLink(
         'back-button',
-        `/investments/projects/${investmentProjectTask.investmentProject.id}/tasks?sortby=-created_on`
+        urls.investments.projects.tasks.index(task.investmentProject.id)
       )
     })
   })

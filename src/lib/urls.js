@@ -457,13 +457,11 @@ module.exports = {
       ),
       evaluation: url('/investments', '/projects/:projectId/evaluation'),
       tasks: {
-        create: url('/investments', '/projects/:projectId/tasks/create'),
         index: url(
           '/investments',
           '/projects/:projectId/tasks',
           '?sortby=-created_on'
         ),
-        edit: url('/investments', '/projects/:projectId/tasks/:taskId/edit'),
       },
     },
     profiles: {
@@ -706,6 +704,12 @@ module.exports = {
     delete: url('/export', '/:exportId/delete'),
   },
   tasks: {
-    details: url('/tasks', '/:taskId'),
+    details: url('/tasks', '/:taskId/details'),
+    create: url('/tasks', '/create'),
+    createInvestmentProject: url(
+      '/tasks/create?investmentProjectId=',
+      ':investmentProjectId'
+    ),
+    edit: url('/tasks', '/:taskId/edit'),
   },
 }

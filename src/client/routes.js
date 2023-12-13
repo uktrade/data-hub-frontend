@@ -55,8 +55,6 @@ import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
 import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
-import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
-import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/InvestmentProjectTaskEdit'
 import EditInvoiceDetails from './modules/Omis/EditInvoiceDetails'
 import EditBillingAddress from './modules/Omis/EditBillingAddress'
 import EditVATStatus from './modules/Omis/EditVATStatus'
@@ -82,6 +80,7 @@ import Opportunity from './modules/Investments/Opportunities/Opportunity'
 import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
 import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
 import PaymentReceipt from './modules/Omis/PaymentReceipt'
+import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
 
 const routes = {
   companies: [
@@ -502,16 +501,6 @@ const routes = {
       component: DeleteProjectDocument,
     },
     {
-      path: '/investments/projects/:projectId/tasks/create',
-      module: 'datahub:investments',
-      component: InvestmentProjectTaskAdd,
-    },
-    {
-      path: '/investments/projects/:projectId/tasks/:taskId/edit',
-      module: 'datahub:investments',
-      component: InvestmentProjectTaskEdit,
-    },
-    {
       path: '/investments/projects',
       module: 'datahub:investments',
       component: InvestmentCollections,
@@ -570,6 +559,23 @@ const routes = {
     },
   ],
   tasks: [
+    {
+      path: '/tasks/:taskId/details',
+      module: 'datahub:companies',
+      component: TaskDetails,
+    },
+
+    {
+      path: '/tasks/:taskId/edit',
+      module: 'datahub:companies',
+      component: TaskFormEdit,
+    },
+    {
+      exact: true,
+      path: '/tasks/create',
+      module: 'datahub:companies',
+      component: TaskFormAdd,
+    },
     {
       path: '/tasks/:taskId',
       module: 'datahub:companies',

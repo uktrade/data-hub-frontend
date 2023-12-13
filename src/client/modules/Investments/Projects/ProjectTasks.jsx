@@ -90,7 +90,7 @@ const ProjectTasks = ({ project }) => {
 
           return (
             <CollectionList
-              addItemUrl={urls.investments.projects.tasks.create(projectId)}
+              addItemUrl={urls.tasks.createInvestmentProject(projectId)}
               collectionName="task"
               items={tasks}
               count={count}

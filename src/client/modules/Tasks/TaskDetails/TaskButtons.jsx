@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 import Button from '@govuk-react/button'
-import { connect } from 'react-redux'
 import { GridRow } from 'govuk-react'
 
 import { SPACING } from '@govuk-react/constants'
@@ -11,7 +10,7 @@ import styled from 'styled-components'
 import { Form } from '../../../components'
 
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
+import { TASK_ARCHIVE_TASK } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
 const ButtonWrapper = styled.div`
@@ -20,7 +19,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export const TaskButtons = ({ task, editUrl }) => (
+export const TaskButtons = ({ task }) => (
   <>
     <GridRow>
       {!task.archived && (
@@ -48,7 +47,7 @@ export const TaskButtons = ({ task, editUrl }) => (
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}
             as={Link}
-            href={editUrl}
+            href={urls.tasks.edit(task.id)}
             data-test="edit-form-button"
           >
             Edit
@@ -70,4 +69,4 @@ export const TaskButtons = ({ task, editUrl }) => (
   </>
 )
 
-export default connect(buttonState2props)(TaskButtons)
+export default TaskButtons

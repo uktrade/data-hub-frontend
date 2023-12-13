@@ -12,9 +12,9 @@ import {
 } from '../../../../../functional/cypress/support/assertions'
 import { clickButton } from '../../../../../functional/cypress/support/actions'
 import urls from '../../../../../../src/lib/urls'
-import TaskForm from '../../../../../../src/client/modules/Tasks/TaskForm'
+import TaskFormFields from '../../../../../../src/client/modules/Tasks/TaskForm/TaskFormFields'
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
-import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Investments/Projects/Tasks/transformers'
+import { transformAPIValuesForForm } from '../../../../../../src/client/modules/Tasks/TaskForm/transformers'
 import advisersListFaker, {
   adviserFaker,
 } from '../../../../../functional/cypress/fakers/advisers'
@@ -24,7 +24,7 @@ import { convertDateToFieldDateObject } from '../../../../../../src/client/utils
 describe('Task form', () => {
   const Component = (props) => (
     <DataHubProvider>
-      <TaskForm {...props} />
+      <TaskFormFields {...props} />
     </DataHubProvider>
   )
 
@@ -34,7 +34,7 @@ describe('Task form', () => {
     })
 
     it('should display the task title field', () => {
-      cy.dataTest('field-taskTitle').then((element) => {
+      cy.dataTest('field-title').then((element) => {
         assertFieldInput({
           element,
           label: 'Task title',
@@ -43,7 +43,7 @@ describe('Task form', () => {
     })
 
     it('should display the task description field', () => {
-      cy.get('[data-test="field-taskDescription"]').then((element) => {
+      cy.get('[data-test="field-description"]').then((element) => {
         assertFieldTextarea({
           element,
           label: 'Task description (optional)',
@@ -53,7 +53,7 @@ describe('Task form', () => {
     })
 
     it('should display the task assigned to field radios', () => {
-      cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+      cy.get('[data-test="field-assignedTo"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Task assigned to',
@@ -63,7 +63,7 @@ describe('Task form', () => {
     })
 
     it('should display the task due date field radios', () => {
-      cy.get('[data-test="field-taskDueDate"]').then((element) => {
+      cy.get('[data-test="field-dueDate"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Task due date',
@@ -73,7 +73,7 @@ describe('Task form', () => {
     })
 
     it('should display the task reminder field radios', () => {
-      cy.get('[data-test="field-taskRemindersEnabled"]').then((element) => {
+      cy.get('[data-test="field-emailRemindersEnabled"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Do you want to set a reminder for this task?',
@@ -100,7 +100,7 @@ describe('Task form', () => {
     })
 
     it('should display the task title field', () => {
-      cy.dataTest('field-taskTitle').then((element) => {
+      cy.dataTest('field-title').then((element) => {
         assertFieldInput({
           element,
           label: 'Task title',
@@ -110,7 +110,7 @@ describe('Task form', () => {
     })
 
     it('should display the task description field', () => {
-      cy.get('[data-test="field-taskDescription"]').then((element) => {
+      cy.get('[data-test="field-description"]').then((element) => {
         assertFieldTextarea({
           element,
           label: 'Task description (optional)',
@@ -131,7 +131,7 @@ describe('Task form', () => {
     })
 
     it('should display the task due date field radios', () => {
-      cy.get('[data-test="field-taskDueDate"]').then((element) => {
+      cy.get('[data-test="field-dueDate"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Task due date',
@@ -141,7 +141,7 @@ describe('Task form', () => {
     })
 
     it('should display the task reminder field radios', () => {
-      cy.get('[data-test="field-taskRemindersEnabled"]').then((element) => {
+      cy.get('[data-test="field-emailRemindersEnabled"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Do you want to set a reminder for this task?',
@@ -179,7 +179,7 @@ describe('Task form', () => {
       })
 
       it('should display the task assigned to field radios with me selected', () => {
-        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+        cy.get('[data-test="field-assignedTo"]').then((element) => {
           assertFieldRadiosWithLegend({
             element,
             legend: 'Task assigned to',
@@ -213,7 +213,7 @@ describe('Task form', () => {
       })
 
       it('should display the task assigned to field radios with me selected', () => {
-        cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+        cy.get('[data-test="field-assignedTo"]').then((element) => {
           assertFieldRadiosWithLegend({
             element,
             legend: 'Task assigned to',
@@ -251,7 +251,7 @@ describe('Task form', () => {
           )
         })
         it('should display the task assigned to field radios with someone else selected', () => {
-          cy.get('[data-test="field-taskAssignedTo"]').then((element) => {
+          cy.get('[data-test="field-assignedTo"]').then((element) => {
             assertFieldRadiosWithLegend({
               element,
               legend: 'Task assigned to',
@@ -272,23 +272,23 @@ describe('Task form', () => {
 
     it('should display an error when for each mandatory field', () => {
       assertFieldError(
-        cy.get('[data-test="field-taskTitle"]'),
+        cy.get('[data-test="field-title"]'),
         'Enter a task title',
         false
       )
 
       assertFieldError(
-        cy.get('[data-test="field-taskAssignedTo"]'),
+        cy.get('[data-test="field-assignedTo"]'),
         'Select who this task is assigned to'
       )
 
       assertFieldError(
-        cy.get('[data-test="field-taskDueDate"]'),
+        cy.get('[data-test="field-dueDate"]'),
         'Select task due date'
       )
 
       assertFieldError(
-        cy.get('[data-test="field-taskRemindersEnabled"]'),
+        cy.get('[data-test="field-emailRemindersEnabled"]'),
         'Select reminder'
       )
     })
@@ -298,13 +298,13 @@ describe('Task form', () => {
     beforeEach(() => {
       cy.mount(<Component />)
 
-      cy.get('[data-test=task-assigned-to-someone-else]').click()
+      cy.get('[data-test=assigned-to-someone-else]').click()
     })
 
     it('should display an error when no advisers are selected', () => {
       clickButton('Save task')
 
-      cy.get('[data-test="field-taskAdvisers"]').should(
+      cy.get('[data-test="field-advisers"]').should(
         'contain.text',
         'Select an adviser'
       )
@@ -314,7 +314,7 @@ describe('Task form', () => {
   context('When a task is created a task with a custom date', () => {
     beforeEach(() => {
       cy.mount(<Component />)
-      cy.get('[data-test=task-due-date-custom-date]').click()
+      cy.get('[data-test=due-date-custom-date]').click()
     })
 
     it('should display an error when no custom date is entered', () => {
@@ -357,33 +357,33 @@ describe('Task form', () => {
     beforeEach(() => {
       cy.mount(<Component />)
 
-      cy.get('[data-test=field-taskRemindersEnabled]').click()
+      cy.get('[data-test=field-emailRemindersEnabled]').click()
     })
 
     it('should display an error when no task reminder days are entered', () => {
       clickButton('Save task')
 
-      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+      cy.get('[data-test="field-emailRemindersEnabled"]').should(
         'contain.text',
         'Enter a number between 1 and 365'
       )
     })
 
     it('should display an error when 0 is entered', () => {
-      cy.get('[data-test=task-reminder-days-input]').type(0)
+      cy.get('[data-test=reminder-days-input]').type(0)
       clickButton('Save task')
 
-      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+      cy.get('[data-test="field-emailRemindersEnabled"]').should(
         'contain.text',
         'Enter a number between 1 and 365'
       )
     })
 
     it('should display an error when day higher than 365 is entered', () => {
-      cy.get('[data-test=task-reminder-days-input]').type(366)
+      cy.get('[data-test=reminder-days-input]').type(366)
       clickButton('Save task')
 
-      cy.get('[data-test="field-taskRemindersEnabled"]').should(
+      cy.get('[data-test="field-emailRemindersEnabled"]').should(
         'contain.text',
         'Enter a number between 1 and 365'
       )
