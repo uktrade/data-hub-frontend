@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { HintText, GridCol, GridRow } from 'govuk-react'
+import { HintText } from 'govuk-react'
 
 import { ID as GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
 import { MY_TASKS_LOADED } from '../../../actions'
@@ -13,40 +13,33 @@ import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
 
-const StyledHeader = styled('header')({
-  [MEDIA_QUERIES.DESKTOP]: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: `-${SPACING.SCALE_1} -${SPACING.SCALE_2}`,
+const FiltersContainer = styled('div')({
+  display: 'grid',
+  rowGap: 15,
+  [MEDIA_QUERIES.TABLET]: {
+    columnGap: 2,
+    gridTemplateColumns: '50% 50%',
   },
-})
-
-const StyledGridCol = styled(GridCol)({
+  [MEDIA_QUERIES.DESKTOP]: {
+    gridTemplateColumns: '25% 25% 25% 25%',
+  },
   marginBottom: SPACING.SCALE_3,
-  paddingBottom: SPACING.SCALE_3,
-  paddingLeft: '25px',
 })
 
 export const MyTasksContent = ({ myTasks, filters }) => (
   <>
-    <StyledHeader>
-      <GridRow>
-        <StyledGridCol>
-          <TaskListSelect
-            label="Created by"
-            qsParam="created_by"
-            options={filters?.createdBy?.options}
-          />
-        </StyledGridCol>
-        <StyledGridCol>
-          <TaskListSelect
-            label="Sort by"
-            qsParam="sortby"
-            options={filters?.sortby?.options}
-          />
-        </StyledGridCol>
-      </GridRow>
-    </StyledHeader>
+    <FiltersContainer>
+      <TaskListSelect
+        label="Created by"
+        qsParam="created_by"
+        options={filters?.createdBy?.options}
+      />
+      <TaskListSelect
+        label="Sort by"
+        qsParam="sortby"
+        options={filters?.sortby?.options}
+      />
+    </FiltersContainer>
     <SpacedSectionBreak />
     <ContentWithHeading
       heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
