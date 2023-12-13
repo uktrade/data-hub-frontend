@@ -33,10 +33,8 @@ const StyledFieldInput = styled(FieldInput)({
 
 const CheckBeforeSendingStep = () => {
   const { values, goToStep } = useFormContext()
-  const props = {
-    values,
-    goToStep,
-  }
+  const props = { values, goToStep }
+
   return (
     <Step
       name={steps.CHECK_BEFORE_SENDING}
@@ -76,11 +74,13 @@ const OfficerDetailsTable = ({ values, goToStep }) => (
     }
   >
     <SummaryTable.Row heading="Lead Officer name">
-      {values?.adviser?.label}
+      {values.adviser.label}
     </SummaryTable.Row>
-    <SummaryTable.Row heading="Team type">{values.team_type}</SummaryTable.Row>
+    <SummaryTable.Row heading="Team type">
+      {values.team_type.label}
+    </SummaryTable.Row>
     <SummaryTable.Row heading="HQ Team, region or post">
-      {values.hq_team_region_or_post}
+      {values.hq_team_region_or_post.label}
     </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="Team members (optional)"
