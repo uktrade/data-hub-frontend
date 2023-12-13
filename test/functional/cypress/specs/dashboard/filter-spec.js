@@ -171,7 +171,7 @@ describe('Task filters', () => {
         cy.visit(tasksTab)
         assertListItems({ length: 3 })
 
-        // Select a different option so the API is called for when testing Due Date
+        // Select a different option so the API is called when testing Due Date
         if (label === 'Due date') {
           cy.get(`${element} select`).select('Recently updated')
         }
