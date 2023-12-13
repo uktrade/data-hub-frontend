@@ -22,7 +22,7 @@ const taskFaker = (overrides = {}) => ({
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
-  archived: true,
+  archived: false,
   archivedBy: null,
   createdBy: basicAdviserFaker(),
   modifiedBy: basicAdviserFaker(),
@@ -44,7 +44,6 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
         name: faker.word.adjective(),
       },
       company: company,
-      archived: false,
       ...overrides,
     })
   )
