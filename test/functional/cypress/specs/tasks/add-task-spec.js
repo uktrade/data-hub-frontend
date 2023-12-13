@@ -5,7 +5,6 @@ import { investments, tasks, dashboard } from '../../../../../src/lib/urls'
 import { id as myAdviserId } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
-  assertBreadcrumbs,
   assertPayload,
   assertFlashMessage,
   assertExactUrl,
@@ -29,13 +28,6 @@ describe('Add generic task', () => {
 
     it('should display the header', () => {
       cy.get('h1').should('have.text', 'Add task')
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard.myTasks(),
-        Task: null,
-      })
     })
   })
 
@@ -84,28 +76,11 @@ describe('Add investment project task', () => {
         'investmentProjectAPIRequest'
       )
       cy.visit(tasks.createInvestmentProject(fixture.id))
+      cy.wait('@investmentProjectAPIRequest')
     })
 
     it('should display the header', () => {
       cy.get('h1').should('have.text', `Add task for ${fixture.name}`)
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard.myTasks(),
-        Investments: investments.index(),
-        Projects: investments.projects.index(),
-        [fixture.name]: investments.projects.tasks.index(fixture.id),
-        Task: null,
-      })
-    })
-  })
-
-  context('When creating a task for me', () => {
-    before(() => {
-      cy.visit(
-        tasks.createInvestmentProject(investment.investmentWithDetails.id)
-      )
     })
 
     it('add task button should send expected values to the api', () => {
@@ -132,21 +107,8 @@ describe('Add company task', () => {
       cy.get('h1').should('have.text', `Add task`)
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard.myTasks(),
-        Task: null,
-      })
-    })
-  })
-
-  context('When creating a task for me', () => {
-    before(() => {
-      cy.visit(tasks.create())
-      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
-    })
-
     it('add task button should send expected values to the api', () => {
+      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
       cy.get('[data-test=assigned-to-me]').click()
       fillTypeahead('[data-test=field-company]', company.name)
       assertTaskForm(null, [myAdviserId], company.id, dashboard.myTasks())

@@ -6,7 +6,7 @@ import { transformAPIValuesForForm } from './transformers'
 
 export const TASK_SAVE_TASK_DETAILS = 'TASK_SAVE_TASK_DETAILS'
 
-const getGenericBreadcumbs = (task) => {
+export const getGenericBreadcumbs = (task) => {
   const defaultBreadcrumbs = [{ link: urls.dashboard.myTasks(), text: 'Home' }]
   if (task) {
     return [
@@ -29,7 +29,7 @@ const getGenericBreadcumbs = (task) => {
   ]
 }
 
-const getInvestmentProjectBreadcumbs = (investmentProject) => {
+export const getInvestmentProjectBreadcumbs = (investmentProject) => {
   const defaultBreadcrumbs = [
     { link: urls.dashboard.myTasks(), text: 'Home' },
     { link: urls.investments.index(), text: 'Investments' },
@@ -49,12 +49,12 @@ const getInvestmentProjectBreadcumbs = (investmentProject) => {
   return defaultBreadcrumbs
 }
 
-const getCompanyBreadcrumbs = (task) => [
+export const getCompanyBreadcrumbs = (company) => [
   { link: urls.dashboard.myTasks(), text: 'Home' },
   { link: urls.companies.index(), text: 'Companies' },
   {
-    link: urls.companies.detail(task.company.value),
-    text: task.company.label,
+    link: urls.companies.detail(company.value),
+    text: company.label,
   },
   { text: 'Task' },
 ]
@@ -67,7 +67,7 @@ export const getTaskBreadcrumbs = (task) => {
     return getInvestmentProjectBreadcumbs(task.investmentProject)
   }
   if (task.company) {
-    return getCompanyBreadcrumbs(task)
+    return getCompanyBreadcrumbs(task.company)
   }
   return getGenericBreadcumbs(task)
 }
@@ -75,8 +75,7 @@ export const getTaskBreadcrumbs = (task) => {
 export const state2props = (state) => {
   const currentAdviserId = state.currentAdviserId
   const { task } = state[TASK_DETAILS_ID]
-  const { project } = transformIdNameToValueLabel(state[INVESTMENT_PROJECT_ID])
-
+  const { project } = state[INVESTMENT_PROJECT_ID]
   if (task) {
     const transformedTask = transformAPIValuesForForm(task, currentAdviserId)
     return {
@@ -87,10 +86,11 @@ export const state2props = (state) => {
   }
 
   if (project) {
+    const transformedProject = transformIdNameToValueLabel(project)
     return {
-      task: { investmentProject: project },
+      task: { investmentProject: transformedProject },
       currentAdviserId,
-      breadcrumbs: getInvestmentProjectBreadcumbs(project),
+      breadcrumbs: getInvestmentProjectBreadcumbs(transformedProject),
     }
   }
 
