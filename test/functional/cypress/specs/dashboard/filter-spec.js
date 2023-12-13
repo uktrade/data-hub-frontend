@@ -136,30 +136,65 @@ describe('Task filters', () => {
       cy.get(`${element} select`).find(':selected').contains('Due date')
     })
 
-    it('should filter from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
-        },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
+    const testData = [
+      {
+        label: 'Due date',
+        sortBy: 'due_date:asc',
+      },
+      {
+        label: 'Recently updated',
+        sortBy: 'modified_on:desc',
+      },
+      {
+        label: 'Least recently updated',
+        sortBy: 'modified_on:asc',
+      },
+      {
+        label: 'Company A-Z',
+        sortBy: 'company.name:asc',
+      },
+      {
+        label: 'Project A-Z',
+        sortBy: 'investment_project.name:asc',
+      },
+    ]
 
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestSortBy')
-      cy.get(`${element} select`).select('Recently updated')
-      assertPayload('@apiRequestSortBy', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'modified_on:desc',
+    testData.forEach(({ label, sortBy }) => {
+      it(`should filter ${label} from user input`, () => {
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 3,
+            results: TaskList,
+          },
+        })
+        cy.visit(tasksTab)
+        assertListItems({ length: 3 })
+
+        // Select a different option so the API is called for when testing Due Date
+        if (label === 'Due date') {
+          cy.get(`${element} select`).select('Recently updated')
+        }
+
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 1,
+            results: [TaskList[0]],
+          },
+        }).as('apiRequestSortBy')
+
+        if (label === 'Due date') {
+          cy.wait('@apiRequestSortBy')
+        }
+
+        cy.get(`${element} select`).select(label)
+        assertPayload('@apiRequestSortBy', {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: sortBy,
+        })
+        assertListItems({ length: 1 })
       })
-      assertListItems({ length: 1 })
     })
   })
 })
