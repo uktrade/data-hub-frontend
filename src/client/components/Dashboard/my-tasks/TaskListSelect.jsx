@@ -4,14 +4,15 @@ import { Select } from 'govuk-react'
 import styled from 'styled-components'
 import { get, kebabCase } from 'lodash'
 import qs from 'qs'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 const StyledSelect = styled(Select)({
   select: {
     width: '100%',
   },
   span: {
-    fontWeight: 'bold',
-    fontSize: '17px',
+    fontWeight: FONT_WEIGHTS.bold,
+    fontSize: FONT_SIZE.SIZE_16,
   },
 })
 
