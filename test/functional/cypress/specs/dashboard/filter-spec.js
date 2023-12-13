@@ -138,26 +138,28 @@ describe('Task filters', () => {
       })
     })
 
-    it('should filter from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestSortBy')
-      cy.visit(`${tasksTab}?sortby=due_date&page=1`)
+    sortbyOptionsData.forEach(({ label, value, sortBy }) => {
+      it(`should filter ${label} from the url`, () => {
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 1,
+            results: [TaskList[0]],
+          },
+        }).as('apiRequestSortBy')
+        cy.visit(`${tasksTab}?sortby=${value}&page=1`)
 
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestSortBy')
+        // This ignores the checkForMyTasks API call which happens on page load
+        cy.wait('@apiRequestSortBy')
 
-      assertPayload('@apiRequestSortBy', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
+        assertPayload('@apiRequestSortBy', {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: sortBy,
+        })
+        assertListItems({ length: 1 })
+        cy.get(`${element} select`).find(':selected').contains(label)
       })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Due date')
     })
 
     sortbyOptionsData.forEach(({ label, sortBy }) => {
