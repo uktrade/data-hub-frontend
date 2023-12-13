@@ -1,6 +1,7 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
+import WarningText from '@govuk-react/warning-text'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
 import { useFormContext } from '../../../../client/components/Form/hooks'
@@ -47,6 +48,10 @@ const CheckBeforeSendingStep = () => {
       <CustomerDetailsTable {...props} />
       <WinDetailsTable {...props} />
       <SupportGivenTable {...props} />
+      <WarningText>
+        This information will be sent to {values.contact?.label} so they can
+        confirm the export win.
+      </WarningText>
       {/* 
           TODO: FIX THIS BUG! We have to keep this in otherwise we
           lose the keys in the values object from the previous step
