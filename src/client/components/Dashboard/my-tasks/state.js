@@ -18,6 +18,14 @@ const areFiltersActive = (queryParams) => {
   return !isEmpty(filters)
 }
 
+const sortbyMapping = {
+  due_date: 'due_date:asc',
+  recently_updated: 'modified_on:desc',
+  least_recently_updated: 'modified_on:asc',
+  company_ascending: 'company.name:asc',
+  project_ascending: 'investment_project.name:asc',
+}
+
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
   const { currentAdviserId } = state
@@ -29,6 +37,7 @@ export const state2props = ({ router, ...state }) => {
     adviser: [currentAdviserId],
     sortby: 'due_date:asc',
   }
+
   if (queryParams.created_by === 'me') {
     payload.created_by = currentAdviserId
   }
@@ -36,21 +45,11 @@ export const state2props = ({ router, ...state }) => {
   if (queryParams.created_by === 'others') {
     payload.not_created_by = currentAdviserId
   }
-  if (queryParams.sortby === 'due_date') {
-    payload.sortby = 'due_date:asc'
+
+  if (queryParams.sortby in sortbyMapping) {
+    payload.sortby = sortbyMapping[queryParams.sortby]
   }
-  if (queryParams.sortby === 'recently_updated') {
-    payload.sortby = 'modified_on:desc'
-  }
-  if (queryParams.sortby === 'least_recently_updated') {
-    payload.sortby = 'modified_on:asc'
-  }
-  if (queryParams.sortby === 'company_ascending') {
-    payload.sortby = 'company.name:asc'
-  }
-  if (queryParams.sortby === 'project_ascending') {
-    payload.sortby = 'investment_project.name:asc'
-  }
+
   return {
     ...state[ID],
     payload: payload,
