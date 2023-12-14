@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { HintText } from 'govuk-react'
 
-import { GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
+import { ID as GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
 import { MY_TASKS_LOADED } from '../../../actions'
 import Task from '../../Task'
 import ContentWithHeading from '../../ContentWithHeading'
