@@ -19,7 +19,6 @@ import {
 import {
   Step,
   FieldRadios,
-  FieldSelect,
   FieldTypeahead,
   ContactInformation,
 } from '../../../components'
@@ -68,7 +67,7 @@ const CustomerDetailsStep = () => {
         id="uk-region"
         label="HQ Location"
         required="Choose a HQ location"
-        field={FieldSelect}
+        field={FieldTypeahead}
         resource={UKRegionsResource}
         fullWidth={true}
       />

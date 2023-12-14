@@ -149,13 +149,13 @@ const CustomerDetailsTable = ({ values, goToStep }) => (
       {values.contact?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="HQ location">
-      {values.uk_region}
+      {values.uk_region.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export potential">
       {values.business_potential}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export experience">
-      {values.export_experience}
+      {values.exporter_experience}
     </SummaryTable.Row>
   </SummaryTable>
 )
