@@ -20,8 +20,6 @@ import {
   FieldAdvisersTypeahead,
 } from '../../../components'
 
-const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-
 const Container = styled('div')({
   borderLeft: `3px solid ${MID_GREY}`,
   marginLeft: 18,
@@ -50,7 +48,7 @@ const CreditForThisWinStep = () => {
       <StyledFieldRadios
         name="credit_for_win"
         label="Did any other teams help with this win?"
-        options={OPTIONS_NO_YES}
+        options={OPTIONS_YES_NO}
         required="Choose Yes or No"
       />
       {values.credit_for_win === OPTION_YES && (
