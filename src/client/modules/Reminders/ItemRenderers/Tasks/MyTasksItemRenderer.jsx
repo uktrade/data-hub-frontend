@@ -35,7 +35,9 @@ const MyTasksItemRenderer = (item, onDeleteReminder, disableDelete) => (
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}
-    deletedText={`${item.event} for ${item.task.title}`}
+    deletedText={`${item.event} for ${
+      item.task.company ? item.task.company.name : item.task.title
+    }`}
     headerLinkHref={urls.tasks.details(item.task.id)}
     headerLinkTitle={item.event}
     itemContent={<ItemContent item={item} />}
