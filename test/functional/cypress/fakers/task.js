@@ -47,6 +47,14 @@ const taskWithInvestmentProjectFaker = (overrides = {}) =>
     })
   )
 
+const taskWithCompanyFaker = (overrides = {}) =>
+  taskFaker(
+    (overrides = {
+      company: companyFaker(),
+      ...overrides,
+    })
+  )
+
 const investmentProjectTaskFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
@@ -85,6 +93,7 @@ export {
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
   basicAdviserFaker,
+  taskWithCompanyFaker,
 }
 
 export default taskListFaker

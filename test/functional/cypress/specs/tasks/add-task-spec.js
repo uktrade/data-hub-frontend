@@ -1,69 +1,51 @@
 import { faker } from '@faker-js/faker'
 
 import { investment } from '../../fixtures'
-import { investments, tasks } from '../../../../../src/lib/urls'
+import { investments, tasks, dashboard } from '../../../../../src/lib/urls'
 import { id as myAdviserId } from '../../../../sandbox/fixtures/whoami.json'
 
 import {
-  assertBreadcrumbs,
   assertPayload,
   assertFlashMessage,
   assertExactUrl,
 } from '../../support/assertions'
-import { fill, fillMultiOptionTypeahead } from '../../support/form-fillers'
+import {
+  fill,
+  fillMultiOptionTypeahead,
+  fillTypeahead,
+} from '../../support/form-fillers'
 import { clickButton } from '../../../../functional/cypress/support/actions'
+import { companyFaker } from '../../fakers/companies'
 
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 
-describe('Add investment project task', () => {
-  const fixture = investment.investmentWithDetails
-  const endpoint = '/api-proxy/v4/task'
-  const detailsUrl = investments.projects.details(fixture.id)
-
+describe('Add generic task', () => {
   context('When visiting the create a task page', () => {
     before(() => {
-      cy.visit(
-        tasks.createInvestmentProject(investment.investmentWithDetails.id)
-      )
+      cy.visit(tasks.create())
     })
 
     it('should display the header', () => {
-      cy.get('h1').should(
-        'have.text',
-        `Add task for ${fixture.investor_company.name}`
-      )
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Investments: investments.index(),
-        Projects: investments.projects.index(),
-        [fixture.name]: detailsUrl,
-        [`Add task for ${fixture.investor_company.name}`]: null,
-      })
+      cy.get('h1').should('have.text', 'Add task')
     })
   })
 
   context('When creating a task for me', () => {
     before(() => {
-      cy.visit(
-        tasks.createInvestmentProject(investment.investmentWithDetails.id)
-      )
+      cy.visit(tasks.create())
     })
 
     it('add task button should send expected values to the api', () => {
       cy.get('[data-test=assigned-to-me]').click()
 
-      assertTaskForm(endpoint, fixture, [myAdviserId])
+      assertTaskForm(null, [myAdviserId], null, dashboard.myTasks())
     })
   })
 
   context('When creating a task for someone else', () => {
     before(() => {
-      cy.visit(
-        tasks.createInvestmentProject(investment.investmentWithDetails.id)
-      )
+      cy.visit(tasks.create())
     })
 
     it('add task button should send expected values to the api', () => {
@@ -76,16 +58,66 @@ describe('Add investment project task', () => {
       )
 
       assertTaskForm(
-        endpoint,
-        fixture,
-        advisers.map((adviser) => adviser.id)
+        null,
+        advisers.map((adviser) => adviser.id),
+        null,
+        dashboard.myTasks()
       )
     })
   })
 })
 
-function assertTaskForm(endpoint, fixture, advisers) {
-  cy.intercept('POST', endpoint, {
+describe('Add investment project task', () => {
+  const fixture = investment.investmentWithDetails
+
+  context('When visiting the create a task page', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v3/investment/${fixture.id}`, fixture).as(
+        'investmentProjectAPIRequest'
+      )
+      cy.visit(tasks.createInvestmentProject(fixture.id))
+      cy.wait('@investmentProjectAPIRequest')
+    })
+
+    it('should display the header', () => {
+      cy.get('h1').should('have.text', `Add task for ${fixture.name}`)
+    })
+
+    it('add task button should send expected values to the api', () => {
+      cy.get('[data-test=assigned-to-me]').click()
+
+      assertTaskForm(
+        fixture.id,
+        [myAdviserId],
+        null,
+        investments.projects.tasks.index(investment.investmentWithDetails.id)
+      )
+    })
+  })
+})
+
+describe('Add company task', () => {
+  const company = companyFaker()
+  context('When visiting the create a task page', () => {
+    before(() => {
+      cy.visit(tasks.create())
+    })
+
+    it('should display the header', () => {
+      cy.get('h1').should('have.text', `Add task`)
+    })
+
+    it('add task button should send expected values to the api', () => {
+      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+      cy.get('[data-test=assigned-to-me]').click()
+      fillTypeahead('[data-test=field-company]', company.name)
+      assertTaskForm(null, [myAdviserId], company.id, dashboard.myTasks())
+    })
+  })
+})
+
+function assertTaskForm(investmentProjectId, advisers, companyId, expectedUrl) {
+  cy.intercept('POST', '/api-proxy/v4/task', {
     statusCode: 201,
   }).as('apiRequest')
 
@@ -103,7 +135,8 @@ function assertTaskForm(endpoint, fixture, advisers) {
   clickButton('Save task')
 
   assertPayload('@apiRequest', {
-    investment_project: fixture.id,
+    investment_project: investmentProjectId,
+    company: companyId,
     title: 'test task',
     description: 'test description',
     due_date: '3023-12-25',
@@ -112,9 +145,7 @@ function assertTaskForm(endpoint, fixture, advisers) {
     advisers: advisers,
   })
 
-  assertExactUrl(
-    investments.projects.tasks.index(investment.investmentWithDetails.id)
-  )
+  assertExactUrl(expectedUrl)
 
   assertFlashMessage('Task saved')
 }

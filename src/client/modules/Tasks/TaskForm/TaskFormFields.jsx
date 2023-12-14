@@ -11,6 +11,7 @@ import {
   FieldDate,
   FieldAdvisersTypeahead,
   NewWindowLink,
+  FieldCompaniesTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
@@ -51,7 +52,8 @@ const TaskFormFields = ({
       redirectTo={() => redirectToUrl}
       submissionTaskName={TASK_SAVE_TASK_DETAILS}
       transformPayload={(values) => ({
-        values,
+        //hidden fields do not get added to the values, include investment project here for now until it gets converted into a FieldSelect in future PRs
+        values: { ...values, investmentProject: task?.investmentProject },
         currentAdviserId,
         taskId: values.id,
       })}
@@ -105,6 +107,7 @@ const TaskFormFields = ({
               </NewWindowLink>
             </p>
           </Details>
+
           <FieldRadios
             name="dueDate"
             legend="Task due date"
@@ -136,7 +139,20 @@ const TaskFormFields = ({
               <ListItem>Data Hub reminder</ListItem>
             </UnorderedList>
           </Details>
-          <FieldInput type="hidden" name="investmentProject" />
+
+          {!task?.investmentProject && (
+            <FieldCompaniesTypeahead
+              name="company"
+              isMulti={false}
+              label="Company name (optional)"
+              hint="This will link the task to the company selected and display on your task list on the homepage."
+            />
+          )}
+          <FieldInput
+            type="hidden"
+            name="investmentProject"
+            initialValue={task?.investmentProject?.value}
+          />
         </>
       )}
     </Form>

@@ -14,54 +14,68 @@ import TaskFormFields from './TaskFormFields'
 import urls from '../../../../lib/urls'
 import { TASK_SAVE_TASK_DETAILS, state2props } from './state'
 
-const TaskFormAdd = ({ currentAdviserId, task }) => {
-  const { search } = useLocation()
-  const searchParams = qs.parse(search.slice(1))
+const getTitle = (task) => {
+  if (!task) {
+    return 'Add task'
+  }
+  if (task.investmentProject) {
+    return `Add task for ${task.investmentProject.label}`
+  }
+  return `Add task for ${task.company}`
+}
 
-  const investmentProjectId = searchParams.investmentProjectId
-  const investorCompanyName =
-    task?.investmentProject?.investorCompany?.name || ''
+const getRedirectUrl = (task) => {
+  if (!task) {
+    return urls.dashboard.myTasks()
+  }
+  if (task.investmentProject) {
+    return urls.investments.projects.tasks.index(task?.investmentProject?.value)
+  }
+  return urls.tasks.details(task.id)
+}
+
+const getCancelUrl = (task) => {
+  if (!task) {
+    return urls.dashboard.myTasks()
+  }
+  if (task.investmentProject) {
+    return urls.investments.projects.tasks.index(task?.investmentProject?.value)
+  }
+  return urls.tasks.details(task.id)
+}
+
+const TaskFormAdd = ({ currentAdviserId, task, breadcrumbs }) => {
+  const { search } = useLocation()
+  const { investmentProjectId } = qs.parse(search.slice(1))
+  const redirectUrl = getRedirectUrl(task)
+  const cancelUrl = getCancelUrl(task)
 
   return (
     <DefaultLayout
-      heading={`Add task for ${investorCompanyName}`}
+      heading={getTitle(task)}
       pageTitle={'Add Task'}
-      breadcrumbs={[
-        { link: urls.investments.index(), text: 'Investments' },
-        { link: urls.investments.projects.index(), text: 'Projects' },
-        {
-          link: urls.investments.projects.details(task?.investmentProject?.id),
-          text: task?.investmentProject?.name || '',
-        },
-        { text: `Add task for ${investorCompanyName}` },
-      ]}
+      breadcrumbs={breadcrumbs}
       useReactRouter={false}
     >
-      <Task.Status
-        name={TASK_GET_INVESTMENT_PROJECT}
-        id={INVESTMENT_PROJECT_ID}
-        startOnRender={{
-          payload: investmentProjectId,
-          onSuccessDispatch: INVESTMENT__PROJECT_LOADED,
-        }}
-      >
-        {() =>
-          task && (
-            <TaskFormFields
-              task={task}
-              currentAdviserId={currentAdviserId}
-              analyticsFormName="createTaskForm"
-              cancelRedirectUrl={urls.investments.projects.tasks.index(
-                task?.investmentProject?.id
-              )}
-              redirectToUrl={urls.investments.projects.tasks.index(
-                task?.investmentProject?.id
-              )}
-              submissionTaskName={TASK_SAVE_TASK_DETAILS}
-            />
-          )
-        }
-      </Task.Status>
+      {investmentProjectId && (
+        <Task.Status
+          name={TASK_GET_INVESTMENT_PROJECT}
+          id={INVESTMENT_PROJECT_ID}
+          startOnRender={{
+            payload: investmentProjectId,
+            onSuccessDispatch: INVESTMENT__PROJECT_LOADED,
+          }}
+        ></Task.Status>
+      )}
+
+      <TaskFormFields
+        task={task}
+        currentAdviserId={currentAdviserId}
+        analyticsFormName="createTaskForm"
+        cancelRedirectUrl={cancelUrl}
+        redirectToUrl={redirectUrl}
+        submissionTaskName={TASK_SAVE_TASK_DETAILS}
+      />
     </DefaultLayout>
   )
 }

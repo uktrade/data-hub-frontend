@@ -26,9 +26,7 @@ export const TaskButtons = ({ task }) => (
         <Form
           id="archive-task-form"
           analyticsFormName="archiveTaskForm"
-          redirectTo={() =>
-            urls.investments.projects.tasks.index(task.investmentProject.id)
-          }
+          redirectTo={() => urls.dashboard.myTasks()}
           cancelRedirectTo={false}
           submissionTaskName={TASK_ARCHIVE_TASK}
           transformPayload={() => ({
@@ -57,9 +55,7 @@ export const TaskButtons = ({ task }) => (
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
           as={Link}
-          href={urls.investments.projects.tasks.index(
-            task.investmentProject.id
-          )} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
+          href={urls.dashboard.myTasks()} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
           data-test="back-button"
         >
           Back
