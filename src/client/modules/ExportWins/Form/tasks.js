@@ -1,10 +1,11 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { idNameToValueLabel } from '../../../../client/utils'
+import { getTwelveMonthsAgo } from './utils'
 
 const isEstimatedWinDateValid = (estimatedWinDate) => {
   // Business date logic
   const today = new Date()
-  const from = new Date(today.getFullYear() - 1, today.getMonth(), 1)
+  const from = getTwelveMonthsAgo()
   return estimatedWinDate >= from && estimatedWinDate <= today
 }
 

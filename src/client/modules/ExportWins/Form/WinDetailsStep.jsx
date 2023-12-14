@@ -31,6 +31,7 @@ import {
   sumWinType,
   formatValue,
   sumTotalValue,
+  getTwelveMonthsAgo,
   getYearCountFromValues,
 } from './utils'
 
@@ -92,6 +93,9 @@ const WinTypeValues = ({ label, name, years = 5, values }) => {
 
 const WinDetailsStep = () => {
   const { values } = useFormContext()
+  const twelveMonthsAgo = getTwelveMonthsAgo()
+  const month = twelveMonthsAgo.getMonth() + 1
+  const year = twelveMonthsAgo.getFullYear()
 
   return (
     <Step name={steps.WIN_DETAILS}>
@@ -111,7 +115,7 @@ const WinDetailsStep = () => {
         name="win_date"
         format="short"
         label="Date won"
-        hint="For example 06 2023, date of win must be in the last 12 months."
+        hint={`For example ${month} ${year}, date of win must be in the last 12 months.`}
         required="Enter the win date"
         invalid="Enter a valid date"
       />
