@@ -160,9 +160,7 @@ describe('Task filters', () => {
         assertListItems({ length: 1 })
         cy.get(`${element} select`).find(':selected').contains(label)
       })
-    })
 
-    sortbyOptionsData.forEach(({ label, sortBy }) => {
       it(`should filter ${label} from user input`, () => {
         cy.intercept('POST', endpoint, {
           body: {
