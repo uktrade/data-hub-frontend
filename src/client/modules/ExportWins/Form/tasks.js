@@ -18,9 +18,9 @@ const transformExportProjectToForm = (exportProject) => {
     exporter_experience: idNameToValueLabel(exportProject.exporter_experience)
       .value,
     contact:
-      exportProject.contacts.length > 0
+      exportProject.contacts.length === 1
         ? idNameToValueLabel(exportProject.contacts[0])
-        : null,
+        : null, // Get the user to choose the contact
     // Win Details
     win_date: isEstimatedWinDateValid(date) && {
       year: String(date.getFullYear()),
