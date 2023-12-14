@@ -10,7 +10,10 @@ import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cy
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
-import { CREATED_BY_LIST_OPTIONS } from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
+import {
+  ASSIGNED_TO_LIST_OPTIONS,
+  CREATED_BY_LIST_OPTIONS,
+} from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 
@@ -32,6 +35,9 @@ describe('My Tasks on the Dashboard', () => {
 
   const filtersList = {
     areActive: false,
+    assignedTo: {
+      options: [ASSIGNED_TO_LIST_OPTIONS],
+    },
     createdBy: {
       options: [CREATED_BY_LIST_OPTIONS],
     },

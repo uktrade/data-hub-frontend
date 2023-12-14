@@ -198,4 +198,76 @@ describe('Task filters', () => {
       })
     })
   })
+  context('Assigned to', () => {
+    const element = '[data-test="assigned-to-select"]'
+
+    it('should have a "Assigned to" filter', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestassignedTo')
+      cy.visit(`${tasksTab}?assigned_to=me&page=1`)
+
+      cy.get(element).find('span').should('have.text', 'Assigned to')
+      cy.get(`${element} option`).then((assignedToOptions) => {
+        expect(transformOptions(assignedToOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: 'me', label: 'Me' },
+          { value: 'others', label: 'Others' },
+        ])
+      })
+    })
+
+    it('should filter from the url', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestassignedTo')
+      cy.visit(`${tasksTab}?assigned_to=me&page=1`)
+
+      // This ignores the checkForMyTasks API call which happens on page load
+      cy.wait('@apiRequestassignedTo')
+
+      assertPayload('@apiRequestassignedTo', {
+        advisers: [myAdviserId],
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+      cy.get(`${element} select`).find(':selected').contains('Me')
+    })
+
+    it('should filter from user input', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 3,
+          results: TaskList,
+        },
+      })
+      cy.visit(tasksTab)
+      assertListItems({ length: 3 })
+
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestassignedTo')
+      cy.get(`${element} select`).select('Me')
+      assertPayload('@apiRequestassignedTo', {
+        advisers: [myAdviserId],
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+    })
+  })
 })
