@@ -9,7 +9,6 @@ import { steps } from './constants'
 import {
   transformTeamsAndAdvisers,
   transformGoodsAndServices,
-  transformKeyValuePairToList,
   transformCustomerConfidential,
 } from './transformers'
 
@@ -77,10 +76,10 @@ const OfficerDetailsTable = ({ values, goToStep }) => (
       {values.adviser.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Team type">
-      {values.team_type.label}
+      {values.team_type?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="HQ Team, region or post">
-      {values.hq_team_region_or_post.label}
+      {values.hq_team_region_or_post?.label}
     </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="Team members (optional)"
@@ -149,7 +148,7 @@ const CustomerDetailsTable = ({ values, goToStep }) => (
       {values.contact?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="HQ location">
-      {values.uk_region.label}
+      {values.uk_region?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export potential">
       {values.business_potential}
@@ -233,12 +232,12 @@ const SupportGivenTable = ({ values, goToStep }) => (
     <SummaryTable.Row heading="HVC code">{values?.hvc?.label}</SummaryTable.Row>
     <SummaryTable.ListRow
       heading="What type of support was given?"
-      value={transformKeyValuePairToList(values, 'support_type')}
+      value={values.support_type}
       emptyValue="Not set"
     />
     <SummaryTable.ListRow
       heading="Was there a DBT campaign or event that contributed to this win?"
-      value={transformKeyValuePairToList(values, 'campaign')}
+      value={values.campaign}
       emptyValue="Not set"
     />
   </SummaryTable>

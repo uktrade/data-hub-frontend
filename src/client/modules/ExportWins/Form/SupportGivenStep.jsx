@@ -2,6 +2,7 @@ import React from 'react'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import { Step, FieldTypeahead, FieldCheckboxes } from '../../../components'
 import { OPTION_YES } from '../../../../common/constants'
 import { idNameToValueLabel } from '../../../utils'
 import { StyledHintParagraph } from './styled'
@@ -11,12 +12,6 @@ import {
   SupportTypeResource,
   AssociatedProgrammeResource,
 } from '../../../components/Resource'
-import {
-  Step,
-  FieldTypeahead,
-  FieldAddAnother,
-  FieldCheckboxes,
-} from '../../../components'
 
 const SupportGivenStep = () => (
   <Step name={steps.SUPPORT_PROVIDED}>
@@ -34,46 +29,42 @@ const SupportGivenStep = () => (
       resultToOptions={(results) => results.map(idNameToValueLabel)}
       field={FieldTypeahead}
     />
-    <FieldAddAnother
-      name="support"
+    <ResourceOptionsField
+      id="support_type"
+      name="support_type"
       label="What type of support was given?"
       hint="You can add up to 5 types of support."
-      itemName="support"
-      buttonText="Add a support type"
-      limitChildGroupCount={5}
-    >
-      {({ groupIndex }) => (
-        <ResourceOptionsField
-          id={`support_type_${groupIndex}`}
-          name={`support_type_${groupIndex}`}
-          field={FieldTypeahead}
-          resource={SupportTypeResource}
-          resultToOptions={(results) => results.map(idNameToValueLabel)}
-          fullWidth={true}
-          required="Choose a support type"
-        />
-      )}
-    </FieldAddAnother>
-    <FieldAddAnother
+      field={FieldTypeahead}
+      resource={SupportTypeResource}
+      resultToOptions={(results) => results.map(idNameToValueLabel)}
+      fullWidth={true}
+      isMulti={true}
+      validate={(value) =>
+        value.length === 0
+          ? 'Choose a support type'
+          : value.length > 5
+          ? 'Choose a maximum of 5 types of support'
+          : null
+      }
+    />
+    <ResourceOptionsField
+      id="campaign"
       name="campaign"
       label="What there as DBT campaign or event that contributed to this win?"
       hint="You can add up to 5 campaigns or events."
-      itemName="campaign"
-      buttonText="Add DBT campaign"
-      limitChildGroupCount={5}
-    >
-      {({ groupIndex }) => (
-        <ResourceOptionsField
-          id={`campaign_${groupIndex}`}
-          name={`campaign_${groupIndex}`}
-          field={FieldTypeahead}
-          resource={AssociatedProgrammeResource}
-          resultToOptions={(results) => results.map(idNameToValueLabel)}
-          fullWidth={true}
-          required="Choose a DBT campaign"
-        />
-      )}
-    </FieldAddAnother>
+      field={FieldTypeahead}
+      resource={AssociatedProgrammeResource}
+      resultToOptions={(results) => results.map(idNameToValueLabel)}
+      fullWidth={true}
+      isMulti={true}
+      validate={(value) =>
+        value.length === 0
+          ? 'Choose a DBT campaign or event'
+          : value.length > 5
+          ? 'Choose a maximum of 5 DBT campaigns or events'
+          : null
+      }
+    />
     <FieldCheckboxes
       name="is_personally_confirmed"
       required="Confirm that this information is complete and accurate"
