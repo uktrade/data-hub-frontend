@@ -37,19 +37,11 @@ export const state2props = ({ router, ...state }) => {
     ...queryParams,
     page: parsePage(queryParams.page),
     created_by: undefined,
-    advisers: undefined,
     not_created_by: undefined,
+    advisers: undefined,
     not_advisers: undefined,
     adviser: [currentAdviserId],
     sortby: 'due_date:asc',
-  }
-
-  if (queryParams.created_by === 'me') {
-    payload.created_by = currentAdviserId
-  }
-
-  if (queryParams.created_by === 'others') {
-    payload.not_created_by = currentAdviserId
   }
 
   if (queryParams.assigned_to === 'me') {
@@ -58,6 +50,14 @@ export const state2props = ({ router, ...state }) => {
 
   if (queryParams.assigned_to === 'others') {
     payload.not_advisers = [currentAdviserId]
+  }
+
+  if (queryParams.created_by === 'me') {
+    payload.created_by = currentAdviserId
+  }
+
+  if (queryParams.created_by === 'others') {
+    payload.not_created_by = currentAdviserId
   }
 
   if (queryParams.sortby in sortbyMapping) {
