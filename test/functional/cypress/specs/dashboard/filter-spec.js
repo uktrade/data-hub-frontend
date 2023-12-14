@@ -90,4 +90,112 @@ describe('Task filters', () => {
       assertListItems({ length: 1 })
     })
   })
+  context('Sort by', () => {
+    const element = '[data-test="sortby-select"]'
+
+    const sortbyOptionsData = [
+      {
+        label: 'Due date',
+        value: 'due_date',
+        sortBy: 'due_date:asc',
+      },
+      {
+        label: 'Recently updated',
+        value: 'recently_updated',
+        sortBy: 'modified_on:desc',
+      },
+      {
+        label: 'Least recently updated',
+        value: 'least_recently_updated',
+        sortBy: 'modified_on:asc',
+      },
+      {
+        label: 'Company A-Z',
+        value: 'company_ascending',
+        sortBy: 'company.name:asc',
+      },
+      {
+        label: 'Project A-Z',
+        value: 'project_ascending',
+        sortBy: 'investment_project.name:asc',
+      },
+    ]
+
+    it('should have a "Sort by" filter', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestSortBy')
+      cy.visit(tasksTab)
+
+      cy.get(element).find('span').should('have.text', 'Sort by')
+      cy.get(`${element} option`).then((sortByOptions) => {
+        expect(transformOptions(sortByOptions)).to.deep.eq(
+          transformOptions(sortbyOptionsData)
+        )
+      })
+    })
+
+    sortbyOptionsData.forEach(({ label, value, sortBy }) => {
+      it(`should filter ${label} from the url`, () => {
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 1,
+            results: [TaskList[0]],
+          },
+        }).as('apiRequestSortBy')
+        cy.visit(`${tasksTab}?sortby=${value}&page=1`)
+
+        // This ignores the checkForMyTasks API call which happens on page load
+        cy.wait('@apiRequestSortBy')
+
+        assertPayload('@apiRequestSortBy', {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: sortBy,
+        })
+        assertListItems({ length: 1 })
+        cy.get(`${element} select`).find(':selected').contains(label)
+      })
+
+      it(`should filter ${label} from user input`, () => {
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 3,
+            results: TaskList,
+          },
+        })
+        cy.visit(tasksTab)
+        assertListItems({ length: 3 })
+
+        // Select a different option so the API is called when testing Due Date
+        if (label === 'Due date') {
+          cy.get(`${element} select`).select('Recently updated')
+        }
+
+        cy.intercept('POST', endpoint, {
+          body: {
+            count: 1,
+            results: [TaskList[0]],
+          },
+        }).as('apiRequestSortBy')
+
+        if (label === 'Due date') {
+          cy.wait('@apiRequestSortBy')
+        }
+
+        cy.get(`${element} select`).select(label)
+        assertPayload('@apiRequestSortBy', {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: sortBy,
+        })
+        assertListItems({ length: 1 })
+      })
+    })
+  })
 })

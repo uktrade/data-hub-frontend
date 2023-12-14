@@ -3,7 +3,7 @@ import { omitBy, isEmpty } from 'lodash'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { parsePage } from '../../../../client/utils/pagination'
 
-import { CREATED_BY_LIST_OPTIONS } from './constants'
+import { CREATED_BY_LIST_OPTIONS, SORT_BY_LIST_OPTIONS } from './constants'
 
 export const ID = 'getMyTasks'
 export const TASK_GET_MY_TASKS = 'TASK_GET_MY_TASKS'
@@ -18,6 +18,14 @@ const areFiltersActive = (queryParams) => {
   return !isEmpty(filters)
 }
 
+const sortbyMapping = {
+  due_date: 'due_date:asc',
+  recently_updated: 'modified_on:desc',
+  least_recently_updated: 'modified_on:asc',
+  company_ascending: 'company.name:asc',
+  project_ascending: 'investment_project.name:asc',
+}
+
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
   const { currentAdviserId } = state
@@ -27,7 +35,9 @@ export const state2props = ({ router, ...state }) => {
     created_by: undefined,
     not_created_by: undefined,
     adviser: [currentAdviserId],
+    sortby: 'due_date:asc',
   }
+
   if (queryParams.created_by === 'me') {
     payload.created_by = currentAdviserId
   }
@@ -35,6 +45,11 @@ export const state2props = ({ router, ...state }) => {
   if (queryParams.created_by === 'others') {
     payload.not_created_by = currentAdviserId
   }
+
+  if (queryParams.sortby in sortbyMapping) {
+    payload.sortby = sortbyMapping[queryParams.sortby]
+  }
+
   return {
     ...state[ID],
     payload: payload,
@@ -42,6 +57,9 @@ export const state2props = ({ router, ...state }) => {
       areActive: areFiltersActive(queryParams),
       createdBy: {
         options: CREATED_BY_LIST_OPTIONS,
+      },
+      sortby: {
+        options: SORT_BY_LIST_OPTIONS,
       },
     },
   }
