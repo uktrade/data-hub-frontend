@@ -3,7 +3,11 @@ import { omitBy, isEmpty } from 'lodash'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { parsePage } from '../../../../client/utils/pagination'
 
-import { CREATED_BY_LIST_OPTIONS, SORT_BY_LIST_OPTIONS } from './constants'
+import {
+  ASSIGNED_TO_LIST_OPTIONS,
+  CREATED_BY_LIST_OPTIONS,
+  SORT_BY_LIST_OPTIONS,
+} from './constants'
 
 export const ID = 'getMyTasks'
 export const TASK_GET_MY_TASKS = 'TASK_GET_MY_TASKS'
@@ -33,7 +37,9 @@ export const state2props = ({ router, ...state }) => {
     ...queryParams,
     page: parsePage(queryParams.page),
     created_by: undefined,
+    advisers: undefined,
     not_created_by: undefined,
+    not_advisers: undefined,
     adviser: [currentAdviserId],
     sortby: 'due_date:asc',
   }
@@ -46,6 +52,14 @@ export const state2props = ({ router, ...state }) => {
     payload.not_created_by = currentAdviserId
   }
 
+  if (queryParams.assigned_to === 'me') {
+    payload.advisers = [currentAdviserId]
+  }
+
+  if (queryParams.assigned_to === 'others') {
+    payload.not_advisers = [currentAdviserId]
+  }
+
   if (queryParams.sortby in sortbyMapping) {
     payload.sortby = sortbyMapping[queryParams.sortby]
   }
@@ -55,6 +69,9 @@ export const state2props = ({ router, ...state }) => {
     payload: payload,
     filters: {
       areActive: areFiltersActive(queryParams),
+      assignedTo: {
+        options: ASSIGNED_TO_LIST_OPTIONS,
+      },
       createdBy: {
         options: CREATED_BY_LIST_OPTIONS,
       },
