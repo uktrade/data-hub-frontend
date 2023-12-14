@@ -14,16 +14,15 @@ const ItemHint = styled('span')({
 
 const ItemContent = ({ item }) => (
   <ul>
-    <li>
-      <ItemHint>Company: </ItemHint>
-      <Link
-        href={urls.companies.detail(
-          item.task.investment_project.investor_company.id
-        )}
-      >
-        {item.task.investment_project.investor_company.name}
-      </Link>
-    </li>
+    {item.task.company && (
+      <li>
+        <ItemHint>Company: </ItemHint>
+        <Link href={urls.companies.detail(item.task.company.id)}>
+          {item.task.company.name}
+        </Link>
+      </li>
+    )}
+
     <li>
       <ItemHint>Date due: </ItemHint>
       {format(item.task.due_date, DATE_LONG_FORMAT_1)}
@@ -36,7 +35,9 @@ const MyTasksItemRenderer = (item, onDeleteReminder, disableDelete) => (
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}
-    deletedText={`${item.event} for ${item.task.investment_project.name}`}
+    deletedText={`${item.event} for ${
+      item.task.company ? item.task.company.name : item.task.title
+    }`}
     headerLinkHref={urls.tasks.details(item.task.id)}
     headerLinkTitle={item.event}
     itemContent={<ItemContent item={item} />}

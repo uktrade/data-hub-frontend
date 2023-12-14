@@ -57,6 +57,7 @@ export const exportReminderFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+const taskCompany = nestedCompanyFaker()
 export const myTasksReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   created_on: faker.date.past({ years: 1 }),
@@ -64,11 +65,13 @@ export const myTasksReminderFaker = (overrides = {}) => ({
   task: {
     id: faker.string.uuid(),
     due_date: faker.date.future({ years: 1 }),
+    title: faker.lorem.word(),
+    company: taskCompany,
     investment_project: {
       id: faker.string.uuid(),
       name: faker.lorem.words(),
       project_code: investmentProjectCodeFaker(),
-      investor_company: nestedCompanyFaker(),
+      investor_company: taskCompany,
     },
   },
   ...overrides,
