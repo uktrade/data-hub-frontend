@@ -1,3 +1,14 @@
+export const ASSIGNED_TO_OPTIONS = [
+  {
+    label: 'Me',
+    value: 'me',
+  },
+  {
+    label: 'Others',
+    value: 'others',
+  },
+]
+
 export const CREATED_BY_OPTIONS = [
   {
     label: 'Me',
@@ -38,3 +49,8 @@ export const SHOW_ALL_OPTION = {
 }
 
 export const CREATED_BY_LIST_OPTIONS = [SHOW_ALL_OPTION, ...CREATED_BY_OPTIONS]
+
+export const ASSIGNED_TO_LIST_OPTIONS = [
+  SHOW_ALL_OPTION,
+  ...ASSIGNED_TO_OPTIONS,
+]
