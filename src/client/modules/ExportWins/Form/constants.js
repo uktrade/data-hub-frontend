@@ -8,9 +8,9 @@ export const steps = {
 }
 
 export const winTypes = {
-  EXPORT: 'export',
-  BUSINESS_SUCCESS: 'business_success',
-  ODI: 'odi',
+  EXPORT: 'export_win',
+  BUSINESS_SUCCESS: 'business_success_win',
+  ODI: 'odi_win',
 }
 
 export const winTypeOptions = [

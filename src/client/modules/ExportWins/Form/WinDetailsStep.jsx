@@ -28,11 +28,11 @@ import {
   winTypes,
 } from './constants'
 import {
-  sumWinType,
   formatValue,
-  sumTotalValue,
+  getYearFromWinType,
   getTwelveMonthsAgo,
-  getYearCountFromValues,
+  sumWinTypeYearlyValues,
+  sumAllWinTypeYearlyValues,
 } from './utils'
 
 const MAX_WORDS = 100
@@ -67,7 +67,7 @@ const StyledExportTotal = styled('p')({
 })
 
 const WinTypeValues = ({ label, name, years = 5, values }) => {
-  const yearCount = getYearCountFromValues(name, values)
+  const year = getYearFromWinType(name, values)
   return (
     <WinTypeContainer>
       <StyledLabel>{label}</StyledLabel>
@@ -84,8 +84,8 @@ const WinTypeValues = ({ label, name, years = 5, values }) => {
         ))}
       </FieldCurrencyContainer>
       <StyledParagraph>
-        Totalling over {yearCount} {pluralize('year', yearCount)}:{' '}
-        {formatValue(sumWinType(name, values))}
+        Totalling over {year} {pluralize('year', year)}:{' '}
+        {formatValue(sumWinTypeYearlyValues(name, values))}
       </StyledParagraph>
     </WinTypeContainer>
   )
@@ -166,7 +166,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Export value over the next 5 years"
-                name="export_win"
+                name="export_win_year"
                 values={values}
               />
             ),
@@ -200,7 +200,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Business success over the next 5 years"
-                name="business_success_win"
+                name="business_success_win_year"
                 values={values}
               />
             ),
@@ -228,7 +228,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Outward Direct Investment over the next 5 years"
-                name="odi_win"
+                name="odi_win_year"
                 values={values}
               />
             ),
@@ -239,7 +239,7 @@ const WinDetailsStep = () => {
       {values?.win_type?.length > 1 && (
         <StyledExportTotal>
           Total export value:{' '}
-          {formatValue(sumTotalValue(values?.win_type, values))}
+          {formatValue(sumAllWinTypeYearlyValues(values?.win_type, values))}
         </StyledExportTotal>
       )}
 

@@ -1,7 +1,8 @@
 import React from 'react'
+import WarningText from '@govuk-react/warning-text'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
-import WarningText from '@govuk-react/warning-text'
+import pluralize from 'pluralize'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
 import { useFormContext } from '../../../../client/components/Form/hooks'
@@ -12,7 +13,13 @@ import {
   transformCustomerConfidential,
 } from './transformers'
 
-import { formatValue, sumTotalValue, sumWinType } from './utils'
+import {
+  formatValue,
+  getYearFromWinType,
+  getMaxYearFromWinTypes,
+  sumWinTypeYearlyValues,
+  sumAllWinTypeYearlyValues,
+} from './utils'
 
 const StyledButtonLink = styled(ButtonLink)({
   margin: 0,
@@ -159,61 +166,92 @@ const CustomerDetailsTable = ({ values, goToStep }) => (
   </SummaryTable>
 )
 
-const WinDetailsTable = ({ values, goToStep }) => (
-  <SummaryTable
-    caption="Win details"
-    data-test="win-details"
-    actions={
-      <StyledButtonLink
-        onClick={() => {
-          goToStep(steps.WIN_DETAILS)
-        }}
-      >
-        Change
-      </StyledButtonLink>
-    }
-  >
-    <SummaryTable.Row heading="Destination">
-      {values.destination_country?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Date won">
-      {`${values.win_date?.month}/${values.win_date?.year}`}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Summary of support given">
-      {values.summary_of_support}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Overseas customer">
-      {values.name_of_customer}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Confidential">
-      {transformCustomerConfidential(values.name_of_customer_confidential)}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Type of win">
-      {values.business_type}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Total value">
-      {formatValue(sumTotalValue(values.win_type, values))}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Export value">
-      {formatValue(sumWinType('export_win', values))}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Business success value">
-      {formatValue(sumWinType('business_success_win', values))}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
-      {formatValue(sumWinType('odi_win', values))}
-    </SummaryTable.Row>
-    <SummaryTable.ListRow
-      heading="What does the value relate to?"
-      value={transformGoodsAndServices(values.goods_and_services)}
-      emptyValue="Not set"
-    />
-    <SummaryTable.Row heading="Type of goods or services">
-      {values.goods_and_services_name}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Sector">{values.sector?.label}</SummaryTable.Row>
-  </SummaryTable>
-)
+const getWinTypeValue = (winType, values) => {
+  const sum = formatValue(sumWinTypeYearlyValues(winType, values))
+  const year = getYearFromWinType(winType, values)
+  return `${sum} over ${year} ${pluralize('year', year)}`
+}
+
+const getTotalWinTypeValue = (winTypes = [], values) => {
+  const sum = formatValue(sumAllWinTypeYearlyValues(winTypes, values))
+  const maxYear = getMaxYearFromWinTypes(winTypes, values)
+  return `${sum} over ${maxYear} ${pluralize('year', maxYear)}`
+}
+
+const WinDetailsTable = ({ values, goToStep }) => {
+  const exportSum = sumWinTypeYearlyValues('export_win_year', values)
+  const odiWinSum = sumWinTypeYearlyValues('odi_win_year', values)
+  const busSuccSum = sumWinTypeYearlyValues('business_success_win_year', values)
+
+  const hasMoreThanOneWinType = values?.win_type?.length > 1
+  const showExportWin = exportSum > 0 && hasMoreThanOneWinType
+  const showBusinessSuccessWin = busSuccSum > 0 && hasMoreThanOneWinType
+  const showOdiWin = odiWinSum > 0 && hasMoreThanOneWinType
+
+  return (
+    <SummaryTable
+      caption="Win details"
+      data-test="win-details"
+      actions={
+        <StyledButtonLink
+          onClick={() => {
+            goToStep(steps.WIN_DETAILS)
+          }}
+        >
+          Change
+        </StyledButtonLink>
+      }
+    >
+      <SummaryTable.Row heading="Destination">
+        {values.destination_country?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Date won">
+        {`${values.win_date?.month}/${values.win_date?.year}`}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Summary of support given">
+        {values.summary_of_support}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Overseas customer">
+        {values.name_of_customer}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Confidential">
+        {transformCustomerConfidential(values.name_of_customer_confidential)}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Type of win">
+        {values.business_type}
+      </SummaryTable.Row>
+      {showExportWin && (
+        <SummaryTable.Row heading="Export value">
+          {getWinTypeValue('export_win_year', values)}
+        </SummaryTable.Row>
+      )}
+      {showBusinessSuccessWin && (
+        <SummaryTable.Row heading="Business success value">
+          {getWinTypeValue('business_success_win_year', values)}
+        </SummaryTable.Row>
+      )}
+      {showOdiWin && (
+        <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
+          {getWinTypeValue('odi_win_year', values)}
+        </SummaryTable.Row>
+      )}
+      <SummaryTable.Row heading="Total value">
+        {getTotalWinTypeValue(values.win_type, values)}
+      </SummaryTable.Row>
+      <SummaryTable.ListRow
+        heading="What does the value relate to?"
+        value={transformGoodsAndServices(values.goods_and_services)}
+        emptyValue="Not set"
+      />
+      <SummaryTable.Row heading="Type of goods or services">
+        {values.goods_and_services_name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Sector">
+        {values.sector?.label}
+      </SummaryTable.Row>
+    </SummaryTable>
+  )
+}
 
 const SupportGivenTable = ({ values, goToStep }) => (
   <SummaryTable
