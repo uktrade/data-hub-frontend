@@ -126,6 +126,10 @@ const AutocompleteInput = styled('input')(({ error }) => ({
   ...FOCUSABLE,
 }))
 
+const TypeaheadOptionContent = ({ option, searchString }) => (
+  <Highlighter optionLabel={option.label} searchStr={searchString} />
+)
+
 const Menu = styled('div')(({ open }) => ({
   visibility: open ? 'visible' : 'hidden',
   backgroundColor: WHITE,
@@ -172,6 +176,7 @@ const Typeahead = ({
   onMenuOpen,
   onChange = () => {},
   'data-test': testId,
+  OptionContent = TypeaheadOptionContent,
   ...inputProps
 }) => {
   const closeOnSelect = isMulti ? closeMenuOnSelect : true
@@ -362,10 +367,7 @@ const Typeahead = ({
                       data-test="typeahead-menu-option"
                     >
                       <span>
-                        <Highlighter
-                          optionLabel={option.label}
-                          searchStr={input}
-                        />
+                        <OptionContent option={option} searchString={input} />
                       </span>
                     </ListboxOption>
                   ))}
