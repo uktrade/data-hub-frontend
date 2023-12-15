@@ -55,11 +55,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
           as={Link}
-          href={
-            returnUrl
-              ? `${returnUrl}?sortby=-created_on`
-              : urls.dashboard.myTasks()
-          }
+          href={returnUrl ?? urls.dashboard.myTasks()}
           data-test="back-button"
         >
           Back
