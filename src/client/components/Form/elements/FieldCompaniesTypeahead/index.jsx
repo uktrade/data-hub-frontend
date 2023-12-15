@@ -30,8 +30,8 @@ const CompanyResultWithTags = ({ option, searchString }) => (
     <GridRow>
       <GridCol>
         <Tag colour={'blue'} data-test="location-tag">
-          {option.uk_region
-            ? `${get(option, 'uk_region.name')}, UK`
+          {option.ukRegion
+            ? `${get(option, 'ukRegion.name')}, UK`
             : get(option, 'address.country.name')}
         </Tag>
       </GridCol>
@@ -74,7 +74,7 @@ const FieldCompaniesTypeahead = ({
                     chipLabel: name,
                     value: id,
                     isInList: is_in_adviser_list,
-                    uk_region,
+                    ukRegion: uk_region,
                     address,
                   })
                 )
