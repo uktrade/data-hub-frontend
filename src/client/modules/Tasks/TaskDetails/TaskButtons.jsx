@@ -1,16 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import Button from '@govuk-react/button'
 import { GridRow } from 'govuk-react'
-
 import { SPACING } from '@govuk-react/constants'
-
 import styled from 'styled-components'
 
 import { Form } from '../../../components'
-
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK } from './state'
+import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
 const ButtonWrapper = styled.div`
@@ -65,4 +63,4 @@ export const TaskButtons = ({ task, returnUrl }) => (
   </>
 )
 
-export default TaskButtons
+export default connect(buttonState2props)(TaskButtons)

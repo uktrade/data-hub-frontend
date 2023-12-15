@@ -1,10 +1,8 @@
 import React from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import styled from 'styled-components'
-
-import qs from 'qs'
 
 import { SPACING } from '@govuk-react/constants'
 
@@ -25,9 +23,6 @@ const getCompany = (task) => {
 
 const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
-
-  const location = useLocation()
-  const { returnUrl } = qs.parse(location.search.slice(1))
 
   const company = getCompany(task)
   const taskTitle = task ? task.title : ''
@@ -53,15 +48,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
           onSuccessDispatch: TASK_DETAILS_LOADED,
         }}
       >
-        {() =>
-          task && (
-            <TaskDetailsTable
-              task={task}
-              company={company}
-              returnUrl={returnUrl}
-            />
-          )
-        }
+        {() => task && <TaskDetailsTable task={task} company={company} />}
       </Task.Status>
     </DefaultLayout>
   )

@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 import { transformIdNameToValueLabel } from '../../../transformers'
 import { getTaskBreadcrumbs } from '../TaskForm/state'
 
@@ -16,4 +18,10 @@ export const state2props = (state) => {
       company: transformIdNameToValueLabel(task?.company),
     }),
   }
+}
+
+export const buttonState2props = ({ router }) => {
+  const { location } = router
+  const { returnUrl } = qs.parse(location.search.slice(1))
+  return { returnUrl: returnUrl }
 }

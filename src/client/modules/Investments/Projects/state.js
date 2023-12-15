@@ -27,6 +27,7 @@ export const TASK_GET_INVESTMENT_PROJECT = 'TASK_GET_INVESTMENT_PROJECT'
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
+
   const queryParams = parseQueryString(queryString)
   const { metadata, selectedAdvisers } = state[INVESTMENT_PROJECTS_ID]
   const financialYearStart = getFinancialYearStart(new Date())
