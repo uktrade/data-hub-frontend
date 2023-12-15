@@ -24,7 +24,6 @@ const SupportGivenStep = () => (
       name="hvc"
       label="High Value Campaign (HVC) code (optional)"
       hint="If the win was linked to a HVC, select the appropriate campaign."
-      required="Choose a HCVC or campaign"
       resource={HvcResource}
       resultToOptions={(results) => results.map(idNameToValueLabel)}
       field={FieldTypeahead}
@@ -34,15 +33,16 @@ const SupportGivenStep = () => (
       name="support_type"
       label="What type of support was given?"
       hint="You can add up to 5 types of support."
+      required="Select at least one type of support"
       field={FieldTypeahead}
       resource={SupportTypeResource}
       resultToOptions={(results) => results.map(idNameToValueLabel)}
       fullWidth={true}
       isMulti={true}
       validate={(value) =>
-        value.length === 0
+        value?.length === 0
           ? 'Choose a support type'
-          : value.length > 5
+          : value?.length > 5
           ? 'Choose a maximum of 5 types of support'
           : null
       }
@@ -52,15 +52,16 @@ const SupportGivenStep = () => (
       name="campaign"
       label="What there as DBT campaign or event that contributed to this win?"
       hint="You can add up to 5 campaigns or events."
+      required="Select at least one type of DBT campaign or event"
       field={FieldTypeahead}
       resource={AssociatedProgrammeResource}
       resultToOptions={(results) => results.map(idNameToValueLabel)}
       fullWidth={true}
       isMulti={true}
       validate={(value) =>
-        value.length === 0
+        value?.length === 0
           ? 'Choose a DBT campaign or event'
-          : value.length > 5
+          : value?.length > 5
           ? 'Choose a maximum of 5 DBT campaigns or events'
           : null
       }
@@ -71,7 +72,7 @@ const SupportGivenStep = () => (
       options={[
         {
           value: OPTION_YES,
-          label: 'I confirm that this information is complete and accurate',
+          label: 'I confirm that this information is complete and accurate.',
         },
       ]}
     />
@@ -81,7 +82,7 @@ const SupportGivenStep = () => (
       options={[
         {
           value: OPTION_YES,
-          label: 'My line manager has agreed that this win should be recorded',
+          label: 'My line manager has agreed that this win should be recorded.',
         },
       ]}
     />

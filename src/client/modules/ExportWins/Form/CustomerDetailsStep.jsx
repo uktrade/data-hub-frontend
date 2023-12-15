@@ -36,6 +36,7 @@ const CustomerDetailsStep = () => {
         name="contact"
         id={companyId}
         label="Company contacts"
+        hint="This contact will be emailed to approve the win."
         required="Select a contact"
         placeholder="Select contact"
         resource={CompanyContactsResource}
@@ -65,8 +66,8 @@ const CustomerDetailsStep = () => {
       <ResourceOptionsField
         name="uk_region"
         id="uk-region"
-        label="HQ Location"
-        required="Choose a HQ location"
+        label="HQ location"
+        required="Select HQ location"
         field={FieldTypeahead}
         resource={UKRegionsResource}
         fullWidth={true}
@@ -85,7 +86,7 @@ const CustomerDetailsStep = () => {
         id="exporter-experience"
         label="Export experience"
         required="Select export experience"
-        hint="You customer will be asked to confirm this information"
+        hint="You customer will be asked to confirm this information."
         field={FieldRadios}
         resource={ExportExperienceResource}
       />

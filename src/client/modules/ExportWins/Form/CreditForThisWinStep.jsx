@@ -49,14 +49,14 @@ const CreditForThisWinStep = () => {
         name="credit_for_win"
         label="Did any other teams help with this win?"
         options={OPTIONS_YES_NO}
-        required="Choose Yes or No"
+        required="Select Yes or No"
       />
       {values.credit_for_win === OPTION_YES && (
         <Container>
           <FieldAddAnother
             name="addAnother"
-            label="Contributing teams and advisers"
-            hint="Up to 5 teams and advisers can be added."
+            label="Contributing advisers"
+            hint="Up to 5 advisers can be added."
             itemName="reminder"
             buttonText="Add another"
             limitChildGroupCount={5}

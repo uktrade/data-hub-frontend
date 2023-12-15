@@ -41,7 +41,7 @@ const OfficerDetailsStep = () => {
       <H3>Officer details</H3>
       <FieldAdvisersTypeahead
         name="adviser"
-        label="Lead Officer name"
+        label="Lead officer name"
         required="Enter a lead officer"
       />
       <ResourceOptionsField
@@ -51,7 +51,7 @@ const OfficerDetailsStep = () => {
         field={FieldTypeahead}
         fullWidth={true}
         label="Team type"
-        required="Enter a team type"
+        required="Select a team type"
       />
       {values.team_type && (
         // Should a user choose a team type, then choose a HQ team, region or post
@@ -69,13 +69,13 @@ const OfficerDetailsStep = () => {
           fullWidth={true}
           payload={{ team_type: values.team_type.value }}
           label="HQ team, region or post"
-          required="Enter a HQ team, region or post"
+          required="Select a HQ team, region or post"
         />
       )}
       <FieldAdvisersTypeahead
         name="team_members"
         label="Team members (optional)"
-        hint="You can add up to 5 team members. They will be notified when this win is updated"
+        hint="You can add up to 5 team members. They will be notified when this win is updated."
         validate={validators.validateTeamMembers}
         isMulti={true}
       />

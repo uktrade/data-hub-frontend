@@ -79,8 +79,8 @@ const OfficerDetailsTable = ({ values, goToStep }) => (
       </StyledButtonLink>
     }
   >
-    <SummaryTable.Row heading="Lead Officer name">
-      {values.adviser.label}
+    <SummaryTable.Row heading="Lead officer name">
+      {values.adviser?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Team type">
       {values.team_type?.label}
