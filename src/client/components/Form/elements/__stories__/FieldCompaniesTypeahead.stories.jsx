@@ -8,12 +8,12 @@ const options = [
     value: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
     label: 'Company A',
     isInList: true,
-    uk_region: { name: 'Bristol' },
+    ukRegion: { name: 'Bristol' },
   },
   {
     value: '8dcd2bb8-dc73-4a42-8655-4ae42d4d3c5a',
     label: 'Company B',
-    uk_region: { name: 'Cardiff' },
+    ukRegion: { name: 'Cardiff' },
   },
   {
     value: 'a6f39399-5bf4-46cb-a686-826f73e9f0ca',

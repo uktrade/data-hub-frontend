@@ -32,7 +32,7 @@ const CompanyResultWithTags = ({ option, searchString }) => (
         <Tag colour={'blue'} data-test="location-tag">
           {option.ukRegion
             ? `${get(option, 'ukRegion.name')}, UK`
-            : get(option, 'address.country.name')}
+            : get(option, 'address.country.name', 'unknown')}
         </Tag>
       </GridCol>
     </GridRow>
