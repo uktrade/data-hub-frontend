@@ -48,6 +48,7 @@ const CreditForThisWinStep = () => {
       <StyledFieldRadios
         name="credit_for_win"
         label="Did any other teams help with this win?"
+        inline={true}
         options={OPTIONS_YES_NO}
         required="Select Yes or No"
       />
