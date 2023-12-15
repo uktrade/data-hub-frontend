@@ -4,6 +4,8 @@ export const getMyTasks = ({
   adviser,
   created_by,
   not_created_by,
+  advisers,
+  not_advisers,
   sortby = 'due_date:asc',
 }) =>
   apiProxyAxios
@@ -12,6 +14,8 @@ export const getMyTasks = ({
       offset: 0,
       created_by: created_by,
       not_created_by: not_created_by,
+      advisers: advisers,
+      not_advisers: not_advisers,
       adviser: adviser,
       sortby,
     })
