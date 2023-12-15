@@ -5,6 +5,8 @@ export const TASK_EDIT_INVESTMENT_PROJECT_SUMMARY =
 export const TASK_EDIT_INVESTMENT_PROJECT_VALUE =
   'TASK_EDIT_INVESTMENT_PROJECT_VALUE'
 
-export const state2props = (state) => ({
-  currentAdviserId: state.currentAdviserId,
-})
+export const state2props = (state) => {
+  return {
+    currentAdviserId: state.currentAdviserId,
+  }
+}

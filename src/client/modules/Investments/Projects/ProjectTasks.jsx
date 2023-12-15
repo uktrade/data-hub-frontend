@@ -22,7 +22,6 @@ import { INVESTMENT__PROJECT_LOADED } from '../../../actions'
 
 const ProjectTasks = ({ project }) => {
   const { projectId } = useParams()
-
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
@@ -32,6 +31,8 @@ const ProjectTasks = ({ project }) => {
   const onPageClick = (page) => {
     setActivePage(page)
   }
+
+  const returnUrl = encodeURIComponent(location.pathname + location.search)
 
   return (
     <ProjectLayout
@@ -72,7 +73,9 @@ const ProjectTasks = ({ project }) => {
         }}
       >
         {(projectTasks, count) => {
-          const tasks = projectTasks.map(transformTaskToListItem)
+          const tasks = projectTasks.map((task) =>
+            transformTaskToListItem({ ...task, returnUrl: returnUrl })
+          )
           const sortOptions = [
             {
               name: 'Recently created',

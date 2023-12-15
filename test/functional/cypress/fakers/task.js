@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker'
 import { pick } from 'lodash'
 
 import { listFaker } from './utils'
-import { investmentProjectFaker } from './investment-projects'
 import { companyFaker } from './companies'
 
 const basicAdviserFaker = (overrides = {}) => ({
@@ -34,13 +33,17 @@ const taskFaker = (overrides = {}) => ({
 
 const company = pick(companyFaker(), ['id', 'name'])
 
-const taskWithInvestmentProjectFaker = (overrides = {}) =>
+const taskWithInvestmentProjectFaker = (
+  overrides = {},
+  investmentProjectOverrides = {}
+) =>
   taskFaker(
     (overrides = {
       investmentProject: {
         investorCompany: company,
         id: faker.string.uuid(),
         name: faker.word.adjective(),
+        ...investmentProjectOverrides,
       },
       company: company,
       ...overrides,
@@ -51,15 +54,6 @@ const taskWithCompanyFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
       company: companyFaker(),
-      ...overrides,
-    })
-  )
-
-const investmentProjectTaskFaker = (overrides = {}) =>
-  taskFaker(
-    (overrides = {
-      investment_project: pick(investmentProjectFaker(), ['id', 'name']),
-      createdOn: faker.date.past().toISOString(),
       ...overrides,
     })
   )
@@ -78,20 +72,11 @@ const taskWithInvestmentProjectListFaker = (length = 3, overrides) =>
     overrides,
   })
 
-const investmentProjectTaskListFaker = (length = 3, overrides) =>
-  listFaker({
-    fakerFunction: investmentProjectTaskFaker,
-    length,
-    overrides,
-  })
-
 export {
   taskFaker,
   taskListFaker,
-  investmentProjectTaskFaker,
   taskWithInvestmentProjectFaker,
   taskWithInvestmentProjectListFaker,
-  investmentProjectTaskListFaker,
   basicAdviserFaker,
   taskWithCompanyFaker,
 }

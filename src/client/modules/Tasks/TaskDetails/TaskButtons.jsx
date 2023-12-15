@@ -19,7 +19,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export const TaskButtons = ({ task }) => (
+export const TaskButtons = ({ task, returnUrl }) => (
   <>
     <GridRow>
       {!task.archived && (
@@ -55,7 +55,11 @@ export const TaskButtons = ({ task }) => (
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
           as={Link}
-          href={urls.dashboard.myTasks()} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
+          href={
+            returnUrl
+              ? `${returnUrl}?sortby=-created_on`
+              : urls.dashboard.myTasks()
+          }
           data-test="back-button"
         >
           Back

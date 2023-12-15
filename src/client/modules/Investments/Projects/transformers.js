@@ -299,9 +299,10 @@ export const transformTaskToListItem = ({
   dueDate,
   advisers,
   archived,
+  returnUrl,
 } = {}) => ({
   id,
-  headingUrl: urls.tasks.details(id),
+  headingUrl: `${urls.tasks.details(id)}?returnUrl=${returnUrl}`,
   headingText: title,
   subheading: getTaskSubheading(archived),
   metadata: [

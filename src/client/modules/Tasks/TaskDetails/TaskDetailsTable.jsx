@@ -9,7 +9,7 @@ import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import urls from '../../../../lib/urls'
 import TaskButtons from './TaskButtons'
 
-const TaskDetailsTable = ({ task, company }) => (
+const TaskDetailsTable = ({ task, company, returnUrl }) => (
   <>
     <SummaryTable data-test="task-details-table">
       <SummaryTable.Row
@@ -48,7 +48,7 @@ const TaskDetailsTable = ({ task, company }) => (
       />
       <SummaryTable.Row heading="Created by" children={task.createdBy.name} />
     </SummaryTable>
-    <TaskButtons task={task} />
+    <TaskButtons task={task} returnUrl={returnUrl} />
   </>
 )
 
