@@ -69,7 +69,7 @@ const OfficerDetailsStep = () => {
           fullWidth={true}
           payload={{ team_type: values.team_type.value }}
           label="HQ team, region or post"
-          required="Select a HQ team, region or post"
+          required="Select HQ team, region or post"
         />
       )}
       <FieldAdvisersTypeahead
