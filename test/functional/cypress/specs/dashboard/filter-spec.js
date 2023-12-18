@@ -17,6 +17,12 @@ describe('Task filters', () => {
   const endpoint = '/api-proxy/v4/search/task'
   const tasksTab = urls.dashboard.myTasks()
   const TaskList = taskListFaker()
+  const basePayload = {
+    limit: 50,
+    offset: 0,
+    adviser: [myAdviserId],
+    sortby: 'due_date:asc',
+  }
 
   function assertFilterName(element, text) {
     cy.intercept('POST', endpoint, {
@@ -42,7 +48,7 @@ describe('Task filters', () => {
     // This ignores the checkForMyTasks API call which happens on page load
     cy.wait('@apiRequest')
 
-    assertPayload('@apiRequest', payload)
+    assertPayload('@apiRequest', { ...basePayload, ...payload })
     assertListItems({ length: 1 })
     cy.get(`${element} select`).find(':selected').contains(selectedOption)
   }
@@ -86,13 +92,7 @@ describe('Task filters', () => {
       testFilterFromUrl(
         element,
         'created_by=me',
-        {
-          created_by: myAdviserId,
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { created_by: myAdviserId },
         'Me'
       )
     })
@@ -101,13 +101,7 @@ describe('Task filters', () => {
       testFilterFromUrl(
         element,
         'created_by=others',
-        {
-          not_created_by: myAdviserId,
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { not_created_by: myAdviserId },
         'Others'
       )
     })
@@ -183,17 +177,7 @@ describe('Task filters', () => {
 
     sortbyOptionsData.forEach(({ label, value, sortBy }) => {
       it(`should filter ${label} from the url`, () => {
-        testFilterFromUrl(
-          element,
-          `sortby=${value}`,
-          {
-            limit: 50,
-            offset: 0,
-            adviser: [myAdviserId],
-            sortby: sortBy,
-          },
-          label
-        )
+        testFilterFromUrl(element, `sortby=${value}`, { sortby: sortBy }, label)
       })
 
       it(`should filter ${label} from user input`, () => {
@@ -252,13 +236,7 @@ describe('Task filters', () => {
       testFilterFromUrl(
         element,
         'assigned_to=me',
-        {
-          advisers: [myAdviserId],
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { advisers: [myAdviserId] },
         'Me'
       )
     })
@@ -267,13 +245,7 @@ describe('Task filters', () => {
       testFilterFromUrl(
         element,
         'assigned_to=others',
-        {
-          not_advisers: [myAdviserId],
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { not_advisers: [myAdviserId] },
         'Others'
       )
     })
@@ -322,31 +294,14 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from the url', () => {
-      testFilterFromUrl(
-        element,
-        'status=active',
-        {
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          archived: false,
-          sortby: 'due_date:asc',
-        },
-        'Active'
-      )
+      testFilterFromUrl(element, 'status=active', { archived: false }, 'Active')
     })
 
     it('should filter completed status from the url', () => {
       testFilterFromUrl(
         element,
         'status=completed',
-        {
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          archived: true,
-          sortby: 'due_date:asc',
-        },
+        { archived: true },
         'Completed'
       )
     })
