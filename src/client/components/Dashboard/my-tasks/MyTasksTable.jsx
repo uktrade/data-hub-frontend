@@ -29,8 +29,8 @@ const header = (
 const rows = ({ results }) => {
   return results.map((task) => (
     <Table.Row data-test="task-item">
-      <Table.Cell setWidth="15%">{formatMediumDate(task.due_date)}</Table.Cell>
-      <Table.Cell setWidth="40%">
+      <Table.Cell setWidth="12%">{formatMediumDate(task.due_date)}</Table.Cell>
+      <Table.Cell setWidth="23%">
         <Link
           href={urls.tasks.details(task.id)}
           data-test={`${task.id}-task-link`}
