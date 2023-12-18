@@ -30,6 +30,23 @@ describe('Task filters', () => {
     cy.get(element).find('span').should('have.text', text)
   }
 
+  function testFilterFromUrl(element, urlQuery, payload, selectedOption) {
+    cy.intercept('POST', endpoint, {
+      body: {
+        count: 1,
+        results: [TaskList[0]],
+      },
+    }).as('apiRequest')
+    cy.visit(`${tasksTab}?${urlQuery}`)
+
+    // This ignores the checkForMyTasks API call which happens on page load
+    cy.wait('@apiRequest')
+
+    assertPayload('@apiRequest', payload)
+    assertListItems({ length: 1 })
+    cy.get(`${element} select`).find(':selected').contains(selectedOption)
+  }
+
   context('Created by', () => {
     const element = '[data-test="created-by-select"]'
 
@@ -45,49 +62,33 @@ describe('Task filters', () => {
     })
 
     it('should filter created by me from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'created_by=me',
+        {
+          created_by: myAdviserId,
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestCreatedBy')
-      cy.visit(`${tasksTab}?created_by=me&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestCreatedBy')
-
-      assertPayload('@apiRequestCreatedBy', {
-        created_by: myAdviserId,
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Me')
+        'Me'
+      )
     })
 
     it('should filter created by others from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'created_by=others',
+        {
+          not_created_by: myAdviserId,
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestCreatedBy')
-      cy.visit(`${tasksTab}?created_by=others&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestCreatedBy')
-
-      assertPayload('@apiRequestCreatedBy', {
-        not_created_by: myAdviserId,
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Others')
+        'Others'
+      )
     })
 
     it('should filter created by me from user input', () => {
@@ -187,25 +188,17 @@ describe('Task filters', () => {
 
     sortbyOptionsData.forEach(({ label, value, sortBy }) => {
       it(`should filter ${label} from the url`, () => {
-        cy.intercept('POST', endpoint, {
-          body: {
-            count: 1,
-            results: [TaskList[0]],
+        testFilterFromUrl(
+          element,
+          `sortby=${value}`,
+          {
+            limit: 50,
+            offset: 0,
+            adviser: [myAdviserId],
+            sortby: sortBy,
           },
-        }).as('apiRequestSortBy')
-        cy.visit(`${tasksTab}?sortby=${value}&page=1`)
-
-        // This ignores the checkForMyTasks API call which happens on page load
-        cy.wait('@apiRequestSortBy')
-
-        assertPayload('@apiRequestSortBy', {
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: sortBy,
-        })
-        assertListItems({ length: 1 })
-        cy.get(`${element} select`).find(':selected').contains(label)
+          label
+        )
       })
 
       it(`should filter ${label} from user input`, () => {
@@ -261,49 +254,33 @@ describe('Task filters', () => {
     })
 
     it('should filter assigned to me from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'assigned_to=me',
+        {
+          advisers: [myAdviserId],
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestassignedTo')
-      cy.visit(`${tasksTab}?assigned_to=me&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestassignedTo')
-
-      assertPayload('@apiRequestassignedTo', {
-        advisers: [myAdviserId],
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Me')
+        'Me'
+      )
     })
 
     it('should filter assigned to others from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'assigned_to=others',
+        {
+          not_advisers: [myAdviserId],
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestassignedTo')
-      cy.visit(`${tasksTab}?assigned_to=others&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestassignedTo')
-
-      assertPayload('@apiRequestassignedTo', {
-        not_advisers: [myAdviserId],
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Others')
+        'Others'
+      )
     })
 
     it('should filter assigned to me from user input', () => {
@@ -376,49 +353,33 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'status=active',
+        {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          archived: false,
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestStatus')
-      cy.visit(`${tasksTab}?status=active&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestStatus')
-
-      assertPayload('@apiRequestStatus', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        archived: false,
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Active')
+        'Active'
+      )
     })
 
     it('should filter completed status from the url', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
+      testFilterFromUrl(
+        element,
+        'status=completed',
+        {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          archived: true,
+          sortby: 'due_date:asc',
         },
-      }).as('apiRequestStatus')
-      cy.visit(`${tasksTab}?status=completed&page=1`)
-
-      // This ignores the checkForMyTasks API call which happens on page load
-      cy.wait('@apiRequestStatus')
-
-      assertPayload('@apiRequestStatus', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        archived: true,
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
-      cy.get(`${element} select`).find(':selected').contains('Completed')
+        'Completed'
+      )
     })
 
     it('should filter active status from user input', () => {
