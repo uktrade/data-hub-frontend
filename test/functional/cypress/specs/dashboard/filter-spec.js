@@ -415,6 +415,7 @@ describe('Task filters', () => {
         sortby: 'due_date:asc',
       })
       assertListItems({ length: 1 })
+      cy.get(`${element} select`).find(':selected').contains('Active')
     })
 
     it('should filter completed status from the url', () => {
@@ -437,6 +438,7 @@ describe('Task filters', () => {
         sortby: 'due_date:asc',
       })
       assertListItems({ length: 1 })
+      cy.get(`${element} select`).find(':selected').contains('Completed')
     })
 
     it('should filter active status from user input', () => {
