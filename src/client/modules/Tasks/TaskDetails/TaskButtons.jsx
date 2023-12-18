@@ -1,16 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import Button from '@govuk-react/button'
 import { GridRow } from 'govuk-react'
-
 import { SPACING } from '@govuk-react/constants'
-
 import styled from 'styled-components'
 
 import { Form } from '../../../components'
-
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK } from './state'
+import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
 const ButtonWrapper = styled.div`
@@ -19,7 +17,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export const TaskButtons = ({ task }) => (
+export const TaskButtons = ({ task, returnUrl }) => (
   <>
     <GridRow>
       {!task.archived && (
@@ -55,7 +53,7 @@ export const TaskButtons = ({ task }) => (
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
           as={Link}
-          href={urls.dashboard.myTasks()} //TODO - when the my tasks dashboard is added this url needs to be more intelligent as there will be multiple entry points to this page
+          href={returnUrl ?? urls.dashboard.myTasks()}
           data-test="back-button"
         >
           Back
@@ -65,4 +63,4 @@ export const TaskButtons = ({ task }) => (
   </>
 )
 
-export default TaskButtons
+export default connect(buttonState2props)(TaskButtons)

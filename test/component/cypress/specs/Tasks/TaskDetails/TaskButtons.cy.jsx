@@ -2,7 +2,7 @@ import React from 'react'
 
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
 import DataHubProvider from '../../provider'
-import TaskButtons from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
+import { TaskButtons } from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 import { assertLink } from '../../../../../functional/cypress/support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
@@ -31,7 +31,7 @@ describe('Task buttons', () => {
       assertLink('edit-form-button', urls.tasks.edit(task.id))
     })
 
-    it('should show the Back link with expected url', () => {
+    it('should show the Back link to dashboard when no return url exists', () => {
       assertLink('back-button', urls.dashboard.myTasks())
     })
   })
@@ -51,8 +51,20 @@ describe('Task buttons', () => {
       cy.get('[data-test="submit-button"]').should('not.exist')
     })
 
-    it('should show the Back link with expected url', () => {
+    it('should show the Back link to dashboard when no return url exists', () => {
       assertLink('back-button', urls.dashboard.myTasks())
+    })
+  })
+
+  context('When a return url exists', () => {
+    const task = taskWithInvestmentProjectFaker()
+
+    beforeEach(() => {
+      cy.mount(<Component task={task} returnUrl="a/b/c" />)
+    })
+
+    it('should the back button with the returnUrl as the href', () => {
+      assertLink('back-button', 'a/b/c')
     })
   })
 })
