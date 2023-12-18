@@ -7,6 +7,7 @@ import {
   ASSIGNED_TO_LIST_OPTIONS,
   CREATED_BY_LIST_OPTIONS,
   SORT_BY_LIST_OPTIONS,
+  STATUS_LIST_OPTIONS,
 } from './constants'
 
 export const ID = 'getMyTasks'
@@ -22,14 +23,6 @@ const areFiltersActive = (queryParams) => {
   return !isEmpty(filters)
 }
 
-const sortbyMapping = {
-  due_date: 'due_date:asc',
-  recently_updated: 'modified_on:desc',
-  least_recently_updated: 'modified_on:asc',
-  company_ascending: 'company.name:asc',
-  project_ascending: 'investment_project.name:asc',
-}
-
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
   const { currentAdviserId } = state
@@ -41,28 +34,37 @@ export const state2props = ({ router, ...state }) => {
     advisers: undefined,
     not_advisers: undefined,
     adviser: [currentAdviserId],
+    archived: undefined,
     sortby: 'due_date:asc',
   }
 
-  if (queryParams.assigned_to === 'me') {
-    payload.advisers = [currentAdviserId]
+  const sortbyMapping = {
+    due_date: 'due_date:asc',
+    recently_updated: 'modified_on:desc',
+    least_recently_updated: 'modified_on:asc',
+    company_ascending: 'company.name:asc',
+    project_ascending: 'investment_project.name:asc',
   }
-
-  if (queryParams.assigned_to === 'others') {
-    payload.not_advisers = [currentAdviserId]
+  const statusMapping = {
+    active: { archived: false },
+    completed: { archived: true },
   }
-
-  if (queryParams.created_by === 'me') {
-    payload.created_by = currentAdviserId
+  const assignedToMapping = {
+    me: { advisers: [currentAdviserId] },
+    others: { not_advisers: [currentAdviserId] },
   }
-
-  if (queryParams.created_by === 'others') {
-    payload.not_created_by = currentAdviserId
+  const createdByMapping = {
+    me: { created_by: currentAdviserId },
+    others: { not_created_by: currentAdviserId },
   }
 
   if (queryParams.sortby in sortbyMapping) {
     payload.sortby = sortbyMapping[queryParams.sortby]
   }
+
+  Object.assign(payload, assignedToMapping[queryParams.assigned_to])
+  Object.assign(payload, createdByMapping[queryParams.created_by])
+  Object.assign(payload, statusMapping[queryParams.status])
 
   return {
     ...state[ID],
@@ -77,6 +79,9 @@ export const state2props = ({ router, ...state }) => {
       },
       sortby: {
         options: SORT_BY_LIST_OPTIONS,
+      },
+      status: {
+        options: STATUS_LIST_OPTIONS,
       },
     },
   }
