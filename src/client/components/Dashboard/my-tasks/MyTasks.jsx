@@ -21,29 +21,63 @@ const FiltersContainer = styled('div')({
     gridTemplateColumns: '50% 50%',
   },
   [MEDIA_QUERIES.DESKTOP]: {
-    gridTemplateColumns: '25% 25% 25% 25%',
+    columnGap: 30,
+    gridTemplateColumns: '80% 17.5%',
   },
   marginBottom: SPACING.SCALE_3,
 })
 
+const FiltersContainerLeft = styled('div')({
+  display: 'grid',
+  [MEDIA_QUERIES.TABLET]: {
+    columnGap: 2,
+    gridTemplateColumns: '100%',
+  },
+  [MEDIA_QUERIES.DESKTOP]: {
+    gridTemplateColumns: '20% 20% 20% 20% 20%',
+  },
+  marginBottom: SPACING.SCALE_3,
+})
+
+const FiltersContainerRight = styled('div')``
+
 export const MyTasksContent = ({ myTasks, filters }) => (
   <>
     <FiltersContainer>
-      <TaskListSelect
-        label="Assigned to"
-        qsParam="assigned_to"
-        options={filters?.assignedTo?.options}
-      />
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters?.createdBy?.options}
-      />
-      <TaskListSelect
-        label="Sort by"
-        qsParam="sortby"
-        options={filters?.sortby?.options}
-      />
+      <FiltersContainerLeft>
+        <TaskListSelect
+          label="Assigned to"
+          qsParam="assigned_to"
+          options={filters?.assignedTo?.options}
+        />
+        <TaskListSelect
+          label="Created by"
+          qsParam="created_by"
+          options={filters?.createdBy?.options}
+        />
+        <TaskListSelect
+          label="Created by"
+          qsParam="created_by"
+          options={filters?.createdBy?.options}
+        />
+        <TaskListSelect
+          label="Created by"
+          qsParam="created_by"
+          options={filters?.createdBy?.options}
+        />
+        <TaskListSelect
+          label="Created by"
+          qsParam="created_by"
+          options={filters?.createdBy?.options}
+        />
+      </FiltersContainerLeft>
+      <FiltersContainerRight>
+        <TaskListSelect
+          label="Sort by"
+          qsParam="sortby"
+          options={filters?.sortby?.options}
+        />
+      </FiltersContainerRight>
     </FiltersContainer>
     <SpacedSectionBreak />
     <ContentWithHeading
