@@ -47,6 +47,27 @@ describe('Task filters', () => {
     cy.get(`${element} select`).find(':selected').contains(selectedOption)
   }
 
+  function testFilterFromUserInput(element, payload, selectedOption) {
+    cy.intercept('POST', endpoint, {
+      body: {
+        count: 3,
+        results: TaskList,
+      },
+    })
+    cy.visit(tasksTab)
+    assertListItems({ length: 3 })
+
+    cy.intercept('POST', endpoint, {
+      body: {
+        count: 1,
+        results: [TaskList[0]],
+      },
+    }).as('apiRequest')
+    cy.get(`${element} select`).select(selectedOption)
+    assertPayload('@apiRequest', payload)
+    assertListItems({ length: 1 })
+  }
+
   context('Created by', () => {
     const element = '[data-test="created-by-select"]'
 
@@ -92,57 +113,31 @@ describe('Task filters', () => {
     })
 
     it('should filter created by me from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          created_by: myAdviserId,
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestCreatedBy')
-      cy.get(`${element} select`).select('Me')
-      assertPayload('@apiRequestCreatedBy', {
-        created_by: myAdviserId,
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Me'
+      )
     })
 
     it('should filter created by others from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          not_created_by: myAdviserId,
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestCreatedBy')
-      cy.get(`${element} select`).select('Others')
-      assertPayload('@apiRequestCreatedBy', {
-        not_created_by: myAdviserId,
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Others'
+      )
     })
   })
 
@@ -284,57 +279,31 @@ describe('Task filters', () => {
     })
 
     it('should filter assigned to me from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          advisers: [myAdviserId],
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestassignedTo')
-      cy.get(`${element} select`).select('Me')
-      assertPayload('@apiRequestassignedTo', {
-        advisers: [myAdviserId],
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Me'
+      )
     })
 
     it('should filter assigned to others from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          not_advisers: [myAdviserId],
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestassignedTo')
-      cy.get(`${element} select`).select('Others')
-      assertPayload('@apiRequestassignedTo', {
-        not_advisers: [myAdviserId],
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Others'
+      )
     })
   })
 
@@ -383,57 +352,31 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          archived: false,
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestStatus')
-      cy.get(`${element} select`).select('Active')
-      assertPayload('@apiRequestStatus', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        archived: false,
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Active'
+      )
     })
 
     it('should filter completed status from user input', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 3,
-          results: TaskList,
+      testFilterFromUserInput(
+        element,
+        {
+          limit: 50,
+          offset: 0,
+          adviser: [myAdviserId],
+          archived: true,
+          sortby: 'due_date:asc',
         },
-      })
-      cy.visit(tasksTab)
-      assertListItems({ length: 3 })
-
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestStatus')
-      cy.get(`${element} select`).select('Completed')
-      assertPayload('@apiRequestStatus', {
-        limit: 50,
-        offset: 0,
-        adviser: [myAdviserId],
-        archived: true,
-        sortby: 'due_date:asc',
-      })
-      assertListItems({ length: 1 })
+        'Completed'
+      )
     })
   })
 })
