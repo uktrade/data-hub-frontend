@@ -14,7 +14,7 @@ import urls from '../../../../lib/urls'
 import { TaskAssignedToMeFromOthersSettingsResource } from '../../../components/Resource'
 
 const OPTIONS_NO_YES = [...OPTIONS_YES_NO].reverse()
-const redirectUrl = `${urls.reminders.settings.index()}?task_assigned_to_me_from_others=true`
+const redirectUrl = `${urls.reminders.settings.index()}?my_tasks_task_assigned_to_me_from_others=true`
 
 export const TaskAssignedToMeFromOthersFormFields = ({ settings }) => (
   <Form

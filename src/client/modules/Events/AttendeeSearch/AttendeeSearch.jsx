@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import {
-  Main,
   FilteredCollectionList,
   CollectionFilters,
   Filters,
   Panel,
-  LocalHeader,
+  DefaultLayout,
 } from '../../../components'
 
 import {
@@ -42,9 +42,10 @@ const AttendeeSearch = ({
   payload,
   optionMetadata,
   selectedFilters,
-  eventId,
   ...props
 }) => {
+  const { eventId } = useParams()
+
   const collectionListTask = {
     name: TASK_SEARCH_ATTENDEE,
     id: SEARCH_ATTENDEE_ID,
@@ -79,8 +80,9 @@ const AttendeeSearch = ({
     <EventResource id={eventId}>
       {(event) => (
         <>
-          <LocalHeader
+          <DefaultLayout
             heading={event.name}
+            pageTitle={`${event.name} - Events`}
             breadcrumbs={[
               { link: urls.dashboard.index(), text: 'Home' },
               {
@@ -90,8 +92,7 @@ const AttendeeSearch = ({
               { link: urls.events.details(eventId), text: event.name },
               { text: 'Add attendee' },
             ]}
-          />
-          <Main>
+          >
             <StyledPanel data-test="help-panel">
               <p>
                 Select the contact to show they attended the event. If you can't
@@ -155,7 +156,7 @@ const AttendeeSearch = ({
                 />
               </CollectionFilters>
             </FilteredCollectionList>
-          </Main>
+          </DefaultLayout>
         </>
       )}
     </EventResource>

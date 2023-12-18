@@ -25,10 +25,7 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
-import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
-import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
-import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
@@ -36,26 +33,17 @@ import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
-import Opportunity from '../apps/investments/client/opportunities/Details/Opportunity'
 import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
-import OpportunityChangeStatusForm from '../apps/investments/client/opportunities/Details/OpportunityChangeStatusForm.jsx'
-import CreateUKInvestmentOpportunity from '../apps/investments/client/opportunities/Details/CreateUKInvestmentOpportunity'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
-import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
-import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
-import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
-import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
-import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
-import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import AccountManagement from './modules/Companies/AccountManagement'
 
 import Footer from '../client/components/Footer'
@@ -212,17 +200,6 @@ function App() {
             />
           )}
         </Mount>
-        <Mount selector="#opportunity">
-          {(props) => <Opportunity {...props} />}
-        </Mount>
-        <Mount selector="#opportunity-status">
-          {(props) => <OpportunityChangeStatusForm {...props} />}
-        </Mount>
-        <Mount selector="#create-uk-investment-opportunity">
-          {() => (
-            <CreateUKInvestmentOpportunity id="create-uk-investment-opportunity" />
-          )}
-        </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (
             <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
@@ -242,17 +219,8 @@ function App() {
         <Mount selector="#referral-details">
           {(props) => <ReferralDetails {...props} />}
         </Mount>
-        <Mount selector="#referral-help">
-          {(props) => <ReferralHelp {...props} />}
-        </Mount>
-        <Mount selector="#company-export-exports-edit">
-          {(props) => <ExportsEdit {...props} />}
-        </Mount>
         <Mount selector="#interaction-referral-details">
           {(props) => <InteractionReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#company-export-countries-edit">
-          {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
         <Mount selector="#investment-project-admin">
           {(props) => <InvestmentProjectAdmin {...props} />}
@@ -308,32 +276,14 @@ function App() {
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
         </Mount>
-        <Mount selector="#ess-interaction-details">
-          {(props) => <ESSInteractionDetails {...props} />}
-        </Mount>
         <Mount selector="#orders-reconciliation-collection">
           {(props) => <OrdersReconciliationCollection {...props} />}
-        </Mount>
-        <Mount selector="#attendee-search">
-          {(props) => <AttendeeSearch {...props} />}
         </Mount>
         <Mount selector="#company-large-capital-profile">
           {(props) => <LargeCapitalProfile {...props} />}
         </Mount>
-        <Mount selector="#create-proposition">
-          {(props) => <CreateProposition {...props} />}
-        </Mount>
-        <Mount selector="#abandon-proposition">
-          {(props) => <AbandonProposition {...props} />}
-        </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
-        </Mount>
-        <Mount selector="#link-global-hq">
-          {(props) => <LinkGlobalHQ {...props} />}
-        </Mount>
-        <Mount selector="#link-subsidiary">
-          {(props) => <LinkSubsidiary {...props} />}
         </Mount>
         <Mount selector="#account-management">
           {(props) => (

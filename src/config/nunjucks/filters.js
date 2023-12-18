@@ -2,7 +2,6 @@ const nunjucks = require('nunjucks')
 
 const Case = require('case')
 const numeral = require('numeral')
-const queryString = require('qs')
 
 const {
   assign,
@@ -13,8 +12,6 @@ const {
   isArray,
   isFunction,
   isPlainObject,
-  isBoolean,
-  isInteger,
   isEmpty,
   isNull,
   isString,
@@ -23,7 +20,6 @@ const {
   reject,
   isNil,
   keys,
-  forEach,
   values,
   flatten,
   map,
@@ -43,7 +39,6 @@ const {
   isDateValid,
   format,
   getDifferenceInWords,
-  convertMinutesToHours,
 } = require('../../client/utils/date')
 require('numeral/locales/en-gb')
 const {
@@ -52,8 +47,6 @@ const {
 } = require('../../common/constants')
 
 numeral.locale('en-gb')
-
-const { currencyFormat } = require('../')
 
 function isNotEmpty(value) {
   return (
@@ -113,10 +106,6 @@ const filters = {
     return dateString.split('/').reverse().join('/')
   },
 
-  encodeQueryString(value) {
-    return encodeURIComponent(queryString.stringify(value))
-  },
-
   assignCopy(...args) {
     return assign({}, ...args)
   },
@@ -156,29 +145,6 @@ const filters = {
     }
   },
 
-  collectionDefault: (collection, defaultValue = 'Not found') => {
-    const hasPresentableValue = (element) => {
-      return !isEmpty(element) || isBoolean(element) || isInteger(element)
-    }
-
-    if (isArray(collection)) {
-      return collection.slice().map((element) => {
-        return !hasPresentableValue(element) ? defaultValue : element
-      })
-    }
-    if (isPlainObject(collection)) {
-      const obj = assign({}, collection)
-
-      forEach(keys(obj), (key) => {
-        if (!hasPresentableValue(obj[key])) {
-          obj[key] = defaultValue
-        }
-      })
-
-      return obj
-    }
-  },
-
   removeNilAndEmpty: (collection) => {
     if (isArray(collection)) {
       return collection.filter(isNotEmpty)
@@ -187,10 +153,6 @@ const filters = {
       return pickBy(collection, isNotEmpty)
     }
     return collection
-  },
-
-  formatCurrency: (value, format = currencyFormat) => {
-    return numeral(value).format(format)
   },
 
   formatNumber: (number, locales = 'en-GB') => {
@@ -237,28 +199,8 @@ const filters = {
     ]).join(join)
   },
 
-  humanizeDuration: (value, measurement = 'minutes') => {
-    let asHours = value
-    if (measurement == 'minutes') {
-      asHours = convertMinutesToHours(value)
-    }
-    const hoursSuffix = pluralise('hour', asHours)
-    return asHours + ' ' + hoursSuffix
-  },
-
   fromNow: (value) => {
     return getDifferenceInWords(value)
-  },
-
-  arrayToLabelValues: (items) => {
-    const result = []
-    for (const item of items) {
-      result.push({
-        label: item,
-        value: item,
-      })
-    }
-    return result
   },
 
   applyClassModifiers(className, modifier) {

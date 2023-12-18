@@ -30,6 +30,7 @@ export const getGlobalHeadquartersCollection = ({
       area: administrativeAreas.length ? administrativeAreas : undefined,
       archived: false,
       company_number,
+      is_global_ultimate: false,
       sortby,
     })
     .then(({ data }) =>

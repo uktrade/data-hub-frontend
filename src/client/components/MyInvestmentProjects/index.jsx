@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Paragraph } from 'govuk-react'
+import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { MID_GREY } from '../../utils/colours'
@@ -25,6 +25,7 @@ import InvestmentListShowDetails from './InvestmentListShowDetails'
 import InvestmentListSelect from './InvestmentListSelect'
 import InvestmentList from './InvestmentList'
 import Pagination from '../Pagination/'
+import InvestmentProjectSummary from '../MyInvestmentProjects/InvestmentProjectSummary'
 
 import {
   PROJECT_STATUS_OPTIONS,
@@ -48,6 +49,10 @@ const StyledListContainer = styled('div')`
   border-top: 1px solid ${MID_GREY};
   margin-top: ${SPACING.SCALE_3};
 `
+
+const StyledCol = styled(GridCol)(() => ({
+  paddingBottom: SPACING.SCALE_3,
+}))
 
 const MyInvestmentProjects = ({
   results,
@@ -73,98 +78,114 @@ const MyInvestmentProjects = ({
     onLoad()
   }, [])
   return (
-    <article>
-      <StyledHeader>
-        {false && (
-          <InvestmentListShowDetails
-            onChange={(event) => onShowDetailsChange(event.target.checked)}
-            checked={showDetails}
-            disabled={!results.length}
-          >
-            Show details
-          </InvestmentListShowDetails>
-        )}
-        <InvestmentListSelect
-          id="my-projects-stage-label"
-          input={{ id: 'my-projects-stage-select' }}
-          data-test="stage-select"
-          label="Stage"
-          options={STAGE_OPTIONS}
-          initialValue={stage}
-          onChange={(event) => onStageChange(event.target.value)}
-        />
-        <InvestmentListSelect
-          id="my-projects-status-label"
-          input={{ id: 'my-projects-status-select' }}
-          data-test="status-select"
-          label="Status"
-          options={PROJECT_STATUS_OPTIONS}
-          initialValue={status}
-          onChange={(event) => onStatusChange(event.target.value)}
-        />
-        <InvestmentListSelect
-          id="my-projects-land-date-label"
-          input={{ id: 'my-projects-land-date-select' }}
-          data-test="land-date-select"
-          label="Land date"
-          options={landDateOptions}
-          initialValue={landDate}
-          onChange={(event) => onLandDateChange(event.target.value)}
-        />
-        <InvestmentListSelect
-          id="my-projects-sort-label"
-          input={{ id: 'my-projects-sort-select' }}
-          data-test="sort-select"
-          label="Sort"
-          options={SORT_OPTIONS}
-          initialValue={sort}
-          onChange={(event) => onSortChange(event.target.value)}
-        />
-      </StyledHeader>
-      <StyledListContainer>
-        <Task.Status
-          name={TASK_GET_MY_INVESTMENTS_LIST}
-          id={ID}
-          progressMessage="Loading your investment projects"
-          startOnRender={{
-            payload: {
-              adviser,
-              page,
-              stage,
-              status,
-              landDate,
-              sort,
-            },
-            onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
-          }}
-        >
-          {() => {
-            const totalPages = Math.ceil(count / itemsPerPage)
-            return (
-              <>
-                {results.length ? (
-                  <>
-                    <InvestmentList
-                      data-test="my-investment-projects-list"
-                      items={results}
-                      isPaginated={totalPages > 1}
-                      showDetails={showDetails}
-                    />
-                    <Pagination
-                      totalPages={totalPages}
-                      activePage={page}
-                      onPageClick={onPaginationClick}
-                    />
-                  </>
-                ) : (
-                  <StyledParagraph>No investment projects</StyledParagraph>
-                )}
-              </>
-            )
-          }}
-        </Task.Status>
-      </StyledListContainer>
-    </article>
+    <>
+      <GridRow>
+        <StyledCol setWidth="one-third">
+          <InvestmentProjectSummary adviser={adviser} />
+        </StyledCol>
+
+        <GridCol>
+          <article>
+            <StyledHeader>
+              {false && (
+                <InvestmentListShowDetails
+                  onChange={(event) =>
+                    onShowDetailsChange(event.target.checked)
+                  }
+                  checked={showDetails}
+                  disabled={!results.length}
+                >
+                  Show details
+                </InvestmentListShowDetails>
+              )}
+
+              <InvestmentListSelect
+                id="my-projects-stage-label"
+                input={{ id: 'my-projects-stage-select' }}
+                data-test="stage-select"
+                label="Stage"
+                options={STAGE_OPTIONS}
+                initialValue={stage}
+                onChange={(event) => onStageChange(event.target.value)}
+              />
+
+              <InvestmentListSelect
+                id="my-projects-status-label"
+                input={{ id: 'my-projects-status-select' }}
+                data-test="status-select"
+                label="Status"
+                options={PROJECT_STATUS_OPTIONS}
+                initialValue={status}
+                onChange={(event) => onStatusChange(event.target.value)}
+              />
+              <InvestmentListSelect
+                id="my-projects-land-date-label"
+                input={{ id: 'my-projects-land-date-select' }}
+                data-test="land-date-select"
+                label="Land date"
+                options={landDateOptions}
+                initialValue={landDate}
+                onChange={(event) => onLandDateChange(event.target.value)}
+              />
+              <InvestmentListSelect
+                id="my-projects-sort-label"
+                input={{ id: 'my-projects-sort-select' }}
+                data-test="sort-select"
+                label="Sort"
+                options={SORT_OPTIONS}
+                initialValue={sort}
+                onChange={(event) => onSortChange(event.target.value)}
+              />
+            </StyledHeader>
+            <StyledListContainer>
+              <Task.Status
+                name={TASK_GET_MY_INVESTMENTS_LIST}
+                id={ID}
+                progressMessage="Loading your investment projects"
+                startOnRender={{
+                  payload: {
+                    adviser,
+                    page,
+                    stage,
+                    status,
+                    landDate,
+                    sort,
+                  },
+                  onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
+                }}
+              >
+                {() => {
+                  const totalPages = Math.ceil(count / itemsPerPage)
+                  return (
+                    <>
+                      {results.length ? (
+                        <>
+                          <InvestmentList
+                            data-test="my-investment-projects-list"
+                            items={results}
+                            isPaginated={totalPages > 1}
+                            showDetails={showDetails}
+                          />
+                          <Pagination
+                            totalPages={totalPages}
+                            activePage={page}
+                            onPageClick={onPaginationClick}
+                          />
+                        </>
+                      ) : (
+                        <StyledParagraph>
+                          No investment projects
+                        </StyledParagraph>
+                      )}
+                    </>
+                  )
+                }}
+              </Task.Status>
+            </StyledListContainer>
+          </article>
+        </GridCol>
+      </GridRow>
+    </>
   )
 }
 

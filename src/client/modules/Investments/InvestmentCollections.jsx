@@ -5,7 +5,7 @@ import TabNav from '../../components/TabNav'
 import urls from '../../../lib/urls'
 import ProjectsCollection from './Projects/ProjectsCollection'
 import ProfilesCollection from './Profiles/ProfilesCollection'
-import OpportunitiesCollection from './Opportunities/OpportunitiesCollection'
+import OpportunitiesCollection from './Opportunities/CollectionList/OpportunitiesCollection'
 
 const PATH = /([^\/]+$)/
 

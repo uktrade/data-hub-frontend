@@ -1,9 +1,4 @@
-const { get } = require('lodash')
-
 const { fetchProposition, fetchDownloadLink } = require('../repos')
-const { getAdvisers } = require('../../adviser/repos')
-const { filterActiveAdvisers } = require('../../adviser/filters')
-const { transformObjectToOption } = require('../../transformers')
 
 async function getPropositionDetails(req, res, next, propositionId) {
   try {
@@ -13,25 +8,6 @@ async function getPropositionDetails(req, res, next, propositionId) {
       propositionId,
       investment.id
     )
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
-async function getPropositionOptions(req, res, next) {
-  try {
-    const advisers = await getAdvisers(req)
-    const currentAdviser = get(res.locals, 'proposition.adviser.id')
-    const activeAdvisers = filterActiveAdvisers({
-      advisers: advisers.results,
-      includeAdviser: currentAdviser,
-    })
-
-    res.locals.options = {
-      advisers: activeAdvisers.map(transformObjectToOption),
-    }
 
     next()
   } catch (error) {
@@ -59,5 +35,4 @@ async function getDownloadLink(req, res, next) {
 module.exports = {
   getDownloadLink,
   getPropositionDetails,
-  getPropositionOptions,
 }

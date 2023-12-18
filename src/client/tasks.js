@@ -78,17 +78,18 @@ import {
 import { TASK_GET_PROFILES_LIST } from './modules/Investments/Profiles/state'
 import * as investmentProfilesTasks from './modules/Investments/Profiles/tasks'
 
-import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/state'
-import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/tasks'
+import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/CollectionList/state'
+import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/CollectionList/tasks'
+
 import {
+  TASK_CREATE_INVESTMENT_OPPORTUNITY,
+  TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_SAVE_OPPORTUNITY_DETAILS,
   TASK_SAVE_OPPORTUNITY_REQUIREMENTS,
-  TASK_SAVE_OPPORTUNITY_STATUS,
   TASK_GET_OPPORTUNITY_DETAILS,
   TASK_GET_OPPORTUNITY_REQUIREMENTS_METADATA,
-  TASK_CREATE_INVESTMENT_OPPORTUNITY,
-} from '../apps/investments/client/opportunities/Details/state'
-import * as investmentOpportunitiesDetailsTasks from '../apps/investments/client/opportunities/Details/tasks'
+} from './modules/Investments/Opportunities/state'
+import * as investmentOpportunitiesDetailsTasks from './modules/Investments/Opportunities/tasks'
 
 import {
   TASK_GET_PROJECTS_LIST,
@@ -127,6 +128,7 @@ import * as personalisedDashboard from './components/PersonalisedDashboard/tasks
 import {
   TASK_CHECK_FOR_INVESTMENTS,
   TASK_DATA_HUB_FEED,
+  TASK_CHECK_FOR_MY_TASKS,
 } from './components/PersonalisedDashboard/state'
 
 import { fetchOutstandingPropositions } from './components/InvestmentReminders/tasks'
@@ -225,13 +227,21 @@ import {
   TASK_GET_NEXT_DUE_DATE_APPROACHING_REMINDER,
   TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS,
+  TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS,
   TASK_SAVE_OVERDUE_REMINDER_SUBSCRIPTIONS,
   TASK_GET_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS,
   TASK_DELETE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
   TASK_GET_NEXT_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER,
+  TASK_GET_TASK_AMENDED_BY_OTHERS_REMINDERS,
+  TASK_DELETE_TASK_AMENDED_BY_OTHERS_REMINDER,
+  TASK_GET_NEXT_TASK_AMENDED_BY_OTHERS_REMINDER,
   TASK_GET_TASK_OVERDUE_REMINDERS,
   TASK_DELETE_TASK_OVERDUE_REMINDER,
   TASK_GET_NEXT_TASK_OVERDUE_REMINDER,
+  TASK_GET_TASK_COMPLETED_REMINDERS,
+  TASK_DELETE_TASK_COMPLETED_REMINDER,
+  TASK_GET_NEXT_TASK_COMPLETED_REMINDER,
+  TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS,
 } from '../client/modules/Reminders/state'
 
 import resourceTasks from '../client/components/Resource/tasks'
@@ -351,8 +361,6 @@ import {
   TASK_GET_ONE_LIST_DETAILS,
   TASK_SAVE_ONE_LIST_DETAILS,
 } from './modules/Companies/CoreTeam/state'
-import { TASK_SAVE_INVESTMENT_PROJECT_TASK } from './modules/Investments/Projects/Tasks/state'
-import { saveInvestmentProjectTask } from './modules/Investments/Projects/Tasks/tasks'
 
 import {
   TASK_EDIT_OMIS_QUOTE_INFORMATION,
@@ -380,6 +388,11 @@ import {
   setLeadAdviser,
 } from './modules/Omis/tasks'
 
+import { TASK_GET_COMPANIES } from './modules/Omis/CreateOrder/CompanySelect/state'
+import { getOmisCompanies } from './modules/Omis/CreateOrder/CompanySelect/tasks.js'
+import { TASK_CREATE_ORDER } from './modules/Omis/CreateOrder/state'
+import { createOrder } from './modules/Omis/CreateOrder/tasks'
+
 import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
   TASK_ARCHIVE_TASK,
@@ -393,6 +406,9 @@ import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
 
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
 import { saveExportWin } from './modules/ExportWins/Form/tasks'
+
+import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
+import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
 
 export const tasks = {
   'Create list': createList,
@@ -595,7 +611,6 @@ export const tasks = {
   [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
-  [TASK_SAVE_INVESTMENT_PROJECT_TASK]: saveInvestmentProjectTask,
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
   [TASK_ARCHIVE_TASK]: archiveTask,
   [TASK_RECONCILE_OMIS_PAYMENT]: savePayment,
@@ -618,5 +633,23 @@ export const tasks = {
   [TASK_GET_TASK_OVERDUE_REMINDERS]: reminders.getTaskOverdueReminders,
   [TASK_DELETE_TASK_OVERDUE_REMINDER]: reminders.deleteTaskOverdueReminder,
   [TASK_GET_NEXT_TASK_OVERDUE_REMINDER]: reminders.getNextTaskOverdueReminder,
+  [TASK_GET_TASK_COMPLETED_REMINDERS]: reminders.getTaskCompletedReminders,
+  [TASK_DELETE_TASK_COMPLETED_REMINDER]: reminders.deleteTaskCompletedReminder,
+  [TASK_GET_NEXT_TASK_COMPLETED_REMINDER]:
+    reminders.getNextTaskCompletedReminder,
   [TASK_SET_LEAD_ADVISER]: setLeadAdviser,
+  [TASK_SAVE_COMPLETED_REMINDER_SUBSCRIPTIONS]:
+    reminderSettings.saveTaskCompletedSubscriptions,
+  [TASK_GET_COMPANIES]: getOmisCompanies,
+  [TASK_CREATE_ORDER]: createOrder,
+  [TASK_CHECK_FOR_MY_TASKS]: personalisedDashboard.checkForMyTasks,
+  [TASK_GET_MY_TASKS]: getMyTasks,
+  [TASK_GET_TASK_AMENDED_BY_OTHERS_REMINDERS]:
+    reminders.getTaskAmendedByOthersReminders,
+  [TASK_DELETE_TASK_AMENDED_BY_OTHERS_REMINDER]:
+    reminders.deleteTaskAmendedByOthersReminder,
+  [TASK_GET_NEXT_TASK_AMENDED_BY_OTHERS_REMINDER]:
+    reminders.getNextTaskAmendedByOthersReminder,
+  [TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS]:
+    reminderSettings.saveTaskAmendedByOthersSubscriptions,
 }

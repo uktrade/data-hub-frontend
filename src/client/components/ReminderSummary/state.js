@@ -8,7 +8,9 @@ import {
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS_LABEL,
   TASK_OVERDUE_LABEL,
+  TASK_COMPLETED_LABEL,
 } from '../../modules/Reminders/constants'
 
 const transformReminderSummary = (data) => ({
@@ -54,9 +56,19 @@ const transformReminderSummary = (data) => ({
       count: data.my_tasks.task_assigned_to_me_from_others,
     },
     {
+      name: TASK_AMENDED_BY_OTHERS_LABEL,
+      url: urls.reminders.myTasks.taskAmendedByOthers(),
+      count: data.my_tasks.task_amended_by_others,
+    },
+    {
       name: TASK_OVERDUE_LABEL,
       url: urls.reminders.myTasks.taskOverdue(),
       count: data.my_tasks.task_overdue,
+    },
+    {
+      name: TASK_COMPLETED_LABEL,
+      url: urls.reminders.myTasks.taskCompleted(),
+      count: data.my_tasks.task_completed,
     },
   ],
 })

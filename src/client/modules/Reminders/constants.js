@@ -31,8 +31,11 @@ export const COMPANIES_NO_RECENT_INTERACTIONS =
   'companies-no-recent-interactions'
 export const COMPANIES_NEW_INTERACTIONS = 'companies-new-interactions'
 export const MY_TASKS_DUE_DATE_APPROACHING = 'my-tasks-due-date-approaching'
-export const TASK_ASSIGNED_TO_ME_FROM_OTHERS = 'task-assigned-to-me-from-others'
+export const TASK_ASSIGNED_TO_ME_FROM_OTHERS =
+  'my-tasks-task-assigned-to-me-from-others'
+export const TASK_AMENDED_BY_OTHERS = 'my-tasks-task-amended-by-others'
 export const TASK_OVERDUE = 'my-tasks-task-overdue'
+export const TASK_COMPLETED = 'my-tasks-task-completed'
 
 export const INVESTMENTS_ESTIMATED_LAND_DATES_LABEL =
   'Approaching estimated land dates'
@@ -54,7 +57,11 @@ export const MY_TASKS_DUE_DATE_APPROACHING_LABEL = 'Due date approaching'
 export const TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL =
   'Task assigned to me from others'
 
+export const TASK_AMENDED_BY_OTHERS_LABEL = 'Task amended by others'
+
 export const TASK_OVERDUE_LABEL = 'Task overdue'
+
+export const TASK_COMPLETED_LABEL = 'Task completed'
 
 export const REMINDERS_SETTINGS = [
   {
@@ -100,10 +107,22 @@ export const REMINDERS_SETTINGS = [
     url: urls.reminders.myTasks.taskAssignedToMeFromOthers(),
   },
   {
+    id: TASK_AMENDED_BY_OTHERS,
+    label: TASK_AMENDED_BY_OTHERS_LABEL,
+    settingsQSParam: snakeCase(TASK_AMENDED_BY_OTHERS),
+    url: urls.reminders.myTasks.taskAmendedByOthers(),
+  },
+  {
     id: TASK_OVERDUE,
     label: TASK_OVERDUE_LABEL,
     settingsQSParam: snakeCase(TASK_OVERDUE),
     url: urls.reminders.myTasks.taskOverdue(),
+  },
+  {
+    id: TASK_COMPLETED,
+    label: TASK_COMPLETED_LABEL,
+    settingsQSParam: snakeCase(TASK_COMPLETED),
+    url: urls.reminders.myTasks.taskCompleted(),
   },
 ]
 
@@ -117,7 +136,9 @@ export const reminderTypeToLabel = {
   [COMPANIES_NEW_INTERACTIONS]: COMPANIES_NEW_INTERACTIONS_LABEL,
   [MY_TASKS_DUE_DATE_APPROACHING]: MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   [TASK_ASSIGNED_TO_ME_FROM_OTHERS]: TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  [TASK_AMENDED_BY_OTHERS]: TASK_AMENDED_BY_OTHERS_LABEL,
   [TASK_OVERDUE]: TASK_OVERDUE_LABEL,
+  [TASK_COMPLETED]: TASK_COMPLETED_LABEL,
 }
 
 export const INTERACTION_NAMES = {

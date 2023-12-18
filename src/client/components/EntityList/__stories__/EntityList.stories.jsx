@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import EntityList from 'EntityList'
 
 import useDnbSearch from '../useDnbSearch'
-import companySearchFixture from '../__fixtures__/company-search.json'
+import companySearchFixture from '../__fixtures__/company-search'
 
 export default {
   title: 'EntitySearch',

@@ -289,3 +289,19 @@ export const mapFieldToUrl = (field, orderId) => {
 
   return null
 }
+
+export const transformCompanyAddress = (company) => {
+  const address = company.registeredAddress
+    ? company.registeredAddress
+    : company.address
+  return [
+    address.line1,
+    address.line2,
+    address.town,
+    address.county,
+    address.postcode,
+    address.country.name,
+  ]
+    .filter((item) => item.length)
+    .join(', ')
+}

@@ -62,6 +62,7 @@ var v4Reminder = require('./routes/v4/reminder/reminder.js')
 var v4SearchAdviser = require('./routes/v4/search/adviser.js')
 var v4Objective = require('./routes/v4/objective/index.js')
 var v4Task = require('./routes/v4/task/index.js')
+var v4SearchMyTasks = require('./routes/v4/search/myTasks.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -397,6 +398,7 @@ app.get('/v3/omis/order/:id/quote', v3OMIS.quote)
 app.patch('/v3/omis/order/:id/assignee', v3OMIS.assignees)
 app.post('/v3/omis/order/:id/cancel', v3OMIS.getOrderById)
 app.post('/v3/omis/order/:id/complete', v3OMIS.getOrderById)
+app.post('/v3/omis/order', v3OMIS.getOrderById)
 
 // V3 Search
 app.get('/v3/search', v3SearchCompany.companies)
@@ -560,34 +562,55 @@ app.patch(
   v4Reminders.saveNewExportInteractionsSubscriptions
 )
 
+// Subscriptions for My Tasks
 app.get(
   '/v4/reminder/subscription/my-tasks-due-date-approaching',
-  v4Reminders.getMyTasksUpcomingDueDateSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/my-tasks-due-date-approaching',
-  v4Reminders.saveMyTasksUpcomingDueDateSubscriptions
+  v4Reminders.saveSubscriptions
 )
 
 app.get(
-  '/v4/reminder/subscription/task-assigned-to-me-from-others',
-  v4Reminders.getTaskAssignedToMeFromOthersSubscriptions
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
-  '/v4/reminder/subscription/task-assigned-to-me-from-others',
-  v4Reminders.saveTaskAssignedToMeFromOthersSubscriptions
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-amended-by-others',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-amended-by-others',
+  v4Reminders.saveSubscriptions
 )
 
 app.get(
   '/v4/reminder/subscription/my-tasks-task-overdue',
-  v4Reminders.getTaskOverdueSubscriptions
+  v4Reminders.getSubscriptions
 )
 
 app.patch(
   '/v4/reminder/subscription/my-tasks-task-overdue',
-  v4Reminders.saveTaskOverdueSubscriptions
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-completed',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-completed',
+  v4Reminders.saveSubscriptions
 )
 
 // Reminders lists
@@ -632,15 +655,33 @@ app.delete(
   v4Reminders.deleteReminder
 )
 
-app.get('/v4/reminder/task-assigned-to-me-from-others', v4Reminder.myTasks)
+app.get(
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others',
+  v4Reminder.myTasks
+)
+
 app.delete(
-  '/v4/reminder/task-assigned-to-me-from-others/:id',
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get('/v4/reminder/my-tasks-task-amended-by-others', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-amended-by-others/:id',
   v4Reminders.deleteReminder
 )
 
 app.get('/v4/reminder/my-tasks-task-overdue', v4Reminder.myTasks)
 
 app.delete('/v4/reminder/my-tasks-task-overdue/:id', v4Reminders.deleteReminder)
+
+app.get('/v4/reminder/my-tasks-task-completed', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-completed/:id',
+  v4Reminders.deleteReminder
+)
 
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)
@@ -687,13 +728,15 @@ app.post(
   v4SearchExports.fetchExportHistory
 )
 app.post('/v4/search/adviser', v4SearchAdviser.advisers)
+app.post('/v4/search/task', v4SearchMyTasks.myTasks)
 
 // V4 Tasks
 app.get('/v4/task', v4Task.getTasks)
 app.get('/v4/task/:taskId', v4Task.getTask)
 app.post('/v4/task', v4Task.createTask)
 app.patch('/v4/task/:taskId', v4Task.updateTask)
-app.get('/v4/investmentprojecttask', v4Task.investmentProjectTasks)
+
+app.get('/v4/export', (req, res) => res.json({ count: 0, results: [] }))
 
 // Whoami endpoint
 app.get('/whoami', user.whoami)

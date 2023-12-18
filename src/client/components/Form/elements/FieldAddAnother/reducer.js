@@ -1,45 +1,32 @@
+import _ from 'lodash'
+
 import {
   FIELD_ADD_ANOTHER__ADD,
-  FIELD_ADD_ANOTHER__INITIALISE,
   FIELD_ADD_ANOTHER__REMOVE,
 } from '../../../../actions'
 
-export default (
-  state = { fieldGroupIds: [] },
-  { type, fieldGroupId, initialChildGroupCount }
-) => {
+export default (state = {}, { type, initialChildGroupCount, fieldGroupId }) => {
+  const {
+    items = _(initialChildGroupCount).range().keyBy().value(),
+    currentId = initialChildGroupCount,
+  } = state
+
   switch (type) {
-    case FIELD_ADD_ANOTHER__INITIALISE:
+    case FIELD_ADD_ANOTHER__ADD: {
       return {
-        ...state,
-        childCount: initialChildGroupCount,
-        fieldGroupIds: [...Array(initialChildGroupCount)].map(
-          (value, index) => ({
-            fieldGroupId: index,
-          })
-        ),
+        currentId: currentId + 1,
+        items: {
+          ...items,
+          [currentId]: currentId,
+        },
       }
-    case FIELD_ADD_ANOTHER__ADD:
-      const maximumFieldIdValue = state.fieldGroupIds
-        .map((item) => item.fieldGroupId)
-        .reduce((previous, current) => {
-          return current > previous ? current : previous
-        }, 0)
-      return {
-        ...state,
-        childCount: state.childCount + 1,
-        fieldGroupIds: [
-          ...state.fieldGroupIds,
-          { fieldGroupId: maximumFieldIdValue + 1 },
-        ],
-      }
+    }
     case FIELD_ADD_ANOTHER__REMOVE:
+      const itemsCopy = { ...items }
+      delete itemsCopy[fieldGroupId]
       return {
         ...state,
-        childCount: state.childCount - 1,
-        fieldGroupIds: state.fieldGroupIds.filter(
-          (item) => item.fieldGroupId !== fieldGroupId
-        ),
+        items: itemsCopy,
       }
     default:
       return state

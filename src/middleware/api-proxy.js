@@ -29,8 +29,10 @@ const ALLOWLIST = [
   '/v4/reminder/no-recent-investment-interaction',
   '/v4/reminder/new-export-interaction',
   '/v4/reminder/my-tasks-due-date-approaching',
-  '/v4/reminder/task-assigned-to-me-from-others',
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others',
+  '/v4/reminder/my-tasks-task-amended-by-others',
   '/v4/reminder/my-tasks-task-overdue',
+  '/v4/reminder/my-tasks-task-completed',
   '/v4/company/:id/remove-from-one-list',
   '/v4/company/:id/update-one-list-core-team',
   '/v4/proposition',
@@ -71,11 +73,12 @@ const ALLOWLIST = [
   '/v4/dnb/:companyId/related-companies/count',
   '/v3/omis/order/:id',
   '/v4/task/:id',
-  '/v4/investmentprojecttask',
-  '/v4/investmentprojecttask/:id',
+  '/v4/task',
   '/v3/omis/order/:id/invoice',
   '/v4/reminder/subscription/:reminderType',
   '/v3/omis/order/:id/complete',
+  '/v3/omis/order',
+  '/v4/search/task',
 ]
 
 module.exports = (app) => {

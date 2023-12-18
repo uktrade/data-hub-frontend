@@ -35,10 +35,16 @@ const transformSubscriptionSummary = ({ data }) => ({
       data.task_assigned_to_me_from_others
     ),
   },
+  taskAmendedByOthers: {
+    emailRemindersOnOff: transformEmailReminders(data.task_amended_by_others),
+  },
   taskOverdue: transformDaysAndEmailReminders(
     data.task_overdue,
     'days after the task due date'
   ),
+  taskCompleted: {
+    emailRemindersOnOff: transformEmailReminders(data.task_completed),
+  },
 })
 
 const transformDaysAndEmailReminders = (
@@ -145,12 +151,24 @@ export const saveUpcomingDueDateExportSubscriptions = (payload) =>
 
 export const saveTaskAssignedToMeFromOthersExportSubscriptions = (payload) =>
   apiProxyAxios.patch(
-    '/v4/reminder/subscription/task-assigned-to-me-from-others',
+    '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
+    payload
+  )
+
+export const saveTaskAmendedByOthersSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/my-tasks-task-amended-by-others',
     payload
   )
 
 export const saveTaskOverdueSubscriptions = (payload) =>
   apiProxyAxios.patch(
     '/v4/reminder/subscription/my-tasks-task-overdue',
+    payload
+  )
+
+export const saveTaskCompletedSubscriptions = (payload) =>
+  apiProxyAxios.patch(
+    '/v4/reminder/subscription/my-tasks-task-completed',
     payload
   )

@@ -9,6 +9,7 @@ import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
+import Tag from '../Tag'
 
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
@@ -65,6 +66,7 @@ const CollectionItem = ({
   subheading,
   headingUrl,
   badges,
+  tags,
   metadata,
   metadataRenderer,
   onClick,
@@ -73,8 +75,24 @@ const CollectionItem = ({
   buttons,
 }) => (
   <ItemWrapper data-test="collection-item">
-    {badges && (
-      <StyledBadgesWrapper>
+    {/* tags take precidence over badges as they are the newer style, however not all components
+     have been updated so the component needs to handle rendering both props */}
+    {tags && (
+      <StyledBadgesWrapper data-test="collection-item-tags">
+        {tags.map((tag, index) => (
+          <Tag
+            key={`tag_${index}`}
+            colour={tag.colour}
+            data-test="collection-item-tag"
+          >
+            {tag.text}
+          </Tag>
+        ))}
+      </StyledBadgesWrapper>
+    )}
+
+    {!tags && badges && (
+      <StyledBadgesWrapper data-test="collection-item-badges">
         {badges.map((badge) => (
           <Badge key={badge.text} borderColour={badge.borderColour}>
             {badge.text}
@@ -100,7 +118,6 @@ const CollectionItem = ({
     ) : (
       <StyledHeader>{headingText}</StyledHeader>
     )}
-
     {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
     {metadataRenderer ? (
@@ -112,6 +129,7 @@ const CollectionItem = ({
     {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
   </ItemWrapper>
 )
+
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
@@ -120,6 +138,12 @@ CollectionItem.propTypes = {
     PropTypes.shape({
       text: PropTypes.string,
       borderColour: PropTypes.string,
+    })
+  ),
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      colour: PropTypes.string,
     })
   ),
   metadata: PropTypes.arrayOf(

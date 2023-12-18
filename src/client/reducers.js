@@ -29,11 +29,11 @@ import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/state'
-import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/CollectionList/state'
+import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/CollectionList/reducer'
 
-import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
-import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
+import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from './modules/Investments/Opportunities/state'
+import investmentOpportunitiesDetailsReducer from './modules/Investments/Opportunities/reducer'
 
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
@@ -62,6 +62,7 @@ import companiesReducer from './modules/Companies/CollectionList/reducer'
 import {
   DATA_HUB_FEED_ID,
   ID as CHECK_FOR_INVESTMENTS_ID,
+  CHECK_FOR_MY_TASKS_ID,
 } from './components/PersonalisedDashboard/state'
 import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
 
@@ -170,6 +171,12 @@ import taskDetailsReducer from './modules/Tasks/TaskDetails/reducer'
 import { ID as EXPORT_WINS_DETAILS_ID } from './modules/ExportWins/Details/state'
 import exportWinDetailsTaskReducer from './modules/ExportWins/Details/reducer'
 
+import { ID as OMIS_COMPANY_SELECT_ID } from './modules/Omis/CreateOrder/CompanySelect/state'
+import omisCompanyReducer from './modules/Omis/CreateOrder/CompanySelect/reducer.js'
+
+import { ID as GET_MY_TASKS_ID } from './components/Dashboard/my-tasks/state'
+import getMyTasksReducer from './components/Dashboard/my-tasks/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -240,6 +247,7 @@ export const reducers = {
   [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
   [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
   [DATA_HUB_FEED_ID]: personalDashboardReducer,
+  [CHECK_FOR_MY_TASKS_ID]: personalDashboardReducer,
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
@@ -271,4 +279,6 @@ export const reducers = {
   [ONE_LIST_DETAILS_ID]: oneListDetailsReducer,
   [TASK_DETAILS_ID]: taskDetailsReducer,
   [EXPORT_WINS_DETAILS_ID]: exportWinDetailsTaskReducer,
+  [OMIS_COMPANY_SELECT_ID]: omisCompanyReducer,
+  [GET_MY_TASKS_ID]: getMyTasksReducer,
 }

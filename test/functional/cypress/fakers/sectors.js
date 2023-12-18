@@ -2,11 +2,7 @@ import { faker } from '@faker-js/faker'
 
 import { listFaker } from './utils'
 
-const sectors = [
-  'Advanced Engineering',
-  'Biotechnology and Pharmaceuticals',
-  'Creative and Media',
-]
+const sectors = ['Aerospace', 'Mining', 'Railways']
 
 export const sectorFaker = (overrides = {}) => ({
   ancestors: [],

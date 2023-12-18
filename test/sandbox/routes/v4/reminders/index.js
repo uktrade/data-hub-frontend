@@ -59,9 +59,15 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
     task_assigned_to_me_from_others: {
       email_reminders_enabled: true,
     },
+    task_amended_by_others: {
+      email_reminders_enabled: true,
+    },
     task_overdue: {
       email_reminders_enabled: true,
       reminder_days: [10],
+    },
+    task_completed: {
+      email_reminders_enabled: true,
     },
   })
 }
@@ -270,37 +276,13 @@ exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
   })
 }
 
-exports.getMyTasksUpcomingDueDateSubscriptions = function (req, res) {
+exports.getSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: false,
   })
 }
 
-exports.saveMyTasksUpcomingDueDateSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: true,
-  })
-}
-
-exports.getTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: false,
-  })
-}
-
-exports.saveTaskAssignedToMeFromOthersSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: true,
-  })
-}
-
-exports.getTaskOverdueSubscriptions = function (req, res) {
-  res.json({
-    email_reminders_enabled: false,
-  })
-}
-
-exports.saveTaskOverdueSubscriptions = function (req, res) {
+exports.saveSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: true,
   })

@@ -5,7 +5,7 @@ import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
 
 const remindersEndpoint =
-  '/api-proxy/v4/reminder/task-assigned-to-me-from-others'
+  '/api-proxy/v4/reminder/my-tasks-task-assigned-to-me-from-others'
 
 describe('My Tasks Task Assigned To Me From Others Reminders', () => {
   after(() => {
@@ -128,7 +128,7 @@ describe('My Tasks Task Assigned To Me From Others Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Company: ${reminders[0].task.investment_project_task.investment_project.investor_company.name}`
+          `Company: ${reminders[0].task.investment_project.investor_company.name}`
         )
         .should(
           'contain',
@@ -265,7 +265,7 @@ describe('My Tasks Task Assigned To Me From Others Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${reminders[4].event} for ${reminders[4].task.investment_project_task.investment_project.name}`
+          `${reminders[4].event} for ${reminders[4].task.company.name}`
         )
         .find('a')
         .should('not.exist')
@@ -284,18 +284,12 @@ describe('My Tasks Task Assigned To Me From Others Reminders', () => {
             DATE_LONG_FORMAT_1
           )}`
         )
-        .should(
-          'contain',
-          `Company: ${nextReminder.task.investment_project_task.investment_project.investor_company.name}`
-        )
+        .should('contain', `Company: ${nextReminder.task.company.name}`)
         .find('a')
         .should(
           'have.attr',
           'href',
-          urls.companies.detail(
-            nextReminder.task.investment_project_task.investment_project
-              .investor_company.id
-          )
+          urls.companies.detail(nextReminder.task.company.id)
         )
     })
   })

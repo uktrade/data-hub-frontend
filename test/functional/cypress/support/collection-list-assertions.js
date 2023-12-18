@@ -46,12 +46,27 @@ const assertBadge = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('contain', badgeText)
 }
 
+const assertTag = (item, badgeText) => {
+  cy.get(item)
+    .find('[data-test="collection-item-tag"]')
+    .should('contain', badgeText)
+}
+
 const assertBadgeNotPresent = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('not.contain', badgeText)
 }
 
+const assertTagNotPresent = (item, badgeText) => {
+  cy.get(item)
+    .find('[data-test="collection-item-tag"]')
+    .should('not.contain', badgeText)
+}
+
 const assertBadgeShouldNotExist = (item) => {
   cy.get(item).find('[data-test="badge"]').should('not.exist')
+}
+const assertTagShouldNotExist = (item) => {
+  cy.get(item).find('[data-test="collection-item-tag"]').should('not.exist')
 }
 
 const assertMetadataItem = (item, metadataText) => {
@@ -159,4 +174,7 @@ module.exports = {
   assertBadgeShouldNotExist,
   assertPaginationSummary,
   assertOMISSumary,
+  assertTag,
+  assertTagNotPresent,
+  assertTagShouldNotExist,
 }

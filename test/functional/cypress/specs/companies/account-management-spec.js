@@ -231,6 +231,24 @@ describe('Company account management', () => {
       })
     }
   )
+
+  context('When visiting the account management page', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v4/company/${companyId}`).as('companyApi')
+      cy.visit(urls.companies.accountManagement.index(companyId))
+      cy.wait('@companyApi')
+    })
+
+    it('should display the account plan section', () => {
+      cy.get('[data-test="account-plan-row"]').should('be.visible')
+    })
+
+    it('should navigate to the account plan page when the link is clicked', () => {
+      cy.get('[data-test="newWindowLink"]')
+        .should('exist')
+        .should('have.attr', 'href', urls.external.dataWorkspace(companyId))
+    })
+  })
 })
 
 describe('One List core team', () => {

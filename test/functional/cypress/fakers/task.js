@@ -3,6 +3,7 @@ import { pick } from 'lodash'
 
 import { listFaker } from './utils'
 import { investmentProjectFaker } from './investment-projects'
+import { companyFaker } from './companies'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -27,37 +28,41 @@ const taskFaker = (overrides = {}) => ({
   modifiedBy: basicAdviserFaker(),
   modifiedOn: faker.date.past().toISOString(),
   createdOn: faker.date.past().toISOString(),
-  investmentProjectTask: null,
 
   ...overrides,
 })
+
+const company = pick(companyFaker(), ['id', 'name'])
 
 const taskWithInvestmentProjectFaker = (overrides = {}) =>
   taskFaker(
     (overrides = {
-      investmentProjectTask: {
-        investmentProject: {
-          investorCompany: {
-            name: faker.company.name(),
-            id: faker.string.uuid(),
-          },
-          id: faker.string.uuid(),
-          name: faker.word.adjective(),
-        },
+      investmentProject: {
+        investorCompany: company,
         id: faker.string.uuid(),
         name: faker.word.adjective(),
       },
+      company: company,
       ...overrides,
     })
   )
 
-const investmentProjectTaskFaker = (overrides = {}) => ({
-  id: faker.string.uuid(),
-  investment_project: pick(investmentProjectFaker(), ['id', 'name']),
-  task: taskFaker(),
-  createdOn: faker.date.past().toISOString(),
-  ...overrides,
-})
+const taskWithCompanyFaker = (overrides = {}) =>
+  taskFaker(
+    (overrides = {
+      company: companyFaker(),
+      ...overrides,
+    })
+  )
+
+const investmentProjectTaskFaker = (overrides = {}) =>
+  taskFaker(
+    (overrides = {
+      investment_project: pick(investmentProjectFaker(), ['id', 'name']),
+      createdOn: faker.date.past().toISOString(),
+      ...overrides,
+    })
+  )
 
 const taskListFaker = (length = 3, overrides) =>
   listFaker({
@@ -87,6 +92,8 @@ export {
   taskWithInvestmentProjectFaker,
   taskWithInvestmentProjectListFaker,
   investmentProjectTaskListFaker,
+  basicAdviserFaker,
+  taskWithCompanyFaker,
 }
 
 export default taskListFaker

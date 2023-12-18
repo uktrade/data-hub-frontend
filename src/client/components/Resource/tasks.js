@@ -77,11 +77,15 @@ import OrderInvoice from './OrderInvoice'
 import OrderCancellationReasons from './OrderCancellationReasons'
 import MyTasksDueDateApproachingSettings from './MyTasksDueDateApproachingSettings'
 import TaskAssignedToMeFromOthersSettings from './TaskAssignedToMeFromOthersSettings'
+import TaskAmendedByOthersSettings from './TaskAmendedByOthersSettings'
 import TaskOverdueSettings from './TaskOverdueSettings'
 import TeamType from './TeamType'
 import WinType from './WinType'
 import WithoutOurSupport from './WithoutOurSupport'
 import OrderQuote from './OrderQuote'
+import TaskCompletedSettings from './TaskCompletedSettings'
+import OmisMarkets from './OmisMarkets'
+import OrderPayment from './OrderPayment'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -163,9 +167,13 @@ export default {
   ...OrderCancellationReasons.tasks,
   ...MyTasksDueDateApproachingSettings.tasks,
   ...TaskAssignedToMeFromOthersSettings.tasks,
+  ...TaskAmendedByOthersSettings.tasks,
   ...TaskOverdueSettings.tasks,
   ...UKRegions.tasks,
   ...WinType.tasks,
   ...WithoutOurSupport.tasks,
   ...OrderQuote.tasks,
+  ...TaskCompletedSettings.tasks,
+  ...OmisMarkets.tasks,
+  ...OrderPayment.tasks,
 }

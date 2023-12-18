@@ -4,7 +4,6 @@ const logger = require('../../../../config/logger')
 const { Order } = require('../../models')
 const { setCompany: setCompanyMW } = require('../../middleware')
 const { getContact } = require('../../../contacts/repos')
-const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
 function setCompany(req, res, next) {
@@ -127,28 +126,6 @@ async function setQuote(req, res, next) {
   next()
 }
 
-async function setInvoice(req, res, next) {
-  try {
-    res.locals.invoice = await Order.getInvoice(req, res.locals.order.id)
-  } catch (error) {
-    logger.error(error)
-  }
-
-  next()
-}
-
-async function setPayments(req, res, next) {
-  try {
-    const payments = await Order.getPayments(req, res.locals.order.id)
-
-    res.locals.payments = payments.map(transformPaymentToView)
-  } catch (error) {
-    logger.error(error)
-  }
-
-  next()
-}
-
 async function generateQuote(req, res, next) {
   const orderId = get(res.locals, 'order.id')
   const clientEmail = get(res.locals, 'order.contact.email') || 'client'
@@ -242,8 +219,6 @@ module.exports = {
   setQuoteSummary,
   setQuotePreview,
   setQuote,
-  setInvoice,
-  setPayments,
   generateQuote,
   cancelQuote,
   setQuoteForm,

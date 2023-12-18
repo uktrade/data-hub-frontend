@@ -38,7 +38,7 @@ function notFound(req, res, next) {
 function catchAll(error, req, res, next) {
   const statusCode = error.statusCode || 500
 
-  if (res.headersSent) {
+  if (res.headersSent || statusCode === 400) {
     return next(error)
   }
 
@@ -53,9 +53,43 @@ function catchAll(error, req, res, next) {
   })
 }
 
+/*
+ * Returns an array of each field and its error message from an error object.
+ */
+function getBadRequestError(error) {
+  if (!error?.error) {
+    return
+  }
+
+  let apiErrors = []
+  for (const [field, errors] of Object.entries(error.error)) {
+    apiErrors.push(`${field}: ${errors.join(', ')}`)
+  }
+
+  return apiErrors
+}
+
+function badRequest(error, req, res, next) {
+  const statusCode = error.statusCode || 500
+
+  if (statusCode !== 400) {
+    return next(error)
+  }
+
+  const apiErrors = getBadRequestError(error)
+
+  res.status(statusCode).json({
+    error: {
+      message: apiErrors || 'Request failed with status code 400',
+      status: statusCode,
+    },
+  })
+}
+
 module.exports = {
   notFound,
   NotAuthorizedError,
   NotFoundError,
   catchAll,
+  badRequest,
 }

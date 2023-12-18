@@ -17,9 +17,7 @@ const { renderBusinessDetails } = require('./apps/business-details/controllers')
 const { renderOrders } = require('./controllers/orders')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
-const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
-const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 
 const {
   redirectToFirstNavItem,
@@ -93,14 +91,9 @@ router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
-router.get(urls.companies.hierarchies.ghq.link.route, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
 
-router.get(
-  urls.companies.hierarchies.subsidiaries.search.route,
-  renderLinkSubsidiary
-)
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
 router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
@@ -121,7 +114,6 @@ router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 
 router.use(urls.companies.subsidiaries.index.route, setCompanyHierarchyLocalNav)
 router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
-router.get(urls.companies.subsidiaries.link.route, renderLinkSubsidiary)
 
 router.use(activityFeedRouter)
 router.use(dnbHierarchyRouter)

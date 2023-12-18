@@ -133,17 +133,41 @@ export const getTaskAssignedToMeFromOthersReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) => getReminders(sortby, page, limit, 'task-assigned-to-me-from-others')
+} = {}) =>
+  getReminders(sortby, page, limit, 'my-tasks-task-assigned-to-me-from-others')
 
 export const getNextTaskAssignedToMeFromOthersReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
 } = {}) =>
-  getNextReminder(sortby, page, limit, 'task-assigned-to-me-from-others')
+  getNextReminder(
+    sortby,
+    page,
+    limit,
+    'my-tasks-task-assigned-to-me-from-others'
+  )
 
 export const deleteTaskAssignedToMeFromOthersReminder = ({ id } = {}) =>
-  apiProxyAxios.delete(`/v4/reminder/task-assigned-to-me-from-others/${id}`)
+  apiProxyAxios.delete(
+    `/v4/reminder/my-tasks-task-assigned-to-me-from-others/${id}`
+  )
+
+export const getTaskAmendedByOthersReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-amended-by-others')
+
+export const getNextTaskAmendedByOthersReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  getNextReminder(sortby, page, limit, 'my-tasks-task-amended-by-others')
+
+export const deleteTaskAmendedByOthersReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-amended-by-others/${id}`)
 
 export const getTaskOverdueReminders = ({
   sortby = '-created_on',
@@ -159,3 +183,18 @@ export const getNextTaskOverdueReminder = ({
 
 export const deleteTaskOverdueReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/my-tasks-task-overdue/${id}`)
+
+export const getTaskCompletedReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-completed')
+
+export const getNextTaskCompletedReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-task-completed')
+
+export const deleteTaskCompletedReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-completed/${id}`)

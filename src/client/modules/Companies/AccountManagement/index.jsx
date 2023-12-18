@@ -15,7 +15,7 @@ import {
 import urls from '../../../../lib/urls'
 import { format } from '../../../../client/utils/date'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
-import { LeadITA } from '../../../../apps/companies/apps/advisers/client/LeadAdvisers'
+import { LeadITA } from './LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'
@@ -62,6 +62,29 @@ const canEditOneList = (permissions) =>
   permissions.includes(
     'company.change_one_list_tier_and_global_account_manager'
   )
+
+const DataWorkspaceAccountPlan = ({ company }) => (
+  <SectionGridRow data-test="account-plan-row">
+    <GridCol>
+      <GridRow>
+        <GridCol>
+          <H3>Account plan</H3>
+        </GridCol>
+      </GridRow>
+      <GridCol>
+        <GridRow>
+          An account plan is a forward thinking dashboard of the company,
+          summarising the wider company's scale, their investment and export
+          ambitions alongside DBT's relationships and progress with them.
+        </GridRow>
+      </GridCol>
+      <br />
+      <NewWindowLink href={urls.external.dataWorkspace(company.id)}>
+        View {company.name}'s account plan
+      </NewWindowLink>
+    </GridCol>
+  </SectionGridRow>
+)
 
 const Strategy = ({ company }) => (
   <SectionGridRow data-test="strategy-row">
@@ -241,6 +264,7 @@ const AccountManagement = ({
           flashMessages={flashMessages}
           csrfToken={csrfToken}
         >
+          <DataWorkspaceAccountPlan company={company} />
           <Strategy company={company} />
           <Objectives company={company} />
           {!company.oneListGroupTier ||

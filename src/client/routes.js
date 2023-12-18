@@ -55,8 +55,6 @@ import TaskDetails from './modules/Tasks/TaskDetails'
 import EditInternalInformation from './modules/Omis/EditInternalInformation'
 import ProjectTasks from './modules/Investments/Projects/ProjectTasks'
 import PaymentReconciliation from './modules/Omis/PaymentReconciliation'
-import InvestmentProjectTaskAdd from './modules/Investments/Projects/Tasks/InvestmentProjectTaskAdd'
-import InvestmentProjectTaskEdit from './modules/Investments/Projects/Tasks/InvestmentProjectTaskEdit'
 import EditInvoiceDetails from './modules/Omis/EditInvoiceDetails'
 import EditBillingAddress from './modules/Omis/EditBillingAddress'
 import EditVATStatus from './modules/Omis/EditVATStatus'
@@ -68,6 +66,21 @@ import EditAssignees from './modules/Omis/EditAssignees'
 import EditSubscribers from './modules/Omis/EditSubscribers'
 import WorkOrder from './modules/Omis/WorkOrder'
 import SetLeadAdviser from './modules/Omis/SetLeadAdviser'
+import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/LinkGlobalHQ'
+import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
+import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
+import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
+import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
+import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
+import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
+import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
+import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
+import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
+import Opportunity from './modules/Investments/Opportunities/Opportunity'
+import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
+import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
+import PaymentReceipt from './modules/Omis/PaymentReceipt'
+import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
 
 const routes = {
   companies: [
@@ -121,6 +134,36 @@ const routes = {
       module: 'datahub:companies',
       component: ObjectiveArchive,
     },
+    {
+      path: '/companies/:companyId/hierarchies/ghq/search',
+      module: 'datahub:companies',
+      component: LinkGlobalHQ,
+    },
+    {
+      path: '/companies/:companyId/subsidiaries/link',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/subsidiaries/search',
+      module: 'datahub:companies',
+      component: LinkSubsidiary,
+    },
+    {
+      path: '/companies/:companyId/exports/edit-countries',
+      module: 'datahub:companies',
+      component: ExportCountriesEdit,
+    },
+    {
+      path: '/companies/:companyId/exports/edit',
+      module: 'datahub:companies',
+      component: ExportsEdit,
+    },
+    {
+      path: '/companies/:companyId/referrals/:referralId/help',
+      module: 'datahub:companies',
+      component: ReferralHelp,
+    },
   ],
   contacts: [
     {
@@ -166,6 +209,11 @@ const routes = {
       path: '/events/aventri/:aventriEventId/registration/:status',
       module: 'datahub:events',
       component: EventAventriRegistrationStatus,
+    },
+    {
+      path: '/events/:eventId/attendees/find-new',
+      module: 'datahub:events',
+      component: AttendeeSearch,
     },
   ],
   interactions: [
@@ -255,6 +303,26 @@ const routes = {
       path: '/omis/:orderId/edit/lead-adviser/:adviserId',
       module: 'datahub:orders',
       component: SetLeadAdviser,
+    },
+    {
+      path: '/omis/create',
+      module: 'datahub:orders',
+      component: SelectOrderCompany,
+    },
+    {
+      path: '/omis/create/:companyId',
+      module: 'datahub:orders',
+      component: CreateOrder,
+    },
+    {
+      path: '/omis/:orderId/payment-receipt',
+      module: 'datahub:orders',
+      component: PaymentReceipt,
+    },
+    {
+      path: '/omis/:orderId/reconciliation/payment-receipt',
+      module: 'datahub:orders',
+      component: PaymentReceipt,
     },
   ],
   reminders: [
@@ -433,16 +501,6 @@ const routes = {
       component: DeleteProjectDocument,
     },
     {
-      path: '/investments/projects/:projectId/tasks/create',
-      module: 'datahub:investments',
-      component: InvestmentProjectTaskAdd,
-    },
-    {
-      path: '/investments/projects/:projectId/tasks/:taskId/edit',
-      module: 'datahub:investments',
-      component: InvestmentProjectTaskEdit,
-    },
-    {
       path: '/investments/projects',
       module: 'datahub:investments',
       component: InvestmentCollections,
@@ -467,8 +525,57 @@ const routes = {
       module: 'datahub:investments',
       component: ProjectTasks,
     },
+    {
+      path: '/investments/opportunities/create',
+      module: 'datahub:investments',
+      component: CreateUKInvestmentOpportunity,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/status',
+      module: 'datahub:investments',
+      component: OpportunityChangeStatusForm,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/details',
+      module: 'datahub:investments',
+      component: Opportunity,
+    },
+    {
+      path: '/investments/opportunities/:opportunityId/interactions',
+      module: 'datahub:investments',
+      component: Opportunity,
+    },
+  ],
+  propositions: [
+    {
+      path: '/investments/projects/:projectId/propositions/:propositionId/abandon',
+      module: 'datahub:investments',
+      component: AbandonProposition,
+    },
+    {
+      path: '/investments/projects/:projectId/propositions/create/proposition',
+      module: 'datahub:investments',
+      component: CreateProposition,
+    },
   ],
   tasks: [
+    {
+      path: '/tasks/:taskId/details',
+      module: 'datahub:companies',
+      component: TaskDetails,
+    },
+
+    {
+      path: '/tasks/:taskId/edit',
+      module: 'datahub:companies',
+      component: TaskFormEdit,
+    },
+    {
+      exact: true,
+      path: '/tasks/create',
+      module: 'datahub:companies',
+      component: TaskFormAdd,
+    },
     {
       path: '/tasks/:taskId',
       module: 'datahub:companies',

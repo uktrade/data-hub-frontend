@@ -85,6 +85,8 @@ module.exports = {
     findExporters: () =>
       'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
+    dataWorkspace: (id) =>
+      `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
@@ -130,6 +132,7 @@ module.exports = {
   dashboard: {
     index: url('/'),
     investmentProjects: url('/investment-projects'),
+    myTasks: url('/my-tasks'),
   },
   oauth: {
     redirect: url('/oauth'),
@@ -454,13 +457,11 @@ module.exports = {
       ),
       evaluation: url('/investments', '/projects/:projectId/evaluation'),
       tasks: {
-        create: url('/investments', '/projects/:projectId/tasks/create'),
         index: url(
           '/investments',
           '/projects/:projectId/tasks',
-          '?sortby=-task__created_on'
+          '?sortby=-created_on'
         ),
-        edit: url('/investments', '/projects/:projectId/tasks/:taskId/edit'),
       },
     },
     profiles: {
@@ -605,8 +606,14 @@ module.exports = {
   omis: {
     index: url('/omis', PRIMARY_LINK_PARAMS.omis),
     export: url('/omis', '/export'),
-    create: url('/omis/create?company=', ':companyId'),
-    reconciliation: url('/omis/reconciliation'),
+    create: {
+      companySelect: url('/omis', '/create'),
+      form: url('/omis', '/create/:companyId'),
+    },
+    reconciliation: url(
+      '/omis/reconciliation',
+      PRIMARY_LINK_PARAMS.reconciliation
+    ),
     order: url('/omis', '/:orderId'),
     paymentReconciliation: url(
       '/omis',
@@ -630,6 +637,10 @@ module.exports = {
     },
     cancel: url('/omis', '/:orderId/edit/cancel-order'),
     complete: url('/omis', '/:orderId/edit/complete-order'),
+    paymentReceiptReconciliation: url(
+      '/omis',
+      '/:orderId/reconciliation/payment-receipt'
+    ),
   },
   support: url('/support'),
   reminders: {
@@ -648,9 +659,11 @@ module.exports = {
     myTasks: {
       dueDateApproaching: url('/reminders/my-tasks-due-date-approaching'),
       taskAssignedToMeFromOthers: url(
-        '/reminders/task-assigned-to-me-from-others'
+        '/reminders/my-tasks-task-assigned-to-me-from-others'
       ),
+      taskAmendedByOthers: url('/reminders/my-tasks-task-amended-by-others'),
       taskOverdue: url('/reminders/my-tasks-task-overdue'),
+      taskCompleted: url('/reminders/my-tasks-task-completed'),
     },
     settings: {
       index: url('/reminders/settings'),
@@ -673,9 +686,13 @@ module.exports = {
           '/reminders/settings/my-tasks-due-date-approaching'
         ),
         taskAssignedToMeFromOthers: url(
-          '/reminders/settings/task-assigned-to-me-from-others'
+          '/reminders/settings/my-tasks-task-assigned-to-me-from-others'
+        ),
+        taskAmendedByOthers: url(
+          '/reminders/settings/my-tasks-task-amended-by-others'
         ),
         taskOverdue: url('/reminders/settings/my-tasks-task-overdue'),
+        taskCompleted: url('/reminders/settings/my-tasks-task-completed'),
       },
     },
   },
@@ -687,6 +704,12 @@ module.exports = {
     delete: url('/export', '/:exportId/delete'),
   },
   tasks: {
-    details: url('/tasks', '/:taskId'),
+    details: url('/tasks', '/:taskId/details'),
+    create: url('/tasks', '/create'),
+    createInvestmentProject: url(
+      '/tasks/create?investmentProjectId=',
+      ':investmentProjectId'
+    ),
+    edit: url('/tasks', '/:taskId/edit'),
   },
 }

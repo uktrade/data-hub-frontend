@@ -10,16 +10,13 @@ describe('Company router', () => {
       '/:companyId',
       '/:companyId/details',
       '/:companyId/business-details',
-      '/:companyId/hierarchies/ghq/search',
       '/:companyId/hierarchies/ghq/:globalHqId/add',
       '/:companyId/hierarchies/ghq/remove',
-      '/:companyId/hierarchies/subsidiaries/search',
       '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add',
       '/:companyId/contacts',
       '/:companyId/orders',
       '/:companyId/manage-company-list',
       '/:companyId/subsidiaries',
-      '/:companyId/subsidiaries/link',
     ])
   })
 })

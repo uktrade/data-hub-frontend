@@ -8,6 +8,6 @@ export const createInvestmentProposition = (values) =>
 
 export const abandonInvestmentProposition = (values) =>
   apiProxyAxios.post(
-    `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/abandon`,
+    `v3/investment/${values.projectId}/proposition/${values.propositionId}/abandon`,
     values
   )

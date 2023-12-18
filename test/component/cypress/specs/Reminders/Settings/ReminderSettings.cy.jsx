@@ -19,8 +19,12 @@ import {
   MY_TASKS_DUE_DATE_APPROACHING_LABEL,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS,
   TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS,
+  TASK_AMENDED_BY_OTHERS_LABEL,
   TASK_OVERDUE,
   TASK_OVERDUE_LABEL,
+  TASK_COMPLETED,
+  TASK_COMPLETED_LABEL,
 } from '../../../../../../src/client/modules/Reminders/constants.js'
 import { assertKeyValueTable } from '../../../../../functional/cypress/support/assertions.js'
 
@@ -245,6 +249,28 @@ describe('ExportReminderSettings', () => {
 describe('TasksAssignedToMeSettings', () => {
   const Component = (props) => <TasksAssignedToMeSettings {...props} />
 
+  function mountComponent(id) {
+    cy.mount(
+      <DataHubProvider>
+        <Component
+          openSettingsSections={[{ id: id }]}
+          upcomingTaskReminder={setting}
+          taskAssignedToMeFromOthers={setting}
+          taskAmendedByOthers={setting}
+          taskOverdue={setting}
+          taskCompleted={setting}
+        />
+      </DataHubProvider>
+    )
+  }
+
+  function assertMyTasks(dataTest, label) {
+    assertSettingsSectionExpanded(dataTest)
+    assertEmailTableData(dataTest, setting)
+    assertEditLink(dataTest)
+    assertToggleSection(dataTest, label)
+  }
+
   context('When component loads', () => {
     beforeEach(() => {
       cy.mount(
@@ -252,7 +278,9 @@ describe('TasksAssignedToMeSettings', () => {
           <Component
             upcomingTaskReminder={{}}
             taskAssignedToMeFromOthers={{}}
+            taskAmendedByOthers={{}}
             taskOverdue={{}}
+            taskCompleted={{}}
           />
         </DataHubProvider>
       )
@@ -261,31 +289,18 @@ describe('TasksAssignedToMeSettings', () => {
     it('should return all my tasks reminder setting sections', () => {
       cy.get(getToggle(MY_TASKS_DUE_DATE_APPROACHING)).should('be.visible')
       cy.get(getToggle(TASK_ASSIGNED_TO_ME_FROM_OTHERS)).should('be.visible')
+      cy.get(getToggle(TASK_AMENDED_BY_OTHERS)).should('be.visible')
       cy.get(getToggle(TASK_OVERDUE)).should('be.visible')
+      cy.get(getToggle(TASK_COMPLETED)).should('be.visible')
     })
   })
 
   context('When due date approaching setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: MY_TASKS_DUE_DATE_APPROACHING }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(MY_TASKS_DUE_DATE_APPROACHING)
     })
 
-    assertSettingsSectionExpanded(MY_TASKS_DUE_DATE_APPROACHING)
-
-    assertEmailTableData(MY_TASKS_DUE_DATE_APPROACHING, setting)
-
-    assertEditLink(MY_TASKS_DUE_DATE_APPROACHING)
-
-    assertToggleSection(
+    assertMyTasks(
       MY_TASKS_DUE_DATE_APPROACHING,
       MY_TASKS_DUE_DATE_APPROACHING_LABEL
     )
@@ -293,50 +308,36 @@ describe('TasksAssignedToMeSettings', () => {
 
   context('When task assigned to me from others setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: TASK_ASSIGNED_TO_ME_FROM_OTHERS }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
     })
 
-    assertSettingsSectionExpanded(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
-
-    assertEmailTableData(TASK_ASSIGNED_TO_ME_FROM_OTHERS, setting)
-
-    assertEditLink(TASK_ASSIGNED_TO_ME_FROM_OTHERS)
-
-    assertToggleSection(
+    assertMyTasks(
       TASK_ASSIGNED_TO_ME_FROM_OTHERS,
       TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL
     )
   })
 
-  context('When task overdue setting is open', () => {
+  context('When task amended by others setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            openSettingsSections={[{ id: TASK_OVERDUE }]}
-            upcomingTaskReminder={setting}
-            taskAssignedToMeFromOthers={setting}
-            taskOverdue={setting}
-          />
-        </DataHubProvider>
-      )
+      mountComponent(TASK_AMENDED_BY_OTHERS)
     })
 
-    assertSettingsSectionExpanded(TASK_OVERDUE)
+    assertMyTasks(TASK_AMENDED_BY_OTHERS, TASK_AMENDED_BY_OTHERS_LABEL)
+  })
 
-    assertEmailTableData(TASK_OVERDUE, setting)
+  context('When task overdue setting is open', () => {
+    beforeEach(() => {
+      mountComponent(TASK_OVERDUE)
+    })
 
-    assertEditLink(TASK_OVERDUE)
+    assertMyTasks(TASK_OVERDUE, TASK_OVERDUE_LABEL)
+  })
 
-    assertToggleSection(TASK_OVERDUE, TASK_OVERDUE_LABEL)
+  context('When task completed setting is open', () => {
+    beforeEach(() => {
+      mountComponent(TASK_COMPLETED)
+    })
+
+    assertMyTasks(TASK_COMPLETED, TASK_COMPLETED_LABEL)
   })
 })

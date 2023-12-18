@@ -2,8 +2,6 @@ const proxyquire = require('proxyquire')
 
 const contactMock =
   require('../../../../../../test/unit/data/contacts/contacts.json')[0]
-const invoiceMock = require('../../../../../../test/unit/data/omis/invoice.json')
-const paymentsMock = require('../../../../../../test/unit/data/omis/payments.json')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
@@ -12,11 +10,8 @@ describe('OMIS View middleware', () => {
     this.getContactStub = sinon.stub()
     this.previewQuoteStub = sinon.stub()
     this.getQuoteStub = sinon.stub()
-    this.getInvoiceStub = sinon.stub()
-    this.getPaymentsStub = sinon.stub()
     this.createQuoteStub = sinon.stub()
     this.cancelQuoteStub = sinon.stub()
-    this.transformPaymentToViewStub = sinon.stub().returnsArg(0)
     this.flashSpy = sinon.spy()
     this.nextSpy = sinon.spy()
 
@@ -38,9 +33,6 @@ describe('OMIS View middleware', () => {
       '../../middleware': {
         setCompany: this.setCompanySpy,
       },
-      '../../transformers': {
-        transformPaymentToView: this.transformPaymentToViewStub,
-      },
       '../../../../config/logger': {
         error: this.loggerErrorSpy,
       },
@@ -51,8 +43,6 @@ describe('OMIS View middleware', () => {
         Order: {
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
-          getInvoice: this.getInvoiceStub,
-          getPayments: this.getPaymentsStub,
           createQuote: this.createQuoteStub,
           cancelQuote: this.cancelQuoteStub,
         },
@@ -666,107 +656,6 @@ describe('OMIS View middleware', () => {
         it('should call next', () => {
           expect(this.nextSpy).to.have.been.calledWith()
         })
-      })
-    })
-  })
-
-  describe('setInvoice()', () => {
-    context('when invoice call resolves', () => {
-      beforeEach(async () => {
-        this.getInvoiceStub.resolves(invoiceMock)
-
-        await this.middleware.setInvoice(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy
-        )
-      })
-
-      it('should set response as quote property on locals', () => {
-        expect(this.resMock.locals).to.have.property('invoice')
-        expect(this.resMock.locals.invoice).to.deep.equal(invoiceMock)
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
-      })
-    })
-
-    context('when call generates an error', () => {
-      beforeEach(async () => {
-        this.error = {
-          statusCode: 500,
-        }
-        this.getInvoiceStub.rejects(this.error)
-
-        await this.middleware.setInvoice(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy
-        )
-      })
-
-      it('should log error', () => {
-        expect(this.loggerErrorSpy).to.have.been.calledOnce
-        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
-      })
-    })
-  })
-
-  describe('setPayments()', () => {
-    context('when invoice call resolves', () => {
-      beforeEach(async () => {
-        this.getPaymentsStub.resolves(paymentsMock)
-
-        await this.middleware.setPayments(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy
-        )
-      })
-
-      it('should set payments property on locals', () => {
-        expect(this.resMock.locals).to.have.property('payments')
-      })
-
-      it('should set correct number of payments', () => {
-        expect(this.resMock.locals.payments).to.have.length(2)
-      })
-
-      it('should set correct objects on payments', () => {
-        expect(this.resMock.locals.payments).to.deep.equal(paymentsMock)
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
-      })
-    })
-
-    context('when call generates an error', () => {
-      beforeEach(async () => {
-        this.error = {
-          statusCode: 500,
-        }
-        this.getPaymentsStub.rejects(this.error)
-
-        await this.middleware.setPayments(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy
-        )
-      })
-
-      it('should log error', () => {
-        expect(this.loggerErrorSpy).to.have.been.calledOnce
-        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
       })
     })
   })
