@@ -1,15 +1,4 @@
-export const ASSIGNED_TO_OPTIONS = [
-  {
-    label: 'Me',
-    value: 'me',
-  },
-  {
-    label: 'Others',
-    value: 'others',
-  },
-]
-
-export const CREATED_BY_OPTIONS = [
+const ME_OTHERS_OPTIONS = [
   {
     label: 'Me',
     value: 'me',
@@ -43,14 +32,22 @@ export const SORT_BY_LIST_OPTIONS = [
   },
 ]
 
+const STATUS_OPTIONS = [
+  {
+    label: 'Active',
+    value: 'active',
+  },
+  {
+    label: 'Completed',
+    value: 'completed',
+  },
+]
+
 export const SHOW_ALL_OPTION = {
   label: 'Show all',
   value: 'all-statuses',
 }
 
-export const CREATED_BY_LIST_OPTIONS = [SHOW_ALL_OPTION, ...CREATED_BY_OPTIONS]
+export const ME_OTHERS_LIST_OPTIONS = [SHOW_ALL_OPTION, ...ME_OTHERS_OPTIONS]
 
-export const ASSIGNED_TO_LIST_OPTIONS = [
-  SHOW_ALL_OPTION,
-  ...ASSIGNED_TO_OPTIONS,
-]
+export const STATUS_LIST_OPTIONS = [SHOW_ALL_OPTION, ...STATUS_OPTIONS]

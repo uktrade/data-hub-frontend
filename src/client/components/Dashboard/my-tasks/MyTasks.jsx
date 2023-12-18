@@ -30,6 +30,11 @@ export const MyTasksContent = ({ myTasks, filters }) => (
   <>
     <FiltersContainer>
       <TaskListSelect
+        label="Status"
+        qsParam="status"
+        options={filters?.status?.options}
+      />
+      <TaskListSelect
         label="Assigned to"
         qsParam="assigned_to"
         options={filters?.assignedTo?.options}

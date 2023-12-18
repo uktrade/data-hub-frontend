@@ -11,8 +11,9 @@ import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
 import {
-  ASSIGNED_TO_LIST_OPTIONS,
-  CREATED_BY_LIST_OPTIONS,
+  ME_OTHERS_LIST_OPTIONS,
+  SORT_BY_LIST_OPTIONS,
+  STATUS_LIST_OPTIONS,
 } from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
@@ -36,10 +37,16 @@ describe('My Tasks on the Dashboard', () => {
   const filtersList = {
     areActive: false,
     assignedTo: {
-      options: [ASSIGNED_TO_LIST_OPTIONS],
+      options: [ME_OTHERS_LIST_OPTIONS],
     },
     createdBy: {
-      options: [CREATED_BY_LIST_OPTIONS],
+      options: [ME_OTHERS_LIST_OPTIONS],
+    },
+    status: {
+      options: [STATUS_LIST_OPTIONS],
+    },
+    sortby: {
+      options: [SORT_BY_LIST_OPTIONS],
     },
   }
 
