@@ -21,9 +21,12 @@ const FiltersContainer = styled.div`
   column-gap: 2px;
   margin-bottom: ${SPACING.SCALE_3};
 
-  grid-template-columns: repeat(5, ${SELECT_WIDTH}) 2.5% ${SELECT_WIDTH};
+  grid-template-columns: repeat(2, ${SELECT_WIDTH}) 51.5% ${SELECT_WIDTH};
   @media (max-width: ${SITE_WIDTH}) {
     grid-template-columns: repeat(2, 50%);
+    span.task-select-spacer {
+      display: none;
+    }
   }
 `
 
@@ -40,22 +43,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
         qsParam="created_by"
         options={filters?.createdBy?.options}
       />
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters?.createdBy?.options}
-      />
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters?.createdBy?.options}
-      />
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters?.createdBy?.options}
-      />
-      <span id="task-select-spacer" />
+      <span class="task-select-spacer" id="task-select-spacer" />
       <TaskListSelect
         label="Sort by"
         qsParam="sortby"
