@@ -70,7 +70,7 @@ describe('Task filters', () => {
       },
     }).as('apiRequest')
     cy.get(`${element} select`).select(selectedOption)
-    assertPayload('@apiRequest', payload)
+    assertPayload('@apiRequest', { ...basePayload, ...payload })
     assertListItems({ length: 1 })
   }
 
@@ -107,29 +107,13 @@ describe('Task filters', () => {
     })
 
     it('should filter created by me from user input', () => {
-      testFilterFromUserInput(
-        element,
-        {
-          created_by: myAdviserId,
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
-        'Me'
-      )
+      testFilterFromUserInput(element, { created_by: myAdviserId }, 'Me')
     })
 
     it('should filter created by others from user input', () => {
       testFilterFromUserInput(
         element,
-        {
-          not_created_by: myAdviserId,
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { not_created_by: myAdviserId },
         'Others'
       )
     })
@@ -251,29 +235,13 @@ describe('Task filters', () => {
     })
 
     it('should filter assigned to me from user input', () => {
-      testFilterFromUserInput(
-        element,
-        {
-          advisers: [myAdviserId],
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
-        'Me'
-      )
+      testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
     })
 
     it('should filter assigned to others from user input', () => {
       testFilterFromUserInput(
         element,
-        {
-          not_advisers: [myAdviserId],
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          sortby: 'due_date:asc',
-        },
+        { not_advisers: [myAdviserId] },
         'Others'
       )
     })
@@ -307,31 +275,11 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from user input', () => {
-      testFilterFromUserInput(
-        element,
-        {
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          archived: false,
-          sortby: 'due_date:asc',
-        },
-        'Active'
-      )
+      testFilterFromUserInput(element, { archived: false }, 'Active')
     })
 
     it('should filter completed status from user input', () => {
-      testFilterFromUserInput(
-        element,
-        {
-          limit: 50,
-          offset: 0,
-          adviser: [myAdviserId],
-          archived: true,
-          sortby: 'due_date:asc',
-        },
-        'Completed'
-      )
+      testFilterFromUserInput(element, { archived: true }, 'Completed')
     })
   })
 })
