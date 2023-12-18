@@ -18,19 +18,23 @@ describe('Task filters', () => {
   const tasksTab = urls.dashboard.myTasks()
   const TaskList = taskListFaker()
 
+  function assertFilterName(element, text) {
+    cy.intercept('POST', endpoint, {
+      body: {
+        count: 1,
+        results: [TaskList[0]],
+      },
+    })
+    cy.visit(tasksTab)
+
+    cy.get(element).find('span').should('have.text', text)
+  }
+
   context('Created by', () => {
     const element = '[data-test="created-by-select"]'
 
     it('should have a "Created by" filter', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestCreatedBy')
-      cy.visit(`${tasksTab}?created_by=me&page=1`)
-
-      cy.get(element).find('span').should('have.text', 'Created by')
+      assertFilterName(element, 'Created by')
       cy.get(`${element} option`).then((createdByOptions) => {
         expect(transformOptions(createdByOptions)).to.deep.eq([
           { value: 'all-statuses', label: 'Show all' },
@@ -173,15 +177,7 @@ describe('Task filters', () => {
     ]
 
     it('should have a "Sort by" filter', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestSortBy')
-      cy.visit(tasksTab)
-
-      cy.get(element).find('span').should('have.text', 'Sort by')
+      assertFilterName(element, 'Sort by')
       cy.get(`${element} option`).then((sortByOptions) => {
         expect(transformOptions(sortByOptions)).to.deep.eq(
           transformOptions(sortbyOptionsData)
@@ -254,15 +250,7 @@ describe('Task filters', () => {
     const element = '[data-test="assigned-to-select"]'
 
     it('should have a "Assigned to" filter', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestassignedTo')
-      cy.visit(`${tasksTab}?assigned_to=me&page=1`)
-
-      cy.get(element).find('span').should('have.text', 'Assigned to')
+      assertFilterName(element, 'Assigned to')
       cy.get(`${element} option`).then((assignedToOptions) => {
         expect(transformOptions(assignedToOptions)).to.deep.eq([
           { value: 'all-statuses', label: 'Show all' },
@@ -376,16 +364,8 @@ describe('Task filters', () => {
   context('Status', () => {
     const element = '[data-test="status-select"]'
 
-    it('should have a "status" filter', () => {
-      cy.intercept('POST', endpoint, {
-        body: {
-          count: 1,
-          results: [TaskList[0]],
-        },
-      }).as('apiRequestStatus')
-      cy.visit(`${tasksTab}?status=active&page=1`)
-
-      cy.get(element).find('span').should('have.text', 'Status')
+    it('should have a "Status" filter', () => {
+      assertFilterName(element, 'Status')
       cy.get(`${element} option`).then((statusOptions) => {
         expect(transformOptions(statusOptions)).to.deep.eq([
           { value: 'all-statuses', label: 'Show all' },
