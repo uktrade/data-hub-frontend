@@ -4,10 +4,9 @@ import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { parsePage } from '../../../../client/utils/pagination'
 
 import {
-  ASSIGNED_TO_LIST_OPTIONS,
-  CREATED_BY_LIST_OPTIONS,
   SORT_BY_LIST_OPTIONS,
   STATUS_LIST_OPTIONS,
+  ME_OTHERS_LIST_OPTIONS,
 } from './constants'
 
 export const ID = 'getMyTasks'
@@ -72,10 +71,10 @@ export const state2props = ({ router, ...state }) => {
     filters: {
       areActive: areFiltersActive(queryParams),
       assignedTo: {
-        options: ASSIGNED_TO_LIST_OPTIONS,
+        options: ME_OTHERS_LIST_OPTIONS,
       },
       createdBy: {
-        options: CREATED_BY_LIST_OPTIONS,
+        options: ME_OTHERS_LIST_OPTIONS,
       },
       sortby: {
         options: SORT_BY_LIST_OPTIONS,
