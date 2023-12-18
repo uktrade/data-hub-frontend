@@ -22,6 +22,18 @@ const areFiltersActive = (queryParams) => {
   return !isEmpty(filters)
 }
 
+const sortbyMapping = {
+  due_date: 'due_date:asc',
+  recently_updated: 'modified_on:desc',
+  least_recently_updated: 'modified_on:asc',
+  company_ascending: 'company.name:asc',
+  project_ascending: 'investment_project.name:asc',
+}
+const statusMapping = {
+  active: { archived: false },
+  completed: { archived: true },
+}
+
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
   const { currentAdviserId } = state
@@ -37,17 +49,6 @@ export const state2props = ({ router, ...state }) => {
     sortby: 'due_date:asc',
   }
 
-  const sortbyMapping = {
-    due_date: 'due_date:asc',
-    recently_updated: 'modified_on:desc',
-    least_recently_updated: 'modified_on:asc',
-    company_ascending: 'company.name:asc',
-    project_ascending: 'investment_project.name:asc',
-  }
-  const statusMapping = {
-    active: { archived: false },
-    completed: { archived: true },
-  }
   const assignedToMapping = {
     me: { advisers: [currentAdviserId] },
     others: { not_advisers: [currentAdviserId] },
