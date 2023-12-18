@@ -372,4 +372,125 @@ describe('Task filters', () => {
       assertListItems({ length: 1 })
     })
   })
+
+  context('Status', () => {
+    const element = '[data-test="status-select"]'
+
+    it('should have a "status" filter', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestStatus')
+      cy.visit(`${tasksTab}?status=active&page=1`)
+
+      cy.get(element).find('span').should('have.text', 'Status')
+      cy.get(`${element} option`).then((statusOptions) => {
+        expect(transformOptions(statusOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: 'active', label: 'Active' },
+          { value: 'completed', label: 'Completed' },
+        ])
+      })
+    })
+
+    it('should filter active status from the url', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestStatus')
+      cy.visit(`${tasksTab}?status=active&page=1`)
+
+      // This ignores the checkForMyTasks API call which happens on page load
+      cy.wait('@apiRequestStatus')
+
+      assertPayload('@apiRequestStatus', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        archived: false,
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+    })
+
+    it('should filter completed status from the url', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestStatus')
+      cy.visit(`${tasksTab}?status=completed&page=1`)
+
+      // This ignores the checkForMyTasks API call which happens on page load
+      cy.wait('@apiRequestStatus')
+
+      assertPayload('@apiRequestStatus', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        archived: true,
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+    })
+
+    it('should filter active status from user input', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 3,
+          results: TaskList,
+        },
+      })
+      cy.visit(tasksTab)
+      assertListItems({ length: 3 })
+
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestStatus')
+      cy.get(`${element} select`).select('Active')
+      assertPayload('@apiRequestStatus', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        archived: false,
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+    })
+
+    it('should filter completed status from user input', () => {
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 3,
+          results: TaskList,
+        },
+      })
+      cy.visit(tasksTab)
+      assertListItems({ length: 3 })
+
+      cy.intercept('POST', endpoint, {
+        body: {
+          count: 1,
+          results: [TaskList[0]],
+        },
+      }).as('apiRequestStatus')
+      cy.get(`${element} select`).select('Completed')
+      assertPayload('@apiRequestStatus', {
+        limit: 50,
+        offset: 0,
+        adviser: [myAdviserId],
+        archived: true,
+        sortby: 'due_date:asc',
+      })
+      assertListItems({ length: 1 })
+    })
+  })
 })
