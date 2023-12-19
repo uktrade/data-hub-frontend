@@ -1,5 +1,4 @@
 import React from 'react'
-// import UnorderedList from '@govuk-react/unordered-list'
 import { H1, H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
@@ -27,7 +26,7 @@ const StyledParagraph = styled('p')`
   color: ${DARK_GREY};
   ${MEDIA_QUERIES.TABLET} {
     margin-bottom: 25px;
-    font-size: ${FONT_SIZE.SIZE_24};
+    font-size: ${FONT_SIZE.SIZE_19};
   }
 `
 
