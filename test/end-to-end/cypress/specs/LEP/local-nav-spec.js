@@ -47,7 +47,11 @@ describe('LEP Permission', () => {
 
     it('should display LEP only dashboard tabs', () => {
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', ['Investment projects', 'Export projects'])
+      assertLocalNav('@tabItems', [
+        'Tasks',
+        'Investment projects',
+        'Export projects',
+      ])
     })
   })
 
