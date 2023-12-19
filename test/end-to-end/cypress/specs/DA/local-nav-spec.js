@@ -50,11 +50,7 @@ describe('DA Permission', () => {
 
     it('should display DA only dashboard tabs', () => {
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', [
-        'Tasks',
-        'Investment projects',
-        'Export projects',
-      ])
+      assertLocalNav('@tabItems', ['Investment projects', 'Export projects'])
     })
   })
 
