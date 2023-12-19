@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, H3 } from 'govuk-react'
+import { Button, H3, Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import SpacedSectionBreak from './SpacedSectionBreak'
@@ -24,7 +24,7 @@ const ContentWithHeading = ({ heading, children, headingActions }) => (
       <Button
         buttonColour={BLUE}
         href={urls.tasks.create()}
-        as="a"
+        as={Link}
         data-test="add-task"
       >
         Add task
