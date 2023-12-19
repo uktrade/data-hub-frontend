@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { SITE_WIDTH, SPACING } from '@govuk-react/constants'
 
 import { HintText } from 'govuk-react'
 
@@ -13,18 +13,22 @@ import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
 
-const FiltersContainer = styled('div')({
-  display: 'grid',
-  rowGap: 15,
-  [MEDIA_QUERIES.TABLET]: {
-    columnGap: 2,
-    gridTemplateColumns: '50% 50%',
-  },
-  [MEDIA_QUERIES.DESKTOP]: {
-    gridTemplateColumns: '25% 25% 25% 25%',
-  },
-  marginBottom: SPACING.SCALE_3,
-})
+const SELECT_WIDTH = `16%`
+
+const FiltersContainer = styled.div`
+  display: grid;
+  row-gap: 15px;
+  column-gap: 2px;
+  margin-bottom: ${SPACING.SCALE_3};
+
+  grid-template-columns: repeat(3, ${SELECT_WIDTH}) 35.5% ${SELECT_WIDTH};
+  @media (max-width: ${SITE_WIDTH}) {
+    grid-template-columns: repeat(2, 50%);
+    span.task-select-spacer {
+      display: none;
+    }
+  }
+`
 
 export const MyTasksContent = ({ myTasks, filters }) => (
   <>
@@ -44,6 +48,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
         qsParam="created_by"
         options={filters?.createdBy?.options}
       />
+      <span class="task-select-spacer" id="task-select-spacer" />
       <TaskListSelect
         label="Sort by"
         qsParam="sortby"
