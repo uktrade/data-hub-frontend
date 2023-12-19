@@ -8,7 +8,9 @@ import { formatMediumDate } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 
 export const transformAdvisersListItem = (advisers) => {
-  return advisers.map((adviser) => <li>{adviser?.name}</li>)
+  return advisers.map((adviser, index) => (
+    <li key={`task_adviser_${index}`}>{adviser?.name}</li>
+  ))
 }
 
 const StyledTableCellHeader = styled(Table.CellHeader)`
@@ -27,8 +29,8 @@ const header = (
 )
 
 const rows = ({ results }) => {
-  return results.map((task) => (
-    <Table.Row>
+  return results.map((task, index) => (
+    <Table.Row key={`task_row_${index}`} data-test="task-item">
       <Table.Cell setWidth="12%">{formatMediumDate(task.due_date)}</Table.Cell>
       <Table.Cell setWidth="23%">
         <Link

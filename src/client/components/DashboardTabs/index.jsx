@@ -12,6 +12,7 @@ import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import ReferralList from '../ReferralList'
 import { state2props } from './state'
+import NoTasks from '../Dashboard/my-tasks/NoTasks'
 
 const StyledDiv = styled('div')`
   padding-top: 16px;
@@ -39,12 +40,10 @@ const DashboardTabs = ({
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
-        ...(hasTasks && {
-          [urls.dashboard.myTasks()]: {
-            label: 'Tasks',
-            content: <MyTasks adviser={adviser} />,
-          },
-        }),
+        [urls.dashboard.myTasks()]: {
+          label: 'Tasks',
+          content: hasTasks ? <MyTasks adviser={adviser} /> : <NoTasks />,
+        },
         ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.index()]: {
             label: 'Company lists',
