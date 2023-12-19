@@ -168,5 +168,11 @@ describe('My Tasks on the Dashboard', () => {
     it('should display the heading 1 task (singular) and not 1 tasks (plural)', () => {
       cy.get('h3').should('contain', '1 task').should('not.contain', '1 tasks')
     })
+
+    it('should contain a button to add task', () => {
+      cy.get('[data-test="add-task"]')
+        .should('have.text', 'Add task')
+        .should('have.attr', 'href', urls.tasks.create())
+    })
   })
 })
