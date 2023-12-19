@@ -17,7 +17,6 @@ import {
 } from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
-import urls from '../../../../../../src/lib/urls'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
