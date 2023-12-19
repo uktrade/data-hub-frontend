@@ -40,10 +40,12 @@ const DashboardTabs = ({
       keepQueryParams={false}
       onTabChange={onTabChange}
       tabs={{
-        [urls.dashboard.myTasks()]: {
-          label: 'Tasks',
-          content: hasTasks ? <MyTasks adviser={adviser} /> : <NoTasks />,
-        },
+        ...(hasTasks && {
+          [urls.dashboard.myTasks()]: {
+            label: 'Tasks',
+            content: hasTasks ? <MyTasks adviser={adviser} /> : <NoTasks />,
+          },
+        }),
         ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.index()]: {
             label: 'Company lists',
