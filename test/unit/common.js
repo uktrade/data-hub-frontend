@@ -22,7 +22,7 @@ global.globalReq = reqres.req()
 global.globalRes = reqres.res()
 
 // Gets axios to work with nock: https://www.npmjs.com/package/nock#axios
-axios.defaults.adapter = require('axios/lib/adapters/http')
+axios.defaults.adapter = 'http'
 
 process.env.TZ = 'Europe/London'
 
