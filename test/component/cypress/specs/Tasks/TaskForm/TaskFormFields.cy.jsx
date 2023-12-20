@@ -89,11 +89,11 @@ describe('Task form', () => {
       })
     })
 
-    it('should display the company typeahead', () => {
+    it('should display the company typeahead field', () => {
       assertVisible('[data-test="field-company"]')
     })
 
-    it('should hide the investment project typeahead', () => {
+    it('should hide the investment project typeahead field', () => {
       assertNotExists('[data-test="field-investmentProject"')
     })
 
