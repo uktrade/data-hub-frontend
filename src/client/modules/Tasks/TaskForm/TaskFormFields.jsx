@@ -146,7 +146,7 @@ const TaskFormFields = ({
             label="Company name (optional)"
             hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
           />
-          {(task.company || values.company) && (
+          {(task?.company || values.company) && (
             <FieldInvestmentProjectTypeahead
               name="investmentProject"
               label="Investment project (optional)"
