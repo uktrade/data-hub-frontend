@@ -17,14 +17,9 @@ const StyledTag = styled(Tag)`
   margin-bottom: ${SPACING.SCALE_2};
 `
 
-const getCompany = (task) => {
-  return task?.investmentProject?.investorCompany
-}
-
 const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
 
-  const company = getCompany(task)
   const taskTitle = task ? task.title : ''
   const archivedTag = task?.archived && (
     <StyledTag colour="green" data-test="activity-kind-label">
@@ -48,7 +43,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
           onSuccessDispatch: TASK_DETAILS_LOADED,
         }}
       >
-        {() => task && <TaskDetailsTable task={task} company={company} />}
+        {() => task && <TaskDetailsTable task={task} company={task?.company} />}
       </Task.Status>
     </DefaultLayout>
   )
