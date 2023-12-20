@@ -87,8 +87,14 @@ export const state2props = (state) => {
 
   if (project) {
     const transformedProject = transformIdNameToValueLabel(project)
+    const transformedCompany = transformIdNameToValueLabel(
+      project.investorCompany
+    )
     return {
-      task: { investmentProject: transformedProject },
+      task: {
+        investmentProject: transformedProject,
+        company: transformedCompany,
+      },
       currentAdviserId,
       breadcrumbs: getInvestmentProjectBreadcumbs(transformedProject),
     }

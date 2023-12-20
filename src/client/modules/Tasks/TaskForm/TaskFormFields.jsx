@@ -145,6 +145,7 @@ const TaskFormFields = ({
             isMulti={false}
             label="Company name (optional)"
             hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
+            initialValue={task?.company}
           />
           {(task?.company || values.company) && (
             <FieldInvestmentProjectTypeahead
@@ -152,6 +153,7 @@ const TaskFormFields = ({
               label="Investment project (optional)"
               hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
               company={values.company && values.company.value}
+              initialValue={task?.investmentProject}
             />
           )}
         </>
