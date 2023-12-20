@@ -12,6 +12,7 @@ import {
   FieldAdvisersTypeahead,
   NewWindowLink,
   FieldCompaniesTypeahead,
+  FieldInvestmentProjectTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
@@ -19,7 +20,6 @@ import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
 import { OPTIONS } from './constants'
 import urls from '../../../../lib/urls'
 import { TASK_SAVE_TASK_DETAILS } from './state'
-import FieldInvestmentProjectTypeahead from '../../../components/Form/elements/FieldInvestmentProjectTypeahead'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
