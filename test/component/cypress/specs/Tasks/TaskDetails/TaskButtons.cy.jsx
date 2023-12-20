@@ -32,7 +32,7 @@ describe('Task buttons', () => {
     })
 
     it('should show the Back link to dashboard when no return url exists', () => {
-      assertLink('back-button', urls.dashboard.myTasks())
+      assertLink('task-back-link', urls.dashboard.myTasks())
     })
   })
 
@@ -52,7 +52,7 @@ describe('Task buttons', () => {
     })
 
     it('should show the Back link to dashboard when no return url exists', () => {
-      assertLink('back-button', urls.dashboard.myTasks())
+      assertLink('task-back-link', urls.dashboard.myTasks())
     })
   })
 
@@ -64,7 +64,7 @@ describe('Task buttons', () => {
     })
 
     it('should the back button with the returnUrl as the href', () => {
-      assertLink('back-button', 'a/b/c')
+      assertLink('task-back-link', 'a/b/c')
     })
   })
 })

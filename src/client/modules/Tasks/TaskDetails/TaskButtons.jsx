@@ -12,8 +12,12 @@ import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 
 const ButtonWrapper = styled.div`
+  min-height: 71px;
   * {
     margin-left: ${SPACING.SCALE_4};
+  }
+  * {
+    vertical-align: baseline;
   }
 `
 
@@ -49,15 +53,12 @@ export const TaskButtons = ({ task, returnUrl }) => (
             Edit
           </Button>
         )}
-        <Button
-          buttonColour={GREY_3}
-          buttonTextColour={TEXT_COLOUR}
-          as={Link}
+        <Link
+          data-test="task-back-link"
           href={returnUrl ?? urls.dashboard.myTasks()}
-          data-test="back-button"
         >
           Back
-        </Button>
+        </Link>
       </ButtonWrapper>
     </GridRow>
   </>
