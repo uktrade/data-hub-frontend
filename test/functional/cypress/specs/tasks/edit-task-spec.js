@@ -78,6 +78,14 @@ describe('Edit investment project task', () => {
       )
     })
 
+    it('should display the company typeahead with the value matching the investment project company', () => {
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test="field-company"]',
+        expectedOption:
+          investmentProjectTask.investmentProject.investorCompany.name,
+      })
+    })
+
     it('changing field values should send new values to the api', () => {
       cy.intercept('PATCH', endpoint, {
         statusCode: 200,

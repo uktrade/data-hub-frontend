@@ -12,6 +12,7 @@ import {
   FieldAdvisersTypeahead,
   NewWindowLink,
   FieldCompaniesTypeahead,
+  FieldInvestmentProjectTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
@@ -52,8 +53,7 @@ const TaskFormFields = ({
       redirectTo={() => redirectToUrl}
       submissionTaskName={TASK_SAVE_TASK_DETAILS}
       transformPayload={(values) => ({
-        //hidden fields do not get added to the values, include investment project here for now until it gets converted into a FieldSelect in future PRs
-        values: { ...values, investmentProject: task?.investmentProject },
+        values: values,
         currentAdviserId,
         taskId: values.id,
       })}
@@ -62,7 +62,7 @@ const TaskFormFields = ({
       submitButtonLabel="Save task"
       cancelButtonLabel="Back"
     >
-      {() => (
+      {({ values }) => (
         <>
           <FieldInput
             label="Task title"
@@ -140,19 +140,22 @@ const TaskFormFields = ({
             </UnorderedList>
           </Details>
 
-          {!task?.investmentProject && (
-            <FieldCompaniesTypeahead
-              name="company"
-              isMulti={false}
-              label="Company name (optional)"
-              hint="This will link the task to the company selected and display on your task list on the homepage."
+          <FieldCompaniesTypeahead
+            name="company"
+            isMulti={false}
+            label="Company name (optional)"
+            hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
+            initialValue={task?.company}
+          />
+          {(task?.company || values.company) && (
+            <FieldInvestmentProjectTypeahead
+              name="investmentProject"
+              label="Investment project (optional)"
+              hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
+              company={values.company && values.company.value}
+              initialValue={task?.investmentProject}
             />
           )}
-          <FieldInput
-            type="hidden"
-            name="investmentProject"
-            initialValue={task?.investmentProject?.value}
-          />
         </>
       )}
     </Form>

@@ -8,6 +8,8 @@ import {
   assertPayload,
   assertFlashMessage,
   assertExactUrl,
+  assertSingleTypeaheadOptionSelected,
+  assertVisible,
 } from '../../support/assertions'
 import {
   fill,
@@ -28,6 +30,17 @@ describe('Add generic task', () => {
 
     it('should display the header', () => {
       cy.get('h1').should('have.text', 'Add task')
+    })
+
+    context('When a company is selected', () => {
+      const company = companyFaker()
+
+      it('should display the investment project typeahead field', () => {
+        cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+        fillTypeahead('[data-test=field-company]', company.name)
+
+        assertVisible('[data-test="field-investmentProject"]')
+      })
     })
   })
 
@@ -81,6 +94,20 @@ describe('Add investment project task', () => {
 
     it('should display the header', () => {
       cy.get('h1').should('have.text', `Add task for ${fixture.name}`)
+    })
+
+    it('should display the company typeahead with the value matching the investment project company', () => {
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test="field-company"]',
+        expectedOption: fixture.investor_company.name,
+      })
+    })
+
+    it('should display the investment project typeahead with the select value', () => {
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test="field-investmentProject"]',
+        expectedOption: fixture.name,
+      })
     })
 
     it('add task button should send expected values to the api', () => {
