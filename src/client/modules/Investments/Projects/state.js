@@ -9,6 +9,7 @@ import {
   PROJECT_STATUS_OPTIONS,
   INVOLVEMENT_LEVEL_OPTIONS,
 } from './constants'
+import { transformInvestmentProjectToListItem } from './transformers'
 
 export const TASK_EDIT_INVESTMENT_PROJECT_STATUS =
   'TASK_EDIT_INVESTMENT_PROJECT_STATUS'
@@ -29,7 +30,7 @@ export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
 
   const queryParams = parseQueryString(queryString)
-  const { metadata, selectedAdvisers } = state[INVESTMENT_PROJECTS_ID]
+  const { metadata, selectedAdvisers, results } = state[INVESTMENT_PROJECTS_ID]
   const financialYearStart = getFinancialYearStart(new Date())
   const financialYearOptions = [
     {
@@ -61,9 +62,9 @@ export const state2props = ({ router, ...state }) => {
     selectedFilters.includeRelatedCompanies.options.some(
       (f) => f.value === 'include_subsidiary_companies'
     )
-
   return {
     ...state[INVESTMENT_PROJECTS_ID],
+    results: results.map(transformInvestmentProjectToListItem),
     currentAdviserId: state.currentAdviserId,
     payload: { ...queryParams },
     selectedFilters,

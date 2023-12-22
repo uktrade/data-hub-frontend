@@ -282,7 +282,6 @@ export const transformInvestmentProjectToListItem = ({
     subheading: `Project code ${project_code}`,
     badges,
     metadata,
-    name: name,
   }
 }
 

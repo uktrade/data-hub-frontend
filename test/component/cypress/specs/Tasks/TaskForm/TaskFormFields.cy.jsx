@@ -324,17 +324,6 @@ describe('Task form', () => {
           })
         })
       })
-
-      it('should display the investment project typeahead without a selected value', () => {
-        cy.get('[data-test="field-investmentProject"]').then((element) => {
-          assertFieldSingleTypeahead({
-            element,
-            label: 'Investment project (optional)',
-            value: '',
-            placeholder: 'Type to search for investment projects',
-          })
-        })
-      })
     })
 
     context(
@@ -347,6 +336,7 @@ describe('Task form', () => {
             <Component
               cancelRedirectUrl={urls.companies.index()}
               task={transformAPIValuesForForm(task)}
+              companyInvestmentProjects={{ results: [task.investmentProject] }}
             />
           )
         })

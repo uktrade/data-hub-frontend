@@ -1,6 +1,5 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
-import { transformInvestmentProjectToListItem } from './transformers'
 import { transformLandDateFilters } from './landDateTransformer'
 
 export const updateInvestmentProject = (values) =>
@@ -23,7 +22,7 @@ export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
     })
     .then(({ data }) => ({
       count: data.count,
-      results: data.results.map(transformInvestmentProjectToListItem),
+      results: data.results,
     }))
 }
 
