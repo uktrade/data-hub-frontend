@@ -158,7 +158,7 @@ const TaskFormFields = ({
                 name={TASK_GET_PROJECTS_LIST}
                 startOnRender={{
                   payload: {
-                    limit: 150,
+                    limit: 250,
                     companyId: task?.company?.value || values.company.value,
                   },
                   onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
@@ -171,6 +171,7 @@ const TaskFormFields = ({
                   label="Investment project (optional)"
                   hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
                   initialValue={task?.investmentProject}
+                  placeholder="Type to search for investment projects"
                 />
               )}
             </>
