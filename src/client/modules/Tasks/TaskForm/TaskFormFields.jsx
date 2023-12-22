@@ -151,9 +151,9 @@ const TaskFormFields = ({
             hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
             initialValue={task?.company}
           />
-
           {(task?.company || values.company) && (
             <>
+              {/* todo - this needs to refire the query when the company value changes */}
               <Task.Status
                 name={TASK_GET_PROJECTS_LIST}
                 startOnRender={{
@@ -163,7 +163,8 @@ const TaskFormFields = ({
                   },
                   onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
                 }}
-              />
+              ></Task.Status>
+
               {companyInvestmentProjects && (
                 <FieldTypeahead
                   options={companyInvestmentProjects}
