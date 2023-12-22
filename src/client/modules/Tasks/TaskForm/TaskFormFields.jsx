@@ -12,7 +12,7 @@ import {
   FieldAdvisersTypeahead,
   NewWindowLink,
   FieldCompaniesTypeahead,
-  FieldInvestmentProjectTypeahead,
+  FieldTypeahead,
 } from '../../../components'
 
 import { validateDaysRange, validateIfDateInFuture } from './validators'
@@ -20,6 +20,9 @@ import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
 import { OPTIONS } from './constants'
 import urls from '../../../../lib/urls'
 import { TASK_SAVE_TASK_DETAILS } from './state'
+import Task from '../../../components/Task'
+import { TASK_GET_PROJECTS_LIST } from '../../Investments/Projects/state'
+import { INVESTMENTS__PROJECTS_LOADED } from '../../../actions'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -44,6 +47,7 @@ const TaskFormFields = ({
   analyticsFormName,
   cancelRedirectUrl,
   redirectToUrl,
+  companyInvestmentProjects,
 }) => (
   <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
     <Form
@@ -147,14 +151,29 @@ const TaskFormFields = ({
             hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
             initialValue={task?.company}
           />
+
           {(task?.company || values.company) && (
-            <FieldInvestmentProjectTypeahead
-              name="investmentProject"
-              label="Investment project (optional)"
-              hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
-              company={values.company && values.company.value}
-              initialValue={task?.investmentProject}
-            />
+            <>
+              <Task.Status
+                name={TASK_GET_PROJECTS_LIST}
+                startOnRender={{
+                  payload: {
+                    limit: 150,
+                    companyId: task?.company?.value || values.company.value,
+                  },
+                  onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
+                }}
+              />
+              {companyInvestmentProjects && (
+                <FieldTypeahead
+                  options={companyInvestmentProjects}
+                  name="investmentProject"
+                  label="Investment project (optional)"
+                  hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
+                  initialValue={task?.investmentProject}
+                />
+              )}
+            </>
           )}
         </>
       )}
