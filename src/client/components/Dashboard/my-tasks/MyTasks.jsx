@@ -48,7 +48,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
         qsParam="created_by"
         options={filters?.createdBy?.options}
       />
-      <span class="task-select-spacer" id="task-select-spacer" />
+      <span className="task-select-spacer" id="task-select-spacer" />
       <TaskListSelect
         label="Sort by"
         qsParam="sortby"
