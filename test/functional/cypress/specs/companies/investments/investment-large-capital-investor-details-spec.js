@@ -31,7 +31,7 @@ describe('View large capital investor details page', () => {
   })
 
   context('when the company already exists', () => {
-    before(() => {
+    beforeEach(() => {
       gotoEditInvestorDetails(existingCompany.id)
     })
 
@@ -142,7 +142,7 @@ describe('View large capital investor details page', () => {
   })
 
   context('when successfully saved', () => {
-    before(() => {
+    beforeEach(() => {
       gotoEditInvestorDetails(existingCompany.id)
     })
 
