@@ -40,11 +40,8 @@ describe('Company Export tab - Edit exports', () => {
     () => {
       const XHR_ALIAS = 'save-export-edit-1'
 
-      before(() => {
-        cy.visit(urls.companies.exports.edit(minimallyMinimal.id))
-      })
-
       beforeEach(() => {
+        cy.visit(urls.companies.exports.edit(minimallyMinimal.id))
         cy.intercept('PATCH', '*/v4/company/*').as(XHR_ALIAS)
       })
 
@@ -92,11 +89,8 @@ describe('Company Export tab - Edit exports', () => {
     () => {
       const XHR_ALIAS = 'save-export-edit-2'
 
-      before(() => {
-        cy.visit(urls.companies.exports.edit(dnbLimited.id))
-      })
-
       beforeEach(() => {
+        cy.visit(urls.companies.exports.edit(dnbLimited.id))
         cy.intercept('PATCH', '*/v4/company/*').as(XHR_ALIAS)
       })
 

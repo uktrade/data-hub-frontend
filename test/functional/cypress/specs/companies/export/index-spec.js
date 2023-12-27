@@ -56,7 +56,7 @@ describe('Company Export tab', () => {
   context(
     'when viewing the export tab for an active company with no export information and 8 Export Wins',
     () => {
-      before(() => {
+      beforeEach(() => {
         visitExportIndex(fixtures.company.dnbCorp.id)
       })
 
@@ -249,7 +249,7 @@ describe('Company Export tab', () => {
   context(
     'when viewing the export tab for an active company with export information in each field',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.exports.index(fixtures.company.dnbLtd.id))
       })
 
@@ -290,7 +290,7 @@ describe('Company Export tab', () => {
   )
 
   context('when viewing exports for an archived company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
     })
 
@@ -369,7 +369,7 @@ describe('Company Export tab', () => {
     })
 
     context('When there is more than one page of results', () => {
-      before(() => {
+      beforeEach(() => {
         visitExports(fixtures.company.marsExportsLtd.id)
       })
 
@@ -411,12 +411,14 @@ describe('Company Export tab', () => {
       })
 
       it('should not display the next button', () => {
+        cy.get('a').contains('2').click()
         cy.get('#company-export-index-page').within(() => {
           cy.get('ul:last li a:last').should('not.have.text', 'Next')
         })
       })
 
       it('should display the previous button', () => {
+        cy.get('a').contains('2').click()
         cy.get('#company-export-index-page').within(() => {
           cy.get('ul:last li a:first').should('have.text', 'Previous')
         })

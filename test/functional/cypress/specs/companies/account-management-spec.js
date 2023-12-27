@@ -59,7 +59,7 @@ describe('Company account management', () => {
   const archivedObjective = objectiveFaker({ archived: true })
 
   context('When visiting the account management page with a strategy', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/company/${companyId}`,
@@ -106,7 +106,7 @@ describe('Company account management', () => {
   context(
     'When visiting the account management page without a strategy',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept(
           'GET',
           `/api-proxy/v4/company/${companyId}`,
@@ -139,7 +139,7 @@ describe('Company account management', () => {
   context(
     'When visiting the account management page without objectives',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
           results: [],
         }).as('objectiveApi')
@@ -162,7 +162,7 @@ describe('Company account management', () => {
   )
 
   context('When visiting the account management page with objectives', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
         results: [...objectives, noBlockersObjective],
       }).as('objectiveApi')
@@ -193,7 +193,7 @@ describe('Company account management', () => {
   context(
     'When visiting the account management page with no archived objectives',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
           results: [...objectives],
         }).as('objectiveApi')
@@ -209,7 +209,7 @@ describe('Company account management', () => {
   context(
     'When visiting the account management page with archived objectives',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective?**`, {
           results: [...objectives, archivedObjective],
         }).as('objectiveApi')
@@ -233,7 +233,7 @@ describe('Company account management', () => {
   )
 
   context('When visiting the account management page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/company/${companyId}`).as('companyApi')
       cy.visit(urls.companies.accountManagement.index(companyId))
       cy.wait('@companyApi')
@@ -253,7 +253,7 @@ describe('Company account management', () => {
 
 describe('One List core team', () => {
   context('when viewing a One List Tier company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.accountManagement.index(company.id))
     })
 
@@ -325,7 +325,7 @@ describe('One List core team', () => {
   })
 
   context('when viewing a One List Tier company with no advisers', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/company/${company.id}/one-list-group-core-team`,
@@ -357,7 +357,7 @@ describe('One List core team', () => {
 
 describe('One List core Tier D team', () => {
   context('when viewing a One List Tier D company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.accountManagement.index(companyTierD.id))
     })
 
@@ -396,7 +396,7 @@ describe('One List core Tier D team', () => {
         id: companyTierD.id,
       })
 
-      before(() => {
+      beforeEach(() => {
         cy.intercept(
           'GET',
           `/api-proxy/v4/company/${companyTierD.id}`,

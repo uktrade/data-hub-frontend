@@ -50,45 +50,39 @@ describe('Company Export tab - Edit export countries', () => {
   context('Adding countries to each field with a 500 response', () => {
     const XHR_ALIAS = 'save-export-edit-countries-1'
 
-    before(() => {
-      cy.visit(urls.companies.exports.editCountries(lambdaPlc.id))
-    })
-
     beforeEach(() => {
+      cy.visit(urls.companies.exports.editCountries(lambdaPlc.id))
       cy.intercept('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
-    })
-
-    it('Should enter values for currently exporting', () => {
-      cy.get(selectors.currentlyExporting)
-        .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOptionInFieldset('Spai')
-        .selectTypeaheadOptionInFieldset('Fran')
-
-      assertTypeaheadValues(selectors.currentlyExporting, 'Spain', 'France')
-    })
-
-    it('Should enter values for future countries of interest', () => {
-      cy.get(selectors.futureInterest)
-        .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOptionInFieldset('Braz')
-        .selectTypeaheadOptionInFieldset('Chin')
-
-      assertTypeaheadValues(selectors.futureInterest, 'Brazil', 'China')
-    })
-
-    it('Should enter values for countries of no interest', () => {
-      cy.get(selectors.notInterested)
-        .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOptionInFieldset('Hon')
-
-      assertTypeaheadValues(selectors.notInterested, 'Honduras')
     })
 
     it('Should render the buttons', () => {
       assertButtons(lambdaPlc.id)
     })
 
-    it('Should try an save the values then show an alert', () => {
+    it('Should try and save the values then show an alert', () => {
+      // Enter and assert values for currently exporting.
+      cy.get(selectors.currentlyExporting)
+        .should('have.prop', 'tagName', 'DIV')
+        .selectTypeaheadOptionInFieldset('Spai')
+        .selectTypeaheadOptionInFieldset('Fran')
+
+      assertTypeaheadValues(selectors.currentlyExporting, 'Spain', 'France')
+
+      // Enter and assert values for future countries of interest
+      cy.get(selectors.futureInterest)
+        .should('have.prop', 'tagName', 'DIV')
+        .selectTypeaheadOptionInFieldset('Braz')
+        .selectTypeaheadOptionInFieldset('Chin')
+
+      assertTypeaheadValues(selectors.futureInterest, 'Brazil', 'China')
+
+      // Enter and assert values for countries of no interest
+      cy.get(selectors.notInterested)
+        .should('have.prop', 'tagName', 'DIV')
+        .selectTypeaheadOptionInFieldset('Hon')
+
+      assertTypeaheadValues(selectors.notInterested, 'Honduras')
+
       clickButton('Save and return')
 
       assertAPIRequest(XHR_ALIAS, (xhr) => {
@@ -113,28 +107,9 @@ describe('Company Export tab - Edit export countries', () => {
   context('Adding the same country to two fields with a 400 response', () => {
     const XHR_ALIAS = 'save-export-edit-countries-2'
 
-    before(() => {
-      cy.visit(urls.companies.exports.editCountries(dnbCorp.id))
-    })
-
     beforeEach(() => {
+      cy.visit(urls.companies.exports.editCountries(dnbCorp.id))
       cy.intercept('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
-    })
-
-    it('Should enter values for currently exporting', () => {
-      cy.get(selectors.currentlyExporting)
-        .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOptionInFieldset('Spai')
-
-      assertTypeaheadValues(selectors.currentlyExporting, 'Spain')
-    })
-
-    it('Should enter values for future countries of interest', () => {
-      cy.get(selectors.futureInterest)
-        .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOptionInFieldset('Spai')
-
-      assertTypeaheadValues(selectors.futureInterest, 'Spain')
     })
 
     it('Should render the buttons', () => {
@@ -142,6 +117,20 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     it('Should try an save the values then show an alert', () => {
+      // Should enter values for currently exporting
+      cy.get(selectors.currentlyExporting)
+        .should('have.prop', 'tagName', 'DIV')
+        .selectTypeaheadOptionInFieldset('Spai')
+
+      assertTypeaheadValues(selectors.currentlyExporting, 'Spain')
+
+      // Should enter values for future countries of interest
+      cy.get(selectors.futureInterest)
+        .should('have.prop', 'tagName', 'DIV')
+        .selectTypeaheadOptionInFieldset('Spai')
+
+      assertTypeaheadValues(selectors.futureInterest, 'Spain')
+
       clickButton('Save and return')
 
       assertAPIRequest(XHR_ALIAS, (xhr) => {

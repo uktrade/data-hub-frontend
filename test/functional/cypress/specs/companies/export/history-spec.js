@@ -17,7 +17,7 @@ describe('Company Export tab - Export countries history', () => {
 
   describe('Full history', () => {
     context('when there is no history', () => {
-      before(() => {
+      beforeEach(() => {
         visitHistory(fixtures.company.lambdaPlc.id)
       })
 
@@ -50,7 +50,7 @@ describe('Company Export tab - Export countries history', () => {
     })
 
     context('when there is history with multiple pages', () => {
-      before(() => {
+      beforeEach(() => {
         visitHistory(fixtures.company.dnbCorp.id)
       })
 
@@ -155,12 +155,14 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not display the next button', () => {
+        cy.get('a').contains('2').click()
         cy.get('#company-export-full-history').within(() => {
           cy.get('ul:last li a:last').should('not.have.text', 'Next')
         })
       })
 
       it('should display the previous button', () => {
+        cy.get('a').contains('2').click()
         cy.get('#company-export-full-history').within(() => {
           cy.get('ul:last li a:first').should('have.text', 'Previous')
         })
@@ -168,7 +170,7 @@ describe('Company Export tab - Export countries history', () => {
     })
 
     context('when there is history that can be grouped', () => {
-      before(() => {
+      beforeEach(() => {
         visitHistory(fixtures.company.dnbGlobalUltimate.id)
       })
 
@@ -248,7 +250,7 @@ describe('Company Export tab - Export countries history', () => {
 
     context('when the user is unknown', () => {
       context('With a single history item', () => {
-        before(() => {
+        beforeEach(() => {
           visitHistory(fixtures.company.marsExportsLtd.id)
         })
 
@@ -278,7 +280,7 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       context('With grouped history items', () => {
-        before(() => {
+        beforeEach(() => {
           visitHistory(fixtures.company.minimallyMinimalLtd.id)
         })
 
@@ -324,7 +326,7 @@ describe('Company Export tab - Export countries history', () => {
     })
 
     context('when the only item is an "update" item', () => {
-      before(() => {
+      beforeEach(() => {
         visitHistory(fixtures.company.dnbSubsidiary.id)
       })
 
@@ -342,7 +344,7 @@ describe('Company Export tab - Export countries history', () => {
     })
 
     context('when viewing a company with interactions in the history', () => {
-      before(() => {
+      beforeEach(() => {
         visitHistory(fixtures.company.investigationLimited.id)
       })
 
@@ -493,7 +495,7 @@ describe('Company Export tab - Export countries history', () => {
       cy.wait('@exportCountryHistoryResults')
     }
 
-    before(() => {
+    beforeEach(() => {
       visitCountryHistory(
         fixtures.company.dnbCorp.id,
         '975f66a0-5d95-e211-a939-e4115bead28a'
