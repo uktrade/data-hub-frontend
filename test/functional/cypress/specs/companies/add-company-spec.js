@@ -139,10 +139,6 @@ const assertUSOrCanadianCompanyFormFields = () => {
 }
 
 describe('Add company form', () => {
-  beforeEach(function () {
-    Cypress.Cookies.preserveOnce('datahub.sid')
-  })
-
   context(
     'when viewing a company in the list thats already in Data Hub',
     () => {
@@ -178,7 +174,7 @@ describe('Add company form', () => {
   )
 
   context('when viewing the "Add company form"', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.create())
     })
 
@@ -215,7 +211,7 @@ describe('Add company form', () => {
   })
 
   context('when "Overseas" is selected for the company location', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.create())
       cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
       cy.get(selectors.companyAdd.continueButton).click()
@@ -243,7 +239,7 @@ describe('Add company form', () => {
   })
 
   context('when an overseas country is picked', () => {
-    before(() => {
+    beforeEach(() => {
       goToOverseasCompanySearchPage()
     })
 
@@ -313,7 +309,7 @@ describe('Add company form', () => {
   })
 
   context('when a company is picked that does not exist on Data Hub', () => {
-    before(() => {
+    beforeEach(() => {
       goToOverseasCompanySearchResultsPage()
       cy.contains('Some unmatched company').click()
     })
@@ -587,7 +583,7 @@ describe('Add company form', () => {
   })
 
   context('when a valid sector and region are submitted', () => {
-    before(() => {
+    beforeEach(() => {
       goToUKCompanySectorAndRegionPage()
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
@@ -595,22 +591,25 @@ describe('Add company form', () => {
       )
       cy.get(selectors.companyAdd.submitButton).click()
     })
+
     it('should redirect to the company overview', () => {
       cy.location('pathname').should(
         'eq',
         `/companies/${fixtures.company.investigationLimited.id}/overview`
       )
     })
+
     it('should display the flash message', () => {
       cy.contains('Company added to Data Hub')
     })
+
     it('should display the pending D&B investigation message', () => {
       cy.get('[data-test="investigation-message"]').should('be.visible')
     })
   })
 
   context('when manually adding a new overseas company', () => {
-    before(() => {
+    beforeEach(() => {
       goToOverseasCompanySearchResultsPage()
 
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
@@ -762,7 +761,7 @@ describe('Add company form', () => {
   })
 
   context('when manually adding a new US company', () => {
-    before(() => {
+    beforeEach(() => {
       goToUSCompanySearchResultsPage()
 
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
@@ -817,7 +816,7 @@ describe('Add company form', () => {
   })
 
   context('when manually adding a new Canadian company', () => {
-    before(() => {
+    beforeEach(() => {
       goToCandianCompanySearchResultsPage()
 
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
@@ -947,7 +946,7 @@ describe('Add company form', () => {
     context(
       'and a single company is found that is not on datahub that doesnt match a datahub country',
       () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept('POST', '/companies/create/dnb/company-search?_csrf=*', {
             results: [
               {
@@ -991,7 +990,10 @@ describe('Add company form', () => {
           )
         })
 
-        it('should submit the form', () => {
+        it('should submit the form and redirect to company overview', () => {
+          cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
+          cy.get(selectors.companyAdd.continueButton).click()
+
           cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
             'London'
           )
@@ -999,9 +1001,7 @@ describe('Add company form', () => {
             'Advanced Engineering'
           )
           cy.get(selectors.companyAdd.submitButton).click()
-        })
 
-        it('should redirect to the company overview', () => {
           cy.location('pathname').should(
             'eq',
             `/companies/${fixtures.company.default.id}/overview`
@@ -1013,7 +1013,7 @@ describe('Add company form', () => {
     context(
       'and a single company is found that is not on datahub with a matching datahub country',
       () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept('POST', '/companies/create/dnb/company-search?_csrf=*', {
             results: [
               {
@@ -1079,14 +1079,14 @@ describe('Add company form', () => {
           )
         })
 
-        it('should submit the form', () => {
+        it('should submit the form and redirect to company overview', () => {
+          cy.get(selectors.companyAdd.continueButton).click()
+
           cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
             'Advanced Engineering'
           )
           cy.get(selectors.companyAdd.submitButton).click()
-        })
 
-        it('should redirect to the company overview', () => {
           cy.location('pathname').should(
             'eq',
             `/companies/${fixtures.company.default.id}/overview`
