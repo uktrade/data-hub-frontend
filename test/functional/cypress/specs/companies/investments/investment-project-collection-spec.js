@@ -104,7 +104,7 @@ describe('Company Investments Collection Page', () => {
     dnbCorp.id
   )}?${buildQueryString()}`
 
-  before(() => {
+  beforeEach(() => {
     cy.intercept(
       'GET',
       `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
@@ -196,7 +196,7 @@ describe('Company Investments Collection Page', () => {
   })
 
   context('when viewing investments projects for an archived company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(companies.investments.companyInvestmentProjects(archivedLtd.id))
     })
 
@@ -239,7 +239,7 @@ describe('Company Investments Collection Page', () => {
   context(
     'Viewing the company investment projects collection page for company with large number of companies',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept(
           'GET',
           `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(

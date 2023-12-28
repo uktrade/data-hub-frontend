@@ -104,7 +104,7 @@ describe('D&B Company hierarchy tree', () => {
   })
 
   context('When a company is the requested company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         `api-proxy/v4/dnb/${dnbGlobalUltimate.id}/family-tree`,
         companyOnlyImmediateSubsidiaries

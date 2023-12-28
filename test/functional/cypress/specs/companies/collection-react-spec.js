@@ -63,11 +63,8 @@ describe('Company Collections - React', () => {
   const otherCompanies = companyListFaker(7)
   const companyList = [company1, company2, company3, ...otherCompanies]
 
-  before(() => {
-    collectionListRequest('v4/search/company', companyList, companies.index())
-  })
-
   beforeEach(() => {
+    collectionListRequest('v4/search/company', companyList, companies.index())
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')

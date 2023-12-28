@@ -4,7 +4,7 @@ const { assertGovReactTable } = require('../../../support/assertions')
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.accountManagement.index(
           fixtures.company.marsExportsLtd.id
@@ -41,7 +41,7 @@ describe('Lead advisers', () => {
   context(
     'when viewing a One List tier D - ITA company with an allocated Account manager',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.accountManagement.index(
             fixtures.company.oneListTierDita.id

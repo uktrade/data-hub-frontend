@@ -28,7 +28,7 @@ describe('Download CSV', () => {
   context('When there is a single company', () => {
     const companiesList = companyListFaker(1)
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: companiesList,

@@ -56,6 +56,7 @@ describe('Company Activity Feed Filter', () => {
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
+
       assertRequestUrl('@apiRequest', minimumRequest)
     })
   })
@@ -85,6 +86,14 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
+
+        /*
+        TODO: Fix test - the apiRequest does not match expected
+        console.log(`apiRequest: ${urls.companies.activity.index(
+          fixtures.company.allActivitiesCompany.id
+        )}?${queryString}`)
+        console.log(`apiRequest should contain: ${expectedRequestAdviserUrl}`)
+        */
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
 
         /*

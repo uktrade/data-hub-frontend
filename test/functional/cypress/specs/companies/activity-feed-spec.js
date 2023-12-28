@@ -5,17 +5,17 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 const company = fixtures.company.allActivitiesCompany
 
 describe('Company activity feed', () => {
-  before(() => {
-    cy.visit(urls.companies.activity.index(company.id))
-  })
-
-  assertCompanyBreadcrumbs(
-    company.name,
-    urls.companies.detail(company.id),
-    'Activity Feed'
-  )
-
   context('Companies House Company', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
+    assertCompanyBreadcrumbs(
+      company.name,
+      urls.companies.detail(company.id),
+      'Activity Feed'
+    )
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="companies-house-company-activity"]').within(() =>
         cy
@@ -26,7 +26,12 @@ describe('Company activity feed', () => {
       )
     })
   })
+
   context('Export Support Service', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity theme label', () => {
       cy.get('[data-test="export-support-service"]').within(() =>
         cy.get('[data-test="activity-theme-label"]').contains('export', {
@@ -71,6 +76,10 @@ describe('Company activity feed', () => {
   })
 
   context('Companies House Account', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="companies-house-account-activity"]').within(() =>
         cy
@@ -83,6 +92,10 @@ describe('Company activity feed', () => {
   })
 
   context('HMRC Exporter', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="hmrc-exporter-activity"]').within(() =>
         cy.get('[data-test="activity-kind-label"]').contains('HMRC Update', {
@@ -93,6 +106,10 @@ describe('Company activity feed', () => {
   })
 
   context('Orders (OMIS)', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="order-activity"]').within(() =>
         cy.get('[data-test="activity-kind-label"]').contains('New Order', {
@@ -137,6 +154,10 @@ describe('Company activity feed', () => {
   })
 
   context('Investment project', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="investment-activity"]').within(() =>
         cy
@@ -192,6 +213,10 @@ describe('Company activity feed', () => {
   })
 
   context('Referrals project', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct referral type label', () => {
       cy.get('[data-test="referral-activity"]').within(() =>
         cy
@@ -219,6 +244,10 @@ describe('Company activity feed', () => {
   })
 
   context('Aventri', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
     it('displays the correct activity type label', () => {
       cy.get('[data-test="aventri-event"]').within(() =>
         cy.get('[data-test="activity-kind-label"]').contains('Aventri Event', {
@@ -238,7 +267,7 @@ describe('Company activity feed', () => {
     context(
       'when a company with large number contacts attending aventri events is viewed',
       () => {
-        before(() => {
+        beforeEach(() => {
           cy.visit(
             urls.companies.activity.index(
               fixtures.company.companyWithManyContacts.id
@@ -281,7 +310,7 @@ describe('Company activity feed', () => {
     })
 
     it('displays the correct activity type label', () => {
-      cy.get('[data-test="maxemail-campaign-activity"]').within(() =>
+      cy.get('[data-test="maxemail-campaign-activity"]').each(() =>
         cy.get('[data-test="activity-kind-label"]').contains('Email Campaign', {
           matchCase: false,
         })
