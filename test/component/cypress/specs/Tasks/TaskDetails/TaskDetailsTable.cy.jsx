@@ -18,9 +18,16 @@ describe('Task details table', () => {
   context('When a task has all optional fields set', () => {
     const investmentProjectTask = taskWithInvestmentProjectFaker()
     const company = investmentProjectTask.company
+    const project = investmentProjectTask.investmentProject
 
     it('the table should show all expected values', () => {
-      cy.mount(<Component task={investmentProjectTask} company={company} />)
+      cy.mount(
+        <Component
+          task={investmentProjectTask}
+          company={company}
+          project={project}
+        />
+      )
 
       assertSummaryTable({
         dataTest: 'task-details-table',
@@ -30,6 +37,10 @@ describe('Task details table', () => {
           Company: {
             href: urls.companies.detail(company.id),
             name: company.name,
+          },
+          ['Investment project']: {
+            href: urls.investments.projects.details(project.id),
+            name: project.name,
           },
           ['Date due']: formatLongDate(investmentProjectTask.dueDate),
           'Assigned to': investmentProjectTask.advisers
@@ -53,7 +64,13 @@ describe('Task details table', () => {
     const company = investmentProjectTask.company
 
     it('the table should show all expected values', () => {
-      cy.mount(<Component task={investmentProjectTask} company={company} />)
+      cy.mount(
+        <Component
+          task={investmentProjectTask}
+          company={company}
+          project={project}
+        />
+      )
 
       assertSummaryTable({
         dataTest: 'task-details-table',
