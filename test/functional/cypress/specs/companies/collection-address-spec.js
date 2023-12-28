@@ -30,11 +30,8 @@ describe('Company Collection Address', () => {
   const otherCompanies = companyListFaker(9)
   const companyList = [usCompany, ...otherCompanies]
 
-  before(() => {
-    collectionListRequest('v4/search/company', companyList, companies.index())
-  })
-
   beforeEach(() => {
+    collectionListRequest('v4/search/company', companyList, companies.index())
     getCollectionList()
   })
 

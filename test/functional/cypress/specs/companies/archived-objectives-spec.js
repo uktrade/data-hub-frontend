@@ -10,7 +10,7 @@ const incompleteObjective = objectiveFaker({ archived: true, progress: 50 })
 const completeObjective = objectiveFaker({ archived: true, progress: 100 })
 
 context('When visiting the archived objective page with objectives', () => {
-  before(() => {
+  beforeEach(() => {
     cy.intercept('GET', `/api-proxy/v4/company/${companyId}/objective**`, {
       results: [incompleteObjective, completeObjective],
     }).as('objectivesApi')

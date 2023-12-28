@@ -8,7 +8,7 @@ const { assertBreadcrumbs } = require('../../../support/assertions')
 
 describe('Referral help', () => {
   context('when viewing referral help', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.referrals.help(companyId, '1'))
     })
 

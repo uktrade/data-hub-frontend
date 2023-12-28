@@ -18,7 +18,7 @@ const assertChanges = (table, caption, beforeChange, afterChange) => {
 }
 
 describe('Edit History', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.companies.editHistory.index(fixtures.company.venusLtd.id))
   })
 

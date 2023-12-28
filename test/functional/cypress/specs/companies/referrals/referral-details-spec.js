@@ -12,7 +12,7 @@ const {
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
-    before(() =>
+    beforeEach(() =>
       cy.visit(urls.companies.referrals.details(companyId, REFERRAL_ID))
     )
 
@@ -107,7 +107,7 @@ describe('Referral details', () => {
   })
 
   context('when viewing referral details with no contact', () => {
-    before(() =>
+    beforeEach(() =>
       cy.visit(
         urls.companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
       )
