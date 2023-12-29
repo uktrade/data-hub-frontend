@@ -5,7 +5,7 @@ const urls = require('../../../../../src/lib/urls')
 
 describe('Create a company list', () => {
   context('when viewing a Create list form', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/lists/create')
     })
 
@@ -55,7 +55,7 @@ describe('Create a company list', () => {
   })
 
   context('when submitting with no input', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should display an error', () => {
@@ -67,7 +67,7 @@ describe('Create a company list', () => {
   })
 
   context('when submitting over 30 characters', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/lists/create')
     })
     it('should display an error', () => {
@@ -85,7 +85,7 @@ describe('Create a company list', () => {
   })
 
   context('when submitting a valid list name', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should display a success message', () => {
@@ -99,7 +99,7 @@ describe('Create a company list', () => {
   })
 
   context('when cancelling the form', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should return to the company page', () => {

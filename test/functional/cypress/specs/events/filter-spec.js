@@ -12,7 +12,7 @@ const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
 const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
 describe('events Collections Filter', () => {
   context('with the events activity stream feature flag enabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(events.index())
     })
 
@@ -22,13 +22,13 @@ describe('events Collections Filter', () => {
       const queryParamWithName = qs.stringify({ name: 'Big Event' })
 
       context('should filter from user input', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
           ).as('nameRequest')
         })
-
+        // TODO: Fix test
         it('should pass the name to the controller', () => {
           cy.get(element).type(`${eventName}{enter}`)
           cy.wait('@nameRequest').then((request) => {
@@ -70,7 +70,7 @@ describe('events Collections Filter', () => {
       const queryParamWithLatestStartDate = 'latest_start_date=2020-11-10'
 
       context('should filter from user input', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&earliestStartDate=2020-11-01&latestStartDate=2020-11-10&page=1`
@@ -147,7 +147,7 @@ describe('events Collections Filter', () => {
       const queryParamWithInvalidAventriId = 'aventri_id=Testing %'
 
       context('should filter from user input', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
@@ -211,7 +211,7 @@ describe('events Collections Filter', () => {
       const countryName = 'Brazil'
 
       context('should filter from user input and apply filter chips', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
@@ -263,7 +263,7 @@ describe('events Collections Filter', () => {
       const ukRegionLabel = 'All'
 
       context('should filter from user input and apply filter chips', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
@@ -312,7 +312,7 @@ describe('events Collections Filter', () => {
       const adviserName = 'Puck Head'
 
       context('should filter from user input and apply filter chips', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept('POST', searchEndpoint).as('apiRequest')
           cy.intercept(
             'GET',
@@ -364,7 +364,7 @@ describe('events Collections Filter', () => {
       const queryParamWithEventType = `event_type%5B0%5D=${eventType.id}`
 
       context('should filter from user input and apply filter chips', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
             'eventTypeApiRequest'
           )

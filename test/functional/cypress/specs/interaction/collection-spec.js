@@ -162,15 +162,13 @@ const assertInteractionDetails = ({
 }
 
 describe('Interactions Collections', () => {
-  before(() => {
+  // TODO: consider how to make these more performant?
+  beforeEach(() => {
     collectionListRequest(
       'v3/search/interaction',
       interactionsList,
       interactions.index()
     )
-  })
-
-  beforeEach(() => {
     cy.get('[data-test="collection-list"]').as('collectionList')
     cy.get('[data-test="collection-item"]').as('collectionItems')
   })

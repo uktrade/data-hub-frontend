@@ -41,6 +41,7 @@ const describeCompanyEditForm = ({ company, elements }) => {
   })
 
   it('should render page contents', () => {
+    // TODO: Investigate why this test breaks for each context
     const spec = [
       ...elements,
       {
@@ -74,7 +75,7 @@ const describeCompanyEditForm = ({ company, elements }) => {
 describe('Company edit', () => {
   context('when editing unmatched UK company on the One List', () => {
     const company = fixtures.company.venusLtd
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.edit(company.id))
     })
 
@@ -202,7 +203,7 @@ describe('Company edit', () => {
   context('when editing unmatched US company NOT on the One List', () => {
     const company = fixtures.company.marsExportsLtd
 
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.edit(company.id))
     })
 
@@ -303,7 +304,7 @@ describe('Company edit', () => {
   context('when editing unmatched Canadian company NOT on the One List', () => {
     const company = fixtures.company.canadianCompany
 
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.edit(company.id))
     })
 

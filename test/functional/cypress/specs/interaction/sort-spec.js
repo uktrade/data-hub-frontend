@@ -5,7 +5,7 @@ const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 
 describe('Interactions Collections Sort', () => {
   context('Default sort', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
       cy.visit(urls.interactions.index())
     })

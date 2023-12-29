@@ -9,7 +9,7 @@ const interactionSearchEndpoint = '/api-proxy/v3/search/interaction'
 
 describe('Download CSV', () => {
   context('When there are 0 interactions', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v3/search/interaction', {
         body: {
           results: [],
@@ -24,7 +24,7 @@ describe('Download CSV', () => {
   })
   context('When there is a single interaction', () => {
     const interactionList = interactionsListFaker(1)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', interactionSearchEndpoint, {
         body: {
           results: interactionList,
@@ -53,7 +53,7 @@ describe('Download CSV', () => {
   })
   context('When there are 4999 interactions or less', () => {
     const interactionsList = interactionsListFaker(9)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', interactionSearchEndpoint, {
         body: {
           results: interactionsList,
@@ -71,7 +71,7 @@ describe('Download CSV', () => {
   })
   context('When there are 5000 interactions or more', () => {
     const interactionsList = interactionsListFaker(10)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', interactionSearchEndpoint, {
         body: {
           results: interactionsList,
@@ -101,7 +101,7 @@ describe('Download CSV', () => {
       policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
       company_one_list_group_tier: ['b91bf800-8d53-e311-aef3-441ea13961e2'],
     })
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', interactionSearchEndpoint, {
         body: {
           results: interactionsList,

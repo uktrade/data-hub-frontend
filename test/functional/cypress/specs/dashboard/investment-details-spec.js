@@ -32,7 +32,9 @@ describe('Dashboard - Investment details', () => {
     investmentProjectFaker({ country_investment_originates_from: undefined }),
     investmentProjectFaker({ latest_interaction: undefined }),
   ]
-  before(() => {
+
+  beforeEach(() => {
+    cy.resetUser()
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
         count: investmentProjects.length,
@@ -41,13 +43,6 @@ describe('Dashboard - Investment details', () => {
     }).as('apiRequest')
     cy.visit(dashboard.investmentProjects())
     cy.wait('@apiRequest')
-  })
-
-  after(() => {
-    cy.resetUser()
-  })
-
-  beforeEach(() => {
     cy.get('[data-test="investment-details"]').as('allInvestmentDetails')
     cy.get('[data-test="investment-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-details"]').eq(1).as('secondProjectDetails')

@@ -13,7 +13,7 @@ const detailsUrl = urls.companies.detail(fixtures.company.lambdaPlc.id)
 
 describe('Adding and removing a company to a list', () => {
   context('when viewing the companies page with company lists created', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
     it('should display the add to list button', () => {
@@ -27,7 +27,7 @@ describe('Adding and removing a company to a list', () => {
     })
   })
   context('when viewing the add/remove from lists form', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
     })
 
@@ -70,7 +70,7 @@ describe('Adding and removing a company to a list', () => {
   })
 
   context('when adding the company to a list', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
       cy.get(`[data-test="checkbox-${listA}"]`).check()
       cy.get('[data-test="submit-button"]').click()
@@ -89,7 +89,7 @@ describe('Adding and removing a company to a list', () => {
   })
 
   context('when removing the company from a list', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
       cy.get(`[data-test="checkbox-${listB}"]`).check()
       cy.get('[data-test="submit-button"]').click()

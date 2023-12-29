@@ -25,7 +25,7 @@ const {
 
 describe('View contact details', () => {
   context('when viewing a contact', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/contacts/2676ea91-9dd7-4cf3-a4a3-67b06f841b54')
     })
 
@@ -113,7 +113,7 @@ describe('View contact details', () => {
     })
 
     context('with partial details', () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit('/contacts/bc05d7fc-ce71-448a-a60d-8a67fb5bfe06')
       })
 
@@ -127,7 +127,7 @@ describe('View contact details', () => {
       })
     })
     context('with the company address', () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit('/contacts/a55af9e5-c53c-4696-9647-065b28ea02de')
       })
 
@@ -143,7 +143,7 @@ describe('View contact details', () => {
       })
     })
     context('based in the US', () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit('/contacts/b0cb178b-49d3-467a-9cd7-90cb0fe0f30a')
       })
 
@@ -162,7 +162,7 @@ describe('View contact details', () => {
   })
 
   context('when viewing an archived contact', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/contacts/1ba51fde-88be-43b3-8701-5c9adcc5cbfb')
     })
 
@@ -218,7 +218,7 @@ describe('View contact details', () => {
   })
 
   context('when viewing a contact with an invalid email flagged', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/contacts/2341fb21-ee64-4898-8f2e-ebf924e1e63f')
     })
 

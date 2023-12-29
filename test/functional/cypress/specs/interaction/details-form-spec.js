@@ -432,6 +432,11 @@ describe('Export theme - standard interaction', () => {
   })
 
   context('when giving user guidance about trade agreement options', () => {
+    beforeEach(() => {
+      spyOnRequest()
+      cy.visit(urls.companies.interactions.create(company.id))
+    })
+
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',

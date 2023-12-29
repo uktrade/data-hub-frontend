@@ -23,7 +23,7 @@ describe('Download CSV', () => {
   })
   context('When there is a single contact', () => {
     const contactsList = contactsListFaker(1)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v3/search/contact', {
         body: {
           results: contactsList,

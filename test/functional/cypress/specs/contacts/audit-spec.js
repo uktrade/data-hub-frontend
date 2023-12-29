@@ -6,11 +6,8 @@ const {
 
 describe('Contact audit history', () => {
   context('when viewing the audit history for a contact', () => {
-    before(() => {
-      cy.visit(urls.contacts.audit('64f85710-eabd-4479-829c-1fd47e3595d0'))
-    })
-
     beforeEach(() => {
+      cy.visit(urls.contacts.audit('64f85710-eabd-4479-829c-1fd47e3595d0'))
       cy.get('[data-test="collection-item"]').as('collectionItems')
       cy.get('@collectionItems').eq(0).as('firstListItem')
       cy.get('@collectionItems').eq(1).as('secondListItem')
@@ -101,11 +98,8 @@ describe('Contact audit history', () => {
   })
 
   context('when viewing an audit history with less than 10 entries', () => {
-    before(() => {
-      cy.visit(urls.contacts.audit('e74f0a25-aeee-48bd-a483-ac29c47e81a4'))
-    })
-
     beforeEach(() => {
+      cy.visit(urls.contacts.audit('e74f0a25-aeee-48bd-a483-ac29c47e81a4'))
       cy.get('[data-test="collection-item"]').as('collectionItems')
       cy.get('@collectionItems').eq(0).as('firstListItem')
       cy.get('@collectionItems').eq(1).as('secondListItem')
@@ -169,7 +163,7 @@ describe('Contact audit history', () => {
   })
 
   context('when viewing an audit history with no entries', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.contacts.audit())
     })
 

@@ -4,7 +4,7 @@ import { exports } from './view-spec-helper'
 const { assertAriaTablistTabSelected } = require('../../support/assertions')
 
 describe('My companies lists', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/')
   })
 
@@ -13,8 +13,7 @@ describe('My companies lists', () => {
 
   Object.entries(exports.expectedLists).forEach(([name, expectedValues]) => {
     describe(`After selecting list "${name}"`, () => {
-      before(() => cy.contains('View list').find('select').select(name))
-
+      beforeEach(() => cy.contains('View list').find('select').select(name))
       exports.describeSelectedList({ name, ...expectedValues })
     })
   })

@@ -12,7 +12,7 @@ describe('Event Export Support Details', () => {
 
   context('Details Render', () => {
     context('when it is a valid ess interaction ', () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.interactions.exportSupportService.details(essInteractionId)
         )
@@ -48,7 +48,7 @@ describe('Event Export Support Details', () => {
   })
 
   context('when ess title is not provided', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.interactions.exportSupportService.details(essInteractionIdNoTitle)
       )
@@ -67,7 +67,7 @@ describe('Event Export Support Details', () => {
   })
 
   context('when the ess interaction is not found', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.interactions.exportSupportService.details(notFoundEssId))
     })
 

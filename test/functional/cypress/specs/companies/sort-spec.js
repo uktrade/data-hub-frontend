@@ -4,7 +4,7 @@ const companySearchEndpoint = '/api-proxy/v4/search/company'
 
 describe('Contact Collections Sort', () => {
   context('Default sort', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
       cy.visit(urls.companies.index())
     })

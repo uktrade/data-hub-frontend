@@ -18,7 +18,7 @@ describe('Export pipeline sort', () => {
     const element = '[data-test="sortby-select"] option'
     const exports = exportListFaker(3)
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `${requestUrl}&sortby=created_on%3Adesc`, {
         body: {
           count: exports.length,
