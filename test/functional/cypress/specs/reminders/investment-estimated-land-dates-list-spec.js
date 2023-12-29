@@ -74,7 +74,7 @@ describe('Estimated Land Date Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.reminders.investments.estimatedLandDate())

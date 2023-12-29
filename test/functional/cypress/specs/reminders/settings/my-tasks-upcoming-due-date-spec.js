@@ -6,7 +6,7 @@ const endpoint =
 
 describe('Settings - my tasks upcoming due dates', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.myTasks.dueDateApproaching())
     })
 

@@ -77,7 +77,7 @@ describe('My Tasks Due Date Approaching Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.myTasks.dueDateApproaching())
       cy.wait('@remindersApiRequest')

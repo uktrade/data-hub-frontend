@@ -5,7 +5,7 @@ const endpoint = '/api-proxy/v4/reminder/subscription/my-tasks-task-completed'
 
 describe('Settings - task completed', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.myTasks.taskCompleted())
     })
 
