@@ -35,13 +35,13 @@ const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 
 describe('Export pipeline create', () => {
-  before(() => {
+  beforeEach(() => {
     // Clear the session storage to avoid caching of contact form data in the application sessionStorage
     Cypress.session.clearCurrentSessionData()
   })
 
   context('when adding an export for unknown company id', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', '/api-proxy/v4/company/not_real', {
         statusCode: 404,
       }).as('getServerFailure')
@@ -83,7 +83,7 @@ describe('Export pipeline create', () => {
       cy.visit(addPageUrl)
     }
     context('when verifying the page', () => {
-      before(() => {
+      beforeEach(() => {
         mockApiAndVisitPage()
       })
 
@@ -128,7 +128,7 @@ describe('Export pipeline create', () => {
     })
 
     context('when the form cancel button is clicked', () => {
-      before(() => {
+      beforeEach(() => {
         mockApiAndVisitPage()
       })
 
@@ -139,7 +139,7 @@ describe('Export pipeline create', () => {
     })
 
     context('when the form is populated but not submitted', () => {
-      before(() => {
+      beforeEach(() => {
         mockApiAndVisitPage()
       })
 
@@ -158,7 +158,7 @@ describe('Export pipeline create', () => {
     })
 
     context('when the form contains invalid data and is submitted', () => {
-      before(() => {
+      beforeEach(() => {
         mockApiAndVisitPage()
       })
 
@@ -304,7 +304,7 @@ describe('Export pipeline create', () => {
       () => {
         const contacts = contactsListFaker((length = 3))
 
-        before(() => {
+        beforeEach(() => {
           cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
           cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
           cy.intercept('POST', `/api-proxy/v4/export`, {

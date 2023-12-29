@@ -199,11 +199,11 @@ exports.describeSelectedList = ({
                   .find('input')
                   .clear()
                   .type(query)
+                // TODO: confirm if the below calls should be within it statement
+                describeTable(rows)
+                describeSortList(rows)
               })
             })
-
-            describeTable(rows)
-            describeSortList(rows)
           })
     }
   })

@@ -28,7 +28,7 @@ describe('Contact activity', () => {
   })
 
   context('when viewing a contact with activities', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.contacts.contactActivities(contactId))
     })
 
@@ -87,7 +87,7 @@ describe('Contact activity', () => {
 
     context('when viewing a Contact with Data Hub interaction', () => {
       it('should display interaction activity kind label', () => {
-        cy.get('[data-test="interaction-activity"]').within(() => {
+        cy.get('[data-test="interaction-activity"]').each(() => {
           cy.get('[data-test=activity-kind-label]').contains('interaction', {
             matchCase: false,
           })
@@ -95,7 +95,7 @@ describe('Contact activity', () => {
       })
 
       it('should display interaction activity theme label', () => {
-        cy.get('[data-test="interaction-activity"]').within(() => {
+        cy.get('[data-test="interaction-activity"]').each(() => {
           cy.get('[data-test=activity-theme-label]').contains('export', {
             matchCase: false,
           })
@@ -103,7 +103,7 @@ describe('Contact activity', () => {
       })
 
       it('should display interaction activity service label', () => {
-        cy.get('[data-test="interaction-activity"]').within(() => {
+        cy.get('[data-test="interaction-activity"]').each(() => {
           cy.get('[data-test=activity-service-label]').contains(
             'introduction',
             { matchCase: false }

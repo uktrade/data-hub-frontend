@@ -37,7 +37,7 @@ describe('Interaction details', () => {
   context('Past draft interaction', () => {
     const params = {}
 
-    before(() => {
+    beforeEach(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.draftPastMeeting.id
 
@@ -110,11 +110,13 @@ describe('Interaction details', () => {
       })
 
       it('should not submit if no reason is selected', () => {
+        cy.get('[data-test="archive-button"]').click()
         cy.get('[data-test=submit-button]').click()
         assertErrorSummary(['You must select a reason'])
       })
 
       it('should render the date field when reschedule is selected', () => {
+        cy.get('[data-test="archive-button"]').click()
         cy.get('[data-test=archived-reason-meeting-was-rescheduled]').click()
         cy.get('[data-test="field-date"]')
           .should('exist')
@@ -129,11 +131,14 @@ describe('Interaction details', () => {
       })
 
       it('should not submit if reschedule is selected and no date is entered', () => {
+        cy.get('[data-test="archive-button"]').click()
+        cy.get('[data-test=archived-reason-meeting-was-rescheduled]').click()
         cy.get('[data-test=submit-button]').click()
         assertErrorSummary(['You must enter a valid date'])
       })
 
       it('should submit the form if a reason is seleted', () => {
+        cy.get('[data-test="archive-button"]').click()
         cy.get('[data-test=archived-reason-client-cancelled]').click()
         cy.get('[data-test=submit-button]').click()
         assertFlashMessage('The interaction has been updated')
@@ -144,7 +149,7 @@ describe('Interaction details', () => {
   context('Future draft interaction', () => {
     const params = {}
 
-    before(() => {
+    beforeEach(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.draftFutureMeeting.id
 
@@ -182,7 +187,7 @@ describe('Interaction details', () => {
   context('Cancelled interaction', () => {
     const params = {}
 
-    before(() => {
+    beforeEach(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.cancelledMeeting.id
 
@@ -234,7 +239,7 @@ describe('Interaction details', () => {
   context('Complete service delivery', () => {
     const params = {}
 
-    before(() => {
+    beforeEach(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.withLink.id
 
@@ -284,7 +289,7 @@ describe('Interaction details', () => {
   context('Complete investment project interaction', () => {
     const params = {}
 
-    before(() => {
+    beforeEach(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.withNoLink.id
 
@@ -351,6 +356,7 @@ describe('Interaction details', () => {
     })
 
     it('should take you to the referral details page when you click on the subject', () => {
+      cy.visit(interactions.detail(interactionWithReferral.id))
       cy.contains(interactionWithReferral.company_referral.subject).click()
       cy.url().should(
         'contain',
@@ -364,7 +370,7 @@ describe('Interaction details', () => {
   context(
     'An interaction with investment theme and large capital opportunity',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           interactions.detail(fixtures.interaction.withInvestmentTheme.id)
         )
@@ -397,7 +403,7 @@ describe('Interaction details', () => {
     }
   )
   context('Interaction with export countries', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(interactions.detail(fixtures.interaction.withExportCountries.id))
     })
 
@@ -428,7 +434,7 @@ describe('Interaction details', () => {
   })
 
   context('Interaction with business intelligence and UKTP fields', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(interactions.detail(fixtures.interaction.withBusIntel.id))
     })
 

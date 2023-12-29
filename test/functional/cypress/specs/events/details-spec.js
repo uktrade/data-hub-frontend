@@ -61,7 +61,7 @@ describe('Event Details', () => {
   })
 
   describe('Disabled event with no document', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.events.details(fixtures.event.teddyBearExpo.id))
     })
 

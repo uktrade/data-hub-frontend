@@ -39,11 +39,10 @@ const transformOptions = (options) =>
 describe('Dashboard - my projects list filters', () => {
   const summary = investmentProjectSummaryFaker()
 
-  after(() => {
+  beforeEach(() => {
     cy.resetUser()
+    cy.clearSessionStorage()
   })
-
-  beforeEach(() => cy.clearSessionStorage())
 
   context('When a filter is applied and there are zero projects', () => {
     before(() => {
@@ -74,6 +73,7 @@ describe('Dashboard - my projects list filters', () => {
       )
     })
   })
+  // TODO: fix test
   context('Dashboard filter options', () => {
     it('should render the stage options', () => {
       cy.get('[data-test="stage-select"] option').then((stageOptions) => {

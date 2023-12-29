@@ -35,9 +35,6 @@ const venusLtd = fixtures.company.venusLtd
 const interactionsPage = urls.companies.interactions.create(venusLtd.id)
 
 describe('Prepopulate the interaction theme form', () => {
-  before(() => cy.clearLocalStorage())
-  after(() => cy.clearLocalStorage())
-
   context('Export', () => {
     it('should select export and interaction', () => {
       cy.localStorage(key, stringifyItem(THEMES.EXPORT, KINDS.INTERACTION))

@@ -3,8 +3,6 @@ const urls = require('../../../../../src/lib/urls')
 const LOCAL_STORAGE_KEY = 'dashboard-tab'
 
 describe('Selecting a dashboard tab based on localstorage when the advisers has tasks', () => {
-  before(() => cy.clearLocalStorage())
-  after(() => cy.clearLocalStorage())
   beforeEach(() => {
     cy.intercept('/api-proxy/v4/search/task').as('taskLookup')
   })

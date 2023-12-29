@@ -182,7 +182,7 @@ describe('Export pipeline list', () => {
     ]
     const notArchivedExports = exportList.filter((e) => e.archived == false)
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `${endpoint}?${queryString}`, {
         body: {
           count: notArchivedExports.length,
@@ -191,9 +191,6 @@ describe('Export pipeline list', () => {
       }).as('apiRequest')
       cy.visit(urls.exportPipeline.index())
       cy.wait('@apiRequest')
-    })
-
-    beforeEach(() => {
       cy.get('[data-test="export-list"]').as('exportList')
       cy.get('[data-test="export-item"]').as('exportItems')
       cy.get('@exportItems').eq(0).as('firstListItem')

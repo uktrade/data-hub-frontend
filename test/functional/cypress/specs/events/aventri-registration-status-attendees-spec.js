@@ -56,7 +56,7 @@ describe('Aventri status event registration attendees', () => {
     context(
       `With normal behaviour for registration status ${test.status}`,
       () => {
-        before(() => {
+        beforeEach(() => {
           cy.visit(
             urls.events.aventri.registrationStatus(existingEventId, test.status)
           )
@@ -233,7 +233,7 @@ describe('Aventri status event registration attendees', () => {
         })
 
         context('With errors', () => {
-          before(() => {
+          beforeEach(() => {
             cy.visit(
               urls.events.aventri.registrationStatus(errorId, test.status)
             )
@@ -248,7 +248,7 @@ describe('Aventri status event registration attendees', () => {
         })
 
         context('With the feature flag turned off', () => {
-          before(() => {
+          beforeEach(() => {
             cy.visit(
               urls.events.aventri.registrationStatus(
                 existingEventId,

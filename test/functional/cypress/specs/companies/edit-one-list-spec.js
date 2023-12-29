@@ -25,7 +25,7 @@ describe('Edit One List', () => {
 
   context('when viewing the "Edit One List" page', () => {
     const testCompany = fixtures.company.oneListCorp
-    before(() => {
+    beforeEach(() => {
       visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
@@ -46,7 +46,7 @@ describe('Edit One List', () => {
   context('when editing details of an existing One List company', () => {
     const testCompany = fixtures.company.oneListCorp
 
-    before(() => {
+    beforeEach(() => {
       visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
@@ -83,6 +83,8 @@ describe('Edit One List', () => {
     })
 
     it('should submit updated data', () => {
+      cy.contains('Continue').click()
+
       cy.get(
         selectors.companyEditOneList.globalAccountManagerField
       ).selectTypeaheadOptionInFieldset('shawn')
@@ -112,7 +114,7 @@ describe('Edit One List', () => {
     () => {
       const testCompany = fixtures.company.minimallyMinimalLtd
 
-      before(() => {
+      beforeEach(() => {
         visitWithWait(
           testCompany.id,
           urls.companies.editOneList(testCompany.id)
@@ -133,12 +135,18 @@ describe('Edit One List', () => {
       })
 
       it('should not have a core team pre-listed', () => {
+        cy.contains('Tier A - Strategic Account').click()
+        cy.contains('Continue').click()
+
         cy.get(selectors.companyEditOneList.coreTeamFieldText)
           .find('input')
           .should('have.attr', 'value', '')
       })
 
       it('should submit updated data', () => {
+        cy.contains('Tier A - Strategic Account').click()
+        cy.contains('Continue').click()
+
         cy.get(selectors.companyEditOneList.globalAccountManagerField)
           .selectTypeaheadOptionInFieldset('shawn')
           .find('input')

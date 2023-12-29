@@ -52,15 +52,12 @@ describe('Link Subsidiary', () => {
   const companyList = [company1, company2, company3, ...otherCompanies]
 
   context('should render the subsidiary list', () => {
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v4/search/company',
         companyList,
         urls.companies.hierarchies.subsidiaries.search(testCompany.id)
       )
-    })
-
-    beforeEach(() => {
       getCollectionList()
       cy.get('@collectionItems').eq(1).as('secondListItem')
       cy.get('@collectionItems').eq(2).as('thirdListItem')

@@ -56,15 +56,12 @@ describe('Event attendee search', () => {
 
   const contactsList = [ukContact, foreignContact, ...contactsListFaker(8)]
 
-  before(() => {
+  beforeEach(() => {
     collectionListRequest(
       'v3/search/contact',
       contactsList,
       urls.events.find(eventFixtureId)
     )
-  })
-
-  beforeEach(() => {
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
   })

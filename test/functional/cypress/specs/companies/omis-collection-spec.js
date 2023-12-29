@@ -62,7 +62,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
 
   const ordersList = [order1, order2]
 
-  before(() => {
+  beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v3/search/order', {
       body: {
         count: ordersList.length,
@@ -74,9 +74,6 @@ describe('Company Orders (OMIS) Collection Page', () => {
     }).as('apiRequest')
     cy.visit(urls.companies.orders(oneListCorp.id))
     cy.wait('@apiRequest')
-  })
-
-  beforeEach(() => {
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
   })
@@ -196,7 +193,7 @@ describe('Company Orders (OMIS) Collection Page', () => {
   })
 
   context('when viewing orders for an archived company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v3/search/order', {
         body: {
           count: ordersList.length,

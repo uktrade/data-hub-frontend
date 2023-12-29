@@ -4,7 +4,7 @@ import { contactsListFaker } from '../../fakers/contacts'
 describe('Contact Collections Sort', () => {
   context('Default sort', () => {
     const contactsList = contactsListFaker(10)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v3/search/contact', {
         body: {
           count: contactsList.length,

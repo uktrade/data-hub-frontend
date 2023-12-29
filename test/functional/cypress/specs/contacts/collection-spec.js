@@ -72,11 +72,9 @@ describe('Contacts Collections', () => {
     ...contactsListFaker(7),
   ]
 
-  before(() => {
-    collectionListRequest('v3/search/contact', contactsList, contacts.index())
-  })
-
+  // TODO: consider if these can be made more performant?
   beforeEach(() => {
+    collectionListRequest('v3/search/contact', contactsList, contacts.index())
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')

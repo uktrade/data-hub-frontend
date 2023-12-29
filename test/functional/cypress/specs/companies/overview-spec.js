@@ -32,7 +32,7 @@ describe('Company overview page', () => {
   context(
     'when viewing company overview the tab should display Overview',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
@@ -49,7 +49,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Overview page a Business details card should be displayed',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
@@ -68,7 +68,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Overview page an Account Management card should be displayed',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
@@ -87,7 +87,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the export status card for a business that has all information added',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
@@ -117,7 +117,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Export Status Card and an error occurs during the Export Wins lookup',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('GET', urls.company.exportWin(companyNoDetails.id), {
           statusCode: 500,
           body: {
@@ -141,7 +141,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the investment status card for a business that has all information added',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
@@ -203,7 +203,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the investment status card with different stages and statuses of investment projects',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
@@ -253,7 +253,7 @@ describe('Company overview page', () => {
   context(
     'Active projects should include an Add investment project button with the current company pre selected',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.investments.companyInvestmentProjects(usCompany.id)
         )
@@ -271,7 +271,7 @@ describe('Company overview page', () => {
   )
 
   context('when viewing the Recent Activities Card for a business', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -306,7 +306,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Recent Activities Card for a business with no activities',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
@@ -330,7 +330,7 @@ describe('Company overview page', () => {
   )
 
   context('when viewing the Upcoming Activities Card for a business', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -365,7 +365,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the Upcoming Activities Card for a business with no activities',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
@@ -389,7 +389,7 @@ describe('Company overview page', () => {
   )
 
   context('when viewing all activity cards types', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.overview.index(fixtures.company.venusLtd.id))
     })
 
@@ -511,7 +511,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the active investment projects card for a business that has all information added',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
@@ -647,7 +647,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the active investment projects card for a business that has an investment but no status',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
           body: {
             count: 1,
@@ -688,7 +688,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the active investment projects card only ongoing or delayed investments are viewable',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
           body: {
             count: 4,
@@ -778,7 +778,7 @@ describe('Company overview page', () => {
   context(
     'when viewing the active investment projects card for a business that has no investment projects',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
           body: {
             results: noActiveInvestments,
