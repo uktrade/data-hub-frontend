@@ -1,12 +1,18 @@
 import React from 'react'
 
+import { pick } from 'lodash'
+
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
-import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
+import {
+  taskFaker,
+  taskWithInvestmentProjectFaker,
+} from '../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../../src/apps/companies/constants'
 import TaskDetailsTable from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
 import DataHubProvider from '../../provider'
+import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
 
 describe('Task details table', () => {
   const Component = (props) => (
@@ -56,17 +62,21 @@ describe('Task details table', () => {
   })
 
   context('When a task is missing all optional fields', () => {
-    const investmentProjectTask = taskWithInvestmentProjectFaker({
+    const company = pick(companyFaker(), ['id', 'name'])
+    const project = null
+
+    const taskNoInvestmentProject = taskFaker({
       dueDate: undefined,
       description: undefined,
       emailRemindersEnabled: false,
+      company: company,
+      investmentProject: project,
     })
-    const company = investmentProjectTask.company
 
     it('the table should show all expected values', () => {
       cy.mount(
         <Component
-          task={investmentProjectTask}
+          task={taskNoInvestmentProject}
           company={company}
           project={project}
         />
@@ -82,13 +92,13 @@ describe('Task details table', () => {
             name: company.name,
           },
           ['Date due']: NOT_SET_TEXT,
-          'Assigned to': investmentProjectTask.advisers
+          'Assigned to': taskNoInvestmentProject.advisers
             .map((adviser) => adviser.name)
             .join(''),
           'Task description': NOT_SET_TEXT,
           'Reminders set': NOT_SET_TEXT,
-          'Date created': formatLongDate(investmentProjectTask.createdOn),
-          'Created by': investmentProjectTask.createdBy.name,
+          'Date created': formatLongDate(taskNoInvestmentProject.createdOn),
+          'Created by': taskNoInvestmentProject.createdBy.name,
         },
       })
     })
