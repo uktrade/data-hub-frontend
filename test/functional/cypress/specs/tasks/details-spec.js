@@ -18,7 +18,7 @@ describe('View details for a generic task', () => {
   const genericTaskNotCompleteTask = taskFaker({ archived: false })
 
   context('When visiting a completed task details', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/task/${genericTaskCompleted.id}`,
@@ -53,7 +53,7 @@ describe('View details for a generic task', () => {
   })
 
   context('When visiting a not complete task details', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/task/${genericTaskNotCompleteTask.id}`,
