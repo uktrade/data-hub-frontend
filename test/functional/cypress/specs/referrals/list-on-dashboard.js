@@ -178,7 +178,7 @@ const assertResultList = (expectedItems) => {
 }
 
 describe('Referall list on dashboard', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/')
     cy.selectDhTablistTab('Dashboard', 'Referrals')
       // This is only to wait for the content to be loaded
