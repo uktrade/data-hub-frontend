@@ -5,7 +5,7 @@ import { assertFlashMessage, assertPayload } from '../../support/assertions'
 const { quoteAwaitOrder } = fixtures.omis
 
 describe('View edit invoice details', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.omis.edit.vatStatus(quoteAwaitOrder.id))
   })
 

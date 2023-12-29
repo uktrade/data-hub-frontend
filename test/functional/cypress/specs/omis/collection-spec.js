@@ -46,11 +46,8 @@ describe('Orders (OMIS) Collection List Page', () => {
 
   const ordersList = [order1, order2, ...ordersListFaker(8)]
 
-  before(() => {
-    omisCollectionListRequest('v3/search/order', ordersList, omis.index())
-  })
-
   beforeEach(() => {
+    omisCollectionListRequest('v3/search/order', ordersList, omis.index())
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
   })

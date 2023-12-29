@@ -10,13 +10,13 @@ import {
 import { getCollectionList } from '../../support/collection-list-assertions'
 
 describe('Create order form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.omis.create.companySelect())
     getCollectionList()
+    cy.get('@firstListItem').find('a').click()
   })
 
   it('should allow user to select a company and redirect to the form', () => {
-    cy.get('@firstListItem').find('a').click()
     cy.location('pathname').should(
       'eq',
       urls.omis.create.form('00009ae3-1912-e411-8a2b-e4115bead28a')
@@ -100,6 +100,18 @@ describe('Create order form', () => {
   })
 
   it('should submit the form if all fields are filled in', () => {
+    cy.get('[data-test="field-useCompanySector"]').contains('No').click()
+    cy.get('[data-test="field-sector"]').then((element) => {
+      assertFieldSingleTypeahead({
+        element,
+        label: 'Sector',
+        value: '',
+        placeholder: 'Select a sector',
+      })
+    })
+
+    cy.get('[data-test="submit-button"').click()
+
     cy.intercept('POST', '/api-proxy/v3/omis/order').as('apiRequest')
     cy.get('[data-test="field-contact"]').selectTypeaheadOption('Joseph Woof')
     cy.get('[data-test="field-country"]').selectTypeaheadOption('Angola')

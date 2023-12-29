@@ -545,7 +545,7 @@ describe('Orders Collections Filter', () => {
   })
 
   context('Remove all filters', () => {
-    before(() => {
+    beforeEach(() => {
       const queryString = buildQueryString({
         page: 1,
         status: 'paid',

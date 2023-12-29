@@ -39,16 +39,13 @@ describe('Reconciliation collection list', () => {
 
   const ordersList = [order]
 
-  before(() => {
+  beforeEach(() => {
     omisCollectionListRequest(
       'v3/search/order',
       ordersList,
       omis.reconciliation(),
       123456789
     )
-  })
-
-  beforeEach(() => {
     getCollectionList()
   })
 
@@ -101,7 +98,7 @@ describe('Reconciliation collection list', () => {
 
 describe('Payment reconciliation form', () => {
   context('When viewing an order where the quote has been accepted', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(omis.paymentReconciliation(quoteAccepted.id))
     })
 
