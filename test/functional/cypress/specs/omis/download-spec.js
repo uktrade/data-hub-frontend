@@ -24,7 +24,7 @@ describe('Download CSV', () => {
   })
   context('When there is a single order', () => {
     const ordersList = ordersListFaker()
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: ordersList,
