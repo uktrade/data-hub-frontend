@@ -78,7 +78,7 @@ describe('Task Amended By Others Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.myTasks.taskAmendedByOthers())
       cy.wait('@remindersApiRequest')

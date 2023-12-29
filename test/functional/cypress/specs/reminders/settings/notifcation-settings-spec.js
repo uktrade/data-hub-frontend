@@ -21,7 +21,7 @@ describe('Notification settings', () => {
   })
 
   context('when in estimated land date page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.setUserFeatureGroups(['investment-notifications'])
       cy.visit(urls.reminders.investments.estimatedLandDate())
       cy.get(selectors.collectionItem).should('be.visible')

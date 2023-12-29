@@ -34,7 +34,7 @@ const assertInputFields = (days) => {
 
 describe('Settings - projects with no recent interaction', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.investments.noRecentInteraction())
     })
 
@@ -57,7 +57,7 @@ describe('Settings - projects with no recent interaction', () => {
   })
 
   context('Settings - the default', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [],
@@ -99,7 +99,7 @@ describe('Settings - projects with no recent interaction', () => {
   })
 
   context('Settings - disabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [],
@@ -129,7 +129,7 @@ describe('Settings - projects with no recent interaction', () => {
 
   context('Settings - 5 days no interaction)', () => {
     const reminder_days = [5]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days,
@@ -163,7 +163,7 @@ describe('Settings - projects with no recent interaction', () => {
 
   context('Settings - 5 and 10 days no interaction)', () => {
     const reminder_days = [5, 10]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days,
@@ -183,7 +183,7 @@ describe('Settings - projects with no recent interaction', () => {
 
   context('Settings - 5, 10 and 15 days no interaction)', () => {
     const reminder_days = [5, 10, 15]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days,
@@ -203,7 +203,7 @@ describe('Settings - projects with no recent interaction', () => {
 
   context('Settings - 5, 10, 15 and 20 days no interaction)', () => {
     const reminder_days = [5, 10, 15, 20]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days,
@@ -223,7 +223,7 @@ describe('Settings - projects with no recent interaction', () => {
 
   context('Settings - 5, 10, 15, 20 and 25 days no interaction)', () => {
     const reminder_days = [5, 10, 15, 20, 25]
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days,
@@ -242,7 +242,7 @@ describe('Settings - projects with no recent interaction', () => {
   })
 
   context('Investment email notifications - the basics', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.investments.noRecentInteraction())
       cy.get('[data-test="reminders-yes"]').click()
     })
@@ -271,7 +271,7 @@ describe('Settings - projects with no recent interaction', () => {
   })
 
   context('Email notifications - disabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],
@@ -292,7 +292,7 @@ describe('Settings - projects with no recent interaction', () => {
   })
 
   context('Email notifications - enabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],

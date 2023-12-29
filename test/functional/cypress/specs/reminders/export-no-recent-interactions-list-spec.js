@@ -81,7 +81,7 @@ describe('Exports no recent Interaction Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       cy.setUserFeatureGroups(['export-notifications'])
       interceptApiCalls()
       cy.visit(urls.reminders.exports.noRecentInteractions())

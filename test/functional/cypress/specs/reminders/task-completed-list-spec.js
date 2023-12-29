@@ -77,7 +77,7 @@ describe('My Tasks Task Completed Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.myTasks.taskCompleted())
       cy.wait('@remindersApiRequest')

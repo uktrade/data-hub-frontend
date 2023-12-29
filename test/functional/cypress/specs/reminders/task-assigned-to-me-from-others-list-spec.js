@@ -78,7 +78,7 @@ describe('My Tasks Task Assigned To Me From Others Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.myTasks.taskAssignedToMeFromOthers())
       cy.wait('@remindersApiRequest')
