@@ -4,7 +4,7 @@ import { assertGovReactTable } from '../../support/assertions'
 
 describe('Investment project evidence', () => {
   context('When viewing a project with no evidence', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.evidence.index(
           fixtures.investment.investmentWithoutValue.id
@@ -27,7 +27,7 @@ describe('Investment project evidence', () => {
   })
 
   context('When viewing a project with evidence', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.evidence.index(
           fixtures.investment.investmentWithLink.id

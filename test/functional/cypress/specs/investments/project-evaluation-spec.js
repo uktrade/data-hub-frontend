@@ -14,7 +14,7 @@ const NOT_KNOWN = 'Not known'
 
 describe('Invesment project evaluation', () => {
   context('When viewing a project with no evaluation fields set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.evaluation(
           fixtures.investment.investmentWithoutEvaluation.id
@@ -70,7 +70,7 @@ describe('Invesment project evaluation', () => {
   })
 
   context('When viewing a project with all evaluation fields set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.evaluation(
           fixtures.investment.investmentWithEvaluation.id
@@ -129,7 +129,7 @@ describe('Invesment project evaluation', () => {
   context(
     'When viewing a project with the evaluation fields set to the alternate values',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.investments.projects.evaluation(
             fixtures.investment.investmentWithAlternateEvaluation.id

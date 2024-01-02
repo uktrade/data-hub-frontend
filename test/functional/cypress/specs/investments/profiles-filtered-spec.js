@@ -13,7 +13,7 @@ const testTypeaheadFilter = ({
     : `no options`
 
   context(`When ${optionsMessage} are selected`, () => {
-    it(`There should be ${expectedNumberOfResults} items found`, () => {
+    beforeEach(() => {
       cy.visit(urls.investments.profiles.index())
       expandToggleSections()
       cy.get(`[data-test="${selector}"]`).within((e) =>
@@ -21,6 +21,9 @@ const testTypeaheadFilter = ({
           cy.wrap(e).find('input').clear().type(`${option}{downarrow}{enter}`)
         )
       )
+    })
+
+    it(`There should be ${expectedNumberOfResults} items found`, () => {
       cy.contains(
         `${expectedNumberOfResults} profile${
           expectedNumberOfResults > 1 ? 's' : ''
@@ -40,10 +43,13 @@ const testTypeaheadFilter = ({
 
 const testInputFilter = ({ selector, text, expectedNumberOfResults }) => {
   context(`When inputting text "${text}"`, () => {
-    it(`There should be ${expectedNumberOfResults} items found`, () => {
+    beforeEach(() => {
       cy.visit(urls.investments.profiles.index())
       expandToggleSections()
       cy.get(selector).within((e) => cy.wrap(e).type(text).blur())
+    })
+
+    it(`There should be ${expectedNumberOfResults} items found`, () => {
       cy.contains(
         `${expectedNumberOfResults} profile${
           expectedNumberOfResults > 1 ? 's' : ''

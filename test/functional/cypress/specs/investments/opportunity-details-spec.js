@@ -36,7 +36,7 @@ const assertDetailsTableValues = (values, tableElement) => {
 }
 
 describe('UK Opportunity with missing data', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(investments.opportunities.details(incompleteOpportunity.id))
   })
   context('The page header', () => {
@@ -103,7 +103,7 @@ describe('UK Opportunity with missing data', () => {
     })
   })
   context('The details tab', () => {
-    before(() => {
+    beforeEach(() => {
       cy.get('button').contains('Details').click()
     })
     it('should display opportunity toggles', () => {
@@ -127,7 +127,7 @@ describe('UK Opportunity with missing data', () => {
       )
     })
     context('The details section', () => {
-      before(() => {
+      beforeEach(() => {
         cy.contains('Opportunity details').click({ force: true })
       })
       it('should show ten rows of data', () => {
@@ -165,7 +165,7 @@ describe('UK Opportunity with missing data', () => {
       })
     })
     context('The requirements section', () => {
-      before(() => {
+      beforeEach(() => {
         cy.contains('Opportunity requirements').click({ force: true })
       })
       it('should show five rows of data', () => {
@@ -200,7 +200,7 @@ describe('UK Opportunity with missing data', () => {
 })
 
 describe('UK Opportunity with complete data', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(investments.opportunities.details(completeOpportunity.id))
   })
   context('The page header', () => {
@@ -234,7 +234,7 @@ describe('UK Opportunity with complete data', () => {
       cy.get('label:contains("Complete")').should('have.length', '2')
     })
     context('The details section', () => {
-      before(() => {
+      beforeEach(() => {
         cy.contains('Opportunity details').click({ force: true })
       })
       it('Should show data in all fields', () => {
@@ -259,7 +259,7 @@ describe('UK Opportunity with complete data', () => {
       })
     })
     context('The requirements section', () => {
-      before(() => {
+      beforeEach(() => {
         cy.contains('Opportunity requirements').click({ force: true })
       })
       it('Should show data in all fields', () => {

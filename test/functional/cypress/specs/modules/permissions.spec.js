@@ -54,7 +54,7 @@ const assertNoPermissionsPage = () =>
     .should('have.text', "You don't have permission to view this page")
 
 const assertNoAccess = (permission, link, name) => {
-  before(() => {
+  beforeEach(() => {
     cy.setModulePermissions(filteredPermissions(permission, permissions))
     cy.visit(link)
   })
@@ -71,7 +71,7 @@ const assertNoAccess = (permission, link, name) => {
 
 describe('DataHub module access', () => {
   context('Access to all modules', () => {
-    before(() => {
+    beforeEach(() => {
       cy.setModulePermissions(permissions)
       cy.visit('/companies')
     })

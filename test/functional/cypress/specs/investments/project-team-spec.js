@@ -29,7 +29,7 @@ const assertViewHeader = ({ project }) => {
 
 describe('Viewing the team of a project', () => {
   context('When viewing a project with existing team data', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.details(projectWithCompleteTeam.id))
       cy.get('[data-test="project-team-link"]').click()
     })
@@ -108,7 +108,7 @@ describe('Viewing the team of a project', () => {
   })
 
   context('When viewing a project with a global account manager', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.details(projectWithGlobalManager.id))
       cy.get('[data-test="project-team-link"]').click()
     })
@@ -148,7 +148,7 @@ describe('Viewing the team of a project', () => {
   })
 
   context('When viewing a prospect project with no project management', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.details(prospectProject.id))
       cy.get('[data-test="project-team-link"]').click()
     })
