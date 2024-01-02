@@ -39,7 +39,6 @@ function ExportsHistory({
   countryId,
   pageTitle,
   isComplete,
-  dnbRelatedCompaniesCount,
   returnUrl,
   localNavItems,
 }) {
@@ -61,7 +60,6 @@ function ExportsHistory({
             { link: urls.companies.exports.index(company.id), text: 'Exports' },
             { text: pageTitle },
           ]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
           localNavItems={localNavItems}
         >

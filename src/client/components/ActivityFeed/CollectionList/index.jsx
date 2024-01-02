@@ -63,7 +63,6 @@ const CompanyActivityCollection = ({
   selectedFilters,
   currentAdviserId,
   dnbHierarchyCount,
-  dnbRelatedCompaniesCount,
   localNavItems,
   flashMessages,
   returnUrl,
@@ -131,7 +130,6 @@ const CompanyActivityCollection = ({
         <CompanyLayout
           company={company}
           breadcrumbs={[{ text: 'Activity Feed' }]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           localNavItems={localNavItems}
           flashMessages={flashMessages}
           returnUrl={returnUrl}

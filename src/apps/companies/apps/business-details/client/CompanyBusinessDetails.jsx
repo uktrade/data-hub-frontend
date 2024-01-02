@@ -67,7 +67,6 @@ const CompanyBusinessDetails = ({
       <CompanyLayout
         company={company}
         breadcrumbs={[{ text: 'Business details' }]}
-        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         localNavItems={localNavItems}
         flashMessages={flashMessages}
         csrfToken={csrfToken}

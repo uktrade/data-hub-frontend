@@ -8,7 +8,6 @@ import { state2props } from '../../Investments/Projects/state'
 
 const CompanyProjectsCollection = ({
   companyId,
-  dnbRelatedCompaniesCount,
   returnUrl,
   localNavItems,
   ...props
@@ -18,7 +17,6 @@ const CompanyProjectsCollection = ({
       <CompanyLayout
         company={company}
         breadcrumbs={[{ text: 'Investment' }]}
-        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         returnUrl={returnUrl}
         localNavItems={localNavItems}
         isInvestment={true}
