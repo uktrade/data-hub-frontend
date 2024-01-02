@@ -49,7 +49,7 @@ describe('Add generic task', () => {
       () => {
         const company = companyFaker()
 
-        it('should not the investment project typeahead field', () => {
+        it('should not the show the investment project typeahead field', () => {
           cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
           cy.intercept(`/api-proxy/v3/search/investment_project`, {
             results: [],
