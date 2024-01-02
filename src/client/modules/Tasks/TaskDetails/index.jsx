@@ -43,7 +43,15 @@ const TaskDetails = ({ task, breadcrumbs }) => {
           onSuccessDispatch: TASK_DETAILS_LOADED,
         }}
       >
-        {() => task && <TaskDetailsTable task={task} company={task?.company} />}
+        {() =>
+          task && (
+            <TaskDetailsTable
+              task={task}
+              company={task?.company}
+              project={task?.investmentProject}
+            />
+          )
+        }
       </Task.Status>
     </DefaultLayout>
   )

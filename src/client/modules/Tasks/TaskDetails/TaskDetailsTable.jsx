@@ -9,7 +9,7 @@ import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import urls from '../../../../lib/urls'
 import TaskButtons from './TaskButtons'
 
-const TaskDetailsTable = ({ task, company }) => (
+const TaskDetailsTable = ({ task, company, project }) => (
   <>
     <SummaryTable data-test="task-details-table">
       <SummaryTable.Row
@@ -22,6 +22,16 @@ const TaskDetailsTable = ({ task, company }) => (
           )
         }
       />
+      {project && (
+        <SummaryTable.Row
+          heading="Investment project"
+          children={
+            <Link href={urls.investments.projects.details(project.id)}>
+              {project.name}
+            </Link>
+          }
+        />
+      )}
       <SummaryTable.Row
         heading="Date due"
         children={task.dueDate ? formatLongDate(task.dueDate) : NOT_SET_TEXT}
