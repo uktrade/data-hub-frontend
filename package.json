@@ -67,9 +67,9 @@
   },
   "dependencies": {
     "@govuk-react/constants": "^0.10.6",
-    "@nivo/core": "^0.80.0",
+    "@nivo/core": "^0.84.0",
     "@nivo/pie": "^0.84.0",
-    "@nivo/tooltip": "^0.80.0",
+    "@nivo/tooltip": "^0.84.0",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/browser": "^7.86.0",
