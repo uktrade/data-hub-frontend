@@ -9,6 +9,7 @@ import {
   assertFieldAddress,
   assertFieldSelect,
   assertFieldRadios,
+  assertFlashMessage,
   assertDetails,
 } from '../../support/assertions'
 
@@ -41,7 +42,6 @@ const describeCompanyEditForm = ({ company, elements }) => {
   })
 
   it('should render page contents', () => {
-    // TODO: Investigate why this test breaks for each context
     const spec = [
       ...elements,
       {
@@ -59,6 +59,10 @@ const describeCompanyEditForm = ({ company, elements }) => {
         },
       },
     ]
+
+    // There is a delay when loading the state or province field so cypress must wait
+    // beforeEach gathering all fields below.
+    cy.wait(500)
 
     cy.get('#edit-company-form form')
       .as('formRoot')
@@ -290,14 +294,11 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.form).contains('Enter a valid ZIP code')
     })
 
-    it('does not render ZIP code errors if ZIP code is valid', () => {
+    it('should update company if ZIP code is valid', () => {
       cy.get(selectors.companyEdit.address.postcode).clear()
       cy.get(selectors.companyEdit.address.postcode).type('12345')
       cy.contains('Submit').click()
-      cy.get(selectors.companyEdit.form).should(
-        'not.contain',
-        'Enter a valid ZIP code'
-      )
+      assertFlashMessage('Company record updated')
     })
   })
 
@@ -391,21 +392,18 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.form).contains('Enter a valid Postal code')
     })
 
-    it('does not render postal code errors if postal code is valid', () => {
+    it('should update company when postal code is valid', () => {
       cy.get(selectors.companyEdit.address.postcode).clear()
       cy.get(selectors.companyEdit.address.postcode).type('A1A 1A1')
       cy.contains('Submit').click()
-      cy.get(selectors.companyEdit.form).should(
-        'not.contain',
-        'Enter a valid Postal code'
-      )
+      assertFlashMessage('Company record updated')
     })
   })
 
   context('when editing matched UK company NOT on the One List', () => {
     const company = fixtures.company.dnbLtd
 
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.edit(company.id))
     })
 
@@ -501,7 +499,7 @@ describe('Company edit', () => {
   context('when form is submitted for a matched company', () => {
     const company = fixtures.company.dnbLtd
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', urls.companies.edit(company.id) + '*', {
         body: { company: company },
       }).as('editCompanyResponse')
@@ -544,19 +542,18 @@ describe('Company edit', () => {
         'eq',
         urls.companies.businessDetails(company.id)
       )
-    })
 
-    it('displays the "Change requested. Thanks for keeping Data Hub running smoothly" flash message and the ID used in GA', () => {
-      cy.contains(
+      // Displays success flash massage
+      assertFlashMessage(
         'Change requested.Thanks for keeping Data Hub running smoothly.'
-      ).should('have.attr', 'data-test', 'status-message')
+      )
     })
   })
 
   context('when form is submitted with dnb change request', () => {
     const company = fixtures.company.dnbLtd
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', urls.companies.edit(company.id) + '*', {
         body: { dnbChangeRequest: { duns_number: company.duns_number } },
       }).as('editCompanyResponse')
@@ -596,7 +593,7 @@ describe('Company edit', () => {
   context('when form is submitted for unmatched company', () => {
     const company = fixtures.company.marsExportsLtd
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', urls.companies.edit(company.id) + '*').as(
         'editCompanyResponse'
       )
@@ -629,8 +626,7 @@ describe('Company edit', () => {
   context('when the form is submitted and there are no changes', () => {
     const company = fixtures.company.dnbLtd
 
-    before(() => {
-      cy.server()
+    beforeEach(() => {
       cy.visit(urls.companies.edit(company.id))
     })
 
