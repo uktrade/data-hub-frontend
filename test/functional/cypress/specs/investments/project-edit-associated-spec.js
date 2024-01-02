@@ -17,8 +17,6 @@ describe('Edit the associated FDI R&D project', () => {
         [project],
         investments.projects.findAssociatedProject(fixture.id)
       )
-    })
-    beforeEach(() => {
       getCollectionList()
       cy.get('[data-test="metadata-item"]').as('metadataItems')
     })

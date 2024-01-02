@@ -13,7 +13,7 @@ const {
 
 describe('Update the project stage', () => {
   context('When viewing a project details page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(fixtures.investment.newHotelFdi.id)
       )
@@ -30,7 +30,7 @@ describe('Update the project stage', () => {
     })
   })
   context('When viewing a project admin page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.admin(fixtures.investment.newHotelFdi.id)
       )
@@ -68,7 +68,7 @@ describe('Update the project stage', () => {
     })
   })
   context('When clicking the "Cancel" link', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.admin(fixtures.investment.newHotelFdi.id)
       )
@@ -84,7 +84,7 @@ describe('Update the project stage', () => {
   context(
     'When the "Save" button is clicked without selecting a new stage',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.investments.projects.admin(fixtures.investment.newHotelFdi.id)
         )
@@ -104,7 +104,7 @@ describe('Update the project stage', () => {
   context(
     'When the "Save" button is clicked after selecting a new stage',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.investments.projects.admin(fixtures.investment.newHotelFdi.id)
         )

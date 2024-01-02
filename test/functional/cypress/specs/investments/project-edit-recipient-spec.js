@@ -13,14 +13,12 @@ describe('Edit the recipient company', () => {
       sector: { name: 'example sector' },
     })
 
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v4/search/company',
         [company],
         investments.projects.recipientCompany(fixture.id)
       )
-    })
-    beforeEach(() => {
       getCollectionList()
       cy.get('[data-test="metadata-item"]').as('metadataItems')
     })

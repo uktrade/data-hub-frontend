@@ -18,7 +18,7 @@ const assertChanges = (table, caption, beforeChange, afterChange) => {
 }
 
 describe('Edit History', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(
       urls.investments.editHistory.index(fixtures.investment.newHotelFdi.id)
     )

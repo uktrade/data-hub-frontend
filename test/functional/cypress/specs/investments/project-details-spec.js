@@ -16,7 +16,7 @@ const {
 
 describe('Investment project details', () => {
   context('When viewing a project with all the details fields', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(
           fixtures.investment.investmentWithDetails.id
@@ -89,7 +89,7 @@ describe('Investment project details', () => {
     })
   })
   context('When viewing a project with all the requirements fields', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(
           fixtures.investment.investmentWithRequirements.id
@@ -155,7 +155,7 @@ describe('Investment project details', () => {
     })
   })
   context('When viewing a project with all the value fields', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(
           fixtures.investment.investmentWithValue.id
@@ -216,7 +216,7 @@ describe('Investment project details', () => {
   context(
     'When viewing a Verify Win project with all the alternate value fields',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.investments.projects.details(
             fixtures.investment.investmentWithAlternateValue.id
@@ -275,7 +275,7 @@ describe('Investment project details', () => {
     }
   )
   context('When viewing a project with no requirements or value', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(
           fixtures.investment.investmentWithNoExistingRequirements.id
@@ -358,7 +358,7 @@ describe('Investment project details', () => {
     })
   })
   context('When the current stage is at Won', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(fixtures.investment.stageWon.id)
       )
@@ -386,7 +386,7 @@ describe('Investment project details', () => {
     })
   })
   context('When and FDI investment type is missing an FDI Type', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.details(
           fixtures.investment.fdiInvestmentWithNoFDIType.id

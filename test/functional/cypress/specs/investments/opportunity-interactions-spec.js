@@ -16,7 +16,7 @@ const interactionsList = interactionsListFaker(10)
 
 describe('The interactions tab on an opportunity page', () => {
   context('When the opportunity has one interaction linked', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
@@ -39,6 +39,7 @@ describe('The interactions tab on an opportunity page', () => {
       )
     })
 
+    // TODO: fix test
     it('should display the correct breadcrumbs', () => {
       assertBreadcrumbs({
         Home: '/',

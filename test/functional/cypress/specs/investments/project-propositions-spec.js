@@ -4,7 +4,7 @@ import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 
 describe('Investment project propositions', () => {
   context('When the project has one proposition linked', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.propositions(
           fixtures.investment.investmentWithDetails.id
