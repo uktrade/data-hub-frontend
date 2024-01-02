@@ -121,8 +121,8 @@ export const getEditLink = (
         interactionId
       )
     : isCompanyPage
-    ? urls.companies.interactions.edit(companyId, interactionId)
-    : urls.interactions.edit(interactionId)
+      ? urls.companies.interactions.edit(companyId, interactionId)
+      : urls.interactions.edit(interactionId)
 }
 
 export const getDetailsLink = (
@@ -141,6 +141,6 @@ export const getDetailsLink = (
         interactionId
       )
     : isCompanyPage
-    ? urls.companies.interactions.detail(companyId, interactionId)
-    : urls.interactions.detail(interactionId)
+      ? urls.companies.interactions.detail(companyId, interactionId)
+      : urls.interactions.detail(interactionId)
 }

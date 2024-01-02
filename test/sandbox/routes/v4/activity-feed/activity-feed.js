@@ -348,8 +348,8 @@ exports.activityFeed = function (req, res) {
       company === BEST_EVER_COMPANY
         ? companyActivities
         : company === BEST_EVER_COMPANY_2
-        ? essInteractionsNoTitle
-        : dataHubAndExternalActivities
+          ? essInteractionsNoTitle
+          : dataHubAndExternalActivities
 
     return res.json(activities)
   }

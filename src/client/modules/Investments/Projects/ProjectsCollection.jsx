@@ -127,8 +127,8 @@ const ProjectsCollection = ({
           !company
             ? `/investments/projects/create`
             : company.archived || company.uk_based
-            ? null
-            : `/investments/projects/create/${company.id}`
+              ? null
+              : `/investments/projects/create/${company.id}`
         }
         sanitizeFiltersForAnalytics={({ advisers, countries }) => ({
           ...sanitizeFilter(advisers),

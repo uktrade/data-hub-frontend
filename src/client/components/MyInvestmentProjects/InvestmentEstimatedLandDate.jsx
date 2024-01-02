@@ -58,10 +58,10 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate, ...props }) => {
     difference >= 90
       ? GreenPanel
       : difference >= 30
-      ? AmberPanel
-      : difference >= 0
-      ? RedPanel
-      : GreyPanel
+        ? AmberPanel
+        : difference >= 0
+          ? RedPanel
+          : GreyPanel
 
   return (
     <Panel data-test="estimated-land-date" {...props}>

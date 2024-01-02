@@ -122,14 +122,14 @@ const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
     ? 'Unknown adviser - Unknown team'
     : ditParticipants.length > 1
-    ? 'Multiple advisers'
-    : ditParticipants.map((adviser, index) => (
-        <div key={index}>
-          {`${adviser.name || 'Unknown adviser'} - ${
-            adviser.team || 'Unknown team'
-          }`}
-        </div>
-      ))
+      ? 'Multiple advisers'
+      : ditParticipants.map((adviser, index) => (
+          <div key={index}>
+            {`${adviser.name || 'Unknown adviser'} - ${
+              adviser.team || 'Unknown team'
+            }`}
+          </div>
+        ))
 
 const CompaniesTable = ({ companies }) => (
   <Table

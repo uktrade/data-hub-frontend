@@ -19,8 +19,8 @@ const formatParticipantName = (participant) =>
   get(participant, 'adviser') && get(participant, 'team')
     ? `${participant.adviser.name}, ${participant.team.name}`
     : get(participant, 'adviser')
-    ? participant.adviser.name
-    : 'Unknown adviser'
+      ? participant.adviser.name
+      : 'Unknown adviser'
 
 const formatParticipants = (dit_participants) =>
   dit_participants.length > 1
