@@ -8,17 +8,19 @@ export const getMyTasks = ({
   not_advisers,
   archived,
   sortby = 'due_date:asc',
+  company,
 }) =>
   apiProxyAxios
     .post('/v4/search/task', {
       limit: 50,
       offset: 0,
-      created_by: created_by,
-      not_created_by: not_created_by,
-      advisers: advisers,
-      not_advisers: not_advisers,
-      adviser: adviser,
-      archived: archived,
+      created_by,
+      not_created_by,
+      advisers,
+      not_advisers,
+      adviser,
+      archived,
       sortby,
+      company,
     })
     .then(({ data }) => data)

@@ -47,6 +47,7 @@ export const state2props = ({ router, ...state }) => {
     adviser: [currentAdviserId],
     archived: undefined,
     sortby: 'due_date:asc',
+    company: undefined,
   }
 
   const assignedToMapping = {
@@ -60,6 +61,10 @@ export const state2props = ({ router, ...state }) => {
 
   if (queryParams.sortby in sortbyMapping) {
     payload.sortby = sortbyMapping[queryParams.sortby]
+  }
+
+  if (queryParams.company) {
+    payload.company = queryParams.company
   }
 
   Object.assign(payload, assignedToMapping[queryParams.assigned_to])
