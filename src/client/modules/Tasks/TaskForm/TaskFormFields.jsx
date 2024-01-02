@@ -161,16 +161,16 @@ const TaskFormFields = ({
                 )
 
                 const companyId = values.company?.value || task?.company?.value
-
                 return (
                   <>
                     <Effect
                       dependencyList={[companyId]}
                       effect={() => {
-                        setFieldValue('investmentProject', {
-                          value: null,
-                          label: null,
-                        })
+                        companyInvestmentProjects &&
+                          setFieldValue('investmentProject', {
+                            value: null,
+                            label: null,
+                          })
                         getProjectsTask.start({
                           payload: {
                             limit: 250,
