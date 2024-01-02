@@ -12,6 +12,8 @@ import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
+import { TaskCompaniesAndProjectsResource } from '../../Resource'
+import Filters from '../../Filters'
 
 const SELECT_WIDTH = `16%`
 
@@ -30,7 +32,7 @@ const FiltersContainer = styled.div`
   }
 `
 
-export const MyTasksContent = ({ myTasks, filters }) => (
+export const MyTasksContent = ({ myTasks, filters, selectedFilters }) => (
   <>
     <FiltersContainer>
       <TaskListSelect
@@ -68,7 +70,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
     </ContentWithHeading>
   </>
 )
-const MyTasks = ({ myTasks, filters, payload }) => (
+const MyTasks = ({ myTasks, filters, selectedFilters, payload }) => (
   <Task.Status
     name={TASK_GET_MY_TASKS}
     id={GET_MY_TASKS_ID}
@@ -78,7 +80,13 @@ const MyTasks = ({ myTasks, filters, payload }) => (
       onSuccessDispatch: MY_TASKS_LOADED,
     }}
   >
-    {() => <MyTasksContent myTasks={myTasks} filters={filters} />}
+    {() => (
+      <MyTasksContent
+        myTasks={myTasks}
+        filters={filters}
+        selectedFilters={selectedFilters}
+      />
+    )}
   </Task.Status>
 )
 

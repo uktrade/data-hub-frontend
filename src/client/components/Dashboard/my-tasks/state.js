@@ -84,5 +84,8 @@ export const state2props = ({ router, ...state }) => {
         options: STATUS_LIST_OPTIONS,
       },
     },
+    selectedFilters: {
+      companies: [],
+    },
   }
 }

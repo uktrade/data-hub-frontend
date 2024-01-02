@@ -86,6 +86,7 @@ import OrderQuote from './OrderQuote'
 import TaskCompletedSettings from './TaskCompletedSettings'
 import OmisMarkets from './OmisMarkets'
 import OrderPayment from './OrderPayment'
+import TaskCompaniesAndProjects from './TaskCompaniesAndProjects'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -176,4 +177,5 @@ export default {
   ...TaskCompletedSettings.tasks,
   ...OmisMarkets.tasks,
   ...OrderPayment.tasks,
+  ...TaskCompaniesAndProjects.tasks,
 }
