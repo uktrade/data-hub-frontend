@@ -36,7 +36,7 @@ export const transformTaskFormValuesForAPI = (
 })
 
 const getUniquePKValue = (formValues) => {
-  if (formValues.investmentProject) {
+  if (formValues?.investmentProject?.value) {
     return {
       investment_project: formValues.investmentProject.value,
       company: null,
