@@ -65,7 +65,7 @@ describe('Task details table', () => {
     const company = pick(companyFaker(), ['id', 'name'])
     const project = null
 
-    const taskNoInvestmentProject = taskFaker({
+    const taskWithNoInvestmentProject = taskFaker({
       dueDate: undefined,
       description: undefined,
       emailRemindersEnabled: false,
@@ -76,7 +76,7 @@ describe('Task details table', () => {
     it('the table should show all expected values', () => {
       cy.mount(
         <Component
-          task={taskNoInvestmentProject}
+          task={taskWithNoInvestmentProject}
           company={company}
           project={project}
         />
@@ -92,13 +92,13 @@ describe('Task details table', () => {
             name: company.name,
           },
           ['Date due']: NOT_SET_TEXT,
-          'Assigned to': taskNoInvestmentProject.advisers
+          'Assigned to': taskWithNoInvestmentProject.advisers
             .map((adviser) => adviser.name)
             .join(''),
           'Task description': NOT_SET_TEXT,
           'Reminders set': NOT_SET_TEXT,
-          'Date created': formatLongDate(taskNoInvestmentProject.createdOn),
-          'Created by': taskNoInvestmentProject.createdBy.name,
+          'Date created': formatLongDate(taskWithNoInvestmentProject.createdOn),
+          'Created by': taskWithNoInvestmentProject.createdBy.name,
         },
       })
     })
