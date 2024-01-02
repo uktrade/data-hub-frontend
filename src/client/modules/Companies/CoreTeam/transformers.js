@@ -39,8 +39,8 @@ export const transformOneListCoreTeamToCollection = (advisers) => {
       location: adviserTeam?.ukRegion
         ? adviserTeam?.ukRegion.name
         : adviserTeam?.country
-        ? adviserTeam?.country.name
-        : '-',
+          ? adviserTeam?.country.name
+          : '-',
     }
   }
 

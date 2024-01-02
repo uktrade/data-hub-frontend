@@ -9,9 +9,8 @@ data layer. */
 
 export default function* () {
   while (true) {
-    const { category, action, label, extra, event } = yield take(
-      ANALYTICS__PUSH
-    )
+    const { category, action, label, extra, event } =
+      yield take(ANALYTICS__PUSH)
 
     window.dataLayer = window.dataLayer || []
     const data = omitBy(

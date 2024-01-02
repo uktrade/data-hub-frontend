@@ -57,6 +57,12 @@ updates:
   - dependency-name: "@sentry/tracing"
     versions:
     - ">= 0"
+  - dependency-name: "@nivo/pie"
+    versions:
+    - ">= 0"
+  - dependency-name: "@nivo/tooltip"
+    versions:
+    - ">= 0"
   # ignore all GitHub linguist patch updates
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]

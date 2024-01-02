@@ -78,21 +78,21 @@ const FlashMessages = ({
         return isNull(messages[0])
           ? null
           : parts.length > 1
-          ? messages.map(({ body, heading }) => (
-              <li key={body}>
-                <StyledStatusMessage colour={messageColours[parts[0]]}>
-                  <StyledHeading>{heading}</StyledHeading>
-                  <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
-                </StyledStatusMessage>
-              </li>
-            ))
-          : messages.map((body, i) => (
-              <li key={i}>
-                <StyledStatusMessage colour={messageColours[type]}>
-                  <StyledMessage dangerouslySetInnerHTML={{ __html: body }} />
-                </StyledStatusMessage>
-              </li>
-            ))
+            ? messages.map(({ body, heading }) => (
+                <li key={body}>
+                  <StyledStatusMessage colour={messageColours[parts[0]]}>
+                    <StyledHeading>{heading}</StyledHeading>
+                    <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
+                  </StyledStatusMessage>
+                </li>
+              ))
+            : messages.map((body, i) => (
+                <li key={i}>
+                  <StyledStatusMessage colour={messageColours[type]}>
+                    <StyledMessage dangerouslySetInnerHTML={{ __html: body }} />
+                  </StyledStatusMessage>
+                </li>
+              ))
       })}
     </UnorderedList>
   ) : null

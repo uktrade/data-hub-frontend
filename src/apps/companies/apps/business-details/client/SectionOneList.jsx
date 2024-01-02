@@ -20,8 +20,8 @@ const getLocation = (manager) => {
   return manager.ditTeam.ukRegion
     ? manager.ditTeam.ukRegion.name
     : manager.ditTeam.country
-    ? manager.ditTeam.country.name
-    : '-'
+      ? manager.ditTeam.country.name
+      : '-'
 }
 
 const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
