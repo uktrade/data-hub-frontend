@@ -348,14 +348,14 @@ export const activityFeed = function (req, res) {
       req.body,
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
-    const activities =
-      company === BEST_EVER_COMPANY
-        ? companyActivities
-        : company === BEST_EVER_COMPANY_2
-        ? essInteractionsNoTitle
-        : dataHubAndExternalActivities
 
-    return res.json(activities)
+    if (company === BEST_EVER_COMPANY) {
+      return res.json(companyActivities)
+    }
+    if (company === BEST_EVER_COMPANY_2) {
+      return res.json(essInteractionsNoTitle)
+    }
+    return res.json(dataHubAndExternalActivities)
   }
 
   // ESS Interactions
