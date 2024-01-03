@@ -90,7 +90,7 @@ export const state2props = ({ router, ...state }) => {
       },
     },
     selectedFilters: {
-      companies: [],
+      companies: queryParams.company,
     },
   }
 }

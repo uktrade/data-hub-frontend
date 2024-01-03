@@ -32,6 +32,21 @@ const FiltersContainer = styled.div`
   }
 `
 
+function mapSelectedCompanyFilters(selectedFilters, companies) {
+  const selectedCompanyIds = selectedFilters?.companies || []
+
+  const selectedCompanies = companies.filter((company) =>
+    selectedCompanyIds.includes(company.id)
+  )
+
+  const options = selectedCompanies.map((company) => ({
+    label: company.name,
+    value: company.id,
+  }))
+
+  return options
+}
+
 export const MyTasksContent = ({ myTasks, filters, selectedFilters }) => (
   <>
     <FiltersContainer>
