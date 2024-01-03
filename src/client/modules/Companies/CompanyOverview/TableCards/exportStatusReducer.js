@@ -1,4 +1,4 @@
-import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../../client/actions'
+import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../actions'
 
 const initialState = {
   results: [],

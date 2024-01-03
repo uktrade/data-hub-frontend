@@ -104,8 +104,8 @@ import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
   TASK_GET_PROJECT_WON_COUNT,
-} from '../apps/companies/apps/company-overview/overview-table-cards/state'
-import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
+} from './modules/Companies/CompanyOverview/TableCards/state.js'
+import * as overviewInvestmentProjectTasks from './modules/Companies/CompanyOverview/TableCards/tasks.js'
 
 import {
   TASK_SEARCH_COMPANY,

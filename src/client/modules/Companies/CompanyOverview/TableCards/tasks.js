@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { apiProxyAxios } from '../../../../../client/components/Task/utils'
-import { NOT_IMPLEMENTED } from '../../exports/client/ExportWins/state'
+import { apiProxyAxios } from '../../../../components/Task/utils'
+import { NOT_IMPLEMENTED } from '../../../../../apps/companies/apps/exports/client/ExportWins/state'
 
 export const getProjectsWon = async ({ companyId }) => {
   return await apiProxyAxios

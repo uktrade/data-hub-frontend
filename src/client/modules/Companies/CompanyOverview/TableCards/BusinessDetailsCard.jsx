@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { UNITED_KINGDOM_ID } from '../../../../../common/constants'
-import { NewWindowLink, SummaryTable } from '../../../../../client/components'
-import { currencyGBP } from '../../../../../client/utils/number-utils'
+import { NewWindowLink, SummaryTable } from '../../../../components'
+import { currencyGBP } from '../../../../utils/number-utils'
 import urls from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
 import {
