@@ -81,6 +81,7 @@ import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
 import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
 import PaymentReceipt from './modules/Omis/PaymentReceipt'
 import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
+import CompanyOverview from './modules/Companies/CompanyOverview/CompanyOverview'
 
 const routes = {
   companies: [
@@ -163,6 +164,11 @@ const routes = {
       path: '/companies/:companyId/referrals/:referralId/help',
       module: 'datahub:companies',
       component: ReferralHelp,
+    },
+    {
+      path: '/companies/:companyId/overview',
+      module: 'datahub:companies',
+      component: CompanyOverview,
     },
   ],
   contacts: [

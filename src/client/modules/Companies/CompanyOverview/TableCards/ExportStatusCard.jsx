@@ -5,16 +5,16 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { kebabCase } from 'lodash'
 
-import { SummaryTable, Tag } from '../../../../../client/components'
-import Task from '../../../../../client/components/Task'
+import { SummaryTable, Tag } from '../../../../components'
+import Task from '../../../../components/Task'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
   OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
   exportWinsState2props,
 } from './state'
-import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../../client/actions'
-import { format } from '../../../../../client/utils/date'
-import { transformExportCountries } from '../../exports/transformer'
+import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../actions'
+import { format } from '../../../../utils/date'
+import { transformExportCountries } from '../../../../../apps/companies/apps/exports/transformer'
 import { companies } from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
 import {
