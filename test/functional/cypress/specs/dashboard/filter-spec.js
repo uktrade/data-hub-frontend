@@ -1,6 +1,7 @@
 import { assertPayload } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import taskListFaker from '../../fakers/task'
+import { companyFaker } from '../../fakers/companies'
 
 const transformOptions = (options) =>
   [...options].map((o) => ({
@@ -212,6 +213,74 @@ describe('Task filters', () => {
           { value: 'all-statuses', label: 'Show all' },
           { value: 'me', label: 'Me' },
           { value: 'others', label: 'Others' },
+        ])
+      })
+    })
+
+    it('should filter assigned to me from the url', () => {
+      testFilterFromUrl(
+        element,
+        'assigned_to=me',
+        { advisers: [myAdviserId] },
+        'Me'
+      )
+    })
+
+    it('should filter assigned to others from the url', () => {
+      testFilterFromUrl(
+        element,
+        'assigned_to=others',
+        { not_advisers: [myAdviserId] },
+        'Others'
+      )
+    })
+
+    it('should filter assigned to me from user input', () => {
+      testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
+    })
+
+    it('should filter assigned to others from user input', () => {
+      testFilterFromUserInput(
+        element,
+        { not_advisers: [myAdviserId] },
+        'Others'
+      )
+    })
+  })
+
+  context('Company', () => {
+    const element = '[data-test="company-select"]'
+    const company1 = companyFaker()
+    const company2 = companyFaker()
+
+    const companyIntercept = () => {
+      const endpoint = '/api-proxy/v4/tasks/companies-and-projects'
+      cy.intercept('POST', endpoint, {
+        body: {
+          companies: [
+            {
+              id: company1.id,
+              name: company1.name,
+            },
+            {
+              id: company2.id,
+              name: company2.name,
+            },
+          ],
+          projects: [],
+        },
+      })
+      cy.visit(tasksTab)
+    }
+
+    it('should have a "Company" filter', () => {
+      assertFilterName(element, 'Company')
+      companyIntercept()
+      cy.get(`${element} option`).then((companyOptions) => {
+        expect(transformOptions(companyOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: company1.id, label: company1.name },
+          { value: company2.id, label: company2.name },
         ])
       })
     })
