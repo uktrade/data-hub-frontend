@@ -67,12 +67,12 @@ export const StyledAnchorTag = styled.a`
   }
 `
 const CompanyLocalTab = (props) => {
-  const { navItem, index } = props
+  const { navItem, index, isActive } = props
 
   return (
     <StyledListItem key={`tab-${index}`}>
       <StyledAnchorTag
-        selected={navItem.isActive}
+        selected={isActive}
         href={`${navItem.url}${navItem.search ? navItem.search : ''}`}
         id={`tab-${navItem.path}`}
         key={`tab-link-${navItem.path}`}
