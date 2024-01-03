@@ -1,11 +1,11 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
-var ukRegion = require('../../../fixtures/v4/metadata/uk-region.json')
-var employeeRange = require('../../../fixtures/v4/metadata/employee-range.json')
-var headquarterType = require('../../../fixtures/v4/metadata/headquarter-type.json')
-var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
+import ukRegion from '../../../fixtures/v4/metadata/uk-region.json' assert { type: 'json' }
+import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' assert { type: 'json' }
+import headquarterType from '../../../fixtures/v4/metadata/headquarter-type.json' assert { type: 'json' }
+import oneListTier from '../../../fixtures/v4/metadata/one-list-tier.json' assert { type: 'json' }
 
 const address = {
   line_1: faker.location.streetAddress(),
@@ -122,7 +122,7 @@ const manuallyLinkedCompanyFaker = () => {
   }
 }
 
-exports.fakerCompanyFamilyTree = ({
+export const fakerCompanyFamilyTree = ({
   treeDepth = 2,
   minCompaniesPerLevel = 1,
   maxCompaniesPerLevel = 1,

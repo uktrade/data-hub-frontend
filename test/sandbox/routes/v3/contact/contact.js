@@ -1,25 +1,23 @@
-const contact = require('../../../fixtures/v3/contact/contact.json')
-const contactByIdUK = require('../../../fixtures/v3/contact/contact-by-id-uk.json')
-const contactByIdUS = require('../../../fixtures/v3/contact/contact-by-id-us.json')
-const contactByIdWithNoDocument = require('../../../fixtures/v3/contact/contact-by-id-with-no-document.json')
-const contactsForReferral = require('../../../fixtures/v3/contact/contacts-for-referral.json')
-const completeUKContact = require('../../../fixtures/v3/contact/contact-complete-details-uk.json')
-const incompleteUKContact = require('../../../fixtures/v3/contact/contact-incomplete-details-uk.json')
-const contactWithCompanyAddress = require('../../../fixtures/v3/contact/contact-with-company-address.json')
-const contactWithUSAddress = require('../../../fixtures/v3/contact/contact-with-us-address.json')
-const archivedContact = require('../../../fixtures/v3/contact/contact-archived.json')
-const invalidEmailContact = require('../../../fixtures/v3/contact/contact-invalid-email.json')
-const aventriContact = require('../../../fixtures/v4/activity-feed/aventri-attendees.json')
-const ditContactforAventri = require('../../../fixtures/v3/contact/contact-aventri.json')
-const noContact = require('../../../fixtures/v3/contact/no-contact.json')
-
-const auditHistory = require('../../../fixtures/v3/contact/contact-audit-history.json')
-const shortAuditHistory = require('../../../fixtures/v3/contact/contact-audit-history-short.json')
-const emptyAuditHistory = require('../../../fixtures/v3/contact/contact-audit-history-empty.json')
-
-const lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
-const contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
-const contactManyContactsCompany = require('../../../fixtures/v3/contact/contact-company-with-many-contacts.json')
+import contact from '../../../fixtures/v3/contact/contact.json' assert { type: 'json' }
+import contactByIdUK from '../../../fixtures/v3/contact/contact-by-id-uk.json' assert { type: 'json' }
+import contactById from '../../../fixtures/v3/contact/contact-by-id-us.json' assert { type: 'json' }
+import contactByIdWithNoDocument from '../../../fixtures/v3/contact/contact-by-id-with-no-document.json' assert { type: 'json' }
+import contactsForReferral from '../../../fixtures/v3/contact/contacts-for-referral.json' assert { type: 'json' }
+import completeUKContact from '../../../fixtures/v3/contact/contact-complete-details-uk.json' assert { type: 'json' }
+import incompleteUKContact from '../../../fixtures/v3/contact/contact-incomplete-details-uk.json' assert { type: 'json' }
+import contactWithCompanyAddress from '../../../fixtures/v3/contact/contact-with-company-address.json' assert { type: 'json' }
+import contactWithUSAddress from '../../../fixtures/v3/contact/contact-with-us-address.json' assert { type: 'json' }
+import archivedContact from '../../../fixtures/v3/contact/contact-archived.json' assert { type: 'json' }
+import invalidEmailContact from '../../../fixtures/v3/contact/contact-invalid-email.json' assert { type: 'json' }
+import aventriContact from '../../../fixtures/v4/activity-feed/aventri-attendees.json' assert { type: 'json' }
+import ditContactforAventri from '../../../fixtures/v3/contact/contact-aventri.json' assert { type: 'json' }
+import noContact from '../../../fixtures/v3/contact/no-contact.json' assert { type: 'json' }
+import auditHistory from '../../../fixtures/v3/contact/contact-audit-history.json' assert { type: 'json' }
+import shortAuditHistory from '../../../fixtures/v3/contact/contact-audit-history-short.json' assert { type: 'json' }
+import emptyAuditHistory from '../../../fixtures/v3/contact/contact-audit-history-empty.json' assert { type: 'json' }
+import lambdaPlc from '../../../fixtures/v4/company/company-lambda-plc.json' assert { type: 'json' }
+import createContact from '../../../fixtures/v3/contact/contact-create.json' assert { type: 'json' }
+import contactManyContactsCompany from '../../../fixtures/v3/contact/contact-company-with-many-contacts.json' assert { type: 'json' }
 
 const validateContactForm = function (formData) {
   const requiredFields = ['first_name', 'last_name', 'job_title', 'email']
@@ -39,7 +37,7 @@ const AventriEmailWithoutDataHubMatch =
 const EmptyStringAventriEmail =
   aventriContact.hits?.hits[2]?._source.object['dit:emailAddress']
 
-exports.contact = function (req, res) {
+export const getContact = function (req, res) {
   // This is here to allow creation of new contacts. The email must contain "new"
   if (req.query.email?.includes('new')) {
     return res.json([])
@@ -64,7 +62,7 @@ exports.contact = function (req, res) {
   }
 }
 
-exports.contactCreate = function (req, res) {
+export const contactCreate = function (req, res) {
   const fieldErrors = validateContactForm(req.body)
 
   if (req.body.first_name === 'Error') {
@@ -76,11 +74,11 @@ exports.contactCreate = function (req, res) {
   if (req.body.company.id === '57c41268-26be-4335-a873-557e8b0deb29') {
     res.json(contactManyContactsCompany)
   } else {
-    res.json(contactCreate)
+    res.json(createContact)
   }
 }
 
-exports.contactById = function (req, res) {
+export const getContactById = function (req, res) {
   const contacts = {
     '5555d636-1d24-416a-aaf0-3fb220d59aaa': contactByIdWithNoDocument,
     'f3d19ea7-d4cf-43e0-8e97-755c57cae313': contactByIdUK,
@@ -92,10 +90,10 @@ exports.contactById = function (req, res) {
     '2341fb21-ee64-4898-8f2e-ebf924e1e63f': invalidEmailContact,
   }
 
-  res.json(contacts[req.params.contactId] || contactByIdUS)
+  res.json(contacts[req.params.contactId] || contactById)
 }
 
-exports.updateContactById = function (req, res) {
+export const updateContactById = function (req, res) {
   const fieldErrors = validateContactForm(req.body)
 
   if (req.body.first_name === 'Error') {
@@ -108,15 +106,15 @@ exports.updateContactById = function (req, res) {
   if (req.params.contactId === 'f3d19ea7-d4cf-43e0-8e97-755c57cae313') {
     res.json(contactByIdUK)
   } else {
-    res.json(contactByIdUS)
+    res.json(contactById)
   }
 }
 
-exports.archiveContact = function (req, res) {
+export const archiveContact = function (req, res) {
   res.sendStatus(200)
 }
 
-exports.auditHistory = function (req, res) {
+export const getAuditHistory = function (req, res) {
   const auditHistories = {
     '64f85710-eabd-4479-829c-1fd47e3595d0': auditHistory,
     'e74f0a25-aeee-48bd-a483-ac29c47e81a4': shortAuditHistory,

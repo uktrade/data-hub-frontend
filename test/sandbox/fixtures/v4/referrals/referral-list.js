@@ -1,6 +1,6 @@
-var whoami = require('../../../fixtures/whoami.json')
+import whoami from '../../../fixtures/whoami.json' assert { type: 'json' }
 
-module.exports = [
+export default [
   {
     id: 'aaa',
     status: 'outstanding',

@@ -1,10 +1,10 @@
-var eventById = require('../../../fixtures/v3/event/single-event.json')
-var missingTeams = require('../../../fixtures/v3/event/single-event-missing-teams.json')
-var emptyEvent = require('../../../fixtures/v3/event/empty-event.json')
-var disabledEvent = require('../../../fixtures/v3/event/disable-event.json')
-var eventCreate = require('../../../fixtures/v4/event/event-create.json')
+import eventById from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' }
+import missingTeams from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' }
+import emptyEvent from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' }
+import disabledEvent from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' }
+import eventCreate from '../../../fixtures/v4/event/event-create.json' assert { type: 'json' }
 
-function getEventById(res, req) {
+function _getEventById(res, req) {
   var events = {
     'b93d4273-36fe-4008-ac40-fbc197910791': emptyEvent,
     'b93d4274-36fe-4008-ac40-fbc197910792': disabledEvent,
@@ -14,14 +14,14 @@ function getEventById(res, req) {
   return res.status(200).json(events[req.params.eventId] || eventById)
 }
 
-exports.eventById = function (req, res) {
-  return getEventById(res, req)
+export const getEventById = function (req, res) {
+  return _getEventById(res, req)
 }
 
-exports.createEvent = function (req, res) {
+export const createEvent = function (req, res) {
   return res.status(201).json(eventCreate)
 }
 
-exports.patchEvent = function (req, res) {
-  return getEventById(res, req)
+export const patchEvent = function (req, res) {
+  return _getEventById(res, req)
 }

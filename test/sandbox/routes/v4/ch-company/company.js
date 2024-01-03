@@ -1,6 +1,6 @@
-var mercuryTradingLtd = require('../../../fixtures/v4/ch-company/mercury-trading-ltd.json')
+import mercuryTradingLtd from '../../../fixtures/v4/ch-company/mercury-trading-ltd.json' assert { type: 'json' }
 
-exports.company = function (req, res) {
+export const company = function (req, res) {
   var companies = {
     99919: mercuryTradingLtd,
   }

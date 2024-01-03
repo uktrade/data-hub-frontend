@@ -1,24 +1,24 @@
-const cancelledOrder = require('../../../fixtures/v3/omis/cancelled-order.json')
-const draftOrder = require('../../../fixtures/v3/omis/draft-order.json')
-const paidOrder = require('../../../fixtures/v3/omis/paid-order.json')
-const assignees = require('../../../fixtures/v3/omis/assignees.json')
-const invoice = require('../../../fixtures/v3/omis/invoice.json')
-const payments = require('../../../fixtures/v3/omis/payments.json')
-const quote = require('../../../fixtures/v3/omis/quote.json')
-const quoteAccepted = require('../../../fixtures/v3/omis/quote-accepted.json')
-const subscribers = require('../../../fixtures/v3/omis/subscribers.json')
-const quoteAwaitOrder = require('../../../fixtures/v3/omis/quote-awaiting-order.json')
-const emptyOrder = require('../../../fixtures/v3/omis/empty-order.json')
+import cancelledOrder from '../../../fixtures/v3/omis/cancelled-order.json' assert { type: 'json' }
+import draftOrder from '../../../fixtures/v3/omis/draft-order.json' assert { type: 'json' }
+import paidOrder from '../../../fixtures/v3/omis/paid-order.json' assert { type: 'json' }
+import assignees from '../../../fixtures/v3/omis/assignees.json' assert { type: 'json' }
+import invoice from '../../../fixtures/v3/omis/invoice.json' assert { type: 'json' }
+import payments from '../../../fixtures/v3/omis/payments.json' assert { type: 'json' }
+import quote from '../../../fixtures/v3/omis/quote.json' assert { type: 'json' }
+import quoteAccepted from '../../../fixtures/v3/omis/quote-accepted.json' assert { type: 'json' }
+import subscribers from '../../../fixtures/v3/omis/subscribers.json' assert { type: 'json' }
+import quoteAwaitOrder from '../../../fixtures/v3/omis/quote-awaiting-order.json' assert { type: 'json' }
+import emptyOrder from '../../../fixtures/v3/omis/empty-order.json' assert { type: 'json' }
 
-exports.assignees = function (req, res) {
+export const getAssignees = function (req, res) {
   res.json(assignees)
 }
 
-exports.invoice = function (req, res) {
+export const getInvoice = function (req, res) {
   res.json(invoice)
 }
 
-exports.getOrderById = function (req, res) {
+export const getOrderById = function (req, res) {
   const orders = {
     [cancelledOrder.id]: cancelledOrder,
     [paidOrder.id]: paidOrder,
@@ -31,22 +31,22 @@ exports.getOrderById = function (req, res) {
   res.json(orders[req.params.id] || paidOrder)
 }
 
-exports.payments = function (req, res) {
+export const getPayments = function (req, res) {
   res.json(req.params.id === draftOrder.id ? [] : payments)
 }
 
-exports.createPayments = function (req, res) {
+export const createPayments = function (req, res) {
   res.json({})
 }
 
-exports.quote = function (req, res) {
+export const getQuote = function (req, res) {
   res.json(quote)
 }
 
-exports.subscriberList = function (req, res) {
+export const subscriberList = function (req, res) {
   res.json(subscribers)
 }
 
-exports.editQuoteDetail = function (req, res) {
+export const editQuoteDetail = function (req, res) {
   res.json({})
 }

@@ -1,168 +1,168 @@
-var likelihoodToLand = require('../../../fixtures/v4/metadata/likelihood-to-land.json')
-var investmentInvestorType = require('../../../fixtures/v4/metadata/investment-investor-type.json')
-var investmentInvolvement = require('../../../fixtures/v4/metadata/investment-involvement.json')
-var investmentSpecificProgramme = require('../../../fixtures/v4/metadata/investment-specific-programme.json')
-var investmentProjectStage = require('../../../fixtures/v4/metadata/investment-project-stage.json')
-var investmentBusinessActivity = require('../../../fixtures/v4/metadata/investment-business-activity.json')
-var investmentType = require('../../../fixtures/v4/metadata/investment-type.json')
-var investmentStrategicDriver = require('../../../fixtures/v4/metadata/investment-strategic-driver.json')
-var investmentDeliveryPartner = require('../../../fixtures/v4/metadata/investment-delivery-partner.json')
-var exportExperienceCategory = require('../../../fixtures/v4/metadata/export-experience-category.json')
-var orderServiceType = require('../../../fixtures/v4/metadata/order-service-type.json')
-var orderCancellationReason = require('../../../fixtures/v4/metadata/order-cancellation-reason.json')
-var omisMarket = require('../../../fixtures/v4/metadata/omis-market.json')
-var fdiValue = require('../../../fixtures/v4/metadata/fdi-value.json')
-var fdiType = require('../../../fixtures/v4/metadata/fdi-type.json')
-var salaryRange = require('../../../fixtures/v4/metadata/salary-range.json')
-var turnover = require('../../../fixtures/v4/metadata/turnover.json')
-var sector = require('../../../fixtures/v4/metadata/sector.json')
-var sectorLte0 = require('../../../fixtures/v4/metadata/sector-lte0.json')
-var locationType = require('../../../fixtures/v4/metadata/location-type.json')
-var eventType = require('../../../fixtures/v4/metadata/event-type.json')
-var programme = require('../../../fixtures/v4/metadata/programme.json')
-var businessType = require('../../../fixtures/v4/metadata/business-type.json')
-var evidenceTag = require('../../../fixtures/v4/metadata/evidence-tag.json')
-var employeeRange = require('../../../fixtures/v4/metadata/employee-range.json')
-var country = require('../../../fixtures/v4/metadata/country.json')
-var ukRegion = require('../../../fixtures/v4/metadata/uk-region.json')
-var administrativeArea = require('../../../fixtures/v4/metadata/administrative-area.json')
-var referralSourceWebsite = require('../../../fixtures/v4/metadata/referral-source-website.json')
-var referralSourceMarketing = require('../../../fixtures/v4/metadata/referral-source-marketing.json')
-var referralSourceActivity = require('../../../fixtures/v4/metadata/referral-source-activity.json')
-var headquarterType = require('../../../fixtures/v4/metadata/headquarter-type.json')
-var service = require('../../../fixtures/v4/metadata/service.json')
-var communicationChannel = require('../../../fixtures/v4/metadata/communication-channel.json')
-var team = require('../../../fixtures/v4/metadata/team.json')
-var policyArea = require('../../../fixtures/v4/metadata/policy-area.json')
-var policyIssueType = require('../../../fixtures/v4/metadata/policy-issue-type.json')
-var exportBarrier = require('../../../fixtures/v4/metadata/export-barrier.json')
-var serviceDeliveryStatus = require('../../../fixtures/v4/metadata/service-delivery-status.json')
-var capitalInvestmentInvestorType = require('../../../fixtures/v4/metadata/capital-investment-investor-type.json')
-var capitalInvestmentRequiredChecks = require('../../../fixtures/v4/metadata/capital-investment-required-checks.json')
-var capitalInvestmentDealTicketSize = require('../../../fixtures/v4/metadata/capital-investment-deal-ticket-size.json')
-var capitalInvestmentInvestmentTypes = require('../../../fixtures/v4/metadata/capital-investment-investment-types.json')
-var capitalInvestmentMinimumReturnRate = require('../../../fixtures/v4/metadata/capital-investment-return-rate.json')
-var capitalInvestmentTimeHorizons = require('../../../fixtures/v4/metadata/capital-investment-time-horizons.json')
-var capitalInvestmentRestrictions = require('../../../fixtures/v4/metadata/capital-investment-restrictions.json')
-var capitalInvestmentConstructionRisks = require('../../../fixtures/v4/metadata/capital-investment-construction-risks.json')
-var capitalInvestmentEquityPercentage = require('../../../fixtures/v4/metadata/capital-investment-equity-percentage.json')
-var capitalInvestmentDesiredDealRoles = require('../../../fixtures/v4/metadata/capital-investment-desired-deal-roles.json')
-var capitalInvestmentAssetClassInterest = require('../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json')
-var capitalInvestmentValueTypes = require('../../../fixtures/metadata/capital-investment-opportunity-value-types.json')
-var capitalInvestmentStatusTypes = require('../../../fixtures/metadata/capital-investment-opportunity-status-types.json')
-var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
-var tradeAgreement = require('../../../fixtures/v4/metadata/trade-agreement.json')
-var estimatedYears = require('../../../fixtures/v4/export/estimated-years.json')
-var exportExperience = require('../../../fixtures/v4/export/export-experience.json')
+import likelihoodToLand from '../../../fixtures/v4/metadata/likelihood-to-land.json' assert { type: 'json' }
+import investmentInvestorType from '../../../fixtures/v4/metadata/investment-investor-type.json' assert { type: 'json' }
+import investmentInvolvement from '../../../fixtures/v4/metadata/investment-involvement.json' assert { type: 'json' }
+import investmentSpecificProgramme from '../../../fixtures/v4/metadata/investment-specific-programme.json' assert { type: 'json' }
+import investmentProjectStage from '../../../fixtures/v4/metadata/investment-project-stage.json' assert { type: 'json' }
+import investmentBusinessActivity from '../../../fixtures/v4/metadata/investment-business-activity.json' assert { type: 'json' }
+import investmentType from '../../../fixtures/v4/metadata/investment-type.json' assert { type: 'json' }
+import investmentStrategicDriver from '../../../fixtures/v4/metadata/investment-strategic-driver.json' assert { type: 'json' }
+import investmentDeliveryPartner from '../../../fixtures/v4/metadata/investment-delivery-partner.json' assert { type: 'json' }
+import exportExperienceCategory from '../../../fixtures/v4/metadata/export-experience-category.json' assert { type: 'json' }
+import orderServiceType from '../../../fixtures/v4/metadata/order-service-type.json' assert { type: 'json' }
+import orderCancellationReason from '../../../fixtures/v4/metadata/order-cancellation-reason.json' assert { type: 'json' }
+import omisMarket from '../../../fixtures/v4/metadata/omis-market.json' assert { type: 'json' }
+import fdiValue from '../../../fixtures/v4/metadata/fdi-value.json' assert { type: 'json' }
+import fdiType from '../../../fixtures/v4/metadata/fdi-type.json' assert { type: 'json' }
+import salaryRange from '../../../fixtures/v4/metadata/salary-range.json' assert { type: 'json' }
+import turnover from '../../../fixtures/v4/metadata/turnover.json' assert { type: 'json' }
+import sector from '../../../fixtures/v4/metadata/sector.json' assert { type: 'json' }
+import sectorLte0 from '../../../fixtures/v4/metadata/sector-lte0.json' assert { type: 'json' }
+import locationType from '../../../fixtures/v4/metadata/location-type.json' assert { type: 'json' }
+import eventType from '../../../fixtures/v4/metadata/event-type.json' assert { type: 'json' }
+import programme from '../../../fixtures/v4/metadata/programme.json' assert { type: 'json' }
+import businessType from '../../../fixtures/v4/metadata/business-type.json' assert { type: 'json' }
+import evidenceTag from '../../../fixtures/v4/metadata/evidence-tag.json' assert { type: 'json' }
+import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' assert { type: 'json' }
+import country from '../../../fixtures/v4/metadata/country.json' assert { type: 'json' }
+import ukRegion from '../../../fixtures/v4/metadata/uk-region.json' assert { type: 'json' }
+import administrativeArea from '../../../fixtures/v4/metadata/administrative-area.json' assert { type: 'json' }
+import referralSourceWebsite from '../../../fixtures/v4/metadata/referral-source-website.json' assert { type: 'json' }
+import referralSourceMarketing from '../../../fixtures/v4/metadata/referral-source-marketing.json' assert { type: 'json' }
+import referralSourceActivity from '../../../fixtures/v4/metadata/referral-source-activity.json' assert { type: 'json' }
+import headquarterType from '../../../fixtures/v4/metadata/headquarter-type.json' assert { type: 'json' }
+import service from '../../../fixtures/v4/metadata/service.json' assert { type: 'json' }
+import communicationChannel from '../../../fixtures/v4/metadata/communication-channel.json' assert { type: 'json' }
+import team from '../../../fixtures/v4/metadata/team.json' assert { type: 'json' }
+import policyArea from '../../../fixtures/v4/metadata/policy-area.json' assert { type: 'json' }
+import policyIssueType from '../../../fixtures/v4/metadata/policy-issue-type.json' assert { type: 'json' }
+import exportBarrier from '../../../fixtures/v4/metadata/export-barrier.json' assert { type: 'json' }
+import serviceDeliveryStatus from '../../../fixtures/v4/metadata/service-delivery-status.json' assert { type: 'json' }
+import capitalInvestmentInvestorType from '../../../fixtures/v4/metadata/capital-investment-investor-type.json' assert { type: 'json' }
+import capitalInvestmentRequiredChecks from '../../../fixtures/v4/metadata/capital-investment-required-checks.json' assert { type: 'json' }
+import capitalInvestmentDealTicketSize from '../../../fixtures/v4/metadata/capital-investment-deal-ticket-size.json' assert { type: 'json' }
+import capitalInvestmentInvestmentTypes from '../../../fixtures/v4/metadata/capital-investment-investment-types.json' assert { type: 'json' }
+import capitalInvestmentMinimumReturnRate from '../../../fixtures/v4/metadata/capital-investment-return-rate.json' assert { type: 'json' }
+import capitalInvestmentTimeHorizons from '../../../fixtures/v4/metadata/capital-investment-time-horizons.json' assert { type: 'json' }
+import capitalInvestmentRestrictions from '../../../fixtures/v4/metadata/capital-investment-restrictions.json' assert { type: 'json' }
+import capitalInvestmentConstructionRisks from '../../../fixtures/v4/metadata/capital-investment-construction-risks.json' assert { type: 'json' }
+import capitalInvestmentEquityPercentage from '../../../fixtures/v4/metadata/capital-investment-equity-percentage.json' assert { type: 'json' }
+import capitalInvestmentDesiredDealRoles from '../../../fixtures/v4/metadata/capital-investment-desired-deal-roles.json' assert { type: 'json' }
+import capitalInvestmentAssetClassInterest from '../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json' assert { type: 'json' }
+import capitalInvestmentValueTypes from '../../../fixtures/metadata/capital-investment-opportunity-value-types.json' assert { type: 'json' }
+import capitalInvestmentStatusTypes from '../../../fixtures/metadata/capital-investment-opportunity-status-types.json' assert { type: 'json' }
+import oneListTier from '../../../fixtures/v4/metadata/one-list-tier.json' assert { type: 'json' }
+import tradeAgreement from '../../../fixtures/v4/metadata/trade-agreement.json' assert { type: 'json' }
+import estimatedYears from '../../../fixtures/v4/export/estimated-years.json' assert { type: 'json' }
+import exportExperience from '../../../fixtures/v4/export/export-experience.json' assert { type: 'json' }
 
-exports.likelihoodToLand = function (req, res) {
+export const getLikelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
 }
 
-exports.investmentInvestorType = function (req, res) {
+export const getInvestmentInvestorType = function (req, res) {
   res.json(investmentInvestorType)
 }
 
-exports.investmentSpecificProgramme = function (req, res) {
+export const getInvestmentSpecificProgramme = function (req, res) {
   res.json(investmentSpecificProgramme)
 }
 
-exports.investmentInvolvement = function (req, res) {
+export const getInvestmentInvolvement = function (req, res) {
   res.json(investmentInvolvement)
 }
 
-exports.investmentProjectStage = function (req, res) {
+export const getInvestmentProjectStage = function (req, res) {
   res.json(investmentProjectStage)
 }
 
-exports.investmentBusinessActivity = function (req, res) {
+export const getInvestmentBusinessActivity = function (req, res) {
   res.json(investmentBusinessActivity)
 }
 
-exports.investmentType = function (req, res) {
+export const getInvestmentType = function (req, res) {
   res.json(investmentType)
 }
 
-exports.investmentStrategicDriver = function (req, res) {
+export const getInvestmentStrategicDriver = function (req, res) {
   res.json(investmentStrategicDriver)
 }
 
-exports.investmentDeliveryPartner = function (req, res) {
+export const getInvestmentDeliveryPartner = function (req, res) {
   res.json(investmentDeliveryPartner)
 }
 
-exports.exportExperienceCategory = function (req, res) {
+export const getExportExperienceCategory = function (req, res) {
   res.json(exportExperienceCategory)
 }
 
-exports.orderServiceType = function (req, res) {
+export const getOrderServiceType = function (req, res) {
   res.json(orderServiceType)
 }
 
-exports.orderCancellationReason = function (req, res) {
+export const getOrderCancellationReason = function (req, res) {
   res.json(orderCancellationReason)
 }
 
-exports.omisMarket = function (req, res) {
+export const getOmisMarket = function (req, res) {
   res.json(omisMarket)
 }
 
-exports.fdiValue = function (req, res) {
+export const getFdiValue = function (req, res) {
   res.json(fdiValue)
 }
 
-exports.fdiType = function (req, res) {
+export const getFdiType = function (req, res) {
   res.json(fdiType)
 }
 
-exports.salaryRange = function (req, res) {
+export const getSalaryRange = function (req, res) {
   res.json(salaryRange)
 }
 
-exports.turnover = function (req, res) {
+export const getTurnover = function (req, res) {
   res.json(turnover)
 }
 
-exports.sector = function (req, res) {
+export const getSector = function (req, res) {
   if (req.query.level__lte === '0') {
     return res.json(sectorLte0)
   }
   res.json(sector)
 }
 
-exports.locationType = function (req, res) {
+export const getLocationType = function (req, res) {
   res.json(locationType)
 }
 
-exports.eventType = function (req, res) {
+export const getEventType = function (req, res) {
   res.json(eventType)
 }
 
-exports.programme = function (req, res) {
+export const getProgramme = function (req, res) {
   res.json(programme)
 }
 
-exports.businessType = function (req, res) {
+export const getBusinessType = function (req, res) {
   res.json(businessType)
 }
 
-exports.evidenceTag = function (req, res) {
+export const getEvidenceTag = function (req, res) {
   res.json(evidenceTag)
 }
 
-exports.employeeRange = function (req, res) {
+export const getEmployeeRange = function (req, res) {
   res.json(employeeRange)
 }
 
-exports.country = function (req, res) {
+export const getCountry = function (req, res) {
   res.json(country)
 }
 
-exports.ukRegion = function (req, res) {
+export const getUkRegion = function (req, res) {
   res.json(ukRegion)
 }
 
-exports.administrativeArea = function (req, res) {
+export const getAdministrativeArea = function (req, res) {
   res.json(
     req.query.country
       ? administrativeArea.filter(
@@ -172,114 +172,114 @@ exports.administrativeArea = function (req, res) {
   )
 }
 
-exports.referralSourceWebsite = function (req, res) {
+export const getReferralSourceWebsite = function (req, res) {
   res.json(referralSourceWebsite)
 }
 
-exports.referralSourceMarketing = function (req, res) {
+export const getReferralSourceMarketing = function (req, res) {
   res.json(referralSourceMarketing)
 }
 
-exports.referralSourceActivity = function (req, res) {
+export const getReferralSourceActivity = function (req, res) {
   res.json(referralSourceActivity)
 }
 
-exports.headquarterType = function (req, res) {
+export const getHeadquarterType = function (req, res) {
   res.json(headquarterType)
 }
 
-exports.service = function (req, res) {
+export const getService = function (req, res) {
   res.json(service)
 }
 
-exports.communicationChannel = function (req, res) {
+export const getCommunicationChannel = function (req, res) {
   res.json(communicationChannel)
 }
 
-exports.team = function (req, res) {
+export const getTeam = function (req, res) {
   res.json(team)
 }
 
-exports.policyArea = function (req, res) {
+export const getPolicyArea = function (req, res) {
   res.json(policyArea)
 }
 
-exports.policyIssueType = function (req, res) {
+export const getPolicyIssueType = function (req, res) {
   res.json(policyIssueType)
 }
 
-exports.exportBarrier = function (req, res) {
+export const getExportBarrier = function (req, res) {
   res.json(exportBarrier)
 }
 
-exports.serviceDeliveryStatus = function (req, res) {
+export const getServiceDeliveryStatus = function (req, res) {
   res.json(serviceDeliveryStatus)
 }
 
-exports.capitalInvestmentInvestorType = function (req, res) {
+export const getCapitalInvestmentInvestorType = function (req, res) {
   res.json(capitalInvestmentInvestorType)
 }
 
-exports.capitalInvestmentRequiredChecks = function (req, res) {
+export const getCapitalInvestmentRequiredChecks = function (req, res) {
   res.json(capitalInvestmentRequiredChecks)
 }
 
-exports.capitalInvestmentValueTypes = function (req, res) {
+export const getCapitalInvestmentValueTypes = function (req, res) {
   res.json(capitalInvestmentValueTypes)
 }
 
-exports.capitalInvestmentStatusTypes = function (req, res) {
+export const getCapitalInvestmentStatusTypes = function (req, res) {
   res.json(capitalInvestmentStatusTypes)
 }
 
-exports.capitalInvestmentDealTicketSize = function (req, res) {
+export const getCapitalInvestmentDealTicketSize = function (req, res) {
   res.json(capitalInvestmentDealTicketSize)
 }
 
-exports.capitalInvestmentInvestmentTypes = function (req, res) {
+export const getCapitalInvestmentInvestmentTypes = function (req, res) {
   res.json(capitalInvestmentInvestmentTypes)
 }
 
-exports.capitalInvestmentMinimumReturnRate = function (req, res) {
+export const getCapitalInvestmentMinimumReturnRate = function (req, res) {
   res.json(capitalInvestmentMinimumReturnRate)
 }
 
-exports.capitalInvestmentTimeHorizons = function (req, res) {
+export const getCapitalInvestmentTimeHorizons = function (req, res) {
   res.json(capitalInvestmentTimeHorizons)
 }
 
-exports.capitalInvestmentRestrictions = function (req, res) {
+export const getCapitalInvestmentRestrictions = function (req, res) {
   res.json(capitalInvestmentRestrictions)
 }
 
-exports.capitalInvestmentConstructionRisks = function (req, res) {
+export const getCapitalInvestmentConstructionRisks = function (req, res) {
   res.json(capitalInvestmentConstructionRisks)
 }
 
-exports.capitalInvestmentEquityPercentage = function (req, res) {
+export const getCapitalInvestmentEquityPercentage = function (req, res) {
   res.json(capitalInvestmentEquityPercentage)
 }
 
-exports.capitalInvestmentDesiredDealRoles = function (req, res) {
+export const getCapitalInvestmentDesiredDealRoles = function (req, res) {
   res.json(capitalInvestmentDesiredDealRoles)
 }
 
-exports.capitalInvestmentAssetClassInterest = function (req, res) {
+export const getCapitalInvestmentAssetClassInterest = function (req, res) {
   res.json(capitalInvestmentAssetClassInterest)
 }
 
-exports.oneListTier = function (req, res) {
+export const getOneListTier = function (req, res) {
   res.json(oneListTier)
 }
 
-exports.tradeAgreement = function (req, res) {
+export const getTradeAgreement = function (req, res) {
   res.json(tradeAgreement)
 }
 
-exports.exportYears = function (req, res) {
+export const getExportYears = function (req, res) {
   res.json(estimatedYears)
 }
 
-exports.exportExperience = function (req, res) {
+export const getExportExperience = function (req, res) {
   res.json(exportExperience)
 }
