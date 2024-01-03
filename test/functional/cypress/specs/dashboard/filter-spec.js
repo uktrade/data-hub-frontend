@@ -248,74 +248,6 @@ describe('Task filters', () => {
     })
   })
 
-  context('Company', () => {
-    const element = '[data-test="company-select"]'
-    const company1 = companyFaker()
-    const company2 = companyFaker()
-
-    const companyIntercept = () => {
-      const endpoint = '/api-proxy/v4/tasks/companies-and-projects'
-      cy.intercept('POST', endpoint, {
-        body: {
-          companies: [
-            {
-              id: company1.id,
-              name: company1.name,
-            },
-            {
-              id: company2.id,
-              name: company2.name,
-            },
-          ],
-          projects: [],
-        },
-      })
-      cy.visit(tasksTab)
-    }
-
-    it('should have a "Company" filter', () => {
-      assertFilterName(element, 'Company')
-      companyIntercept()
-      cy.get(`${element} option`).then((companyOptions) => {
-        expect(transformOptions(companyOptions)).to.deep.eq([
-          { value: 'all-statuses', label: 'Show all' },
-          { value: company1.id, label: company1.name },
-          { value: company2.id, label: company2.name },
-        ])
-      })
-    })
-
-    it('should filter assigned to me from the url', () => {
-      testFilterFromUrl(
-        element,
-        'assigned_to=me',
-        { advisers: [myAdviserId] },
-        'Me'
-      )
-    })
-
-    it('should filter assigned to others from the url', () => {
-      testFilterFromUrl(
-        element,
-        'assigned_to=others',
-        { not_advisers: [myAdviserId] },
-        'Others'
-      )
-    })
-
-    it('should filter assigned to me from user input', () => {
-      testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
-    })
-
-    it('should filter assigned to others from user input', () => {
-      testFilterFromUserInput(
-        element,
-        { not_advisers: [myAdviserId] },
-        'Others'
-      )
-    })
-  })
-
   context('Status', () => {
     const element = '[data-test="status-select"]'
 
@@ -350,5 +282,73 @@ describe('Task filters', () => {
     it('should filter completed status from user input', () => {
       testFilterFromUserInput(element, { archived: true }, 'Completed')
     })
+  })
+
+  context('Company', () => {
+    const element = '[data-test="company-select"]'
+    const company1 = companyFaker()
+    const company2 = companyFaker()
+
+    const getTaskCompanies = () => {
+      cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
+        body: {
+          companies: [
+            {
+              id: company1.id,
+              name: company1.name,
+            },
+            {
+              id: company2.id,
+              name: company2.name,
+            },
+          ],
+          projects: [],
+        },
+      })
+      cy.visit(tasksTab)
+    }
+
+    it('should have a "Company" filter', () => {
+      getTaskCompanies()
+      assertFilterName(element, 'Company')
+      cy.get(`${element} option`).then((companyOptions) => {
+        expect(transformOptions(companyOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: company1.id, label: company1.name },
+          { value: company2.id, label: company2.name },
+        ])
+      })
+    })
+
+    it('should filter company from the url', () => {
+      getTaskCompanies()
+      testFilterFromUrl(
+        element,
+        `company=${company1.id}`,
+        { companies: [company1.id] },
+        company1.name
+      )
+    })
+
+    // it('should filter assigned to others from the url', () => {
+    //   testFilterFromUrl(
+    //     element,
+    //     'assigned_to=others',
+    //     { not_advisers: [myAdviserId] },
+    //     'Others'
+    //   )
+    // })
+
+    // it('should filter assigned to me from user input', () => {
+    //   testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
+    // })
+
+    // it('should filter assigned to others from user input', () => {
+    //   testFilterFromUserInput(
+    //     element,
+    //     { not_advisers: [myAdviserId] },
+    //     'Others'
+    //   )
+    // })
   })
 })
