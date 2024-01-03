@@ -63,7 +63,7 @@ export const state2props = ({ router, ...state }) => {
     payload.sortby = sortbyMapping[queryParams.sortby]
   }
 
-  if (queryParams.company) {
+  if (queryParams.company && queryParams.company !== 'all-statuses') {
     payload.company = queryParams.company
   }
 
@@ -88,9 +88,6 @@ export const state2props = ({ router, ...state }) => {
       status: {
         options: STATUS_LIST_OPTIONS,
       },
-    },
-    selectedFilters: {
-      companies: queryParams.company,
     },
   }
 }

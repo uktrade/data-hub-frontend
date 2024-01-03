@@ -13,7 +13,8 @@ import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
 import { TaskCompaniesAndProjectsResource } from '../../Resource'
-import Filters from '../../Filters'
+// import Filters from '../../Filters'
+import { companyOptions } from './constants'
 
 const SELECT_WIDTH = `16%`
 
@@ -30,34 +31,9 @@ const FiltersContainer = styled.div`
       display: none;
     }
   }
-
-  #field-company {
-    input {
-      padding: 6px 4px 7px;
-    }
-
-    label {
-      padding-bottom: 3px;
-    }
-  }
 `
 
-function mapSelectedCompanyFilters(selectedFilters, companies) {
-  const selectedCompanyIds = selectedFilters?.companies || []
-
-  const selectedCompanies = companies.filter((company) =>
-    selectedCompanyIds.includes(company.id)
-  )
-
-  const options = selectedCompanies.map((company) => ({
-    label: company.name,
-    value: company.id,
-  }))
-
-  return options
-}
-
-export const MyTasksContent = ({ myTasks, filters, selectedFilters }) => (
+export const MyTasksContent = ({ myTasks, filters }) => (
   <>
     <FiltersContainer>
       <TaskListSelect
@@ -95,7 +71,7 @@ export const MyTasksContent = ({ myTasks, filters, selectedFilters }) => (
     </ContentWithHeading>
   </>
 )
-const MyTasks = ({ myTasks, filters, selectedFilters, payload }) => (
+const MyTasks = ({ myTasks, filters, payload }) => (
   <Task.Status
     name={TASK_GET_MY_TASKS}
     id={GET_MY_TASKS_ID}
@@ -105,13 +81,7 @@ const MyTasks = ({ myTasks, filters, selectedFilters, payload }) => (
       onSuccessDispatch: MY_TASKS_LOADED,
     }}
   >
-    {() => (
-      <MyTasksContent
-        myTasks={myTasks}
-        filters={filters}
-        selectedFilters={selectedFilters}
-      />
-    )}
+    {() => <MyTasksContent myTasks={myTasks} filters={filters} />}
   </Task.Status>
 )
 
