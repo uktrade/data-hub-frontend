@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AccountManagementCard } from '../../../../../../src/apps/companies/apps/company-overview/overview-table-cards'
+import { AccountManagementCard } from '../../../../../../src/client/modules/Companies/CompanyOverview/TableCards'
 
 import {
   assertSummaryTable,
