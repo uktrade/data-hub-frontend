@@ -18,7 +18,6 @@ async function handleAddRemoveCompanyToList(req, res, next) {
       listsToUpdate.push(addOrRemoveCompany(req, listId, id))
     }
     await Promise.all(listsToUpdate)
-    req.flash('success', 'Lists changes for this company have been saved.')
     res.send()
   } catch (error) {
     req.flash('error', 'Could not add or remove to list')

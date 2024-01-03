@@ -9,6 +9,7 @@ import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
 import { H4 } from '@govuk-react/heading'
+import { connect } from 'react-redux'
 
 import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
@@ -24,6 +25,7 @@ import {
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
 import { RelatedCompaniesCountResource } from '../Resource'
+import { companyState2Props } from './state'
 
 const LocalHeaderTradingNames = styled(H4)`
   font-weight: normal;
@@ -121,7 +123,6 @@ const CompanyLocalHeader = ({
   breadcrumbs,
   flashMessages,
   company,
-  returnUrl,
   csrfToken,
 }) =>
   company && (
@@ -191,7 +192,7 @@ const CompanyLocalHeader = ({
           </GridCol>
         </GridRow>
         <StyledList>
-          <LocalHeaderCompanyLists company={company} returnUrl={returnUrl} />
+          <LocalHeaderCompanyLists companyId={company.id} />
         </StyledList>
         {(isUltimate(company) || isGlobalHQ(company)) && (
           <TypeWrapper>
@@ -283,13 +284,11 @@ CompanyLocalHeader.propTypes = {
   }),
   company: PropTypes.object.isRequired,
   dnbRelatedCompaniesCount: PropTypes.number,
-  returnUrl: PropTypes.string,
 }
 
 CompanyLocalHeader.defaultProps = {
   flashMessages: null,
   dnbRelatedCompaniesCount: null,
-  returnUrl: null,
 }
 
-export default CompanyLocalHeader
+export default connect(companyState2Props)(CompanyLocalHeader)

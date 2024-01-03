@@ -15,6 +15,7 @@ import Task from '../Task'
 import { COMPANY_LISTS__COMPANY_IN_LOADED } from '../../actions'
 import { ID, TASK_GET_LISTS_COMPANY_IS_IN, state2props } from './state'
 import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
+import urls from '../../../lib/urls'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
@@ -43,10 +44,11 @@ const StyledAddButton = styled(StyledCompanyListButton)`
   border-bottom: 3px solid ${GREY_3_LEGACY};
 `
 
-export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
-  const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
+export const LocalHeaderCompanyLists = ({ results, companyId }) => {
   const handleClickAddRemove = () => {
-    window.location.href = `/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`
+    window.location.href = `${urls.companies.lists.addRemove(
+      companyId
+    )}?returnUrl=${window.location.pathname}`
   }
   return (
     <Task.Status
@@ -54,7 +56,7 @@ export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
       id={ID}
       progressMessage="Loading my lists"
       startOnRender={{
-        payload: { id: company.id },
+        payload: { id: companyId },
         onSuccessDispatch: COMPANY_LISTS__COMPANY_IN_LOADED,
       }}
     >
@@ -76,7 +78,7 @@ export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
             >
               <span>+</span> Add to list
             </StyledAddButton>
-            <LocalHeaderCompanyRefer companyId={company.id} />
+            <LocalHeaderCompanyRefer companyId={companyId} />
           </>
         )
       }
