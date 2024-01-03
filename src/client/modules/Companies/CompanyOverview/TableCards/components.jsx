@@ -5,8 +5,8 @@
 import styled from 'styled-components'
 import { Table } from 'govuk-react'
 
-import { SummaryTable } from '../../../../../client/components'
-import { GREY_1 } from '../../../../../client/utils/colours'
+import { SummaryTable } from '../../../../components'
+import { GREY_1 } from '../../../../utils/colours'
 
 export const StyledTableCell = styled(Table.Cell)`
   border: 0;

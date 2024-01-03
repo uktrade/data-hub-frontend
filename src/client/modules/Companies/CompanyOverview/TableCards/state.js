@@ -1,5 +1,5 @@
-import { SORT_OPTIONS } from '../../../../../client/modules/Contacts/CollectionList/constants'
-import { parseQueryString } from '../../../../../client/utils'
+import { SORT_OPTIONS } from '../../../Contacts/CollectionList/constants'
+import { parseQueryString } from '../../../../utils'
 
 export const OVERVIEW_COMPANY_PROJECTS_LIST_ID = 'overviewCompanyProjectsList'
 export const TASK_GET_PROJECT_WON_COUNT = 'TASK_GET_PROJECT_WON_COUNT'
