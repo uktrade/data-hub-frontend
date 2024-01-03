@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 import { kebabCase } from 'lodash'
 
 import { companies, investments } from '../../../../../lib/urls'
-import { Tag } from '../../../../../client/components'
+import { Tag } from '../../../../components'
 import { companyProjectsState2props } from './state'
-import { BLUE, GREY_2 } from '../../../../../client/utils/colours'
+import { BLUE, GREY_2 } from '../../../../utils/colours'
 import { buildCellContents } from './transformers'
 import { StyledSummaryTable, StyledTableRow } from './components'
 

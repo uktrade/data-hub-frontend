@@ -50,12 +50,12 @@ import {
 import {
   OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
   OVERVIEW_COMPANY_PROJECTS_LIST_ID,
-} from '../apps/companies/apps/company-overview/overview-table-cards/state'
+} from './modules/Companies/CompanyOverview/TableCards/state.js'
 
 import investmentProjectsReducer from './modules/Investments/Projects/reducer'
 import investmentProjectReducer from './modules/Investments/Projects/investmentProjectReducer'
-import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
-import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
+import overviewInvestmentProjectReducer from './modules/Companies/CompanyOverview/TableCards/reducer.js'
+import overviewExportWinsReducer from './modules/Companies/CompanyOverview/TableCards/exportStatusReducer.js'
 
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'

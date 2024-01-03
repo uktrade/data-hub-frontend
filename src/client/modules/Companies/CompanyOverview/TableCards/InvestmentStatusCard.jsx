@@ -3,15 +3,15 @@ import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { SummaryTable } from '../../../../../client/components'
+import { SummaryTable } from '../../../../components'
 import {
   TASK_GET_PROJECT_WON_COUNT,
   OVERVIEW_COMPANY_PROJECTS_LIST_ID,
   companyProjectsState2props,
 } from './state'
-import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../../client/actions'
+import { OVERVIEW__COMPANY_INVESTMENT_WON_COUNT } from '../../../../actions'
 import urls from '../../../../../lib/urls'
-import Task from '../../../../../client/components/Task'
+import Task from '../../../../components/Task'
 import {
   StyledLastTableCell,
   StyledSpan,
@@ -19,7 +19,7 @@ import {
   StyledTableRow,
 } from './components'
 
-const { format } = require('../../../../../client/utils/date')
+const { format } = require('../../../../utils/date')
 
 const buildProjectStatusUrl = (companyId, param) =>
   urls.companies.investments.companyInvestmentProjects(companyId) + param

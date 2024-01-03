@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 
-import { SummaryTable } from '../../../../../client/components'
-import { isItaTierDAccount } from '../../../../../client/modules/Companies/utils'
+import { SummaryTable } from '../../../../components'
+import { isItaTierDAccount } from '../../utils'
 import urls from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
 import {
