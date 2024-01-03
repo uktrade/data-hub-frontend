@@ -43,8 +43,8 @@ export const LocalNav = ({ children, dataTest = 'local-nav' }) => {
   return (
     <nav data-test={dataTest}>
       <ul>
-        {children.map((link) => (
-          <li> {link} </li>
+        {children.map((link, index) => (
+          <li key={`${index}-${link}`}>{link}</li>
         ))}
       </ul>
     </nav>

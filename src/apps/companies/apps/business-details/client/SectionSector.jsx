@@ -11,7 +11,12 @@ const SectionSector = ({ company, isArchived }) => (
     data-test="sectorDetailsContainer"
     actions={
       !isArchived && (
-        <Link href={`${urls.companies.edit(company.id)}#sector`}>Edit</Link>
+        <Link
+          href={`${urls.companies.edit(company.id)}#sector`}
+          key={company.id}
+        >
+          Edit
+        </Link>
       )
     }
   >

@@ -19,7 +19,7 @@ const getSubheadingText = (company) => {
 
 const buildRow = (transformedAdvisers) =>
   transformedAdvisers.map(({ team, location, name, email }) => (
-    <Table.Row>
+    <Table.Row key={name}>
       <Table.Cell>{team}</Table.Cell>
       <Table.Cell>{location}</Table.Cell>
       <Table.Cell>{name}</Table.Cell>

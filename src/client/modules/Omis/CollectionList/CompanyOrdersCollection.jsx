@@ -71,7 +71,7 @@ const CompanyOrdersCollection = ({
           breadcrumbs={[{ text: 'Orders (OMIS)' }]}
           returnUrl={returnUrl}
         >
-          {company.archived && (
+          {company.archived ? (
             <Details
               summary="Why can I not add an order?"
               data-test="archived-details"
@@ -81,7 +81,7 @@ const CompanyOrdersCollection = ({
                 Click here to unarchive
               </Link>
             </Details>
-          )}
+          ) : null}
           <FilteredCollectionList
             {...props}
             collectionName="order"

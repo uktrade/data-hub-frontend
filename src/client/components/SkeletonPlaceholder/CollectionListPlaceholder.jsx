@@ -26,9 +26,10 @@ const collectionList =
   () => (
     <List>
       {Array.from(Array(listItems).keys()).map((i) => (
-        <ListItem marginTop={i === 0 ? null : 40}>
+        <ListItem key={i} marginTop={i === 0 ? null : 40}>
           {Array.from(Array(listItemFields).keys()).map((j) => (
             <ListItemRow
+              key={j}
               height={j === 0 ? 20 : 13}
               marginTop={j === 0 ? null : 15}
               widthPercent={randomNumberMinToMax(30, 60)}

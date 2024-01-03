@@ -41,7 +41,7 @@ const StyledInsetText = styled(InsetText)`
 `
 
 export const CompanyDetails = ({ company }) => (
-  <FieldWrapper>
+  <FieldWrapper name="company_details">
     <StyledLabel data-test="company-label">Company</StyledLabel>
     <StyledInsetText data-test="company-details">
       {company.name}
@@ -62,7 +62,7 @@ export const CompanyDetails = ({ company }) => (
 )
 
 export const WhatHappensNext = ({ ukRegion }) => (
-  <FieldWrapper>
+  <FieldWrapper name="what_happens_next">
     <StyledLabel data-test="what-happens-next-label">
       What happens next?
     </StyledLabel>

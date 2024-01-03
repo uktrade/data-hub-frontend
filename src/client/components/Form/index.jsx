@@ -571,7 +571,7 @@ Form.propTypes = {
   id: PropTypes.string.isRequired,
   analyticsFormName: PropTypes.string.isRequired,
   analyticsData: PropTypes.func,
-  cancelRedirectTo: PropTypes.func.isRequired,
+  cancelRedirectTo: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   cancelButtonLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   submissionTaskName: PropTypes.string.isRequired,
   submitButtonLabel: PropTypes.string,

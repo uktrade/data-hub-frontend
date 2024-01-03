@@ -22,6 +22,7 @@ const ContactTable = ({ order, contact }) => (
     actions={
       (canEditOrder(order) || isOrderActive(order)) && (
         <Link
+          key="editContactLink"
           href={urls.omis.edit.contact(order.id)}
           data-test="edit-contact-link"
           noVisitedState={true}

@@ -61,6 +61,7 @@ const InvoiceDetailsTable = ({ order, company }) => (
     actions={
       (canEditOrder(order) || isOrderActive(order)) && (
         <Link
+          key="editInvoiceDetailsLink"
           href={urls.omis.edit.invoiceDetails(order.id)}
           data-test="edit-invoice-details-link"
           noVisitedState={true}

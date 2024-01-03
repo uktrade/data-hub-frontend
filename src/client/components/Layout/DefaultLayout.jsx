@@ -60,7 +60,7 @@ const DefaultLayout = ({
 }
 
 DefaultLayout.propTypes = {
-  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   headingLink: PropTypes.shape({
     url: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,

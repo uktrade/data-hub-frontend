@@ -118,9 +118,11 @@ const EditProjectValue = () => {
                           label="Gross value added (GVA)"
                           name="gross_value_added"
                         >
-                          {project.grossValueAdded
-                            ? currencyGBP(project.grossValueAdded)
-                            : setGVAMessage(project)}
+                          <>
+                            {project.grossValueAdded
+                              ? currencyGBP(project.grossValueAdded)
+                              : setGVAMessage(project)}
+                          </>
                         </FieldUneditable>
                       )}
                     </>

@@ -10,8 +10,11 @@ const FormLayout = ({ setWidth, children }) => (
 )
 
 FormLayout.propTypes = {
-  setWidth: PropTypes.string,
-  children: PropTypes.element.isRequired,
+  setWidth: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]).isRequired,
 }
 
 export default FormLayout

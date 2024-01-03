@@ -8,7 +8,7 @@ import WideSummaryTableRow from '../../../../apps/companies/apps/business-detail
 
 const buildSubscriberRows = (subscribers) =>
   subscribers.map(({ name, ditTeam }) => (
-    <WideSummaryTableRow>
+    <WideSummaryTableRow key={name}>
       {name}
       {ditTeam?.ukRegion ? ', ' + ditTeam.ukRegion.name : ''}
     </WideSummaryTableRow>
@@ -21,6 +21,7 @@ const SubscribersTable = ({ subscribers, order }) => (
     actions={
       isOrderActive(order) && (
         <Link
+          key="addSubscribersLink"
           href={urls.omis.edit.subscribers(order.id)}
           aria-label="Add or remove advisers in the UK"
           data-test="add-subscribers-link"

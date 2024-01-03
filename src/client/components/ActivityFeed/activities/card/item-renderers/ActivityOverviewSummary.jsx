@@ -10,7 +10,10 @@ export default class ActivityOverviewSummary extends React.PureComponent {
     date: PropTypes.string,
     kind: PropTypes.string,
     subject: PropTypes.node,
-    summary: PropTypes.string,
+    summary: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.any),
+    ]),
   }
 
   render() {

@@ -12,6 +12,7 @@ const InternalUseTable = ({ order }) => (
     actions={
       canEditOrder(order) && (
         <Link
+          key="editInternalInfoLink"
           href={urls.omis.edit.internalInfo(order.id)}
           data-test="edit-internal-info-link"
           noVisitedState={true}

@@ -93,24 +93,27 @@ const CollectionList = ({
               )
             )}
           </ol>
-          <Task.Status {...taskProps}>
-            {() =>
-              isComplete && (
-                <>
-                  <ol>
-                    {results.map((item, i) => (
-                      <CollectionItem {...item} key={i} />
-                    ))}
-                  </ol>
-                  <Pagination
-                    totalPages={totalPages}
-                    onPageClick={onPageClick}
-                    activePage={activePage}
-                  />
-                </>
-              )
-            }
-          </Task.Status>
+          {taskProps && (
+            <Task.Status {...taskProps}>
+              {() =>
+                isComplete && (
+                  <>
+                    <ol>
+                      {results.map((item, i) => (
+                        <CollectionItem {...item} key={i} />
+                      ))}
+                    </ol>
+                    <Pagination
+                      totalPages={totalPages}
+                      onPageClick={onPageClick}
+                      activePage={activePage}
+                    />
+                  </>
+                )
+              }
+            </Task.Status>
+          )}
+          {/* )} */}
         </article>
       </GridCol>
     </GridRow>
@@ -142,7 +145,7 @@ CollectionList.propTypes = {
   }),
   maxItemsToPaginate: PropTypes.number,
   maxItemsToDownload: PropTypes.number,
-  onPageClick: PropTypes.func.isRequired,
+  onPageClick: PropTypes.func,
   addItemUrl: PropTypes.string,
   metadataRenderer: PropTypes.func,
   footerRenderer: PropTypes.func,

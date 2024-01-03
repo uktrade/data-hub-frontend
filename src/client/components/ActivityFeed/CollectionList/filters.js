@@ -26,7 +26,7 @@ export const buildSelectedFilters = (
     })),
   },
   createdByOthers: {
-    queryParams: 'createdByOthers',
+    queryParam: 'createdByOthers',
     options: buildOptionsFilter({
       options: [
         {

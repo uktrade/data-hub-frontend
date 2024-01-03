@@ -80,7 +80,7 @@ OpportunityDetailsHeader.propTypes = {
       ).isRequired,
       opportunityValue: PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.number,
       }).isRequired,
     }),
   }),

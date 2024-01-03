@@ -54,7 +54,10 @@ const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
       actions={
         !isDnbCompany &&
         !isArchived && (
-          <Link href={`${urls.companies.edit(company.id)}#field-address`}>
+          <Link
+            href={`${urls.companies.edit(company.id)}#field-address`}
+            key={company.id}
+          >
             Edit
           </Link>
         )

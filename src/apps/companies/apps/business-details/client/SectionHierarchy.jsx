@@ -210,7 +210,10 @@ const SectionHierarchy = ({
       actions={
         !isArchived &&
         showDataHubHierarchy && (
-          <Link href={`${companies.edit(company.id)}#field-headquarter_type`}>
+          <Link
+            href={`${companies.edit(company.id)}#field-headquarter_type`}
+            key={company.id}
+          >
             Edit
           </Link>
         )

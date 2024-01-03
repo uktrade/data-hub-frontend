@@ -12,7 +12,10 @@ const SectionRegion = ({ company, isArchived }) =>
       data-test="regionDetailsContainer"
       actions={
         !isArchived && (
-          <Link href={`${urls.companies.edit(company.id)}#uk_region`}>
+          <Link
+            href={`${urls.companies.edit(company.id)}#uk_region`}
+            key={company.id}
+          >
             Edit
           </Link>
         )

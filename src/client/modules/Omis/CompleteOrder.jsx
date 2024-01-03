@@ -19,7 +19,7 @@ import OMISLayout from './OMISLayout'
 
 const buildRows = (assignees) =>
   assignees.map(({ adviser, estimatedTime }, index) => (
-    <Table.Row>
+    <Table.Row key={adviser.id}>
       <Table.Cell bold={true}>{adviser.name}</Table.Cell>
       <Table.Cell>{transformEstimatedTime(estimatedTime)}</Table.Cell>
       <Table.Cell>

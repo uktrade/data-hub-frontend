@@ -98,8 +98,8 @@ const FieldCurrency = ({
     initialValue,
   })
 
-  const [displayValue, setDisplayValue] = useState()
-  const [rawValue, setRawValue] = useState()
+  const [displayValue, setDisplayValue] = useState('')
+  const [rawValue, setRawValue] = useState('')
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {

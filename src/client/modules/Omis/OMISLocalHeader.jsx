@@ -73,7 +73,7 @@ const setHeaderItems = (order, quote) => {
   return order.ukRegion
     ? secondItems.unshift({
         label: 'UK region',
-        value: order.ukRegion?.name,
+        value: order.ukRegion?.name || '',
       }) && items.concat(secondItems)
     : items.concat(secondItems)
 }

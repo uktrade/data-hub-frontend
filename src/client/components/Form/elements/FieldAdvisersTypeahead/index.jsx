@@ -47,5 +47,7 @@ FieldAdvisersTypeahead.propTypes = {
   isMulti: PropTypes.bool,
   placeholder: PropTypes.string,
 }
-
+FieldAdvisersTypeahead.defaultProps = {
+  label: '',
+}
 export default FieldAdvisersTypeahead

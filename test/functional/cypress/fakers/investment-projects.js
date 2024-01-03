@@ -74,6 +74,10 @@ const investmentProjectFaker = (overrides = {}) => ({
   status: investmentProjectStatusFaker(),
   project_code: investmentProjectCodeFaker(),
   incomplete_fields: [],
+  investment_type: {
+    name: faker.company.name(),
+    id: faker.string.uuid(),
+  },
   ...overrides,
 })
 

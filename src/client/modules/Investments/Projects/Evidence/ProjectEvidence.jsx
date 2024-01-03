@@ -37,7 +37,7 @@ const ProjectEvidence = () => {
               <H2 size={LEVEL_SIZE[3]} data-test="evidence-heading">
                 Evidence
               </H2>
-              {evidence.count > 0 && (
+              {evidence.count > 0 ? (
                 <Table data-test="evidence-table">
                   <Table.Row>
                     <Table.CellHeader setWidth="50%">
@@ -48,11 +48,11 @@ const ProjectEvidence = () => {
                     <Table.CellHeader />
                   </Table.Row>
                   {evidence.results.map((document) => (
-                    <Table.Row>
+                    <Table.Row key={document.id}>
                       <Table.Cell>
-                        {document.tags.map((tag, i) => (
-                          <UnorderedList listStyleType="bullet">
-                            <StyledListItem key={i}>{tag.name}</StyledListItem>
+                        {document.tags.map((tag) => (
+                          <UnorderedList key={tag.id} listStyleType="bullet">
+                            <StyledListItem>{tag.name}</StyledListItem>
                           </UnorderedList>
                         ))}
                       </Table.Cell>
@@ -96,7 +96,7 @@ const ProjectEvidence = () => {
                     </Table.Row>
                   ))}
                 </Table>
-              )}
+              ) : null}
               <Button
                 as={Link}
                 href={urls.investments.projects.evidence.add(projectId)}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
@@ -96,12 +96,11 @@ const FieldCheckboxes = ({
             },
             index
           ) => (
-            <>
+            <Fragment key={optionValue}>
               {exclusive && index === options.length - 1 && (
                 <StyledOr data-test="exclusive-or">or</StyledOr>
               )}
               <Checkbox
-                key={optionValue}
                 name={optionValue}
                 checked={value.includes(optionValue)}
                 onChange={exclusive ? onChangeExclusive : onChange}
@@ -112,7 +111,7 @@ const FieldCheckboxes = ({
                 {optionLabel}
               </Checkbox>
               {value.includes(optionValue) && !!children ? children : null}
-            </>
+            </Fragment>
           )
         )}
       </MultiChoice>

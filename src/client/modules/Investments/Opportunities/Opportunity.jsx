@@ -95,7 +95,6 @@ const Opportunity = ({ opportunity }) => {
 }
 
 Opportunity.propTypes = {
-  opportunityId: PropTypes.string.isRequired,
   opportunity: PropTypes.object.isRequired,
 }
 

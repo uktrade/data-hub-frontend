@@ -35,7 +35,7 @@ export const BillingAddress = ({ company, order }) => {
       </H2>
       <ul data-test="invoice-address">
         {transformedAddress.map((addressPart) => (
-          <li>{addressPart}</li>
+          <li key={addressPart}>{addressPart}</li>
         ))}
       </ul>
 
@@ -98,7 +98,7 @@ export const FieldVATStatus = ({ order }) => (
                   Validate the EU VAT number
                 </NewWindowLink>
               }
-              initialValue={order ? order.vatNumber : null}
+              initialValue={order ? order.vatNumber : ''}
               validate={validateVATNumber}
             />
 

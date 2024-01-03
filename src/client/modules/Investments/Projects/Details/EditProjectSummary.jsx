@@ -140,7 +140,7 @@ const EditProjectSummary = ({ currentAdviserId, autoScroll }) => {
                 label="Other business activity (if not on list)"
                 name="other_business_activity"
                 type="text"
-                initialValue={project.otherBusinessActivity}
+                initialValue={project.otherBusinessActivity || ''}
                 placeholder="e.g. meet and greet dinner"
               />
             </StyledFieldWrapper>

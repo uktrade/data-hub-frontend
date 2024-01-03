@@ -145,7 +145,6 @@ const TaskFormFields = ({
               <ListItem>Data Hub reminder</ListItem>
             </UnorderedList>
           </Details>
-
           <FieldInput
             type="hidden"
             name="interaction"
@@ -168,7 +167,6 @@ const TaskFormFields = ({
                       TASK_GET_PROJECTS_LIST,
                       TASK_DETAILS_ID
                     )
-
                     const companyId =
                       values.company?.value || task?.company?.value
                     return (

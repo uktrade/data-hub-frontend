@@ -111,7 +111,7 @@ const ProjectTeam = () => {
                 project.projectAssuranceAdviser
               ) ? (
                 <>
-                  <Table caption="" data-test="pm-table">
+                  <Table data-test="pm-table">
                     <Table.Row>
                       <Table.CellHeader>Role</Table.CellHeader>
                       <Table.CellHeader>Adviser</Table.CellHeader>
@@ -185,7 +185,7 @@ const ProjectTeam = () => {
               </H2>
               {project.teamMembers?.length > 0 ? (
                 <>
-                  <Table caption="" data-test="team-table">
+                  <Table data-test="team-table">
                     <Table.Row>
                       <Table.CellHeader>Role</Table.CellHeader>
                       <Table.CellHeader>Adviser</Table.CellHeader>
@@ -194,7 +194,7 @@ const ProjectTeam = () => {
                     {project.teamMembers.map((member) => {
                       const adviserTeam = getTeamMemberTeam(member.adviser.id)
                       return (
-                        <Table.Row>
+                        <Table.Row key={member.adviser.id}>
                           <Table.Cell>{member.role}</Table.Cell>
                           <Table.Cell>{member.adviser.name}</Table.Cell>
                           <Table.Cell>{adviserTeam}</Table.Cell>
