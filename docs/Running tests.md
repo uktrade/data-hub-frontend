@@ -257,14 +257,20 @@ Updating the baseline consists in 2 steps:
 There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
 
 ## Accessibility tests
-The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
 
-  4 Tabs:
-  
-  1. cd test/sandbox && npm install && npx nodemon .
-  2. redis-server
-  3. npm run develop
-  4. npm run test:a11y
+> “ a11y ” stands for “accessibility.” It is a numeronym, with 11 representing the count of letters between the letter a and the letter y.
+
+The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
+## Running the Tests in the Browser
+
+To run the tests first ensure any locally running instances of the application are stopped. Then start 4 terminal sessions to for the following instructions.
+
+1. redis-server
+2. cd test/sandbox && npm install && npx nodemon .
+3. npm run develop
+4. npm run test:a11y:watch
+
+This will open Cypress in the browser. When the browser opens, select **E2E Testing** and then start E2E testing in the browser of your choice.
 
 ## Component unit tests
 The aim of this suite is to run tests directly against our React components without having to start the frontend.

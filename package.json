@@ -26,6 +26,7 @@
     "test:unit": "NODE_ENV=test API_ROOT=http://test MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js --exit",
     "test:functional": "CYPRESS_retries=3 nyc cypress run --browser chrome",
     "test:a11y": "CYPRESS_coverage=false cypress run --config-file cypress.a11y.config.js --browser chrome",
+    "test:a11y:watch": "CYPRESS_coverage=false cypress open --config-file cypress.a11y.config.js --browser chrome",
     "test:unit-client": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mochapack --webpack-config webpack.node.config.js --opts ./test/unit-client/mocha.opts ./test/unit-client/assets/javascripts/**/*.test.{js,jsx}",
     "test:functional:watch": "cypress open --e2e --browser chrome",
     "test:e2e:lep": "CYPRESS_coverage=false cypress run --config '{\"specPattern\":[\"test/end-to-end/cypress/specs/LEP/**/*.js\"]}' --browser chrome",
