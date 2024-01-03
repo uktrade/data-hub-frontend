@@ -2,7 +2,8 @@ import {
   getCollectionList,
   assertCollectionBreadcrumbs,
   assertAddItemButton,
-  assertBadge,
+  assertTag,
+  assertRole,
   assertMetadataItem,
   assertListLength,
 } from '../../support/collection-list-assertions'
@@ -27,6 +28,7 @@ describe('Company Collections - React', () => {
       id: 'b1959812-6095-e211-a939-e4115bead28a',
       name: 'Energy',
     },
+    uk_region: null,
   })
   const company2 = companyFaker({
     trading_names: ['Company Corp', 'Company Ltd'],
@@ -34,6 +36,7 @@ describe('Company Collections - React', () => {
       id: 'ukhq-id',
       name: 'ukhq',
     },
+    is_global_headquarters: false,
     uk_region: {
       id: '874cd12a-6095-e211-a939-e4115bead28a',
       name: 'London',
@@ -50,6 +53,7 @@ describe('Company Collections - React', () => {
       id: 'ghq-id',
       name: 'ghq',
     },
+    is_global_headquarters: true,
     global_headquarters: {
       id: 'company-id',
       name: 'Company Ltd, New York',
@@ -71,6 +75,10 @@ describe('Company Collections - React', () => {
 
   assertCollectionBreadcrumbs('Companies')
 
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
+
   it('should have a link to add company', () => {
     assertAddItemButton('Add company', '/companies/create')
   })
@@ -79,8 +87,8 @@ describe('Company Collections - React', () => {
     assertListLength(companyList)
   })
 
-  it('should contain country badge', () => {
-    assertBadge('@firstListItem', 'Malaysia')
+  it('should contain country tag', () => {
+    assertTag('@firstListItem', 'Malaysia')
   })
 
   it('should contain company sector and primary address', () => {
@@ -95,16 +103,16 @@ describe('Company Collections - React', () => {
     assertMetadataItem('@secondListItem', 'Company Corp, Company Ltd')
   })
 
-  it('should contain UK HQ Badge', () => {
-    assertBadge('@secondListItem', 'UK HQ')
+  it('should contain UK HQ tag', () => {
+    assertTag('@secondListItem', 'UK HQ')
   })
 
-  it('should contain UK Region Badge', () => {
-    assertBadge('@secondListItem', 'London')
+  it('should contain UK Region tag', () => {
+    assertTag('@secondListItem', 'London, UK')
   })
 
-  it('should contain Global HQ Badge', () => {
-    assertBadge('@thirdListItem', 'Global HQ')
+  it('should contain Global HQ tag', () => {
+    assertTag('@thirdListItem', 'Global HQ')
     assertMetadataItem('@thirdListItem', company3.global_headquarters.name)
   })
 })

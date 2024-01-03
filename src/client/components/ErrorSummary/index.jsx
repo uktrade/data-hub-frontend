@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
-import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
-
 import { H2 } from '@govuk-react/heading'
 import Paragraph from '@govuk-react/paragraph'
 import UnorderedList from '@govuk-react/unordered-list'
 import Link from '@govuk-react/link'
 import ListItem from '@govuk-react/list-item'
-
 import {
   NTA_LIGHT,
   FONT_SIZE,
@@ -20,9 +16,9 @@ import {
   MEDIA_QUERIES,
   RESPONSIVE_4,
 } from '@govuk-react/constants'
-
 import { spacing } from '@govuk-react/lib'
 
+import { TEXT_COLOUR, ERROR_COLOUR } from '../../../client/utils/colours'
 import { focusMixin } from '../../styles'
 
 const StyledErrorText = styled(Link)({

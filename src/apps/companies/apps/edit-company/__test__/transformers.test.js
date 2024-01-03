@@ -33,7 +33,7 @@ describe('#transformFormToDnbChangeRequest', () => {
 
 describe('#transformCompanyToForm', () => {
   context(
-    'when all fields except whitelisted fields populated with duns_number is null',
+    'when all fields except allowed fields populated with duns_number is null',
     () => {
       const company = {
         trading_names: [''],

@@ -2,11 +2,13 @@ const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const formSelectors = selectors.interactionForm
-const companyLocalHeader = selectors.companyLocalHeader()
 
 describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
@@ -19,7 +21,7 @@ describe('Referrals', () => {
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: selectors.sendReferral.adviserField,
         input: 'dennis',
         mockAdviserResponse: false,
@@ -35,15 +37,14 @@ describe('Referrals', () => {
         .find('button')
         .eq(2)
         .click()
-      cy.get(companyLocalHeader.flashMessageList)
-      cy.contains('Referral sent')
+      assertFlashMessage('Referral sent')
     })
   })
   context('when viewing a referral', () => {
     it('should display the new referral on the homepage', () => {
-      cy.get(companyLocalHeader.flashMessageList).find('a').eq(0).click()
+      cy.get('[data-test="flash"]').find('a').eq(0).click()
       cy.get(selectors.tabbedNav().item(2)).click()
-      cy.selectDhTablistTab('Dashboard', 'My referrals').within(() => {
+      cy.selectDhTablistTab('Dashboard', 'Referrals').within(() => {
         cy.get('select').select('Sent referrals')
         cy.contains('h3', '1 sent referral')
           .parent()
@@ -65,7 +66,7 @@ describe('Referrals', () => {
       cy.get(selectors.createInteractionContext.export.interaction).click()
       cy.get(selectors.createInteractionContext.button).click()
 
-      cy.get(formSelectors.service).select('Export Win')
+      cy.get(formSelectors.service).select('Export win')
       cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
       cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
       cy.get(formSelectors.communicationChannel).selectTypeaheadOption(

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
+
 import { NewWindowLink } from '../../../../../client/components/'
 
 const ItemWrapper = styled('div')`

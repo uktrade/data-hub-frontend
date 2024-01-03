@@ -1,19 +1,30 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import useDnbSearch from '../useDnbSearch'
-import companySearchFixture from '../__fixtures__/company-search.json'
+
 import EntityList from 'EntityList'
 
-storiesOf('EntitySearch', module)
-  .addParameters({ component: EntityList })
-  .add('EntityList - DnB', () => {
-    const { transformCompanyRecord } = useDnbSearch()
-    const fixtures = companySearchFixture.results.map(transformCompanyRecord)
-    return (
-      <EntityList
-        onEntityClick={action('EntitySearch.onEntityClick')}
-        entities={fixtures}
-      />
-    )
-  })
+import useDnbSearch from '../useDnbSearch'
+import companySearchFixture from '../__fixtures__/company-search'
+
+export default {
+  title: 'EntitySearch',
+
+  parameters: {
+    component: EntityList,
+  },
+}
+
+export const EntityListDnB = () => {
+  const { transformCompanyRecord } = useDnbSearch()
+  const fixtures = companySearchFixture.results.map(transformCompanyRecord)
+  return (
+    <EntityList
+      onEntityClick={action('EntitySearch.onEntityClick')}
+      entities={fixtures}
+    />
+  )
+}
+
+EntityListDnB.story = {
+  name: 'EntityList - DnB',
+}

@@ -1,8 +1,8 @@
 {
   "id": "7d19d407-9aec-4d06-b190-d3f404627f21",
-  "name": "DIT Staff",
+  "name": "DBT Staff",
   "last_login": null,
-  "first_name": "DIT",
+  "first_name": "DBT",
   "last_name": "Staff",
   "email": "dit_staff@datahub.com",
   "contact_email": "",
@@ -93,7 +93,11 @@
     "company.view_companyexportcountry",
     "company.change_companyexportcountry",
     "company.change_one_list_tier_and_global_account_manager",
-    "company.change_one_list_core_team_member"
+    "company.change_one_list_core_team_member",
+    "company_referral.view_companyreferral",
+    "interaction.view_associated_investmentproject_interaction",
+    "proposition.view_all_proposition",
+    "proposition.view_associated_proposition"
   ],
   "features": [],
   "active_features": [],

@@ -1,6 +1,6 @@
-/* eslint-disable no-new */
 const assign = require('lodash/assign')
 const pickBy = require('lodash/pickBy')
+
 const {
   insertAfter,
   resetFieldValues,

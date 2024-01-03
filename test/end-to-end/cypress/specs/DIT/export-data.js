@@ -1,9 +1,10 @@
 const { expect } = require('chai')
+
 const urls = require('../../../../../src/lib/urls')
 
 // TODO: With the upgrade of cypress and some dependencies, the below test exposes an issue
 // with the integration we have with legal basis api.
-// contacts: `Name,Job title,Date created,Archived,Link,Company,Company sector,Company link,Company UK region,Country,Postcode,Phone number,Email address,Accepts DIT email marketing,Date of latest interaction,Teams of latest interaction,Created by team`,
+// contacts: `Name,Job title,Date created,Archived,Link,Company,Company sector,Company link,Company UK region,Country,Postcode,Phone number,Email address,Accepts DBT email marketing,Date of latest interaction,Teams of latest interaction,Created by team`,
 
 const csvHeadings = {
   companies: `Name,Link,Sector,Country,Area,UK region,Countries exported to,Countries of interest,Archived,Date created,Number of employees,Annual turnover,Headquarter type`,

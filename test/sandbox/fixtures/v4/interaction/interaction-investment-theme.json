@@ -26,16 +26,16 @@
   "modified_on": "2017-06-05T00:00:00Z",
   "date": "2017-06-05",
   "dit_adviser": {
-    "name": "DIT Staff",
-    "first_name": "DIT",
+    "name": "DBT Staff",
+    "first_name": "DBT",
     "last_name": "Staff",
     "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "dit_participants": [
     {
       "adviser": {
-        "name": "DIT Staff",
-        "first_name": "DIT",
+        "name": "DBT Staff",
+        "first_name": "DBT",
         "last_name": "Staff",
         "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
       },
@@ -57,7 +57,7 @@
   "investment_project": null,
   "net_company_receipt": null,
   "service": {
-    "name": "Providing Investment Advice & Information",
+    "name": "Investment advice and information",
     "id": "ef3218c1-bed6-4ad8-b8d5-8af2430d32ff"
   },
   "service_answers": {

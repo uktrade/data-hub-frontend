@@ -3,21 +3,28 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { connectRouter } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
+
+import queryString from 'qs'
 
 import rootSaga from '../../../../src/client/root-saga'
-import tasks from '../../../../src/client/components/Task/reducer'
-import Typeahead from '../../../../src/client/components/Typeahead/Typeahead'
-import FieldAddAnother from '../../../../src/client/components/Form/elements/FieldAddAnother/FieldAddAnother'
-import Resource from '../../../../src/client/components/Resource'
+import { reducers } from '../../../../src/client/reducers'
+import { tasks as appTasks } from '../../../../src/client/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 
+const history = createBrowserHistory({
+  basename: queryString.stringify(new URL(document.baseURI).pathname),
+})
+
 const reducer = (state, action) =>
   combineReducers({
-    tasks,
-    ...Resource.reducerSpread,
-    ...Typeahead.reducerSpread,
-    ...FieldAddAnother.reducerSpread,
+    ...reducers,
+    activeFeatureGroups: () => [],
+    modulePermissions: () => [],
+    userPermissions: () => [],
+    router: connectRouter(history),
   })(action.type === 'RESET' ? undefined : state, action)
 
 export const store = legacy_createStore(
@@ -25,11 +32,14 @@ export const store = legacy_createStore(
   applyMiddleware(sagaMiddleware)
 )
 
+export const dispatchResetAction = () => store.dispatch({ type: 'RESET' })
+
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
-export default ({ children, tasks }) => {
+export default ({ children, tasks = appTasks, resetTasks = false }) => {
   // We only ever want to start the sagas once
-  runMiddlewareOnce(tasks || {})
+  resetTasks ? sagaMiddleware.run(rootSaga(tasks)) : runMiddlewareOnce(tasks)
+
   return (
     <Provider store={store}>
       <BrowserRouter>{children}</BrowserRouter>

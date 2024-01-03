@@ -8,12 +8,12 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { LoadingBox } from 'govuk-react'
+import styled from 'styled-components'
 
 import { TASK__START, TASK__DISMISS_ERROR, TASK__CANCEL } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
-
-import styled from 'styled-components'
+import AccessDenied from '../AccessDenied'
 
 const StyledLoadingBox = styled(LoadingBox)({
   paddingBottom: 0,
@@ -91,7 +91,7 @@ const startOnRenderPropTypes = {
  * <Task>
  *   {getTask => {
  *     const task = getTask('square', 'foo')
- *     return (d
+ *     return (
  *       <button
  *         disabled={task.progress}
  *         onClick={() => task.start({
@@ -251,13 +251,18 @@ Task.Status = ({
             progress &&
             renderProgress({ message: progressMessage })}
           {error &&
-            renderError({
-              noun,
-              errorMessage,
-              retry: () => start({ payload, onSuccessDispatch }),
-              dismiss: dismissError,
-              dismissable,
-            })}
+            (errorMessage ===
+            'You do not have permission to perform this action.' ? (
+              <AccessDenied />
+            ) : (
+              renderError({
+                noun,
+                errorMessage,
+                retry: () => start({ payload, onSuccessDispatch }),
+                dismiss: dismissError,
+                dismissable,
+              })
+            ))}
           <StyledLoadingBox loading={progress && progressOverlay}>
             {(!status || progressOverlay) && children()}
           </StyledLoadingBox>

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 
-import CountriesResource from '../../Resource/Countries'
+import { CountriesResource } from '../../Resource'
 import FieldSelect from './FieldSelect'
 
 const FieldCountrySelect = (props) => (

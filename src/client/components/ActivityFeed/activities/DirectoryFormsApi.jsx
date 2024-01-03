@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import Link from '@govuk-react/link'
+
 import { ACTIVITY_TYPE } from '../constants'
 import CardUtils from './card/CardUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
@@ -9,8 +10,10 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardNotes from './card/ActivityCardNotes'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
 import { format } from '../../../utils/date'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 export default class DirectoryFormsApi extends React.PureComponent {
   static propTypes = {
@@ -22,7 +25,9 @@ export default class DirectoryFormsApi extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
+
+    let kind = 'Interaction'
 
     // ESS index to extract id from ESS string feed by activity-stream
     // e.g. dit:directoryFormsApi:Submission:89321:create
@@ -46,14 +51,22 @@ export default class DirectoryFormsApi extends React.PureComponent {
       const contacts = CardUtils.getContacts(activity)
       const formattedContacts = () =>
         contacts &&
-        contacts.map((contact, index) => (
-          <span key={`contact-link-${index}`}>
-            {index ? ', ' : ''}
-            <Link data-test={`contact-link-${index}`} href={contact.url}>
-              {contact.name}
-            </Link>
-          </span>
-        ))
+        contacts.map((contact, index) =>
+          isOverview ? (
+            index ? (
+              `, `
+            ) : (
+              `` + `${contact.name}`
+            )
+          ) : (
+            <span key={`contact-link-${index}`}>
+              {index ? ', ' : ''}
+              <Link data-test={`contact-link-${index}`} href={contact.url}>
+                {contact.name}
+              </Link>
+            </span>
+          )
+        )
       const metadata = [
         { label: 'Date', value: format(sentDate) },
         {
@@ -62,23 +75,37 @@ export default class DirectoryFormsApi extends React.PureComponent {
         },
       ]
 
+      const url = `/interactions/ess/${essId}/details`
+
+      const subject = <Link href={url}>{natureOfEnquiry}</Link>
+
       //Mapping from https://github.com/uktrade/export-support/blob/93fb921e33f0f49c5cecc0b9c18579941a384ad7/export_support/core/forms.py
-      return (
+      return isOverview ? (
+        <OverviewActivityCardWrapper dataTest="export-support-service-summary">
+          <ActivityOverviewSummary
+            activity={activity}
+            date={format(sentDate)}
+            kind={kind}
+            url={url}
+            subject={subject}
+            summary={`Enquirer ` + formattedContacts()}
+          ></ActivityOverviewSummary>
+        </OverviewActivityCardWrapper>
+      ) : (
         <ActivityCardWrapper dataTest="export-support-service">
+          <ActivityCardSubject dataTest="export-support-service-name">
+            {subject}
+          </ActivityCardSubject>
           <ActivityCardLabels
             theme="export"
             service="Export Support Service"
-            kind="Interaction"
+            kind={kind}
           />
-          <ActivityCardSubject dataTest="export-support-service-name">
-            <Link href={`/interactions/ess/${essId}/details`}>
-              {natureOfEnquiry}
-            </Link>
-          </ActivityCardSubject>
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )
     } else {
+      kind = 'great.gov.uk Enquiry'
       const metadata = [
         { label: 'Date', value: format(sentDate) },
         {
@@ -88,14 +115,23 @@ export default class DirectoryFormsApi extends React.PureComponent {
         { label: 'Job title', value: formData.position },
         { label: 'Email', value: formData.email },
       ]
-      return (
+      return isOverview ? (
+        <ActivityOverviewSummary
+          dataTest="export-support-service-great-summary"
+          activity={activity}
+          date={format(sentDate)}
+          kind={kind}
+          subject="Enquiry"
+          summary={`Enquirer ${formData.first_name} ${formData.last_name}`}
+        ></ActivityOverviewSummary>
+      ) : (
         <ActivityCardWrapper>
+          <ActivityCardSubject>Enquiry</ActivityCardSubject>
           <ActivityCardLabels
             theme="great.gov.uk"
             service="export"
-            kind="great.gov.uk Enquiry"
+            kind={kind}
           />
-          <ActivityCardSubject>Enquiry</ActivityCardSubject>
           <ActivityCardNotes notes={formData.comment} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>

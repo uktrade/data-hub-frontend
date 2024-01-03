@@ -9,14 +9,20 @@
 {% macro LocalNav(props) %}
   {% if props %}
     <nav class="{{ 'c-local-nav' | applyClassModifiers(props.modifier) }}" aria-label="local navigation">
-      {% for item in props.items %}
-        <a class="{{ 'c-local-nav__link' | applyClassModifiers(props.modifier) }} {{ 'is-active' if item.isActive }}" href="{{item.url}}" 
-          {% if item.ariaDescription %} aria-label="{{ item.ariaDescription }}" {% endif %}
-          {% for key, value in item.data %}
-            data-{{ key }}="{{ value | escape }}-link"
-          {% endfor %}
-        >{{ item.label }}</a>
-      {% endfor %}
+      <ul>
+        {% for item in props.items %}
+        <li>
+          <a class="{{ 'c-local-nav__link' | applyClassModifiers(props.modifier) }} {{ 'is-active' if item.isActive }}" href="{{item.url}}"
+            {% if item.ariaDescription %} aria-label="{{ item.ariaDescription }}" {% endif %}
+            {% for key, value in item.data %}
+              data-{{ key }}="{{ value | escape }}-link"
+            {% endfor %}
+            >{{ item.label }}
+          </a>
+        </li>
+
+        {% endfor %}
+      </ul>
     </nav>
   {% endif %}
 {% endmacro %}

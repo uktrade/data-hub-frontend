@@ -1,4 +1,5 @@
 import { mapValues } from 'lodash'
+
 import {
   COMPANY_LISTS__LISTS_LOADED,
   COMPANY_LISTS__SELECT,

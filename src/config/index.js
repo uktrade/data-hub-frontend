@@ -84,10 +84,8 @@ const config = {
   },
   sentryDsn: envVars.SENTRY_DSN,
   sentryEnvironment: envVars.SENTRY_ENVIRONMENT,
-  currencyFormat: '$0,0.00',
   paginationMaxResults: 10000,
   paginationDefaultSize: 10,
-  archivedDocumentsBaseUrl: envVars.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: envVars.OAUTH2_AUTH_URL,
     clientId: envVars.OAUTH2_CLIENT_ID,

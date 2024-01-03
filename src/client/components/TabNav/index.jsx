@@ -3,15 +3,17 @@ import React, { useEffect, useRef } from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { get } from 'lodash'
+import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
+
 import {
+  BLACK,
   GREY_4,
   WHITE,
   LINK_COLOUR,
   TEXT_COLOUR,
   BORDER_COLOUR,
   FOCUS_COLOUR,
-} from 'govuk-colours'
-import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
+} from '../../../client/utils/colours'
 
 import multiInstance from '../../utils/multiinstance'
 import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
@@ -33,7 +35,7 @@ const focusStyle = {
 const StyledSpan = styled('span')({
   display: 'block',
   '::before': {
-    color: '#0b0c0c',
+    color: `${BLACK}`,
     content: '"\u2014 "',
     paddingRight: `${SPACING_POINTS[1]}px`,
   },
@@ -147,6 +149,7 @@ const TabNav = ({
   tabs,
   label,
   onChange,
+  onTabChange,
   onFocusChange,
   id,
   routed,
@@ -180,8 +183,8 @@ const TabNav = ({
                   focusIndex !== undefined
                     ? focusIndex
                     : selectedIndex === undefined || foundIndex === -1
-                    ? 0
-                    : foundIndex
+                      ? 0
+                      : foundIndex
 
                 if (keyCode === RIGHT_ARROW_KEY) {
                   onFocusChange((currentFocusIndex + 1) % totalTabs)
@@ -215,12 +218,13 @@ const TabNav = ({
                           ? // ...only the first tab participates in the tabindex
                             0
                           : // Otherwise, only the selected tab participates in tabindex
-                          selected
-                          ? 0
-                          : -1
+                            selected
+                            ? 0
+                            : -1
                       }
                       onClick={() => {
                         onChange(key, index)
+                        onTabChange && onTabChange({ path: key })
                         if (routed && !selected) {
                           const url = keepQueryParams ? `${key}${search}` : key
                           history.push(url)
@@ -257,6 +261,7 @@ TabNav.propTypes = {
   label: PropTypes.string.isRequired,
   routed: PropTypes.any,
   keepQueryParams: PropTypes.bool,
+  onTabChange: PropTypes.func,
   tabs: PropTypes.oneOfType([
     PropTypes.arrayOf(tabPropType),
     PropTypes.objectOf(tabPropType),

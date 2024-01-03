@@ -1,34 +1,16 @@
 const {
   assertLocalHeader,
   assertBreadcrumbs,
+  assertGovReactTable,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
 const projectWithCompleteTeam = require('../../fixtures/investment/investment-complete-team.json')
 const projectWithGlobalManager = require('../../fixtures/investment/investment-with-global-account-manager.json')
+const prospectProject = require('../../fixtures/investment/investment-has-existing-details.json')
 
 const investmentTeams = require('../../fixtures/investment/investment-teams.json')
 const globalAccountManager = require('../../fixtures/investment/investment-global-manager.json')
-
-const assertTable = ({ element, headings, rows }) => {
-  cy.get(element)
-    .as('table')
-    .find('th')
-    .each((el, i) => {
-      cy.wrap(el).should('have.text', headings[i])
-    })
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
 
 const assertViewHeader = ({ project }) => {
   it('should render the header', () => {
@@ -39,7 +21,7 @@ const assertViewHeader = ({ project }) => {
       Home: '/',
       Investments: investments.index(),
       Projects: investments.projects.index(),
-      [project.name]: investments.projects.project(project.id),
+      [project.name]: investments.projects.details(project.id),
       'Project team': null,
     })
   })
@@ -55,15 +37,15 @@ describe('Viewing the team of a project', () => {
     assertViewHeader({ project: projectWithCompleteTeam })
 
     it('should display expected data', () => {
-      cy.get('[data-test="client-relationship-management-heading"]').should(
+      cy.get('[data-test="crm-heading"]').should(
         'have.text',
         'Client relationship management'
       )
 
-      assertTable({
-        element: '[data-test="client-relationship-management-content"]',
-        headings: ['Role', 'Adviser', 'Team'],
+      assertGovReactTable({
+        element: '[data-test="crm-table"]',
         rows: [
+          ['Role', 'Adviser', 'Team'],
           [
             'Client Relationship Manager',
             projectWithCompleteTeam.client_relationship_manager.name,
@@ -72,15 +54,18 @@ describe('Viewing the team of a project', () => {
         ],
       })
 
-      cy.get('[data-test="project-management-heading"]').should(
+      cy.get('[data-test="edit-crm-button"]').should('exist')
+      cy.get('[data-test="add-crm-button"]').should('not.exist')
+
+      cy.get('[data-test="pm-heading"]').should(
         'have.text',
         'Project management'
       )
 
-      assertTable({
-        element: '[data-test="project-management-content"]',
-        headings: ['Role', 'Adviser', 'Team'],
+      assertGovReactTable({
+        element: '[data-test="pm-table"]',
         rows: [
+          ['Role', 'Adviser', 'Team'],
           [
             'Project Assurance Adviser',
             projectWithCompleteTeam.project_assurance_adviser.name,
@@ -93,16 +78,18 @@ describe('Viewing the team of a project', () => {
           ],
         ],
       })
+      cy.get('[data-test="edit-pm-button"]').should('exist')
+      cy.get('[data-test="add-pm-button"]').should('not.exist')
 
-      cy.get('[data-test="project-specialist-team-members-heading"]').should(
+      cy.get('[data-test="team-heading"]').should(
         'have.text',
         'Project specialist and team members'
       )
 
-      assertTable({
-        element: '[data-test="project-specialist-team-members-content"]',
-        headings: ['Role', 'Adviser', 'Team'],
+      assertGovReactTable({
+        element: '[data-test="team-table"]',
         rows: [
+          ['Role', 'Adviser', 'Team'],
           [
             projectWithCompleteTeam.team_members[0].role,
             projectWithCompleteTeam.team_members[0].adviser.name,
@@ -115,16 +102,8 @@ describe('Viewing the team of a project', () => {
           ],
         ],
       })
-
-      cy.get('[data-test="success-verifier-heading"]').should(
-        'have.text',
-        'Success verifier'
-      )
-
-      cy.get('[data-test="success-verifier-content"]').should(
-        'have.text',
-        'Will be assigned during "Verify win" stage.'
-      )
+      cy.get('[data-test="edit-team-button"]').should('exist')
+      cy.get('[data-test="add-team-button"]').should('not.exist')
     })
   })
 
@@ -137,15 +116,15 @@ describe('Viewing the team of a project', () => {
     assertViewHeader({ project: projectWithGlobalManager })
 
     it('should display expected data', () => {
-      cy.get('[data-test="client-relationship-management-heading"]').should(
+      cy.get('[data-test="crm-heading"]').should(
         'have.text',
         'Client relationship management'
       )
 
-      assertTable({
-        element: '[data-test="client-relationship-management-content"]',
-        headings: ['Role', 'Adviser', 'Team'],
+      assertGovReactTable({
+        element: '[data-test="crm-table"]',
         rows: [
+          ['Role', 'Adviser', 'Team'],
           [
             'Client Relationship Manager',
             projectWithGlobalManager.client_relationship_manager.name,
@@ -159,16 +138,30 @@ describe('Viewing the team of a project', () => {
         ],
       })
     })
+
+    it('should display the correct inset text for project management', () => {
+      cy.get('[data-test="pm-inset"]').should(
+        'have.text',
+        'Once both a Project Manager and a Project Assurance Adviser have been assigned, the project will move to the Active stage.'
+      )
+    })
   })
 
-  context('When attempting to edit a non-existent project', () => {
-    it('should display an error to the user', () => {
-      cy.request({
-        url: investments.projects.team('Error'),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(500)
-      })
+  context('When viewing a prospect project with no project management', () => {
+    before(() => {
+      cy.visit(investments.projects.details(prospectProject.id))
+      cy.get('[data-test="project-team-link"]').click()
+    })
+
+    it('should display the correct inset text for project management', () => {
+      cy.get('[data-test="pm-prospect-inset"]').should(
+        'have.text',
+        'Will be assigned during the Assign PM stage.'
+      )
+
+      cy.get('[data-test="pm-inset"]').should('not.exist')
+      cy.get('[data-test="add-pm-button"]').should('not.exist')
+      cy.get('[data-test="edit-pm-button"]').should('not.exist')
     })
   })
 })

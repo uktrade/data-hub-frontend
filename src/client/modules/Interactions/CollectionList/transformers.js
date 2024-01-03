@@ -19,8 +19,8 @@ const formatParticipantName = (participant) =>
   get(participant, 'adviser') && get(participant, 'team')
     ? `${participant.adviser.name}, ${participant.team.name}`
     : get(participant, 'adviser')
-    ? participant.adviser.name
-    : 'Unknown adviser'
+      ? participant.adviser.name
+      : 'Unknown adviser'
 
 const formatParticipants = (dit_participants) =>
   dit_participants.length > 1
@@ -91,9 +91,9 @@ export const filterServiceNames = (services) => {
   if (!services) return
 
   const excludedParentServices = [
-    'A Specific DIT Export Service or Funding',
-    'A Specific Service',
-    'Enquiry or Referral Received',
+    'DBT export service or funding',
+    'Specific service',
+    'Enquiry or referral',
     'Enquiry Received',
   ]
   const filteredServiceNames = services

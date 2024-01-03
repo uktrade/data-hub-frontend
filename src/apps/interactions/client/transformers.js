@@ -1,9 +1,7 @@
-/* eslint-disable camelcase */
-const { get } = require('lodash')
+import { get } from 'lodash'
 
-const { format } = require('../../../client/utils/date')
-const urls = require('../../../lib/urls')
-
+import { format } from '../../../client/utils/date'
+import urls from '../../../lib/urls'
 import { LABELS } from './constants'
 
 const formatContacts = (contacts) =>
@@ -18,8 +16,8 @@ const formatParticipantName = (participant) =>
   get(participant, 'adviser') && get(participant, 'team')
     ? `${participant.adviser.name}, ${participant.team.name}`
     : get(participant, 'adviser')
-    ? participant.adviser.name
-    : 'Unknown adviser'
+      ? participant.adviser.name
+      : 'Unknown adviser'
 
 const formatParticipants = (dit_participants) =>
   dit_participants.length > 1

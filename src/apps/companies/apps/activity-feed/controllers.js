@@ -1,32 +1,24 @@
 const {
-  FILTER_ITEMS,
-  FILTER_KEYS,
-  DATA_HUB_ACTIVITY,
-  EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_ALL_ACTIVITY,
-  DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ATTENDEES_MAPPING,
+  FILTER_FEED_TYPE,
 } = require('./constants')
 
 const { ACTIVITIES_PER_PAGE } = require('../../../contacts/constants')
 
-const { getGlobalUltimateHierarchy } = require('../../repos')
+const { getRelatedCompanies } = require('../../repos')
 const urls = require('../../../../lib/urls')
 const { fetchActivityFeed, fetchMatchingDataHubContact } = require('./repos')
 const config = require('../../../../config')
 
 const {
-  myActivityQuery,
-  externalActivityQuery,
-  maxemailCampaignQuery,
   maxemailEmailSentQuery,
   aventriAttendeeForCompanyQuery,
-  dataHubAndActivityStreamServicesQuery,
   aventriAttendeeQuery,
   exportSupportServiceDetailQuery,
   aventriAttendeeRegistrationStatusQuery,
@@ -39,41 +31,29 @@ const {
   transformAventriEventStatusToEventStatus,
   transformAventriEventStatusCountsToEventStatusCounts,
 } = require('./transformers')
+const dataHubCompanyActivityQuery = require('./es-queries/data-hub-company-activity-query')
 
 async function renderActivityFeed(req, res, next) {
   const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
 
   res.locals.title = `Activities - ${company.name} - Companies`
 
-  const breadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
-    {
-      link: urls.companies.index(),
-      text: 'Companies',
-    },
-    { link: urls.companies.detail(company.id), text: company.name },
-    { text: 'Activity Feed' },
-  ]
-
   try {
     const contentProps = company.archived
       ? {
-          company,
-          breadcrumbs,
+          companyId: company.id,
           flashMessages: res.locals.getMessages(),
+          localNavItems: res.locals.localNavItems,
+          company,
         }
       : {
-          company,
-          breadcrumbs,
+          companyId: company.id,
           flashMessages: res.locals.getMessages(),
-          activityTypeFilter: FILTER_KEYS.dataHubActivity,
-          activityTypeFilters: FILTER_ITEMS,
+          isOverview: false,
           localNavItems: res.locals.localNavItems,
-          isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
           dnbRelatedCompaniesCount,
-          showMatchingPrompt:
-            !company.duns_number && !company.pending_dnb_investigation,
+          company,
         }
 
     const props = {
@@ -87,41 +67,6 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
-function getQueries(options) {
-  return {
-    [FILTER_KEYS.myActivity]: myActivityQuery({
-      ...options,
-      types: DATA_HUB_ACTIVITY,
-    }),
-    [FILTER_KEYS.dataHubActivity]: dataHubAndActivityStreamServicesQuery({
-      ...options,
-      types: DATA_HUB_AND_AVENTRI_ACTIVITY,
-    }),
-    [FILTER_KEYS.externalActivity]: externalActivityQuery({
-      ...options,
-      types: EXTERNAL_ACTIVITY,
-    }),
-    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery({
-      ...options,
-      types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
-    }),
-  }
-}
-
-function isExternalFilter(activityTypeFilter) {
-  return (
-    activityTypeFilter === FILTER_KEYS.externalActivity ||
-    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
-  )
-}
-
-function isEssFilter(activityTypeFilter) {
-  return (
-    activityTypeFilter === FILTER_KEYS.dataHubActivity ||
-    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
-  )
-}
-
 function getContactFromEmailAddress(emailAddress, contacts) {
   const contact = contacts.find((contact) => contact.email === emailAddress)
   return contact
@@ -132,46 +77,36 @@ function getContactFromEmailAddress(emailAddress, contacts) {
     : null
 }
 
-async function getMaxemailCampaigns(req, next, contacts) {
-  try {
-    // Fetch Maxemail campaigns
-    const campaignQuery = maxemailCampaignQuery()
-    const campaignsResults = await fetchActivityFeed(req, campaignQuery)
-    const campaignActivities = campaignsResults.hits.hits.map(
-      (hit) => hit._source
-    )
+function extractEmailsByCampaignId(activities) {
+  return activities.hits.hits.reduce((emailsByCampaignId, obj) => {
+    const campaignId = `${obj._source.object.attributedTo.id}:Create`
+    const email = obj._source.object['dit:emailAddress']
 
+    if (emailsByCampaignId[campaignId]) {
+      emailsByCampaignId[campaignId].push(email)
+    } else {
+      emailsByCampaignId[campaignId] = [email]
+    }
+
+    return emailsByCampaignId
+  }, {})
+}
+
+async function getMaxemailEmailsByCampaign(req, next, contacts) {
+  try {
     // Fetch all Maxemail emails sent to Data Hub company contacts as part of a campaign
     const emailSentQuery = maxemailEmailSentQuery(contacts)
     const emailSentResults = await fetchActivityFeed(req, emailSentQuery)
-    const emailSentActivities = emailSentResults.hits.hits.map(
-      (hit) => hit._source
-    )
 
-    // Group Data Hub company contacts to a campaign
-    campaignActivities.forEach((campaign) => {
-      campaign.object.contacts = []
-      const campaignId = campaign.object['dit:maxemail:Campaign:id']
-      emailSentActivities.forEach((emailSent) => {
-        const sentEmailCampaignId =
-          emailSent.object.attributedTo['dit:maxemail:Campaign:id']
-        if (campaignId === sentEmailCampaignId) {
-          const emailAddress = emailSent.object['dit:emailAddress']
-          const contact = getContactFromEmailAddress(emailAddress, contacts)
-          if (contact) {
-            campaign.object.contacts.push(contact)
-          }
-        }
-      })
-    })
-
-    // We only want campaigns that have at least one contact
-    return campaignActivities.filter(
-      (campaign) => campaign.object.contacts.length
-    )
+    return extractEmailsByCampaignId(emailSentResults)
   } catch (error) {
     next(error)
   }
+}
+
+// Filter Contacts with empty email addresses or Null Emails
+function filterContactListOnEmail(contacts) {
+  return contacts.filter((contact) => contact.email)
 }
 
 async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
@@ -227,7 +162,7 @@ async function fetchActivitiesForContact(req, res, next) {
     const from = (req.query.page - 1) * ACTIVITIES_PER_PAGE
 
     // istanbul ignore next: Covered by functional tests
-    let results = await fetchActivityFeed(
+    const results = await fetchActivityFeed(
       req,
       contactActivityQuery(
         from,
@@ -306,53 +241,64 @@ async function fetchActivityFeedHandler(req, res, next) {
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
-      activityTypeFilter = FILTER_KEYS.dataHubActivity,
-      showDnbHierarchy = false,
+      dateBefore = null,
+      dateAfter = null,
+      feedType = FILTER_FEED_TYPE.ALL,
+      ditParticipantsAdviser = [],
+      include_parent_companies = false,
+      include_subsidiary_companies = false,
+      createdByOthers = [],
+      activityType = [],
     } = req.query
 
-    let dnbHierarchyIds = []
-    if (company.is_global_ultimate && showDnbHierarchy) {
-      const { results } = await getGlobalUltimateHierarchy(
+    const sortBy = req.query.sortby
+    const relatedCompanyIds = []
+    if (include_parent_companies || include_subsidiary_companies) {
+      const relatedCompaniesResponse = await getRelatedCompanies(
         req,
-        company.global_ultimate_duns_number
+        company.id,
+        include_parent_companies,
+        include_subsidiary_companies
       )
-      dnbHierarchyIds = results
-        .filter((company) => !company.is_global_ultimate)
-        .map((company) => company.id)
+
+      relatedCompanyIds.push(...relatedCompaniesResponse.related_companies)
     }
 
+    const filteredContacts = filterContactListOnEmail(company.contacts)
     const aventriEvents = await getAventriEventsAttendedByCompanyContacts(
       req,
       next,
-      company.contacts
+      filteredContacts
     )
     const aventriEventIds = Object.keys(aventriEvents)
 
-    // Get Ess Activities
-    const getEssInteractions = isEssFilter(activityTypeFilter)
-    const queries = getQueries({
+    const maxemailCampaigns = await getMaxemailEmailsByCampaign(
+      req,
+      next,
+      filteredContacts
+    )
+
+    const query = dataHubCompanyActivityQuery({
       from,
       size,
-      companyIds: [company.id, ...dnbHierarchyIds],
-      contacts: company.contacts,
+      sortBy,
+      companyIds: [company.id, ...relatedCompanyIds],
+      contacts: filteredContacts,
+      dateAfter,
+      dateBefore,
+      ditParticipantsAdviser,
+      createdByOthers,
+      activityType,
       user,
       aventriEventIds,
-      getEssInteractions,
+      maxemailCampaignIds: Object.keys(maxemailCampaigns),
+      feedType,
     })
 
-    const results = await fetchActivityFeed(
-      req,
-      queries[activityTypeFilter] || queries[FILTER_KEYS.dataHubActivity]
-    )
+    const results = await fetchActivityFeed(req, query)
 
     let activities = results.hits.hits.map((hit) => hit._source)
     let total = results.hits.total.value
-
-    if (isExternalFilter(activityTypeFilter)) {
-      const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
-      activities = [...activities, ...campaigns]
-      total += campaigns.length
-    }
 
     //loop over all aventri results, set the contact to be the matching contact from the contacts array
     activities = activities.map((activity) => {
@@ -362,24 +308,25 @@ async function fetchActivityFeedHandler(req, res, next) {
           ...aventriEvents[activity.id],
         ]
       }
+      if (activity.object.type == 'dit:maxemail:Campaign') {
+        const emails = maxemailCampaigns[activity.id] || []
+        activity.object.contacts = emails
+          .map((email) => getContactFromEmailAddress(email, filteredContacts))
+          .filter(Boolean)
+      }
+
       // Add Contacts to ESS activities (need to check type as Maxemail does not have attributedTo.id key)
       if (isEssActivity(activity)) {
         const essContactEmail = activity.actor['dit:emailAddress']
         const essContact = getContactFromEmailAddress(
           essContactEmail,
-          company.contacts
+          filteredContacts
         )
         activity = augmentEssActivity(activity, essContact)
       }
 
       return activity
     })
-
-    // Sort activities by startTime
-    activities.sort(
-      (a, b) => Date.parse(b.object.startTime) - Date.parse(a.object.startTime)
-    )
-
     res.json({
       total,
       activities,
@@ -399,9 +346,6 @@ function augmentEssActivity(activity, contact) {
     activity.object.attributedTo,
     mapEssContacts(contact),
   ]
-  // Add published time for sorting
-  activity.object.startTime = activity.published
-
   return activity
 }
 
@@ -563,6 +507,7 @@ const eventsColListQueryBuilder = ({
   ukRegion,
   organiser,
   eventType,
+  relatedProgramme,
 }) => {
   const eventNameFilter = name
     ? {
@@ -635,6 +580,28 @@ const eventsColListQueryBuilder = ({
       }
     : null
 
+  const relatedProgrammeFilter =
+    relatedProgramme && relatedProgramme.length
+      ? {
+          nested: {
+            path: 'object.dit:relatedProgrammes',
+            query: {
+              bool: {
+                should: [
+                  {
+                    terms: {
+                      'object.dit:relatedProgrammes.id': relatedProgramme.map(
+                        (rp) => `dit:DataHubEventProgramme:${rp}`
+                      ),
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }
+      : null
+
   const filtersArray = [
     eventNameFilter,
     dateFilter,
@@ -643,6 +610,7 @@ const eventsColListQueryBuilder = ({
     ukRegionFilter,
     organiserFilter,
     eventTypeFilter,
+    relatedProgrammeFilter,
   ]
 
   const cleansedFiltersArray = filtersArray.filter((filter) => filter)
@@ -664,6 +632,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
       page,
       addressCountry,
       eventType,
+      relatedProgramme,
     } = req.query
 
     const from = (page - 1) * ACTIVITIES_PER_PAGE
@@ -680,6 +649,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
           ukRegion,
           organiser,
           eventType,
+          relatedProgramme,
         }),
         from,
         size: ACTIVITIES_PER_PAGE,
@@ -716,4 +686,5 @@ module.exports = {
   fetchESSDetails,
   isEssActivity,
   augmentEssActivity,
+  filterContactListOnEmail,
 }

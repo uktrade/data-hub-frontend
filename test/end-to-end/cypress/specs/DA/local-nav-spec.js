@@ -1,12 +1,6 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-
-const {
-  companies,
-  contacts,
-  dashboard,
-  investments,
-} = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 const {
   assertLocalNav,
@@ -19,13 +13,15 @@ describe('DA Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company.pk))
+      cy.visit(urls.companies.detail(company.pk))
     })
 
     it('should display DA only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
-        'Company contacts',
-        'Core team',
+        'Overview',
+        'Contacts',
+        'Business details',
+        'Account management',
         'Investment',
         'Orders',
       ])
@@ -34,10 +30,14 @@ describe('DA Permission', () => {
 
   describe('dashboard', () => {
     before(() => {
-      cy.visit(dashboard())
+      cy.visit(urls.dashboard.investmentProjects())
     })
 
-    it('should display DA only tabs', () => {
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
+    })
+
+    it('should display DA only header tabs', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
@@ -45,6 +45,15 @@ describe('DA Permission', () => {
         'Orders',
         'Market access',
         'Support',
+      ])
+    })
+
+    it('should display DA only dashboard tabs', () => {
+      cy.get('[data-test="tab-item"]').as('tabItems')
+      assertLocalNav('@tabItems', [
+        'Tasks',
+        'Investment projects',
+        'Export projects',
       ])
     })
   })
@@ -56,27 +65,31 @@ describe('DA Permission', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.details(contact.pk))
+      cy.visit(urls.contacts.details(contact.pk))
     })
 
     it('should display DA only tabs', () => {
-      assertLocalReactNav('[data-test=local-nav]', ['Details', 'Audit history'])
+      assertLocalReactNav('[data-test=local-nav] > ul', [
+        'Details',
+        'Audit history',
+      ])
     })
   })
 
   describe('investment projects', () => {
     before(() => {
       cy.visit(
-        investments.projects.details(
+        urls.investments.projects.details(
           fixtures.investmentProject.newGolfCourse.id
         )
       )
     })
 
     it('should display DA only tabs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Project details',
         'Project team',
+        'Tasks',
         'Interactions',
         'Evaluations',
         'Propositions',

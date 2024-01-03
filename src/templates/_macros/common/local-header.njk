@@ -51,6 +51,11 @@
                 {{ props.heading }} {{ props.headingSuffix | safe }}
               </h1>
             {% endif %}
+            {% if props.subHeading %}
+              <h2 class="c-local-header__subheading">
+                {{ props.subHeading | upper | safe }}
+              </h2>
+            {% endif %}
             {{ caller() if caller }}
           </div>
           {% if props.actions %}

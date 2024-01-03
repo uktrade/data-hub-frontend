@@ -1,12 +1,10 @@
 import React from 'react'
-import { addDecorator, configure, addParameters } from '@storybook/react'
 import { FONT_SIZE, FONT_STACK, MEDIA_QUERIES } from '@govuk-react/constants'
 import { createGlobalStyle } from 'styled-components'
 
-const req = require.context('../src', true, /.*\.stories\.(js|jsx)$/)
-
 import '../src/client/components'
 import DataHubProvider from '../src/client/provider'
+import { store, history, sagaMiddleware } from '../src/client/middleware'
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import typeaheadTasks from '../src/client/components/Typeahead/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
@@ -22,20 +20,23 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-addDecorator((s) => (
-  <>
-    <GlobalStyle />
-    <DataHubProvider
-      tasks={{
-        ...taskStoriesTasks,
-        ...contactTasks,
-        ...typeaheadTasks,
-        ...formTasks,
-      }}
-    >
-      {s()}
-    </DataHubProvider>
-  </>
-))
-
-configure(req, module)
+export const decorators = [
+  (Story) => (
+    <>
+      <GlobalStyle />
+      <DataHubProvider
+        sagaMiddleware={sagaMiddleware}
+        history={history}
+        store={store}
+        tasks={{
+          ...taskStoriesTasks,
+          ...contactTasks,
+          ...typeaheadTasks,
+          ...formTasks,
+        }}
+      >
+        <Story />
+      </DataHubProvider>
+    </>
+  ),
+]

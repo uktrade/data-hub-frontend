@@ -1,4 +1,5 @@
 const { expect } = require('chai')
+
 const { transformResponseToEventAventriDetails } = require('../transformers')
 
 describe('#transformResponseToEventAventriDetails', () => {

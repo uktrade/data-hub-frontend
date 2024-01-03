@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker'
+
 import { listFaker } from './utils'
 
 const policyAreaFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
-  name: faker.name.jobArea(),
+  id: faker.string.uuid(),
+  name: faker.person.jobArea(),
   disabled_on: null,
   ...overrides,
 })

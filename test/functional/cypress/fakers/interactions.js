@@ -11,8 +11,8 @@ const interactionFaker = (overrides = {}) => ({
   companies: [
     {
       trading_names: [],
-      name: faker.company.companyName(),
-      id: faker.datatype.uuid(),
+      name: faker.company.name(),
+      id: faker.string.uuid(),
     },
   ],
   contacts: [userFaker()],
@@ -24,7 +24,7 @@ const interactionFaker = (overrides = {}) => ({
   ],
   service: {
     name: faker.lorem.words(),
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
   },
   ...overrides,
 })

@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
-import { GREY_2 } from 'govuk-colours'
+
+import { GREY_2 } from '../../../../../client/utils/colours'
 
 const CardContainer = styled('div')`
   border: ${({ isUpcoming }) =>

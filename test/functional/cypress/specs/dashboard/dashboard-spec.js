@@ -1,76 +1,138 @@
-const EXPORTERS_TOOL_LINK =
-  'https://uktrade.zendesk.com/hc/en-gb/articles/360001844497-Using-Sectors-in-the-Find-Exporters-Tool'
+import urls from '../../../../../src/lib/urls'
 
 describe('Dashboard', () => {
   context('When the help centre API is available', () => {
     beforeEach(() => {
+      cy.intercept('GET', '/api-proxy/help-centre/feed', {
+        body: [
+          {
+            heading: 'Using Sectors in the Find Exporters Tool',
+            link: 'https://test-url',
+            date: 'a day ago',
+          },
+          {
+            heading: 'Adding more activity to company pages',
+            link: 'https://test-url2',
+            date: '2 hours ago',
+          },
+        ],
+      }).as('apiRequest')
       cy.visit('/')
-      cy.get('[data-test="info-feed"]')
-        .as('infoFeed')
+      cy.get('[data-test="data-hub-feed"]')
+        .as('dataHubFeed')
         .within(() => {
-          cy.get('[data-test="info-feed-top-link"]').as('infoFeedTopLink')
-          cy.get('[data-test="info-feed-heading"]').as('infoFeedHeading')
-          cy.get('[data-test="info-feed-list"]').as('infoFeedList')
+          cy.get('[data-test="data-hub-feed-view-all"]').as('infoFeedTopLink')
         })
-    })
-
-    it('should display the top link', () => {
-      cy.get('@infoFeedTopLink')
-        .should('exist')
-        .should('have.text', 'View all updates')
-        .should('have.attr', 'href', 'https://lookInVault.com/')
     })
 
     it('should display the correct heading', () => {
-      cy.get('@infoFeedHeading')
-        .should('exist')
-        .should('have.text', 'Data Hub updates')
+      cy.get('@dataHubFeed').find('h3').should('have.text', '"What\'s new"')
     })
 
     it('should display the info feed list', () => {
-      cy.get('@infoFeedList')
-        .should('exist')
-        .find('[data-test="info-feed-list-item"]')
-        .should('have.length', 1)
-        .first()
-        .within(() => {
-          cy.get('a')
-            .should('exist')
-            .should('have.text', 'Using Sectors in the Find Exporters Tool')
-            .should('have.attr', 'href', EXPORTERS_TOOL_LINK)
-          cy.get('span')
-            .should('exist')
-            .should('have.text', '(Link opens in a new window)')
-          cy.get('time').should('exist').should('have.text', 'a day ago')
-        })
-    })
-  })
+      cy.get('@dataHubFeed')
+        .find('[data-test="data-hub-feed-link-0"]')
+        .should(
+          'have.text',
+          'Using Sectors in the Find Exporters Tool (opens in new tab)'
+        )
+        .should('have.attr', 'href', 'https://test-url')
 
-  context('When the help centre API is unavailable', () => {
-    beforeEach(() => {
-      cy.visit('/', { qs: { test: 'help-centre-unavailable' } })
-      cy.get('[data-test="info-feed"]').as('infoFeed')
+      cy.get('@dataHubFeed')
+        .find('[data-test=data-hub-feed-date-0]')
+        .contains('a day ago')
+
+      cy.get('@dataHubFeed')
+        .find('[data-test="data-hub-feed-link-1"]')
+        .should('not.exist')
     })
 
-    it('should return an empty info feed', () => {
-      cy.get('[data-test="info-feed-list"]').should('not.exist')
-      cy.get('[data-test="info-feed-no-results"]')
+    it('should display the view all link', () => {
+      cy.get('@infoFeedTopLink')
         .should('exist')
-        .should('have.text', 'No updates available')
+        .should('have.text', 'View all Data Hub updates (opens in new tab)')
+        .should('have.attr', 'href', urls.external.helpCentre.allUpdates())
     })
   })
 
   context('When the help centre API returns no results', () => {
     beforeEach(() => {
-      cy.visit('/', { qs: { test: 'help-centre-empty' } })
-      cy.get('[data-test="info-feed"]').as('infoFeed')
+      cy.intercept('GET', '/api-proxy/help-centre/feed', {
+        body: [],
+      }).as('apiRequest')
+      cy.visit('/')
+      cy.wait('@apiRequest')
+      cy.get('[data-test="data-hub-feed"]').as('dataHubFeed')
     })
 
     it('should return an empty info feed', () => {
-      cy.get('[data-test="info-feed-list"]').should('not.exist')
-      cy.get('[data-test="info-feed-no-results"]')
-        .should('exist')
+      cy.get('[data-test="data-hub-feed-link-0"]').should('not.exist')
+      cy.get('@dataHubFeed')
+        .find('p')
         .should('have.text', 'No updates available')
+    })
+  })
+
+  context('Tabs - Export', () => {
+    before(() => {
+      cy.visit('/')
+    })
+
+    after(() => {
+      cy.resetUser()
+    })
+
+    it('should display tabs in the right order', () => {
+      cy.get('[data-test="dashboard-tabs"]')
+        .should('exist')
+        .find('[data-test="tablist"]')
+        .eq(0)
+        .should('exist')
+        .children()
+        .should('have.length', 5)
+        .first()
+        .should('have.text', 'Tasks')
+        .next()
+        .should('have.text', 'Company lists')
+        .next()
+        .should('have.text', 'Investment projects')
+        .next()
+        .should('have.text', 'Export projects')
+        .next()
+        .should('have.text', 'Referrals')
+    })
+  })
+
+  context('When My Tasks returns no results', () => {
+    before(() => {
+      cy.intercept('POST', '/api-proxy/v4/search/task', {
+        body: { count: false },
+      }).as('myTaskCount')
+      cy.visit('/')
+    })
+
+    after(() => {
+      cy.resetUser()
+    })
+
+    it('should display tabs in the right order', () => {
+      cy.get('[data-test="dashboard-tabs"]')
+        .should('exist')
+        .find('[data-test="tablist"]')
+        .eq(0)
+        .should('exist')
+        .children()
+        .should('have.length', 5)
+        .first()
+        .should('have.text', 'Tasks')
+        .next()
+        .should('have.text', 'Company lists')
+        .next()
+        .should('have.text', 'Investment projects')
+        .next()
+        .should('have.text', 'Export projects')
+        .next()
+        .should('have.text', 'Referrals')
     })
   })
 })

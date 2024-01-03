@@ -1,3 +1,5 @@
+const { sortCriteria } = require('./sortCriteria')
+
 const externalActivityQuery = ({
   from,
   size,
@@ -103,18 +105,7 @@ const externalActivityQuery = ({
   const dsl = {
     from,
     size,
-    sort: [
-      {
-        'object.published': {
-          order: 'desc',
-        },
-      },
-      {
-        'object.startTime': {
-          order: 'desc',
-        },
-      },
-    ],
+    sort: sortCriteria('desc'),
     query: {
       bool: {
         filter: {

@@ -3,23 +3,27 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
 import { SummaryTable } from '../../../../../client/components/'
+import urls from '../../../../../lib/urls'
 
-const SectionSector = ({ businessDetails, isArchived, urls }) => (
+const SectionSector = ({ company, isArchived }) => (
   <SummaryTable
-    caption="DIT sector"
+    caption="DBT sector"
     data-test="sectorDetailsContainer"
     actions={
-      !isArchived && <Link href={`${urls.companyEdit}#sector`}>Edit</Link>
+      !isArchived && (
+        <Link href={`${urls.companies.edit(company.id)}#sector`}>Edit</Link>
+      )
     }
   >
-    <SummaryTable.Row>{businessDetails.sector || 'Not set'}</SummaryTable.Row>
+    <SummaryTable.Row>
+      {company.sector ? company.sector.name : 'Not set'}
+    </SummaryTable.Row>
   </SummaryTable>
 )
 
 SectionSector.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionSector

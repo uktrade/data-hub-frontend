@@ -9,10 +9,14 @@ import {
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS, KINDS, THEMES } from '../../../constants'
 import {
+  readThemeAndKindFromLocalStorage,
+  writeThemeAndKindToLocalStorage,
+} from './utils'
+import {
   EXPORT_INTEREST_STATUS_VALUES,
   OPTION_NO,
   OPTION_YES,
-} from '../../../../constants'
+} from '../../../../../common/constants'
 import { ID as STORE_ID } from './state'
 
 import {
@@ -22,6 +26,7 @@ import {
   transformToYesNo,
   transformToID,
   transformObjectToTypeahead,
+  transformExportCountriesToGroupStatus,
 } from '../../../../transformers'
 
 import { formatWithoutParsing } from '../../../../../client/utils/date'
@@ -36,10 +41,12 @@ const FIELDS_TO_OMIT = [
   'has_related_opportunity',
 ]
 
+const HTTP_201_CREATED = 201
+
+const isWereCountriesDiscussed = (wereCountriesDiscussed) =>
+  wereCountriesDiscussed === OPTION_YES || wereCountriesDiscussed === true
+
 function transformExportCountries(values) {
-  if (values.were_countries_discussed === OPTION_NO) {
-    return
-  }
   return EXPORT_INTEREST_STATUS_VALUES.filter(
     (status) => values[status]
   ).reduce(
@@ -117,6 +124,10 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
   const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
   const date = new Date(interaction.date)
 
+  const exportCountries = get(interaction, 'export_countries') || []
+  const groupExportCountries =
+    transformExportCountriesToGroupStatus(exportCountries)
+
   return {
     theme: interaction.theme || THEMES.OTHER,
     service: childServiceLabel ? parentServiceLabel : serviceId,
@@ -167,12 +178,12 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       'large_capital_opportunity',
     ]),
     ...transformServiceAnswers(interaction.service_answers),
+    ...transformValues(groupExportCountries, transformObjectToTypeahead, [
+      'currently_exporting',
+      'future_interest',
+      'not_interested',
+    ]),
   }
-}
-
-export function openContactForm({ values, url }) {
-  window.sessionStorage.setItem(STORE_ID, JSON.stringify(values))
-  window.location.href = url
 }
 
 export async function getInitialFormValues({
@@ -198,19 +209,30 @@ export async function getInitialFormValues({
     return valuesFromStorage
   } else if (interactionId) {
     // If editing an interaction
+
     return apiProxyAxios
       .get(`v4/interaction/${interactionId}`)
       .then(({ data }) =>
         transformInteractionToValues(data, companyId, investmentId)
       )
+
+    /**
+     * NOTE:
+     * The transformed interaction values above currently cascaded
+     * as props(values) in the FORM, from InteractionDetailsForm down to
+     * StepInteractionDetails
+     **/
   } else {
     // If creating an interaction
     const date = new Date()
-    const getInvestmentValues = (investmentId) =>
-      investmentId && {
-        kind: KINDS.INTERACTION,
-        theme: THEMES.INVESTMENT,
-      }
+
+    // If the user is coming from the investment page
+    // they don't get to choose the theme or kind.
+    const getThemeAndKindForInvestment = () => ({
+      theme: THEMES.INVESTMENT,
+      kind: KINDS.INTERACTION,
+    })
+
     return {
       companies: [companyId],
       investment_project: investmentId,
@@ -224,7 +246,9 @@ export async function getInitialFormValues({
           ? [transformObjectToOption(referral.contact)]
           : [],
       dit_participants: [transformObjectToOption(user)],
-      ...getInvestmentValues(investmentId),
+      ...(investmentId
+        ? getThemeAndKindForInvestment()
+        : readThemeAndKindFromLocalStorage()),
     }
   }
 }
@@ -281,6 +305,26 @@ export function saveInteraction({ values, companyIds, referralId }) {
           ? values.large_capital_opportunity.value
           : null,
     }),
+    // If the user has selected Investment the
+    // API endpoint still requires a kind.
+    ...(values.theme == THEMES.INVESTMENT && {
+      kind: KINDS.INTERACTION,
+    }),
+    // If the user has selected Trade agreement
+    // the API endpoint still requires a kind.
+    ...(values.theme == THEMES.TRADE_AGREEMENT && {
+      kind: KINDS.INTERACTION,
+    }),
+
+    // Added to ensure were_countries_discussed has a valid value
+    were_countries_discussed: transformToYesNo(
+      isWereCountriesDiscussed(values.were_countries_discussed)
+    ),
+
+    // Added to ensure export_countries has a valid value
+    export_countries: isWereCountriesDiscussed(values.were_countries_discussed)
+      ? transformExportCountries(values)
+      : [],
   }
 
   const payload = values.id
@@ -290,16 +334,28 @@ export function saveInteraction({ values, companyIds, referralId }) {
     : {
         ...values,
         ...commonPayload,
-        export_countries: transformExportCountries(values),
       }
+
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
-  ).catch((e) => {
-    // Accounts for non-standard API error on contacts field
-    const contactsError = e.response.data.contacts[0]
-    return contactsError ? Promise.reject(contactsError) : catchApiError(e)
-  })
+  )
+    .then((result) => {
+      if (result.status === HTTP_201_CREATED) {
+        // Save both the theme and kind so when the user
+        // creates their next interaction both fields will
+        // prepopulate based on their previous selections.
+        // Statistics show us that users select the same
+        // options 85% of the time.
+        writeThemeAndKindToLocalStorage(values.theme, values.kind)
+      }
+      return result
+    })
+    .catch((e) => {
+      // Accounts for non-standard API error on contacts field
+      const contactsError = e.response?.data?.contacts[0]
+      return contactsError ? Promise.reject(contactsError) : catchApiError(e)
+    })
 }
 
 export const fetchActiveEvents = () =>

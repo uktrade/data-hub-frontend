@@ -63,12 +63,12 @@ const investmentProjectCodeFaker = () => `DHP-${numberStringFaker(8)}`
  */
 const investmentProjectFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.IProject),
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   stage: investmentProjectStageFaker(),
   estimated_land_date: relativeDateFaker({ minDays: -100, maxDays: 365 }),
   investor_company: {
-    id: faker.datatype.uuid(),
-    name: faker.company.companyName(),
+    id: faker.string.uuid(),
+    name: faker.company.name(),
   },
   sector: sectorFaker(),
   status: investmentProjectStatusFaker(),

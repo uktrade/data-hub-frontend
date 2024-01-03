@@ -5,11 +5,13 @@ import LinesEllipsis from 'react-lines-ellipsis'
 import { typography } from '@govuk-react/lib'
 import Table from '@govuk-react/table'
 import Link from '@govuk-react/link'
-import { GREY_1, GREY_3, TEXT_COLOUR } from 'govuk-colours'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
+
 import { useMyCompaniesContext } from './useMyCompaniesContext'
 import Filters from './MyCompaniesFilters'
+
+import { GREY_1, GREY_3, TEXT_COLOUR } from '../../../../client/utils/colours'
 import urls from '../../../../lib/urls'
 
 const { formatMediumDate } = require('../../../utils/date')

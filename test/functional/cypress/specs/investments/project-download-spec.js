@@ -1,6 +1,6 @@
-import { investments } from '../../../../../src/lib/urls'
 import qs from 'qs'
 
+import { investments } from '../../../../../src/lib/urls'
 import { investmentProjectListFaker } from '../../fakers/investment-projects'
 
 const downloadHeader = '[data-test="download-data-header"]'

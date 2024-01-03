@@ -1,4 +1,4 @@
-import { RED, GREEN, BLUE } from 'govuk-colours'
+import { RED, GREEN, BLUE } from '../../../client/utils/colours'
 
 export const STATUS = {
   DRAFT: 'draft',
@@ -90,7 +90,7 @@ export const ANALYTICS_ACCORDION_TYPE = {
 export const INTERACTION_SERVICES = {
   'Account Management': 'Account Management',
   'A Specific Service': 'Specific Service',
-  'A Specific DIT Export Service or Funding': 'Service or Funding',
+  'A Specific DBT Export Service or Funding': 'Service or Funding',
   COP26: 'COP26',
   'Enquiry received': 'Enquiry',
   'Enquiry or Referral Received': 'Enquiry or Referral',
@@ -103,42 +103,59 @@ export const INTERACTION_SERVICES = {
   'IST Specific Service': 'IST Service',
   'Proposition Development': 'Proposition Development',
   'Trade Agreement Implementation Activity': 'Implementation',
+  'GREAT - Unicorn Kingdom Campaign - North America (2023)':
+    'GREAT - Unicorn Kingdom Campaign',
+  // Below services with updated capitalisation
+  'Account management': 'Account management',
+  'Specific service': 'Specific service',
+  'DBT export service or funding': 'DBT export service or funding',
+  'Enquiry received': 'Enquiry',
+  'Enquiry or referral': 'Enquiry or referral',
+  'Export win': 'Export win',
+  'Global Investment Summit (2021)': 'Global Investment Summit (2021)',
+  'Investment Enquiry': 'Enquiry',
+  'Investment - IST aftercare offered (IST use only)': 'IST Aftercare',
+  'Investment - services': 'Service',
+  'IST service': 'IST service',
+  'Proposition development': 'Proposition development',
+  'Trade agreement implementation activity': 'Implementation',
 }
 
 export const INTERACTION_SERVICEOTHER = {
   'Export Support Service - International Markets':
     'Export Support Service: International',
-  'Global Growth Service: Diagnostic and Output Report Completed by DIT':
+  'Global Growth Service: Diagnostic and Output Report Completed by DBT':
     'Global Growth: Diagnostic and Output Report',
-  'Global Growth Service: Engagement Letter Signed by Company':
+  'Global Growth Service: engagement letter signed by company':
     'Global Growth: Engagement Letter Signed',
-  'Global Growth Service: Project Closed': 'Global Growth: Project Closed',
-  'Global Growth Service: Signed Export Growth Plan Received from Company':
+  'Global Growth Service: project closed': 'Global Growth: Project Closed',
+  'Global Growth Service: signed export growth plan received from company':
     'Global Growth: Export Growth Plan Received',
-  'Overseas Business Network Chargeable Services (OBN)':
+  'Overseas Business Network chargeable services (OBN)':
     'OBN Chargeable Services',
   'Participation at Glasgow/getting involved with COP26':
     'Participation at Glasgow/COP26 involvement',
-  'DIT Middle East & Pakistan Comms & Marketing campaigns':
-    'DIT Middle East & Pakistan Comms & Marketing',
+  'DBT Middle East & Pakistan Comms & Marketing campaigns':
+    'DBT Middle East & Pakistan Comms & Marketing',
   'Commonwealth Games 2022 - BATP Programme': 'Commonwealth Games 2022 – BATP',
   'Commonwealth Games 2022 - GEP Programme': 'Commonwealth Games 2022 – GEP',
-  'HPO High Potential Opportunity Investment Enquiry via IIGB':
+  'HPO High Potential Opportunity investment enquiry from IIGB':
     'HPO Investment Enquiry via IIGB',
-  'HPO High Potential Opportunity Investment Enquiry via IST Target Company':
+  'HPO High Potential Opportunity investment enquiry from IST target company':
     'HPO Investment Enquiry via IST Target Company',
-  'Abandoned - No Investor Response (ERU Use)':
+  'Abandoned - no investor response (ERU Use)':
     'Abandoned - No Response (ERU Use)',
-  'Follow Up Email - No Investor Response (ERU Use)':
+  'Follow up email - no investor response (ERU Use)':
     'Follow Up Email - No Response (ERU Use)',
-  'Business Partners (e.g. distributors or manufacturers)': 'Business Partners',
-  'Financial and Professional Service Providers':
+  'Business partners (such as distributors or manufacturers)':
+    'Business Partners',
+  'Financial and professional service providers':
     'Financial + Professional Service Providers',
-  'Engagement with Local Enterprise Partnerships':
+  'Engagement with Local Enterprise Partnerships (LEPs)':
     'Engagement: Local Enterprise Partnerships',
-  'Engaging with Devolved Authorities on Trade Agreements':
+  'Engaging with devolved authorities on trade agreements':
     'Engagement: Devolved Authorities Trade Agreements',
-  'Informing key stakeholder groups of opportunities & gathering business intelligence':
+  'Informing key stakeholder groups of opportunities and gathering business intelligence':
     'Informing stakeholders + gathering intelligence',
   'Negotiating rounds - pre-ratification and negotiating amendments':
     'Negotiating: pre-ratification + amendments',
@@ -146,7 +163,7 @@ export const INTERACTION_SERVICEOTHER = {
     '121 with exporters: new trade agreement opportunities',
   'One-to-one with investors explaining new trade agreement opportunities, messages and resources':
     '121 with investors: new trade agreement opportunities',
-  'Partner country interaction - post-ratification (Trade Agreement related)':
+  'Partner country interaction - post-ratification (trade agreement related)':
     'Partner country interaction: post-ratification',
   'Partner country interaction - related to Market Access Barriers':
     'Partner country interaction: Market Access Barriers',

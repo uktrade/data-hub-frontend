@@ -1,5 +1,5 @@
-/* eslint-disable camelcase */
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
+
 const { roundToSignificantDigits } = require('../../../../common/number')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
@@ -42,13 +42,13 @@ const MATCHED_COMPANY_VERIFIABLE_FIELDS = [
 ]
 
 const transformCompanyToForm = (company) => {
-  const whitelistedFields = company.duns_number
+  const allowedFields = company.duns_number
     ? [...MATCHED_COMPANY_EDITABLE_FIELDS, ...MATCHED_COMPANY_VERIFIABLE_FIELDS]
     : UNMATCHED_COMPANY_EDITABLE_FIELDS
 
   return omitBy(
     {
-      ...pick(company, whitelistedFields),
+      ...pick(company, allowedFields),
       address1: get(company, 'address.line_1'),
       address2: get(company, 'address.line_2'),
       area: get(company, 'address.area.id'),
@@ -68,7 +68,7 @@ const transformCompanyToForm = (company) => {
 }
 
 const transformFormToApi = (company, formValues) => {
-  const whitelistedFields = company.duns_number
+  const allowedFields = company.duns_number
     ? MATCHED_COMPANY_EDITABLE_FIELDS
     : UNMATCHED_COMPANY_EDITABLE_FIELDS
 
@@ -92,7 +92,7 @@ const transformFormToApi = (company, formValues) => {
     },
     (fieldValue, fieldName) =>
       isUndefined(fieldValue) ||
-      !whitelistedFields.includes(fieldName) ||
+      !allowedFields.includes(fieldName) ||
       originalFormValues[fieldName] === formValues[fieldName]
   )
 }

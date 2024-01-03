@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
-import { BLACK, GREY_3 } from 'govuk-colours'
 
-import InteractionResource from '../../../components/Resource/Interaction'
+import { BLACK, GREY_3 } from '../../../../client/utils/colours'
+import { InteractionResource } from '../../../components/Resource'
 import InteractionReferralDetails from './InteractionReferralDetails'
-import { NewWindowLink, SummaryTable } from '../../../components'
+import { SummaryTable } from '../../../components'
 import ArchivePanel from '../../../components/ArchivePanel'
 import CompleteInteraction from './CompleteInteraction'
 
@@ -29,7 +29,7 @@ import {
 
 const EXPORT = 'export'
 
-const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
+const InteractionDetails = ({ interactionId }) => {
   return (
     <InteractionResource id={interactionId}>
       {(interaction) => (
@@ -120,18 +120,6 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                 children={interaction.communicationChannel.name}
               />
             )}
-            {interaction.policyIssueTypes.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy issue types"
-                children={transformArray(interaction.policyIssueTypes)}
-              />
-            )}
-            {interaction.policyAreas.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy areas"
-                children={transformArray(interaction.policyAreas)}
-              />
-            )}
             {interaction.policyFeedbackNotes && (
               <SummaryTable.Row
                 heading="Business intelligence"
@@ -157,21 +145,6 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                   >
                     {interaction.largeCapitalOpportunity.name}
                   </Link>
-                }
-              />
-            )}
-            {interaction.archivedDocumentsUrlPath && (
-              <SummaryTable.Row
-                heading="Documents"
-                children={
-                  <NewWindowLink
-                    href={
-                      archivedDocumentPath +
-                      interaction.archivedDocumentsUrlPath
-                    }
-                  >
-                    View files and documents
-                  </NewWindowLink>
                 }
               />
             )}

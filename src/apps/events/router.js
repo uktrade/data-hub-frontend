@@ -1,4 +1,5 @@
 const router = require('express').Router()
+
 const urls = require('../../lib/urls')
 
 const { APP_PERMISSIONS, LOCAL_NAV } = require('./constants')

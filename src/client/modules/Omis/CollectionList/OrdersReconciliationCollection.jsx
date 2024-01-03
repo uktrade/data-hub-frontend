@@ -119,6 +119,22 @@ const OrdersReconciliationCollection = ({
           placeholder="Search company name"
           data-test="company-name-filter"
         />
+        <Filters.Input
+          id="OrdersReconciliationCollection.net-amount"
+          qsParam="subtotal_cost"
+          name="subtotal_cost"
+          label={LABELS.netAmount}
+          placeholder="Search net amount"
+          data-test="net-amount-filter"
+        />
+        <Filters.Input
+          id="OrdersReconciliationCollection.gross-amount"
+          qsParam="total_cost"
+          name="total_cost"
+          label={LABELS.grossAmount}
+          placeholder="Search gross amount"
+          data-test="gross-amount-filter"
+        />
       </CollectionFilters>
     </FilteredCollectionList>
   )

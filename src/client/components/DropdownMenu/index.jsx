@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREY_2 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
+
+import { GREY_2 } from '../../../client/utils/colours'
 import SecondaryButton from '../SecondaryButton'
 import trianglePng from '../../../../assets/images/icon-triangle.svg'
 
@@ -97,6 +98,7 @@ const DropdownMenu = ({
   activeIndex,
   onUpdateIndex,
   closeMenu,
+  dataTest,
 }) => {
   const buttonRef = React.useRef(null)
   const childrenGroupRef = React.useRef(null)
@@ -158,6 +160,7 @@ const DropdownMenu = ({
       ref={containerRef}
       onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}
+      data-test={dataTest}
     >
       <DropdownButtonContainer>
         <DropdownToggleButton

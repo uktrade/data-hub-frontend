@@ -88,7 +88,7 @@ the `head` element, the same applies to `headIcons`.
 
 Base layout checks for certain variables.
 
-- `siteTitle` {string} - name of the site. Defaults to 'Department for International Trade'.
+- `siteTitle` {string} - name of the site. Defaults to 'Department for Business and Trade'.
 - `serviceTitle` {string} - name of the service.
 - `phaseBanner` {boolean} - whether to show the separate phase banner or default to phase tag in the global header. Possible values: `true` and `false`.
 - `projectPhase` {string} - phase of the project. Possible values: `alpha` and `beta`.

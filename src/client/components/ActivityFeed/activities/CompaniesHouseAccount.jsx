@@ -10,6 +10,8 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -17,7 +19,6 @@ export default class CompaniesHouseAccount extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -28,7 +29,7 @@ export default class CompaniesHouseAccount extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
     const startTime = get(activity, 'object.startTime')
     const summary = get(activity, 'summary')
     const balanceSheetDate = format(
@@ -45,8 +46,9 @@ export default class CompaniesHouseAccount extends React.PureComponent {
     const shareholderFunds = currencyGBP(
       get(activity, 'object.dit:shareholderFunds')
     )
+    const date = format(startTime)
     const metadata = [
-      { label: 'Date', value: format(startTime) },
+      { label: 'Date', value: date },
       { label: 'Balance sheet date', value: balanceSheetDate },
       {
         label: 'Net assets liabilities including pension asset liability',
@@ -57,15 +59,27 @@ export default class CompaniesHouseAccount extends React.PureComponent {
       { label: 'Shareholder funds', value: shareholderFunds },
     ]
 
-    return (
+    const kind = 'Companies House Updated'
+
+    return isOverview ? (
+      <OverviewActivityCardWrapper dataTest="companies-house-account-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={'Accounts Record'}
+          subject={summary}
+          summary={kind}
+        ></ActivityOverviewSummary>
+      </OverviewActivityCardWrapper>
+    ) : (
       <ActivityCardWrapper dataTest="companies-house-account-activity">
+        <ActivityCardSubject>{summary}</ActivityCardSubject>
         <ActivityCardLabels
           isExternalActivity={true}
           theme="Companies House"
           service="Accounts Record"
-          kind="Companies House Update"
+          kind={kind}
         ></ActivityCardLabels>
-        <ActivityCardSubject>{summary}</ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

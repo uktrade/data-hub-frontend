@@ -1,23 +1,12 @@
-const { get, upperFirst, camelCase } = require('lodash')
+const { get, upperFirst } = require('lodash')
 
 const metadata = require('../../../lib/metadata')
-const {
-  buildIncompleteFormList,
-  toCompleteStageMessages,
-} = require('../helpers')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
 const { companies, investments } = require('../../../lib/urls')
 const { formatMediumDateTime } = require('../../../client/utils/date')
-
-function getNextStage(currentStage, projectStages) {
-  const projectStageIndex = projectStages.findIndex((projectStage) => {
-    return projectStage.name.toLowerCase() === currentStage.toLowerCase()
-  })
-  return projectStages[projectStageIndex + 1]
-}
 
 function getCompanyDetails(req, res, next) {
   getDitCompany(req, req.params.companyId)
@@ -88,15 +77,6 @@ async function getInvestmentDetails(req, res, next) {
       (stage) => stage.name
     )
 
-    const incompleteFields = buildIncompleteFormList(
-      get(investment, 'incomplete_fields', [])
-    )
-    const isCurrentStageComplete =
-      investment.team_complete &&
-      investment.requirements_complete &&
-      investment.value_complete &&
-      !incompleteFields.length
-
     res.locals.investmentStatus = {
       id: investment.id,
       meta: [
@@ -134,17 +114,13 @@ async function getInvestmentDetails(req, res, next) {
         url: companies.detail(investment.investor_company.id),
       },
       currentStage: {
-        incompleteFields,
         name: stageName,
-        isComplete: isCurrentStageComplete,
-        messages: get(toCompleteStageMessages, camelCase(stageName), []),
       },
-      nextStage: getNextStage(stageName, investmentProjectStages),
     }
 
     res
       .breadcrumb('Projects', investments.projects.index())
-      .breadcrumb(investment.name, investments.projects.project(investment.id))
+      .breadcrumb(investment.name, investments.projects.details(investment.id))
 
     next()
   } catch (error) {

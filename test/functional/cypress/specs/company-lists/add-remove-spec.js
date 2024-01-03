@@ -1,18 +1,29 @@
-const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { testBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
-const listSelectors = selectors.companyAddRemoveFromLists
+const listA = '70513f19-0df6-4c8d-bef1-f11b65641ae4'
+const listB = '75e14e32-292e-4d1b-a361-992d548251f7'
+const listC = 'a87af6bc-e117-47c7-ad3d-35f9900bbd0e'
+
+const addRemoveFromListUrl = urls.companies.lists.addRemove(
+  fixtures.company.lambdaPlc.id
+)
+const detailsUrl = urls.companies.detail(fixtures.company.lambdaPlc.id)
 
 describe('Adding and removing a company to a list', () => {
   context('when viewing the companies page with company lists created', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
-    it('displays a button to add or remove from a list', () => {
-      cy.contains('View options').click()
-      cy.contains('Add to or remove from lists')
+    it('should display the add to list button', () => {
+      cy.get('[data-test="add-to-list-button"]').contains('+ Add to list')
+      cy.get('[data-test="add-to-list-button"]').click()
+      cy.location().should((loc) => {
+        expect(loc.pathname).to.eq(addRemoveFromListUrl)
+        expect(loc.search).contains(detailsUrl)
+      })
+      cy.go('back')
     })
   })
   context('when viewing the add/remove from lists form', () => {
@@ -26,62 +37,43 @@ describe('Adding and removing a company to a list', () => {
       'Lambda plc': `/companies/${fixtures.company.lambdaPlc.id}`,
       'Add and remove from lists': undefined,
     })
-
-    it('should render options for list A', () => {
-      cy.get(listSelectors.listA.legend).should(
-        'have.text',
-        'Do you want to add Lambda plc to the List A list?'
-      )
-      cy.get(listSelectors.listA.radios).should('have.length', 2)
-      cy.get(listSelectors.listA.labelYes).should('have.text', 'Yes')
-      cy.get(listSelectors.listA.labelNo).should('have.text', 'No')
-
-      cy.get(listSelectors.listA.radioYes).should('not.be.checked')
-      cy.get(listSelectors.listA.radioNo).should('be.checked')
+    it('should render a for with 3 checkboxes', () => {
+      cy.get('[data-test="field-userCompanyLists"]')
+        .children()
+        .children()
+        .children()
+        .contains('What list do you want to save Lambda plc to?')
     })
-    it('should render options for list B', () => {
-      cy.get(listSelectors.listB.legend).should(
-        'have.text',
-        'Do you want to add Lambda plc to the List B list?'
-      )
-      cy.get(listSelectors.listB.radios).should('have.length', 2)
-      cy.get(listSelectors.listB.labelYes).should('have.text', 'Yes')
-      cy.get(listSelectors.listB.labelNo).should('have.text', 'No')
-
-      cy.get(listSelectors.listB.radioYes).should('be.checked')
-      cy.get(listSelectors.listB.radioNo).should('not.be.checked')
-    })
-    it('should render options for list B', () => {
-      cy.get(listSelectors.listC.legend).should(
-        'have.text',
-        'Do you want to add Lambda plc to the List C list?'
-      )
-      cy.get(listSelectors.listC.radios).should('have.length', 2)
-      cy.get(listSelectors.listC.labelYes).should('have.text', 'Yes')
-      cy.get(listSelectors.listC.labelNo).should('have.text', 'No')
-
-      cy.get(listSelectors.listC.radioYes).should('not.be.checked')
-      cy.get(listSelectors.listC.radioNo).should('be.checked')
+    it('should render 3 checkboxes', () => {
+      cy.get(`[data-test="checkbox-${listA}"]`)
+        .next()
+        .should('have.text', 'List A')
+      cy.get(`[data-test="checkbox-${listB}"]`)
+        .next()
+        .should('have.text', 'List B')
+      cy.get(`[data-test="checkbox-${listC}"]`)
+        .next()
+        .should('have.text', 'List C')
     })
     it('should render a "Create list" button', () => {
-      cy.get(listSelectors.createButton).should(
+      cy.get('[data-test="create-list-button"]').should(
         'have.text',
         'Create a new list'
       )
     })
     it('should render a "Save" button', () => {
-      cy.get(listSelectors.saveButton).should('have.text', 'Save')
+      cy.get('[data-test="submit-button"]').should('have.text', 'Save')
     })
     it('should render a "Cancel" link', () => {
-      cy.get(listSelectors.cancelLink).should('have.text', 'Cancel')
+      cy.get('[data-test="cancel-button"]').should('have.text', 'Cancel')
     })
   })
 
   context('when adding the company to a list', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
-      cy.get(listSelectors.listA.radioYes).check()
-      cy.get(listSelectors.saveButton).click()
+      cy.get(`[data-test="checkbox-${listA}"]`).check()
+      cy.get('[data-test="submit-button"]').click()
     })
 
     it('should redirect to the homepage', () => {
@@ -99,8 +91,8 @@ describe('Adding and removing a company to a list', () => {
   context('when removing the company from a list', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
-      cy.get(listSelectors.listB.radioNo).check()
-      cy.get(listSelectors.saveButton).click()
+      cy.get(`[data-test="checkbox-${listB}"]`).check()
+      cy.get('[data-test="submit-button"]').click()
     })
 
     it('should redirect to the homepage', () => {

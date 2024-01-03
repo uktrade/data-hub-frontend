@@ -51,7 +51,7 @@ describe('Event edit', () => {
         country: 'China',
         notes: 'This is a dummy event for testing.',
         leadTeam: 'CBBC Hangzhou',
-        service: 'Events : UK Based',
+        service: 'Events : UK based',
         organiser: 'John Rogers',
         isEventShared: 'Yes',
         teams: ['CBBC HangZhou', 'CBBC North West'],

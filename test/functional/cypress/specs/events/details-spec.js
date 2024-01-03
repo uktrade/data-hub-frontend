@@ -10,13 +10,13 @@ const event = require('../../../../sandbox/fixtures/v3/event/single-event-missin
 const selectors = require('../../../../selectors')
 
 describe('Event Details', () => {
-  it('should display one day event details with link to documents', () => {
+  it('should display one day event details', () => {
     cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     cy.get(selectors.entityCollection.editEvent).should('be.visible')
 
     assertBreadcrumbs({
-      Home: urls.dashboard.route,
+      Home: urls.dashboard.index.route,
       Events: urls.events.index(),
       'One-day exhibition': null,
     })
@@ -34,13 +34,7 @@ describe('Event Details', () => {
       'Other teams': 'CBBC HangzhouCBBC North West',
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
-      Service: 'Events : UK Based',
-      Documents: 'View files and documents (opens in a new window or tab)',
-    })
-
-    cy.contains('a', 'View files and documents').should((el) => {
-      expect(el).to.have.attr('href', '/documents/123')
-      expect(el).to.have.attr('target', '_blank')
+      Service: 'Events : UK based',
     })
   })
 
@@ -62,8 +56,7 @@ describe('Event Details', () => {
       'Other teams': 'Not set',
       'Related programmes': 'Grown in Britain',
       'Related Trade Agreements': 'UK - Japan',
-      Service: 'Events : UK Based',
-      Documents: 'View files and documents (opens in a new window or tab)',
+      Service: 'Events : UK based',
     })
   })
 
@@ -74,7 +67,7 @@ describe('Event Details', () => {
 
     it('should display no document link details', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard.route,
+        Home: urls.dashboard.index.route,
         Events: urls.events.index(),
         'Teddy bear expo': null,
       })
@@ -92,7 +85,7 @@ describe('Event Details', () => {
         'Other teams': 'CBBC HangzhouCBBC North West',
         'Related programmes': 'Grown in Britain',
         'Related Trade Agreements': 'Not set',
-        Service: 'Events : UK Based',
+        Service: 'Events : UK based',
       })
     })
 
@@ -130,7 +123,7 @@ describe('Event Details', () => {
           organiser: null,
           start_date: '2016-03-16',
           service: {
-            name: 'A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+            name: 'DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor',
             id: '380bba2b-3499-e211-a939-e4115bead28a',
           },
           uk_region: null,
@@ -154,7 +147,7 @@ describe('Event Details', () => {
         'Related programmes': 'Not set',
         'Related Trade Agreements': 'Not set',
         Service:
-          'A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor',
+          'DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor',
       })
     })
   })

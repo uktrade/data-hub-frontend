@@ -19,39 +19,6 @@ describe('Business hierarchy', () => {
         )
       })
     })
-    context('when linking a global hq to a company', () => {
-      it('should create the link', () => {
-        cy.get(`${selectors.companyBusinessDetails().hierarchy} td a`).click()
-        cy.get('input[type="search"]')
-          .type(fixtures.company.oneListCorp.name)
-          .next()
-          .click()
-        cy.get('.c-entity-list li a').first().click()
-        cy.get('.c-message--success').should(
-          'contain',
-          'You’ve linked the Global Headquarters'
-        )
-        cy.get(selectors.companyBusinessDetails().hierarchy).should(
-          'contain',
-          'Global HQOne List CorpRemove link'
-        )
-      })
-    })
-    context('when removing the link to a global hq', () => {
-      it('should remove the link', () => {
-        cy.get(
-          `${selectors.companyBusinessDetails().hierarchy} td a:nth-child(2)`
-        ).click()
-        cy.get('.c-message--success').should(
-          'contain',
-          'You’ve removed the link to Global Headquarters'
-        )
-        cy.get(selectors.companyBusinessDetails().hierarchy).should(
-          'contain',
-          'Global HQNoneLink to the Global HQ'
-        )
-      })
-    })
   })
   context('Company Subsidiary', () => {
     const company = fixtures.company.create.lambda()
@@ -74,29 +41,6 @@ describe('Business hierarchy', () => {
         'have.attr',
         'data-test',
         'status-message'
-      )
-    })
-
-    it('should link a subsidiary', () => {
-      cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).click()
-
-      cy.get(selectors.companySubsidiariesLink().search.term).type('Mars')
-      cy.get(selectors.companySubsidiariesLink().search.button).click()
-      cy.get(selectors.companySubsidiariesLink().search.result(1).title).click()
-
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'You’ve linked the subsidiary'
-      )
-    })
-
-    it('should remove a subsidiary', () => {
-      cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
-      cy.get(selectors.companySubsidiariesLink().removeSubsidiary).click()
-
-      cy.get(selectors.message.successful).should(
-        'contain',
-        'You’ve removed the link to Global Headquarters'
       )
     })
 

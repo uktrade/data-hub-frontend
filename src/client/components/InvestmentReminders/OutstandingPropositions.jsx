@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { H3 } from '@govuk-react/heading'
-import { LINK_COLOUR, RED, TEXT_COLOUR } from 'govuk-colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import urls from '../../../lib/urls'
-import { DARK_GREY } from '../../utils/colors'
+import { DARK_GREY, LINK_COLOUR, RED, TEXT_COLOUR } from '../../utils/colours'
 
 const {
   formatWithoutParsing,

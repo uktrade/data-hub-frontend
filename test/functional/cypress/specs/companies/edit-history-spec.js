@@ -29,7 +29,7 @@ describe('Edit History', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
         'Business details': urls.companies.businessDetails(
@@ -104,19 +104,19 @@ describe('Edit History', () => {
       )
     })
 
-    it('should display the changes to "DIT sector"', () => {
+    it('should display the changes to "DBT sector"', () => {
       assertChanges(
         editHistory.change(2).table(3),
-        'DIT sector',
+        'DBT sector',
         'Biotechnology and Pharmaceuticals',
         'Airports'
       )
     })
 
-    it('should display the changes to "DIT region"', () => {
+    it('should display the changes to "DBT region"', () => {
       assertChanges(
         editHistory.change(2).table(4),
-        'DIT region',
+        'DBT region',
         'South East',
         'London'
       )

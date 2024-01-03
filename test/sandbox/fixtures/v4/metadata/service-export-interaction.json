@@ -1,7 +1,7 @@
 [
   {
       "id": "041e7ce1-9d5a-4ce6-b77c-088aef9d816b",
-      "name": "Enquiry or Referral Received : General Export Enquiry",
+      "name": "Enquiry or referral : General export enquiry",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -11,7 +11,7 @@
   },
   {
       "id": "f8a3d592-eb06-422b-b554-915f014b7819",
-      "name": "Enquiry or Referral Received : Other",
+      "name": "Enquiry or referral : Other",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -20,7 +20,7 @@
   },
   {
       "id": "ea87262c-dca6-4df2-8351-11cbd6620fc4",
-      "name": "Enquiry or Referral Received : Accountants",
+      "name": "Enquiry or referral : Accountants",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -29,7 +29,7 @@
   },
   {
       "id": "632b8708-28b6-e611-984a-e4115bead28a",
-      "name": "Enquiry or Referral Received : Local Partner Referral",
+      "name": "Enquiry or referral : Local partner referral",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -39,7 +39,7 @@
   },
   {
       "id": "804eff41-d807-42a2-9900-443046c254ee",
-      "name": "Enquiry or Referral Received : Banks",
+      "name": "Enquiry or referral : Banks",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -48,7 +48,7 @@
   },
   {
       "id": "bb9024e0-61ff-4fd7-acd3-61e12614b776",
-      "name": "Enquiry or Referral Received : British Business Bank",
+      "name": "Enquiry or referral : British business bank",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -57,7 +57,7 @@
   },
   {
       "id": "9984b82b-3499-e211-a939-e4115bead28a",
-      "name": "Enquiry or Referral Received : Other Inbound Export Referral",
+      "name": "Enquiry or referral : Inbound export referral",
       "disabled_on": "2020-05-26T00:00:00Z",
       "contexts": [
           "export_interaction"
@@ -66,7 +66,7 @@
   },
   {
       "id": "e722cad1-8caf-4f3c-957a-d6ef753088a8",
-      "name": "Enquiry or Referral Received : Chambers of Commerce",
+      "name": "Enquiry or referral : Chambers of commerce",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -75,7 +75,7 @@
   },
   {
       "id": "e7238b26-653c-e711-8a1f-e4115bead28a",
-      "name": "Enquiry or Referral Received : DIT Marketing Campaigns",
+      "name": "Enquiry or referral : DBT Marketing Campaigns",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -85,7 +85,7 @@
   },
   {
       "id": "1a41446a-ec87-4256-ae6c-c658df023d88",
-      "name": "Enquiry or Referral Received : Combined Authorities",
+      "name": "Enquiry or referral : Combined authorities",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -94,7 +94,7 @@
   },
   {
       "id": "96c87c0c-c58b-414f-9718-290895e21c2f",
-      "name": "Enquiry or Referral Received : Consultancies",
+      "name": "Enquiry or referral : Consultancies",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -103,7 +103,7 @@
   },
   {
       "id": "cab605ce-5f50-4790-9378-1c8a056f7e5a",
-      "name": "Enquiry or Referral Received : County Councils",
+      "name": "Enquiry or referral : County councils",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -112,7 +112,7 @@
   },
   {
       "id": "cf0175f0-e425-4582-955a-1f9d14567e5e",
-      "name": "Enquiry or Referral Received : FSB",
+      "name": "Enquiry or referral : FSB",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -121,7 +121,7 @@
   },
   {
       "id": "d045c2e1-d218-4aa2-901a-8ae9d6e5b9a9",
-      "name": "Enquiry or Referral Received : Growth Hubs",
+      "name": "Enquiry or referral : Growth hubs",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -130,7 +130,7 @@
   },
   {
       "id": "8e204e69-adad-4bd6-a14d-b1f95b6c499d",
-      "name": "Enquiry or Referral Received : Investment Services Team",
+      "name": "Enquiry or referral : Investment Services Team",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -139,7 +139,7 @@
   },
   {
       "id": "b7869852-af3f-4661-8844-60545f304960",
-      "name": "Enquiry or Referral Received : Key Account Managers",
+      "name": "Enquiry or referral : Key account managers",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -148,7 +148,7 @@
   },
   {
       "id": "8fd3720c-512e-4984-b4bb-bef233c719bc",
-      "name": "Enquiry or Referral Received : Lawyers",
+      "name": "Enquiry or referral : Lawyers",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -157,7 +157,7 @@
   },
   {
       "id": "c10d61ab-cf3a-4ef9-b94a-267c1dbbd5c3",
-      "name": "Enquiry or Referral Received : LEPs",
+      "name": "Enquiry or referral : LEPs",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -166,7 +166,7 @@
   },
   {
       "id": "ee36397c-18fd-47c5-9d90-bf316db82593",
-      "name": "Enquiry or Referral Received : Make UK",
+      "name": "Enquiry or referral : Make UK",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -175,7 +175,7 @@
   },
   {
       "id": "1477622e-9adb-4017-8d8d-fe3221f1d2fc",
-      "name": "Making Export Introductions",
+      "name": "Export introductions",
       "disabled_on": "2019-07-04T00:00:00Z",
       "contexts": [
           "export_interaction"
@@ -194,22 +194,22 @@
                   {
                       "disabled_on": "2019-07-04T00:00:00Z",
                       "id": "2ecdad3d-642a-454c-9bd9-8089b448c319",
-                      "name": "Business Partners (e.g. distributors or manufacturers)"
+                      "name": "Business partners (such as distributors or manufacturers)"
                   },
                   {
                       "disabled_on": "2019-07-04T00:00:00Z",
                       "id": "2a8db035-f8fe-4700-9769-d980754b90af",
-                      "name": "Financial and Professional Service Providers"
+                      "name": "Financial and professional service providers"
                   },
                   {
                       "disabled_on": "2019-07-04T00:00:00Z",
                       "id": "c1a1ab4a-a248-4104-b5a1-caab763ebd8b",
-                      "name": "Someone else in DIT"
+                      "name": "Someone else in DBT"
                   },
                   {
                       "disabled_on": "2019-07-04T00:00:00Z",
                       "id": "91d496af-0185-449c-a19c-4016c8e78cb0",
-                      "name": "Another Government Department"
+                      "name": "Other government department"
                   },
                   {
                       "disabled_on": "2019-07-04T00:00:00Z",
@@ -222,7 +222,7 @@
   },
   {
       "id": "273132d7-de50-41a7-a994-ff7d93302092",
-      "name": "Making Export Introductions : Someone else in DIT",
+      "name": "Export introductions : Someone else in DBT",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -231,7 +231,7 @@
   },
   {
       "id": "394b3f03-67ee-4a1a-b7bb-c2a249ab879c",
-      "name": "Making Export Introductions : UK Export Finance (UKEF)",
+      "name": "Export introductions : UK Export Finance (UKEF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -240,7 +240,7 @@
   },
   {
       "id": "549d657d-6930-413d-a14e-18a6427467be",
-      "name": "Making Export Introductions : Financial and Professional Service Providers",
+      "name": "Export introductions : Financial and professional service providers",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -249,7 +249,7 @@
   },
   {
       "id": "8cb7deb7-7618-4eb7-b248-4686ae0634ea",
-      "name": "Making Export Introductions : Another Government Department",
+      "name": "Export introductions : Other government department",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -258,7 +258,7 @@
   },
   {
       "id": "9efb937b-c23f-4248-aab3-986ede3e655d",
-      "name": "Making Export Introductions : Business Partners (e.g. distributors or manufacturers)",
+      "name": "Export introductions : Business partners (such as distributors or manufacturers)",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -267,7 +267,7 @@
   },
   {
       "id": "ae59b1bf-5dc1-48d7-bb4b-49264fe8feea",
-      "name": "Making Export Introductions : Customers",
+      "name": "Export introductions : Customers",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -276,7 +276,7 @@
   },
   {
       "id": "76d912d6-e9da-4963-80ae-d07f8f6feed7",
-      "name": "Providing Export Advice & Information",
+      "name": "Export advice and information",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -295,7 +295,7 @@
                   {
                       "disabled_on": null,
                       "id": "4cff9ba9-ca8c-4777-89db-396066ec9d78",
-                      "name": "DIT or Government Services"
+                      "name": "DBT or Government Services"
                   },
                   {
                       "disabled_on": null,
@@ -328,7 +328,7 @@
   },
   {
       "id": "9484b82b-3499-e211-a939-e4115bead28a",
-      "name": "Account Management : General",
+      "name": "Account management : General",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -344,7 +344,7 @@
   },
   {
       "id": "09073992-2476-481d-8341-ee575d1f541e",
-      "name": "Account Management : Healthcare UK",
+      "name": "Account management : Healthcare UK",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -353,7 +353,7 @@
   },
   {
       "id": "a4a733b6-eb95-e611-be23-e4115bead28a",
-      "name": "Account Management : Northern Powerhouse",
+      "name": "Account management : Northern Powerhouse",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -364,7 +364,7 @@
   },
   {
       "id": "0796b92b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : UK Defence and Security Exports",
+      "name": "DBT export service or funding : UK Defence and Security Exports",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -373,7 +373,7 @@
   },
   {
       "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
+      "name": "DBT export service or funding : Overseas Business Network chargeable services (OBN)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -383,7 +383,7 @@
   },
   {
       "id": "360bba2b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Overseas Market Introduction Service (OMIS)",
+      "name": "DBT export service or funding : Overseas Market Introduction Service (OMIS)",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -392,7 +392,7 @@
   },
   {
       "id": "380bba2b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+      "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -403,7 +403,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28b",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": [
         "export_interaction",
@@ -414,7 +414,7 @@
 },
   {
       "id": "4664f856-166f-4f48-9865-653250f84086",
-      "name": "A Specific DIT Export Service or Funding : Global Growth Service: Diagnostic and Output Report Completed by DIT",
+      "name": "DBT export service or funding : Global Growth Service: Diagnostic and Output Report Completed by DBT",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -423,7 +423,7 @@
   },
   {
       "id": "6a27f71a-6b4b-4e8f-83b8-35615c13fdc8",
-      "name": "A Specific DIT Export Service or Funding : Global Growth Service: Engagement Letter Signed by Company",
+      "name": "DBT export service or funding : Global Growth Service: engagement letter signed by company",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -432,7 +432,7 @@
   },
   {
       "id": "94a2473d-e898-4e1c-a082-ddfde8f297ff",
-      "name": "A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)",
+      "name": "DBT export service or funding : European Regional Development Fund (ERDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -442,7 +442,7 @@
   },
   {
       "id": "bc005d16-48f2-4769-8f63-272226f84dc8",
-      "name": "A Specific DIT Export Service or Funding : Global Growth Service: Project Closed",
+      "name": "DBT export service or funding : Global Growth Service: project closed",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -451,7 +451,7 @@
   },
   {
       "id": "d1516466-5e62-4c1a-9831-7b1e7e536514",
-      "name": "A Specific DIT Export Service or Funding : Trade Development Fund (TDF)",
+      "name": "DBT export service or funding : Trade Development Fund (TDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -461,7 +461,7 @@
   },
   {
       "id": "4c434df3-e7c7-4afb-ba79-7f354995600f",
-      "name": "A Specific DIT Export Service or Funding : Field Force Phase 2 call",
+      "name": "DBT export service or funding : Field Force phase 2 call",
       "disabled_on": null,
       "contexts": [
           "export_interaction"
@@ -470,7 +470,7 @@
   },
   {
       "id": "e64d7719-0bd9-65df-55a9-f08d328bc467",
-      "name": "A Specific DIT Export Service or Funding : Export Academy",
+      "name": "DBT export service or funding : Export Academy",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -480,7 +480,7 @@
   },
   {
       "id": "350bba2b-3499-e211-a939-e4115bead28a",
-      "name": "Export Win",
+      "name": "Export win",
       "disabled_on": null,
       "contexts": [
           "export_interaction",

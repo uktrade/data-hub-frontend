@@ -1,14 +1,18 @@
-const { reduce, isEqual } = require('lodash')
+import { reduce, isEqual } from 'lodash'
 
 import {
+  assertErrorSummary,
+  assertFieldError,
   assertFieldInput,
   assertFieldRadiosWithLegend,
   assertFieldSelect,
   testBreadcrumbs,
 } from '../../support/assertions'
+import { fillSelect } from '../../support/form-fillers'
 
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
+const selectors = require('../../../../../test/selectors')
 const interactionWithoutTheme = require('../../../../sandbox/fixtures/v3/interaction/interaction-without-theme')
 const {
   assertFieldTextarea,
@@ -42,7 +46,7 @@ const ELEMENT_BUSINESS_INTELLIGENCE_INFO = {
     cy
       .wrap(element)
       .contains(
-        'If your contact provided business intelligence (eg issues impacting the company or feedback on government policy), complete the business intelligence section.'
+        'Select business intelligence if your contact mentioned issues relating to DBT or government objectives.'
       ),
 }
 
@@ -56,7 +60,7 @@ const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
 }
 const ELEMENT_RELATED_TRADE_AGREEMENT = {
-  legend: 'Does this interaction relate to a named trade agreement?',
+  legend: 'Does this interaction relate to a named trade agreement? (optional)',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
@@ -65,7 +69,8 @@ const ELEMENT_TRADE_AGREEMENTS = {
   placeholder: '-- Select named trade agreement --',
 }
 const ELEMENT_RELATED_OPPORTUNITY = {
-  legend: 'Does this interaction relate to a large capital opportunity?',
+  legend:
+    'Does this interaction relate to a large capital opportunity? (optional)',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
@@ -90,15 +95,15 @@ const ELEMENT_ADD_CONTACT_LINK = {
   assert: ({ element }) => cy.wrap(element).contains('add a new contact'),
 }
 const ELEMENT_CONTACT_INFO_DETAILS = {
-  summary: "Information you'll need to add a contact",
+  summary: 'Information needed to add a new contact',
   content:
-    "You need to give the new contact's:full namejob titleemail" +
+    'You need:full namejob titleemail' +
     ' addressphone numberwork address if different to the company address',
   assert: assertDetails,
 }
 const ELEMENT_ADVISER = {
   label: 'Adviser(s)',
-  value: 'DIT Staff',
+  value: 'DBT Staff',
   assert: assertFieldTypeahead,
 }
 const ELEMENT_DETAILS_HEADER = {
@@ -119,17 +124,13 @@ const ELEMENT_COMMUNICATION_CHANNEL = {
   placeholder: '-- Select communication channel --',
   assert: assertFieldTypeahead,
 }
-const ELEMENT_NOTES_HEADER = {
-  text: 'Notes',
-  assert: assertHeader,
-}
-const ELEMENT_SUBJECT = {
-  label: 'Subject',
+const ELEMENT_SUMMARY = {
+  label: 'Summary',
   assert: assertFieldInput,
 }
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
-  hint: 'Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section.',
+  hint: 'Add details of the interaction, such as how the meeting came about and location. Issues relating to DBT or government objectives should be added to the business intelligence section.',
   assert: assertFieldTextarea,
 }
 // The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.
@@ -140,7 +141,7 @@ const ELEMENT_FEEDBACK_POLICY = {
 }
 
 const ELEMENT_EXPORT_BARRIER = {
-  legend: 'Did the interaction help remove an export barrier?',
+  legend: 'Did the interaction help remove an export barrier? (optional)',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
@@ -148,18 +149,11 @@ const ELEMENT_EXPORT_BARRIER = {
 const ELEMENT_EXPORT_BARRIER_HOW = {
   legend: 'Tell us how the interaction helped remove an export barrier',
 }
-
-const ELEMENT_POLICY_ISSUE_TYPES = {
-  label: 'Policy issue types',
-}
-const ELEMENT_POLICY_AREAS = {
-  label: 'Policy areas',
-}
 const ELEMENT_POLICY_FEEDBACK_NOTES = {
   label: 'Business intelligence',
 }
 const ELEMENT_COUNTRIES = {
-  legend: 'Were any countries discussed?',
+  legend: 'Were any countries discussed? (optional)',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
@@ -186,15 +180,17 @@ const COMMON_REQUEST_BODY = {
   contacts: ['9b1138ab-ec7b-497f-b8c3-27fed21694ef'],
   dit_participants: [{ adviser: '7d19d407-9aec-4d06-b190-d3f404627f21' }],
   date: `${TODAY_YEAR}-${TODAY_MONTH}-${TODAY_DAY}`,
-  subject: 'Some subject',
+  subject: 'Some summary',
   notes: 'Some notes',
   was_policy_feedback_provided: 'yes',
-  policy_issue_types: ['688ac22e-89d4-4d1f-bf0b-013588bf63a7'],
-  policy_areas: ['583c0bb6-d3c5-4e4b-8f25-e861c1e8d9c9'],
+  policy_areas: [],
   policy_feedback_notes: 'Some policy feedback notes',
   companies: ['0f5216e0-849f-11e6-ae22-56b6b6499611'],
   service_answers: {},
   status: 'complete',
+}
+
+const RELATED_TRADE_AGREEMENTs_REQUEST_BODY = {
   has_related_trade_agreements: 'yes',
   related_trade_agreements: [
     '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
@@ -207,42 +203,27 @@ function fillCommonFields({
   subservice = null,
   contact = 'Johnny Cakeman',
 }) {
-  cy.contains('Service').next().next().find('select').select(service)
-
+  fillSelect('[data-test=field-service]', service)
   if (subservice) {
-    cy.contains('Service')
-      .next()
-      .next()
-      .find('select')
-      .last()
-      .select(subservice)
+    fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
-
-  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
-    .next()
-    .find('input')
-    .check('yes')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
-    .should('contain', 'UK-Australia Mutual Recognition Agreement')
-
-  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
-    .parent()
-    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
-    .should('contain', 'UK-Mexico Trade Continuity Agreement')
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
+      .parent()
       .next()
       .selectTypeaheadOption(contact)
       .should('contain', contact)
   }
 
-  cy.contains(ELEMENT_SUBJECT.label).next().find('input').type('Some subject')
+  cy.contains(ELEMENT_SUMMARY.label)
+    .parent()
+    .next()
+    .find('input')
+    .type('Some summary')
 
   cy.contains(ELEMENT_NOTES.label)
+    .parent()
     .next()
     .next()
     .find('textarea')
@@ -250,17 +231,8 @@ function fillCommonFields({
 
   cy.contains(ELEMENT_FEEDBACK_POLICY.legend).next().find('input').check('yes')
 
-  cy.contains(ELEMENT_POLICY_ISSUE_TYPES.label)
-    .next()
-    .contains('Domestic')
-    .click()
-
-  cy.contains(ELEMENT_POLICY_AREAS.label)
-    .next()
-    .selectTypeaheadOption('State Aid')
-    .should('contain', 'State Aid')
-
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
+    .parent()
     .next()
     .next()
     .find('textarea')
@@ -272,17 +244,23 @@ function fillExportCountriesFields() {
 
   cy.contains(ELEMENT_COUNTRIES_CURRENTLY_EXPORTING.label)
     .parent()
+    .parent()
     .selectTypeaheadOption('Iceland')
+    .parent()
     .should('contain', 'Iceland')
 
   cy.contains(ELEMENT_COUNTRIES_FUTURE_INTEREST.label)
     .parent()
+    .parent()
     .selectTypeaheadOption('Austria')
+    .parent()
     .should('contain', 'Austria')
 
   cy.contains(ELEMENT_COUNTRIES_NOT_INTERESTED.label)
     .parent()
+    .parent()
     .selectTypeaheadOption('Germany')
+    .parent()
     .should('contain', 'Germany')
 }
 
@@ -298,9 +276,31 @@ function fillExportBarrierFields() {
   cy.contains(
     'What happened in the interaction to help remove an export barrier?'
   )
+    .parent()
     .next()
     .find('textarea')
     .type('My export barrier notes')
+}
+
+function fillRelatedTradeAgreementFields() {
+  cy.contains(ELEMENT_RELATED_TRADE_AGREEMENT.legend)
+    .next()
+    .find('input')
+    .check('yes')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .parent()
+    .selectTypeaheadOption('UK-Australia Mutual Recognition Agreement')
+    .parent()
+    .should('contain', 'UK-Australia Mutual Recognition Agreement')
+
+  cy.contains(ELEMENT_TRADE_AGREEMENTS.legend)
+    .parent()
+    .parent()
+    .selectTypeaheadOption('UK-Mexico Trade Continuity Agreement')
+    .parent()
+    .should('contain', 'UK-Mexico Trade Continuity Agreement')
 }
 
 function submitForm(kind, theme, values) {
@@ -312,27 +312,32 @@ function submitForm(kind, theme, values) {
     }
 
     if (theme !== THEMES.INVESTMENT) {
+      fillRelatedTradeAgreementFields()
       fillExportCountriesFields()
     }
 
     if (kind === KINDS.INTERACTION) {
       cy.contains(ELEMENT_COMMUNICATION_CHANNEL.label)
+        .parent()
         .next()
         .selectTypeaheadOption('Telephone')
         .find('input')
         .should('have.attr', 'value', 'Telephone')
     } else if (kind === KINDS.SERVICE_DELIVERY) {
       cy.contains(ELEMENT_SERVICE_STATUS.label)
+        .parent()
         .next()
         .find('select')
         .select('Completed')
 
       cy.contains(ELEMENT_SERVICE_GRANT_OFFERED.label)
+        .parent()
         .next()
         .find('input')
         .type('123')
 
       cy.contains(ELEMENT_SERVICE_NET_RECEIPT.label)
+        .parent()
         .next()
         .find('input')
         .type('456')
@@ -353,6 +358,7 @@ function submitForm(kind, theme, values) {
         .find('input')
         .check('yes')
       cy.contains(ELEMENT_OPPORTUNITY.legend)
+        .parent()
         .next()
         .selectTypeaheadOption('A modified opportunity')
         .find('input')
@@ -388,14 +394,15 @@ function assertRequestBody(expectedBody, callback) {
       objectDiff(xhr.request.body, expectedBody)
     )
 
-    expect(xhr.request.body.has_related_trade_agreements).to.equal(
-      expectedBody.has_related_trade_agreements
-    )
-    expect(xhr.request.body.related_trade_agreements).to.deep.equal(
-      expectedBody.related_trade_agreements
-    )
-
-    expect(xhr.request.body).to.deep.equal(expectedBody)
+    if (expectedBody.theme != THEMES.INVESTMENT) {
+      expect(xhr.request.body.has_related_trade_agreements).to.equal(
+        expectedBody.has_related_trade_agreements
+      )
+      expect(xhr.request.body.related_trade_agreements).to.deep.equal(
+        expectedBody.related_trade_agreements
+      )
+      expect(xhr.request.body).to.deep.equal(expectedBody)
+    }
 
     callback(xhr)
   })
@@ -409,7 +416,7 @@ const selectInteractionType = (theme, kind) => {
 
 const company = fixtures.company.venusLtd
 
-describe('Interaction theme', () => {
+describe('Export theme - standard interaction', () => {
   context('when viewing the form', () => {
     beforeEach(() => {
       spyOnRequest()
@@ -417,9 +424,10 @@ describe('Interaction theme', () => {
     })
 
     testBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
-      [`Add interaction for ${company.name}`]: null,
+      [company.name]: urls.companies.detail(company.id),
+      ['Add interaction']: null,
     })
   })
 
@@ -427,13 +435,13 @@ describe('Interaction theme', () => {
     it('should permanently show a description about when to select trade agreement', () => {
       cy.get('div [data-test="trade-agreement-guide"]').should(
         'contain',
-        `Select ‘Trade agreement’ if your interaction was set up to focus on, or contributes to, implementing a trade agreement.Read more information and guidance (opens in a new window or tab) on this section.`
+        `Select 'trade agreement' if your interaction deals with a named trade agreement.For more information see recording trade agreement activity (opens in new tab).`
       )
     })
 
     it('should always have a see more guidance link', () => {
       cy.get('div [data-test="trade-agreement-guide"]>a')
-        .should('contain', 'information and guidance')
+        .should('contain', 'recording trade agreement activity')
         .should(
           'have.attr',
           'href',
@@ -442,7 +450,7 @@ describe('Interaction theme', () => {
     })
   })
 
-  context('when creating an interaction', () => {
+  context('when creating an export interaction', () => {
     beforeEach(() => {
       spyOnRequest()
       cy.visit(urls.companies.interactions.create(company.id))
@@ -455,7 +463,7 @@ describe('Interaction theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
@@ -466,9 +474,9 @@ describe('Interaction theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -486,34 +494,35 @@ describe('Interaction theme', () => {
         .should('have.text', 'Johnny Cakeman')
     })
 
+    const export_standard_theme_error_messages = [
+      'Select a service',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
-            'Select if the interaction helped remove an export barrier',
-          ].join('')
-        )
+      assertErrorSummary(export_standard_theme_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'DBT export service or funding')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(export_standard_theme_error_messages)
     })
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-        service: 'A Specific DIT Export Service or Funding',
-        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+        service: 'DBT export service or funding',
+        subservice: 'UK Tradeshow Programme (UKTP) – exhibitor',
       })
 
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'export',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -547,39 +556,41 @@ describe('Interaction theme', () => {
       )
     })
 
-    it('should persist form fields after navigating back', () => {
+    it('should not persist form fields after navigating back', () => {
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
         .next()
         .find('input')
-        .type('Persisting subject')
+        .type('Persisting summary')
       cy.go('back')
       cy.url().should('include', '?step=interaction_type')
       cy.contains('button', 'Continue').click()
       cy.url().should('include', '?step=interaction_details')
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
         .next()
         .find('input')
-        .should('have.attr', 'value', 'Persisting subject')
+        .should('have.attr', 'value', '')
     })
   })
 })
 
-describe('Service delivery theme', () => {
+describe('Export theme - service delivery', () => {
   context('when creating a service delivery', () => {
     beforeEach(() => {
       spyOnRequest()
       cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Export').click()
-      cy.contains('label', 'A service that you have provided').click()
+      cy.contains('label', 'A service you have provided').click()
       cy.contains('button', 'Continue').click()
     })
 
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
@@ -590,9 +601,9 @@ describe('Service delivery theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_IS_EVENT,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_EXPORT_BARRIER,
@@ -600,34 +611,35 @@ describe('Service delivery theme', () => {
       ])
     })
 
+    const export_service_delivery_theme_error_messages = [
+      'Select a service',
+      'Select at least one contact',
+      'Select if this was an event',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
-            'Select at least one contact',
-            'Answer if this was an event',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
-            'Select if the interaction helped remove an export barrier',
-          ].join('')
-        )
+      assertErrorSummary(export_service_delivery_theme_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'DBT export service or funding')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(export_service_delivery_theme_error_messages)
     })
 
     it('should save the service delivery', () => {
       submitForm(KINDS.SERVICE_DELIVERY, THEMES.EXPORT, {
-        service: 'A Specific DIT Export Service or Funding',
-        subservice: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+        service: 'DBT export service or funding',
+        subservice: 'UK Tradeshow Programme (UKTP) – exhibitor',
       })
 
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'export',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           is_event: 'yes',
@@ -680,9 +692,8 @@ describe('Investment theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
-        ELEMENT_RELATED_TRADE_AGREEMENT,
+        ELEMENT_SERVICE,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
         ELEMENT_ADD_CONTACT_LINK,
@@ -691,39 +702,39 @@ describe('Investment theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_RELATED_OPPORTUNITY,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
 
+    const investment_theme_error_messages = [
+      'Select a service',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if this interaction relates to a large capital opportunity',
-          ].join('')
-        )
+      assertErrorSummary(investment_theme_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'Enquiry received')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(investment_theme_error_messages)
     })
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.INVESTMENT, {
         service: 'Enquiry received',
-        subservice: 'General Investment Enquiry',
+        subservice: 'General investment enquiry',
       })
-
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
@@ -800,7 +811,7 @@ describe('Trade Agreement theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form'), [
         ELEMENT_SERVICE_HEADER,
-        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_SERVICE,
         ELEMENT_SERVICE,
         ELEMENT_RELATED_TRADE_AGREEMENT,
         ELEMENT_PARTICIPANTS_HEADER,
@@ -811,42 +822,44 @@ describe('Trade Agreement theme', () => {
         ELEMENT_DETAILS_HEADER,
         ELEMENT_DATE,
         ELEMENT_COMMUNICATION_CHANNEL,
-        ELEMENT_NOTES_HEADER,
-        ELEMENT_SUBJECT,
+        ELEMENT_SUMMARY,
         ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_FEEDBACK_POLICY,
         ELEMENT_COUNTRIES,
         ELEMENT_STEP2_BUTTONS,
       ])
     })
 
+    const trade_agreement_theme_error_messages = [
+      'Select a service',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+    ]
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
-      cy.contains('h2', 'There is a problem')
-        .next()
-        .should(
-          'have.text',
-          [
-            'Select a service',
-            'Answer if this interaction relates to a named trade agreement',
-            'Select at least one contact',
-            'Select a communication channel',
-            'Enter a subject',
-            'Answer if the contact provided business intelligence',
-            'Answer if any countries were discussed',
-          ].join('')
-        )
+      assertErrorSummary(trade_agreement_theme_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'Specific service')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(trade_agreement_theme_error_messages)
     })
 
     it('should save the interaction for a specific service', () => {
       submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
-        service: 'A Specific Service',
+        service: 'Specific service',
         subservice: 'Export Academy',
       })
 
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'trade_agreement',
           service: '440b7770-62d2-e325-df93-cd7b62818405',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -882,13 +895,14 @@ describe('Trade Agreement theme', () => {
 
     it('should save the interaction for trade agreements', () => {
       submitForm(KINDS.INTERACTION, THEMES.TRADE_AGREEMENT, {
-        service: 'Trade Agreement Implementation Activity',
-        subservice: 'Civil Society meetings',
+        service: 'Trade agreement implementation activity',
+        subservice: 'Civil society meetings',
       })
 
       assertRequestBody(
         {
           ...COMMON_REQUEST_BODY,
+          ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
           theme: 'trade_agreement',
           service: '8d098d19-5988-4afd-8c0b-cc5652eccb26',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -939,7 +953,8 @@ describe('Contact loop', () => {
     })
 
     it('should redirect the user back to the interaction form after the contact is added', () => {
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
         .next()
         .find('input')
         .type('Test if values is restored')
@@ -972,7 +987,8 @@ describe('Contact loop', () => {
 
       cy.url().should('include', urls.companies.interactions.create(company.id))
 
-      cy.contains(ELEMENT_SUBJECT.label)
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
         .next()
         .find('input')
         .should('have.attr', 'value', 'Test if values is restored')
@@ -998,7 +1014,7 @@ describe('Adding an interaction from a referral', () => {
     cy.contains('Continue').click()
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-      service: 'A Specific DIT Export Service or Funding',
+      service: 'DBT export service or funding',
       subservice: 'Export Academy',
       contact: null,
     })
@@ -1006,6 +1022,7 @@ describe('Adding an interaction from a referral', () => {
     assertRequestBody(
       {
         ...COMMON_REQUEST_BODY,
+        ...RELATED_TRADE_AGREEMENTs_REQUEST_BODY,
         companies: [referral.company.id],
         contacts: [referral.contact.id], // Was prepopulated
         theme: 'export',
@@ -1057,7 +1074,7 @@ describe('Adding an interaction from a contact', () => {
     cy.contains('A standard interaction').click()
     cy.contains('Continue').click()
 
-    cy.contains('h1', 'Add interaction for Zboncak Group')
+    cy.contains('h1', 'Add interaction')
     cy.contains('button', 'Add interaction')
   })
 })
@@ -1067,7 +1084,7 @@ describe('Editing an interaction from a contact', () => {
     cy.visit(urls.contacts.interactions.index(fixtures.contact.deanCox.id))
     cy.contains('a', 'Meeting between Brendan Smith and Tyson Morar').click()
     cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction for Venus Ltd')
+    cy.contains('h1', 'Edit interaction')
     cy.contains('button', 'Save interaction').click()
     cy.get('[data-test="status-message"]').should(
       'have.text',
@@ -1083,7 +1100,7 @@ describe('Adding an interaction from an investment project', () => {
     cy.visit(urls.investments.projects.interactions.index(investmentProject.id))
 
     cy.contains('Add interaction').click()
-    cy.contains('h1', 'Add interaction for Venus Ltd')
+    cy.contains('h1', 'Add interaction')
     cy.contains('button', 'Add interaction')
   })
 })
@@ -1095,7 +1112,7 @@ describe('Editing an interaction from an investment project', () => {
     cy.visit(urls.investments.projects.interactions.index(investmentProject.id))
     cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
     cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction for Venus Ltd')
+    cy.contains('h1', 'Edit interaction')
     cy.contains('button', 'Save interaction').click()
     cy.get('[data-test="status-message"]').should(
       'have.text',
@@ -1108,7 +1125,7 @@ describe('Editing an interaction from an interactions list', () => {
   it('should be able to edit an interaction from an interactions list', () => {
     cy.visit(urls.interactions.edit(fixtures.interaction.withLink))
 
-    cy.contains('h1', 'Edit interaction for Zboncak Group')
+    cy.contains('h1', 'Edit interaction')
     cy.contains('button', 'Save interaction').click()
     cy.get('[data-test="status-message"]').should(
       'have.text',
@@ -1127,26 +1144,26 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Export Service or Funding',
-        'Account Management',
-        'Enquiry or Referral Received',
-        'Export Win',
-        'Making Export Introductions',
-        'Providing Export Advice & Information',
+        'Account management',
+        'DBT export service or funding',
+        'Enquiry or referral',
+        'Export advice and information',
+        'Export introductions',
+        'Export win',
       ].join('')
     )
   })
 
   it('should show filtered services for Export => Service delivery', () => {
-    selectInteractionType('Export', 'A service that you have provided')
+    selectInteractionType('Export', 'A service you have provided')
     cy.get('#field-service').should(
       'have.text',
       [
         '-- Select service --',
-        'A Specific DIT Export Service or Funding',
-        'Account Management',
+        'Account management',
+        'DBT export service or funding',
         'Events',
-        'Export Win',
+        'Export win',
       ].join('')
     )
   })
@@ -1157,11 +1174,11 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'Account Management',
+        'Account management',
         'Enquiry received',
-        'IST Specific Service',
-        'Making Investment Introductions',
-        'Providing Investment Advice & Information',
+        'IST service',
+        'Investment advice and information',
+        'Investment introductions',
       ].join('')
     )
   })
@@ -1172,13 +1189,13 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
-        'Enquiry or Referral Received',
+        'Account management',
+        'Enquiry or referral',
         'Events',
-        'Making Other Introductions',
-        'Providing Other Advice & Information',
-        'Trade Agreement Implementation Activity',
+        'Other advice and information',
+        'Other introductions',
+        'Specific service',
+        'Trade agreement implementation activity',
       ].join('')
     )
   })
@@ -1189,25 +1206,25 @@ describe('Filtering services based on theme & kind', () => {
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
-        'Enquiry or Referral Received',
-        'Making Other Introductions',
-        'Providing Other Advice & Information',
+        'Account management',
+        'Enquiry or referral',
+        'Other advice and information',
+        'Other introductions',
+        'Specific service',
       ].join('')
     )
   })
 
   it('should show filtered services for Other => Service delivery', () => {
-    selectInteractionType('Other', 'A service that you have provided')
+    selectInteractionType('Other', 'A service you have provided')
 
     cy.get('#field-service').should(
       'have.text',
       [
         '-- Select service --',
-        'A Specific Service',
-        'Account Management',
+        'Account management',
         'Events',
+        'Specific service',
       ].join('')
     )
   })
@@ -1220,7 +1237,7 @@ describe('Editing an interaction without a theme', () => {
     cy.get('#field-subject').then((element) =>
       assertFieldInput({
         element,
-        label: 'Subject',
+        label: 'Summary',
         value: interactionWithoutTheme.subject,
       })
     )
@@ -1229,6 +1246,105 @@ describe('Editing an interaction without a theme', () => {
     cy.get('[data-test="status-message"]').should(
       'have.text',
       'Interaction updated'
+    )
+  })
+})
+
+describe('Editing an interaction related to were countries disscussed', () => {
+  context('when editing interaction with countries discussed', () => {
+    before(() => {
+      cy.visit(
+        urls.interactions.edit(fixtures.interaction.withExportCountries.id)
+      )
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/interaction/${fixtures.interaction.withExportCountries.id}`
+      ).as('apiRequest_1')
+    })
+    it('should changed values from were any countries discussed if user select from yes to no', () => {
+      cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('no')
+      cy.contains('button', 'Save interaction').click()
+      cy.wait('@apiRequest_1').then(({ request }) => {
+        expect(request.body.were_countries_discussed).to.equal('no')
+        expect(request.body.export_countries).to.deep.equal([])
+      })
+    })
+  })
+
+  context('when editing interaction with no countries discussed', () => {
+    const exportCountries = [
+      {
+        country: '82756b9a-5d95-e211-a939-e4115bead28a',
+        status: 'currently_exporting',
+      },
+      {
+        country: '83756b9a-5d95-e211-a939-e4115bead28a',
+        status: 'future_interest',
+      },
+      {
+        country: 'a65f66a0-5d95-e211-a939-e4115bead28a',
+        status: 'not_interested',
+      },
+    ]
+    before(() => {
+      cy.visit(
+        urls.interactions.edit(fixtures.interaction.withoutExportCountries.id)
+      )
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v4/interaction/${fixtures.interaction.withoutExportCountries.id}`
+      ).as('apiRequest_2')
+    })
+    it('should changed values of were any countries discussed and save related export countries', () => {
+      cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('yes')
+      cy.get(selectors.interactionForm.countries.export).selectTypeaheadOption(
+        'Fran'
+      )
+      cy.get(selectors.interactionForm.countries.future).selectTypeaheadOption(
+        'Germ'
+      )
+      cy.get(
+        selectors.interactionForm.countries.noInterest
+      ).selectTypeaheadOption('Rus')
+      cy.contains('button', 'Save interaction').click()
+      cy.wait('@apiRequest_2').then(({ request }) => {
+        expect(request.body.were_countries_discussed).to.equal('yes')
+        expect(request.body.export_countries).to.deep.equal(exportCountries)
+      })
+    })
+  })
+})
+
+describe('Interaction landing page error checking', () => {
+  beforeEach(() => {
+    cy.visit(urls.companies.interactions.create(company.id))
+  })
+  it('should display an error when no interaction types are selected', () => {
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-theme"]'),
+      'Select interaction type'
+    )
+  })
+
+  it('should display an error when no export interaction types are selected', () => {
+    cy.contains('label', 'Export').click()
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-kind"]'),
+      'Select interaction type'
+    )
+  })
+
+  it('should display an error when no other interaction types are selected', () => {
+    cy.contains('label', 'Other').click()
+    cy.contains('button', 'Continue').click()
+
+    assertFieldError(
+      cy.get('[data-test="field-kind"]'),
+      'Select interaction type'
     )
   })
 })

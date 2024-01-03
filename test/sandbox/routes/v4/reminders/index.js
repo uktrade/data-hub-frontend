@@ -1,3 +1,7 @@
+exports.deleteReminder = function (req, res) {
+  res.sendStatus(204)
+}
+
 exports.getEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
@@ -43,6 +47,27 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
     new_export_interaction: {
       email_reminders_enabled: true,
       reminder_days: [2, 4, 7],
+    },
+    upcoming_task_reminder: {
+      email_reminders_enabled: true,
+      reminder_days: [10],
+    },
+    my_tasks_due_date_approaching: {
+      email_reminders_enabled: true,
+      reminder_days: [10],
+    },
+    task_assigned_to_me_from_others: {
+      email_reminders_enabled: true,
+    },
+    task_amended_by_others: {
+      email_reminders_enabled: true,
+    },
+    task_overdue: {
+      email_reminders_enabled: true,
+      reminder_days: [10],
+    },
+    task_completed: {
+      email_reminders_enabled: true,
     },
   })
 }
@@ -248,5 +273,17 @@ exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
         },
       },
     ],
+  })
+}
+
+exports.getSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: false,
+  })
+}
+
+exports.saveSubscriptions = function (req, res) {
+  res.json({
+    email_reminders_enabled: true,
   })
 }

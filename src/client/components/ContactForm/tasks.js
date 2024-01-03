@@ -19,3 +19,8 @@ export const saveContact = ({ contactId, values }) => {
       return response.data
     })
 }
+
+export const redirectToContactForm = ({ values, url, storeId }) => {
+  window.sessionStorage.setItem(storeId, JSON.stringify(values))
+  window.location.href = url
+}

@@ -23,7 +23,7 @@ const assertCollectionBreadcrumbs = (pageName) => {
 const assertCompanyCollectionBreadcrumbs = (companyFixture, pageName) => {
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [companyFixture.name]: urls.companies.detail(companyFixture.id),
       [pageName]: null,
@@ -46,12 +46,27 @@ const assertBadge = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('contain', badgeText)
 }
 
+const assertTag = (item, badgeText) => {
+  cy.get(item)
+    .find('[data-test="collection-item-tag"]')
+    .should('contain', badgeText)
+}
+
 const assertBadgeNotPresent = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('not.contain', badgeText)
 }
 
+const assertTagNotPresent = (item, badgeText) => {
+  cy.get(item)
+    .find('[data-test="collection-item-tag"]')
+    .should('not.contain', badgeText)
+}
+
 const assertBadgeShouldNotExist = (item) => {
   cy.get(item).find('[data-test="badge"]').should('not.exist')
+}
+const assertTagShouldNotExist = (item) => {
+  cy.get(item).find('[data-test="collection-item-tag"]').should('not.exist')
 }
 
 const assertMetadataItem = (item, metadataText) => {
@@ -113,9 +128,15 @@ const assertUpdatedOn = (item, text) => {
   cy.get(item).find('h4').should('have.text', text)
 }
 
+const assertRole = (roleType) => {
+  it('should contain a status role', () => {
+    cy.get(`[role="${roleType}"]`).should('exist')
+  })
+}
+
 const assertTitle = (headingText) => {
   it('should render a title', () => {
-    cy.get('h2').should('have.text', headingText)
+    cy.get('h2').should('contain', headingText)
   })
 }
 
@@ -148,8 +169,12 @@ module.exports = {
   assertArchiveMessage,
   assertUnarchiveLink,
   assertUpdatedOn,
+  assertRole,
   assertTitle,
   assertBadgeShouldNotExist,
   assertPaginationSummary,
   assertOMISSumary,
+  assertTag,
+  assertTagNotPresent,
+  assertTagShouldNotExist,
 }

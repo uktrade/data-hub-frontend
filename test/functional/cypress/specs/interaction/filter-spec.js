@@ -5,7 +5,7 @@ import { interactions } from '../../../../../src/lib/urls'
 import {
   clickCheckboxGroupOption,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   inputDateValue,
 } from '../../support/actions'
 
@@ -21,11 +21,12 @@ import {
 } from '../../support/assertions'
 
 import { testTypeahead } from '../../support/tests'
-
 import { serviceFaker } from '../../fakers/services'
 import { policyAreaFaker } from '../../fakers/policy-area'
 import { policyIssueTypeFaker } from '../../fakers/policy-issue-type'
 import { companyOneListgroupTierFaker } from '../../fakers/company-one-list-group-tier'
+
+const companyResult = require('../../../../sandbox/fixtures/autocomplete-company-list.json')
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -42,6 +43,8 @@ const minimumPayload = {
 
 const interactionsSearchEndpoint = '/api-proxy/v3/search/interaction'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
+const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
+const companyAutocompleteEndpoint = '/api-proxy/v4/company?autocomplete=*'
 const serviceMetadataEndpoint = '/api-proxy/v4/metadata/service'
 const policyAreaMetadataEndpoint = '/api-proxy/v4/metadata/policy-area'
 const policyIssueTypeMetadataEndpoint =
@@ -50,16 +53,24 @@ const companyOneListTierGroupMetadataEndpoint =
   '/api-proxy/v4/metadata/one-list-tier'
 
 const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviserId}`
 
 const advisersFilter = '[data-test="adviser-filter"]'
 const myInteractionsFilter = '[data-test="my-interactions-filter"]'
 
 const adviser = {
   id: myAdviserId,
-  name: 'Barry Oling',
+  name: 'Barry Oling6',
 }
 
+const myCompanyId = '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+const searchCompanyEndpoint = `/api-proxy/v4/search/company`
+
+const companiesFilter = '[data-test="company-filter"]'
+
+const company = {
+  id: myCompanyId,
+  name: 'Lambda plc',
+}
 describe('Interactions Collections Filter', () => {
   context('Default Params', () => {
     it('should set the default params', () => {
@@ -145,6 +156,112 @@ describe('Interactions Collections Filter', () => {
     })
   })
 
+  context('Subject', () => {
+    const element = '[data-test="interaction-subject-filter"]'
+    const subjectQuery = 'amazing'
+    const expectedPayload = {
+      limit: 10,
+      offset: 0,
+      sortby: 'date:desc',
+      subject: subjectQuery,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({ subject: subjectQuery })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('have.value', subjectQuery)
+      assertChipExists({ label: subjectQuery, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      cy.wait('@apiRequest')
+
+      cy.get(element).type(`${subjectQuery}{enter}`)
+      assertPayload('@apiRequest', expectedPayload)
+
+      assertQueryParams('subject', subjectQuery)
+      assertChipExists({ label: subjectQuery, position: 1 })
+      removeChip(subjectQuery)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Companies', () => {
+    const expectedPayload = {
+      ...minimumPayload,
+      company: [company.id],
+    }
+
+    it('should filter from the url', () => {
+      const queryParams = buildQueryString({
+        company: [company.id],
+      })
+
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', companyAutocompleteEndpoint, {
+        count: 1,
+        results: [company],
+      }).as('companyListApiRequest')
+      cy.intercept('POST', searchCompanyEndpoint, { results: [company] }).as(
+        'companyApiRequest'
+      )
+      cy.visit(`/interactions?${queryParams}`)
+      assertPayload('@apiRequest', expectedPayload)
+      assertTypeaheadOptionSelected({
+        element: companiesFilter,
+        expectedOption: company.name,
+      })
+      assertChipExists({ label: company.name, position: 1 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('GET', companyAutocompleteEndpoint, {
+        count: 1,
+        results: [company],
+      }).as('companyListApiRequest')
+      cy.intercept('POST', searchCompanyEndpoint, { results: [company] }).as(
+        'companyApiRequest'
+      )
+
+      cy.visit(`/interactions?${queryString}`)
+      cy.wait('@apiRequest')
+
+      selectFirstMockedTypeaheadOption({
+        element: companiesFilter,
+        input: company.name,
+        mockCompanyResponse: false,
+        url: `/api-proxy/v4/company?*`,
+        bodyResult: companyResult,
+      })
+      cy.wait('@companyListApiRequest')
+      cy.wait('@companyApiRequest')
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('company', [company.id])
+      assertTypeaheadOptionSelected({
+        element: companiesFilter,
+        expectedOption: company.name,
+      })
+      assertChipExists({
+        label: company.name,
+        position: 1,
+      })
+
+      removeChip(company.id)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(companiesFilter)
+    })
+  })
+
   context('Advisers', () => {
     const expectedPayload = {
       ...minimumPayload,
@@ -157,11 +274,14 @@ describe('Interactions Collections Filter', () => {
       })
 
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.intercept('GET', adviserAutocompleteEndpoint, {
         count: 1,
         results: [adviser],
       }).as('adviserListApiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+
       cy.visit(`/interactions?${queryParams}`)
       assertPayload('@apiRequest', expectedPayload)
       assertTypeaheadOptionSelected({
@@ -187,18 +307,20 @@ describe('Interactions Collections Filter', () => {
         count: 1,
         results: [adviser],
       }).as('adviserListApiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
 
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
 
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: advisersFilter,
         input: adviser.name,
         mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('dit_participants__adviser', [adviser.id])
       assertTypeaheadOptionSelected({
@@ -237,9 +359,11 @@ describe('Interactions Collections Filter', () => {
         dit_participants__adviser: [adviser.id],
       })
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`/interactions?${queryString}`)
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       /*
       Asserts the "Adviser typeahead" filter is selected with the
@@ -260,14 +384,16 @@ describe('Interactions Collections Filter', () => {
     it('should filter from user input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, adviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [adviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`/interactions?${queryString}`)
       cy.wait('@apiRequest')
       clickCheckboxGroupOption({
         element: myInteractionsFilter,
         value: adviser.id,
       })
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [adviser.id])
       assertChipExists({ label: adviser.name, position: 1 })
@@ -429,6 +555,49 @@ describe('Interactions Collections Filter', () => {
       assertQueryParams('sector_descends', [aerospaceId])
       assertChipExists({ label: 'Aerospace', position: 1 })
       removeChip(aerospaceId)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
+  context('Sub-sector', () => {
+    const element = '[data-test="sub-sector-filter"]'
+    const aircraftDesignSubSectorId = 'af22c9d2-5f95-e211-a939-e4115bead28a'
+    const expectedPayload = {
+      ...minimumPayload,
+      sector_descends: [aircraftDesignSubSectorId],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        sub_sector_descends: [aircraftDesignSubSectorId],
+      })
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', 'Aircraft Design')
+      assertChipExists({ label: 'Aerospace : Aircraft Design', position: 1 })
+    })
+
+    it('should filter from user input and remove the chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', interactionsSearchEndpoint).as('apiRequest')
+      cy.visit(`/interactions?${queryString}`)
+      cy.wait('@apiRequest')
+
+      testTypeahead({
+        element,
+        label: 'Sub-sector',
+        placeholder: 'Search sub-sector',
+        input: 'air',
+        expectedOption: 'Aerospace : Aircraft Design',
+      })
+
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('sector_descends', [aircraftDesignSubSectorId])
+      assertChipExists({ label: 'Aerospace : Aircraft Design', position: 1 })
+      removeChip(aircraftDesignSubSectorId)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)

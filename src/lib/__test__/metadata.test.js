@@ -1,4 +1,5 @@
 const rewire = require('rewire')
+
 const config = require('../../config')
 
 const modulePath = '../metadata'

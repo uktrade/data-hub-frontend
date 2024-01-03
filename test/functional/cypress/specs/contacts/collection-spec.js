@@ -1,14 +1,15 @@
 import {
+  assertRole,
   getCollectionList,
   assertCollectionBreadcrumbs,
-  assertBadge,
-  assertBadgeNotPresent,
+  assertTag,
+  assertTagNotPresent,
   assertMetadataItem,
   assertListLength,
   assertItemLink,
   assertUpdatedOn,
   assertMetadataItemNotPresent,
-  assertBadgeShouldNotExist,
+  assertTagShouldNotExist,
 } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import { contacts } from '../../../../../src/lib/urls'
@@ -35,6 +36,7 @@ describe('Contacts Collections', () => {
     primary: true,
     full_telephone_number: '+44 02071234567',
     modified_on: '2020-08-10T19:09:35.276Z',
+    valid_email: true,
   })
 
   const foreignContact = contactFaker({
@@ -57,10 +59,16 @@ describe('Contacts Collections', () => {
     archived: true,
   })
 
+  const invalidEmail = contactFaker({
+    id: '4',
+    valid_email: false,
+  })
+
   const contactsList = [
     ukContact,
     foreignContact,
     archivedContact,
+    invalidEmail,
     ...contactsListFaker(7),
   ]
 
@@ -72,9 +80,14 @@ describe('Contacts Collections', () => {
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
+    cy.get('@collectionItems').eq(3).as('forthListItem')
   })
 
   assertCollectionBreadcrumbs('Contacts')
+
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
 
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'Contacts')
@@ -89,12 +102,16 @@ describe('Contacts Collections', () => {
       assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
-    it('should contain a primary contact badge', () => {
-      assertBadge('@firstListItem', 'Primary')
+    it('should contain a primary contact tag', () => {
+      assertTag('@firstListItem', 'Primary')
     })
 
-    it('should not contain an archived badge', () => {
-      assertBadgeNotPresent('@firstListItem', 'Archived')
+    it('should not contain an archived tag', () => {
+      assertTagNotPresent('@firstListItem', 'Archived')
+    })
+
+    it('should not contain an unknown email tag', () => {
+      assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
     })
 
     it('should render the updated date and time', () => {
@@ -141,8 +158,8 @@ describe('Contacts Collections', () => {
       assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
     })
 
-    it('should not contain a primary contact badge', () => {
-      assertBadgeShouldNotExist('@secondListItem')
+    it('should not contain a primary contact tag', () => {
+      assertTagShouldNotExist('@secondListItem')
     })
 
     it('should render the foreign country', () => {
@@ -157,8 +174,14 @@ describe('Contacts Collections', () => {
   })
 
   context('Archived contact', () => {
-    it('should contain an archived badge', () => {
-      assertBadge('@thirdListItem', 'Archived')
+    it('should contain an archived tag', () => {
+      assertTag('@thirdListItem', 'Archived')
+    })
+  })
+
+  context('Contact with invalid email', () => {
+    it('should contain an unknown email tag', () => {
+      assertTag('@forthListItem', 'UNKNOWN EMAIL')
     })
   })
 })

@@ -425,75 +425,6 @@ describe('nunjucks filters', () => {
     })
   })
 
-  describe('#collectionDefault', () => {
-    const mockObjectWithEmpties = {
-      a: true,
-      b: null,
-      c: undefined,
-      d: 'false',
-      e: 'value',
-      f: '',
-      g: false,
-      h: [],
-      i: {},
-      j: 0,
-    }
-    const mockArrayWithEmpties = Object.values(mockObjectWithEmpties)
-
-    function expectedWithDefaults(expectedDefault, isArray = false) {
-      const expected = {
-        a: true,
-        b: expectedDefault,
-        c: expectedDefault,
-        d: 'false',
-        e: 'value',
-        f: expectedDefault,
-        g: false,
-        h: expectedDefault,
-        i: expectedDefault,
-        j: 0,
-      }
-
-      if (isArray) {
-        return Object.values(expected)
-      }
-      return expected
-    }
-
-    it('should correctly provide default for empty values in object', () => {
-      const expectedDefault = 'Not found'
-      const collectionDefault = filters.collectionDefault(mockObjectWithEmpties)
-
-      expect(collectionDefault).to.deep.equal(
-        expectedWithDefaults(expectedDefault)
-      )
-    })
-
-    it('should correctly provide argument default for empty values in object', () => {
-      const argumentDefault = 'Currently unknown'
-      const collectionDefault = filters.collectionDefault(
-        mockObjectWithEmpties,
-        argumentDefault
-      )
-
-      expect(collectionDefault).to.deep.equal(
-        expectedWithDefaults(argumentDefault)
-      )
-    })
-
-    it('should correctly provide argument default for empty values in array', () => {
-      const argumentDefault = 'This is really not known'
-      const collectionDefault = filters.collectionDefault(
-        mockArrayWithEmpties,
-        argumentDefault
-      )
-
-      expect(collectionDefault).to.deep.equal(
-        expectedWithDefaults(argumentDefault, true)
-      )
-    })
-  })
-
   describe('#applyClassModifiers', () => {
     it('should return original class name when no valid modifier is given', () => {
       expect(
@@ -522,32 +453,6 @@ describe('nunjucks filters', () => {
       ).to.equal(
         'c-custom-component c-custom-component--modifier c-custom-component--another-modifier'
       )
-    })
-  })
-
-  describe('#humanizeDuration', () => {
-    context('when hours is 1', () => {
-      it('should return singular format', () => {
-        expect(filters.humanizeDuration(60)).to.equal('1 hour')
-      })
-    })
-
-    context('when hours is 0', () => {
-      it('should return singular format', () => {
-        expect(filters.humanizeDuration(0)).to.equal('0 hours')
-      })
-    })
-
-    context('when hours is greater than 1', () => {
-      it('should return plural format', () => {
-        expect(filters.humanizeDuration(120)).to.equal('2 hours')
-      })
-    })
-
-    context('when using a different format', () => {
-      it('should return format as hours', () => {
-        expect(filters.humanizeDuration(2, 'hours')).to.equal('2 hours')
-      })
     })
   })
 })

@@ -1,15 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { GridCol, GridRow } from 'govuk-react'
+import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
 import { TASK_GET_ESS_INTERACTION_DETAILS, ID, state2props } from './state'
 import { INTERACTION__ESS_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
 import { DefaultLayout, SummaryTable } from '../../../components'
-
-import { GridCol, GridRow } from 'govuk-react'
-import styled from 'styled-components'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -27,7 +26,7 @@ const ESSInteractionDetails = ({
 
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {

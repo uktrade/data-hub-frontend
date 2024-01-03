@@ -1,5 +1,6 @@
 import { getMetadataOptions } from '../../../metadata'
 import {
+  transformOrderCost,
   transformResponseToCollection,
   transformResponseToReconciliationCollection,
 } from './transformers'
@@ -57,10 +58,11 @@ export const getOrdersReconciliation = ({
   company_name,
   payment_due_date,
   subtotal_cost,
-  net_cost,
   total_cost,
-}) =>
-  apiProxyAxios
+}) => {
+  const transformedTotalCost = transformOrderCost(total_cost)
+  const transformedSubtotalCost = transformOrderCost(subtotal_cost)
+  return apiProxyAxios
     .post('/v3/search/order', {
       limit,
       offset: getPageOffset({ limit, page }),
@@ -71,11 +73,11 @@ export const getOrdersReconciliation = ({
       company: companyId,
       company_name,
       payment_due_date,
-      subtotal_cost,
-      total_cost,
-      net_cost,
+      subtotal_cost: transformedSubtotalCost,
+      total_cost: transformedTotalCost,
     })
     .then(({ data }) => transformResponseToReconciliationCollection(data))
+}
 
 export const getOrdersMetadata = () =>
   Promise.all([

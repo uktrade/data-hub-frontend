@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TEXT_COLOUR, ERROR_COLOUR } from 'govuk-colours'
 import { H2 } from '@govuk-react/heading'
 import {
   BORDER_WIDTH,
@@ -8,6 +7,8 @@ import {
   MEDIA_QUERIES,
   RESPONSIVE_4,
 } from '@govuk-react/constants'
+
+import { TEXT_COLOUR, ERROR_COLOUR } from '../../../client/utils/colours'
 import config from '../../config'
 
 import FormActions from '../Form/elements/FormActions'

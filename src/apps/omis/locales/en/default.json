@@ -32,7 +32,7 @@
       "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
-      "label": "Specific people or organisations the company does not want DIT to talk to"
+      "label": "Specific people or organisations the company does not want DBT to talk to"
     },
     "existing_agents": {
       "label": "Contacts the company already has in the market",
@@ -125,14 +125,11 @@
   },
   "validation": {
     "required": "cannot be blank",
-    "arrayRequired": "cannot be blank",
     "numeric": "can only contain numbers",
     "date": "must be a valid date",
     "after": "must be in the future",
     "before": "must be in the past",
-    "duration": "must be a whole number, for example 5",
     "greaterthanamount": "must be equal to or larger than the invoice amount",
-    "euvatnumber": "must be a valid EU VAT number starting with the country code, for example IT12345678901 for Italy where \"IT\" is the country code",
     "default": "is required",
     "verify_work_sent": {
       "required": "must be verified"

@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const paths = require('./paths')
 
+const paths = require('./paths')
 const projectsRouter = require('./router-projects')
 const profilesRouter = require('./router-profiles')
 const opportunitiesRouter = require('./router-opportunities')
@@ -13,14 +13,5 @@ router.use((req, res, next) => {
 router.use('/projects', projectsRouter)
 router.use('/profiles', profilesRouter)
 router.use('/opportunities', opportunitiesRouter)
-
-const redirectToProjects = (res) => {
-  const { projects } = res.locals.paths
-  res.redirect(`${projects}?page=1&sortby=created_on:desc`)
-}
-
-router.get('/', (req, res) => {
-  redirectToProjects(res)
-})
 
 module.exports = router

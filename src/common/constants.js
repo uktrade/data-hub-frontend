@@ -20,7 +20,9 @@ const PRIMARY_LINK_PARAMS = {
   interactions: '?page=1&sortby=date:desc',
   investments: '?page=1&sortby=created_on:desc',
   omis: '?page=1&sortby=created_on:desc',
+  reconciliation: '?page=1&sortby=payment_due_date:asc&status=quote_accepted',
 }
+const INVESTMENT_LINK_PARAM = '?sortby=-created_on&page=1'
 const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
 const OPTION_YES = 'yes'
 const OPTION_NO = 'no'
@@ -33,10 +35,19 @@ const FORM_LAYOUT = {
   THREE_QUARTERS: 'three-quarters',
   ONE_THIRD: 'one-third',
   TWO_THIRDS: 'two-thirds',
+  ONE_HALF: 'one-half',
 }
 
 const METHOD_PATCH = 'PATCH'
 const METHOD_POST = 'POST'
+
+// The order here controls the order they are displayed to the user
+// either on a form or when displaying the values
+const EXPORT_INTEREST_STATUS = {
+  EXPORTING_TO: 'currently_exporting',
+  FUTURE_INTEREST: 'future_interest',
+  NOT_INTERESTED: 'not_interested',
+}
 
 module.exports = {
   DATE_DAY_LONG_FORMAT,
@@ -53,6 +64,7 @@ module.exports = {
   UNITED_STATES_ID,
   CANADA_ID,
   PRIMARY_LINK_PARAMS,
+  INVESTMENT_LINK_PARAM,
   GENERIC_PHONE_NUMBER_REGEX,
   OPTIONS_YES_NO,
   OPTION_YES,
@@ -60,4 +72,6 @@ module.exports = {
   FORM_LAYOUT,
   METHOD_PATCH,
   METHOD_POST,
+  EXPORT_INTEREST_STATUS,
+  EXPORT_INTEREST_STATUS_VALUES: Object.values(EXPORT_INTEREST_STATUS),
 }

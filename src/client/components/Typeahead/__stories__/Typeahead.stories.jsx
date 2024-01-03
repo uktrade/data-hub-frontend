@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import usageReadme from './usage.md'
 import Typeahead from '../'
@@ -49,138 +48,189 @@ const options = [
   { value: '0010', label: 'Prickly Pear That Has a Very Very Long Name' },
 ]
 
-storiesOf('Typeahead', module)
-  .add('Docs placeholder', () => (
-    <p>
-      This is a workaround to get the DocsPage to work with multiInstance
-      components.
-    </p>
-  ))
-  .add(
-    'Single - standard options',
-    () => (
-      <Typeahead
-        name="singleselect"
-        isMulti={false}
-        initialOptions={options}
-        placeholder="Search..."
-        label="Pick a fruit"
-      />
-    ),
-    {
-      docs: {
-        storyDescription: usageReadme,
-      },
-    }
-  )
-  .add('Single - pre-selected option', () => (
+export default {
+  title: 'Typeahead',
+  excludeStories: ['mockLoadOptions'],
+}
+
+export const DocsPlaceholder = () => (
+  <p>
+    This is a workaround to get the DocsPage to work with multiInstance
+    components.
+  </p>
+)
+
+DocsPlaceholder.story = {
+  name: 'Docs placeholder',
+}
+
+export const SingleStandardOptions = () => (
+  <Typeahead
+    name="singleselect"
+    isMulti={false}
+    initialOptions={options}
+    placeholder="Search..."
+    label="Pick a fruit"
+  />
+)
+
+SingleStandardOptions.story = {
+  name: 'Single - standard options',
+
+  parameters: {
+    docs: {
+      storyDescription: usageReadme,
+    },
+  },
+}
+
+export const SinglePreSelectedOption = () => (
+  <Typeahead
+    name="singleselect-pre-select"
+    isMulti={false}
+    initialOptions={options}
+    placeholder="Search..."
+    defaultValue={options[2]}
+    label="Pick a fruit"
+  />
+)
+
+SinglePreSelectedOption.story = {
+  name: 'Single - pre-selected option',
+}
+
+export const SingleError = () => (
+  <Typeahead
+    name="singleselect-error"
+    error={true}
+    isMulti={false}
+    initialOptions={options}
+    placeholder="Search..."
+    label="Pick a fruit"
+  />
+)
+
+SingleError.story = {
+  name: 'Single - error',
+}
+
+export const SingleAsyncOptions = () => (
+  <div style={{ width: '600px' }}>
+    <h2>Search for</h2>
+    <ul>
+      <li>Bernard</li>
+      <li>Dennis</li>
+      <li>Denzil</li>
+      <li>Holly</li>
+    </ul>
     <Typeahead
-      name="singleselect-pre-select"
       isMulti={false}
-      initialOptions={options}
+      name="singleselect"
+      loadOptions={mockLoadOptions}
       placeholder="Search..."
-      defaultValue={options[2]}
-      label="Pick a fruit"
+      label="Pick an adviser"
     />
-  ))
-  .add('Single - error', () => (
-    <Typeahead
-      name="singleselect-error"
-      error={true}
-      isMulti={false}
-      initialOptions={options}
-      placeholder="Search..."
-      label="Pick a fruit"
-    />
-  ))
-  .add('Single - async options', () => (
-    <div style={{ width: '600px' }}>
-      <h2>Search for</h2>
-      <ul>
-        <li>Bernard</li>
-        <li>Dennis</li>
-        <li>Denzil</li>
-        <li>Holly</li>
-      </ul>
-      <Typeahead
-        isMulti={false}
-        name="singleselect"
-        loadOptions={mockLoadOptions}
-        placeholder="Search..."
-        label="Pick an adviser"
-      />
-    </div>
-  ))
-  .add('Multi - standard options', () => (
+  </div>
+)
+
+SingleAsyncOptions.story = {
+  name: 'Single - async options',
+}
+
+export const MultiStandardOptions = () => (
+  <Typeahead
+    isMulti={true}
+    closeMenuOnSelect={false}
+    name="multiselect"
+    initialOptions={options}
+    placeholder="Search..."
+    label="Pick a fruit"
+  />
+)
+
+MultiStandardOptions.story = {
+  name: 'Multi - standard options',
+}
+
+export const MultiPreSelectedOption = () => (
+  <Typeahead
+    isMulti={true}
+    closeMenuOnSelect={false}
+    name="multiselect-pre-select"
+    initialOptions={options}
+    placeholder="Search..."
+    defaultValue={options[2]}
+    label="Pick a fruit"
+  />
+)
+
+MultiPreSelectedOption.story = {
+  name: 'Multi - pre-selected option',
+}
+
+export const MultiPreSelectedMultipleOptions = () => (
+  <Typeahead
+    isMulti={true}
+    closeMenuOnSelect={false}
+    name="multiselect-pre-select-multiple"
+    initialOptions={options}
+    placeholder="Search..."
+    defaultValue={[options[2], options[0]]}
+    label="Pick a fruit"
+  />
+)
+
+MultiPreSelectedMultipleOptions.story = {
+  name: 'Multi - pre-selected multiple options',
+}
+
+export const MultiAsyncOptions = () => (
+  <div style={{ width: '600px' }}>
+    <h2>Search for</h2>
+    <ul>
+      <li>Bernard</li>
+      <li>Dennis</li>
+      <li>Denzil</li>
+      <li>Holly</li>
+    </ul>
     <Typeahead
       isMulti={true}
       closeMenuOnSelect={false}
-      name="multiselect"
-      initialOptions={options}
-      placeholder="Search..."
-      label="Pick a fruit"
+      name="multiselect-async"
+      loadOptions={mockLoadOptions}
+      placeholder="Search advisers..."
+      noOptionsMessage="No advisers found"
+      aria-label="search"
     />
-  ))
-  .add('Multi - pre-selected option', () => (
+  </div>
+)
+
+MultiAsyncOptions.story = {
+  name: 'Multi - async options',
+}
+
+export const MultiAsyncPreSelectedOptions = () => (
+  <div style={{ width: '600px' }}>
+    <h2>Search for</h2>
+    <ul>
+      <li>Bernard</li>
+      <li>Dennis</li>
+      <li>Denzil</li>
+      <li>Holly</li>
+    </ul>
     <Typeahead
       isMulti={true}
       closeMenuOnSelect={false}
-      name="multiselect-pre-select"
-      initialOptions={options}
-      placeholder="Search..."
-      defaultValue={options[2]}
-      label="Pick a fruit"
+      name="multiselect-async"
+      loadOptions={mockLoadOptions}
+      placeholder="Search advisers..."
+      noOptionsMessage="No advisers found"
+      defaultValue={[asyncOptions[2], asyncOptions[0]]}
+      aria-label="search"
     />
-  ))
-  .add('Multi - pre-selected multiple options', () => (
-    <Typeahead
-      isMulti={true}
-      closeMenuOnSelect={false}
-      name="multiselect-pre-select-multiple"
-      initialOptions={options}
-      placeholder="Search..."
-      defaultValue={[options[2], options[0]]}
-      label="Pick a fruit"
-    />
-  ))
-  .add('Multi - async options', () => (
-    <div style={{ width: '600px' }}>
-      <h2>Search for</h2>
-      <ul>
-        <li>Bernard</li>
-        <li>Dennis</li>
-        <li>Denzil</li>
-        <li>Holly</li>
-      </ul>
-      <Typeahead
-        isMulti={true}
-        closeMenuOnSelect={false}
-        name="multiselect-async"
-        loadOptions={mockLoadOptions}
-        placeholder="Search advisers..."
-        noOptionsMessage="No advisers found"
-        aria-label="search"
-      />
-    </div>
-  ))
-  .add('Multi - async pre-selected options', () => (
-    <div style={{ width: '600px' }}>
-      <h2>Search for</h2>
-      <ul>
-        <li>Bernard</li>
-        <li>Dennis</li>
-        <li>Denzil</li>
-        <li>Holly</li>
-      </ul>
-      <Typeahead
-        isMulti={true}
-        closeMenuOnSelect={false}
-        name="multiselect-async"
-        loadOptions={mockLoadOptions}
-        placeholder="Search advisers..."
-        noOptionsMessage="No advisers found"
-        defaultValue={[asyncOptions[2], asyncOptions[0]]}
-        aria-label="search"
-      />
-    </div>
-  ))
+  </div>
+)
+
+MultiAsyncPreSelectedOptions.story = {
+  name: 'Multi - async pre-selected options',
+}

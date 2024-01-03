@@ -2,15 +2,15 @@ import { faker } from '@faker-js/faker'
 
 const randomAdviser = () => ({
   ...faker.helpers.createCard(),
-  team: faker.random.words(3),
+  team: faker.word.words(3),
 })
 
 const randomReferral = () => ({
-  companyId: faker.datatype.uuid(),
-  id: faker.datatype.uuid(),
+  companyId: faker.string.uuid(),
+  id: faker.string.uuid(),
   subject: faker.lorem.sentence(),
-  companyName: faker.company.companyName(),
-  date: faker.date.past(1),
+  companyName: faker.company.name(),
+  date: faker.date.past({ years: 1 }),
   dateAccepted: faker.date.recent(),
   sender: randomAdviser(),
   recipient: randomAdviser(),

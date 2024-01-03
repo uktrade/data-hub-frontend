@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { WHITE, BLUE, LIGHT_BLUE_50 } from 'govuk-colours'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
+
+import { WHITE, BLUE, LIGHT_BLUE_50 } from '../../../client/utils/colours'
 
 const focusMixin = {
   ':focus': { color: BLUE },
@@ -48,7 +49,7 @@ Panel.propTypes = {
   /**
    * Text for title
    */
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   /**
    * Text for panel
    */

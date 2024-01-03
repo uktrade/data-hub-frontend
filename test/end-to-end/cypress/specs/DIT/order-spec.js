@@ -1,8 +1,10 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { omis } = require('../../../../../src/lib/urls')
 const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
+const {
+  assertSummaryTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 const today = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 
@@ -13,26 +15,29 @@ describe('Order', () => {
   before(() => {
     cy.loadFixture([company])
     cy.loadFixture([contact])
-    cy.visit(omis.create(company.pk))
+    cy.visit(omis.create.form(company.pk))
   })
 
   it('should create an order and view collection page', () => {
-    cy.contains('Continue').click()
-    cy.get(selectors.omisCreate.contact).select('Johnny Cakeman')
-    cy.get(selectors.omisCreate.continue).click()
-    cy.get(selectors.omisCreate.country).select('Brazil')
-    cy.get(selectors.omisCreate.continue).click()
-    cy.get(selectors.omisCreate.sectorNo).click()
-    cy.get(selectors.omisCreate.sector).select('Aerospace')
-    cy.get(selectors.omisCreate.continue).click()
-    cy.get(selectors.omisCreate.continue).click()
+    cy.get('[data-test="field-contact"]').selectTypeaheadOption(
+      'Johnny Cakeman'
+    )
+    cy.get('[data-test="field-country"]').selectTypeaheadOption('Brazil')
+    cy.get('[data-test="field-useCompanySector"]').contains('No').click()
+    cy.get('[data-test="field-sector"]').selectTypeaheadOption('Aerospace')
+    cy.get('[data-test="submit-button"').click()
 
-    cy.get(selectors.omisSummary.summary)
-      .contains('Contact')
-      .parent()
-      .should('contain', 'Johnny Cakeman')
-      .and('contain', 'johnny@cakeman.com')
-    cy.get(selectors.omisSummary.header)
+    assertSummaryTable({
+      dataTest: 'contact-table',
+      heading: 'Contact',
+      showEditLink: true,
+      content: {
+        Name: 'Johnny Cakeman',
+        Phone: '44 67890123432',
+        Email: 'johnny@cakeman.com',
+      },
+    })
+    cy.get('[data-test="localHeaderDetails"]')
       .should('contain', 'order testing')
       .and('contain', 'Brazil')
       .and('contain', today)

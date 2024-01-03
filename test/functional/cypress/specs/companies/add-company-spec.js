@@ -4,7 +4,10 @@
 
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const {
+  assertBreadcrumbs,
+  assertErrorDialog,
+} = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
 const goToOverseasCompanySearchPage = () => {
@@ -181,7 +184,7 @@ describe('Add company form', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         'Add company': null,
       })
@@ -254,7 +257,7 @@ describe('Add company form', () => {
     it('should display the selected country', () => {
       cy.get(selectors.companyAdd.form)
         .find('fieldset')
-        .should('have.text', 'CountryPoland Change Country')
+        .contains('CountryPoland Change Country')
     })
 
     it('should display the "Find company" button', () => {
@@ -358,10 +361,12 @@ describe('Add company form', () => {
     it('should render the "Add company" page with a form to add a sector', () => {
       cy.get(selectors.companyAdd.title)
       cy.should('have.text', 'Add company').and('have.prop', 'tagName', 'H1')
-      cy.contains('DIT sector')
+      cy.contains('DBT sector')
+        .parent()
         .next()
         .get('select option:selected')
-        .should('have.text', '-- Select DIT sector --')
+        .should('have.text', '-- Select DBT sector --')
+        .parent()
         .parent()
         .parent()
         .parent()
@@ -375,10 +380,10 @@ describe('Add company form', () => {
 
     it('should display an error message when no sector is selected', () => {
       cy.get(selectors.companyAdd.submitButton).click()
-      cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
-    it('should redirect to the new company activity when a sector is picked', () => {
+    it('should redirect to the company overview when a sector is picked', () => {
       cy.get(selectors.companyAdd.sectorSelect)
         .select('Airports')
         .get(selectors.companyAdd.submitButton)
@@ -386,7 +391,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          urls.companies.activity.index(fixtures.company.someOtherCompany.id)
+          urls.companies.overview.index(fixtures.company.someOtherCompany.id)
         )
       cy.contains('Company added to Data Hub')
     })
@@ -396,6 +401,26 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.sectorSelect).select('Water')
       cy.get(selectors.companyAdd.submitButton).click()
       cy.location('pathname').should('eq', urls.companies.create())
+    })
+
+    it('should display error dialog when DnB company creation fails', () => {
+      const apiErrorMessage = 'website: Enter a valid URL.'
+
+      cy.intercept('POST', '/companies/create/dnb/company-create*', {
+        statusCode: 400,
+        body: {
+          error: {
+            message: [apiErrorMessage],
+            status: 400,
+          },
+        },
+      })
+
+      cy.get(selectors.companyAdd.sectorSelect).select('Aerospace')
+      cy.get(selectors.companyAdd.submitButton).click()
+      cy.location('pathname').should('eq', urls.companies.create())
+
+      assertErrorDialog('Create company', apiErrorMessage)
     })
   })
 
@@ -536,19 +561,19 @@ describe('Add company form', () => {
 
     it('should render the region and sector fields', () => {
       cy.get(selectors.companyAdd.form).contains('London')
-      cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      cy.get(selectors.companyAdd.form).contains('Select DBT sector')
     })
 
     it('should show errors when continuing without a region or sector', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
-        '-- Select DIT region --'
+        '-- Select DBT region --'
       )
       cy.get(selectors.companyAdd.submitButton)
         .click()
         .get(selectors.companyAdd.form)
-        .contains('Select DIT region')
+        .contains('Select DBT region')
         .get(selectors.companyAdd.form)
-        .contains('Select DIT sector')
+        .contains('Select DBT sector')
     })
 
     it('should not continue when the DnB investigation api call fails', () => {
@@ -570,19 +595,17 @@ describe('Add company form', () => {
       )
       cy.get(selectors.companyAdd.submitButton).click()
     })
-    it('should redirect to the new company activity', () => {
+    it('should redirect to the company overview', () => {
       cy.location('pathname').should(
         'eq',
-        `/companies/${fixtures.company.investigationLimited.id}/activity`
+        `/companies/${fixtures.company.investigationLimited.id}/overview`
       )
     })
     it('should display the flash message', () => {
       cy.contains('Company added to Data Hub')
     })
     it('should display the pending D&B investigation message', () => {
-      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
-        'be.visible'
-      )
+      cy.get('[data-test="investigation-message"]').should('be.visible')
     })
   })
 
@@ -677,7 +700,8 @@ describe('Add company form', () => {
     })
 
     it('should render a form with both "Region" and "Sector" selects', () => {
-      cy.contains('DIT region')
+      cy.contains('DBT region')
+        .parent()
         .next()
         .find('select option:selected')
         .should('have.text', 'London')
@@ -685,11 +709,14 @@ describe('Add company form', () => {
         .parent()
         .parent()
         .parent()
+        .parent()
         .next()
-        .contains('DIT sector')
+        .contains('DBT sector')
+        .parent()
         .next()
         .find('select option:selected')
-        .should('have.text', '-- Select DIT sector --')
+        .should('have.text', '-- Select DBT sector --')
+        .parent()
         .parent()
         .parent()
         .parent()
@@ -705,9 +732,9 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.submitButton)
         .click()
         .get(selectors.companyAdd.form)
-        .contains('Select DIT region')
+        .contains('Select DBT region')
         .get(selectors.companyAdd.form)
-        .contains('Select DIT sector')
+        .contains('Select DBT sector')
     })
 
     it('should add a company after defining both region and sector', () => {
@@ -720,7 +747,7 @@ describe('Add company form', () => {
         .location('pathname')
         .should(
           'eq',
-          `/companies/${fixtures.company.someOtherCompany.id}/activity`
+          `/companies/${fixtures.company.someOtherCompany.id}/overview`
         )
       cy.contains('Company added to Data Hub')
     })
@@ -733,10 +760,11 @@ describe('Add company form', () => {
     })
 
     it('should prompt the user to select a "Region"', () => {
-      cy.contains('DIT region')
+      cy.contains('DBT region')
+        .parent()
         .next()
         .find('select option:selected')
-        .should('have.text', '-- Select DIT region --')
+        .should('have.text', '-- Select DBT region --')
     })
   })
 
@@ -849,5 +877,229 @@ describe('Add company form', () => {
         'Enter a valid Postal code'
       )
     })
+  })
+
+  context('when manually adding a company where duns number is known', () => {
+    context('and an error occurs getting the company details', () => {
+      before(() => {
+        cy.intercept('POST', '/companies/create/dnb/company-search*', {
+          statusCode: 500,
+        })
+        cy.visit(`${urls.companies.create()}?duns_number=123456789`)
+      })
+      it('should forward to the manually add step', () => {
+        cy.get(
+          selectors.companyAdd.newCompanyRecordForm.whyAmISeeingThis.summary
+        ).should('be.visible')
+      })
+    })
+
+    context('and no company details are returned', () => {
+      before(() => {
+        cy.intercept('POST', '/companies/create/dnb/company-search*', {
+          results: [],
+        })
+        cy.visit(`${urls.companies.create()}?duns_number=000000000`)
+      })
+      it('should forward to the manually add step', () => {
+        cy.get(
+          selectors.companyAdd.newCompanyRecordForm.whyAmISeeingThis.summary
+        ).should('be.visible')
+      })
+    })
+
+    context('and more than 1 company details are returned', () => {
+      before(() => {
+        cy.intercept('POST', '/companies/create/dnb/company-search*', {
+          results: [{ dnb_company: {} }, { dnb_company: {} }],
+        })
+        cy.visit(`${urls.companies.create()}?duns_number=123456789`)
+      })
+      it('should forward to the manually add step', () => {
+        cy.get(
+          selectors.companyAdd.newCompanyRecordForm.whyAmISeeingThis.summary
+        ).should('be.visible')
+      })
+    })
+
+    context('and a single company is found that is already on datahub', () => {
+      before(() => {
+        cy.visit(`${urls.companies.create()}?duns_number=222222222`)
+      })
+      it('should display the already imported message', () => {
+        cy.get(selectors.companyAdd.entitySearch.alreadyOnDatahub).should(
+          'exist'
+        )
+      })
+    })
+
+    context('and a single company is found that is out of business', () => {
+      before(() => {
+        cy.intercept('POST', '/companies/create/dnb/company-search*', {
+          results: [
+            {
+              dnb_company: { is_out_of_business: true },
+              datahub_company: { id: 1 },
+            },
+          ],
+        })
+        cy.visit(`${urls.companies.create()}?duns_number=222222222`)
+      })
+
+      it('should display the out of business message', () => {
+        cy.get(selectors.companyAdd.entitySearch.outOfBusiness).should('exist')
+      })
+    })
+
+    context(
+      'and a single company is found that is not on datahub that doesnt match a datahub country',
+      () => {
+        before(() => {
+          cy.intercept('POST', '/companies/create/dnb/company-search?_csrf=*', {
+            results: [
+              {
+                dnb_company: {
+                  duns_number: '111111111',
+                  address_country: 'NOT_REAL',
+                  registration_numbers: [
+                    {
+                      registration_type: 'uk_companies_house_number',
+                      registration_number: '00016033',
+                    },
+                  ],
+                },
+              },
+            ],
+          })
+
+          cy.visit(`${urls.companies.create()}?duns_number=111111111`)
+        })
+
+        it('should display a confirmation summary with the option to select the country', () => {
+          cy.get(selectors.companyAdd.stepHeader).should(
+            'have.text',
+            'Confirm you want to add this company to Data Hub'
+          )
+
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.companyLocation
+          ).should('exist')
+        })
+
+        it('when uk is selected should display both dbt region and sector', () => {
+          cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
+          cy.get(selectors.companyAdd.continueButton).click()
+
+          cy.get(selectors.companyAdd.newCompanyRecordForm.dbtRegion).should(
+            'exist'
+          )
+          cy.get(selectors.companyAdd.newCompanyRecordForm.dbtSector).should(
+            'exist'
+          )
+        })
+
+        it('should submit the form', () => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
+            'London'
+          )
+          cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
+            'Advanced Engineering'
+          )
+          cy.get(selectors.companyAdd.submitButton).click()
+        })
+
+        it('should redirect to the company overview', () => {
+          cy.location('pathname').should(
+            'eq',
+            `/companies/${fixtures.company.default.id}/overview`
+          )
+        })
+      }
+    )
+
+    context(
+      'and a single company is found that is not on datahub with a matching datahub country',
+      () => {
+        before(() => {
+          cy.intercept('POST', '/companies/create/dnb/company-search?_csrf=*', {
+            results: [
+              {
+                dnb_company: {
+                  primary_name: 'US company',
+                  duns_number: '111111111',
+                  address_line_1: '256 Square Street',
+                  address_line_2: '',
+                  address_town: 'Austin',
+                  address_county: '',
+                  address_postcode: '765413',
+                  address_area: 'Texas',
+                  address_country: 'US',
+                  registration_numbers: [],
+                },
+              },
+            ],
+          })
+          cy.visit(`${urls.companies.create()}?duns_number=268435455`)
+        })
+
+        it('should display a confirmation summary without the option to select a country', () => {
+          cy.get(selectors.companyAdd.stepHeader).should(
+            'have.text',
+            'Confirm you want to add this company to Data Hub'
+          )
+          cy.get(selectors.companyAdd.summary).should(
+            'contain',
+            'Registered company name'
+          )
+          cy.get(selectors.companyAdd.summary).should('contain', 'US company')
+
+          cy.get(selectors.companyAdd.summary).should('contain', 'Country')
+          cy.get(selectors.companyAdd.summary).should(
+            'contain',
+            'United States'
+          )
+
+          cy.get(selectors.companyAdd.summary).should('contain', 'Address')
+          cy.get(selectors.companyAdd.summary).should(
+            'contain',
+            '256 Square Street, Austin, 765413'
+          )
+
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.companyLocation
+          ).should('not.exist')
+        })
+
+        it('should only show the continue button', () => {
+          cy.get(selectors.companyAdd.backButton).should('not.exist')
+          cy.get(selectors.companyAdd.continueButton).should('be.visible')
+        })
+
+        it('should display only the dbt sector', () => {
+          cy.get(selectors.companyAdd.continueButton).click()
+
+          cy.get(selectors.companyAdd.newCompanyRecordForm.dbtRegion).should(
+            'not.exist'
+          )
+          cy.get(selectors.companyAdd.newCompanyRecordForm.dbtSector).should(
+            'exist'
+          )
+        })
+
+        it('should submit the form', () => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
+            'Advanced Engineering'
+          )
+          cy.get(selectors.companyAdd.submitButton).click()
+        })
+
+        it('should redirect to the company overview', () => {
+          cy.location('pathname').should(
+            'eq',
+            `/companies/${fixtures.company.default.id}/overview`
+          )
+        })
+      }
+    )
   })
 })

@@ -2,75 +2,67 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
-const StyledListItem = styled.li`
+import { BLACK, GREY_2, GREY_4, WHITE } from '../../../client/utils/colours'
+
+export const StyledListItem = styled.li`
   *,
   *:before,
   *:after {
     box-sizing: border-box;
   }
   border-left-width: 1px;
-  flex-grow: 1;
   text-align: center;
+  border-bottom: 1px solid ${GREY_2};
 
-  @media (min-width: 40.0625em) {
-    margin-left: 0;
+  @media (min-width: 1020px) {
+    white-space: nowrap;
   }
-  a {
-    display: block;
-    width: calc(100% - 5px);
+  @media (max-width: 839px) {
+    text-align: left;
+    margin-left: 25px;
+    line-height: 2.5em;
+    border-bottom: none;
+    &::before {
+      content: '—';
+      margin-left: -25px;
+      padding-right: 5px;
+    }
+    a {
+      width: calc(100% - 5px);
+    }
   }
 `
 
-const StyledAnchorTag = styled.a`
-  font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 16px;
-  font-size: 1rem;
-  line-height: 1.25;
-  padding: 10px 20px;
-  margin-right: 5px;
-  display: block;
-  flex: 1;
-  padding-right: -4px;
-  padding-left: -4px;
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    color: black;
-  }
-  @media (min-width: 40.0625em) {
-    margin-right: 5px;
-    padding-right: 20px;
-    padding-left: 20px;
-    float: left;
-    color: #0b0c0c;
-    background-color: #f8f8f8;
+export const StyledAnchorTag = styled.a`
+  display: inline-block;
+
+  @media (min-width: 840px) {
+    padding: 10px 11px;
+    margin: 0 5px 0 0;
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: ${BLACK};
+    }
+    background-color: ${GREY_4};
     text-align: center;
     text-decoration: none;
-    font-size: 19px;
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
+    height: 90%;
 
     ${(props) =>
       props.selected &&
       css`
-        margin: -5px, 1px, -1px, 0px;
-        margin-top: -5px;
-        margin-bottom: -1px;
+        margin: -5px 5px -1px 0px;
         padding-top: 14px;
         padding-right: 19px;
         padding-bottom: 16px;
         padding-left: 19px;
-        border: 1px solid #bfc1c3;
-        border-bottom: 0;
-        color: #0b0c0c;
-        background-color: #fff;
+        border: 1px solid ${GREY_2};
+        border-bottom: 0px;
+        color: ${BLACK};
+        background-color: ${WHITE};
+        height: auto;
       `}
   }
 `
@@ -81,9 +73,9 @@ const CompanyLocalTab = (props) => {
     <StyledListItem key={`tab-${index}`}>
       <StyledAnchorTag
         selected={navItem.isActive}
-        href={navItem.url}
-        id={`tab-${index}`}
-        key={`tab-link-${index}`}
+        href={`${navItem.url}${navItem.search ? navItem.search : ''}`}
+        id={`tab-${navItem.path}`}
+        key={`tab-link-${navItem.path}`}
         aria-label={navItem.ariaDescription}
       >
         {navItem.label}

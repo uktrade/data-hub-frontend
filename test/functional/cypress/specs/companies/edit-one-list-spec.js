@@ -2,6 +2,7 @@ const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertFieldRadios,
+  assertFieldTypeahead,
 } = require('../../support/assertions')
 
 const fixtures = require('../../fixtures')
@@ -10,22 +11,34 @@ const metadataTiers = require('../../../../sandbox/fixtures/metadata/one-list-ti
 const urls = require('../../../../../src/lib/urls')
 
 describe('Edit One List', () => {
+  const visitWithWait = (companyId, url) => {
+    cy.intercept(
+      `/api-proxy/v4/company/${companyId}/one-list-group-core-team`
+    ).as('oneListTeam')
+    cy.intercept(`/api-proxy/v4/metadata/one-list-tier`).as('oneListTiers')
+    cy.intercept(`/api-proxy/v4/company/${companyId}`).as('company')
+
+    cy.visit(url)
+
+    cy.wait(['@oneListTeam', '@oneListTiers', '@company'])
+  }
+
   context('when viewing the "Edit One List" page', () => {
     const testCompany = fixtures.company.oneListCorp
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should render the header', () => {
-      assertLocalHeader(`Add or edit ${testCompany.name} One List information`)
+      assertLocalHeader(`Edit core team of ${testCompany.name}`)
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [testCompany.name]: urls.companies.detail(testCompany.id),
-        'Edit One List information': null,
+        'Edit core team': null,
       })
     })
   })
@@ -34,7 +47,7 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should render One List tier options with tier pre-selected', () => {
@@ -72,7 +85,7 @@ describe('Edit One List', () => {
     it('should submit updated data', () => {
       cy.get(
         selectors.companyEditOneList.globalAccountManagerField
-      ).selectTypeaheadOption('shawn')
+      ).selectTypeaheadOptionInFieldset('shawn')
 
       cy.contains('Holly Collins').click({ force: true })
 
@@ -81,9 +94,9 @@ describe('Edit One List', () => {
         'Holly Collins'
       )
 
-      cy.get(selectors.companyEditOneList.coreTeamField).selectTypeaheadOption(
-        'leroy'
-      )
+      cy.get(
+        selectors.companyEditOneList.coreTeamField
+      ).selectTypeaheadOptionInFieldset('leroy')
 
       cy.contains('Submit').click()
 
@@ -100,7 +113,10 @@ describe('Edit One List', () => {
       const testCompany = fixtures.company.minimallyMinimalLtd
 
       before(() => {
-        cy.visit(urls.companies.editOneList(testCompany.id))
+        visitWithWait(
+          testCompany.id,
+          urls.companies.editOneList(testCompany.id)
+        )
       })
 
       it('should not have a tier pre-selected', () => {
@@ -124,7 +140,7 @@ describe('Edit One List', () => {
 
       it('should submit updated data', () => {
         cy.get(selectors.companyEditOneList.globalAccountManagerField)
-          .selectTypeaheadOption('shawn')
+          .selectTypeaheadOptionInFieldset('shawn')
           .find('input')
           .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
 
@@ -142,7 +158,7 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     before(() => {
-      cy.visit(urls.companies.editOneList(testCompany.id))
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
     it('should submit the form without manager information stage', () => {
@@ -153,6 +169,76 @@ describe('Edit One List', () => {
       cy.location('pathname').should(
         'eq',
         urls.companies.businessDetails(testCompany.id)
+      )
+    })
+  })
+
+  context('when skipping step 1', () => {
+    const testCompany = fixtures.company.oneListCorp
+    const noOneListCompany = fixtures.company.dnbCorp
+
+    context('with a company that has a one list tier', () => {
+      before(() => {
+        visitWithWait(
+          testCompany.id,
+          `${urls.companies.editOneList(testCompany.id)}?step=oneListAdvisers`
+        )
+      })
+
+      it('should show the one list advisers step', () => {
+        cy.get('[data-test="field-global_account_manager"]').then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Global Account Manager',
+            value: `${testCompany.one_list_group_global_account_manager.name}, ${testCompany.one_list_group_global_account_manager.dit_team.name}`,
+            isMulti: false,
+          })
+        })
+      })
+    })
+
+    context('with a company that is missing a one list tier', () => {
+      before(() => {
+        visitWithWait(
+          noOneListCompany.id,
+          `${urls.companies.editOneList(
+            noOneListCompany.id
+          )}?step=oneListAdvisers`
+        )
+      })
+
+      it('should still show step 1 as this field is needed', () => {
+        cy.get(selectors.companyEditOneList.tierField).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Company One List tier',
+            optionsCount: 8,
+          })
+        })
+      })
+    })
+  })
+
+  context('when needing to override the return url', () => {
+    const testCompany = fixtures.company.oneListCorp
+
+    before(() => {
+      visitWithWait(
+        testCompany.id,
+        `${urls.companies.editOneList(
+          testCompany.id
+        )}?step=oneListAdvisers&returnUrl=${urls.companies.accountManagement.index(
+          testCompany.id
+        )}`
+      )
+    })
+
+    it('should return the user to the requested url on form submit', () => {
+      cy.contains('Submit').click()
+
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.accountManagement.index(testCompany.id)
       )
     })
   })

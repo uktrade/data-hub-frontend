@@ -4,14 +4,13 @@ module.exports = {
   continueButton: 'form button:contains("Continue")',
   submitButton: 'form button:contains("Add company")',
   backButton: 'form button:contains("Back")',
-  subheader: 'form p',
   stepHeader: 'form h3',
   summary: 'form dl',
   regionSelect: 'form select#uk_region',
   sectorSelect: 'form select#sector',
+
   entitySearch: {
     companyNameField: 'input[name="dnbCompanyName"]',
-    postalCodeField: 'input[name="dnbPostalCode"]',
     searchButton: 'form button:contains("Find company")',
     results: {
       someCompanyName: 'form ol li:nth-child(1)',
@@ -22,6 +21,8 @@ module.exports = {
       summary: 'details summary span',
       stillCannotFind: `button:contains("I still can't find what I'm looking for")`,
     },
+    outOfBusiness: '[data-test="company-out-of-business"]',
+    alreadyOnDatahub: '[data-test="company-already-on-datahub"]',
   },
   newCompanyRecordForm: {
     whyAmISeeingThis: {
@@ -52,8 +53,8 @@ module.exports = {
     sector: 'select#sector',
     areaUS: 'select#area',
     areaCanada: 'select#areaCanada',
-  },
-  companyDetails: {
-    subheader: 'form h2',
+    companyLocation: '[data-test="field-companyLocation"]',
+    dbtRegion: '[data-test="field-uk_region"]',
+    dbtSector: '[data-test="field-sector"]',
   },
 }

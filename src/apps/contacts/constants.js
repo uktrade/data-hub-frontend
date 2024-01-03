@@ -22,11 +22,6 @@ const LOCAL_NAV = [
     path: 'audit',
     label: 'Audit history',
   },
-  {
-    path: 'documents',
-    label: 'Documents',
-    permissions: ['company.view_contact_document'],
-  },
 ]
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)

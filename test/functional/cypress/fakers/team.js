@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker'
+
 import { listFaker } from './utils'
 
 const teamFaker = () => ({
-  id: faker.datatype.uuid(),
-  name: faker.name.jobDescriptor(),
+  id: faker.string.uuid(),
+  name: faker.person.jobDescriptor(),
 })
 
 const teamListFaker = (length = 1, overrides) =>

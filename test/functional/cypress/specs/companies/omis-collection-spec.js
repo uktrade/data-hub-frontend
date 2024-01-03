@@ -1,4 +1,4 @@
-const qs = require('qs')
+import qs from 'qs'
 
 import { orderFaker } from '../../fakers/orders'
 import { assertPayload } from '../../support/assertions'
@@ -11,6 +11,7 @@ import {
   assertAddItemButtonNotPresent,
   assertListLength,
   assertBadge,
+  assertRole,
   assertMetadataItem,
   assertMetadataItemNotPresent,
   assertItemLink,
@@ -82,21 +83,22 @@ describe('Company Orders (OMIS) Collection Page', () => {
 
   assertCompanyCollectionBreadcrumbs(oneListCorp, 'Orders (OMIS)')
 
+  it('should contain a status role', () => {
+    assertRole('status')
+  })
+
   it('should render a title', () => {
     cy.get('h1').should('have.text', 'One List Corp')
   })
 
   it('should render a meta title', () => {
-    cy.title().should('eq', 'Orders - One List Corp - Companies - DIT Data Hub')
+    cy.title().should('eq', 'Orders - One List Corp - Companies - DBT Data Hub')
   })
 
   assertRemoveAllFiltersNotPresent()
 
   it('should render an "Add order" button', () => {
-    assertAddItemButton(
-      'Add order',
-      `/omis/create?company=${oneListCorp.id}&skip-company=true`
-    )
+    assertAddItemButton('Add order', urls.omis.create.form(oneListCorp.id))
   })
 
   it('should render the sort options', () => {

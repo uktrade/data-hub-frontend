@@ -65,7 +65,7 @@ describe('Company Export tab - Edit exports', () => {
             label: 'great.gov.uk business profile',
             value: 'No profile',
           },
-          { label: 'Export potential', value: 'No score given' },
+          { label: 'Export potential', value: 'Unavailable' },
         ])
       })
 
@@ -115,9 +115,9 @@ describe('Company Export tab - Edit exports', () => {
         assertReadOnlyItems([
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile (opens in a new window or tab)',
+            value: '"Find a supplier" profile (opens in new tab)',
           },
-          { label: 'Export potential', value: 'Medium' },
+          { label: 'Export potential', value: 'Unavailable' },
         ])
 
         cy.contains('"Find a supplier" profile').should(

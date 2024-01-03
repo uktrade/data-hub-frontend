@@ -42,6 +42,11 @@ const FieldRadios = ({
     initialValue,
   })
 
+  const getDataTest = (prefix, name, optionLabel) => {
+    const dataTest = kebabCase(`${name}-${optionLabel}`)
+    return prefix ? `${prefix}-${dataTest}` : dataTest
+  }
+
   return (
     <FieldWrapper
       {...{ ...props, name, label, legend, hint, error, bigLegend }}
@@ -63,7 +68,7 @@ const FieldRadios = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
-                data-test={kebabCase(`${name}-${optionLabel}`)}
+                data-test={getDataTest(props.dataTestPrefix, name, optionLabel)}
                 aria-label={optionLabel}
                 {...optionProps}
               >

@@ -1,13 +1,17 @@
 import { faker } from '@faker-js/faker'
 
-const sectors = [
-  'Advanced Engineering',
-  'Biotechnology and Pharmaceuticals',
-  'Creative and Media',
-]
+import { listFaker } from './utils'
 
-export const sectorFaker = () => ({
+const sectors = ['Aerospace', 'Mining', 'Railways']
+
+export const sectorFaker = (overrides = {}) => ({
   ancestors: [],
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.helpers.arrayElement(sectors),
+  ...overrides,
 })
+
+export const sectorListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: sectorFaker, length, overrides })
+
+export default sectorListFaker

@@ -1,19 +1,12 @@
-import { omitBy, isEmpty } from 'lodash'
 import qs from 'qs'
+
 import { EVENT_ATTENDEES_MAPPING } from '../../../../apps/companies/apps/activity-feed/constants'
+import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES =
   'TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES'
 
 export const ID = 'eventAventriRegistrationStatusAttendees'
-
-const parseQueryString = (queryString) => {
-  const queryParams = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryParams,
-    page: parseInt(queryParams.page || 1, 10),
-  }
-}
 
 export const mapUrlSlugToRegistrationStatus = (urlSlug) => {
   const status = Object.entries(EVENT_ATTENDEES_MAPPING).find(

@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+
+import { TEXT_COLOUR, GREY_3 } from '../../../client/utils/colours'
 
 const ChipList = styled('ul')({
   listStyleType: 'none',

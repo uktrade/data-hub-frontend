@@ -10,11 +10,11 @@ const {
 } = require('../../support/assertions')
 
 const {
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
   clickButton,
 } = require('../../support/actions')
 
-const incompleteProject = require('../../fixtures/investment/investment-no-management-staff.json')
+const incompleteProject = require('../../../../sandbox/fixtures/v3/investment/project.json')
 const completeProject = require('../../fixtures/investment/investment-has-management-staff.json')
 const { investments } = require('../../../../../src/lib/urls')
 
@@ -42,7 +42,11 @@ describe('Edit the management advisers for a project', () => {
           Home: '/',
           Investments: investments.index(),
           Projects: investments.projects.index(),
-          [incompleteProject.name]: null,
+          [incompleteProject.name]: investments.projects.details(
+            incompleteProject.id
+          ),
+          'Project team': investments.projects.team(incompleteProject.id),
+          'Project management': null,
         })
       })
 
@@ -55,7 +59,7 @@ describe('Edit the management advisers for a project', () => {
           'Primary sector': incompleteProject.sector.name,
           'Client company': incompleteProject.investor_company.name,
           Website: '',
-          'Account tier': 'None',
+          'Account tier': 'Tier A - Strategic Account',
           'Possible UK locations': '',
           'Competitor countries': '',
           'Estimated land date': 'January 2020',
@@ -78,10 +82,11 @@ describe('Edit the management advisers for a project', () => {
 
       it('should submit the form with only assurance typeahead filled in and redirect to the project details page', () => {
         const expectedBody = {
+          id: incompleteProject.id,
           project_assurance_adviser: '2c42c516-9898-e211-a939-e4115bead28a',
           project_manager: null,
         }
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_assurance_adviser',
           input: 'shawn',
         })
@@ -95,10 +100,11 @@ describe('Edit the management advisers for a project', () => {
 
       it('should submit the form with only PM typeahead filled in and redirect', () => {
         const expectedBody = {
+          id: incompleteProject.id,
           project_assurance_adviser: null,
           project_manager: '2c42c516-9898-e211-a939-e4115bead28a',
         }
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_manager',
           input: 'shawn',
         })
@@ -112,16 +118,17 @@ describe('Edit the management advisers for a project', () => {
 
       it('should submit the form with both typeaheads filled in and redirect', () => {
         const expectedBody = {
+          id: incompleteProject.id,
           project_assurance_adviser: '8242c516-9898-e211-a939-e4115bead28a',
           project_manager: '2c42c516-9898-e211-a939-e4115bead28a',
         }
 
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_assurance_adviser',
           input: 'blake',
         })
 
-        selectFirstAdvisersTypeaheadOption({
+        selectFirstMockedTypeaheadOption({
           element: '#field-project_manager',
           input: 'shawn',
         })
@@ -149,7 +156,11 @@ describe('Edit the management advisers for a project', () => {
           Home: '/',
           Investments: investments.index(),
           Projects: investments.projects.index(),
-          [completeProject.name]: null,
+          [completeProject.name]: investments.projects.details(
+            completeProject.id
+          ),
+          'Project team': investments.projects.team(completeProject.id),
+          'Project management': null,
         })
       })
       it('should render the subheading', () => {
@@ -160,7 +171,7 @@ describe('Edit the management advisers for a project', () => {
           'Primary sector': completeProject.sector.name,
           'Client company': completeProject.investor_company.name,
           Website: '',
-          'Account tier': 'None',
+          'Account tier': 'Tier A - Strategic Account',
           'Possible UK locations': '',
           'Competitor countries': '',
           'Estimated land date': 'January 2020',

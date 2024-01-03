@@ -137,7 +137,7 @@ describe('Contact activity', () => {
 
       it('should display the service', () => {
         cy.get('[data-test=interaction-activity]').contains(
-          'Service: Making Export Introductions : Someone else in DIT'
+          'Service: Export introductions : Someone else in DBT'
         )
       })
 

@@ -15,12 +15,13 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardNotes from './card/ActivityCardNotes'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 export default class Interaction extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -28,12 +29,11 @@ export default class Interaction extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
     const transformed = {
       ...CardUtils.transform(activity),
       ...InteractionUtils.transform(activity),
     }
-
     const advisers = CardUtils.getAdvisers(activity)
     const contacts = CardUtils.getContacts(activity)
     const activityObject = activity.object
@@ -49,11 +49,24 @@ export default class Interaction extends React.PureComponent {
 
     const formattedAdvisers = () =>
       !!advisers.length &&
-      advisers.map((adviser) => (
-        <span key={adviser.name}>
-          <AdviserActivityRenderer adviser={adviser} />
-        </span>
-      ))
+      advisers.map((adviser) =>
+        isOverview ? (
+          `${adviser.name}` + (adviser.team ? `, ${adviser.team}` : ``)
+        ) : (
+          <span key={adviser.name}>
+            <AdviserActivityRenderer
+              adviser={adviser}
+              isOverview={isOverview}
+            />
+          </span>
+        )
+      )
+
+    const subject = (
+      <Link data-test="interaction-subject" href={transformed.interactionUrl}>
+        {transformed.subject}
+      </Link>
+    )
 
     const formattedContactUrl = (contact) => {
       return `/${contact.url.split('/').slice(3).join('/')}/details`
@@ -61,17 +74,25 @@ export default class Interaction extends React.PureComponent {
 
     const formattedContacts = () =>
       !!contacts.length &&
-      contacts.map((contact, index) => (
-        <span key={contact.name}>
-          {index ? ', ' : ''}
-          <Link
-            data-test={`contact-link-${index}`}
-            href={formattedContactUrl(contact)}
-          >
-            {contact.name}
-          </Link>
-        </span>
-      ))
+      contacts.map((contact, index) =>
+        isOverview ? (
+          index ? (
+            `, `
+          ) : (
+            `` + `${contact.name}`
+          )
+        ) : (
+          <span key={contact.name}>
+            {index ? ', ' : ''}
+            <Link
+              data-test={`contact-link-${index}`}
+              href={formattedContactUrl(contact)}
+            >
+              {contact.name}
+            </Link>
+          </span>
+        )
+      )
 
     const metadata = [
       { label: 'Date', value: date },
@@ -95,18 +116,26 @@ export default class Interaction extends React.PureComponent {
     const RightCol = styled('div')`
       flex: 25%;
     `
-
-    return theme || service ? (
+    return isOverview ? (
+      <OverviewActivityCardWrapper dataTest="interaction-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={kind}
+          subject={subject}
+          summary={
+            formattedAdvisers() +
+            ` had ` +
+            communicationChannel?.toLowerCase() +
+            ' contact with ' +
+            formattedContacts()
+          }
+        ></ActivityOverviewSummary>
+      </OverviewActivityCardWrapper>
+    ) : theme || service ? (
       <ActivityCardWrapper dataTest="interaction-activity">
+        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardLabels theme={theme} service={service} kind={kind} />
-        <ActivityCardSubject>
-          <Link
-            data-test="interaction-subject"
-            href={transformed.interactionUrl}
-          >
-            {transformed.subject}
-          </Link>
-        </ActivityCardSubject>
         {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
@@ -114,14 +143,7 @@ export default class Interaction extends React.PureComponent {
       <ActivityCardWrapper dataTest="interaction-activity">
         <Row>
           <LeftCol>
-            <ActivityCardSubject>
-              <Link
-                data-test="interaction-subject"
-                href={transformed.interactionUrl}
-              >
-                {transformed.subject}
-              </Link>
-            </ActivityCardSubject>
+            <ActivityCardSubject>{subject}</ActivityCardSubject>
             {serviceNotes && <ActivityCardNotes notes={serviceNotes} />}
             <ActivityCardMetadata metadata={metadata} />
           </LeftCol>

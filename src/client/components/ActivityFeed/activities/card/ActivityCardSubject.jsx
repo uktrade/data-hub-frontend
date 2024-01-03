@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
+
+import { BLUE } from '../../../../../client/utils/colours'
 
 const StyledActivitySubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};
   font-weight: ${FONT_WEIGHTS.bold};
   line-height: ${FONT_SIZE.SIZE_24};
-  margin-top: ${SPACING.SCALE_2};
-  margin-bottom: ${SPACING.SCALE_2};
+  margin-top: ${({ margin }) => `${margin.top}px`};
+  margin-bottom: ${({ margin }) => `${margin.bottom}px`};
   & > a:link,
   a:visited,
   a:hover,
@@ -22,16 +23,23 @@ const StyledActivitySubject = styled('h3')`
 const ActivityCardSubject = ({
   children,
   dataTest = 'activity-card-subject',
-}) => {
-  return (
-    <StyledActivitySubject data-test={dataTest}>
-      {children}
-    </StyledActivitySubject>
-  )
-}
+  margin = { bottom: 10 },
+}) => (
+  <StyledActivitySubject data-test={dataTest} margin={margin}>
+    {children}
+  </StyledActivitySubject>
+)
 
 ActivityCardSubject.propTypes = {
   children: PropTypes.node.isRequired,
+  dataTest: PropTypes.string,
+  margin: PropTypes.shape({
+    top: PropTypes.number.isRequired,
+    bottom: PropTypes.number.isRequired,
+  }),
+}
+ActivityCardSubject.defaultProps = {
+  isOverview: false,
 }
 
 export default ActivityCardSubject

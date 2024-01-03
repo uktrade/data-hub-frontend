@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
+
 import { currencyGBP } from '../../../../../client/utils/number-utils'
 import {
   FieldInput,
@@ -30,11 +31,13 @@ const CompanyMatched = ({
       name="turnover"
       data-test="company-matched-annual-turnover"
     >
-      {company.turnover
-        ? currencyGBP(company.turnover, {
-            maximumSignificantDigits: 2,
-          })
-        : company.turnover_range.name}
+      {!company.turnover_gbp && !company.turnover_range
+        ? 'Not set'
+        : company.turnover_gbp
+          ? currencyGBP(company.turnover_gbp, {
+              maximumSignificantDigits: 2,
+            })
+          : company.turnover_range.name}
     </FieldUneditable>
 
     <FieldUneditable
@@ -42,9 +45,11 @@ const CompanyMatched = ({
       name="number_of_employees"
       data-test="company-matched-number-of-employees"
     >
-      {company.number_of_employees
-        ? company.number_of_employees.toString()
-        : company.employee_range.name}
+      {!company.number_of_employees && !company.employee_range
+        ? 'Not set'
+        : company.number_of_employees
+          ? company.number_of_employees.toString()
+          : company.employee_range.name}
     </FieldUneditable>
 
     {isOnOneList ? (
@@ -57,10 +62,10 @@ const CompanyMatched = ({
     ) : (
       <FieldSelect
         name="sector"
-        label="DIT sector"
-        emptyOption="-- Select DIT sector --"
+        label="DBT sector"
+        emptyOption="-- Select DBT sector --"
         options={sectors}
-        required="Select DIT sector"
+        required="Select DBT sector"
       />
     )}
 

@@ -7,14 +7,6 @@ import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 const orderInvestmentTypes = ([first, ...rest]) => [...rest, first]
 
-export const openContactForm = ({ values, url }) => {
-  window.sessionStorage.setItem(
-    CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
-    JSON.stringify(values)
-  )
-  window.location.href = url
-}
-
 export const createInvestmentProject = (formValues) =>
   apiProxyAxios.post('/v3/investment', formValues)
 
@@ -28,24 +20,6 @@ export const getCompanyInvestmentsCount = (companyId) =>
     .then(({ data }) => ({
       count: data.count,
     }))
-
-const getAdvisers = () =>
-  apiProxyAxios
-    .get('/adviser/', {
-      params: {
-        is_active: true,
-        limit: 100000,
-        offset: 0,
-      },
-    })
-    .then(({ data: { results } }) =>
-      results
-        .filter((adviser) => adviser?.name.trim().length)
-        .map(({ id, name }) => ({
-          label: name,
-          value: id,
-        }))
-    )
 
 export const searchCompany = ({ searchTerm }) =>
   apiProxyAxios
@@ -83,47 +57,10 @@ const fetchValuesFromSessionStorage = (contact) => {
 const fetchValuesFromAPI = () =>
   Promise.all([
     getAdviser(),
-    getAdvisers(),
-    getMetadataOptions(urls.metadata.sector(), {
-      params: {
-        level__lte: '0',
-      },
-    }),
-    getMetadataOptions(urls.metadata.fdiType()),
     getMetadataOptions(urls.metadata.investmentType()),
-    getMetadataOptions(urls.metadata.referralSourceActivity()),
-    getMetadataOptions(urls.metadata.referralSourceMarketing()),
-    getMetadataOptions(urls.metadata.referralSourceWebsite()),
-    getMetadataOptions(urls.metadata.investmentInvestorType()),
-    getMetadataOptions(urls.metadata.investmentInvolvement()),
-    getMetadataOptions(urls.metadata.investmentSpecificProgramme()),
-    getMetadataOptions(urls.metadata.investmentBusinessActivity()),
-  ]).then(
-    ([
-      adviser,
-      advisers,
-      sectors,
-      fdiTypes,
-      investmentTypes,
-      referralSourceActivity,
-      referralSourceMarketing,
-      referralSourceWebsite,
-      investmentInvestorType,
-      investmentInvolvement,
-      investmentSpecificProgramme,
-      investmentBusinessActivity,
-    ]) => ({
-      adviser,
-      advisers,
-      sectors,
-      fdiTypes,
-      investmentTypes: orderInvestmentTypes(investmentTypes),
-      referralSourceActivity,
-      referralSourceMarketing,
-      referralSourceWebsite,
-      investmentInvestorType,
-      investmentInvolvement,
-      investmentSpecificProgramme,
-      investmentBusinessActivity,
-    })
-  )
+    getMetadataOptions(urls.metadata.fdiType()),
+  ]).then(([adviser, investmentTypes, fdiTypes]) => ({
+    adviser,
+    investmentTypes: orderInvestmentTypes(investmentTypes),
+    fdiTypes,
+  }))

@@ -21,7 +21,6 @@ var healthcheck = require('./routes/ping.js')
 // TODO: `/metadata/*` endpoints are deprecated and should be removed or on after 17th October 2019
 var metadata = require('./routes/metadata.js')
 var user = require('./routes/whoami.js')
-var helpCentre = require('./routes/helpCentre.js')
 var zendesk = require('./routes/zendesk.js')
 var postcode = require('./routes/postcode.js')
 
@@ -47,6 +46,7 @@ var v4Company = require('./routes/v4/company/company.js')
 var v4CompanyList = require('./routes/v4/company-list/companyList.js')
 var v4Dnb = require('./routes/v4/dnb/index.js')
 var v4Event = require('./routes/v4/event/event.js')
+var v4ExportWin = require('./routes/v4/export-win/export-win.js')
 
 var v4Investment = require('./routes/v4/investment/investment.js')
 var v4Interaction = require('./routes/v4/interaction/interaction.js')
@@ -56,10 +56,13 @@ var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplet
 var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-profile/results.js')
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
-var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 var v4Proposition = require('./routes/v4/proposition/proposition.js')
 var v4Reminders = require('./routes/v4/reminders/index.js')
 var v4Reminder = require('./routes/v4/reminder/reminder.js')
+var v4SearchAdviser = require('./routes/v4/search/adviser.js')
+var v4Objective = require('./routes/v4/objective/index.js')
+var v4Task = require('./routes/v4/task/index.js')
+var v4SearchMyTasks = require('./routes/v4/search/myTasks.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -319,6 +322,8 @@ app.get(
 )
 app.get('/v4/metadata/one-list-tier', v4Metadata.oneListTier)
 app.get('/v4/metadata/trade-agreement', v4Metadata.tradeAgreement)
+app.get('/v4/metadata/export-years', v4Metadata.exportYears)
+app.get('/v4/metadata/export-experience', v4Metadata.exportExperience)
 
 // Ping
 app.get('/ping.xml', healthcheck.ping)
@@ -338,6 +343,9 @@ app.get('/v3/event/:eventId', v3Event.eventById)
 app.get('/v4/event/:eventId', v4Event.eventById)
 app.patch('/v4/event/:eventId', v4Event.patchEvent)
 app.post('/v4/event', v4Event.createEvent)
+
+// V4 Export Win
+app.get('/v4/export-win', v4ExportWin.getExportWinCollection)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', v3FeatureFlag.featureFlag)
@@ -362,6 +370,14 @@ app.get(
   '/v3/investment/:investmentId/audit',
   v3Investment.investmentProjectAudit
 )
+app.get(
+  '/v3/investment/:investmentId/evidence-document',
+  v3Investment.investmentProjectEvidence
+)
+app.get(
+  '/v3/investment/:investmentId/evidence-document/:documentId/download',
+  v3Investment.documentDownload
+)
 app.post('/v3/investment', v3Investment.postInvestmentProject)
 app.post('/v3/investment/:id/update-stage', v3Investment.investmentProjectById)
 app.put(
@@ -380,6 +396,9 @@ app.get('/v3/omis/order/:id/payment', v3OMIS.payments)
 app.post('/v3/omis/order/:id/payment', v3OMIS.createPayments)
 app.get('/v3/omis/order/:id/quote', v3OMIS.quote)
 app.patch('/v3/omis/order/:id/assignee', v3OMIS.assignees)
+app.post('/v3/omis/order/:id/cancel', v3OMIS.getOrderById)
+app.post('/v3/omis/order/:id/complete', v3OMIS.getOrderById)
+app.post('/v3/omis/order', v3OMIS.getOrderById)
 
 // V3 Search
 app.get('/v3/search', v3SearchCompany.companies)
@@ -446,6 +465,8 @@ app.patch(
   '/v4/company/:companyId/update-one-list-core-team',
   v4Company.patchOneListCoreTeam
 )
+app.get('/v4/company/:companyId/objective', v4Objective.objectives)
+app.get('/v4/company/:companyId/objective/count', v4Objective.objectivesCount)
 
 // V4 interactions
 app.get('/v4/interaction', v4Interaction.getInteractions)
@@ -464,6 +485,12 @@ app.post('/v4/dnb/company-search', v4Dnb.companySearch)
 app.post('/v4/dnb/company-link', v4Dnb.companyLink)
 app.post('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
 app.get('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
+app.get('/v4/dnb/:companyId/family-tree', v4Dnb.companyFamilyTree)
+app.get(
+  '/v4/dnb/:companyId/related-companies/count',
+  v4Dnb.relatedCompaniesCount
+)
+app.get('/v4/dnb/:companyId/related-companies', v4Dnb.relatedCompanies)
 
 // V4 legacy company list
 app.get('/v4/user/company-list/:companyId', v4Company.getCompanyList)
@@ -535,24 +562,125 @@ app.patch(
   v4Reminders.saveNewExportInteractionsSubscriptions
 )
 
+// Subscriptions for My Tasks
+app.get(
+  '/v4/reminder/subscription/my-tasks-due-date-approaching',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-due-date-approaching',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-assigned-to-me-from-others',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-amended-by-others',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-amended-by-others',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-overdue',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-overdue',
+  v4Reminders.saveSubscriptions
+)
+
+app.get(
+  '/v4/reminder/subscription/my-tasks-task-completed',
+  v4Reminders.getSubscriptions
+)
+
+app.patch(
+  '/v4/reminder/subscription/my-tasks-task-completed',
+  v4Reminders.saveSubscriptions
+)
+
 // Reminders lists
 
 app.get(
   '/v4/reminder/estimated-land-date',
   v4Reminders.getEstimatedLandDateReminders
 )
+app.delete('/v4/reminder/estimated-land-date/:id', v4Reminders.deleteReminder)
+
 app.get(
   '/v4/reminder/no-recent-export-interaction',
   v4Reminders.getNoRecentExportInteractionReminders
 )
+app.delete(
+  '/v4/reminder/no-recent-export-interaction/:id',
+  v4Reminders.deleteReminder
+)
+
 app.get(
   '/v4/reminder/no-recent-investment-interaction',
   v4Reminders.getNoRecentInvestmentInteractionReminders
+)
+app.delete(
+  '/v4/reminder/no-recent-investment-interaction/:id',
+  v4Reminders.deleteReminder
 )
 
 app.get(
   '/v4/reminder/new-export-interaction',
   v4Reminders.getNewExportInteractionReminders
+)
+app.delete(
+  '/v4/reminder/new-export-interaction/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get('/v4/reminder/my-tasks-due-date-approaching', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-due-date-approaching/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get(
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others',
+  v4Reminder.myTasks
+)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-assigned-to-me-from-others/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get('/v4/reminder/my-tasks-task-amended-by-others', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-amended-by-others/:id',
+  v4Reminders.deleteReminder
+)
+
+app.get('/v4/reminder/my-tasks-task-overdue', v4Reminder.myTasks)
+
+app.delete('/v4/reminder/my-tasks-task-overdue/:id', v4Reminders.deleteReminder)
+
+app.get('/v4/reminder/my-tasks-task-completed', v4Reminder.myTasks)
+
+app.delete(
+  '/v4/reminder/my-tasks-task-completed/:id',
+  v4Reminders.deleteReminder
 )
 
 // V4 Investment
@@ -599,39 +727,24 @@ app.post(
   '/v4/search/export-country-history',
   v4SearchExports.fetchExportHistory
 )
+app.post('/v4/search/adviser', v4SearchAdviser.advisers)
+app.post('/v4/search/task', v4SearchMyTasks.myTasks)
+
+// V4 Tasks
+app.get('/v4/task', v4Task.getTasks)
+app.get('/v4/task/:taskId', v4Task.getTask)
+app.post('/v4/task', v4Task.createTask)
+app.patch('/v4/task/:taskId', v4Task.updateTask)
+
+app.get('/v4/export', (req, res) => res.json({ count: 0, results: [] }))
 
 // Whoami endpoint
 app.get('/whoami', user.whoami)
 app.put('/whoami', user.setWhoami)
 app.post('/whoami', user.resetWhoami)
 
-// Help centre endpoint
-app.get('/help-centre/announcement', helpCentre.announcement)
-app.get('/help-centre/feed', helpCentre.feed)
-
 // Zendesk tickets endpoint
 app.post('/zendesk/tickets', zendesk.tickets)
-
-// Pipeline endpoint
-app.get('/v4/pipeline-item', v4pipelineItem.getPipelineItems)
-app.post('/v4/pipeline-item', v4pipelineItem.createUpdatePipelineItem)
-app.patch(
-  '/v4/pipeline-item/:pipelineItemId',
-  v4pipelineItem.createUpdatePipelineItem
-)
-app.get('/v4/pipeline-item/:pipelineItemId', v4pipelineItem.getPipelineItem)
-app.post(
-  '/v4/pipeline-item/:pipelineItemId/archive',
-  v4pipelineItem.archivePipelineItem
-)
-app.post(
-  '/v4/pipeline-item/:pipelineItemId/unarchive',
-  v4pipelineItem.unarchivePipelineItem
-)
-app.delete(
-  '/v4/pipeline-item/:pipelineItemId',
-  v4pipelineItem.deletePipelineItem
-)
 
 app.post('/api/v1/person', consentService.person)
 app.get('/api/v1/person/bulk_lookup', consentService.bulkPerson)

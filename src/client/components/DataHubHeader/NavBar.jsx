@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { BLACK } from 'govuk-colours'
 import {
   FONT_SIZE,
   FONT_WEIGHTS,
@@ -10,10 +9,9 @@ import {
   SPACING,
   MEDIA_QUERIES,
 } from '@govuk-react/constants'
+
 import ProtectedLink from '../ProtectedLink'
-
-import { GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colors'
-
+import { BLACK, GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colours'
 import links from './links'
 
 const StyledNavContainer = styled.div({
@@ -51,17 +49,31 @@ const StyledListItem = styled.li({
   },
 })
 
-const styledLinkActive = {
+const styledLinkMixin = {
   content: '""',
   position: 'absolute',
   left: 0,
   right: 0,
   bottom: 0,
   borderBottom: `${BORDER_WIDTH} solid`,
+}
+
+const styledLinkActive = {
+  ...styledLinkMixin,
   borderColor: DARK_BLUE_LEGACY,
 }
 
+const styledLinkFocus = {
+  ...styledLinkMixin,
+  borderColor: BLACK,
+}
+
 const styledLink = {
+  '&:focus': {
+    backgroundColor: '#FFDD00',
+    boxShadow: 'none',
+    outline: 'none',
+  },
   '&:link, &:visited': {
     position: 'relative',
     display: 'block',
@@ -79,6 +91,7 @@ const styledLink = {
       padding: '8px 0',
       ':hover::after': styledLinkActive,
       '&.active::after': styledLinkActive,
+      ':focus::after': styledLinkFocus,
     },
   },
 }

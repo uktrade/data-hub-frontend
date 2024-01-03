@@ -1,9 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import Task from '..'
 
-storiesOf('Task', module).add('Cancelation', () => (
+export default {
+  title: 'Task',
+}
+
+export const Cancelation = () => (
   <Task>
     {(task) => (
       <ul>
@@ -37,4 +40,4 @@ storiesOf('Task', module).add('Cancelation', () => (
       </ul>
     )}
   </Task>
-))
+)

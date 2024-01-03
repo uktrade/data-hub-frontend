@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
-import { Badge, SummaryTable } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
+import { Badge, SummaryTable } from '../../../../../client/components/'
+import urls from '../../../../../lib/urls'
+
 const StyledAddressList = styled('ul')`
-  ${({ isRegistered }) => isRegistered && `margin-top: ${SPACING_POINTS[2]}px;`}
+  margin-top: ${SPACING_POINTS[2]}px;
 `
 
 const Address = ({ address, isRegistered }) => {
@@ -16,12 +18,13 @@ const Address = ({ address, isRegistered }) => {
       return <li>{address.area.name}</li>
     }
   }
+  const addressType = isRegistered ? 'Registered' : 'Trading'
   return (
     <Table.Cell>
-      {isRegistered && <Badge>Registered</Badge>}
-      <StyledAddressList isRegistered={isRegistered}>
-        {address.line_1 && <li>{address.line_1}</li>}
-        {address.line_2 && <li>{address.line_2}</li>}
+      {<Badge>{addressType}</Badge>}
+      <StyledAddressList data-test={`addresses${addressType}`}>
+        {address.line1 && <li>{address.line1}</li>}
+        {address.line2 && <li>{address.line2}</li>}
         {address.town && <li>{address.town}</li>}
         {address.county && <li>{address.county}</li>}
         {address.postcode && <li>{address.postcode}</li>}
@@ -41,40 +44,37 @@ Address.defaultProps = {
   isRegistered: false,
 }
 
-const SectionAddresses = ({
-  businessDetails,
-  isDnbCompany,
-  isArchived,
-  urls,
-}) => (
-  <SummaryTable
-    caption="Addresses"
-    data-test="addressesDetailsContainer"
-    actions={
-      !isDnbCompany &&
-      !isArchived && (
-        <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
-      )
-    }
-  >
-    <Table.Row>
-      <Address address={businessDetails.address} />
+const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
+  const hasOnlyOneAddress = company.registeredAddress == null
 
-      {businessDetails.registered_address && (
-        <Address
-          address={businessDetails.registered_address}
-          isRegistered={true}
-        />
-      )}
-    </Table.Row>
-  </SummaryTable>
-)
+  return (
+    <SummaryTable
+      caption="Addresses"
+      data-test="addressesDetailsContainer"
+      actions={
+        !isDnbCompany &&
+        !isArchived && (
+          <Link href={`${urls.companies.edit(company.id)}#field-address`}>
+            Edit
+          </Link>
+        )
+      }
+    >
+      <Table.Row>
+        {!hasOnlyOneAddress && (
+          <Address address={company.registeredAddress} isRegistered={true} />
+        )}
+
+        <Address address={company.address} isRegistered={hasOnlyOneAddress} />
+      </Table.Row>
+    </SummaryTable>
+  )
+}
 
 SectionAddresses.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
   isDnbCompany: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  urls: PropTypes.object.isRequired,
 }
 
 export default SectionAddresses

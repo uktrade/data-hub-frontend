@@ -1,4 +1,4 @@
-const { assign, merge } = require('lodash')
+const { assign } = require('lodash')
 const proxyquire = require('proxyquire')
 
 describe('OMIS list transformers', () => {
@@ -176,103 +176,6 @@ describe('OMIS list transformers', () => {
         expect(actual).to.have.property('subtotal_cost').a('number')
         expect(actual).to.have.property('total_cost').a('number')
         expect(actual).to.have.property('company').a('string')
-      })
-    })
-  })
-
-  describe('#transformPaymentToView', () => {
-    const payment = require('../../../../test/unit/data/omis/payments.json')[0]
-
-    context('when given an unqualified result', () => {
-      it('should return undefined', () => {
-        expect(this.transformers.transformPaymentToView()).to.be.undefined
-        expect(this.transformers.transformPaymentToView({ a: 'b' })).to.be
-          .undefined
-        expect(this.transformers.transformPaymentToView({ id: 'abcd' })).to.be
-          .undefined
-      })
-    })
-
-    context('when given a qualified result', () => {
-      it('should return the correct properties', () => {
-        const actual = this.transformers.transformPaymentToView(payment)
-
-        expect(actual).to.have.property('reference').a('string')
-        expect(actual).to.have.property('transaction_reference').a('string')
-        expect(actual).to.have.property('additional_reference').a('string')
-        expect(actual).to.have.property('method').a('string')
-        expect(actual).to.have.property('received_on').a('string')
-        expect(actual).to.have.property('created_on').a('string')
-        expect(actual).to.have.property('amount').a('number')
-      })
-
-      it('should convert amount to pounds', () => {
-        const actual = this.transformers.transformPaymentToView(payment)
-        const amount = actual.amount
-
-        expect(amount).to.equal(53.43)
-      })
-    })
-  })
-
-  describe('#transformSubscriberToView', () => {
-    const subscriber =
-      require('../../../../test/unit/data/omis/subscribers.json')[0]
-    const subscriberWithTeam = merge({}, subscriber, {
-      dit_team: {
-        uk_region: {
-          name: 'London',
-        },
-      },
-    })
-
-    context('when given an unqualified result', () => {
-      it('should return undefined', () => {
-        expect(this.transformers.transformSubscriberToView()()).to.be.undefined
-        expect(this.transformers.transformSubscriberToView()({ a: 'b' })).to.be
-          .undefined
-        expect(this.transformers.transformSubscriberToView()({ name: 'abcd' }))
-          .to.be.undefined
-      })
-    })
-
-    context('when given a qualified result', () => {
-      context('when the subscriber is not the current user', () => {
-        it('should return just the name', () => {
-          const actual =
-            this.transformers.transformSubscriberToView()(subscriber)
-
-          expect(actual).to.equal('Puck Head')
-        })
-
-        context('when the subscriber has a UK region', () => {
-          it('should return the name and Uk region', () => {
-            const actual =
-              this.transformers.transformSubscriberToView()(subscriberWithTeam)
-
-            expect(actual).to.equal('Puck Head, London')
-          })
-        })
-      })
-
-      context('when the subscriber is the current user', () => {
-        it('should return the name with suffix', () => {
-          const actual = this.transformers.transformSubscriberToView(
-            subscriber.id
-          )(subscriber)
-
-          expect(actual).to.equal('Puck Head (you)')
-        })
-
-        context('when the subscriber has a UK region', () => {
-          it('should return the name and Uk region', () => {
-            const actual = this.transformers.transformSubscriberToView(
-              subscriber.id
-            )(subscriberWithTeam)
-
-            expect(actual).to.equal('Puck Head, London (you)')
-          })
-        })
       })
     })
   })

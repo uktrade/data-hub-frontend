@@ -1,7 +1,7 @@
 [
   {
     "id": "sv1",
-    "name": "Account Management",
+    "name": "Account management",
     "disabled_on": null,
     "interaction_questions": [],
     "contexts": [
@@ -15,7 +15,7 @@
   },
   {
     "id": "sv2",
-    "name": "Providing Export Advice & Information : Advice & information",
+    "name": "Export advice and information : Advice & information",
     "disabled_on": null,
     "interaction_questions": [
       {
@@ -63,7 +63,7 @@
   },
   {
     "id": "sv3",
-    "name": "Making Introductions (Export)",
+    "name": "Export introductions",
     "disabled_on": null,
     "interaction_questions": [
       {

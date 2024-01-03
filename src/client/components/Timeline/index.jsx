@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { WHITE, GREY_3 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { get } from 'lodash'
 
-import { DARK_BLUE_LEGACY } from '../../utils/colors'
+import { DARK_BLUE_LEGACY, GREY_3, WHITE } from '../../utils/colours'
 
 const TimelineContainer = styled('div')({
   backgroundColor: ({ theme }) =>

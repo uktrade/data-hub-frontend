@@ -1,14 +1,10 @@
+const { sortCriteria } = require('./sortCriteria')
+
 const myActivityQuery = ({ from, size, types, user, companyIds }) => {
   return {
     from,
     size,
-    sort: [
-      {
-        'object.startTime': {
-          order: 'desc',
-        },
-      },
-    ],
+    sort: sortCriteria('desc'),
     query: {
       bool: {
         must: [

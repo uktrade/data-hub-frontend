@@ -1,8 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import Paragraph from '@govuk-react/paragraph'
+import WarningText from '@govuk-react/warning-text'
+import Details from '@govuk-react/details'
+import Button from '@govuk-react/button'
 
 import CompanyLocalTab from './CompanyLocalTab'
-import styled from 'styled-components'
+import urls from '../../../lib/urls'
+import StatusMessage from '../../../client/components/StatusMessage'
+import { BLACK } from '../../../client/utils/colours'
 
 const StyledGridRow = styled.div`
   margin-right: -15px;
@@ -13,28 +20,18 @@ const StyledGridColumn = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 0 15px;
-  @media (min-width: 40.0625em) {
+  @media (min-width: 840px) {
     width: 100%;
     float: left;
   }
 `
 const StyledNav = styled.nav`
   margin-bottom: 15px;
-  font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 16px;
-  font-size: 1rem;
-  line-height: 1.25;
   color: #0b0c0c;
   margin-top: 5px;
-  @media (min-width: 40.0625em) {
+  @media (min-width: 840px) {
     margin-bottom: 30px;
     margin-top: 5px;
-    font-size: 19px;
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
   }
 `
 
@@ -43,35 +40,61 @@ const StyledUnorderedList = styled.ul`
   padding: 0;
   list-style: none;
   display: flex;
-
-  @media (min-width: 40.0625em) {
-    border-bottom: 1px solid #bfc1c3;
+  border-bottom: none;
+  @media (max-width: 839px) {
+    display: block;
+    padding-bottom: 20px;
+    border-bottom: 0;
   }
 `
 
-const CompanyTabbedLocalNavigation = (props) => {
-  const { localNavItems } = props
+const StyledLink = styled('a')`
+  margin-bottom: 0;
+`
 
-  return (
-    <StyledGridRow>
-      <StyledGridColumn>
-        <StyledNav aria-label="local navigation" data-test="tabbedLocalNav">
-          <StyledUnorderedList data-test="tabbedLocalNavList">
-            {localNavItems?.map((navItem, index) => {
-              return (
-                <CompanyLocalTab
-                  navItem={navItem}
-                  index={index}
-                  key={`company-tab-${index}`}
-                />
-              )
-            })}
-          </StyledUnorderedList>
-        </StyledNav>
-      </StyledGridColumn>
-    </StyledGridRow>
-  )
-}
+const showMatchingPrompt = (company) =>
+  !company.dunsNumber && !company.pendingDnbInvestigation
+
+const CompanyTabbedLocalNavigation = ({ localNavItems, company }) => (
+  <StyledGridRow>
+    {showMatchingPrompt(company) && (
+      <StatusMessage colour={BLACK} id="ga-company-details-matching-prompt">
+        <WarningText>
+          Business details on this company record have not been verified and
+          could be wrong.
+        </WarningText>
+        <Details summary="Why verify?">
+          <Paragraph>
+            Using verified business details from a trusted third-party supplier
+            means we can keep certain information up to date automatically. This
+            helps reduce duplicate records, provide a shared view of complex
+            companies and make it more likely we can link other data sources
+            together.
+          </Paragraph>
+          <Paragraph>
+            Verification can often be done in just 4 clicks.
+          </Paragraph>
+        </Details>
+        <Button as={StyledLink} href={urls.companies.match.index(company.id)}>
+          Verify business details
+        </Button>
+      </StatusMessage>
+    )}
+    <StyledGridColumn>
+      <StyledNav aria-label="local navigation" data-test="tabbedLocalNav">
+        <StyledUnorderedList data-test="tabbedLocalNavList">
+          {localNavItems?.map((navItem, index) => (
+            <CompanyLocalTab
+              navItem={navItem}
+              index={index}
+              key={`company-tab-${index}`}
+            />
+          ))}
+        </StyledUnorderedList>
+      </StyledNav>
+    </StyledGridColumn>
+  </StyledGridRow>
+)
 
 CompanyTabbedLocalNavigation.propTypes = {
   localNavItems: PropTypes.arrayOf(

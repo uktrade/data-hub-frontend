@@ -2,6 +2,7 @@ const path = require('path')
 const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const config = require('./src/config')
 
@@ -59,6 +60,43 @@ module.exports = (env) => ({
       chunkFilename: 'css/[name].[id].css',
     }),
     new WebpackAssetsManifest({ output: 'assets-manifest.json' }),
+    new ImageMinimizerPlugin({
+      minimizer: {
+        implementation: ImageMinimizerPlugin.imageminMinify,
+        options: {
+          // Lossless optimization with custom option
+          // Feel free to experiment with options for better result for you
+          plugins: [
+            ['gifsicle', { interlaced: true }],
+            ['jpegtran', { progressive: true }],
+            ['optipng', { optimizationLevel: 5 }],
+            // Svgo configuration here https://github.com/svg/svgo#configuration
+            [
+              'svgo',
+              {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                        addAttributesToSVGElement: {
+                          params: {
+                            attributes: [
+                              { xmlns: 'http://www.w3.org/2000/svg' },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+      },
+    }),
     env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
   resolve: {
@@ -80,8 +118,12 @@ module.exports = (env) => ({
       https: false,
       stream: false,
       zlib: false,
+      url: require.resolve('url/'),
     },
-    extensions: ['*', '.js', '.jsx', '.json'],
+    extensions: ['.*', '.js', '.jsx', '.json'],
+    alias: {
+      'govuk-colours': path.resolve(__dirname, 'src/client/utils/colours.js'),
+    },
   },
   module: {
     rules: [
@@ -109,12 +151,11 @@ module.exports = (env) => ({
         },
       },
       {
-        test: /\.(png|svg|jpe?g)$/,
-        type: 'asset/resource',
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset',
         generator: {
-          filename: 'images/[name].[hash:8].[ext]',
+          filename: 'images/[name].[hash:8][ext]',
         },
-        use: [{ loader: 'image-webpack-loader' }],
       },
       {
         test: /\.scss$/,

@@ -34,14 +34,18 @@ function DnbCompanyRenderer(props) {
   )
 }
 
-function getDnbEntityText(companyId, isOutOfBusiness, companyName) {
+export const getDnbEntityText = (companyId, isOutOfBusiness, companyName) => {
   if (isOutOfBusiness) {
-    return 'This company has stopped trading and is no longer in business.'
+    return (
+      <span data-test="company-out-of-business">
+        This company has stopped trading and is no longer in business.
+      </span>
+    )
   }
 
   if (companyId) {
     return (
-      <>
+      <div data-test="company-already-on-datahub">
         This company is already on Data Hub. You can record activity{' '}
         <Link
           href={`/companies/${companyId}`}
@@ -49,7 +53,7 @@ function getDnbEntityText(companyId, isOutOfBusiness, companyName) {
         >
           on the company page.
         </Link>
-      </>
+      </div>
     )
   }
 

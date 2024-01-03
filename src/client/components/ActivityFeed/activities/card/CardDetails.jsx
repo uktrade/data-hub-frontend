@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { VisuallyHidden } from 'govuk-react'
 import PropTypes from 'prop-types'
+
 import Analytics from '../../../Analytics'
 
 const GovUkDetails = styled(Details)`

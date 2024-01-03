@@ -1,3 +1,5 @@
+const { sortCriteria } = require('./sortCriteria')
+
 const contactActivityQuery = (
   from,
   size,
@@ -9,6 +11,7 @@ const contactActivityQuery = (
   return {
     from,
     size,
+    sort: sortCriteria(sortOrder),
     query: {
       bool: {
         must: [
@@ -37,11 +40,8 @@ const contactActivityQuery = (
                   bool: {
                     must: [
                       {
-                        terms: {
-                          'object.type': [
-                            'dit:aventri:Attendee',
-                            'dit:maxemail:Email:Sent',
-                          ],
+                        term: {
+                          'object.type': 'dit:aventri:Attendee',
                         },
                       },
                       {
@@ -75,7 +75,12 @@ const contactActivityQuery = (
                         },
                       },
                       {
-                        term: { 'actor.dit:emailAddress': email },
+                        term: {
+                          'actor.dit:emailAddress': {
+                            value: email,
+                            case_insensitive: true,
+                          },
+                        },
                       },
                     ],
                   },
@@ -86,14 +91,6 @@ const contactActivityQuery = (
         ],
       },
     },
-    sort: [
-      {
-        published: {
-          order: sortOrder,
-          unmapped_type: 'long',
-        },
-      },
-    ],
   }
 }
 

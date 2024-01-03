@@ -44,7 +44,7 @@ async function fetchListsCompanyIsOn(req, res, next) {
 
 async function renderAddRemoveForm(req, res, next) {
   const { company, listsCompanyIsIn, csrfToken } = res.locals
-  const cancelLinkUrl = req.query.returnUrl || urls.dashboard()
+  const cancelLinkUrl = req.query.returnUrl || urls.dashboard.index()
 
   try {
     res

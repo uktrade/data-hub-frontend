@@ -38,6 +38,14 @@ export const buildSelectedFilters = (
       categoryLabel: LABELS.sector,
     }),
   },
+  subSectors: {
+    queryParam: 'sub_sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.subSectorOptions,
+      value: queryParams.sub_sector_descends,
+      categoryLabel: LABELS.subSector,
+    }),
+  },
   countries: {
     queryParam: 'country',
     options: buildOptionsFilter({
@@ -117,9 +125,9 @@ export const buildSelectedFilters = (
   },
   leadItaOrGlobalAccountManagers: {
     queryParam: 'one_list_group_global_account_manager',
-    options: selectedLeadItaOrGlobalAccountManagers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedLeadItaOrGlobalAccountManagers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.leadItaOrGlobalAccountManager,
     })),
   },

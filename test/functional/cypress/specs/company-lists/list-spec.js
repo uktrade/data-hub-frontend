@@ -9,7 +9,7 @@ describe('My companies lists', () => {
   })
 
   it('my companies lists tab should be selected', () =>
-    assertAriaTablistTabSelected('Dashboard', 'My companies lists'))
+    assertAriaTablistTabSelected('Dashboard', 'Company lists'))
 
   Object.entries(exports.expectedLists).forEach(([name, expectedValues]) => {
     describe(`After selecting list "${name}"`, () => {

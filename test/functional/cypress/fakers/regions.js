@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 import { listFaker } from './utils'
 
 export const ukRegionFaker = (overrides = {}) => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.words(),
   disabled_on: null,
   ...overrides,

@@ -85,18 +85,19 @@ describe('Creating company lists', () => {
       ).to.have.been.calledWith('Company')
       expect(
         global.middlewareParameters.resMock.breadcrumb
-      ).to.have.been.calledWith('Create a list')
+      ).to.have.been.calledWith('Create new list')
     })
 
     it('should render to the view with props', () => {
       expect(
         global.middlewareParameters.resMock.render
       ).to.have.been.calledWith('company-lists/views/create-list-container', {
+        heading: 'Add Company to list',
         props: {
           id: '1',
           name: 'listName',
-          label: 'List name',
-          hint: 'This is a name only you see, and can be up to 30 characters',
+          label: 'What do you want to name your new list?',
+          hint: 'This is a name only you see, and can be up to 30 characters long',
           cancelUrl: `/companies/1/lists/add-remove`,
           maxLength: 30,
         },

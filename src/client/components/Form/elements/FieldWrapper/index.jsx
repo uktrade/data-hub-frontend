@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FormGroup from '@govuk-react/form-group'
 import Label from '@govuk-react/label'
 import styled from 'styled-components'
 import HintText from '@govuk-react/hint-text'
-import { ERROR_COLOUR, GREY_2, GREY_3 } from 'govuk-colours'
 import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
   FONT_WEIGHTS,
   SPACING,
   BODY_SIZES,
 } from '@govuk-react/constants'
+
+import {
+  ERROR_COLOUR,
+  GREY_2,
+  GREY_3,
+} from '../../../../../client/utils/colours'
 
 const StyledFormGroup = styled(FormGroup)`
   ${(props) => {
@@ -55,6 +60,13 @@ const StyledFieldset = styled('fieldset')`
   `}
 `
 
+const StyledFieldsetNoStyling = styled('fieldset')`
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+`
+
 const StyledLegend = styled('legend')`
   box-sizing: border-box;
   display: table;
@@ -89,9 +101,14 @@ const StyledLegend = styled('legend')`
   `}
 `
 
+const StyledLegendNoStyle = styled('legend')`
+  padding: 0;
+  margin: 0;
+`
+
 const StyledLabel = styled(Label)`
   padding-bottom: ${SPACING.SCALE_1};
-  font-weight: ${FONT_WEIGHTS.bold};
+  ${(props) => props.boldLabel && ` font-weight: ${FONT_WEIGHTS.bold};`}
 `
 
 const StyledHint = styled(HintText)`
@@ -117,6 +134,7 @@ const FieldInner = ({
   groupId,
 }) =>
   legend ? (
+    // FIXME: This shouldn't be a fieldset
     <StyledFieldset showBorder={showBorder}>
       <StyledLegend
         className="govuk-heading-m"
@@ -149,36 +167,74 @@ const FieldWrapper = ({
   children,
   reduced,
   groupId,
+  boldLabel,
+  autoScroll,
   ...rest
-}) => (
-  <StyledFormGroup
-    id={`field-${name}`}
-    data-test={`field-${name}`}
-    reduced={reduced}
-    hint={hint}
-    {...rest}
-  >
-    <FieldInner
-      legend={legend}
-      error={error}
-      showBorder={showBorder}
-      bigLegend={bigLegend}
-      groupId={groupId}
+}) => {
+  const styledWrapperRef = React.useRef(null)
+  useEffect(() => {
+    if (autoScroll) {
+      styledWrapperRef.current.scrollIntoView()
+    }
+  }, [autoScroll])
+
+  return (
+    <StyledFormGroup
+      id={`field-${name}`}
+      data-test={`field-${name}`}
+      reduced={reduced}
+      hint={hint}
+      ref={styledWrapperRef}
+      {...rest}
     >
-      {label && (
-        <StyledLabel error={error} htmlFor={name}>
-          {label}
-        </StyledLabel>
+      {!legend ? (
+        <StyledFieldsetNoStyling>
+          <FieldInner
+            legend={legend}
+            error={error}
+            showBorder={showBorder}
+            bigLegend={bigLegend}
+            groupId={groupId}
+          >
+            {label && (
+              <StyledLegendNoStyle>
+                <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
+                  {label}
+                </StyledLabel>
+              </StyledLegendNoStyle>
+            )}
+            {hint && (
+              <StyledHint data-test="hint-text" error={error}>
+                {hint}
+              </StyledHint>
+            )}
+            {children}
+          </FieldInner>
+        </StyledFieldsetNoStyling>
+      ) : (
+        <FieldInner
+          legend={legend}
+          error={error}
+          showBorder={showBorder}
+          bigLegend={bigLegend}
+          groupId={groupId}
+        >
+          {label && (
+            <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
+              {label}
+            </StyledLabel>
+          )}
+          {hint && (
+            <StyledHint data-test="hint-text" error={error}>
+              {hint}
+            </StyledHint>
+          )}
+          {children}
+        </FieldInner>
       )}
-      {hint && (
-        <StyledHint data-test="hint-text" error={error}>
-          {hint}
-        </StyledHint>
-      )}
-      {children}
-    </FieldInner>
-  </StyledFormGroup>
-)
+    </StyledFormGroup>
+  )
+}
 
 FieldInner.propTypes = {
   legend: PropTypes.node,
@@ -229,6 +285,14 @@ FieldWrapper.propTypes = {
    * Node for children elements
    */
   children: PropTypes.node,
+  /**
+   * Boolean for rendering the label in bold or not
+   */
+  boldLabel: PropTypes.bool,
+  /**
+   * Whether the window should auto scroll into view this component
+   */
+  autoScroll: PropTypes.bool,
 }
 
 FieldWrapper.defaultProps = {
@@ -238,6 +302,8 @@ FieldWrapper.defaultProps = {
   error: null,
   showBorder: false,
   children: null,
+  boldLabel: true,
+  autoScroll: false,
 }
 
 export default FieldWrapper

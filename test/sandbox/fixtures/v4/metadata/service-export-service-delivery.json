@@ -1,7 +1,7 @@
 [
   {
       "id": "9484b82b-3499-e211-a939-e4115bead28a",
-      "name": "Account Management : General",
+      "name": "Account management : General",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -17,7 +17,7 @@
   },
   {
       "id": "a4a733b6-eb95-e611-be23-e4115bead28a",
-      "name": "Account Management : Northern Powerhouse",
+      "name": "Account management : Northern Powerhouse",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -28,7 +28,7 @@
   },
   {
       "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Overseas Business Network Chargeable Services (OBN)",
+      "name": "DBT export service or funding : Overseas Business Network chargeable services (OBN)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -38,7 +38,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+    "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor",
     "disabled_on": null,
     "contexts": [
         "export_interaction",
@@ -49,7 +49,7 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28b",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": [
         "export_interaction",
@@ -57,10 +57,10 @@
         "export_service_delivery"
     ],
     "interaction_questions": []
-}, 
+},
   {
       "id": "482fca2e-3bfa-4c4f-8649-17d292aad87f",
-      "name": "A Specific DIT Export Service or Funding : Global Growth Service: Signed Export Growth Plan Received from Company",
+      "name": "DBT export service or funding : Global Growth Service: signed export growth plan received from company",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -69,7 +69,7 @@
   },
   {
       "id": "94a2473d-e898-4e1c-a082-ddfde8f297ff",
-      "name": "A Specific DIT Export Service or Funding : European Regional Development Fund (ERDF)",
+      "name": "DBT export service or funding : European Regional Development Fund (ERDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -79,7 +79,7 @@
   },
   {
       "id": "d1516466-5e62-4c1a-9831-7b1e7e536514",
-      "name": "A Specific DIT Export Service or Funding : Trade Development Fund (TDF)",
+      "name": "DBT export service or funding : Trade Development Fund (TDF)",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -89,7 +89,7 @@
   },
   {
       "id": "d520b92b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Export Opportunities",
+      "name": "DBT export service or funding : Export opportunities",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -98,7 +98,7 @@
   },
   {
       "id": "f56eb92b-3499-e211-a939-e4115bead28a",
-      "name": "A Specific DIT Export Service or Funding : Significant Assistance",
+      "name": "DBT export service or funding : Significant assistance",
       "disabled_on": null,
       "contexts": [
           "export_service_delivery"
@@ -107,7 +107,7 @@
   },
   {
       "id": "e64d7719-0bd9-65df-55a9-f08d328bc467",
-      "name": "A Specific DIT Export Service or Funding : Export Academy",
+      "name": "DBT export service or funding : Export Academy",
       "disabled_on": null,
       "contexts": [
           "export_interaction",
@@ -117,7 +117,7 @@
   },
   {
       "id": "0696b92b-3499-e211-a939-e4115bead28a",
-      "name": "Events : Outward Mission",
+      "name": "Events : Outward mission",
       "disabled_on": null,
       "contexts": [
           "service_delivery",
@@ -130,7 +130,7 @@
   },
   {
       "id": "340bba2b-3499-e211-a939-e4115bead28a",
-      "name": "Events : Market Visit",
+      "name": "Events : Market visit",
       "disabled_on": null,
       "contexts": [
           "service_delivery",
@@ -143,7 +143,7 @@
   },
   {
       "id": "370bba2b-3499-e211-a939-e4115bead28a",
-      "name": "Events : Inward Mission",
+      "name": "Events : Inward mission",
       "disabled_on": null,
       "contexts": [
           "service_delivery",
@@ -169,7 +169,7 @@
   },
   {
       "id": "9584b82b-3499-e211-a939-e4115bead28a",
-      "name": "Events : UK Based",
+      "name": "Events : UK based",
       "disabled_on": null,
       "contexts": [
           "service_delivery",
@@ -195,7 +195,7 @@
   },
   {
       "id": "350bba2b-3499-e211-a939-e4115bead28a",
-      "name": "Export Win",
+      "name": "Export win",
       "disabled_on": null,
       "contexts": [
           "export_interaction",

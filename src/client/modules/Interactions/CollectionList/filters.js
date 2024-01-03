@@ -1,12 +1,17 @@
 import { KIND_OPTIONS, BUSINESS_INTELLIGENCE_OPTION, LABELS } from './constants'
 
-import { buildOptionsFilter, buildDatesFilter } from '../../../filters'
+import {
+  buildOptionsFilter,
+  buildDatesFilter,
+  buildInputFieldFilter,
+} from '../../../filters'
 
 export const buildSelectedFilters = (
   queryParams,
   metadata,
   selectedAdvisers,
-  selectedTeams
+  selectedTeams,
+  selectedCompanies
 ) => ({
   kind: {
     queryParam: 'kind',
@@ -18,11 +23,26 @@ export const buildSelectedFilters = (
   },
   advisers: {
     queryParam: 'dit_participants__adviser',
-    options: selectedAdvisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedAdvisers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.advisers,
     })),
+  },
+  company: {
+    queryParam: 'company',
+    options: selectedCompanies.map((company) => ({
+      label: company.name,
+      value: company.id,
+      categoryLabel: LABELS.company,
+    })),
+  },
+  subject: {
+    queryParam: 'subject',
+    options: buildInputFieldFilter({
+      value: queryParams.subject,
+      categoryLabel: LABELS.subject,
+    }),
   },
   datesAfter: {
     queryParam: 'date_after',
@@ -52,6 +72,14 @@ export const buildSelectedFilters = (
       options: metadata.sectorOptions,
       value: queryParams.sector_descends,
       categoryLabel: LABELS.sector,
+    }),
+  },
+  subSectors: {
+    queryParam: 'sub_sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.subSectorOptions,
+      value: queryParams.sub_sector_descends,
+      categoryLabel: LABELS.subSector,
     }),
   },
   businessIntelligence: {

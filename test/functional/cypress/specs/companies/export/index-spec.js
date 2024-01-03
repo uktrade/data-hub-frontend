@@ -1,7 +1,6 @@
 const fixtures = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
-const exportSelectors = require('../../../../../selectors/company/export')
 
 function visitExportIndex(companyId) {
   cy.intercept('GET', '**/export-win').as('exportWinResults')
@@ -62,7 +61,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render a meta title', () => {
-        cy.title().should('eq', 'Export - DnB Corp - Companies - DIT Data Hub')
+        cy.title().should('eq', 'Export - DnB Corp - Companies - DBT Data Hub')
       })
 
       it('should render breadcrumbs', () => {
@@ -80,14 +79,14 @@ describe('Company Export tab', () => {
         assertExportsTable(fixtures.company.dnbCorp.id, [
           { label: 'Export win category', value: 'None' },
           { label: 'great.gov.uk business profile', value: 'No profile' },
-          { label: 'Export potential', value: 'No score given' },
+          { label: 'Export potential', value: 'Unavailable' },
         ])
       })
 
       it('should render the "What is export potential" dropdown', () => {
         cy.contains('What is export potential')
         cy.contains(
-          "The export potential score is a prediction of a company's likelihood of exporting, and was originally created for the Find Exporters tool. DIT's data science team compared all HMRC export information with the features of all UK companies to find patterns; they then repeatedly tested their model against a subset of known-good data to improve it. The scores are as follows:Very High - Most companies like this one are exportersHigh - This business shares some features with successful exportersMedium - Some businesses that look like this one export, others don'tLow - This business shares many features with companies that do not exportVery Low - Most of the businesses like this aren't exportersWe are continuing to improve the algorithm so please do share your feedback or let us know of any anomalies through the support channel."
+          "The export potential score is a prediction of a company's likelihood of exporting, and was originally created for the Find Exporters tool. DBT's data science team compared all HMRC export information with the features of all UK companies to find patterns; they then repeatedly tested their model against a subset of known-good data to improve it. The scores are as follows:Very High - Most companies like this one are exportersHigh - This business shares some features with successful exportersMedium - Some businesses that look like this one export, others don'tLow - This business shares many features with companies that do not exportVery Low - Most of the businesses like this aren't exportersWe are continuing to improve the algorithm so please do share your feedback or let us know of any anomalies through the support channel."
         )
         cy.contains('Find Exporters tool')
           .should('have.attr', 'href', urls.external.findExporters())
@@ -135,7 +134,7 @@ describe('Company Export tab', () => {
       it('should render the "What is an Export Win" details', () => {
         cy.contains('What is an Export Win')
         cy.contains(
-          'Export wins capture the export deals that Department of International Trade (DIT)'
+          'Export wins capture the export deals that Department for Business and Trade (DBT)'
         )
       })
 
@@ -259,10 +258,10 @@ describe('Company Export tab', () => {
           { label: 'Export win category', value: 'Increasing export turnover' },
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile (opens in a new window or tab)',
+            value: '"Find a supplier" profile (opens in new tab)',
           },
 
-          { label: 'Export potential', value: 'Medium' },
+          { label: 'Export potential', value: 'Unavailable' },
         ])
 
         cy.contains('"Find a supplier" profile').should(
@@ -380,10 +379,8 @@ describe('Company Export tab', () => {
 
       it('should have the correct count and number of visible results', () => {
         cy.contains('15 results')
-        cy.get(exportSelectors.exportWins.listItemHeadings).should(
-          'have.length',
-          10
-        )
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
       })
 
       it('should display the next button', () => {
@@ -401,10 +398,8 @@ describe('Company Export tab', () => {
       it('the second page renders the collection list with 6 of the 15 results', () => {
         cy.get('a').contains('2').click()
 
-        cy.get(exportSelectors.exportWins.listItemHeadings).should(
-          'have.length',
-          6
-        )
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 6)
         cy.contains(
           'Quis vel quidem quo cum nesciunt recusandae laboriosam dolor.'
         )

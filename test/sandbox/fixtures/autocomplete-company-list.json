@@ -1,0 +1,32 @@
+{
+  "count": 5,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "name": "A1 BMW LTD!!!!!",
+      "id": "a1138c1c-d449-4846-aa58-18fae7e1cb92",
+      "isArchived": false
+    },
+    {
+      "name": "Portable Potatoes",
+      "id": "a30b1db3-7140-44ca-ad7a-9824c3c2ed56",
+      "isArchived": false
+    },
+    {
+      "name": "Zebra clothing",
+      "id": "b89b1db3-7140-44ca-ad7a-9824c3c2gh74",
+      "isArchived": false
+    },
+    {
+      "name": "Lambda plc",
+      "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+      "isArchived": false
+    },
+    {
+      "name": "One List Corp",
+      "id": "375094ac-f79a-43e5-9c88-059a7caa17f0",
+      "isArchived": false
+    }
+  ]
+}

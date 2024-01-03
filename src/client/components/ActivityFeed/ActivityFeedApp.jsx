@@ -1,31 +1,35 @@
 import React from 'react'
-import ActivityFeed from './ActivityFeed'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+
+import ActivityFeed from './ActivityFeed'
+import { FILTER_FEED_TYPE } from '../../../apps/companies/apps/activity-feed/constants'
 
 export default class ActivityFeedApp extends React.Component {
   static propTypes = {
     actions: PropTypes.node,
-    activityTypeFilter: PropTypes.string,
-    activityTypeFilters: PropTypes.object,
+    activityType: PropTypes.array.isRequired,
     apiEndpoint: PropTypes.string.isRequired,
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     companyIsArchived: PropTypes.bool,
+    numberOfItems: PropTypes.number,
+    feedType: PropTypes.string,
   }
 
   static defaultProps = {
-    activityTypeFilter: null,
-    activityTypeFilters: {},
+    activityType: [],
     actions: null,
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
+    numberOfItems: 20,
+    feedType: FILTER_FEED_TYPE.ALL,
   }
 
   constructor(props) {
     super(props)
 
-    const { activityTypeFilter } = props
+    const { activityType, feedType } = props
 
     this.state = {
       activities: [],
@@ -35,8 +39,8 @@ export default class ActivityFeedApp extends React.Component {
       from: 0,
       total: 0,
       queryParams: {
-        activityTypeFilter,
-        showDnbHierarchy: false,
+        activityType,
+        feedType: feedType,
       },
     }
 
@@ -61,8 +65,7 @@ export default class ActivityFeedApp extends React.Component {
 
   async onLoadMore() {
     const { activities, queryParams, from } = this.state
-    const { apiEndpoint } = this.props
-    const size = 20
+    const { apiEndpoint, numberOfItems } = this.props
 
     this.setState({
       isLoading: true,
@@ -73,8 +76,9 @@ export default class ActivityFeedApp extends React.Component {
         await ActivityFeedApp.fetchActivities(
           apiEndpoint,
           from,
-          size,
-          queryParams
+          numberOfItems,
+          queryParams,
+          this.props.isOverview
         )
 
       const allActivities = activities.concat(newActivities)
@@ -83,7 +87,7 @@ export default class ActivityFeedApp extends React.Component {
         activities: allActivities,
         isLoading: false,
         hasMore: total > allActivities.length,
-        from: from + size,
+        from: from + numberOfItems,
         total,
       })
     } catch (e) {
@@ -95,17 +99,29 @@ export default class ActivityFeedApp extends React.Component {
     }
   }
 
-  static async fetchActivities(apiEndpoint, from, size, queryParams) {
-    const { activityTypeFilter, showDnbHierarchy } = queryParams
+  static async fetchActivities(
+    apiEndpoint,
+    from,
+    numberOfItems,
+    queryParams,
+    isOverview
+  ) {
+    const { activityType, feedType } = queryParams
 
     const params = {
       from,
-      size,
-      activityTypeFilter,
-      showDnbHierarchy,
+      size: numberOfItems,
+      activityType,
+      feedType,
     }
 
     const { data } = await axios.get(apiEndpoint, { params })
+
+    if (isOverview && data.activities && data.activities.length) {
+      data.activities = data.activities.filter(
+        (activity) => activity['dit:application'] !== 'maxemail'
+      )
+    }
 
     const { total, activities } = data
 
@@ -118,11 +134,13 @@ export default class ActivityFeedApp extends React.Component {
   render() {
     const { activities, isLoading, hasMore, error, total } = this.state
     const {
-      activityTypeFilters,
       actions,
       isGlobalUltimate,
       dnbHierarchyCount,
       companyIsArchived,
+      isOverview,
+      feedType,
+      activityType,
     } = this.props
 
     const isEmptyFeed = activities.length === 0 && !hasMore
@@ -130,7 +148,6 @@ export default class ActivityFeedApp extends React.Component {
     return (
       <ActivityFeed
         activities={activities}
-        activityTypeFilters={activityTypeFilters}
         actions={actions}
         isLoading={isLoading}
         hasMore={hasMore}
@@ -140,9 +157,12 @@ export default class ActivityFeedApp extends React.Component {
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
         companyIsArchived={companyIsArchived}
+        isOverview={isOverview}
+        feedType={feedType}
+        activityType={activityType}
       >
         {isEmptyFeed && !error && (
-          <div data-test="noActivites">There are no activities to show.</div>
+          <div data-test="noActivities">There are no activities to show.</div>
         )}
         {error && <div>Error occurred while loading activities.</div>}
       </ActivityFeed>

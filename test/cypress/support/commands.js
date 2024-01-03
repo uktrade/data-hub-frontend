@@ -128,6 +128,17 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add(
+  'selectTypeaheadOptionInFieldset',
+  { prevSubject: 'element' },
+  (subject, text) => {
+    cy.wrap(subject).children().find('input').click().clear().type(text)
+    cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
+    cy.wrap(subject).children().find('input').type('{downarrow}{enter}{esc}')
+    return cy.wrap(subject)
+  }
+)
+
+Cypress.Commands.add(
   'checkNoTypeaheadOptionsDisplayed',
   { prevSubject: 'element' },
   (subject, text) => {
@@ -305,3 +316,49 @@ Cypress.Commands.add('setModulePermissions', (permissions) => {
 Cypress.Commands.add('clearSessionStorage', () => {
   cy.window().then((win) => win.sessionStorage.clear())
 })
+
+Cypress.Commands.add('localStorage', (key, value) => {
+  cy.window().then((win) => win.localStorage.setItem(key, value))
+})
+
+Cypress.Commands.add('getViewport', () => {
+  cy.document().then((doc) => {
+    return doc.documentElement.getBoundingClientRect()
+  })
+})
+
+Cypress.Commands.add('isNotInViewport', (element) => {
+  cy.get(element).then(($el) => {
+    const bottom = Cypress.$(cy.state('window')).height()
+    const rect = $el[0].getBoundingClientRect()
+
+    expect(rect.top).to.be.greaterThan(bottom)
+    expect(rect.bottom).to.be.greaterThan(bottom)
+    expect(rect.top).to.be.greaterThan(bottom)
+    expect(rect.bottom).to.be.greaterThan(bottom)
+  })
+})
+
+Cypress.Commands.add('isInViewport', (element) => {
+  cy.get(element).then(($el) => {
+    const bottom = Cypress.$(cy.state('window')).height()
+    const rect = $el[0].getBoundingClientRect()
+
+    expect(rect.top).not.to.be.greaterThan(bottom)
+    expect(rect.bottom).not.to.be.greaterThan(bottom)
+    expect(rect.top).not.to.be.greaterThan(bottom)
+    expect(rect.bottom).not.to.be.greaterThan(bottom)
+  })
+})
+
+Cypress.Commands.add('isScrolledTo', (element) => {
+  cy.get(element).should(($el) => {
+      const bottom = Cypress.$(cy.state("window")).height();
+      const rect = $el[0].getBoundingClientRect();
+
+      expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
+      expect(rect.top).to.be.greaterThan(0 - rect.height, `Expected element not to be above the visible scrolled area`)
+  });
+});
+
+Cypress.Commands.add('dataTest', (value) => cy.get(`[data-test="${value}"]`))

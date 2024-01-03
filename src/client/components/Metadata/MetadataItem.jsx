@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { BLACK } from 'govuk-colours'
-import { DARK_GREY } from '../../utils/colors'
+
+import { BLACK, DARK_GREY } from '../../utils/colours'
 
 const StyledMetaWrapper = styled('div')`
   color: ${BLACK};

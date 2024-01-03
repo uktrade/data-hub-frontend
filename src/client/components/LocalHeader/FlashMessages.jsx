@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash'
+import { isEmpty, isNull } from 'lodash'
 import { connect } from 'react-redux'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import UnorderedList from '@govuk-react/unordered-list'
 
 import {
   ERROR_COLOUR,
@@ -11,9 +13,7 @@ import {
   ORANGE,
   BLACK,
   WHITE,
-} from 'govuk-colours'
-import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import UnorderedList from '@govuk-react/unordered-list'
+} from '../../../client/utils/colours'
 import StatusMessage from '../../components/StatusMessage'
 import { state2props } from './state'
 import {
@@ -75,22 +75,24 @@ const FlashMessages = ({
           and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
           */
         const parts = String(type).split(':')
-        return parts.length > 1
-          ? messages.map(({ body, heading }) => (
-              <li key={body}>
-                <StyledStatusMessage colour={messageColours[parts[0]]}>
-                  <StyledHeading>{heading}</StyledHeading>
-                  <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
-                </StyledStatusMessage>
-              </li>
-            ))
-          : messages.map((body, i) => (
-              <li key={i}>
-                <StyledStatusMessage colour={messageColours[type]}>
-                  <StyledMessage dangerouslySetInnerHTML={{ __html: body }} />
-                </StyledStatusMessage>
-              </li>
-            ))
+        return isNull(messages[0])
+          ? null
+          : parts.length > 1
+            ? messages.map(({ body, heading }) => (
+                <li key={body}>
+                  <StyledStatusMessage colour={messageColours[parts[0]]}>
+                    <StyledHeading>{heading}</StyledHeading>
+                    <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
+                  </StyledStatusMessage>
+                </li>
+              ))
+            : messages.map((body, i) => (
+                <li key={i}>
+                  <StyledStatusMessage colour={messageColours[type]}>
+                    <StyledMessage dangerouslySetInnerHTML={{ __html: body }} />
+                  </StyledStatusMessage>
+                </li>
+              ))
       })}
     </UnorderedList>
   ) : null

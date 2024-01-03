@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const AdviserItemRenderer = (item) => {
-  const name = <span>{item.name}</span>
+  const name = <span>{item?.name}</span>
   const emailAddress = (
     <Link href={`mailto:${item.emailAddress}`}> {item.emailAddress}</Link>
   )

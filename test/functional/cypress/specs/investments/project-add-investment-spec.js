@@ -1,18 +1,19 @@
-const urls = require('../../../../../src/lib/urls')
-const { company } = require('../../fixtures')
 const { expect } = require('chai')
 
+const urls = require('../../../../../src/lib/urls')
+const { company } = require('../../fixtures')
 const {
-  assertSelectOptions,
   assertSummaryTable,
   assertFieldTypeahead,
   assertFieldTextarea,
+  assertFieldRadios,
   assertFieldRadiosWithLegend,
   assertFieldInput,
   assertFieldSelect,
   assertFieldDate,
   assertFieldDateShort,
 } = require('../../support/assertions')
+const { clearTypeahead } = require('../../support/form-fillers')
 
 const { usCompany } = company
 
@@ -37,12 +38,30 @@ const investmentTypeTests = () => {
       .should('not.be.checked')
   })
 
+  it('should display the FDI info text', () => {
+    cy.get('[data-test="fdi-info"]')
+      .should('exist')
+      .should(
+        'have.text',
+        'Is this an FDI project?Is there a foreign direct investor involved in the Project and is the global HQ of the company based outside the UK?Is there a new (additional) financial investment being made in the UK as a result of the Project?Is there a UK Foreign Direct Enterprise established in the UK with at least 10% foreign ownership?Will the UK foreign direct enterprise be involved in a business (commercial) activity in the UK which is expected to last at least 3 years?Is there at least 1 new job created as a result of the Project (or safeguarded jobs for Retentions or M&As)?If a Retention or M&A project is being claimed, is there evidence that the UK jobs were at risk?'
+      )
+  })
+
   it('should display a "Non-FDI" radio button label', () => {
     cy.get('form')
       .find('label')
       .eq(1)
       .should('contain', 'Non-FDI')
       .should('not.be.checked')
+  })
+
+  it('should display the Non-FDI info text', () => {
+    cy.get('[data-test="non-fdi-info"]')
+      .should('exist')
+      .should(
+        'have.text',
+        'Is this an Non-FDI project?Is there a foreign investor/partner involved in the project?Is it clear who is the UK recipient organisation in the proposed collaboration and partnership project?Is the R&D Collaboration or partnership aimed at creating (or validating) new to the world technology, products or services that will lead to creation (or testing) new intellectual property (IP) in the UK?Will there be a new IP created (or validated) by the R&D collaboration or partnership be registered or used in the UK?Will the project create or maintain (directly or indirectly) at least 1 job in the UK partner organisation for a duration of at least 6 months?ORIs there additional financial support from the foreign partner which will ensure the continuation of the R&D Collaboration or partnership project in the UK site for a minimum of 6 months?'
+      )
   })
 
   it('should display a "Commitment to invest" radio button label', () => {
@@ -53,42 +72,24 @@ const investmentTypeTests = () => {
       .should('not.be.checked')
   })
 
+  it('should display the Commitment to invest info text', () => {
+    cy.get('[data-test="cti-info"]')
+      .should('exist')
+      .should(
+        'have.text',
+        'Is this a Commitment to Invest project?Is this a Commitment to Invest – a project where a company is investing money into a large and multi-component investment project with a long period of preparation and implementation (e.g. infrastructure or regeneration)?'
+      )
+  })
+
   it('should display a list of "FDI types" when selecting "FDI"', () => {
-    cy.checkRadioGroup('Investment type', 'FDI')
-    assertSelectOptions('select option', [
-      {
-        label: 'Select an FDI type',
-        value: '',
-      },
-      {
-        label: 'Acquisition',
-        value: 'ac035522-ad0b-4eeb-87f4-0ce964e4b104',
-      },
-      {
-        label: 'Capital only',
-        value: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
-      },
-      {
-        label: 'Creation of new site or activity',
-        value: 'f8447013-cfdc-4f35-a146-6619665388b3',
-      },
-      {
-        label: 'Expansion of existing site or activity',
-        value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
-      },
-      {
-        label: 'Joint venture',
-        value: 'a7dbf6b3-9c04-43a7-9be9-d3072f138fab',
-      },
-      {
-        label: 'Merger',
-        value: '32018db0-fd2d-4b8c-aee4-a931bde3abe8',
-      },
-      {
-        label: 'Retention',
-        value: '0657168e-8a58-4f37-914f-ec541556fc28',
-      },
-    ])
+    cy.get('[data-test="investment-type-fdi"]').click()
+    cy.get('[data-test="field-fdi_type"]').then((element) => {
+      assertFieldTypeahead({
+        element,
+        label: 'Type of foreign direct investment (FDI)',
+        placeholder: 'Select an FDI type',
+      })
+    })
   })
 
   it('should display a "Continue" button', () => {
@@ -123,11 +124,17 @@ describe('Adding an investment via "Investments"', () => {
     cy.get('[data-test="add-collection-item-button"]').click()
   })
 
+  it('should take us to create investment page', () => {
+    cy.location('pathname').should('eq', `/investments/projects/create`)
+  })
+
   it('should display "Search for a company as the source of foreign equity"', () => {
-    cy.get('label').should(
-      'have.text',
-      'Search for a company as the source of foreign equity'
-    )
+    cy.get('label')
+      .parent()
+      .should(
+        'have.text',
+        'Search for a company as the source of foreign equity'
+      )
   })
 
   it('should display a "Search" button', () => {
@@ -203,7 +210,7 @@ describe('Investment Detail Step Form Content', () => {
 
   it('should display the Project name field', () => {
     cy.get('form label').should('contain', 'Project name')
-    cy.get('[data-test="name"]').should('be.visible')
+    cy.get('[data-test="field-name"]').should('be.visible')
   })
 
   it('should display the Project description field', () => {
@@ -241,24 +248,23 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Business activities',
-        placeholder: 'Search',
+        placeholder: 'Choose a business activity',
         hint: 'You can select more than one activity',
       })
     })
   })
 
   it('should not display the other business activitiy field', () => {
-    cy.get('div[data-test="business-activities"] input').clear()
+    clearTypeahead('[data-test=field-business_activities]')
 
     cy.get('[data-test="field-other_business_activity"]').should('not.exist')
   })
 
   it('should display the other business activitiy field if Other listed in Business activities field', () => {
-    cy.get('div[data-test="business-activities"] input').clear()
-    cy.get('div[data-test="business-activities"] input').type('other')
-    cy.get(
-      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
-    ).click()
+    clearTypeahead('[data-test=field-business_activities]')
+    cy.get('[data-test="field-business_activities"]').selectTypeaheadOption(
+      'Other'
+    )
 
     cy.get('[data-test="field-other_business_activity"]').then((element) => {
       assertFieldInput({
@@ -274,7 +280,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Client contact details',
-        placeholder: 'Search',
+        placeholder: 'Choose a client contact',
       })
     })
   })
@@ -289,7 +295,7 @@ describe('Investment Detail Step Form Content', () => {
   it('should display the add a new contact details', () => {
     cy.get('[data-test="contact-information-details"]').should(
       'contain',
-      "Information you'll need to add a contact"
+      'Information needed to add a new contact'
     )
   })
 
@@ -304,7 +310,7 @@ describe('Investment Detail Step Form Content', () => {
   })
 
   it('should display the Referral source field', () => {
-    cy.get('[data-test="field-referralSourceAdviser"]').then((element) => {
+    cy.get('[data-test="field-is_referral_source"]').then((element) => {
       assertFieldRadiosWithLegend({
         element,
         legend: 'Are you the referral source for this project?',
@@ -318,7 +324,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldSelect({
         element,
         label: 'Referral source activity',
-        value: 'Choose a referral source activity',
+        placeholder: 'Choose a referral source activity',
         optionsCount: 46,
       })
     })
@@ -345,10 +351,10 @@ describe('Investment Detail Step Form Content', () => {
 
   it('should display the new or existing investor field', () => {
     cy.get('[data-test="field-investor_type"]').then((element) => {
-      assertFieldTypeahead({
+      assertFieldRadios({
         element,
         label: 'Is the investor new or existing? (optional)',
-        placeholder: 'Choose an investor type',
+        optionsCount: 2,
       })
     })
   })
@@ -383,13 +389,13 @@ describe('Validation error messages', () => {
   const validationErrorMessages = [
     'Enter a project name',
     'Enter a project description',
-    'Choose a sector',
+    'Choose a primary sector',
     'Choose a business activity',
+    'Choose a client contact',
     "Select yes if you're the client relationship manager for this project",
     "Select yes if you're the referral source for this project",
-    'Choose a referral source activity',
     'Enter an estimated land date',
-    'Choose a client contact',
+    'Choose a referral source activity',
   ]
 
   const validationErrorMessageOtherBusinessActivities =
@@ -415,10 +421,9 @@ describe('Validation error messages', () => {
   })
 
   it('should display Other Business Activities validation error messages', () => {
-    cy.get('div[data-test="business-activities"] input').type('other')
-    cy.get(
-      'div[data-test="business-activities"] div[data-test="typeahead-menu-option"]'
-    ).click()
+    cy.get('[data-test="field-business_activities"]').selectTypeaheadOption(
+      'Other'
+    )
     cy.get('[data-test="submit"]').click()
     cy.get('a[href="#field-other_business_activity"]').contains(
       validationErrorMessageOtherBusinessActivities

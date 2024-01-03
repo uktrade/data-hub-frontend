@@ -1,4 +1,5 @@
 const { find } = require('lodash')
+
 const transformInteractionToListItem = require('../interaction-to-list-item')
 const mockInteraction = require('../../../../../test/unit/data/interactions/search-interaction.json')
 const mockInteractionWithFeedback = require('../../../../../test/unit/data/interactions/search-interaction-with-feedback.json')
@@ -47,7 +48,7 @@ describe('#transformInteractionToListItem', () => {
             label: 'Service',
             value: {
               id: 'sv1',
-              name: 'Account Management',
+              name: 'Account management',
             },
           },
         ],
@@ -246,7 +247,7 @@ describe('#transformInteractionToListItem', () => {
             label: 'Service',
             value: {
               id: 'sv1',
-              name: 'Account Management',
+              name: 'Account management',
             },
           },
         ],

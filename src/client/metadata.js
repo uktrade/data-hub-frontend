@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const HQ_TYPE_LABELS = {
   ukhq: 'UK HQ',
-  ghq: 'Global HQ',
+  ghq: 'Ultimate/Global HQ',
   ehq: 'European HQ',
 }
 

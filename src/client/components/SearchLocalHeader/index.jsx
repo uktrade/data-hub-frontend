@@ -4,23 +4,23 @@ import { SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import styled from 'styled-components'
 import Main from '@govuk-react/main'
-import { GREY_3_LEGACY, DARK_GREY } from '../../../client/utils/colors'
+
+import { BLUE, DARK_GREY, GREY_3_LEGACY } from '../../utils/colours'
 import urls from '../../../lib/urls'
 import SearchButton from '../SearchButton'
-import { BLUE } from 'govuk-colours'
 
 import FlashMessages from '../LocalHeader/FlashMessages'
 
 const StyledSearchContainer = styled('div')`
   position: relative;
   width: 100%;
+  margin-top: 10px;
 `
 
 const StyledSearchInput = styled(Input)`
   border: 2px solid #0b0c0c;
   width: 100%;
   padding-left: ${SPACING.SCALE_3};
-  margin-top: 10px;
 `
 const StyledMain = styled(Main)`
   padding-top: 40px;

@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker')
+
 const {
   transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
@@ -143,17 +144,17 @@ describe('Companies add company transformers', () => {
   describe('#transformFormData', () => {
     context('when area is populated', () => {
       it('returns area correctly', () => {
-        const area = faker.datatype.uuid
+        const area = faker.string.uuid
         const formData = {
-          name: faker.name,
+          name: faker.person,
           website: faker.internet.domainName,
           telephone_number: faker.phone,
-          address1: faker.address.streetAddress,
-          address2: faker.address.streetAddress,
-          city: faker.address.city,
-          county: faker.address.county,
-          postcode: faker.address.zipCode,
-          country: faker.address.country,
+          address1: faker.location.streetAddress,
+          address2: faker.location.streetAddress,
+          city: faker.location.city,
+          county: faker.location.county,
+          postcode: faker.location.zipCode,
+          country: faker.location.country,
           area: area,
         }
         const response = transformFormData(formData)
@@ -180,15 +181,15 @@ describe('Companies add company transformers', () => {
       it('returns area as undefined without an id', () => {
         const area = undefined
         const formData = {
-          name: faker.name,
+          name: faker.person,
           website: faker.internet.domainName,
           telephone_number: faker.phone,
-          address1: faker.address.streetAddress,
-          address2: faker.address.streetAddress,
-          city: faker.address.city,
-          county: faker.address.county,
-          postcode: faker.address.zipCode,
-          country: faker.address.country,
+          address1: faker.location.streetAddress,
+          address2: faker.location.streetAddress,
+          city: faker.location.city,
+          county: faker.location.county,
+          postcode: faker.location.zipCode,
+          country: faker.location.country,
           area: area,
         }
         const response = transformFormData(formData)

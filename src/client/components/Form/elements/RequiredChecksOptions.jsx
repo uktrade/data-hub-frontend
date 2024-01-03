@@ -1,11 +1,11 @@
 import React from 'react'
 
-import RequiredChecksConducted from '../../Resource/RequiredChecksConducted'
+import { RequiredChecksConductedResource } from '../../Resource'
 import ResourceOptionsField from './ResourceOptionsField'
 import FieldRadios from './FieldRadios'
 
 const RequiredChecksOptions = (props) => (
-  <ResourceOptionsField {...props} resource={RequiredChecksConducted} />
+  <ResourceOptionsField {...props} resource={RequiredChecksConductedResource} />
 )
 
 export const FieldRequiredChecksRadios = (props) => (

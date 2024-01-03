@@ -27,6 +27,7 @@ const StyledShape = styled(Shape)({
 const StyledImage = styled('img')({
   width: 22,
   height: 22,
+  marginLeft: 20,
 })
 
 const NotificationAlert = ({ count, remindersURL }) => (

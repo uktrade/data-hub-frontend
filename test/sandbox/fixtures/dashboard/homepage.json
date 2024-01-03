@@ -18,9 +18,9 @@
         },
         "dit_adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "dit_team":{
            "id":"a52b032f-9798-e211-a939-e4115bead28a",
@@ -39,7 +39,7 @@
         ],
         "service":{
            "id":"f56eb92b-3499-e211-a939-e4115bead28a",
-           "name":"Significant Assistance (PIMS)"
+           "name":"Significant assistance (PIMS)"
         },
         "service_delivery_status":null,
         "company_sector":{
@@ -83,9 +83,9 @@
         },
         "dit_adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "dit_team":{
            "id":"237b6d9c-0353-e611-af02-e4115bead28a",
@@ -101,7 +101,7 @@
         ],
         "service":{
            "id":"42c71892-f9f7-e511-888e-e4115bead28a",
-           "name":"Investment - IST Visit (IST use only)"
+           "name":"Investment - IST visit (IST use only)"
         },
         "service_delivery_status":null,
         "company_sector":{
@@ -145,9 +145,9 @@
         },
         "dit_adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "dit_team":{
            "id":"ab4d24c2-9698-e211-a939-e4115bead28a",
@@ -207,9 +207,9 @@
         },
         "dit_adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "dit_team":{
            "id":"f80532c3-5b25-e511-b6bc-e4115bead28a",
@@ -280,9 +280,9 @@
         },
         "dit_adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "dit_team":{
            "id":"544d24c2-9698-e211-a939-e4115bead28a",
@@ -329,9 +329,9 @@
      {
         "adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "archived_by":null,
         "company":{
@@ -344,9 +344,9 @@
         },
         "created_by":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff",
+           "name":"DBT Staff",
            "dit_team":{
               "id":"9010dd28-9798-e211-a939-e4115bead28a",
               "name":"UKTI Team East Midlands - International Trade Team"
@@ -393,9 +393,9 @@
      {
         "adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "archived_by":null,
         "company":{
@@ -408,9 +408,9 @@
         },
         "created_by":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff",
+           "name":"DBT Staff",
            "dit_team":{
               "id":"9010dd28-9798-e211-a939-e4115bead28a",
               "name":"UKTI Team East Midlands - International Trade Team"
@@ -457,9 +457,9 @@
      {
         "adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "archived_by":null,
         "company":{
@@ -472,9 +472,9 @@
         },
         "created_by":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff",
+           "name":"DBT Staff",
            "dit_team":{
               "id":"9010dd28-9798-e211-a939-e4115bead28a",
               "name":"UKTI Team East Midlands - International Trade Team"
@@ -524,9 +524,9 @@
      {
         "adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "archived_by":null,
         "company":{
@@ -539,9 +539,9 @@
         },
         "created_by":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff",
+           "name":"DBT Staff",
            "dit_team":{
               "id":"9010dd28-9798-e211-a939-e4115bead28a",
               "name":"UKTI Team East Midlands - International Trade Team"
@@ -591,9 +591,9 @@
      {
         "adviser":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff"
+           "name":"DBT Staff"
         },
         "archived_by":null,
         "company":{
@@ -606,9 +606,9 @@
         },
         "created_by":{
            "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
-           "first_name":"DIT",
+           "first_name":"DBT",
            "last_name":"Staff",
-           "name":"DIT Staff",
+           "name":"DBT Staff",
            "dit_team":{
               "id":"9010dd28-9798-e211-a939-e4115bead28a",
               "name":"UKTI Team East Midlands - International Trade Team"

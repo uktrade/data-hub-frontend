@@ -1,8 +1,5 @@
 const investmentProjectsData = require('../../../../../test/unit/data/investment/collection.json')
-const {
-  transformInvestmentProjectToListItem,
-  transformInvestmentListItemToDisableMetaLinks,
-} = require('../collection')
+const { transformInvestmentProjectToListItem } = require('../collection')
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentProjectToListItem', () => {
@@ -16,7 +13,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should provide the id', () => {
-        expect(this.transformedItem.id).to.equal(this.rawItem.id)
+        expect(this.transformedItem.id).to.equal(this.rawItem.id + '/details')
       })
 
       it('should provide the name', () => {
@@ -69,23 +66,6 @@ describe('Investment project transformers', () => {
           value: this.rawItem.project_code,
         })
       })
-    })
-  })
-
-  describe('#transformInvestmentListItemToDisableMetaLinks', () => {
-    it('should mark any metaItem as inert', () => {
-      const item = {
-        id: '1234',
-        meta: [
-          {
-            name: 'item',
-          },
-        ],
-      }
-
-      const transformedItem =
-        transformInvestmentListItemToDisableMetaLinks(item)
-      expect(transformedItem.meta[0].isInert).to.equal(true)
     })
   })
 })

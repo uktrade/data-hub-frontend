@@ -39,16 +39,14 @@ const getCurrentTab = (currentPath) =>
   currentPath.includes('/interactions')
     ? 'Activity'
     : currentPath.includes('/audit')
-    ? 'Audit history'
-    : currentPath.includes('/documents')
-    ? 'Documents'
-    : null
+      ? 'Audit history'
+      : null
 
 const currentTab = getCurrentTab(path)
 
 const buildBreadcrumbs = (currentTab, id, name) => {
-  const initalBreadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
+  const initialBreadcrumbs = [
+    { link: urls.dashboard.index(), text: 'Home' },
     { link: urls.contacts.index(), text: 'Contacts' },
   ]
   const dynamicBreadcrumbs = currentTab
@@ -60,7 +58,7 @@ const buildBreadcrumbs = (currentTab, id, name) => {
         { text: currentTab },
       ]
     : [{ text: name }]
-  return initalBreadcrumbs.concat(dynamicBreadcrumbs)
+  return initialBreadcrumbs.concat(dynamicBreadcrumbs)
 }
 
 const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
@@ -73,7 +71,7 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
           <GridCol>
             <StyledLink
               data-test="company-link"
-              href={urls.companies.details(contact.company.id)}
+              href={urls.companies.overview.index(contact.company.id)}
             >
               {contact.company.name}
             </StyledLink>

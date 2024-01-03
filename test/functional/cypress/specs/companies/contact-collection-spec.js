@@ -6,8 +6,8 @@ const {
   assertAddItemButton,
   assertAddItemButtonNotPresent,
   assertListLength,
-  assertBadge,
-  assertBadgeNotPresent,
+  assertTag,
+  assertTagNotPresent,
   assertMetadataItem,
   assertMetadataItemNotPresent,
   assertItemLink,
@@ -15,6 +15,7 @@ const {
   assertArchiveSummary,
   assertUnarchiveLink,
   assertUpdatedOn,
+  assertRole,
   assertTitle,
 } = require('../../support/collection-list-assertions')
 const { collectionListRequest } = require('../../support/actions')
@@ -115,6 +116,10 @@ describe('Company Contacts Collections', () => {
     assertTitle('2 contacts')
     assertRemoveAllFiltersNotPresent()
 
+    it('should contain a status role', () => {
+      assertRole('status')
+    })
+
     it('should render an "Add contact" button', () => {
       assertAddItemButton(
         'Add contact',
@@ -162,12 +167,12 @@ describe('Company Contacts Collections', () => {
       assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
-    it('should contain a primary contact badge', () => {
-      assertBadge('@firstListItem', 'Primary')
+    it('should contain a primary contact tag', () => {
+      assertTag('@firstListItem', 'Primary')
     })
 
-    it('should not contain an archived badge', () => {
-      assertBadgeNotPresent('@firstListItem', 'Archived')
+    it('should not contain an archived tag', () => {
+      assertTagNotPresent('@firstListItem', 'Archived')
     })
 
     it('should render the updated date and time', () => {
@@ -270,7 +275,7 @@ describe('Company Contacts Collections', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Contacts - Archived Ltd - Companies - DIT Data Hub'
+        'Contacts - Archived Ltd - Companies - DBT Data Hub'
       )
     })
 

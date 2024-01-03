@@ -22,7 +22,7 @@ const {
 } = fixtures
 
 const companyObject = {
-  href: companies.details(fixtures.company.venusLtd.id),
+  href: companies.overview.index(fixtures.company.venusLtd.id),
   name: fixtures.company.venusLtd.name,
 }
 
@@ -226,7 +226,7 @@ describe('Interaction details', () => {
     assertCannotCompleteTextNotVisible()
   })
 
-  context('Complete service delivery with documents', () => {
+  context('Complete service delivery', () => {
     const params = {}
 
     before(() => {
@@ -253,14 +253,13 @@ describe('Interaction details', () => {
             href: contacts.details('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
             name: 'Johnny Cakeman',
           },
-          Service: 'Events - UK Based',
+          Service: 'Events - UK based',
           Notes: 'This is a dummy service delivery for testing',
           'Date of service delivery': '5 September 2017',
           Event: {
             href: events.details('bda12a57-433c-4a0c-a7ce-5ebd080e09e8'),
             name: 'Grand exhibition',
           },
-          Documents: 'View files and documents (opens in a new window or tab)',
         },
       })
     })
@@ -276,7 +275,7 @@ describe('Interaction details', () => {
     assertCannotCompleteTextNotVisible()
   })
 
-  context('Complete investment project interaction without documents', () => {
+  context('Complete investment project interaction', () => {
     const params = {}
 
     before(() => {
@@ -374,10 +373,10 @@ describe('Interaction details', () => {
               href: contacts.details('952232d2-1d25-4c3a-bcac-2f3a30a94da9'),
               name: 'Dean Cox',
             },
-            Service: 'Providing Investment Advice & Information',
+            Service: 'Investment advice and information',
             Notes: 'This is a dummy interaction for testing',
             'Date of interaction': '5 June 2017',
-            'Adviser(s)': 'DIT Staff, Digital Data Hub - Live Service',
+            'Adviser(s)': 'DBT Staff, Digital Data Hub - Live Service',
             'Communication channel': 'Email/Website',
             'Related large capital opportunity': {
               href: investments.opportunities.details(
@@ -403,7 +402,7 @@ describe('Interaction details', () => {
         content: {
           Company: companyObject,
           'Contact(s)': contactObjectTheodore,
-          Service: 'Export Win',
+          Service: 'Export win',
           'Date of interaction': '7 October 2022',
           'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
           'Communication channel': 'Letter/Fax',
@@ -434,19 +433,15 @@ describe('Interaction details', () => {
         content: {
           Company: companyObject,
           'Contact(s)': contactObjectTheodore,
-          Service: 'UK Tradeshow Programme (UKTP) – Exhibitor',
+          Service: 'UK Tradeshow Programme (UKTP) – exhibitor',
           'Service status': 'Completed',
           'Grant offered': '£1',
           'Net receipt': '£2',
           'Date of service delivery': '22 April 2022',
           'Adviser(s)': 'Brendan Smith, Aberdeen City Council',
           Event: 'No',
-          'Policy issue types':
-            'Domestic, EU exit, Non-EU trade priority, Economic opportunity, Economic risk, International Climate',
-          'Policy areas':
-            'Access to Finance, Access to Public Funding (inc. EU funding), Agriculture (Regulation/Support), Announcement Feedback, Government Communications, Health and Social Care (NHS), Imports, Inclusive Economy, Standards, State Aid, Supply Chains and Raw Materials, Tariffs and Trade Policy, COP26 Energy Transitions, including RE100 and EP100, COP26 Finance, including TCFD, COP26 Nature, including supply chains',
           'Business intelligence':
-            'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT.',
+            'Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DBT.',
           'Named trade agreement(s)':
             'EU-UK Trade Co-operation Agreement, Free Trade Agreements: Gulf Cooperation Council (GCC), Test agreement, UK-Iceland, Liechtenstein and Norway Free Trade Agreement, UK-Singapore Digital Economy Agreement',
           'Helped remove an export barrier': 'No',

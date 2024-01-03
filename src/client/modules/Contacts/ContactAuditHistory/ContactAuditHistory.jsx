@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import ContactResource from '../../../components/Resource/Contact'
-import ContactAuditHistoryResource from '../../../components/Resource/ContactAuditHistory'
+import {
+  ContactResource,
+  ContactAuditHistoryResource,
+} from '../../../components/Resource'
 import { transformResponseToCollection } from './transformers'
 import {
   CollectionHeader,

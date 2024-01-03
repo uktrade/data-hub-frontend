@@ -270,9 +270,6 @@ describe('Estimated Land Date Reminders', () => {
         )
         .find('a')
         .should('not.exist')
-      cy.get('@reminder')
-        .find('[data-test="item-footer"]')
-        .should('contain', '')
 
       // pulls in the next item and appends to the end of the page
       cy.wait('@getNextRemindersApiRequest')

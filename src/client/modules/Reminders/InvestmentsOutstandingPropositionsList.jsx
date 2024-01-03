@@ -2,15 +2,16 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import { BLACK, GREY_1, GREY_2 } from 'govuk-colours'
 import styled from 'styled-components'
 import qs from 'qs'
+
+import { BLACK, GREY_1, GREY_2 } from '../../utils/colours'
 
 import { REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED } from '../../actions'
 import { TASK_GET_OUTSTANDING_PROPOSITIONS_REMINDERS, ID } from './state'
 import { maxItemsToPaginate, itemsPerPage } from './constants'
 
-import InvestmentOPListItemRenderer from './ItemRenderers/InvestmentOPListItemRenderer'
+import InvestmentOPListItemRenderer from './ItemRenderers/Investments/InvestmentOPListItemRenderer'
 import { RoutedPagination } from '../../components'
 import CollectionHeader from './CollectionHeader'
 import CollectionList from './CollectionList'
@@ -29,10 +30,8 @@ const PaginationSummary = styled(Summary)({
   borderBottom: `solid 1px ${GREY_2}`,
 })
 
-const InvestmentsOutstandingPropositionsList = ({
-  outstandingPropositionsReminders,
-}) => {
-  const { results, count } = outstandingPropositionsReminders
+const InvestmentsOutstandingPropositionsList = ({ reminders }) => {
+  const { results, count } = reminders
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1

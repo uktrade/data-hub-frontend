@@ -2,8 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
-import { GREY_4, WHITE, BLUE, BLACK } from 'govuk-colours'
 import { FONT_SIZE } from '@govuk-react/constants'
+
+import {
+  DARK_BLUE_LEGACY,
+  GREY_4,
+  WHITE,
+  BLUE,
+  BLACK,
+} from '../../../client/utils/colours'
 
 const StyledActiveLink = styled('a')({
   display: 'block',
@@ -11,7 +18,7 @@ const StyledActiveLink = styled('a')({
   padding: '11px 16px',
   '&:link, &:visited': {
     color: WHITE,
-    background: '#005ea5',
+    background: DARK_BLUE_LEGACY,
     textDecoration: 'none',
     fontWeight: 600,
   },
@@ -31,9 +38,18 @@ const StyledInactiveLink = styled('a')({
   },
 })
 
-export const LocalNav = ({ children, dataTest = 'local-nav' }) => (
-  <nav data-test={dataTest}>{children}</nav>
-)
+export const LocalNav = ({ children, dataTest = 'local-nav' }) => {
+  children = children.filter((child) => child !== false)
+  return (
+    <nav data-test={dataTest}>
+      <ul>
+        {children.map((link) => (
+          <li> {link} </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export const LocalNavLink = ({
   children,
@@ -43,7 +59,9 @@ export const LocalNavLink = ({
 }) => (
   <Route>
     {({ location: { pathname } }) => {
-      const NavLink = pathname === href ? StyledActiveLink : StyledInactiveLink
+      const NavLink = href?.includes(pathname)
+        ? StyledActiveLink
+        : StyledInactiveLink
       return (
         <NavLink href={href} data-test={dataTest} {...rest}>
           {children}

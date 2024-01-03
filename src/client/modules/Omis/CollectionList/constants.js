@@ -10,6 +10,8 @@ export const LABELS = {
   completedOnBefore: 'Completed date to',
   deliveryDateAfter: 'Expected delivery date from',
   deliveryDateBefore: 'Expected delivery date to',
+  grossAmount: 'Gross amount',
+  netAmount: 'Net amount',
 }
 
 export const SORT_OPTIONS = [

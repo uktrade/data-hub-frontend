@@ -1,4 +1,5 @@
 const { get } = require('lodash')
+
 const config = require('../config')
 const reporter = require('../lib/reporter')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')

@@ -3,6 +3,9 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
 const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 let companyObj
@@ -44,7 +47,13 @@ describe('Contact', () => {
     cy.visit(urls.contacts.edit(contactObj.pk))
 
     cy.contains('Job title').type('Freerider')
-    cy.contains('Phone number').next().next().find('input').clear().type('1234')
+    cy.contains('Phone number')
+      .parent()
+      .next()
+      .next()
+      .find('input')
+      .clear()
+      .type('1234')
   })
 
   it('should display name of the person who made contact record changes', () => {
@@ -55,7 +64,7 @@ describe('Contact', () => {
 
     cy.get('[data-test=collection-item]')
       .should('contain', 'DIT Staff')
-      .and('contain', '2 changes')
+      .and('contain', '3 changes')
       .and('contain', todaysDate)
     cy.get('[data-test=audit-results]').should('contain', '1 result')
   })
@@ -69,8 +78,12 @@ describe('Investment Project', () => {
   })
 
   it('should display name of the person who made investment project record changes', () => {
-    cy.get('[data-test="submit"]').click()
-    cy.get(selectors.message.successful).should('be.visible')
+    cy.intercept('api-proxy/v4/metadata/investment-specific-programme').as(
+      'apiRequest'
+    )
+    cy.wait('@apiRequest')
+    cy.get('[data-test="submit-button"]').click()
+    assertFlashMessage('Investment details updated')
 
     cy.visit(urls.investments.editHistory.index(investmentProjectObj.pk))
 
@@ -82,6 +95,6 @@ describe('Investment Project', () => {
       'have.text',
       'No changes were made to the project in this update'
     )
-    cy.get(selectors.investment.form.history).should('contain', '1 change')
+    cy.get('h3').should('contain', '1 change')
   })
 })

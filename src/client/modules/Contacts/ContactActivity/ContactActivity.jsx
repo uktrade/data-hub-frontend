@@ -16,7 +16,7 @@ import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
 import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 import ContactLayout from '../../../components/Layout/ContactLayout'
-import ContactResource from '../../../components/Resource/Contact'
+import { ContactResource } from '../../../components/Resource'
 
 const ContactActivity = ({
   contactId,

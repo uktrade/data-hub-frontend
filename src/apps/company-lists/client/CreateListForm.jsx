@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { FieldInput, FormLayout } from '../../../client/components'
 import Form from '../../../client/components/Form'
 import { FORM_LAYOUT } from '../../../common/constants'
@@ -22,6 +23,7 @@ const CreateListForm = ({
       flashMessage={() => 'Company list created'}
       submitButtonLabel="Create list"
       cancelRedirectTo={() => cancelUrl}
+      cancelButtonLabel="Back"
       transformPayload={(values) => ({
         id,
         values,
@@ -37,7 +39,7 @@ const CreateListForm = ({
           hint={hint}
           validate={(value) =>
             value && value.length > maxLength
-              ? `Enter list name which is no longer than ${maxLength} characters`
+              ? `Enter list name which is no longer than ${maxLength} characters long`
               : null
           }
         />

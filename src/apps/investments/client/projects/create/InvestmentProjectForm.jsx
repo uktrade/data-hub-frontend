@@ -57,7 +57,7 @@ const InvestmentProjectForm = ({ company, csrfToken }) => (
             }
             flashMessage={() => 'Investment project created'}
           >
-            {({ values, errors }) => {
+            {({ values }) => {
               const dhCompany = company || values.company
               return (
                 <>
@@ -65,13 +65,8 @@ const InvestmentProjectForm = ({ company, csrfToken }) => (
                   {!company && <CompanySearchStep />}
                   <InvestmentTypeStep
                     investmentTypes={values.investmentTypes}
-                    fdiTypes={values.fdiTypes}
                   />
-                  <InvestmentDetailsStep
-                    company={dhCompany}
-                    values={values}
-                    errors={errors}
-                  />
+                  <InvestmentDetailsStep company={dhCompany} values={values} />
                 </>
               )
             }}

@@ -8,6 +8,8 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardSubject from './card/ActivityCardSubject'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -15,7 +17,6 @@ export default class CompaniesHouseCompany extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -26,12 +27,12 @@ export default class CompaniesHouseCompany extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
 
     const startTime = get(activity, 'object.startTime')
     const reference = get(activity, 'object.name')
 
-    const summary = get(activity, 'summary')
+    const subject = get(activity, 'summary')
     const address = get(activity, 'object.location:dit:address')
     const postcode = get(activity, 'object.location:dit:postcode')
     const confStmtLastMadeUpDate = format(
@@ -59,8 +60,10 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       </span>
     ))
 
+    const date = format(startTime)
+
     const metadata = [
-      { label: 'Date', value: format(startTime) },
+      { label: 'Date', value: date },
       { label: 'Company name', value: reference },
       { label: 'Address', value: address },
       { label: 'Postcode', value: postcode },
@@ -91,15 +94,25 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       },
     ]
 
-    return (
+    return isOverview ? (
+      <OverviewActivityCardWrapper dataTest="companies-house-company-activity">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind="Company Record"
+          subject={subject}
+          summary="Companies House Updated"
+        ></ActivityOverviewSummary>
+      </OverviewActivityCardWrapper>
+    ) : (
       <ActivityCardWrapper dataTest="companies-house-company-activity">
+        <ActivityCardSubject>{subject}</ActivityCardSubject>
         <ActivityCardLabels
           isExternalActivity={true}
           theme="Companies House"
           service="Company Record"
           kind="Companies House Update"
         ></ActivityCardLabels>
-        <ActivityCardSubject>{summary}</ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

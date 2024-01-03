@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { GREY_1, GREY_2 } from 'govuk-colours'
 
+import { GREY_1, GREY_2 } from '../../utils/colours'
 import EditHistoryChangeList from './EditHistoryChangeList'
 import Pagination from '../../components/Pagination'
 

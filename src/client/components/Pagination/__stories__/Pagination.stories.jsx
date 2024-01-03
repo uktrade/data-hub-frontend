@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { storiesOf } from '@storybook/react'
 
 import RoutedPagination from '../RoutedPagination'
 import Pagination from '../'
@@ -57,7 +56,13 @@ const RoutedPaginationWithState = () => {
   )
 }
 
-storiesOf('Pagination', module)
-  .addParameters({ component: Pagination })
-  .add('Default', () => <PaginationWithState />)
-  .add('Routed', () => <RoutedPaginationWithState />)
+export default {
+  title: 'Pagination',
+
+  parameters: {
+    component: Pagination,
+  },
+}
+
+export const Default = () => <PaginationWithState />
+export const Routed = () => <RoutedPaginationWithState />

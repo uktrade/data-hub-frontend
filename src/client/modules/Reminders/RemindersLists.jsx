@@ -1,112 +1,99 @@
 import React from 'react'
-import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
+import { useLocation } from 'react-router-dom'
+import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
-import FooterLink from './FooterLink'
+import qs from 'qs'
 
-import { DefaultLayout } from '../../components'
-import RemindersMenu from './RemindersMenu'
+import { BLACK } from '../../../client/utils/colours'
 
-import InvestmentsEstimatedLandDatesList from './InvestmentsEstimatedLandDatesList'
-import InvestmentsNoRecentInteractionsList from './InvestmentsNoRecentInteractionsList'
-import InvestmentsOutstandingPropositionsList from './InvestmentsOutstandingPropositionsList'
-import ExportsNoRecentInteractionsList from './ExportsNoRecentInteractionsList'
-import ExportsNewInteractionsList from './ExportsNewInteractionsList'
+import { ID } from './state'
 
-import urls from '../../../lib/urls'
-import {
-  reminderTypeToLabel,
-  INVESTMENTS_ESTIMATED_LAND_DATES,
-  INVESTMENTS_NO_RECENT_INTERACTIONS,
-  INVESTMENTS_OUTSTANDING_PROPOSITIONS,
-  COMPANIES_NO_RECENT_INTERACTIONS,
-  COMPANIES_NEW_INTERACTIONS,
-} from './constants'
+import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
 
-const Container = styled('div')({
-  [MEDIA_QUERIES.DESKTOP]: {
-    display: 'flex',
-  },
+import { CollectionSort, RoutedPagination } from '../../components'
+import CollectionHeader from './CollectionHeader'
+import CollectionList from './CollectionList'
+import Effect from '../../components/Effect'
+import Task from '../../components/Task'
+
+const Summary = styled('p')({
+  color: BLACK,
+  paddingTop: SPACING.SCALE_2,
+  fontSize: FONT_SIZE.SIZE_19,
 })
 
-const MenuContainer = styled('div')({
-  width: '100%',
-  [MEDIA_QUERIES.DESKTOP]: {
-    width: 'calc(33% - 20px)',
-    padding: SPACING.SCALE_2,
-  },
-})
+const RemindersLists = ({
+  reminders,
+  pageOrigin,
+  dataTest,
+  getReminderTask,
+  getReminderTaskOnSuccessDispatch,
+  deleteReminderTask,
+  deleteReminderTaskOnSuccessDispatch,
+  getNextReminderTask,
+  getNextReminderTaskOnSuccessDispatch,
+  itemRenderer,
+}) => {
+  const { results, count, nextPending } = reminders
+  const location = useLocation()
+  const qsParams = qs.parse(location.search.slice(1))
+  const page = parseInt(qsParams.page, 10) || 1
+  const totalPages = Math.ceil(
+    Math.min(count, maxItemsToPaginate) / itemsPerPage
+  )
 
-const SettingsLink = styled(Link)({
-  display: 'block',
-  marginTop: SPACING.SCALE_5,
-  marginBottom: SPACING.SCALE_3,
-  [MEDIA_QUERIES.TABLET]: {
-    display: 'none',
-  },
-  [MEDIA_QUERIES.DESKTOP]: {
-    display: 'none',
-  },
-})
-
-const ListContainer = styled('div')({
-  width: '100%',
-  [MEDIA_QUERIES.DESKTOP]: {
-    width: '67%',
-  },
-})
-
-const RemindersLists = ({ reminderType }) => {
-  const subject = reminderTypeToLabel[reminderType]
   return (
-    <DefaultLayout
-      pageTitle={`Reminders - ${subject}`}
-      heading="Reminders"
-      subheading={subject}
-      breadcrumbs={[
-        { link: urls.dashboard(), text: 'Home' },
-        { link: urls.reminders.index(), text: 'Reminders' },
-        { text: subject },
-      ]}
-    >
-      <>
-        <Container>
-          <MenuContainer>
-            <RemindersMenu />
-            {reminderType !== INVESTMENTS_OUTSTANDING_PROPOSITIONS && (
-              <SettingsLink
-                data-test="reminders-settings-link"
-                href="/reminders/settings"
-              >
-                Reminders settings
-              </SettingsLink>
-            )}
-          </MenuContainer>
-          <ListContainer>
-            {reminderType === INVESTMENTS_ESTIMATED_LAND_DATES && (
-              <InvestmentsEstimatedLandDatesList />
-            )}
-            {reminderType === INVESTMENTS_NO_RECENT_INTERACTIONS && (
-              <InvestmentsNoRecentInteractionsList />
-            )}
-            {reminderType === INVESTMENTS_OUTSTANDING_PROPOSITIONS && (
-              <InvestmentsOutstandingPropositionsList />
-            )}
-            {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
-              <ExportsNoRecentInteractionsList />
-            )}
-            {reminderType === COMPANIES_NEW_INTERACTIONS && (
-              <ExportsNewInteractionsList />
-            )}
-          </ListContainer>
-        </Container>
-        <FooterLink
-          headingText="Need Help?"
-          linkUrl={urls.external.reminderAndSettings}
-          linkText="guidance on reminders and email notifications"
-        />
-      </>
-    </DefaultLayout>
+    <>
+      <CollectionHeader totalItems={count} pageOrigin={pageOrigin} />
+      {results.length === 0 ? (
+        <Summary data-test={dataTest}>You have no reminders.</Summary>
+      ) : (
+        <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
+      )}
+      <Task.Status
+        name={getReminderTask}
+        id={ID}
+        startOnRender={{
+          payload: { page, sortby: qsParams.sortby },
+          onSuccessDispatch: getReminderTaskOnSuccessDispatch,
+        }}
+      >
+        {() => (
+          <Task>
+            {(getTask) => {
+              const deleteTask = getTask(deleteReminderTask, ID)
+              const getNextTask = getTask(getNextReminderTask, ID)
+              return (
+                <>
+                  <Effect
+                    dependencyList={[nextPending]}
+                    effect={() =>
+                      nextPending &&
+                      getNextTask.start({
+                        payload: { page, sortby: qsParams.sortby },
+                        onSuccessDispatch: getNextReminderTaskOnSuccessDispatch,
+                      })
+                    }
+                  />
+                  <CollectionList
+                    results={results}
+                    itemRenderer={itemRenderer}
+                    disableDelete={deleteTask.status || nextPending}
+                    onDeleteReminder={(reminderId) => {
+                      deleteTask.start({
+                        payload: { id: reminderId },
+                        onSuccessDispatch: deleteReminderTaskOnSuccessDispatch,
+                      })
+                    }}
+                  />
+                  <RoutedPagination initialPage={page} items={count || 0} />
+                </>
+              )
+            }}
+          </Task>
+        )}
+      </Task.Status>
+    </>
   )
 }
 

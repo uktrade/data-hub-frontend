@@ -1,8 +1,8 @@
 import React from 'react'
 import { Details, Link, Paragraph, ListItem, UnorderedList } from 'govuk-react'
 import styled from 'styled-components'
-
 import { SPACING_POINTS } from '@govuk-react/constants'
+
 import urls from '../../../lib/urls'
 
 const StyledDetails = styled(Details)`
@@ -10,25 +10,30 @@ const StyledDetails = styled(Details)`
 `
 
 const ContactInformation = ({ onOpenContactForm, companyId }) => {
+  const redirectUrl = urls.contacts.create(companyId, {
+    origin_url: window.location.pathname,
+    origin_search: btoa(window.location.search),
+  })
   return (
     <>
-      If a contact isn't listed{' '}
+      If your contact is not listed{' '}
       <Link
         data-test="add-a-new-contact-link"
-        onClick={onOpenContactForm}
-        href={urls.contacts.create(companyId, {
-          origin_url: window.location.pathname,
-        })}
+        onClick={(e) => {
+          e.preventDefault()
+          onOpenContactForm({ event: e, redirectUrl })
+        }}
+        href={redirectUrl}
       >
         add a new contact
       </Link>
-      . After completing the form you'll return to this page without losing
-      data.
+      . You will leave this page to enter details, once added you will return
+      here. The information you added will have been saved.
       <StyledDetails
-        summary="Information you'll need to add a contact"
+        summary="Information needed to add a new contact"
         data-test="contact-information-details"
       >
-        <Paragraph>You need to give the new contact's:</Paragraph>
+        <Paragraph>You need:</Paragraph>
         <UnorderedList listStyleType="bullet">
           <ListItem>full name</ListItem>
           <ListItem>job title</ListItem>

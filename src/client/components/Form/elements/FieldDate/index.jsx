@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { castArray, snakeCase } from 'lodash'
 import styled from 'styled-components'
-import { ERROR_COLOUR } from 'govuk-colours'
 import ErrorText from '@govuk-react/error-text'
 import Label from '@govuk-react/label'
 import Input from '@govuk-react/input'
@@ -12,6 +11,7 @@ import {
   SPACING,
 } from '@govuk-react/constants'
 
+import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
 import { useFormContext } from '../../hooks'
@@ -46,9 +46,12 @@ const StyledLabel = styled(Label)(
   })
 )
 
-const StyledList = styled('div')({
-  display: 'flex',
-})
+const StyledList = styled.div`
+  display: flex;
+  ${Input} {
+    height: 47px;
+  }
+`
 
 const getValidator =
   (required, invalid, format) =>
@@ -60,12 +63,20 @@ const getValidator =
 
     const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
+    if (isDateEmpty && !required) {
+      return null
+    }
+
     if (required && isDateEmpty) {
       return required
     }
 
     if (!isValid && !isDateEmpty) {
       return invalid || 'Enter a valid date'
+    }
+
+    if (year.toString().length != 4) {
+      return 'Enter a year as 4 digits'
     }
   }
 
@@ -124,7 +135,9 @@ const FieldDate = ({
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced }}>
       <StyledInputWrapper error={error}>
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && (
+          <ErrorText data-test={`field-${name}-error`}>{error}</ErrorText>
+        )}
         {reduced ? (
           <Input
             id={name}
@@ -145,7 +158,7 @@ const FieldDate = ({
                   name={`${name}.day`}
                   data-test={`${dataTest}-day`}
                   error={touched && error}
-                  type="number"
+                  type="text"
                   value={value.day}
                   onChange={(e) => onChange(DAY, e)}
                   onBlur={onBlur}
@@ -159,7 +172,7 @@ const FieldDate = ({
                 name={`${name}.month`}
                 data-test={`${dataTest}-month`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.month}
                 onChange={(e) => onChange(MONTH, e)}
                 onBlur={onBlur}
@@ -172,7 +185,7 @@ const FieldDate = ({
                 name={`${name}.year`}
                 data-test={`${dataTest}-year`}
                 error={touched && error}
-                type="number"
+                type="text"
                 value={value.year}
                 onChange={(e) => onChange(YEAR, e)}
                 onBlur={onBlur}

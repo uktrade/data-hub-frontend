@@ -1,16 +1,27 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import NewWindowLink from 'NewWindowLink'
 
-const stories = storiesOf('NewWindowLink')
+export default {
+  title: 'NewWindowLink',
 
-stories
-  .addParameters({ component: NewWindowLink })
-  .add('Default', () => (
-    <NewWindowLink href="https://example.com">This is a link</NewWindowLink>
-  ))
-  .add('Custom aria-label', () => (
-    <NewWindowLink href="https://example.com" aria-label="custom help text">
-      This is a link
-    </NewWindowLink>
-  ))
+  parameters: {
+    component: NewWindowLink,
+  },
+}
+
+export const Default = () => (
+  <NewWindowLink href="https://example.com">This is a link</NewWindowLink>
+)
+
+export const CustomAriaLabel = () => (
+  <NewWindowLink
+    href="https://example.com"
+    aria-label="custom help text for screen readers which overrides the link text"
+  >
+    This is a link
+  </NewWindowLink>
+)
+
+CustomAriaLabel.story = {
+  name: 'Custom aria-label',
+}

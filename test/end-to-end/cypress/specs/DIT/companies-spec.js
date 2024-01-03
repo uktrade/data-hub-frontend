@@ -7,7 +7,6 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 const { assertKeyValueTable } = require('../../support/assertions')
 
 describe('Advisors', () => {
-  const globalManagerTable = 2
   const company = fixtures.company.create.corp()
 
   before(() => {
@@ -15,14 +14,14 @@ describe('Advisors', () => {
   })
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index(company.pk))
+    cy.visit(companies.accountManagement.index(company.pk))
 
-    cy.get(selectors.collection.contentHeader).should(
+    cy.get('[data-test=core-team-heading]').should(
       'contain',
       'Advisers on the core team'
     )
 
-    cy.get(selectors.collection.contentTable(globalManagerTable))
+    cy.get('[data-test=global-acc-manager-table]')
       .should('contain', 'IST - Sector Advisory Services')
       .and('contain', 'London')
       .and('contain', 'Travis Greene')
@@ -62,7 +61,7 @@ describe('Contacts', () => {
   it('should display the newly created contact in company contact collection page', () => {
     cy.visit(companies.activity.index(company.pk))
 
-    cy.contains('Company contacts').click()
+    cy.contains('Contacts').click()
     cy.get('[data-test="collection-item"]')
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')
@@ -95,7 +94,7 @@ describe('Export', () => {
           assertTable([
             'Export growth',
             'No profile',
-            'No score given',
+            'Unavailable',
             'None',
             'None',
             'None',
@@ -113,7 +112,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'None',
             'None',
             'None',
@@ -153,7 +152,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'None',
             'None',
             'None',
@@ -176,7 +175,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'France, Germany',
             'None',
             'None',
@@ -192,7 +191,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'France, Germany',
             'None',
             'None',
@@ -219,7 +218,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'Brazil, France, Germany',
             'Honduras',
             'Chile',
@@ -246,7 +245,7 @@ describe('Export', () => {
           assertTable([
             'None',
             'No profile',
-            'No score given',
+            'Unavailable',
             'None',
             'None',
             'None',

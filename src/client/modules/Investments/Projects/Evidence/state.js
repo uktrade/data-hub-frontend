@@ -1,0 +1,2 @@
+export const DELETE_DOCUMENT_ID = 'deleteProjectDocument'
+export const TASK_DELETE_PROJECT_DOCUMENT = 'TASK_DELETE_PROJECT_DOCUMENT'

@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker'
 
+import { listFaker } from './utils'
+
 const countries = [
   'United Kingdom',
   'Zimbabwe',
@@ -9,7 +11,13 @@ const countries = [
   'The Bahamas',
 ]
 
-export const countryFaker = () => ({
-  id: faker.datatype.uuid(),
+export const countryFaker = (overrides = {}) => ({
+  id: faker.string.uuid(),
   name: faker.helpers.arrayElement(countries),
+  ...overrides,
 })
+
+export const countryListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: countryFaker, length, overrides })
+
+export default countryListFaker

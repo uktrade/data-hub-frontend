@@ -1,4 +1,4 @@
-import { BLUE, WHITE } from 'govuk-colours'
+import { BLUE, WHITE } from '../../../client/utils/colours'
 import { MEDIA_QUERIES } from '../../utils/responsive'
 
 export default {

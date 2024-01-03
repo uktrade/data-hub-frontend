@@ -1,5 +1,6 @@
 import { get, pick } from 'lodash'
 import axios from 'axios'
+
 import { apiProxyAxios } from '../../Task/utils'
 
 export const fetchCompanyLists = () =>
@@ -14,20 +15,22 @@ export const fetchCompanyLists = () =>
   )
 
 export const fetchCompanyList = (id) =>
-  apiProxyAxios.get(`v4/company-list/${id}/item`).then((res) =>
-    res.data.results.map(({ company: { id, name }, latest_interaction }) => ({
-      id,
-      name,
-      ...pick(latest_interaction, ['date', 'subject']),
-      interactionId: get(latest_interaction, 'id'),
-      ditParticipants: get(latest_interaction, 'dit_participants', []).map(
-        (x) => ({
-          name: get(x, 'adviser.name'),
-          team: get(x, 'team.name'),
-        })
-      ),
-    }))
-  )
+  apiProxyAxios
+    .get(`v4/company-list/${id}/item?limit=1000&offset=0`)
+    .then((res) =>
+      res.data.results.map(({ company: { id, name }, latest_interaction }) => ({
+        id,
+        name,
+        ...pick(latest_interaction, ['date', 'subject']),
+        interactionId: get(latest_interaction, 'id'),
+        ditParticipants: get(latest_interaction, 'dit_participants', []).map(
+          (x) => ({
+            name: get(x, 'adviser.name'),
+            team: get(x, 'team.name'),
+          })
+        ),
+      }))
+    )
 
 export const addOrRemoveFromList = ({ token, companyId, list }) =>
   axios({

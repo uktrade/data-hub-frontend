@@ -16,13 +16,14 @@ async function renderCreateListForm(req, res, next) {
   try {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
-      .breadcrumb('Create a list')
+      .breadcrumb('Create new list')
       .render('company-lists/views/create-list-container', {
+        heading: `Add ${company.name} to list`,
         props: {
           id: company.id,
           name: 'listName',
-          label: 'List name',
-          hint: 'This is a name only you see, and can be up to 30 characters',
+          label: 'What do you want to name your new list?',
+          hint: 'This is a name only you see, and can be up to 30 characters long',
           cancelUrl: `/companies/${company.id}/lists/add-remove`,
           maxLength: 30,
         },

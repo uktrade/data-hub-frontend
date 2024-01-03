@@ -3,8 +3,9 @@ import Select from '@govuk-react/select'
 import React from 'react'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
-import { GREY_4 } from 'govuk-colours'
 import PropTypes from 'prop-types'
+
+import { GREY_4 } from '../../../../client/utils/colours'
 
 const StyledDropdownContainer = styled('div')`
   background: ${GREY_4};

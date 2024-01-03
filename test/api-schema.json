@@ -8050,7 +8050,7 @@
           "permission_to_approach_contacts": {
             "type": "string",
             "readOnly": true,
-            "description": "Legacy field. Can DIT speak to the contacts?"
+            "description": "Legacy field. Can DBT speak to the contacts?"
           },
           "delivery_date": {
             "type": "string",

@@ -11,7 +11,7 @@ const EditCompanyList = ({ cancelUrl, listName, csrfToken, id, returnUrl }) => (
     <LocalHeader
       heading="Edit list name"
       breadcrumbs={[
-        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.dashboard.index(), text: 'Home' },
         {
           text: 'Edit list',
         },

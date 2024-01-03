@@ -2,11 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import { BLUE, BORDER_COLOUR } from 'govuk-colours'
 import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
+import { BLUE, BORDER_COLOUR } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import {
@@ -15,6 +14,11 @@ import {
   INVESTMENTS_ESTIMATED_LAND_DATES_LABEL,
   INVESTMENTS_NO_RECENT_INTERACTIONS_LABEL,
   INVESTMENTS_OUTSTANDING_PROPOSITIONS_LABEL,
+  MY_TASKS_DUE_DATE_APPROACHING_LABEL,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL,
+  TASK_AMENDED_BY_OTHERS_LABEL,
+  TASK_OVERDUE_LABEL,
+  TASK_COMPLETED_LABEL,
 } from './constants'
 
 const LinkList = styled('ul')({
@@ -105,6 +109,39 @@ export const RemindersMenu = ({
           )}
         </Menu>
       )}
+      <Menu dataTest="my-tasks-menu-group">
+        <H3 as="h2">My Tasks</H3>
+        <MenuItem
+          to={urls.reminders.myTasks.dueDateApproaching()}
+          pathname={location.pathname}
+        >
+          {`${MY_TASKS_DUE_DATE_APPROACHING_LABEL} (${reminderSummary.my_tasks.due_date_approaching})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskAssignedToMeFromOthers()}
+          pathname={location.pathname}
+        >
+          {`${TASK_ASSIGNED_TO_ME_FROM_OTHERS_LABEL} (${reminderSummary.my_tasks.task_assigned_to_me_from_others})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskAmendedByOthers()}
+          pathname={location.pathname}
+        >
+          {`${TASK_AMENDED_BY_OTHERS_LABEL} (${reminderSummary.my_tasks.task_amended_by_others})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskOverdue()}
+          pathname={location.pathname}
+        >
+          {`${TASK_OVERDUE_LABEL} (${reminderSummary.my_tasks.task_overdue})`}
+        </MenuItem>
+        <MenuItem
+          to={urls.reminders.myTasks.taskCompleted()}
+          pathname={location.pathname}
+        >
+          {`${TASK_COMPLETED_LABEL} (${reminderSummary.my_tasks.task_completed})`}
+        </MenuItem>
+      </Menu>
     </>
   )
 }

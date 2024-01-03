@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 
 const {
   companies,
@@ -7,10 +6,10 @@ const {
   investments,
 } = require('../../../../../src/lib/urls')
 
+const { assertCollection } = require('../../support/assertions')
 const {
-  assertCollection,
-  assertReactCollection,
-} = require('../../support/assertions')
+  assertGovReactTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -19,7 +18,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      cy.get('[data-test="collectionCount"]').should('have.text', '1')
+      cy.get('[data-test="collectionCount"]').should('have.text', '2')
     })
   })
 
@@ -45,7 +44,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a investment collection', () => {
-        assertReactCollection()
+        assertCollection('collectionCount', false)
       })
     })
 
@@ -59,21 +58,21 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        assertCollection()
+        assertCollection('collection-count')
       })
     })
 
     describe('proposition', () => {
       before(() => {
         cy.visit(
-          investments.projects.interactions.index(
+          investments.projects.propositions(
             fixtures.investmentProject.newZoo.id
           )
         )
       })
 
       it('should return the results summary for a proposition collection', () => {
-        assertCollection()
+        assertCollection('collection-count')
       })
     })
 
@@ -85,10 +84,17 @@ describe('Collection', () => {
       })
 
       it('should return the investment project team summary', () => {
-        cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
-          .should('contain', 'Client Relationship Manager')
-          .and('contain', 'Marketing - Marketing Team')
-          .and('contain', 'Paula Churing')
+        assertGovReactTable({
+          element: '[data-test="crm-table"]',
+          rows: [
+            ['Role', 'Adviser', 'Team'],
+            [
+              'Client Relationship Manager',
+              'Paula Churing',
+              'Marketing - Marketing Team',
+            ],
+          ],
+        })
       })
     })
   })

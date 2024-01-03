@@ -4,8 +4,12 @@ var companyLink = require('../../../fixtures/v4/dnb/company-link.json')
 var companyChangeRequest = require('../../../fixtures/v4/dnb/company-change-request.json')
 var companySearchMatched = require('../../../fixtures/v4/dnb/company-search-matched.json')
 var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-not-matched.json')
+var companySearchNotMatchedNoCountry = require('../../../fixtures/v4/dnb/company-search-not-matched-no-country.json')
 var companySearchNotMatchedUS = require('../../../fixtures/v4/dnb/company-search-not-matched-us.json')
 var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
+var dnbGlobalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
+
+const { fakerCompanyFamilyTree } = require('./company-tree')
 
 exports.companyCreate = function (req, res) {
   if (req.body.duns_number === '111111111') {
@@ -24,6 +28,8 @@ exports.companySearch = function (req, res) {
     return res.json(companySearchNotMatched)
   } else if (req.body.duns_number === '222222222') {
     return res.json(companySearchMatched)
+  } else if (req.body.duns_number === '333333333') {
+    return res.json(companySearchNotMatchedNoCountry)
   }
 
   return res.json(companySearch)
@@ -39,4 +45,38 @@ exports.companyLink = function (req, res) {
 
 exports.companyChangeRequest = function (req, res) {
   res.json(companyChangeRequest)
+}
+
+exports.companyFamilyTree = function (req, res) {
+  res.json(
+    fakerCompanyFamilyTree({
+      treeDepth: 3,
+      minCompaniesPerLevel: 1,
+      maxCompaniesPerLevel: 5,
+    })
+  )
+}
+
+exports.relatedCompaniesCount = function (req, res) {
+  res.json(
+    req.params.companyId === dnbGlobalUltimate.id
+      ? {
+          total: 5,
+          related_companies_count: 3,
+          manually_linked_subsidiaries_count: 2,
+          reduced_tree: false,
+        }
+      : {
+          total: 0,
+          related_companies_count: 0,
+          manually_linked_subsidiaries_count: 0,
+          reduced_tree: false,
+        }
+  )
+}
+exports.relatedCompanies = function (req, res) {
+  res.json({
+    related_companies: [],
+    reduced_tree: false,
+  })
 }

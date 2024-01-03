@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import Link from '@govuk-react/link'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
+import Label from '@govuk-react/label'
 
 import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
@@ -19,8 +21,7 @@ import {
   FormLayout,
 } from '..'
 import LocalHeader from '../LocalHeader/LocalHeader'
-import ContactResource from '../Resource/Contact'
-import CompanyResource from '../Resource/Company'
+import { CompanyResource, ContactResource } from '../Resource'
 import * as validators from '../Form/validators'
 import State from '../State'
 import {
@@ -33,9 +34,6 @@ import {
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import urls from '../../../lib/urls'
-
-import styled from 'styled-components'
-import Label from '@govuk-react/label'
 
 const YES = 'Yes'
 const NO = 'No'
@@ -50,6 +48,20 @@ const keysToSnakeCase = (o) => _.mapKeys(o, (v, k) => _.snakeCase(k))
 
 const stripHost = (u) => {
   const url = new URL(u)
+  return url.pathname + url.search
+}
+
+const appendParamsToUrl = (origin_url, origin_search, id, name) => {
+  const url = new URL(origin_url, window.location.origin)
+  let inputParams = new URLSearchParams(
+    origin_search ? atob(origin_search) : ''
+  )
+
+  inputParams.append('new-contact-id', id)
+  inputParams.append('new-contact-name', name)
+
+  url.search = inputParams
+
   return url.pathname + url.search
 }
 
@@ -141,15 +153,12 @@ const _ContactForm = ({
           <Main>
             <State>
               {({ referrerUrl, router }) => {
-                const { origin_url } = qs.parse(router.location.search)
+                const { origin_url, origin_search } = qs.parse(
+                  router.location.search
+                )
                 const redirectTo = ({ name, id }) => {
-                  const encoded = qs.stringify({
-                    'new-contact-name': name,
-                    'new-contact-id': id,
-                  })
-
                   return origin_url
-                    ? `${origin_url}?${encoded}`
+                    ? appendParamsToUrl(origin_url, origin_search, id, name)
                     : urls.contacts.details(id)
                 }
                 return (
@@ -168,6 +177,7 @@ const _ContactForm = ({
                         addressSameAsCompany,
                         primary,
                         email,
+                        valid_email,
                         moreDetails,
                         ...values
                       }) => ({
@@ -175,6 +185,7 @@ const _ContactForm = ({
                         values: {
                           ...keysToSnakeCase(values),
                           email,
+                          valid_email: true,
                           notes: moreDetails,
                           accepts_dit_email_marketing:
                             acceptsDitEmailMarketing.includes(YES),

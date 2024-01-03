@@ -4,6 +4,15 @@ export const fill = (selector, value) => {
   }
 }
 
+/**
+ * This function first clears the input before typing the new value
+ */
+export const fillWithNewValue = (selector, value) => {
+  if (selector && value) {
+    cy.get(selector).clear().type(value)
+  }
+}
+
 export const fillYesNoRadio = (selector, isYes) => {
   cy.get(selector)
     .eq(isYes === true ? 0 : 1)
@@ -14,14 +23,30 @@ export const fillTypeahead = (selector, value) => {
   cy.get(selector).selectTypeaheadOption(value)
 }
 
+export const fillTypeaheadWithLegend = (selector, value) => {
+  cy.get(selector).children().selectTypeaheadOption(value)
+}
+
 export const fillMultiOptionTypeahead = (selector, values = []) => {
   values.map((value) => fillTypeahead(selector, value))
+}
+
+export const fillMultiOptionTypeaheadWithLegend = (selector, values = []) => {
+  values.map((value) => fillTypeaheadWithLegend(selector, value))
 }
 
 export const fillDate = (dateId, day, month, year) => {
   cy.get(`${dateId}\\.day`).type(day)
   cy.get(`${dateId}\\.month`).type(month)
   cy.get(`${dateId}\\.year`).type(year)
+}
+
+export const fillSelect = (selector, value) => {
+  cy.get(selector).find('select').should('not.be.disabled').select(value)
+}
+
+export const clearTypeahead = (selector) => {
+  cy.get(selector).find('input').clear().type('{esc}')
 }
 
 //  Click events

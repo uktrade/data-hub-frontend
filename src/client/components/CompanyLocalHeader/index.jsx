@@ -1,24 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import pluralize from 'pluralize'
+import Main from '@govuk-react/main'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
-import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
-import { GREY_3, PURPLE, BLACK } from 'govuk-colours'
+import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
-import Main from '@govuk-react/main'
+import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
+import { Link } from 'govuk-react'
+import { H4 } from '@govuk-react/heading'
 
-import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
-import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
+import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
+import LocalHeader from '../LocalHeader/LocalHeader'
+import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
+import LocalHeaderCompanyLists from './LocalHeaderCompanyLists'
+import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
-import { addressToString } from '../../../client/utils/addresses'
+import { addressToStringResource } from '../../../client/utils/addresses'
 import urls from '../../../lib/urls'
-import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
-import { DropdownButton } from '../DropdownMenu'
-import NewWindowLink from '../NewWindowLink'
 import ArchivePanel from '../ArchivePanel'
+import {
+  buildCompanyBreadcrumbs,
+  isItaTierDAccount,
+} from '../../modules/Companies/utils'
+
+const LocalHeaderTradingNames = styled(H4)`
+  font-weight: normal;
+`
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -35,6 +44,20 @@ const TypeWrapper = styled('div')`
     display: table-row;
   }
 `
+const StyledButtonContainer = styled('div')`
+  width: 100%;
+  display: inline-block;
+`
+
+const StyledList = styled('div')`
+  padding-bottom: 10px;
+  display: inline-flex;
+`
+
+const StyledButtonLink = styled.a({
+  marginBottom: 10,
+  float: 'right',
+})
 
 const BadgeWrapper = styled('div')`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
@@ -46,14 +69,6 @@ const StyledDetails = styled(Details)`
   @media (min-width: ${BREAKPOINTS.TABLET}) {
     margin: 0 0 0 ${SPACING.SCALE_3};
   }
-  span,
-  div {
-    font-size: ${FONT_SIZE.SIZE_16};
-  }
-`
-
-const StyledDetailsMuted = styled(Details)`
-  margin: 0;
   span,
   div {
     font-size: ${FONT_SIZE.SIZE_16};
@@ -88,20 +103,19 @@ const StyledMain = styled(Main)`
     font-size: ${FONT_SIZE.SIZE_20};
   }
 `
-
-const StyledMainMuted = styled(Main)`
-  padding-top: ${SPACING.SCALE_1};
-  div {
-    font-size: ${FONT_SIZE.SIZE_16};
-    font-weight: normal;
-    color: ${BLACK};
-  }
-  div > div {
-    border: 3px solid ${PURPLE};
-    margin: 0;
-    padding: ${SPACING.SCALE_3};
-  }
+const StyledRelatedCompaniesWrapper = styled('div')`
+  padding-bottom: 20px;
 `
+
+const isUltimate = (company) => !!company.isGlobalUltimate
+const isGlobalHQ = (company) =>
+  company.headquarterType && company.headquarterType.name === 'ghq'
+
+const hasAllocatedLeadIta = (company) =>
+  company.oneListGroupGlobalAccountManager != null
+
+const hasManagedAccountDetails = (company) =>
+  company.oneListGroupTier && hasAllocatedLeadIta(company)
 
 const CompanyLocalHeader = ({
   breadcrumbs,
@@ -109,50 +123,85 @@ const CompanyLocalHeader = ({
   company,
   dnbRelatedCompaniesCount,
   returnUrl,
-}) => {
-  const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
-  return (
+  csrfToken,
+}) =>
+  company && (
     <>
-      <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
+      <LocalHeader
+        breadcrumbs={buildCompanyBreadcrumbs(
+          breadcrumbs,
+          company.id,
+          company.name
+        )}
+        flashMessages={flashMessages}
+      >
         <GridRow>
           <GridCol setWidth="two-thirds">
             <LocalHeaderHeading data-test="heading">
               {company.name}
             </LocalHeaderHeading>
+            {company?.tradingNames?.length > 0 && (
+              <LocalHeaderTradingNames data-test="trading-names">
+                Trading as: {company.tradingNames.join(', ')}
+              </LocalHeaderTradingNames>
+            )}
+
             <StyledAddress data-test="address">
-              {addressToString(company.address)}
+              {addressToStringResource(company.address)}
             </StyledAddress>
+            {dnbRelatedCompaniesCount > 0 && (
+              <StyledRelatedCompaniesWrapper>
+                <Link
+                  href={urls.companies.dnbHierarchy.tree(company.id)}
+                  data-test="company-tree-link"
+                >
+                  {`View company tree: ${
+                    dnbRelatedCompaniesCount + 1
+                  } companies`}
+                </Link>
+              </StyledRelatedCompaniesWrapper>
+            )}
           </GridCol>
           <GridCol setWith="one-third">
-            <ConnectedDropdownMenu
-              label="View options"
-              closedLabel="Hide options"
-              id="local_header"
-            >
-              <DropdownButton
-                href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+            <StyledButtonContainer>
+              <Button
+                as={StyledButtonLink}
+                data-test="header-add-interaction"
+                href={urls.companies.interactions.create(company.id)}
+                aria-label={`Add interaction with ${company.name}`}
               >
-                Add to or remove from lists
-              </DropdownButton>
-              <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
-                Add to my pipeline
-              </DropdownButton>
-            </ConnectedDropdownMenu>
+                Add interaction
+              </Button>
+              <Button
+                as={StyledButtonLink}
+                data-test="header-add-export-project"
+                href={urls.exportPipeline.create(company.id)}
+                aria-label={`Add export project`}
+                buttonColour={GREY_3}
+                buttonTextColour={TEXT_COLOUR}
+              >
+                Add export project
+              </Button>
+            </StyledButtonContainer>
           </GridCol>
         </GridRow>
-        {(company.isUltimate || company.isGlobalHQ) && (
+        <StyledList>
+          <LocalHeaderCompanyLists company={company} returnUrl={returnUrl} />
+          <LocalHeaderCompanyRefer companyId={company.id} />
+        </StyledList>
+        {(isUltimate(company) || isGlobalHQ(company)) && (
           <TypeWrapper>
             <BadgeWrapper>
               <Badge>
                 <BadgeText data-test="badge">
-                  {company.isUltimate ? 'Ultimate HQ' : 'Global HQ'}
+                  {isUltimate(company) ? 'Ultimate HQ' : 'Global HQ'}
                 </BadgeText>
               </Badge>
             </BadgeWrapper>
-            {company.isUltimate && (
+            {isUltimate(company) && (
               <StyledDetails
                 summary="What does Ultimate HQ mean?"
-                data-test="metaList"
+                data-test="ultimate-hq-details"
               >
                 This HQ is in control of all related company records for{' '}
                 {company.name}.
@@ -160,31 +209,21 @@ const CompanyLocalHeader = ({
             )}
           </TypeWrapper>
         )}
-        {(dnbRelatedCompaniesCount > 0 || company.hasManagedAccountDetails) && (
+        {hasManagedAccountDetails(company) && (
           <StyledDescription data-test="description">
-            {dnbRelatedCompaniesCount > 0 && (
-              <p>
-                Data Hub contains{' '}
-                <a href={urls.companies.dnbHierarchy.index(company.id)}>
-                  {dnbRelatedCompaniesCount} other company{' '}
-                  {pluralize('record', dnbRelatedCompaniesCount)}
-                </a>{' '}
-                related to this company
-              </p>
-            )}
-            {company.hasManagedAccountDetails && (
+            {hasManagedAccountDetails(company) && (
               <>
                 <p>
                   This is an account managed company (One List{' '}
-                  {company.one_list_group_tier.name})
+                  {company.oneListGroupTier.name})
                 </p>
                 <p>
-                  {company.isItaTierDAccount
+                  {isItaTierDAccount(company.oneListGroupTier)
                     ? 'Lead ITA'
                     : 'Global Account Manager'}
-                  : {company.one_list_group_global_account_manager.name}{' '}
-                  <a href={urls.companies.advisers.index(company.id)}>
-                    {company.isItaTierDAccount
+                  : {company.oneListGroupGlobalAccountManager.name}{' '}
+                  <a href={urls.companies.accountManagement.index(company.id)}>
+                    {isItaTierDAccount(company.oneListGroupTier)
                       ? 'View Lead adviser'
                       : 'View core team'}
                   </a>
@@ -193,25 +232,22 @@ const CompanyLocalHeader = ({
             )}
           </StyledDescription>
         )}
-        <p>
-          <a href={urls.companies.businessDetails(company.id)}>
-            View full business details
-          </a>
-        </p>
       </LocalHeader>
 
       {company.archived && (
         <ArchivePanel
-          archivedBy={company.archived_by}
-          archivedOn={company.archived_on}
-          archiveReason={company.archived_reason}
-          unarchiveUrl={urls.companies.unarchive(company.id)}
+          archivedBy={company.archivedBy}
+          archivedOn={company.archivedOn}
+          archiveReason={company.archivedReason}
+          unarchiveUrl={`${urls.companies.unarchive(
+            company.id
+          )}?_csrf=${csrfToken}`}
           type="company"
         />
       )}
 
-      {company.pending_dnb_investigation && (
-        <StyledMain data-test="investigationMessage">
+      {company.pendingDnbInvestigation && (
+        <StyledMain data-test="investigation-message">
           <StatusMessage>
             This company record is based on information that has not yet been
             validated. This information is currently being checked by the Data
@@ -219,63 +255,8 @@ const CompanyLocalHeader = ({
           </StatusMessage>
         </StyledMain>
       )}
-
-      {company.account_plan_url && (
-        <StyledMainMuted data-test="accountPlanMessage">
-          <StatusMessage>
-            <a
-              href={company.account_plan_url}
-              target="_blank"
-              aria-label="Opens in a new window or tab"
-              rel="noopener noreferrer"
-            >
-              Go to Sharepoint to view the account plan
-            </a>{' '}
-            for {company.name} (opens in a new window or tab). You might have to
-            request access to this file.
-            {company.one_list_group_global_account_manager &&
-              company.one_list_group_global_account_manager.contact_email && (
-                <>
-                  &nbsp;To do so, contact the Global Account Manager at&nbsp;
-                  <a
-                    href={
-                      'mailto:' +
-                      company.one_list_group_global_account_manager
-                        .contact_email
-                    }
-                  >
-                    {
-                      company.one_list_group_global_account_manager
-                        .contact_email
-                    }
-                  </a>
-                  .
-                </>
-              )}
-            <StyledDetailsMuted
-              summary="What is an account plan?"
-              data-test="metaList"
-            >
-              All businesses on the One List are expected to have an account
-              plan, to ensure that the wider virtual team understands the
-              company and its key priorities. The Global Account Manager is
-              responsible for adding and updating the account plan. For further
-              information{' '}
-              <NewWindowLink
-                href={
-                  urls.external.digitalWorkspace.accountManagementStrategyTeam
-                }
-                aria-label="view the Account Management Framework"
-              >
-                view the Account Management Framework
-              </NewWindowLink>
-            </StyledDetailsMuted>
-          </StatusMessage>
-        </StyledMainMuted>
-      )}
     </>
   )
-}
 
 CompanyLocalHeader.propTypes = {
   breadcrumbs: PropTypes.arrayOf(

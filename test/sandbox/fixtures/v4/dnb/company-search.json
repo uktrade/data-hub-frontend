@@ -8,9 +8,7 @@
       "dnb_company": {
         "duns_number": "111111111",
         "primary_name": "Some unmatched company",
-        "trading_names": [
-          "Some unmatched company trading name"
-        ],
+        "trading_names": ["Some unmatched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",
@@ -33,7 +31,7 @@
         "registered_address_county": "",
         "registered_address_postcode": "BN2 9QB",
         "registered_address_country": "GB",
-        
+
         "annual_sales": 1999999999,
         "annual_sales_currency": "USD",
         "is_annual_sales_estimated": null,
@@ -53,9 +51,7 @@
       "dnb_company": {
         "duns_number": "222222222",
         "primary_name": "Some matched company",
-        "trading_names": [
-          "Some matched company trading name"
-        ],
+        "trading_names": ["Some matched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",
@@ -97,7 +93,7 @@
           "id": "ec4a46ef-6e50-4a5c-bba0-e311f0471312",
           "created_on": "2019-08-01T18:10:00",
           "date": "2019-08-01",
-          "subject": "Meeting between DIT and Joe Bloggs"
+          "subject": "Meeting between DBT and Joe Bloggs"
         }
       }
     },
@@ -147,9 +143,7 @@
       "dnb_company": {
         "duns_number": "268435455",
         "primary_name": "Some unmatched US company",
-        "trading_names": [
-          "Some unmatched company trading name"
-        ],
+        "trading_names": ["Some unmatched company trading name"],
         "registration_numbers": [
           {
             "registration_type": "uk_companies_house_number",

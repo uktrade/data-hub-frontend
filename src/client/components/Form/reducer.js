@@ -5,6 +5,7 @@ import {
   FORM__FIELD_DEREGISTER,
   FORM__FIELD_REGISTER,
   FORM__FIELD_SET_VALUE,
+  FORM__FIELDS__RESET,
   FORM__ERRORED,
   FORM__FORWARD,
   FORM__LOADED,
@@ -21,6 +22,7 @@ export default (
     values: {},
     touched: {},
     errors: {},
+    errorStatus: 0,
     fields: {},
     currentStep: 0,
     steps: [],
@@ -36,6 +38,20 @@ export default (
           ...action.initialValues,
         },
         currentStep: action.initialStepIndex,
+      }
+    case FORM__FIELDS__RESET:
+      return {
+        values: {
+          ...action.values,
+        },
+        touched: {},
+        errors: {},
+        errorStatus: 0,
+        fields: {
+          ...state.fields,
+        },
+        currentStep: 0,
+        steps: [...state.steps],
       }
     case FORM__RESOLVED:
       return {
@@ -100,6 +116,7 @@ export default (
         touched: Object.fromEntries(
           Object.keys(action.errors).map((key) => [key, true])
         ),
+        errorStatus: action.httpStatusCode,
       }
     case FORM__FORWARD:
       return {

@@ -20,10 +20,9 @@ import {
   StatusMessage,
   Main,
 } from '../../../../../client/components'
-
 import Form from '../../../../../client/components/Form'
-
 import FieldActiveITATypeahead from '../../../../../client/components/Form/elements/FieldActiveITATypeahead'
+import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {
@@ -50,17 +49,13 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
       heading={`${
         currentLeadITA ? 'Replace the Lead ITA' : 'Add someone as the Lead ITA'
       }`}
-      breadcrumbs={[
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(companyId), text: companyName },
+      breadcrumbs={buildCompanyBreadcrumbs(
         {
           text: `${currentLeadITA ? 'Replace the Lead ITA' : 'Add Lead ITA'}`,
         },
-      ]}
+        companyId,
+        companyName
+      )}
     />
     <Main>
       {currentLeadITA && (
@@ -74,7 +69,7 @@ const Add = ({ cancelUrl, currentLeadITA, companyName, companyId }) => (
         submissionTaskName="Update Lead ITA"
         analyticsFormName="updateLeadITA"
         transformPayload={(values) => ({ ...values, companyId })}
-        redirectTo={() => urls.companies.advisers.index(companyId)}
+        redirectTo={() => urls.companies.accountManagement.index(companyId)}
         flashMessage={({ name, email }) => [
           'Lead adviser information updated.',
           `Send ${name} an email to let them know they've been ` +
@@ -128,17 +123,13 @@ const Remove = ({
   <>
     <LocalHeader
       heading="Remove the Lead ITA"
-      breadcrumbs={[
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(companyId), text: companyName },
+      breadcrumbs={buildCompanyBreadcrumbs(
         {
           text: 'Remove the Lead ITA',
         },
-      ]}
+        companyId,
+        companyName
+      )}
     />
     <Main>
       <Paragraph>This will remove the current Lead ITA</Paragraph>

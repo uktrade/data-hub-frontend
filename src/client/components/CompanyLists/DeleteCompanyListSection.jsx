@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { RED } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import ErrorSummary from '@govuk-react/error-summary'
 import InsetText from '@govuk-react/inset-text'
@@ -12,6 +11,7 @@ import pluralize from 'pluralize'
 
 import { FormActions, LocalHeader, Main } from '../../../client/components'
 import urls from '../../../lib/urls'
+import { RED } from '../../../client/utils/colours'
 
 const DeleteCompanyListSection = ({
   companyList,
@@ -25,7 +25,7 @@ const DeleteCompanyListSection = ({
       <LocalHeader
         heading="Delete list"
         breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.dashboard.index(), text: 'Home' },
           {
             text: 'Delete list',
           },

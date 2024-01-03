@@ -1,7 +1,6 @@
-const selectors = require('../../../../selectors')
-const urls = require('../../../../../src/lib/urls')
-const fixtures = require('../../fixtures')
-
+import selectors from '../../../../selectors'
+import urls from '../../../../../src/lib/urls'
+import fixtures from '../../fixtures'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import {
   testBreadcrumbs,
@@ -34,7 +33,7 @@ const assertRegisteredAddress = ({ element, ukBased }) =>
 
 const describeCompanyEditForm = ({ company, elements }) => {
   testBreadcrumbs({
-    Home: urls.dashboard(),
+    Home: urls.dashboard.index(),
     Companies: urls.companies.index(),
     [company.name]: urls.companies.detail(company.id),
     'Business details': urls.companies.businessDetails(company.id),
@@ -156,7 +155,7 @@ describe('Company edit', () => {
           assert: assertRegisteredAddress,
         },
         {
-          label: 'DIT region',
+          label: 'DBT region',
           value: company.uk_region.name,
           optionsCount: 16,
           assert: assertFieldSelect,
@@ -181,7 +180,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the sector?',
           content:
             'If you need to change the sector for a company on the' +
-            ' One List, please email onelist@example.com',
+            ` One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
         {
@@ -193,7 +192,7 @@ describe('Company edit', () => {
           summary: 'Need to edit the headquarter type?',
           content:
             'If you need to change the headquarter type for a company' +
-            ' on the One List, please email onelist@example.com',
+            ` on the One List, please email ${Cypress.env('one_list_email')}`,
           assert: assertDetails,
         },
       ],
@@ -264,7 +263,7 @@ describe('Company edit', () => {
           optionsCount: 5,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,
@@ -365,7 +364,7 @@ describe('Company edit', () => {
           optionsCount: 5,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,
@@ -460,7 +459,7 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover',
           hint: 'Amount in GBP',
-          value: currencyGBP(company.turnover, {
+          value: currencyGBP(company.turnover_gbp, {
             maximumSignificantDigits: 2,
           }),
           assert: assertFieldUneditable,
@@ -471,7 +470,7 @@ describe('Company edit', () => {
           assert: assertFieldUneditable,
         },
         {
-          label: 'DIT sector',
+          label: 'DBT sector',
           value: company.sector.name,
           optionsCount: 256,
           assert: assertFieldSelect,
@@ -510,18 +509,21 @@ describe('Company edit', () => {
 
     it('should redirect to the business details page', () => {
       cy.contains('Company name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company name')
 
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company trading name')
 
       cy.contains('Website (optional)')
+        .parent()
         .next()
         .find('input')
         .clear()
@@ -562,18 +564,21 @@ describe('Company edit', () => {
 
     it('should display the "Change requested. Thanks for keeping Data Hub running smoothly"', () => {
       cy.contains('Company name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company name')
 
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()
         .type('Test company trading name')
 
       cy.contains('Website (optional)')
+        .parent()
         .next()
         .find('input')
         .clear()
@@ -599,6 +604,7 @@ describe('Company edit', () => {
 
     it('should update the company record and redirect to the business details', () => {
       cy.contains('Trading name')
+        .parent()
         .next()
         .find('input')
         .clear()

@@ -4,6 +4,7 @@
       "name": "Travis Greene",
       "first_name": "Travis",
       "last_name": "Greene",
+      "contact_email": "travis@example.net",
       "dit_team": {
         "name": "IST - Sector Advisory Services",
         "uk_region": {
@@ -25,6 +26,7 @@
       "name": "Holly Collins",
       "first_name": "Holly",
       "last_name": "Collins",
+      "contact_email": "holly@example.net",
       "dit_team": {
         "name": "Heart of the South West LEP",
         "country": {

@@ -61,8 +61,8 @@ describe('Company Export tab - Edit export countries', () => {
     it('Should enter values for currently exporting', () => {
       cy.get(selectors.currentlyExporting)
         .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOption('Spai')
-        .selectTypeaheadOption('Fran')
+        .selectTypeaheadOptionInFieldset('Spai')
+        .selectTypeaheadOptionInFieldset('Fran')
 
       assertTypeaheadValues(selectors.currentlyExporting, 'Spain', 'France')
     })
@@ -70,8 +70,8 @@ describe('Company Export tab - Edit export countries', () => {
     it('Should enter values for future countries of interest', () => {
       cy.get(selectors.futureInterest)
         .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOption('Braz')
-        .selectTypeaheadOption('Chin')
+        .selectTypeaheadOptionInFieldset('Braz')
+        .selectTypeaheadOptionInFieldset('Chin')
 
       assertTypeaheadValues(selectors.futureInterest, 'Brazil', 'China')
     })
@@ -79,7 +79,7 @@ describe('Company Export tab - Edit export countries', () => {
     it('Should enter values for countries of no interest', () => {
       cy.get(selectors.notInterested)
         .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOption('Hon')
+        .selectTypeaheadOptionInFieldset('Hon')
 
       assertTypeaheadValues(selectors.notInterested, 'Honduras')
     })
@@ -124,7 +124,7 @@ describe('Company Export tab - Edit export countries', () => {
     it('Should enter values for currently exporting', () => {
       cy.get(selectors.currentlyExporting)
         .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOption('Spai')
+        .selectTypeaheadOptionInFieldset('Spai')
 
       assertTypeaheadValues(selectors.currentlyExporting, 'Spain')
     })
@@ -132,7 +132,7 @@ describe('Company Export tab - Edit export countries', () => {
     it('Should enter values for future countries of interest', () => {
       cy.get(selectors.futureInterest)
         .should('have.prop', 'tagName', 'DIV')
-        .selectTypeaheadOption('Spai')
+        .selectTypeaheadOptionInFieldset('Spai')
 
       assertTypeaheadValues(selectors.futureInterest, 'Spain')
     })

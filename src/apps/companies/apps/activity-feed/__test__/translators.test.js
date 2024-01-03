@@ -10,8 +10,6 @@ describe('Converting query String types', () => {
         requestQuery: {
           from: '0',
           size: '20',
-          activityTypeFilter: 'dataHubAndExternalActivity',
-          showDnbHierarchy: 'false',
         },
       })
 
@@ -26,8 +24,6 @@ describe('Converting query String types', () => {
       expect(middlewareParameters.reqMock.query).to.deep.equal({
         from: 0,
         size: 20,
-        activityTypeFilter: 'dataHubAndExternalActivity',
-        showDnbHierarchy: false,
       })
     })
 
@@ -39,9 +35,7 @@ describe('Converting query String types', () => {
   context('should not cast the types when the values are undefined', () => {
     before(() => {
       middlewareParameters = buildMiddlewareParameters({
-        requestQuery: {
-          activityTypeFilter: 'dataHubAndExternalActivity',
-        },
+        requestQuery: {},
       })
 
       convertQueryTypes(
@@ -52,9 +46,7 @@ describe('Converting query String types', () => {
     })
 
     it('should not cast the types', () => {
-      expect(middlewareParameters.reqMock.query).to.deep.equal({
-        activityTypeFilter: 'dataHubAndExternalActivity',
-      })
+      expect(middlewareParameters.reqMock.query).to.deep.equal({})
     })
 
     it('call next', () => {

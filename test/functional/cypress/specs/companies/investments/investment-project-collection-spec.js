@@ -12,6 +12,7 @@ const {
   assertArchiveMessage,
   assertArchiveSummary,
   assertUnarchiveLink,
+  assertRole,
   assertTitle,
 } = require('../../../support/collection-list-assertions')
 const { collectionListRequest } = require('../../../support/actions')
@@ -20,6 +21,7 @@ const {
 } = require('../../../fakers/investment-projects')
 const { companies, investments } = require('../../../../../../src/lib/urls')
 const fixtures = require('../../../fixtures')
+const urls = require('../../../../../../src/lib/urls')
 
 const { dnbCorp, archivedLtd } = fixtures.company
 
@@ -69,6 +71,12 @@ function assertListItem({
       `Estimated land date ${formattedEstimatedLandDate}`
     )
   })
+
+  it('should render the subsidiary companies enabled', () => {
+    cy.get('[data-test="checkbox-include_related_companies"]').should(
+      'not.be.disabled'
+    )
+  })
 }
 
 describe('Company Investments Collection Page', () => {
@@ -92,14 +100,22 @@ describe('Company Investments Collection Page', () => {
       sortby: 'modified_on:desc',
     })
 
+  const visitLink = `${companies.investments.companyInvestmentProjects(
+    dnbCorp.id
+  )}?${buildQueryString()}`
+
   before(() => {
-    const queryString = buildQueryString()
+    cy.intercept(
+      'GET',
+      `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+        dnbCorp.id
+      )}?include_manually_linked_companies=true`,
+      { reduced_tree: false, related_companies_count: 1, total: 1 }
+    ).as('relatedCompaniesApiRequest')
     collectionListRequest(
       'v3/search/investment_project',
       investmentProjects,
-      `${companies.investments.companyInvestmentProjects(
-        dnbCorp.id
-      )}?${queryString}`
+      visitLink
     )
   })
 
@@ -107,13 +123,17 @@ describe('Company Investments Collection Page', () => {
     it('should render a meta title', () => {
       cy.title().should(
         'eq',
-        'Investments - DnB Corp - Companies - DIT Data Hub'
+        'Investments - DnB Corp - Companies - DBT Data Hub'
       )
     })
 
     assertCompanyCollectionBreadcrumbs(dnbCorp, 'Investment')
     assertTitle('3 investment projects')
     assertRemoveAllFiltersNotPresent()
+
+    it('should contain a status role', () => {
+      assertRole('status')
+    })
 
     it('should render an "Add investment project" button', () => {
       assertAddItemButton(
@@ -209,8 +229,36 @@ describe('Company Investments Collection Page', () => {
           limit: 10,
           sortby: 'modified_on:desc',
           investor_company: [dnbCorp.id],
+          include_parent_companies: false,
+          include_subsidiary_companies: false,
         })
       )
     })
   })
+
+  context(
+    'Viewing the company investment projects collection page for company with large number of companies',
+    () => {
+      before(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
+            dnbCorp.id
+          )}?include_manually_linked_companies=true`,
+          { reduced_tree: true, related_companies_count: 2000 }
+        ).as('relatedCompaniesApiRequest')
+        cy.visit(visitLink)
+      })
+
+      it('should render the subsidiary companies disabled', () => {
+        cy.wait('@relatedCompaniesApiRequest')
+        cy.get('[data-test="checkbox-include_related_companies"]')
+          .eq(0)
+          .should('not.be.disabled')
+        cy.get('[data-test="checkbox-include_related_companies"]')
+          .eq(1)
+          .should('be.disabled')
+      })
+    }
+  )
 })

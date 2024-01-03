@@ -109,28 +109,12 @@ describe('LEP Permission', () => {
   })
 
   context('investment', () => {
-    describe('investment document', () => {
-      investmentProjectNewZoo = fixtures.investmentProject.create.newZooLEP()
-
-      before(() => {
-        cy.loadFixture([investmentProjectNewGolf])
-        cy.visit(investments.projects.documents(investmentProjectNewZoo.pk), {
-          failOnStatusCode: false,
-        })
-      })
-
-      it('should prevent LEP users from accessing the page', () => {
-        assertError("You don't have permission to view this page")
-        assertError('403')
-      })
-    })
-
     describe('interaction', () => {
       investmentProjectNewGolf =
         fixtures.investmentProject.create.newGolfCourseDA()
 
       before(() => {
-        cy.loadFixture([investmentProjectNewZoo])
+        cy.loadFixture([investmentProjectNewGolf])
         cy.visit(
           investments.projects.interactions.index(investmentProjectNewGolf.pk),
           { failOnStatusCode: false }
@@ -162,22 +146,6 @@ describe('LEP Permission', () => {
   })
 
   context('contacts', () => {
-    describe('documents', () => {
-      const company = fixtures.company.create.defaultCompany('contact lep')
-      const contact = fixtures.contact.create(company.pk)
-
-      before(() => {
-        cy.loadFixture([company])
-        cy.loadFixture([contact])
-        cy.visit(contacts.documents(contact.pk), { failOnStatusCode: false })
-      })
-
-      it('should prevent LEP users from accessing the page', () => {
-        assertError("You don't have permission to view this page")
-        assertError('403')
-      })
-    })
-
     describe('interactions', () => {
       const company = fixtures.company.create.defaultCompany('contact lep')
       const contact = fixtures.contact.create(company.pk)

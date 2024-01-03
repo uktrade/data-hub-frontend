@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import styled from 'styled-components'
-import { BLACK, WHITE, YELLOW } from 'govuk-colours'
 import qs from 'qs'
 import {
   FONT_SIZE,
@@ -12,16 +11,19 @@ import {
   SPACING,
 } from '@govuk-react/constants'
 
-import { DARK_BLUE_LEGACY } from '../../utils/colors'
+import { BLACK, DARK_BLUE_LEGACY, WHITE, YELLOW } from '../../utils/colours'
 import NotificationAlert from '../NotificationAlert'
+import urls from '../../../lib/urls'
 
-const SWITCH_TO_DATA_WORKSPACE = 'Switch to Data Workspace'
+const DATA_WORKSPACE = 'Switch to Data Workspace'
+const CRM_COMMUNITY_LABEL = 'CRM community'
+const COMMUNITY_PATHNAME = urls.community.index()
 
 const googleAnalyticsUTM = qs.stringify({
   utm_source: 'Data Hub',
   utm_medium: 'referral',
   utm_campaign: 'dataflow',
-  utm_content: SWITCH_TO_DATA_WORKSPACE,
+  utm_content: DATA_WORKSPACE,
 })
 
 const Layout = styled.div({
@@ -69,6 +71,10 @@ const StyledLogoNavLink = styled(NavLink)({
     '&::after': {
       content: '" "',
     },
+    ':focus': {
+      color: BLACK,
+      background: YELLOW,
+    },
   },
 })
 
@@ -88,10 +94,12 @@ const BetaTag = styled.strong({
 const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   color: WHITE,
   display: 'none',
+  marginLeft: '20px',
+  marginRight: '20px',
   '-webkit-font-smoothing': 'antialiased',
   [MEDIA_QUERIES.TABLET]: {
     display: 'block',
-    marginRight: hasFeatureGroup ? 65 : 0,
+    marginRight: hasFeatureGroup ? 20 : 0,
   },
   fontWeight: FONT_WEIGHTS.bold,
   textDecoration: 'none',
@@ -155,7 +163,7 @@ const DataHubBar = ({
   <Layout>
     <RootContainer>
       <DataHubContainer>
-        <VisuallyHidden>Department for International Trade</VisuallyHidden>
+        <VisuallyHidden>Department for Business and Trade</VisuallyHidden>
         <StyledLogoNavLink as="a" href="/">
           Data Hub
         </StyledLogoNavLink>
@@ -163,17 +171,26 @@ const DataHubBar = ({
       </DataHubContainer>
       <Container hasFeatureGroup={hasFeatureGroup}>
         <NavigationLink
+          data-test="crm-community-link"
+          hasFeatureGroup={hasFeatureGroup}
+          showVerticalNav={showVerticalNav}
+          href={COMMUNITY_PATHNAME}
+        >
+          {CRM_COMMUNITY_LABEL}
+        </NavigationLink>
+        <NavigationLink
           hasFeatureGroup={hasFeatureGroup}
           showVerticalNav={showVerticalNav}
           href={`https://data.trade.gov.uk?${googleAnalyticsUTM}`}
         >
-          {SWITCH_TO_DATA_WORKSPACE}
+          {DATA_WORKSPACE}
         </NavigationLink>
-        {hasFeatureGroup && <NotificationAlert />}
+        <NotificationAlert />
         <MobileMenuButton
           showVerticalNav={showVerticalNav}
           onClick={() => onShowVerticalNav(!showVerticalNav)}
           role="button"
+          aria-expanded={showVerticalNav}
           aria-label="Show or hide navigation"
           aria-controls="navigation sub-navigation logo-navigation"
         >

@@ -1,7 +1,7 @@
 [
   {
     "id": "9884b82b-3499-e211-a939-e4115bead28a",
-    "name": "Account Management : High Growth",
+    "name": "Account management : High Growth",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -13,84 +13,84 @@
   },
   {
     "id": "0796b92b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : DSO Interaction",
+    "name": "DBT export service or funding : DSO Interaction",
     "disabled_on": null,
     "contexts": ["other_interaction", "export_interaction"],
     "interaction_questions": []
   },
   {
     "id": "d520b92b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : Export Opportunities",
+    "name": "DBT export service or funding : Export opportunities",
     "disabled_on": null,
     "contexts": ["export_interaction", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "350bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : Export Win",
+    "name": "DBT export service or funding : Export win",
     "disabled_on": null,
     "contexts": ["event", "export_interaction", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : OBN Chargeable Services",
+    "name": "DBT export service or funding : OBN Chargeable Services",
     "disabled_on": null,
     "contexts": ["export_interaction", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "360bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : Overseas Market Introduction Service (OMIS)",
+    "name": "DBT export service or funding : Overseas Market Introduction Service (OMIS)",
     "disabled_on": null,
     "contexts": ["export_interaction"],
     "interaction_questions": []
   },
   {
     "id": "f56eb92b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : Significant Assist",
+    "name": "DBT export service or funding : Significant Assist",
     "disabled_on": null,
     "contexts": ["export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Exhibitor",
+    "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor",
     "disabled_on": null,
     "contexts": ["event", "export_interaction", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28b",
-    "name": "A Specific DIT Export Service or Funding : UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": ["event", "export_interaction", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "140e343e-b69c-4449-99df-bc6735498391",
-    "name": "A Specific DIT Service : Great International Trade Campaign",
+    "name": "A Specific DBT Service : Great international trade campaign",
     "disabled_on": null,
     "contexts": ["event", "other_interaction", "other_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
-    "name": "A Specific DIT Service : Language and Culture Advisers One-to-One",
+    "name": "A Specific DBT Service : Language and Culture Advisers one-to-one",
     "disabled_on": null,
     "contexts": ["other_interaction", "other_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "9a84b82b-3499-e211-a939-e4115bead28a",
-    "name": "A Specific DIT Service : UK Region Local",
+    "name": "A Specific DBT Service : UK region local",
     "disabled_on": null,
     "contexts": ["event", "other_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
-    "name": "A Specific Service : Digital Trade Advisers One-to-One",
+    "name": "Specific service : Digital Trade Advisers one-to-one",
     "disabled_on": null,
     "contexts": ["other_interaction", "interaction", "other_service_delivery"],
     "interaction_questions": []
@@ -145,28 +145,28 @@
   },
   {
     "id": "e7238b26-653c-e711-8a1f-e4115bead28a",
-    "name": "Enquiry or Referral Received : EiG National Referral",
+    "name": "Enquiry or referral : EiG National Referral",
     "disabled_on": null,
     "contexts": ["event", "other_interaction", "export_interaction"],
     "interaction_questions": []
   },
   {
     "id": "632b8708-28b6-e611-984a-e4115bead28a",
-    "name": "Enquiry or Referral Received : Local Partner Referral",
+    "name": "Enquiry or referral : Local partner referral",
     "disabled_on": null,
     "contexts": ["event", "other_service_delivery", "export_service_delivery"],
     "interaction_questions": []
   },
   {
     "id": "9984b82b-3499-e211-a939-e4115bead28a",
-    "name": "Enquiry or Referral Received : Other Inbound Export Referral",
+    "name": "Enquiry or referral : Inbound export referral",
     "disabled_on": null,
     "contexts": ["export_interaction"],
     "interaction_questions": []
   },
   {
     "id": "3a0bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Enquiry received : General Investment Enquiry",
+    "name": "Enquiry received : General investment enquiry",
     "disabled_on": null,
     "contexts": ["investment_project_interaction", "investment_interaction"],
     "interaction_questions": []
@@ -204,7 +204,7 @@
   },
   {
     "id": "370bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Events : Inward Mission",
+    "name": "Events : Inward mission",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -216,7 +216,7 @@
   },
   {
     "id": "340bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Events : Market Visit",
+    "name": "Events : Market visit",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -240,7 +240,7 @@
   },
   {
     "id": "0696b92b-3499-e211-a939-e4115bead28a",
-    "name": "Events : Outward Mission",
+    "name": "Events : Outward mission",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -264,7 +264,7 @@
   },
   {
     "id": "9584b82b-3499-e211-a939-e4115bead28a",
-    "name": "Events : UK Based",
+    "name": "Events : UK based",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -464,7 +464,7 @@
   },
   {
     "id": "4664f856-166f-4f48-9865-653250f84086",
-    "name": "Global Growth Service : Diagnostic and Output Report Completed by DIT",
+    "name": "Global Growth Service : Diagnostic and Output Report Completed by DBT",
     "disabled_on": null,
     "contexts": ["export_interaction"],
     "interaction_questions": []
@@ -608,7 +608,7 @@
   },
   {
     "id": "79824229-fd87-483f-b929-8f2b9531492b",
-    "name": "Investment - IST Aftercare Offered (IST use only)",
+    "name": "Investment - IST aftercare offered (IST use only)",
     "disabled_on": null,
     "contexts": ["investment_project_interaction"],
     "interaction_questions": []
@@ -711,7 +711,7 @@
   },
   {
     "id": "0596b92b-3499-e211-a939-e4115bead28a",
-    "name": "Investment - Services",
+    "name": "Investment - services",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -723,14 +723,14 @@
   },
   {
     "id": "42c71892-f9f7-e511-888e-e4115bead28a",
-    "name": "IST Specific Service : IST Visit",
+    "name": "IST service : IST visit",
     "disabled_on": null,
     "contexts": ["investment_project_interaction", "investment_interaction"],
     "interaction_questions": []
   },
   {
     "id": "1477622e-9adb-4017-8d8d-fe3221f1d2fc",
-    "name": "Making Export Introductions",
+    "name": "Export introductions",
     "disabled_on": null,
     "contexts": ["export_interaction"],
     "interaction_questions": [
@@ -747,22 +747,22 @@
           {
             "disabled_on": null,
             "id": "2ecdad3d-642a-454c-9bd9-8089b448c319",
-            "name": "Business Partners (e.g. distributors or manufacturers)"
+            "name": "Business partners (such as distributors or manufacturers)"
           },
           {
             "disabled_on": null,
             "id": "2a8db035-f8fe-4700-9769-d980754b90af",
-            "name": "Financial and Professional Service Providers"
+            "name": "Financial and professional service providers"
           },
           {
             "disabled_on": null,
             "id": "c1a1ab4a-a248-4104-b5a1-caab763ebd8b",
-            "name": "Someone else in DIT"
+            "name": "Someone else in DBT"
           },
           {
             "disabled_on": null,
             "id": "91d496af-0185-449c-a19c-4016c8e78cb0",
-            "name": "Another Government Department"
+            "name": "Other government department"
           },
           {
             "disabled_on": null,
@@ -775,7 +775,7 @@
   },
   {
     "id": "7aa9b539-84e9-4ba8-8d93-2e1fdbfd066c",
-    "name": "Making Investment Introductions",
+    "name": "Investment introductions",
     "disabled_on": null,
     "contexts": ["investment_interaction"],
     "interaction_questions": [
@@ -792,22 +792,22 @@
           {
             "disabled_on": null,
             "id": "faa5a5c7-5703-46d8-a35c-c92a87850655",
-            "name": "Business Partners (e.g. distributors or manufacturers)"
+            "name": "Business partners (such as distributors or manufacturers)"
           },
           {
             "disabled_on": null,
             "id": "158d945b-7220-47ae-9d80-ce77ef7ef397",
-            "name": "Financial and Professional Service Providers"
+            "name": "Financial and professional service providers"
           },
           {
             "disabled_on": null,
             "id": "693ef762-dd6b-4f85-8d64-1449ec555003",
-            "name": "Someone else in DIT"
+            "name": "Someone else in DBT"
           },
           {
             "disabled_on": null,
             "id": "3bb0827b-1b62-498b-b940-401e81f27328",
-            "name": "Another Government Department"
+            "name": "Other government department"
           },
           {
             "disabled_on": null,
@@ -947,7 +947,7 @@
   },
   {
     "id": "76d912d6-e9da-4963-80ae-d07f8f6feed7",
-    "name": "Providing Export Advice & Information",
+    "name": "Export advice and information",
     "disabled_on": null,
     "contexts": ["export_interaction"],
     "interaction_questions": [
@@ -964,7 +964,7 @@
           {
             "disabled_on": null,
             "id": "4cff9ba9-ca8c-4777-89db-396066ec9d78",
-            "name": "DIT or Government Services"
+            "name": "DBT or Government Services"
           },
           {
             "disabled_on": null,
@@ -997,7 +997,7 @@
   },
   {
     "id": "ef3218c1-bed6-4ad8-b8d5-8af2430d32ff",
-    "name": "Providing Investment Advice & Information",
+    "name": "Investment advice and information",
     "disabled_on": null,
     "contexts": ["investment_interaction"],
     "interaction_questions": [
@@ -1014,7 +1014,7 @@
           {
             "disabled_on": null,
             "id": "e5f83d7f-f696-4069-b649-a3e295b41046",
-            "name": "DIT or Government Services"
+            "name": "DBT or Government Services"
           },
           {
             "disabled_on": null,
@@ -1093,7 +1093,7 @@
   },
   {
     "id": "d820b92b-3499-e211-a939-e4115bead28a",
-    "name": "Significant Assistance Development Aid (PIMS)",
+    "name": "Significant assistance Development Aid (PIMS)",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -1539,7 +1539,7 @@
   },
   {
     "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-    "name": "Trade - UK Tradeshow Programme (UKTP) – Exhibitor",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – exhibitor",
     "disabled_on": null,
     "contexts": [
       "event",
@@ -1551,7 +1551,7 @@
   },
   {
     "id": "f76eb92b-3499-e211-a939-e4115bead28b",
-    "name": "Trade - UK Tradeshow Programme (UKTP) – Attendee-only",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": [
       "event",

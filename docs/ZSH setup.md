@@ -1,6 +1,6 @@
 # ZSH setup
 
-If you are using a DIT-issued device, you will need to set up ZSH before you can run the project natively. You will only need to complete this process once.
+If you are using a DBT-issued device, you will need to set up ZSH before you can run the project natively. You will only need to complete this process once.
 
 Prerequisites:
 - [Homebrew](https://brew.sh)

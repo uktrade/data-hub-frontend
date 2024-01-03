@@ -1,8 +1,8 @@
+const proxyquire = require('proxyquire')
+
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
 const urls = require('../../../../../../src/lib/urls')
-
-const proxyquire = require('proxyquire')
 
 describe('rendering Edit History', () => {
   const getCompanyAuditLogStub = sinon.stub()

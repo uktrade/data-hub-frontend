@@ -1,4 +1,5 @@
 const sinon = require('sinon')
+
 const permissions = require('../permissions')
 
 describe('Permissions middleware', () => {

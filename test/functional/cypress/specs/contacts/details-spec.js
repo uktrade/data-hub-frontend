@@ -9,6 +9,7 @@ const incompleteUKContact = require('../../../../sandbox/fixtures/v3/contact/con
 const companyAddresscontact = require('../../../../sandbox/fixtures/v3/contact/contact-with-company-address.json')
 const usContact = require('../../../../sandbox/fixtures/v3/contact/contact-with-us-address.json')
 const archiveContact = require('../../../../sandbox/fixtures/v3/contact/contact-archived.json')
+const invalidEmailContact = require('../../../../sandbox/fixtures/v3/contact/contact-invalid-email.json')
 
 const ARCHIVE_INTERCEPT = 'archiveHttpRequest'
 
@@ -209,6 +210,47 @@ describe('View contact details', () => {
 
     it('should not render the archive container', () => {
       cy.get('[data-test=archive-contact-container]').should('not.exist')
+    })
+
+    it('should not render the invalid email message when email is valid', () => {
+      cy.contains('Please update the email address').should('not.exist')
+    })
+  })
+
+  context('when viewing a contact with an invalid email flagged', () => {
+    before(() => {
+      cy.visit('/contacts/2341fb21-ee64-4898-8f2e-ebf924e1e63f')
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: '/',
+        Contacts: contacts.index(),
+        'Joseph Woof': null,
+      })
+    })
+
+    it('should render the invalid email message', () => {
+      cy.contains('Please update the email address').should('exist')
+      cy.contains('The email address has been flagged as invalid').should(
+        'exist'
+      )
+    })
+
+    it('should render the subheading', () => {
+      cy.contains('Contact details').should('exist')
+    })
+
+    it('should render the details table', () => {
+      assertKeyValueTable('contact-details-table', {
+        'Job title': invalidEmailContact.job_title,
+        'Phone number': invalidEmailContact.full_telephone_number,
+        Address:
+          '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
+        Email: invalidEmailContact.email,
+        'More details': invalidEmailContact.notes,
+        'Email marketing': EMAIL_CONSENT_YES,
+      })
     })
   })
 

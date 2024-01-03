@@ -3,6 +3,9 @@ module.exports = {
     mercuryTradingLtd: require('./ch-company/mercury-trading-ltd'),
   },
   company: {
+    default: require('../../../../test/sandbox/fixtures/v4/company/company.json'),
+    noOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-no-overview-details.json'),
+    allOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-all-overview-details.json'),
     archivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived.json'),
     automaticallyArchivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived-automatically.json'),
     dnbCorp: require('../../../../test/sandbox/fixtures/v4/company/company-dnb-corp.json'),
@@ -30,6 +33,7 @@ module.exports = {
   },
   contact: {
     deanCox: require('./contact/dean-cox'),
+    johnnyCakeman: require('./contact/johnny-cakeman'),
   },
   default: require('./default.json'),
   interaction: {
@@ -41,16 +45,25 @@ module.exports = {
     withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
     withInvestmentTheme: require('./interaction/investment-theme.json'),
     withExportCountries: require('../../../sandbox/fixtures/v4/interaction/interaction-with-export-countries.json'),
+    withoutExportCountries: require('../../../sandbox/fixtures/v4/interaction/interaction-with-no-countries-discussed.json'),
     withBusIntel: require('../../../sandbox/fixtures/v4/interaction/interaction-with-business-intelligence.json'),
   },
   investment: {
-    investmentWithNoLink: require('./investment/investment-with-no-link.json'),
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
     stageWon: require('./investment/investment-stage-won.json'),
     investmentWithNoExistingRequirements: require('./investment/investment-no-existing-requirements.json'),
     investmentWithNoGlobalAccountManager: require('./investment/investment-no-global-account-manager.json'),
     fdiInvestmentWithNoFDIType: require('./investment/investment-fdi-has-no-fdi-type.json'),
+    investmentWithValue: require('./investment/investment-has-existing-value.json'),
+    investmentWithAlternateValue: require('./investment/investment-has-existing-value-alternate.json'),
+    investmentWithRequirements: require('./investment/investment-has-existing-requirements.json'),
+    investmentWithDetails: require('./investment/investment-has-existing-details.json'),
+    investmentWithoutEvaluation: require('./investment/investment-evaluation-not-set.json'),
+    investmentWithEvaluation: require('./investment/investment-evaluation-complete.json'),
+    investmentWithAlternateEvaluation: require('./investment/investment-evaluation-complete-with-negative-values.json'),
+    investmentWithoutValue: require('./investment/investment-no-value.json'),
+    projectDocumentDownlad: require('../../../sandbox/fixtures/v3/investment/project-document-download.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
@@ -60,6 +73,7 @@ module.exports = {
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
   },
+
   omis: {
     cancelledOrder: require('../../../sandbox/fixtures/v3/omis/cancelled-order.json'),
     draftOrder: require('../../../sandbox/fixtures/v3/omis/draft-order.json'),
@@ -68,6 +82,7 @@ module.exports = {
     quoteAccepted: require('../../../sandbox/fixtures/v3/omis/quote-accepted.json'),
     assignees: require('../../../sandbox/fixtures/v3/omis/assignees.json'),
     subscribers: require('../../../sandbox/fixtures/v3/omis/subscribers.json'),
+    emptyOrder: require('../../../sandbox/fixtures/v3/omis/empty-order.json'),
   },
   referrals: {
     referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),
