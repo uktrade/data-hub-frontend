@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { BLACK, GREY_3 } from 'govuk-colours'
 
-import ContactResource from '../../../components/Resource/Contact'
-import { SummaryTable } from '../../../components'
+import { BLACK, GREY_3 } from '../../../../client/utils/colours'
+import { ContactResource } from '../../../components/Resource'
+import { SummaryTable, ErrorSummary } from '../../../components'
 import urls from '../../../../lib/urls'
 import {
   EMAIL_CONSENT_NO,
@@ -16,6 +16,7 @@ import {
 } from '../../../../apps/contacts/constants'
 import { ID, TASK_ARCHIVE_CONTACT } from './state'
 import ArchiveForm from '../../../components/ArchiveForm'
+import ContactLayout from '../../../components/Layout/ContactLayout'
 
 const getAddress = (contact, companyAddress) => {
   const address = contact.addressSameAsCompany
@@ -43,11 +44,20 @@ const getAddress = (contact, companyAddress) => {
   return Object.values(addressCleaned).join(', ')
 }
 
-const ContactDetails = ({ contactId, companyAddress }) => {
-  return (
-    <ContactResource id={contactId}>
-      {(contact) => (
-        <>
+const errorMsg = 'The email address has been flagged as invalid'
+
+const ContactDetails = ({ contactId, companyAddress, permissions }) => (
+  <ContactResource id={contactId}>
+    {(contact) => (
+      <>
+        <ContactLayout contact={contact} permissions={permissions}>
+          {contact.validEmail === false && (
+            <ErrorSummary
+              heading="Please update the email address"
+              description={errorMsg}
+              errors={[]}
+            />
+          )}
           <SummaryTable
             caption="Contact details"
             data-test="contact-details-table"
@@ -62,7 +72,11 @@ const ContactDetails = ({ contactId, companyAddress }) => {
               heading="Address"
               children={getAddress(contact, companyAddress)}
             />
-            <SummaryTable.Row heading="Email" children={contact.email} />
+            <SummaryTable.Row
+              heading="Email"
+              children={contact.email}
+              flag={contact.validEmail === false}
+            />
             {contact.notes && (
               <SummaryTable.Row
                 heading="More details"
@@ -118,11 +132,11 @@ const ContactDetails = ({ contactId, companyAddress }) => {
             ]}
             radioHint="This contact has:"
           />
-        </>
-      )}
-    </ContactResource>
-  )
-}
+        </ContactLayout>
+      </>
+    )}
+  </ContactResource>
+)
 
 ContactDetails.propTypes = {
   contactId: PropTypes.string.isRequired,

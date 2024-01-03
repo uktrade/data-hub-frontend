@@ -11,6 +11,8 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -18,7 +20,6 @@ export default class Omis extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -26,7 +27,7 @@ export default class Omis extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
 
     const published = get(activity, 'published')
     const reference = get(activity, 'object.name')
@@ -35,9 +36,10 @@ export default class Omis extends React.PureComponent {
     const url = get(activity, 'object.url')
     const adviser = CardUtils.getAdviser(activity)
     const contacts = CardUtils.getContacts(activity)
+    const date = format(published)
 
     const metadata = [
-      { label: 'Date', value: format(published) },
+      { label: 'Date', value: date },
       { label: 'Country', value: country },
       { label: 'UK region', value: ukRegion },
       {
@@ -58,16 +60,31 @@ export default class Omis extends React.PureComponent {
       },
     ]
 
-    return (
+    const href = `${url}/work-order`
+    const kind = 'New Order'
+    const subject = <Link href={href}>{reference}</Link>
+
+    let summary = []
+    if (country) summary.push('Export to ', country)
+    if (adviser) summary.push(' added by ', adviser.name)
+
+    return isOverview ? (
+      <OverviewActivityCardWrapper dataTest="omis-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={kind}
+          url={href}
+          subject={subject}
+          summary={summary}
+        ></ActivityOverviewSummary>
+      </OverviewActivityCardWrapper>
+    ) : (
       <ActivityCardWrapper dataTest="order-activity">
-        <ActivityCardLabels
-          theme="Orders (OMIS)"
-          service="Event"
-          kind="New Order"
-        />
         <ActivityCardSubject dataTest="order-activity-card-subject">
-          <Link href={`${url}/work-order`}>{reference}</Link>
+          {subject}
         </ActivityCardSubject>
+        <ActivityCardLabels theme="Orders (OMIS)" service="Event" kind={kind} />
         <ActivityCardMetadata metadata={metadata} />
       </ActivityCardWrapper>
     )

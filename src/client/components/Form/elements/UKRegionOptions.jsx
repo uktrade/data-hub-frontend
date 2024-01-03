@@ -1,6 +1,6 @@
 import React from 'react'
 
-import UKRegionsResource from '../../Resource/UKRegions'
+import { UKRegionsResource } from '../../Resource'
 import FieldTypeahead from './FieldTypeahead'
 import ResourceOptionsField from './ResourceOptionsField'
 

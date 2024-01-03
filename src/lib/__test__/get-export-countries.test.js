@@ -1,10 +1,10 @@
 const { faker } = require('@faker-js/faker')
 
-const { EXPORT_INTEREST_STATUS } = require('../../apps/constants')
+const { EXPORT_INTEREST_STATUS } = require('../../common/constants')
 const getExportCountries = require('../get-export-countries')
 
 function generateCountries(length) {
-  return Array.from({ length }).map(faker.datatype.uuid)
+  return Array.from({ length }).map(faker.string.uuid)
 }
 
 describe('getExportCountries', () => {

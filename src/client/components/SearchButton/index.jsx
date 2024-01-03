@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { BLACK, WHITE } from 'govuk-colours'
 import VisuallyHidden from '@govuk-react/visually-hidden'
+
+import { BLACK, WHITE } from '../../../client/utils/colours'
 
 const StyledButton = styled('button')`
   position: absolute;

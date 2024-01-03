@@ -1,19 +1,32 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { snakeCase } from 'lodash'
 
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
-import { snakeCase } from 'lodash'
 import {
   reminderTypeToLabel,
   INVESTMENTS_ESTIMATED_LAND_DATES,
   INVESTMENTS_NO_RECENT_INTERACTIONS,
   COMPANIES_NO_RECENT_INTERACTIONS,
+  COMPANIES_NEW_INTERACTIONS,
+  MY_TASKS_DUE_DATE_APPROACHING,
+  TASK_ASSIGNED_TO_ME_FROM_OTHERS,
+  TASK_AMENDED_BY_OTHERS,
+  TASK_OVERDUE,
+  TASK_COMPLETED,
 } from '../constants'
 
 import InvestmentsEstimatedLandDatesForm from './InvestmentsEstimatedLandDatesForm'
 import InvestmentsNoRecentInteractionsForm from './InvestmentsNoRecentInteractionsForm'
 import ExportsNoRecentInteractionsForm from './ExportsNoRecentInteractionsForm'
+import ExportsNewInteractionsForm from './ExportsNewInteractionsForm'
+import FooterLink from '../FooterLink'
+import DueDateApproachingForm from './DueDateApproachingForm'
+import TaskAssignedToMeFromOthersForm from './TaskAssignedToMeFromOthersForm'
+import TaskAmendedByOthersForm from './TaskAmendedByOthersForm'
+import TaskOverdueForm from './TaskOverdueForm'
+import TaskCompletedForm from './TaskCompletedForm'
 
 const RemindersForms = () => {
   const { reminderType } = useParams()
@@ -27,8 +40,12 @@ const RemindersForms = () => {
       subheading={subject}
       breadcrumbs={[
         {
-          link: urls.dashboard(),
+          link: urls.dashboard.index(),
           text: 'Home',
+        },
+        {
+          link: `${urls.reminders.index()}/${reminderType}`,
+          text: 'Reminders',
         },
         {
           link: `${urls.reminders.settings.index()}?${queryParams}`,
@@ -49,7 +66,24 @@ const RemindersForms = () => {
         {reminderType === COMPANIES_NO_RECENT_INTERACTIONS && (
           <ExportsNoRecentInteractionsForm />
         )}
+        {reminderType === COMPANIES_NEW_INTERACTIONS && (
+          <ExportsNewInteractionsForm />
+        )}
+        {reminderType === MY_TASKS_DUE_DATE_APPROACHING && (
+          <DueDateApproachingForm />
+        )}
+        {reminderType === TASK_ASSIGNED_TO_ME_FROM_OTHERS && (
+          <TaskAssignedToMeFromOthersForm />
+        )}
+        {reminderType === TASK_AMENDED_BY_OTHERS && <TaskAmendedByOthersForm />}
+        {reminderType === TASK_OVERDUE && <TaskOverdueForm />}
+        {reminderType === TASK_COMPLETED && <TaskCompletedForm />}
       </>
+      <FooterLink
+        headingText="Need Help?"
+        linkUrl={urls.external.reminderAndSettings}
+        linkText="guidance on reminders and email notifications"
+      />
     </DefaultLayout>
   )
 }

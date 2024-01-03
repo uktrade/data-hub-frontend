@@ -1,5 +1,4 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
 
 const {
   companies,
@@ -8,6 +7,9 @@ const {
 } = require('../../../../../src/lib/urls')
 
 const { assertCollection } = require('../../support/assertions')
+const {
+  assertGovReactTable,
+} = require('../../../../functional/cypress/support/assertions')
 
 describe('Collection', () => {
   describe('company', () => {
@@ -16,7 +18,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      cy.get('[data-test="collectionCount"]').should('have.text', '1')
+      cy.get('[data-test="collectionCount"]').should('have.text', '2')
     })
   })
 
@@ -42,7 +44,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a investment collection', () => {
-        cy.get('[data-test="collectionCount"]').should('have.text', '1')
+        assertCollection('collectionCount', false)
       })
     })
 
@@ -56,7 +58,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a interaction collection', () => {
-        assertCollection()
+        assertCollection('collection-count', false)
       })
     })
 
@@ -70,7 +72,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a proposition collection', () => {
-        assertCollection()
+        assertCollection('collection-count')
       })
     })
 
@@ -82,10 +84,17 @@ describe('Collection', () => {
       })
 
       it('should return the investment project team summary', () => {
-        cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
-          .should('contain', 'Client Relationship Manager')
-          .and('contain', 'Marketing - Marketing Team')
-          .and('contain', 'Paula Churing')
+        assertGovReactTable({
+          element: '[data-test="crm-table"]',
+          rows: [
+            ['Role', 'Adviser', 'Team'],
+            [
+              'Client Relationship Manager',
+              'Paula Churing',
+              'Marketing - Marketing Team',
+            ],
+          ],
+        })
       })
     })
   })

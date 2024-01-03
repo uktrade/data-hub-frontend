@@ -2,6 +2,7 @@ const { keys, forEach, isObject } = require('lodash')
 const qs = require('qs')
 
 const selectors = require('../../../selectors')
+const urls = require('../../../../src/lib/urls')
 
 const assertKeyValueTable = (dataTest, expected) => {
   forEach(keys(expected), (key, i) => {
@@ -49,14 +50,20 @@ const assertValueTable = (dataTest, expected) => {
   })
 }
 
-const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
+const assertSummaryTable = ({
+  dataTest,
+  heading,
+  showEditLink,
+  content,
+  editLinkText = 'Edit',
+}) => {
   const summaryTableSelector = `[data-test="${dataTest}"]`
 
   if (heading) {
     cy.get(summaryTableSelector).find('caption').should('contain', heading)
   }
   cy.get(summaryTableSelector)
-    .contains('Edit')
+    .contains(editLinkText)
     .should(showEditLink ? 'be.visible' : 'not.exist')
 
   if (typeof content !== 'undefined') {
@@ -64,6 +71,25 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
       ? assertValueTable(dataTest, content)
       : assertKeyValueTable(dataTest, content)
   }
+}
+
+const assertGovReactTable = ({ element, headings, rows }) => {
+  cy.get(element).as('table')
+
+  if (headings) {
+    cy.get('@table').find('th')
+  }
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
 }
 
 /**
@@ -84,7 +110,7 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
  */
 const assertBreadcrumbs = (specs) => {
   const entries = Object.entries(specs)
-  cy.contains(Object.keys(specs).join(''))
+  cy.get('[data-test=breadcrumbs] > ol')
     .children('li')
     .should('have.length', entries.length)
     .each((x, i) => {
@@ -97,17 +123,30 @@ const assertBreadcrumbs = (specs) => {
 }
 
 /**
- * @description Same as asserBreadcrumbs but already wrapped in an `it` block.
+ * @description Same as assertBreadcrumbs but already wrapped in an `it` block.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
  */
 const testBreadcrumbs = (specs) =>
   it('should render breadcrumbs', () => assertBreadcrumbs(specs))
+
+/**
+ * Asserts that the breadcrumbs on company pages appear correctly
+ */
+const assertCompanyBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
+  testBreadcrumbs({
+    Home: urls.dashboard.index(),
+    Companies: urls.companies.index(),
+    [companyName]: detailsUrl,
+    [lastCrumb]: null,
+  })
+}
 
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
     .wrap(element)
     .find('label')
     .should('have.text', label)
+    .parent()
     .parent()
     .then(($el) => value && cy.wrap($el).should('contain', value))
 
@@ -180,36 +219,6 @@ const assertSelectOptions = (element, expectedOptions) =>
     ).to.deep.eq(expectedOptions)
   })
 
-const assertFieldAddAnother = ({
-  element,
-  label,
-  values,
-  emptyOption,
-  optionsCount = 0,
-}) =>
-  cy
-    .wrap(element)
-    .as('fieldAddAnother')
-    .then(
-      () =>
-        label &&
-        cy
-          .get('@fieldAddAnother')
-          .find('label')
-          .first()
-          .should('have.text', label)
-    )
-    .parent()
-    .children('div')
-    .each((item, i) => {
-      assertFieldSelect({
-        element: item,
-        emptyOption,
-        optionsCount,
-        value: values && values[i] && values[i].name,
-      })
-    })
-
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
     .wrap(element)
@@ -217,6 +226,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     .find('label')
     .first()
     .should('have.text', label)
+    .parent()
     .parent()
     .find('input')
     .should('have.length', optionsCount)
@@ -231,7 +241,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
     )
 
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
-//  Use this assertion for radios which have legends applied.
+// Use this assertion for radios which have legends applied.
 const assertFieldRadiosWithLegend = ({
   element,
   legend,
@@ -245,6 +255,22 @@ const assertFieldRadiosWithLegend = ({
     .first()
     .should('have.text', legend)
     .parent()
+    .find('input')
+    .should('have.length', optionsCount)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldRadio')
+          .find('input:checked')
+          .next()
+          .should('have.text', value)
+    )
+
+const assertFieldRadiosWithoutLabel = ({ element, value, optionsCount }) =>
+  cy
+    .wrap(element)
+    .as('fieldRadio')
     .find('input')
     .should('have.length', optionsCount)
     .then(
@@ -295,7 +321,7 @@ const assertFieldTypeahead = ({
 const assertFieldSingleTypeahead = (props) =>
   assertFieldTypeahead({ ...props, isMulti: false })
 
-const assertFieldInput = ({
+const assertFieldInputWithLegend = ({
   element,
   label,
   hint = undefined,
@@ -305,6 +331,8 @@ const assertFieldInput = ({
     .wrap(element)
     .find('label')
     .should('have.text', label)
+    .parent()
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -314,6 +342,48 @@ const assertFieldInput = ({
           .should('have.text', hint || '')
           .next()
     )
+
+    .find('input')
+    .then(
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    )
+
+const assertFieldInput = ({
+  element,
+  label,
+  hint = undefined,
+  value = undefined,
+  ignoreHint = false,
+}) =>
+  cy
+    .wrap(element)
+    .find('label')
+    .should('have.text', label)
+    .parent()
+    .next()
+    .then(
+      ($el) =>
+        hint &&
+        cy
+          .wrap($el)
+          .should('have.text', hint || '')
+          .next()
+    )
+    .then(
+      //in the scenario where we don't need to validate what the hint is, but a hint is still
+      //being rendered, skip over the hint without validating it to get to the next element
+      ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
+    )
+    .find('input')
+    .then(
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    )
+
+const assertFieldInputNoLabel = ({ element, value = undefined }) =>
+  cy
+    .wrap(element)
     .find('input')
     .then(
       ($el) =>
@@ -328,6 +398,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .wrap(element)
     .find('label')
     .should('contain', label)
+    .parent()
     .next()
     .then(
       ($el) =>
@@ -337,6 +408,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
           .should('have.text', hint || '')
           .next()
     )
+    .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
@@ -356,7 +428,8 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   }
   let addressElements = [
     {
-      assert: ({ element }) => cy.wrap(element).should('have.text', 'Address'),
+      assert: ({ element }) =>
+        cy.wrap(element).should('have.text', 'Trading address'),
     },
     hint && {
       assert: ({ element }) => cy.wrap(element).should('have.text', hint),
@@ -406,7 +479,7 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
 
   cy.wrap(element)
     .as('field')
-    .get('fieldset')
+    .get('[data-test="field-address"] fieldset')
     .children()
     .each((item, i) => {
       if (addressElements[i]) {
@@ -523,6 +596,15 @@ const assertCheckboxGroupNoneSelected = (element) => {
 }
 
 /**
+ * Assert that all of the options in a checkbox group are selected
+ */
+const assertCheckboxGroupAllSelected = (element) => {
+  cy.get(element)
+    .find('input')
+    .each((child) => cy.wrap(child).should('be.checked'))
+}
+
+/**
  * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
 const assertTypeaheadHints = ({
@@ -611,6 +693,15 @@ const assertPayload = (apiRequest, expectedParams) => {
 }
 
 /**
+ * Asserts the url (no domain name) is contained within the API request url
+ */
+const assertRequestUrl = (apiRequest, url) => {
+  cy.wait(apiRequest).then(({ request }) => {
+    expect(request.url).to.contain(url)
+  })
+}
+
+/**
  * Assert that the label and value exist on the date input
  */
 
@@ -618,6 +709,20 @@ const assertDateInput = ({ element, label, value }) => {
   cy.get(element)
     .find('label')
     .should('contain', label)
+    .parent()
+    .next()
+    .should('have.attr', 'value', value)
+}
+
+/**
+ * Assert that the label and value exist on the date input where a hint is provided
+ */
+const assertDateInputWithHint = ({ element, label, value }) => {
+  cy.get(element)
+    .find('fieldset > legend > label')
+    .should('contain', label)
+    .parent()
+    .next()
     .next()
     .should('have.attr', 'value', value)
 }
@@ -657,6 +762,13 @@ const assertTextVisible = (text) => {
  */
 const assertUrl = (url) => {
   cy.url().should('contain', url)
+}
+
+/**
+ * Assert url is exactly matches the current url
+ */
+const assertExactUrl = (url) => {
+  cy.url().should('eq', `${Cypress.config('baseUrl')}${url}`)
 }
 
 /**
@@ -705,21 +817,69 @@ const assertErrorDialog = (taskName, errorMessage) => {
 const assertAPIRequest = (endPointAlias, assertCallback) =>
   cy.wait(`@${endPointAlias}`).then((xhr) => assertCallback(xhr))
 
+/**
+ * Assert the field element contains the expected error message
+ * @param {*} element the field element that contains the error
+ * @param {*} errorMessage the error message that should be displayed
+ * @param {*} hasHint whether this field has a hint
+ * @returns
+ */
+const assertFieldError = (element, errorMessage, hasHint = true) =>
+  element
+    .find('span')
+    .eq(hasHint ? 1 : 0)
+    .should('have.text', errorMessage)
+
+/**
+ * Assert the typeahead element contains a chip for each of the values
+ * @param {*} selector the selector for the typeahead component
+ * @param {*} values the list of values that should exist in the chips
+ */
+const assertTypeaheadValues = (selector, values) => {
+  const VALUES_ALIAS = 'typeahead-values'
+  cy.get(selector).find('[data-test="typeahead-chip"]').as(VALUES_ALIAS)
+
+  values.forEach((value) => {
+    cy.get('@' + VALUES_ALIAS).contains(value)
+  })
+}
+
+/**
+ * Assert that a link exists and that the href url is correct
+ */
+const assertLink = (dataTest, expected) => {
+  cy.get(`[data-test=${dataTest}]`)
+    .should('exist')
+    .should('have.attr', 'href', expected)
+}
+
+/**
+ * A wrapper around assertLink that also checks the text
+ */
+const assertLinkWithText = (dataTest, expectedLink, expectedText) => {
+  cy.get(`[data-test=${dataTest}]`).should('have.text', expectedText)
+  assertLink(dataTest, expectedLink)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
+  assertGovReactTable,
   assertBreadcrumbs,
   testBreadcrumbs,
+  assertCompanyBreadcrumbs,
   assertFieldTypeahead,
   assertFieldSingleTypeahead,
   assertFieldInput,
+  assertFieldInputWithLegend,
+  assertFieldInputNoLabel,
   assertFieldTextarea,
   assertFieldSelect,
   assertSelectOptions,
-  assertFieldAddAnother,
   assertFieldRadios,
   assertFieldRadiosWithLegend,
+  assertFieldRadiosWithoutLabel,
   assertFieldCheckbox,
   assertFieldAddress,
   assertFieldUneditable,
@@ -736,6 +896,7 @@ module.exports = {
   assertFormButtons,
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
+  assertCheckboxGroupAllSelected,
   assertTypeaheadHints,
   assertSingleTypeaheadOptionSelected,
   assertTypeaheadOptionSelected,
@@ -745,7 +906,9 @@ module.exports = {
   assertQueryParams,
   assertNotQueryParams,
   assertPayload,
+  assertRequestUrl,
   assertDateInput,
+  assertDateInputWithHint,
   assertErrorSummary,
   assertVisible,
   assertNotExists,
@@ -757,4 +920,9 @@ module.exports = {
   assertRequestBody,
   assertErrorDialog,
   assertAPIRequest,
+  assertExactUrl,
+  assertFieldError,
+  assertTypeaheadValues,
+  assertLink,
+  assertLinkWithText,
 }

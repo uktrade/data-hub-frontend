@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
-import { BLACK, GREY_3 } from 'govuk-colours'
 
-import InteractionResource from '../../../components/Resource/Interaction'
-import ArchivePanel from '../../../components/ArchivePanel'
-import { NewWindowLink, SummaryTable } from '../../../components'
-import urls from '../../../../lib/urls'
-import { currencyGBP } from '../../../utils/number-utils'
+import { BLACK, GREY_3 } from '../../../../client/utils/colours'
+import { InteractionResource } from '../../../components/Resource'
 import InteractionReferralDetails from './InteractionReferralDetails'
+import { SummaryTable } from '../../../components'
+import ArchivePanel from '../../../components/ArchivePanel'
 import CompleteInteraction from './CompleteInteraction'
+
+import { currencyGBP } from '../../../utils/number-utils'
+import { formatLongDate } from '../../../utils/date'
+import urls from '../../../../lib/urls'
 import {
   getEditLink,
   isEditable,
@@ -25,9 +27,9 @@ import {
   transformService,
 } from './transformers'
 
-const { formatLongDate } = require('../../../utils/date')
+const EXPORT = 'export'
 
-const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
+const InteractionDetails = ({ interactionId }) => {
   return (
     <InteractionResource id={interactionId}>
       {(interaction) => (
@@ -118,18 +120,6 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                 children={interaction.communicationChannel.name}
               />
             )}
-            {interaction.policyIssueTypes.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy issue types"
-                children={transformArray(interaction.policyIssueTypes)}
-              />
-            )}
-            {interaction.policyAreas.length > 0 && (
-              <SummaryTable.Row
-                heading="Policy areas"
-                children={transformArray(interaction.policyAreas)}
-              />
-            )}
             {interaction.policyFeedbackNotes && (
               <SummaryTable.Row
                 heading="Business intelligence"
@@ -158,20 +148,29 @@ const InteractionDetails = ({ interactionId, archivedDocumentPath }) => {
                 }
               />
             )}
-            {interaction.archivedDocumentsUrlPath && (
-              <SummaryTable.Row
-                heading="Documents"
-                children={
-                  <NewWindowLink
-                    href={
-                      archivedDocumentPath +
-                      interaction.archivedDocumentsUrlPath
-                    }
-                  >
-                    View files and documents
-                  </NewWindowLink>
-                }
-              />
+            {interaction.theme === EXPORT && (
+              <>
+                <SummaryTable.Row
+                  heading="Helped remove an export barrier"
+                  children={
+                    interaction.helpedRemoveExportBarrier ? 'Yes' : 'No'
+                  }
+                />
+                {interaction.exportBarrierTypes.length > 0 && (
+                  <SummaryTable.Row
+                    heading="Export barrier category"
+                    children={interaction.exportBarrierTypes
+                      .map((barrierType) => barrierType.name)
+                      .join(', ')}
+                  />
+                )}
+                {interaction.exportBarrierNotes.length > 0 && (
+                  <SummaryTable.Row
+                    heading="Export barrier - other"
+                    children={interaction.exportBarrierNotes}
+                  />
+                )}
+              </>
             )}
           </SummaryTable>
           {isEditable(interaction.status) && (

@@ -34,6 +34,7 @@ async function renderAddCompanyForm(req, res, next) {
           organisationTypes,
           regions,
           sectors,
+          dunsNumber: req.query.duns_number,
         },
       })
   } catch (error) {

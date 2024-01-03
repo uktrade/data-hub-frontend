@@ -4,7 +4,6 @@ const logger = require('../../../../config/logger')
 const { Order } = require('../../models')
 const { setCompany: setCompanyMW } = require('../../middleware')
 const { getContact } = require('../../../contacts/repos')
-const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
 function setCompany(req, res, next) {
@@ -34,32 +33,6 @@ async function setContact(req, res, next) {
   } catch (error) {
     next(error)
   }
-}
-
-async function setAssignees(req, res, next) {
-  const orderId = get(res.locals, 'order.id')
-
-  if (orderId) {
-    try {
-      res.locals.assignees = await Order.getAssignees(req, orderId)
-    } catch (error) {
-      return next(error)
-    }
-  }
-  next()
-}
-
-async function setSubscribers(req, res, next) {
-  const orderId = get(res.locals, 'order.id')
-
-  if (orderId) {
-    try {
-      res.locals.subscribers = await Order.getSubscribers(req, orderId)
-    } catch (error) {
-      return next(error)
-    }
-  }
-  next()
 }
 
 async function setQuoteSummary(req, res, next) {
@@ -148,28 +121,6 @@ async function setQuote(req, res, next) {
     if (error.statusCode !== 404) {
       logger.error(error)
     }
-  }
-
-  next()
-}
-
-async function setInvoice(req, res, next) {
-  try {
-    res.locals.invoice = await Order.getInvoice(req, res.locals.order.id)
-  } catch (error) {
-    logger.error(error)
-  }
-
-  next()
-}
-
-async function setPayments(req, res, next) {
-  try {
-    const payments = await Order.getPayments(req, res.locals.order.id)
-
-    res.locals.payments = payments.map(transformPaymentToView)
-  } catch (error) {
-    logger.error(error)
   }
 
   next()
@@ -265,13 +216,9 @@ function setQuoteForm(req, res, next) {
 module.exports = {
   setCompany,
   setContact,
-  setAssignees,
-  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,
-  setInvoice,
-  setPayments,
   generateQuote,
   cancelQuote,
   setQuoteForm,

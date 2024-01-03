@@ -1,6 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-
 import ArchivePanel from 'ArchivePanel'
 
 const archivist = {
@@ -8,25 +6,40 @@ const archivist = {
   last_name: 'Archivist',
 }
 
-storiesOf('ArchivePanel', module)
-  .addParameters({ component: ArchivePanel })
-  .add('Archived item', () => (
-    <ArchivePanel
-      isArchived={true}
-      archivedBy={archivist}
-      archivedOn={'2022-01-01'}
-      archiveReason={'Example archival reason'}
-      unarchiveUrl={'#'}
-      type={'item'}
-    />
-  ))
-  .add('Automatically archived item', () => (
-    <ArchivePanel
-      isArchived={true}
-      archivedBy={null}
-      archivedOn={'2022-01-01'}
-      archiveReason={'Example archival reason'}
-      unarchiveUrl={'#'}
-      type={'item'}
-    />
-  ))
+export default {
+  title: 'ArchivePanel',
+
+  parameters: {
+    component: ArchivePanel,
+  },
+}
+
+export const ArchivedItem = () => (
+  <ArchivePanel
+    isArchived={true}
+    archivedBy={archivist}
+    archivedOn={'2022-01-01'}
+    archiveReason={'Example archival reason'}
+    unarchiveUrl={'#'}
+    type={'item'}
+  />
+)
+
+ArchivedItem.story = {
+  name: 'Archived item',
+}
+
+export const AutomaticallyArchivedItem = () => (
+  <ArchivePanel
+    isArchived={true}
+    archivedBy={null}
+    archivedOn={'2022-01-01'}
+    archiveReason={'Example archival reason'}
+    unarchiveUrl={'#'}
+    type={'item'}
+  />
+)
+
+AutomaticallyArchivedItem.story = {
+  name: 'Automatically archived item',
+}

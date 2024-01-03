@@ -1,7 +1,8 @@
 import React from 'react'
-import StatusMessage from '../../StatusMessage'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+
+import StatusMessage from '../../StatusMessage'
 import { NewWindowLink } from '../../'
 
 const StyledStatusMessage = styled(StatusMessage)`

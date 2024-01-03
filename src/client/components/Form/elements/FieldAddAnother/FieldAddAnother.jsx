@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import _ from 'lodash'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
@@ -12,7 +13,6 @@ import multiInstance from '../../../../utils/multiinstance'
 import {
   FIELD_ADD_ANOTHER__ADD,
   FIELD_ADD_ANOTHER__REMOVE,
-  FIELD_ADD_ANOTHER__INITIALISE,
 } from '../../../../actions'
 import reducer from './reducer'
 
@@ -44,60 +44,56 @@ const FieldAddAnother = ({
   buttonText,
   initialChildGroupCount = 1,
   limitChildGroupCount = Number.MAX_VALUE,
-  childCount,
-  fieldGroupIds,
-  initialise,
   add,
   remove,
+  // State props
+  items = _(initialChildGroupCount).range().keyBy().value(),
 }) => {
-  useEffect(() => {
-    initialise(initialChildGroupCount)
-  }, [initialChildGroupCount])
+  const fieldGroupIds = Object.keys(items)
 
   const addAnotherHandler = (event) => {
     event.preventDefault()
-    add()
+    add(initialChildGroupCount)
   }
 
   return (
     <>
       <FieldWrapper {...{ name, label, legend, hint, bigLegend: true }}>
-        {fieldGroupIds &&
-          fieldGroupIds.map((item, index) => (
-            <StyledGroup
-              role="region"
-              aria-label={`${indexToOrdinal(index)} ${itemName}`}
-              data-test={`${dataTestPrefix}${index}`}
-              key={item.fieldGroupId}
-            >
-              <StyledChildren>
-                {children({
-                  groupIndex: item.fieldGroupId,
-                })}
-              </StyledChildren>
-              {fieldGroupIds.length > 1 && (
-                <StyledLink>
-                  <Link
-                    href="#"
-                    aria-label={`Remove ${indexToOrdinal(index)} ${itemName}`}
-                    onClick={(event) => {
-                      event.preventDefault()
-                      remove(item.fieldGroupId)
-                    }}
-                  >
-                    Remove
-                  </Link>
-                </StyledLink>
-              )}
-            </StyledGroup>
-          ))}
-        {childCount < limitChildGroupCount && (
+        {fieldGroupIds.map((fieldGroupId, index) => (
+          <StyledGroup
+            role="region"
+            aria-label={`${indexToOrdinal(index)} ${itemName}`}
+            data-test={`${dataTestPrefix}${index}`}
+            key={fieldGroupId}
+          >
+            <StyledChildren>
+              {children({
+                groupIndex: fieldGroupId,
+              })}
+            </StyledChildren>
+            {fieldGroupIds.length > 1 && (
+              <StyledLink>
+                <Link
+                  href="#"
+                  aria-label={`Remove ${indexToOrdinal(index)} ${itemName}`}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    remove(fieldGroupId, initialChildGroupCount)
+                  }}
+                >
+                  Remove
+                </Link>
+              </StyledLink>
+            )}
+          </StyledGroup>
+        ))}
+        {fieldGroupIds.length < limitChildGroupCount && (
           <StyledButton>
             <SecondaryButton
               data-test="add-another"
               onClick={addAnotherHandler}
               aria-label={`Add a ${indexToOrdinal(
-                fieldGroupIds?.length || 0
+                fieldGroupIds.length || 0
               )} ${itemName}`}
             >
               {buttonText ? buttonText : `Add another ${itemName}`}
@@ -120,34 +116,22 @@ FieldAddAnother.propTypes = {
   children: PropTypes.func,
   initialChildGroupCount: PropTypes.number,
   limitChildGroupCount: PropTypes.number,
-  // Props from redux state
-  fieldGroupIds: PropTypes.arrayOf(
-    PropTypes.shape({
-      fieldGroupId: PropTypes.number.isRequired,
-    })
-  ),
-  initialise: PropTypes.func,
-  add: PropTypes.func,
-  remove: PropTypes.func,
 }
 
 export default multiInstance({
   name: 'FieldAddAnother',
   actionPattern: 'FIELD_ADD_ANOTHER__',
   dispatchToProps: (dispatch) => ({
-    initialise: (initialChildGroupCount) =>
-      dispatch({
-        type: FIELD_ADD_ANOTHER__INITIALISE,
-        initialChildGroupCount,
-      }),
-    add: () =>
+    add: (initialChildGroupCount) =>
       dispatch({
         type: FIELD_ADD_ANOTHER__ADD,
+        initialChildGroupCount,
       }),
-    remove: (fieldGroupId) =>
+    remove: (fieldGroupId, initialChildGroupCount) =>
       dispatch({
         type: FIELD_ADD_ANOTHER__REMOVE,
         fieldGroupId,
+        initialChildGroupCount,
       }),
   }),
   component: FieldAddAnother,

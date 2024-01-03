@@ -54,7 +54,7 @@ export const EventFormFields = ({ values }) => (
               options={values?.metadata?.relatedTradeAgreements}
               placeholder="Search trade agreements"
               required="Select at least one trade agreement"
-              aria-label="Select a trade agreement"
+              aria-label="Related Trade Agreements"
               noOptionsMessage="No trade agreement found"
             />
           ),
@@ -74,7 +74,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.eventTypeOptions}
       placeholder="Select event type"
       required="Select at least one event type"
-      aria-label="Select an event type"
+      aria-label="Type of event"
       noOptionsMessage="No event type found"
     />
     <FieldDate
@@ -93,7 +93,7 @@ export const EventFormFields = ({ values }) => (
       label="Event location type (optional)"
       options={values?.metadata?.eventLocationTypes}
       placeholder="Select event"
-      aria-label="Select an event"
+      aria-label="Event location type (optional)"
       noOptionsMessage="No event location found"
     />
     <FieldInput
@@ -126,7 +126,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.countries}
       required="Enter a country"
       placeholder="Select country"
-      aria-label="Select a country"
+      aria-label="Country"
       noOptionsMessage="No country found"
     />
     {values.address_country?.value === UNITED_KINGDOM_ID && (
@@ -136,7 +136,7 @@ export const EventFormFields = ({ values }) => (
         options={values?.metadata?.ukRegions}
         required="Select a UK region"
         placeholder="Select region"
-        aria-label="Select a region"
+        aria-label="UK Region"
         noOptionsMessage="No region found"
       />
     )}
@@ -147,7 +147,7 @@ export const EventFormFields = ({ values }) => (
       options={values?.metadata?.teams}
       required="Select at least one team hosting the event"
       placeholder="Select team"
-      aria-label="Select a team"
+      aria-label="Team hosting the event"
       noOptionsMessage="No hosting team found"
     />
     <FieldTypeahead
@@ -156,7 +156,7 @@ export const EventFormFields = ({ values }) => (
       required="Select at least one service"
       options={values?.metadata?.services}
       placeholder="Select service"
-      aria-label="Select a service"
+      aria-label="Service"
       noOptionsMessage="No service found"
     />
     <FieldAdvisersTypeahead
@@ -181,7 +181,7 @@ export const EventFormFields = ({ values }) => (
               options={values?.metadata?.teams}
               placeholder="Select team"
               required="Select at least one team"
-              aria-label="Select at least one team"
+              aria-label="Teams"
               noOptionsMessage="No shared team found"
             />
           ),
@@ -196,7 +196,7 @@ export const EventFormFields = ({ values }) => (
       name="related_programmes"
       options={values?.metadata?.programmes}
       placeholder="Select programme"
-      aria-label="Select programme"
+      aria-label="Related programmes (optional)"
       noOptionsMessage="No programmes found"
     />
   </>

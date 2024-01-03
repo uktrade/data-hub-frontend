@@ -14,17 +14,23 @@ const generateAventriEvent = (
     postcode,
     nameOfLocation,
   } = {
-    id: faker.random.numeric(),
-    name: faker.random.word(),
-    startTime: faker.date.between(faker.date.past(), faker.date.future()),
-    endTime: faker.date.between(faker.date.past(), faker.date.future()),
-    address1: faker.address.buildingNumber(),
-    address2: faker.address.buildingNumber(),
-    address3: faker.address.buildingNumber(),
-    city: faker.address.buildingNumber(),
-    country: faker.address.buildingNumber(),
-    postcode: faker.address.buildingNumber(),
-    nameOfLocation: faker.address.streetAddress(),
+    id: faker.string.numeric(),
+    name: faker.word.sample(),
+    startTime: faker.date.between({
+      from: faker.date.past(),
+      to: faker.date.future(),
+    }),
+    endTime: faker.date.between({
+      from: faker.date.past(),
+      to: faker.date.future(),
+    }),
+    address1: faker.location.buildingNumber(),
+    address2: faker.location.buildingNumber(),
+    address3: faker.location.buildingNumber(),
+    city: faker.location.buildingNumber(),
+    country: faker.location.buildingNumber(),
+    postcode: faker.location.buildingNumber(),
+    nameOfLocation: faker.location.streetAddress(),
   }
 ) => {
   return {
@@ -75,7 +81,7 @@ const generateAventriEvent = (
         endTime,
         id: `dit:aventri:Event:${id}`,
         name,
-        published: '2022-01-23T20:09:14',
+        published: new Date().toISOString(),
         startTime,
         type: ['dit:aventri:Event'],
         url: '',

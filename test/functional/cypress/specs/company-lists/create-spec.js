@@ -14,27 +14,27 @@ describe('Create a company list', () => {
       Companies: urls.companies.index(),
       'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978':
         '/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018',
-      'Create a list': undefined,
+      'Create new list': undefined,
     })
 
     it('displays the "Create list" heading', () => {
       cy.get(selectors.localHeader().heading).should(
         'have.text',
-        'Create a list'
+        'Add Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978 to list'
       )
     })
 
     it('displays the list name', () => {
       cy.get(selectors.companyList.create.label).should(
         'have.text',
-        'List name'
+        'What do you want to name your new list?'
       )
     })
 
     it('displays the hint', () => {
       cy.get(selectors.companyList.create.hint).should(
         'have.text',
-        'This is a name only you see, and can be up to 30 characters'
+        'This is a name only you see, and can be up to 30 characters long'
       )
     })
 
@@ -49,8 +49,8 @@ describe('Create a company list', () => {
       )
     })
 
-    it('displays a cancel link', () => {
-      cy.get(selectors.companyList.create.cancel).should('have.text', 'Cancel')
+    it('displays a back link', () => {
+      cy.get(selectors.companyList.create.cancel).should('have.text', 'Back')
     })
   })
 
@@ -60,10 +60,9 @@ describe('Create a company list', () => {
     })
     it('should display an error', () => {
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should(
-        'contain.text',
-        'Enter a name for your list'
-      )
+      cy.get('[data-test="hint-text"]')
+        .next()
+        .should('contain.text', 'Enter a name for your list')
     })
   })
 
@@ -76,10 +75,12 @@ describe('Create a company list', () => {
         'loooooooooooooonnnnnnnnnnnnnggggggggg text!'
       )
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should(
-        'contain.text',
-        'Enter list name which is no longer than 30 characters'
-      )
+      cy.get('[data-test="hint-text"]')
+        .next()
+        .should(
+          'contain.text',
+          'Enter list name which is no longer than 30 characters'
+        )
     })
   })
 

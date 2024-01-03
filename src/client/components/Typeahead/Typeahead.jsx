@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+import Label from '@govuk-react/label'
+
 import {
   BLACK,
   BLUE,
@@ -10,9 +13,7 @@ import {
   RED,
   TEXT_COLOUR,
   WHITE,
-} from 'govuk-colours'
-import { FOCUSABLE, SPACING } from '@govuk-react/constants'
-import Label from '@govuk-react/label'
+} from '../../utils/colours'
 import multiInstance from '../../utils/multiinstance'
 
 import {
@@ -37,7 +38,6 @@ import {
   getActionFromKey,
   getFilteredOptions,
   getUpdatedIndex,
-  maintainScrollVisibility,
   menuActions,
   getNewSelectedOptions,
 } from './utils'
@@ -126,6 +126,10 @@ const AutocompleteInput = styled('input')(({ error }) => ({
   ...FOCUSABLE,
 }))
 
+const TypeaheadOptionContent = ({ option, searchString }) => (
+  <Highlighter optionLabel={option.label} searchStr={searchString} />
+)
+
 const Menu = styled('div')(({ open }) => ({
   visibility: open ? 'visible' : 'hidden',
   backgroundColor: WHITE,
@@ -172,6 +176,7 @@ const Typeahead = ({
   onMenuOpen,
   onChange = () => {},
   'data-test': testId,
+  OptionContent = TypeaheadOptionContent,
   ...inputProps
 }) => {
   const closeOnSelect = isMulti ? closeMenuOnSelect : true
@@ -183,7 +188,7 @@ const Typeahead = ({
     })
   }, [JSON.stringify(initialValue), isMulti])
   const inputRef = React.useRef(null)
-  const menuRef = React.useRef(null)
+  const listRef = React.useRef(null)
   const ignoreFilter =
     !isMulti && selectedOptions.map(({ label }) => label).includes(input)
   const filteredOptions = getFilteredOptions({
@@ -194,14 +199,16 @@ const Typeahead = ({
     menuOpen && filteredOptions[activeIndex]
       ? `${name}-${filteredOptions[activeIndex].value}`
       : ''
-  const scrollMenuToIndex = (index) =>
-    maintainScrollVisibility({
-      parent: menuRef.current,
-      target: menuRef.current.children[index],
-    })
+  const scrollItemAtIndexIntoView = (index) => {
+    const item = listRef.current?.children[index]
+    if (item) {
+      item.scrollIntoView({ block: 'nearest' })
+    }
+  }
   const onInputKeyDown = (event) => {
     const max = filteredOptions.length - 1
     const action = getActionFromKey(event.code, menuOpen)
+
     switch (action) {
       case menuActions.next:
       case menuActions.last:
@@ -210,7 +217,7 @@ const Typeahead = ({
         event.preventDefault()
         const newActiveIndex = getUpdatedIndex(activeIndex, max, action)
         onActiveChange(newActiveIndex)
-        scrollMenuToIndex(newActiveIndex)
+        scrollItemAtIndexIntoView(newActiveIndex)
         return
       case menuActions.closeSelect:
         event.preventDefault()
@@ -234,10 +241,11 @@ const Typeahead = ({
         return
       case menuActions.open:
         onMenuOpen()
-        scrollMenuToIndex(activeIndex)
+        scrollItemAtIndexIntoView(activeIndex)
         return
     }
   }
+
   const menuActive = loadOptions ? !!input : true
   return (
     <div id={`${name}-wrapper`} data-test={testId} className={className}>
@@ -283,7 +291,7 @@ const Typeahead = ({
           onBlur={onBlur}
           onClick={() => {
             onMenuOpen()
-            scrollMenuToIndex(activeIndex)
+            scrollItemAtIndexIntoView(activeIndex)
           }}
           onInput={(e) => {
             onInput(e)
@@ -303,7 +311,6 @@ const Typeahead = ({
           role="listbox"
           aria-labelledby={`${name}-label`}
           aria-multiselectable="true"
-          ref={menuRef}
           data-test="typeahead-menu"
         >
           {menuOpen && menuActive && (
@@ -321,7 +328,7 @@ const Typeahead = ({
               }}
             >
               {() => (
-                <>
+                <div ref={listRef}>
                   {filteredOptions.map((option, index) => (
                     <ListboxOption
                       id={`${name}-${option.value}`}
@@ -338,7 +345,7 @@ const Typeahead = ({
                       aria-setsize={filteredOptions.length}
                       aria-posinset={index}
                       onClick={() => {
-                        inputRef.current && inputRef.current.focus()
+                        inputRef.current && inputRef.current.select()
                         onOptionToggle(option)
                         onChange(
                           getNewSelectedOptions({
@@ -360,10 +367,7 @@ const Typeahead = ({
                       data-test="typeahead-menu-option"
                     >
                       <span>
-                        <Highlighter
-                          optionLabel={option.label}
-                          searchStr={input}
-                        />
+                        <OptionContent option={option} searchString={input} />
                       </span>
                     </ListboxOption>
                   ))}
@@ -372,7 +376,7 @@ const Typeahead = ({
                       {noOptionsMessage}
                     </NoOptionsMessage>
                   )}
-                </>
+                </div>
               )}
             </Task.Status>
           )}

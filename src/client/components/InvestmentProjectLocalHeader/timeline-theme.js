@@ -1,6 +1,6 @@
-import { GREY_4 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
-import { GREY_3_LEGACY } from '../../utils/colors'
+
+import { GREY_4, GREY_3_LEGACY } from '../../utils/colours'
 
 export default {
   container: {

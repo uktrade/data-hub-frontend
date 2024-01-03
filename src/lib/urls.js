@@ -1,5 +1,9 @@
 const queryString = require('qs')
-const { PRIMARY_LINK_PARAMS } = require('../../src/common/constants')
+
+const {
+  INVESTMENT_LINK_PARAM,
+  PRIMARY_LINK_PARAMS,
+} = require('../../src/common/constants')
 
 function getTokens(path) {
   const tokens = []
@@ -79,8 +83,10 @@ module.exports = {
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
     findExporters: () =>
-      'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c',
+      'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
+    dataWorkspace: (id) =>
+      `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
@@ -90,11 +96,19 @@ module.exports = {
         'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team',
     },
     helpCentre: {
+      community: {
+        roadmap: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/updates/roadmap/data-hub-roadmap/ ',
+        feedback: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/feedback-or-propose-changes',
+        principles: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-principles',
+        training: () =>
+          'https://data-services-help.trade.gov.uk/data-hub/crm-community/training',
+      },
       accessibilityStatement: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/data-hub-accessibility-statement/data-hub-accessibility-statement/',
       dhHomepage: () => 'https://data-services-help.trade.gov.uk/data-hub/',
-      pipeline: () =>
-        'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
       policyFeedback: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
       tradeagreementGuidance: () =>
@@ -108,16 +122,33 @@ module.exports = {
     },
     copyright:
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
+    referrals:
+      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/',
+    reminderAndSettings:
+      'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
+    euVIES: 'http://ec.europa.eu/taxation_customs/vies/',
   },
-  dashboard: url('/'),
+
+  dashboard: {
+    index: url('/'),
+    investmentProjects: url('/investment-projects'),
+    myTasks: url('/my-tasks'),
+  },
   oauth: {
     redirect: url('/oauth'),
     callback: url('/oauth/callback'),
     signout: url('/oauth/sign-out'),
   },
+  company: {
+    exportWin: url('/api-proxy/v4/company', '/:companyId/export-win'),
+  },
+  community: {
+    index: url('/community'),
+  },
   companies: {
     index: url('/companies', PRIMARY_LINK_PARAMS.companies),
     create: url('/companies', '/create'),
+    createFromDNB: url('/companies/create?duns_number=', ':dunsNumber'),
     export: url('/companies', '/export'),
     detail: url('/companies', '/:companyId'),
     edit: url('/companies', '/:companyId/edit'),
@@ -126,15 +157,17 @@ module.exports = {
       index: url('/companies', '/:companyId/lists'),
       addRemove: url('/companies', '/:companyId/lists/add-remove'),
     },
-    pipelineAdd: url('/companies', '/:companyId/my-pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('/companies', '/:companyId/contacts'),
     unarchive: url('/companies', '/:companyId/unarchive'),
-    documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
+    editVirtualTeam: url(
+      '/companies',
+      '/:companyId/edit-one-list?step=oneListAdvisers'
+    ),
     interactions: createInteractionsSubApp(
       '/companies',
       '/:companyId/interactions'
@@ -154,11 +187,6 @@ module.exports = {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
     },
-    advisers: {
-      index: url('/companies', '/:companyId/advisers'),
-      assign: url('/companies', '/:companyId/advisers/assign'),
-      remove: url('/companies', '/:companyId/advisers/remove'),
-    },
     editHistory: {
       index: url('/companies', '/:companyId/edit-history'),
       data: url('/companies', '/:companyId/edit-history/data'),
@@ -166,6 +194,11 @@ module.exports = {
     dnbHierarchy: {
       index: url('/companies', '/:companyId/dnb-hierarchy'),
       data: url('/companies', '/:companyId/dnb-hierarchy/data'),
+      tree: url('/companies', '/:companyId/company-tree'),
+      relatedCompaniesCount: url(
+        '/v4/dnb',
+        '/:companyId/related-companies/count'
+      ),
     },
     exports: {
       index: url('/companies', '/:companyId/exports'),
@@ -175,6 +208,16 @@ module.exports = {
         index: url('/companies', '/:companyId/exports/history'),
         country: url('/companies', '/:companyId/exports/history/:countryId'),
       },
+    },
+    exportWins: {
+      index: url('/exportwins'),
+      create: url('/exportwins/create'),
+      details: url('/exportwins/:winId/details'),
+      confirmed: url('/exportwins/confirmed'),
+      unconfirmed: url('/exportwins/unconfirmed'),
+    },
+    overview: {
+      index: url('/companies', '/:companyId/overview'),
     },
     hierarchies: {
       ghq: {
@@ -199,6 +242,10 @@ module.exports = {
         '/companies',
         '/:companyId/investments/projects'
       ),
+      companyInvestmentProjectsWithSearch: url(
+        '/companies',
+        '/:companyId/investments/projects?page=1&sortby=created_on%3Adesc'
+      ),
       largeCapitalProfile: url(
         '/companies',
         '/:companyId/investments/large-capital-profile'
@@ -214,6 +261,44 @@ module.exports = {
     subsidiaries: {
       index: url('/companies', '/:companyId/subsidiaries'),
       link: url('/companies', '/:companyId/subsidiaries/link'),
+    },
+    accountManagement: {
+      index: url('/companies', '/:companyId/account-management'),
+      strategy: {
+        create: url(
+          '/companies',
+          '/:companyId/account-management/strategy/create'
+        ),
+        edit: url('/companies', '/:companyId/account-management/strategy/edit'),
+      },
+      objectives: {
+        create: url(
+          '/companies',
+          '/:companyId/account-management/objective/create'
+        ),
+        edit: url(
+          '/companies',
+          '/:companyId/account-management/objective/:objectiveId/edit'
+        ),
+        archived: url(
+          '/companies',
+          '/:companyId/account-management/objective/archived'
+        ),
+        archive: url(
+          '/companies',
+          '/:companyId/account-management/objective/:objectiveId/archive'
+        ),
+      },
+      advisers: {
+        assign: url(
+          '/companies',
+          '/:companyId/account-management/advisers/assign'
+        ),
+        remove: url(
+          '/companies',
+          '/:companyId/account-management/advisers/remove'
+        ),
+      },
     },
   },
   companyLists: {
@@ -232,7 +317,6 @@ module.exports = {
     create: url('/contacts/create?company=', '/:companyId'),
     contactActivities: url('/contacts', '/:contactId/interactions'),
     details: url('/contacts', '/:contactId/details'),
-    documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),
     interactions: createInteractionsSubApp(
       '/contacts',
@@ -251,6 +335,7 @@ module.exports = {
     edit: url('/events', '/:eventId/edit'),
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
+    addAttendee: url('/events', '/:eventId/attendees/create/:contactId'),
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
@@ -273,6 +358,10 @@ module.exports = {
     activeEvents: url('/activeEvents'),
     activeEventsData: url('/interactions', '/activeEvents'),
     export: url('/interactions', '/export'),
+    exportSupportService: {
+      details: url('/interactions', '/ess/:essInteractionId/details'),
+      detailsData: url('/interactions', '/ess/:essInteractionId/details/data'),
+    },
   },
   investments: {
     index: url('/investments', PRIMARY_LINK_PARAMS.investments),
@@ -289,12 +378,34 @@ module.exports = {
         '/investments',
         '/projects/:investmentId/edit-team-members'
       ),
-      documents: url('/investments', '/projects/:investmentId/documents'),
-      propositions: url('/investments', '/projects/:investmentId/propositions'),
-      proposition: url(
+      editValue: url('/investments', '/projects/:investmentId/edit-value'),
+      propositions: url(
         '/investments',
-        '/projects/:investmentId/propositions/:propositionId'
+        '/projects/:investmentId/propositions',
+        INVESTMENT_LINK_PARAM
       ),
+      proposition: {
+        details: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId'
+        ),
+        abandon: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/abandon'
+        ),
+        document: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/document'
+        ),
+        complete: url(
+          '/investments',
+          '/projects/:investmentId/propositions/:propositionId/complete'
+        ),
+        create: url(
+          '/investments',
+          '/projects/:investmentId/propositions/create/proposition'
+        ),
+      },
       team: url('/investments', '/projects/:investmentId/team'),
       clientRelationshipManagement: url(
         '/investments',
@@ -302,9 +413,9 @@ module.exports = {
       ),
       interactions: createInteractionsSubApp(
         '/investments/projects',
-        '/:investmentId/interactions'
+        '/:investmentId/interactions',
+        INVESTMENT_LINK_PARAM
       ),
-      project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
       admin: url('/investments', '/projects/:projectId/admin'),
       create: url('/investments', '/projects/create/:companyId'),
@@ -312,10 +423,46 @@ module.exports = {
         '/investments',
         '/projects/:projectId/edit-project-management'
       ),
-      typeInfo: url(
+      findAssociatedProject: url(
         '/investments',
-        '/projects/create/investment-type/info/:anchor'
+        '/projects/:projectId/find-associated'
       ),
+      editAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/edit-associated/:associatedProjectId'
+      ),
+      evidence: {
+        index: url('/investments', '/projects/:projectId/evidence'),
+        add: url('/investments', '/projects/:projectId/evidence/add-new'),
+        delete: url(
+          '/investments',
+          '/projects/:projectId/evidence/:evidenceId/delete'
+        ),
+      },
+      recipientCompany: url(
+        '/investments',
+        '/projects/:projectId/find-ukcompany'
+      ),
+      editRecipientCompany: url(
+        '/investments',
+        '/projects/:projectId/edit-ukcompany/:companyId'
+      ),
+      removeRecipientCompany: url(
+        '/investments',
+        '/projects/:projectId/remove-ukcompany'
+      ),
+      removeAssociatedProject: url(
+        '/investments',
+        '/projects/:projectId/remove-associated'
+      ),
+      evaluation: url('/investments', '/projects/:projectId/evaluation'),
+      tasks: {
+        index: url(
+          '/investments',
+          '/projects/:projectId/tasks',
+          '?sortby=-created_on'
+        ),
+      },
     },
     profiles: {
       index: url('/investments', '/profiles'),
@@ -459,8 +606,14 @@ module.exports = {
   omis: {
     index: url('/omis', PRIMARY_LINK_PARAMS.omis),
     export: url('/omis', '/export'),
-    create: url('/omis/create?company=', ':companyId'),
-    reconciliation: url('/omis/reconciliation'),
+    create: {
+      companySelect: url('/omis', '/create'),
+      form: url('/omis', '/create/:companyId'),
+    },
+    reconciliation: url(
+      '/omis/reconciliation',
+      PRIMARY_LINK_PARAMS.reconciliation
+    ),
     order: url('/omis', '/:orderId'),
     paymentReconciliation: url(
       '/omis',
@@ -474,18 +627,22 @@ module.exports = {
       quote: url('/omis', '/:orderId/edit/quote-details'),
       assignees: url('/omis', '/:orderId/edit/assignees'),
       subscribers: url('/omis', '/:orderId/edit/subscribers'),
+      internalInfo: url('/omis', '/:orderId/edit/internal-details'),
+      invoiceDetails: url('/omis', '/:orderId/edit/invoice-details'),
+      billingAddress: url('/omis', '/:orderId/edit/billing-address'),
+      vatStatus: url('/omis', '/:orderId/edit/vat-status'),
+      assigneeTime: url('/omis', '/:orderId/edit/assignee-time'),
+      contact: url('/omis', '/:orderId/edit/contact'),
+      setLeadAssignee: url('/omis', '/:orderId/edit/lead-adviser/:adviserId'),
     },
+    cancel: url('/omis', '/:orderId/edit/cancel-order'),
+    complete: url('/omis', '/:orderId/edit/complete-order'),
+    paymentReceiptReconciliation: url(
+      '/omis',
+      '/:orderId/reconciliation/payment-receipt'
+    ),
   },
   support: url('/support'),
-  pipeline: {
-    index: url('/my-pipeline'),
-    active: url('/my-pipeline/active'),
-    won: url('/my-pipeline/won'),
-    edit: url('/my-pipeline', '/:pipelineItemId/edit'),
-    archive: url('/my-pipeline', '/:pipelineItemId/archive'),
-    unarchive: url('/my-pipeline', '/:pipelineItemId/unarchive'),
-    delete: url('/my-pipeline', '/:pipelineItemId/delete'),
-  },
   reminders: {
     index: url('/reminders'),
     investments: {
@@ -497,6 +654,16 @@ module.exports = {
     },
     exports: {
       noRecentInteractions: url('/reminders/companies-no-recent-interactions'),
+      newInteractions: url('/reminders/companies-new-interactions'),
+    },
+    myTasks: {
+      dueDateApproaching: url('/reminders/my-tasks-due-date-approaching'),
+      taskAssignedToMeFromOthers: url(
+        '/reminders/my-tasks-task-assigned-to-me-from-others'
+      ),
+      taskAmendedByOthers: url('/reminders/my-tasks-task-amended-by-others'),
+      taskOverdue: url('/reminders/my-tasks-task-overdue'),
+      taskCompleted: url('/reminders/my-tasks-task-completed'),
     },
     settings: {
       index: url('/reminders/settings'),
@@ -512,7 +679,37 @@ module.exports = {
         noRecentInteraction: url(
           '/reminders/settings/companies-no-recent-interactions'
         ),
+        newInteraction: url('/reminders/settings/companies-new-interactions'),
+      },
+      myTasks: {
+        dueDateApproaching: url(
+          '/reminders/settings/my-tasks-due-date-approaching'
+        ),
+        taskAssignedToMeFromOthers: url(
+          '/reminders/settings/my-tasks-task-assigned-to-me-from-others'
+        ),
+        taskAmendedByOthers: url(
+          '/reminders/settings/my-tasks-task-amended-by-others'
+        ),
+        taskOverdue: url('/reminders/settings/my-tasks-task-overdue'),
+        taskCompleted: url('/reminders/settings/my-tasks-task-completed'),
       },
     },
+  },
+  exportPipeline: {
+    index: url('/export'),
+    create: url('/export/create?companyId=', ':companyId'),
+    details: url('/export', '/:exportId/details'),
+    edit: url('/export', '/:exportId/edit'),
+    delete: url('/export', '/:exportId/delete'),
+  },
+  tasks: {
+    details: url('/tasks', '/:taskId/details'),
+    create: url('/tasks', '/create'),
+    createInvestmentProject: url(
+      '/tasks/create?investmentProjectId=',
+      ':investmentProjectId'
+    ),
+    edit: url('/tasks', '/:taskId/edit'),
   },
 }

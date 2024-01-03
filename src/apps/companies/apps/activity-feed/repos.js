@@ -1,6 +1,7 @@
+const { get } = require('lodash')
+
 const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
-const { get } = require('lodash')
 
 async function fetchActivityFeed(req, body) {
   return await authorisedRequest(req, {

@@ -2,28 +2,24 @@ const { castArray, sortBy } = require('lodash')
 
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('./hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
-
-let client, redisAsyncGet
-
-if (!config.isTest) {
-  const redisClient = require('./redis-client')
-
-  client = redisClient.get()
-  redisAsyncGet = redisClient.asyncGet()
-}
+const redisClient = require('./redis-client')
 
 async function fetchOptions(req, url) {
-  let metaData = config.isTest ? null : await redisAsyncGet(url)
+  const client = redisClient.getClient()
+  let metaData = config.isTest ? null : await client.get(url)
 
   if (metaData) {
     return JSON.parse(metaData)
   }
   metaData = await hawkRequest(url)
+
   if (!config.isTest) {
-    client.set(url, JSON.stringify(metaData), 'ex', config.cacheDurationLong)
+    await client.set(url, JSON.stringify(metaData), {
+      EX: config.cacheDurationLong,
+    })
   }
 
   return metaData

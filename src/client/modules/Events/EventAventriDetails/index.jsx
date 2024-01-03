@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { GridCol, GridRow } from 'govuk-react'
+import styled from 'styled-components'
+import { isEmpty } from 'lodash'
 
 import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_AVENTRI_DETAILS, ID, state2props } from './state'
@@ -14,9 +17,6 @@ import {
   SummaryTable,
 } from '../../../components'
 import AventriEventSyncWarning from '../../../components/ActivityFeed/activities/AventriEventSyncWarning'
-import { GridCol, GridRow } from 'govuk-react'
-import styled from 'styled-components'
-import { isEmpty } from 'lodash'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -32,7 +32,7 @@ const EventAventriDetails = ({
   const { aventriEventId } = useParams()
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {

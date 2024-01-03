@@ -25,7 +25,7 @@
     },
     {
         "id": "9484b82b-3499-e211-a939-e4115bead28a",
-        "name": "Account Management : General",
+        "name": "Account management : General",
         "disabled_on": null,
         "contexts": [
             "investment_project_interaction",
@@ -41,7 +41,7 @@
     },
     {
         "id": "9884b82b-3499-e211-a939-e4115bead28a",
-        "name": "Account Management : High Growth",
+        "name": "Account management : High Growth",
         "disabled_on": "2017-06-27T13:43:19Z",
         "contexts": [
             "investment_project_interaction",
@@ -53,7 +53,7 @@
     },
     {
         "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
-        "name": "A Specific Service : Digital Trade Advisers One-to-One",
+        "name": "Specific service : Digital Trade Advisers one-to-one",
         "disabled_on": null,
         "contexts": [
             "trade_agreement_interaction",
@@ -64,7 +64,7 @@
     },
     {
         "id": "58da3eec-a906-48eb-b258-bd3fb0717e7a",
-        "name": "A Specific Service : Significant Assistance",
+        "name": "Specific service : Significant assistance",
         "disabled_on": null,
         "contexts": [
             "trade_agreement_interaction",
@@ -379,7 +379,7 @@
     },
     {
         "id": "5359ba2b-3499-e211-a939-e4115bead28a",
-        "name": "Exhibitions (Not TAP)",
+        "name": "Exhibitions (Not UKTP)",
         "disabled_on": "2017-01-19T15:07:21.999000Z",
         "contexts": [
             "investment_project_interaction",
@@ -941,7 +941,7 @@
     },
     {
         "id": "d820b92b-3499-e211-a939-e4115bead28a",
-        "name": "Significant Assistance Development Aid (PIMS)",
+        "name": "Significant assistance Development Aid (PIMS)",
         "disabled_on": "2018-06-28T13:42:25Z",
         "contexts": [
             "investment_project_interaction",
@@ -1069,7 +1069,19 @@
     },
     {
         "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-        "name": "Trade - Tradeshow Access Programme (TAP)",
+        "name": "Trade - UK Tradeshow Programme (UKTP) – exhibitor",
+        "disabled_on": "2018-04-25T15:05:19Z",
+        "contexts": [
+            "investment_project_interaction",
+            "event",
+            "service_delivery",
+            "interaction"
+        ],
+        "interaction_questions": []
+    },
+    {
+        "id": "f76eb92b-3499-e211-a939-e4115bead28b",
+        "name": "Trade - UK Tradeshow Programme (UKTP) – attendee",
         "disabled_on": "2018-04-25T15:05:19Z",
         "contexts": [
             "investment_project_interaction",

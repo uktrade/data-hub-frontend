@@ -1,13 +1,21 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { ERROR_COLOUR } from 'govuk-colours'
 
 import StatusMessage from 'StatusMessage'
 
-storiesOf('StatusMessage', module)
-  .add('Default', () => {
-    return <StatusMessage>An info message</StatusMessage>
-  })
-  .add('Custom colour', () => {
-    return <StatusMessage colour={ERROR_COLOUR}>An error message</StatusMessage>
-  })
+import { ERROR_COLOUR } from '../../../../client/utils/colours'
+
+export default {
+  title: 'StatusMessage',
+}
+
+export const Default = () => {
+  return <StatusMessage>An info message</StatusMessage>
+}
+
+export const CustomColour = () => {
+  return <StatusMessage colour={ERROR_COLOUR}>An error message</StatusMessage>
+}
+
+CustomColour.story = {
+  name: 'Custom colour',
+}

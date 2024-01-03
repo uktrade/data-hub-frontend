@@ -2,8 +2,15 @@ import { find } from 'lodash'
 
 import { STATUSES } from './constants'
 import { omis } from '../../../../lib/urls'
+import { currencyGBP } from '../../../utils/number-utils'
 
-const { format, formatMediumDateTime } = require('../../../utils/date')
+const {
+  format,
+  formatMediumDate,
+  formatMediumDateTime,
+} = require('../../../utils/date')
+
+export const transformOrderCost = (cost) => (cost ? cost * 100 : undefined)
 
 export const transformOrderToListItem = ({
   id,
@@ -66,6 +73,53 @@ export const transformOrderToListItem = ({
   return retVal
 }
 
+export const transformOrderToReconciliationListItem = ({
+  id,
+  status,
+  company,
+  modified_on,
+  payment_due_date,
+  reference,
+  subtotal_cost,
+  total_cost,
+} = {}) => {
+  const getCostAsDecimal = (cost) => cost / 100
+  const orderState = find(STATUSES, { value: status })
+  const metadata = [
+    {
+      label: 'Payment due date',
+      value: payment_due_date ? formatMediumDate(payment_due_date) : null,
+    },
+    {
+      label: 'Company name',
+      value: company?.name,
+    },
+    {
+      label: 'Amount (ex. VAT)',
+      value: currencyGBP(getCostAsDecimal(subtotal_cost)),
+    },
+    {
+      label: 'Amount (inc. VAT)',
+      value: currencyGBP(getCostAsDecimal(total_cost)),
+    },
+  ].filter((item) => item.value)
+
+  const badges = [{ text: orderState?.label }].filter((item) => item.text)
+
+  const retVal = {
+    id,
+    badges,
+    metadata,
+    headingText: reference,
+    headingUrl: omis.paymentReconciliation(id),
+    subheading: modified_on
+      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      : null,
+  }
+
+  return retVal
+}
+
 export const transformResponseToCollection = ({
   count,
   results = [],
@@ -74,4 +128,14 @@ export const transformResponseToCollection = ({
   count,
   summary,
   results: results.map(transformOrderToListItem),
+})
+
+export const transformResponseToReconciliationCollection = ({
+  count,
+  results = [],
+  summary,
+}) => ({
+  count,
+  summary,
+  results: results.map(transformOrderToReconciliationListItem),
 })

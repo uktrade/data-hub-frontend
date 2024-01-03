@@ -1,4 +1,4 @@
-const { EXPORT_INTEREST_STATUS } = require('../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../common/constants')
 
 const countriesDiscussed = {
   were_countries_discussed: 'Were any countries discussed?',
@@ -17,7 +17,6 @@ const interaction = {
   dit_participants: 'Adviser(s)',
   investment_project: 'Investment project',
   communication_channel: 'Communication channel',
-  documents: 'Documents',
   policy_issue_types: 'Policy issue types',
   policy_areas: 'Policy areas',
   policy_feedback_notes: 'Business intelligence',
@@ -51,7 +50,6 @@ const serviceDelivery = {
   investment_project: 'Investment project',
   event: 'Event',
   communication_channel: 'Communication channel',
-  documents: 'Documents',
   policy_issue_types: 'Policy issue types',
   policy_areas: 'Policy areas',
   policy_feedback_notes: 'Business intelligence',
@@ -68,6 +66,8 @@ const filters = {
   kind: 'Interaction type',
   communication_channel: 'Communication channel',
   dit_participants__adviser: 'Adviser(s)',
+  company: 'Company',
+  subject: 'Subject',
   date_after: 'From',
   date_before: 'To',
   dit_participants__team: 'Teams',

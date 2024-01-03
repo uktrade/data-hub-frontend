@@ -29,20 +29,10 @@ services:
       - postgres
       - opensearch
       - redis
-      - celery
+      - rq
       - mock-sso
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: /app/setup-uat.sh || echo "all good"
-
-  celery:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
-    env_file: .env
-    depends_on:
-      - postgres
-      - opensearch
-      - redis
-    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
-    command: celery -A config worker -l info -Q celery -B
 
   rq:
     image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
@@ -56,6 +46,8 @@ services:
 
   postgres:
     image: postgres:12
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: datahub
       POSTGRES_USER: user

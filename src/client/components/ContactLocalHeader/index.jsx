@@ -39,16 +39,14 @@ const getCurrentTab = (currentPath) =>
   currentPath.includes('/interactions')
     ? 'Activity'
     : currentPath.includes('/audit')
-    ? 'Audit history'
-    : currentPath.includes('/documents')
-    ? 'Documents'
-    : null
+      ? 'Audit history'
+      : null
 
 const currentTab = getCurrentTab(path)
 
 const buildBreadcrumbs = (currentTab, id, name) => {
-  const initalBreadcrumbs = [
-    { link: urls.dashboard(), text: 'Home' },
+  const initialBreadcrumbs = [
+    { link: urls.dashboard.index(), text: 'Home' },
     { link: urls.contacts.index(), text: 'Contacts' },
   ]
   const dynamicBreadcrumbs = currentTab
@@ -60,7 +58,7 @@ const buildBreadcrumbs = (currentTab, id, name) => {
         { text: currentTab },
       ]
     : [{ text: name }]
-  return initalBreadcrumbs.concat(dynamicBreadcrumbs)
+  return initialBreadcrumbs.concat(dynamicBreadcrumbs)
 }
 
 const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
@@ -73,7 +71,7 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
           <GridCol>
             <StyledLink
               data-test="company-link"
-              href={urls.companies.details(contact.company.id)}
+              href={urls.companies.overview.index(contact.company.id)}
             >
               {contact.company.name}
             </StyledLink>
@@ -105,9 +103,9 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
         </GridRow>
         {contact.archived && (
           <ArchivePanel
-            archivedBy={contact.archived_by}
-            archivedOn={contact.archived_on}
-            archiveReason={contact.archived_reason}
+            archivedBy={contact.archivedBy}
+            archivedOn={contact.archivedOn}
+            archiveReason={contact.archivedReason}
             unarchiveUrl={urls.contacts.unarchive(contact.id)}
             onClick={() => {
               writeFlashMessage('Contact record updated')
@@ -121,7 +119,7 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
 }
 
 ContactLocalHeader.propTypes = {
-  contactId: PropTypes.string.isRequired,
+  contact: PropTypes.object.isRequired,
   writeFlashMessage: PropTypes.func,
 }
 

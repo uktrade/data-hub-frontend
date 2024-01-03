@@ -1,10 +1,11 @@
+import { take, put } from 'redux-saga/effects'
+
 import {
   addMessage,
   addMessageWithBody,
   getMessages,
   clearMessages,
 } from '../../utils/flash-messages'
-import { take, put } from 'redux-saga/effects'
 import { readFromLocalStorage, writeToLocalStorage } from './utils'
 import {
   FLASH_MESSAGE__WRITE_TO_SESSION,

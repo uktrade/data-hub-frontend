@@ -122,14 +122,6 @@ function createDnbCompanyInvestigation(req, body) {
   })
 }
 
-function saveCompanyExportDetails(req, companyId, body) {
-  return authorisedRequest(req, {
-    body,
-    url: `${config.apiRoot}/v4/company/${companyId}/export-detail`,
-    method: 'PATCH',
-  })
-}
-
 function linkDataHubCompanyToDnBCompany(req, companyId, dunsNumber) {
   return authorisedRequest(req, {
     body: {
@@ -152,6 +144,17 @@ function createDnbChangeRequest(req, dunsNumber, changes) {
   })
 }
 
+function getRelatedCompanies(
+  req,
+  companyId,
+  include_parent_companies,
+  include_subsidiary_companies
+) {
+  return authorisedRequest(req, {
+    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies?include_subsidiary_companies=${include_subsidiary_companies}&include_parent_companies=${include_parent_companies}`,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -167,7 +170,7 @@ module.exports = {
   getOneListGroupCoreTeam,
   saveDnbCompany,
   createDnbCompanyInvestigation,
-  saveCompanyExportDetails,
   linkDataHubCompanyToDnBCompany,
   createDnbChangeRequest,
+  getRelatedCompanies,
 }

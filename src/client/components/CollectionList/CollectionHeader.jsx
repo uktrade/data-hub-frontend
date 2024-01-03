@@ -4,9 +4,10 @@ import Button from '@govuk-react/button'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { H2 } from '@govuk-react/heading'
-import { BLACK, GREY_3 } from 'govuk-colours'
 import { HEADING_SIZES } from '@govuk-react/constants'
+
 import CollectionHeaderRow from './CollectionHeaderRow'
+import { BLACK, GREY_3 } from '../../../client/utils/colours'
 import { decimal } from '../../utils/number-utils'
 
 const StyledHeaderText = styled(H2)`
@@ -53,7 +54,9 @@ function CollectionHeader({
   return (
     <CollectionHeaderRow primary={true} actions={actions} {...rest}>
       <StyledHeaderText data-test="collection-header-name">
-        <StyledResultCount>{formattedTotal}</StyledResultCount>
+        <StyledResultCount data-test="collection-count">
+          {formattedTotal}
+        </StyledResultCount>
         {` ${counterSuffix}`}
       </StyledHeaderText>
     </CollectionHeaderRow>

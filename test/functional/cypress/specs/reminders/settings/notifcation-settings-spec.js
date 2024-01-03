@@ -1,17 +1,25 @@
+import {
+  INVESTMENTS_ESTIMATED_LAND_DATES,
+  INVESTMENTS_NO_RECENT_INTERACTIONS,
+} from '../../../../../../src/client/modules/Reminders/constants'
 import urls from '../../../../../../src/lib/urls'
 
 const selectors = {
   collectionItem: '[data-test="item-content"]',
   remindersSettings: 'a[data-test="reminders-settings-link"]',
-  ELDSettingsClose: '#estimated-land-dates-toggle-toggle-button-close',
-  ELDSettingsOpen: '#estimated-land-dates-toggle-toggle-button-open',
-  ELDEdit: '[data-test="estimated-land-dates-link"]',
-  NRISettingsClose: '#no-recent-interactions-toggle-toggle-button-close',
-  NRISettingsOpen: '#no-recent-interactions-toggle-toggle-button-open',
-  NRIEdit: '[data-test="no-recent-interactions-link"]',
+  ELDSettingsClose: `#${INVESTMENTS_ESTIMATED_LAND_DATES}-toggle-toggle-button-close`,
+  ELDSettingsOpen: `#${INVESTMENTS_ESTIMATED_LAND_DATES}-toggle-toggle-button-open`,
+  ELDEdit: `[data-test="${INVESTMENTS_ESTIMATED_LAND_DATES}-link"]`,
+  NRISettingsClose: `#${INVESTMENTS_NO_RECENT_INTERACTIONS}-toggle-toggle-button-close`,
+  NRISettingsOpen: `#${INVESTMENTS_NO_RECENT_INTERACTIONS}-toggle-toggle-button-open`,
+  NRIEdit: `[data-test="${INVESTMENTS_NO_RECENT_INTERACTIONS}-link"]`,
 }
 
 describe('Notification settings', () => {
+  after(() => {
+    cy.resetUser()
+  })
+
   context('when in estimated land date page', () => {
     before(() => {
       cy.setUserFeatureGroups(['investment-notifications'])

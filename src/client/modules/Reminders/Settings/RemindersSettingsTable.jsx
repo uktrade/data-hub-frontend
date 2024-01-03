@@ -23,22 +23,41 @@ const StyledRouterLink = styled(RouterLink)({
   display: 'block',
 })
 
-const RemindersSettingsTable = ({ dataName, data, to }) => (
+const SettingsTable = ({ dataName, to, children }) => (
   <>
-    <StyledTable data-test={`${dataName}-table`}>
-      <Table.Row>
-        <StyledCellHeader>Reminders</StyledCellHeader>
-        <Table.Cell>{data.formattedReminderDays}</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <StyledCellHeader>Email notifications</StyledCellHeader>
-        <Table.Cell>{data.emailRemindersOnOff}</Table.Cell>
-      </Table.Row>
-    </StyledTable>
-    <StyledRouterLink data-test={`${dataName}-link`} to={to} aria-label="edit">
-      Edit
-    </StyledRouterLink>
+    <StyledTable data-test={`${dataName}-table`}>{children}</StyledTable>
+    {to && (
+      <StyledRouterLink
+        data-test={`${dataName}-link`}
+        to={to}
+        aria-label="edit"
+      >
+        Edit
+      </StyledRouterLink>
+    )}
   </>
+)
+
+export const RemindersSettingsTable = ({ dataName, data, to }) => (
+  <SettingsTable dataName={dataName} to={to}>
+    <Table.Row>
+      <StyledCellHeader>Reminders</StyledCellHeader>
+      <Table.Cell>{data.formattedReminderDays}</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <StyledCellHeader>Email notifications</StyledCellHeader>
+      <Table.Cell>{data.emailRemindersOnOff}</Table.Cell>
+    </Table.Row>
+  </SettingsTable>
+)
+
+export const EmailRemindersSettingsTable = ({ dataName, data, to }) => (
+  <SettingsTable dataName={dataName} to={to}>
+    <Table.Row>
+      <StyledCellHeader>Email notifications</StyledCellHeader>
+      <Table.Cell>{data.emailRemindersOnOff}</Table.Cell>
+    </Table.Row>
+  </SettingsTable>
 )
 
 export default RemindersSettingsTable

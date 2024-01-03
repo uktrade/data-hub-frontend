@@ -14,7 +14,7 @@ import Analytics from '../Analytics'
 import CollectionItem from '../../components/CollectionList/CollectionItem'
 import CollectionSort from '../../components/CollectionList/CollectionSort'
 import RoutedDownloadDataHeader from '../../components/RoutedDownloadDataHeader'
-import RoutedPagination from '../../components/Pagination/RoutedPagination'
+import Pagination from '../../components/Pagination'
 import FilteredCollectionHeader from './FilteredCollectionHeader'
 
 /**
@@ -37,6 +37,39 @@ const getSelectedFilters = (filters) =>
     )
   )
 
+const getPageNumber = (qsParams, defaultValue = 1) => {
+  const pageNumber = parseInt(qsParams.page, 10)
+  return isNaN(pageNumber) ? defaultValue : pageNumber
+}
+
+const collectionItemTemplateDefault = (
+  item,
+  titleRenderer,
+  useReactRouter,
+  pushAnalytics,
+  selectedFilters,
+  sanitizeFiltersForAnalytics
+) => {
+  return (
+    <CollectionItem
+      {...item}
+      key={item.id}
+      titleRenderer={titleRenderer}
+      useReactRouter={useReactRouter}
+      onClick={() => {
+        pushAnalytics({
+          event: 'filterResultClick',
+          extra: {
+            ...filtersToAnalytics(selectedFilters),
+            ...(sanitizeFiltersForAnalytics &&
+              sanitizeFiltersForAnalytics(getSelectedFilters(selectedFilters))),
+          },
+        })
+      }}
+    />
+  )
+}
+
 const FilteredCollectionList = ({
   results = [],
   summary = null,
@@ -58,6 +91,7 @@ const FilteredCollectionList = ({
   titleRenderer = null,
   sanitizeFiltersForAnalytics = null,
   useReactRouter = false,
+  collectionItemTemplate = collectionItemTemplateDefault,
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -66,7 +100,7 @@ const FilteredCollectionList = ({
     <Route>
       {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        const initialPage = parseInt(qsParams.page, 10)
+        const initialPage = getPageNumber(qsParams)
         if (defaultQueryParams && isEmpty(qsParams)) {
           history.push({
             search: qs.stringify({
@@ -112,33 +146,35 @@ const FilteredCollectionList = ({
                       <ol aria-live="polite">
                         {results.map((item) => (
                           <Analytics>
-                            {(pushAnalytics) => (
-                              <CollectionItem
-                                {...item}
-                                key={item.id}
-                                titleRenderer={titleRenderer}
-                                useReactRouter={useReactRouter}
-                                onClick={() => {
-                                  pushAnalytics({
-                                    event: 'filterResultClick',
-                                    extra: {
-                                      ...filtersToAnalytics(selectedFilters),
-                                      ...(sanitizeFiltersForAnalytics &&
-                                        sanitizeFiltersForAnalytics(
-                                          getSelectedFilters(selectedFilters)
-                                        )),
-                                    },
-                                  })
-                                }}
-                              />
-                            )}
+                            {(pushAnalytics) =>
+                              collectionItemTemplate(
+                                item,
+                                titleRenderer,
+                                useReactRouter,
+                                pushAnalytics,
+                                selectedFilters,
+                                sanitizeFiltersForAnalytics
+                              )
+                            }
                           </Analytics>
                         ))}
                       </ol>
                     )
                   }
                 </Task.Status>
-                <RoutedPagination initialPage={initialPage} items={count} />
+                <Pagination
+                  totalPages={totalPages}
+                  activePage={initialPage}
+                  onPageClick={(page, e) => {
+                    e.preventDefault()
+                    history.push({
+                      search: qs.stringify({
+                        ...qsParams,
+                        page,
+                      }),
+                    })
+                  }}
+                />
               </article>
             </GridCol>
           </GridRow>

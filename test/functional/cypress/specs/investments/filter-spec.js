@@ -5,21 +5,22 @@ import urls from '../../../../../src/lib/urls'
 import { ukRegionFaker, ukRegionListFaker } from '../../fakers/regions'
 import {
   clickCheckboxGroupOption,
-  inputDateValue,
+  inputDateValueWithHint,
   removeChip,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } from '../../support/actions'
 import {
   assertCheckboxGroupOption,
   assertChipsEmpty,
   assertChipExists,
-  assertDateInput,
+  assertDateInputWithHint,
   assertFieldEmpty,
   assertPayload,
   assertTypeaheadOptionSelected,
   assertQueryParams,
 } from '../../support/assertions'
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
+import { STAGE_PROSPECT } from '../../../../../src/client/modules/Investments/Projects/constants'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -31,6 +32,8 @@ const buildQueryString = (queryParams = {}) =>
 const minimumPayload = {
   limit: 10,
   offset: 0,
+  include_parent_companies: false,
+  include_subsidiary_companies: false,
 }
 
 const getFinancialYearStart = () => {
@@ -47,7 +50,7 @@ const myAdviser = {
 }
 
 const searchEndpoint = '/api-proxy/v3/search/investment_project'
-const myAdviserEndpoint = `/api-proxy/adviser/${myAdviser.id}`
+const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
@@ -73,6 +76,8 @@ describe('Investments Collections Filter', () => {
       offset: 0,
       limit: 10,
       stage: [prospectStageId],
+      include_parent_companies: false,
+      include_subsidiary_companies: false,
     }
 
     it('should filter from the url', () => {
@@ -85,7 +90,7 @@ describe('Investments Collections Filter', () => {
         value: prospectStageId,
         checked: true,
       })
-      assertChipExists({ label: 'Prospect', position: 1 })
+      assertChipExists({ label: STAGE_PROSPECT, position: 1 })
     })
 
     it('should filter from user input and remove chips', () => {
@@ -100,7 +105,7 @@ describe('Investments Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('stage[0]', prospectStageId)
-      assertChipExists({ label: 'Prospect', position: 1 })
+      assertChipExists({ label: STAGE_PROSPECT, position: 1 })
 
       removeChip(prospectStageId)
       assertPayload('@apiRequest', minimumPayload)
@@ -122,9 +127,12 @@ describe('Investments Collections Filter', () => {
         adviser: [myAdviser.id],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       /*
       Asserts the "Adviser typeahead" filter is selected with the
@@ -145,7 +153,9 @@ describe('Investments Collections Filter', () => {
     it('should filter from "my projects" input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.visit(`${urls.investments.projects.index()}?${queryString}`)
       cy.wait('@apiRequest')
       cy.get('[data-test="toggle-section-button"]')
@@ -155,7 +165,7 @@ describe('Investments Collections Filter', () => {
         element: myProjectsFilter,
         value: myAdviser.id,
       })
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [myAdviser.id])
       assertChipExists({ label: myAdviser.name, position: 1 })
@@ -168,7 +178,9 @@ describe('Investments Collections Filter', () => {
     it('should filter from "advisers" input and remove chips', () => {
       const queryString = buildQueryString()
       cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept('GET', myAdviserEndpoint, myAdviser).as('adviserApiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [myAdviser],
+      }).as('adviserSearchApiRequest')
       cy.intercept('GET', adviserAutocompleteEndpoint, {
         count: 1,
         results: [myAdviser],
@@ -178,13 +190,13 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Project details')
         .click()
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: advisersFilter,
         input: myAdviser.name,
         mockAdviserResponse: false,
       })
       cy.wait('@adviserListApiRequest')
-      cy.wait('@adviserApiRequest')
+      cy.wait('@adviserSearchApiRequest')
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [myAdviser.id])
       assertTypeaheadOptionSelected({
@@ -216,8 +228,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="sector-filter"]'
     const aerospaceSectorId = '9538cecc-5f95-e211-a939-e4115bead28a'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       sector_descends: [aerospaceSectorId],
     }
 
@@ -262,8 +273,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="country-filter"]'
     const brazilCountryId = 'b05f66a0-5d95-e211-a939-e4115bead28a'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       country_investment_originates_from: [brazilCountryId],
     }
 
@@ -309,8 +319,7 @@ describe('Investments Collections Filter', () => {
     const ukRegion = ukRegionFaker()
     const ukRegions = [ukRegion, ...ukRegionListFaker(5)]
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       uk_region_location: [ukRegion.id],
     }
 
@@ -366,8 +375,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="project-status-filter"]'
     const statusAbandoned = 'abandoned'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       status: [statusAbandoned],
     }
 
@@ -409,8 +417,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="investment-type-filter"]'
     const investmentTypeFdi = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       investment_type: [investmentTypeFdi],
     }
 
@@ -458,8 +465,7 @@ describe('Investments Collections Filter', () => {
     const yearStart = getFinancialYearStart()
     const yearRange = yearStartToRange(yearStart)
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       land_date_financial_year_start: [`${yearStart}`],
     }
 
@@ -502,12 +508,11 @@ describe('Investments Collections Filter', () => {
     })
   })
 
-  context('Likelihood to land', () => {
+  context('Likelihood of landing', () => {
     const element = '[data-test="likelihood-to-land-filter"]'
     const likelihoodToLandMedium = '683ca57b-bd69-462c-852f-d2177e35b2eb'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       likelihood_to_land: [likelihoodToLandMedium],
     }
 
@@ -581,12 +586,12 @@ describe('Investments Collections Filter', () => {
         label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: toDate,
@@ -602,12 +607,12 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Land date details')
         .click()
-      inputDateValue({
+      inputDateValueWithHint({
         element: fromElement,
         value: fromDate,
       })
       cy.wait('@apiRequest')
-      inputDateValue({
+      inputDateValueWithHint({
         element: toElement,
         value: toDate,
       })
@@ -623,12 +628,12 @@ describe('Investments Collections Filter', () => {
         label: `Estimated land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: toDate,
@@ -640,12 +645,12 @@ describe('Investments Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
 
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Estimated land date from',
         value: '',
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Estimated land date to',
         value: '',
@@ -684,12 +689,12 @@ describe('Investments Collections Filter', () => {
         label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: toDate,
@@ -705,12 +710,12 @@ describe('Investments Collections Filter', () => {
       cy.get('[data-test="toggle-section-button"]')
         .contains('Land date details')
         .click()
-      inputDateValue({
+      inputDateValueWithHint({
         element: fromElement,
         value: fromDate,
       })
       cy.wait('@apiRequest')
-      inputDateValue({
+      inputDateValueWithHint({
         element: toElement,
         value: toDate,
       })
@@ -726,12 +731,12 @@ describe('Investments Collections Filter', () => {
         label: `Actual land date from: ${formattedFromDate}`,
         position: 2,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: fromDate,
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: toDate,
@@ -743,12 +748,12 @@ describe('Investments Collections Filter', () => {
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
 
-      assertDateInput({
+      assertDateInputWithHint({
         element: fromElement,
         label: 'Actual land date from',
         value: '',
       })
-      assertDateInput({
+      assertDateInputWithHint({
         element: toElement,
         label: 'Actual land date to',
         value: '',
@@ -760,8 +765,7 @@ describe('Investments Collections Filter', () => {
     const element = '[data-test="involvement-level-filter"]'
     const involvementLevelUnspecified = 'unspecified'
     const expectedPayload = {
-      offset: 0,
-      limit: 10,
+      ...minimumPayload,
       level_of_involvement_simplified: [involvementLevelUnspecified],
     }
 

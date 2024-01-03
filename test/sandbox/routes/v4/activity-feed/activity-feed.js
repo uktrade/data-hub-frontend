@@ -2,7 +2,6 @@ var { isEqual, startsWith, get } = require('lodash')
 
 // External activities
 var externalActivities = require('../../../fixtures/v4/activity-feed/external/external-activities.json')
-var maxemailCampaignQuery = require('../../../fixtures/v4/activity-feed/external/maxemail-campaign-query.json')
 var maxemailCampaignActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-campaign-activities.json')
 var maxemailEmailSentQuery = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-query.json')
 var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-activities.json')
@@ -10,6 +9,8 @@ var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/ex
 // Data Hub and external activities
 var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
 var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
+var companyRecentActivities = require('../../../fixtures/v4/activity-feed/company-recent-activity-feed-activities.json')
+var companyUpcomingActivities = require('../../../fixtures/v4/activity-feed/company-upcoming-activity-feed-activities.json')
 var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json')
 
 // My activities
@@ -26,6 +27,7 @@ var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/ac
 
 //ESS Interactions
 var essInteractionsNoTitle = require('../../../fixtures/v4/activity-feed/ess-interaction-no-title.json')
+var essInteractionDetail = require('../../../fixtures/v4/activity-feed/ess-interaction.json')
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
@@ -66,13 +68,19 @@ const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
 const ALL_ACTIVITIES_PER_PAGE = 10
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
+const NO_COMPANY_DETAILS =
+  'dit:DataHubCompany:1111ae21-2895-47cf-90ba-9273c94dab88'
 const BEST_EVER_COMPANY =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce'
 
 const BEST_EVER_COMPANY_2 =
   'dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47be'
-
+const COMPANY_WITH_MANY_CONTACTS =
+  'dit:DataHubCompany:57c41268-26be-4335-a873-557e8b0deb29'
+const MAX_EMAIL_CAMPAIGN =
+  'dit:DataHubCompany:6df487c5-7c75-4672-8907-f74b49e6c635'
 exports.activityFeed = function (req, res) {
+  const size = get(req.body, 'size')
   // Activities by contact
   var isContactActivityQuery = get(
     req.body,
@@ -100,15 +108,14 @@ exports.activityFeed = function (req, res) {
     }
 
     //if the sort by is newest
-    if (req.body.sort[0].published.order === 'desc') {
+    if (req.body.sort._script.order === 'desc') {
       return res.json(contactDataHubAndExternalActivities)
     }
     //if the story by is oldest
-    if (req.body.sort[0].published.order === 'asc') {
+    if (req.body.sort._script.order === 'asc') {
       return res.json(dataHubActivities)
     }
   }
-
   var allActivityStreamEventTypes = get(
     req.body,
     "query.bool.must[0].terms['object.type']"
@@ -147,7 +154,7 @@ exports.activityFeed = function (req, res) {
     get(req.body, "query.bool.must[0].term['object.type']") ===
     'dit:aventri:Event'
 
-  if (isAventriEventQuery) {
+  if ((size === undefined || size == 10) && isAventriEventQuery) {
     var aventriEventIdQuery = req.body.query.bool.must[1]
     var aventriId = aventriEventIdQuery.terms.id[0]
 
@@ -264,12 +271,53 @@ exports.activityFeed = function (req, res) {
     req.body,
     "query.bool.filter.bool.should[0].bool.must[0].terms['object.type']"
   )
-  if (isEqual(dataHubTypes, DATA_HUB_ACTIVITY)) {
-    var company = get(
-      req.body,
-      "query.bool.must[1].terms['object.attributedTo.id'][0]"
-    )
-    return res.json(company === VENUS_LTD ? noActivity : dataHubActivities)
+
+  var company = get(
+    req.body,
+    "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
+  )
+  if (company == MAX_EMAIL_CAMPAIGN) {
+    return res.json(maxemailCampaignActivities)
+  }
+  if (
+    (size != 10 && isEqual(dataHubTypes, DATA_HUB_AND_EXTERNAL_ACTIVITY)) ||
+    isEqual(dataHubTypes, DATA_HUB_ACTIVITY) ||
+    company == COMPANY_WITH_MANY_CONTACTS
+  ) {
+    const filteredSortHits = dataHubActivities.hits.hits
+      .filter((hit) => hit._source.object.startTime)
+      .sort((a, b) =>
+        b._source.object.startTime.localeCompare(a._source.object.startTime)
+      )
+
+    if (size == 3) {
+      switch (company) {
+        case VENUS_LTD:
+          return res.json(companyActivities)
+          break
+        case NO_COMPANY_DETAILS:
+          return res.json(noActivity)
+          break
+        default:
+          return res.json(companyRecentActivities)
+          break
+      }
+    }
+    if (size == 2) {
+      return res.json(
+        company === NO_COMPANY_DETAILS ? noActivity : companyUpcomingActivities
+      )
+    }
+    const updatedHits = Object.assign({}, dataHubActivities, {
+      hits: {
+        total: {
+          value: filteredSortHits.length,
+        },
+        hits: filteredSortHits,
+      },
+    })
+
+    return res.json(company === VENUS_LTD ? noActivity : updatedHits)
   }
 
   // External activity
@@ -300,16 +348,18 @@ exports.activityFeed = function (req, res) {
       company === BEST_EVER_COMPANY
         ? companyActivities
         : company === BEST_EVER_COMPANY_2
-        ? essInteractionsNoTitle
-        : dataHubAndExternalActivities
+          ? essInteractionsNoTitle
+          : dataHubAndExternalActivities
 
     return res.json(activities)
   }
 
-  // Maxemail campaigns
-  if (isEqual(maxemailCampaignQuery, req.body)) {
-    return res.json(maxemailCampaignActivities)
-  }
+  // ESS Interactions
+  var essDetails = get(req.body, "query.bool.must[0].term['id']")
+  if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:1111'))
+    return res.json(essInteractionDetail)
+  if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:2222'))
+    return res.json(essInteractionsNoTitle)
 
   // Maxemail emails sent
   if (isEqual(maxemailEmailSentQuery, req.body)) {

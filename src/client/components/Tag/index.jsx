@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import GovUkTag from '@govuk-react/tag'
-import { TAG_COLOURS } from './colours'
+
+import { TAG_COLOURS } from '../../../client/utils/colours'
 
 const StyledTag = styled(GovUkTag)`
   background-color: ${(props) => TAG_COLOURS[props.colour].background};

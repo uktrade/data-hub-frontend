@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-const { get } = require('lodash')
+import { get } from 'lodash'
 
 import { formatMediumDateTime } from '../../../utils/date'
 
@@ -19,16 +18,20 @@ export const transformContactToListItem = (companyId) => (contact) => {
     { label: 'Email', value: contact.email },
   ].filter((item) => !(item.label === 'Company' && companyId))
 
-  const badges = [
-    { text: contact.primary ? 'Primary' : null },
-    { text: contact.archived ? 'Archived' : null },
+  const tags = [
+    {
+      text: contact.valid_email === false ? 'UNKNOWN EMAIL' : null,
+      colour: 'pink',
+    },
+    { text: contact.primary ? 'Primary' : null, colour: 'turquoise' },
+    { text: contact.archived ? 'Archived' : null, colour: 'grey' },
   ]
 
   return {
     id: contact.id,
     metadata: metadata.filter((item) => item.value),
     headingUrl: urls.contacts.details(contact.id),
-    badges: badges.filter((item) => item.text),
+    tags: tags.filter((item) => item.text),
     headingText: `${contact.first_name} ${contact.last_name}`.trim(),
     subheading: `Updated on ${formatMediumDateTime(contact.modified_on)}`,
   }

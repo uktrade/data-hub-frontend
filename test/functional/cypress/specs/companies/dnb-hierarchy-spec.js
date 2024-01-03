@@ -39,7 +39,7 @@ function assertRelatedCompaniesPage({
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [company.name]: urls.companies.detail(company.id),
       'Business details': urls.companies.businessDetails(company.id),
@@ -89,7 +89,7 @@ function assertRelatedCompaniesPage({
 
   if (areTabsVisible) {
     it('should display the local nav', () => {
-      assertLocalNav(selectors.tabbedLocalNav().tabs, [
+      assertLocalNav('[data-test="tabbedLocalNav"] a', [
         'Dun & Bradstreet hierarchy',
         'Manually linked subsidiaries',
       ])
@@ -154,13 +154,17 @@ describe('D&B Company hierarchy', () => {
   )
 
   context('when attempting to view the hierarchy without a D&B id', () => {
-    it('should have a 403 error', () => {
-      cy.request({
-        url: urls.companies.dnbHierarchy.index(1234),
-        failOnStatusCode: false,
-      }).then((response) => {
-        expect(response.status).to.eq(403)
-      })
+    const accessDeniedId = 1234
+    before(() => {
+      cy.intercept(`api-proxy/v4/company/${accessDeniedId}`, {
+        id: accessDeniedId,
+        global_ultimate_duns_number: null,
+      }).as('companyApi')
+      cy.visit(urls.companies.dnbHierarchy.index(accessDeniedId))
+    })
+    it('should display the access denied page', () => {
+      cy.wait('@companyApi')
+      cy.get('[data-test="access-denied"]').should('be.visible')
     })
   })
 })

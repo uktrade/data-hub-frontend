@@ -19,12 +19,18 @@ updates:
   - dependency-name: react-router-dom # TET-34
     versions:
     - "> 5.3.0"
-  - dependency-name: redis # TET-131
-    versions:
-    - "> 3.1.2"
   - dependency-name: axios # TET-354
     versions:
     - "> 0.27.2"
+  - dependency-name: cypress # TET-372
+    versions:
+    - "> 11.2.0"
+  - dependency-name: jsdom # TET-371
+    versions:
+      - "> 20.0.3"
+  - dependency-name: formidable 
+    versions:
+      - "> 2.1.2"
 
   # These are part of dependency groups and should be updated via the relevant script.
   - dependency-name: "@storybook/addon-a11y"
@@ -36,10 +42,10 @@ updates:
   - dependency-name: "@storybook/react"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/builder-webpack5"
+  - dependency-name: "@storybook/react-webpack5"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/manager-webpack5"
+  - dependency-name: "storybook"
     versions:
     - ">= 0"
   - dependency-name: "@sentry/node"
@@ -51,7 +57,21 @@ updates:
   - dependency-name: "@sentry/tracing"
     versions:
     - ">= 0"
+  - dependency-name: "@nivo/pie"
+    versions:
+    - ">= 0"
+  - dependency-name: "@nivo/tooltip"
+    versions:
+    - ">= 0"
   # ignore all GitHub linguist patch updates
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]
   rebase-strategy: disabled
+- package-ecosystem: npm
+  directory: "/test/sandbox"
+  schedule:
+    interval: "weekly"
+    day: "monday"
+    time: "02:00"
+    timezone: Europe/London
+  open-pull-requests-limit: 10

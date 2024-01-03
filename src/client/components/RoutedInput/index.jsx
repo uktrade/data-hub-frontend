@@ -3,7 +3,9 @@ import Input from '@govuk-react/input'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 import { Route } from 'react-router-dom'
+
 import multiInstance from '../../utils/multiinstance'
+import { useTextCaretPosition } from './useTextCaretPosition'
 import {
   ROUTED_INPUT__CHANGE,
   ROUTED_INPUT__RESET,
@@ -26,6 +28,7 @@ const RoutedInput = ({
   type,
   ...props
 }) => {
+  const { ref, updateTextCaret } = useTextCaretPosition()
   // This is the only way we can reset the value when the query string param is
   // reset from outside this component
   useEffect(() => {
@@ -49,9 +52,13 @@ const RoutedInput = ({
         return (
           <Input
             {...props}
+            ref={ref}
             value={value}
             type={type}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => {
+              onChange(e.target.value)
+              updateTextCaret()
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 onEnter(e.target.value)

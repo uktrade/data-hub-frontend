@@ -6,14 +6,10 @@ const {
 } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
-const { renderProfilesView } = require('./controllers/profiles')
-const setInvestmentTabItems = require('./middleware/investments-tab-items')
 
 const {
   exportCollection,
 } = require('../../modules/search/middleware/collection')
-
-router.get('/', setInvestmentTabItems, renderProfilesView)
 
 router.get(
   '/export',

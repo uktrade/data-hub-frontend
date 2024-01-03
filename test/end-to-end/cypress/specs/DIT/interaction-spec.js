@@ -33,7 +33,7 @@ describe('Interaction', () => {
       const subject = 'Some interesting interaction'
       const formSelectors = selectors.interactionForm
 
-      cy.get(formSelectors.service).select('Export Win')
+      cy.get(formSelectors.service).select('Export win')
       cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
       cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
       cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
@@ -43,7 +43,8 @@ describe('Interaction', () => {
       cy.get(formSelectors.notes).type('Conversation with potential client')
       cy.get(formSelectors.policyFeedbackNo).click()
       cy.get(formSelectors.countriesDiscussed.no).click()
-      cy.get(selectors.interactionForm.add).click()
+      cy.get(formSelectors.exportBarrier.no).click()
+      cy.get(formSelectors.add).click()
 
       cy.contains('h1', subject)
 
@@ -58,7 +59,7 @@ describe('Interaction', () => {
           'contain',
           'DIT Staff, UKTI Team East Midlands - International Trade Team'
         )
-        .and('contain', 'Export Win')
+        .and('contain', 'Export win')
         .and('contain', today)
     })
   })
@@ -69,7 +70,7 @@ describe('Interaction', () => {
         const subject = 'Some interesting interaction about countries'
         const formSelectors = selectors.interactionForm
 
-        cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.service).select('Export win')
         cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
         cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
         cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
@@ -84,8 +85,8 @@ describe('Interaction', () => {
         cy.get(formSelectors.countries.export).selectTypeaheadOption('Fran')
         cy.get(formSelectors.countries.future).selectTypeaheadOption('Germ')
         cy.get(formSelectors.countries.noInterest).selectTypeaheadOption('Spai')
-
-        cy.get(selectors.interactionForm.add).click()
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
         assertSummaryTable({
           dataTest: 'interaction-details-table',
@@ -94,7 +95,7 @@ describe('Interaction', () => {
           content: {
             Company: 'interaction testing',
             'Contact(s)': 'Johnny Cakeman',
-            Service: 'Export Win',
+            Service: 'Export win',
             Notes: 'Conversation with potential client about countries',
             'Date of interaction': today,
             'Adviser(s)':
@@ -121,7 +122,7 @@ describe('Interaction', () => {
         const subject = 'Some interesting interaction about countries'
         const formSelectors = selectors.interactionForm
 
-        cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.service).select('Export win')
         cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
         cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
           'Email/Website'
@@ -134,8 +135,9 @@ describe('Interaction', () => {
         cy.get(formSelectors.countriesDiscussed.yes).click()
         cy.get(formSelectors.countries.export).selectTypeaheadOption('Fran')
         cy.get(formSelectors.countries.future).selectTypeaheadOption('Fran')
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
-        cy.get(selectors.interactionForm.add).click()
         cy.contains(
           'A country that was discussed cannot be entered in multiple fields'
         )
@@ -147,7 +149,7 @@ describe('Interaction', () => {
         const subject = 'Some interesting interaction about countries'
         const formSelectors = selectors.interactionForm
 
-        cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.service).select('Export win')
         cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
         cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
           'Email/Website'
@@ -158,8 +160,9 @@ describe('Interaction', () => {
         )
         cy.get(formSelectors.policyFeedbackNo).click()
         cy.get(formSelectors.countriesDiscussed.yes).click()
+        cy.get(formSelectors.exportBarrier.no).click()
+        cy.get(formSelectors.add).click()
 
-        cy.get(selectors.interactionForm.add).click()
         cy.contains('Select at least one country in one of the three fields')
       })
     })
@@ -177,15 +180,14 @@ describe('Service delivery', () => {
 
   beforeEach(() => {
     cy.visit(companies.interactions.create(company.pk))
-    selectInteractionType('Export', 'A service that you have provided')
+    selectInteractionType('Export', 'A service you have provided')
   })
 
   it('should create the service delivery', () => {
     const subject = 'Some interesting service delivery'
-
     const formSelectors = selectors.interactionForm
 
-    cy.get(formSelectors.service).select('Export Win')
+    cy.get(formSelectors.service).select('Export win')
     cy.get(formSelectors.hasRelatedTradeAgreementsNo).click()
     cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
     cy.get(formSelectors.eventNo).click()
@@ -193,7 +195,8 @@ describe('Service delivery', () => {
     cy.get(formSelectors.notes).type('Conversation with potential client')
     cy.get(formSelectors.policyFeedbackNo).click()
     cy.get(formSelectors.countriesDiscussed.no).click()
-    cy.get(selectors.interactionForm.add).click()
+    cy.get(formSelectors.exportBarrier.no).click()
+    cy.get(formSelectors.add).click()
 
     cy.contains('h1', subject)
   })
@@ -210,7 +213,7 @@ describe('Service delivery', () => {
         'contain',
         'DIT Staff, UKTI Team East Midlands - International Trade Team'
       )
-      .and('contain', 'Export Win')
+      .and('contain', 'Export win')
       .and('contain', today)
   })
 })

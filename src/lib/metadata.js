@@ -1,6 +1,6 @@
 const config = require('../config')
 const logger = require('../config/logger')
-const hawkRequest = require('../lib/hawk-request')
+const hawkRequest = require('./hawk-request')
 
 let redisClient
 
@@ -98,29 +98,31 @@ const metadataItems = [
   ['export-experience-category', 'exportExperienceCategory'],
   ['likelihood-to-land', 'likelihoodToLandOptions'],
   ['trade-agreement', 'tradeAgreementOptions'],
+  ['export-years', 'exportYears'],
+  ['export-experience', 'exportExperience'],
 ]
 
 const restrictedServiceKeys = [
-  'Account Management',
+  'Account management',
   'Bank Referral',
-  'Digital Trade Advisers One-to-One',
+  'Digital Trade Advisers one-to-one',
   'Events – Overseas',
-  'Events - UK Based',
+  'Events - UK based',
   'Events – Webinars',
   'First Time Exporters - Export Insight Visits',
   'First Time Exporters – Export Savvy',
-  'Language and Culture Advisers One-to-One',
+  'Language and Culture Advisers one-to-one',
   'Market Selection Service (MSS)',
-  'Market Visit Support (MVS)',
+  'Market visit Support (MVS)',
   'Onward Referral',
   'Open to Export Assist (OtE)',
-  'Outward Missions',
+  'Outward missions',
   'Overseas Business Network Advisers One-to-One',
   'Overseas Market Introduction Service (OMIS)',
   'Postgraduates for International Business - Placement',
-  'Significant Assistance (PIMS)',
+  'Significant assistance (PIMS)',
   'Trade - ECR Web Action Plan',
-  'UK Region Local]',
+  'UK region local]',
 ]
 
 module.exports.setRedisClient = (client) => {
@@ -163,15 +165,6 @@ module.exports.fetchAll = (cb) => {
 }
 
 module.exports.REASONS_FOR_ARCHIVE = ['Company is dissolved', 'Other']
-
-// Todo - Move to metadata repo in back end
-module.exports.investmentStatusOptions = [
-  { label: 'Ongoing', value: 'ongoing' },
-  { label: 'Delayed', value: 'delayed' },
-  { label: 'Abandoned', value: 'abandoned' },
-  { label: 'Lost', value: 'lost' },
-  { label: 'Dormant', value: 'dormant' },
-]
 
 module.exports.getServices = function () {
   return hawkRequest(`${config.apiRoot}/v4/metadata/service`)

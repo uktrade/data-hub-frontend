@@ -9,7 +9,7 @@
   },
   "hits" : {
     "total" : {
-      "value" : 578,
+      "value" : 5,
       "relation" : "eq"
     },
     "max_score" : null,
@@ -56,7 +56,7 @@
           "actor" : {
             "dit:emailAddress" : "ddat-comms-engagement@email.trade.gov.uk",
             "id" : "dit:maxemail:Sender:ddat-comms-engagement@email.trade.gov.uk",
-            "name" : "DIT Data Team",
+            "name" : "DBT Data Team",
             "type" : [
               "Organization",
               "dit:maxemail:Sender"
@@ -99,7 +99,7 @@
           "id" : "dit:maxemail:Campaign:3:Create",
           "object" : {
             "content" : "Deadline 18:00, Tuesday 15 December, 2020 to submit your details for the UK Tech Company Directory at CES 2021",
-            "dit:emailSubject" : "Submit your details now for DIT's UK Tech Company Directory at CES 2021",
+            "dit:emailSubject" : "Submit your details now for DBT's UK Tech Company Directory at CES 2021",
             "dit:maxemail:Campaign:id" : 3,
             "id" : "dit:maxemail:Campaign:3",
             "name" : "NPH CES 21 Brochure",
@@ -131,8 +131,8 @@
           "dit:application" : "maxemail",
           "id" : "dit:maxemail:Campaign:4:Create",
           "object" : {
-            "content" : "News, virtual events & trade missions with DIT Yorkshire & Humber",
-            "dit:emailSubject" : "Your monthly round up: news, virtual events & trade missions with DIT Yorkshire & Humber",
+            "content" : "News, virtual events & trade missions with DBT Yorkshire & Humber",
+            "dit:emailSubject" : "Your monthly round up: news, virtual events & trade missions with DBT Yorkshire & Humber",
             "dit:maxemail:Campaign:id" : 4,
             "id" : "dit:maxemail:Campaign:4",
             "name" : "External Newsletter December 2020",

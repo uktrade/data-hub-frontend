@@ -1,10 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { BLACK } from 'govuk-colours'
-import { SPACING, FONT_SIZE } from '@govuk-react/constants'
-import styled from 'styled-components'
-import qs from 'qs'
 
 import {
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED,
@@ -19,101 +14,31 @@ import {
   TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
 } from './state'
 
-import { sortOptions, maxItemsToPaginate, itemsPerPage } from './constants'
+import RemindersLists from './RemindersLists'
+import { ExportNoRecentInteractionsItemRenderer } from './ItemRenderers/Exports/ExportNoRecentInteractionsItemRenderer'
 
-import { CollectionSort, RoutedPagination } from '../../components'
-import ExportItemRenderer from './ItemRenderers/ExportItemRenderer'
-import CollectionHeader from './CollectionHeader'
-import CollectionList from './CollectionList'
-import Effect from '../../components/Effect'
-import Task from '../../components/Task'
-
-const Summary = styled('p')({
-  color: BLACK,
-  paddingTop: SPACING.SCALE_2,
-  fontSize: FONT_SIZE.SIZE_19,
-})
-
-const ExportsNoRecentInteractionsList = ({
-  exportsNoRecentInteractionReminders,
-}) => {
-  const { results, count, nextPending } = exportsNoRecentInteractionReminders
-  const location = useLocation()
-  const qsParams = qs.parse(location.search.slice(1))
-  const page = parseInt(qsParams.page, 10) || 1
-  const totalPages = Math.ceil(
-    Math.min(count, maxItemsToPaginate) / itemsPerPage
-  )
-
+const ExportsNoRecentInteractionsList = ({ reminders }) => {
   return (
-    <>
-      <CollectionHeader
-        totalItems={count}
-        pageOrigin="companies_no_recent_interactions"
-      />
-      {results.length === 0 ? (
-        <Summary data-test="investments-no-reminders">
-          You have no reminders.
-        </Summary>
-      ) : (
-        <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
-      )}
-      <Task.Status
-        name={TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS}
-        id={ID}
-        startOnRender={{
-          payload: { page, sortby: qsParams.sortby },
-          onSuccessDispatch:
-            REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED,
-        }}
-      >
-        {() => (
-          <Task>
-            {(getTask) => {
-              const deleteTask = getTask(
-                TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER,
-                ID
-              )
-              const getNextTask = getTask(
-                TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS,
-                ID
-              )
-              return (
-                <>
-                  <Effect
-                    dependencyList={[nextPending]}
-                    effect={() =>
-                      nextPending &&
-                      getNextTask.start({
-                        payload: {
-                          page,
-                          sortby: qsParams.sortby,
-                        },
-                        onSuccessDispatch:
-                          REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT,
-                      })
-                    }
-                  />
-                  <CollectionList
-                    results={results}
-                    itemRenderer={ExportItemRenderer}
-                    disableDelete={deleteTask.status || nextPending}
-                    onDeleteReminder={(reminderId) => {
-                      deleteTask.start({
-                        payload: { id: reminderId },
-                        onSuccessDispatch:
-                          REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED,
-                      })
-                    }}
-                  />
-                  <RoutedPagination initialPage={page} items={count || 0} />
-                </>
-              )
-            }}
-          </Task>
-        )}
-      </Task.Status>
-    </>
+    <RemindersLists
+      reminders={reminders}
+      pageOrigin="companies_no_recent_interactions"
+      dataTest="investments-no-reminders"
+      getReminderTask={TASK_GET_EXPORTS_NO_RECENT_INTERACTION_REMINDERS}
+      getReminderTaskOnSuccessDispatch={
+        REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED
+      }
+      deleteReminderTask={TASK_DELETE_EXPORTS_NO_RECENT_INTERACTION_REMINDER}
+      deleteReminderTaskOnSuccessDispatch={
+        REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED
+      }
+      getNextReminderTask={
+        TASK_GET_NEXT_EXPORTS_NO_RECENT_INTERACTION_REMINDERS
+      }
+      getNextReminderTaskOnSuccessDispatch={
+        REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT
+      }
+      itemRenderer={ExportNoRecentInteractionsItemRenderer}
+    />
   )
 }
 

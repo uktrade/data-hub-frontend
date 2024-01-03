@@ -8,12 +8,17 @@ import InsetText from '@govuk-react/inset-text'
 import { SPACING } from '@govuk-react/constants'
 import Details from '@govuk-react/details'
 
-import { SummaryList } from '../../../../../client/components'
+import {
+  LocalHeader,
+  Main,
+  SummaryList,
+} from '../../../../../client/components'
 import Form from '../../../../../client/components/Form'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
+import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils'
 
-const StyledRoot = styled('div')`
+const StyledRoot = styled(Main)`
   h2:not(:first-child) {
     margin-top: ${SPACING.SCALE_6};
   }
@@ -42,78 +47,90 @@ function MatchConfirmation({
   }
 
   return (
-    <StyledRoot>
-      <Form
-        id="match-confirmation-form"
-        submissionTaskName="Match confirmation"
-        analyticsFormName="matchConfirmationForm"
-        redirectTo={(company) => urls.companies.detail(company.id)}
-        flashMessage={() => [
-          'Business details verified.',
-          'Thanks for helping to improve the quality of records on Data Hub!',
-        ]}
-        transformPayload={() => ({
-          company,
-          dnbCompany,
-          csrfToken,
-        })}
-        submitButtonLabel="Verify"
-        cancelRedirectTo={() => urls.companies.match.index(company.id)}
-        cancelButtonLabel="Back"
-      >
-        {() => (
-          <>
-            <H4 as="h2">Data Hub business details (un-verified)</H4>
-            <InsetText>
-              <SummaryList
-                rows={[
-                  { label: 'Company name', value: company.name },
-                  {
-                    label: 'Located at',
-                    value: company.address.join(', '),
-                  },
-                ]}
-              />
-            </InsetText>
-
-            <H4 as="h2">Data Hub business details (after verification)</H4>
-            <InsetText>
-              <SummaryList
-                rows={[
-                  {
-                    label: 'Company name',
-                    value: dnbCompany.primary_name,
-                  },
-                  {
-                    label: 'Located at',
-                    value: dnbCompany.address.join(', '),
-                  },
-                ]}
-              />
-            </InsetText>
-
-            <Details summary="Why can't I edit these details">
-              These business details are from trusted third-party suppliers of
-              verified company records. Being editable would make them less
-              reliable. If you think they're wrong, go back and select "I can't
-              find what I'm looking for".
-            </Details>
-
-            <H4 as="h2">Verifying business details will:</H4>
-            <StyledList>
-              <ListItem>
-                NOT change any recorded activity (interactions, OMIS orders or
-                Investment projects)
-              </ListItem>
-              <ListItem>
-                ensure these business details are updated automatically in the
-                future
-              </ListItem>
-            </StyledList>
-          </>
+    <>
+      <LocalHeader
+        heading="Verify business details"
+        breadcrumbs={buildCompanyBreadcrumbs(
+          {
+            text: 'Send request',
+          },
+          company.id,
+          company.name
         )}
-      </Form>
-    </StyledRoot>
+      />
+      <StyledRoot>
+        <Form
+          id="match-confirmation-form"
+          submissionTaskName="Match confirmation"
+          analyticsFormName="matchConfirmationForm"
+          redirectTo={(company) => urls.companies.detail(company.id)}
+          flashMessage={() => [
+            'Business details verified.',
+            'Thanks for helping to improve the quality of records on Data Hub!',
+          ]}
+          transformPayload={() => ({
+            company,
+            dnbCompany,
+            csrfToken,
+          })}
+          submitButtonLabel="Verify"
+          cancelRedirectTo={() => urls.companies.match.index(company.id)}
+          cancelButtonLabel="Back"
+        >
+          {() => (
+            <>
+              <H4 as="h2">Data Hub business details (un-verified)</H4>
+              <InsetText>
+                <SummaryList
+                  rows={[
+                    { label: 'Company name', value: company.name },
+                    {
+                      label: 'Located at',
+                      value: company.address.join(', '),
+                    },
+                  ]}
+                />
+              </InsetText>
+
+              <H4 as="h2">Data Hub business details (after verification)</H4>
+              <InsetText>
+                <SummaryList
+                  rows={[
+                    {
+                      label: 'Company name',
+                      value: dnbCompany.primary_name,
+                    },
+                    {
+                      label: 'Located at',
+                      value: dnbCompany.address.join(', '),
+                    },
+                  ]}
+                />
+              </InsetText>
+
+              <Details summary="Why can't I edit these details">
+                These business details are from trusted third-party suppliers of
+                verified company records. Being editable would make them less
+                reliable. If you think they're wrong, go back and select "I
+                can't find what I'm looking for".
+              </Details>
+
+              <H4 as="h2">Verifying business details will:</H4>
+              <StyledList>
+                <ListItem>
+                  NOT change any recorded activity (interactions, OMIS orders or
+                  Investment projects)
+                </ListItem>
+                <ListItem>
+                  ensure these business details are updated automatically in the
+                  future
+                </ListItem>
+              </StyledList>
+            </>
+          )}
+        </Form>
+      </StyledRoot>
+    </>
   )
 }
 

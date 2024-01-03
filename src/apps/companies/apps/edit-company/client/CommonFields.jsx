@@ -54,7 +54,7 @@ const CommonFields = ({ company, regions, features }) => (
     />
 
     <FieldAddress
-      legend="Address"
+      legend="Trading address"
       name="address"
       hint="This should be the address for this particular office of the
          business. If you need to record activity or a contact for a different
@@ -110,10 +110,10 @@ const CommonFields = ({ company, regions, features }) => (
     {company.uk_based && (
       <FieldSelect
         name="uk_region"
-        label="DIT region"
-        emptyOption="-- Select DIT region --"
+        label="DBT region"
+        emptyOption="-- Select DBT region --"
         options={regions}
-        required="Select DIT region"
+        required="Select DBT region"
         data-test="common-fields-dit-region"
       />
     )}

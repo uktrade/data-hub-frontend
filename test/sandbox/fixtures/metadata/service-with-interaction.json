@@ -9,7 +9,7 @@
   },
   {
       "id": "9484b82b-3499-e211-a939-e4115bead28a",
-      "name": "Account Management",
+      "name": "Account management",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -19,7 +19,7 @@
   },
   {
       "id": "9884b82b-3499-e211-a939-e4115bead28a",
-      "name": "Account Management : High Growth",
+      "name": "Account management : High Growth",
       "disabled_on": "2017-06-27T13:43:19.000004Z",
       "contexts": [
           "investment_project_interaction",
@@ -60,7 +60,7 @@
   },
   {
       "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
-      "name": "Digital Trade Advisers One-to-One",
+      "name": "Digital Trade Advisers one-to-one",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -80,7 +80,7 @@
   },
   {
       "id": "350bba2b-3499-e211-a939-e4115bead28a",
-      "name": "Export Win",
+      "name": "Export win",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -240,7 +240,7 @@
   },
   {
       "id": "42c71892-f9f7-e511-888e-e4115bead28a",
-      "name": "Investment - IST Visit (IST use only)",
+      "name": "Investment - IST visit (IST use only)",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -260,7 +260,7 @@
   },
   {
       "id": "0596b92b-3499-e211-a939-e4115bead28a",
-      "name": "Investment - Services",
+      "name": "Investment - services",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -270,7 +270,7 @@
   },
   {
       "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
-      "name": "Language and Culture Advisers One-to-One",
+      "name": "Language and Culture Advisers one-to-one",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -641,7 +641,7 @@
   },
   {
       "id": "f76eb92b-3499-e211-a939-e4115bead28a",
-      "name": "Trade - Tradeshow Access Programme (TAP)",
+      "name": "Trade - UK Tradeshow Programme (UKTP) – exhibitor",
       "disabled_on": null,
       "contexts": [
           "investment_project_interaction",
@@ -649,6 +649,16 @@
           "event"
       ]
   },
+  {
+    "id": "f76eb92b-3499-e211-a939-e4115bead28b",
+    "name": "Trade - UK Tradeshow Programme (UKTP) – attendee",
+    "disabled_on": null,
+    "contexts": [
+        "investment_project_interaction",
+        "interaction",
+        "event"
+    ]
+},
   {
       "id": "561c6040-db21-e311-a78e-e4115bead28a",
       "name": "UKEF - Bond Support Scheme",

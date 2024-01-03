@@ -1,15 +1,19 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const { assertCompanyBreadcrumbs } = require('../../support/assertions')
+
+const company = fixtures.company.allActivitiesCompany
 
 describe('Company activity feed', () => {
   before(() => {
-    cy.visit(
-      urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
-    )
-    cy.get('[data-test="activity-feed"] select').select(
-      'dataHubAndExternalActivity'
-    )
+    cy.visit(urls.companies.activity.index(company.id))
   })
+
+  assertCompanyBreadcrumbs(
+    company.name,
+    urls.companies.detail(company.id),
+    'Activity Feed'
+  )
 
   context('Companies House Company', () => {
     it('displays the correct activity type label', () => {
@@ -48,6 +52,20 @@ describe('Company activity feed', () => {
           .contains('Enquiring about Exporting some things', {
             matchCase: false,
           })
+      )
+    })
+
+    it('displays the correct contact', () => {
+      cy.get('[data-test="export-support-service"]').within(() =>
+        cy
+          .get('[data-test="contact-link-0"]')
+          .should('exist')
+          .should('have.text', 'Super Glue')
+          .should(
+            'have.attr',
+            'href',
+            '/contacts/67ecb4fc-2db9-4afb-9b7b-e4736b0a2d9d/details'
+          )
       )
     })
   })
@@ -242,7 +260,7 @@ describe('Company activity feed', () => {
 
         it('correctly displays contacts for a future event', () => {
           cy.get('[data-test="aventri-event"]')
-            .eq(3)
+            .eq(1)
             .within(() => {
               cy.get('[data-test="cancelled-label"]').should('exist')
               cy.get('[data-test="attended-label"]').should('exist')
@@ -260,8 +278,6 @@ describe('Company activity feed', () => {
       const companyId = fixtures.company.externalActivitiesLtd.id
       const url = urls.companies.activity.index(companyId)
       cy.visit(url)
-        .get('[data-test="activity-feed"] select')
-        .select('externalActivity')
     })
 
     it('displays the correct activity type label', () => {
@@ -277,9 +293,6 @@ describe('Company activity feed', () => {
 context('Export Support Service No Title', () => {
   before(() => {
     cy.visit(urls.companies.activity.index(fixtures.company.essNoTitle.id))
-    cy.get('[data-test="activity-feed"] select').select(
-      'dataHubAndExternalActivity'
-    )
   })
 
   it('Displays the ESS Inbound Enquiry support title when no title provided', () => {

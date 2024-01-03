@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import Link from '@govuk-react/link'
 
 import Metadata from 'Metadata'
@@ -13,6 +12,12 @@ const metadata = [
   },
 ]
 
-storiesOf('Metadata', module)
-  .addParameters({ component: Metadata })
-  .add('Default', () => <Metadata rows={metadata} />)
+export default {
+  title: 'Metadata',
+
+  parameters: {
+    component: Metadata,
+  },
+}
+
+export const Default = () => <Metadata rows={metadata} />

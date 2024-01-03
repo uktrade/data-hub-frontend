@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GREEN, WHITE } from 'govuk-colours'
 import { Button, Link } from 'govuk-react'
+
+import { GREEN, WHITE } from '../../../../client/utils/colours'
 
 import ArchiveForm from '../../../components/ArchiveForm'
 import { FieldDate } from '../../../components'
@@ -9,7 +10,7 @@ import { getDetailsLink, getEditLink } from './transformers'
 import { ID, TASK_ARCHIVE_INTERACTION } from './state'
 
 const CLIENT_CANCELLED_OPTION = 'Client cancelled'
-const DIT_CANCELLED_OPTION = 'DIT cancelled'
+const DIT_CANCELLED_OPTION = 'DBT cancelled'
 const RESCHEDULED_OPTION = 'Meeting was rescheduled'
 
 const CompleteInteraction = ({

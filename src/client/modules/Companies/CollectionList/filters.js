@@ -1,4 +1,8 @@
 import {
+  export_segments,
+  export_sub_segments,
+} from '../../../../apps/companies/apps/edit-company/client/constants'
+import {
   buildDatesFilter,
   buildOptionsFilter,
   buildInputFieldFilter,
@@ -32,6 +36,14 @@ export const buildSelectedFilters = (
       options: metadata.sectorOptions,
       value: queryParams.sector_descends,
       categoryLabel: LABELS.sector,
+    }),
+  },
+  subSectors: {
+    queryParam: 'sub_sector_descends',
+    options: buildOptionsFilter({
+      options: metadata.subSectorOptions,
+      value: queryParams.sub_sector_descends,
+      categoryLabel: LABELS.subSector,
     }),
   },
   countries: {
@@ -113,10 +125,26 @@ export const buildSelectedFilters = (
   },
   leadItaOrGlobalAccountManagers: {
     queryParam: 'one_list_group_global_account_manager',
-    options: selectedLeadItaOrGlobalAccountManagers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedLeadItaOrGlobalAccountManagers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.leadItaOrGlobalAccountManager,
     })),
+  },
+  exportSegment: {
+    queryParam: 'export_segment',
+    options: buildOptionsFilter({
+      options: export_segments,
+      value: queryParams.export_segment,
+      categoryLabel: LABELS.exportSegment,
+    }),
+  },
+  exportSubsegment: {
+    queryParam: 'export_sub_segment',
+    options: buildOptionsFilter({
+      options: export_sub_segments,
+      value: queryParams.export_sub_segment,
+      categoryLabel: LABELS.exportSubsegment,
+    }),
   },
 })

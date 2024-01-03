@@ -13,7 +13,7 @@ import { listFaker } from './utils'
  */
 const eventFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Event),
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.words(),
   ...overrides,
 })

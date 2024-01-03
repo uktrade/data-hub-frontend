@@ -1,7 +1,28 @@
 import { getPageOffset } from '../../utils/pagination'
 import { apiProxyAxios } from '../../components/Task/utils'
-import { formatDays, transformReminderDaysToForm } from './transformers'
-import { settings } from './constants'
+
+const getReminders = (sortby = '-created_on', page = 1, limit = 10, endpoint) =>
+  apiProxyAxios
+    .get(`/v4/reminder/${endpoint}`, {
+      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
+    })
+    .then(({ data }) => data)
+
+const getNextReminder = (
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+  endpoint
+) =>
+  apiProxyAxios
+    .get(`/v4/reminder/${endpoint}`, {
+      params: {
+        sortby,
+        limit: 1,
+        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
+      },
+    })
+    .then(({ data }) => data.results)
 
 // *************************** Investment lists ***************************
 
@@ -9,53 +30,26 @@ export const getEstimatedLandDateReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/estimated-land-date', {
-      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
-    })
-    .then(({ data }) => data)
+} = {}) => getReminders(sortby, page, limit, 'estimated-land-date')
 
 export const getNextEstimatedLandDateReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/estimated-land-date', {
-      params: {
-        sortby,
-        limit: 1,
-        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
-      },
-    })
-    .then(({ data }) => data.results)
+} = {}) => getNextReminder(sortby, page, limit, 'estimated-land-date')
 
 export const getNoRecentInteractionReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/no-recent-investment-interaction', {
-      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
-    })
-    .then(({ data }) => data)
+} = {}) => getReminders(sortby, page, limit, 'no-recent-investment-interaction')
 
 export const getNextNoRecentInteractionReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
 } = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/no-recent-investment-interaction', {
-      params: {
-        sortby,
-        limit: 1,
-        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
-      },
-    })
-    .then(({ data }) => data.results)
+  getNextReminder(sortby, page, limit, 'no-recent-investment-interaction')
 
 export const deleteEstimatedLandDateReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/estimated-land-date/${id}`)
@@ -92,117 +86,115 @@ export const getExportsNoRecentInteractionReminders = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/no-recent-export-interaction', {
-      params: { sortby, limit, offset: getPageOffset({ page, limit }) },
-    })
-    .then(({ data }) => data)
+} = {}) => getReminders(sortby, page, limit, 'no-recent-export-interaction')
 
 export const getNextExportNoRecentInteractionReminder = ({
   sortby = '-created_on',
   page = 1,
   limit = 10,
-} = {}) =>
-  apiProxyAxios
-    .get('/v4/reminder/no-recent-export-interaction', {
-      params: {
-        sortby,
-        limit: 1,
-        offset: Math.max(getPageOffset({ page: page + 1, limit }) - 1, 1),
-      },
-    })
-    .then(({ data }) => data.results)
+} = {}) => getNextReminder(sortby, page, limit, 'no-recent-export-interaction')
 
 export const deleteExportNoRecentInteractionReminder = ({ id } = {}) =>
   apiProxyAxios.delete(`/v4/reminder/no-recent-export-interaction/${id}`)
 
-// ********************** Summary ***************************
+export const getExportsNewInteractionReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'new-export-interaction')
 
-const transformSubscriptionSummary = ({ data }) => ({
-  estimatedLandDate: {
-    formattedReminderDays: formatDays(
-      data.estimated_land_date.reminder_days.sort((a, b) => a - b).reverse(),
-      'days before the estimated land date'
-    ),
-    emailRemindersOnOff: data.estimated_land_date.email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  noRecentInteraction: {
-    formattedReminderDays: formatDays(
-      data.no_recent_investment_interaction.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: data.no_recent_investment_interaction
-      .email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-  exportNoRecentInteractions: {
-    formattedReminderDays: formatDays(
-      data.no_recent_export_interaction.reminder_days.sort((a, b) => a - b),
-      'days after the last interaction'
-    ),
-    emailRemindersOnOff: data.no_recent_export_interaction
-      .email_reminders_enabled
-      ? settings.ON
-      : settings.OFF,
-  },
-})
+export const getNextExportsNewInteractionReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'new-export-interaction')
 
-export const getSubscriptionSummary = () =>
-  apiProxyAxios
-    .get('/v4/reminder/subscription/summary')
-    .then(transformSubscriptionSummary)
+export const deleteExportNewInteractionReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/new-export-interaction/${id}`)
 
-// ********************** Investment subscriptions ***************************
+// *************************** My tasks lists ***************************
 
-export const getEldSubscriptions = () =>
-  apiProxyAxios
-    .get('/v4/reminder/subscription/estimated-land-date')
-    .then(({ data }) => ({
-      estimatedLandDate: {
-        reminderDays: data.reminder_days,
-        emailRemindersEnabled: data.email_reminders_enabled,
-      },
-    }))
+export const getMyTasksDueDateApproachingReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-due-date-approaching')
 
-export const saveEldSubscriptions = (payload) =>
-  apiProxyAxios.patch('/v4/reminder/subscription/estimated-land-date', payload)
+export const getMyTasksNextDueDateApproachingReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-due-date-approaching')
 
-export const getNriSubscriptions = () =>
-  apiProxyAxios
-    .get('/v4/reminder/subscription/no-recent-investment-interaction')
-    .then(({ data }) => ({
-      ...transformReminderDaysToForm(
-        [...data.reminder_days].sort((a, b) => a - b)
-      ),
-      reminder_days: data.reminder_days,
-      email_reminders_enabled: data.email_reminders_enabled,
-    }))
+export const deleteMyTasksDueDateApproachingReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-due-date-approaching/${id}`)
 
-export const saveNriSubscriptions = (payload) =>
-  apiProxyAxios.patch(
-    '/v4/reminder/subscription/no-recent-investment-interaction',
-    payload
+export const getTaskAssignedToMeFromOthersReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  getReminders(sortby, page, limit, 'my-tasks-task-assigned-to-me-from-others')
+
+export const getNextTaskAssignedToMeFromOthersReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  getNextReminder(
+    sortby,
+    page,
+    limit,
+    'my-tasks-task-assigned-to-me-from-others'
   )
 
-// **********************  Export subscriptions ***************************
-
-export const getNriExportSubscriptions = () =>
-  apiProxyAxios
-    .get('/v4/reminder/subscription/no-recent-export-interaction')
-    .then(({ data }) => ({
-      ...transformReminderDaysToForm(
-        [...data.reminder_days].sort((a, b) => a - b)
-      ),
-      reminder_days: data.reminder_days,
-      email_reminders_enabled: data.email_reminders_enabled,
-    }))
-
-export const saveNriExportSubscriptions = (payload) =>
-  apiProxyAxios.patch(
-    '/v4/reminder/subscription/no-recent-export-interaction',
-    payload
+export const deleteTaskAssignedToMeFromOthersReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(
+    `/v4/reminder/my-tasks-task-assigned-to-me-from-others/${id}`
   )
+
+export const getTaskAmendedByOthersReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-amended-by-others')
+
+export const getNextTaskAmendedByOthersReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) =>
+  getNextReminder(sortby, page, limit, 'my-tasks-task-amended-by-others')
+
+export const deleteTaskAmendedByOthersReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-amended-by-others/${id}`)
+
+export const getTaskOverdueReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-overdue')
+
+export const getNextTaskOverdueReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-task-overdue')
+
+export const deleteTaskOverdueReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-overdue/${id}`)
+
+export const getTaskCompletedReminders = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getReminders(sortby, page, limit, 'my-tasks-task-completed')
+
+export const getNextTaskCompletedReminder = ({
+  sortby = '-created_on',
+  page = 1,
+  limit = 10,
+} = {}) => getNextReminder(sortby, page, limit, 'my-tasks-task-completed')
+
+export const deleteTaskCompletedReminder = ({ id } = {}) =>
+  apiProxyAxios.delete(`/v4/reminder/my-tasks-task-completed/${id}`)

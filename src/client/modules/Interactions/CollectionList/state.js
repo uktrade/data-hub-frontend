@@ -1,36 +1,30 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
+import { buildSelectedFilters } from './filters'
+import { SORT_OPTIONS } from './constants'
+import { transformWasPolicyfeedBackProvidedToApi } from './transformers'
+import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_INTERACTIONS_LIST = 'TASK_GET_INTERACTIONS_LIST'
 export const TASK_GET_INTERACTIONS_ADVISER_NAME =
   'TASK_GET_INTERACTIONS_ADVISER_NAME'
 export const TASK_GET_INTERACTIONS_METADATA = 'TASK_GET_INTERACTIONS_METADATA'
 export const TASK_GET_INTERACTIONS_TEAM_NAME = 'TASK_GET_INTERACTIONS_TEAM_NAME'
+export const TASK_GET_INTERACTIONS_COMPANY_NAME =
+  'TASK_GET_INTERACTIONS_COMPANY_NAME'
 
 export const ID = 'interactionsList'
-
-import { buildSelectedFilters } from './filters'
-import { SORT_OPTIONS } from './constants'
-import { transformWasPolicyfeedBackProvidedToApi } from './transformers'
-
-const parseQueryString = (queryString) => {
-  const queryProps = omitBy({ ...qs.parse(queryString) }, isEmpty)
-  return {
-    ...queryProps,
-    page: parseInt(queryProps.page || 1, 10),
-  }
-}
 
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
   const { currentAdviserId } = state
-  const { metadata, selectedAdvisers, selectedTeams } = state[ID]
+  const { metadata, selectedAdvisers, selectedTeams, selectedCompanies } =
+    state[ID]
   const selectedFilters = buildSelectedFilters(
     queryParams,
     metadata,
     selectedAdvisers,
-    selectedTeams
+    selectedTeams,
+    selectedCompanies
   )
 
   return {

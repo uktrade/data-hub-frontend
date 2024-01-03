@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 const groupExportCountries = require('../../../../lib/group-export-countries')
-const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
-const { EXPORT_INTEREST_STATUS } = require('../../../constants')
+const { exportDetailsLabels } = require('../../labels')
+const { EXPORT_INTEREST_STATUS } = require('../../../../common/constants')
 
-function getCountriesFields(company) {
-  const groupedExportCountries = groupExportCountries(company.export_countries)
+function getCountriesFields(companyExportCountries) {
+  const groupedExportCountries = groupExportCountries(companyExportCountries)
 
   return {
     exportToCountries:
@@ -17,30 +17,11 @@ function getCountriesFields(company) {
 }
 
 module.exports = {
-  transformCompanyToExportDetailsView: (company) => {
+  transformExportCountries: (companyExportCountries) => {
     const { exportToCountries, futureInterestCountries, noInterestCountries } =
-      getCountriesFields(company)
+      getCountriesFields(companyExportCountries)
 
-    const exportWinCategory = {
-      name: exportDetailsLabels.exportExperienceCategory,
-      value:
-        company.export_experience_category &&
-        company.export_experience_category.name,
-    }
-
-    const greatProfile = {
-      name: exportDetailsLabels.greatProfile,
-      value: company.great_profile_status,
-    }
-
-    const exportPotential = {
-      name: exportDetailsLabels.exportPotential,
-      value:
-        exportPotentialLabels[company.export_potential] &&
-        exportPotentialLabels[company.export_potential].text,
-    }
-
-    const exportCountriesInformation = [
+    return [
       {
         name: exportDetailsLabels.exportToCountries,
         values: exportToCountries,
@@ -54,12 +35,5 @@ module.exports = {
         values: noInterestCountries,
       },
     ]
-
-    return {
-      exportWinCategory,
-      greatProfile,
-      exportPotential,
-      exportCountriesInformation,
-    }
   },
 }

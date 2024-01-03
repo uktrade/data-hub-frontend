@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { castArray } from 'lodash'
+
 import urls from '../lib/urls'
 import { apiProxyAxios } from './components/Task/utils'
 
@@ -7,7 +9,7 @@ export const getTeamNames = (team) => {
     return []
   }
 
-  const teams = Array.isArray(team) ? team : [team]
+  const teams = castArray(team)
 
   return axios
     .all(

@@ -1,5 +1,5 @@
 const typeaheadId = '#group-field-dit_participants'
-const { EXPORT_INTEREST_STATUS } = require('../../src/apps/constants')
+const { EXPORT_INTEREST_STATUS } = require('../../src/common/constants')
 
 module.exports = {
   form: 'form',
@@ -45,4 +45,10 @@ module.exports = {
   },
   hasRelatedTradeAgreementsNo: '#field-has_related_trade_agreements [value=no]',
   hasRelatedOpportunityNo: '#field-has_related_opportunity [value=no]',
+  exportBarrier: {
+    yes: '#field-helped_remove_export_barrier [value=yes]',
+    no: '#field-helped_remove_export_barrier [value=no]',
+    other: '[aria-label="Other"]',
+    notes: '#field-export_barrier_notes',
+  },
 }

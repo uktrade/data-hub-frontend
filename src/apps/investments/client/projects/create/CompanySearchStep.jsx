@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
 import { FieldCompany, Step } from '../../../../../client/components'
 import Task from '../../../../../client/components/Task'
 

@@ -1,6 +1,7 @@
+const { omit } = require('lodash')
+
 const urls = require('../../../../../lib/urls')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
-const { omit } = require('lodash')
 const config = require('../../../../../config/index')
 
 function renderSendReferralForm(req, res) {

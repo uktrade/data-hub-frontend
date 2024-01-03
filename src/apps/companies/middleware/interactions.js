@@ -1,10 +1,15 @@
 const urls = require('../../../lib/urls')
+const { redirectWithQueryString } = require('../../middleware')
 
 function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
   if (req.path === '/') {
-    return res.redirect(301, 'activity')
+    return redirectWithQueryString(
+      req,
+      res,
+      urls.companies.activity.index(company.id)
+    )
   }
 
   res.locals.interactions = {

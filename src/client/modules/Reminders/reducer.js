@@ -1,3 +1,5 @@
+import { LOCATION_CHANGE } from 'connected-react-router'
+
 import {
   REMINDERS__ESTIMATED_LAND_DATE_REMINDERS_LOADED,
   REMINDERS__ESTIMATED_LAND_DATE_REMINDER_DELETED,
@@ -9,24 +11,28 @@ import {
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED,
   REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT,
   REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED,
+  REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT,
+  REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_LOADED,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_DELETED,
+  REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_LOADED,
+  REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_DELETED,
+  REMINDERS__TASK_OVERDUE_REMINDERS_LOADED,
+  REMINDERS__TASK_OVERDUE_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_OVERDUE_REMINDERS_DELETED,
+  REMINDERS__TASK_COMPLETED_REMINDERS_LOADED,
+  REMINDERS__TASK_COMPLETED_REMINDERS_GOT_NEXT,
+  REMINDERS__TASK_COMPLETED_REMINDERS_DELETED,
 } from '../../actions'
 
 const initialState = {
-  estimatedLandDateReminders: {
-    results: [],
-    count: 0,
-    nextPending: false,
-  },
-  noRecentInteractionReminders: {
-    results: [],
-    count: 0,
-    nextPending: false,
-  },
-  outstandingPropositionsReminders: {
-    results: [],
-    count: 0,
-  },
-  exportsNoRecentInteractionReminders: {
+  reminders: {
     results: [],
     count: 0,
     nextPending: false,
@@ -35,94 +41,59 @@ const initialState = {
 
 export default (state = initialState, { type, result, payload }) => {
   switch (type) {
+    case LOCATION_CHANGE:
+      return {
+        ...initialState,
+      }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_LOADED:
     case REMINDERS__ESTIMATED_LAND_DATE_REMINDERS_LOADED:
-      return {
-        ...state,
-        estimatedLandDateReminders: result,
-      }
-    case REMINDERS__ESTIMATED_LAND_DATE_REMINDER_DELETED:
-      return {
-        ...state,
-        estimatedLandDateReminders: {
-          ...state.estimatedLandDateReminders,
-          results: state.estimatedLandDateReminders.results.map((item) => ({
-            ...item,
-            deleted: item.deleted || item.id === payload.id,
-          })),
-          count: state.estimatedLandDateReminders.count - 1,
-          nextPending: true,
-        },
-      }
-    case REMINDERS__ESTIMATED_LAND_DATE_REMINDER_GOT_NEXT:
-      return {
-        ...state,
-        estimatedLandDateReminders: {
-          ...state.estimatedLandDateReminders,
-          results: [...state.estimatedLandDateReminders.results, ...result],
-          nextPending: false,
-        },
-      }
     case REMINDERS__NO_RECENT_INTERACTION_REMINDERS_LOADED:
+    case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED:
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_LOADED:
+    case REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED:
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_LOADED:
+    case REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_LOADED:
+    case REMINDERS__TASK_OVERDUE_REMINDERS_LOADED:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_LOADED:
       return {
         ...state,
-        noRecentInteractionReminders: result,
+        reminders: result,
       }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_DELETED:
+    case REMINDERS__ESTIMATED_LAND_DATE_REMINDER_DELETED:
     case REMINDERS__NO_RECENT_INTERACTION_REMINDER_DELETED:
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_DELETED:
+    case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED:
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_DELETED:
+    case REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_DELETED:
+    case REMINDERS__TASK_OVERDUE_REMINDERS_DELETED:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_DELETED:
       return {
         ...state,
-        noRecentInteractionReminders: {
-          ...state.noRecentInteractionReminders,
-          results: state.noRecentInteractionReminders.results.map((item) => ({
+        reminders: {
+          ...state.reminders,
+          results: state.reminders.results.map((item) => ({
             ...item,
             deleted: item.deleted || item.id === payload.id,
           })),
-          count: state.noRecentInteractionReminders.count - 1,
+          count: state.reminders.count - 1,
           nextPending: true,
         },
       }
+    case REMINDERS__DUE_DATE_APPROACHING_REMINDERS_GOT_NEXT:
+    case REMINDERS__ESTIMATED_LAND_DATE_REMINDER_GOT_NEXT:
     case REMINDERS__NO_RECENT_INTERACTION_REMINDER_GOT_NEXT:
-      return {
-        ...state,
-        noRecentInteractionReminders: {
-          ...state.noRecentInteractionReminders,
-          results: [...state.noRecentInteractionReminders.results, ...result],
-          nextPending: false,
-        },
-      }
-    case REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED:
-      return {
-        ...state,
-        outstandingPropositionsReminders: result,
-      }
-    case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_LOADED:
-      return {
-        ...state,
-        exportsNoRecentInteractionReminders: result,
-      }
-    case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_DELETED:
-      return {
-        ...state,
-        exportsNoRecentInteractionReminders: {
-          ...state.exportsNoRecentInteractionReminders,
-          results: state.exportsNoRecentInteractionReminders.results.map(
-            (item) => ({
-              ...item,
-              deleted: item.deleted || item.id === payload.id,
-            })
-          ),
-          count: state.exportsNoRecentInteractionReminders.count - 1,
-          nextPending: true,
-        },
-      }
+    case REMINDERS__EXPORTS_NEW_INTERACTION_REMINDERS_GOT_NEXT:
     case REMINDERS__EXPORTS_NO_RECENT_INTERACTION_REMINDERS_GOT_NEXT:
+    case REMINDERS__TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDERS_GOT_NEXT:
+    case REMINDERS__TASK_AMENDED_BY_OTHERS_REMINDERS_GOT_NEXT:
+    case REMINDERS__TASK_OVERDUE_REMINDERS_GOT_NEXT:
+    case REMINDERS__TASK_COMPLETED_REMINDERS_GOT_NEXT:
       return {
         ...state,
-        exportsNoRecentInteractionReminders: {
-          ...state.exportsNoRecentInteractionReminders,
-          results: [
-            ...state.exportsNoRecentInteractionReminders.results,
-            ...result,
-          ],
+        reminders: {
+          ...state.reminders,
+          results: [...state.reminders.results, ...result],
           nextPending: false,
         },
       }

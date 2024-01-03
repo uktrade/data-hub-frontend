@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
-import { LINK_COLOUR } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
+
+import { LINK_COLOUR } from '../../../client/utils/colours'
 
 const ButtonLink = styled(Button).attrs((props) => props)`
   &,

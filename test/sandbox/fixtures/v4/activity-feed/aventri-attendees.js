@@ -4,10 +4,10 @@ const futureEventIdWithLargeAttendeeList = 1114
 const pastEventIdWithLargeAttendeeList = 1111
 
 function generateAttendee({
-  id = faker.random.numeric(),
-  eventId = faker.random.numeric(),
-  firstName = faker.name.firstName(),
-  lastName = faker.name.lastName(),
+  id = faker.string.numeric(),
+  eventId = faker.string.numeric(),
+  firstName = faker.person.firstName(),
+  lastName = faker.person.lastName(),
   email = faker.internet.email(),
   companyName = faker.company.name(),
   registrationStatus = faker.helpers.arrayElement([
@@ -64,7 +64,7 @@ function generateAttendee({
 const generateListOfAttendeesForEvent = (eventId) =>
   ['Activated', 'Confirmed', 'Attended', 'Cancelled', 'No Show', 'Waitlist']
     .map((status) =>
-      Array.from({ length: 5 }).map((_, index) =>
+      Array.from({ length: 10 }).map((_, index) =>
         generateAttendee({
           eventId: eventId,
           email: `contact${index}@bob.com`,

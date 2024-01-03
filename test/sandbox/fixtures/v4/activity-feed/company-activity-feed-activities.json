@@ -63,9 +63,7 @@
             "name": "EITA Test Event 2022",
             "published": "2022-01-23T20:09:14",
             "startTime": "2021-03-02T20:09:14",
-            "type": [
-              "dit:aventri:Event"
-            ],
+            "type": ["dit:aventri:Event"],
             "url": ""
           },
           "published": "2022-01-23T20:09:14",
@@ -97,25 +95,17 @@
                   "dit:postcode": "E11234"
                 },
                 "name": "Best Ever Company",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
               }
             ],
             "dit:datetime": "2019-10-01T00:00:00",
-            "dit:exportItemCodes": [
-              "222222"
-            ],
+            "dit:exportItemCodes": ["222222"],
             "id": "dit:externalSources:hmrc.exporters:11111111",
             "startTime": "2019-10-01T00:00:00",
-            "type": [
-              "Event",
-              "dit:Export"
-            ]
+            "type": ["Event", "dit:Export"]
           },
           "published": "2019-10-01T00:00:00",
           "summary": "Export of goods outside the EU",
@@ -147,10 +137,7 @@
                   "dit:postcode": "MG101GE"
                 },
                 "name": "Best Ever Company",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
@@ -166,15 +153,10 @@
             "dit:nextDueDate": "2021-12-31T00:00:00+00:00",
             "dit:returnsLastMadeUpDate": "2016-05-10T00:00:00+00:00",
             "dit:returnsNextDueDate": "2017-06-07T00:00:00+00:00",
-            "dit:sicCodes": [
-              "14181 - Manufacture of other men's outerwear"
-            ],
+            "dit:sicCodes": ["14181 - Manufacture of other men's outerwear"],
             "id": "dit:externalSources:companies_house.companies:2222222",
             "startTime": "1865-01-11T00:00:00",
-            "type": [
-              "Organization",
-              "dit:Company"
-            ]
+            "type": ["Organization", "dit:Company"]
           },
           "published": "1865-01-11T00:00:00",
           "summary": "Company officially incorporated in Companies House",
@@ -202,10 +184,7 @@
                 "dit:companiesHouseNumber": "33333",
                 "id": "dit:DataScienceCompany:333333",
                 "name": "Best Ever Company",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce"
@@ -229,10 +208,7 @@
             "dit:totalAssetsLessCurrentLiabilities": 38065.0,
             "id": "dit:externalSources:companies_house.accounts:390700043233",
             "startTime": "2011-06-30T00:00:00",
-            "type": [
-              "Event",
-              "dit:Accounts"
-            ]
+            "type": ["Event", "dit:Accounts"]
           },
           "published": "2011-06-30T00:00:00",
           "summary": "Company accounts made up",
@@ -249,10 +225,7 @@
             "dit:emailAddress": "angelica.schulyer@ham.com",
             "id": "dit:DataHubAdviser:2222",
             "name": "Angelica Schuyler",
-            "type": [
-              "Person",
-              "dit:Adviser"
-            ]
+            "type": ["Person", "dit:Adviser"]
           },
           "generator": {
             "name": "dit:dataHub",
@@ -266,20 +239,14 @@
                 "dit:dunsNumber": "123456789",
                 "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce",
                 "name": "Best Ever Company",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "dit:emailAddress": "eliza@gov.uk",
                 "dit:jobTitle": "Director",
                 "id": "dit:DataHubContact:3333",
                 "name": "Eliza Schuyler",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "url": "https://www.my-website.com"
               }
             ],
@@ -292,9 +259,7 @@
             "id": "dit:DataHubOMISOrder:1111",
             "name": "HAM100",
             "startTime": "2013-03-25T00:00:00Z",
-            "type": [
-              "dit:OMISOrder"
-            ],
+            "type": ["dit:OMISOrder"],
             "url": "https://www.my-website.com"
           },
           "published": "2013-03-25T00:00:00Z",
@@ -311,10 +276,7 @@
             "dit:emailAddress": "CDMS\\CDMSInstall",
             "id": "dit:DataHubAdviser:419fe8a8-3e95-e211-a939-e4115bead28a",
             "name": "CDMSInstall Last name",
-            "type": [
-              "Person",
-              "dit:Adviser"
-            ]
+            "type": ["Person", "dit:Adviser"]
           },
           "generator": {
             "name": "dit:dataHub",
@@ -328,10 +290,7 @@
                 "dit:dunsNumber": "656147733",
                 "id": "dit:DataHubCompany:c79ba298-106e-4629-aa12-61ec6e2e47ce",
                 "name": "Best Ever Company",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               }
             ],
             "dit:investmentType": {
@@ -341,9 +300,7 @@
             "id": "dit:DataHubInvestmentProject:d9e25847-6199-e211-a939-e4115bead28a",
             "name": "Marshmellow UK Takeover",
             "startTime": "2011-11-23T00:00:00Z",
-            "type": [
-              "dit:InvestmentProject"
-            ],
+            "type": ["dit:InvestmentProject"],
             "url": "https://www.datahub.trade.gov.uk/investments/projects/d9e25847-6199-e211-a939-e4115bead28a"
           },
           "published": "2011-11-23T00:00:00Z",
@@ -364,10 +321,7 @@
                 "dit:dunsNumber": "225713780",
                 "id": "dit:DataHubCompany:01e3366a-aa2b-40c0-aaf9-9013f714a671",
                 "name": "Limited Company (UK) LTD",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "dit:DataHubCompanyReferral:role": "sender",
@@ -375,17 +329,11 @@
                 "dit:team": {
                   "id": "dit:DataHubTeam:63d616b6-9698-e211-a939-e4115bead28a",
                   "name": "Planet Consulate General",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ]
+                  "type": ["Group", "dit:Team"]
                 },
                 "id": "dit:DataHubAdviser:799602fe-12d1-4ad3-92a6-54a3bcd6ae1e",
                 "name": "John Doe",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ]
+                "type": ["Person", "dit:Adviser"]
               },
               {
                 "dit:DataHubCompanyReferral:role": "recipient",
@@ -393,27 +341,18 @@
                 "dit:team": {
                   "id": "dit:DataHubTeam:4bd616b6-9698-e211-a939-e4115bead28a",
                   "name": "Planet Embassy",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ]
+                  "type": ["Group", "dit:Team"]
                 },
                 "id": "dit:DataHubAdviser:5228483d-6d23-449c-b800-af70aa9056ac",
                 "name": "John Taylorme",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ]
+                "type": ["Person", "dit:Adviser"]
               },
               {
                 "dit:emailAddress": "john.doe@gov.uk",
                 "dit:jobTitle": null,
                 "id": "dit:DataHubContact:8da658fe-85fe-4737-b4fb-a0b25fcea3c2",
                 "name": "John Me",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "url": "https://www.datahub.trade.gov.uk/contacts/8da658fe-85fe-4737-b4fb-a0b25fcea3c2"
               }
             ],
@@ -421,9 +360,7 @@
             "dit:subject": "Support needs in the Planet",
             "id": "dit:DataHubCompanyReferral:fd6a151f-90db-41e3-841f-1ca0dd63b674",
             "startTime": "2020-05-21T17:43:47.957561Z",
-            "type": [
-              "dit:CompanyReferral"
-            ],
+            "type": ["dit:CompanyReferral"],
             "url": "https://www.datahub.trade.gov.uk/company-referrals/fd6a151f-90db-41e3-841f-1ca0dd63b674"
           },
           "published": "2020-05-21T17:43:47.957585Z",
@@ -438,20 +375,18 @@
         "_source": {
           "actor": {
             "dit:blackListedReason": null,
-            "dit:emailAddress": "contact@bob.com",
+            "dit:emailAddress": "superglue@gov.uk",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:1111",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
           "id": "dit:directoryFormsApi:Submission:1111:Create",
           "object": {
-            "attributedTo": [
-              {
-                "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
-                "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
-              }
-            ],
+            "attributedTo": {
+              "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
+              "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
+            },
             "dit:directoryFormsApi:Submission:Data": {
               "_custom_fields": [
                 {
@@ -516,7 +451,65 @@
           "published": "2022-12-02T16:48:19.344421+00:00",
           "type": "Create"
         }
-      }
+      },
+      {
+        "_index": "activities__feed_id_datahub-events__date_2022-06-23__timestamp_1655982198__batch_id_iquvq1ib__",
+        "_type": "_doc",
+        "_id": "dit:DataHubEvent:6666:Announce",
+        "_score": 0.036367644,
+        "_source": {
+          "generator": {
+            "name": "dit:dataHub",
+            "type": "Application"
+          },
+          "id": "dit:DataHubEvent:6666:Announce",
+          "object": {
+            "content": "",
+            "dit:address_1": "London",
+            "dit:address_2": "",
+            "dit:address_country": {
+              "name": "United Kingdom"
+            },
+            "dit:address_county": "",
+            "dit:address_postcode": "",
+            "dit:address_town": "London",
+            "dit:archivedDocumentsUrlPath": "",
+            "dit:disabledOn": null,
+            "dit:eventType": {
+              "name": "Account management"
+            },
+            "dit:hasRelatedTradeAgreements": false,
+            "dit:leadTeam": {
+              "name": "Digital Data Hub - Live Service"
+            },
+            "dit:locationType": {
+              "name": "HQ"
+            },
+            "dit:organiser": {
+              "name": "Joe Bloggs"
+            },
+            "dit:relatedProgrammes": [],
+            "dit:service": {
+              "name": "Best service"
+            },
+            "dit:teams": [
+              {
+                "id": "dit:DataHubTeam:5555",
+                "name": "Digital Data Hub - Live Service",
+                "type": ["Group", "dit:Team"]
+              }
+            ],
+            "endTime": "2022-06-14",
+            "id": "dit:DataHubEvent:6666",
+            "name": "Holiday to the Seaside",
+            "startTime": "2022-05-30",
+            "type": ["dit:dataHub:Event"],
+            "url": ""
+          },
+          "published": "2021-08-20T10:39:10.184330Z",
+          "type": "Announce"
+        }
+      }      
     ]
   }
 }

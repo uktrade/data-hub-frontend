@@ -1,7 +1,9 @@
 export const LABELS = {
   headquarterType: 'Type',
   companyName: 'Company name',
+  companyNumber: 'Company number',
   sector: 'Sector',
+  subSector: 'Sub-sector',
   country: 'Country',
   usState: 'US state',
   canadianProvince: 'Canadian province',
@@ -10,6 +12,8 @@ export const LABELS = {
   companyStatus: 'Status',
   currentlyExportingTo: 'Currently exporting to',
   futureCountriesOfInterest: 'Future countries of interest',
+  exportSegment: 'Export Segment',
+  exportSubsegment: 'Export Subsegment',
   lastInteractionAfter: 'Last interaction from',
   lastInteractionBefore: 'Last interaction to',
   leadItaOrGlobalAccountManager: 'Lead ITA or global account manager',
@@ -38,3 +42,5 @@ export const SORT_OPTIONS = [
     value: 'latest_interaction_date:desc',
   },
 ]
+
+export const GLOBAL_HQ_ID = '43281c5e-92a4-4794-867b-b4d5f801e6f3'

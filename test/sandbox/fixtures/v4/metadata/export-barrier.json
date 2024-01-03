@@ -1,0 +1,27 @@
+[
+  {
+      "id": "758c4132-a07b-4e4d-a43d-f2f630113023",
+      "name": "Finance",
+      "disabled_on": null
+  },
+  {
+      "id": "ef9b19d8-510b-4819-8304-5387e4c6df29",
+      "name": "Knowledge",
+      "disabled_on": null
+  },
+  {
+      "id": "d0c8fe10-dd29-4e39-a422-80dd111199e7",
+      "name": "Capacity",
+      "disabled_on": null
+  },
+  {
+      "id": "27ea2db8-4383-42dd-aa7d-62023950f97d",
+      "name": "Access",
+      "disabled_on": null
+  },
+  {
+      "id": "8ef83315-2b0f-4d5e-98da-a16f8b2217a6",
+      "name": "Other",
+      "disabled_on": null
+  }
+]

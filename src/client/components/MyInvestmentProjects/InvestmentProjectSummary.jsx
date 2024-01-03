@@ -1,11 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { PURPLE, ORANGE, BLUE, YELLOW, GREEN } from 'govuk-colours'
 import { connect } from 'react-redux'
+
+import {
+  PURPLE,
+  ORANGE,
+  BLUE,
+  YELLOW,
+  GREEN,
+} from '../../../client/utils/colours'
 
 import PieChart from '../PieChart'
 import { ID as CHECK_INVESTMENTS_ID } from '../PersonalisedDashboard/state'
-
 import { ID as INVESTMENT_PROJECTS_ID } from './state'
 
 const segmentColours = [PURPLE, ORANGE, BLUE, YELLOW, GREEN]

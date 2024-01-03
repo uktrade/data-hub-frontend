@@ -1,5 +1,3 @@
-const urls = require('../../../lib/urls')
-
 function renderContacts(req, res) {
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
 
@@ -7,18 +5,10 @@ function renderContacts(req, res) {
 
   res.render('companies/views/contacts', {
     props: {
-      company,
-      breadcrumbs: [
-        { link: urls.dashboard(), text: 'Home' },
-        {
-          link: urls.companies.index(),
-          text: 'Companies',
-        },
-        { link: urls.companies.detail(company.id), text: company.name },
-        { text: 'Contacts' },
-      ],
+      companyId: company.id,
       returnUrl,
       dnbRelatedCompaniesCount,
+      localNavItems: res.locals.localNavItems,
     },
   })
 }

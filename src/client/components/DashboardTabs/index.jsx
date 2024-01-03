@@ -1,27 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
 import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
-import Pipeline from '../../components/Pipeline'
+import ExportList from '../../modules/ExportPipeline/ExportList'
+import MyTasks from '../Dashboard/my-tasks/MyTasks'
 import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
+import ReferralList from '../ReferralList'
+import { state2props } from './state'
+import NoTasks from '../Dashboard/my-tasks/NoTasks'
 
 const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
+const canViewCompanyLists = (permissions) =>
+  permissions.includes('company_list.view_companylist')
+
+const canViewReferrals = (permissions) =>
+  permissions.includes('company_referral.view_companyreferral')
+
+const DashboardTabs = ({
+  id,
+  adviser,
+  hasInvestmentProjects,
+  onTabChange,
+  userPermissions,
+  hasTasks,
+}) => (
   <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
       label="Dashboard"
       routed={true}
-      keepQueryParams={true}
+      keepQueryParams={false}
+      onTabChange={onTabChange}
       tabs={{
-        [urls.dashboard()]: {
+        [urls.dashboard.myTasks()]: {
+          label: 'Tasks',
+          content: hasTasks ? <MyTasks adviser={adviser} /> : <NoTasks />,
+        },
+        ...(canViewCompanyLists(userPermissions) && {
+          [urls.dashboard.index()]: {
+            label: 'Company lists',
+            content: <CompanyLists />,
+          },
+        }),
+        [urls.dashboard.investmentProjects()]: {
           label: 'Investment projects',
           content: hasInvestmentProjects ? (
             <MyInvestmentProjects adviser={adviser} />
@@ -29,14 +58,16 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
             <NoInvestmentProjects />
           ),
         },
-        [urls.companyLists.index()]: {
-          label: 'Company lists',
-          content: <CompanyLists />,
+        [urls.exportPipeline.index()]: {
+          label: 'Export projects',
+          content: <ExportList />,
         },
-        [urls.pipeline.index.mountPoint]: {
-          label: 'Pipeline',
-          content: <Pipeline />,
-        },
+        ...(canViewReferrals(userPermissions) && {
+          [urls.companies.referrals.list()]: {
+            label: 'Referrals',
+            content: <ReferralList id="ReferralList" />,
+          },
+        }),
       }}
     />
   </StyledDiv>
@@ -45,6 +76,7 @@ const DashboardTabs = ({ id, adviser, hasInvestmentProjects }) => (
 DashboardTabs.propTypes = {
   id: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
+  onTabChange: PropTypes.func,
 }
 
-export default DashboardTabs
+export default connect(state2props)(DashboardTabs)

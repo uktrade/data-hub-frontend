@@ -13,7 +13,7 @@ describe('Aventri status event registration attendees', () => {
     {
       status: 'did-not-attend',
       expected: {
-        total: 12,
+        total: 22,
         totalLabel: 'Did not attend',
         pageCount: 2,
       },
@@ -21,7 +21,7 @@ describe('Aventri status event registration attendees', () => {
     {
       status: 'registered',
       expected: {
-        total: 24,
+        total: 44,
         totalLabel: 'Registered',
         pageCount: 3,
       },
@@ -29,7 +29,7 @@ describe('Aventri status event registration attendees', () => {
     {
       status: 'waiting-list',
       expected: {
-        total: 12,
+        total: 22,
         totalLabel: 'Waiting list',
         pageCount: 2,
       },
@@ -37,7 +37,7 @@ describe('Aventri status event registration attendees', () => {
     {
       status: 'attended',
       expected: {
-        total: 13,
+        total: 23,
         totalLabel: 'Attended',
         pageCount: 2,
       },
@@ -45,7 +45,7 @@ describe('Aventri status event registration attendees', () => {
     {
       status: 'cancelled',
       expected: {
-        total: 11,
+        total: 21,
         totalLabel: 'Cancelled',
         pageCount: 2,
       },
@@ -64,7 +64,7 @@ describe('Aventri status event registration attendees', () => {
 
         it('should display aventri event name in breadcrumb', () => {
           assertBreadcrumbs({
-            Home: urls.dashboard.route,
+            Home: urls.dashboard.index.route,
             Events: urls.events.index(),
             'EITA Test Filtering Event 2022': null,
           })
@@ -111,37 +111,37 @@ describe('Aventri status event registration attendees', () => {
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=first_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=first_name:asc&page=1&size=20&registrationStatus*`
             ).as('firstNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=first_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=first_name:desc&page=1&size=20&registrationStatus*`
             ).as('firstNameZ-A')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=last_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=last_name:asc&page=1&size=20&registrationStatus*`
             ).as('lastNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=last_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=last_name:desc&page=1&size=20&registrationStatus*`
             ).as('lastNameZ-A')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=company_name:asc&page=1&size=10&registrationStatus*`
+              )}?sortBy=company_name:asc&page=1&size=20&registrationStatus*`
             ).as('companyNameA-Z')
             cy.intercept(
               'GET',
               `${urls.events.aventri.registrationStatusData(
                 existingEventId
-              )}?sortBy=company_name:desc&page=1&size=10&registrationStatus*`
+              )}?sortBy=company_name:desc&page=1&size=20&registrationStatus*`
             ).as('companyNameZ-A')
 
             cy.visit(

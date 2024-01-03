@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 
 const OPTIONS = Array(1000)
   .fill()
-  .map(() => faker.name.findName())
+  .map(() => faker.person.fullName())
 
 export const fakerOptions = (query = '') =>
   new Promise((resolve, reject) =>

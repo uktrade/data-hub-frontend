@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { BLACK, YELLOW } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
+
+import { BLACK, YELLOW } from '../../../client/utils/colours'
 
 import {
   ButtonContent,
@@ -21,7 +22,9 @@ export const ToggleSection = styled(MultiInstanceToggleSection)`
     &:focus ${ButtonContent} {
       color: ${BLACK};
       background-color: ${YELLOW};
-      box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
+      box-shadow:
+        0 -2px ${YELLOW},
+        0 4px ${BLACK};
     }
   }
 

@@ -23,7 +23,7 @@
     "created_by": null,
     "event": null,
     "is_event": null,
-    "status": "complete",
+    "status": "draft",
     "kind": "interaction",
     "modified_by": null,
     "modifiedOn": "2022-10-07T13:24:41.613400Z",
@@ -42,7 +42,7 @@
           }
         }
       ],
-    "communicationChannel": {
+    "communication_channel": {
       "name": "Letter/Fax",
       "id": "74c226d7-5d95-e211-a939-e4115bead28a"
     },
@@ -51,7 +51,7 @@
     "largeCapitalOpportunity": null,
     "netCompanyReceipt": null,
     "service": {
-      "name": "Export Win",
+      "name": "Export win",
       "id": "350bba2b-3499-e211-a939-e4115bead28a"
     },
     "serviceAnswers": {},
@@ -63,9 +63,9 @@
     "policyAreas": [],
     "policyFeedbackNotes": "",
     "policyIssueTypes": [],
-    "wasPolicyFeedbackProvided": false,
-    "wereCountriesDiscussed": true,
-    "exportCountries": [
+    "was_policy_feedback_provided": false,
+    "were_countries_discussed": true,
+    "export_countries": [
       {
         "country": {
           "name": "Afghanistan",
@@ -325,5 +325,11 @@
     "archivedReason": "",
     "companyReferral": null,
     "hasRelatedTradeAgreements": false,
-    "relatedTradeAgreements": []
+    "relatedTradeAgreements": [],
+    "helped_remove_export_barrier": true,
+    "export_barrier_types": [{
+      "name": "Other",
+      "id": "8ef83315-2b0f-4d5e-98da-a16f8b2217a6"
+    }],
+    "export_barrier_notes": "My export barrier notes..."
   }

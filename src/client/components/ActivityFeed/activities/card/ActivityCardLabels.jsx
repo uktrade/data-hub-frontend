@@ -1,53 +1,57 @@
 import React from 'react'
-import Tag from '../../../Tag'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
 
-import { SPACING } from '@govuk-react/constants'
+import Tag from '../../../Tag'
 
-const TagRow = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: ${SPACING.SCALE_2};
-  margin-right: ${SPACING.SCALE_1};
-`
+const flexMixin = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: SPACING.SCALE_1,
+  [MEDIA_QUERIES.TABLET]: {
+    gap: SPACING.SCALE_2,
+  },
+}
 
-const TagColumn = styled('div')`
-  display: flex;
-`
+const Container = styled('div')({
+  ...flexMixin,
+  justifyContent: 'space-between',
+  paddingBottom: '10px',
+})
 
-const StyledThemeTag = styled(Tag)`
-  margin-right: ${SPACING.SCALE_1};
-`
+const ThemeServiceContainer = styled('div')({
+  ...flexMixin,
+})
 
 const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
-  <TagRow>
-    <TagColumn>
-      {theme && (
-        <StyledThemeTag
-          data-test="activity-theme-label"
-          colour={isExternalActivity ? 'darkGreen' : 'default'}
-        >
-          {theme}
-        </StyledThemeTag>
-      )}
-      {service && (
-        <Tag
-          data-test="activity-service-label"
-          colour={isExternalActivity ? 'turquoise' : 'blue'}
-        >
-          {service}
-        </Tag>
-      )}
-    </TagColumn>
-    {kind && (
-      <TagColumn>
-        <Tag data-test="activity-kind-label" colour="grey">
-          {kind}
-        </Tag>
-      </TagColumn>
+  <Container>
+    {(kind || theme || service) && (
+      <ThemeServiceContainer>
+        {kind && (
+          <Tag colour="grey" data-test="activity-kind-label">
+            {kind}
+          </Tag>
+        )}
+        {theme && (
+          <Tag
+            colour={isExternalActivity ? 'darkGreen' : 'default'}
+            data-test="activity-theme-label"
+          >
+            {theme}
+          </Tag>
+        )}
+        {service && (
+          <Tag
+            colour={isExternalActivity ? 'turquoise' : 'blue'}
+            data-test="activity-service-label"
+          >
+            {service}
+          </Tag>
+        )}
+      </ThemeServiceContainer>
     )}
-  </TagRow>
+  </Container>
 )
 
 ActivityCardLabels.propTypes = {
@@ -60,4 +64,5 @@ ActivityCardLabels.propTypes = {
 ActivityCardLabels.defaultProps = {
   isExternalActivity: false,
 }
+
 export default ActivityCardLabels

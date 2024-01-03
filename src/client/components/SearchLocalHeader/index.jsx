@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import VisuallyHidden from '@govuk-react/visually-hidden'
 import { SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import styled from 'styled-components'
 import Main from '@govuk-react/main'
-import { GREY_3_LEGACY, DARK_GREY } from '../../../client/utils/colors'
+
+import { BLUE, DARK_GREY, GREY_3_LEGACY } from '../../utils/colours'
 import urls from '../../../lib/urls'
 import SearchButton from '../SearchButton'
-import { BLUE } from 'govuk-colours'
 
 import FlashMessages from '../LocalHeader/FlashMessages'
 
 const StyledSearchContainer = styled('div')`
   position: relative;
   width: 100%;
+  margin-top: 10px;
 `
 
 const StyledSearchInput = styled(Input)`
@@ -23,12 +23,11 @@ const StyledSearchInput = styled(Input)`
   padding-left: ${SPACING.SCALE_3};
 `
 const StyledMain = styled(Main)`
-  padding-top: 0;
+  padding-top: 40px;
 `
 
-const StyledDiv = styled('div')({
+const StyledLabel = styled('label')({
   marginTop: 2 * 20.5,
-  marginBottom: 10,
   fontSize: 19,
   color: DARK_GREY,
 })
@@ -52,13 +51,10 @@ const SearchLocalHeader = ({ csrfToken, flashMessages }) => (
     >
       <FlashMessages flashMessages={flashMessages} />
       <StyledMain>
-        <StyledDiv>
+        <StyledLabel htmlFor="search-input">
           Search for company, contact, event, investment project or OMIS order
-        </StyledDiv>
+        </StyledLabel>
         <StyledSearchContainer role="search">
-          <label htmlFor="search-input">
-            <VisuallyHidden>Input your search term</VisuallyHidden>
-          </label>
           <StyledSearchInput
             name="term"
             type="text"

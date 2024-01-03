@@ -1,6 +1,6 @@
 # Conventions
 
-This document was created to help DIT front-end developers use the same approach when writing JavaScript code.
+This document was created to help DBT front-end developers use the same approach when writing JavaScript code.
 
 ## 1. Avoid using lodash functions if native alternative is available
 

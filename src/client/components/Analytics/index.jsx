@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import { ANALYTICS__PUSH } from '../../actions'
 
 /* This component wraps around a child component from which you want to push

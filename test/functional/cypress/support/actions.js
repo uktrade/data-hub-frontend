@@ -1,23 +1,30 @@
+import { fill } from './form-fillers'
+
 const adviserResult = require('../../../sandbox/fixtures/autocomplete-adviser-list.json')
 
 /**
- * Enter `input` into an advisers typeahead `element` and select the first result
+ * Enter `input` into a typeahead `element` and select the first result.
  *
- * This waits for the adviser api request to complete before selecting the
- * first option, but has a mocked intercepted adviser response to circumvent
+ * Defaults to Typeahead for adviser but can changed to any type by setting
+ * optional url and bodyResult parameters.
+ *
+ * This waits for the [adviser] api request to complete before selecting the
+ * first option, but has a mocked intercepted [adviser] response to circumvent
  * network latency.
  */
-export const selectFirstAdvisersTypeaheadOption = ({
+export const selectFirstMockedTypeaheadOption = ({
   element,
   input,
   mockAdviserResponse = true,
+  url = `/api-proxy/adviser/?*`,
+  bodyResult = adviserResult,
 }) =>
   cy.get(element).within(() => {
     cy.intercept(
-      `/api-proxy/adviser/?*${input.replace(' ', '+')}*`,
+      url + `${input.replace(' ', '+')}*`,
       mockAdviserResponse
         ? {
-            body: adviserResult,
+            body: bodyResult,
           }
         : undefined
     ).as('adviserResults')
@@ -65,6 +72,13 @@ export const removeChip = (dataValue) => {
  */
 export const inputDateValue = ({ element, value }) => {
   cy.get(element).type(value)
+}
+
+/**
+ * Adds a date to the any given date input field that also has a hint
+ */
+export const inputDateValueWithHint = ({ element, value }) => {
+  cy.get(element).find('fieldset > input').type(value)
 }
 
 /**
@@ -128,4 +142,67 @@ export const clickButton = (buttonText) => {
  */
 export const clickCancelLink = () => {
   cy.get('[data-test="cancel-button"]').click()
+}
+
+/**
+ * Click on a Continue button
+ */
+export const clickContinueButton = () => {
+  cy.get('[data-test="continue"]').click()
+}
+
+/**
+ * Click on a Submit button
+ */
+export const clickSubmitButton = () => {
+  cy.get('[data-test="submit"]').click()
+}
+
+/**
+ * Generic search request for a CollectionList
+ * @param {*} endpoint The search endpoint
+ * @param {*} fakeList The fake list of items to display
+ * @param {*} link The page to render
+ */
+export const collectionListRequest = (endpoint, fakeList, link) => {
+  const fullEndpoint = '/api-proxy/' + endpoint
+  cy.intercept('POST', fullEndpoint, {
+    body: {
+      count: fakeList.length,
+      results: fakeList,
+    },
+  }).as('apiRequest')
+  cy.visit(link)
+  cy.wait('@apiRequest')
+}
+
+export const omisCollectionListRequest = (
+  endpoint,
+  fakeList,
+  link,
+  subtotalCost = 23218.0
+) => {
+  const fullEndpoint = '/api-proxy/' + endpoint
+  cy.intercept('POST', fullEndpoint, {
+    body: {
+      count: fakeList.length,
+      results: fakeList,
+      summary: {
+        total_subtotal_cost: subtotalCost,
+      },
+    },
+  }).as('apiRequest')
+  cy.visit(link)
+  cy.wait('@apiRequest')
+}
+
+export const addNewContact = (contact) => {
+  fill('[data-test=group-field-first_name]', contact.first_name)
+  fill('[data-test=group-field-last_name]', contact.last_name)
+  fill('[data-test=job-title-input]', contact.job_title)
+  fill('[data-test=job-title-input]', contact.job_title)
+  fill('[data-test=email-input]', contact.email)
+  cy.get('[name="addressSameAsCompany"]').check('Yes')
+  cy.get('[name="primary"]').check('No')
+  cy.get('[data-test="submit-button"').click()
 }

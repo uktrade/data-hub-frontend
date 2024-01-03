@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { BLACK, GREY_3 } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import { kebabCase } from 'lodash'
 
+import { BLACK, GREY_3 } from '../../../client/utils/colours'
 import { FieldRadios, FieldInput, SectionHeader } from '..'
 
 import Form from '../Form'

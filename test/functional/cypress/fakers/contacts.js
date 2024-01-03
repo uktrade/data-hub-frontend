@@ -4,6 +4,7 @@ import jsf from 'json-schema-faker'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { userFaker } from './users'
+import { ditTeamFaker } from './dit-team'
 
 const UK = {
   NAME: 'United Kingdom',
@@ -19,33 +20,27 @@ const SECTOR_NAMES = [
   'Creative and Media',
 ]
 
-const DIT_TEAM_NAMES = [
-  'Digital Data Hub - Live Service',
-  'Aberdeen City Council',
-  'Healthcare UK',
-]
-
 const contactFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Contact),
-  id: faker.datatype.uuid(),
-  job_title: faker.name.jobTitle(),
+  id: faker.string.uuid(),
+  job_title: faker.person.jobTitle(),
   ...userFaker(),
   adviser: {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     ...userFaker(),
   },
   company: {
-    id: faker.datatype.uuid(),
-    name: faker.company.companyName(),
-    trading_names: [faker.company.companyName(), faker.company.companyName()],
+    id: faker.string.uuid(),
+    name: faker.company.name(),
+    trading_names: [faker.company.name(), faker.company.name()],
   },
   company_uk_region: {
     name: faker.helpers.arrayElement(UK.REGIONS),
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
   },
   company_sector: {
     name: faker.helpers.arrayElement(SECTOR_NAMES),
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     ancestors: [],
   },
   primary: faker.datatype.boolean(),
@@ -55,16 +50,16 @@ const contactFaker = (overrides = {}) => ({
   )}`,
   telephone_number: faker.helpers.arrayElement(UK.TELEPHONE_NUMBERS),
   telephone_alternative: faker.helpers.arrayElement(UK.TELEPHONE_NUMBERS),
-  email: faker.unique(faker.internet.email).toLocaleLowerCase(),
-  email_alternative: faker.unique(faker.internet.email),
+  email: faker.internet.email(),
+  email_alternative: faker.internet.email(),
   address_same_as_company: true,
-  address_1: faker.address.streetAddress(),
-  address_2: faker.address.streetName(),
-  address_town: faker.address.city(),
-  address_county: faker.address.county(),
+  address_1: faker.location.streetAddress(),
+  address_2: faker.location.street(),
+  address_town: faker.location.city(),
+  address_county: faker.location.county(),
   address_postcode: faker.helpers.arrayElement(UK.POST_CODES),
   address_country: {
-    id: faker.datatype.uuid(),
+    id: faker.string.uuid(),
     name: UK.NAME,
   },
   notes: faker.lorem.paragraph(),
@@ -75,10 +70,7 @@ const contactFaker = (overrides = {}) => ({
   created_on: faker.date.past(),
   created_by: {
     ...userFaker(),
-    dit_team: {
-      name: faker.helpers.arrayElement(DIT_TEAM_NAMES),
-      id: faker.datatype.uuid(),
-    },
+    dit_team: ditTeamFaker(),
   },
   modified_on: faker.date.past(),
   ...overrides,

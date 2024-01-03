@@ -15,6 +15,25 @@ function getDnbHierarchy(req, globalUltimateDunsNumber, limit, page = 1) {
   })
 }
 
+async function getRelatedCompaniesCount(req, companyId) {
+  return await authorisedRequest(req, {
+    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`,
+  })
+}
+
+async function getGlobalUltimate(req, globalUltimateDunsNumber) {
+  return await authorisedRequest(req, {
+    method: 'POST',
+    url: `${config.apiRoot}/v4/search/company`,
+    qs: {
+      limit: 1,
+    },
+    body: { duns_number: globalUltimateDunsNumber },
+  })
+}
+
 module.exports = {
   getDnbHierarchy,
+  getGlobalUltimate,
+  getRelatedCompaniesCount,
 }

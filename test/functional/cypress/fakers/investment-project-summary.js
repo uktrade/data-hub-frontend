@@ -13,7 +13,7 @@ const investmentProjectSummaryFaker = ({ minValue = 0, maxValue = 50 } = {}) =>
       {
         label: stage.name,
         id: stage.id,
-        value: faker.datatype.number({ min: minValue, max: maxValue }),
+        value: faker.number.int({ min: minValue, max: maxValue }),
       },
     ])
   )

@@ -36,10 +36,11 @@ If the Opensearch version has been updated in the API, the version used in [`doc
 
 The `react-dom` and `react` packages should, where possible, be kept at the same version number.
 
-### Bulk updgrade of dependency groups (Sentry and Storybook)
+### Bulk upgrade of dependency groups
 
 Some of the packages we use have several companion packages that should be kept at the same version in order for them to work correctly. In order to optimise the number of upgrades we perform and to prevent wastage of CircleCI resource on redundant PRs, Dependabot has been configured to only upgrade one dependency in the group with the expectation being that the others should be updated using a script.
 
-We currently have two groups of dependencies that need to be updated in this manner:
+We currently have three groups of dependencies that need to be updated in this manner:
+- Nivo (`dependabot:update-nivo`)
 - Sentry (`dependabot:update-sentry`)
 - Storybook (`dependabot:update-storybook`)

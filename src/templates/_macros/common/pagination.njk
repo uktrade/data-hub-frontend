@@ -34,7 +34,7 @@
           {% for page in pagination.pages -%}
             <li class="c-pagination__list-item">
               {% if page.url -%}
-                <a href="{{ page.url }}" class="c-pagination__label {{ 'is-current' if page.label == pagination.currentPage }}">
+                <a href="{{ page.url }}" class="c-pagination__label {{ 'is-current' if page.label == pagination.currentPage }}" aria-label="Page {{ page.label }}" {% if page.label == pagination.currentPage %} aria-current="page" {% else %} aria-current="false" {% endif %}>
                   {{- page.label -}}
                 </a>
               {% else -%}

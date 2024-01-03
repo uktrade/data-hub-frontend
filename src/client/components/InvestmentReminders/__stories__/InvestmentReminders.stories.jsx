@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import InvestmentReminders from 'InvestmentReminders'
 
@@ -38,11 +37,17 @@ const outstandingPropositions = {
   ],
 }
 
-storiesOf('InvestmentReminders', module)
-  .addParameters({ component: InvestmentReminders })
-  .add('Default', () => (
-    <InvestmentReminders
-      adviser={adviser}
-      outstandingPropositions={outstandingPropositions}
-    />
-  ))
+export default {
+  title: 'InvestmentReminders',
+
+  parameters: {
+    component: InvestmentReminders,
+  },
+}
+
+export const Default = () => (
+  <InvestmentReminders
+    adviser={adviser}
+    outstandingPropositions={outstandingPropositions}
+  />
+)

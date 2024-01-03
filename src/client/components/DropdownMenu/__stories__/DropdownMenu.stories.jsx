@@ -1,8 +1,9 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { GREY_3, BLACK } from 'govuk-colours'
 import styled from 'styled-components'
 import DropdownMenu, { DropdownButton } from 'DropdownMenu'
+
+import { GREY_3, BLACK } from '../../../../client/utils/colours'
 import noCloseLabelReadme from './noCloseLabel.md'
 
 const StyledDiv = styled.div`

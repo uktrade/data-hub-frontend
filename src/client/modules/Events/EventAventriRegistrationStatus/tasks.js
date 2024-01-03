@@ -1,6 +1,7 @@
 import { transformResponseToEventAventriDetails } from '../transformers'
 
 const { default: axios } = require('axios')
+
 const urls = require('../../../../lib/urls')
 
 export const getEventAventriRegistrationStatusAttendees = ({

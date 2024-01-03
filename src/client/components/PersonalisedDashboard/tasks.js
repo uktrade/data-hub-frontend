@@ -15,9 +15,18 @@ export const checkForInvestments = ({ adviser }) =>
 
 // This API call doesn't go through the conventional /api-proxy endpoint.
 // Instead, it goes through a another piece of middleware where the path
-// also starts with /api-proxy and requires the env var HELP_CENTRE_API_FEED
-// to be set. The middleware can be found in help-centre-api-proxy.js
+// also starts with /api-proxy. The middleware can be found in help-centre-api-proxy.js
 export const checkDataHubFeed = () =>
   apiProxyAxios.get('/api-proxy/help-centre/feed').then(({ data }) => ({
     dataHubFeed: data,
   }))
+
+export const checkForMyTasks = ({ adviser }) =>
+  apiProxyAxios
+    .post('/v4/search/task', {
+      limit: 10,
+      offset: 0,
+      created_by: adviser.id,
+      adviser: [adviser.id],
+    })
+    .then(({ data }) => !!data.count)

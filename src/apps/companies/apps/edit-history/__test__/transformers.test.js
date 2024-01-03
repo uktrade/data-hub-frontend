@@ -179,7 +179,7 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'DIT sector',
+            fieldName: 'DBT sector',
             oldValue: 'Biotechnology and Pharmaceuticals',
             newValue: 'Airports',
           },
@@ -189,7 +189,7 @@ describe('Edit history transformers', () => {
             newValue: 'Superior editing services',
           },
           {
-            fieldName: 'DIT region',
+            fieldName: 'DBT region',
             oldValue: 'South East',
             newValue: 'London',
           },
@@ -239,7 +239,7 @@ describe('Edit history transformers', () => {
           id: 234,
           user: null,
           timestamp: '2019-12-10T14:39:28.768359Z',
-          comment: 'Updated from D&B [celery:company_update]',
+          comment: 'Updated from D&B [rq:company_update]',
           changes: {
             address_1: ['1600 Amphitheatre Pkwyz', '1600 Amphitheatre Pkwy'],
             dnb_modified_on: [null, '2019-12-10T14:39:28.768000Z'],

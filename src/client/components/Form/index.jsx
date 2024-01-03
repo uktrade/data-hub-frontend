@@ -1,8 +1,7 @@
-import _ from 'lodash'
+import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { Route, useHistory, useLocation } from 'react-router-dom'
-import { camelCase, isEmpty } from 'lodash'
 import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -11,7 +10,7 @@ import multiInstance from '../../utils/multiinstance'
 import ErrorSummary from '../ErrorSummary'
 import Task from '../Task'
 import TaskLoadingBox from '../Task/LoadingBox'
-import Resource from '../Resource'
+import Resource from '../Resource/Resource'
 import Wrap from '../Wrap'
 import Analytics from '../Analytics'
 
@@ -22,7 +21,7 @@ import { FormContextProvider } from './hooks'
 import Effect from '../Effect'
 import HardRedirect from '../HardRedirect'
 
-import { BUTTON_COLOUR } from 'govuk-colours'
+import { BUTTON_COLOUR } from '../../../client/utils/colours'
 
 const validateForm = (state) =>
   Object.values(state.fields)
@@ -78,6 +77,7 @@ const _Form = ({
   result,
   resolved,
   errors = {},
+  errorStatus,
   values = {},
   touched = {},
   steps = [],
@@ -132,6 +132,7 @@ const _Form = ({
     values,
     touched,
     steps,
+    goToStep,
     getStepIndex: (stepName) => {
       const index = steps?.indexOf(stepName)
       return index !== -1 ? index : null
@@ -193,6 +194,12 @@ const _Form = ({
                         }),
                       })
                     }
+                  }}
+                  resetFields={(values = {}) => {
+                    props.resetFields({
+                      ...initialValues,
+                      ...values,
+                    })
                   }}
                   validateForm={(fieldNamesToValidate) => {
                     // This method is supposed to validate only the fields whose names
@@ -408,6 +415,11 @@ const dispatchToProps = (dispatch) => ({
     dispatch({
       type: 'FORM__FIELD_DEREGISTER',
       fieldName,
+    }),
+  resetFields: (values) =>
+    dispatch({
+      type: 'FORM__FIELDS__RESET',
+      values,
     }),
   setFieldValue: (fieldName, fieldValue) =>
     dispatch({

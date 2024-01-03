@@ -38,7 +38,7 @@
             },
             "dit:subject": "Invited to Technology Roundtable 99",
             "dit:service": {
-              "name": "Account Management"
+              "name": "Account management"
             },
             "attributedTo": [
               {
@@ -86,6 +86,72 @@
         ]
       },
       {
+        "_index": "activities__feed_id_maxemail_1",
+        "_type": "_doc",
+        "_id": "dit:maxemail:Campaign:123:Create",
+        "_score": null,
+        "_source": {
+          "actor": {
+            "dit:emailAddress": "some@email",
+            "id": "dit:maxemail:Sender:some@email",
+            "name": "DBT",
+            "type": [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application": "maxemail",
+          "id": "dit:maxemail:Campaign:123:Create",
+          "object": {
+            "content": "Lorem ipsum",
+            "dit:emailSubject": "Join us at Lorem ipsum",
+            "dit:maxemail:Campaign:id": 123,
+            "id": "dit:maxemail:Campaign:123",
+            "name": "Lorem ipsum invite",
+            "published": "2023-06-01T12:30:04",
+            "type": "dit:maxemail:Campaign"
+          },
+          "published": "2023-06-01T12:30:04",
+          "type": "Create"
+        },
+        "sort": [
+          1565426620904
+        ]
+      },      
+      {
+        "_index": "activities__feed_id_maxemail_1",
+        "_type": "_doc",
+        "_id": "dit:maxemail:Campaign:124:Create",
+        "_score": null,
+        "_source": {
+          "actor": {
+            "dit:emailAddress": "some@email",
+            "id": "dit:maxemail:Sender:some@email",
+            "name": "DBT",
+            "type": [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application": "maxemail",
+          "id": "dit:maxemail:Campaign:124:Create",
+          "object": {
+            "content": "Lorem ipsum 2",
+            "dit:emailSubject": "Join us at Lorem ipsum 2",
+            "dit:maxemail:Campaign:id": 124,
+            "id": "dit:maxemail:Campaign:124",
+            "name": "Lorem ipsum invite",
+            "published": "2023-06-15T12:30:04",
+            "type": "dit:maxemail:Campaign"
+          },
+          "published": "2023-06-15T12:30:04",
+          "type": "Create"
+        },
+        "sort": [
+          1565426620904
+        ]
+      },   
+      {
         "_index": "activity-feed",
         "_type": "doc",
         "_id": "98",
@@ -112,7 +178,7 @@
             },
             "dit:subject": "Invited to Technology Roundtable 98",
             "dit:service": {
-              "name": "Account Management"
+              "name": "Account management"
             },
             "attributedTo": [
               {
@@ -186,7 +252,7 @@
             },
             "dit:subject": "Invited to Technology Roundtable 97",
             "dit:service": {
-              "name": "Account Management"
+              "name": "Account management"
             },
             "attributedTo": [
               {
@@ -260,7 +326,7 @@
             },
             "dit:subject": "Invited to Technology Roundtable 96",
             "dit:service": {
-              "name": "Account Management"
+              "name": "Account management"
             },
             "attributedTo": [
               {
@@ -334,7 +400,7 @@
             },
             "dit:subject": "Invited to Technology Roundtable 95",
             "dit:service": {
-              "name": "Account Management"
+              "name": "Account management"
             },
             "attributedTo": [
               {

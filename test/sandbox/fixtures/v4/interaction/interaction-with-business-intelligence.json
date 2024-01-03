@@ -48,7 +48,7 @@
     "large_capital_opportunity": null,
     "net_company_receipt": "2.00",
     "service": {
-      "name": "A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)",
+      "name": "DBT export service or funding : UK Tradeshow Programme (UKTP) – exhibitor",
       "id": "380bba2b-3499-e211-a939-e4115bead28a"
     },
     "service_answers": {},
@@ -56,7 +56,7 @@
       "name": "Completed",
       "id": "47329c18-6095-e211-a939-e4115bead28a"
     },
-    "subject": "Meeting about the Tradeshow Access Programme",
+    "subject": "Meeting about the UK Tradeshow Programme",
     "theme": "export",
     "notes": "",
     "archived_documents_url_path": "",
@@ -110,7 +110,7 @@
         "id": "6f5db2e8-a128-4d66-ae0a-5e314758933b"
       },
       {
-        "name": "COP26 Energy Transitions, including RE100 and EP100",
+        "name": "COP26 Energy transitions, including RE100 and EP100",
         "id": "3e0c6b60-15bb-48e2-b4a8-304a21f8ed3f"
       },
       {
@@ -122,7 +122,7 @@
         "id": "d6213100-8b86-4826-8128-ef15797d14b5"
       }
     ],
-    "policy_feedback_notes": "Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT.",
+    "policy_feedback_notes": "Any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DBT.",
     "policy_issue_types": [
       {
         "name": "Domestic",
@@ -179,5 +179,8 @@
         "name": "UK-Singapore Digital Economy Agreement",
         "id": "21b4f851-6adc-49b1-815e-db87cba71953"
       }
-    ]
+    ],
+    "helped_remove_export_barrier": false,
+    "export_barrier_types": [],
+    "export_barrier_notes": ""
   }

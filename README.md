@@ -32,6 +32,7 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Making changes](#making-changes)
 - [Formatting markdown files](#formatting-markdown-files)
 - [Managing Dependabot PRs](./docs/Dependabot.md)
+- [Adding a new page](./docs/Adding%20a%20new%20page.md)
 
 ## Getting started
 
@@ -43,7 +44,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
 **Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
 
-**Note for Civil Servant developers** When running the project natively for the first time on your DIT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
+**Note for Civil Servant developers** When running the project natively for the first time on your DBT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
 
 1.  Navigate to the project root.
 
@@ -51,7 +52,7 @@ Please view the dedicated [Docker readme](./docs/Docker.md).
 
     ```bash
     brew install nvm
-    nvm use 18.7.0
+    nvm use 18.15.0
     ```
 
 3.  Install node packages:
@@ -75,7 +76,8 @@ Use this method if you want to make backend changes or run against an API branch
 5.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker set-up outlined [here](./docs/Docker.md). To run the frontend natively, the following variables will need to be changed to:
 
     ```
-    API_ROOT=http://localhost:8000
+    LOCAL_DEV=True
+    API_ROOT=http://127.0.0.1:8000
     REDIS_HOST=localhost
     REDIS_URL=redis://localhost:6379
     ```

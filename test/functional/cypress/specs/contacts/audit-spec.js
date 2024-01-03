@@ -1,5 +1,8 @@
 const urls = require('../../../../../src/lib/urls')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const {
+  assertPaginationSummary,
+} = require('../../support/collection-list-assertions')
 
 describe('Contact audit history', () => {
   context('when viewing the audit history for a contact', () => {
@@ -38,9 +41,7 @@ describe('Contact audit history', () => {
     })
 
     it('should render the page counter', () => {
-      cy.get('[data-test=pagination-summary]')
-        .should('exist')
-        .should('have.text', 'Page 1 of 5')
+      assertPaginationSummary('Page 1 of 5')
     })
 
     it('should render the pagination component', () => {

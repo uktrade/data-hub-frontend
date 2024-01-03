@@ -1,10 +1,11 @@
 const { faker } = require('@faker-js/faker')
+
 const urls = require('../urls')
 
 describe('urls', () => {
   describe('external', () => {
     it('should have the correct urls', () => {
-      const companyNumber = faker.random.alphaNumeric(8)
+      const companyNumber = faker.string.alphanumeric(8)
       expect(urls.external.greatProfile(companyNumber)).to.equal(
         `https://www.great.gov.uk/international/trade/suppliers/${companyNumber}`
       )
@@ -14,7 +15,7 @@ describe('urls', () => {
       )
 
       expect(urls.external.findExporters()).to.equal(
-        'https://data.trade.gov.uk/datasets/a70a3967-2352-4230-b556-61bf875dc28c'
+        'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b'
       )
 
       expect(urls.external.exportWins()).to.equal(
@@ -25,9 +26,9 @@ describe('urls', () => {
 
   describe('dashboard', () => {
     it('should return the correct value', () => {
-      expect(urls.dashboard()).to.equal('/')
-      expect(urls.dashboard.mountPoint).to.equal('/')
-      expect(urls.dashboard.route).to.equal('/')
+      expect(urls.dashboard.index()).to.equal('/')
+      expect(urls.dashboard.index.mountPoint).to.equal('/')
+      expect(urls.dashboard.index.route).to.equal('/')
     })
   })
 
@@ -36,8 +37,8 @@ describe('urls', () => {
     let countryId
 
     beforeEach(() => {
-      companyId = faker.datatype.uuid()
-      countryId = faker.datatype.uuid()
+      companyId = faker.string.uuid()
+      countryId = faker.string.uuid()
     })
     it('should return the correct values', () => {
       expect(urls.companies.index.mountPoint).to.equal('/companies')
@@ -88,21 +89,21 @@ describe('urls', () => {
         '/:companyId/activity/data'
       )
 
-      expect(urls.companies.advisers.index(companyId)).to.equal(
-        `/companies/${companyId}/advisers`
+      expect(urls.companies.accountManagement.index(companyId)).to.equal(
+        `/companies/${companyId}/account-management`
       )
-      expect(urls.companies.advisers.index.route).to.equal(
-        '/:companyId/advisers'
+      expect(urls.companies.accountManagement.index.route).to.equal(
+        '/:companyId/account-management'
       )
 
-      expect(urls.companies.advisers.assign(companyId)).to.equal(
-        `/companies/${companyId}/advisers/assign`
-      )
-      expect(urls.companies.advisers.remove(companyId)).to.equal(
-        `/companies/${companyId}/advisers/remove`
-      )
-      expect(urls.companies.advisers.remove.route).to.equal(
-        '/:companyId/advisers/remove'
+      expect(
+        urls.companies.accountManagement.advisers.assign(companyId)
+      ).to.equal(`/companies/${companyId}/account-management/advisers/assign`)
+      expect(
+        urls.companies.accountManagement.advisers.remove(companyId)
+      ).to.equal(`/companies/${companyId}/account-management/advisers/remove`)
+      expect(urls.companies.accountManagement.advisers.remove.route).to.equal(
+        '/:companyId/account-management/advisers/remove'
       )
 
       expect(urls.companies.dnbHierarchy.index.route).to.equal(
@@ -163,7 +164,7 @@ describe('urls', () => {
         urls.companies.investments.largeCapitalProfile(companyId)
       ).to.equal(`/companies/${companyId}/investments/large-capital-profile`)
 
-      const globalHqId = faker.datatype.uuid()
+      const globalHqId = faker.string.uuid()
       expect(
         urls.companies.hierarchies.ghq.add(companyId, globalHqId)
       ).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
@@ -183,7 +184,7 @@ describe('urls', () => {
         '/:companyId/hierarchies/ghq/remove'
       )
 
-      const interactionId = faker.datatype.uuid()
+      const interactionId = faker.string.uuid()
       expect(urls.companies.interactions.create.route).to.equal(
         '/:companyId/interactions/create'
       )
@@ -199,7 +200,7 @@ describe('urls', () => {
       )
       expect(urls.companies.orders.route).to.equal('/:companyId/orders')
 
-      const referralId = faker.datatype.uuid()
+      const referralId = faker.string.uuid()
       expect(urls.companies.referrals.send(companyId)).to.equal(
         `/companies/${companyId}/referrals/send`
       )
@@ -229,10 +230,6 @@ describe('urls', () => {
       expect(urls.companies.lists.addRemove(companyId)).to.equal(
         `/companies/${companyId}/lists/add-remove`
       )
-
-      expect(urls.companies.pipelineAdd(companyId)).to.equal(
-        `/companies/${companyId}/my-pipeline`
-      )
     })
   })
 
@@ -246,7 +243,7 @@ describe('urls', () => {
         '/contacts?archived[0]=false&sortby=modified_on:desc&page=1'
       )
 
-      const contactId = faker.datatype.uuid()
+      const contactId = faker.string.uuid()
       expect(urls.contacts.interactions.create(contactId)).to.equal(
         `/contacts/${contactId}/interactions/create`
       )
@@ -290,9 +287,6 @@ describe('urls', () => {
       expect(urls.investments.projects.index()).to.equal(
         '/investments/projects'
       )
-      expect(urls.investments.projects.project(123)).to.equal(
-        '/investments/projects/123'
-      )
       expect(
         urls.investments.projects.interactions.createType(
           '123',
@@ -305,28 +299,11 @@ describe('urls', () => {
       expect(urls.investments.projects.status(123)).to.equal(
         '/investments/projects/123/status'
       )
-      expect(urls.investments.projects.documents(123)).to.equal(
-        '/investments/projects/123/documents'
-      )
       expect(urls.investments.profiles.index()).to.equal(
         '/investments/profiles'
       )
       expect(urls.investments.profiles.data()).to.equal(
         '/investments/profiles/data'
-      )
-    })
-  })
-
-  describe('pipeline', () => {
-    const pipelineItemId = faker.datatype.uuid()
-
-    it('should return the correct value', () => {
-      expect(urls.pipeline.index()).to.equal('/my-pipeline')
-      expect(urls.pipeline.index.route).to.equal('/')
-      expect(urls.pipeline.active()).to.equal('/my-pipeline/active')
-      expect(urls.pipeline.won()).to.equal('/my-pipeline/won')
-      expect(urls.pipeline.edit(pipelineItemId)).to.equal(
-        `/my-pipeline/${pipelineItemId}/edit`
       )
     })
   })

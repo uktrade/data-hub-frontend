@@ -17,18 +17,18 @@
         {
           "_index": "activities__feed_id_forms-api__date_2022-12-05__timestamp_1670241189__batch_id_qhcuk8sa__",
           "_type": "_doc",
-          "_id": "dit:directoryFormsApi:Submission:146133:Create",
+          "_id": "dit:directoryFormsApi:Submission:2222:Create",
           "_score": 4.4319797,
           "_source": {
             "actor": {
               "dit:blackListedReason": null,
               "dit:emailAddress": "contact@bob.com",
               "dit:isBlacklisted": false,
-              "dit:isWhitelisted": false,
-              "id": "dit:directoryFormsApi:Sender:1111",
+              "dit:isAllowListed": false,
+              "id": "dit:directoryFormsApi:Sender:2222",
               "type": "dit:directoryFormsApi:Submission:Sender"
             },
-            "id": "dit:directoryFormsApi:Submission:1111:Create",
+            "id": "dit:directoryFormsApi:Submission:2222:Create",
             "object": {
               "attributedTo": [
                 {
@@ -87,7 +87,7 @@
                 },
                 "service_name": "export_support_service",
                 "spam_control": {
-                  "contents": "I have a very important question that I would like help with, regarding Exporting, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                  "contents": "I have a very important question that I would like help with, regarding Exporting."
                 },
                 "subdomain": "dit",
                 "subject": "I have an enquiry"

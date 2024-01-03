@@ -28,7 +28,6 @@ export default class ActivityFeed extends React.Component {
     sendQueryParams: PropTypes.func,
     children: PropTypes.node,
     activities: PropTypes.arrayOf(PropTypes.object),
-    activityTypeFilters: PropTypes.object,
     hasMore: PropTypes.bool,
     isLoading: PropTypes.bool,
     actions: PropTypes.node,
@@ -36,6 +35,7 @@ export default class ActivityFeed extends React.Component {
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     companyIsArchived: PropTypes.bool,
+    isOverview: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -43,7 +43,6 @@ export default class ActivityFeed extends React.Component {
     sendQueryParams: () => {},
     children: null,
     activities: [],
-    activityTypeFilters: {},
     hasMore: false,
     isLoading: false,
     actions: null,
@@ -53,58 +52,23 @@ export default class ActivityFeed extends React.Component {
   }
 
   constructor(props) {
-    const {
-      dataHubAndExternalActivity,
-      myActivity,
-      externalActivity,
-      dataHubActivity,
-    } = props.activityTypeFilters
-
     super(props)
 
-    this.state = {
-      activityTypeFilter: dataHubActivity ? dataHubActivity.value : '',
-      showDnbHierarchy: false,
-      activityTypeFilters: [
-        dataHubAndExternalActivity,
-        myActivity,
-        externalActivity,
-        dataHubActivity,
-      ],
-    }
+    this.state = {}
 
     this.onActivityTypeFilterChange = this.onActivityTypeFilterChange.bind(this)
-    this.showActivitiesFromAllCompanies =
-      this.showActivitiesFromAllCompanies.bind(this)
   }
 
   onActivityTypeFilterChange(e) {
     const activityTypeFilter = e.target.value
     const { sendQueryParams } = this.props
-    const { showDnbHierarchy } = this.state
 
     sendQueryParams({
       activityTypeFilter,
-      showDnbHierarchy,
     })
 
     this.setState({
       activityTypeFilter,
-    })
-  }
-
-  showActivitiesFromAllCompanies(e) {
-    const showDnbHierarchy = e.target.checked
-    const { sendQueryParams } = this.props
-    const { activityTypeFilter } = this.state
-
-    sendQueryParams({
-      activityTypeFilter,
-      showDnbHierarchy,
-    })
-
-    this.setState({
-      showDnbHierarchy,
     })
   }
 
@@ -117,37 +81,30 @@ export default class ActivityFeed extends React.Component {
       actions,
       children,
       totalActivities,
-      isGlobalUltimate,
-      dnbHierarchyCount,
       companyIsArchived,
+      isOverview,
+      feedType,
     } = this.props
 
-    const { activityTypeFilters, activityTypeFilter, showDnbHierarchy } =
-      this.state
+    const { activityTypeFilter } = this.state
     return (
       <ActivityFeedContainer data-test="activity-feed">
-        <ActivityFeedHeader
-          totalActivities={totalActivities}
-          actions={actions}
-        />
-        {!companyIsArchived && (
-          <ActivityFeedFilters
-            activityTypeFilters={activityTypeFilters}
-            activityTypeFilter={activityTypeFilter}
-            onActivityTypeFilterChange={this.onActivityTypeFilterChange}
-            showActivitiesFromAllCompanies={this.showActivitiesFromAllCompanies}
-            isGlobalUltimate={isGlobalUltimate}
-            dnbHierarchyCount={dnbHierarchyCount}
+        {!isOverview && (
+          <ActivityFeedHeader
+            totalActivities={totalActivities}
+            actions={actions}
           />
         )}
-
+        {!companyIsArchived && !isOverview && (
+          <ActivityFeedFilters
+            activityTypeFilter={activityTypeFilter}
+            onActivityTypeFilterChange={this.onActivityTypeFilterChange}
+          />
+        )}
         <ActivityFeedCardList>
           {activities.map((activity) => (
             <li key={activity.id}>
-              <Activity
-                activity={activity}
-                showDnbHierarchy={showDnbHierarchy}
-              />
+              <Activity activity={activity} isOverview={isOverview} />
             </li>
           ))}
         </ActivityFeedCardList>
@@ -156,6 +113,8 @@ export default class ActivityFeed extends React.Component {
           <ActivityFeedPagination
             isLoading={isLoading}
             onLoadMore={onLoadMore}
+            feedType={feedType}
+            isOverview={isOverview}
           />
         )}
 

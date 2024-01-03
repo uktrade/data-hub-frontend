@@ -1,5 +1,14 @@
+const urls = require('../../../lib/urls')
+const { redirectWithQueryString } = require('../../middleware')
+
 async function renderDetails(req, res) {
-  return res.redirect(301, 'interactions')
+  const { company } = res.locals
+
+  return redirectWithQueryString(
+    req,
+    res,
+    urls.companies.interactions.index(company.id)
+  )
 }
 
 module.exports = {

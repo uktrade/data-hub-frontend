@@ -1,0 +1,225 @@
+{
+"count": 6,
+"next": null,
+"previous": null,
+"results": [
+    {
+      "id": "7cbe3d94-4d02-49fb-8ccb-9f70be849206",
+      "tags": [
+        {
+          "name": "Check A - FDI eligibility: New permanent jobs",
+          "id": "e8bc969c-d675-4282-acae-1a0535626896"
+        },
+        {
+          "name": "Check A - FDI eligibility: Safeguarded jobs",
+          "id": "c1e208ea-c9a6-4fd2-ac5d-a09dd86d7758"
+        },
+        {
+          "name": "Check B - Non-FDI: Create or maintain jobs",
+          "id": "9bc91433-27ca-453e-aed1-4cbeaf477c76"
+        },
+        {
+          "name": "Check B - Non-FDI: New intellectual property",
+          "id": "74d2739c-4806-4a5c-ba2e-56081c2edf43"
+        },
+        {
+          "name": "Check C - FDI validation: Government assistance",
+          "id": "cd0e4fb0-79df-4f2a-ae2b-7b849d315551"
+        },
+        {
+          "name": "Check C - FDI validation: Press release",
+          "id": "85847439-008f-4a11-9c74-8f27ee4a0a65"
+        },
+        {
+          "name": "Check C - FDI validation: Visit report",
+          "id": "1bc1286c-372e-409d-9749-14e817004a77"
+        },
+        {
+          "name": "Check D - Value categorisation: Export-oriented FDI",
+          "id": "4bc0f296-df29-4935-a202-eca3786c3a6f"
+        },
+        {
+          "name": "Check D - Value categorisation: Investor quality",
+          "id": "8310073f-3cd5-4b18-ace9-03e164944cb4"
+        },
+        {
+          "name": "Check D - Value categorisation: R&D",
+          "id": "337f050d-49de-474f-b5e3-5980b606e5f1"
+        },
+        {
+          "name": "Check D - Value categorisation: Total investment value",
+          "id": "cb0d96d6-4192-4784-9358-7372883e1602"
+        }
+      ],
+      "comment": "A comment on this piece of valuable evidence",
+      "avClean": true,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-25T15:47:59.374756Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-25T15:47:59.374782Z",
+      "uploadedOn": "2023-08-25T15:47:59.926324Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/7cbe3d94-4d02-49fb-8ccb-9f70be849206/download",
+      "status": "virus_scanned"
+    },
+    {
+      "id": "3e480927-a1e9-4127-91af-7a155fef5d74",
+      "tags": [
+        {
+          "name": "Check C - FDI validation: Government assistance",
+          "id": "cd0e4fb0-79df-4f2a-ae2b-7b849d315551"
+        },
+        {
+          "name": "Check C - FDI validation: Press release",
+          "id": "85847439-008f-4a11-9c74-8f27ee4a0a65"
+        }
+      ],
+      "comment": "#1",
+      "avClean": false,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-29T09:41:44.479315Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-29T09:41:44.479335Z",
+      "uploadedOn": "2023-08-29T09:41:44Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/3e480927-a1e9-4127-91af-7a155fef5d74/download",
+      "status": "virus_scanned"
+    },
+    {
+      "id": "1996e594-a662-47b1-946d-f464b21d132d",
+      "tags": [
+        {
+          "name": "Check D - Value categorisation: Total investment value",
+          "id": "cb0d96d6-4192-4784-9358-7372883e1602"
+        }
+      ],
+      "comment": "#2",
+      "avClean": true,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-29T09:42:11.964999Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-29T09:42:11.965019Z",
+      "uploadedOn": "2023-08-29T09:42:12Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/1996e594-a662-47b1-946d-f464b21d132d/download",
+      "status": "not_virus_scanned"
+    },
+    {
+      "id": "6d485c62-8271-4e9a-a697-3ab142b3d5c7",
+      "tags": [
+        {
+          "name": "Check D - Commitment to Invest: Public commitment to invest",
+          "id": "d3652023-785c-4925-93f9-dc4caa0fe86e"
+        }
+      ],
+      "comment": "#3",
+      "avClean": true,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-29T09:42:33.369915Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-29T09:42:33.369938Z",
+      "uploadedOn": "2023-08-29T09:42:33Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/6d485c62-8271-4e9a-a697-3ab142b3d5c7/download",
+      "status": "virus_scanning_scheduled"
+    },
+    {
+      "id": "6b491eb3-1dde-417e-a020-98078f7ffefe",
+      "tags": [
+        {
+          "name": "Check D - Commitment to Invest: Expected to land",
+          "id": "e77fae4a-f337-4401-b735-cadc88bfff29"
+        }
+      ],
+      "comment": "#4",
+      "avClean": true,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-29T09:42:58.365681Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-29T09:42:58.365707Z",
+      "uploadedOn": "2023-08-29T09:42:58Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/6b491eb3-1dde-417e-a020-98078f7ffefe/download",
+      "status": "virus_scanning_in_progress"
+    },
+    {
+      "id": "b7fd6f76-a1cf-4bac-a06b-a7de8c8fd3bb",
+      "tags": [
+        {
+          "name": "Check C - FDI validation: Press release",
+          "id": "85847439-008f-4a11-9c74-8f27ee4a0a65"
+        }
+      ],
+      "comment": "#5",
+      "avClean": true,
+      "createdBy": {
+        "name": "Dean Cox",
+        "firstName": "Dean",
+        "lastName": "Cox",
+        "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+      },
+      "createdOn": "2023-08-29T09:43:19.755596Z",
+      "modifiedBy": null,
+      "modifiedOn": "2023-08-29T09:43:19.755630Z",
+      "uploadedOn": "2023-08-29T09:43:20Z",
+      "investmentProject": {
+        "name": "New zoo (LEP)",
+        "projectCode": "DHP-00000011",
+        "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977"
+      },
+      "originalFilename": "example.txt",
+      "url": "/v3/investment/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/evidence-document/b7fd6f76-a1cf-4bac-a06b-a7de8c8fd3bb/download",
+      "status": "virus_scanning_failed"
+    }
+  ]
+}

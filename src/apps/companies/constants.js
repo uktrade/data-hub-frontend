@@ -27,22 +27,36 @@ const GLOBAL_NAV_ITEM = {
 
 const LOCAL_NAV = [
   {
-    path: 'activity',
-    label: 'Activity',
-    permissions: ['interaction.view_all_interaction'],
-  },
-  {
-    path: 'contacts',
-    label: 'Company contacts',
+    path: 'overview',
+    label: 'Overview',
     permissions: ['company.view_contact'],
   },
   {
-    path: 'advisers',
-    label: 'Lead adviser',
+    path: 'activity',
+    label: 'Activity',
+    search: '?activityType%5B0%5D=dataHubActivity&page=1',
+    permissions: ['interaction.view_all_interaction'],
+  },
+  {
+    path: 'business-details',
+    label: 'Business details',
+  },
+  {
+    path: 'contacts',
+    label: 'Contacts',
+    search: '?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1',
+    permissions: ['company.view_contact'],
+    ariaDescription: 'Company contacts',
+  },
+  {
+    path: 'account-management',
+    label: 'Account management',
+    ariaDescription: 'Account management',
   },
   {
     path: 'investments',
     label: 'Investment',
+    search: '/projects?page=1&sortby=created_on%3Adesc',
     permissions: [
       'investment.view_all_investmentproject',
       'investment.view_associated_investmentproject',

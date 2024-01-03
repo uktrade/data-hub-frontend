@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import SummaryList from 'SummaryList'
 
@@ -17,6 +16,12 @@ const rows = [
   },
 ]
 
-storiesOf('SummaryList', module)
-  .addParameters({ component: SummaryList })
-  .add('Default', () => <SummaryList rows={rows} />)
+export default {
+  title: 'SummaryList',
+
+  parameters: {
+    component: SummaryList,
+  },
+}
+
+export const Default = () => <SummaryList rows={rows} />

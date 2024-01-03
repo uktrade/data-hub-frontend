@@ -14,14 +14,14 @@ const addOrReplaceTestCase = ({
   it(`Should render "${replace ? 'replace' : 'add'} a lead adviser" ${
     !team && replace ? 'with no team' : ''
   }`, () => {
-    cy.visit(urls.companies.advisers.assign(companyId))
+    cy.visit(urls.companies.accountManagement.advisers.assign(companyId))
 
     const headline = replace
       ? 'Replace the Lead ITA'
       : 'Add someone as the Lead ITA'
 
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [companyName]: urls.companies.detail(companyId),
       [replace ? 'Replace the Lead ITA' : 'Add Lead ITA']: undefined,
@@ -46,6 +46,7 @@ const addOrReplaceTestCase = ({
       .eq(0)
       .find('label')
       .contains('Select an ITA')
+      .parent()
       .next()
       .contains('Who should be the primary point of contact?')
       .next()
@@ -85,7 +86,11 @@ const addOrReplaceTestCase = ({
       .next()
       .as('cancel')
       .contains('Cancel')
-      .should('have.attr', 'href', urls.companies.advisers.index(companyId))
+      .should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.index(companyId)
+      )
   })
 
 describe('Manage Lead ITA', () => {
@@ -112,7 +117,7 @@ describe('Manage Lead ITA', () => {
 
   context('When submitted with no adviser is selected', () => {
     it('Should display errors', () => {
-      cy.visit(urls.companies.advisers.assign('managed'))
+      cy.visit(urls.companies.accountManagement.advisers.assign('managed'))
       cy.get('form button').click()
       cy.get('form div').contains('There is a problemSelect an ITA')
       cy.get('#field-dit_participants').contains('Select an ITA')
@@ -124,10 +129,10 @@ describe('Manage Lead ITA', () => {
     const COMPANY_NAME = 'Managed Company'
     const COMPANY_ID = 'managed'
 
-    cy.visit(urls.companies.advisers.remove('managed'))
+    cy.visit(urls.companies.accountManagement.advisers.remove('managed'))
 
     assertBreadcrumbs({
-      Home: urls.dashboard(),
+      Home: urls.dashboard.index(),
       Companies: urls.companies.index(),
       [COMPANY_NAME]: urls.companies.detail(COMPANY_ID),
       [HEADLINE]: undefined,
@@ -168,6 +173,10 @@ describe('Manage Lead ITA', () => {
       .as('submit')
       .next()
       .contains('Cancel')
-      .should('have.attr', 'href', urls.companies.advisers.index(COMPANY_ID))
+      .should(
+        'have.attr',
+        'href',
+        urls.companies.accountManagement.index(COMPANY_ID)
+      )
   })
 })

@@ -19,6 +19,7 @@ const getCompanies = ({
   headquarter_type,
   name,
   sector_descends,
+  sub_sector_descends,
   country,
   uk_postcode,
   uk_region,
@@ -30,16 +31,29 @@ const getCompanies = ({
   latest_interaction_date_before,
   latest_interaction_date_after,
   one_list_group_global_account_manager,
+  export_segment,
+  export_sub_segment,
   sortby = 'modified_on:desc',
 }) => {
   const administrativeAreas = [...us_state, ...canadian_province]
+  const getSectors = (sector_descends, sub_sector_descends) => {
+    if (sector_descends && sub_sector_descends) {
+      return [...sector_descends, ...sub_sector_descends]
+    }
+    if (sub_sector_descends) {
+      return sub_sector_descends
+    }
+    if (sector_descends) {
+      return sector_descends
+    }
+  }
   return apiProxyAxios
     .post('/v4/search/company', {
       limit,
       offset: getPageOffset({ limit, page }),
       headquarter_type,
       name,
-      sector_descends,
+      sector_descends: getSectors(sector_descends, sub_sector_descends),
       country,
       uk_postcode,
       uk_region,
@@ -50,6 +64,8 @@ const getCompanies = ({
       latest_interaction_date_before,
       latest_interaction_date_after,
       one_list_group_global_account_manager,
+      export_segment,
+      export_sub_segment,
       sortby,
     })
     .then(({ data }) => transformResponseToCompanyCollection(data))
@@ -69,6 +85,11 @@ const getCompaniesMetadata = () =>
         level__lte: '0',
       },
     }),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__gte: '1',
+      },
+    }),
     getHeadquarterTypeOptions(urls.metadata.headquarterType()),
     getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
     getMetadataOptions(urls.metadata.administrativeArea(), {
@@ -82,6 +103,7 @@ const getCompaniesMetadata = () =>
     .then(
       ([
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,
@@ -89,6 +111,7 @@ const getCompaniesMetadata = () =>
         countryOptions,
       ]) => ({
         sectorOptions,
+        subSectorOptions,
         headquarterTypeOptions,
         ukRegionOptions,
         usStateOptions,

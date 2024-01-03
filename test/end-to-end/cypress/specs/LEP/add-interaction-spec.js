@@ -12,7 +12,7 @@ describe('LEP add Investment Project interaction', () => {
       )
     })
     it('should have the correct url', () => {
-      cy.get('[data-test="Add interaction"]')
+      cy.get('[data-test="add-collection-item-button"]')
         .click()
         .location('pathname')
         .should(
@@ -27,8 +27,8 @@ describe('LEP add Investment Project interaction', () => {
   })
 
   context('LEP completes the form and clicks "Add interaction"', () => {
-    before(() => {
-      cy.server().route('POST', '/api-proxy/v4/interaction').as('post')
+    beforeEach(() => {
+      cy.intercept('POST', '/api-proxy/v4/interaction').as('post')
 
       cy.visit(
         investments.projects.interactions.createType(
@@ -39,15 +39,17 @@ describe('LEP add Investment Project interaction', () => {
       )
     })
 
+    it('should have the correct headings', () => {
+      cy.get('h1').should('have.text', 'Add interaction')
+      cy.get('h2').eq(0).should('have.text', 'MARS EXPORTS LTD')
+    })
+
     it('should add an interaction', () => {
       const subject = 'The best Investment Project interaction'
       const formSelectors = selectors.interactionForm
 
-      cy.contains('Add interaction for Mars Exports Ltd')
-        .get(formSelectors.service)
-        .select('Investment - Services')
-        .get(formSelectors.hasRelatedTradeAgreementsNo)
-        .click()
+      cy.get(formSelectors.service)
+        .select('Investment - services')
         .get(formSelectors.contact)
         .selectTypeaheadOption('Mark Halomi')
         .get(formSelectors.communicationChannel)
@@ -63,8 +65,8 @@ describe('LEP add Investment Project interaction', () => {
         .get(formSelectors.add)
         .click()
         .wait('@post')
-        .should((xhr) => {
-          expect(xhr.status, 'successful POST').to.equal(201)
+        .then((request) => {
+          expect(request.response.statusCode).to.eql(201)
         })
 
       cy.contains('h1', subject)

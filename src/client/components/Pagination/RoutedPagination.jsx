@@ -5,7 +5,8 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
-import { GREY_3, GREY_4, LINK_COLOUR, TEXT_COLOUR } from 'govuk-colours'
+
+import { GREY_3, LINK_COLOUR, WHITE } from '../../../client/utils/colours'
 import { PAGINATION_PIECE_PREVIOUS, PAGINATION_PIECE_NEXT } from './constants'
 
 const StyledNav = styled('nav')`
@@ -64,19 +65,24 @@ const StyledPaginationLink = styled(Link)`
     display: inline-block;
     padding: ${SPACING.SCALE_1} 12px;
     line-height: 1.9em;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-thickness: max(1px, 0.0625rem);
     :hover {
       background-color: ${GREY_3};
+      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
     }
     ${({ $isActive }) =>
       $isActive
         ? `
-        color: ${TEXT_COLOUR};
-        background-color: transparent;
+        color: ${WHITE};
+        background-color: ${LINK_COLOUR};
+        :hover {
+          background-color: ${LINK_COLOUR};
+        }
        `
         : `
         color: ${LINK_COLOUR};
-        background-color: ${GREY_4};
+        background-color: transparent;
       `}
     ${(props) => props['data-page-number'] && `display: none;`}
     ${MEDIA_QUERIES.TABLET} {
@@ -215,6 +221,8 @@ const Pagination = ({
                       onClick={(e) => handleOnClick(page, e)}
                       data-page-number={page}
                       data-test={`${isActive && 'page-number-active'}`}
+                      aria-label={`Page ${page}`}
+                      aria-current={isActive ? 'page' : false}
                       ref={(el) => (linkRefs.current[index] = el)}
                       href="#"
                     >

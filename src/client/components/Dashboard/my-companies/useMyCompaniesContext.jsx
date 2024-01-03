@@ -2,6 +2,7 @@ import { orderBy, pick } from 'lodash'
 import { useReducer } from 'react'
 import PropTypes from 'prop-types'
 import constate from 'constate'
+
 import { FILTER_CHANGE, LIST_CHANGE, ORDER_CHANGE } from './constants'
 
 export const filterCompanyName = (companies, filterText) =>

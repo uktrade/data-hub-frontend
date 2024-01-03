@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { BLUE, GREY_3, RED } from 'govuk-colours'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+
+import { BLUE, GREY_3, RED } from '../../../client/utils/colours'
 
 import {
   MultiInstanceToggleSection,
@@ -30,10 +31,14 @@ export const DashboardToggleSection = styled(MultiInstanceToggleSection)`
 
   ${ButtonContent} {
     text-decoration: underline;
+    white-space: nowrap;
   }
 
   ${BadgeContainer} {
-    margin-left: ${SPACING.SCALE_1};
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: ${SPACING.SCALE_3};
   }
 
   ${ToggleContent} {

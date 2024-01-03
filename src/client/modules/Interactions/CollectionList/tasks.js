@@ -24,6 +24,11 @@ const getInteractionsMetadata = () =>
         level__lte: '0',
       },
     }),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__gte: '1',
+      },
+    }),
     getMetadataOptions(urls.metadata.policyArea()),
     getMetadataOptions(urls.metadata.policyIssueType()),
     getMetadataOptions(urls.metadata.oneListTier()),
@@ -32,12 +37,14 @@ const getInteractionsMetadata = () =>
       ([
         serviceOptions,
         sectorOptions,
+        subSectorOptions,
         policyAreaOptions,
         policyIssueTypeOptions,
         companyOneListTierOptions,
       ]) => ({
         serviceOptions: filterServiceNames(sortServiceOptions(serviceOptions)),
         sectorOptions,
+        subSectorOptions,
         policyAreaOptions,
         policyIssueTypeOptions,
         companyOneListTierOptions,
@@ -48,30 +55,46 @@ const getInteractionsMetadata = () =>
 const getInteractions = ({
   limit = 10,
   page = 1,
+  subject,
   kind,
   dit_participants__adviser,
+  company,
   service,
   date_before,
   date_after,
   sortby = 'date:desc',
   sector_descends,
+  sub_sector_descends,
   was_policy_feedback_provided,
   policy_areas,
   policy_issue_types,
   company_one_list_group_tier,
   dit_participants__team,
-}) =>
-  apiProxyAxios
+}) => {
+  const getSectors = (sector_descends, sub_sector_descends) => {
+    if (sector_descends && sub_sector_descends) {
+      return [...sector_descends, ...sub_sector_descends]
+    }
+    if (sub_sector_descends) {
+      return sub_sector_descends
+    }
+    if (sector_descends) {
+      return sector_descends
+    }
+  }
+  return apiProxyAxios
     .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
+      subject,
       kind,
       dit_participants__adviser,
+      company,
       sortby,
       date_before,
       date_after,
       service,
-      sector_descends,
+      sector_descends: getSectors(sector_descends, sub_sector_descends),
       was_policy_feedback_provided,
       policy_areas,
       policy_issue_types,
@@ -79,5 +102,6 @@ const getInteractions = ({
       dit_participants__team,
     })
     .then(({ data }) => transformResponseToCollection(data))
+}
 
 export { getInteractions, getInteractionsMetadata }

@@ -66,3 +66,26 @@ export const indexToOrdinal = (zeroBasedIndex) => {
     return naturalIndex + 'rd'
   }
 }
+
+/**
+ * Parse a string that has been formatted to a Number.
+ * @param {string} stringNumber - the localized number
+ * @param {string} locale - [optional] the locale that the number is represented in. Omit this parameter to use the en-GB locale.
+ */
+export const parseLocaleNumber = (stringNumber, locale = 'en-GB') => {
+  if (!stringNumber.length) {
+    return stringNumber
+  }
+  var thousandSeparator = Intl.NumberFormat(locale)
+    .format(11111)
+    .replace(/\p{Number}/gu, '')
+  var decimalSeparator = Intl.NumberFormat(locale)
+    .format(1.1)
+    .replace(/\p{Number}/gu, '')
+
+  return Number(
+    stringNumber
+      .replace(new RegExp('\\' + thousandSeparator, 'g'), '')
+      .replace(new RegExp('\\' + decimalSeparator), '.')
+  )
+}

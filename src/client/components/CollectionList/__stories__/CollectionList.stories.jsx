@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
-import { storiesOf } from '@storybook/react'
+
 import CollectionList from 'CollectionList'
 
 import profilesFixture from '../__fixtures__/capitalProfiles.json'
-import { SORT_OPTIONS } from '../../../../apps/investments/client/projects/constants'
+import { SORT_OPTIONS } from '../../../modules/Investments/Projects/constants'
 
-const collectionStories = storiesOf('Collection', module)
+export default {
+  title: 'Collection/CollectionList',
+
+  parameters: {
+    component: CollectionList,
+  },
+}
 
 const CollectionWithState = () => {
   const [activePage, setActivePage] = useState(1)
@@ -33,15 +39,17 @@ const CollectionWithState = () => {
   )
 }
 
-collectionStories.addParameters({ component: CollectionList })
+export const _CollectionList = () => <CollectionWithState />
 
-collectionStories.add('Collection List', () => <CollectionWithState />)
-
-collectionStories.add('Collection List with 0 items', () => (
+export const CollectionListWith0Items = () => (
   <CollectionList
     totalItems={0}
     items={[]}
     itemName="results"
     sortOptions={SORT_OPTIONS}
   />
-))
+)
+
+CollectionListWith0Items.story = {
+  name: 'Collection List with 0 items',
+}

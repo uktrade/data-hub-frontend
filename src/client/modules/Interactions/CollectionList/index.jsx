@@ -6,6 +6,7 @@ import { SPACING } from '@govuk-react/constants'
 import {
   INTERACTIONS__LOADED,
   INTERACTIONS_SELECTED_ADVISERS,
+  INTERACTIONS_SELECTED_COMPANIES,
   INTERACTIONS__METADATA_LOADED,
   INTERACTIONS_SELECTED_TEAMS,
 } from '../../../actions'
@@ -32,6 +33,7 @@ import {
   state2props,
   TASK_GET_INTERACTIONS_LIST,
   TASK_GET_INTERACTIONS_ADVISER_NAME,
+  TASK_GET_INTERACTIONS_COMPANY_NAME,
   TASK_GET_INTERACTIONS_METADATA,
   TASK_GET_INTERACTIONS_TEAM_NAME,
 } from './state'
@@ -59,6 +61,14 @@ const InteractionCollection = ({
     startOnRender: {
       payload,
       onSuccessDispatch: INTERACTIONS__LOADED,
+    },
+  }
+  const companyListTask = {
+    name: TASK_GET_INTERACTIONS_COMPANY_NAME,
+    id: ID,
+    startOnRender: {
+      payload: payload.company,
+      onSuccessDispatch: INTERACTIONS_SELECTED_COMPANIES,
     },
   }
   const adviserListTask = {
@@ -147,7 +157,27 @@ const InteractionCollection = ({
             label="Interaction details"
             isOpen={true}
           >
+            <Filters.Input
+              id="EventsCollection.subject"
+              qsParam="subject"
+              name="subject"
+              label={LABELS.subject}
+              data-test="interaction-subject-filter"
+            />
+            <Filters.CompanyTypeahead
+              taskProps={companyListTask}
+              isMulti={true}
+              label={LABELS.company}
+              name="company"
+              qsParam="company"
+              placeholder="Search company"
+              noOptionsMessage="No companies found"
+              selectedOptions={selectedFilters.company.options}
+              data-test="company-filter"
+              closeMenuOnSelect={false}
+            />
             <Filters.AdvisersTypeahead
+              closeMenuOnSelect={false}
               taskProps={adviserListTask}
               isMulti={true}
               onlyShowActiveAdvisers={false}
@@ -172,6 +202,7 @@ const InteractionCollection = ({
               data-test="date-before-filter"
             />
             <Filters.TeamsTypeahead
+              closeMenuOnSelect={false}
               taskProps={teamListTask}
               isMulti={true}
               label={LABELS.teams}
@@ -191,6 +222,16 @@ const InteractionCollection = ({
               options={optionMetadata.sectorOptions}
               selectedOptions={selectedFilters.sectors.options}
               data-test="sector-filter"
+            />
+            <Filters.Typeahead
+              isMulti={true}
+              label={LABELS.subSector}
+              name="sub_sector"
+              qsParam="sub_sector_descends"
+              placeholder="Search sub-sector"
+              options={optionMetadata.subSectorOptions}
+              selectedOptions={selectedFilters.subSectors.options}
+              data-test="sub-sector-filter"
             />
             <Filters.CheckboxGroup
               legend={LABELS.businessIntelligence}

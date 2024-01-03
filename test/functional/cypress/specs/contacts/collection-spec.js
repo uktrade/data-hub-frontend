@@ -1,4 +1,17 @@
-import { assertBreadcrumbs } from '../../support/assertions'
+import {
+  assertRole,
+  getCollectionList,
+  assertCollectionBreadcrumbs,
+  assertTag,
+  assertTagNotPresent,
+  assertMetadataItem,
+  assertListLength,
+  assertItemLink,
+  assertUpdatedOn,
+  assertMetadataItemNotPresent,
+  assertTagShouldNotExist,
+} from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
 import { contacts } from '../../../../../src/lib/urls'
 import { contactsListFaker, contactFaker } from '../../fakers/contacts'
 
@@ -23,6 +36,7 @@ describe('Contacts Collections', () => {
     primary: true,
     full_telephone_number: '+44 02071234567',
     modified_on: '2020-08-10T19:09:35.276Z',
+    valid_email: true,
   })
 
   const foreignContact = contactFaker({
@@ -45,37 +59,34 @@ describe('Contacts Collections', () => {
     archived: true,
   })
 
+  const invalidEmail = contactFaker({
+    id: '4',
+    valid_email: false,
+  })
+
   const contactsList = [
     ukContact,
     foreignContact,
     archivedContact,
+    invalidEmail,
     ...contactsListFaker(7),
   ]
 
   before(() => {
-    cy.intercept('POST', '/api-proxy/v3/search/contact', {
-      body: {
-        count: contactsList.length,
-        results: contactsList,
-      },
-    }).as('apiRequest')
-    cy.visit(contacts.index())
-    cy.wait('@apiRequest')
+    collectionListRequest('v3/search/contact', contactsList, contacts.index())
   })
 
   beforeEach(() => {
-    cy.get('[data-test="collection-list"]').as('collectionList')
-    cy.get('[data-test="collection-item"]').as('collectionItems')
-    cy.get('@collectionItems').eq(0).as('firstListItem')
+    getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
+    cy.get('@collectionItems').eq(3).as('forthListItem')
   })
 
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: '/',
-      Contacts: null,
-    })
+  assertCollectionBreadcrumbs('Contacts')
+
+  it('should contain a status role', () => {
+    assertRole('status')
   })
 
   it('should render a title', () => {
@@ -83,124 +94,94 @@ describe('Contacts Collections', () => {
   })
 
   it('should display a list of contacts', () => {
-    cy.get('@collectionList').should('have.length', 1)
-    cy.get('@collectionItems').should('have.length', contactsList.length)
+    assertListLength(contactsList)
   })
 
   context('UK contact', () => {
     it('should have a link with the contact name', () => {
-      cy.get('@firstListItem')
-        .find('h3')
-        .children()
-        .should('have.text', 'Hanna Reinger')
-        .should('have.attr', 'href', '/contacts/1/details')
+      assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
     })
 
-    it('should contain a primary contact badge', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="badge"]')
-        .should('contain', 'Primary')
+    it('should contain a primary contact tag', () => {
+      assertTag('@firstListItem', 'Primary')
     })
 
-    it('should not contain an archived badge', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="badge"]')
-        .should('not.contain', 'Archived')
+    it('should not contain an archived tag', () => {
+      assertTagNotPresent('@firstListItem', 'Archived')
+    })
+
+    it('should not contain an unknown email tag', () => {
+      assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
     })
 
     it('should render the updated date and time', () => {
-      cy.get('@firstListItem')
-        .find('h4')
-        .should('have.text', 'Updated on 10 Aug 2020, 8:09pm')
+      assertUpdatedOn('@firstListItem', 'Updated on 10 Aug 2020, 8:09pm')
     })
 
     it('should render the company name', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(0)
-        .should('contain', 'Company Murray, Price and Hodkiewicz')
+      assertMetadataItem(
+        '@firstListItem',
+        'Company Murray, Price and Hodkiewicz'
+      )
     })
 
     it('should render the job title', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(1)
-        .should('contain', 'Job title Dynamic Accountability Administrator')
+      assertMetadataItem(
+        '@firstListItem',
+        'Job title Dynamic Accountability Administrator'
+      )
     })
 
     it('should render the sector', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(2)
-        .should('contain', 'Sector Advanced Engineering')
+      assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
     })
 
     it('should render the country', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should('contain', 'Country United Kingdom')
+      assertMetadataItem('@firstListItem', 'Country United Kingdom')
     })
 
     it('should render the UK region', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(4)
-        .should('contain', 'UK region London')
+      assertMetadataItem('@firstListItem', 'UK region London')
     })
 
     it('should render the UK telephone number', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(5)
-        .should('contain', 'Phone number +44 02071234567')
+      assertMetadataItem('@firstListItem', 'Phone number +44 02071234567')
     })
 
     it('should render the email', () => {
-      cy.get('@firstListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(6)
-        .should('contain', 'Email gloria33@gmail.com')
+      assertMetadataItem('@firstListItem', 'Email gloria33@gmail.com')
     })
   })
 
   context('Foreign contact', () => {
     it('should have a link with the contact name', () => {
-      cy.get('@secondListItem')
-        .find('h3')
-        .children()
-        .should('have.text', 'Ted Woods')
-        .should('have.attr', 'href', '/contacts/2/details')
+      assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
     })
 
-    it('should not contain a primary contact badge', () => {
-      cy.get('@secondListItem').find('[data-test="badge"]').should('not.exist')
+    it('should not contain a primary contact tag', () => {
+      assertTagShouldNotExist('@secondListItem')
     })
 
     it('should render the foreign country', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should('contain', 'Country United States')
+      assertMetadataItem('@secondListItem', 'Country United States')
     })
     it('should not render the UK region', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .should('not.contain', 'UK region')
+      assertMetadataItemNotPresent('@secondListItem', 'UK region')
     })
     it('should render the telephone number', () => {
-      cy.get('@secondListItem')
-        .find('[data-test="metadata-item"]')
-        .eq(4)
-        .should('contain', 'Phone number 0045 48770000')
+      assertMetadataItem('@secondListItem', 'Phone number 0045 48770000')
     })
   })
 
   context('Archived contact', () => {
-    it('should contain an archived badge', () => {
-      cy.get('@thirdListItem')
-        .find('[data-test="badge"]')
-        .should('contain', 'Archived')
+    it('should contain an archived tag', () => {
+      assertTag('@thirdListItem', 'Archived')
+    })
+  })
+
+  context('Contact with invalid email', () => {
+    it('should contain an unknown email tag', () => {
+      assertTag('@forthListItem', 'UNKNOWN EMAIL')
     })
   })
 })

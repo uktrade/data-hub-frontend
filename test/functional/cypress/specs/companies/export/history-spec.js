@@ -1,9 +1,6 @@
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
 const { assertBreadcrumbs } = require('../../../support/assertions')
-const exportSelectors = require('../../../../../selectors/company/export')
-
-const countrySelectors = exportSelectors.countries
 
 describe('Company Export tab - Export countries history', () => {
   function checkListItems(items) {
@@ -26,7 +23,7 @@ describe('Company Export tab - Export countries history', () => {
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          Home: urls.dashboard(),
+          Home: urls.dashboard.index(),
           Companies: urls.companies.index(),
           [fixtures.company.lambdaPlc.name]: urls.companies.detail(
             fixtures.company.lambdaPlc.id
@@ -48,7 +45,7 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with the 0 results', () => {
         cy.contains('0 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
+        cy.get('[data-test="collection-item"]').should('not.exist')
       })
     })
 
@@ -69,57 +66,58 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with 10 of the 12 results', () => {
         cy.contains('12 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
 
         checkListItems([
           [
             'Belarus added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Botswana added to future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Georgia added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:48am',
           ],
           [
             'France added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:47am',
           ],
           [
             'Fiji added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 11 Feb 2020, 10:46am',
           ],
           [
             'Argentina added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 4:06pm',
           ],
           [
             'Andorra added to currently exporting',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 4:05pm',
           ],
           [
             'Afghanistan added to future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:42pm',
           ],
           [
             'Andorra removed from future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
         ])
@@ -139,17 +137,18 @@ describe('Company Export tab - Export countries history', () => {
 
       it('the second page renders the collection list with 2 of the 12 results', () => {
         cy.get('a').contains('2').click()
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 2)
 
         checkListItems([
           [
             'Andorra removed from future countries of interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DIT Staff',
+            'By DBT Staff',
             'Date 6 Feb 2020, 3:41pm',
           ],
         ])
@@ -185,7 +184,8 @@ describe('Company Export tab - Export countries history', () => {
 
       it('renders the collection list with grouped countries in alphabetical order', () => {
         cy.contains('10 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 10)
 
         checkListItems([
           [
@@ -242,7 +242,7 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not display the pagination', () => {
-        cy.get('#company-export-full-history ul').should('not.exist')
+        cy.get('[data-test="pagination"]').should('not.exist')
       })
     })
 
@@ -264,7 +264,8 @@ describe('Company Export tab - Export countries history', () => {
 
         it('renders the collection list with the one result', () => {
           cy.contains('1 result')
-          cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+          cy.get('[data-test="collection-item"]').as('collectionItems')
+          cy.get('@collectionItems').should('have.length', 1)
 
           checkListItems([
             [
@@ -293,7 +294,8 @@ describe('Company Export tab - Export countries history', () => {
 
         it('renders the collection list with grouped countries in alphabetical order', () => {
           cy.contains('4 results')
-          cy.get(countrySelectors.listItemHeadings).should('have.length', 4)
+          cy.get('[data-test="collection-item"]').as('collectionItems')
+          cy.get('@collectionItems').should('have.length', 4)
 
           checkListItems([
             [
@@ -327,7 +329,8 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not filter out the update', () => {
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 1)
         checkListItems([
           [
             'Andorra moved to future countries of interest',
@@ -387,13 +390,17 @@ describe('Company Export tab - Export countries history', () => {
             .find('div span')
             .should('contain', 'Interaction')
 
-          assertionTasks.reduce(($details, { assertion, value }) => {
-            return $details.should(assertion, value)
-          }, cy.get('@' + interaction).find('details'))
+          assertionTasks.reduce(
+            ($details, { assertion, value }) => {
+              return $details.should(assertion, value)
+            },
+            cy.get('@' + interaction).find('details')
+          )
         }
 
         cy.contains('5 results')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 5)
+        cy.get('[data-test="collection-item"]').as('collectionItems')
+        cy.get('@collectionItems').should('have.length', 5)
 
         const interactionDetails = [
           [
@@ -471,7 +478,7 @@ describe('Company Export tab - Export countries history', () => {
 
         cy.contains('Belarus added to countries of no interest')
           .siblings()
-          .should('contain', 'By DIT Staff')
+          .should('contain', 'By DBT Staff')
           .should('contain', 'Date 11 Feb 2020, 10:47am')
       })
     })
@@ -495,7 +502,7 @@ describe('Company Export tab - Export countries history', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
         [fixtures.company.dnbCorp.name]: urls.companies.detail(
           fixtures.company.dnbCorp.id
@@ -517,17 +524,18 @@ describe('Company Export tab - Export countries history', () => {
 
     it('renders the collection list with 2 results', () => {
       cy.contains('2 results')
-      cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+      cy.get('[data-test="collection-item"]').as('collectionItems')
+      cy.get('@collectionItems').should('have.length', 2)
 
       checkListItems([
         [
           'Andorra added to currently exporting',
-          'By DIT Staff',
+          'By DBT Staff',
           'Date 6 Feb 2020, 4:06pm',
         ],
         [
           'Andorra removed from future countries of interest',
-          'By DIT Staff',
+          'By DBT Staff',
           'Date 6 Feb 2020, 3:41pm',
         ],
       ])

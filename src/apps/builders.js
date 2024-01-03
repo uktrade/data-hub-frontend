@@ -1,17 +1,14 @@
 const {
-  at,
   castArray,
   get,
   has,
-  keyBy,
   isArray,
-  isFunction,
   isEmpty,
-  isString,
   map,
   pick,
   pickBy,
 } = require('lodash')
+
 const { getOptions } = require('../lib/options')
 
 function getDeepObjectValuesForKey(object, keyName, values = []) {
@@ -117,61 +114,6 @@ function buildFormWithStateAndErrors(form, requestBody, errorsObject) {
   return buildFormWithErrors(formWithState, errorsObject)
 }
 
-function buildSelectedFiltersSummary(fields, query = {}) {
-  if (!isArray(fields)) {
-    return
-  }
-
-  return fields
-    .map((field) => {
-      field.value = query[field.name]
-      return field
-    })
-    .filter(
-      (field) => field.value || get(field, 'selectedOptions', []).length > 0
-    )
-    .reduce(buildSelectedFiltersSummaryReducer, {})
-}
-
-function buildSelectedFiltersSummaryReducer(fieldsObj, field) {
-  if (!isEmpty(field.selectedOptions)) {
-    fieldsObj[field.name] = getFieldWithSelectedOptions(field)
-    return fieldsObj
-  }
-
-  fieldsObj[field.name] = {
-    label: field.label,
-    valueLabel: field.value,
-  }
-
-  const fieldValues = isString(field.value)
-    ? field.value.split(',')
-    : field.value
-  const fieldOptions = isFunction(field.options)
-    ? field.options()
-    : field.options
-
-  if (fieldOptions) {
-    const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(
-      (x) => x
-    )
-    fieldsObj[field.name].valueLabel = selectedValues
-      .map((x) => x.label)
-      .join(', ')
-  }
-
-  return fieldsObj
-}
-
-function getFieldWithSelectedOptions(field) {
-  const values = field.selectedOptions.map((x) => x.label).join(', ')
-
-  return {
-    label: field.label,
-    valueLabel: values,
-  }
-}
-
 async function buildFieldsWithSelectedEntities(req, fields = [], query = {}) {
   const fieldsArray = castArray(fields)
   const processedFields = []
@@ -197,6 +139,5 @@ module.exports = {
   buildFormWithErrors,
   buildFormWithState,
   buildFormWithStateAndErrors,
-  buildSelectedFiltersSummary,
   buildFieldsWithSelectedEntities,
 }

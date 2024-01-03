@@ -1,20 +1,23 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+
 import CollectionHeader from '../CollectionHeader'
 
-const collectionStories = storiesOf('Collection', module)
+export default {
+  title: 'Collection/CollectionHeader',
+  parameters: {
+    component: CollectionHeader,
+  },
+}
 
-collectionStories.addParameters({ component: CollectionHeader })
-
-collectionStories.add('Collection Header', () => (
+export const _CollectionHeader = () => (
   <CollectionHeader
     totalItems={1}
     itemName="profile"
     addItemText="#"
     addItemUrl="#"
   />
-))
+)
 
-collectionStories.add('Collection Header', () => (
+export const __CollectionHeader = () => (
   <CollectionHeader totalItems={1} itemName="profile" addItemUrl="#" />
-))
+)

@@ -30,14 +30,14 @@ async function getCommon(req, res, next) {
 function getDetails(req, res, next) {
   try {
     const contactId = req.params.contactId
-    const contact = res.locals.contact
-    const companyAddress = res.locals.company.address
+    const companyAddress = res.locals?.company.address
+    const permissions = res.locals?.user.permissions
 
     res.render('contacts/views/details', {
       props: {
-        contactId: contactId,
-        contact: contact,
-        companyAddress: companyAddress,
+        contactId,
+        companyAddress,
+        permissions,
       },
     })
   } catch (error) {

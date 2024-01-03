@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
+import Link from '@govuk-react/link'
 
 import { useFormContext } from '../hooks'
 import ButtonLink from '../../ButtonLink'
 import FormActions from './FormActions'
 
-function Step({ name, backButton, forwardButton, children }) {
+function Step({ name, backButton, forwardButton, cancelUrl, children }) {
   const {
     currentStep,
     goBack,
@@ -69,6 +70,12 @@ function Step({ name, backButton, forwardButton, children }) {
     return forwardButton
   }
 
+  const renderCancelLink = () => (
+    <Link data-test="cancel-link" href={cancelUrl}>
+      Cancel
+    </Link>
+  )
+
   return (
     <>
       {typeof children === 'function' ? children() : children}
@@ -77,6 +84,7 @@ function Step({ name, backButton, forwardButton, children }) {
         {renderForwardButton()}
 
         {!isFirstStep() && renderBackButton()}
+        {isFirstStep() && cancelUrl && renderCancelLink()}
       </FormActions>
     </>
   )

@@ -5,7 +5,7 @@ import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
 import Footer from '../Footer'
-import { Main } from '../../components'
+import Main from '../Main'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import DataHubHeader from '../DataHubHeader'
 
@@ -17,16 +17,18 @@ const GlobalStyles = createGlobalStyle`
 
 const DefaultLayout = ({
   heading,
+  headingLink,
   subheading,
   pageTitle,
   flashMessages,
   breadcrumbs,
   children,
   useReactRouter = false,
+  localHeaderChildren,
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   useEffect(() => {
-    document.title = `${pageTitle} - DIT Data Hub`
+    document.title = `${pageTitle} - DBT Data Hub`
   }, [pageTitle])
   return (
     <>
@@ -37,13 +39,16 @@ const DefaultLayout = ({
       />
       <LocalHeader
         heading={heading}
+        headingLink={headingLink}
         subheading={subheading}
         flashMessages={flashMessages}
         breadcrumbs={
           breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
         }
         useReactRouter={useReactRouter}
-      />
+      >
+        {localHeaderChildren}
+      </LocalHeader>
       <Main>
         <GridRow>
           <GridCol>{children}</GridCol>
@@ -56,7 +61,11 @@ const DefaultLayout = ({
 
 DefaultLayout.propTypes = {
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  subheading: PropTypes.string,
+  headingLink: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
+  subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
 }

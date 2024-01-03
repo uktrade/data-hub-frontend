@@ -1,6 +1,6 @@
-const fixtures = require('../../fixtures/index')
-
-const urls = require('../../../../../src/lib/urls')
+import fixtures from '../../fixtures/index'
+import urls from '../../../../../src/lib/urls'
+import { assertErrorSummary, assertLocalHeader } from '../../support/assertions'
 
 const { draftOrder } = fixtures.omis
 
@@ -9,18 +9,24 @@ describe('View edit quote information', () => {
     cy.visit(urls.omis.edit.quote(draftOrder.id))
   })
 
-  it('Should render edit form', () => {
-    cy.contains('Edit quote information').should('exist')
+  it('should render edit form', () => {
+    assertLocalHeader('Edit quote information')
   })
 
-  it('Should submit form successfully', () => {
+  it('should submit form successfully', () => {
     const year = new Date().getFullYear() + 1
-    cy.get('#field-delivery_date').type(`04/02/${year}`)
-    cy.contains('Save and return').click()
-    cy.location('pathname').should(
-      'eq',
-      urls.omis.order(draftOrder.id) + '/work-order'
-    )
-    cy.contains('Changes saved').should('exist')
+    cy.get('[data-test="delivery_date-day"]').type('04')
+    cy.get('[data-test="delivery_date-month"]').type('02')
+    cy.get('[data-test="delivery_date-year"]').type(`${year}`)
+    cy.get('[data-test=submit-button]').click()
+    cy.location('pathname').should('eq', urls.omis.workOrder(draftOrder.id))
+  })
+
+  it('should not allow a past date to be entered', () => {
+    cy.get('[data-test="delivery_date-day"]').type('04')
+    cy.get('[data-test="delivery_date-month"]').type('02')
+    cy.get('[data-test="delivery_date-year"]').type('2000')
+    cy.get('[data-test=submit-button]').click()
+    assertErrorSummary(['Delivery date must be at least 21 days in the future'])
   })
 })

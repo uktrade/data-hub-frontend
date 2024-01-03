@@ -1,7 +1,7 @@
 [
   {
     "id": "9484b82b-3499-e211-a939-e4115bead28a",
-    "name": "Account Management",
+    "name": "Account management",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -26,7 +26,7 @@
   },
   {
     "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
-    "name": "Digital Trade Advisers One-to-One",
+    "name": "Digital Trade Advisers one-to-one",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -50,7 +50,7 @@
   },
   {
     "id": "370bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Events - Inward Missions",
+    "name": "Events - Inward missions",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",
@@ -60,7 +60,7 @@
   },
   {
     "id": "340bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Events - Market Visit Support (MVS)",
+    "name": "Events - Market visit Support (MVS)",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",
@@ -70,7 +70,7 @@
   },
   {
     "id": "0696b92b-3499-e211-a939-e4115bead28a",
-    "name": "Events - Outward Missions",
+    "name": "Events - Outward missions",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",
@@ -90,7 +90,7 @@
   },
   {
     "id": "9584b82b-3499-e211-a939-e4115bead28a",
-    "name": "Events - UK Based",
+    "name": "Events - UK based",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",
@@ -110,7 +110,7 @@
   },
   {
     "id": "350bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Export Win",
+    "name": "Export win",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -124,7 +124,7 @@
   },
   {
     "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
-    "name": "Language and Culture Advisers One-to-One",
+    "name": "Language and Culture Advisers one-to-one",
     "disabled_on": null,
     "contexts": [
       "investment_project_interaction",
@@ -148,7 +148,7 @@
   },
   {
     "id": "f56eb92b-3499-e211-a939-e4115bead28a",
-    "name": "Significant Assistance (PIMS)",
+    "name": "Significant assistance (PIMS)",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",
@@ -158,7 +158,19 @@
   },
   {
     "id": "380bba2b-3499-e211-a939-e4115bead28a",
-    "name": "Tradeshow Access Programme (TAP)",
+    "name": "UK Tradeshow Programme (UKTP) – exhibitor",
+    "disabled_on": null,
+    "contexts": [
+      "export_service_delivery",
+      "other_service_delivery",
+      "export_interaction",
+      "service_delivery",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28b",
+    "name": "UK Tradeshow Programme (UKTP) – attendee",
     "disabled_on": null,
     "contexts": [
       "export_service_delivery",
@@ -170,7 +182,7 @@
   },
   {
     "id": "9a84b82b-3499-e211-a939-e4115bead28a",
-    "name": "UK Region Local",
+    "name": "UK region local",
     "disabled_on": null,
     "contexts": [
       "other_service_delivery",

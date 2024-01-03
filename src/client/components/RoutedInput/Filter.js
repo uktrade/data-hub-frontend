@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
-import { FOCUS_COLOUR, BLACK } from 'govuk-colours'
+
+import { FOCUS_COLOUR, BLACK } from '../../../client/utils/colours'
 
 import RoutedInput from '.'
 

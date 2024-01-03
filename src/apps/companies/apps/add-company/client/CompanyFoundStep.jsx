@@ -6,7 +6,11 @@ import PropTypes from 'prop-types'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
-import { Step, SummaryList } from '../../../../../client/components'
+import {
+  FieldRadios,
+  Step,
+  SummaryList,
+} from '../../../../../client/components'
 import { getCompanyAddress } from '../../../../../client/utils/addresses'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 
@@ -23,16 +27,22 @@ function getCompaniesHouseNumber(dnbCompany) {
   }
 }
 
-function CompanyFoundStep({ countryName, features }) {
+function CompanyFoundStep({
+  features,
+  allowBackButton,
+  countryOptions,
+  showCountry,
+}) {
   const { values } = useFormContext()
 
   const dnbCompany = get(values, 'dnbCompany')
   const companyName = get(dnbCompany, 'primary_name')
   const companyAddress = getCompanyAddress(dnbCompany, features)
   const companiesHouseNumber = getCompaniesHouseNumber(dnbCompany)
+  const countryName = get(values, 'countryName')
 
   return (
-    <Step name="companyDetails">
+    <Step name="companyDetails" backButton={allowBackButton}>
       <H3>Confirm you want to add this company to Data Hub</H3>
 
       <InsetText>
@@ -57,6 +67,20 @@ function CompanyFoundStep({ countryName, features }) {
           ]}
         />
       </InsetText>
+
+      {showCountry && (
+        <>
+          <FieldRadios
+            legend={
+              'We were unable to determine the country of this company, please select the correct value below'
+            }
+            name="companyLocation"
+            required="Specify location of the company"
+            options={Object.values(countryOptions)}
+            bigLegend={false}
+          />
+        </>
+      )}
     </Step>
   )
 }

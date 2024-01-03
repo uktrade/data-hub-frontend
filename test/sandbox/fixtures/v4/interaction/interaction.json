@@ -24,8 +24,8 @@
   ],
   "created_on":"2019-02-07T15:54:01.435652Z",
   "created_by":{
-     "name":"DIT Staff",
-     "first_name":"DIT",
+     "name":"DBT Staff",
+     "first_name":"DBT",
      "last_name":"Staff",
      "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
   },
@@ -34,16 +34,16 @@
   "status": "complete",
   "kind":"interaction",
   "modified_by":{
-     "name":"DIT Staff",
-     "first_name":"DIT",
+     "name":"DBT Staff",
+     "first_name":"DBT",
      "last_name":"Staff",
      "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
   },
   "modified_on":"2019-02-07T15:54:01.435681Z",
   "date":"2019-02-07",
   "dit_adviser":{
-    "name":"DIT Staff",
-    "first_name":"DIT",
+    "name":"DBT Staff",
+    "first_name":"DBT",
     "last_name":"Staff",
     "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
   },
@@ -54,8 +54,8 @@
   "dit_participants": [
     {
       "adviser": {
-        "name":"DIT Staff",
-        "first_name":"DIT",
+        "name":"DBT Staff",
+        "first_name":"DBT",
         "last_name":"Staff",
         "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
       },

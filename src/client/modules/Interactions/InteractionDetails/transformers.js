@@ -8,9 +8,9 @@ import urls from '../../../../lib/urls'
 const groupExportCountries = require('../../../../lib/group-export-countries')
 
 const excludedServiceStrings = [
-  'A Specific DIT Export Service or Funding',
-  'A Specific Service',
-  'Enquiry or Referral Received',
+  'DBT export service or funding',
+  'Specific service',
+  'Enquiry or referral',
   'Enquiry Received',
 ]
 
@@ -47,7 +47,9 @@ export const transformCompany = (companyObject, companyArray) => {
     <SummaryTable.Row
       heading="Company"
       children={
-        <Link href={urls.companies.details(company.id)}>{company.name}</Link>
+        <Link href={urls.companies.overview.index(company.id)}>
+          {company.name}
+        </Link>
       }
     />
   )
@@ -59,7 +61,7 @@ export const transformContacts = (contacts) =>
   ))
 
 export const transformAdvisers = (advisers) =>
-  advisers.map((adviser) => adviser.adviser.name + ', ' + adviser.team.name)
+  advisers.map((adviser) => adviser?.adviser?.name + ', ' + adviser?.team?.name)
 
 export const transformExportCountries = (countries) => {
   const groupedCountries = groupExportCountries(countries)
@@ -119,8 +121,8 @@ export const getEditLink = (
         interactionId
       )
     : isCompanyPage
-    ? urls.companies.interactions.edit(companyId, interactionId)
-    : urls.interactions.edit(interactionId)
+      ? urls.companies.interactions.edit(companyId, interactionId)
+      : urls.interactions.edit(interactionId)
 }
 
 export const getDetailsLink = (
@@ -139,6 +141,6 @@ export const getDetailsLink = (
         interactionId
       )
     : isCompanyPage
-    ? urls.companies.interactions.detail(companyId, interactionId)
-    : urls.interactions.detail(interactionId)
+      ? urls.companies.interactions.detail(companyId, interactionId)
+      : urls.interactions.detail(interactionId)
 }

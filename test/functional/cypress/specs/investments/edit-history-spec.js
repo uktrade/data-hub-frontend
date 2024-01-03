@@ -26,18 +26,18 @@ describe('Edit History', () => {
 
   context('when viewing the "Edit History" page', () => {
     it('should render the header', () => {
-      assertLocalHeader('Edit History')
+      assertLocalHeader('Edit history')
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        'New hotel (FDI)': urls.investments.projects.project(
+        'New hotel (FDI)': urls.investments.projects.details(
           fixtures.investment.newHotelFdi.id
         ),
-        'Edit History': null,
+        'Edit history': null,
       })
     })
   })

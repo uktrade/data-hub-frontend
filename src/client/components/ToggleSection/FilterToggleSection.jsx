@@ -1,6 +1,7 @@
 import { SPACING } from '@govuk-react/constants'
-import { GREY_2 } from 'govuk-colours'
 import styled from 'styled-components'
+
+import { GREY_2 } from '../../../client/utils/colours'
 
 import { ToggleButton, ToggleContent } from './BaseToggleSection'
 import { ToggleSection } from './ToggleSection'

@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
+import styled from 'styled-components'
+
 import CardUtils from './card/CardUtils'
 import { ACTIVITY_TYPE } from '../constants'
-import { GREY_1 } from 'govuk-colours'
-import styled from 'styled-components'
+import { GREY_1 } from '../../../../client/utils/colours'
 
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
@@ -55,12 +56,6 @@ export default function AventriAttendee({ activity: attendee }) {
 
   return eventName ? (
     <ActivityCardWrapper dataTest="aventri-activity">
-      <ActivityCardLabels
-        service="event"
-        kind={
-          registrationStatus === 'Attended' ? 'aventri event' : 'interaction'
-        }
-      />
       <ActivityCardSubject>
         <Link href={`/events/aventri/${eventId}/details`}>{eventName}</Link>
 
@@ -70,6 +65,12 @@ export default function AventriAttendee({ activity: attendee }) {
           </StyledSpan>
         )}
       </ActivityCardSubject>
+      <ActivityCardLabels
+        service="event"
+        kind={
+          registrationStatus === 'Attended' ? 'aventri event' : 'interaction'
+        }
+      />
       <ActivityCardMetadata
         metadata={[{ label: 'Event date', value: date || 'Unknown' }]}
       />

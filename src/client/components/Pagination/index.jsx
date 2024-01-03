@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { GREY_1, GREY_3, GREY_4, LINK_COLOUR, TEXT_COLOUR } from 'govuk-colours'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
+import { GREY_1, GREY_3, BLUE, WHITE, LINK_COLOUR } from '../../utils/colours'
 import computeVisiblePieces from './computeVisiblePieces'
-
 import {
   PAGINATION_PIECE_ELLIPSIS,
   PAGINATION_PIECE_NEXT,
@@ -44,7 +43,6 @@ const StyledPaginationLink = styled(Link)`
   font-size: ${FONT_SIZE.SIZE_16};
   display: inline-block;
   padding: ${SPACING.SCALE_1} ${SPACING.SCALE_3};
-  background-color: ${GREY_4};
   line-height: 1.9em;
   color: ${LINK_COLOUR};
   text-decoration: none;
@@ -56,8 +54,8 @@ const StyledPaginationLink = styled(Link)`
 
 const StyledActivePaginationLink = styled(StyledPaginationLink)`
   :link {
-    color: ${TEXT_COLOUR};
-    background-color: transparent;
+    color: ${WHITE};
+    background-color: ${BLUE};
   }
 `
 
@@ -71,7 +69,12 @@ const StyledPagesTruncation = styled('span')`
   color: ${GREY_1};
 `
 
-function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
+function Pagination({
+  totalPages,
+  activePage = 1,
+  getPageUrl = () => '#',
+  onPageClick,
+}) {
   const visiblePieces = computeVisiblePieces(totalPages, activePage)
   if (totalPages < 2) {
     return null
@@ -90,7 +93,8 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
             const onClick = (event) => {
               event.target.blur()
               event.preventDefault()
-              onPageClick(pageNumber)
+              onPageClick(pageNumber, event)
+              window.scrollTo({ top: 0 })
             }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink
@@ -122,6 +126,8 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                   <PageNumberLink
                     data-test={isActive ? 'page-number-active' : 'page-number'}
                     data-page-number={pageNumber}
+                    aria-label={`Page ${pageNumber}`}
+                    aria-current={isActive ? 'page' : false}
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
@@ -152,12 +158,6 @@ Pagination.propTypes = {
   activePage: PropTypes.number,
   onPageClick: PropTypes.func,
   getPageUrl: PropTypes.func,
-}
-
-Pagination.defaultProps = {
-  activePage: 1,
-  onPageClick: null,
-  getPageUrl: () => '#',
 }
 
 export default Pagination

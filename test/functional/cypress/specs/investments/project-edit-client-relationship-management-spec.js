@@ -12,7 +12,7 @@ const {
 } = require('../../support/assertions')
 const {
   clickButton,
-  selectFirstAdvisersTypeaheadOption,
+  selectFirstMockedTypeaheadOption,
 } = require('../../support/actions')
 
 const {
@@ -39,10 +39,13 @@ describe('Edit client relationship management page', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: urls.dashboard(),
+        Home: urls.dashboard.index(),
         Investments: urls.investments.index(),
         Projects: urls.investments.projects.index(),
-        [investmentWithNoExistingRequirements.name]: `/investments/projects/${investmentWithNoExistingRequirements.id}`,
+        [investmentWithNoExistingRequirements.name]:
+          urls.investments.projects.details(
+            investmentWithNoExistingRequirements.id
+          ),
         'Project team': urls.investments.projects.team(
           investmentWithNoExistingRequirements.id
         ),
@@ -83,15 +86,13 @@ describe('Edit client relationship management page', () => {
     it('should render the hidden help text with visually hidden text for screen reader', () => {
       cy.get('[data-test="global-account-manager-links"]').click()
       cy.contains(
-        `If you need to change the Global Account Manager for this company, go to the Digital Workspace or opens email client for ${Cypress.env(
-          'one_list_email'
-        )}.`
+        'If you need to change the Global Account Manager for this company, go to the Digital Workspace (opens in new tab) or opens email client for'
       )
     })
 
     it('should always have a Digital Workspace link', () => {
       cy.get('[data-test="newWindowLink"]')
-        .should('contain', 'Digital Workspace')
+        .should('contain', 'Digital Workspace (opens in new tab)')
         .should(
           'have.attr',
           'href',
@@ -111,6 +112,7 @@ describe('Edit client relationship management page', () => {
 
     it('should save and redirect with no changes', () => {
       const expectedBody = {
+        id: investmentWithNoExistingRequirements.id,
         client_relationship_manager: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
       }
 
@@ -162,7 +164,7 @@ describe('Edit client relationship management page', () => {
     })
 
     it('should allow the editing of the client relationship manager', () => {
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '[data-test="field-client_relationship_manager"]',
         input: 'Shawn',
       })
@@ -176,6 +178,7 @@ describe('Edit client relationship management page', () => {
 
     it('should submit the changes and redirect with a flash message', () => {
       const expectedBody = {
+        id: investmentWithNoExistingRequirements.id,
         client_relationship_manager: '2c42c516-9898-e211-a939-e4115bead28a',
       }
 

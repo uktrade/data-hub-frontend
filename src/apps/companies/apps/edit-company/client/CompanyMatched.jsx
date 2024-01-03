@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
 
-import { FieldInput, FieldSelect } from '../../../../../client/components'
+import { currencyGBP } from '../../../../../client/utils/number-utils'
+import {
+  FieldInput,
+  FieldSelect,
+  FieldUneditable,
+} from '../../../../../client/components'
 import OneListFields from './OneListFields'
 import CommonFields from './CommonFields'
 
@@ -21,20 +26,31 @@ const CompanyMatched = ({
 
     <CommonFields company={company} regions={regions} features={features} />
 
-    <FieldInput
-      label="Annual turnover (optional)"
-      hint="Amount in GBP"
+    <FieldUneditable
+      label="Annual turnover"
       name="turnover"
-      type="number"
       data-test="company-matched-annual-turnover"
-    />
+    >
+      {!company.turnover_gbp && !company.turnover_range
+        ? 'Not set'
+        : company.turnover_gbp
+          ? currencyGBP(company.turnover_gbp, {
+              maximumSignificantDigits: 2,
+            })
+          : company.turnover_range.name}
+    </FieldUneditable>
 
-    <FieldInput
-      label="Number of employees (optional)"
+    <FieldUneditable
+      label="Number of employees"
       name="number_of_employees"
-      type="number"
       data-test="company-matched-number-of-employees"
-    />
+    >
+      {!company.number_of_employees && !company.employee_range
+        ? 'Not set'
+        : company.number_of_employees
+          ? company.number_of_employees.toString()
+          : company.employee_range.name}
+    </FieldUneditable>
 
     {isOnOneList ? (
       <OneListFields
@@ -46,10 +62,10 @@ const CompanyMatched = ({
     ) : (
       <FieldSelect
         name="sector"
-        label="DIT sector"
-        emptyOption="-- Select DIT sector --"
+        label="DBT sector"
+        emptyOption="-- Select DBT sector --"
         options={sectors}
-        required="Select DIT sector"
+        required="Select DBT sector"
       />
     )}
 

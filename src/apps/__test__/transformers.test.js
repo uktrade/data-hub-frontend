@@ -18,17 +18,6 @@ describe('Global transformers', () => {
     })
   })
 
-  describe('#transformStringToOption', () => {
-    it('should return value and label from string', () => {
-      const actual = this.transformers.transformStringToOption('One')
-
-      expect(actual).to.deep.equal({
-        value: 'One',
-        label: 'One',
-      })
-    })
-  })
-
   describe('#transformContactToOption', () => {
     it('should return value and label from id and first_name/last_name', () => {
       const actual = this.transformers.transformContactToOption({
@@ -154,16 +143,6 @@ describe('Global transformers', () => {
           month: '09',
           day: '25',
         })
-      })
-    })
-  })
-
-  describe('#transformIdToObject', () => {
-    it('should return an object with id', () => {
-      const actual = this.transformers.transformIdToObject('123456')
-
-      expect(actual).to.deep.equal({
-        id: '123456',
       })
     })
   })

@@ -28,7 +28,7 @@ describe('Edit company list page', () => {
       )
     })
     it('displays hint text', () => {
-      cy.get(selectors.companyList.edit.form.hint).should(
+      cy.get('[data-test="hint-text"]').should(
         'have.text',
         'This is a name only you see, and can be up to 30 characters'
       )
@@ -43,15 +43,9 @@ describe('Edit company list page', () => {
       cy.get(selectors.companyList.edit.saveButton).should('have.text', 'Save')
     })
     it('displays a cancel link', () => {
-      cy.get(selectors.companyList.edit.cancelLink).should(
-        'have.text',
-        'Cancel'
-      )
-      cy.get(selectors.companyList.edit.cancelLink).should(
-        'have.attr',
-        'href',
-        '/'
-      )
+      cy.get('[data-test=cancel-button]')
+        .should('have.text', 'Cancel')
+        .should('have.attr', 'href', '/')
     })
   })
 
@@ -72,10 +66,7 @@ describe('Edit company list page', () => {
     })
 
     it('displays the "List updated" flash message', () => {
-      cy.get('[data-auto-id="localHeader"]').should(
-        'contain.text',
-        'List updated'
-      )
+      cy.get('[data-test="flash"]').should('contain.text', 'List updated')
     })
   })
 

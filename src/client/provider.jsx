@@ -1,238 +1,13 @@
-import _ from 'lodash'
-import queryString from 'qs'
 import React from 'react'
-import { createBrowserHistory } from 'history'
-import {
-  connectRouter,
-  routerMiddleware,
-  ConnectedRouter,
-} from 'connected-react-router'
+import _ from 'lodash'
+import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from 'redux-saga'
 
-import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
-import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
 
-import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
-import companyListsReducer from './components/CompanyLists/reducer'
-
-import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/companies/apps/referrals/details/client/state'
-import referralsReducer from '../apps/companies/apps/referrals/details/client/reducer'
-
-import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
-import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
-
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
-import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
-
-import TabNav from './components/TabNav'
-
-import ReferralList from './components/ReferralList'
-
-import ToggleSection from './components/ToggleSection/BaseToggleSection'
-
-import Typeahead from './components/Typeahead/Typeahead'
-
-import FieldAddAnother from './components/Form/elements/FieldAddAnother/FieldAddAnother'
-
-import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
-import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
-
-import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
-import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
-
-import { ID as ADD_TO_PIPELINE_ID } from '../apps/my-pipeline/client/state'
-import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
-
-import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
-import pipelineListReducer from './components/Pipeline/reducer'
-
-import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from '../apps/investments/client/opportunities/List/state'
-import investmentOpportunitiesListReducer from '../apps/investments/client/opportunities/List/reducer'
-
-import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from '../apps/investments/client/opportunities/Details/state'
-import investmentOpportunitiesDetailsReducer from '../apps/investments/client/opportunities/Details/reducer'
-
-import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
-import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
-
-import { ID as INVESTMENT_PROFILES_ID } from '../apps/investments/client/profiles/state'
-import investmentProfileReducer from '../apps/investments/client/profiles/reducer'
-
-import {
-  INVESTMENT_PROJECTS_ID,
-  COMPANY_PROJECTS_LIST_ID,
-} from '../apps/investments/client/projects/state'
-
-import investmentProjectsReducer from '../apps/investments/client/projects/reducer'
-
-import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
-import companiesReducer from './modules/Companies/CollectionList/reducer'
-
-import {
-  DATA_HUB_FEED_ID,
-  ID as CHECK_FOR_INVESTMENTS_ID,
-} from './components/PersonalisedDashboard/state'
-import personalDashboardReducer from './components/PersonalisedDashboard/reducer'
-
-import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
-import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
-
-import {
-  CREATE_INVESTMENT_PROJECT_ID,
-  COMPANY_INVESTMENT_COUNT_ID,
-} from '../apps/investments/client/projects/create/state.js'
-import createInvestmentProjectsReducer from '../apps/investments/client/projects/create/reducer.js'
-
-import { ID as INVESTMENT_REMINDERS_ID } from './components/InvestmentReminders/state'
-import investmentRemindersReducer from './components/InvestmentReminders/reducer'
-import { ID as REMINDER_SUMMARY_ID } from './components/ReminderSummary/state'
-import reminderSummaryReducer from './components/ReminderSummary/reducer'
-import { ID as NOTIFICATION_ALERT_ID } from './components/NotificationAlert/state'
-import notificationAlertReducer from './components/NotificationAlert/reducer'
-import {
-  CONTACTS_LIST_ID,
-  COMPANY_CONTACTS_LIST_ID,
-} from './modules/Contacts/CollectionList/state'
-import contactsReducer from './modules/Contacts/CollectionList/reducer'
-
-import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
-import interactionsReducer from './modules/Interactions/CollectionList/reducer'
-
-import { ID as EVENTS_DETAILS_ID } from './modules/Events/EventDetails/state'
-import eventDetailsReducer from './modules/Events/EventDetails/reducer'
-
-import { ID as EVENTS_AVENTRI_DETAILS_ID } from './modules/Events/EventAventriDetails/state'
-import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/reducer'
-
-import { ID as EVENTS_AVENTRI_REGISTRATION_STATUS_ID } from './modules/Events/EventAventriRegistrationStatus/state'
-import eventAventriRegistrationStatusReducer from './modules/Events/EventAventriRegistrationStatus/reducer'
-
-import { ID as EVENTS_ID } from './modules/Events/CollectionList/state'
-import eventsReducer from './modules/Events/CollectionList/reducer'
-
-import {
-  ORDERS_LIST_ID,
-  COMPANY_ORDERS_LIST_ID,
-} from './modules/Omis/CollectionList/state'
-import ordersReducer from './modules/Omis/CollectionList/reducer'
-
-import RoutedInput from './components/RoutedInput'
-
-import Resource from './components/Resource'
-
-import { ContactForm } from './components/ContactForm'
-import Form from './components/Form'
-
-import { ID as FLASH_MESSAGE_ID } from './components/LocalHeader/state'
-import flashMessageReducer from './components/LocalHeader/reducer'
-
-import { ID as CONTACT_ACTIVITIES_ID } from '../client/modules/Contacts/ContactActivity/state'
-import contactActivitiesReducer from '../client/modules/Contacts/ContactActivity/reducer'
-
-import { ID as REMINDERS_ID } from './modules/Reminders/state'
-import remindersReducer from './modules/Reminders/reducer'
-
-const sagaMiddleware = createSagaMiddleware()
-const history = createBrowserHistory({
-  // The baseURI is set to the <base/> tag by the spaFallbackSpread
-  // middleware, which should be applied to each Express route where
-  // react-router is expected to be used.
-  basename: queryString.stringify(new URL(document.baseURI).pathname),
-})
-
-const parseProps = (domNode) => {
-  if (!domNode) {
-    return {
-      modulePermissions: [],
-      currentAdviserId: '',
-      activeFeatures: null,
-      activeFeatureGroups: null,
-    }
-  }
-  return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
-}
-
-const appWrapper = document.getElementById('react-app')
-
-const {
-  modulePermissions,
-  currentAdviserId,
-  activeFeatures,
-  activeFeatureGroups,
-} = parseProps(appWrapper)
-
-const reducer = {
-  currentAdviserId: () => currentAdviserId,
-  activeFeatures: () => activeFeatures,
-  activeFeatureGroups: () => activeFeatureGroups,
-  modulePermissions: () => modulePermissions,
-  router: connectRouter(history),
-  tasks,
-  [FLASH_MESSAGE_ID]: flashMessageReducer,
-  [COMPANY_LISTS_STATE_ID]: companyListsReducer,
-  [COMPANIES_ID]: companiesReducer,
-  [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
-  [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
-  [REFERRALS_SEND_ID]: referralsSendReducer,
-  [EXPORTS_WINS_ID]: exportWinsReducer,
-  [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
-  [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
-  [PIPELINE_LIST_ID]: pipelineListReducer,
-  ...TabNav.reducerSpread,
-  ...ReferralList.reducerSpread,
-  ...DropdownMenu.reducerSpread,
-  ...ToggleSection.reducerSpread,
-  ...Typeahead.reducerSpread,
-  ...RoutedInput.reducerSpread,
-  ...Resource.reducerSpread,
-  ...ContactForm.reducerSpread,
-  ...Form.reducerSpread,
-  ...FieldAddAnother.reducerSpread,
-  // A reducer is required to be able to set a preloadedState parameter
-  referrerUrl: (state = {}) => state,
-  [DNB_CHECK_ID]: dnbCheckReducer,
-  [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
-  [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
-  [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
-  [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
-  [COMPANY_PROJECTS_LIST_ID]: investmentProjectsReducer,
-  [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
-  [CREATE_INVESTMENT_PROJECT_ID]: createInvestmentProjectsReducer,
-  [COMPANY_INVESTMENT_COUNT_ID]: createInvestmentProjectsReducer,
-  [CHECK_FOR_INVESTMENTS_ID]: personalDashboardReducer,
-  [DATA_HUB_FEED_ID]: personalDashboardReducer,
-  [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
-  [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
-  [NOTIFICATION_ALERT_ID]: notificationAlertReducer,
-  [CONTACTS_LIST_ID]: contactsReducer,
-  [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
-  [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
-  [INTERACTIONS_ID]: interactionsReducer,
-  [EVENTS_ID]: eventsReducer,
-  [EVENTS_DETAILS_ID]: eventDetailsReducer,
-  [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
-  [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
-    eventAventriRegistrationStatusReducer,
-  [ORDERS_LIST_ID]: ordersReducer,
-  [COMPANY_ORDERS_LIST_ID]: ordersReducer,
-  [REMINDERS_ID]: remindersReducer,
-}
-
-const preloadedState = {
-  referrerUrl: window.document.referrer,
-}
-
-const store = configureStore({
-  devTools: process.env.NODE_ENV === 'development',
-  middleware: [sagaMiddleware, routerMiddleware(history)],
-  preloadedState,
-  reducer,
-})
-
-const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
+const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
+  sagaMiddleware.run(rootSaga(tasks))
+)
 
 /**
  * Provides state management and routing infrastructure required by the
@@ -250,19 +25,20 @@ const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
  *    <ReferralList id="foo"/>
  * </DataHubProvider>
  */
-export default class DataHubProvider extends React.Component {
-  constructor(...args) {
-    super(...args)
-    // We only ever want to start the sagas once
-    runMiddlewareOnce(this.props.tasks || {})
-  }
-  render() {
-    return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          {this.props.children}
-        </ConnectedRouter>
-      </Provider>
-    )
-  }
+const DataHubProvider = ({
+  tasks,
+  store,
+  history,
+  sagaMiddleware,
+  children,
+}) => {
+  runMiddlewareOnce(tasks, sagaMiddleware)
+
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+    </Provider>
+  )
 }
+
+export default DataHubProvider

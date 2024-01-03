@@ -5,27 +5,12 @@ const FILTER_KEYS = {
   dataHubActivity: 'dataHubActivity',
 }
 
-const FILTER_ITEMS = {
-  dataHubAndExternalActivity: {
-    label: 'All Data Hub & external activity',
-    value: FILTER_KEYS.dataHubAndExternalActivity,
-  },
-
-  externalActivity: {
-    label: 'All external activity',
-    value: FILTER_KEYS.externalActivity,
-  },
-
-  myActivity: {
-    label: 'My activity',
-    value: FILTER_KEYS.myActivity,
-  },
-
-  dataHubActivity: {
-    label: 'All Data Hub activity',
-    value: FILTER_KEYS.dataHubActivity,
-  },
+const FILTER_FEED_TYPE = {
+  ALL: 'all',
+  RECENT: 'recent',
+  UPCOMING: 'upcoming',
 }
+
 const CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS = {
   newest: 'desc',
   oldest: 'asc',
@@ -167,10 +152,6 @@ const DATA_HUB_ACTIVITY = [
   'dit:InvestmentProject',
   'dit:OMISOrder',
   'dit:CompanyReferral',
-]
-
-const DATA_HUB_AND_AVENTRI_ACTIVITY = [
-  ...DATA_HUB_ACTIVITY,
   'dit:aventri:Event',
 ]
 
@@ -181,7 +162,7 @@ const EXTERNAL_ACTIVITY = [
 ]
 
 const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
-  ...DATA_HUB_AND_AVENTRI_ACTIVITY,
+  ...DATA_HUB_ACTIVITY,
   ...EXTERNAL_ACTIVITY,
 ]
 
@@ -192,14 +173,13 @@ module.exports = {
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ALL_ACTIVITY,
   FILTER_KEYS,
-  FILTER_ITEMS,
+  FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
   DATA_HUB_AND_EXTERNAL_ACTIVITY,
   CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
 
-  DATA_HUB_AND_AVENTRI_ACTIVITY,
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_MAPPING,
 }

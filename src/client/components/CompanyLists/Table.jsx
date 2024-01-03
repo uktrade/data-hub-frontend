@@ -1,6 +1,11 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import VisuallyHidden from '@govuk-react/visually-hidden'
+import React from 'react'
+import LinesEllipsis from 'react-lines-ellipsis'
+import styled from 'styled-components'
+
 import {
   BORDER_COLOUR,
   LINK_ACTIVE_COLOUR,
@@ -8,12 +13,7 @@ import {
   LINK_HOVER_COLOUR,
   LINK_VISITED_COLOUR,
   PAGE_COLOUR,
-} from 'govuk-colours'
-import VisuallyHidden from '@govuk-react/visually-hidden'
-import React from 'react'
-import LinesEllipsis from 'react-lines-ellipsis'
-import styled from 'styled-components'
-
+} from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
 
@@ -39,6 +39,10 @@ const StyledCell = styled.td({
   padding: 0,
   borderBottom: 'none',
 })
+const StyledHeaderCell = styled.th({
+  padding: 0,
+  borderBottom: 'none',
+})
 const StyledTableCell = styled(StyledCell)(({ theme }) => ({
   display: 'inline-block',
   width: '100%',
@@ -50,7 +54,7 @@ const StyledTableCell = styled(StyledCell)(({ theme }) => ({
   },
 }))
 
-const StyledHeaderCell = styled(StyledCell)(({ theme }) => ({
+const StyledTableHeaderCell = styled(StyledHeaderCell)(({ theme }) => ({
   display: 'none',
   fontWeight: FONT_WEIGHTS.bold,
   [getMediaQuery(theme)]: {
@@ -118,26 +122,28 @@ const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
     ? 'Unknown adviser - Unknown team'
     : ditParticipants.length > 1
-    ? 'Multiple advisers'
-    : ditParticipants.map((adviser, index) => (
-        <div key={index}>
-          {`${adviser.name || 'Unknown adviser'} - ${
-            adviser.team || 'Unknown team'
-          }`}
-        </div>
-      ))
+      ? 'Multiple advisers'
+      : ditParticipants.map((adviser, index) => (
+          <div key={index}>
+            {`${adviser.name || 'Unknown adviser'} - ${
+              adviser.team || 'Unknown team'
+            }`}
+          </div>
+        ))
 
 const CompaniesTable = ({ companies }) => (
   <Table
     head={
       <Table.Row>
-        <StyledHeaderCell width="auto">Company name</StyledHeaderCell>
-        <StyledHeaderCell width="15%">Last interaction</StyledHeaderCell>
-        <StyledHeaderCell width="25%">Subject</StyledHeaderCell>
-        <StyledHeaderCell width="20%">Added by</StyledHeaderCell>
-        <StyledHeaderCell width="151px">
+        <StyledTableHeaderCell width="auto">Company name</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="15%">
+          Last interaction
+        </StyledTableHeaderCell>
+        <StyledTableHeaderCell width="25%">Subject</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="20%">Added by</StyledTableHeaderCell>
+        <StyledTableHeaderCell width="151px">
           <VisuallyHidden>Action</VisuallyHidden>
-        </StyledHeaderCell>
+        </StyledTableHeaderCell>
       </Table.Row>
     }
   >

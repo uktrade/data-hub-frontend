@@ -1,8 +1,16 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 
 import InvestmentProjectLocalHeader from 'InvestmentProjectLocalHeader'
+
 import urls from '../../../../lib/urls'
+
+import {
+  STAGE_ACTIVE,
+  STAGE_ASSIGN_PM,
+  STAGE_PROSPECT,
+  STAGE_VERIFY_WIN,
+  STAGE_WON,
+} from '../../../modules/Investments/Projects/constants'
 
 const investment = {
   id: '123',
@@ -20,13 +28,13 @@ const investment = {
     },
   },
   stage: {
-    name: 'Prospect',
+    name: STAGE_PROSPECT,
   },
   status: 'ongoing',
 }
 
 const breadcrumbs = [
-  { link: urls.dashboard(), text: 'Home' },
+  { link: urls.dashboard.index(), text: 'Home' },
   {
     link: urls.investments.index(),
     text: 'Investments',
@@ -41,124 +49,194 @@ const breadcrumbs = [
   },
 ]
 
-storiesOf('InvestmentProjectLocalHeader', module)
-  .addParameters({ component: InvestmentProjectLocalHeader })
-  .add('Status: Ongoing', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        status: 'ongoing',
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Status: Delayed', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        status: 'delayed',
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Status: Abandoned', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        status: 'abandoned',
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Status: Lost', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        status: 'lost',
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Status: Dormant', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        status: 'dormant',
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Stage: Prospect', () => (
-    <InvestmentProjectLocalHeader
-      investment={investment}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Stage: Assign PM', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        stage: {
-          name: 'Assign PM',
-        },
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Stage: Active', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        stage: {
-          name: 'Active',
-        },
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Stage: Verify win', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        stage: {
-          name: 'Verify win',
-        },
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Stage: Won', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        stage: {
-          name: 'Won',
-        },
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Project valued: false', () => (
-    <InvestmentProjectLocalHeader
-      investment={investment}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Project valued: true', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        value_complete: true,
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
-  .add('Created by: no DIT team', () => (
-    <InvestmentProjectLocalHeader
-      investment={{
-        ...investment,
-        created_by: {},
-      }}
-      breadcrumbs={breadcrumbs}
-    />
-  ))
+export default {
+  title: 'InvestmentProjectLocalHeader',
+
+  parameters: {
+    component: InvestmentProjectLocalHeader,
+  },
+}
+
+export const StatusOngoing = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      status: 'ongoing',
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StatusOngoing.story = {
+  name: 'Status: Ongoing',
+}
+
+export const StatusDelayed = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      status: 'delayed',
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StatusDelayed.story = {
+  name: 'Status: Delayed',
+}
+
+export const StatusAbandoned = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      status: 'abandoned',
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StatusAbandoned.story = {
+  name: 'Status: Abandoned',
+}
+
+export const StatusLost = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      status: 'lost',
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StatusLost.story = {
+  name: 'Status: Lost',
+}
+
+export const StatusDormant = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      status: 'dormant',
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StatusDormant.story = {
+  name: 'Status: Dormant',
+}
+
+export const StageProspect = () => (
+  <InvestmentProjectLocalHeader
+    investment={investment}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StageProspect.story = {
+  name: 'Stage: Prospect',
+}
+
+export const StageAssignPm = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      stage: {
+        name: STAGE_ASSIGN_PM,
+      },
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StageAssignPm.story = {
+  name: 'Stage: Assign PM',
+}
+
+export const StageActive = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      stage: {
+        name: STAGE_ACTIVE,
+      },
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StageActive.story = {
+  name: 'Stage: Active',
+}
+
+export const StageVerifyWin = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      stage: {
+        name: STAGE_VERIFY_WIN,
+      },
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StageVerifyWin.story = {
+  name: 'Stage: Verify win',
+}
+
+export const StageWon = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      stage: {
+        name: STAGE_WON,
+      },
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+StageWon.story = {
+  name: 'Stage: Won',
+}
+
+export const ProjectValuedFalse = () => (
+  <InvestmentProjectLocalHeader
+    investment={investment}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+ProjectValuedFalse.story = {
+  name: 'Project valued: false',
+}
+
+export const ProjectValuedTrue = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      value_complete: true,
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+ProjectValuedTrue.story = {
+  name: 'Project valued: true',
+}
+
+export const CreatedByNoDbtTeam = () => (
+  <InvestmentProjectLocalHeader
+    investment={{
+      ...investment,
+      created_by: {},
+    }}
+    breadcrumbs={breadcrumbs}
+  />
+)
+
+CreatedByNoDbtTeam.story = {
+  name: 'Created by: no DBT team',
+}

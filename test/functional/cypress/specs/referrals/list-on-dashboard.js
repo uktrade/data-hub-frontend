@@ -180,7 +180,7 @@ const assertResultList = (expectedItems) => {
 describe('Referall list on dashboard', () => {
   before(() => {
     cy.visit('/')
-    cy.selectDhTablistTab('Dashboard', 'My referrals')
+    cy.selectDhTablistTab('Dashboard', 'Referrals')
       // This is only to wait for the content to be loaded
       .within(() => cy.get('ol'))
   })
@@ -191,7 +191,7 @@ describe('Referall list on dashboard', () => {
       .should('eq', Cypress.config().baseUrl + urls.companies.referrals.list()))
 
   it('All referrals should be visible by default', () => {
-    cy.selectDhTablistTab('Dashboard', 'My referrals')
+    cy.selectDhTablistTab('Dashboard', 'Referrals')
       .children()
       .eq(0)
       .within(() =>

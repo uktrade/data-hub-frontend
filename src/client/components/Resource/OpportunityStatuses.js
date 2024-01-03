@@ -1,4 +1,4 @@
-import { createMetadataResource } from '.'
+import { createMetadataResource } from './Resource'
 
 export default createMetadataResource(
   'OpportunityStatuses',

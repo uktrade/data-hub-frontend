@@ -63,9 +63,7 @@
             "name": "EITA Test Event 2022",
             "published": "2022-01-23T20:09:14",
             "startTime": "2021-03-02T20:09:14",
-            "type": [
-              "dit:aventri:Event"
-            ],
+            "type": ["dit:aventri:Event"],
             "url": ""
           },
           "published": "2022-01-23T20:09:14",
@@ -121,9 +119,7 @@
             "name": "EITA Test Event 2 2022",
             "published": "2022-01-23T20:09:14",
             "startTime": "2021-03-02T20:09:14",
-            "type": [
-              "dit:aventri:Event"
-            ],
+            "type": ["dit:aventri:Event"],
             "url": ""
           },
           "published": "2022-01-23T20:09:14",
@@ -179,9 +175,7 @@
             "name": "EITA Test Event2 with unknown date",
             "published": "2022-01-23T20:09:14",
             "startTime": null,
-            "type": [
-              "dit:aventri:Event"
-            ],
+            "type": ["dit:aventri:Event"],
             "url": ""
           },
           "published": "2022-01-23T20:09:14",
@@ -206,60 +200,42 @@
                 "dit:dunsNumber": null,
                 "id": "dit:DataHubCompany:0fb3379c-341c-4da4-b825-bf8d47b26baa",
                 "name": "Lambda plc",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "dit:emailAddress": "Brendan.Smith@trade.gov.uk",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
                   "name": "Digital Data Hub - Live Service",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ]
+                  "type": ["Group", "dit:Team"]
                 },
                 "id": "dit:DataHubAdviser:8891ec72-b4ec-4977-9656-839346bc6011",
                 "name": "Brendan Smith",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ]
+                "type": ["Person", "dit:Adviser"]
               },
               {
                 "dit:emailAddress": "Dolly.Parton@trade.gov.uk",
                 "dit:team": {
                   "id": "dit:DataHubTeam:3a48318c-9698-e211-a939-e4115bead28a",
                   "name": "Digital Data Hub - Live Service",
-                  "type": [
-                    "Group",
-                    "dit:Team"
-                  ]
+                  "type": ["Group", "dit:Team"]
                 },
                 "id": "dit:DataHubAdviser:8891ec72-b4ec-4977-9656-839346bc7122",
                 "name": "Dolly Long Middle Name Parton",
-                "type": [
-                  "Person",
-                  "dit:Adviser"
-                ]
+                "type": ["Person", "dit:Adviser"]
               },
               {
                 "dit:emailAddress": "Tyson.Morar@example.com",
                 "dit:jobTitle": "Product Metrics Associate",
                 "id": "dit:DataHubContact:e2eee6cd-acf6-454a-a4a8-f6c8fa604fde",
                 "name": "Tyson Morar",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "url": "http://localhost:3000/contacts/e2eee6cd-acf6-454a-a4a8-f6c8fa604fde"
               }
             ],
             "dit:archived": false,
             "dit:service": {
-              "name": "Making Export Introductions : Someone else in DIT"
+              "name": "Export introductions : Someone else in DBT"
             },
             "dit:status": "draft",
             "dit:subject": "Meeting between Brendan Smith and Tyson Morar",
@@ -279,9 +255,7 @@
           "published": "2019-06-17T16:02:28.796549Z",
           "type": "Announce"
         },
-        "sort": [
-          1560787348796
-        ]
+        "sort": [1560787348796]
       },
       {
         "_index": "activities__feed_id_datahub-interactions__date_2020-06-20__timestamp_1561034370__batch_id_xputyeio__",
@@ -301,20 +275,14 @@
                 "dit:dunsNumber": null,
                 "id": "dit:DataHubCompany:0fb3379c-341c-4da4-b825-bf8d47b26baa",
                 "name": "Lambda plc",
-                "type": [
-                  "Organization",
-                  "dit:Company"
-                ]
+                "type": ["Organization", "dit:Company"]
               },
               {
                 "dit:emailAddress": "Tyson.Morar@example.com",
                 "dit:jobTitle": "Product Metrics Associate",
                 "id": "dit:DataHubContact:e2eee6cd-acf6-454a-a4a8-f6c8fa604fde",
                 "name": "Tyson Morar",
-                "type": [
-                  "Person",
-                  "dit:Contact"
-                ],
+                "type": ["Person", "dit:Contact"],
                 "url": "http://localhost:3000/contacts/e2eee6cd-acf6-454a-a4a8-f6c8fa604fde"
               }
             ],
@@ -333,9 +301,7 @@
           "published": "2020-06-17T16:02:28.796549Z",
           "type": "Announce"
         },
-        "sort": [
-          1560787348796
-        ]
+        "sort": [1560787348796]
       },
       {
         "_index": "activity-feed",
@@ -350,7 +316,7 @@
             "dit:blackListedReason": null,
             "dit:emailAddress": "gary.james@fish.com",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:26731",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
@@ -390,9 +356,7 @@
               "action_name": "gov-notify-email",
               "email_address": "gary.james@fish.com",
               "email_reply_to_id": "ad1b973d-5c49-4d1d-a197-863fd25b4a97",
-              "funnel_steps": [
-                "domestic"
-              ],
+              "funnel_steps": ["domestic"],
               "ingress_url": "https://www.gov.uk/",
               "sender": {},
               "spam_control": {},
@@ -409,20 +373,18 @@
         "_source": {
           "actor": {
             "dit:blackListedReason": null,
-            "dit:emailAddress": "contact@bob.com",
+            "dit:emailAddress": "superglue@gov.uk",
             "dit:isBlacklisted": false,
-            "dit:isWhitelisted": false,
+            "dit:isAllowListed": false,
             "id": "dit:directoryFormsApi:Sender:1111",
             "type": "dit:directoryFormsApi:Submission:Sender"
           },
           "id": "dit:directoryFormsApi:Submission:1111:Create",
           "object": {
-            "attributedTo": [
-              {
-                "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
-                "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
-              }
-            ],
+            "attributedTo": {
+              "id": "dit:directoryFormsApi:SubmissionType:export-support-service",
+              "type": "dit:directoryFormsApi:SubmissionAction:zendesk"
+            },
             "dit:directoryFormsApi:Submission:Data": {
               "_custom_fields": [
                 {

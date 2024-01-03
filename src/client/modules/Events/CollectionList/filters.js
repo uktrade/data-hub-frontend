@@ -19,9 +19,9 @@ export const buildSelectedFilters = (
   },
   organisers: {
     queryParam: 'organiser',
-    options: selectedOrganisers.map(({ advisers }) => ({
-      label: advisers.name,
-      value: advisers.id,
+    options: selectedOrganisers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
       categoryLabel: LABELS.organiser,
     })),
   },
@@ -61,6 +61,14 @@ export const buildSelectedFilters = (
       options: metadata.eventTypeOptions,
       value: queryParams.event_type,
       categoryLabel: LABELS.eventType,
+    }),
+  },
+  relatedProgrammes: {
+    queryParam: 'related_programmes',
+    options: buildOptionsFilter({
+      options: metadata.relatedProgrammeOptions,
+      value: queryParams.related_programmes,
+      categoryLabel: LABELS.relatedProgrammes,
     }),
   },
 })

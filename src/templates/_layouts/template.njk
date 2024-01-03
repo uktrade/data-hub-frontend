@@ -1,11 +1,10 @@
 {% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "button/macro.njk" import govukButton %}
 {% from "details/macro.njk" import govukDetails %}
-{% from '_macros/details-container/macro.njk' import DetailsContainer %}
 {% from "_macros/form.njk" import FormGroup, Fieldset, TextField, AddAnother, Link, FormSubHeading, MultipleChoiceField, PreviouslySelected, HiddenField, DateFieldset, DateField, UneditableField %}
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/common.njk" import LocalHeader with context %}
-{% from "_macros/common.njk" import Message, MessageList, Pagination, LocalNav, Progress, FromNow, AnswersSummary, HiddenContent, TabbedLocalNav %}
+{% from "_macros/common.njk" import Message, MessageList, Pagination, LocalNav, FromNow, HiddenContent, TabbedLocalNav %}
 {% from "_macros/collection.njk" import CollectionContent, CollectionFilters %}
 {% from "_macros/entity.njk" import MetaList %}
 
@@ -19,8 +18,8 @@
 {# Remove the skipLink from the base template #}
 {% block skipLink %}{% endblock %}
 
-{% set pageTitle = [getPageTitle() if getPageTitle, 'DIT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
-{%- set titleDefault = 'Department for International Trade' -%}
+{% set pageTitle = [getPageTitle() if getPageTitle, 'DBT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
+{%- set titleDefault = 'Department for Business and  Trade' -%}
 {%- set htmlClasses = 'no-js' -%}
 
 {% block pageTitle %}
@@ -65,14 +64,6 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="1200">
 
-  <!-- twitter -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:domain" content="{{ BASE_URL }}">
-  <meta name="twitter:title" content="{{ title | default(titleDefault) }}">
-  {% if description -%}
-    <meta name="twitter:description" content="{{ description }}">
-  {% endif -%}
-
   <!-- styles -->
   <link href="{{ getAssetPath('styles.css') }}" media="screen, print" rel="stylesheet">
 
@@ -94,9 +85,6 @@
       <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a>
     </p>
   </div>
-  <nav role="navigation">
-    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
-  </nav>
 {% endblock %}
 
 {% block header %}
@@ -108,7 +96,7 @@
   {% block local_header %}
     {% set pageTitle = getPageTitle() if getPageTitle %}
     {% set heading = heading or pageTitle[0] %}
-    {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
+    {{ LocalHeader({ heading: heading, subHeading: props.subHeading,  modifier: 'light-banner' }) }}
   {% endblock %}
 
 {% endblock %}

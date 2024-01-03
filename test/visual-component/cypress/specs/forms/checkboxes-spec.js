@@ -6,14 +6,14 @@ describe('Forms', () => {
   describe('Default', () => {
     it('should render the default checkbox component correctly', () => {
       cy.visit('/iframe.html?id=form-form-elements-checkboxes--default')
-      cy.get('#root').should('be.visible').compareSnapshot('default')
+      cy.get('#storybook-root').should('be.visible').compareSnapshot('default')
     })
   })
 
   describe('Hint', () => {
     it('should render the checkbox with hint component correctly', () => {
       cy.visit('/iframe.html?id=form-form-elements-checkboxes--checkboxes-hint')
-      cy.get('#root').should('be.visible').compareSnapshot('hint')
+      cy.get('#storybook-root').should('be.visible').compareSnapshot('hint')
     })
   })
 
@@ -22,7 +22,7 @@ describe('Forms', () => {
       cy.visit(
         '/iframe.html?id=form-form-elements-checkboxes--checkboxes-legend'
       )
-      cy.get('#root').should('be.visible').compareSnapshot('legend')
+      cy.get('#storybook-root').should('be.visible').compareSnapshot('legend')
     })
   })
 })

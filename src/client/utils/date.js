@@ -17,7 +17,6 @@ const {
   formatDistanceToNowStrict,
   isAfter,
   isValid,
-  minutesToHours,
   parse,
   parseISO,
   subDays,
@@ -25,6 +24,7 @@ const {
   subYears,
   subWeeks,
   differenceInCalendarMonths,
+  isFuture,
 } = require('date-fns')
 
 const {
@@ -81,8 +81,12 @@ function subtractMonths(date, numberOfMonths) {
   return subMonths(date, numberOfMonths)
 }
 
-function convertMinutesToHours(date) {
-  return minutesToHours(date)
+function isDateInFuture(date) {
+  return isFuture(parseISO(date))
+}
+
+function parseDateISO(date) {
+  return parseISO(date)
 }
 
 /**
@@ -222,14 +226,6 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-function parseInvestmentDate(dateStr) {
-  return {
-    day: parseInt(formatFns(new Date(dateStr), 'd')),
-    month: parseInt(formatFns(new Date(dateStr), 'M')),
-    year: parseInt(formatFns(new Date(dateStr), 'yyyy')),
-  }
-}
-
 function createDateFromObject({ day, month, year }) {
   const monthIndex = parseInt(month, 10) - 1
   const result = new Date(year, monthIndex, day)
@@ -262,11 +258,37 @@ function formatStartAndEndDate(startDate, endDate) {
   return `${startDateFormatted} to ${endDateFormatted}`
 }
 
+/**
+ * Convert a date to a short object format required by the FieldDate component
+ * @param {*} date a string representing a date or a Date type
+ * @returns an object of the format {month:'', year:''}
+ */
+function convertDateToFieldShortDateObject(date) {
+  const { month, year } = convertDateToFieldDateObject(date)
+  return { month, year }
+}
+
+/**
+ * Convert a date to an object format required by the FieldDate component
+ * @param {*} date a string representing a date or a Date type
+ * @returns an object of the format {day:'', month:'', year:''}
+ */
+function convertDateToFieldDateObject(date) {
+  const parsedTime = parseISO(date)
+  if (isValid(parsedTime)) {
+    return {
+      day: parsedTime.getDate(),
+      month: parsedTime.getMonth() + 1, //getMonth is zero based
+      year: parsedTime.getFullYear(),
+    }
+  }
+  return { day: '', month: '', year: '' }
+}
+
 module.exports = {
   addDays,
   addMonths,
   addYears,
-  convertMinutesToHours,
   createAndFormatDateObject,
   format,
   formatMediumDate,
@@ -288,7 +310,6 @@ module.exports = {
   isShortDateValid,
   isUnparsedDateValid,
   parseDateString,
-  parseInvestmentDate,
   subtractDays,
   subtractMonths,
   subtractYears,
@@ -297,4 +318,8 @@ module.exports = {
   transformValueForAPI,
   createDateFromObject,
   formatStartAndEndDate,
+  convertDateToFieldShortDateObject,
+  isDateInFuture,
+  parseDateISO,
+  convertDateToFieldDateObject,
 }

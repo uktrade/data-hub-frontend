@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { spacing } from '@govuk-react/lib'
-import { BLUE } from 'govuk-colours'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+
+import { BLUE } from '../../../client/utils/colours'
 
 const StatusMessage = styled('div')`
   border: ${({ colour }) => `${SPACING.SCALE_1} solid ${colour}`};
@@ -21,8 +22,8 @@ StatusMessage.propTypes = {
 
 StatusMessage.defaultProps = {
   colour: BLUE,
+  role: 'alert',
   'data-test': 'status-message',
-  'aria-live': 'polite',
 }
 
 export default StatusMessage

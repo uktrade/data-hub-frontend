@@ -1,4 +1,10 @@
-import { assertBreadcrumbs, assertErrorDialog } from '../../support/assertions'
+import { assertErrorDialog } from '../../support/assertions'
+import {
+  assertRole,
+  assertCollectionBreadcrumbs,
+  assertAddItemButton,
+  assertPaginationSummary,
+} from '../../support/collection-list-assertions'
 import { events } from '../../../../../src/lib/urls'
 
 const urls = require('../../../../../src/lib/urls')
@@ -15,11 +21,10 @@ describe('Event Collection List Page - React', () => {
         cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
       })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: '/',
-          Events: null,
-        })
+      assertCollectionBreadcrumbs('Events')
+
+      it('should contain a status role', () => {
+        assertRole('status')
       })
 
       it('should display the events result count header', () => {
@@ -29,14 +34,11 @@ describe('Event Collection List Page - React', () => {
       })
 
       it('should have a link to add event', () => {
-        cy.get('[data-test="add-collection-item-button"]')
-          .should('exist')
-          .should('contain', 'Add event')
-          .should('have.attr', 'href', '/events/create')
+        assertAddItemButton('Add event', '/events/create')
       })
 
       it('should display the expected number of pages', () => {
-        cy.get('[data-test=pagination-summary]').contains('Page 1 of 9')
+        assertPaginationSummary('Page 1 of 9')
       })
 
       it('should not display the data hub API collection list', () => {
@@ -114,7 +116,7 @@ describe('Event Collection List Page - React', () => {
       context('when there are more than 10 events', () => {
         it('should be possible to page through', () => {
           cy.get('[data-page-number="2"]').click()
-          cy.get('[data-test=pagination-summary]').contains('Page 2 of 9')
+          assertPaginationSummary('Page 2 of 9')
           cy.get('@firstDataHubEvent')
             .find('[data-test="data-hub-event-name"]')
             .should('exist')

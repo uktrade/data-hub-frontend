@@ -1,4 +1,5 @@
 const { get, isEmpty, pick } = require('lodash')
+const url = require('url')
 
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const {
@@ -9,7 +10,6 @@ const { transformToDnbInvestigation } = require('./transformers')
 const { getOptions } = require('../../../../lib/options')
 const { postToZenDesk } = require('../../../support/services')
 const urls = require('../../../../lib/urls')
-const url = require('url')
 
 const ZENDESK_TICKET_TAG_MERGE_REQUEST = 'dnb_merge_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'

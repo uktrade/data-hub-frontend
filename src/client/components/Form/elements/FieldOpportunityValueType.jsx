@@ -1,6 +1,6 @@
 import React from 'react'
 
-import OpportunityValueTypeResource from '../../Resource/OpportunityValueType'
+import { OpportunityValueTypesResource } from '../../Resource'
 import ResourceOptionsField from './ResourceOptionsField'
 import FieldRadios from './FieldRadios'
 
@@ -8,7 +8,7 @@ const OpportunityValueTypeOptions = (props) => (
   <ResourceOptionsField
     legend="Opportunity value type"
     {...props}
-    resource={OpportunityValueTypeResource}
+    resource={OpportunityValueTypesResource}
   />
 )
 

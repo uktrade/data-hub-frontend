@@ -119,7 +119,7 @@ describe('contact form service', () => {
       expect(contactFormService.getContactAsFormData(null)).to.be.null
     })
 
-    context('when the contact accepts DIT email marketing', () => {
+    context('when the contact accepts DBT email marketing', () => {
       it('should set the marketing preferences to accepts_dit_email_marketing', () => {
         const contact = assign({}, contactData, {
           accepts_dit_email_marketing: true,

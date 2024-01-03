@@ -71,7 +71,7 @@
               "name": "Email/Website"
             },
             "dit:service": {
-              "name": "A Specific DIT Export Service or Funding : Export Academy"
+              "name": "DBT export service or funding : Export Academy"
             },
             "dit:status": "complete",
             "dit:subject": "Webinar",

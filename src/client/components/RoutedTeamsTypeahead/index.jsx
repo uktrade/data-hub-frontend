@@ -6,14 +6,12 @@ import RoutedTypeahead from '../RoutedTypeahead'
 import Task from '../Task'
 import urls from '../../../lib/urls'
 import { apiProxyAxios } from '../Task/utils'
+import { transformIdNameToValueLabel } from '../../transformers'
 
 const parseTeamData = (teams) =>
   teams
     .filter((team) => team.name && team.name.trim().length)
-    .map(({ id, name }) => ({
-      label: name,
-      value: id,
-    }))
+    .map(transformIdNameToValueLabel)
 
 const fetchTeams = () =>
   throttle((searchString) => {
@@ -32,6 +30,7 @@ const fetchTeams = () =>
 
 const RoutedTeamsTypeahead = ({
   taskProps,
+  closeMenuOnSelect,
   loadOptions = fetchTeams(),
   ...props
 }) => (
@@ -39,7 +38,7 @@ const RoutedTeamsTypeahead = ({
     {() => (
       <RoutedTypeahead
         loadOptions={loadOptions}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={closeMenuOnSelect}
         {...props}
       />
     )}
@@ -52,6 +51,9 @@ RoutedTeamsTypeahead.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
+  closeMenuOnSelect: PropTypes.bool,
 }
+
+RoutedTeamsTypeahead.defaultProps = { closeMenuOnSelect: true }
 
 export default RoutedTeamsTypeahead

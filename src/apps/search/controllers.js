@@ -10,7 +10,7 @@ const { transformContactToListItem } = require('../contacts/transformers')
 const { transformEventToListItem } = require('../events/transformers')
 const {
   transformInvestmentProjectToListItem,
-} = require('../investments/transformers')
+} = require('../investments/transformers/collection')
 const { transformOrderToListItem } = require('../omis/transformers')
 const {
   transformInteractionToListItem,

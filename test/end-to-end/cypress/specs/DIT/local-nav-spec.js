@@ -1,22 +1,23 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const { assertLocalNav } = require('../../support/assertions')
-
+const urls = require('../../../../../src/lib/urls')
 const {
-  companies,
-  contacts,
-  dashboard,
-  events,
-  investments,
-} = require('../../../../../src/lib/urls')
+  assertLocalNav,
+  assertLocalReactNav,
+  assertActivitytab,
+} = require('../../support/assertions')
 
-describe('DIT Permission', () => {
+describe('DBT Permission', () => {
   describe('dashboard', () => {
     before(() => {
-      cy.visit(dashboard())
+      cy.visit(urls.dashboard.index())
     })
 
-    it('should display DIT only header nav links', () => {
+    it('should display CRM Community in the Datahub Bar', () => {
+      cy.get('[data-test="crm-community-link"]').should('be.visible')
+    })
+
+    it('should display DBT only header nav links', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
@@ -28,6 +29,17 @@ describe('DIT Permission', () => {
         'Support',
       ])
     })
+
+    it('should display all five dashboard tabs', () => {
+      cy.get('[data-test="tab-item"]').as('tabItems')
+      assertLocalNav('@tabItems', [
+        'Tasks',
+        'Company lists',
+        'Investment projects',
+        'Export projects',
+        'Referrals',
+      ])
+    })
   })
 
   describe('activity', () => {
@@ -35,18 +47,24 @@ describe('DIT Permission', () => {
 
     before(() => {
       cy.loadFixture([company])
-      cy.visit(companies.detail(company.pk))
+      cy.visit(urls.companies.detail(company.pk))
     })
 
-    it('should display DIT only tabs', () => {
-      assertLocalNav(selectors.tabbedLocalNav().tabs, [
+    it('should display DBT only tabs', () => {
+      assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
+        'Overview',
         'Activity',
-        'Company contacts',
-        'Core team',
+        'Business details',
+        'Contacts',
+        'Account management',
         'Investment',
         'Export',
         'Orders',
       ])
+    })
+    it('when on the activity tab, internal activity should be selected', () => {
+      cy.get('[data-test="tabbedLocalNavList"]').contains('Activity').click()
+      assertActivitytab('#field-activityType-1')
     })
   })
 
@@ -57,15 +75,14 @@ describe('DIT Permission', () => {
     before(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
-      cy.visit(contacts.contact(contact.pk))
+      cy.visit(urls.contacts.contact(contact.pk))
     })
 
-    it('should display DIT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+    it('should display DBT only side navs', () => {
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Details',
-        'Interactions',
+        'Activity',
         'Audit history',
-        'Documents',
       ])
     })
   })
@@ -74,13 +91,14 @@ describe('DIT Permission', () => {
     before(() => {
       const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
-      cy.visit(investments.projects.project(investmentProject.pk))
+      cy.visit(urls.investments.projects.details(investmentProject.pk))
     })
 
-    it('should display DIT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
+    it('should display DBT only side navs', () => {
+      assertLocalReactNav('[data-test=local-nav] > ul', [
         'Project details',
         'Project team',
+        'Tasks',
         'Interactions',
         'Evaluations',
         'Propositions',
@@ -94,11 +112,11 @@ describe('DIT Permission', () => {
     before(() => {
       const event = fixtures.event.create.defaultEvent()
       cy.loadFixture([event])
-      cy.visit(events.details(event.pk))
+      cy.visit(urls.events.details(event.pk))
     })
 
-    it('should display DIT only side navs', () => {
-      const navSelector = '[data-test="eventDetails"] > div > nav > a'
+    it('should display DBT only side navs', () => {
+      const navSelector = '[data-test="event-details-nav-link"]'
       assertLocalNav(navSelector, ['Details', 'Attendee'])
     })
   })

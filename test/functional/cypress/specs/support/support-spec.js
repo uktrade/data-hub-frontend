@@ -1,6 +1,6 @@
 const { expect } = require('chai')
-const urls = require('../../../../../src/lib/urls')
 
+const urls = require('../../../../../src/lib/urls')
 const selectors = require('../../../../selectors')
 
 describe('Accessing support form', () => {

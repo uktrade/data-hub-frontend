@@ -151,6 +151,7 @@ app.use(routers)
 reporter.handleErrors(app)
 
 app.use(errors.notFound)
+app.use(errors.badRequest)
 app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {

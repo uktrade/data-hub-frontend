@@ -9,8 +9,8 @@ import {
   BORDER_WIDTH_FORM_ELEMENT_ERROR,
   SPACING,
 } from '@govuk-react/constants'
-import { ERROR_COLOUR } from 'govuk-colours'
 
+import { ERROR_COLOUR } from '../../../../../client/utils/colours'
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
@@ -22,11 +22,19 @@ const StyledInputWrapper = styled('div')`
     margin-right: ${SPACING.SCALE_3};
     padding-left: ${SPACING.SCALE_2};
   `}
+  ${Input} {
+    height: 47px;
+  }
 `
 
 const StyledText = styled('span')({
   paddingLeft: SPACING.SCALE_2,
 })
+
+const setDataTest = (dataTest, name) => {
+  const element = dataTest ? dataTest : name
+  return kebabCase(`${element}-'input'`)
+}
 
 /**
  * A basic input field for numbers and text.
@@ -42,6 +50,7 @@ const FieldInput = ({
   hint,
   initialValue,
   reduced,
+  dataTest = null,
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -63,7 +72,7 @@ const FieldInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          data-test={kebabCase(`${name}-'input'`)}
+          data-test={setDataTest(dataTest, name)}
           {...rest}
         />
         {text && <StyledText>{text}</StyledText>}
@@ -112,6 +121,10 @@ FieldInput.propTypes = {
    * Toggles wether the element is a filter or not
    */
   reduced: PropTypes.bool,
+  /**
+   * Sets the data-test ID if the name isn't suitable
+   */
+  dataTest: PropTypes.string,
 }
 
 FieldInput.defaultProps = {

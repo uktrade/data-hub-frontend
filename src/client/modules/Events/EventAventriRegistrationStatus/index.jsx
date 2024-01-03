@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
+import { GridCol, GridRow } from 'govuk-react'
+
 import urls from '../../../../lib/urls'
 import {
   CollectionSort,
@@ -12,7 +14,6 @@ import {
   LocalNavLink,
   RoutedPagination,
 } from '../../../components'
-import { GridCol, GridRow } from 'govuk-react'
 import Task from '../../../components/Task'
 import {
   ID,
@@ -26,6 +27,8 @@ import AventriEventSyncWarning from '../../../components/ActivityFeed/activities
 
 import { ATTENDEES_SORT_OPTIONS } from './constants'
 
+const activityListSize = 20
+
 const EventAventriRegistrationStatus = ({
   name,
   aventriEventId,
@@ -34,18 +37,18 @@ const EventAventriRegistrationStatus = ({
   registrationStatusCounts,
   defaultQueryParams = {
     page: 1,
-    size: 10,
+    size: activityListSize,
     sortby: 'first_name:asc',
   },
   payload,
-  page = parseInt(page || 1, 10),
+  page = parseInt(page || 1, activityListSize),
   totalAttendees,
-  itemsPerPage = 10,
+  itemsPerPage = activityListSize,
   maxItemsToPaginate = 10000,
 }) => {
   const breadcrumbs = [
     {
-      link: urls.dashboard(),
+      link: urls.dashboard.index(),
       text: 'Home',
     },
     {
@@ -146,7 +149,11 @@ const EventAventriRegistrationStatus = ({
                 </>
               )}
             </Task.Status>
-            <RoutedPagination initialPage={page} items={totalAttendees} />
+            <RoutedPagination
+              initialPage={page}
+              items={totalAttendees}
+              pageSize={itemsPerPage}
+            />
           </DefaultLayout>
         )
       }}

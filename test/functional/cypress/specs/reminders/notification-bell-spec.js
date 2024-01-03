@@ -3,25 +3,27 @@ import urls from '../../../../../src/lib/urls'
 const assertNotificationBadgeExists = () => {
   cy.get('[data-test="notification-alert-badge"]')
     .should('exist')
-    .should('contain', '289')
+    .should('contain', '99+')
 }
 
 const assertNotificationBadgeNotExist = () =>
   cy.get('[data-test="notification-alert-badge"]').should('not.exist')
 
 describe('Notification bell', () => {
+  after(() => {
+    cy.resetUser()
+    cy.resetFeatureFlags()
+  })
+
   context('Dashboard', () => {
-    beforeEach(() => {
-      cy.setUserFeatures(['personalised-dashboard'])
-    })
     it('should display a notification bell when investments are enabled', () => {
       cy.setUserFeatureGroups(['investment-notifications'])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       assertNotificationBadgeExists()
     })
     it('should display a notification bell when exports are enabled', () => {
       cy.setUserFeatureGroups(['export-notifications'])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       assertNotificationBadgeExists()
     })
     it('should display a notification bell when both investments and exports are enabled', () => {
@@ -29,12 +31,12 @@ describe('Notification bell', () => {
         'investment-notifications',
         'export-notifications',
       ])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       assertNotificationBadgeExists()
     })
     it('should not display a notification bell when either investments or exports are disabled', () => {
       cy.setUserFeatureGroups([])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       assertNotificationBadgeNotExist()
     })
   })
@@ -44,19 +46,19 @@ describe('Notification bell', () => {
         'investment-notifications',
         'export-notifications',
       ])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       cy.get('[data-test="notification-alert-badge"]').click()
       cy.url().should('include', urls.reminders.investments.estimatedLandDate())
     })
     it('should link to "Estimated land date" when only "investment-notifications" is set', () => {
       cy.setUserFeatureGroups(['investment-notifications'])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       cy.get('[data-test="notification-alert-badge"]').click()
       cy.url().should('include', urls.reminders.investments.estimatedLandDate())
     })
     it('should link to "Companies no recent interaction" when only "export-notifications" is set', () => {
       cy.setUserFeatureGroups(['export-notifications'])
-      cy.visit(urls.dashboard())
+      cy.visit(urls.dashboard.index())
       cy.get('[data-test="notification-alert-badge"]').click()
       cy.url().should('include', urls.reminders.exports.noRecentInteractions())
     })

@@ -1,3 +1,10 @@
+import { selectFirstMockedTypeaheadOption } from '../../support/actions'
+
+import {
+  assertTypeaheadOptionSelected,
+  assertSingleTypeaheadOptionSelected,
+} from '../../support/assertions'
+
 const { assertPayload } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 const completeOpportunity = require('../../../../sandbox/fixtures/v4/investment/large-capital-opportunity-complete.json')
@@ -11,12 +18,6 @@ const relationshipManager = require('../../../../sandbox/fixtures/autocomplete-a
 const otherDITContacts = require('../../../../sandbox/fixtures/autocomplete-adviser-list.json')
 const valueType = require('../../../../sandbox/fixtures/metadata/capital-investment-opportunity-value-types.json')
 const assetClasses = require('../../../../sandbox/fixtures/metadata/capital-investment-asset-class-interest.json')
-
-import { selectFirstAdvisersTypeaheadOption } from '../../support/actions'
-import {
-  assertTypeaheadOptionSelected,
-  assertSingleTypeaheadOptionSelected,
-} from '../../support/assertions'
 
 const filteredUKRegions = ukRegions.filter((region) => !region.disabled_on)
 
@@ -98,6 +99,7 @@ describe('A capital opportunity with no existing details', () => {
         .selectTypeaheadOption(filteredUKRegions[1].name)
       cy.contains('Promoters')
         .parent()
+        .parent()
         .selectTypeaheadOption(promoters.results[0].name)
         .selectTypeaheadOption(promoters.results[1].name)
       cy.contains('Has this opportunity cleared the required checks?')
@@ -107,7 +109,7 @@ describe('A capital opportunity with no existing details', () => {
       cy.get('#requiredChecksConductedOn\\.day').type('01')
       cy.get('#requiredChecksConductedOn\\.month').type('01')
       cy.get('#requiredChecksConductedOn\\.year').type('2021')
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-requiredChecksConductedBy',
         input: requiredChecksConductedBy.results[0].name,
       })
@@ -115,21 +117,22 @@ describe('A capital opportunity with no existing details', () => {
         .next()
         .find('input')
         .check(constructionRisk[0].id)
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-leadRelationshipManager',
         input: relationshipManager.results[0].name,
       })
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-otherDitContacts',
         input: otherDITContacts.results[0].name,
       })
-      selectFirstAdvisersTypeaheadOption({
+      selectFirstMockedTypeaheadOption({
         element: '#field-otherDitContacts',
         input: otherDITContacts.results[1].name,
       })
       cy.get('#field-valueType').find('input').check(valueType[0].id)
       cy.get('#opportunityValue').type('123456')
       cy.contains('Asset classes')
+        .parent()
         .parent()
         .selectTypeaheadOption(assetClasses[0].name)
         .selectTypeaheadOption(assetClasses[1].name)

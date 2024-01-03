@@ -170,7 +170,6 @@ function subsidiaryCorp(companyId) {
       registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
       uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
       description: 'dummy company for testing subsidiaries of One List GHQ',
-      archived_documents_url_path: '/documents/123',
       created_on: '2017-07-23T10:00:00Z',
       modified_on: '2017-04-07T10:00:00Z',
       global_headquarters: companyId,

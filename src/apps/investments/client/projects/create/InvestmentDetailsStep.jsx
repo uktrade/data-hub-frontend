@@ -1,115 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
-import { SPACING } from '@govuk-react/constants'
 
 import {
   Step,
-  FieldDate,
   FieldInput,
   FieldRadios,
-  FieldSelect,
-  FieldTextarea,
-  FieldTypeahead,
   SummaryTable,
   ContactInformation,
   FormLayout,
+  FieldAdvisersTypeahead,
 } from '../../../../../client/components'
-import CompanyContactsResource from '../../../../../client/components/Resource/CompanyContacts'
-import { OPTION_NO, OPTIONS_YES_NO } from '../../../../constants'
-import Task from '../../../../../client/components/Task'
 import {
-  CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
-  TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
-} from './state'
-import { FORM_LAYOUT } from '../../../../../common/constants'
-
-const StyledContainer = styled.div(({ error }) => ({
-  paddingLeft: SPACING.SCALE_4,
-  marginLeft: SPACING.SCALE_4,
-  marginTop: SPACING.SCALE_2,
-  ...(error
-    ? { marginLeft: 0 }
-    : {
-        borderLeft: `${SPACING.SCALE_1} solid ${GREY_2}`,
-        marginLeft: SPACING.SCALE_4,
-      }),
-}))
-
-const StyledFieldInput = styled(FieldInput)({
-  width: '100%',
-})
-
-const StyledFieldSelect = styled(FieldSelect)({
-  width: '100%',
-})
+  FieldActualLandDate,
+  FieldAnonDescription,
+  FieldBusinessActivity,
+  FieldClientContacts,
+  FieldEstimatedLandDate,
+  FieldInvestmentInvestorType,
+  FieldLevelOfInvolvement,
+  FieldLikelihoodOfLanding,
+  FieldProjectDescription,
+  FieldProjectName,
+  FieldProjectSector,
+  FieldReferralSourceAdviser,
+  FieldReferralSourceHierarchy,
+  FieldSpecificProgramme,
+} from '../../../../../client/modules/Investments/Projects/InvestmentFormFields'
+import Task from '../../../../../client/components/Task'
+import { CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID } from './state'
+import {
+  FORM_LAYOUT,
+  OPTION_NO,
+  OPTIONS_YES_NO,
+} from '../../../../../common/constants'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
 
 const findSelectedItem = (items, value) =>
   items ? items.find((type) => type.value === value) : null
 
-const buildReferralSourceHierarchy = (
-  {
-    referralSourceActivity = [],
-    referralSourceMarketing,
-    referralSourceWebsite,
-  },
-  {
-    referral_source_activity_event,
-    referral_source_activity_marketing,
-    referral_source_activity_website,
-  }
-) =>
-  referralSourceActivity.map((item) => ({
-    ...item,
-    ...(item.label === 'Event'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_event}>
-              <StyledFieldInput
-                type="text"
-                name="referral_source_activity_event"
-                label="Event type"
-                required="Enter an event type"
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-    ...(item.label === 'Marketing'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_marketing}>
-              <StyledFieldSelect
-                name="referral_source_activity_marketing"
-                label="Choose a marketing type"
-                aria-label="Choose a marketing type"
-                required="You must choose a marketing type"
-                options={referralSourceMarketing}
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-    ...(item.label === 'Website'
-      ? {
-          children: (
-            <StyledContainer error={referral_source_activity_website}>
-              <StyledFieldSelect
-                name="referral_source_activity_website"
-                label="Choose a website"
-                aria-label="Choose a website"
-                required="You must choose a website"
-                options={referralSourceWebsite}
-              />
-            </StyledContainer>
-          ),
-        }
-      : {}),
-  }))
-
-const InvestmentDetailsStep = ({ values, errors, company }) => {
-  const referralSourceHierarchy = buildReferralSourceHierarchy(values, errors)
+const InvestmentDetailsStep = ({ values, company }) => {
   const investmentType = findSelectedItem(
     values.investmentTypes,
     values.investment_type
@@ -130,50 +59,11 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           </SummaryTable.Row>
         </SummaryTable>
 
-        <FieldInput
-          type="text"
-          name="name"
-          label="Project name"
-          required="Enter a project name"
-          data-test="name"
-        />
-
-        <FieldTextarea
-          type="text"
-          name="description"
-          label="Project description"
-          hint="Provide a short description of the project"
-          required="Enter a project description"
-          data-test="description"
-        />
-
-        <FieldTextarea
-          type="text"
-          name="anonymous_description"
-          label="Anonymous project details (optional)"
-          hint="Do not include company names, financial details or addresses"
-          data-test="anonymous-description"
-        />
-
-        <FieldTypeahead
-          name="sector"
-          label="Primary sector"
-          options={values.sectors}
-          placeholder="Choose a sector"
-          required="Choose a sector"
-          data-test="primary-sector"
-        />
-
-        <FieldTypeahead
-          name="business_activities"
-          label="Business activities"
-          hint="You can select more than one activity"
-          placeholder="Search"
-          required="Choose a business activity"
-          options={values.investmentBusinessActivity}
-          isMulti={true}
-          data-test="business-activities"
-        />
+        <FieldProjectName />
+        <FieldProjectDescription hint="Provide a short description of the project" />
+        <FieldAnonDescription />
+        <FieldProjectSector />
+        <FieldBusinessActivity />
 
         {Object.keys(values).length &&
           values?.business_activities?.find(
@@ -191,42 +81,25 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
         <Task>
           {(getTask) => {
             const openContactFormTask = getTask(
-              TASK_CREATE_INVESTMENT_OPEN_CONTACT_FORM,
+              TASK_REDIRECT_TO_CONTACT_FORM,
               CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID
             )
             return (
-              <CompanyContactsResource id={company.id}>
-                {({ results }) => {
-                  return (
-                    <>
-                      <FieldTypeahead
-                        name="client_contacts"
-                        label="Client contact details"
-                        placeholder="Search"
-                        required="Choose a client contact"
-                        data-test="client-contact"
-                        options={results.map(({ name, id }) => ({
-                          label: name,
-                          value: id,
-                        }))}
-                        isMulti={true}
-                      />
-                      <ContactInformation
-                        onOpenContactForm={(e) => {
-                          e.preventDefault()
-                          openContactFormTask.start({
-                            payload: {
-                              values,
-                              url: e.target.href,
-                            },
-                          })
-                        }}
-                        companyId={company.id}
-                      />
-                    </>
-                  )
-                }}
-              </CompanyContactsResource>
+              <>
+                <FieldClientContacts companyId={company.id} />
+                <ContactInformation
+                  onOpenContactForm={({ redirectUrl }) => {
+                    openContactFormTask.start({
+                      payload: {
+                        values,
+                        url: redirectUrl,
+                        storeId: CREATE_INVESTMENT_OPEN_CONTACT_FORM_ID,
+                      },
+                    })
+                  }}
+                  companyId={company.id}
+                />
+              </>
             )
           }}
         </Task>
@@ -239,9 +112,8 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
             ...option,
             ...(option.value === OPTION_NO && {
               children: (
-                <FieldSelect
+                <FieldAdvisersTypeahead
                   name="client_relationship_manager"
-                  options={values.advisers}
                   required="Choose a client relationship manager"
                   aria-label="Choose a client relationship manager"
                 />
@@ -250,75 +122,14 @@ const InvestmentDetailsStep = ({ values, errors, company }) => {
           }))}
         />
 
-        <FieldRadios
-          name="referralSourceAdviser"
-          legend="Are you the referral source for this project?"
-          required="Select yes if you're the referral source for this project"
-          options={OPTIONS_YES_NO.map((option) => ({
-            ...option,
-            ...(option.value === OPTION_NO && {
-              children: (
-                <FieldSelect
-                  name="referral_source_adviser"
-                  options={values.advisers}
-                  required="Choose a referral source adviser"
-                  aria-label="Choose a referral source adviser"
-                />
-              ),
-            }),
-          }))}
-        />
-
-        <StyledFieldSelect
-          name="referral_source_activity"
-          label="Referral source activity"
-          emptyOption="Choose a referral source activity"
-          options={referralSourceHierarchy}
-          required="Choose a referral source activity"
-          data-test="referral-source-activity"
-        />
-
-        <FieldDate
-          format="short"
-          name="estimated_land_date"
-          label="Estimated land date"
-          hint="An estimated date of when investment project activities will start"
-          required="Enter an estimated land date"
-          invalid="Enter a valid estimated land date"
-          data-test="estimated-land-date"
-        />
-
-        <FieldDate
-          name="actual_land_date"
-          label="Actual land date (optional)"
-          hint="The date investment project activities started"
-          invalid="Enter a valid actual land date"
-          data-test="actual-land-date"
-        />
-
-        <FieldTypeahead
-          name="investor_type"
-          label="Is the investor new or existing? (optional)"
-          options={values.investmentInvestorType}
-          placeholder="Choose an investor type"
-          data-test="investor-type"
-        />
-
-        <FieldTypeahead
-          name="level_of_involvement"
-          label="Level of investor involvement (optional)"
-          options={values.investmentInvolvement}
-          placeholder="Choose a level of involvement"
-          data-test="level-of-involvement"
-        />
-
-        <FieldTypeahead
-          name="specific_programme"
-          label="Specific investment programme (optional)"
-          options={values.investmentSpecificProgramme}
-          placeholder="Choose a specific programme"
-          data-test="specific-investment-programme"
-        />
+        <FieldReferralSourceAdviser label="Are you the referral source for this project?" />
+        <FieldReferralSourceHierarchy />
+        <FieldEstimatedLandDate />
+        <FieldLikelihoodOfLanding />
+        <FieldActualLandDate />
+        <FieldInvestmentInvestorType label="Is the investor new or existing? (optional)" />
+        <FieldLevelOfInvolvement />
+        <FieldSpecificProgramme />
       </Step>
     </FormLayout>
   )
@@ -336,15 +147,6 @@ InvestmentDetailsStep.propTypes = {
     investment_type: PropTypes.string,
     fdiTypes: PropTypes.arrayOf(optionProp),
     fdi_type: PropTypes.string,
-    sectors: PropTypes.arrayOf(optionProp),
-    investmentBusinessActivity: PropTypes.arrayOf(optionProp),
-    advisers: PropTypes.arrayOf(PropTypes.object),
-    referralSourceActivity: PropTypes.arrayOf(optionProp),
-    referralSourceMarketing: PropTypes.arrayOf(optionProp),
-    referralSourceWebsite: PropTypes.arrayOf(optionProp),
-    investmentInvestorType: PropTypes.arrayOf(optionProp),
-    investmentInvolvement: PropTypes.arrayOf(optionProp),
-    investmentSpecificProgramme: PropTypes.arrayOf(optionProp),
   }),
 }
 

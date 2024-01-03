@@ -1,17 +1,15 @@
-const { formatMediumDateTime } = require('../../../../../../client/utils/date')
-
-import { GREEN } from 'govuk-colours'
-
+import { formatMediumDateTime } from '../../../../../../client/utils/date'
+import { GREEN } from '../../../../../../client/utils/colours'
 import urls from '../../../../../../lib/urls'
 import groupExportCountries from '../../../../../../lib/group-export-countries'
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} from '../../../../../constants'
+} from '../../../../../../common/constants'
 import { groupHistoryItems } from '../group-history-items'
 import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
-const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
+const ALLOWLISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
@@ -110,7 +108,7 @@ function transformFullExportHistory({ results }, activePage) {
     results.filter(
       (item) =>
         isInteraction(item) ||
-        WHITELISTED_HISTORY_TYPES.includes(item.history_type)
+        ALLOWLISTED_HISTORY_TYPES.includes(item.history_type)
     )
   )
 

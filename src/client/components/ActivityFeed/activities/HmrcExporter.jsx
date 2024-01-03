@@ -8,6 +8,8 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
+import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
+import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 const { format } = require('../../../utils/date')
 
@@ -15,7 +17,6 @@ export default class HmrcExporter extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
     showDetails: PropTypes.bool.isRequired,
-    showDnbHierarchy: PropTypes.bool.isRequired,
   }
 
   static canRender(activity) {
@@ -23,31 +24,47 @@ export default class HmrcExporter extends React.PureComponent {
   }
 
   render() {
-    const { activity } = this.props
+    const { activity, isOverview } = this.props
 
     const startTime = get(activity, 'object.startTime')
     const summary = get(activity, 'summary')
     const exportItemCodes = get(activity, 'object.dit:exportItemCodes')
 
-    const exportItemCodesList = exportItemCodes.map((value) => (
-      <span key={value}>
-        {value}
-        <br />
-      </span>
-    ))
-
+    const exportItemCodesList = exportItemCodes.map((value) =>
+      isOverview ? (
+        `${value}`
+      ) : (
+        <span key={value}>
+          {value}
+          <br />
+        </span>
+      )
+    )
+    const date = format(startTime)
     const metadata = [
-      { label: 'Date', value: format(startTime) },
+      { label: 'Date', value: date },
       { label: 'Export item code(s)', value: exportItemCodesList },
     ]
 
-    return (
+    const kind = 'HMRC Update'
+
+    return isOverview ? (
+      <OverviewActivityCardWrapper dataTest="hmrc-exporter-activity-summary">
+        <ActivityOverviewSummary
+          activity={activity}
+          date={date}
+          kind={'Exporters Record'}
+          subject={summary}
+          summary={[kind]}
+        ></ActivityOverviewSummary>
+      </OverviewActivityCardWrapper>
+    ) : (
       <ActivityCardWrapper dataTest="hmrc-exporter-activity">
         <ActivityCardLabels
           isExternalActivity={true}
           theme="HMRC"
           service="Exporters Record"
-          kind="HMRC Update"
+          kind={kind}
         />
         <ActivityCardSubject>{summary}</ActivityCardSubject>
         <ActivityCardMetadata metadata={metadata} />

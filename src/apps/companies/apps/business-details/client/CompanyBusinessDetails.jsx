@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
-import { get } from 'lodash'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { SPACING_POINTS } from '@govuk-react/constants'
@@ -14,11 +13,12 @@ import SectionHierarchy from './SectionHierarchy'
 import SectionRegion from './SectionRegion'
 import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
-import SectionDocuments from './SectionDocuments'
 import ArchiveForm from '../../../../../client/components/ArchiveForm'
 import { StatusMessage } from '../../../../../client/components/'
 import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
-import ArchivePanel from '../../../../../client/components/ArchivePanel'
+import { CompanyResource } from '../../../../../client/components/Resource'
+import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
+import urls from '../../../../../lib/urls'
 
 import {
   ID as CHECK_PENDING_REQUEST_ID,
@@ -36,162 +36,164 @@ const StyledRoot = styled('div')`
     margin-bottom: ${SPACING_POINTS[8]}px;
   }
 `
-
-const CompanyBusinessDetails = ({
-  businessDetails,
-  subsidiariesCount,
-  dnbRelatedCompaniesCount,
-  globalUltimate,
-  canEditOneList,
-  urls,
-  isDnbPending,
-}) => {
-  const isGlobalHQ = get(businessDetails, 'headquarter_type.name') === 'ghq'
-  const isGlobalUltimate = !!businessDetails.is_global_ultimate
-  const isDnbCompany = !!businessDetails.duns_number
-  const isArchived = !!businessDetails.archived
-  const isBasedInUK = !!businessDetails.uk_based
-  const lastUpdated = [
-    businessDetails.dnb_modified_on,
-    businessDetails.modified_on,
-    businessDetails.created_on,
-  ]
+const isDnbCompany = (dunsNumber) => !!dunsNumber
+const isArchived = (archived) => !!archived
+const lastUpdated = (company) =>
+  [company.dnbModifiedOn, company.modifiedOn, company.createdOn]
     .filter(Boolean)
     .sort()
     .reverse()[0]
-
-  return (
-    <StyledRoot>
-      <div>
-        This page shows information about this business and how it is related to
-        other businesses.
-      </div>
-      <div>
-        Changes made to this information can be found on the{' '}
-        <Link href={urls.companyEditHistory}>Edit history page</Link>.
-      </div>
-      {lastUpdated && <div>Last updated on: {format(lastUpdated)}</div>}
-      {isArchived && (
-        <ArchivePanel
-          archivedBy={businessDetails.archived_by}
-          archivedOn={businessDetails.archived_on}
-          archiveReason={businessDetails.archived_reason}
-          unarchiveUrl={urls.companyUnarchive}
-          type="company"
-        />
-      )}
-      <Task.Status
-        name={DNB__CHECK_PENDING_REQUEST}
-        id={CHECK_PENDING_REQUEST_ID}
-        progressMessage="Checking for pending change requests"
-        startOnRender={{
-          payload: businessDetails.duns_number,
-          onSuccessDispatch: DNB__CHECK_PENDING_REQUEST,
-        }}
-      >
-        {() =>
-          isDnbPending && (
-            <>
-              <br />
-              <StatusMessage>
-                Changes to these business details are currently being reviewed.
-              </StatusMessage>
-            </>
-          )
-        }
-      </Task.Status>
-      {isDnbCompany && (
-        <Details
-          summary="Are these business details right?"
-          data-test="businessDetailsWhereDoesInformation"
-        >
-          <p>
-            Most business details have been verified by trusted third-parties to
-            keep them updated automatically. Business description, region and
-            sector are not updated by third parties.
-          </p>
-          <p>
-            <strong>Think some details are wrong?</strong> ‘Edit’ and ‘Submit’
-            new details for review.
-          </p>
-        </Details>
-      )}
-      <SectionAbout
-        businessDetails={businessDetails}
-        isArchived={isArchived}
-        isDnbCompany={isDnbCompany}
-        urls={urls}
-      />
-      <SectionAddresses
-        businessDetails={businessDetails}
-        isArchived={isArchived}
-        isDnbCompany={isDnbCompany}
-        urls={urls}
-      />
-      <SectionRegion
-        businessDetails={businessDetails}
-        isArchived={isArchived}
-        isBasedInUK={isBasedInUK}
-        urls={urls}
-      />
-      <SectionSector
-        businessDetails={businessDetails}
-        isArchived={isArchived}
-        urls={urls}
-      />
-      <SectionOneList
-        businessDetails={businessDetails}
-        isArchived={isArchived}
-        isDnbCompany={isDnbCompany}
-        urls={urls}
-      />
-      <SectionHierarchy
-        businessDetails={businessDetails}
-        subsidiariesCount={subsidiariesCount}
-        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-        isArchived={isArchived}
-        isDnbCompany={isDnbCompany}
-        isGlobalUltimate={isGlobalUltimate}
-        isGlobalHQ={isGlobalHQ}
-        globalUltimate={globalUltimate}
-        urls={urls}
-      />
-      <SectionDocuments urls={urls} />
-      <ArchiveForm
-        type="company"
-        id={CHECK_PENDING_REQUEST_ID}
-        submissionTaskName={TASK_ARCHIVE_COMPANY}
-        isArchived={isArchived}
-        isDnbCompany={isDnbCompany}
-        analyticsFormName="archiveCompany"
-        redirectUrl={urls.companyBusinessDetails}
-        transformPayload={(values) => ({
-          values,
-          urls,
-        })}
-        archiveReasons={[
-          {
-            label: COMPANY_DISSOLVED_OPTION,
-            value: COMPANY_DISSOLVED_OPTION,
-          },
-        ]}
-      />
-      {canEditOneList && (
-        <Button as={Link} href={urls.editOneList}>
-          Edit One List Information
-        </Button>
-      )}
-    </StyledRoot>
+const canEditOneList = (permissions) =>
+  permissions &&
+  permissions.includes('company.change_company') &&
+  permissions.includes('company.change_one_list_core_team_member') &&
+  permissions.includes(
+    'company.change_one_list_tier_and_global_account_manager'
   )
-}
+
+const CompanyBusinessDetails = ({
+  subsidiariesCount,
+  dnbRelatedCompaniesCount,
+  globalUltimate,
+  isDnbPending,
+  companyId,
+  localNavItems,
+  flashMessages,
+  csrfToken,
+  permissions,
+}) => (
+  <CompanyResource id={companyId}>
+    {(company) => (
+      <CompanyLayout
+        company={company}
+        breadcrumbs={[{ text: 'Business details' }]}
+        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+        localNavItems={localNavItems}
+        flashMessages={flashMessages}
+        csrfToken={csrfToken}
+      >
+        <StyledRoot>
+          <div>
+            This page shows information about this business and how it is
+            related to other businesses.
+          </div>
+          <div>
+            Changes made to this information can be found on the{' '}
+            <Link href={urls.companies.editHistory.index(companyId)}>
+              Edit history page
+            </Link>
+            .
+          </div>
+          {lastUpdated(company) && (
+            <div>Last updated on: {format(lastUpdated(company))}</div>
+          )}
+          <Task.Status
+            name={DNB__CHECK_PENDING_REQUEST}
+            id={CHECK_PENDING_REQUEST_ID}
+            progressMessage="Checking for pending change requests"
+            startOnRender={{
+              payload: company.dunsNumber,
+              onSuccessDispatch: DNB__CHECK_PENDING_REQUEST,
+            }}
+          >
+            {() =>
+              isDnbPending && (
+                <>
+                  <br />
+                  <StatusMessage>
+                    Changes to these business details are currently being
+                    reviewed.
+                  </StatusMessage>
+                </>
+              )
+            }
+          </Task.Status>
+          {isDnbCompany(company.dunsNumber) && (
+            <Details
+              summary="Are these business details right?"
+              data-test="businessDetailsWhereDoesInformation"
+            >
+              <p>
+                Most business details have been verified by trusted
+                third-parties to keep them updated automatically. Business
+                description, region and sector are not updated by third parties.
+              </p>
+              <p>
+                <strong>Think some details are wrong?</strong> ‘Edit’ and
+                ‘Submit’ new details for review.
+              </p>
+            </Details>
+          )}
+          <SectionAbout
+            company={company}
+            isArchived={isArchived(company.archived)}
+            isDnbCompany={isDnbCompany(company.dunsNumber)}
+          />
+          <SectionAddresses
+            company={company}
+            isArchived={isArchived(company.archived)}
+            isDnbCompany={isDnbCompany(company.dunsNumber)}
+          />
+          <SectionRegion
+            company={company}
+            isArchived={isArchived(company.archived)}
+          />
+          <SectionSector
+            company={company}
+            isArchived={isArchived(company.archived)}
+          />
+          <SectionOneList
+            company={company}
+            isArchived={isArchived(company.archived)}
+            isDnbCompany={isDnbCompany(company.dunsNumber)}
+          />
+          <SectionHierarchy
+            company={company}
+            subsidiariesCount={subsidiariesCount}
+            dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
+            isArchived={isArchived(company.archived)}
+            isDnbCompany={isDnbCompany(company.dunsNumber)}
+            globalUltimate={globalUltimate}
+          />
+          {canEditOneList(permissions) && (
+            <Button as={Link} href={urls.companies.editOneList(companyId)}>
+              Edit One List Information
+            </Button>
+          )}
+          <ArchiveForm
+            type="company"
+            id={CHECK_PENDING_REQUEST_ID}
+            submissionTaskName={TASK_ARCHIVE_COMPANY}
+            isArchived={isArchived(company.archived)}
+            isDnbCompany={isDnbCompany(company.dunsNumber)}
+            analyticsFormName="archiveCompany"
+            redirectUrl={urls.companies.businessDetails(companyId)}
+            transformPayload={(values) => ({
+              values,
+              companyId,
+              csrfToken,
+            })}
+            archiveReasons={[
+              {
+                label: COMPANY_DISSOLVED_OPTION,
+                value: COMPANY_DISSOLVED_OPTION,
+              },
+            ]}
+          />
+        </StyledRoot>
+      </CompanyLayout>
+    )}
+  </CompanyResource>
+)
 
 CompanyBusinessDetails.propTypes = {
-  businessDetails: PropTypes.object.isRequired,
-  urls: PropTypes.object.isRequired,
   subsidiariesCount: PropTypes.number,
   dnbRelatedCompaniesCount: PropTypes.number,
-  globalUltimate: PropTypes.object.isRequired,
-  canEditOneList: PropTypes.bool,
+  globalUltimate: PropTypes.object,
+  companyId: PropTypes.string.isRequired,
+  flashMessages: PropTypes.object,
+  csrfToken: PropTypes.string,
+  permissions: PropTypes.array,
 }
 
 CompanyBusinessDetails.defaultProps = {

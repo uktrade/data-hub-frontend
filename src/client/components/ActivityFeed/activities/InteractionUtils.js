@@ -1,5 +1,11 @@
 import { get, includes } from 'lodash'
-import { STATUS, BADGES, INTERACTION_SERVICES } from '../constants'
+
+import {
+  STATUS,
+  BADGES,
+  INTERACTION_SERVICES,
+  INTERACTION_SERVICEOTHER,
+} from '../constants'
 import urls from '../../../../lib/urls'
 
 const getStatus = (activity) => {
@@ -35,15 +41,25 @@ export const getServiceText = (service) => {
     : service
 
   const serviceText =
-    service.includes('Making') && service.includes('Introductions')
+    (service.includes('Making') && service.includes('Introductions')) ||
+    service.includes('introductions')
       ? 'Introduction'
-      : service.includes('Advice & Information')
-      ? 'Advice & Information'
-      : service.includes('Investment Enquiry')
-      ? 'Enquiry'
-      : INTERACTION_SERVICES[serviceType]
-
+      : service.includes('Advice & Information') ||
+          service.includes('advice and information')
+        ? 'Advice and information'
+        : service.includes('Investment Enquiry') ||
+            service.includes('Investment enquiry')
+          ? 'Enquiry'
+          : INTERACTION_SERVICES[serviceType]
   return serviceText
+}
+
+export const getServiceOtherText = (service) => {
+  let serviceType = service
+  if (INTERACTION_SERVICEOTHER[service] !== undefined) {
+    serviceType = INTERACTION_SERVICEOTHER[service]
+  }
+  return serviceType
 }
 
 const getThemeText = (activity) => {
@@ -51,12 +67,12 @@ const getThemeText = (activity) => {
   const themeText = includes(themeTypes, 'dit:datahub:theme:export')
     ? 'export'
     : includes(themeTypes, 'dit:datahub:theme:investment')
-    ? 'investment'
-    : includes(themeTypes, 'dit:datahub:theme:trade_agreement')
-    ? 'trade agreement'
-    : includes(themeTypes, 'dit:datahub:theme:other')
-    ? 'other'
-    : null
+      ? 'investment'
+      : includes(themeTypes, 'dit:datahub:theme:trade_agreement')
+        ? 'trade agreement'
+        : includes(themeTypes, 'dit:datahub:theme:other')
+          ? 'other'
+          : null
   return themeText
 }
 
