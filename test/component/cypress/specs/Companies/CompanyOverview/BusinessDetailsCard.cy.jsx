@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BusinessDetailsCard } from '../../../../../../src/apps/companies/apps/company-overview/overview-table-cards'
+import { BusinessDetailsCard } from '../../../../../../src/client/modules/Companies/CompanyOverview/TableCards'
 
 import { currencyGBP } from '../../../../../../src/client/utils/number-utils'
 import {

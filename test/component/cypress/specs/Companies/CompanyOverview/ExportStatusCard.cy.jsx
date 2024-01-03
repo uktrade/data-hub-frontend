@@ -17,7 +17,7 @@ import {
   numberOfCurrentExportCountries,
   numberOfFutureInterestCountries,
   SUBSEGMENT,
-} from '../../../../../../src/apps/companies/apps/company-overview/overview-table-cards/ExportStatusCard'
+} from '../../../../../../src/client/modules/Companies/CompanyOverview/TableCards/ExportStatusCard'
 
 function convertCountriesListToString(listOfCountries) {
   let appendValue = Array.from(listOfCountries.values()).map(

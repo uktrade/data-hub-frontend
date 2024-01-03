@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 import camelCase from 'camelcase'
 import styled from 'styled-components'
 
-import { ActivityFeedApp, SummaryTable } from '../../../../../client/components'
+import { ActivityFeedApp, SummaryTable } from '../../../../components'
 import { companies } from '../../../../../lib/urls'
-import CompanyActivityFeed from '../../activity-feed/client/CompanyActivityFeed'
+import CompanyActivityFeed from '../../../../../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import {
   StyledLastTableCell,
   StyledTableCell,
   StyledTableRow,
 } from './components'
-import { FILTER_KEYS } from '../../activity-feed/constants'
+import { FILTER_KEYS } from '../../../../../apps/companies/apps/activity-feed/constants'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
