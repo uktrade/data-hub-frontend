@@ -10,10 +10,10 @@ import {
   BusinessDetailsCard,
   ExportStatusCard,
   InvestmentStatusCard,
-} from '../overview-table-cards'
-import { FILTER_FEED_TYPE } from '../../activity-feed/constants'
-import { CompanyResource } from '../../../../../client/components/Resource/index'
-import CompanyLayoutNew from '../../../../../client/components/Layout/CompanyLayoutNew'
+} from './TableCards'
+import { FILTER_FEED_TYPE } from '../../../../apps/companies/apps/activity-feed/constants'
+import { CompanyResource } from '../../../components/Resource/index'
+import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;

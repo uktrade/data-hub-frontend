@@ -81,7 +81,7 @@ import SelectOrderCompany from './modules/Omis/CreateOrder/CompanySelect'
 import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
 import PaymentReceipt from './modules/Omis/PaymentReceipt'
 import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
-import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
+import CompanyOverview from './modules/Companies/CompanyOverview/CompanyOverview'
 
 const routes = {
   companies: [
