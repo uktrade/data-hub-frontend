@@ -25,6 +25,24 @@ describe('Task filters', () => {
     sortby: 'due_date:asc',
   }
 
+  const getTaskCompaniesIntercept = (company1, company2) => {
+    cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
+      body: {
+        companies: [
+          {
+            id: company1.id,
+            name: company1.name,
+          },
+          {
+            id: company2.id,
+            name: company2.name,
+          },
+        ],
+        projects: [],
+      },
+    })
+  }
+
   function assertFilterName(element, text) {
     cy.intercept('POST', endpoint, {
       body: {
@@ -37,13 +55,21 @@ describe('Task filters', () => {
     cy.get(element).find('span').should('have.text', text)
   }
 
-  function testFilterFromUrl(element, urlQuery, payload, selectedOption) {
+  function testFilterFromUrl(
+    element,
+    urlQuery,
+    payload,
+    selectedOption,
+    company1 = companyFaker(),
+    company2 = companyFaker()
+  ) {
     cy.intercept('POST', endpoint, {
       body: {
         count: 1,
         results: [TaskList[0]],
       },
     }).as('apiRequest')
+    getTaskCompaniesIntercept(company1, company2)
     cy.visit(`${tasksTab}?${urlQuery}`)
 
     // This ignores the checkForMyTasks API call which happens on page load
@@ -289,27 +315,9 @@ describe('Task filters', () => {
     const company1 = companyFaker()
     const company2 = companyFaker()
 
-    const getTaskCompanies = () => {
-      cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
-        body: {
-          companies: [
-            {
-              id: company1.id,
-              name: company1.name,
-            },
-            {
-              id: company2.id,
-              name: company2.name,
-            },
-          ],
-          projects: [],
-        },
-      })
-      cy.visit(tasksTab)
-    }
-
     it('should have a "Company" filter', () => {
-      getTaskCompanies()
+      getTaskCompaniesIntercept(company1, company2)
+      cy.visit(tasksTab)
       assertFilterName(element, 'Company')
       cy.get(`${element} option`).then((companyOptions) => {
         expect(transformOptions(companyOptions)).to.deep.eq([
@@ -321,34 +329,20 @@ describe('Task filters', () => {
     })
 
     it('should filter company from the url', () => {
-      getTaskCompanies()
       testFilterFromUrl(
         element,
         `company=${company1.id}`,
-        { companies: [company1.id] },
-        company1.name
+        { company: company1.id },
+        company1.name,
+        company1,
+        company2
       )
     })
 
-    // it('should filter assigned to others from the url', () => {
-    //   testFilterFromUrl(
-    //     element,
-    //     'assigned_to=others',
-    //     { not_advisers: [myAdviserId] },
-    //     'Others'
-    //   )
-    // })
-
-    // it('should filter assigned to me from user input', () => {
+    // it('should filter company from user input', () => {
     //   testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
     // })
 
-    // it('should filter assigned to others from user input', () => {
-    //   testFilterFromUserInput(
-    //     element,
-    //     { not_advisers: [myAdviserId] },
-    //     'Others'
-    //   )
-    // })
+    // Possibly have the equivalent of these 2 tests for show all ?
   })
 })
