@@ -23,11 +23,21 @@ const FiltersContainer = styled.div`
   column-gap: 2px;
   margin-bottom: ${SPACING.SCALE_3};
 
-  grid-template-columns: repeat(3, ${SELECT_WIDTH}) 35.5% ${SELECT_WIDTH};
+  grid-template-columns: repeat(4, ${SELECT_WIDTH}) 19.5% ${SELECT_WIDTH};
   @media (max-width: ${SITE_WIDTH}) {
     grid-template-columns: repeat(2, 50%);
     span.task-select-spacer {
       display: none;
+    }
+  }
+
+  #field-company {
+    input {
+      padding: 6px 4px 7px;
+    }
+
+    label {
+      padding-bottom: 3px;
     }
   }
 `
