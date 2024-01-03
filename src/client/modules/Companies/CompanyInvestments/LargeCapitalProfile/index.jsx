@@ -10,7 +10,7 @@ import CompanyLayout from '../../../../components/Layout/CompanyLayout'
 import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 import EditLargeCapitalProfile from './EditLargeCapitalProfile'
 
-const LargeCapitalProfile = ({ companyId, localNavItems, flashMessages }) => {
+const LargeCapitalProfile = ({ companyId, flashMessages }) => {
   return (
     <LargeInvestorProfileResource id={companyId}>
       {(profile) => (
@@ -19,7 +19,6 @@ const LargeCapitalProfile = ({ companyId, localNavItems, flashMessages }) => {
             <CompanyLayout
               company={company}
               breadcrumbs={[{ text: 'Investments' }]}
-              localNavItems={localNavItems}
               flashMessages={flashMessages}
               isInvestment={true}
               isLCP={true}

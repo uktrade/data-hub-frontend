@@ -19,7 +19,6 @@ const CompanyContactsCollection = ({
   optionMetadata,
   selectedFilters,
   returnUrl,
-  localNavItems,
   ...props
 }) => {
   const collectionListTask = {
@@ -42,7 +41,6 @@ const CompanyContactsCollection = ({
           company={company}
           breadcrumbs={[{ text: 'Contacts' }]}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           {company.archived && (
             <Details

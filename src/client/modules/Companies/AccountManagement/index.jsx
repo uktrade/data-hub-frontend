@@ -246,7 +246,6 @@ const objectiveMetadata = (objective) => {
 }
 
 const AccountManagement = ({
-  localNavItems,
   companyId,
   flashMessages,
   csrfToken,
@@ -258,7 +257,6 @@ const AccountManagement = ({
         <CompanyLayout
           company={company}
           breadcrumbs={[{ text: 'Account management' }]}
-          localNavItems={localNavItems}
           flashMessages={flashMessages}
           csrfToken={csrfToken}
         >

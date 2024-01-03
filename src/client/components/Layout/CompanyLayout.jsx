@@ -12,7 +12,6 @@ const CompanyLayout = ({
   breadcrumbs,
   children,
   returnUrl,
-  localNavItems,
   isInvestment = false,
   isLCP = false,
 }) => (
@@ -24,10 +23,7 @@ const CompanyLayout = ({
       returnUrl={returnUrl}
     />
     <Main>
-      <CompanyTabbedLocalNavigation
-        localNavItems={localNavItems}
-        company={company}
-      />
+      <CompanyTabbedLocalNavigation company={company} />
       {isInvestment && (
         <CompanyInvestmentSubNavigation companyId={company.id} isLCP={isLCP} />
       )}

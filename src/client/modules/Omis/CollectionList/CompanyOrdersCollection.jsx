@@ -39,7 +39,6 @@ const CompanyOrdersCollection = ({
   optionMetadata,
   selectedFilters,
   returnUrl,
-  localNavItems,
   ...props
 }) => {
   const collectionListTask = {
@@ -71,7 +70,6 @@ const CompanyOrdersCollection = ({
           company={company}
           breadcrumbs={[{ text: 'Orders (OMIS)' }]}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           {company.archived && (
             <Details

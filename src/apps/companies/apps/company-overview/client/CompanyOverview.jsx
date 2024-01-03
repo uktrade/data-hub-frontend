@@ -21,13 +21,12 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = ({ companyId, localNavItems, flashMessages }) => (
+const CompanyOverview = ({ companyId, flashMessages }) => (
   <CompanyResource id={companyId}>
     {(company) => (
       <CompanyLayout
         company={company}
         breadcrumbs={[{ text: 'Overview' }]}
-        localNavItems={localNavItems}
         flashMessages={flashMessages}
       >
         <GridRow>

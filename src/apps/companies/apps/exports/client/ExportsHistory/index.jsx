@@ -40,7 +40,6 @@ function ExportsHistory({
   pageTitle,
   isComplete,
   returnUrl,
-  localNavItems,
 }) {
   const collectionListTask = {
     name: 'Exports history',
@@ -61,7 +60,6 @@ function ExportsHistory({
             { text: pageTitle },
           ]}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           <InsetText>
             You can only see the history of countries that were added or edited
