@@ -1,5 +1,6 @@
-const router = require('express').Router()
 const fs = require('fs')
+
+const router = require('express').Router()
 
 const { setHomeBreadcrumb } = require('./middleware')
 
@@ -28,6 +29,9 @@ const reactRoutes = [
   '/export/:exportId/edit',
   '/export/:exportId/details',
   '/export/:exportId/delete',
+  '/exportwins',
+  '/exportwins/confirmed',
+  '/exportwins/unconfirmed',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',
   '/companies/:companyId/account-management/strategy/create',
@@ -69,6 +73,8 @@ const reactRoutes = [
   '/omis/:orderId/edit/internal-details',
   '/investments/projects/:projectId/tasks/create',
   '/investments/projects/:projectId/tasks',
+  '/omis/:orderId/edit/payment-reconciliation',
+  '/investments/projects/:projectId/tasks/:taskId/edit',
 ]
 
 reactRoutes.forEach((path) => {

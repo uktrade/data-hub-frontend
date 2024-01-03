@@ -1,8 +1,8 @@
-var events = require('../../../fixtures/v3/search/event.json')
-var eventFilter = require('../../../fixtures/v3/search/filter/event-filter.json')
-var eventSort = require('../../../fixtures/v3/search/sort/event-sort-by.json')
+import events from '../../../fixtures/v3/search/event.json' assert { type: 'json' }
+import eventFilter from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' }
+import eventSort from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' }
 
-exports.events = function (req, res) {
+export const searchEvents = function (req, res) {
   var eventList = {
     'modified_on:asc': eventSort,
     'start_date:asc': eventSort,

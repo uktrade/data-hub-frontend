@@ -1,5 +1,6 @@
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
+import { assertGovReactTable } from '../../support/assertions'
 
 const company = fixtures.company.oneListCorp
 const globalAccountManager = company.one_list_group_global_account_manager
@@ -18,21 +19,6 @@ const coreTeamResponse = {
     },
   },
   isGlobalAccountManager: true,
-}
-
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table').find('th')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
 }
 
 describe('One List core team', () => {
@@ -57,7 +43,7 @@ describe('One List core team', () => {
     })
 
     it('should render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],
@@ -72,7 +58,7 @@ describe('One List core team', () => {
     })
 
     it('should render the advisers table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="advisers-table"]',
         rows: [
           ['Team', 'Location', 'Adviser on core team', 'Email'],
@@ -116,7 +102,7 @@ describe('One List core team', () => {
     })
 
     it('should only render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],

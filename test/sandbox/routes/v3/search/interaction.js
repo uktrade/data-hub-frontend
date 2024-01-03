@@ -1,5 +1,5 @@
-var interaction = require('../../../fixtures/v3/search/interaction.json')
+import interaction from '../../../fixtures/v3/search/interaction.json' assert { type: 'json' }
 
-exports.interaction = function (req, res) {
+export const searchInteraction = function (req, res) {
   return res.json(interaction)
 }

@@ -4,6 +4,7 @@ import { listFaker } from './utils'
 import { addressFaker } from './addresses'
 import { ukRegionFaker } from './regions'
 import { EMPLOYEE_RANGE, HEADQUARTER_TYPE, ONE_LIST_TIER } from './constants'
+import { formatWithoutParsing } from '../../../../src/client/utils/date'
 
 const companyTreeItemFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
@@ -25,7 +26,10 @@ const companyTreeItemFaker = (overrides = {}) => ({
       name: faker.commerce.productName(),
     },
   ],
-  latest_interaction_date: faker.date.past(),
+  latest_interaction_date: formatWithoutParsing(
+    faker.date.past(),
+    "yyyy-MM-dd'T'HH:mm:ss"
+  ),
   one_list_tier: faker.helpers.arrayElement(ONE_LIST_TIER),
   archived: false,
   trading_names: [faker.company.name()],

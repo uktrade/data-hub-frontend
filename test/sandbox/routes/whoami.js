@@ -1,14 +1,14 @@
-var whoami = require('../fixtures/whoami.json')
+import whoami from '../fixtures/whoami.json' assert { type: 'json' }
 
 var defaultTeamId = whoami.dit_team.id
 var defaultAdviserId = whoami.id
 var defaultPermissions = whoami.permissions
 
-exports.whoami = function (req, res) {
+export const getWhoami = function (req, res) {
   res.json(whoami)
 }
 
-exports.setWhoami = function (req, res) {
+export const setWhoami = function (req, res) {
   if (req.body.id) {
     whoami.id = req.body.id
   }
@@ -27,7 +27,7 @@ exports.setWhoami = function (req, res) {
   res.json(whoami)
 }
 
-exports.resetWhoami = function (req, res) {
+export const resetWhoami = function (req, res) {
   whoami.id = defaultAdviserId
   whoami.dit_team.id = defaultTeamId
   whoami.active_features = []

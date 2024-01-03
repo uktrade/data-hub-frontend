@@ -351,4 +351,14 @@ Cypress.Commands.add('isInViewport', (element) => {
   })
 })
 
+Cypress.Commands.add('isScrolledTo', (element) => {
+  cy.get(element).should(($el) => {
+      const bottom = Cypress.$(cy.state("window")).height();
+      const rect = $el[0].getBoundingClientRect();
+
+      expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
+      expect(rect.top).to.be.greaterThan(0 - rect.height, `Expected element not to be above the visible scrolled area`)
+  });
+});
+
 Cypress.Commands.add('dataTest', (value) => cy.get(`[data-test="${value}"]`))

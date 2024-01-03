@@ -5,7 +5,11 @@ import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'
-import { assertRequestUrl } from '../../support/assertions'
+import {
+  assertCompanyBreadcrumbs,
+  assertGovReactTable,
+  assertRequestUrl,
+} from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -33,34 +37,17 @@ const coreTeamResponse = {
   isGlobalAccountManager: true,
 }
 
-const assertTable = ({ element, rows }) => {
-  cy.get(element).as('table').find('th')
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
-
 const assertBreadcrumbs = (company) => {
-  it('should render breadcrumbs', () => {
-    assertBreadcrumbs({
-      Home: urls.dashboard.index(),
-      Companies: urls.companies.index(),
-      [company.name]: urls.companies.detail(company.id),
-      'Account management': null,
-    })
-  })
+  assertCompanyBreadcrumbs(
+    company.name,
+    urls.companies.detail(company.id),
+    'Account management'
+  )
 }
 
 describe('Company account management', () => {
   const companyWithStrategy = companyFaker({
+    name: 'Best Ever Company',
     strategy: 'ABC',
     id: companyId,
     modifiedBy: userFaker(),
@@ -123,7 +110,11 @@ describe('Company account management', () => {
         cy.intercept(
           'GET',
           `/api-proxy/v4/company/${companyId}`,
-          companyFaker({ strategy: undefined, id: companyId })
+          companyFaker({
+            name: 'Best Ever Company',
+            strategy: undefined,
+            id: companyId,
+          })
         ).as('companyApi')
         cy.visit(urls.companies.accountManagement.index(companyId))
         cy.wait('@companyApi')
@@ -264,7 +255,7 @@ describe('One List core team', () => {
     })
 
     it('should render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],
@@ -279,7 +270,7 @@ describe('One List core team', () => {
     })
 
     it('should render the advisers table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="advisers-table"]',
         rows: [
           ['Team', 'Location', 'Adviser on core team', 'Email'],
@@ -329,7 +320,7 @@ describe('One List core team', () => {
     })
 
     it('should only render the global account manager table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
           ['Team', 'Location', 'Global Account Manager', 'Email'],
@@ -359,7 +350,7 @@ describe('One List core Tier D team', () => {
     })
 
     it('should render the Lead ITA table', () => {
-      assertTable({
+      assertGovReactTable({
         element: '[data-test="lead-adviser-table"]',
         rows: [
           ['Team', 'Lead ITA', 'Email'],
@@ -404,7 +395,7 @@ describe('One List core Tier D team', () => {
       })
 
       it('should render the Lead ITA table', () => {
-        assertTable({
+        assertGovReactTable({
           element: '[data-test="lead-adviser-table"]',
           rows: [
             ['Team', 'Lead ITA', 'Email'],

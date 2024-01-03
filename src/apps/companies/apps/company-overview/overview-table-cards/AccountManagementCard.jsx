@@ -58,8 +58,8 @@ const AccountManagementCard = ({ company }) => {
 
   return (
     <StyledSummaryTable
-      caption="Account Management"
-      data-test="accountManagementContainer"
+      caption="Account management"
+      data-test="account-management-container"
     >
       <SummaryTable.Row heading="DBT Region">
         {buildCellContents(
@@ -76,7 +76,10 @@ const AccountManagementCard = ({ company }) => {
       >
         {buildCellContents(
           company?.oneListGroupGlobalAccountManager,
-          <Link href={urls.companies.accountManagement.index(company.id)}>
+          <Link
+            data-test="account-manager-link"
+            href={urls.companies.accountManagement.index(company.id)}
+          >
             {company.oneListGroupGlobalAccountManager?.name}
           </Link>
         )}
@@ -93,7 +96,10 @@ const AccountManagementCard = ({ company }) => {
           <StyledAddressList>
             {viewablePrimaryContacts.map((contact) => (
               <li>
-                <Link href={urls.contacts.details(contact.id)}>
+                <Link
+                  data-test={`contact-${contact.id}-link`}
+                  href={urls.contacts.details(contact.id)}
+                >
                   {contact.name}
                 </Link>
               </li>

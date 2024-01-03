@@ -1,6 +1,6 @@
-let investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
+import investmentProjects from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' }
 
-exports.investmentProjects = function (req, res) {
+export const searchInvestmentProjects = function (req, res) {
   const hasFilters = !!(
     req.body.actual_land_date_before ||
     req.body.actual_land_date_after ||
@@ -56,7 +56,7 @@ exports.investmentProjects = function (req, res) {
 /**
  * Mock a simple csv file for export
  */
-exports.export = function (req, res) {
+export const exportCsv = function (req, res) {
   res.header('Content-Type', 'text/csv')
   res.attachment('export.csv')
   res.send('a,b,c\n1,2,3')

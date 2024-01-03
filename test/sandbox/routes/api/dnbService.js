@@ -1,5 +1,5 @@
-var companiesSearch = require('../../fixtures/dnb/companies-search.json')
+import companiesSearch from '../../fixtures/dnb/companies-search.json' assert { type: 'json' }
 
-exports.companiesSearch = function (req, res) {
+export const createCompaniesSearch = function (req, res) {
   res.json(companiesSearch)
 }

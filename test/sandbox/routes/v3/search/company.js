@@ -1,11 +1,11 @@
-var companies = require('../../../fixtures/v3/search/company.json')
-var companyWithAttributes = require('../../../fixtures/v3/search/company-with-attributes.json')
-var companyFilter = require('../../../fixtures/v3/search/filter/company-filter.json')
-var companySortByMostRecent = require('../../../fixtures/v3/search/sort/company-sort-by-most-recent.json')
-var companySortByLeastRecent = require('../../../fixtures/v3/search/sort/company-sort-by-least-recent.json')
-var companySortByAZ = require('../../../fixtures/v3/search/sort/company-sort-by-a-z.json')
+import companies from '../../../fixtures/v3/search/company.json' assert { type: 'json' }
+import companyWithAttributes from '../../../fixtures/v3/search/company-with-attributes.json' assert { type: 'json' }
+import companyFilter from '../../../fixtures/v3/search/filter/company-filter.json' assert { type: 'json' }
+import companySortByMostRecent from '../../../fixtures/v3/search/sort/company-sort-by-most-recent.json' assert { type: 'json' }
+import companySortByLeastRecent from '../../../fixtures/v3/search/sort/company-sort-by-least-recent.json' assert { type: 'json' }
+import companySortByAZ from '../../../fixtures/v3/search/sort/company-sort-by-a-z.json' assert { type: 'json' }
 
-exports.companies = function (req, res) {
+export const getCompanies = function (req, res) {
   var companiesList = {
     collectionTest: companyWithAttributes,
     'modified_on:desc': companySortByMostRecent,

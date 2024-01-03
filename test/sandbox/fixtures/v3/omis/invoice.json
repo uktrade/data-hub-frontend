@@ -22,5 +22,8 @@
     "name": "United Kingdom",
     "id": "80756b9a-5d95-e211-a939-e4115bead28a"
   },
-  "po_number": "At ipsam dolorum inventore."
+  "po_number": "At ipsam dolorum inventore.",
+  "payment_due_date": "2017-09-27T08:59:20.381047",
+  "subtotal_cost": 12345,
+  "total_cost": 123456
 }

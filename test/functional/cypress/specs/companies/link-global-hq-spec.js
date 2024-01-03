@@ -4,7 +4,10 @@ import {
   assertMetadataItem,
   assertListLength,
 } from '../../support/collection-list-assertions'
-import { assertBreadcrumbs, assertFlashMessage } from '../../support/assertions'
+import {
+  assertCompanyBreadcrumbs,
+  assertFlashMessage,
+} from '../../support/assertions'
 import { collectionListRequest } from '../../support/actions'
 import urls from '../../../../../src/lib/urls'
 
@@ -86,14 +89,11 @@ describe('Link Global HQ', () => {
       cy.get('@collectionItems').eq(2).as('thirdListItem')
     })
 
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard.index(),
-        Companies: urls.companies.index(),
-        [testCompany.name]: urls.companies.detail(testCompany.id),
-        ['Link Global HQ']: null,
-      })
-    })
+    assertCompanyBreadcrumbs(
+      testCompany.name,
+      urls.companies.detail(testCompany.id),
+      'Link Global HQ'
+    )
 
     it('should display a list of companies', () => {
       assertListLength(companyList)

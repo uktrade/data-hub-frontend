@@ -4,6 +4,7 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 import { useSearchParam } from 'react-use'
 import { connect } from 'react-redux'
+import qs from 'qs'
 
 import { CollectionList } from '../../../components'
 import { InvestmentProjectTasksResource } from '../../../components/Resource'
@@ -22,6 +23,7 @@ import { INVESTMENT__PROJECT_LOADED } from '../../../actions'
 const ProjectTasks = ({ project }) => {
   const { projectId } = useParams()
 
+  const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
   const setActivePage = (page) =>
@@ -49,7 +51,7 @@ const ProjectTasks = ({ project }) => {
     >
       <H2 size={LEVEL_SIZE[3]}>Investment tasks</H2>
       <p>
-        An investment tasks is an upcoming action that is associated with this
+        An investment task is an upcoming action that is associated with this
         investment project. Once a task is marked as complete it will not be
         visible here.
       </p>
@@ -66,12 +68,26 @@ const ProjectTasks = ({ project }) => {
           investment_project: projectId,
           limit: ITEMS_PER_PAGE,
           offset: activePage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
-          sortby: 'task__due_date',
+          sortby: parsedQueryString.sortby,
           archived: false,
         }}
       >
         {(projectTasks, count) => {
           const tasks = projectTasks.map(transformTaskToListItem)
+          const sortOptions = [
+            {
+              name: 'Recently created',
+              value: '-task__created_on',
+            },
+            {
+              name: 'Oldest',
+              value: 'task__created_on',
+            },
+            {
+              name: 'Due date',
+              value: 'task__due_date',
+            },
+          ]
 
           return (
             <CollectionList
@@ -82,6 +98,7 @@ const ProjectTasks = ({ project }) => {
               isComplete={true}
               onPageClick={onPageClick}
               activePage={activePage}
+              sortOptions={count ? sortOptions : null}
             />
           )
         }}

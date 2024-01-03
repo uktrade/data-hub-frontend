@@ -201,7 +201,7 @@ const CompanyLocalHeader = ({
             {isUltimate(company) && (
               <StyledDetails
                 summary="What does Ultimate HQ mean?"
-                data-test="metaList"
+                data-test="ultimate-hq-details"
               >
                 This HQ is in control of all related company records for{' '}
                 {company.name}.
@@ -247,7 +247,7 @@ const CompanyLocalHeader = ({
       )}
 
       {company.pendingDnbInvestigation && (
-        <StyledMain data-test="investigationMessage">
+        <StyledMain data-test="investigation-message">
           <StatusMessage>
             This company record is based on information that has not yet been
             validated. This information is currently being checked by the Data

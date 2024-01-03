@@ -1,19 +1,19 @@
-const { isEmpty } = require('lodash')
+import isEmpty from 'lodash/isEmpty.js'
 
-var defaultFeatureFlags = require('../../../fixtures/v3/feature-flag/feature-flag.json')
+import defaultFeatureFlags from '../../../fixtures/v3/feature-flag/feature-flag.json' assert { type: 'json' }
 
 let featureFlags = [...defaultFeatureFlags]
 
-exports.featureFlag = function (req, res) {
+export const featureFlag = function (req, res) {
   res.json(featureFlags.filter((x) => !isEmpty(x)))
 }
 
-exports.setSandboxFlag = function (req, res) {
+export const setSandboxFlag = function (req, res) {
   featureFlags.push(req.body)
   res.json(featureFlags)
 }
 
-exports.resetSandboxFlags = function (req, res) {
+export const resetSandboxFlags = function (req, res) {
   featureFlags = [...defaultFeatureFlags]
   res.json(featureFlags)
 }

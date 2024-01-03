@@ -1,5 +1,9 @@
 import { company } from '../../fixtures'
 import { exportFaker } from '../../fakers/export'
+import {
+  companyGlobalUltimateAllDetails,
+  companyNoDetails,
+} from '../../fakers/companies'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
@@ -20,16 +24,6 @@ describe('Company overview page', () => {
   const allActivityUrlAllOverview = urls.companies.activity.index(
     fixtures.company.allOverviewDetails.id
   )
-  const companyBusinessDetailsUrlAllOverview = urls.companies.businessDetails(
-    fixtures.company.allOverviewDetails.id
-  )
-  const companyAccountManagementAdvisersUrlAllOverview =
-    urls.companies.accountManagement.index(
-      fixtures.company.allOverviewDetails.id
-    )
-  const companyExportsAllOverview = urls.companies.exports.index(
-    fixtures.company.allOverviewDetails.id
-  )
   const noActiveInvestments = exportFaker({
     count: 10,
     results: [],
@@ -40,7 +34,7 @@ describe('Company overview page', () => {
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
@@ -53,380 +47,39 @@ describe('Company overview page', () => {
     }
   )
   context(
-    'when viewing the Business details card for a business that has all information added',
+    'when viewing the Overview page a Business details card should be displayed',
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
-      it('the card should contain the Business details table including all keys and values for All Overview Details Inc.', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
+      it('the card should contain the Business details table', () => {
+        cy.get('[data-test="business-details-container"]')
+          .as('bd-table')
           .first()
           .contains('Business details')
-          .next()
-          .children()
-        cy.get('th').contains('Companies House')
-        cy.get('[data-test="companies-house-link"]')
-          .contains('01261539')
-          .invoke('attr', 'href')
-          .should('eq', 'https://beta.companieshouse.gov.uk/company/01261539')
-        cy.get('th').contains('Trading Address')
-        cy.get('td').children()
-        cy.get('li')
-          .contains('Unit 10 Ockham Drive')
-          .parent()
-          .parent()
-          .parent()
-          .next()
-        cy.get('th').contains('Website')
-        cy.get('td')
-          .contains('http://all-the-details.com')
-          .parent()
-          .parent()
-          .next()
-        cy.get('th').contains('Turnover')
-        cy.get('td').contains('£720,000').parent().next()
-        cy.get('th').contains('Number of Employees')
-        cy.get('td').contains('260').parent().next()
-        cy.get('th').contains('DBT Sector')
-        cy.get('td').contains('Retail').parent().next()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('United Kingdom')
-      })
-
-      it('the card should link to the business overview page', () => {
-        cy.get('[data-test="business-page-link"]')
-          .contains('View full business details')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          companyBusinessDetailsUrlAllOverview
-        )
-        cy.go('back')
+        cy.get('@bd-table').find('tbody').should('exist')
       })
     }
   )
+
   context(
-    'when viewing the Business details card for a global ultimate company',
+    'when viewing the Overview page an Account Management card should be displayed',
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.dnbGlobalUltimate.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
-      it('the card should contain Headquarter Location matching country of the company', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
+
+      it('the card should contain the Account management table', () => {
+        cy.get('[data-test="account-management-container"]')
+          .as('am-table')
           .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .last()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('United Kingdom')
-      })
-      it('the card should link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]')
-          .contains('View company tree')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          urls.companies.dnbHierarchy.tree(
-            fixtures.company.dnbGlobalUltimate.id
-          )
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Business details card for a subsidiary company',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.dnbSubsidiary.id)
-        )
-      })
-      it('the card should contain Headquarter Location matching country of global ultimate company', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
-          .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .last()
-        cy.get('th').contains('Headquarter Location')
-        cy.get('td').contains('Canada')
-      })
-      it('the card should link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]')
-          .contains('View company tree')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          urls.companies.dnbHierarchy.tree(fixtures.company.dnbSubsidiary.id)
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context('when viewing a non-UK business', () => {
-    before(() => {
-      cy.visit(urls.companies.overview.index(usCompany.id))
-    })
-    it('the business detail card should not contain the Company House row', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .first()
-        .contains('Trading Address')
-    })
-  })
-  context('when viewing a UK business with only registered address', () => {
-    const blankAddress = fixtures.company.allOverviewDetails
-    blankAddress.address = null
-    before(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`,
-        fixtures.company.allOverviewDetails
-      )
-      cy.visit(urls.companies.overview.index(blankAddress.id))
-    })
-    it('should contain the Company House row', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .first()
-        .contains('Companies House')
-    })
-
-    it('should have address set as "Not set"', () => {
-      cy.get('[data-test="businessDetailsContainer"]')
-        .children()
-        .first()
-        .contains('Business details')
-        .next()
-        .children()
-        .contains('Trading Address')
-        .siblings()
-        .contains('td', 'Not set')
-    })
-  })
-  context(
-    'when viewing the Business details card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Business details table with all values set to "Not set"', () => {
-        cy.get('[data-test="businessDetailsContainer"]')
-          .children()
-          .first()
-          .contains('Business details')
-          .next()
-          .children()
-          .first()
-          .contains('Trading Address')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('Website').siblings().contains('td', 'Not set')
-        cy.get('th').contains('Turnover').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Number of Employees')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('DBT Sector').siblings().contains('td', 'Not set')
-        cy.get('th').contains('Headquarter Location').should('not.exist')
-      })
-
-      it('the card should not show link to the company tree page', () => {
-        cy.get('[data-test="company-tree-link"]').should('not.exist')
-      })
-    }
-  )
-  context(
-    'when viewing the Account management card for a business that has all information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Account management table including all keys and values then load 2 more contacts', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
-          .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('DBT Region')
-          .siblings()
-          .contains('td', 'South East')
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('td', 'Billy Bob')
-        cy.get('th')
-          .contains('One List')
-          .siblings()
-          .contains('td', 'Tier A - SRM Programme Accounts')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Speed')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Weight')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'View 2 more contacts')
-          .click()
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Max Height')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('li', 'Baz Slow')
-      })
-
-      it('the card should link to the account management overview page', () => {
-        cy.get('[data-test="account-management-page-link"]')
-          .contains('View full account management')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          companyAccountManagementAdvisersUrlAllOverview
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Account management  card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Account management table with all values set to "Not set"', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
-          .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th').contains('DBT Region').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th').contains('One List').siblings().contains('td', 'Not set')
-        cy.get('th')
-          .contains('Primary Contact(s)')
-          .siblings()
-          .contains('td', 'Not set')
-      })
-    }
-  )
-  context('clicking a primary contact on the account management card', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
-      )
-    })
-
-    it('should click on a primary contact and take you the contacts page', () => {
-      cy.get('[data-test="accountManagementContainer"]')
-        .children()
-        .first()
-        .contains('Account Management')
-        .next()
-        .children()
-      cy.get('th')
-        .contains('Primary Contact(s)')
-        .siblings()
-        .contains('a', 'Max Speed')
-        .click()
-      cy.location('pathname').should(
-        'eq',
-        '/contacts/9136dd49-df67-4b2b-b241-6b64a662f1af/details'
-      )
-      cy.go('back')
-    })
-  })
-  context('clicking on the Lead ITA on the account management card', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.overview.index(fixtures.company.oneListTierDita.id)
-      )
-    })
-
-    it('should click on the Lead ITA and take you the contacts page', () => {
-      cy.get('[data-test="accountManagementContainer"]')
-        .children()
-        .first()
-        .contains('Account Management')
-        .next()
-        .children()
-      cy.get('th')
-        .contains('Lead ITA')
-        .siblings()
-        .contains('a', 'Travis Greene')
-        .click()
-      cy.location('pathname').should(
-        'eq',
-        `/companies/${fixtures.company.oneListTierDita.id}/account-management`
-      )
-      cy.go('back')
-    })
-  })
-  context(
-    'clicking on the Account Manager on the account management card',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
-        )
-      })
-
-      it('should click on the Account Manager and take you the contacts page', () => {
-        cy.get('[data-test="accountManagementContainer"]')
-          .children()
-          .first()
-          .contains('Account Management')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Account Manager')
-          .siblings()
-          .contains('a', 'Billy Bob')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `/companies/${fixtures.company.allOverviewDetails.id}/account-management`
-        )
-        cy.go('back')
+          .contains('Account management')
+        cy.get('@am-table').find('tbody').should('exist')
       })
     }
   )
@@ -436,34 +89,20 @@ describe('Company overview page', () => {
     () => {
       before(() => {
         cy.visit(
-          urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
+          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
       })
 
-      it('the card should contain the export status table including all keys and value', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
+      it('the card should contain the Export status table', () => {
+        cy.get('[data-test="export-status-container"]')
+          .as('es-table')
           .first()
           .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Sustain: Nurture & grow')
-        cy.get('[data-test="current-export-list"]')
-          .children()
-          .should('have.length.of.at.most', 10)
-        cy.get('[data-test="export-status-currently-exporting-to-link"]')
-          .contains('View 2 more')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-        cy.get('[data-test="exportStatusContainer"]').children()
+        cy.get('@es-table').find('tbody').should('exist')
+      })
+
+      it('the card should contain the export status table including the last export win and total exports won', () => {
+        cy.get('[data-test="export-status-container"]').children()
         cy.get('th')
           .contains('Last export win')
           .siblings()
@@ -472,87 +111,6 @@ describe('Company overview page', () => {
           .contains('Total exports won')
           .siblings()
           .contains('td', '8')
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Saint Helena')
-        cy.get('[data-test="export-status-future-exporting-to-link"]')
-          .contains('View 4 more')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-      })
-
-      it('the card should link to the export status overview page', () => {
-        cy.get('[data-test="export-status-page-link"]')
-          .contains('View full export details')
-          .click()
-        cy.location('pathname').should('eq', companyExportsAllOverview)
-        cy.go('back')
-      })
-      it('the card should link to the export history page of the specific country', () => {
-        cy.get('[data-test="current-export-country-algeria-link"]')
-          .contains('Algeria')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${companyExportsAllOverview}/history/955f66a0-5d95-e211-a939-e4115bead28a`
-        )
-        cy.go('back')
-      })
-      it('the card should link to the future countries of interest', () => {
-        cy.get('[data-test="future-export-country-saint-helena-link"]')
-          .contains('Saint Helena')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${companyExportsAllOverview}/history/dec8d80f-efe5-4190-a8e9-c8ccc38e7724`
-        )
-        cy.go('back')
-      })
-    }
-  )
-  context(
-    'when viewing the Export Status Card for a business that has no information added',
-    () => {
-      before(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Export Status table with all values set to "Not set"', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
-          .first()
-          .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Not set')
-
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Last export win')
-          .siblings()
-          .contains('td', 'No export wins recorded')
-        cy.get('th')
-          .contains('Total exports won')
-          .siblings()
-          .contains('td', '0')
       })
     }
   )
@@ -560,50 +118,18 @@ describe('Company overview page', () => {
     'when viewing the Export Status Card and an error occurs during the Export Wins lookup',
     () => {
       before(() => {
-        cy.intercept(
-          'GET',
-          urls.company.exportWin(fixtures.company.noOverviewDetails.id),
-          {
-            statusCode: 500,
-            body: {
-              detail:
-                "('The Company matching service returned an error status: 401',)",
-            },
-          }
-        )
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
+        cy.intercept('GET', urls.company.exportWin(companyNoDetails.id), {
+          statusCode: 500,
+          body: {
+            detail:
+              "('The Company matching service returned an error status: 401',)",
+          },
+        })
+        cy.visit(urls.companies.overview.index(companyNoDetails.id))
       })
 
       it('the card should contain the Export Status table', () => {
-        cy.get('[data-test="exportStatusContainer"]')
-          .children()
-          .first()
-          .contains('Export status')
-          .next()
-          .children()
-        cy.get('th')
-          .contains('Export potential')
-          .siblings()
-          .contains('td', 'Unavailable')
-        cy.get('th')
-          .contains('Export sub-segment')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Currently exporting to')
-          .siblings()
-          .contains('td', 'Not set')
-
-        cy.get('th')
-          .contains('Future countries of interest')
-          .siblings()
-          .contains('td', 'Not set')
-        cy.get('th')
-          .contains('Last export win')
-          .siblings()
-          .contains('td', 'Unable to load export wins')
+        cy.get('[data-test="export-status-container"]')
         cy.get('th')
           .contains('Total exports won')
           .siblings()

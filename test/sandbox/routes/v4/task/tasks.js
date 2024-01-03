@@ -1,8 +1,8 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
-const generateTask = (overrides = {}) => {
+export const generateTask = (overrides = {}) => {
   return {
     id: faker.string.uuid(),
     title: faker.word.sample(),
@@ -20,7 +20,7 @@ const generateTask = (overrides = {}) => {
   }
 }
 
-const generatePerson = () => {
+export const generatePerson = () => {
   const firstName = faker.person.firstName()
   const lastName = faker.person.lastName()
   return {
@@ -31,7 +31,7 @@ const generatePerson = () => {
   }
 }
 
-const generateTasks = () => {
+export const generateTasks = () => {
   return {
     count: 3,
     next: null,
@@ -39,5 +39,3 @@ const generateTasks = () => {
     results: [...Array(3)].map(() => generateTask()),
   }
 }
-
-module.exports = { generateTask, generateTasks }

@@ -7,28 +7,10 @@ const {
 } = require('../../../../functional/cypress/support/actions')
 const {
   assertFlashMessage,
+  assertGovReactTable,
 } = require('../../../../functional/cypress/support/assertions')
 
 const teamSelectors = selectors.investment.team
-
-const assertTable = ({ element, headings, rows }) => {
-  cy.get(element).as('table')
-
-  if (headings) {
-    cy.get('@table').find('th')
-  }
-
-  cy.get('@table')
-    .find('tbody')
-    .find('tr')
-    .each((el, i) => {
-      cy.wrap(el)
-        .children()
-        .each((el, j) => {
-          cy.wrap(el).should('have.text', rows[i][j])
-        })
-    })
-}
 
 const testSubForm = ({ selector, header, checkForm, expectedResults }) => {
   cy.get(teamSelectors[selector].button).click()
@@ -39,7 +21,7 @@ const testSubForm = ({ selector, header, checkForm, expectedResults }) => {
   clickButton('Save')
   assertFlashMessage('Investment details updated')
 
-  assertTable({
+  assertGovReactTable({
     element: teamSelectors[selector].table,
     rows: expectedResults,
   })
