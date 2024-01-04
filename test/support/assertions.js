@@ -66,6 +66,25 @@ const assertSummaryTable = ({ dataTest, heading, showEditLink, content }) => {
   }
 }
 
+const assertGovReactTable = ({ element, headings, rows }) => {
+  cy.get(element).as('table')
+
+  if (headings) {
+    cy.get('@table').find('th')
+  }
+
+  cy.get('@table')
+    .find('tbody')
+    .find('tr')
+    .each((el, i) => {
+      cy.wrap(el)
+        .children()
+        .each((el, j) => {
+          cy.wrap(el).should('have.text', rows[i][j])
+        })
+    })
+}
+
 /**
  * @description Asserts the presence of breadcrumbs with minimal knowledge about
  * implementation details e.g. class names and ids.
@@ -102,6 +121,18 @@ const assertBreadcrumbs = (specs) => {
  */
 const testBreadcrumbs = (specs) =>
   it('should render breadcrumbs', () => assertBreadcrumbs(specs))
+
+/**
+ * Asserts that the breadcrumbs on company pages appear correctly
+ */
+const assertCompanyBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
+  testBreadcrumbs({
+    Home: urls.dashboard.index(),
+    Companies: urls.companies.index(),
+    [companyName]: detailsUrl,
+    [lastCrumb]: null,
+  })
+}
 
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
@@ -337,6 +368,15 @@ const assertFieldInput = ({
       //being rendered, skip over the hint without validating it to get to the next element
       ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
     )
+    .find('input')
+    .then(
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    )
+
+const assertFieldInputNoLabel = ({ element, value = undefined }) =>
+  cy
+    .wrap(element)
     .find('input')
     .then(
       ($el) =>
@@ -797,6 +837,23 @@ const assertTypeaheadValues = (selector, values) => {
   })
 }
 
+/**
+ * Assert that a link exists and that the href url is correct
+ */
+const assertLink = (dataTest, expected) => {
+  cy.get(`[data-test=${dataTest}]`)
+    .should('exist')
+    .should('have.attr', 'href', expected)
+}
+
+/**
+ * A wrapper around assertLink that also checks the text
+ */
+const assertLinkWithText = (dataTest, expectedLink, expectedText) => {
+  cy.get(`[data-test=${dataTest}]`).should('have.text', expectedText)
+  assertLink(dataTest, expectedLink)
+}
+
 export default {
   assertKeyValueTable,
   assertValueTable,
@@ -856,4 +913,9 @@ export default {
   assertExactUrl,
   assertFieldError,
   assertTypeaheadValues,
+  assertGovReactTable,
+  assertCompanyBreadcrumbs,
+  assertFieldInputNoLabel,
+  assertLink,
+  assertLinkWithText,
 }

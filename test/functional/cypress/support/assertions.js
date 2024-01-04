@@ -89,6 +89,9 @@ const assertSummaryTable = ({
   }
 }
 
+/**
+ * @deprecated Use the version in /test/support folder
+ */
 const assertGovReactTable = ({ element, headings, rows }) => {
   cy.get(element).as('table')
 
@@ -967,6 +970,7 @@ const assertTypeaheadValues = (selector, values) => {
 }
 
 /**
+ * @deprecated Use the version in /test/support folder
  * Assert that a link exists and that the href url is correct
  */
 const assertLink = (dataTest, expected) => {
@@ -976,6 +980,7 @@ const assertLink = (dataTest, expected) => {
 }
 
 /**
+ * @deprecated Use the version in /test/support folder
  * A wrapper around assertLink that also checks the text
  */
 const assertLinkWithText = (dataTest, expectedLink, expectedText) => {

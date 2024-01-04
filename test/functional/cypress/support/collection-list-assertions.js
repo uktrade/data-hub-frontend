@@ -98,6 +98,10 @@ const assertTagNotPresent = (item, badgeText) => {
 const assertBadgeShouldNotExist = (item) => {
   cy.get(item).find('[data-test="badge"]').should('not.exist')
 }
+
+/**
+ * @deprecated Use the version in /test/support folder
+ */
 const assertTagShouldNotExist = (item) => {
   cy.get(item).find('[data-test="collection-item-tag"]').should('not.exist')
 }
