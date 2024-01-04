@@ -4,8 +4,9 @@ import {
   assertFlashMessage,
   assertExactUrl,
   assertSingleTypeaheadOptionSelected,
+  assertVisible,
 } from '../../support/assertions'
-import { fillWithNewValue } from '../../support/form-fillers'
+import { fillTypeahead, fillWithNewValue } from '../../support/form-fillers'
 import { clickButton } from '../../../../functional/cypress/support/actions'
 import {
   taskFaker,
@@ -14,6 +15,8 @@ import {
 } from '../../fakers/task'
 import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
 import { format } from '../../../../../src/client/utils/date'
+import { companyFaker } from '../../fakers/companies'
+import { investmentProjectFaker } from '../../fakers/investment-projects'
 
 describe('Edit generic task', () => {
   const task = taskFaker()
@@ -86,6 +89,13 @@ describe('Edit investment project task', () => {
       })
     })
 
+    it('should display the investment project typeahead with the value matching the investment project', () => {
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test="field-investmentProject"]',
+        expectedOption: investmentProjectTask.investmentProject.name,
+      })
+    })
+
     it('changing field values should send new values to the api', () => {
       cy.intercept('PATCH', endpoint, {
         statusCode: 200,
@@ -110,6 +120,95 @@ describe('Edit investment project task', () => {
       assertExactUrl(tasks.details(investmentProjectTask.id))
 
       assertFlashMessage('Task saved')
+    })
+  })
+
+  context(
+    'When changing the company from one without investment projects to one with investment projects',
+    () => {
+      const company = companyFaker()
+
+      before(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/task/${investmentProjectTask.id}`,
+          investmentProjectTask
+        )
+
+        cy.intercept(`/api-proxy/v3/search/investment_project`, (req) => {
+          if (
+            req.body.investor_company.includes(
+              investmentProjectTask.investmentProject.investorCompany.id
+            )
+          ) {
+            req.reply({ results: [] })
+          } else {
+            req.reply({ results: [investmentProjectTask.investmentProject] })
+          }
+        }).as('companyProjectSearch')
+
+        cy.visit(tasks.edit(investmentProjectTask.id))
+      })
+
+      it('should show the investments project field when company is changed', () => {
+        cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+        fillTypeahead('[data-test=field-company]', company.name)
+        cy.wait('@companyProjectSearch')
+        assertVisible('[data-test="field-investmentProject"]')
+        fillTypeahead(
+          '[data-test=field-investmentProject]',
+          investmentProjectTask.investmentProject.name
+        )
+      })
+    }
+  )
+
+  context('When changing the company and the investment project', () => {
+    const company = companyFaker()
+    const newInvestmentProject = investmentProjectFaker({
+      investor_company: company,
+    })
+
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/task/${investmentProjectTask.id}`,
+        investmentProjectTask
+      )
+
+      cy.intercept(`/api-proxy/v3/search/investment_project`, (req) => {
+        if (
+          req.body.investor_company.includes(
+            investmentProjectTask.investmentProject.investorCompany.id
+          )
+        ) {
+          req.reply({ results: [investmentProjectTask.investmentProject] })
+        } else {
+          req.reply({ results: [newInvestmentProject] })
+        }
+      }).as('companyProjectSearch')
+
+      cy.visit(tasks.edit(investmentProjectTask.id))
+    })
+
+    it('should display the new values in the typeaheads', () => {
+      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test=field-company]',
+        expectedOption: investmentProjectTask.company.name,
+      })
+      assertSingleTypeaheadOptionSelected({
+        element: '[data-test=field-investmentProject]',
+        expectedOption: investmentProjectTask.investmentProject.name,
+      })
+
+      fillTypeahead('[data-test=field-company]', company.name)
+      cy.wait('@companyProjectSearch')
+      fillTypeahead(
+        '[data-test=field-investmentProject]',
+        newInvestmentProject.name
+      )
     })
   })
 })

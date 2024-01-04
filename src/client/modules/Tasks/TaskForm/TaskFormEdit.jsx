@@ -21,9 +21,13 @@ const getTitle = (task) => {
   return `Edit task for ${task.company.label}`
 }
 
-const TaskFormEdit = ({ currentAdviserId, task, breadcrumbs }) => {
+const TaskFormEdit = ({
+  currentAdviserId,
+  task,
+  breadcrumbs,
+  companyInvestmentProjects,
+}) => {
   const { taskId } = useParams()
-
   return (
     <DefaultLayout
       heading={getTitle(task)}
@@ -48,6 +52,7 @@ const TaskFormEdit = ({ currentAdviserId, task, breadcrumbs }) => {
               cancelRedirectUrl={urls.tasks.details(taskId)}
               redirectToUrl={urls.tasks.details(taskId)}
               submissionTaskName={TASK_SAVE_TASK_DETAILS}
+              companyInvestmentProjects={companyInvestmentProjects}
             />
           )
         }

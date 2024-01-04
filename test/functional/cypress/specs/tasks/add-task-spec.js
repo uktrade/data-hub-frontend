@@ -10,6 +10,7 @@ import {
   assertExactUrl,
   assertSingleTypeaheadOptionSelected,
   assertVisible,
+  assertNotExists,
 } from '../../support/assertions'
 import {
   fill,
@@ -32,7 +33,7 @@ describe('Add generic task', () => {
       cy.get('h1').should('have.text', 'Add task')
     })
 
-    context('When a company is selected', () => {
+    context('When a company is selected that has investment projects', () => {
       const company = companyFaker()
 
       it('should display the investment project typeahead field', () => {
@@ -42,6 +43,23 @@ describe('Add generic task', () => {
         assertVisible('[data-test="field-investmentProject"]')
       })
     })
+
+    context(
+      'When a company is selected that doesnt have any investment projects',
+      () => {
+        const company = companyFaker()
+
+        it('should not the show the investment project typeahead field', () => {
+          cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+          cy.intercept(`/api-proxy/v3/search/investment_project`, {
+            results: [],
+          })
+          fillTypeahead('[data-test=field-company]', company.name)
+
+          assertNotExists('[data-test="field-investmentProject"]')
+        })
+      }
+    )
   })
 
   context('When creating a task for me', () => {

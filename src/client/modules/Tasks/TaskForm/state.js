@@ -1,6 +1,12 @@
 import urls from '../../../../lib/urls'
-import { transformIdNameToValueLabel } from '../../../transformers'
-import { INVESTMENT_PROJECT_ID } from '../../Investments/Projects/state'
+import {
+  transformArrayIdNameToValueLabel,
+  transformIdNameToValueLabel,
+} from '../../../transformers'
+import {
+  INVESTMENT_PROJECTS_ID,
+  INVESTMENT_PROJECT_ID,
+} from '../../Investments/Projects/state'
 import { ID as TASK_DETAILS_ID } from '../TaskDetails/state'
 import { transformAPIValuesForForm } from './transformers'
 
@@ -76,12 +82,20 @@ export const state2props = (state) => {
   const currentAdviserId = state.currentAdviserId
   const { task } = state[TASK_DETAILS_ID]
   const { project } = state[INVESTMENT_PROJECT_ID]
+  const { results } = state[INVESTMENT_PROJECTS_ID]
+
+  const companyInvestmentProjects =
+    Array.isArray(results) && results.length > 0
+      ? transformArrayIdNameToValueLabel(results)
+      : null
+
   if (task) {
     const transformedTask = transformAPIValuesForForm(task, currentAdviserId)
     return {
       task: transformedTask,
       currentAdviserId,
       breadcrumbs: getTaskBreadcrumbs(transformedTask),
+      companyInvestmentProjects: companyInvestmentProjects,
     }
   }
 
@@ -97,6 +111,7 @@ export const state2props = (state) => {
       },
       currentAdviserId,
       breadcrumbs: getInvestmentProjectBreadcumbs(transformedProject),
+      companyInvestmentProjects: companyInvestmentProjects,
     }
   }
 
@@ -104,5 +119,6 @@ export const state2props = (state) => {
     task: null,
     currentAdviserId,
     breadcrumbs: getGenericBreadcumbs(task),
+    companyInvestmentProjects: companyInvestmentProjects,
   }
 }

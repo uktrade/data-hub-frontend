@@ -12,14 +12,18 @@ import {
   FieldAdvisersTypeahead,
   NewWindowLink,
   FieldCompaniesTypeahead,
-  FieldInvestmentProjectTypeahead,
+  FieldTypeahead,
 } from '../../../components'
-
+import { ID as TASK_DETAILS_ID } from '../TaskDetails/state'
 import { validateDaysRange, validateIfDateInFuture } from './validators'
 import { FORM_LAYOUT, OPTIONS_YES_NO } from '../../../../common/constants'
 import { OPTIONS } from './constants'
 import urls from '../../../../lib/urls'
 import { TASK_SAVE_TASK_DETAILS } from './state'
+import Task from '../../../components/Task'
+import { TASK_GET_PROJECTS_LIST } from '../../Investments/Projects/state'
+import { INVESTMENTS__PROJECTS_LOADED } from '../../../actions'
+import Effect from '../../../components/Effect'
 
 const StyledFieldInput = styled(FieldInput)`
   text-align: center;
@@ -44,6 +48,7 @@ const TaskFormFields = ({
   analyticsFormName,
   cancelRedirectUrl,
   redirectToUrl,
+  companyInvestmentProjects,
 }) => (
   <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
     <Form
@@ -62,7 +67,7 @@ const TaskFormFields = ({
       submitButtonLabel="Save task"
       cancelButtonLabel="Back"
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <>
           <FieldInput
             label="Task title"
@@ -148,13 +153,47 @@ const TaskFormFields = ({
             initialValue={task?.company}
           />
           {(task?.company || values.company) && (
-            <FieldInvestmentProjectTypeahead
-              name="investmentProject"
-              label="Investment project (optional)"
-              hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
-              company={values.company && values.company.value}
-              initialValue={task?.investmentProject}
-            />
+            <Task>
+              {(getTask) => {
+                const getProjectsTask = getTask(
+                  TASK_GET_PROJECTS_LIST,
+                  TASK_DETAILS_ID
+                )
+
+                const companyId = values.company?.value || task?.company?.value
+                return (
+                  <>
+                    <Effect
+                      dependencyList={[companyId]}
+                      effect={() => {
+                        companyInvestmentProjects &&
+                          setFieldValue('investmentProject', {
+                            value: null,
+                            label: null,
+                          })
+                        getProjectsTask.start({
+                          payload: {
+                            limit: 250,
+                            companyId: companyId,
+                          },
+                          onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
+                        })
+                      }}
+                    />
+                    {companyInvestmentProjects && (
+                      <FieldTypeahead
+                        options={companyInvestmentProjects}
+                        name="investmentProject"
+                        label="Investment project (optional)"
+                        hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
+                        initialValue={task?.investmentProject}
+                        placeholder="Type to search for investment projects"
+                      />
+                    )}
+                  </>
+                )
+              }}
+            </Task>
           )}
         </>
       )}

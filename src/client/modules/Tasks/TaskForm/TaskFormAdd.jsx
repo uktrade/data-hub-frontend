@@ -44,7 +44,12 @@ const getCancelUrl = (task) => {
   return urls.tasks.details(task.id)
 }
 
-const TaskFormAdd = ({ currentAdviserId, task, breadcrumbs }) => {
+const TaskFormAdd = ({
+  currentAdviserId,
+  task,
+  breadcrumbs,
+  companyInvestmentProjects,
+}) => {
   const { search } = useLocation()
   const { investmentProjectId } = qs.parse(search.slice(1))
   const redirectUrl = getRedirectUrl(task)
@@ -75,6 +80,7 @@ const TaskFormAdd = ({ currentAdviserId, task, breadcrumbs }) => {
         cancelRedirectUrl={cancelUrl}
         redirectToUrl={redirectUrl}
         submissionTaskName={TASK_SAVE_TASK_DETAILS}
+        companyInvestmentProjects={companyInvestmentProjects}
       />
     </DefaultLayout>
   )
