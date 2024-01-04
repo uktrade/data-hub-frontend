@@ -272,6 +272,7 @@ import {
   getTask,
   createTask,
   updateTask,
+  getTaskCompaniesAndProjects,
 } from './routes/v4/task/index.js'
 
 // Datahub API 3rd party dependencies
