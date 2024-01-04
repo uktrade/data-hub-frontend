@@ -27,7 +27,7 @@ describe('Task filters', () => {
   const company1 = companyFaker()
   const company2 = companyFaker()
 
-  const getTaskCompaniesIntercept = () => {
+  const getTaskCompaniesAndProjectsIntercept = () => {
     cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
       body: {
         companies: [
@@ -64,7 +64,7 @@ describe('Task filters', () => {
         results: [TaskList[0]],
       },
     }).as('apiRequest')
-    getTaskCompaniesIntercept()
+    getTaskCompaniesAndProjectsIntercept()
     cy.visit(`${tasksTab}?${urlQuery}`)
 
     // This ignores the checkForMyTasks API call which happens on page load
@@ -76,7 +76,7 @@ describe('Task filters', () => {
   }
 
   function testFilterFromUserInput(element, payload, selectedOption) {
-    getTaskCompaniesIntercept()
+    getTaskCompaniesAndProjectsIntercept()
     cy.intercept('POST', endpoint, {
       body: {
         count: 3,
@@ -310,7 +310,7 @@ describe('Task filters', () => {
     const element = '[data-test="company-select"]'
 
     it('should have a "Company" filter', () => {
-      getTaskCompaniesIntercept(company1, company2)
+      getTaskCompaniesAndProjectsIntercept(company1, company2)
       cy.visit(tasksTab)
       assertFilterName(element, 'Company')
       cy.get(`${element} option`).then((companyOptions) => {
