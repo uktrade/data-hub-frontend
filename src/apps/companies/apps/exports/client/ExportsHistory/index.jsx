@@ -39,9 +39,7 @@ function ExportsHistory({
   countryId,
   pageTitle,
   isComplete,
-  dnbRelatedCompaniesCount,
   returnUrl,
-  localNavItems,
 }) {
   const collectionListTask = {
     name: 'Exports history',
@@ -61,9 +59,7 @@ function ExportsHistory({
             { link: urls.companies.exports.index(company.id), text: 'Exports' },
             { text: pageTitle },
           ]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           <InsetText>
             You can only see the history of countries that were added or edited

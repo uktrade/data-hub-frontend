@@ -21,7 +21,6 @@ const archiveMessage =
 
 const accountManagementUrl = (id) => urls.companies.accountManagement.index(id)
 const addInteractionUrl = (id) => urls.companies.interactions.create(id)
-const companyTreeUrl = (id) => urls.companies.dnbHierarchy.tree(id)
 const detailsUrl = (id) => urls.companies.detail(id)
 const exportProjectUrl = (id) => urls.exportPipeline.create(id)
 
@@ -203,12 +202,6 @@ describe('CompanyLocalHeader', () => {
     })
 
     companyAddressTest(dnbGlobalUltAddress)
-
-    it('should display the view related companies link', () => {
-      cy.get('[data-test="company-tree-link"]')
-        .contains('View company tree: 12346 companies')
-        .should('have.attr', 'href', companyTreeUrl(dnbGlobalUltimate.id))
-    })
 
     addInteractionButtonTest(dnbGlobalUltimate.id)
     addExportProjectButtonTest(dnbGlobalUltimate.id)

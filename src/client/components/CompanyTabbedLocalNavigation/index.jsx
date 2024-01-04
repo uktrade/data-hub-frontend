@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Paragraph from '@govuk-react/paragraph'
 import WarningText from '@govuk-react/warning-text'
@@ -10,6 +10,9 @@ import CompanyLocalTab from './CompanyLocalTab'
 import urls from '../../../lib/urls'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { BLACK } from '../../../client/utils/colours'
+import { localNavItems } from './constants'
+import { state2props } from './state'
+import { filterNonPermittedItem } from '../../../modules/permissions/filters'
 
 const StyledGridRow = styled.div`
   margin-right: -15px;
@@ -55,7 +58,19 @@ const StyledLink = styled('a')`
 const showMatchingPrompt = (company) =>
   !company.dunsNumber && !company.pendingDnbInvestigation
 
-const CompanyTabbedLocalNavigation = ({ localNavItems, company }) => (
+const transformLocalNavItems = (navItems, userPermissions) =>
+  navItems
+    .filter(filterNonPermittedItem(userPermissions))
+    .map((item, index) => (
+      <CompanyLocalTab
+        navItem={item}
+        index={index}
+        isActive={location.pathname.includes(item.path)}
+        key={`company-tab-${index}`}
+      />
+    ))
+
+const CompanyTabbedLocalNavigation = ({ company, userPermissions }) => (
   <StyledGridRow>
     {showMatchingPrompt(company) && (
       <StatusMessage colour={BLACK} id="ga-company-details-matching-prompt">
@@ -83,31 +98,11 @@ const CompanyTabbedLocalNavigation = ({ localNavItems, company }) => (
     <StyledGridColumn>
       <StyledNav aria-label="local navigation" data-test="tabbedLocalNav">
         <StyledUnorderedList data-test="tabbedLocalNavList">
-          {localNavItems?.map((navItem, index) => (
-            <CompanyLocalTab
-              navItem={navItem}
-              index={index}
-              key={`company-tab-${index}`}
-            />
-          ))}
+          {transformLocalNavItems(localNavItems(company.id), userPermissions)}
         </StyledUnorderedList>
       </StyledNav>
     </StyledGridColumn>
   </StyledGridRow>
 )
 
-CompanyTabbedLocalNavigation.propTypes = {
-  localNavItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      path: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      permissions: PropTypes.array,
-      url: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      isActive: PropTypes.bool.isRequired,
-      ariaDescription: PropTypes.string,
-    })
-  ).isRequired,
-}
-
-export default CompanyTabbedLocalNavigation
+export default connect(state2props)(CompanyTabbedLocalNavigation)

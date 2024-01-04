@@ -15,8 +15,6 @@ const CompanyActivityFeed = ({
   isGlobalUltimate,
   dnbHierarchyCount,
   apiEndpoint,
-  dnbRelatedCompaniesCount,
-  localNavItems,
   flashMessages,
 }) => {
   const actions = (
@@ -38,8 +36,6 @@ const CompanyActivityFeed = ({
         <CompanyLayout
           company={company}
           breadcrumbs={[{ text: 'Activity Feed' }]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
-          localNavItems={localNavItems}
           flashMessages={flashMessages}
         >
           <ActivityFeedApp

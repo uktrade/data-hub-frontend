@@ -38,9 +38,7 @@ const CompanyOrdersCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
-  dnbRelatedCompaniesCount,
   returnUrl,
-  localNavItems,
   ...props
 }) => {
   const collectionListTask = {
@@ -71,9 +69,7 @@ const CompanyOrdersCollection = ({
         <CompanyLayout
           company={company}
           breadcrumbs={[{ text: 'Orders (OMIS)' }]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           {company.archived && (
             <Details

@@ -25,21 +25,14 @@ const StyledLink = styled(Link)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
-const ExportsIndex = ({
-  companyId,
-  returnUrl,
-  dnbRelatedCompaniesCount,
-  localNavItems,
-}) => {
+const ExportsIndex = ({ companyId, returnUrl }) => {
   return (
     <CompanyResource id={companyId}>
       {(company) => (
         <CompanyLayout
           company={company}
           breadcrumbs={[{ text: 'Exports' }]}
-          dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           returnUrl={returnUrl}
-          localNavItems={localNavItems}
         >
           <SummaryTable
             caption="Exports"

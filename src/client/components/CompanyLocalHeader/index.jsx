@@ -24,6 +24,7 @@ import {
   buildCompanyBreadcrumbs,
   isItaTierDAccount,
 } from '../../modules/Companies/utils'
+import { RelatedCompaniesCountResource } from '../Resource'
 
 const LocalHeaderTradingNames = styled(H4)`
   font-weight: normal;
@@ -121,7 +122,6 @@ const CompanyLocalHeader = ({
   breadcrumbs,
   flashMessages,
   company,
-  dnbRelatedCompaniesCount,
   returnUrl,
   csrfToken,
 }) =>
@@ -149,18 +149,22 @@ const CompanyLocalHeader = ({
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
-            {dnbRelatedCompaniesCount > 0 && (
-              <StyledRelatedCompaniesWrapper>
-                <Link
-                  href={urls.companies.dnbHierarchy.tree(company.id)}
-                  data-test="company-tree-link"
-                >
-                  {`View company tree: ${
-                    dnbRelatedCompaniesCount + 1
-                  } companies`}
-                </Link>
-              </StyledRelatedCompaniesWrapper>
-            )}
+            <RelatedCompaniesCountResource id={company.id}>
+              {({ relatedCompaniesCount }) =>
+                relatedCompaniesCount > 0 && (
+                  <StyledRelatedCompaniesWrapper>
+                    <Link
+                      href={urls.companies.dnbHierarchy.tree(company.id)}
+                      data-test="company-tree-link"
+                    >
+                      {`View company tree: ${
+                        relatedCompaniesCount + 1
+                      } companies`}
+                    </Link>
+                  </StyledRelatedCompaniesWrapper>
+                )
+              }
+            </RelatedCompaniesCountResource>
           </GridCol>
           <GridCol setWith="one-third">
             <StyledButtonContainer>
