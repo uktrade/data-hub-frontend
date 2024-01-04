@@ -1,4 +1,4 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
 const fakeExportWin = (_, i) => ({
   id: `export-win-id-#${i}`,
@@ -30,7 +30,7 @@ const fakeExportWin = (_, i) => ({
 const CONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
 const UNCONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
 
-const getExportWinCollection = (req, res) => {
+export const getExportWinCollection = (req, res) => {
   const exportWins =
     req.query.filter === 'unconfirmed'
       ? UNCONFIRMED_EXPORT_WINS
@@ -43,8 +43,4 @@ const getExportWinCollection = (req, res) => {
     count: exportWins.length,
     results: exportWins.slice(offset, offset + limit),
   })
-}
-
-module.exports = {
-  getExportWinCollection,
 }

@@ -1,47 +1,50 @@
-var { isEqual, startsWith, get } = require('lodash')
+import get from 'lodash/get.js'
+import isEqual from 'lodash/isEqual.js'
+import startsWith from 'lodash/startsWith.js'
 
 // External activities
-var externalActivities = require('../../../fixtures/v4/activity-feed/external/external-activities.json')
-var maxemailCampaignActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-campaign-activities.json')
-var maxemailEmailSentQuery = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-query.json')
-var maxemailEmailSentActivities = require('../../../fixtures/v4/activity-feed/external/maxemail-email-sent-activities.json')
+import externalActivities from '../../../fixtures/v4/activity-feed/external/external-activities.json' assert { type: 'json' }
+
+import maxemailCampaignActivities from '../../../fixtures/v4/activity-feed/external/maxemail-campaign-activities.json' assert { type: 'json' }
+import maxemailEmailSentQuery from '../../../fixtures/v4/activity-feed/external/maxemail-email-sent-query.json' assert { type: 'json' }
+import maxemailEmailSentActivities from '../../../fixtures/v4/activity-feed/external/maxemail-email-sent-activities.json' assert { type: 'json' }
 
 // Data Hub and external activities
-var dataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json')
-var companyActivities = require('../../../fixtures/v4/activity-feed/company-activity-feed-activities.json')
-var companyRecentActivities = require('../../../fixtures/v4/activity-feed/company-recent-activity-feed-activities.json')
-var companyUpcomingActivities = require('../../../fixtures/v4/activity-feed/company-upcoming-activity-feed-activities.json')
-var contactDataHubAndExternalActivities = require('../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json')
+import dataHubAndExternalActivities from '../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json' assert { type: 'json' }
+
+import companyActivities from '../../../fixtures/v4/activity-feed/company-activity-feed-activities.json' assert { type: 'json' }
+import companyRecentActivities from '../../../fixtures/v4/activity-feed/company-recent-activity-feed-activities.json' assert { type: 'json' }
+import companyUpcomingActivities from '../../../fixtures/v4/activity-feed/company-upcoming-activity-feed-activities.json' assert { type: 'json' }
+import contactDataHubAndExternalActivities from '../../../fixtures/v4/activity-feed/contact-data-hub-and-external-activities.json' assert { type: 'json' }
 
 // My activities
-var myActivities = require('../../../fixtures/v4/activity-feed/my-activities.json')
+import myActivities from '../../../fixtures/v4/activity-feed/my-activities.json' assert { type: 'json' }
 
 // Data Hub activities
-var noActivity = require('../../../fixtures/v4/activity-feed/no-activity.json')
-var dataHubEvents = require('../../../fixtures/v4/activity-feed/data-hub-events.json')
+import noActivity from '../../../fixtures/v4/activity-feed/no-activity.json' assert { type: 'json' }
+
+import dataHubEvents from '../../../fixtures/v4/activity-feed/data-hub-events.json' assert { type: 'json' }
 
 //Aventri events
 ////This order is correct when sorted by: First Name A-Z, Last name A-Z and Company name A-Z
-var aventriAttendeesAToZOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json')
-var aventriRegistrationStatusWithAggregations = require('../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json')
+import aventriAttendeesAToZOrder from '../../../fixtures/v4/activity-feed/aventri-attendees-sort-a-z.json' assert { type: 'json' }
+
+import aventriRegistrationStatusWithAggregations from '../../../fixtures/v4/activity-feed/aventri-registration-status-with-aggregation-counts.json' assert { type: 'json' }
 
 //ESS Interactions
-var essInteractionsNoTitle = require('../../../fixtures/v4/activity-feed/ess-interaction-no-title.json')
-var essInteractionDetail = require('../../../fixtures/v4/activity-feed/ess-interaction.json')
+import essInteractionsNoTitle from '../../../fixtures/v4/activity-feed/ess-interaction-no-title.json' assert { type: 'json' }
+
+import essInteractionDetail from '../../../fixtures/v4/activity-feed/ess-interaction.json' assert { type: 'json' }
 
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
-var aventriAttendeesZToAOrder = require('../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json')
+import aventriAttendeesZToAOrder from '../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json' assert { type: 'json' }
+
 //All Activitiy feed events
-var allActivityFeedEvents = require('../../../fixtures/v4/activity-feed/all-activity-feed-events.json')
-const {
-  generateAventriEventESResponse,
-} = require('../../../fixtures/v4/activity-feed/aventri-events')
-const {
-  generateDataHubActivitiesESResponse,
-} = require('../../../fixtures/v4/activity-feed/data-hub-activities')
-const {
-  generateAventriAttendeeESResponse,
-} = require('../../../fixtures/v4/activity-feed/aventri-attendees')
+import allActivityFeedEvents from '../../../fixtures/v4/activity-feed/all-activity-feed-events.json' assert { type: 'json' }
+
+import { generateAventriEventESResponse } from '../../../fixtures/v4/activity-feed/aventri-events.js'
+import { generateDataHubActivitiesESResponse } from '../../../fixtures/v4/activity-feed/data-hub-activities.js'
+import { generateAventriAttendeeESResponse } from '../../../fixtures/v4/activity-feed/aventri-attendees.js'
 
 let aventriEvents = generateAventriEventESResponse()
 let dataHubActivities = generateDataHubActivitiesESResponse()
@@ -79,7 +82,8 @@ const COMPANY_WITH_MANY_CONTACTS =
   'dit:DataHubCompany:57c41268-26be-4335-a873-557e8b0deb29'
 const MAX_EMAIL_CAMPAIGN =
   'dit:DataHubCompany:6df487c5-7c75-4672-8907-f74b49e6c635'
-exports.activityFeed = function (req, res) {
+
+export const activityFeed = function (req, res) {
   const size = get(req.body, 'size')
   // Activities by contact
   var isContactActivityQuery = get(
@@ -344,14 +348,14 @@ exports.activityFeed = function (req, res) {
       req.body,
       "query.bool.filter.bool.should[0].bool.must[1].terms['object.attributedTo.id'][0]"
     )
-    const activities =
-      company === BEST_EVER_COMPANY
-        ? companyActivities
-        : company === BEST_EVER_COMPANY_2
-          ? essInteractionsNoTitle
-          : dataHubAndExternalActivities
 
-    return res.json(activities)
+    if (company === BEST_EVER_COMPANY) {
+      return res.json(companyActivities)
+    }
+    if (company === BEST_EVER_COMPANY_2) {
+      return res.json(essInteractionsNoTitle)
+    }
+    return res.json(dataHubAndExternalActivities)
   }
 
   // ESS Interactions

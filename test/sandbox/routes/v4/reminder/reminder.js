@@ -1,6 +1,6 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
-var summary = require('../../../fixtures/v4/reminder/summary.json')
+import summary from '../../../fixtures/v4/reminder/summary.json' assert { type: 'json' }
 
 const myTasksReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
@@ -30,11 +30,11 @@ const myTasksReminderListFaker = (length = 10, overrides = {}) => {
   return list
 }
 
-exports.summary = function (req, res) {
+export const getSummary = function (req, res) {
   res.json(summary)
 }
 
-exports.myTasks = function (req, res) {
+export const myTasks = function (req, res) {
   const count = 11
   res.json({
     count: count,

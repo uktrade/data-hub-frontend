@@ -1,9 +1,9 @@
-var incompleteLargeCapitalOpportunity = require('../../../fixtures/v4/investment/large-capital-opportunity-incomplete.json')
-var completeLargeCapitalOpportunity = require('../../../fixtures/v4/investment/large-capital-opportunity-complete.json')
-var largeCapitalOpportunityList = require('../../../fixtures/v4/investment/large-capital-opportunity-list.json')
-var largeCapitalOpportunityListOnePage = require('../../../fixtures/v4/investment/large-capital-opportunity-list-one-page.json')
+import incompleteLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-incomplete.json' assert { type: 'json' }
+import completeLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-complete.json' assert { type: 'json' }
+import largeCapitalOpportunityList from '../../../fixtures/v4/investment/large-capital-opportunity-list.json' assert { type: 'json' }
+import largeCapitalOpportunityListOnePage from '../../../fixtures/v4/investment/large-capital-opportunity-list-one-page.json' assert { type: 'json' }
 
-exports.getLargeCapitalOpportunity = function (req, res) {
+export const getLargeCapitalOpportunity = function (req, res) {
   if (req.params.opportunityId == completeLargeCapitalOpportunity.id) {
     res.json(completeLargeCapitalOpportunity)
   } else {
@@ -11,13 +11,13 @@ exports.getLargeCapitalOpportunity = function (req, res) {
   }
 }
 
-exports.getLargeCapitalOpportunityList = function (req, res) {
+export const getLargeCapitalOpportunityList = function (req, res) {
   if (req.body.sortby == 'name:asc') {
     return res.json(largeCapitalOpportunityListOnePage)
   }
   res.json(largeCapitalOpportunityList)
 }
 
-exports.saveOpportunityDetails = function (req, res) {
+export const saveOpportunityDetails = function (req, res) {
   res.json(completeLargeCapitalOpportunity)
 }

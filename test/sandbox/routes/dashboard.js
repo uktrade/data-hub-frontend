@@ -1,5 +1,5 @@
-var homePage = require('../fixtures/dashboard/homepage.json')
+import homepage from '../fixtures/dashboard/homepage.json' assert { type: 'json' }
 
-exports.homePage = function (req, res) {
-  res.json(homePage)
+export const dashboardHomepage = function (req, res) {
+  res.json(homepage)
 }

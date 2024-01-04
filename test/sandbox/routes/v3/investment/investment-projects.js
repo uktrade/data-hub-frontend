@@ -1,28 +1,28 @@
-var allProjects = require('../../../fixtures/v3/investment/projects.json')
-var project = require('../../../fixtures/v3/investment/project.json')
-var projectAudit = require('../../../fixtures/v3/investment/project-audit.json')
-var projectEvidence = require('../../../fixtures/v3/investment/project-evidence.json')
-var projectNoEvidence = require('../../../fixtures/v3/investment/project-no-evidence.json')
-var documentDownload = require('../../../fixtures/v3/investment/project-document-download.json')
+import allProjects from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' }
+import project from '../../../fixtures/v3/investment/project.json' assert { type: 'json' }
+import projectAudit from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' }
+import projectEvidence from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
+import projectNoEvidence from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
+import projectDocumentDownload from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
 
 var allProjectsMap = {}
 allProjects.results.forEach(function (project) {
   allProjectsMap[project.id] = project
 })
 
-exports.investmentProjectById = function (req, res) {
+export const investmentProjectById = function (req, res) {
   res.json(allProjectsMap[req.params.id] || project)
 }
 
-exports.investmentProjects = function (req, res) {
+export const investmentProjects = function (req, res) {
   res.json(allProjects)
 }
 
-exports.investmentProjectAudit = function (req, res) {
+export const investmentProjectAudit = function (req, res) {
   res.json(projectAudit)
 }
 
-exports.investmentProjectEvidence = function (req, res) {
+export const investmentProjectEvidence = function (req, res) {
   res.json(
     req.params.investmentId === '7ee2c85b-8ad9-46cd-8c39-9c9bef74ced0'
       ? projectNoEvidence
@@ -30,11 +30,11 @@ exports.investmentProjectEvidence = function (req, res) {
   )
 }
 
-exports.documentDownload = function (req, res) {
-  res.json(documentDownload)
+export const documentDownload = function (req, res) {
+  res.json(projectDocumentDownload)
 }
 
-exports.patchInvestmentProject = function (req, res) {
+export const patchInvestmentProject = function (req, res) {
   if (req.body) {
     if (req.body.associated_non_fdi_r_and_d_project) {
       res.sendStatus(200)
@@ -53,10 +53,10 @@ exports.patchInvestmentProject = function (req, res) {
   })
 }
 
-exports.postInvestmentProject = function (req, res) {
+export const postInvestmentProject = function (req, res) {
   res.json(project)
 }
 
-exports.postInvestmentProjectEditTeams = function (req, res) {
+export const postInvestmentProjectEditTeams = function (req, res) {
   res.sendStatus(200).json(allProjectsMap[req.params.id] || project)
 }

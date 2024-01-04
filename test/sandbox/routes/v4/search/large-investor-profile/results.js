@@ -1,6 +1,6 @@
-var largeCapitalProfile = require('./../../../../fixtures/v4/investment/large-capital-profile-list10.json')
+import largeCapitalProfile from './../../../../fixtures/v4/investment/large-capital-profile-list10.json' assert { type: 'json' }
 
-exports.largeInvestorProfile = function (req, res) {
+export const largeInvestorProfile = function (req, res) {
   const countryOfOriginFilter = req.body.country_of_origin || []
   const assetClassesOfInterestFilter = req.body.asset_classes_of_interest || []
   const ukRegionLocationsFilter = req.body.uk_region_location || []

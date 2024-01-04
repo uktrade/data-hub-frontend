@@ -1,5 +1,6 @@
 module.exports = {
   sourceType: 'unambiguous',
+  plugins: ['@babel/plugin-syntax-import-assertions'],
   env: {
     test: {
       plugins: ['istanbul'],

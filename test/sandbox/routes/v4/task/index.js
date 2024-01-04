@@ -1,12 +1,12 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
-const { generateTask, generateTasks } = require('./tasks')
+import { generateTask, generateTasks } from './tasks.js'
 
-exports.getTasks = function (req, res) {
+export const getTasks = function (req, res) {
   res.json(generateTasks())
 }
 
-exports.getTask = function (req, res) {
+export const getTask = function (req, res) {
   res.json(
     generateTask({
       id: req.params.taskId,
@@ -14,14 +14,14 @@ exports.getTask = function (req, res) {
   )
 }
 
-exports.createTask = function (req, res) {
+export const createTask = function (req, res) {
   res.status(201).json({ ...req.body, id: faker.string.uuid() })
 }
 
-exports.updateTask = function (req, res) {
+export const updateTask = function (req, res) {
   res.status(200).json({ ...req.body })
 }
 
-exports.investmentProjectTasks = function (req, res) {
+export const investmentProjectTasks = function (req, res) {
   res.json({ count: 0, next: null, previous: null, results: [] })
 }

@@ -1,36 +1,36 @@
-exports.deleteReminder = function (req, res) {
+export const deleteReminder = function (req, res) {
   res.sendStatus(204)
 }
 
-exports.getEstimatedLandDateSubscriptions = function (req, res) {
+export const getEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
 }
 
-exports.saveEstimatedLandDateSubscriptions = function (req, res) {
+export const saveEstimatedLandDateSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
 }
 
-exports.getNoRecentInteractionsSubscriptions = function (req, res) {
+export const getNoRecentInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30],
     email_reminders_enabled: false,
   })
 }
 
-exports.saveNoRecentInteractionsSubscriptions = function (req, res) {
+export const saveNoRecentInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [30, 60],
     email_reminders_enabled: true,
   })
 }
 
-exports.getReminderSubscriptionsSummary = function (req, res) {
+export const getReminderSubscriptionsSummary = function (req, res) {
   res.json({
     estimated_land_date: {
       email_reminders_enabled: true,
@@ -72,35 +72,35 @@ exports.getReminderSubscriptionsSummary = function (req, res) {
   })
 }
 
-exports.getNoRecentExportInteractionsSubscriptions = function (req, res) {
+export const getNoRecentExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [20],
     email_reminders_enabled: false,
   })
 }
 
-exports.saveNoRecentExportInteractionsSubscriptions = function (req, res) {
+export const saveNoRecentExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [20, 40],
     email_reminders_enabled: true,
   })
 }
 
-exports.getNewExportInteractionsSubscriptions = function (req, res) {
+export const getNewExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [2],
     email_reminders_enabled: false,
   })
 }
 
-exports.saveNewExportInteractionsSubscriptions = function (req, res) {
+export const saveNewExportInteractionsSubscriptions = function (req, res) {
   res.json({
     reminder_days: [2, 4],
     email_reminders_enabled: true,
   })
 }
 
-exports.getEstimatedLandDateReminders = function (req, res) {
+export const getEstimatedLandDateReminders = function (req, res) {
   res.json({
     count: 14,
     next: null,
@@ -120,7 +120,7 @@ exports.getEstimatedLandDateReminders = function (req, res) {
   })
 }
 
-exports.getNoRecentExportInteractionReminders = function (req, res) {
+export const getNoRecentExportInteractionReminders = function (req, res) {
   res.json({
     count: 15,
     next: null,
@@ -188,7 +188,7 @@ exports.getNoRecentExportInteractionReminders = function (req, res) {
   })
 }
 
-exports.getNewExportInteractionReminders = function (req, res) {
+export const getNewExportInteractionReminders = function (req, res) {
   res.json({
     count: 15,
     next: null,
@@ -256,7 +256,7 @@ exports.getNewExportInteractionReminders = function (req, res) {
   })
 }
 
-exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
+export const getNoRecentInvestmentInteractionReminders = function (req, res) {
   res.json({
     count: 15,
     next: null,
@@ -276,13 +276,13 @@ exports.getNoRecentInvestmentInteractionReminders = function (req, res) {
   })
 }
 
-exports.getSubscriptions = function (req, res) {
+export const getSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: false,
   })
 }
 
-exports.saveSubscriptions = function (req, res) {
+export const saveSubscriptions = function (req, res) {
   res.json({
     email_reminders_enabled: true,
   })
