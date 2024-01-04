@@ -24,8 +24,10 @@ describe('Task filters', () => {
     adviser: [myAdviserId],
     sortby: 'due_date:asc',
   }
+  const company1 = companyFaker()
+  const company2 = companyFaker()
 
-  const getTaskCompaniesIntercept = (company1, company2) => {
+  const getTaskCompaniesIntercept = () => {
     cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
       body: {
         companies: [
@@ -55,21 +57,14 @@ describe('Task filters', () => {
     cy.get(element).find('span').should('have.text', text)
   }
 
-  function testFilterFromUrl(
-    element,
-    urlQuery,
-    payload,
-    selectedOption,
-    company1 = companyFaker(),
-    company2 = companyFaker()
-  ) {
+  function testFilterFromUrl(element, urlQuery, payload, selectedOption) {
     cy.intercept('POST', endpoint, {
       body: {
         count: 1,
         results: [TaskList[0]],
       },
     }).as('apiRequest')
-    getTaskCompaniesIntercept(company1, company2)
+    getTaskCompaniesIntercept()
     cy.visit(`${tasksTab}?${urlQuery}`)
 
     // This ignores the checkForMyTasks API call which happens on page load
@@ -81,6 +76,7 @@ describe('Task filters', () => {
   }
 
   function testFilterFromUserInput(element, payload, selectedOption) {
+    getTaskCompaniesIntercept()
     cy.intercept('POST', endpoint, {
       body: {
         count: 3,
@@ -312,8 +308,6 @@ describe('Task filters', () => {
 
   context('Company', () => {
     const element = '[data-test="company-select"]'
-    const company1 = companyFaker()
-    const company2 = companyFaker()
 
     it('should have a "Company" filter', () => {
       getTaskCompaniesIntercept(company1, company2)
@@ -333,16 +327,12 @@ describe('Task filters', () => {
         element,
         `company=${company1.id}`,
         { company: company1.id },
-        company1.name,
-        company1,
-        company2
+        company1.name
       )
     })
 
-    // it('should filter company from user input', () => {
-    //   testFilterFromUserInput(element, { advisers: [myAdviserId] }, 'Me')
-    // })
-
-    // Possibly have the equivalent of these 2 tests for show all ?
+    it('should filter company from user input', () => {
+      testFilterFromUserInput(element, { company: company1.id }, company1.name)
+    })
   })
 })
