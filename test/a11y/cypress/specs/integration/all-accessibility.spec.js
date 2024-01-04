@@ -2,10 +2,9 @@ import urls from '../../../../../src/lib/urls'
 import { urlTestExclusions } from './config/urlTestExclusions'
 import { cleanseArrayOfUrls, createArrayOfUrls } from './config/utils'
 
-const mountPoint = urls.reminders
-const excludedUrls = urlTestExclusions.reminders
+const excludedUrls = urlTestExclusions
 
-const arrayOfUrls = createArrayOfUrls(mountPoint)
+const arrayOfUrls = createArrayOfUrls(urls)
 
 const filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, excludedUrls)
 

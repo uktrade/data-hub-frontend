@@ -13,6 +13,8 @@ export const testIdentityNumbers = {
   ':projectId': '0e686ea4-b8a2-4337-aec4-114d92ad4588',
   ':referralId': 'cc5b9953-894c-44b4-a4ac-d0f6a6f6128f',
   ':subsidiaryCompanyId': 'cc7e2f19-7251-4a41-a27a-f98437720532',
+  ':taskId': '162ba2d6-8b78-4720-b644-626b010be30b',
+  ':winId': '1',
   // Missing ID numbers
   ':kind': 'do_not_have',
   ':pipelineItemId': 'do_not_have',
