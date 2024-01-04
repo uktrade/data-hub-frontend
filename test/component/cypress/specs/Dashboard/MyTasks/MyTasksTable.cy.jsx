@@ -17,12 +17,15 @@ import {
 } from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
+import Provider from '../../provider'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
@@ -47,6 +50,9 @@ describe('My Tasks on the Dashboard', () => {
     },
     sortby: {
       options: [SORT_BY_LIST_OPTIONS],
+    },
+    company: {
+      options: [{ label: 'Company 1', value: '1' }],
     },
   }
 
@@ -117,9 +123,11 @@ describe('My Tasks on the Dashboard', () => {
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   const myTasks = {
     count: 0,
@@ -148,9 +156,11 @@ describe('My Tasks on the Dashboard', () => {
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
