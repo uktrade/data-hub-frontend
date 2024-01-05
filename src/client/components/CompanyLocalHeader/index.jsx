@@ -149,22 +149,24 @@ const CompanyLocalHeader = ({
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
-            <RelatedCompaniesCountResource id={company.id}>
-              {({ relatedCompaniesCount }) =>
-                relatedCompaniesCount > 0 && (
-                  <StyledRelatedCompaniesWrapper>
-                    <Link
-                      href={urls.companies.dnbHierarchy.tree(company.id)}
-                      data-test="company-tree-link"
-                    >
-                      {`View company tree: ${
-                        relatedCompaniesCount + 1
-                      } companies`}
-                    </Link>
-                  </StyledRelatedCompaniesWrapper>
-                )
-              }
-            </RelatedCompaniesCountResource>
+            {company.dunsNumber && (
+              <RelatedCompaniesCountResource id={company.id}>
+                {({ relatedCompaniesCount }) =>
+                  relatedCompaniesCount > 0 && (
+                    <StyledRelatedCompaniesWrapper>
+                      <Link
+                        href={urls.companies.dnbHierarchy.tree(company.id)}
+                        data-test="company-tree-link"
+                      >
+                        {`View company tree: ${
+                          relatedCompaniesCount + 1
+                        } companies`}
+                      </Link>
+                    </StyledRelatedCompaniesWrapper>
+                  )
+                }
+              </RelatedCompaniesCountResource>
+            )}
           </GridCol>
           <GridCol setWith="one-third">
             <StyledButtonContainer>
