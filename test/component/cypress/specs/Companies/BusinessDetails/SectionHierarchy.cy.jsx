@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SectionHierarchy from '../../../../../../src/apps/companies/apps/business-details/client/SectionHierarchy'
+import SectionHierarchy from '../../../../../../src/client/modules/Companies/CompanyBusinessDetails/SectionHierarchy'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
 import urls from '../../../../../../src/lib/urls'
 import DataHubProvider from '../../provider'

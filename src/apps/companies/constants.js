@@ -81,7 +81,6 @@ const QUERY_FIELDS = Object.values(QUERY_FIELDS_MAP)
 const NONE_TEXT = 'None'
 const NOT_SET_TEXT = 'Not set'
 const NOT_AVAILABLE_TEXT = 'Not available'
-const COMPANY_DISSOLVED_OPTION = 'Company is dissolved'
 
 module.exports = {
   GLOBAL_NAV_ITEM,
@@ -92,5 +91,4 @@ module.exports = {
   NONE_TEXT,
   NOT_SET_TEXT,
   NOT_AVAILABLE_TEXT,
-  COMPANY_DISSOLVED_OPTION,
 }

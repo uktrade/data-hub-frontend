@@ -21,7 +21,6 @@ import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotF
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
-import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
@@ -190,14 +189,6 @@ function App() {
         </Mount>
         <Mount selector="#dnb-hierarchy">
           {(props) => <CompanyHierarchy {...props} />}
-        </Mount>
-        <Mount selector="#company-business-details">
-          {(props) => (
-            <CompanyBusinessDetails
-              csrfToken={globalProps.csrfToken}
-              {...props}
-            />
-          )}
         </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (

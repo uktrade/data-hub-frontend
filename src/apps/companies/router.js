@@ -12,8 +12,6 @@ const {
 
 const { renderDetails } = require('./controllers/details')
 
-const { renderBusinessDetails } = require('./apps/business-details/controllers')
-
 const { renderOrders } = require('./controllers/orders')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
@@ -31,11 +29,7 @@ const {
   addCompanyOrRemoveFromList,
 } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
-const {
-  setGlobalHQ,
-  removeGlobalHQ,
-  addSubsidiary,
-} = require('./middleware/hierarchies')
+const { addSubsidiary } = require('./middleware/hierarchies')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 const formatPostcodes = require('./middleware/format-postcodes')
 
@@ -43,7 +37,6 @@ const addCompanyFormRouter = require('./apps/add-company/router')
 const editCompanyFormRouter = require('./apps/edit-company/router')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
-const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
 const exportsRouter = require('./apps/exports/router')
@@ -88,11 +81,6 @@ router.use(
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
 
-router.get(urls.companies.businessDetails.route, renderBusinessDetails)
-
-router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
-router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
-
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
 router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
@@ -116,7 +104,6 @@ router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
 
 router.use(activityFeedRouter)
 router.use(dnbHierarchyRouter)
-router.use(businessDetailsRouter)
 router.use(matchCompanyRouter)
 router.use(exportsRouter)
 router.use(referralsRouter)

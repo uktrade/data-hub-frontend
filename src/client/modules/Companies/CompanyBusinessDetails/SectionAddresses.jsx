@@ -5,8 +5,8 @@ import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { Badge, SummaryTable } from '../../../../../client/components/'
-import urls from '../../../../../lib/urls'
+import { Badge, SummaryTable } from '../../../components'
+import urls from '../../../../lib/urls'
 
 const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
