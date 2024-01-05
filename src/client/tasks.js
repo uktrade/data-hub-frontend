@@ -25,8 +25,9 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
-} from '../apps/companies/apps/business-details/client/state'
-import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
+  TASK_GET_GLOBAL_ULTIMATE,
+} from './modules/Companies/CompanyBusinessDetails/state.js'
+import * as businessDetails from './modules/Companies/CompanyBusinessDetails/tasks.js'
 
 import {
   TASK_GET_COMPANIES_LIST,
@@ -309,8 +310,16 @@ import {
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
 import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
 
-import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
-import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
+import {
+  TASK_GET_GLOBAL_HQ_LIST,
+  TASK_SET_GLOBAL_HQ,
+  TASK_REMOVE_GLOBAL_HQ,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
+import {
+  getGlobalHeadquartersCollection,
+  setGlobalHq,
+  removeGlobalHq,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
 
 import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
@@ -674,4 +683,7 @@ export const tasks = {
   [TASK_PROPOSITION_COMPLETE]: completeInvestmentPropositions,
   [TASK_GET_EXPORT_PROJECT]: getExportProject,
   [TASK_GET_EXPORT_WIN]: getExportWin,
+  [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
+  [TASK_SET_GLOBAL_HQ]: setGlobalHq,
+  [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
 }
