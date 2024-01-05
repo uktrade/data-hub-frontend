@@ -1,16 +1,8 @@
 import { fill } from './form-fillers'
-/**
- * @deprecated
- * THE LOGIC IN THIS FILE HAS BEEN MOVED TO THE /test/support FOLDER AS THE LOGIC IS SHARED BETWEEN
- *  THE COMPONENT AND FUNCTIONAL TESTS. THIS FILE IS ONLY HERE TO AVOID BREAKING ANY TESTS, NO
- * ADDITIONAL LOGIC SHOULD BE ADDED
- */
 
-const adviserResult = require('../../../sandbox/fixtures/autocomplete-adviser-list.json')
+import adviserResult from '../sandbox/fixtures/autocomplete-adviser-list.json' assert { type: 'json' }
 
 /**
- * @deprecated Use the version in /test/support folder
- *
  * Enter `input` into a typeahead `element` and select the first result.
  *
  * Defaults to Typeahead for adviser but can changed to any type by setting
@@ -46,7 +38,6 @@ export const selectFirstMockedTypeaheadOption = ({
   })
 
 /**
- * @deprecated Use the version in /test/support folder
  * Clicks the checkbox option with the given value
  */
 export const clickCheckboxGroupOption = ({ element, value }) => {
@@ -54,7 +45,6 @@ export const clickCheckboxGroupOption = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Clicks the radiogroup option with the label
  */
 export const clickRadioGroupOption = ({ element, label }) => {
@@ -62,7 +52,6 @@ export const clickRadioGroupOption = ({ element, label }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Enter `input` into a typeahead `element` and select the first result
  */
 export const selectFirstTypeaheadOption = ({ element, input }) => {
@@ -72,7 +61,6 @@ export const selectFirstTypeaheadOption = ({ element, input }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Removes a specific chip based on the data-value
  */
 export const removeChip = (dataValue) => {
@@ -80,7 +68,6 @@ export const removeChip = (dataValue) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Adds a date to the any given date input field
  */
 export const inputDateValue = ({ element, value }) => {
@@ -88,7 +75,6 @@ export const inputDateValue = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Adds a date to the any given date input field that also has a hint
  */
 export const inputDateValueWithHint = ({ element, value }) => {
@@ -96,7 +82,6 @@ export const inputDateValueWithHint = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Adds a date object of {day, month, year} to the relevent input fields
  */
 export const clearAndInputDateValueObject = ({ element, value }) => {
@@ -114,7 +99,6 @@ export const clearAndInputDateValueObject = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Clears and Types a value in an input field
  */
 export const clearAndTypeInput = ({ element, value }) => {
@@ -127,7 +111,6 @@ export const clearAndTypeInput = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Clears and Types a value in an textarea field
  */
 export const clearAndTypeTextArea = ({ element, value }) => {
@@ -140,7 +123,6 @@ export const clearAndTypeTextArea = ({ element, value }) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Remove the first item in a multi-select Typeahead
  */
 export const removeFirstTypeaheadItem = () => {
@@ -148,7 +130,6 @@ export const removeFirstTypeaheadItem = () => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Click on a button
  * @param {*} buttonText The text of the button you want to click
  */
@@ -157,7 +138,6 @@ export const clickButton = (buttonText) => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
  * Click on a Cancel anchor
  */
 export const clickCancelLink = () => {
@@ -165,23 +145,6 @@ export const clickCancelLink = () => {
 }
 
 /**
- * @deprecated Use the version in /test/support folder
- * Click on a Continue button
- */
-export const clickContinueButton = () => {
-  cy.get('[data-test="continue"]').click()
-}
-
-/**
- * @deprecated Use the version in /test/support folder
- * Click on a Submit button
- */
-export const clickSubmitButton = () => {
-  cy.get('[data-test="submit"]').click()
-}
-
-/**
- * @deprecated Use the version in /test/support folder
  * Generic search request for a CollectionList
  * @param {*} endpoint The search endpoint
  * @param {*} fakeList The fake list of items to display
@@ -199,9 +162,6 @@ export const collectionListRequest = (endpoint, fakeList, link) => {
   cy.wait('@apiRequest')
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 export const omisCollectionListRequest = (
   endpoint,
   fakeList,
@@ -222,9 +182,6 @@ export const omisCollectionListRequest = (
   cy.wait('@apiRequest')
 }
 
-/**
- * @deprecated Use the version in /test/support folder
- */
 export const addNewContact = (contact) => {
   fill('[data-test=group-field-first_name]', contact.first_name)
   fill('[data-test=group-field-last_name]', contact.last_name)
