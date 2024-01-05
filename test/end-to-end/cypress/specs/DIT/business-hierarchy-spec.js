@@ -68,40 +68,14 @@ describe('Business hierarchy', () => {
     })
 
     beforeEach(() => {
-      cy.visit(companies.businessDetails(company.pk))
+      cy.visit(companies.hierarchies.subsidiaries.index(company.pk))
     })
 
     it('should hide subsidiaries links for archived companies', () => {
-      cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).should(
-        'not.exist'
-      )
-
-      cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
       cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should(
         'not.exist'
       )
       cy.get(selectors.companySubsidiaries().whyNoSubLink).should('be.visible')
-    })
-  })
-
-  describe('DnB Company Subsidiary', () => {
-    const company = fixtures.company.create.corp()
-    const subsidiaryCompany = fixtures.company.create.subsidiaryCorp(company.pk)
-
-    before(() => {
-      cy.loadFixture([company])
-      cy.loadFixture([subsidiaryCompany])
-    })
-
-    beforeEach(() => {
-      cy.visit(companies.businessDetails(company.pk))
-    })
-
-    it('should display subsidiaries links for dnb companies', () => {
-      cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
-      cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should(
-        'be.visible'
-      )
     })
   })
 })

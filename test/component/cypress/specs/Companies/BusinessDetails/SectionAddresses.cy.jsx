@@ -5,7 +5,7 @@ import { assertSummaryTable } from '../../../../../functional/cypress/support/as
 
 const {
   default: SectionAddresses,
-} = require('../../../../../../src/apps/companies/apps/business-details/client/SectionAddresses')
+} = require('../../../../../../src/client/modules/Companies/CompanyBusinessDetails/SectionAddresses')
 const {
   companyFaker,
 } = require('../../../../../functional/cypress/fakers/companies')
