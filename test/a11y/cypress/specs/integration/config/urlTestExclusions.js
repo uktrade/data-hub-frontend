@@ -19,7 +19,10 @@ export const urlTestExclusions = [
   { url: '/contacts/:contactId/audit' },
   { url: '/events/:eventId/attendees/find-new' },
   { url: '/companies/:companyId/interactions/create' },
-  { url: '/companies/:companyId/interactions/create/do_not_have/do_not_have' },
+  { url: '/companies/:companyId/interactions' },
+  { url: '/companies/:companyId/activity' },
+  { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
+  { url: '/companies/:companyId/hierarchies/ghq/search' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
   { url: '/investments/projects/:investmentId/details' },
@@ -53,6 +56,7 @@ export const urlTestExclusions = [
   { url: '/omis/:orderId/edit/complete-order' },
   { url: '/omis/:orderId/reconciliation/payment-receipt' },
   { url: '/companies/:companyId/referrals/:referralId/help' },
+  { url: '/companies/:companyId/referrals/:referralId/interactions/create' },
   { url: '/companies/:companyId/referrals/send' },
   { url: '/reminders/' },
   { url: '/reminders/investments-estimated-land-dates/' },
@@ -66,6 +70,15 @@ export const urlTestExclusions = [
   { url: '/reminders/my-tasks-task-overdue/' },
   { url: '/reminders/my-tasks-task-completed/' },
   { url: '/reminders/settings/' },
+  { url: '/reminders/settings/investments-estimated-land-dates/' },
+  { url: '/reminders/settings/investments-no-recent-interactions/' },
+  { url: '/reminders/settings/companies-no-recent-interactions/' },
+  { url: '/reminders/settings/companies-new-interactions/' },
+  { url: '/reminders/settings/my-tasks-due-date-approaching/' },
+  { url: '/reminders/settings/my-tasks-task-assigned-to-me-from-others/' },
+  { url: '/reminders/settings/my-tasks-task-amended-by-others/' },
+  { url: '/reminders/settings/my-tasks-task-overdue/' },
+  { url: '/reminders/settings/my-tasks-task-completed/' },
   { url: '/export/' },
   { url: '/tasks/:taskId/edit' },
   // 404 errors
@@ -84,6 +97,8 @@ export const urlTestExclusions = [
   { url: '/omis/edit/payment-reconciliation' },
   { url: '/export/:exportId/edit' },
   { url: '/export/:exportId/delete' },
+  { url: '/investments/projects/:investmentId/interactions' },
+  { url: '/investments/projects/:projectId/evidence' },
   // 501 errors
   { url: '/api-proxy/v4/company/:companyId/export-win' },
   { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },
@@ -98,6 +113,11 @@ export const urlTestExclusions = [
   { url: '/investments/projects/:investmentId/propositions' },
   { url: '/investments/projects/:investmentId/propositions/:propositionId' },
   // No sandbox data available for testing the below locations
+  { url: '/investments/projects/:projectId/evidence/:evidenceId/delete' },
+  {
+    url: '/companies/:companyId/referrals/:referralId/interactions/create/:theme/:kind',
+  },
+  { url: '/companies/:companyId/interactions/create/:theme/:kind' },
   { url: '/investments/projects/create/investment-type/info/:anchor' },
   { url: '/investments/:investmentId/interactions/:interactionsId' },
   { url: '/my-pipeline/:pipelineId/edit' },
@@ -116,6 +136,21 @@ export const urlTestExclusions = [
   { url: '/export/:exportId/details' },
   { url: '/omis/:orderId/edit/lead-adviser/:adviserId' },
   { url: '/interactions/ess/:essInteractionId/details' },
+  {
+    url: '/companies/:companyId/account-management/objective/:objectiveId/edit',
+  },
+  {
+    url: '/companies/:companyId/account-management/objective/:objectiveId/archive',
+  },
+  {
+    url: '/investments/projects/:investmentId/propositions/:propositionId/abandon',
+  },
+  {
+    url: '/investments/projects/:investmentId/propositions/:propositionId/document',
+  },
+  {
+    url: '/investments/projects/:investmentId/propositions/:propositionId/complete',
+  },
   // Exclude all metadata
   { url: '/api-proxy/v4/metadata/likelihood-to-land' },
   { url: '/api-proxy/v4/metadata/investment-investor-type' },

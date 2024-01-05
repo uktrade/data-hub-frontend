@@ -2,41 +2,22 @@ import { differenceBy } from 'lodash'
 
 import { testIdentityNumbers } from './testIdentityNumbers'
 
-export const createArrayOfUrls = (mountPoint) => {
+export const createArrayOfUrls = (urls) => {
   const arrayOfUrls = []
-
-  for (const levelOnePath in mountPoint) {
-    if (mountPoint[levelOnePath].route) {
-      arrayOfUrls.push({
-        url:
-          mountPoint[levelOnePath].mountPoint + mountPoint[levelOnePath].route,
-      })
-    } else {
-      const levelTwoPaths = Object.keys(mountPoint[levelOnePath])
-      levelTwoPaths.forEach((levelTwoPath) => {
-        if (mountPoint[levelOnePath][levelTwoPath].route) {
-          arrayOfUrls.push({
-            url:
-              mountPoint[levelOnePath][levelTwoPath].mountPoint +
-              mountPoint[levelOnePath][levelTwoPath].route,
-          })
-        } else {
-          const levelThreePaths = Object.keys(
-            mountPoint[levelOnePath][levelTwoPath]
-          )
-          levelThreePaths.forEach((levelThreePath) => {
-            if (mountPoint[levelOnePath][levelTwoPath][levelThreePath].route) {
-              arrayOfUrls.push({
-                url:
-                  mountPoint[levelOnePath][levelTwoPath][levelThreePath]
-                    .mountPoint +
-                  mountPoint[levelOnePath][levelTwoPath][levelThreePath].route,
-              })
-            }
-          })
-        }
-      })
+  const processPaths = (mountPoint) => {
+    for (const pages in mountPoint) {
+      if (mountPoint[pages].route) {
+        arrayOfUrls.push({
+          url: mountPoint[pages].mountPoint + mountPoint[pages].route,
+        })
+      } else if (typeof mountPoint[pages] === 'object') {
+        processPaths(mountPoint[pages])
+      }
     }
+  }
+
+  for (const mountPoint in urls) {
+    processPaths(urls[mountPoint])
   }
   return arrayOfUrls
 }
