@@ -67,7 +67,7 @@ export const MyTasksContent = ({ myTasks, filters }) => (
           as={Link}
           data-test="add-task"
         >
-          Add tasks
+          Add task
         </Button>
       }
       data-test="my-tasks-heading"
