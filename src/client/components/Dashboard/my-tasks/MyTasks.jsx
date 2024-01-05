@@ -13,7 +13,7 @@ import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
 import { TaskCompaniesAndProjectsResource } from '../../Resource'
-import { companyOptions } from './constants'
+import { companyOptions } from './transformers'
 
 const SELECT_WIDTH = `16%`
 
