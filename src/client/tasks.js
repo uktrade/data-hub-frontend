@@ -25,6 +25,7 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
+  TASK_GET_GLOBAL_ULTIMATE,
 } from '../apps/companies/apps/business-details/client/state'
 import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
 
@@ -652,4 +653,5 @@ export const tasks = {
     reminders.getNextTaskAmendedByOthersReminder,
   [TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
+  [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
 }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import urls from '../../../../../lib/urls'
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 const {
   isDateAfter,
@@ -44,3 +45,10 @@ export function archiveSubmitCallback({ companyId, csrfToken, values }) {
     data: values,
   })
 }
+
+export const getGlobalUltimate = (globalUltimateDunsNumber) =>
+  globalUltimateDunsNumber
+    ? apiProxyAxios.post('/v4/search/company', {
+        duns_number: globalUltimateDunsNumber,
+      })
+    : ''

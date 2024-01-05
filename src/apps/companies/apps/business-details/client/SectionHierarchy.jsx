@@ -8,7 +8,7 @@ import { SPACING_POINTS } from '@govuk-react/constants'
 import { SummaryTable } from '../../../../../client/components/'
 import WideSummaryTableRow from './WideSummaryTableRow'
 import { hqLabels } from '../../../labels'
-import { companies } from '../../../../../lib/urls'
+import urls, { companies } from '../../../../../lib/urls'
 
 const StyledRowActionLink = styled(Link)`
   float: right;
@@ -46,7 +46,9 @@ const SubsectionDnBHierarchy = ({
 
       {!isGlobalUltimate && globalUltimate && (
         <SummaryTable.Row heading="Ultimate HQ">
-          <Link href={globalUltimate.url}>{globalUltimate.name}</Link>
+          <Link href={urls.companies.detail(globalUltimate.id)}>
+            {globalUltimate.name}
+          </Link>
         </SummaryTable.Row>
       )}
 
