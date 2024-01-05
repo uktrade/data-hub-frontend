@@ -13,6 +13,7 @@ import TabNav from '../TabNav'
 import ReferralList from '../ReferralList'
 import { state2props } from './state'
 import NoTasks from '../Dashboard/my-tasks/NoTasks'
+import { TaskCompaniesAndProjectsResource } from '../Resource'
 
 const StyledDiv = styled('div')`
   padding-top: 16px;
@@ -42,7 +43,15 @@ const DashboardTabs = ({
       tabs={{
         [urls.dashboard.myTasks()]: {
           label: 'Tasks',
-          content: hasTasks ? <MyTasks adviser={adviser} /> : <NoTasks />,
+          content: hasTasks ? (
+            <TaskCompaniesAndProjectsResource>
+              {({ companies }) => (
+                <MyTasks adviser={adviser} companies={companies} />
+              )}
+            </TaskCompaniesAndProjectsResource>
+          ) : (
+            <NoTasks />
+          ),
         },
         ...(canViewCompanyLists(userPermissions) && {
           [urls.dashboard.index()]: {
