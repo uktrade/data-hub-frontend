@@ -34,11 +34,11 @@ const StyledImage = styled('img')`
   display: none;
   ${MEDIA_QUERIES.TABLET} {
     display: block;
-    width: 655px;
+    width: 380px;
     margin-bottom: ${SPACING.SCALE_3};
   }
   ${MEDIA_QUERIES.DESKTOP} {
-    width: 760px;
+    width: 460px;
     margin: ${SPACING.SCALE_3} 0 35px 0;
   }
 `

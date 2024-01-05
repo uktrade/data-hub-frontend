@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { SITE_WIDTH, SPACING } from '@govuk-react/constants'
 
-import { HintText } from 'govuk-react'
+import { HintText, Button, Link } from 'govuk-react'
 
 import { ID as GET_MY_TASKS_ID, TASK_GET_MY_TASKS, state2props } from './state'
 import { MY_TASKS_LOADED } from '../../../actions'
@@ -13,6 +13,8 @@ import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
 import { companyOptions } from './transformers'
+import { BLUE } from '../../../utils/colours'
+import urls from '../../../../lib/urls'
 
 const SELECT_WIDTH = `16%`
 
@@ -64,6 +66,16 @@ export const MyTasksContent = ({ myTasks, filters, companies }) => (
     <SpacedSectionBreak />
     <ContentWithHeading
       heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
+      headingActions={
+        <Button
+          buttonColour={BLUE}
+          href={urls.tasks.create()}
+          as={Link}
+          data-test="add-task"
+        >
+          Add task
+        </Button>
+      }
       data-test="my-tasks-heading"
     >
       {myTasks?.count ? (
