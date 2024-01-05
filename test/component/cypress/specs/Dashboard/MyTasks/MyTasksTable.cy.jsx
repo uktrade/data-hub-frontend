@@ -19,6 +19,13 @@ import {
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 import Provider from '../../provider'
 
+const companies = [
+  {
+    id: '1',
+    name: 'Company 1',
+  },
+]
+
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
@@ -59,7 +66,13 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} filters={filtersList} />)
+      cy.mount(
+        <Component
+          myTasks={myTasks}
+          filters={filtersList}
+          companies={companies}
+        />
+      )
     })
 
     it('should display the heading 3 tasks', () => {
@@ -137,7 +150,7 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has no tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mount(<Component myTasks={myTasks} companies={[]} />)
     })
     it('should display the heading 0 tasks', () => {
       cy.get('h3').should('contain', '0 tasks')
@@ -172,7 +185,7 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mount(<Component myTasks={myTasks} companies={companies} />)
     })
 
     it('should display the heading 1 task (singular) and not 1 tasks (plural)', () => {
