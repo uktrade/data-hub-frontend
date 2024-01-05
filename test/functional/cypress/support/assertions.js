@@ -412,6 +412,12 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
+const assertFieldTextareaNoLabel = ({ element, value = undefined }) =>
+  cy
+    .wrap(element)
+    .find('textarea')
+    .then(($el) => value && cy.wrap($el).should('have.text', value || ''))
+
 const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   const isUKBased = value.country.name === 'United Kingdom'
   const isUSBased = value.country.name === 'United States'
@@ -925,4 +931,5 @@ module.exports = {
   assertTypeaheadValues,
   assertLink,
   assertLinkWithText,
+  assertFieldTextareaNoLabel,
 }

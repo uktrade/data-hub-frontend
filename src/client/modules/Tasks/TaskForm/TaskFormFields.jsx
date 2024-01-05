@@ -145,55 +145,66 @@ const TaskFormFields = ({
             </UnorderedList>
           </Details>
 
-          <FieldCompaniesTypeahead
-            name="company"
-            isMulti={false}
-            label="Company name (optional)"
-            hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
-            initialValue={task?.company}
+          <FieldInput
+            type="hidden"
+            name="interaction"
+            initialValue={task?.interaction?.id}
           />
-          {(task?.company || values.company) && (
-            <Task>
-              {(getTask) => {
-                const getProjectsTask = getTask(
-                  TASK_GET_PROJECTS_LIST,
-                  TASK_DETAILS_ID
-                )
 
-                const companyId = values.company?.value || task?.company?.value
-                return (
-                  <>
-                    <Effect
-                      dependencyList={[companyId]}
-                      effect={() => {
-                        companyInvestmentProjects &&
-                          setFieldValue('investmentProject', {
-                            value: null,
-                            label: null,
-                          })
-                        getProjectsTask.start({
-                          payload: {
-                            limit: 250,
-                            companyId: companyId,
-                          },
-                          onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
-                        })
-                      }}
-                    />
-                    {companyInvestmentProjects && (
-                      <FieldTypeahead
-                        options={companyInvestmentProjects}
-                        name="investmentProject"
-                        label="Investment project (optional)"
-                        hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
-                        initialValue={task?.investmentProject}
-                        placeholder="Type to search for investment projects"
-                      />
-                    )}
-                  </>
-                )
-              }}
-            </Task>
+          {!task?.interaction && (
+            <>
+              <FieldCompaniesTypeahead
+                name="company"
+                isMulti={false}
+                label="Company name (optional)"
+                hint="This will link the task to the company selected. The task will be added to your task list on the homepage."
+                initialValue={task?.company}
+              />
+              {(task?.company || values.company) && (
+                <Task>
+                  {(getTask) => {
+                    const getProjectsTask = getTask(
+                      TASK_GET_PROJECTS_LIST,
+                      TASK_DETAILS_ID
+                    )
+
+                    const companyId =
+                      values.company?.value || task?.company?.value
+                    return (
+                      <>
+                        <Effect
+                          dependencyList={[companyId]}
+                          effect={() => {
+                            companyInvestmentProjects &&
+                              setFieldValue('investmentProject', {
+                                value: null,
+                                label: null,
+                              })
+                            getProjectsTask.start({
+                              payload: {
+                                limit: 250,
+                                companyId: companyId,
+                              },
+                              onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
+                            })
+                          }}
+                        />
+                        {companyInvestmentProjects && (
+                          <FieldTypeahead
+                            options={companyInvestmentProjects}
+                            name="investmentProject"
+                            label="Investment project (optional)"
+                            hint="This will link the task to the project selected. The task will be added to your task list on the homepage."
+                            initialValue={task?.investmentProject}
+                            placeholder="Type to search for investment projects"
+                          />
+                        )}
+                      </>
+                    )
+                  }}
+                </Task>
+              )}
+            </>
           )}
         </>
       )}

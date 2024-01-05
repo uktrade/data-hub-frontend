@@ -51,6 +51,7 @@ describe('Edit generic task', () => {
         company: null,
         reminder_days: task.reminderDays,
         advisers: task.advisers.map((a) => a.id),
+        interaction: null,
       })
 
       assertExactUrl(tasks.details(task.id))
@@ -115,6 +116,7 @@ describe('Edit investment project task', () => {
         investment_project: investmentProjectTask.investmentProject.id,
         reminder_days: investmentProjectTask.reminderDays,
         advisers: investmentProjectTask.advisers.map((a) => a.id),
+        interaction: null,
       })
 
       assertExactUrl(tasks.details(investmentProjectTask.id))
@@ -256,6 +258,7 @@ describe('Edit company task', () => {
         company: companyTask.company.id,
         reminder_days: companyTask.reminderDays,
         advisers: companyTask.advisers.map((a) => a.id),
+        interaction: null,
       })
 
       assertExactUrl(tasks.details(companyTask.id))

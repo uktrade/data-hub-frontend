@@ -710,6 +710,7 @@ module.exports = {
       '/tasks/create?investmentProjectId=',
       ':investmentProjectId'
     ),
+    createInteraction: url('/tasks/create?interactionId=', ':interactionId'),
     edit: url('/tasks', '/:taskId/edit'),
   },
 }

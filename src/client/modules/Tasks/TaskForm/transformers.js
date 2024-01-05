@@ -40,15 +40,24 @@ const getUniquePKValue = (formValues) => {
     return {
       investment_project: formValues.investmentProject.value,
       company: null,
+      interaction: null,
+    }
+  }
+  if (formValues?.interaction?.id) {
+    return {
+      investment_project: null,
+      company: null,
+      interaction: formValues.interaction.id,
     }
   }
   if (formValues.company) {
     return {
       investment_project: null,
       company: transformOptionToValue(formValues.company),
+      interaction: null,
     }
   }
-  return { investment_project: null, company: null }
+  return { investment_project: null, company: null, interaction: null }
 }
 
 const getDueDate = (dueDate, customDate) => {
@@ -83,4 +92,5 @@ export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   assignedTo: transformAdvisor(task.advisers, currentAdviserId),
   advisers: transformArrayIdNameToValueLabel(task.advisers),
   company: task.company && transformIdNameToValueLabel(task.company),
+  interaction: task.interaction,
 })

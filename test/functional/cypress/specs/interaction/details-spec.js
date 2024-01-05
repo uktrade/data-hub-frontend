@@ -8,6 +8,7 @@ const {
   assertErrorSummary,
   assertFieldDate,
   assertFlashMessage,
+  assertLinkWithText,
 } = require('../../support/assertions')
 const {
   interactions,
@@ -15,6 +16,7 @@ const {
   investments,
   contacts,
   events,
+  tasks,
 } = require('../../../../../src/lib/urls')
 
 const {
@@ -74,6 +76,7 @@ describe('Interaction details', () => {
 
     assertEditButtonNotVisible()
     assertCannotCompleteTextNotVisible()
+    assertAddFollowUpTaskVisible(fixtures.interaction.draftPastMeeting.id)
 
     context('when cancelling the interaction', () => {
       it('should render the archive container', () => {
@@ -169,6 +172,7 @@ describe('Interaction details', () => {
 
     assertCompleteButtonNotVisible()
     assertEditButtonNotVisible()
+    assertAddFollowUpTaskVisible(fixtures.interaction.draftFutureMeeting.id)
 
     it('should render the "Why can I not complete this interaction?" details summary', () => {
       cy.get('[data-test=cannot-complete-interaction]').should('be.visible')
@@ -224,6 +228,7 @@ describe('Interaction details', () => {
     assertCompleteButtonNotVisible()
     assertEditButtonNotVisible()
     assertCannotCompleteTextNotVisible()
+    assertAddFollowUpTaskVisible(fixtures.interaction.cancelledMeeting.id)
   })
 
   context('Complete service delivery', () => {
@@ -265,6 +270,7 @@ describe('Interaction details', () => {
     })
 
     assertCompleteButtonNotVisible()
+    assertAddFollowUpTaskVisible(fixtures.interaction.withLink.id)
 
     it('should render the "Edit interaction" button', () => {
       cy.get('[data-test=edit-interaction-button]')
@@ -316,6 +322,7 @@ describe('Interaction details', () => {
     })
 
     assertCompleteButtonNotVisible()
+    assertAddFollowUpTaskVisible(fixtures.interaction.withNoLink.id)
 
     it('should render the "Edit interaction" button', () => {
       cy.get('[data-test=edit-interaction-button]')
@@ -482,5 +489,15 @@ function assertEditButtonNotVisible() {
 function assertCannotCompleteTextNotVisible() {
   it('should not render the "Why can I not complete this interaction?" details summary', () => {
     cy.get('[data-test=cannot-complete-interaction]').should('not.exist')
+  })
+}
+
+function assertAddFollowUpTaskVisible(interactionId) {
+  it('should render an Add follow up task button with expected url', () => {
+    assertLinkWithText(
+      'add-follow-up-task-button',
+      tasks.createInteraction(interactionId),
+      'Add follow up task'
+    )
   })
 }

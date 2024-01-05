@@ -260,8 +260,14 @@ import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
 import { getEventAventriRegistrationStatusAttendees } from './modules/Events/EventAventriRegistrationStatus/tasks'
 
-import { TASK_ARCHIVE_INTERACTION } from './modules/Interactions/InteractionDetails/state'
-import { archiveInteraction } from './modules/Interactions/InteractionDetails/tasks'
+import {
+  TASK_ARCHIVE_INTERACTION,
+  TASK_GET_INTERACTION,
+} from './modules/Interactions/InteractionDetails/state'
+import {
+  archiveInteraction,
+  getInteraction,
+} from './modules/Interactions/InteractionDetails/tasks'
 import { TASK_GET_ESS_INTERACTION_DETAILS } from './modules/Interactions/ESSInteractionDetails/state'
 
 import { TASK_GET_COMPANY_DETAIL } from '../client/modules/Companies/CompanyDetails/state'
@@ -652,4 +658,5 @@ export const tasks = {
     reminders.getNextTaskAmendedByOthersReminder,
   [TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
+  [TASK_GET_INTERACTION]: getInteraction,
 }
