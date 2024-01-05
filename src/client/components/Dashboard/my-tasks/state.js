@@ -7,6 +7,7 @@ import {
   SORT_BY_LIST_OPTIONS,
   STATUS_LIST_OPTIONS,
   ME_OTHERS_LIST_OPTIONS,
+  SHOW_ALL_OPTION,
 } from './constants'
 
 export const ID = 'getMyTasks'
@@ -63,7 +64,7 @@ export const state2props = ({ router, ...state }) => {
     payload.sortby = sortbyMapping[queryParams.sortby]
   }
 
-  if (queryParams.company && queryParams.company !== 'all-statuses') {
+  if (queryParams.company && queryParams.company !== SHOW_ALL_OPTION.value) {
     payload.company = queryParams.company
   }
 
