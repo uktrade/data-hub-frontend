@@ -15,6 +15,7 @@ import SpacedSectionBreak from '../../SpacedSectionBreak'
 import { companyOptions } from './transformers'
 import { BLUE } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
+import { TaskCompaniesAndProjectsResource } from '../../Resource'
 
 const SELECT_WIDTH = `16%`
 
@@ -33,36 +34,8 @@ const FiltersContainer = styled.div`
   }
 `
 
-export const MyTasksContent = ({ myTasks, filters, companies }) => (
+export const MyTasksContent = ({ myTasks }) => (
   <>
-    <FiltersContainer>
-      <TaskListSelect
-        label="Status"
-        qsParam="status"
-        options={filters?.status?.options}
-      />
-      <TaskListSelect
-        label="Assigned to"
-        qsParam="assigned_to"
-        options={filters?.assignedTo?.options}
-      />
-      <TaskListSelect
-        label="Created by"
-        qsParam="created_by"
-        options={filters?.createdBy?.options}
-      />
-      <TaskListSelect
-        label="Company"
-        qsParam="company"
-        options={companyOptions(companies)}
-      />
-      <span className="task-select-spacer" id="task-select-spacer" />
-      <TaskListSelect
-        label="Sort by"
-        qsParam="sortby"
-        options={filters?.sortby?.options}
-      />
-    </FiltersContainer>
     <SpacedSectionBreak />
     <ContentWithHeading
       heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
@@ -86,24 +59,52 @@ export const MyTasksContent = ({ myTasks, filters, companies }) => (
     </ContentWithHeading>
   </>
 )
-const MyTasks = ({ myTasks, filters, payload, companies }) => (
-  <Task.Status
-    name={TASK_GET_MY_TASKS}
-    id={GET_MY_TASKS_ID}
-    progressMessage="Loading your tasks"
-    startOnRender={{
-      payload: payload,
-      onSuccessDispatch: MY_TASKS_LOADED,
-    }}
-  >
-    {() => (
-      <MyTasksContent
-        myTasks={myTasks}
-        filters={filters}
-        companies={companies}
-      />
-    )}
-  </Task.Status>
+const MyTasks = ({ myTasks, filters, payload }) => (
+  <>
+    <TaskCompaniesAndProjectsResource>
+      {({ companies }) => (
+        <FiltersContainer>
+          <TaskListSelect
+            label="Status"
+            qsParam="status"
+            options={filters?.status?.options}
+          />
+          <TaskListSelect
+            label="Assigned to"
+            qsParam="assigned_to"
+            options={filters?.assignedTo?.options}
+          />
+          <TaskListSelect
+            label="Created by"
+            qsParam="created_by"
+            options={filters?.createdBy?.options}
+          />
+          <TaskListSelect
+            label="Company"
+            qsParam="company"
+            options={companyOptions(companies)}
+          />
+          <span className="task-select-spacer" id="task-select-spacer" />
+          <TaskListSelect
+            label="Sort by"
+            qsParam="sortby"
+            options={filters?.sortby?.options}
+          />
+        </FiltersContainer>
+      )}
+    </TaskCompaniesAndProjectsResource>
+    <Task.Status
+      name={TASK_GET_MY_TASKS}
+      id={GET_MY_TASKS_ID}
+      progressMessage="Loading your tasks"
+      startOnRender={{
+        payload: payload,
+        onSuccessDispatch: MY_TASKS_LOADED,
+      }}
+    >
+      {() => <MyTasksContent myTasks={myTasks} />}
+    </Task.Status>
+  </>
 )
 
 export default connect(state2props)(MyTasks)
