@@ -1,5 +1,3 @@
-import { differenceBy } from 'lodash'
-
 import { testIdentityNumbers } from './testIdentityNumbers'
 
 export const createArrayOfUrls = (urls) => {
@@ -23,25 +21,24 @@ export const createArrayOfUrls = (urls) => {
 }
 
 export const cleanseArrayOfUrls = (arrayOfUrls, excludedUrls) => {
-  let filteredArrayOfUrls = differenceBy(arrayOfUrls, excludedUrls, 'url')
-
-  filteredArrayOfUrls = filteredArrayOfUrls.filter(
-    (path) => path.url.split('/').pop() !== 'data'
-  )
-
-  filteredArrayOfUrls = filteredArrayOfUrls.filter(
-    (path) => path.url.split('/').pop() !== 'export'
-  )
-
-  filteredArrayOfUrls = filteredArrayOfUrls.map((path) => {
-    let pathUrl = path.url.split('/')
-    const currentPathUrl = pathUrl.map((pathSegment) => {
-      if (pathSegment.startsWith(':')) {
-        return (pathSegment = testIdentityNumbers[pathSegment])
-      }
-      return pathSegment
+  const filteredArrayOfUrls = arrayOfUrls
+    .filter(
+      (path) => !excludedUrls.some((excluded) => excluded.url === path.url)
+    )
+    .filter(
+      (path) =>
+        path.url.split('/').pop() !== 'data' &&
+        path.url.split('/').pop() !== 'export'
+    )
+    .map((path) => {
+      const pathUrl = path.url.split('/')
+      const currentPathUrl = pathUrl.map((pathSegment) =>
+        pathSegment.startsWith(':')
+          ? testIdentityNumbers[pathSegment]
+          : pathSegment
+      )
+      return currentPathUrl.join('/')
     })
-    return currentPathUrl.join('/')
-  })
+
   return filteredArrayOfUrls
 }
