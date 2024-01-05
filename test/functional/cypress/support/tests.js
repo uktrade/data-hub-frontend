@@ -1,3 +1,9 @@
+/**
+ * Resuable test functions - these combine an action with an assertion.
+ *
+ * These are distinct from assertions because unlike an assertion, these have
+ * side effects as a result of the action taken.
+ */
 import { selectFirstTypeaheadOption } from './actions'
 import {
   assertTypeaheadHints,
@@ -6,14 +12,6 @@ import {
 } from './assertions'
 
 /**
- * @deprecated
- * THE LOGIC IN THIS FILE HAS BEEN MOVED TO THE /test/support FOLDER AS THE LOGIC IS SHARED BETWEEN
- *  THE COMPONENT AND FUNCTIONAL TESTS. THIS FILE IS ONLY HERE TO AVOID BREAKING ANY TESTS, NO
- * ADDITIONAL LOGIC SHOULD BE ADDED
- */
-
-/**
- * @deprecated
  * Tests that a typeahead functions correctly by inputing a value and selecting
  */
 export const testTypeahead = ({
@@ -30,7 +28,6 @@ export const testTypeahead = ({
 }
 
 /**
- * @deprecated
  * Test that a typeahead has the correct number of options
  */
 export const testTypeaheadOptionsLength = ({ element, length }) => {
@@ -41,7 +38,6 @@ export const testTypeaheadOptionsLength = ({ element, length }) => {
 }
 
 /**
- * @deprecated
  * Tests that clicking the first indicator button clears a filter element
  */
 export const testRemoveChip = ({ element, placeholder = null }) => {
@@ -54,7 +50,6 @@ export const testRemoveChip = ({ element, placeholder = null }) => {
 }
 
 /**
- * @deprecated
  * Tests that finding the checkbox option matching the value and clicking it will mark that option as selected
  */
 export const testCheckBoxGroup = ({ element, value, checked = true }) => {
