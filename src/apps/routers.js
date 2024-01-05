@@ -110,6 +110,9 @@ const reactRoutes = [
   '/tasks/create',
   '/tasks/:taskId/edit',
   '/companies/:companyId/overview',
+  '/companies/:companyId/business-details',
+  '/companies/:companyId/hierarchies/ghq/:globalHqId/add',
+  '/companies/:companyId/hierarchies/ghq/remove',
 ]
 
 reactRoutes.forEach((path) => {

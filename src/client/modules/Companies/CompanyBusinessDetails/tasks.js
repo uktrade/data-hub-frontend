@@ -1,12 +1,9 @@
 import axios from 'axios'
 
-import urls from '../../../../../lib/urls'
+import urls from '../../../../lib/urls'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
-const {
-  isDateAfter,
-  subtractDays,
-  today,
-} = require('../../../../../client/utils/date')
+const { isDateAfter, subtractDays, today } = require('../../../utils/date')
 
 export function checkIfPendingRequest(duns_number) {
   if (duns_number) {
@@ -44,3 +41,10 @@ export function archiveSubmitCallback({ companyId, csrfToken, values }) {
     data: values,
   })
 }
+
+export const getGlobalUltimate = (globalUltimateDunsNumber) =>
+  globalUltimateDunsNumber
+    ? apiProxyAxios.post('/v4/search/company', {
+        duns_number: globalUltimateDunsNumber,
+      })
+    : ''

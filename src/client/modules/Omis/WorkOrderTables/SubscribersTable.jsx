@@ -4,7 +4,7 @@ import { Link } from 'govuk-react'
 import { SummaryTable } from '../../../components'
 import { isOrderActive } from '../transformers'
 import urls from '../../../../lib/urls'
-import WideSummaryTableRow from '../../../../apps/companies/apps/business-details/client/WideSummaryTableRow'
+import WideSummaryTableRow from '../../Companies/CompanyBusinessDetails/WideSummaryTableRow'
 
 const buildSubscriberRows = (subscribers) =>
   subscribers.map(({ name, ditTeam }) => (

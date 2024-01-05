@@ -4,8 +4,8 @@ import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { SummaryTable } from '../../../../../client/components/'
-import urls from '../../../../../lib/urls'
+import { SummaryTable } from '../../../components'
+import urls from '../../../../lib/urls'
 
 const StyledSummaryFooterLink = styled(Link)`
   margin-top: -${SPACING_POINTS[7]}px;

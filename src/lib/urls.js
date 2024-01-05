@@ -226,6 +226,7 @@ module.exports = {
         remove: url('/companies', '/:companyId/hierarchies/ghq/remove'),
       },
       subsidiaries: {
+        index: url('/companies', '/:companyId/subsidiaries'),
         search: url(
           '/companies',
           '/:companyId/hierarchies/subsidiaries/search'
