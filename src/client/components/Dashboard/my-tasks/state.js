@@ -49,6 +49,7 @@ export const state2props = ({ router, ...state }) => {
     archived: undefined,
     sortby: 'due_date:asc',
     company: undefined,
+    project: undefined,
   }
 
   const assignedToMapping = {
@@ -66,6 +67,10 @@ export const state2props = ({ router, ...state }) => {
 
   if (queryParams.company && queryParams.company !== SHOW_ALL_OPTION.value) {
     payload.company = queryParams.company
+  }
+
+  if (queryParams.project && queryParams.project !== SHOW_ALL_OPTION.value) {
+    payload.project = queryParams.project
   }
 
   Object.assign(payload, assignedToMapping[queryParams.assigned_to])

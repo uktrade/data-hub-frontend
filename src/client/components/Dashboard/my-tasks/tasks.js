@@ -9,6 +9,7 @@ export const getMyTasks = ({
   archived,
   sortby = 'due_date:asc',
   company,
+  project,
 }) =>
   apiProxyAxios
     .post('/v4/search/task', {
@@ -22,5 +23,6 @@ export const getMyTasks = ({
       archived,
       sortby,
       company,
+      investment_project: project,
     })
     .then(({ data }) => data)

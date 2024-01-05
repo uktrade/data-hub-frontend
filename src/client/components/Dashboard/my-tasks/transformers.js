@@ -1,10 +1,10 @@
 import { SHOW_ALL_OPTION } from './constants'
 
-export const companyOptions = (companies) => {
-  const companiesList = companies.map((company) => ({
-    label: company.name,
-    value: company.id,
+export const companyAndProjectOptions = (options) => {
+  const optionsList = options.map((option) => ({
+    label: option.name,
+    value: option.id,
   }))
 
-  return [SHOW_ALL_OPTION, ...companiesList]
+  return [SHOW_ALL_OPTION, ...optionsList]
 }

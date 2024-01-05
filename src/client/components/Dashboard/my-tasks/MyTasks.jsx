@@ -12,7 +12,7 @@ import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
-import { companyOptions } from './transformers'
+import { companyAndProjectOptions } from './transformers'
 import { BLUE } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
 import { TaskCompaniesAndProjectsResource } from '../../Resource'
@@ -62,7 +62,7 @@ export const MyTasksContent = ({ myTasks }) => (
 const MyTasks = ({ myTasks, filters, payload }) => (
   <>
     <TaskCompaniesAndProjectsResource>
-      {({ companies }) => (
+      {({ companies, projects }) => (
         <FiltersContainer>
           <TaskListSelect
             label="Status"
@@ -82,7 +82,12 @@ const MyTasks = ({ myTasks, filters, payload }) => (
           <TaskListSelect
             label="Company"
             qsParam="company"
-            options={companyOptions(companies)}
+            options={companyAndProjectOptions(companies)}
+          />
+          <TaskListSelect
+            label="Project"
+            qsParam="project"
+            options={companyAndProjectOptions(projects)}
           />
           <span className="task-select-spacer" id="task-select-spacer" />
           <TaskListSelect
