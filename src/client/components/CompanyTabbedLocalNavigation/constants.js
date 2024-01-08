@@ -40,7 +40,6 @@ export const localNavItems = (companyId) => {
         companyId
       ),
       label: 'Investment',
-      search: '/projects?page=1&sortby=created_on%3Adesc',
       permissions: [
         'investment.view_all_investmentproject',
         'investment.view_associated_investmentproject',
