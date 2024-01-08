@@ -31,13 +31,13 @@ const taskFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-const company = pick(companyFaker(), ['id', 'name'])
-
 const taskWithInvestmentProjectFaker = (
   overrides = {},
   investmentProjectOverrides = {}
-) =>
-  taskFaker(
+) => {
+  const company = pick(companyFaker(), ['id', 'name'])
+
+  return taskFaker(
     (overrides = {
       investmentProject: {
         investorCompany: company,
@@ -49,6 +49,7 @@ const taskWithInvestmentProjectFaker = (
       ...overrides,
     })
   )
+}
 
 const taskWithCompanyFaker = (overrides = {}) =>
   taskFaker(

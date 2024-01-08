@@ -1,7 +1,6 @@
 import { assertPayload } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import taskListFaker from '../../fakers/task'
-import { companyFaker } from '../../fakers/companies'
 
 const transformOptions = (options) =>
   [...options].map((o) => ({
@@ -18,14 +17,21 @@ describe('Task filters', () => {
   const endpoint = '/api-proxy/v4/search/task'
   const tasksTab = urls.dashboard.myTasks()
   const TaskList = taskListFaker()
+
   const basePayload = {
     limit: 50,
     offset: 0,
     adviser: [myAdviserId],
     sortby: 'due_date:asc',
   }
-  const company1 = companyFaker()
-  const company2 = companyFaker()
+  //Remap investment_project property to investmentProject so it displays in the Task List UI properly
+  TaskList[0].investment_project = TaskList[0].investmentProject
+  TaskList[1].investment_project = TaskList[1].investmentProject
+
+  const company1 = TaskList[0].company
+  const company2 = TaskList[1].company
+  const project1 = TaskList[0].investmentProject
+  const project2 = TaskList[1].investmentProject
 
   const getTaskCompaniesAndProjectsIntercept = () => {
     cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
@@ -40,7 +46,16 @@ describe('Task filters', () => {
             name: company2.name,
           },
         ],
-        projects: [],
+        projects: [
+          {
+            id: project1.id,
+            name: project1.name,
+          },
+          {
+            id: project2.id,
+            name: project2.name,
+          },
+        ],
       },
     })
   }
@@ -310,7 +325,7 @@ describe('Task filters', () => {
     const element = '[data-test="company-select"]'
 
     it('should have a "Company" filter', () => {
-      getTaskCompaniesAndProjectsIntercept(company1, company2)
+      getTaskCompaniesAndProjectsIntercept()
       cy.visit(tasksTab)
       assertFilterName(element, 'Company')
       cy.get(`${element} option`).then((companyOptions) => {
@@ -333,6 +348,46 @@ describe('Task filters', () => {
 
     it('should filter company from user input', () => {
       testFilterFromUserInput(element, { company: company1.id }, company1.name)
+    })
+  })
+
+  context('Project', () => {
+    const element = '[data-test="project-select"]'
+
+    it('should have a "Project" filter', () => {
+      getTaskCompaniesAndProjectsIntercept()
+      cy.visit(tasksTab)
+      assertFilterName(element, 'Project')
+      cy.get(`${element} option`).then((projectOptions) => {
+        expect(transformOptions(projectOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          {
+            value: project1.id,
+            label: project1.name,
+          },
+          {
+            value: project2.id,
+            label: project2.name,
+          },
+        ])
+      })
+    })
+
+    it('should filter project from the url', () => {
+      testFilterFromUrl(
+        element,
+        `project=${project1.id}`,
+        { investment_project: project1.id },
+        project1.name
+      )
+    })
+
+    it('should filter project from user input', () => {
+      testFilterFromUserInput(
+        element,
+        { investment_project: project1.id },
+        project1.name
+      )
     })
   })
 })

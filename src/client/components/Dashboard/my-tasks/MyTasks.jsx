@@ -12,7 +12,7 @@ import ContentWithHeading from '../../ContentWithHeading'
 import MyTasksTable from './MyTasksTable'
 import TaskListSelect from './TaskListSelect'
 import SpacedSectionBreak from '../../SpacedSectionBreak'
-import { companyOptions } from './transformers'
+import { companyAndProjectOptions } from './transformers'
 import { BLUE } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
 import { TaskCompaniesAndProjectsResource } from '../../Resource'
@@ -25,7 +25,7 @@ const FiltersContainer = styled.div`
   column-gap: 2px;
   margin-bottom: ${SPACING.SCALE_3};
 
-  grid-template-columns: repeat(4, ${SELECT_WIDTH}) 19.5% ${SELECT_WIDTH};
+  grid-template-columns: repeat(5, ${SELECT_WIDTH}) 3.5% ${SELECT_WIDTH};
   @media (max-width: ${SITE_WIDTH}) {
     grid-template-columns: repeat(2, 50%);
     span.task-select-spacer {
@@ -62,7 +62,7 @@ export const MyTasksContent = ({ myTasks }) => (
 const MyTasks = ({ myTasks, filters, payload }) => (
   <>
     <TaskCompaniesAndProjectsResource>
-      {({ companies }) => (
+      {({ companies, projects }) => (
         <FiltersContainer>
           <TaskListSelect
             label="Status"
@@ -82,7 +82,12 @@ const MyTasks = ({ myTasks, filters, payload }) => (
           <TaskListSelect
             label="Company"
             qsParam="company"
-            options={companyOptions(companies)}
+            options={companyAndProjectOptions(companies)}
+          />
+          <TaskListSelect
+            label="Project"
+            qsParam="project"
+            options={companyAndProjectOptions(projects)}
           />
           <span className="task-select-spacer" id="task-select-spacer" />
           <TaskListSelect
