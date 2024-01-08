@@ -11,14 +11,12 @@ import {
 } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 import { isString, isArray } from 'lodash'
+import { IconImportant } from '@govuk-react/icons'
 
+import InlineIcon from '../InlineIcon'
 import FormActions from '../Form/elements/FormActions'
 import SecondaryButton from '../SecondaryButton'
-import {
-  TEXT_COLOUR,
-  ERROR_COLOUR,
-  FOCUS_COLOUR,
-} from '../../../client/utils/colours'
+import { TEXT_COLOUR, ERROR_COLOUR, FOCUS_COLOUR } from '../../utils/colours'
 
 const StyledRoot = styled.div(
   {
@@ -43,26 +41,45 @@ const StyledSecondaryButton = styled(SecondaryButton)({
   marginBottom: 0,
 })
 
-const Err = ({ errorMessage, retry, dismiss, noun, dismissable = true }) => (
+const Err = ({ errorMessage, retry, dismiss, noun }) => (
   <StyledRoot data-test="error-dialog">
     <H2 size="MEDIUM">Could not load {noun}</H2>
     {isString(errorMessage) && <p>Error: {errorMessage}</p>}
     {isArray(errorMessage) &&
       errorMessage.map((error) => <p key={error}>{error}</p>)}
-    <FormActions>
-      <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
-      {dismissable && (
-        <StyledSecondaryButton onClick={dismiss}>Dismiss</StyledSecondaryButton>
-      )}
-    </FormActions>
+    {retry && (
+      <FormActions>
+        <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
+        {dismiss && (
+          <StyledSecondaryButton onClick={dismiss}>
+            Dismiss
+          </StyledSecondaryButton>
+        )}
+      </FormActions>
+    )}
   </StyledRoot>
 )
 
 Err.propTypes = {
   noun: PropTypes.string.isRequired,
   errorMessage: PropTypes.string.isRequired,
-  retry: PropTypes.func.isRequired,
-  clear: PropTypes.func.isRequired,
+  retry: PropTypes.func,
+  dismiss: PropTypes.func,
 }
+
+Err.Inline = ({ retry, noun }) => (
+  <span style={{ color: ERROR_COLOUR }}>
+    <InlineIcon>
+      <IconImportant />
+    </InlineIcon>{' '}
+    Could not load {noun}
+    {retry && (
+      <>
+        {' '}
+        <SecondaryButton.Inline onClick={retry}>Retry</SecondaryButton.Inline>
+      </>
+    )}
+  </span>
+)
 
 export default Err
