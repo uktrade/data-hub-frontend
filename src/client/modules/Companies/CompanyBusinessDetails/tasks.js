@@ -1,13 +1,9 @@
 import axios from 'axios'
 
-import urls from '../../../../../lib/urls'
-import { apiProxyAxios } from '../../../../../client/components/Task/utils'
+import urls from '../../../../lib/urls'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
-const {
-  isDateAfter,
-  subtractDays,
-  today,
-} = require('../../../../../client/utils/date')
+const { isDateAfter, subtractDays, today } = require('../../../utils/date')
 
 export function checkIfPendingRequest(duns_number) {
   if (duns_number) {

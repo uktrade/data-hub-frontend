@@ -1,7 +1,7 @@
 import {
   COMPANIES__GLOBAL_ULTIMATE_LOADED,
   DNB__CHECK_PENDING_REQUEST,
-} from '../../../../../client/actions'
+} from '../../../actions'
 
 export default (
   state = {

@@ -26,8 +26,8 @@ import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
   TASK_GET_GLOBAL_ULTIMATE,
-} from '../apps/companies/apps/business-details/client/state'
-import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
+} from './modules/Companies/CompanyBusinessDetails/state.js'
+import * as businessDetails from './modules/Companies/CompanyBusinessDetails/tasks.js'
 
 import {
   TASK_GET_COMPANIES_LIST,

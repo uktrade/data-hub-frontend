@@ -35,8 +35,8 @@ import investmentOpportunitiesListReducer from './modules/Investments/Opportunit
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from './modules/Investments/Opportunities/state'
 import investmentOpportunitiesDetailsReducer from './modules/Investments/Opportunities/reducer'
 
-import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
-import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
+import { ID as DNB_CHECK_ID } from './modules/Companies/CompanyBusinessDetails/state.js'
+import dnbCheckReducer from './modules/Companies/CompanyBusinessDetails/reducer.js'
 
 import { ID as INVESTMENT_PROFILES_ID } from './modules/Investments/Profiles/state'
 import investmentProfileReducer from './modules/Investments/Profiles/reducer'

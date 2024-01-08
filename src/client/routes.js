@@ -82,7 +82,7 @@ import CreateOrder from './modules/Omis/CreateOrder/CreateOrder'
 import PaymentReceipt from './modules/Omis/PaymentReceipt'
 import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
 import CompanyOverview from './modules/Companies/CompanyOverview/CompanyOverview'
-import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import CompanyBusinessDetails from './modules/Companies/CompanyBusinessDetails/CompanyBusinessDetails'
 import SetGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/SetGlobalHQ'
 import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/RemoveGlobalHQ'
 

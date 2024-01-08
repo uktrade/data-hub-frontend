@@ -14,18 +14,19 @@ import SectionHierarchy from './SectionHierarchy'
 import SectionRegion from './SectionRegion'
 import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
-import ArchiveForm from '../../../../../client/components/ArchiveForm'
-import { StatusMessage } from '../../../../../client/components/'
-import { COMPANY_DISSOLVED_OPTION } from '../../../constants'
+import ArchiveForm from '../../../components/ArchiveForm'
+import { StatusMessage } from '../../../components'
 import {
   CompanyResource,
   RelatedCompaniesCountResource,
-} from '../../../../../client/components/Resource'
-import CompanyLayoutNew from '../../../../../client/components/Layout/CompanyLayoutNew'
-import urls from '../../../../../lib/urls'
+} from '../../../components/Resource'
+import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import Task from '../../../components/Task'
+import urls from '../../../../lib/urls'
+import { format } from '../../../utils/date'
 
 import {
-  ID as CHECK_PENDING_REQUEST_ID,
+  ID,
   TASK_ARCHIVE_COMPANY,
   TASK_GET_GLOBAL_ULTIMATE,
   state2props,
@@ -33,10 +34,7 @@ import {
 import {
   COMPANIES__GLOBAL_ULTIMATE_LOADED,
   DNB__CHECK_PENDING_REQUEST,
-} from '../../../../../client/actions'
-import Task from '../../../../../client/components/Task'
-
-const { format } = require('../../../../../client/utils/date')
+} from '../../../actions'
 
 const StyledRoot = styled('div')`
   & > table {
@@ -58,6 +56,8 @@ const canEditOneList = (permissions) =>
   permissions.includes(
     'company.change_one_list_tier_and_global_account_manager'
   )
+
+const COMPANY_DISSOLVED_OPTION = 'Company is dissolved'
 
 const CompanyBusinessDetails = ({
   globalUltimate,
@@ -94,7 +94,7 @@ const CompanyBusinessDetails = ({
             )}
             <Task.Status
               name={DNB__CHECK_PENDING_REQUEST}
-              id={CHECK_PENDING_REQUEST_ID}
+              id={ID}
               progressMessage="Checking for pending change requests"
               startOnRender={{
                 payload: company.dunsNumber,
@@ -155,7 +155,7 @@ const CompanyBusinessDetails = ({
             />
             <Task.Status
               name={TASK_GET_GLOBAL_ULTIMATE}
-              id={CHECK_PENDING_REQUEST_ID}
+              id={ID}
               progressMessage="laoding subsidiary details"
               startOnRender={{
                 payload: company.globalUltimateDunsNumber,
@@ -203,7 +203,7 @@ const CompanyBusinessDetails = ({
             )}
             <ArchiveForm
               type="company"
-              id={CHECK_PENDING_REQUEST_ID}
+              id={ID}
               submissionTaskName={TASK_ARCHIVE_COMPANY}
               isArchived={isArchived(company.archived)}
               isDnbCompany={isDnbCompany(company.dunsNumber)}

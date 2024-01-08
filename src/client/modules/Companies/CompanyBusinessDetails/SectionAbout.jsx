@@ -6,10 +6,10 @@ import Link from '@govuk-react/link'
 import { isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 
-import { currencyGBP } from '../../../../../client/utils/number-utils'
-import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
-import { exportSegmentsLabels, exportSubSegmentsLabels } from '../../../labels'
-import urls from '../../../../../lib/urls'
+import { currencyGBP } from '../../../utils/number-utils'
+import { NewWindowLink, SummaryTable } from '../../../components'
+import { exportSegmentsLabels, exportSubSegmentsLabels } from './labels'
+import urls from '../../../../lib/urls'
 
 const TableDetails = styled('div')`
   display: flex;
