@@ -7,6 +7,7 @@ import {
   SORT_BY_LIST_OPTIONS,
   STATUS_LIST_OPTIONS,
   ME_OTHERS_LIST_OPTIONS,
+  SHOW_ALL_OPTION,
 } from './constants'
 
 export const ID = 'getMyTasks'
@@ -47,6 +48,7 @@ export const state2props = ({ router, ...state }) => {
     adviser: [currentAdviserId],
     archived: undefined,
     sortby: 'due_date:asc',
+    company: undefined,
   }
 
   const assignedToMapping = {
@@ -60,6 +62,10 @@ export const state2props = ({ router, ...state }) => {
 
   if (queryParams.sortby in sortbyMapping) {
     payload.sortby = sortbyMapping[queryParams.sortby]
+  }
+
+  if (queryParams.company && queryParams.company !== SHOW_ALL_OPTION.value) {
+    payload.company = queryParams.company
   }
 
   Object.assign(payload, assignedToMapping[queryParams.assigned_to])

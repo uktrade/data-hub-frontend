@@ -10,19 +10,17 @@ import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cy
 import { formatMediumDate } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
-import {
-  ME_OTHERS_LIST_OPTIONS,
-  SORT_BY_LIST_OPTIONS,
-  STATUS_LIST_OPTIONS,
-} from '../../../../../../src/client/components/Dashboard/my-tasks/constants'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
+import Provider from '../../provider'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
@@ -34,26 +32,10 @@ describe('My Tasks on the Dashboard', () => {
     results: myTaskResults,
   }
 
-  const filtersList = {
-    areActive: false,
-    assignedTo: {
-      options: [ME_OTHERS_LIST_OPTIONS],
-    },
-    createdBy: {
-      options: [ME_OTHERS_LIST_OPTIONS],
-    },
-    status: {
-      options: [STATUS_LIST_OPTIONS],
-    },
-    sortby: {
-      options: [SORT_BY_LIST_OPTIONS],
-    },
-  }
-
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} filters={filtersList} />)
+      cy.mount(<Component myTasks={myTasks} />)
     })
 
     it('should display the heading 3 tasks', () => {
@@ -117,9 +99,11 @@ describe('My Tasks on the Dashboard', () => {
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   const myTasks = {
     count: 0,
@@ -148,9 +132,11 @@ describe('My Tasks on the Dashboard', () => {
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
-    <BrowserRouter>
-      <MyTasksContent {...props} />
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MyTasksContent {...props} />
+      </BrowserRouter>
+    </Provider>
   )
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))

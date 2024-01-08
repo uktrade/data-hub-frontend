@@ -1,6 +1,7 @@
 import { assertPayload } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import taskListFaker from '../../fakers/task'
+import { companyFaker } from '../../fakers/companies'
 
 const transformOptions = (options) =>
   [...options].map((o) => ({
@@ -23,6 +24,26 @@ describe('Task filters', () => {
     adviser: [myAdviserId],
     sortby: 'due_date:asc',
   }
+  const company1 = companyFaker()
+  const company2 = companyFaker()
+
+  const getTaskCompaniesAndProjectsIntercept = () => {
+    cy.intercept('GET', '/api-proxy/v4/task/companies-and-projects', {
+      body: {
+        companies: [
+          {
+            id: company1.id,
+            name: company1.name,
+          },
+          {
+            id: company2.id,
+            name: company2.name,
+          },
+        ],
+        projects: [],
+      },
+    })
+  }
 
   function assertFilterName(element, text) {
     cy.intercept('POST', endpoint, {
@@ -43,6 +64,7 @@ describe('Task filters', () => {
         results: [TaskList[0]],
       },
     }).as('apiRequest')
+    getTaskCompaniesAndProjectsIntercept()
     cy.visit(`${tasksTab}?${urlQuery}`)
 
     // This ignores the checkForMyTasks API call which happens on page load
@@ -54,6 +76,7 @@ describe('Task filters', () => {
   }
 
   function testFilterFromUserInput(element, payload, selectedOption) {
+    getTaskCompaniesAndProjectsIntercept()
     cy.intercept('POST', endpoint, {
       body: {
         count: 3,
@@ -280,6 +303,36 @@ describe('Task filters', () => {
 
     it('should filter completed status from user input', () => {
       testFilterFromUserInput(element, { archived: true }, 'Completed')
+    })
+  })
+
+  context('Company', () => {
+    const element = '[data-test="company-select"]'
+
+    it('should have a "Company" filter', () => {
+      getTaskCompaniesAndProjectsIntercept(company1, company2)
+      cy.visit(tasksTab)
+      assertFilterName(element, 'Company')
+      cy.get(`${element} option`).then((companyOptions) => {
+        expect(transformOptions(companyOptions)).to.deep.eq([
+          { value: 'all-statuses', label: 'Show all' },
+          { value: company1.id, label: company1.name },
+          { value: company2.id, label: company2.name },
+        ])
+      })
+    })
+
+    it('should filter company from the url', () => {
+      testFilterFromUrl(
+        element,
+        `company=${company1.id}`,
+        { company: company1.id },
+        company1.name
+      )
+    })
+
+    it('should filter company from user input', () => {
+      testFilterFromUserInput(element, { company: company1.id }, company1.name)
     })
   })
 })

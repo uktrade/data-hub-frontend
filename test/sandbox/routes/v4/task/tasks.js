@@ -39,3 +39,19 @@ export const generateTasks = () => {
     results: [...Array(3)].map(() => generateTask()),
   }
 }
+
+export const generateCompaniesAndProjects = () => {
+  return {
+    companies: [
+      {
+        id: faker.string.uuid(),
+        name: faker.company.name(),
+      },
+      {
+        id: faker.string.uuid(),
+        name: faker.company.name(),
+      },
+    ],
+    projects: [],
+  }
+}

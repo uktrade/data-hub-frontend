@@ -272,6 +272,7 @@ import {
   getTask,
   createTask,
   updateTask,
+  getTaskCompaniesAndProjects,
 } from './routes/v4/task/index.js'
 
 // Datahub API 3rd party dependencies
@@ -809,6 +810,7 @@ app.post('/v4/search/task', tasks)
 
 // V4 Tasks
 app.get('/v4/task', getTasks)
+app.get('/v4/task/companies-and-projects', getTaskCompaniesAndProjects)
 app.get('/v4/task/:taskId', getTask)
 app.post('/v4/task', createTask)
 app.patch('/v4/task/:taskId', updateTask)

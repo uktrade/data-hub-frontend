@@ -1,6 +1,10 @@
 import { faker } from '@faker-js/faker'
 
-import { generateTask, generateTasks } from './tasks.js'
+import {
+  generateTask,
+  generateTasks,
+  generateCompaniesAndProjects,
+} from './tasks.js'
 
 export const getTasks = function (req, res) {
   res.json(generateTasks())
@@ -24,4 +28,8 @@ export const updateTask = function (req, res) {
 
 export const investmentProjectTasks = function (req, res) {
   res.json({ count: 0, next: null, previous: null, results: [] })
+}
+
+export const getTaskCompaniesAndProjects = function (req, res) {
+  res.json(generateCompaniesAndProjects())
 }
