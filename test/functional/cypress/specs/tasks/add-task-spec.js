@@ -14,13 +14,13 @@ import {
   assertFieldInputNoLabel,
   assertFieldTextareaNoLabel,
 } from '../../../cypress/support/assertions'
+import { companyFaker } from '../../fakers/companies'
 import {
   fillMultiOptionTypeahead,
   fillTypeahead,
   fillWithNewValue,
-} from '../../../../support/form-fillers'
-import { clickButton } from '../../../..//support/actions'
-import { companyFaker } from '../../fakers/companies'
+} from '../../support/form-fillers'
+import { clickButton } from '../../support/actions'
 
 const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
