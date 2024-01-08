@@ -277,9 +277,7 @@ Task.Status = ({
             ))}
           {/* FIXME: Is this needed when we have the LoadingBox component? */}
           {progressOverlay ? (
-            <StyledLoadingBox loading={progress}>
-              {!status && children()}
-            </StyledLoadingBox>
+            <StyledLoadingBox loading={progress}>{children()}</StyledLoadingBox>
           ) : (
             !status && children()
           )}
