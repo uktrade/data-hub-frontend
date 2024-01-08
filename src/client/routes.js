@@ -83,6 +83,8 @@ import PaymentReceipt from './modules/Omis/PaymentReceipt'
 import { TaskFormAdd, TaskFormEdit } from './modules/Tasks/TaskForm'
 import CompanyOverview from './modules/Companies/CompanyOverview/CompanyOverview'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import SetGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/SetGlobalHQ'
+import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/RemoveGlobalHQ'
 
 const routes = {
   companies: [
@@ -175,6 +177,16 @@ const routes = {
       path: '/companies/:companyId/business-details',
       module: 'datahub:companies',
       component: CompanyBusinessDetails,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/ghq/:globalHqId/add',
+      module: 'datahub:companies',
+      component: SetGlobalHQ,
+    },
+    {
+      path: '/companies/:companyId/hierarchies/ghq/remove',
+      module: 'datahub:companies',
+      component: RemoveGlobalHQ,
     },
   ],
   contacts: [

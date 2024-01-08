@@ -301,8 +301,16 @@ import {
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
 import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
 
-import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
-import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
+import {
+  TASK_GET_GLOBAL_HQ_LIST,
+  TASK_SET_GLOBAL_HQ,
+  TASK_REMOVE_GLOBAL_HQ,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
+import {
+  getGlobalHeadquartersCollection,
+  setGlobalHq,
+  removeGlobalHq,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
 
 import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
@@ -654,4 +662,6 @@ export const tasks = {
   [TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
   [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
+  [TASK_SET_GLOBAL_HQ]: setGlobalHq,
+  [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
 }

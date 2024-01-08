@@ -37,3 +37,13 @@ export const getGlobalHeadquartersCollection = ({
       transformResponseToGlobalHQCollection(childCompanyId, data)
     )
 }
+
+export const setGlobalHq = (values) =>
+  apiProxyAxios.patch(`/v4/company/${values.companyId}`, {
+    global_headquarters: values.globalHqId,
+  })
+
+export const removeGlobalHq = (values) =>
+  apiProxyAxios.patch(`/v4/company/${values.companyId}`, {
+    global_headquarters: null,
+  })
