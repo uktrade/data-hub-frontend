@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Details, Link } from 'govuk-react'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 
 import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 import { InteractionResource } from '../../../components/Resource'
@@ -28,6 +30,14 @@ import {
 } from './transformers'
 
 const EXPORT = 'export'
+
+const ButtonBar = styled.div`
+  > * {
+    &:first-child {
+      margin-right: ${SPACING.SCALE_4};
+    }
+  }
+`
 
 const InteractionDetails = ({ interactionId }) => {
   return (
@@ -173,36 +183,46 @@ const InteractionDetails = ({ interactionId }) => {
               </>
             )}
           </SummaryTable>
-          {isEditable(interaction.status) && (
+          <ButtonBar>
             <Button
               as={Link}
-              href={getEditLink(
-                interaction.id,
-                interaction.company,
-                interaction.companies,
-                interaction.companyReferral
-              )}
-              buttonColour={GREY_3}
-              buttonTextColour={BLACK}
-              data-test="edit-interaction-button"
+              href={urls.tasks.createInteraction(interaction.id)}
+              data-test="add-follow-up-task-button"
             >
-              Edit {transformKind(interaction.kind)}
+              Add follow up task
             </Button>
-          )}
 
-          {isIncomplete(
-            interaction.status,
-            interaction.date,
-            interaction.archived
-          ) && (
-            <CompleteInteraction
-              interactionId={interaction.id}
-              companyObject={interaction.company}
-              companyArray={interaction.companies}
-              kind={transformKind(interaction.kind)}
-              archived={interaction.archived}
-            />
-          )}
+            {isEditable(interaction.status) && (
+              <Button
+                as={Link}
+                href={getEditLink(
+                  interaction.id,
+                  interaction.company,
+                  interaction.companies,
+                  interaction.companyReferral
+                )}
+                buttonColour={GREY_3}
+                buttonTextColour={BLACK}
+                data-test="edit-interaction-button"
+              >
+                Edit {transformKind(interaction.kind)}
+              </Button>
+            )}
+
+            {isIncomplete(
+              interaction.status,
+              interaction.date,
+              interaction.archived
+            ) && (
+              <CompleteInteraction
+                interactionId={interaction.id}
+                companyObject={interaction.company}
+                companyArray={interaction.companies}
+                kind={transformKind(interaction.kind)}
+                archived={interaction.archived}
+              />
+            )}
+          </ButtonBar>
           {isNotEditable(
             interaction.status,
             interaction.date,

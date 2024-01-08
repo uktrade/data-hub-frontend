@@ -230,6 +230,30 @@ describe('Task form', () => {
     })
   })
 
+  describe('Adding a task form', () => {
+    context('When a task form renders with an interaction', () => {
+      beforeEach(() => {
+        cy.mount(
+          <Component
+            cancelRedirectUrl={urls.companies.index()}
+            task={{ interaction: { id: 1, subject: 'a', notes: 'b' } }}
+          />
+        )
+      })
+
+      it('should hide the company field select', () => {
+        assertNotExists('[data-test="field-company"')
+      })
+
+      it('should hide the investment project field select', () => {
+        assertNotExists('[data-test="field-investmentProject"')
+      })
+
+      it('should render the cancel button with the correct url', () => {
+        assertLink('cancel-button', urls.companies.index())
+      })
+    })
+  })
   describe('Editing a task form', () => {
     context('When a generic task form renders with existing data', () => {
       const task = taskFaker()

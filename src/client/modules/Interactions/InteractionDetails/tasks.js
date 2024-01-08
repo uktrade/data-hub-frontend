@@ -20,3 +20,6 @@ export const archiveInteraction = ({ interactionId, values }) => {
   }
   return apiProxyAxios(options)
 }
+
+export const getInteraction = (id) =>
+  apiProxyAxios.get(`v4/interaction/${id}`).then(({ data }) => data)

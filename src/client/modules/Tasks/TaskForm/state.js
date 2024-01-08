@@ -9,6 +9,7 @@ import {
 } from '../../Investments/Projects/state'
 import { ID as TASK_DETAILS_ID } from '../TaskDetails/state'
 import { transformAPIValuesForForm } from './transformers'
+import { ID as INTERACTION_ID } from '../../Interactions/InteractionDetails/state'
 
 export const TASK_SAVE_TASK_DETAILS = 'TASK_SAVE_TASK_DETAILS'
 
@@ -65,6 +66,16 @@ export const getCompanyBreadcrumbs = (company) => [
   { text: 'Task' },
 ]
 
+export const getInteractionBreadcrumbs = (interaction) => [
+  { link: urls.dashboard.myTasks(), text: 'Home' },
+  { link: urls.interactions.index(), text: 'Interactions' },
+  {
+    link: urls.interactions.detail(interaction.id),
+    text: interaction.subject,
+  },
+  { text: 'Task' },
+]
+
 export const getTaskBreadcrumbs = (task) => {
   if (!task) {
     return getGenericBreadcumbs(task)
@@ -72,9 +83,13 @@ export const getTaskBreadcrumbs = (task) => {
   if (task.investmentProject) {
     return getInvestmentProjectBreadcumbs(task.investmentProject)
   }
+  if (task.interaction) {
+    return getInteractionBreadcrumbs(task.interaction)
+  }
   if (task.company) {
     return getCompanyBreadcrumbs(task.company)
   }
+
   return getGenericBreadcumbs(task)
 }
 
@@ -83,19 +98,24 @@ export const state2props = (state) => {
   const { task } = state[TASK_DETAILS_ID]
   const { project } = state[INVESTMENT_PROJECT_ID]
   const { results } = state[INVESTMENT_PROJECTS_ID]
+  const { interaction } = state[INTERACTION_ID]
 
   const companyInvestmentProjects =
     Array.isArray(results) && results.length > 0
       ? transformArrayIdNameToValueLabel(results)
       : null
 
+  const defaultTaskProps = {
+    currentAdviserId,
+    companyInvestmentProjects: companyInvestmentProjects,
+  }
+
   if (task) {
     const transformedTask = transformAPIValuesForForm(task, currentAdviserId)
     return {
+      ...defaultTaskProps,
       task: transformedTask,
-      currentAdviserId,
       breadcrumbs: getTaskBreadcrumbs(transformedTask),
-      companyInvestmentProjects: companyInvestmentProjects,
     }
   }
 
@@ -105,20 +125,30 @@ export const state2props = (state) => {
       project.investorCompany
     )
     return {
+      ...defaultTaskProps,
       task: {
         investmentProject: transformedProject,
         company: transformedCompany,
       },
-      currentAdviserId,
       breadcrumbs: getInvestmentProjectBreadcumbs(transformedProject),
-      companyInvestmentProjects: companyInvestmentProjects,
+    }
+  }
+
+  if (interaction) {
+    return {
+      ...defaultTaskProps,
+      task: {
+        interaction: interaction,
+        title: interaction.subject,
+        description: interaction.notes,
+      },
+      breadcrumbs: getInteractionBreadcrumbs(interaction),
     }
   }
 
   return {
+    ...defaultTaskProps,
     task: null,
-    currentAdviserId,
     breadcrumbs: getGenericBreadcumbs(task),
-    companyInvestmentProjects: companyInvestmentProjects,
   }
 }
