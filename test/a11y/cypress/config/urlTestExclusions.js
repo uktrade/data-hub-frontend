@@ -4,24 +4,16 @@ export const urlTestExclusions = [
   { url: '/my-tasks/' },
   { url: '/community/' },
   { url: '/my-referrals/' },
-  { url: '/companies/:companyId' },
   { url: '/companies/:companyId/edit-history' },
   { url: '/companies/:companyId/exports' },
-  { url: '/companies/:companyId/exports/edit' },
-  { url: '/companies/:companyId/exports/edit-countries' },
-  { url: '/companies/:companyId/overview' },
   { url: '/exportwins/' },
   { url: '/exportwins/unconfirmed/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
   { url: '/companies/:companyId/account-management' },
   { url: '/company-lists/' },
-  { url: '/contacts/:contactId/edit' },
-  { url: '/contacts/:contactId/audit' },
   { url: '/events/:eventId/attendees/find-new' },
   { url: '/companies/:companyId/interactions/create' },
   { url: '/companies/:companyId/interactions' },
-  { url: '/companies/:companyId/activity' },
-  { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
   { url: '/companies/:companyId/hierarchies/ghq/search' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
@@ -55,9 +47,6 @@ export const urlTestExclusions = [
   { url: '/omis/:orderId/edit/assignee-time' },
   { url: '/omis/:orderId/edit/complete-order' },
   { url: '/omis/:orderId/reconciliation/payment-receipt' },
-  { url: '/companies/:companyId/referrals/:referralId/help' },
-  { url: '/companies/:companyId/referrals/:referralId/interactions/create' },
-  { url: '/companies/:companyId/referrals/send' },
   { url: '/reminders/' },
   { url: '/reminders/investments-estimated-land-dates/' },
   { url: '/reminders/investments-no-recent-interactions/' },
@@ -81,7 +70,7 @@ export const urlTestExclusions = [
   { url: '/reminders/settings/my-tasks-task-completed/' },
   { url: '/export/' },
   { url: '/tasks/:taskId/edit' },
-  // 404 errors
+  // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },
   { url: '/companies/:companyId/lists' },
@@ -99,20 +88,6 @@ export const urlTestExclusions = [
   { url: '/export/:exportId/delete' },
   { url: '/investments/projects/:investmentId/interactions' },
   { url: '/investments/projects/:projectId/evidence' },
-  // 501 errors
-  { url: '/api-proxy/v4/company/:companyId/export-win' },
-  { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },
-  // Excluded urls
-  { url: '/testing/' },
-  { url: '//' },
-  { url: '/oauth/' },
-  { url: '/oauth/callback/' },
-  { url: '/oauth/sign-out/' },
-  // don't have permission to view this page
-  { url: '/companies/:companyId/dnb-hierarchy' },
-  { url: '/investments/projects/:investmentId/propositions' },
-  { url: '/investments/projects/:investmentId/propositions/:propositionId' },
-  // No sandbox data available for testing the below locations
   { url: '/investments/projects/:projectId/evidence/:evidenceId/delete' },
   {
     url: '/companies/:companyId/referrals/:referralId/interactions/create/:theme/:kind',
@@ -151,6 +126,17 @@ export const urlTestExclusions = [
   {
     url: '/investments/projects/:investmentId/propositions/:propositionId/complete',
   },
+  { url: '/investments/projects/:investmentId/propositions/:propositionId' },
+  // 501 errors
+  { url: '/api-proxy/v4/company/:companyId/export-win' },
+  { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },
+  // Excluded urls
+  { url: '/testing/' },
+  { url: '//' },
+  { url: '/oauth/' },
+  { url: '/oauth/callback/' },
+  { url: '/oauth/sign-out/' },
+  { url: '/exportwins/1/details' },
   // Exclude all metadata
   { url: '/api-proxy/v4/metadata/likelihood-to-land' },
   { url: '/api-proxy/v4/metadata/investment-investor-type' },

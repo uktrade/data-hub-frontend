@@ -314,7 +314,7 @@ module.exports = {
     export: url('/contacts', '/export'),
     audit: url('/contacts', '/:contactId/audit'),
     contact: url('/contacts', '/:contactId'),
-    create: url('/contacts/create?company=', '/:companyId'),
+    create: url('/contacts/create?company=', ':companyId'),
     contactActivities: url('/contacts', '/:contactId/interactions'),
     details: url('/contacts', '/:contactId/details'),
     edit: url('/contacts', '/:contactId/edit'),
