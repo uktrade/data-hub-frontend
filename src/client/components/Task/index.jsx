@@ -228,12 +228,12 @@ Task.Status = ({
   progressOverlay = false,
   dismissable = true,
   children = () => null,
+  noRetry,
 }) => (
   <Task>
     {(getTask) => {
       const {
         start,
-        status,
         progress,
         error,
         payload,
@@ -247,27 +247,73 @@ Task.Status = ({
           {!!startOnRender && (
             <Task.StartOnRender {...startOnRender} {...{ name, id }} />
           )}
-          {!progressOverlay &&
-            progress &&
-            renderProgress({ message: progressMessage })}
-          {error &&
-            (errorMessage ===
+          {progressOverlay ? (
+            <StyledLoadingBox loading={progress || error}>
+              {children()}
+            </StyledLoadingBox>
+          ) : progress ? (
+            renderProgress({ message: progressMessage, noun })
+          ) : error ? (
+            // FIXME: This shouldn't be done here
+            errorMessage ===
             'You do not have permission to perform this action.' ? (
               <AccessDenied />
             ) : (
               renderError({
                 noun,
                 errorMessage,
-                retry: () => start({ payload, onSuccessDispatch }),
+                noRetry,
+                retry: () =>
+                  start({
+                    payload,
+                    onSuccessDispatch,
+                    ignoreIfInProgress: true,
+                  }),
                 dismiss: dismissError,
                 dismissable,
               })
-            ))}
-          <StyledLoadingBox loading={progress && progressOverlay}>
-            {(!status || progressOverlay) && children()}
-          </StyledLoadingBox>
+            )
+          ) : (
+            children()
+          )}
         </>
       )
+
+      // return (
+      //   <>
+      //     {!!startOnRender && (
+      //       <Task.StartOnRender {...startOnRender} {...{ name, id }} />
+      //     )}
+      //     {!progressOverlay &&
+      //       progress &&
+      //       renderProgress({ message: progressMessage, noun })}
+      //     {error &&
+      //       (errorMessage ===
+      //       'You do not have permission to perform this action.' ? (
+      //         <AccessDenied />
+      //       ) : (
+      //         renderError({
+      //           noun,
+      //           errorMessage,
+      //           noRetry,
+      //           retry: () =>
+      //             start({
+      //               payload,
+      //               onSuccessDispatch,
+      //               ignoreIfInProgress: true,
+      //             }),
+      //           dismiss: dismissError,
+      //           dismissable,
+      //         })
+      //       ))}
+      //     {progressOverlay
+      //       ?  <StyledLoadingBox loading={progress}>
+      //           {!status && children()}
+      //         </StyledLoadingBox>
+      //       : !status && children()
+      //     }
+      //   </>
+      // )
     }}
   </Task>
 )
