@@ -62,12 +62,6 @@ describe('Company Activity Feed Filter', () => {
   })
 
   context('Filters', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
-      )
-    })
-
     context('Created by', () => {
       const expectedRequestAdviserUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
       const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
@@ -87,13 +81,6 @@ describe('Company Activity Feed Filter', () => {
         )
         cy.wait('@adviserSearchApiRequest')
 
-        /*
-        TODO: Fix test - the apiRequest does not match expected
-        console.log(`apiRequest: ${urls.companies.activity.index(
-          fixtures.company.allActivitiesCompany.id
-        )}?${queryString}`)
-        console.log(`apiRequest should contain: ${expectedRequestAdviserUrl}`)
-        */
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
 
         /*
