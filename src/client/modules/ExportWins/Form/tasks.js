@@ -13,11 +13,14 @@ const transformExportProjectToForm = (exportProject) => {
   const date = new Date(exportProject.estimated_win_date) // "YYYY-MM-DD"
   return {
     // Officer details
-    adviser: idNameToValueLabel(exportProject.owner),
+    lead_officer: idNameToValueLabel(exportProject.owner),
     team_members: exportProject.team_members.map(idNameToValueLabel),
     // Customer details
-    exporter_experience: idNameToValueLabel(exportProject.exporter_experience)
-      .value,
+    export_experience:
+      // We need the check here as exporter_experience is
+      // optional within the Export project form
+      exportProject.exporter_experience &&
+      idNameToValueLabel(exportProject.exporter_experience).value,
     contact:
       exportProject.contacts.length === 1
         ? idNameToValueLabel(exportProject.contacts[0])
@@ -28,7 +31,7 @@ const transformExportProjectToForm = (exportProject) => {
       month: String(date.getMonth() + 1),
     },
     sector: idNameToValueLabel(exportProject.sector),
-    destination_country: idNameToValueLabel(exportProject.destination_country),
+    country: idNameToValueLabel(exportProject.destination_country),
   }
 }
 
@@ -37,5 +40,11 @@ export const getExportProject = ({ id }) =>
     .get(`/v4/export/${id}`)
     .then(({ data }) => transformExportProjectToForm(data))
 
-// For now just resolve the promise until we have an endpoint
-export const saveExportWin = () => Promise.resolve('saved')
+export const saveExportWin = ({ exportWinId, payload }) => {
+  const request = exportWinId ? apiProxyAxios.patch : apiProxyAxios.post
+  const endpoint = exportWinId
+    ? `/v4/export_win/${exportWinId}`
+    : '/v4/export_win'
+
+  return request(endpoint, payload)
+}

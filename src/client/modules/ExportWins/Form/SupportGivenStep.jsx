@@ -29,8 +29,8 @@ const SupportGivenStep = () => (
       field={FieldTypeahead}
     />
     <ResourceOptionsField
-      id="support_type"
-      name="support_type"
+      name="type_of_support"
+      id="type-of-support"
       label="What type of support was given?"
       hint="You can add up to 5 types of support."
       required="Select at least one type of support"
@@ -48,8 +48,8 @@ const SupportGivenStep = () => (
       }
     />
     <ResourceOptionsField
-      id="campaign"
-      name="campaign"
+      name="associated_programme"
+      id="associated-programme"
       label="What there as DBT campaign or event that contributed to this win?"
       hint="You can add up to 5 campaigns or events."
       required="Select at least one type of DBT campaign or event"

@@ -88,7 +88,7 @@ const CreditForThisWinStep = () => {
                   // id, when the id changes the component updates.
                   <ResourceOptionsField
                     key={values[`team_type_${groupIndex}`].value}
-                    name={`hq_team_region_or_post_${groupIndex}`}
+                    name={`hq_team_${groupIndex}`}
                     id={`contributors-${groupIndex}`}
                     resource={HQTeamRegionOrPostsResource}
                     field={FieldTypeahead}

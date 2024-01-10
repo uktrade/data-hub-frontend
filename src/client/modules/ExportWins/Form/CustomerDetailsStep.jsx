@@ -4,6 +4,7 @@ import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+import { Step, FieldTypeahead, ContactInformation } from '../../../components'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { idNameToValueLabel } from '../../../../client/utils'
@@ -16,12 +17,6 @@ import {
   ExportExperienceResource,
   BusinessPotentialResource,
 } from '../../../components/Resource'
-import {
-  Step,
-  FieldRadios,
-  FieldTypeahead,
-  ContactInformation,
-} from '../../../components'
 
 const CustomerDetailsStep = () => {
   const { values } = useFormContext()
@@ -33,7 +28,7 @@ const CustomerDetailsStep = () => {
     <Step name={steps.CUSTOMER_DETAILS}>
       <H3>Customer details</H3>
       <ResourceOptionsField
-        name="contact"
+        name="company_contacts"
         id={companyId}
         label="Company contacts"
         hint="This contact will be emailed to approve the win."
@@ -64,8 +59,8 @@ const CustomerDetailsStep = () => {
         }}
       </Task>
       <ResourceOptionsField
-        name="uk_region"
-        id="uk-region"
+        name="customer_location"
+        id="customer-location"
         label="HQ location"
         required="Select HQ location"
         field={FieldTypeahead}
@@ -77,17 +72,17 @@ const CustomerDetailsStep = () => {
         id="business-potential"
         label="Export potential"
         required="Select export potential"
-        field={FieldRadios}
+        field={FieldTypeahead}
         resource={BusinessPotentialResource}
       />
-      {values.exporter_experience?.value}
+      {values.export_experience?.value}
       <ResourceOptionsField
-        name="exporter_experience"
-        id="exporter-experience"
+        name="export_experience"
+        id="export-experience"
         label="Export experience"
         required="Select export experience"
         hint="You customer will be asked to confirm this information."
-        field={FieldRadios}
+        field={FieldTypeahead}
         resource={ExportExperienceResource}
       />
     </Step>

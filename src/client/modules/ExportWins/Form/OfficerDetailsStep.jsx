@@ -40,7 +40,7 @@ const OfficerDetailsStep = () => {
     >
       <H3>Officer details</H3>
       <FieldAdvisersTypeahead
-        name="adviser"
+        name="lead_officer"
         label="Lead officer name"
         required="Enter a lead officer"
       />
@@ -62,7 +62,7 @@ const OfficerDetailsStep = () => {
         // id, when the id changes the component updates.
         <ResourceOptionsField
           key={values.team_type.value}
-          name="hq_team_region_or_post"
+          name="hq_team"
           id={`officer-hq-team-region-or-post`}
           resource={HQTeamRegionOrPostsResource}
           field={FieldTypeahead}

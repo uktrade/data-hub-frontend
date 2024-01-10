@@ -80,13 +80,13 @@ const OfficerDetailsTable = ({ values, goToStep }) => (
     }
   >
     <SummaryTable.Row heading="Lead officer name">
-      {values.adviser?.label}
+      {values.lead_officer?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Team type">
       {values.team_type?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="HQ Team, region or post">
-      {values.hq_team_region_or_post?.label}
+      {values.hq_team?.label}
     </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="Team members (optional)"
@@ -105,7 +105,7 @@ const ContributingTeamsAndAdvisers = ({ teamsAndAdvisors }) => (
       <StyledOrderedList index={index} length={teamsAndAdvisors.length}>
         <li>Contributing officer: {contributingTeam.officer}</li>
         <li>Team type: {contributingTeam.teamType}</li>
-        <li>HQ team, region or post: {contributingTeam.hqTeamRegionOrPost}</li>
+        <li>HQ team, region or post: {contributingTeam.hqTeam}</li>
       </StyledOrderedList>
     ))}
   </>
@@ -152,16 +152,16 @@ const CustomerDetailsTable = ({ values, goToStep }) => (
     }
   >
     <SummaryTable.Row heading="Contact name">
-      {values.contact?.label}
+      {values.company_contacts?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="HQ location">
-      {values.uk_region?.label}
+      {values.customer_location?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export potential">
-      {values.business_potential}
+      {values.business_potential?.label}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export experience">
-      {values.exporter_experience}
+      {values.export_experience?.label}
     </SummaryTable.Row>
   </SummaryTable>
 )
@@ -203,13 +203,13 @@ const WinDetailsTable = ({ values, goToStep }) => {
       }
     >
       <SummaryTable.Row heading="Destination">
-        {values.destination_country?.label}
+        {values.country?.label}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Date won">
         {`${values.win_date?.month}/${values.win_date?.year}`}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Summary of support given">
-        {values.summary_of_support}
+        {values.description}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Overseas customer">
         {values.name_of_customer}
@@ -238,13 +238,11 @@ const WinDetailsTable = ({ values, goToStep }) => {
       <SummaryTable.Row heading="Total value">
         {getTotalWinTypeValue(values.win_type, values)}
       </SummaryTable.Row>
-      <SummaryTable.ListRow
-        heading="What does the value relate to?"
-        value={transformGoodsAndServices(values.goods_and_services)}
-        emptyValue="Not set"
-      />
+      <SummaryTable.Row heading="What does the value relate to?">
+        {transformGoodsAndServices(values.goods_vs_services)}
+      </SummaryTable.Row>
       <SummaryTable.Row heading="Type of goods or services">
-        {values.goods_and_services_name}
+        {values.name_of_export}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Sector">
         {values.sector?.label}
@@ -270,12 +268,12 @@ const SupportGivenTable = ({ values, goToStep }) => (
     <SummaryTable.Row heading="HVC code">{values?.hvc?.label}</SummaryTable.Row>
     <SummaryTable.ListRow
       heading="What type of support was given?"
-      value={values.support_type}
+      value={values.type_of_support}
       emptyValue="Not set"
     />
     <SummaryTable.ListRow
       heading="Was there a DBT campaign or event that contributed to this win?"
-      value={values.campaign}
+      value={values.associated_programme}
       emptyValue="Not set"
     />
   </SummaryTable>

@@ -104,8 +104,8 @@ const WinDetailsStep = () => {
         The customer will be asked to confirm this infomation.
       </StyledHintParagraph>
       <ResourceOptionsField
-        name="destination_country"
-        id="destination-country"
+        name="country"
+        id="country"
         label="Destination country"
         required="Choose a destination country"
         resource={CountriesResource}
@@ -120,7 +120,7 @@ const WinDetailsStep = () => {
         invalid="Enter a valid date"
       />
       <FieldTextarea
-        name="summary_of_support"
+        name="description"
         label="Summary of the support given"
         hint="Outline what had the most impact or would be memorable to the customer in less than 100 words."
         required="Enter a summary"
@@ -244,7 +244,7 @@ const WinDetailsStep = () => {
       )}
 
       <FieldCheckboxes
-        name="goods_and_services"
+        name="goods_vs_services"
         legend="What does the value relate to?"
         hint="Select goods or services"
         required="Select at least one option"
@@ -253,7 +253,7 @@ const WinDetailsStep = () => {
 
       <FieldInput
         type="text"
-        name="goods_and_services_name"
+        name="name_of_export"
         label="Name of goods or services"
         required="Enter the name of goods or services"
         hint="For instance 'shortbread biscuits'."
