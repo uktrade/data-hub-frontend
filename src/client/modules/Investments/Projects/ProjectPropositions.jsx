@@ -145,8 +145,8 @@ const ProjectPropositions = ({
                   completeStatus === 'completed'
                     ? { success: ['Proposition Completed'] }
                     : taskState.status === 'error'
-                    ? { error: [taskState.errorMessage] }
-                    : null
+                      ? { error: [taskState.errorMessage] }
+                      : null
                 }
               >
                 <H2 size={LEVEL_SIZE[3]}>Investment Propositions</H2>
