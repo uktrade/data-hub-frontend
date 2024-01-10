@@ -137,6 +137,7 @@ export const urlTestExclusions = [
   { url: '/oauth/callback/' },
   { url: '/oauth/sign-out/' },
   { url: '/exportwins/1/details' },
+  { url: '/exportwins/unconfirmed/' },
   // Exclude all metadata
   { url: '/api-proxy/v4/metadata/likelihood-to-land' },
   { url: '/api-proxy/v4/metadata/investment-investor-type' },
