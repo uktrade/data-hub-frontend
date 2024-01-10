@@ -28,8 +28,8 @@ Identification numbers such as companyId and countryId are accessed from **testI
 
 Any urls entered in **urlTestExclusions.js** are excluded from testing. This includes pages that currently have A11y issues, pages that return a 404 in the sandbox environment and pages that doe not resolve because sandbox or faker data is not currently configured.
 
-If you have failing **a11y_tests** in Circle CI following changes it's possible your page has genuine accessibility issues. If this is not the case and the url needs to be excluded. Open **urlTestExclusions.js** and add the url to the array under the appropriate heading within the array i.e. A11y errors, 404 errors and or no sandbox data available, Excluded urls
+If you have failing **a11y_tests** in Circle CI following changes it's possible your page has genuine accessibility issues. If this is not the case and the url needs to be excluded. Open **urlTestExclusions.js** and add the url to the array under the appropriate heading within the array i.e. A11y errors, 404 errors and or no sandbox data available, Excluded urls. All metadata urls are also excluded here
 
-Data, Export and metadata endpoints are excluded as a default.
+Data, Export data points are excluded as a default.
 
 New tests will automatically appear when added to urls.js.
