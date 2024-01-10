@@ -65,7 +65,6 @@ const Resource = multiInstance({
           ignoreIfInProgress: true,
         }}
       >
-        {/* {children(...(result ? transformer(result) : [result]))} */}
         {result ? children(...transformer(result)) : children()}
       </LoadingBox>
     ) : (
