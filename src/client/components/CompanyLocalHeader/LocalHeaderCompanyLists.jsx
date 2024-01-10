@@ -14,6 +14,7 @@ import {
 import Task from '../Task'
 import { COMPANY_LISTS__COMPANY_IN_LOADED } from '../../actions'
 import { ID, TASK_GET_LISTS_COMPANY_IS_IN, state2props } from './state'
+import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
@@ -75,6 +76,7 @@ export const LocalHeaderCompanyLists = ({ results, company, returnUrl }) => {
             >
               <span>+</span> Add to list
             </StyledAddButton>
+            <LocalHeaderCompanyRefer companyId={company.id} />
           </>
         )
       }

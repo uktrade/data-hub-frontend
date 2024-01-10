@@ -14,7 +14,6 @@ import { GREY_3, TEXT_COLOUR } from '../../utils/colours'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 import LocalHeaderCompanyLists from './LocalHeaderCompanyLists'
-import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
 import { addressToStringResource } from '../../../client/utils/addresses'
@@ -193,7 +192,6 @@ const CompanyLocalHeader = ({
         </GridRow>
         <StyledList>
           <LocalHeaderCompanyLists company={company} returnUrl={returnUrl} />
-          <LocalHeaderCompanyRefer companyId={company.id} />
         </StyledList>
         {(isUltimate(company) || isGlobalHQ(company)) && (
           <TypeWrapper>
