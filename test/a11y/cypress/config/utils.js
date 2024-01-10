@@ -20,6 +20,8 @@ export const createArrayOfUrls = (urls) => {
   return arrayOfUrls
 }
 
+const defaultExcludedUrlDataPoints = ['/data', '/export']
+
 export const cleanseArrayOfUrls = (arrayOfUrls, excludedUrls) => {
   const filteredArrayOfUrls = arrayOfUrls
     .filter(
@@ -27,8 +29,9 @@ export const cleanseArrayOfUrls = (arrayOfUrls, excludedUrls) => {
     )
     .filter(
       (path) =>
-        path.url.split('/').pop() !== 'data' &&
-        path.url.split('/').pop() !== 'export'
+        !defaultExcludedUrlDataPoints.some((suffix) =>
+          path.url.endsWith(suffix)
+        )
     )
     .map((path) => {
       const pathUrl = path.url.split('/')
