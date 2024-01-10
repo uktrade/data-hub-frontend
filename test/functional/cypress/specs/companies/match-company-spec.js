@@ -553,23 +553,20 @@ describe('Match a company', () => {
     }
   )
 
-  // TODO: Fix test
-  context('when company merge request is confirmed', () => {
-    beforeEach(() => {
+  context('when doing a company merge', () => {
+    it('should redirect to the company page', () => {
       cy.visit(
         urls.companies.match.confirmation(company.id, DUNS_NUMBER_MATCHED)
       )
-      cy.get('button:contains("Request merge")').click()
-    })
 
-    it('should redirect to the company page', () => {
+      // Do merge
+      cy.get('button:contains("Request merge")').click()
+
+      // Assert redirect and flash message
       cy.location('pathname').should(
         'eq',
         urls.companies.overview.index(company.id)
       )
-    })
-
-    it('displays the "Company record update request sent" flash message', () => {
       assertFlashMessage(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )
