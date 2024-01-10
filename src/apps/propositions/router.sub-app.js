@@ -15,12 +15,6 @@ const { postUpload } = require('../documents/middleware/upload')
 
 router.param('propositionId', getPropositionDetails)
 
-router.route('/propositions/:propositionId/complete').get(postComplete)
-router
-  .route('/propositions/:propositionId/abandon')
-  .post(renderAbandon)
-  .get(renderAbandon)
-
 router
   .route('/propositions/:propositionId/document')
   .post(

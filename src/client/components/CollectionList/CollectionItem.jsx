@@ -74,6 +74,8 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
+  footerRenderer,
+  footerdata,
 }) => (
   <ItemWrapper data-test="collection-item">
     {/* tags take precidence over badges as they are the newer style, however not all components
@@ -121,22 +123,15 @@ const CollectionItem = ({
     )}
     {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
-      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
-
-      {metadataRenderer ? (
-        metadataRenderer(metadata)
-      ) : (
-        <Metadata rows={metadata} />
-      )}
-      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-      {footerRenderer && (
-        <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
-      )}
-    </ItemWrapper>
-  )
-}
-
+    {metadataRenderer ? (
+      metadataRenderer(metadata)
+    ) : (
+      <Metadata rows={metadata} />
+    )}
     {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+    {footerRenderer && (
+      <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
+    )}
   </ItemWrapper>
 )
 
