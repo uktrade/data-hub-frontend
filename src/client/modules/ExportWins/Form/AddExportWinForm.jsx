@@ -12,6 +12,7 @@ import { transformFormValuesForAPI } from './transformers'
 import urls from '../../../../lib/urls'
 import {
   state2props,
+  TASK_GET_EXPORT_WIN,
   TASK_GET_EXPORT_PROJECT,
   TASK_GET_EXPORT_WINS_SAVE_FORM,
 } from './state'
@@ -31,6 +32,12 @@ const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const company = queryParams.company
+
+  const initialValuesTaskName = queryParams.export
+    ? TASK_GET_EXPORT_PROJECT
+    : queryParams.exportwin
+    ? TASK_GET_EXPORT_WIN
+    : null
 
   return (
     <DefaultLayout
@@ -58,7 +65,7 @@ const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
           redirectTo={() => urls.companies.exportWins.unconfirmed()}
           analyticsFormName="addExportWin"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
-          initialValuesTaskName={TASK_GET_EXPORT_PROJECT}
+          initialValuesTaskName={initialValuesTaskName}
           transformPayload={(values) => ({
             exportWinId: queryParams.exportwin,
             payload: {
@@ -69,7 +76,7 @@ const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
             },
           })}
           initialValuesPayload={{
-            id: queryParams.export,
+            id: queryParams.export || queryParams.exportwin,
           }}
         >
           {({ values }) => {

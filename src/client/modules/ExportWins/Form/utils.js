@@ -1,5 +1,3 @@
-import { isEmpty } from 'lodash'
-
 import { currencyGBP } from '../../../../client/utils/number-utils'
 
 /**
@@ -7,13 +5,13 @@ import { currencyGBP } from '../../../../client/utils/number-utils'
  * @param {Object} values the form values object containing the keys
  * @returns {Number} aggregated key values
  * @example
- * sumWinTypeYearlyValues('export_win_year', {
+ * sumWinTypeYearlyValues('export_win', {
  *   ...
- *   export_win_year_0: '1',
- *   export_win_year_1: '',
- *   export_win_year_2: '2',
- *   export_win_year_3: '3',
- *   export_win_year_4: '4',
+ *   export_win_0: '1',
+ *   export_win_1: '',
+ *   export_win_2: '2',
+ *   export_win_3: '3',
+ *   export_win_4: '4',
  *   ...
  * }) // 10
  */
@@ -29,21 +27,21 @@ export const sumWinTypeYearlyValues = (winType, values) =>
  * @example
  * sumAllWinTypeYearlyValues(['export_win', 'business_success_win', 'odi_win'], {
  *   ...
- *   export_win_year_0: '2',
- *   export_win_year_1: '2',
- *   export_win_year_2: '2',
- *   export_win_year_3: '2',
- *   export_win_year_4: '2',
- *   business_success_win_year_0: '3',
- *   business_success_win_year_1: '3',
- *   business_success_win_year_2: '3',
- *   business_success_win_year_3: '3',
- *   business_success_win_year_4: '3',
- *   odi_win_year_0: '4',
- *   odi_win_year_1: '4',
- *   odi_win_year_2: '4',
- *   odi_win_year_3: '4',
- *   odi_win_year_4: '4',
+ *   export_win_0: '2',
+ *   export_win_1: '2',
+ *   export_win_2: '2',
+ *   export_win_3: '2',
+ *   export_win_4: '2',
+ *   business_success_win_0: '3',
+ *   business_success_win_1: '3',
+ *   business_success_win_2: '3',
+ *   business_success_win_3: '3',
+ *   business_success_win_4: '3',
+ *   odi_win_0: '4',
+ *   odi_win_1: '4',
+ *   odi_win_2: '4',
+ *   odi_win_3: '4',
+ *   odi_win_4: '4',
  *   ...
  * }) // 45
  */
@@ -55,38 +53,38 @@ export const sumAllWinTypeYearlyValues = (winTypes = [], values) =>
  * @param {Object} values the form value object
  * @returns the year of the last win type value
  * @example
- * getYearFromWinType('export_win_year', {
+ * getYearFromWinType('export_win', {
  *   ...
- *   export_win_year_0: '2',
- *   export_win_year_1: '2',
- *   export_win_year_2: '',
- *   export_win_year_3: '',
- *   export_win_year_4: '',
+ *   export_win_0: '2',
+ *   export_win_1: '2',
+ *   export_win_2: '',
+ *   export_win_3: '',
+ *   export_win_4: '',
  *   ...
  * }) // 2
- * getYearFromWinType('export_win_year', {
+ * getYearFromWinType('export_win', {
  *   ...
- *   export_win_year_0: '',
- *   export_win_year_1: '2',
- *   export_win_year_2: '2',
- *   export_win_year_3: '',
- *   export_win_year_4: '',
+ *   export_win_0: '',
+ *   export_win_1: '2',
+ *   export_win_2: '2',
+ *   export_win_3: '',
+ *   export_win_4: '',
  *   ...
  * }) // 3
- * getYearFromWinType('export_win_year', {
+ * getYearFromWinType('export_win', {
  *   ...
- *   export_win_year_0: '',
- *   export_win_year_1: '',
- *   export_win_year_2: '',
- *   export_win_year_3: '2',
- *   export_win_year_4: '2',
+ *   export_win_0: '',
+ *   export_win_1: '',
+ *   export_win_2: '',
+ *   export_win_3: '2',
+ *   export_win_4: '2',
  *   ...
  * }) // 5
  */
 
 export const getYearFromWinType = (winType, values) =>
   Object.keys(values)
-    .filter((key) => key.startsWith(winType) && !isEmpty(values[key]))
+    .filter((key) => key.startsWith(winType) && !!values[key])
     .reduce((acc, key) => Math.max(Number(key.slice(-1)) + 1, acc), 0)
 
 /**
@@ -94,22 +92,22 @@ export const getYearFromWinType = (winType, values) =>
  * @param {Object} values the form value object
  * @returns the max year of the last win type value across all win types
  * @example
- * getMaxYearFromWinTypes(['export_win_year', 'business_success_win_year', 'odi_win_year']) {
- *   export_win_year_0: '5',
- *   export_win_year_1: '',
- *   export_win_year_2: '',
- *   export_win_year_3: '',
- *   export_win_year_4: '',
- *   business_success_win_year_0: '10',
- *   business_success_win_year_1: '15',
- *   business_success_win_year_2: '',
- *   business_success_win_year_3: '',
- *   business_success_win_year_4: '',
- *   odi_win_year_0: '',
- *   odi_win_year_1: '',
- *   odi_win_year_2: '8',
- *   odi_win_year_3: '8',
- *   odi_win_year_4: '',
+ * getMaxYearFromWinTypes(['export_win', 'business_success_win', 'odi_win']) {
+ *   export_win_0: '5',
+ *   export_win_1: '',
+ *   export_win_2: '',
+ *   export_win_3: '',
+ *   export_win_4: '',
+ *   business_success_win_0: '10',
+ *   business_success_win_1: '15',
+ *   business_success_win_2: '',
+ *   business_success_win_3: '',
+ *   business_success_win_4: '',
+ *   odi_win_0: '',
+ *   odi_win_1: '',
+ *   odi_win_2: '8',
+ *   odi_win_3: '8',
+ *   odi_win_4: '',
  * }) // 4
  */
 export const getMaxYearFromWinTypes = (winTypes, values) =>

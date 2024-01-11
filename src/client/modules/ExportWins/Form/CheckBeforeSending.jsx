@@ -179,9 +179,9 @@ const getTotalWinTypeValue = (winTypes = [], values) => {
 }
 
 const WinDetailsTable = ({ values, goToStep }) => {
-  const exportSum = sumWinTypeYearlyValues('export_win_year', values)
-  const odiWinSum = sumWinTypeYearlyValues('odi_win_year', values)
-  const busSuccSum = sumWinTypeYearlyValues('business_success_win_year', values)
+  const exportSum = sumWinTypeYearlyValues('export_win', values)
+  const odiWinSum = sumWinTypeYearlyValues('odi_win', values)
+  const busSuccSum = sumWinTypeYearlyValues('business_success_win', values)
 
   const hasMoreThanOneWinType = values?.win_type?.length > 1
   const showExportWin = exportSum > 0 && hasMoreThanOneWinType
@@ -206,7 +206,7 @@ const WinDetailsTable = ({ values, goToStep }) => {
         {values.country?.label}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Date won">
-        {`${values.win_date?.month}/${values.win_date?.year}`}
+        {`${values.date?.month}/${values.date?.year}`}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Summary of support given">
         {values.description}
@@ -222,17 +222,17 @@ const WinDetailsTable = ({ values, goToStep }) => {
       </SummaryTable.Row>
       {showExportWin && (
         <SummaryTable.Row heading="Export value">
-          {getWinTypeValue('export_win_year', values)}
+          {getWinTypeValue('export_win', values)}
         </SummaryTable.Row>
       )}
       {showBusinessSuccessWin && (
         <SummaryTable.Row heading="Business success value">
-          {getWinTypeValue('business_success_win_year', values)}
+          {getWinTypeValue('business_success_win', values)}
         </SummaryTable.Row>
       )}
       {showOdiWin && (
         <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
-          {getWinTypeValue('odi_win_year', values)}
+          {getWinTypeValue('odi_win', values)}
         </SummaryTable.Row>
       )}
       <SummaryTable.Row heading="Total value">

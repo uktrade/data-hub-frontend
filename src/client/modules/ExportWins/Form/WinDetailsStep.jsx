@@ -112,7 +112,7 @@ const WinDetailsStep = () => {
         field={FieldTypeahead}
       />
       <FieldDate
-        name="win_date"
+        name="date"
         format="short"
         label="Date won"
         hint={`For example ${month} ${year}, date of win must be in the last 12 months.`}
@@ -166,7 +166,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Export value over the next 5 years"
-                name="export_win_year"
+                name="export_win"
                 values={values}
               />
             ),
@@ -200,7 +200,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Business success over the next 5 years"
-                name="business_success_win_year"
+                name="business_success_win"
                 values={values}
               />
             ),
@@ -228,7 +228,7 @@ const WinDetailsStep = () => {
             children: (
               <WinTypeValues
                 label="Outward Direct Investment over the next 5 years"
-                name="odi_win_year"
+                name="odi_win"
                 values={values}
               />
             ),
