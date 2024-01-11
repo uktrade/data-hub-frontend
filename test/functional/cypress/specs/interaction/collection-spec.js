@@ -162,7 +162,6 @@ const assertInteractionDetails = ({
 }
 
 describe('Interactions Collections', () => {
-  // TODO: consider how to make these more performant?
   beforeEach(() => {
     collectionListRequest(
       'v3/search/interaction',
