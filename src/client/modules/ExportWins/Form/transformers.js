@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 
 import { convertDateToFieldDateObject } from '../../../../client/utils/date'
+import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
 import { getTwelveMonthsAgo, sumWinTypeYearlyValues } from './utils'
 import { idNameToValueLabel } from '../../../../client/utils'
 import {
@@ -133,7 +134,7 @@ export const transformExportWinForForm = (exportWin) => ({
   hq_team: idNameToValueLabel(exportWin.hq_team),
   team_members: exportWin.team_members.map(idNameToValueLabel),
   // Credit for this win
-  credit_for_win: exportWin.advisers.length ? 'yes' : 'no',
+  credit_for_win: exportWin.advisers.length ? OPTION_YES : OPTION_NO,
   ...transformAdvisersToContributingOfficers(exportWin.advisers),
   // Customer details
   company_contacts: idNameToValueLabel(exportWin.company_contacts[0]),
@@ -146,7 +147,7 @@ export const transformExportWinForForm = (exportWin) => ({
   description: exportWin.description,
   name_of_customer: exportWin.name_of_customer,
   name_of_customer_confidential:
-    exportWin.name_of_customer_confidential === true ? 'yes' : 'no',
+    exportWin.name_of_customer_confidential === true ? OPTION_YES : OPTION_NO,
   business_type: exportWin.business_type,
   ...transformBreakdownsToYearlyValues(exportWin.breakdowns),
   win_type: getWinTypesFromBreakdowns(exportWin.breakdowns),
@@ -160,8 +161,12 @@ export const transformExportWinForForm = (exportWin) => ({
   hvc: idNameToValueLabel(exportWin.hvc),
   type_of_support: exportWin.type_of_support.map(idNameToValueLabel),
   associated_programme: exportWin.associated_programme.map(idNameToValueLabel),
-  is_personally_confirmed: exportWin.is_personally_confirmed ? 'yes' : 'no',
-  is_line_manager_confirmed: exportWin.is_line_manager_confirmed ? 'yes' : 'no',
+  is_personally_confirmed: exportWin.is_personally_confirmed
+    ? OPTION_YES
+    : OPTION_NO,
+  is_line_manager_confirmed: exportWin.is_line_manager_confirmed
+    ? OPTION_YES
+    : OPTION_NO,
 })
 
 export const transformFormValuesForAPI = (values) => ({
@@ -183,7 +188,7 @@ export const transformFormValuesForAPI = (values) => ({
   description: values.description,
   name_of_customer: values.name_of_customer,
   name_of_customer_confidential:
-    values.name_of_customer_confidential[0] === 'yes',
+    values.name_of_customer_confidential[0] === OPTION_YES,
   business_type: values.business_type,
   breakdowns: [
     ...transformYearlyValuesToBreakdowns(
@@ -208,8 +213,8 @@ export const transformFormValuesForAPI = (values) => ({
   hvc: values.hvc.value,
   type_of_support: values.type_of_support.map((support) => support.value),
   associated_programme: values.associated_programme.map((c) => c.value),
-  is_personally_confirmed: values.is_personally_confirmed[0] === 'yes',
-  is_line_manager_confirmed: values.is_line_manager_confirmed[0] === 'yes',
+  is_personally_confirmed: values.is_personally_confirmed[0] === OPTION_YES,
+  is_line_manager_confirmed: values.is_line_manager_confirmed[0] === OPTION_YES,
   // Miscellaneous
   total_expected_export_value: sumWinTypeYearlyValues('export_win', values),
   total_expected_non_export_value: sumWinTypeYearlyValues(
