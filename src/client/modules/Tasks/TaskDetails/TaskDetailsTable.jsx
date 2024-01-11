@@ -32,6 +32,16 @@ const TaskDetailsTable = ({ task, company, project }) => (
           }
         />
       )}
+      {task.interaction && (
+        <SummaryTable.Row
+          heading="Related interaction"
+          children={
+            <Link href={urls.interactions.detail(task.interaction.id)}>
+              {task.interaction.subject}
+            </Link>
+          }
+        />
+      )}
       <SummaryTable.Row
         heading="Date due"
         children={task.dueDate ? formatLongDate(task.dueDate) : NOT_SET_TEXT}

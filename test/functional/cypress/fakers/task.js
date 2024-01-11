@@ -3,6 +3,7 @@ import { pick } from 'lodash'
 
 import { listFaker } from './utils'
 import { companyFaker } from './companies'
+import { interactionFaker } from './interactions'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -21,6 +22,7 @@ const taskFaker = (overrides = {}) => ({
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
+  interaction: null,
   archived: false,
   archivedBy: null,
   createdBy: basicAdviserFaker(),
@@ -46,6 +48,29 @@ const taskWithInvestmentProjectFaker = (
         ...investmentProjectOverrides,
       },
       company: company,
+      ...overrides,
+    })
+  )
+}
+
+const taskWithInteractionFaker = (overrides = {}) => {
+  const company = pick(companyFaker(), ['id', 'name'])
+  const interaction = pick(
+    interactionFaker({
+      companies: [
+        {
+          name: company.name,
+          id: company.id,
+        },
+      ],
+    }),
+    ['subject', 'id']
+  )
+
+  return taskFaker(
+    (overrides = {
+      company: company,
+      interaction: interaction,
       ...overrides,
     })
   )
@@ -78,6 +103,7 @@ export {
   taskListFaker,
   taskWithInvestmentProjectFaker,
   taskWithInvestmentProjectListFaker,
+  taskWithInteractionFaker,
   basicAdviserFaker,
   taskWithCompanyFaker,
 }
