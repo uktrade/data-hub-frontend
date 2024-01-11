@@ -32,4 +32,4 @@ If you have failing **a11y_tests** in Circle CI following changes it's possible 
 
 Data, Export data points are excluded as a default.
 
-New tests will automatically appear when added to urls.js.
+New tests will automatically appear when added to **src/lib/urls.js**.
