@@ -24,6 +24,7 @@ const transformContributingOfficersToAdvisers = (values) =>
 const transformYearlyValuesToBreakdowns = (key, id, values) =>
   Object.keys(values)
     .filter((k) => k.startsWith(key))
+    .filter((k) => values[k])
     .map((k) => ({
       type: id,
       year: parseInt(k[k.length - 1], 10) + 1,
