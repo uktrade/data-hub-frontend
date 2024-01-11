@@ -201,8 +201,12 @@ describe('Edit the value details of a project', () => {
       })
     })
 
-    // TODO: fix test
     it('should not submit the form if the investment inputs are empty', () => {
+      cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
+      cy.get(
+        '[data-test="client-cannot-provide-foreign-investment-yes"]'
+      ).click()
+
       cy.get('[data-test="submit-button"]').click()
       assertErrorSummary([
         'Enter the total investment',

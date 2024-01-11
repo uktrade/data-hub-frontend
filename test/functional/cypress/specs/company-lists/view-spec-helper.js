@@ -83,7 +83,7 @@ const describeTable = (rows) => {
 
 const describeSortListBy = ({ option, rows }) =>
   describe(`Sort list by "${option}"`, () => {
-    before(() => {
+    beforeEach(() => {
       cy.contains('Sort by').children('select').select(option)
     })
 
@@ -194,15 +194,14 @@ exports.describeSelectedList = ({
         searches &&
           Object.entries(searches).forEach(([query, rows]) => {
             describe(`When the search query is "${query}"`, () => {
-              it('it should only display matching rows', () => {
+              beforeEach(() => {
                 cy.contains('Search this list')
                   .find('input')
                   .clear()
                   .type(query)
-                // TODO: confirm if the below calls should be within it statement
-                describeTable(rows)
-                describeSortList(rows)
               })
+              describeTable(rows)
+              describeSortList(rows)
             })
           })
     }
