@@ -73,8 +73,12 @@ describe('Dashboard - my projects list filters', () => {
       )
     })
   })
-  // TODO: fix test
+
   context('Dashboard filter options', () => {
+    beforeEach(() => {
+      cy.visit(urls.dashboard.investmentProjects())
+    })
+
     it('should render the stage options', () => {
       cy.get('[data-test="stage-select"] option').then((stageOptions) => {
         expect(transformOptions(stageOptions)).to.deep.eq([
