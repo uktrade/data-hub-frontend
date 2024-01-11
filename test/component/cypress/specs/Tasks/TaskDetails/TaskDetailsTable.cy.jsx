@@ -6,6 +6,7 @@ import { assertSummaryTable } from '../../../../../functional/cypress/support/as
 import {
   taskFaker,
   taskWithInvestmentProjectFaker,
+  taskWithInteractionFaker,
 } from '../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../src/client/utils/date'
@@ -99,6 +100,39 @@ describe('Task details table', () => {
           'Reminders set': NOT_SET_TEXT,
           'Date created': formatLongDate(taskWithNoInvestmentProject.createdOn),
           'Created by': taskWithNoInvestmentProject.createdBy.name,
+        },
+      })
+    })
+  })
+
+  context('When a task is linked to an interaction', () => {
+    const taskWithInteraction = taskWithInteractionFaker()
+    const company = taskWithInteraction.company
+
+    it('the table should show all expected values', () => {
+      cy.mount(<Component task={taskWithInteraction} company={company} />)
+
+      assertSummaryTable({
+        dataTest: 'task-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: {
+            href: urls.companies.detail(company.id),
+            name: company.name,
+          },
+          'Related interaction': {
+            href: urls.interactions.detail(taskWithInteraction.interaction.id),
+            name: taskWithInteraction.interaction.subject,
+          },
+          ['Date due']: formatLongDate(taskWithInteraction.dueDate),
+          'Assigned to': taskWithInteraction.advisers
+            .map((adviser) => adviser.name)
+            .join(''),
+          'Task description': taskWithInteraction.description,
+          'Reminders set': `${taskWithInteraction.reminderDays} days before due date`,
+          'Date created': formatLongDate(taskWithInteraction.createdOn),
+          'Created by': taskWithInteraction.createdBy.name,
         },
       })
     })

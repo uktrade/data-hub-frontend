@@ -11,6 +11,7 @@ import {
   assertUrl,
 } from '../../support/assertions'
 import { clickButton } from '../../support/actions'
+import interactionsListFaker from '../../fakers/interactions'
 
 describe('View details for a generic task', () => {
   const genericTaskCompleted = taskFaker({ archived: true })
@@ -136,6 +137,29 @@ describe('View details for task that is assigned to a company', () => {
       clickButton('Mark as complete')
       assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
       assertUrl(dashboard.myTasks())
+    })
+  })
+})
+
+describe('View details for task that is assigned to an interaction', () => {
+  const interaction = interactionsListFaker((length = 3))
+  const task = taskWithCompanyFaker({
+    interaction: { subject: interaction[0].subject, id: interaction[0].id },
+  })
+
+  context('When visiting a completed task details', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v4/task/${task.id}`, task).as(
+        'apiRequest'
+      )
+      cy.visit(tasks.details(task.id))
+      cy.wait('@apiRequest')
+    })
+
+    it('should display the summary table', () => {
+      assertSummaryTable({
+        dataTest: 'task-details-table',
+      })
     })
   })
 })
