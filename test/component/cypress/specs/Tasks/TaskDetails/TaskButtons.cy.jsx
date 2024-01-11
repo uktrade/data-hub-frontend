@@ -34,7 +34,7 @@ describe('Task buttons', () => {
     it('should show the Create similar task button with expected url', () => {
       assertLink(
         'create-similar-task-button',
-        urls.createSimilarTask.edit(task.id)
+        urls.tasks.createSimilarTask(task.id)
       )
     })
 
