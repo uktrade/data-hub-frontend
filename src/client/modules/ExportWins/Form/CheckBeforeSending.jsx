@@ -37,9 +37,9 @@ const StyledFieldInput = styled(FieldInput)({
   display: 'none',
 })
 
-const CheckBeforeSendingStep = () => {
+const CheckBeforeSendingStep = ({ isEditing }) => {
   const { values, goToStep } = useFormContext()
-  const props = { values, goToStep }
+  const props = { values, goToStep, isEditing }
 
   return (
     <Step

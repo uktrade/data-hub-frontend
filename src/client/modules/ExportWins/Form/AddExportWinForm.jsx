@@ -28,10 +28,11 @@ const StyledLoadingBox = styled(LoadingBox)({
   width: SPACING.SCALE_5,
 })
 
-const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
+const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const company = queryParams.company
+  const stepProps = { isEditing }
 
   const initialValuesTaskName = queryParams.export
     ? TASK_GET_EXPORT_PROJECT
@@ -41,7 +42,7 @@ const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
 
   return (
     <DefaultLayout
-      heading="Add export win"
+      heading={`${isEditing ? 'Edit' : 'Add'} export win`}
       subheading={
         <CompanyResource
           taskStatusProps={{
@@ -82,12 +83,12 @@ const AddExportWinForm = ({ csrfToken, currentAdviserId }) => {
           {({ values }) => {
             return (
               <>
-                <OfficerDetailsStep />
-                <CreditForThisWinStep />
-                <CustomerDetailsStep />
-                <WinDetailsStep />
-                <SupportGivenStep />
-                <CheckBeforeSendingStep />
+                <OfficerDetailsStep {...stepProps} />
+                <CreditForThisWinStep {...stepProps} />
+                <CustomerDetailsStep {...stepProps} />
+                <WinDetailsStep {...stepProps} />
+                <SupportGivenStep {...stepProps} />
+                <CheckBeforeSendingStep {...stepProps} />
                 <pre>{JSON.stringify(values, null, 2)}</pre>
               </>
             )
