@@ -12,7 +12,7 @@ import {
 import {
   INTERACTION__LOADED,
   INVESTMENT__PROJECT_LOADED,
-  SIMILAR_TASK_DETAILS_LOADED,
+  COPY_TASK_DETAILS_LOADED,
 } from '../../../actions'
 import TaskFormFields from './TaskFormFields'
 import urls from '../../../../lib/urls'
@@ -105,7 +105,7 @@ const getTaskProps = (investmentProjectId, interactionId, copyTaskId) => {
       id: TASK_ID,
       startOnRender: {
         payload: copyTaskId,
-        onSuccessDispatch: SIMILAR_TASK_DETAILS_LOADED,
+        onSuccessDispatch: COPY_TASK_DETAILS_LOADED,
       },
     }
   }

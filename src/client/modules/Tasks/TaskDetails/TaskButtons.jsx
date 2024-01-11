@@ -57,7 +57,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
               buttonColour={GREY_3}
               buttonTextColour={TEXT_COLOUR}
               as={Link}
-              href={urls.tasks.createSimilarTask(task.id)}
+              href={urls.tasks.createCopyTask(task.id)}
               data-test="create-similar-task-button"
             >
               Create similar task

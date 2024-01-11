@@ -28,7 +28,7 @@ describe('View details for a generic task', () => {
         `/api-proxy/v4/tasks/create?copyTaskId=${task.id}`,
         task
       ).as('apiRequest')
-      cy.visit(tasks.createSimilarTask(task.id))
+      cy.visit(tasks.createCopyTask(task.id))
       cy.wait('@apiRequest')
     })
 
