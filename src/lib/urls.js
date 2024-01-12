@@ -212,7 +212,7 @@ module.exports = {
     exportWins: {
       index: url('/exportwins'),
       create: url('/exportwins/create'),
-      details: url('/exportwins/:winId/details'),
+      details: url('/exportwins', '/:winId/details'),
       confirmed: url('/exportwins/confirmed'),
       unconfirmed: url('/exportwins/unconfirmed'),
     },
