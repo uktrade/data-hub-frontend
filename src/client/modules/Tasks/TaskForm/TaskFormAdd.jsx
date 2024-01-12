@@ -24,7 +24,7 @@ import {
 import { TASK_GET_TASK_DETAILS, ID as TASK_ID } from '../TaskDetails/state'
 
 const getTitle = (task) => {
-  if (!task || !task.title) {
+  if (!task) {
     return 'Add task'
   }
   if (task.investmentProject) {
@@ -33,7 +33,10 @@ const getTitle = (task) => {
   if (task.interaction) {
     return `Add task for ${task.interaction.subject}`
   }
-  return `Add task for ${task.company}`
+  if (task.company) {
+    return `Add task for ${task.company}`
+  }
+  return `Add task`
 }
 
 const getRedirectUrl = (task) => {
