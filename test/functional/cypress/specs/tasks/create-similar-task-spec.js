@@ -14,7 +14,7 @@ import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
 import { format } from '../../../../../src/client/utils/date'
 
 describe('Copy task from generic task task', () => {
-  const genericTask = taskFaker({ archived: false })
+  const genericTask = taskFaker()
 
   context('When creating a similar task', () => {
     before(() => {
@@ -33,7 +33,7 @@ describe('Copy task from generic task task', () => {
 })
 
 describe('Copy task from task with company', () => {
-  const taskWithCompany = taskWithCompanyFaker({ archived: false })
+  const taskWithCompany = taskWithCompanyFaker()
 
   context('When creating a similar task', () => {
     before(() => {
@@ -52,7 +52,7 @@ describe('Copy task from task with company', () => {
 })
 
 describe('Copy task from task with investment project', () => {
-  const taskWithIP = taskWithInvestmentProjectFaker({ archived: false })
+  const taskWithIP = taskWithInvestmentProjectFaker()
 
   context('When creating a similar task', () => {
     before(() => {

@@ -15,7 +15,7 @@ export const TASK_SAVE_TASK_DETAILS = 'TASK_SAVE_TASK_DETAILS'
 
 export const getGenericBreadcumbs = (task) => {
   const defaultBreadcrumbs = [{ link: urls.dashboard.myTasks(), text: 'Home' }]
-  if (task && task.title?.length > 0) {
+  if (task && task.title) {
     return [
       ...defaultBreadcrumbs,
       {
