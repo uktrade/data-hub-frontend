@@ -13,9 +13,9 @@ import { ID as INTERACTION_ID } from '../../Interactions/InteractionDetails/stat
 
 export const TASK_SAVE_TASK_DETAILS = 'TASK_SAVE_TASK_DETAILS'
 
-export const getGenericBreadcumbs = (task, isCopy = false) => {
+export const getGenericBreadcumbs = (task) => {
   const defaultBreadcrumbs = [{ link: urls.dashboard.myTasks(), text: 'Home' }]
-  if (task && !isCopy) {
+  if (task && task.title?.length > 0) {
     return [
       ...defaultBreadcrumbs,
       {
@@ -76,7 +76,7 @@ export const getInteractionBreadcrumbs = (interaction) => [
   { text: 'Task' },
 ]
 
-export const getTaskBreadcrumbs = (task, isCopy = false) => {
+export const getTaskBreadcrumbs = (task) => {
   if (!task) {
     return getGenericBreadcumbs(task)
   }
@@ -90,7 +90,7 @@ export const getTaskBreadcrumbs = (task, isCopy = false) => {
     return getCompanyBreadcrumbs(task.company)
   }
 
-  return getGenericBreadcumbs(task, isCopy)
+  return getGenericBreadcumbs(task)
 }
 
 export const state2props = (state) => {
@@ -120,7 +120,7 @@ export const state2props = (state) => {
     return {
       ...defaultTaskProps,
       task: transformedTask,
-      breadcrumbs: getTaskBreadcrumbs(transformedTask, copyTask),
+      breadcrumbs: getTaskBreadcrumbs(transformedTask),
     }
   }
 
