@@ -24,7 +24,7 @@ import {
 import { TASK_GET_TASK_DETAILS, ID as TASK_ID } from '../TaskDetails/state'
 
 const getTitle = (task) => {
-  if (!task) {
+  if (!task || !task.title) {
     return 'Add task'
   }
   if (task.investmentProject) {
