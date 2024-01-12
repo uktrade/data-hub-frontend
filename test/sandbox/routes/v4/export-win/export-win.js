@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
-const fakeExportWin = (_, i) => ({
-  id: `export-win-id-#${i}`,
+const fakeExportWin = () => ({
+  id: faker.string.uuid(),
   adviser: {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
@@ -43,4 +43,13 @@ export const getExportWinCollection = (req, res) => {
     count: exportWins.length,
     results: exportWins.slice(offset, offset + limit),
   })
+}
+
+const getExportWin = (req, res) => {
+  res.json(fakeExportWin())
+}
+
+module.exports = {
+  getExportWinCollection,
+  getExportWin,
 }
