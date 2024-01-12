@@ -7,7 +7,6 @@ const {
   getDownloadLink,
   getPropositionDetails,
 } = require('./middleware/details')
-const { postComplete } = require('./middleware/complete')
 const {
   setPropositionDocumentUploadReturnUrl,
   setDocumentsOptions,
@@ -15,8 +14,6 @@ const {
 const { postUpload } = require('../documents/middleware/upload')
 
 router.param('propositionId', getPropositionDetails)
-
-router.route('/propositions/:propositionId/complete').get(postComplete)
 
 router
   .route('/propositions/:propositionId/document')

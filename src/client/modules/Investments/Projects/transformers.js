@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, Link } from 'govuk-react'
+import { Link } from 'govuk-react'
 
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
+
 import urls from '../../../../lib/urls'
+
 import {
   EXPORT_REVENUE_FALSE,
   EXPORT_REVENUE_TRUE,
@@ -17,7 +19,7 @@ import {
   STAGE_WON,
 } from './constants'
 import { format } from '../../../utils/date'
-import { BLACK, GREY_3 } from '../../../utils/colours'
+
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import Tag from '../../../components/Tag'
@@ -200,7 +202,7 @@ export const transformPropositionToListItem = ({
   deadline,
   adviser,
   status,
-} = {}) => ({
+}) => ({
   id,
   metadata: [
     { label: 'Deadline', value: format(deadline, 'dd MMMM yyyy') },
@@ -220,33 +222,11 @@ export const transformPropositionToListItem = ({
     },
   ],
   headingText: name,
-  buttons:
-    status === 'abandoned' || status === 'completed' ? null : (
-      <>
-        <Button
-          as={Link}
-          href={urls.investments.projects.proposition.abandon(
-            investment_project.id,
-            id
-          )}
-          data-test="abandon-button"
-          buttonColour={GREY_3}
-          buttonTextColour={BLACK}
-        >
-          Abandon
-        </Button>{' '}
-        <Button
-          as={Link}
-          href={urls.investments.projects.proposition.complete(
-            investment_project.id,
-            id
-          )}
-          data-test="complete-button"
-        >
-          Complete
-        </Button>
-      </>
-    ),
+  footerdata: {
+    investment_project_id: investment_project.id,
+    status: status,
+    id,
+  },
 })
 
 export const transformInvestmentProjectToListItem = ({

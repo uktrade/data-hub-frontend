@@ -2,6 +2,7 @@ import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
   INVESTMENTS__SET_PROJECTS_METADATA,
+  PROPOSITION_COMPLETE,
 } from '../../../actions'
 
 const initialState = {
@@ -9,6 +10,7 @@ const initialState = {
   selectedAdvisers: [],
   metadata: {},
   isComplete: false,
+  completeStatus: '',
 }
 
 export default (state = initialState, { type, result }) => {
@@ -29,6 +31,10 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         metadata: result,
+      }
+    case PROPOSITION_COMPLETE:
+      return {
+        completeStatus: result.status,
       }
     default:
       return state

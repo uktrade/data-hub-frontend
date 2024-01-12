@@ -33,6 +33,7 @@ const CollectionList = ({
   entityNamePlural,
   addItemUrl,
   metadataRenderer,
+  footerRenderer,
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -73,6 +74,7 @@ const CollectionList = ({
                   badges,
                   metadata,
                   buttons,
+                  footerdata,
                 },
                 index
               ) => (
@@ -85,6 +87,8 @@ const CollectionList = ({
                   metadata={metadata}
                   metadataRenderer={metadataRenderer}
                   buttons={buttons}
+                  footerRenderer={footerRenderer}
+                  footerdata={footerdata}
                 />
               )
             )}
@@ -141,6 +145,7 @@ CollectionList.propTypes = {
   onPageClick: PropTypes.func.isRequired,
   addItemUrl: PropTypes.string,
   metadataRenderer: PropTypes.func,
+  footerRenderer: PropTypes.func,
 }
 
 export default CollectionList

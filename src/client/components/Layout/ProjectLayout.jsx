@@ -40,6 +40,7 @@ export const ProjectLayout = ({
   pageTitle,
   children,
   userPermissions,
+  flashMessages,
 }) => (
   <DefaultLayout
     heading={project && project.name}
@@ -53,6 +54,7 @@ export const ProjectLayout = ({
       project && project.name
     } - Projects - Investments`}
     breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
+    flashMessages={flashMessages}
     useReactRouter={false}
     localHeaderChildren={
       project && <InvestmentProjectLocalHeader investment={project} />
@@ -155,6 +157,18 @@ ProjectLayout.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.array.isRequired,
   userPermissions: PropTypes.array.isRequired,
+  flashMessages: PropTypes.shape({
+    type: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          body: PropTypes.string.isRequired,
+          heading: PropTypes.string.isRequired,
+          id: PropTypes.string,
+        })
+      ),
+      PropTypes.arrayOf(PropTypes.string).isRequired,
+    ]),
+  }),
 }
 
 export default connect(state2props)(ProjectLayout)

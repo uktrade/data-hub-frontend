@@ -115,6 +115,9 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
+import { TASK_PROPOSITION_COMPLETE } from '../client/modules/Investments/Projects/state'
+import { completeInvestmentPropositions } from '../client/modules/Investments/Projects/tasks'
+
 import {
   TASK_CREATE_LARGE_CAPITAL_PROFILE,
   TASK_UPDATE_LARGE_CAPITAL_PROFILE,
@@ -659,4 +662,5 @@ export const tasks = {
   [TASK_SAVE_TASK_AMENDED_BY_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
   [TASK_GET_INTERACTION]: getInteraction,
+  [TASK_PROPOSITION_COMPLETE]: completeInvestmentPropositions,
 }
