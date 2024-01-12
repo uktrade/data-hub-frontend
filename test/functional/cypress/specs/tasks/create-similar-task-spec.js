@@ -1,71 +1,98 @@
 import { tasks } from '../../../../../src/lib/urls'
-import { taskFaker, taskWithCompanyFaker } from '../../fakers/task'
+import {
+  taskFaker,
+  taskWithCompanyFaker,
+  taskWithInvestmentProjectFaker,
+} from '../../fakers/task'
 import { clickButton } from '../../support/actions'
-import { fillWithNewValue } from '../../support/form-fillers'
+import { fill } from '../../support/form-fillers'
 import {
   assertPayload,
   assertFlashMessage,
-  assertExactUrl,
 } from '../../../cypress/support/assertions'
+import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
+import { format } from '../../../../../src/client/utils/date'
 
-describe('View details for a generic task', () => {
-  const task = taskFaker({ archived: false })
-
-  context('When visiting generic task details', () => {
-    before(() => {
-      cy.intercept('GET', `/api-proxy/v4/task/${task.id}`, task).as(
-        'apiRequest'
-      )
-      cy.visit(tasks.details(task.id))
-      cy.wait('@apiRequest')
-    })
-
-    it('should display the create similar task button', () => {
-      cy.get('[data-test="create-similar-task-button"]').should('exist')
-    })
-  })
+describe('Copy task from generic task task', () => {
+  const genericTask = taskFaker({ archived: false })
 
   context('When creating a similar task', () => {
-    const companyTask = taskWithCompanyFaker({ archived: false })
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/task/${genericTask.id}`,
+        genericTask
+      ).as('apiRequest')
+      cy.visit(tasks.createCopyTask(genericTask.id))
+    })
 
-    context('When visiting a task details', () => {
-      before(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v4/tasks/create?copyTaskId=${companyTask.id}`
-        ).as('apiRequest')
-        cy.visit(tasks.details(companyTask.id))
-        cy.get('[data-test="create-similar-task-button"]').click()
-      })
-
-      it('should have all the other fields prefilled from the other task', () => {
-        cy.intercept('POST', `/api-proxy/v4/tasks/create`, {
-          statusCode: 200,
-        }).as('apiPostRequest')
-
-        fillWithNewValue('[data-test=title-input]', 'task copy title')
-        fillWithNewValue(
-          '[data-test=field-description]',
-          'task copy description'
-        )
-
-        clickButton('Save task')
-
-        assertPayload('@apiPostRequest', {
-          title: 'task copy title',
-          description: 'task copy description',
-          email_reminders_enabled: companyTask.emailRemindersEnabled,
-          investment_project: null,
-          company: null,
-          reminder_days: companyTask.reminderDays,
-          advisers: companyTask.advisers.map((a) => a.id),
-          interaction: null,
-        })
-
-        assertExactUrl(tasks.details(companyTask.id))
-
-        assertFlashMessage('Task saved')
-      })
+    it('should save the task with the expected values', () => {
+      assertTaskForm(genericTask)
     })
   })
 })
+
+describe('Copy task from task with company', () => {
+  const taskWithCompany = taskWithCompanyFaker({ archived: false })
+
+  context('When creating a similar task', () => {
+    before(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/task/${taskWithCompany.id}`,
+        taskWithCompany
+      ).as('apiRequest')
+      cy.visit(tasks.createCopyTask(taskWithCompany.id))
+    })
+
+    it('should save the task with the expected values', () => {
+      assertTaskForm(taskWithCompany, taskWithCompany.company.id)
+    })
+  })
+})
+
+describe('Copy task from task with investment project', () => {
+  const taskWithIP = taskWithInvestmentProjectFaker({ archived: false })
+
+  context('When creating a similar task', () => {
+    before(() => {
+      cy.intercept('GET', `/api-proxy/v4/task/${taskWithIP.id}`, taskWithIP).as(
+        'apiRequest'
+      )
+      cy.visit(tasks.createCopyTask(taskWithIP.id))
+    })
+
+    it('should save the task with the expected values', () => {
+      assertTaskForm(taskWithIP, null, taskWithIP.investmentProject.id)
+    })
+  })
+})
+
+function assertTaskForm(
+  task,
+  companyId = null,
+  investmentProjectId = null,
+  interactionId = null
+) {
+  cy.intercept('POST', '/api-proxy/v4/task', {
+    statusCode: 201,
+  }).as('postApiRequest')
+
+  fill('[data-test=field-title]', 'test copy task')
+  fill('[data-test=field-description]', 'test copy description')
+
+  clickButton('Save task')
+
+  assertPayload('@postApiRequest', {
+    investment_project: investmentProjectId,
+    company: companyId,
+    interaction: interactionId,
+    title: 'test copy task',
+    description: 'test copy description',
+    due_date: format(task.dueDate, DATE_LONG_FORMAT_3),
+    email_reminders_enabled: task.emailRemindersEnabled,
+    reminder_days: task.reminderDays,
+    advisers: task.advisers.map((adviser) => adviser.id),
+  })
+  assertFlashMessage('Task saved')
+}
