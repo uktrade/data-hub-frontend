@@ -32,8 +32,8 @@ export const WinsWonTable = ({ exportWins }) => (
         company,
         country,
         date,
-        customer_response,
         total_expected_export_value,
+        created_on,
       }) => (
         <Table.Row key={id}>
           <Table.Cell>
@@ -47,9 +47,7 @@ export const WinsWonTable = ({ exportWins }) => (
           <Table.Cell>{country.name}</Table.Cell>
           <Table.Cell>{currencyGBP(total_expected_export_value)}</Table.Cell>
           <NoWrapCell>{formatMediumDate(date)}</NoWrapCell>
-          <NoWrapCell>
-            {formatMediumDate(customer_response?.created_on)}
-          </NoWrapCell>
+          <NoWrapCell>{formatMediumDate(created_on)}</NoWrapCell>
           <NoWrapCell>
             <Link
               as={ReactRouterLink}
