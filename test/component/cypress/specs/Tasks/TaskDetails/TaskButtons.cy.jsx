@@ -58,8 +58,8 @@ describe('Task buttons', () => {
       cy.get('[data-test="submit-button"]').should('not.exist')
     })
 
-    it('should not show the Create similar task link', () => {
-      cy.get('[data-test="create-similar-task-button"]').should('not.exist')
+    it('should show the Create similar task link', () => {
+      cy.get('[data-test="create-similar-task-button"]').should('exist')
     })
 
     it('should show the Back link to dashboard when no return url exists', () => {
