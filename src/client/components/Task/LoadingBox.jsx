@@ -22,6 +22,7 @@ const StyledErrorOverlay = styled.div({
   background: 'rgba(255, 255, 255, 0.85)',
 })
 
+// FIXME: Is this component needed when we can use TaskStatus with the progressOverlay prop?
 /**
  * @function TaskLoadingBox
  * @description A loading box tied to the status of a _task_ instance.

@@ -107,7 +107,8 @@ LocalHeader.propTypes = {
   breadcrumbs: PropTypes.arrayOf(
     PropTypes.shape({
       link: PropTypes.string,
-      text: PropTypes.string.isRequired,
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+        .isRequired,
     })
   ),
   /**

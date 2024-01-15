@@ -7,6 +7,8 @@ import { apiProxyAxios } from '../Task/utils'
 import Task from '../Task'
 import LoadingBox from '../Task/LoadingBox'
 import { deepKeysToCamelCase } from '../../utils'
+import ProgressIndicator from '../ProgressIndicator'
+import Err from '../Task/Error'
 import PaginatedResource from './Paginated'
 
 /**
@@ -53,29 +55,31 @@ const Resource = multiInstance({
     payload,
     transformer = (x) => [x],
     progressBox,
+    noRetry,
   }) =>
     progressBox ? (
       <LoadingBox
         {...taskStatusProps}
         name={name}
         id={id}
+        noRetry={noRetry}
         startOnRender={{
           onSuccessDispatch: 'RESOURCE',
           payload,
           ignoreIfInProgress: true,
         }}
       >
-        {children(...(result ? transformer(result) : [result]))}
+        {result ? children(...transformer(result)) : children()}
       </LoadingBox>
     ) : (
       <Task.Status
         {...taskStatusProps}
         name={name}
         id={id}
+        noRetry={noRetry}
         startOnRender={{
           onSuccessDispatch: 'RESOURCE',
           payload,
-          ignoreIfInProgress: true,
         }}
       >
         {() => result !== undefined && children(...transformer(result))}
@@ -89,6 +93,24 @@ Resource.propTypes = {
   children: PropTypes.func,
   taskStatusProps: PropTypes.shape(_.omit(Task.Status.propTypes, 'name', 'id')),
 }
+
+/**
+ * @function Resource.Inline
+ * @description Same as Resource but with inline variants of progress indicator and error views.
+ * Use this component to fetch data in inline context.
+ */
+Resource.Inline = (props) => (
+  <Resource
+    {...props}
+    taskStatusProps={{
+      dismissable: false,
+      noun: props.noun || props.name,
+      renderProgress: ProgressIndicator.Inline,
+      renderError: Err.Inline,
+      ...props.taskStatusProps,
+    }}
+  />
+)
 
 export default Resource
 
@@ -129,6 +151,8 @@ export const createEntityResource = (name, endpoint) => {
   const Component = (props) => (
     <Resource transformer={transformer} {...props} name={name} />
   )
+
+  Component.Inline = (props) => <Resource.Inline {...props} name={name} />
 
   Component.propTypes = _.omit(Component.propTypes, 'name')
   Component.tasks = {
