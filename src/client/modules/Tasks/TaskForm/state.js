@@ -15,7 +15,7 @@ export const TASK_SAVE_TASK_DETAILS = 'TASK_SAVE_TASK_DETAILS'
 
 export const getGenericBreadcumbs = (task) => {
   const defaultBreadcrumbs = [{ link: urls.dashboard.myTasks(), text: 'Home' }]
-  if (task) {
+  if (task && task.title) {
     return [
       ...defaultBreadcrumbs,
       {
@@ -95,7 +95,7 @@ export const getTaskBreadcrumbs = (task) => {
 
 export const state2props = (state) => {
   const currentAdviserId = state.currentAdviserId
-  const { task } = state[TASK_DETAILS_ID]
+  const { task, copyTask } = state[TASK_DETAILS_ID]
   const { project } = state[INVESTMENT_PROJECT_ID]
   const { results } = state[INVESTMENT_PROJECTS_ID]
   const { interaction } = state[INTERACTION_ID]
@@ -112,6 +112,11 @@ export const state2props = (state) => {
 
   if (task) {
     const transformedTask = transformAPIValuesForForm(task, currentAdviserId)
+    if (copyTask) {
+      delete transformedTask.id
+      delete transformedTask.title
+      delete transformedTask.description
+    }
     return {
       ...defaultTaskProps,
       task: transformedTask,

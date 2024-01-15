@@ -711,6 +711,7 @@ module.exports = {
       ':investmentProjectId'
     ),
     createInteraction: url('/tasks/create?interactionId=', ':interactionId'),
+    createCopyTask: url('/tasks/create?copyTaskId=', ':copyTaskId'),
     edit: url('/tasks', '/:taskId/edit'),
   },
 }

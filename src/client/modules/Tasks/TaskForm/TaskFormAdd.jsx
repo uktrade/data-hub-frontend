@@ -12,6 +12,7 @@ import {
 import {
   INTERACTION__LOADED,
   INVESTMENT__PROJECT_LOADED,
+  COPY_TASK_DETAILS_LOADED,
 } from '../../../actions'
 import TaskFormFields from './TaskFormFields'
 import urls from '../../../../lib/urls'
@@ -20,6 +21,7 @@ import {
   TASK_GET_INTERACTION,
   ID as INTERACTION_ID,
 } from '../../Interactions/InteractionDetails/state'
+import { TASK_GET_TASK_DETAILS, ID as TASK_ID } from '../TaskDetails/state'
 
 const getTitle = (task) => {
   if (!task) {
@@ -31,7 +33,10 @@ const getTitle = (task) => {
   if (task.interaction) {
     return `Add task for ${task.interaction.subject}`
   }
-  return `Add task for ${task.company}`
+  if (task.company) {
+    return `Add task for ${task.company}`
+  }
+  return `Add task`
 }
 
 const getRedirectUrl = (task) => {
@@ -76,7 +81,7 @@ const TaskForm = ({ task, currentAdviserId, companyInvestmentProjects }) => {
   )
 }
 
-const getTaskProps = (investmentProjectId, interactionId) => {
+const getTaskProps = (investmentProjectId, interactionId, copyTaskId) => {
   if (investmentProjectId) {
     return {
       name: TASK_GET_INVESTMENT_PROJECT,
@@ -97,6 +102,16 @@ const getTaskProps = (investmentProjectId, interactionId) => {
       },
     }
   }
+  if (copyTaskId) {
+    return {
+      name: TASK_GET_TASK_DETAILS,
+      id: TASK_ID,
+      startOnRender: {
+        payload: copyTaskId,
+        onSuccessDispatch: COPY_TASK_DETAILS_LOADED,
+      },
+    }
+  }
 }
 
 const TaskFormAdd = ({
@@ -106,7 +121,9 @@ const TaskFormAdd = ({
   companyInvestmentProjects,
 }) => {
   const { search } = useLocation()
-  const { investmentProjectId, interactionId } = qs.parse(search.slice(1))
+  const { investmentProjectId, interactionId, copyTaskId } = qs.parse(
+    search.slice(1)
+  )
   const taskForm = (
     <TaskForm
       task={task}
@@ -122,8 +139,10 @@ const TaskFormAdd = ({
       breadcrumbs={breadcrumbs}
       useReactRouter={false}
     >
-      {investmentProjectId || interactionId ? (
-        <Task.Status {...getTaskProps(investmentProjectId, interactionId)}>
+      {investmentProjectId || interactionId || copyTaskId ? (
+        <Task.Status
+          {...getTaskProps(investmentProjectId, interactionId, copyTaskId)}
+        >
           {() => taskForm}
         </Task.Status>
       ) : (

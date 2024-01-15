@@ -90,6 +90,7 @@ const TaskFormFields = ({
                 children: (
                   <FieldAdvisersTypeahead
                     name="advisers"
+                    aria-label="Task assigned to"
                     required="Select an adviser"
                     isMulti={true}
                   />
@@ -215,6 +216,7 @@ const TaskFormFields = ({
 const FieldDueDate = ({ initialValue = null }) => (
   <FieldDate
     name="customDate"
+    aria-label="Due date"
     hint="For example 28 11 2025"
     required="Enter a date"
     defaultValue={initialValue}
@@ -229,6 +231,7 @@ const FieldReminder = ({ initialValue = null }) => (
       type="number"
       validate={validateDaysRange}
       defaultValue={initialValue}
+      aria-label={'day(s) before the due date'}
       text={'day(s) before the due date'}
     ></StyledFieldInput>
   </InputFieldWrapper>
