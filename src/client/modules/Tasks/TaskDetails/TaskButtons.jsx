@@ -53,17 +53,17 @@ export const TaskButtons = ({ task, returnUrl }) => (
             >
               Edit
             </Button>
-            <Button
-              buttonColour={GREY_3}
-              buttonTextColour={TEXT_COLOUR}
-              as={Link}
-              href={urls.tasks.createCopyTask(task.id)}
-              data-test="create-similar-task-button"
-            >
-              Create similar task
-            </Button>
           </>
         )}
+        <Button
+          buttonColour={GREY_3}
+          buttonTextColour={TEXT_COLOUR}
+          as={Link}
+          href={urls.tasks.createCopyTask(task.id)}
+          data-test="create-similar-task-button"
+        >
+          Create similar task
+        </Button>
         <Link
           data-test="task-back-link"
           href={returnUrl ?? urls.dashboard.myTasks()}
