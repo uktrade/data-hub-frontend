@@ -3,39 +3,36 @@ import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
-import { CompanyTabbedLocalNavigation, DefaultLayout } from '..'
+import { CompanyTabbedLocalNavigation, Main } from '..'
 import CompanyInvestmentSubNavigation from '../CompanyTabbedLocalNavigation/CompanyInvestmentTab'
-import { buildCompanyBreadcrumbs } from '../../modules/Companies/utils'
-import CompanyLocalHeaderNew from '../CompanyLocalHeader/CompanyLocalHeaderNew'
+import CompanyLocalHeader from '../CompanyLocalHeader'
 
 const CompanyLayoutNew = ({
   company,
   breadcrumbs,
   children,
   returnUrl,
-  pageTitle,
+  flashMessages,
   isInvestment = false,
   isLCP = false,
 }) => (
-  <DefaultLayout
-    heading={company && company.name}
-    pageTitle={`${pageTitle} - ${company && company.name} - Companies`}
-    breadcrumbs={buildCompanyBreadcrumbs(breadcrumbs, company.id, company.name)}
-    useReactRouter={false}
-    localHeaderChildren={
-      company && (
-        <CompanyLocalHeaderNew company={company} returnUrl={returnUrl} />
-      )
-    }
-  >
-    <CompanyTabbedLocalNavigation company={company} />
-    {isInvestment && (
-      <CompanyInvestmentSubNavigation companyId={company.id} isLCP={isLCP} />
-    )}
-    <GridRow>
-      <GridCol>{children}</GridCol>
-    </GridRow>
-  </DefaultLayout>
+  <>
+    <CompanyLocalHeader
+      breadcrumbs={breadcrumbs}
+      flashMessages={flashMessages}
+      company={company}
+      returnUrl={returnUrl}
+    />
+    <Main>
+      <CompanyTabbedLocalNavigation company={company} />
+      {isInvestment && (
+        <CompanyInvestmentSubNavigation companyId={company.id} isLCP={isLCP} />
+      )}
+      <GridRow>
+        <GridCol>{children}</GridCol>
+      </GridRow>
+    </Main>
+  </>
 )
 
 CompanyLayoutNew.propTypes = {
