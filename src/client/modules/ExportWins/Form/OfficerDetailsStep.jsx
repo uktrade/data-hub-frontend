@@ -38,7 +38,7 @@ const OfficerDetailsStep = () => {
               : null
       }
     >
-      <H3>Officer details</H3>
+      <H3 data-test="step-heading">Officer details</H3>
       <FieldAdvisersTypeahead
         name="lead_officer"
         label="Lead officer name"
@@ -46,7 +46,7 @@ const OfficerDetailsStep = () => {
       />
       <ResourceOptionsField
         name="team_type"
-        id={`officer-team-type`}
+        id="team-type"
         resource={TeamTypeResource}
         field={FieldTypeahead}
         fullWidth={true}
