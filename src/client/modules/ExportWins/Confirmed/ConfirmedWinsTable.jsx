@@ -60,7 +60,7 @@ export const ExportWinsTable = ({ exportWins }) => (
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="unconfirmed-export-wins"
+    id="confirmed-export-wins"
     payload={{ filter: 'confirmed' }}
   >
     {(page) => <ExportWinsTable exportWins={page} />}
