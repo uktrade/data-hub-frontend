@@ -1,28 +1,45 @@
 import React from 'react'
 
 import AddExportWinForm from '../../../../../src/client/modules/ExportWins/Form/AddExportWinForm'
+import { clickContinueButton } from '../../../../functional/cypress/support/actions'
+import {
+  assertFieldError,
+  assertErrorSummary,
+  assertFieldTypeahead,
+} from '../../../../functional/cypress/support/assertions'
 import DataHubProvider from '../provider'
 
-const typeahead = '[data-test="typeahead-input"]'
+const TEAM_TYPES = [
+  {
+    label: 'Trade (TD or ST)',
+    value: 'a4839e09-e30e-492c-93b5-8ab2ef90b891',
+  },
+  {
+    label: 'Investment (ITFG or IG)',
+    value: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
+  },
+  {
+    label: 'DSO',
+    value: 'c2d215e2-d564-4c50-b209-ec838eef761d',
+  },
+]
 
-const Component = (props) => {
-  return (
-    <DataHubProvider
-      resetTasks={true}
-      tasks={{
-        TASK_GET_EXPORT_PROJECT: () => {},
-        TASK_GET_REMINDER_SUMMARY: () => {},
-        Company: () => ({ name: 'Company Ltd' }),
-        TeamType: () => [],
-        HQTeamRegionOrPost: () => {},
-        TASK_GET_TYPEAHEAD_OPTIONS: () => [],
-        ...props.tasks,
-      }}
-    >
-      <AddExportWinForm {...props} />
-    </DataHubProvider>
-  )
-}
+const Component = (props) => (
+  <DataHubProvider
+    resetTasks={true}
+    tasks={{
+      TASK_GET_EXPORT_PROJECT: () => {},
+      TASK_GET_REMINDER_SUMMARY: () => {},
+      Company: () => ({ name: 'Company Ltd' }),
+      TeamType: () => [],
+      HQTeamRegionOrPost: () => {},
+      TASK_GET_TYPEAHEAD_OPTIONS: () => [],
+      ...props.tasks,
+    }}
+  >
+    <AddExportWinForm {...props} />
+  </DataHubProvider>
+)
 
 describe('Add Export Win', () => {
   context('Default Layout', () => {
@@ -45,61 +62,51 @@ describe('Add Export Win', () => {
     it('should render Lead Officer label and a Typeahead', () => {
       const leadOfficer = '[data-test="field-lead_officer"]'
       cy.mount(<Component />)
-      cy.get(leadOfficer).as('leadOfficer')
-      cy.get('@leadOfficer')
-        .find('label')
-        .should('have.text', 'Lead officer name')
-      cy.get('@leadOfficer').find(typeahead).should('exist')
+      cy.get(leadOfficer).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Lead officer name',
+        })
+      })
     })
 
-    it('should render HQ Team after a user has selected a Team type', () => {
+    it('should render HQ Team after a user has selected a Team Type', () => {
       const teamType = '[data-test="field-team_type"]'
       const hqTeam = '[data-test="field-hq_team"]'
       cy.mount(
-        <Component
-          tasks={{
-            TASK_GET_TYPEAHEAD_OPTIONS: () => [
-              {
-                label: 'Trade (TD or ST)',
-                value: 'a4839e09-e30e-492c-93b5-8ab2ef90b891',
-              },
-              {
-                label: 'Investment (ITFG or IG)',
-                value: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
-              },
-              {
-                label: 'DSO',
-                value: 'c2d215e2-d564-4c50-b209-ec838eef761d',
-              },
-            ],
-          }}
-        />
+        <Component tasks={{ TASK_GET_TYPEAHEAD_OPTIONS: () => TEAM_TYPES }} />
       )
-      cy.get(teamType).as('teamType')
-      cy.get(teamType).find('input').as('teamTypeInput')
       // The HQ Team field is not visible until a team has been selected
       cy.get(hqTeam).should('not.exist')
-      cy.get('@teamType').find('label').should('have.text', 'Team type')
-      cy.get('@teamType').find(typeahead).should('exist')
+      cy.get(teamType).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Team type',
+        })
+      })
+      cy.get(teamType).find('input').as('teamTypeInput')
       cy.get('@teamTypeInput').type('Inv')
       cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
-      // Now the user has selected a team the HQ Team field will be visible
+      // Now the user has selected a team the HQ Team field is visible
       cy.get(hqTeam).should('exist')
-      cy.get(hqTeam)
-        .find('label')
-        .should('have.text', 'HQ team, region or post')
-      cy.get(hqTeam).find(typeahead).should('exist')
+      cy.get(hqTeam).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'HQ team, region or post',
+        })
+      })
     })
 
-    it('should render Team Members label and a Typeahead', () => {
+    it('should render a Team Members Typeahead and hint text', () => {
       const teamMembers = '[data-test="field-team_members"]'
       const hintText = '[data-test="hint-text"]'
       cy.mount(<Component />)
-      cy.get(teamMembers).as('teamMembers')
-      cy.get('@teamMembers')
-        .find('label')
-        .should('have.text', 'Team members (optional)')
-      cy.get('@teamMembers').find(typeahead).should('exist')
+      cy.get(teamMembers).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Team members (optional)',
+        })
+      })
       cy.get(hintText).should(
         'have.text',
         'You can add up to 5 team members. They will be notified when this win is updated.'
@@ -110,6 +117,29 @@ describe('Add Export Win', () => {
       const continueButton = '[data-test="continue"]'
       cy.mount(<Component />)
       cy.get(continueButton).should('have.text', 'Continue')
+    })
+
+    it('should display validation error messages on mandatory fields', () => {
+      const teamType = '[data-test="field-team_type"]'
+      const leadOfficer = '[data-test="field-lead_officer"]'
+      const hqTeam = '[data-test="field-hq_team"]'
+      cy.mount(
+        <Component tasks={{ TASK_GET_TYPEAHEAD_OPTIONS: () => TEAM_TYPES }} />
+      )
+      clickContinueButton()
+      assertErrorSummary(['Enter a lead officer', 'Select a team type'])
+      assertFieldError(cy.get(leadOfficer), 'Enter a lead officer', false)
+      assertFieldError(cy.get(teamType), 'Select a team type', false)
+      // Select a team to reveal the HQ Team field
+      cy.get(teamType).find('input').as('teamTypeInput')
+      cy.get('@teamTypeInput').type('Inv')
+      cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
+      clickContinueButton()
+      assertErrorSummary([
+        'Enter a lead officer',
+        'Select HQ team, region or post',
+      ])
+      assertFieldError(cy.get(hqTeam), 'Select HQ team, region or post', false)
     })
   })
 })
