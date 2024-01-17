@@ -43,8 +43,8 @@ const SupportGivenStep = () => (
         value?.length === 0
           ? 'Choose a support type'
           : value?.length > 5
-          ? 'Choose a maximum of 5 types of support'
-          : null
+            ? 'Choose a maximum of 5 types of support'
+            : null
       }
     />
     <ResourceOptionsField
@@ -62,8 +62,8 @@ const SupportGivenStep = () => (
         value?.length === 0
           ? 'Choose a DBT campaign or event'
           : value?.length > 5
-          ? 'Choose a maximum of 5 DBT campaigns or events'
-          : null
+            ? 'Choose a maximum of 5 DBT campaigns or events'
+            : null
       }
     />
     <FieldCheckboxes

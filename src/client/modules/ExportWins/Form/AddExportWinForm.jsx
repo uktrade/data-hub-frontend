@@ -37,8 +37,8 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
   const initialValuesTaskName = queryParams.export
     ? TASK_GET_EXPORT_PROJECT
     : queryParams.exportwin
-    ? TASK_GET_EXPORT_WIN
-    : null
+      ? TASK_GET_EXPORT_WIN
+      : null
 
   return (
     <DefaultLayout
