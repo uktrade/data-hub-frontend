@@ -213,6 +213,8 @@ module.exports = {
       index: url('/exportwins'),
       create: url('/exportwins/create'),
       details: url('/exportwins', '/:winId/details'),
+      edit: url('/exportwins', '/:winId/edit'),
+      customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
       confirmed: url('/exportwins/confirmed'),
       unconfirmed: url('/exportwins/unconfirmed'),
     },
