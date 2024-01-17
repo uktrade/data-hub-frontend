@@ -100,6 +100,16 @@ const PaginatedResource = multiInstance({
               const task = getTask(name, id)
               return (
                 <>
+                  <Task.StartOnRender
+                    name={name}
+                    id={id}
+                    payload={{
+                      ...payload,
+                      limit: pageSize,
+                      offset: (routePage - 1) * pageSize,
+                    }}
+                    onSuccessDispatch={PAGINATED_RESOURCE__ON_SUCCESS}
+                  />
                   {currentPage && (
                     <Redirect
                       to={{
@@ -138,18 +148,7 @@ const PaginatedResource = multiInstance({
                       />
                     </LoadingBox>
                   ) : (
-                    <Task.Status
-                      name={name}
-                      id={id}
-                      startOnRender={{
-                        payload: {
-                          ...payload,
-                          limit: pageSize,
-                          offset: (routePage - 1) * pageSize,
-                        },
-                        onSuccessDispatch: PAGINATED_RESOURCE__ON_SUCCESS,
-                      }}
-                    />
+                    <Task.Status name={name} id={id} />
                   )}
                 </>
               )
