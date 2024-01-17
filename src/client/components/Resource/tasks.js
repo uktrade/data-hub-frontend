@@ -21,6 +21,7 @@ import Interaction from './Interaction'
 import Event from './Event'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
+import ExportWin from './ExportWin'
 import ExportWins from './ExportWins'
 import Sector from './Sector'
 import Export from './Export'
@@ -119,6 +120,7 @@ export default {
   ...ExportExperienceCategories.tasks,
   ...Event.tasks,
   ...ExportYears.tasks,
+  ...ExportWin.tasks,
   ...ExportWins.tasks,
   ...Sector.tasks,
   ...Export.tasks,
