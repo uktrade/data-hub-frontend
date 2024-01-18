@@ -18,20 +18,20 @@ RUN apt-get install -y \
 
 # Install dockerize
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+  && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+  && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Install Cypress dependencies
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   libgtk2.0-0 \
+  libgtk-3-0 \
+  libgbm-dev \
   libnotify-dev \
-  libgconf-2-4 \
   libnss3 \
   libxss1 \
   libasound2 \
-  libpng-dev \
-  zlib1g-dev  \
+  libxtst6 \
+  xauth \
   xvfb
 
 # Install visual test dependencies
@@ -64,7 +64,7 @@ ENV npm_config_prefix=$HOME/.local
 
 COPY --chown=1000:1000 package.json .
 COPY --chown=1000:1000 package-lock.json .
-RUN npm install -g cypress@11.2.0
+RUN npm install -g cypress@12.17.4
 RUN cypress verify
 
 RUN cypress cache path
