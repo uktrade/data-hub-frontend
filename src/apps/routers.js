@@ -113,6 +113,7 @@ const reactRoutes = [
   '/companies/:companyId/business-details',
   '/companies/:companyId/hierarchies/ghq/:globalHqId/add',
   '/companies/:companyId/hierarchies/ghq/remove',
+  '/companies/:companyId/activity',
 ]
 
 reactRoutes.forEach((path) => {

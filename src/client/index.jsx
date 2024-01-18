@@ -11,7 +11,6 @@ import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrap
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
-import CompanyActivityCollection from './components/ActivityFeed/CollectionList'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
@@ -150,14 +149,6 @@ function App() {
         <Mount selector="#find-company">
           {(props) => (
             <FindCompany csrfToken={globalProps.csrfToken} {...props} />
-          )}
-        </Mount>
-        <Mount selector="#activity-feed-app">
-          {(props) => (
-            <CompanyActivityCollection
-              companyInteractionsTab={true}
-              {...props}
-            />
           )}
         </Mount>
         <Mount selector="#dashboard">

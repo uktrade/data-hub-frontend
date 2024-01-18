@@ -33,40 +33,6 @@ const {
 } = require('./transformers')
 const dataHubCompanyActivityQuery = require('./es-queries/data-hub-company-activity-query')
 
-async function renderActivityFeed(req, res, next) {
-  const { company, dnbHierarchyCount, dnbRelatedCompaniesCount } = res.locals
-
-  res.locals.title = `Activities - ${company.name} - Companies`
-
-  try {
-    const contentProps = company.archived
-      ? {
-          companyId: company.id,
-          flashMessages: res.locals.getMessages(),
-          localNavItems: res.locals.localNavItems,
-          company,
-        }
-      : {
-          companyId: company.id,
-          flashMessages: res.locals.getMessages(),
-          isOverview: false,
-          localNavItems: res.locals.localNavItems,
-          dnbHierarchyCount,
-          dnbRelatedCompaniesCount,
-          company,
-        }
-
-    const props = {
-      ...contentProps,
-      apiEndpoint: urls.companies.activity.data(company.id),
-    }
-
-    res.render('companies/apps/activity-feed/views/client-container', { props })
-  } catch (error) {
-    next(error)
-  }
-}
-
 function getContactFromEmailAddress(emailAddress, contacts) {
   const contact = contacts.find((contact) => contact.email === emailAddress)
   return contact
@@ -674,7 +640,6 @@ async function fetchAllActivityFeedEvents(req, res, next) {
 }
 
 module.exports = {
-  renderActivityFeed,
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
   fetchAventriEvent,
