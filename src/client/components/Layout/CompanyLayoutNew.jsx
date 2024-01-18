@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
-import { CompanyTabbedLocalNavigation, Main } from '..'
+import { CompanyLocalHeader, CompanyTabbedLocalNavigation, Main } from '..'
 import CompanyInvestmentSubNavigation from '../CompanyTabbedLocalNavigation/CompanyInvestmentTab'
-import CompanyLocalHeader from '../CompanyLocalHeader'
 
 const CompanyLayoutNew = ({
   company,
