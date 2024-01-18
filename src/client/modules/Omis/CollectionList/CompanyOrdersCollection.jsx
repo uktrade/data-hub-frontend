@@ -5,6 +5,7 @@ import { Link, Details } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
+import { useParams } from 'react-router-dom'
 
 import { ORDERS__LOADED } from '../../../actions'
 
@@ -12,6 +13,7 @@ import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
+import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 import {
   companyOrdersState2props,
@@ -34,13 +36,13 @@ const StyledLinkHeader = styled(StyledHeader)`
 `
 
 const CompanyOrdersCollection = ({
-  companyId,
   payload,
   optionMetadata,
   selectedFilters,
-  returnUrl,
   ...props
 }) => {
+  const { companyId } = useParams()
+
   const collectionListTask = {
     name: TASK_GET_ORDERS_LIST,
     id: COMPANY_ORDERS_LIST_ID,
@@ -64,44 +66,46 @@ const CompanyOrdersCollection = ({
   )
 
   return (
-    <CompanyResource id={companyId}>
-      {(company) => (
-        <CompanyLayout
-          company={company}
-          breadcrumbs={[{ text: 'Orders (OMIS)' }]}
-          returnUrl={returnUrl}
-        >
-          {company.archived ? (
-            <Details
-              summary="Why can I not add an order?"
-              data-test="archived-details"
-            >
-              Orders cannot be added to an archived company.{' '}
-              <Link href={`/companies/${company.id}/unarchive`}>
-                Click here to unarchive
-              </Link>
-            </Details>
-          ) : null}
-          <FilteredCollectionList
-            {...props}
-            collectionName="order"
-            sortOptions={optionMetadata.sortOptions}
-            taskProps={collectionListTask}
-            selectedFilters={selectedFilters}
-            addItemUrl={
-              company.archived ? null : urls.omis.create.form(company.id)
-            }
-            entityName="order"
-            entityNamePlural="orders"
-            titleRenderer={TitleRenderer}
-            defaultQueryParams={{
-              page: 1,
-              sortby: 'created_on:desc',
-            }}
-          />
-        </CompanyLayout>
-      )}
-    </CompanyResource>
+    <DefaultLayoutBase>
+      <CompanyResource id={companyId}>
+        {(company) => (
+          <CompanyLayout
+            company={company}
+            breadcrumbs={[{ text: 'Orders (OMIS)' }]}
+            pageTitle="Orders"
+          >
+            {company.archived ? (
+              <Details
+                summary="Why can I not add an order?"
+                data-test="archived-details"
+              >
+                Orders cannot be added to an archived company.{' '}
+                <Link href={`/companies/${company.id}/unarchive`}>
+                  Click here to unarchive
+                </Link>
+              </Details>
+            ) : null}
+            <FilteredCollectionList
+              {...props}
+              collectionName="order"
+              sortOptions={optionMetadata.sortOptions}
+              taskProps={collectionListTask}
+              selectedFilters={selectedFilters}
+              addItemUrl={
+                company.archived ? null : urls.omis.create.form(company.id)
+              }
+              entityName="order"
+              entityNamePlural="orders"
+              titleRenderer={TitleRenderer}
+              defaultQueryParams={{
+                page: 1,
+                sortby: 'created_on:desc',
+              }}
+            />
+          </CompanyLayout>
+        )}
+      </CompanyResource>
+    </DefaultLayoutBase>
   )
 }
 

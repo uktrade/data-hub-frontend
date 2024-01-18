@@ -28,7 +28,6 @@ import InteractionReferralDetails from './modules/Interactions/InteractionDetail
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
-import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
@@ -231,9 +230,6 @@ function App() {
               flashMessage={props.flashMessage}
             />
           )}
-        </Mount>
-        <Mount selector="#company-orders-collection">
-          {(props) => <CompanyOrdersCollection {...props} />}
         </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}

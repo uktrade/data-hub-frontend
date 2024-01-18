@@ -115,6 +115,7 @@ const reactRoutes = [
   '/companies/:companyId/hierarchies/ghq/remove',
   '/companies/:companyId/activity',
   '/companies/:companyId/contacts',
+  '/companies/:companyId/orders',
 ]
 
 reactRoutes.forEach((path) => {
