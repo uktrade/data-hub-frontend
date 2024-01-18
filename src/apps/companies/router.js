@@ -14,7 +14,6 @@ const { renderDetails } = require('./controllers/details')
 
 const { renderOrders } = require('./controllers/orders')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
-const { renderContacts } = require('./controllers/contacts')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 
 const {
@@ -82,8 +81,6 @@ router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
-
-router.get(urls.companies.contacts.route, setReturnUrl, renderContacts)
 
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.use(
