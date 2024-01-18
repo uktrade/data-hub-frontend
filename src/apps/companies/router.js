@@ -12,7 +12,6 @@ const {
 
 const { renderDetails } = require('./controllers/details')
 
-const { renderOrders } = require('./controllers/orders')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 
@@ -82,7 +81,6 @@ router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.use(
   urls.companies.investments.companyInvestment.route,
   setReturnUrl,

@@ -87,6 +87,7 @@ import SetGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ
 import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/RemoveGlobalHQ'
 import CompanyActivityCollection from './components/ActivityFeed/CollectionList/index'
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
+import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
 
 const routes = {
   companies: [
@@ -199,6 +200,11 @@ const routes = {
       path: '/companies/:companyId/contacts',
       module: 'datahub:companies',
       component: CompanyContactsCollection,
+    },
+    {
+      path: '/companies/:companyId/orders',
+      module: 'datahub:companies',
+      component: CompanyOrdersCollection,
     },
   ],
   contacts: [

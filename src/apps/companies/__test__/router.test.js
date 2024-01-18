@@ -10,7 +10,6 @@ describe('Company router', () => {
       '/:companyId',
       '/:companyId/details',
       '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add',
-      '/:companyId/orders',
       '/:companyId/manage-company-list',
       '/:companyId/subsidiaries',
     ])
