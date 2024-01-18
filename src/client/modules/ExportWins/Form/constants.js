@@ -6,3 +6,48 @@ export const steps = {
   SUPPORT_PROVIDED: 'support_provided',
   CHECK_BEFORE_SENDING: 'check_before_sending',
 }
+
+// Win Types
+export const winTypeId = {
+  EXPORT: 'cecb1f61-abd2-4715-a0c9-b196b52671d9',
+  BUSINESS_SUCCESS: '07fbb895-8e04-48f8-bedb-f7054dbdb85f',
+  ODI: '833e7aad-912b-4b93-89b4-64b05222c958',
+}
+
+export const winTypes = {
+  EXPORT: 'export_win',
+  BUSINESS_SUCCESS: 'business_success_win',
+  ODI: 'odi_win',
+}
+
+export const winTypeIdToWinTypeMap = {
+  [winTypeId.EXPORT]: winTypes.EXPORT,
+  [winTypeId.BUSINESS_SUCCESS]: winTypes.BUSINESS_SUCCESS,
+  [winTypeId.ODI]: winTypes.ODI,
+}
+
+export const winTypeOptions = [
+  { label: 'Export', value: winTypes.EXPORT },
+  { label: 'Business success', value: winTypes.BUSINESS_SUCCESS },
+  { label: 'Outward Direct Investment (ODI)', value: winTypes.ODI },
+]
+
+//  Goods and Services
+export const GOODS_ID = '456e951d-a633-4f21-afde-d41381407efe'
+export const SERVICES_ID = '9b65391a-0359-44c2-b020-a710fb29211f'
+const GOODS_AND_SERVICES_ID = '8711e3dd-3a2c-4b47-aea7-9a53c135efb6'
+
+export const goodsServicesOptions = [
+  { label: 'Goods', value: GOODS_ID },
+  { label: 'Services', value: SERVICES_ID },
+]
+
+export const goodsServicesIdToLabelMap = {
+  [GOODS_ID]: 'Goods',
+  [SERVICES_ID]: 'Services',
+}
+
+export const bothGoodsAndServices = {
+  label: 'Both goods and services',
+  value: GOODS_AND_SERVICES_ID,
+}

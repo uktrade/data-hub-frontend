@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useFormContext } from '../../../../client/components/Form/hooks'
+import { useFormContext } from '../../../components/Form/hooks'
 import { Step } from '../../../components'
 import { steps } from './constants'
 

@@ -1,32 +1,48 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
 import LoadingBox from '@govuk-react/loading-box'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
+import { DefaultLayout, Form, FormLayout } from '../../../components'
 import { CompanyResource } from '../../../components/Resource'
-import { DefaultLayout, Form } from '../../../components'
+import { transformFormValuesForAPI } from './transformers'
+import urls from '../../../../lib/urls'
+import {
+  state2props,
+  TASK_GET_EXPORT_WIN,
+  TASK_GET_EXPORT_PROJECT,
+  TASK_GET_EXPORT_WINS_SAVE_FORM,
+} from './state'
 import OfficerDetailsStep from './OfficerDetailsStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
-import SupportProvidedStep from './SupportProvidedStep'
+import SupportGivenStep from './SupportGivenStep'
 import CheckBeforeSendingStep from './CheckBeforeSending'
-import urls from '../../../../lib/urls'
 
 const StyledLoadingBox = styled(LoadingBox)({
-  height: SPACING.SCALE_5,
+  height: 16,
+  width: SPACING.SCALE_5,
 })
 
-const AddExportWinForm = () => {
+const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
+  const company = queryParams.company
+  const stepProps = { isEditing }
+
+  const initialValuesTaskName = queryParams.export
+    ? TASK_GET_EXPORT_PROJECT
+    : queryParams.exportwin
+      ? TASK_GET_EXPORT_WIN
+      : null
 
   return (
     <DefaultLayout
-      heading="Add export win"
+      heading={`${isEditing ? 'Edit' : 'Add'} export win`}
       subheading={
         <CompanyResource
           taskStatusProps={{
@@ -36,35 +52,51 @@ const AddExportWinForm = () => {
           }}
           id={queryParams.company}
         >
-          {(company) => company.name}
+          {(company) => company.name.toUpperCase()}
         </CompanyResource>
       }
       pageTitle="Add export win"
       breadcrumbs={[]}
     >
-      <Form
-        id="add-export-win"
-        showStepInUrl={true}
-        cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
-        redirectTo={() => urls.companies.exportWins.unconfirmed()}
-        analyticsFormName="addExportWin"
-        submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
-      >
-        {() => {
-          return (
-            <>
-              <OfficerDetailsStep />
-              <CreditForThisWinStep />
-              <CustomerDetailsStep />
-              <WinDetailsStep />
-              <SupportProvidedStep />
-              <CheckBeforeSendingStep />
-            </>
-          )
-        }}
-      </Form>
+      <FormLayout>
+        <Form
+          id="add-export-win"
+          showStepInUrl={true}
+          cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
+          redirectTo={() => urls.companies.exportWins.unconfirmed()}
+          analyticsFormName="addExportWin"
+          submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
+          initialValuesTaskName={initialValuesTaskName}
+          transformPayload={(values) => ({
+            exportWinId: queryParams.exportwin,
+            payload: {
+              ...transformFormValuesForAPI(values),
+              company,
+              _csrf: csrfToken,
+              adviser: currentAdviserId,
+            },
+          })}
+          initialValuesPayload={{
+            id: queryParams.export || queryParams.exportwin,
+          }}
+        >
+          {({ values }) => {
+            return (
+              <>
+                <OfficerDetailsStep {...stepProps} />
+                <CreditForThisWinStep {...stepProps} />
+                <CustomerDetailsStep {...stepProps} />
+                <WinDetailsStep {...stepProps} />
+                <SupportGivenStep {...stepProps} />
+                <CheckBeforeSendingStep {...stepProps} />
+                <pre>{JSON.stringify(values, null, 2)}</pre>
+              </>
+            )
+          }}
+        </Form>
+      </FormLayout>
     </DefaultLayout>
   )
 }
 
-export default AddExportWinForm
+export default connect(state2props)(AddExportWinForm)
