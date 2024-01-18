@@ -23,11 +23,10 @@ Prerequisite:
 
 Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container.
 
-
 ```bash
-export VERSION=2.0.4 # Increment this version each time when you edit Dockerfile.
+export VERSION=3.0.1 # Increment this version each time when you edit Dockerfile.
 
-docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies .
+docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
 docker tag data-hub-frontend-dependencies:latest gcr.io/sre-docker-registry/data-hub-frontend-dependencies:${VERSION}
 

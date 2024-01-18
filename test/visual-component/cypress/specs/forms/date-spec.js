@@ -1,5 +1,5 @@
 describe('Forms', () => {
-  before(() => {
+  beforeEach(() => {
     cy.viewport(2980, 2440)
   })
 
