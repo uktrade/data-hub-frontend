@@ -61,6 +61,7 @@ const StyledButtonWrapper = styled('div')`
 `
 const StyledFooterWrapper = styled('div')`
   margin-right: 10px;
+  text-align: right;
 `
 const CollectionItem = ({
   headingText,
