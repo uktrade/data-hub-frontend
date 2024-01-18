@@ -4,9 +4,12 @@ import PropTypes from 'prop-types'
 import camelCase from 'camelcase'
 import styled from 'styled-components'
 
-import { ActivityFeedApp, SummaryTable } from '../../../../components'
+import {
+  ActivityFeedApp,
+  ActivityFeedAction,
+  SummaryTable,
+} from '../../../../components'
 import { companies } from '../../../../../lib/urls'
-import CompanyActivityFeed from '../../../../../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import {
   StyledLastTableCell,
   StyledTableCell,
@@ -24,6 +27,19 @@ const ActivityStyledLink = styled(Link)`
     font-size: 16px;
   }
 `
+
+const activityActions = (companyId) => (
+  <>
+    <ActivityFeedAction
+      text="Refer this company"
+      link={companies.referrals.send(companyId)}
+    />
+    <ActivityFeedAction
+      text="Add interaction"
+      link={companies.interactions.create(companyId)}
+    />
+  </>
+)
 
 const ActivityCard = (props) => {
   const { company, numberOfItems, feedType } = props
@@ -45,7 +61,7 @@ const ActivityCard = (props) => {
       <StyledTableRow>
         <StyledTableCell colspan={2}>
           <ActivityFeedApp
-            actions={!company.archived && CompanyActivityFeed.actions}
+            actions={!company.archived && activityActions(company.id)}
             isGlobalUltimate={company.isGlobalUltimate}
             dnbHierarchyCount={0}
             apiEndpoint={companies.activity.data(company.id)}
