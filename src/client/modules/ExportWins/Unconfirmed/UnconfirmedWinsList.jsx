@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from 'govuk-react'
+import { Link } from 'react-router-dom/cjs/react-router-dom'
 
 import { CollectionItem } from '../../../components'
 import { formatMediumDate } from '../../../utils/date'
 import { currencyGBP } from '../../../utils/number-utils'
 import ExportWinsResource from '../../../components/Resource/ExportWins'
-
 import urls from '../../../../lib/urls'
 
 export default () => (
@@ -31,11 +31,12 @@ export default () => (
                 { label: 'Date modified', value: '???' },
               ]}
               buttons={
-                <div style={{ display: 'flex', gap: 10 }}>
-                  <Button as="a" href={`review/${item.id}`}>
-                    Review export win
-                  </Button>
-                </div>
+                <Button
+                  as={Link}
+                  to={urls.companies.exportWins.details(item.id)}
+                >
+                  Review export win
+                </Button>
               }
             />
           </li>
