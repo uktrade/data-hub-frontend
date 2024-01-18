@@ -93,27 +93,24 @@ const CollectionList = ({
               )
             )}
           </ol>
-          {taskProps && (
-            <Task.Status {...taskProps}>
-              {() =>
-                isComplete && (
-                  <>
-                    <ol>
-                      {results.map((item, i) => (
-                        <CollectionItem {...item} key={i} />
-                      ))}
-                    </ol>
-                    <Pagination
-                      totalPages={totalPages}
-                      onPageClick={onPageClick}
-                      activePage={activePage}
-                    />
-                  </>
-                )
-              }
-            </Task.Status>
-          )}
-          {/* )} */}
+          <Task.Status {...taskProps}>
+            {() =>
+              isComplete && (
+                <>
+                  <ol>
+                    {results.map((item, i) => (
+                      <CollectionItem {...item} key={i} />
+                    ))}
+                  </ol>
+                  <Pagination
+                    totalPages={totalPages}
+                    onPageClick={onPageClick}
+                    activePage={activePage}
+                  />
+                </>
+              )
+            }
+          </Task.Status>
         </article>
       </GridCol>
     </GridRow>

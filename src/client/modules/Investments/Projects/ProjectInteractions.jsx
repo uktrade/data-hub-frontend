@@ -12,6 +12,8 @@ import {
 } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import { INTERACTIONS__LOADED } from '../../../actions'
+import { TASK_GET_INTERACTIONS_LIST } from '../../Interactions/CollectionList/state'
 
 const ProjectInteractions = () => {
   const history = useHistory()
@@ -20,15 +22,25 @@ const ProjectInteractions = () => {
   const activePage = parseInt(parsedQueryString.page, 10) || 1
 
   const { projectId } = useParams()
+
+  const payload = {
+    investment_project_id: projectId,
+    limit: 10,
+    offset: activePage * 10 - 10,
+    sortby: parsedQueryString.sortby,
+  }
+
+  const collectionListTask = {
+    name: TASK_GET_INTERACTIONS_LIST,
+    id: projectId,
+    progressMessage: 'Loading interactions',
+    startOnRender: {
+      payload: payload,
+      onSuccessDispatch: INTERACTIONS__LOADED,
+    },
+  }
   return (
-    <InteractionCollectionResource
-      payload={{
-        investment_project_id: projectId,
-        limit: 10,
-        offset: activePage * 10 - 10,
-        sortby: parsedQueryString.sortby,
-      }}
-    >
+    <InteractionCollectionResource payload={payload}>
       {(_, count, rawData) => {
         const interactions = rawData.results.map(transformInteractionToListItem)
         const sortOptions = [
@@ -74,6 +86,7 @@ const ProjectInteractions = () => {
                       }),
                     })
                   }
+                  taskProps={collectionListTask}
                   activePage={activePage}
                   sortOptions={count ? sortOptions : null}
                   addItemUrl={urls.investments.projects.interactions.createType(
