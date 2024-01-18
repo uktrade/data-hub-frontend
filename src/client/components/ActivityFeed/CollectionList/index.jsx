@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
 import {
   COMPANY_ACTIVITIES__LOADED,
@@ -36,6 +37,7 @@ import { sanitizeFilter } from '../../../../client/filters'
 import Activity from '../Activity'
 
 import { CompanyResource } from '../../Resource'
+import DefaultLayoutBase from '../../Layout/DefaultLayoutBase'
 import CompanyLayout from '../../Layout/CompanyLayout'
 
 const FiltersCheckboxGroupWithNext = styled(Filters.CheckboxGroup)({
@@ -57,17 +59,16 @@ const collectionItemTemplateDefault = (activity) => {
 
 const CompanyActivityCollection = ({
   payload,
-  companyId,
   company,
   optionMetadata,
   selectedFilters,
   currentAdviserId,
   dnbHierarchyCount,
-  flashMessages,
-  returnUrl,
   ...props
 }) => {
-  const collectionListTask = {
+  const { companyId } = useParams()
+
+  const collectionListTask = (company) => ({
     name: TASK_GET_COMPANY_ACTIVITIES_LIST,
     id: ID,
     progressMessage: 'Loading interactions',
@@ -79,7 +80,8 @@ const CompanyActivityCollection = ({
       },
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
-  }
+  })
+
   const adviserListTask = {
     name: TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
     id: ID,
@@ -124,97 +126,98 @@ const CompanyActivityCollection = ({
   }
 
   return (
-    <CompanyResource id={companyId}>
-      {(company) => (
-        <CompanyLayout
-          company={company}
-          breadcrumbs={[{ text: 'Activity Feed' }]}
-          flashMessages={flashMessages}
-          returnUrl={returnUrl}
-        >
-          <FilteredCollectionList
-            {...props}
-            collectionName="activities"
-            sortOptions={optionMetadata.sortOptions}
-            taskProps={collectionListTask}
-            selectedFilters={selectedFilters}
-            entityName="companyActivities"
-            sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
-              ...sanitizeFilter(advisers),
-              ...sanitizeFilter(teams),
-            })}
-            collectionItemTemplate={collectionItemTemplateDefault}
+    <DefaultLayoutBase>
+      <CompanyResource id={companyId}>
+        {(company) => (
+          <CompanyLayout
+            company={company}
+            breadcrumbs={[{ text: 'Activity Feed' }]}
+            pageTitle="Activities"
           >
-            <CollectionFilters taskProps={collectionListMetadataTask}>
-              <FiltersCheckboxGroupWithNext
-                legend={LABELS.createdBy}
-                name="my_interactions"
-                qsParam="ditParticipantsAdviser"
-                options={[myInteractionsOption]}
-                selectedOptions={
-                  createdByMeSelected ? [myInteractionsOption] : []
-                }
-                data-test="my-interactions-filter"
-              />
-              <FiltersCheckboxGroupHiddenLegend
-                legend={LABELS.createdBy}
-                name="created_by_others"
-                qsParam="createdByOthers"
-                options={[createdByOthersOption]}
-                selectedOptions={selectedFilters.createdByOthers.options}
-                data-test="created-by-others-filter"
-              />
-              <Filters.Date
-                label={LABELS.dateAfter}
-                name="date_after"
-                qsParamName="dateAfter"
-                data-test="date-after-filter"
-              />
-              <Filters.Date
-                label={LABELS.dateBefore}
-                name="date_before"
-                qsParamName="dateBefore"
-                data-test="date-before-filter"
-              />
-              {dnbHierarchyCount > 0 && (
-                <Filters.RelatedCompaniesCheckboxGroup
-                  company={company}
-                  selectedOptions={
-                    selectedFilters.includeRelatedCompanies.options
-                  }
-                />
-              )}
-              <FilterToggleSection
-                id="CompanyActivityCollection.interaction-details-filters"
-                label="Interaction details"
-                isOpen={true}
-              >
-                <Filters.AdvisersTypeahead
-                  taskProps={adviserListTask}
-                  isMulti={true}
-                  onlyShowActiveAdvisers={false}
-                  label={LABELS.advisers}
-                  name="advisers"
+            <FilteredCollectionList
+              {...props}
+              collectionName="activities"
+              sortOptions={optionMetadata.sortOptions}
+              taskProps={collectionListTask(company)}
+              selectedFilters={selectedFilters}
+              entityName="companyActivities"
+              sanitizeFiltersForAnalytics={({ advisers, teams }) => ({
+                ...sanitizeFilter(advisers),
+                ...sanitizeFilter(teams),
+              })}
+              collectionItemTemplate={collectionItemTemplateDefault}
+            >
+              <CollectionFilters taskProps={collectionListMetadataTask}>
+                <FiltersCheckboxGroupWithNext
+                  legend={LABELS.createdBy}
+                  name="my_interactions"
                   qsParam="ditParticipantsAdviser"
-                  placeholder="Search adviser"
-                  noOptionsMessage="No advisers found"
-                  selectedOptions={selectedFilters.advisers.options}
-                  data-test="adviser-filter"
+                  options={[myInteractionsOption]}
+                  selectedOptions={
+                    createdByMeSelected ? [myInteractionsOption] : []
+                  }
+                  data-test="my-interactions-filter"
                 />
-              </FilterToggleSection>
-              <Filters.CheckboxGroup
-                legend={LABELS.activityType}
-                name="activityType"
-                qsParam="activityType"
-                options={ACTIVITY_TYPE_OPTIONS}
-                selectedOptions={selectedFilters.activityType.options}
-                data-test="activity-type-filter"
-              />
-            </CollectionFilters>
-          </FilteredCollectionList>
-        </CompanyLayout>
-      )}
-    </CompanyResource>
+                <FiltersCheckboxGroupHiddenLegend
+                  legend={LABELS.createdBy}
+                  name="created_by_others"
+                  qsParam="createdByOthers"
+                  options={[createdByOthersOption]}
+                  selectedOptions={selectedFilters.createdByOthers.options}
+                  data-test="created-by-others-filter"
+                />
+                <Filters.Date
+                  label={LABELS.dateAfter}
+                  name="date_after"
+                  qsParamName="dateAfter"
+                  data-test="date-after-filter"
+                />
+                <Filters.Date
+                  label={LABELS.dateBefore}
+                  name="date_before"
+                  qsParamName="dateBefore"
+                  data-test="date-before-filter"
+                />
+                {dnbHierarchyCount > 0 && (
+                  <Filters.RelatedCompaniesCheckboxGroup
+                    company={company}
+                    selectedOptions={
+                      selectedFilters.includeRelatedCompanies.options
+                    }
+                  />
+                )}
+                <FilterToggleSection
+                  id="CompanyActivityCollection.interaction-details-filters"
+                  label="Interaction details"
+                  isOpen={true}
+                >
+                  <Filters.AdvisersTypeahead
+                    taskProps={adviserListTask}
+                    isMulti={true}
+                    onlyShowActiveAdvisers={false}
+                    label={LABELS.advisers}
+                    name="advisers"
+                    qsParam="ditParticipantsAdviser"
+                    placeholder="Search adviser"
+                    noOptionsMessage="No advisers found"
+                    selectedOptions={selectedFilters.advisers.options}
+                    data-test="adviser-filter"
+                  />
+                </FilterToggleSection>
+                <Filters.CheckboxGroup
+                  legend={LABELS.activityType}
+                  name="activityType"
+                  qsParam="activityType"
+                  options={ACTIVITY_TYPE_OPTIONS}
+                  selectedOptions={selectedFilters.activityType.options}
+                  data-test="activity-type-filter"
+                />
+              </CollectionFilters>
+            </FilteredCollectionList>
+          </CompanyLayout>
+        )}
+      </CompanyResource>
+    </DefaultLayoutBase>
   )
 }
 
