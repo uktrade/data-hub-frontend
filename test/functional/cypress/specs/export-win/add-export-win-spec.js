@@ -172,8 +172,14 @@ describe('Adding an export win', () => {
           optionsCount: 2,
         })
       })
-      cy.get('[data-test="credit-for-win-yes"]').should('not.be.checked')
-      cy.get('[data-test="credit-for-win-no"]').should('not.be.checked')
+      cy.get('[data-test="credit-for-win-yes"]')
+        .should('not.be.checked')
+        .parent()
+        .should('have.text', 'Yes')
+      cy.get('[data-test="credit-for-win-no"]')
+        .should('not.be.checked')
+        .parent()
+        .should('have.text', 'No')
     })
 
     it('should go to the next step when selecting "No" and then "Continue"', () => {
@@ -260,7 +266,7 @@ describe('Adding an export win', () => {
       )
     })
 
-    it('should complete this step and continue to "Credit for this win"', () => {
+    it('should complete this step and continue to "Customer details"', () => {
       const contributingOfficer = '[data-test="field-contributing_officer_0"]'
       const teamType = '[data-test="field-team_type_0"]'
       const hqTeam = '[data-test="field-hq_team_0"]'
