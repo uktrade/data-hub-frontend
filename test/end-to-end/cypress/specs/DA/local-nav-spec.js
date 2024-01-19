@@ -29,7 +29,7 @@ describe('DA Permission', () => {
   })
 
   describe('dashboard', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.dashboard.investmentProjects())
     })
 

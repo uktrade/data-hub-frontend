@@ -88,8 +88,7 @@ describe('Creating an investment project', () => {
       cy.loadFixture([contact])
       cy.visit(companies.investments.companyInvestment(company.pk))
     })
-
-    it('should create an FDI project', () => {
+    it('should create an FDI project and add value to an investment project', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
@@ -120,9 +119,7 @@ describe('Creating an investment project', () => {
           'Specific investment programme': data.specificInvestmentProgramme,
         },
       })
-    })
 
-    it('should add value to an investment project', () => {
       cy.contains('Add value').click()
       cy.get(selectors.investment.value.totalInvestmentRadioYes).click()
       cy.get(selectors.investment.value.totalInvestment).type('100000')
@@ -165,7 +162,7 @@ describe('Creating an investment project', () => {
       cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
-    it('should create a Non-FDI project', () => {
+    it('should create a Non-FDI project and add value to an investment project when user selects no value', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.nonFdiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
@@ -193,9 +190,7 @@ describe('Creating an investment project', () => {
           'Specific investment programme': data.specificInvestmentProgramme,
         },
       })
-    })
 
-    it('should add value to an investment project when user selects no value', () => {
       cy.contains('Add value').click()
       cy.get(selectors.investment.value.totalInvestmentRadioNo).click()
       cy.get(selectors.investment.value.foreignEquityInvestmentRadioNo).click()
@@ -235,7 +230,7 @@ describe('Creating an investment project', () => {
       cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
-    it('should create a commitment to investment project', () => {
+    it('should create a commitment to investment project and change the project status', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.ctiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
@@ -264,9 +259,7 @@ describe('Creating an investment project', () => {
           'Specific investment programme': data.specificInvestmentProgramme,
         },
       })
-    })
 
-    it('should change the project status', () => {
       cy.contains('change').click()
 
       cy.get('[data-test="field-status"]').then((element) => {
