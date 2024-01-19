@@ -1,0 +1,17 @@
+[
+  {
+    "id": "0e6f1d69-e9c3-4460-a74b-3881930fe3e9",
+    "name": "The company is an exporter with High Export Potential",
+    "disabled_on": null
+  },
+  {
+    "id": "e4d74957-60a4-4eab-a17b-d4c7b792ad25",
+    "name": "The company is a Medium Sized Business",
+    "disabled_on": null
+  },
+  {
+    "id": "97f5e000-37a6-4452-b2be-25ccc94e5bd3",
+    "name": "The company is not an exporter with High Export Potential or a Medium Sized Business",
+    "disabled_on": null
+  }
+]
