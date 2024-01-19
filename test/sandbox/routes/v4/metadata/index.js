@@ -33,6 +33,7 @@ import headquarterType from '../../../fixtures/v4/metadata/headquarter-type.json
 import service from '../../../fixtures/v4/metadata/service.json' assert { type: 'json' }
 import communicationChannel from '../../../fixtures/v4/metadata/communication-channel.json' assert { type: 'json' }
 import team from '../../../fixtures/v4/metadata/team.json' assert { type: 'json' }
+import teamType from '../../../fixtures/v4/metadata/team-type.json' assert { type: 'json' }
 import policyArea from '../../../fixtures/v4/metadata/policy-area.json' assert { type: 'json' }
 import policyIssueType from '../../../fixtures/v4/metadata/policy-issue-type.json' assert { type: 'json' }
 import exportBarrier from '../../../fixtures/v4/metadata/export-barrier.json' assert { type: 'json' }
@@ -198,6 +199,10 @@ export const getCommunicationChannel = function (req, res) {
 
 export const getTeam = function (req, res) {
   res.json(team)
+}
+
+export const getTeamType = function (req, res) {
+  res.json(teamType)
 }
 
 export const getPolicyArea = function (req, res) {
