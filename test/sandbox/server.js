@@ -218,6 +218,7 @@ import {
   getService as _service,
   getCommunicationChannel as _communicationChannel,
   getTeam as _team,
+  getTeamType as _teamType,
   getPolicyArea as _policyArea,
   getPolicyIssueType as _policyIssueType,
   getExportBarrier,
@@ -395,6 +396,7 @@ app.get(
 app.get('/metadata/one-list-tier/', getOneListTier)
 
 // V4 Metadata endpoints
+app.get('/v4/metadata/team-type/', _teamType)
 app.get('/v4/metadata/likelihood-to-land', _likelihoodToLand)
 app.get('/v4/metadata/export-experience-category', _exportExperienceCategory)
 app.get('/v4/metadata/investment-investor-type', _investmentInvestorType)

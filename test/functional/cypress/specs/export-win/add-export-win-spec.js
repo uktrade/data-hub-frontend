@@ -4,6 +4,7 @@ import {
   assertLocalHeader,
   assertErrorSummary,
   assertFieldTypeahead,
+  assertFieldRadiosWithLegend,
 } from '../../support/assertions'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
@@ -145,8 +146,134 @@ describe('Adding an export win', () => {
   })
 
   context('Credit for this win', () => {
-    it('should complete this step and continue to "Customer details"', () => {
+    beforeEach(() =>
       cy.visit(`${urls.companies.exportWins.create()}${creditForThisWin}`)
+    )
+
+    it('should render a step heading', () => {
+      cy.get('[data-test="step-heading"]').should(
+        'have.text',
+        'Credit for this win'
+      )
+    })
+
+    it('should render a hint', () => {
+      cy.get('[data-test="hint"]').should(
+        'have.text',
+        'Other teams that helped with this win should be added so they can be credited, this will not reduce your credit for this win.'
+      )
+    })
+
+    it('should render two unselected radio buttons', () => {
+      cy.get('[data-test="field-credit_for_win"]').then((element) => {
+        assertFieldRadiosWithLegend({
+          element,
+          legend: 'Did any other teams help with this win?',
+          optionsCount: 2,
+        })
+      })
+      cy.get('[data-test="credit-for-win-yes"]')
+        .should('not.be.checked')
+        .parent()
+        .should('have.text', 'Yes')
+      cy.get('[data-test="credit-for-win-no"]')
+        .should('not.be.checked')
+        .parent()
+        .should('have.text', 'No')
+    })
+
+    it('should go to the next step when selecting "No" and then "Continue"', () => {
+      cy.get('[data-test="credit-for-win-no"]').check()
+      clickContinueAndAssertUrl(customerDetails)
+    })
+
+    it('should render a legend and hint text', () => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-addAnother"]')
+        .find('legend')
+        .eq(0)
+        .should('have.text', 'Contributing advisers')
+      cy.get('[data-test="hint-text"]').should(
+        'have.text',
+        'Up to 5 advisers can be added.'
+      )
+    })
+
+    it('should render a Typeahead for the contributing officer', () => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-contributing_officer_0"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Contributing officer',
+        })
+      })
+    })
+
+    it('should render a Typeahead for the team type', () => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-team_type_0"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Team type',
+        })
+      })
+    })
+
+    it('should render an "Add another" button', () => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="add-another"]').should('exist')
+    })
+
+    it('should display validation error messages on mandatory fields', () => {
+      clickContinueButton()
+      // Assert Yes and No radio buttons
+      assertErrorSummary(['Select Yes or No'])
+      assertFieldError(
+        cy.get('[data-test="field-credit_for_win"]'),
+        'Select Yes or No',
+        true
+      )
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      clickContinueButton()
+      // Assert Contributing officer and Team type
+      assertErrorSummary(['Enter a contributing officer', 'Enter a team type'])
+      assertFieldError(
+        cy.get('[data-test="field-contributing_officer_0"]'),
+        'Enter a contributing officer',
+        false
+      )
+      assertFieldError(
+        cy.get('[data-test="field-team_type_0"]'),
+        'Enter a team type',
+        false
+      )
+      // Select a team type to render the HQ team, region or post field
+      cy.get('[data-test="field-team_type_0"]')
+        .find('input')
+        .as('teamTypeInput')
+      cy.get('@teamTypeInput').type('Inv')
+      cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
+      clickContinueButton()
+      // Assert HQ team, region or post
+      assertErrorSummary([
+        'Enter a contributing officer',
+        'Enter a HQ team, region or post',
+      ])
+      assertFieldError(
+        cy.get('[data-test="field-hq_team_0"]'),
+        'Enter a HQ team, region or post',
+        false
+      )
+    })
+
+    it('should complete this step and continue to "Customer details"', () => {
+      const contributingOfficer = '[data-test="field-contributing_officer_0"]'
+      const teamType = '[data-test="field-team_type_0"]'
+      const hqTeam = '[data-test="field-hq_team_0"]'
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get(contributingOfficer).selectTypeaheadOption('David')
+      cy.get(teamType).selectTypeaheadOption('Investment (ITFG or IG)')
+      cy.get(hqTeam).selectTypeaheadOption('DIT Education')
       clickContinueAndAssertUrl(customerDetails)
     })
   })

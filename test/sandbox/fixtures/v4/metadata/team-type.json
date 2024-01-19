@@ -1,0 +1,42 @@
+[
+  {
+    "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891",
+    "name": "Trade (TD or ST)",
+    "disabled_on": null
+  },
+  {
+    "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add",
+    "name": "Investment (ITFG or IG)",
+    "disabled_on": null
+  },
+  {
+    "id": "c2d215e2-d564-4c50-b209-ec838eef761d",
+    "name": "DSO",
+    "disabled_on": null
+  },
+  {
+    "id": "bbb7fad4-417c-411e-a40a-11184b0c635d",
+    "name": "Other HQ Team",
+    "disabled_on": null
+  },
+  {
+    "id": "1f6eccf9-289a-450b-a4af-b75600ea521b",
+    "name": "International Trade Team",
+    "disabled_on": null
+  },
+  {
+    "id": "17f95045-63b4-489d-9af8-7246e6ab370e",
+    "name": "Overseas Business Network",
+    "disabled_on": null
+  },
+  {
+    "id": "6e798633-83da-4597-8e9a-9bb033ca06a4",
+    "name": "Overseas Post",
+    "disabled_on": null
+  },
+  {
+    "id": "f7006548-9ef0-4c4e-bc60-1b7ca40ff75b",
+    "name": "Trade Challenge Partners (TCP)",
+    "disabled_on": null
+  }
+]
