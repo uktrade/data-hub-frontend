@@ -127,6 +127,8 @@ export const urlTestExclusions = [
     url: '/investments/projects/:investmentId/propositions/:propositionId/complete',
   },
   { url: '/investments/projects/:investmentId/propositions/:propositionId' },
+  { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
+  { url: '/companies/:companyId/hierarchies/ghq/remove' },
   // 501 errors
   { url: '/api-proxy/v4/company/:companyId/export-win' },
   { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },

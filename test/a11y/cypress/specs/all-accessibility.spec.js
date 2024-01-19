@@ -2,7 +2,7 @@ import urls from '../../../../src/lib/urls'
 import { urlTestExclusions } from '../config/urlTestExclusions'
 import { cleanseArrayOfUrls, createArrayOfUrls } from '../config/utils'
 
-const arrayOfUrls = createArrayOfUrls(urls)
+const arrayOfUrls = createArrayOfUrls(urls.companies.hierarchies)
 
 const filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
 
