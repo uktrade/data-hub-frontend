@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import ReactDOM from 'react-dom'
 
 /**
  * @function WatchTextContent
@@ -15,34 +16,24 @@ const WatchTextContent = ({ onTextContentChange, ...props }) => {
   const previousTextContent = useRef()
 
   useEffect(() => {
-    previousTextContent.current = ref.current.textContent
+    ref.current = document.createElement('div')
+    return () => {
+      ref.current.remove()
+    }
+  }, [])
 
-    // Detach the element so that the content is not searchable by Cypress tests.
-    // This is the only way to make an element really hidden from Cypress.
-    ref.current?.remove()
-
-    const observer = new MutationObserver(() => {
+  useEffect(() => {
+    ReactDOM.render(props.children, ref.current)
+    // The most recent update only takes effect in the next event tick
+    setTimeout(() => {
       if (ref.current.textContent !== previousTextContent.current) {
         onTextContentChange(ref.current.textContent)
         previousTextContent.current = ref.current.textContent
       }
-    })
+    }, 0)
+  })
 
-    if (ref.current) {
-      observer.observe(ref.current, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        characterData: true,
-      })
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  return <div ref={ref} {...props} hidden={true} />
+  return null
 }
 
 export default WatchTextContent

@@ -21,15 +21,18 @@ describe('WatchTextContent', () => {
     cy.mount(
       <Counter>
         {(count) => (
-          <WatchTextContent onTextContentChange={onTextContentChange}>
-            <h1>Heading</h1>
-            <ul>
-              <li>foo</li>
-              <li>bar</li>
-              <li>{count}</li>
-              <li>baz</li>
-            </ul>
-          </WatchTextContent>
+          <>
+            count: {count}
+            <WatchTextContent onTextContentChange={onTextContentChange}>
+              <h1>Heading</h1>
+              <ul>
+                <li>foo</li>
+                <li>bar</li>
+                <li>{count}</li>
+                <li>baz</li>
+              </ul>
+            </WatchTextContent>
+          </>
         )}
       </Counter>
     )
@@ -40,6 +43,7 @@ describe('WatchTextContent', () => {
       .click()
       .then(() => {
         expect(onTextContentChange.args).to.deep.eq([
+          ['Headingfoobar0baz'],
           ['Headingfoobar1baz'],
           ['Headingfoobar2baz'],
           ['Headingfoobar3baz'],
