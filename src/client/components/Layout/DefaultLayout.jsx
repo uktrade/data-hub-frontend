@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
@@ -8,6 +8,7 @@ import Footer from '../Footer'
 import Main from '../Main'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import DataHubHeader from '../DataHubHeader'
+import WatchTextContent from '../WatchTextContent'
 
 const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
@@ -27,11 +28,16 @@ const DefaultLayout = ({
   localHeaderChildren,
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
-  useEffect(() => {
-    document.title = `${pageTitle} - DBT Data Hub`
-  }, [pageTitle])
+
   return (
     <>
+      <WatchTextContent
+        onTextContentChange={(text) => {
+          document.title = text
+        }}
+      >
+        {pageTitle} - DBT Data Hub
+      </WatchTextContent>
       <GlobalStyles />
       <DataHubHeader
         showVerticalNav={showVerticalNav}
@@ -66,7 +72,7 @@ DefaultLayout.propTypes = {
     text: PropTypes.string.isRequired,
   }),
   subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  pageTitle: PropTypes.string.isRequired,
+  pageTitle: PropTypes.node.isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 
