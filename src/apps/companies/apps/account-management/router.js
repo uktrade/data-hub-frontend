@@ -1,13 +1,8 @@
 const router = require('express').Router()
 
 const urls = require('../../../../lib/urls')
-const { submit, renderAccountManagement, form } = require('./controllers')
+const { submit, form } = require('./controllers')
 const { allPermissionsOr403 } = require('../../../../middleware/conditionals')
-
-router.get(
-  urls.companies.accountManagement.index.route,
-  renderAccountManagement
-)
 
 router
   .route([
