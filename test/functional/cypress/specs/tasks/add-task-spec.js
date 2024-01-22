@@ -167,7 +167,7 @@ describe('Add interaction task', () => {
   const fixture = interaction.withReferral
 
   context('When visiting the create a task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/interaction/${fixture.id}`,
