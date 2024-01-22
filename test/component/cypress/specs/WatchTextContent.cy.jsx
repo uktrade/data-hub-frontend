@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 
 import WatchTextContent from '../../../../src/client/components/WatchTextContent.jsx'
 
-const Counter = () => {
+const Counter = ({ children }) => {
   const [count, setCount] = useState(0)
   return (
-    <button className="counter" onClick={() => setCount((x) => x + 1)}>
-      {count}
-    </button>
+    <>
+      <button className="counter" onClick={() => setCount((x) => x + 1)}>
+        increase
+      </button>
+      {children(count)}
+    </>
   )
 }
 
@@ -16,17 +19,19 @@ describe('WatchTextContent', () => {
     const onTextContentChange = cy.stub()
 
     cy.mount(
-      <WatchTextContent onTextContentChange={onTextContentChange}>
-        <h1>Heading</h1>
-        <ul>
-          <li>foo</li>
-          <li>bar</li>
-          <li>
-            <Counter />
-          </li>
-          <li>baz</li>
-        </ul>
-      </WatchTextContent>
+      <Counter>
+        {(count) => (
+          <WatchTextContent onTextContentChange={onTextContentChange}>
+            <h1>Heading</h1>
+            <ul>
+              <li>foo</li>
+              <li>bar</li>
+              <li>{count}</li>
+              <li>baz</li>
+            </ul>
+          </WatchTextContent>
+        )}
+      </Counter>
     )
 
     cy.get('.counter').click()

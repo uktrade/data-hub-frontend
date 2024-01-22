@@ -32,7 +32,6 @@ const DefaultLayout = ({
   return (
     <>
       <WatchTextContent
-        style={{ display: 'none' }}
         onTextContentChange={(text) => {
           document.title = text
         }}
