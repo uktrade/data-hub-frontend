@@ -39,7 +39,6 @@ import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCap
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
-import AccountManagement from './modules/Companies/AccountManagement'
 
 import Footer from '../client/components/Footer'
 
@@ -254,11 +253,6 @@ function App() {
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
-        </Mount>
-        <Mount selector="#account-management">
-          {(props) => (
-            <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
-          )}
         </Mount>
 
         <Mount selector="#react-app">
