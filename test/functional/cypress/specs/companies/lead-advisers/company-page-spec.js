@@ -13,7 +13,10 @@ describe('Lead advisers', () => {
     })
 
     it('should render a meta title', () => {
-      cy.title().should('eq', 'Companies - DBT Data Hub')
+      cy.title().should(
+        'eq',
+        'Account management - Mars Exports Ltd - Companies - DBT Data Hub'
+      )
     })
 
     it('should display a header with the company name', () => {

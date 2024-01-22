@@ -11,23 +11,6 @@ const companyToLeadITA = ({ one_list_group_global_account_manager: leadITA }) =>
     team: get(leadITA, 'dit_team.name'),
   }
 
-async function renderAccountManagement(req, res) {
-  const { company, dnbRelatedCompaniesCount, localNavItems, returnUrl } =
-    res.locals
-  const permissions = res.locals.user.permissions
-
-  res.render('companies/apps/account-management/views/client-container', {
-    props: {
-      dnbRelatedCompaniesCount,
-      permissions,
-      localNavItems: localNavItems,
-      flashMessages: res.locals.getMessages(),
-      companyId: company.id,
-      returnUrl: returnUrl,
-    },
-  })
-}
-
 // istanbul ignore next: Covered by functional tests
 const form = (req, res) => {
   const {
@@ -66,7 +49,6 @@ async function submit(req, res, next) {
 }
 
 module.exports = {
-  renderAccountManagement,
   submit,
   form,
 }
