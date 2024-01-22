@@ -14,3 +14,7 @@ export const state2props = (state) => {
   }
   return { objectiveItem }
 }
+
+export const state2propsMainTab = (state) => ({
+  permissions: state.userPermissions,
+})

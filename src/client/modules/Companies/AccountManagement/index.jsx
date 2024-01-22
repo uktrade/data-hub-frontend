@@ -4,6 +4,8 @@ import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { Metadata, NewWindowLink } from '../../../components'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
@@ -19,6 +21,8 @@ import { LeadITA } from './LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
 import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'
+import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
+import { state2propsMainTab } from './state'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -245,63 +249,62 @@ const objectiveMetadata = (objective) => {
   return rows
 }
 
-const AccountManagement = ({
-  companyId,
-  flashMessages,
-  csrfToken,
-  permissions,
-}) => {
+const AccountManagement = ({ permissions }) => {
+  const { companyId } = useParams()
+
   return (
-    <CompanyResource id={companyId}>
-      {(company) => (
-        <CompanyLayout
-          company={company}
-          breadcrumbs={[{ text: 'Account management' }]}
-          flashMessages={flashMessages}
-          csrfToken={csrfToken}
-        >
-          <DataWorkspaceAccountPlan company={company} />
-          <Strategy company={company} />
-          <Objectives company={company} />
-          {!company.oneListGroupTier ||
-          isItaTierDAccount(company.oneListGroupTier) ? (
-            <LeadITA company={company} permissions={permissions} />
-          ) : (
-            <div>
-              <CoreTeamAdvisers
-                company={company}
-                oneListEmail={ONE_LIST_EMAIL}
-              />
-              {canEditOneList(permissions) && (
-                <div>
-                  <Button
-                    data-test="edit-core-team-button"
-                    as={Link}
-                    href={urls.companies.editVirtualTeam(companyId)}
-                  >
-                    Edit core team
-                  </Button>
-                </div>
-              )}
-            </div>
-          )}
-          <Details
-            summary="Need to find out more, or edit the One List tier information?"
-            data-test="core-team-details"
+    <DefaultLayoutBase>
+      <CompanyResource id={companyId}>
+        {(company) => (
+          <CompanyLayout
+            company={company}
+            breadcrumbs={[{ text: 'Account management' }]}
+            pageTitle="Account management"
           >
-            For more information, or if you need to change the One List tier or
-            account management team for this company, go to the{' '}
-            <NewWindowLink
-              href={urls.external.digitalWorkspace.accountManagement}
+            <DataWorkspaceAccountPlan company={company} />
+            <Strategy company={company} />
+            <Objectives company={company} />
+            {!company.oneListGroupTier ||
+            isItaTierDAccount(company.oneListGroupTier) ? (
+              <LeadITA company={company} permissions={permissions} />
+            ) : (
+              <div>
+                <CoreTeamAdvisers
+                  company={company}
+                  oneListEmail={ONE_LIST_EMAIL}
+                />
+                {canEditOneList(permissions) && (
+                  <div>
+                    <Button
+                      data-test="edit-core-team-button"
+                      as={Link}
+                      href={urls.companies.editVirtualTeam(companyId)}
+                    >
+                      Edit core team
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+            <Details
+              summary="Need to find out more, or edit the One List tier information?"
+              data-test="core-team-details"
             >
-              Digital Workspace
-            </NewWindowLink>{' '}
-            or email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
-          </Details>
-        </CompanyLayout>
-      )}
-    </CompanyResource>
+              For more information, or if you need to change the One List tier
+              or account management team for this company, go to the{' '}
+              <NewWindowLink
+                href={urls.external.digitalWorkspace.accountManagement}
+              >
+                Digital Workspace
+              </NewWindowLink>{' '}
+              or email{' '}
+              <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+            </Details>
+          </CompanyLayout>
+        )}
+      </CompanyResource>
+    </DefaultLayoutBase>
   )
 }
 
-export default AccountManagement
+export default connect(state2propsMainTab)(AccountManagement)
