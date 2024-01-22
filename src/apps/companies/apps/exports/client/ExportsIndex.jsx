@@ -1,20 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
 import WarningText from '@govuk-react/warning-text'
+import { useParams } from 'react-router-dom'
 
 import { SummaryTable } from '../../../../../client/components/'
 import urls from '../../../../../lib/urls'
 import ExportWins from './ExportWins/'
 import GreatProfile from './GreatProfile'
 import { CompanyResource } from '../../../../../client/components/Resource'
-import CompanyLayout from '../../../../../client/components/Layout/CompanyLayout'
+import CompanyLayoutNew from '../../../../../client/components/Layout/CompanyLayoutNew'
 import { exportDetailsLabels, exportPotentialLabels } from '../../../labels'
 import { transformExportCountries } from '../transformer'
+import DefaultLayoutBase from '../../../../../client/components/Layout/DefaultLayoutBase'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
@@ -25,168 +26,162 @@ const StyledLink = styled(Link)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
-const ExportsIndex = ({ companyId, returnUrl }) => {
+const ExportsIndex = ({ returnUrl, flashMessages }) => {
+  const { companyId } = useParams()
   return (
-    <CompanyResource id={companyId}>
-      {(company) => (
-        <CompanyLayout
-          company={company}
-          breadcrumbs={[{ text: 'Exports' }]}
-          returnUrl={returnUrl}
-        >
-          <SummaryTable
-            caption="Exports"
-            actions={
-              !company.archived && (
-                <Link
-                  href={urls.companies.exports.edit(companyId)}
-                  key={companyId}
-                >
-                  Edit
-                </Link>
-              )
-            }
+    <DefaultLayoutBase>
+      <CompanyResource id={companyId}>
+        {(company) => (
+          <CompanyLayoutNew
+            company={company}
+            breadcrumbs={[{ text: 'Exports' }]}
+            returnUrl={returnUrl}
+            flashMessages={flashMessages}
+            pageTitle="Export"
           >
-            <SummaryTable.Row
-              heading={exportDetailsLabels.exportExperienceCategory}
-              key={exportDetailsLabels.exportExperienceCategory}
+            <SummaryTable
+              caption="Exports"
+              actions={
+                !company.archived && (
+                  <Link href={urls.companies.exports.edit(companyId)}>
+                    Edit
+                  </Link>
+                )
+              }
             >
-              {company.exportExperienceCategory
-                ? company.exportExperienceCategory.name
-                : 'None'}
-            </SummaryTable.Row>
-            <SummaryTable.Row
-              heading={exportDetailsLabels.greatProfile}
-              key={exportDetailsLabels.greatProfile}
+              <SummaryTable.Row
+                heading={exportDetailsLabels.exportExperienceCategory}
+                key={exportDetailsLabels.exportExperienceCategory}
+              >
+                {company.exportExperienceCategory
+                  ? company.exportExperienceCategory.name
+                  : 'None'}
+              </SummaryTable.Row>
+              <SummaryTable.Row
+                heading={exportDetailsLabels.greatProfile}
+                key={exportDetailsLabels.greatProfile}
+              >
+                <GreatProfile
+                  profileStatus={company.greatProfileStatus}
+                  companyNumber={company.companyNumber}
+                />
+              </SummaryTable.Row>
+              <SummaryTable.Row
+                heading={exportDetailsLabels.exportPotential}
+                key={exportDetailsLabels.exportPotential}
+              >
+                Unavailable
+              </SummaryTable.Row>
+            </SummaryTable>
+
+            <WarningText>
+              The export potential value is unavailable. This is because the
+              previous values were out of date. We are working to fix this.
+            </WarningText>
+
+            <Details summary="What is export potential">
+              The export potential score is a prediction of a company's
+              likelihood of exporting, and was originally created for the{' '}
+              <Link
+                href={urls.external.findExporters()}
+                target="_blank"
+                aria-label="opens in a new tab"
+              >
+                Find Exporters tool
+              </Link>
+              . DBT's data science team compared all HMRC export information
+              with the features of all UK companies to find patterns; they then
+              repeatedly tested their model against a subset of known-good data
+              to improve it. The scores are as follows:
+              <ol>
+                {Object.values(exportPotentialLabels).map((category) => (
+                  <li key={category.text}>
+                    <strong>{category.text}</strong> - {category.description}
+                  </li>
+                ))}
+              </ol>
+              <br />
+              We are continuing to improve the algorithm so please do share your
+              feedback or let us know of any anomalies through the{' '}
+              <a href={urls.support()}>support channel</a>.
+            </Details>
+
+            <StyledSummaryTable
+              caption="Export countries information"
+              actions={
+                !company.archived && (
+                  <Link
+                    href={urls.companies.exports.editCountries(companyId)}
+                    data-test-id="edit-export-countries"
+                  >
+                    Edit
+                  </Link>
+                )
+              }
             >
-              <GreatProfile
-                profileStatus={company.greatProfileStatus}
-                companyNumber={company.companyNumber}
-              />
-            </SummaryTable.Row>
-            <SummaryTable.Row
-              heading={exportDetailsLabels.exportPotential}
-              key={exportDetailsLabels.exportPotential}
-            >
-              Unavailable
-            </SummaryTable.Row>
-          </SummaryTable>
+              {transformExportCountries(company.exportCountries).map(
+                ({ name, values }) => (
+                  <SummaryTable.Row heading={name} key={name}>
+                    <>
+                      {values?.length
+                        ? values.map(({ id, name }, i) => {
+                            const isLastItem = i === values.length - 1
+                            return (
+                              <React.Fragment key={id}>
+                                <Link
+                                  href={urls.companies.exports.history.country(
+                                    companyId,
+                                    id
+                                  )}
+                                >
+                                  {name}
+                                </Link>
+                                {isLastItem ? null : ', '}
+                              </React.Fragment>
+                            )
+                          })
+                        : 'None'}
+                    </>
+                  </SummaryTable.Row>
+                )
+              )}
+            </StyledSummaryTable>
 
-          <WarningText>
-            The export potential value is unavailable. This is because the
-            previous values were out of date. We are working to fix this.
-          </WarningText>
+            <StyledLink href={urls.companies.exports.history.index(companyId)}>
+              View full export countries history
+            </StyledLink>
 
-          <Details summary="What is export potential">
-            The export potential score is a prediction of a company's likelihood
-            of exporting, and was originally created for the{' '}
-            <Link
-              href={urls.external.findExporters()}
-              target="_blank"
-              aria-label="opens in a new tab"
-            >
-              Find Exporters tool
-            </Link>
-            . DBT's data science team compared all HMRC export information with
-            the features of all UK companies to find patterns; they then
-            repeatedly tested their model against a subset of known-good data to
-            improve it. The scores are as follows:
-            <ol>
-              {Object.values(exportPotentialLabels).map((category, index) => (
-                <li key={`${category.text}-${index}`}>
-                  <strong>{category.text}</strong> - {category.description}
-                </li>
-              ))}
-            </ol>
-            <br />
-            We are continuing to improve the algorithm so please do share your
-            feedback or let us know of any anomalies through the{' '}
-            <a href={urls.support()}>support channel</a>.
-          </Details>
-
-          <StyledSummaryTable
-            caption="Export countries information"
-            actions={
-              !company.archived && (
-                <Link
-                  href={urls.companies.exports.editCountries(companyId)}
-                  data-test-id="edit-export-countries"
-                  key={companyId}
-                >
-                  Edit
-                </Link>
-              )
-            }
-          >
-            {transformExportCountries(company.exportCountries).map(
-              ({ name, values }) => (
-                <SummaryTable.Row heading={name} key={name}>
-                  <>
-                    {values?.length
-                      ? values.map(({ id, name }, i) => {
-                          const isLastItem = i === values.length - 1
-                          return (
-                            <React.Fragment key={id}>
-                              <Link
-                                href={urls.companies.exports.history.country(
-                                  companyId,
-                                  id
-                                )}
-                              >
-                                {name}
-                              </Link>
-                              {isLastItem ? null : ', '}
-                            </React.Fragment>
-                          )
-                        })
-                      : 'None'}
-                  </>
-                </SummaryTable.Row>
-              )
-            )}
-          </StyledSummaryTable>
-
-          <StyledLink href={urls.companies.exports.history.index(companyId)}>
-            View full export countries history
-          </StyledLink>
-
-          <H3>Export wins</H3>
-          <p>
-            <Link
-              data-test-id="exportWinsLink"
-              href={urls.external.exportWins()}
-              target="_blank"
-              aria-label="opens in a new tab"
-            >
-              Record your win
-            </Link>{' '}
-            on our Export Wins site
-          </p>
-          <Details summary="What is an Export Win">
+            <H3>Export wins</H3>
             <p>
-              Export wins capture the export deals that Department for Business
-              and Trade (DBT) support and quantify their expected export value.
-              If applicable, they also quantify the non-export and outward
-              direct investment (ODI) value, up to a 5-year period. They give a
-              picture of DBT support for business.
+              <Link
+                data-test-id="exportWinsLink"
+                href={urls.external.exportWins()}
+                target="_blank"
+                aria-label="opens in a new tab"
+              >
+                Record your win
+              </Link>{' '}
+              on our Export Wins site
             </p>
-            <p>
-              The export win metric is currently the only way the department
-              measures export activity.
-            </p>
-          </Details>
-          <ExportWins
-            companyId={companyId}
-            companyName={company.name}
-          ></ExportWins>
-        </CompanyLayout>
-      )}
-    </CompanyResource>
+            <Details summary="What is an Export Win">
+              <p>
+                Export wins capture the export deals that Department for
+                Business and Trade (DBT) support and quantify their expected
+                export value. If applicable, they also quantify the non-export
+                and outward direct investment (ODI) value, up to a 5-year
+                period. They give a picture of DBT support for business.
+              </p>
+              <p>
+                The export win metric is currently the only way the department
+                measures export activity.
+              </p>
+            </Details>
+            <ExportWins companyId={companyId} companyName={company.name} />
+          </CompanyLayoutNew>
+        )}
+      </CompanyResource>
+    </DefaultLayoutBase>
   )
-}
-
-ExportsIndex.propTypes = {
-  companyId: PropTypes.string.isRequired,
 }
 
 export default ExportsIndex

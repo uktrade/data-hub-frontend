@@ -91,6 +91,7 @@ import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrders
 import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
+import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 
 const routes = {
   companies: [
@@ -228,6 +229,11 @@ const routes = {
       path: '/companies/:companyId/investments/large-capital-profile',
       module: 'datahub:companies',
       component: LargeCapitalProfile,
+    },
+    {
+      path: '/companies/:companyId/exports',
+      module: 'datahub:companies',
+      component: ExportsIndex,
     },
   ],
   contacts: [

@@ -384,15 +384,11 @@ describe('Company Export tab', () => {
       })
 
       it('should display the next button', () => {
-        cy.get('#company-export-index-page').within(() => {
-          cy.get('ul:last li a:last').should('have.text', 'Next')
-        })
+        cy.get('[data-test="next"]').should('have.text', 'Next')
       })
 
       it('should not display the previous button', () => {
-        cy.get('#company-export-index-page').within(() => {
-          cy.get('ul:last li a:first').should('not.have.text', 'Previous')
-        })
+        cy.get('[data-test="prev"]').should('not.exist')
       })
 
       it('the second page renders the collection list with 6 of the 15 results', () => {
@@ -411,15 +407,11 @@ describe('Company Export tab', () => {
       })
 
       it('should not display the next button', () => {
-        cy.get('#company-export-index-page').within(() => {
-          cy.get('ul:last li a:last').should('not.have.text', 'Next')
-        })
+        cy.get('[data-test="next"]').should('not.exist')
       })
 
       it('should display the previous button', () => {
-        cy.get('#company-export-index-page').within(() => {
-          cy.get('ul:last li a:first').should('have.text', 'Previous')
-        })
+        cy.get('[data-test="prev"]').should('have.text', 'Previous')
       })
     })
   })
