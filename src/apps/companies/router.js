@@ -4,7 +4,6 @@ const urls = require('../../lib/urls')
 
 const { LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
-const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
 const {
   exportCollection,
@@ -38,7 +37,6 @@ const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
 const exportsRouter = require('./apps/exports/router')
-const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const referralsRouter = require('./apps/referrals/router')
@@ -81,11 +79,6 @@ router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.use(
-  urls.companies.investments.companyInvestment.route,
-  setReturnUrl,
-  investmentsRouter
-)
 router.use(
   urls.companies.interactions.index.route,
   setInteractionsDetails,
