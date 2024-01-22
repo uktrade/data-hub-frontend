@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom'
 
 import { ERROR_COLOUR } from '../../../../utils/colours'
 import Task from '../../../../components/Task'
-import Form from '../../../../components/Form'
 import { ID as TASK_ID, TASK_NAME, API_ERROR, API_WARN } from './state'
 import urls from '../../../../../lib/urls'
 import {
   StatusMessage,
   FieldTypeahead,
+  Form,
   FormLayout,
   DefaultLayout,
 } from '../../../../components'

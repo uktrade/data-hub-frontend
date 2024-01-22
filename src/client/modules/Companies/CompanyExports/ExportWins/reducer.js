@@ -1,7 +1,7 @@
 import {
   EXPORT_WINS__LOADED,
   EXPORT_WINS__SELECT_PAGE,
-} from '../../../../../../client/actions'
+} from '../../../../actions'
 
 import { NOT_IMPLEMENTED } from './state'
 

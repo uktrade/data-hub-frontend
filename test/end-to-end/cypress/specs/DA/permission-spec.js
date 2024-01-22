@@ -18,7 +18,7 @@ describe('DA Permission', () => {
 
       before(() => {
         cy.loadFixture([company])
-        cy.visit(companies.exports.index(company), {
+        cy.visit(companies.exports.index(company.pk), {
           failOnStatusCode: false,
         })
       })

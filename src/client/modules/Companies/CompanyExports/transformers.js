@@ -1,7 +1,4 @@
-import {
-  exportDetailsLabels,
-  exportPotentialLabels,
-} from '../../../../apps/companies/labels'
+import { exportDetailsLabels, exportPotentialLabels } from './labels'
 import groupExportCountries from '../../../../lib/group-export-countries'
 import { EXPORT_INTEREST_STATUS } from '../../../../common/constants'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
@@ -36,6 +33,39 @@ export const transformCountriesForTypeahead = (exportCountries) => {
       values: transformArrayIdNameToValueLabel(
         groupedExportCountries[EXPORT_INTEREST_STATUS.NOT_INTERESTED]
       ),
+    },
+  ]
+}
+
+const getCountriesFields = (companyExportCountries) => {
+  const groupedExportCountries = groupExportCountries(companyExportCountries)
+
+  return {
+    exportToCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.EXPORTING_TO],
+    futureInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.FUTURE_INTEREST],
+    noInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.NOT_INTERESTED],
+  }
+}
+
+export const transformExportCountries = (companyExportCountries) => {
+  const { exportToCountries, futureInterestCountries, noInterestCountries } =
+    getCountriesFields(companyExportCountries)
+
+  return [
+    {
+      name: exportDetailsLabels.exportToCountries,
+      values: exportToCountries,
+    },
+    {
+      name: exportDetailsLabels.futureInterestCountries,
+      values: futureInterestCountries,
+    },
+    {
+      name: exportDetailsLabels.noInterestCountries,
+      values: noInterestCountries,
     },
   ]
 }

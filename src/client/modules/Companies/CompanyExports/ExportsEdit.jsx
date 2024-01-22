@@ -3,16 +3,20 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { DefaultLayout, FieldInput, FieldSelect } from '../../../components'
-import GreatProfile from '../../../../apps/companies/apps/exports/client/GreatProfile'
+import {
+  DefaultLayout,
+  FieldInput,
+  FieldSelect,
+  Form,
+} from '../../../components'
+import GreatProfile from './GreatProfile'
 import urls from '../../../../lib/urls'
-import Form from '../../../components/Form'
 import {
   CompanyResource,
   ExportExperienceCategoriesResource,
 } from '../../../components/Resource'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
-import { exportDetailsLabels } from '../../../../apps/companies/labels'
+import { exportDetailsLabels } from './labels'
 import { buildCompanyBreadcrumbs } from '../utils'
 
 const StyledDt = styled.dt`
