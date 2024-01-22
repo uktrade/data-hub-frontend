@@ -1,43 +1,44 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 import {
   CompanyResource,
   LargeInvestorProfileResource,
 } from '../../../../components/Resource'
-import CompanyLayout from '../../../../components/Layout/CompanyLayout'
+import CompanyLayoutNew from '../../../../components/Layout/CompanyLayoutNew'
+import DefaultLayoutBase from '../../../../components/Layout/DefaultLayoutBase'
 
 import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 import EditLargeCapitalProfile from './EditLargeCapitalProfile'
 
-const LargeCapitalProfile = ({ companyId, flashMessages }) => {
+const LargeCapitalProfile = ({ flashMessages }) => {
+  const { companyId } = useParams()
   return (
-    <LargeInvestorProfileResource id={companyId}>
-      {(profile) => (
-        <CompanyResource id={companyId}>
-          {(company) => (
-            <CompanyLayout
-              company={company}
-              breadcrumbs={[{ text: 'Investments' }]}
-              flashMessages={flashMessages}
-              isInvestment={true}
-              isLCP={true}
-            >
-              {profile.results.length != 0 ? (
-                <EditLargeCapitalProfile profile={profile} />
-              ) : (
-                <CreateLargeCapitalProfile companyId={companyId} />
-              )}
-            </CompanyLayout>
-          )}
-        </CompanyResource>
-      )}
-    </LargeInvestorProfileResource>
+    <DefaultLayoutBase>
+      <LargeInvestorProfileResource id={companyId}>
+        {(profile) => (
+          <CompanyResource id={companyId}>
+            {(company) => (
+              <CompanyLayoutNew
+                company={company}
+                breadcrumbs={[{ text: 'Investments' }]}
+                flashMessages={flashMessages}
+                isInvestment={true}
+                isLCP={true}
+                pageTitle="Large capital profile"
+              >
+                {profile.results.length != 0 ? (
+                  <EditLargeCapitalProfile profile={profile} />
+                ) : (
+                  <CreateLargeCapitalProfile companyId={companyId} />
+                )}
+              </CompanyLayoutNew>
+            )}
+          </CompanyResource>
+        )}
+      </LargeInvestorProfileResource>
+    </DefaultLayoutBase>
   )
-}
-
-LargeCapitalProfile.propTypes = {
-  companyId: PropTypes.string.isRequired,
 }
 
 export default LargeCapitalProfile

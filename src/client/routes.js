@@ -89,6 +89,8 @@ import CompanyActivityCollection from './components/ActivityFeed/CollectionList/
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
 import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
 import AccountManagement from './modules/Companies/AccountManagement'
+import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
+import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 
 const routes = {
   companies: [
@@ -211,6 +213,21 @@ const routes = {
       path: '/companies/:companyId/account-management',
       module: 'datahub:companies',
       component: AccountManagement,
+    },
+    {
+      path: '/companies/:companyId/investments',
+      module: 'datahub:companies',
+      component: CompanyProjectsCollection,
+    },
+    {
+      path: '/companies/:companyId/investments/projects',
+      module: 'datahub:companies',
+      component: CompanyProjectsCollection,
+    },
+    {
+      path: '/companies/:companyId/investments/large-capital-profile',
+      module: 'datahub:companies',
+      component: LargeCapitalProfile,
     },
   ],
   contacts: [
