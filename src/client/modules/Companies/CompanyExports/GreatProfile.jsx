@@ -1,7 +1,7 @@
 import React from 'react'
 
-import urls from '../../../../../lib/urls'
-import { NewWindowLink } from '../../../../../client/components/'
+import urls from '../../../../lib/urls'
+import { NewWindowLink } from '../../../components'
 
 export default ({ profileStatus, companyNumber }) =>
   profileStatus === 'published' ? (

@@ -1,13 +1,13 @@
-import { formatMediumDateTime } from '../../../../../../client/utils/date'
-import { GREEN } from '../../../../../../client/utils/colours'
-import urls from '../../../../../../lib/urls'
-import groupExportCountries from '../../../../../../lib/group-export-countries'
+import { formatMediumDateTime } from '../../../../utils/date'
+import { GREEN } from '../../../../utils/colours'
+import urls from '../../../../../lib/urls'
+import groupExportCountries from '../../../../../lib/group-export-countries'
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} from '../../../../../../common/constants'
-import { groupHistoryItems } from '../group-history-items'
-import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
+} from '../../../../../common/constants'
+import { groupHistoryItems } from './group-history-items'
+import { apiProxyAxios } from '../../../../components/Task/utils'
 
 const ALLOWLISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 

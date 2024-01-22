@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 
-import { CollectionList } from '../../../../../../client/components/'
+import { CollectionList } from '../../../../components'
 import { state2props, NOT_IMPLEMENTED } from './state'
+import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
 import {
   EXPORT_WINS__LOADED,
   EXPORT_WINS__SELECT_PAGE,
-} from '../../../../../../client/actions'
+} from '../../../../actions'
 
 const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
@@ -33,6 +34,7 @@ function ExportWins(state) {
     name: 'Export wins',
     id: 'exportWins',
     progressMessage: 'Loading Exports Wins...',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload: { companyId, companyName, activePage },
       onSuccessDispatch: EXPORT_WINS__LOADED,

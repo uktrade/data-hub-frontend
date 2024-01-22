@@ -10,8 +10,8 @@ import referralsReducer from '../apps/companies/apps/referrals/details/client/re
 import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
 import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
 
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
-import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
+import { ID as EXPORTS_HISTORY_ID } from './modules/Companies/CompanyExports/ExportHistory/state.js'
+import exportsHistoryReducer from './modules/Companies/CompanyExports/ExportHistory/reducer.js'
 
 import TabNav from './components/TabNav'
 
@@ -23,8 +23,8 @@ import Typeahead from './components/Typeahead/Typeahead'
 
 import FieldAddAnother from './components/Form/elements/FieldAddAnother/FieldAddAnother'
 
-import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
-import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
+import { ID as EXPORTS_WINS_ID } from './modules/Companies/CompanyExports/ExportWins/state.js'
+import exportWinsReducer from './modules/Companies/CompanyExports/ExportWins/reducer.js'
 
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'

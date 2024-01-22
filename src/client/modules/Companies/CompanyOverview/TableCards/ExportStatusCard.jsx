@@ -14,7 +14,7 @@ import {
 } from './state'
 import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../actions'
 import { format } from '../../../../utils/date'
-import { transformExportCountries } from '../../../../../apps/companies/apps/exports/transformer'
+import { transformExportCountries } from '../../CompanyExports/transformers'
 import { companies } from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
 import {

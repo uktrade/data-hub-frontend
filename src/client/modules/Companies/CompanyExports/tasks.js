@@ -1,4 +1,4 @@
-import { apiProxyAxios } from '../../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../../../components/Task/utils'
 
 export const saveWinCategory = ({ companyId, export_experience_category }) => {
   return apiProxyAxios
