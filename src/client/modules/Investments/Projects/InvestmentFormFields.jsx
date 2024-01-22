@@ -69,41 +69,35 @@ export const FieldFDIType = ({ initialValue = null }) => (
   />
 )
 
-export const FieldProjectName = ({
-  initialValue = null,
-  placeholder = null,
-}) => (
+export const FieldProjectName = ({ initialValue = '', placeholder = null }) => (
   <FieldInput
     label="Project name"
     name="name"
     type="text"
-    initialValue={initialValue}
+    initialValue={initialValue || ''}
     required="Enter a project name"
     placeholder={placeholder}
   />
 )
 
-export const FieldProjectDescription = ({
-  initialValue = null,
-  hint = null,
-}) => (
+export const FieldProjectDescription = ({ initialValue = '', hint = null }) => (
   <FieldTextarea
     type="text"
     name="description"
     label="Project description"
     required="Enter a project description"
-    initialValue={initialValue}
+    initialValue={initialValue || ''}
     hint={hint}
   />
 )
 
-export const FieldAnonDescription = ({ initialValue = null }) => (
+export const FieldAnonDescription = ({ initialValue = '' }) => (
   <FieldTextarea
     type="text"
     name="anonymous_description"
     label="Anonymous project details (optional)"
     hint="Do not include company names, financial details or addresses"
-    initialValue={initialValue}
+    initialValue={initialValue || ''}
   />
 )
 
@@ -236,7 +230,7 @@ export const FieldReferralSourceHierarchy = ({
                     label="Event"
                     name="referral_source_activity_event"
                     type="text"
-                    initialValue={eventInitialValue}
+                    initialValue={eventInitialValue || ''}
                     placeholder={eventPlaceholder}
                     required="Enter the event details"
                   />

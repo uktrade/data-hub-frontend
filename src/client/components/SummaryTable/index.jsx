@@ -75,8 +75,8 @@ SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag }) => {
         <StyledCellList>
           {children
             .filter((c) => c)
-            .map((c) => (
-              <li key={c}>{c}</li>
+            .map((c, index) => (
+              <li key={`${c}-${index}`}>{c}</li>
             ))}
         </StyledCellList>
       )
@@ -122,7 +122,7 @@ SummaryTable.ListRow = ({ heading, value, emptyValue, ...rest }) => (
 )
 
 SummaryTable.propTypes = {
-  caption: PropTypes.string,
+  caption: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   actions: PropTypes.node,
   children: PropTypes.node,
 }
@@ -145,7 +145,11 @@ SummaryTable.Row.defaultProps = {
 
 SummaryTable.TextRow.propTypes = {
   heading: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 }
 
 SummaryTable.TextRow.defaultProps = {

@@ -48,7 +48,10 @@ export const transformObjectForTypeahead = (object) =>
         label: object.name,
         value: object.id,
       }
-    : null
+    : {
+        label: '',
+        value: '',
+      }
 
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
@@ -266,10 +269,12 @@ export const transformInvestmentProjectToListItem = ({
 }
 
 const getTaskSubheading = (archived) =>
-  archived && (
+  archived ? (
     <Tag colour="green" data-test="activity-kind-label">
       COMPLETED
     </Tag>
+  ) : (
+    ''
   )
 
 export const transformTaskToListItem = ({

@@ -59,44 +59,44 @@ const InteractionDetails = ({ interactionId }) => {
               heading="Contact(s)"
               children={transformContacts(interaction.contacts)}
             />
-            {interaction.service && (
+            {interaction.service ? (
               <SummaryTable.Row
                 heading="Service"
                 children={transformService(interaction.service.name)}
               />
-            )}
-            {interaction.serviceDeliveryStatus && (
+            ) : null}
+            {interaction.serviceDeliveryStatus ? (
               <SummaryTable.Row
                 heading="Service status"
                 children={interaction.serviceDeliveryStatus.name}
               />
-            )}
-            {interaction.grantAmountOffered && (
+            ) : null}
+            {interaction.grantAmountOffered ? (
               <SummaryTable.Row
                 heading="Grant offered"
                 children={currencyGBP(interaction.grantAmountOffered)}
               />
-            )}
-            {interaction.netCompanyReceipt && (
+            ) : null}
+            {interaction.netCompanyReceipt ? (
               <SummaryTable.Row
                 heading="Net receipt"
                 children={currencyGBP(interaction.netCompanyReceipt)}
               />
-            )}
-            {interaction.notes && (
+            ) : null}
+            {interaction.notes ? (
               <SummaryTable.Row heading="Notes" children={interaction.notes} />
-            )}
+            ) : null}
             <SummaryTable.Row
               heading={`Date of ${transformKind(interaction.kind)}`}
               children={formatLongDate(interaction.date)}
             />
-            {interaction.ditParticipants && (
+            {interaction.ditParticipants ? (
               <SummaryTable.Row
                 heading="Adviser(s)"
                 children={transformAdvisers(interaction.ditParticipants)}
               />
-            )}
-            {interaction.investmentProject && (
+            ) : null}
+            {interaction.investmentProject ? (
               <SummaryTable.Row
                 heading="Investment project"
                 children={
@@ -109,8 +109,8 @@ const InteractionDetails = ({ interactionId }) => {
                   </Link>
                 }
               />
-            )}
-            {interaction.kind === 'service_delivery' && (
+            ) : null}
+            {interaction.kind === 'service_delivery' ? (
               <SummaryTable.Row
                 heading="Event"
                 children={
@@ -123,28 +123,28 @@ const InteractionDetails = ({ interactionId }) => {
                   )
                 }
               />
-            )}
-            {interaction.communicationChannel && (
+            ) : null}
+            {interaction.communicationChannel ? (
               <SummaryTable.Row
                 heading="Communication channel"
                 children={interaction.communicationChannel.name}
               />
-            )}
-            {interaction.policyFeedbackNotes && (
+            ) : null}
+            {interaction.policyFeedbackNotes ? (
               <SummaryTable.Row
                 heading="Business intelligence"
                 children={interaction.policyFeedbackNotes}
               />
-            )}
+            ) : null}
             {interaction.exportCountries?.length > 0 &&
               transformExportCountries(interaction.exportCountries)}
-            {interaction.relatedTradeAgreements?.length > 0 && (
+            {interaction.relatedTradeAgreements?.length > 0 ? (
               <SummaryTable.Row
                 heading="Named trade agreement(s)"
                 children={transformArray(interaction.relatedTradeAgreements)}
               />
-            )}
-            {interaction.largeCapitalOpportunity && (
+            ) : null}
+            {interaction.largeCapitalOpportunity ? (
               <SummaryTable.Row
                 heading="Related large capital opportunity"
                 children={
@@ -157,8 +157,8 @@ const InteractionDetails = ({ interactionId }) => {
                   </Link>
                 }
               />
-            )}
-            {interaction.theme === EXPORT && (
+            ) : null}
+            {interaction.theme === EXPORT ? (
               <>
                 <SummaryTable.Row
                   heading="Helped remove an export barrier"
@@ -181,7 +181,7 @@ const InteractionDetails = ({ interactionId }) => {
                   />
                 )}
               </>
-            )}
+            ) : null}
           </SummaryTable>
           <ButtonBar>
             <Button
@@ -240,7 +240,7 @@ const InteractionDetails = ({ interactionId }) => {
 
               <div>
                 If you think the information is incomplete or incorrect,{' '}
-                <Link href={urls.support}>
+                <Link href={urls.support()}>
                   get in touch using the support form.
                 </Link>
               </div>

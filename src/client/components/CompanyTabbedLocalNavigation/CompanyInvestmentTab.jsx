@@ -66,9 +66,9 @@ const investmentNavItems = (companyId, isLCP) => [
   },
 ]
 
-const CompanyInvestmentTab = ({ navItem, index }) =>
+const CompanyInvestmentTab = ({ navItem }) =>
   navItem && (
-    <StyledTabListItem key={`tab-${index}`}>
+    <StyledTabListItem>
       <StyledTabAnchorTag
         selected={navItem.isActive}
         href={navItem.url}
@@ -90,7 +90,7 @@ const CompanyInvestmentSubNavigation = ({ companyId, isLCP }) => (
       >
         <StyledUnorderedList data-test="tabbedLocalNavList">
           {investmentNavItems(companyId, isLCP).map((t, index) => (
-            <CompanyInvestmentTab navItem={t} index={index} />
+            <CompanyInvestmentTab navItem={t} index={index} key={index} />
           ))}
         </StyledUnorderedList>
       </StyledNav>

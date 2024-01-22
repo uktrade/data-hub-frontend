@@ -53,7 +53,7 @@ const EventDetails = ({
       text: 'Events',
     },
     {
-      text: name,
+      text: name || '',
     },
   ]
 
@@ -164,6 +164,10 @@ const EventDetails = ({
       </Task.Status>
     </DefaultLayout>
   )
+}
+
+EventDetails.defaultProps = {
+  name: 'Event',
 }
 
 export default connect(state2props)(EventDetails)

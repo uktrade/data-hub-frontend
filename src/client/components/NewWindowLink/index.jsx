@@ -37,7 +37,7 @@ const NewWindowLink = ({ href, children, showWarning = true, ...rest }) => (
 
 NewWindowLink.propTypes = {
   href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   showWarning: PropTypes.bool,
 }
 

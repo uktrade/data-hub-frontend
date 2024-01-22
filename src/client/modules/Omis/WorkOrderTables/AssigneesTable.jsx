@@ -58,7 +58,7 @@ const calculateTotalEstimatedHours = (assignees) => {
 
 const buildAssigneeRows = (assignees, order) =>
   assignees.map(({ adviser, estimatedTime, isLead }) => (
-    <Table.Row>
+    <Table.Row key={adviser.id}>
       <Table.Cell setWidth="one-half">
         {setAssigneeNameText(adviser, isLead)}
       </Table.Cell>
@@ -91,6 +91,7 @@ const AssigneesTable = ({ assignees, order }) => (
       [
         isOrderActive(order) && (
           <Link
+            key="addAssigneeLink"
             href={urls.omis.edit.assignees(order.id)}
             aria-label={`${setAdviserEditText(
               assignees,
@@ -104,6 +105,7 @@ const AssigneesTable = ({ assignees, order }) => (
         ),
         canEditOrder(order) && (
           <Link
+            key="estimateHours"
             href={urls.omis.edit.assigneeTime(order.id)}
             data-test="assignee-time-link"
             noVisitedState={true}

@@ -88,8 +88,8 @@ function CompanySearchStep({
 }
 
 CompanySearchStep.propTypes = {
-  countryName: PropTypes.string.isRequired,
-  countryIsoCode: PropTypes.string.isRequired,
+  countryName: PropTypes.string,
+  countryIsoCode: PropTypes.string,
   csrfToken: PropTypes.string.isRequired,
 }
 

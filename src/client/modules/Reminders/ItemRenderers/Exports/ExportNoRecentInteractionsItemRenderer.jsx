@@ -8,6 +8,7 @@ export const ExportNoRecentInteractionsItemRenderer = (
   disableDelete
 ) => (
   <ExportItemRenderer
+    key={item.id}
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}

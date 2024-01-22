@@ -42,7 +42,7 @@ const CompanyContactsCollection = ({
           breadcrumbs={[{ text: 'Contacts' }]}
           returnUrl={returnUrl}
         >
-          {company.archived && (
+          {company.archived ? (
             <Details
               summary="Why can I not add a contact?"
               data-test="archived-details"
@@ -52,7 +52,7 @@ const CompanyContactsCollection = ({
                 Click here to unarchive
               </Link>
             </Details>
-          )}
+          ) : null}
           <FilteredCollectionList
             {...props}
             collectionName="contact"

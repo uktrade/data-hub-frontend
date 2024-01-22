@@ -94,8 +94,8 @@ const AccountManagementCard = ({ company }) => {
         {buildCellContents(
           viewablePrimaryContacts.length > 0,
           <StyledAddressList>
-            {viewablePrimaryContacts.map((contact) => (
-              <li>
+            {viewablePrimaryContacts.map((contact, index) => (
+              <li key={`${contact.id}-${index}`}>
                 <Link
                   data-test={`contact-${contact.id}-link`}
                   href={urls.contacts.details(contact.id)}

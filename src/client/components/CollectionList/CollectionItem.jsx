@@ -139,7 +139,7 @@ const CollectionItem = ({
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
-  subheading: PropTypes.string,
+  subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   badges: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,

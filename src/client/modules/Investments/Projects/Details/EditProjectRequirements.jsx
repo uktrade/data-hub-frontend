@@ -88,7 +88,7 @@ const EditProjectRequirements = () => {
               type="text"
               name="client_requirements"
               label="Client requirements"
-              initialValue={project.clientRequirements}
+              initialValue={project.clientRequirements || ''}
             />
             <FieldRadios
               name="client_considering_other_countries"
@@ -142,10 +142,10 @@ const EditProjectRequirements = () => {
                         hideCountyField={true}
                         useStaticPostcodeField={true}
                         initialValue={{
-                          address1: project.address1,
-                          address2: project.address2,
-                          town: project.addressTown,
-                          postcode: project.addressPostcode,
+                          address1: project.address1 || '',
+                          address2: project.address2 || '',
+                          town: project.addressTown || '',
+                          postcode: project.addressPostcode || '',
                         }}
                       />
                       <FieldUKRegionTypeahead

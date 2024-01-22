@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 // this is because there isn't necessarily a unique id to use as the key
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { Route, useHistory, useLocation } from 'react-router-dom'
 import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
@@ -93,21 +93,28 @@ const FilteredCollectionList = ({
   useReactRouter = false,
   collectionItemTemplate = collectionItemTemplateDefault,
 }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
+  const qsParams = qs.parse(location.search.slice(1))
+
+  useEffect(() => {
+    if (defaultQueryParams && isEmpty(qsParams)) {
+      history.push({
+        search: qs.stringify({
+          ...defaultQueryParams,
+        }),
+      })
+    }
+  }, [])
+
   return (
     <Route>
-      {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
+      {() => {
         const initialPage = getPageNumber(qsParams)
-        if (defaultQueryParams && isEmpty(qsParams)) {
-          history.push({
-            search: qs.stringify({
-              ...defaultQueryParams,
-            }),
-          })
-        }
         return (
           <GridRow data-test="collection-list">
             {children}
@@ -144,8 +151,8 @@ const FilteredCollectionList = ({
                   {() =>
                     isComplete && (
                       <ol aria-live="polite">
-                        {results.map((item) => (
-                          <Analytics>
+                        {results.map((item, index) => (
+                          <Analytics key={`${item.id}-${index}`}>
                             {(pushAnalytics) =>
                               collectionItemTemplate(
                                 item,

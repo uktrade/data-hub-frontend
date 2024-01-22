@@ -62,7 +62,10 @@ const ContactLayout = ({ contact, flashMessages, permissions, children }) => {
 ContactLayout.propTypes = {
   contact: PropTypes.object.isRequired,
   permissions: PropTypes.array.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]).isRequired,
 }
 
 export default ContactLayout

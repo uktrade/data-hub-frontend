@@ -22,9 +22,13 @@ const StyledLink = styled(Link)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
+const getEstimatedTime = (estimatedTime) => {
+  return estimatedTime > 0 ? (estimatedTime / 60).toString() : ''
+}
+
 const buildRows = (assignees) =>
   assignees.map(({ adviser, estimatedTime }, index) => (
-    <Table.Row>
+    <Table.Row key={adviser.id}>
       <Table.Cell bold={true}>{adviser.name}</Table.Cell>
       <Table.Cell>
         <FormLayout setWidth={FORM_LAYOUT.ONE_HALF}>
@@ -32,7 +36,7 @@ const buildRows = (assignees) =>
             name={`${adviser.id}`}
             dataTest={`adviser-${index}`}
             type="text"
-            initialValue={estimatedTime > 0 ? estimatedTime / 60 : null}
+            initialValue={getEstimatedTime(estimatedTime)}
             validate={validateNumber}
           />
         </FormLayout>

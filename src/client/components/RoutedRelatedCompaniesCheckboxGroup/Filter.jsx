@@ -48,7 +48,7 @@ const RoutedRelatedCompaniesCheckboxGroup = ({ company, selectedOptions }) => (
                   }
                   selectedOptions={selectedOptions}
                   data-test="include-related-companies-filter"
-                  aria-description={
+                  aria-describedby={
                     relatedCompaniesCountResponse.reducedTree
                       ? SUBSIDIARIES_LIMITED_LABEL
                       : undefined

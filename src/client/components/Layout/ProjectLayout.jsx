@@ -152,10 +152,13 @@ export const ProjectLayout = ({
 )
 
 ProjectLayout.propTypes = {
-  project: PropTypes.object.isRequired,
+  project: PropTypes.object,
   breadcrumbs: PropTypes.array.isRequired,
   pageTitle: PropTypes.string.isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element,
+  ]).isRequired,
   userPermissions: PropTypes.array.isRequired,
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([

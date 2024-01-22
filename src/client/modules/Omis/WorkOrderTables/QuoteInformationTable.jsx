@@ -13,6 +13,7 @@ const QuoteInformationTable = ({ order }) => (
     actions={
       canEditOrder(order) && (
         <Link
+          key="editQuoteInfoLink"
           href={urls.omis.edit.quote(order.id)}
           data-test="edit-quote-info-link"
           noVisitedState={true}

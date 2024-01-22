@@ -68,7 +68,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
       {(project) => (
         <ProjectLayout
           project={project}
-          breadcrumbs={{ text: project.name }}
+          breadcrumbs={[{ text: project.name }]}
           pageTitle={project.name}
         >
           <InvestmentProjectStageResource>
@@ -131,6 +131,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
                 heading="Client contacts"
                 value={project.clientContacts.map((contact, i) => (
                   <Link
+                    key={`${contact}-${i}`}
                     href={urls.contacts.contact(contact.id)}
                     data-test={`contact-` + i}
                   >
@@ -139,54 +140,54 @@ const ProjectDetails = ({ currentAdviserId }) => {
                 ))}
               />
             )}
-            {project.description && (
+            {project.description ? (
               <SummaryTable.TextRow
                 heading="Project description"
                 value={project.description}
               />
-            )}
-            {project.anonymousDescription && (
+            ) : null}
+            {project.anonymousDescription ? (
               <SummaryTable.TextRow
                 heading="Anonymised description"
                 value={project.anonymousDescription}
               />
-            )}
-            {project.estimatedLandDate && (
+            ) : null}
+            {project.estimatedLandDate ? (
               <SummaryTable.TextRow
                 heading="Estimated land date"
                 value={format(project.estimatedLandDate, 'MMMM yyyy')}
               />
-            )}
-            {project.likelihoodToLand && (
+            ) : null}
+            {project.likelihoodToLand ? (
               <SummaryTable.TextRow
                 heading="Likelihood of landing"
                 value={project.likelihoodToLand?.name}
               />
-            )}
-            {project.actualLandDate && (
+            ) : null}
+            {project.actualLandDate ? (
               <SummaryTable.TextRow
                 heading="Actual land date"
                 value={format(project.actualLandDate, DATE_LONG_FORMAT_1)}
               />
-            )}
-            {project.investorType && (
+            ) : null}
+            {project.investorType ? (
               <SummaryTable.TextRow
                 heading="New or existing investor"
                 value={project.investorType?.name}
               />
-            )}
-            {project.levelOfInvolvement && (
+            ) : null}
+            {project.levelOfInvolvement ? (
               <SummaryTable.TextRow
                 heading="Level of involvement"
                 value={project.levelOfInvolvement?.name}
               />
-            )}
-            {project.specificProgramme && (
+            ) : null}
+            {project.specificProgramme ? (
               <SummaryTable.TextRow
                 heading="Specific investment programme"
                 value={project.specificProgramme?.name}
               />
-            )}
+            ) : null}
           </SummaryTable>
           <Button
             as={Link}
@@ -209,12 +210,12 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   value={transformArray(project.strategicDrivers)}
                 />
               )}
-            {project.clientRequirements && (
+            {project.clientRequirements ? (
               <SummaryTable.TextRow
                 heading="Client requirements"
                 value={project.clientRequirements}
               />
-            )}
+            ) : null}
             {project.competitorCountries &&
               project.competitorCountries.length > 0 && (
                 <SummaryTable.TextRow
@@ -331,7 +332,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
             {project.grossValueAdded && (
               <SummaryTable.CurrencyRow
                 heading="Gross Value Added (GVA)"
-                value={project.grossValueAdded}
+                value={+project.grossValueAdded}
               />
             )}
             {project.governmentAssistance != null && (

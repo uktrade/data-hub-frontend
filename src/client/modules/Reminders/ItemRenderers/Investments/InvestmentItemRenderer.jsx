@@ -15,6 +15,7 @@ const ItemContent = ({ item }) => (
 
 const InvestmentItemRenderer = (item, onDeleteReminder, disableDelete) => (
   <ItemRenderer
+    key={item.id}
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}

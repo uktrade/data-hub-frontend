@@ -64,8 +64,8 @@ const EntityListItem = ({ id, onEntityClick, data, text, heading, meta }) => {
   return (
     <StyledEntity
       key={`entity_${id}`}
-      tabIndex={isClickable && 0}
-      role={isClickable && 'button'}
+      tabIndex={isClickable ? 0 : undefined}
+      role={isClickable ? 'button' : undefined}
       onClick={() => isClickable && onEntityClick(data)}
       onKeyDown={(e) =>
         isClickable && e.keyCode === KEY_ENTER && onEntityClick(data)

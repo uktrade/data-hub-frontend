@@ -194,7 +194,6 @@ InteractionDetailsForm.propTypes = {
   contactId: PropTypes.string,
   interactionId: PropTypes.string,
   user: PropTypes.object,
-  ...StepInteractionDetails.propTypes,
 }
 
 export default connect(({ values, ...state }) => ({

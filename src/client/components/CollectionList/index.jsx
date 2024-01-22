@@ -142,7 +142,7 @@ CollectionList.propTypes = {
   }),
   maxItemsToPaginate: PropTypes.number,
   maxItemsToDownload: PropTypes.number,
-  onPageClick: PropTypes.func.isRequired,
+  onPageClick: PropTypes.func,
   addItemUrl: PropTypes.string,
   metadataRenderer: PropTypes.func,
   footerRenderer: PropTypes.func,

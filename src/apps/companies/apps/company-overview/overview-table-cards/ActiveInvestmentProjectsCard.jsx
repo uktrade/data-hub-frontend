@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link, Table } from 'govuk-react'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
@@ -92,7 +92,7 @@ const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
 
 const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
   upcomingActiveInvestments.map((activeInvestment) => (
-    <>
+    <Fragment key={activeInvestment.id}>
       <StyledTableRow>
         <StyledActiveInvestmentHeadingTableCell colSpan={2}>
           <StyledActiveInvestmentSubject>
@@ -175,7 +175,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
           )}
         </StyledActiveInvestmentTableBottomCell>
       </StyledActiveInvestmentTableBottomRow>
-    </>
+    </Fragment>
   ))
 
 const ActiveInvestmentProjectsCard = ({

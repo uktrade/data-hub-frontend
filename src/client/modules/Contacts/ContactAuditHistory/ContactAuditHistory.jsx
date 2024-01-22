@@ -40,33 +40,36 @@ const ContactAuditHistory = ({
         {(contactAuditHistory) => (
           <>
             <ContactLayout contact={contact} permissions={permissions}>
-              <SectionHeader type="audit">Audit history</SectionHeader>
-              <CollectionHeader
-                totalItems={contactAuditHistory.count}
-                collectionName="result"
-                data-test="audit-results"
-              />
-              {contactAuditHistory.count > 0 && (
-                <CollectionSort
-                  totalPages={getTotalPages(
-                    contactAuditHistory.count,
-                    pageSize
-                  )}
+              <>
+                <SectionHeader type="audit">Audit history</SectionHeader>
+                <CollectionHeader
+                  totalItems={contactAuditHistory.count}
+                  collectionName="result"
+                  data-test="audit-results"
                 />
-              )}
+                {contactAuditHistory.count > 0 ? (
+                  <CollectionSort
+                    totalPages={getTotalPages(
+                      contactAuditHistory.count,
+                      pageSize
+                    )}
+                  />
+                ) : null}
 
-              <CollectionList
-                items={transformResponseToCollection(contactAuditHistory)}
-                count={contactAuditHistory.count}
-                activePage={page}
-                data-test="contact-audit-history-list"
-              />
-              <RoutedPagination
-                initialPage={page}
-                items={contactAuditHistory.count}
-                pageSize={pageSize}
-                totalPages={getTotalPages(contactAuditHistory.count)}
-              />
+                <CollectionList
+                  items={transformResponseToCollection(contactAuditHistory)}
+                  count={contactAuditHistory.count}
+                  activePage={page}
+                  data-test="contact-audit-history-list"
+                  onPageClick={() => {}}
+                />
+                <RoutedPagination
+                  initialPage={page}
+                  items={contactAuditHistory.count}
+                  pageSize={pageSize}
+                  totalPages={getTotalPages(contactAuditHistory.count)}
+                />
+              </>
             </ContactLayout>
           </>
         )}

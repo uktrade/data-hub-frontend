@@ -51,13 +51,13 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
     {(contact) => (
       <>
         <ContactLayout contact={contact} permissions={permissions}>
-          {contact.validEmail === false && (
+          {contact.validEmail === false ? (
             <ErrorSummary
               heading="Please update the email address"
               description={errorMsg}
               errors={[]}
             />
-          )}
+          ) : null}
           <SummaryTable
             caption="Contact details"
             data-test="contact-details-table"
@@ -77,12 +77,12 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
               children={contact.email}
               flag={contact.validEmail === false}
             />
-            {contact.notes && (
+            {contact.notes ? (
               <SummaryTable.Row
                 heading="More details"
                 children={contact.notes}
               />
-            )}
+            ) : null}
             <SummaryTable.Row
               heading="Email marketing"
               children={
@@ -92,7 +92,7 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
               }
             />
           </SummaryTable>
-          {!contact.archived && (
+          {!contact.archived ? (
             <Button
               as={Link}
               href={urls.contacts.edit(contactId)}
@@ -102,7 +102,7 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
             >
               Edit Contact
             </Button>
-          )}
+          ) : null}
 
           <ArchiveForm
             id={ID}

@@ -38,7 +38,12 @@ const ExportsIndex = ({ companyId, returnUrl }) => {
             caption="Exports"
             actions={
               !company.archived && (
-                <Link href={urls.companies.exports.edit(companyId)}>Edit</Link>
+                <Link
+                  href={urls.companies.exports.edit(companyId)}
+                  key={companyId}
+                >
+                  Edit
+                </Link>
               )
             }
           >
@@ -87,8 +92,8 @@ const ExportsIndex = ({ companyId, returnUrl }) => {
             repeatedly tested their model against a subset of known-good data to
             improve it. The scores are as follows:
             <ol>
-              {Object.values(exportPotentialLabels).map((category) => (
-                <li key={category.text}>
+              {Object.values(exportPotentialLabels).map((category, index) => (
+                <li key={`${category.text}-${index}`}>
                   <strong>{category.text}</strong> - {category.description}
                 </li>
               ))}
@@ -106,6 +111,7 @@ const ExportsIndex = ({ companyId, returnUrl }) => {
                 <Link
                   href={urls.companies.exports.editCountries(companyId)}
                   data-test-id="edit-export-countries"
+                  key={companyId}
                 >
                   Edit
                 </Link>

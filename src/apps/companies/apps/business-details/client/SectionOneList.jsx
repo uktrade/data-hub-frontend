@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
@@ -20,8 +21,8 @@ const getLocation = (manager) => {
   return manager.ditTeam.ukRegion
     ? manager.ditTeam.ukRegion.name
     : manager.ditTeam.country
-      ? manager.ditTeam.country.name
-      : '-'
+    ? manager.ditTeam.country.name
+    : '-'
 }
 
 const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
@@ -33,7 +34,9 @@ const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
         actions={
           !isArchived &&
           !isDnbCompany && (
-            <Link href={urls.companies.edit(company.id)}>Edit</Link>
+            <Link href={urls.companies.edit(company.id)} key={company.id}>
+              Edit
+            </Link>
           )
         }
       >

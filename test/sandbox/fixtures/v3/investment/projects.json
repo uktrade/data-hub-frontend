@@ -2865,7 +2865,8 @@
       "id": "ac4b1006-56af-40e0-8615-7aba53e0e4bf",
       "name": "A nice investment",
       "investor_company": {
-        "id": "ba3h7106-56af-40e0-8615-7aba53e0e4bf"
+        "id": "ba3h7106-56af-40e0-8615-7aba53e0e4bf",
+        "name": "Some company"
       },
       "stage": {
         "name": "Active",

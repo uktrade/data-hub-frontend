@@ -84,7 +84,7 @@ describe('Edit the management advisers for a project', () => {
         const expectedBody = {
           id: incompleteProject.id,
           project_assurance_adviser: '2c42c516-9898-e211-a939-e4115bead28a',
-          project_manager: null,
+          project_manager: '',
         }
         selectFirstMockedTypeaheadOption({
           element: '#field-project_assurance_adviser',
@@ -101,7 +101,7 @@ describe('Edit the management advisers for a project', () => {
       it('should submit the form with only PM typeahead filled in and redirect', () => {
         const expectedBody = {
           id: incompleteProject.id,
-          project_assurance_adviser: null,
+          project_assurance_adviser: '',
           project_manager: '2c42c516-9898-e211-a939-e4115bead28a',
         }
         selectFirstMockedTypeaheadOption({

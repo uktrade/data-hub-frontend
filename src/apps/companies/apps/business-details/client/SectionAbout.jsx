@@ -36,7 +36,11 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
     caption={`About ${company.name}`}
     data-test="aboutDetailsContainer"
     actions={
-      !isArchived && <Link href={urls.companies.edit(company.id)}>Edit</Link>
+      !isArchived && (
+        <Link href={urls.companies.edit(company.id)} key={company.id}>
+          Edit
+        </Link>
+      )
     }
   >
     <SummaryTable.Row heading="VAT number" hideWhenEmpty={true}>
