@@ -45,7 +45,10 @@ const CompanyLayoutNew = ({
 
 CompanyLayoutNew.propTypes = {
   company: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
   isInvestment: PropTypes.bool,
   isLCP: PropTypes.bool,
 }
