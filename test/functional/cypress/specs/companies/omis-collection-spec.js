@@ -129,9 +129,9 @@ describe('Company Orders (OMIS) Collection Page', () => {
           count: ordersList.length,
           results: ordersList,
         },
-      }).as('apiRequest')
+      }).as('apiPayloadRequest')
       cy.visit(`${urls.companies.orders(oneListCorp.id)}?${queryString}`)
-      assertPayload('@apiRequest', {
+      assertPayload('@apiPayloadRequest', {
         offset: 0,
         limit: 10,
         sortby: 'modified_on:desc',
