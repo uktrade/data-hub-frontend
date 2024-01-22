@@ -80,7 +80,7 @@ const CustomerDetailsStep = () => {
         id="export-experience"
         label="Export experience"
         required="Select export experience"
-        hint="You customer will be asked to confirm this information."
+        hint="Your customer will be asked to confirm this information."
         field={FieldTypeahead}
         resource={ExportExperienceResource}
       />

@@ -334,7 +334,7 @@ describe('Adding an export win', () => {
         assertFieldTypeahead({
           element,
           label: 'Export experience',
-          hint: 'You customer will be asked to confirm this information.',
+          hint: 'Your customer will be asked to confirm this information.',
         })
       })
     })
