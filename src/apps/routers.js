@@ -117,6 +117,9 @@ const reactRoutes = [
   '/companies/:companyId/contacts',
   '/companies/:companyId/orders',
   '/companies/:companyId/account-management',
+  '/companies/:companyId/investments',
+  '/companies/:companyId/investments/projects',
+  '/companies/:companyId/investments/large-capital-profile',
 ]
 
 reactRoutes.forEach((path) => {
