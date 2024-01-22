@@ -14,3 +14,8 @@ export const state2props = (state) => {
   }
   return { objectiveItem }
 }
+
+export const state2propsMainTab = (state) => ({
+  csrfToken: state.csrfToken,
+  permissions: state.userPermissions,
+})
