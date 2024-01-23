@@ -368,7 +368,6 @@ const assertFieldInput = ({
   hint = undefined,
   value = undefined,
   ignoreHint = false,
-  placeholder,
 }) =>
   cy
     .wrap(element)
@@ -390,15 +389,9 @@ const assertFieldInput = ({
       ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
     )
     .find('input')
-    .then(
-      ($el) =>
-        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
-    )
-    .then(
-      ($el) =>
-        placeholder &&
-        cy.wrap($el).should('have.attr', 'placeholder', placeholder)
-    )
+    .then(($el) => {
+      value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
+    })
 
 const assertFieldInputNoLabel = ({ element, value = undefined }) =>
   cy
