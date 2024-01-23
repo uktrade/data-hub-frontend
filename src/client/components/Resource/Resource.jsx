@@ -152,7 +152,9 @@ export const createEntityResource = (name, endpoint) => {
     <Resource transformer={transformer} {...props} name={name} />
   )
 
-  Component.Inline = (props) => <Resource.Inline {...props} name={name} />
+  Component.Inline = (props) => (
+    <Resource.Inline transformer={transformer} {...props} name={name} />
+  )
 
   Component.propTypes = _.omit(Component.propTypes, 'name')
   Component.tasks = {
