@@ -206,6 +206,7 @@ import {
   getEventType as _eventType,
   getProgramme as _programme,
   getBusinessType as _businessType,
+  getBusinessPotential as _businessPotential,
   getEvidenceTag as _evidenceTag,
   getEmployeeRange as _employeeRange,
   getCountry as _country,
@@ -397,6 +398,7 @@ app.get('/metadata/one-list-tier/', getOneListTier)
 
 // V4 Metadata endpoints
 app.get('/v4/metadata/team-type/', _teamType)
+app.get('/v4/metadata/business-potential/', _businessPotential)
 app.get('/v4/metadata/likelihood-to-land', _likelihoodToLand)
 app.get('/v4/metadata/export-experience-category', _exportExperienceCategory)
 app.get('/v4/metadata/investment-investor-type', _investmentInvestorType)

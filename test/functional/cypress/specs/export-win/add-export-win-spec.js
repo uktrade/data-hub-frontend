@@ -279,8 +279,87 @@ describe('Adding an export win', () => {
   })
 
   context('Customer details', () => {
-    it('should complete this step and continue to "Win details"', () => {
+    // The 4 typeaheads on the form step
+    const contacts = '[data-test="field-company_contacts"]'
+    const location = '[data-test="field-customer_location"]'
+    const potential = '[data-test="field-business_potential"]'
+    const experience = '[data-test="field-export_experience"]'
+
+    beforeEach(() =>
       cy.visit(`${urls.companies.exportWins.create()}${customerDetails}`)
+    )
+
+    it('should render a step heading', () => {
+      cy.get('[data-test="step-heading"]').should(
+        'have.text',
+        'Customer details'
+      )
+    })
+
+    it('should show a contact link and details', () => {
+      cy.get('[data-test="add-a-new-contact-link"]').should('be.visible')
+      cy.get('[data-test="contact-information-details"]').should('be.visible')
+    })
+
+    it('should render Company contacts label and a Typeahead', () => {
+      cy.get(contacts).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Company contacts',
+          hint: 'This contact will be emailed to approve the win.',
+        })
+      })
+    })
+
+    it('should render HQ location label and a Typeahead', () => {
+      cy.get(location).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'HQ location',
+        })
+      })
+    })
+
+    it('should render Export potential label and a Typeahead', () => {
+      cy.get(potential).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Export potential',
+        })
+      })
+    })
+
+    it('should render Export potential label and a Typeahead', () => {
+      cy.get(experience).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Export experience',
+          hint: 'Your customer will be asked to confirm this information.',
+        })
+      })
+    })
+
+    it('should display validation error messages on mandatory fields', () => {
+      clickContinueButton()
+      assertErrorSummary([
+        'Select a contact',
+        'Select HQ location',
+        'Select export potential',
+        'Select export experience',
+      ])
+      assertFieldError(cy.get(contacts), 'Select a contact', true)
+      assertFieldError(cy.get(location), 'Select HQ location', false)
+      assertFieldError(cy.get(potential), 'Select export potential', false)
+      assertFieldError(cy.get(experience), 'Select export experience', true)
+    })
+
+    it('should complete this step and continue to "Win details"', () => {
+      cy.get(contacts).selectTypeaheadOption('Joseph Woof')
+      cy.get(location).selectTypeaheadOption('Scotland')
+      cy.get(potential).selectTypeaheadOption(
+        'The company is a Medium Sized Business'
+      )
+      cy.get(experience).selectTypeaheadOption('Never exported')
       clickContinueAndAssertUrl(winDetails)
     })
   })

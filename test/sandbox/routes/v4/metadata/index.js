@@ -21,6 +21,7 @@ import locationType from '../../../fixtures/v4/metadata/location-type.json' asse
 import eventType from '../../../fixtures/v4/metadata/event-type.json' assert { type: 'json' }
 import programme from '../../../fixtures/v4/metadata/programme.json' assert { type: 'json' }
 import businessType from '../../../fixtures/v4/metadata/business-type.json' assert { type: 'json' }
+import businessPotential from '../../../fixtures/v4/metadata/business-potential.json' assert { type: 'json' }
 import evidenceTag from '../../../fixtures/v4/metadata/evidence-tag.json' assert { type: 'json' }
 import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' assert { type: 'json' }
 import country from '../../../fixtures/v4/metadata/country.json' assert { type: 'json' }
@@ -145,6 +146,10 @@ export const getProgramme = function (req, res) {
 
 export const getBusinessType = function (req, res) {
   res.json(businessType)
+}
+
+export const getBusinessPotential = function (req, res) {
+  res.json(businessPotential)
 }
 
 export const getEvidenceTag = function (req, res) {
