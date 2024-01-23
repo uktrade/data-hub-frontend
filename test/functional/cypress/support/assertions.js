@@ -412,9 +412,8 @@ const assertFieldInputNoLabel = ({ element, value = undefined }) =>
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
-const assertFieldTextarea = ({ element, label, hint, value, wordCount }) =>
-  cy
-    .wrap(element)
+const assertFieldTextarea = ({ element, label, hint, value, wordCount }) => {
+  cy.wrap(element)
     .find('label')
     .should('contain', label)
     .parent()
@@ -430,9 +429,9 @@ const assertFieldTextarea = ({ element, label, hint, value, wordCount }) =>
     .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
-    .parent()
-    .find('p')
-    .then(($el) => wordCount && cy.wrap($el).should('have.text', wordCount))
+
+  wordCount && cy.wrap(element).find('p').should('have.text', wordCount)
+}
 
 const assertFieldTextareaNoLabel = ({ element, value = undefined }) =>
   cy
