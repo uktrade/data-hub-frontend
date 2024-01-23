@@ -23,6 +23,8 @@ Prerequisite:
 
 Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container.
 
+> If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Visual & Visual Component Tests section, before retrying the build command below.
+
 ```bash
 export VERSION=3.0.1 # Increment this version each time when you edit Dockerfile.
 

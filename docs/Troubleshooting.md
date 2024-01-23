@@ -230,3 +230,64 @@ at endReadableNT (node: internal/streams/readable: 1345:12)
 at processTicksAndRejections (node: internal/process/task queues: 83:21) {"date" "Mon Jun 20 2022 10-34:32 GMT+9190 (Britich Summer Time')
 
 **Solution** Bring down your local frontend, enable the VPN and then run `npm run develop` again. The frontend should now work correctly.
+
+## Test Issues
+
+This section is for issues when running tests locally in accordance with the [running tests](./Running%20tests.md) documentation.
+
+### Visual & Visual Component Tests
+
+Visual and visual-component tests should always be run within docker (using the `make` commands) to ensure the screenshot resolutions are consistent, otherwise you may find the tests fail with an error message similar to `Error: Image difference greater than threshold: 0`.
+
+However, when running the `make` commands on Macs with Apple chips, you may come across errors with Cypress or the test runners failing to start:
+
+```
+> test:visual-component
+> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual-component/cypress/specs/**/*.js"]}' --browser chrome
+
+qemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped
+qemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+The Test Runner unexpectedly exited via a exit event with signal SIGSEGV
+
+Please search Cypress documentation for possible solutions:
+
+https://on.cypress.io
+
+Check if there is a GitHub issue describing this crash:
+
+https://github.com/cypress-io/cypress/issues
+
+Consider opening a new issue.
+
+----------
+
+Platform: linux-x64 (Debian - 10)
+Cypress Version: 12.17.4
+make: *** [visual-component-tests] Error 1
+```
+
+**Solution**: ensure you have checked the following and then re-build/re-run the containers/`make` commands.
+
+- Have Rosetta 2 installed on your Mac (see [Apple's support page](https://support.apple.com/en-gb/HT211861) for more information on this)
+- Have the latest version of Docker Desktop installed
+- Have enabled the `Use Rosetta for x86/amd64 emulation on Apple Silicon` setting under the general tab in Docker Desktop
+
+#### Visual & Visual Component Tests Hanging
+
+After following the above steps, you may find the visual tests eventually start, but get stuck (or hang) on the first. You might see console output similar to:
+
+```
+> test:visual-component
+> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual-component/cypress/specs/**/*.js"]}' --browser chrome
+
+[125:0123/090101.393020:ERROR:node_bindings.cc(279)] Most NODE_OPTIONs are not supported in packaged apps. See documentation for more details.
+
+DevTools listening on ws://127.0.0.1:39919/devtools/browser/641efdf5-1f09-42da-9409-027f3d7d6ae7
+[315:0123/090102.938113:ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
+Couldn't find tsconfig.json. tsconfig-paths will be skipped
+```
+
+We are still investigating the root cause of this issue, but preliminary results point to the frontend dependencies docker image, and how that has been built.
+
+We believe this issue only arises when running the tests locally and CircleCI should continue to run the tests without problems.
