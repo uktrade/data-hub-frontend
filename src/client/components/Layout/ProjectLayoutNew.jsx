@@ -83,7 +83,7 @@ export const ProjectLayoutNew = ({
               >
                 Tasks
               </LocalNavLink>
-              {userCanViewInteractions(userPermissions) ? (
+              {userCanViewInteractions(userPermissions) && (
                 <LocalNavLink
                   dataTest="project-interactions-link"
                   href={localProjectUrl(
@@ -94,8 +94,8 @@ export const ProjectLayoutNew = ({
                 >
                   Interactions
                 </LocalNavLink>
-              ) : null}
-              {userCanViewPropositions(userPermissions) ? (
+              )}
+              {userCanViewPropositions(userPermissions) && (
                 <LocalNavLink
                   dataTest="project-propositions-link"
                   href={localProjectUrl(
@@ -105,7 +105,7 @@ export const ProjectLayoutNew = ({
                 >
                   Propositions
                 </LocalNavLink>
-              ) : null}
+              )}
               <LocalNavLink
                 dataTest="project-evaluation-link"
                 href={localProjectUrl(
@@ -133,7 +133,7 @@ export const ProjectLayoutNew = ({
               >
                 Evidence
               </LocalNavLink>
-              {userCanViewAdmin(userPermissions) ? (
+              {userCanViewAdmin(userPermissions) && (
                 <LocalNavLink
                   dataTest="project-admin-link"
                   href={localProjectUrl(
@@ -143,7 +143,7 @@ export const ProjectLayoutNew = ({
                 >
                   Admin
                 </LocalNavLink>
-              ) : null}
+              )}
             </LocalNav>
           </StyledNavWrapper>
         </GridCol>
