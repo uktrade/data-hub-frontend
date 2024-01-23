@@ -73,6 +73,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
     <ProjectLayoutNew
       projectId={projectId}
       projectName={<InvestmentName id={projectId} />}
+      breadcrumbs={{ text: <InvestmentName id={projectId} /> }}
       pageTitle="Page title"
     >
       <InvestmentResource id={projectId}>

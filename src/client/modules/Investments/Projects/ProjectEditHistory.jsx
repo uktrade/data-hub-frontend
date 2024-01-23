@@ -8,7 +8,7 @@ import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from './constants'
 import EditHistory from '../../../components/EditHistory/EditHistory'
 import { InvestmentResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
+import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 import { formatMediumDateTime, isDateValid } from '../../../utils/date'
 
 function getValue(value) {
@@ -33,34 +33,37 @@ function getUpdatedBy(timestamp, changedBy) {
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 
+const InvestmentName = (props) => (
+  <InvestmentResource.Inline {...props}>
+    {(project) => project.name}
+  </InvestmentResource.Inline>
+)
 const ProjectEditHistory = () => {
   const { projectId } = useParams()
+  // const projectId = 'asdf'
   return (
-    <InvestmentResource id={projectId}>
-      {(project) => (
-        <ProjectLayout
-          project={project}
-          breadcrumbs={[
-            {
-              link: urls.investments.projects.details(project.id),
-              text: project.name,
-            },
-            { text: 'Edit history' },
-          ]}
-          pageTitle="Edit history"
-        >
-          <H2 size={LEVEL_SIZE[3]} data-test="edit-history-heading">
-            Edit history
-          </H2>
-          <EditHistory
-            dataEndpoint={urls.investments.editHistory.data(project.id)}
-            changeType={CHANGE_TYPE_TEXT}
-            getUpdatedBy={getUpdatedBy}
-            getValue={getValue}
-          />
-        </ProjectLayout>
-      )}
-    </InvestmentResource>
+    <ProjectLayoutNew
+      projectId={projectId}
+      projectName={<InvestmentName id={projectId} />}
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Edit history' },
+      ]}
+      pageTitle="Edit history"
+    >
+      <H2 size={LEVEL_SIZE[3]} data-test="edit-history-heading">
+        Edit history
+      </H2>
+      <EditHistory
+        dataEndpoint={urls.investments.editHistory.data(projectId)}
+        changeType={CHANGE_TYPE_TEXT}
+        getUpdatedBy={getUpdatedBy}
+        getValue={getValue}
+      />
+    </ProjectLayoutNew>
   )
 }
 
