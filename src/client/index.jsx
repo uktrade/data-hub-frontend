@@ -20,8 +20,6 @@ import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotF
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
-import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
-import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
@@ -181,16 +179,10 @@ function App() {
             <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
           )}
         </Mount>
-        <Mount selector="#company-export-index-page">
-          {(props) => <ExportsIndex {...props} />}
-        </Mount>
         <Mount selector="#send-referral-form">
           {(props) => (
             <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
           )}
-        </Mount>
-        <Mount selector="#company-export-full-history">
-          {(props) => <ExportsHistory {...props} />}
         </Mount>
         <Mount selector="#referral-details">
           {(props) => <ReferralDetails {...props} />}
