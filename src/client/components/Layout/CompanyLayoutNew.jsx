@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 
 import { CompanyLocalHeader, CompanyTabbedLocalNavigation, Main } from '..'
 import CompanyInvestmentSubNavigation from '../CompanyTabbedLocalNavigation/CompanyInvestmentTab'
+import WatchTextContent from '../WatchTextContent'
 
 const CompanyLayoutNew = ({
   company,
@@ -15,33 +16,32 @@ const CompanyLayoutNew = ({
   pageTitle,
   isInvestment = false,
   isLCP = false,
-}) => {
-  useEffect(() => {
-    document.title = `${pageTitle} - ${company.name} - Companies - DBT Data Hub`
-  }, [`${pageTitle} - ${company.name} - Companies - DBT Data Hub`])
-  return (
-    <>
-      <CompanyLocalHeader
-        breadcrumbs={breadcrumbs}
-        flashMessages={flashMessages}
-        company={company}
-        returnUrl={returnUrl}
-      />
-      <Main>
-        <CompanyTabbedLocalNavigation company={company} />
-        {isInvestment && (
-          <CompanyInvestmentSubNavigation
-            companyId={company.id}
-            isLCP={isLCP}
-          />
-        )}
-        <GridRow>
-          <GridCol>{children}</GridCol>
-        </GridRow>
-      </Main>
-    </>
-  )
-}
+}) => (
+  <>
+    <WatchTextContent
+      onTextContentChange={(text) => {
+        document.title = text
+      }}
+    >
+      {pageTitle} - {company.name} - Companies - DBT Data Hub
+    </WatchTextContent>
+    <CompanyLocalHeader
+      breadcrumbs={breadcrumbs}
+      flashMessages={flashMessages}
+      company={company}
+      returnUrl={returnUrl}
+    />
+    <Main>
+      <CompanyTabbedLocalNavigation company={company} />
+      {isInvestment && (
+        <CompanyInvestmentSubNavigation companyId={company.id} isLCP={isLCP} />
+      )}
+      <GridRow>
+        <GridCol>{children}</GridCol>
+      </GridRow>
+    </Main>
+  </>
+)
 
 CompanyLayoutNew.propTypes = {
   company: PropTypes.object.isRequired,
