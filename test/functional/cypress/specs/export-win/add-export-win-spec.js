@@ -1,17 +1,22 @@
-import {
-  assertUrl,
-  assertFieldError,
-  assertLocalHeader,
-  assertErrorSummary,
-  assertFieldTypeahead,
-  assertFieldRadiosWithLegend,
-} from '../../support/assertions'
+import { getTwelveMonthsAgo } from '../../../../../src/client/modules/ExportWins/Form/utils'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
 import { advisersListFaker } from '../../fakers/advisers'
 import { teamTypeListFaker } from '../../fakers/team-type'
 import { hqTeamListFaker } from '../../fakers/hq-team'
 import urls from '../../../../../src/lib/urls'
+import {
+  assertUrl,
+  assertFieldInput,
+  assertFieldError,
+  assertLocalHeader,
+  assertErrorSummary,
+  assertFieldTextarea,
+  assertFieldTypeahead,
+  assertFieldDateShort,
+  assertFieldCheckboxes,
+  assertFieldRadiosWithLegend,
+} from '../../support/assertions'
 
 const clickContinueAndAssertUrl = (url) => {
   clickContinueButton()
@@ -365,8 +370,212 @@ describe('Adding an export win', () => {
   })
 
   context('Win details', () => {
-    it('should complete this step and continue to "Support provided"', () => {
+    // Helpers
+    const twelveMonthsAgo = getTwelveMonthsAgo()
+    const month = twelveMonthsAgo.getMonth() + 1
+    const year = twelveMonthsAgo.getFullYear()
+
+    // Fields
+    const country = '[data-test="field-country"]'
+    const date = '[data-test="field-date"]'
+    const description = '[data-test="field-description"]'
+    const nameOfCustomer = '[data-test="field-name_of_customer"]'
+    const confidential = '[data-test="field-name_of_customer_confidential"]'
+    const businessType = '[data-test="field-business_type"]'
+    const winType = '[data-test="field-win_type"]'
+    const goodsVsServices = '[data-test="field-goods_vs_services"]'
+    const nameOfExport = '[data-test="field-name_of_export"]'
+    const sector = '[data-test="field-sector"]'
+
+    beforeEach(() =>
       cy.visit(`${urls.companies.exportWins.create()}${winDetails}`)
+    )
+
+    it('should render a step heading', () => {
+      cy.get('[data-test="step-heading"]').should('have.text', 'Win details')
+    })
+
+    it('should render a hint', () => {
+      cy.get('[data-test="hint"]').should(
+        'have.text',
+        'The customer will be asked to confirm this infomation.'
+      )
+    })
+
+    it('should render Destination country label and a Typeahead', () => {
+      cy.get(country).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Destination country',
+        })
+      })
+    })
+
+    it('should render the Win date', () => {
+      cy.get(date).then((element) => {
+        // Both Month and Year labels are tested within the assertion
+        assertFieldDateShort({
+          element,
+          label: 'Date won',
+          hint: `For example ${month} ${year}, date of win must be in the last 12 months.`,
+        })
+      })
+    })
+
+    it('should render Summary of the support given', () => {
+      cy.get(description).then((element) => {
+        assertFieldTextarea({
+          element,
+          label: 'Summary of the support given',
+          hint: 'Outline what had the most impact or would be memorable to the customer in less than 100 words.',
+          wordCount: 'You have 100 words remaining.',
+        })
+      })
+    })
+
+    it('should renderer Overseas customer', () => {
+      cy.get(nameOfCustomer).then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Overseas customer',
+          placeholder: 'Add name',
+        })
+      })
+    })
+
+    it('should render a Confidential checkbox', () => {
+      assertFieldCheckboxes({
+        element: confidential,
+        hint: 'Check this box if your customer has asked for this not to be public (optional).',
+        options: [
+          {
+            label: 'Confidential',
+            checked: false,
+          },
+        ],
+      })
+    })
+
+    it('should renderer a type of business deal', () => {
+      cy.get(businessType).then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Type of business deal',
+          hint: 'For example: export sales, contract, order, distributor, tender / competition win, joint venture, outward investment.',
+          placeholder: 'Enter a type of business deal',
+        })
+      })
+    })
+
+    it('should render Type of win ', () => {
+      assertFieldCheckboxes({
+        element: winType,
+        legend: 'Type of win',
+        options: [
+          {
+            label: 'Export',
+            checked: false,
+          },
+          {
+            label: 'Business success',
+            checked: false,
+          },
+          {
+            label: 'Outward Direct Investment (ODI)',
+            checked: false,
+          },
+        ],
+      })
+    })
+
+    it('should render Goods and Services', () => {
+      assertFieldCheckboxes({
+        element: goodsVsServices,
+        legend: 'What does the value relate to?',
+        hint: 'Select goods or services',
+        options: [
+          {
+            label: 'Goods',
+            checked: false,
+          },
+          {
+            label: 'Services',
+            checked: false,
+          },
+        ],
+      })
+    })
+
+    it('should renderer name of goods or services', () => {
+      cy.get(nameOfExport).then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Name of goods or services',
+          hint: "For instance 'shortbread biscuits'.",
+          placeholder: 'Enter a name for goods or services',
+        })
+      })
+    })
+
+    it('should render a sector label and typeahead', () => {
+      cy.get(sector).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Sector',
+        })
+      })
+    })
+
+    it('should display validation error messages on mandatory fields', () => {
+      clickContinueButton()
+      assertErrorSummary([
+        'Choose a destination country',
+        'Enter the win date',
+        'Enter a summary',
+        'Enter the name of the overseas customer',
+        'Enter the type of business deal',
+        'Choose at least one type of win',
+        'Select at least one option',
+        'Enter the name of goods or services',
+        'Enter a sector',
+      ])
+      assertFieldError(cy.get(country), 'Choose a destination country', false)
+      assertFieldError(cy.get(date), 'Enter the win date', true)
+      assertFieldError(cy.get(description), 'Enter a summary', true)
+      assertFieldError(
+        cy.get(nameOfCustomer),
+        'Enter the name of the overseas customer',
+        false
+      )
+      assertFieldError(
+        cy.get(businessType),
+        'Enter the type of business deal',
+        true
+      )
+      assertFieldError(cy.get(winType), 'Choose at least one type of win', true)
+      // We can't use assertFieldError here as it picks up the wrong span
+      cy.get(goodsVsServices).should('contain', 'Select at least one option')
+      assertFieldError(
+        cy.get(nameOfExport),
+        'Enter the name of goods or services',
+        true
+      )
+      assertFieldError(cy.get(sector), 'Enter a sector', false)
+    })
+
+    it('should complete this step and continue to "Support provided"', () => {
+      cy.get(country).selectTypeaheadOption('United states')
+      cy.get(date).as('winDate')
+      cy.get('@winDate').find('[data-test="date-month"]').type('03')
+      cy.get('@winDate').find('[data-test="date-year"]').type('2023')
+      cy.get(description).find('textarea').type('Foo bar baz')
+      cy.get(nameOfCustomer).find('input').type('David French')
+      cy.get(confidential).find('input[type="checkbox"]').check()
+      cy.get(businessType).find('input').type('Contract')
+      cy.get(winType).find('[data-test="checkbox-export_win"]').check()
+      cy.get(goodsVsServices).find('input[type="checkbox"]').eq(0).check()
+      cy.get(nameOfExport).find('input').type('Biscuits')
+      cy.get(sector).selectTypeaheadOption('Advanced Engineering')
       clickContinueAndAssertUrl(supportProvided)
     })
   })
