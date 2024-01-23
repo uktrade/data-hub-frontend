@@ -92,6 +92,7 @@ import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
+import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory'
 
 const routes = {
   companies: [
@@ -234,6 +235,16 @@ const routes = {
       path: '/companies/:companyId/exports',
       module: 'datahub:companies',
       component: ExportsIndex,
+    },
+    {
+      path: '/companies/:companyId/exports/history',
+      module: 'datahub:companies',
+      component: ExportsHistory,
+    },
+    {
+      path: '/companies/:companyId/exports/history/:countryId',
+      module: 'datahub:companies',
+      component: ExportsHistory,
     },
   ],
   contacts: [
