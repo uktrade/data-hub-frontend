@@ -37,6 +37,7 @@ const localProjectUrl = (url, projectId) => projectId && url(projectId)
 export const ProjectLayoutNew = ({
   projectId,
   projectName,
+  breadcrumbs,
   pageTitle,
   children,
   userPermissions,
@@ -47,7 +48,7 @@ export const ProjectLayoutNew = ({
       projectId={projectId}
       heading={projectName}
       pageTitle={`${pageTitle} - ${projectName} - Projects - Investments`}
-      breadcrumbs={buildProjectBreadcrumbs({ text: projectName })}
+      breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
       flashMessages={flashMessages}
       useReactRouter={false}
       localHeaderChildren={<InvestmentProjectLocalHeader />}
