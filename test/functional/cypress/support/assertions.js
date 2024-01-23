@@ -283,16 +283,29 @@ const assertFieldRadiosWithoutLabel = ({ element, value, optionsCount }) =>
           .should('have.text', value)
     )
 
-const assertFieldCheckbox = ({ element, label, value, checked }) => {
-  cy.wrap(element)
-    .as('fieldCheckbox')
-    .find('label')
-    .should('contain.text', label)
-
+const assertFieldCheckboxes = ({ element, legend, hint, options = [] }) => {
+  cy.get(element).as('fieldCheckbox')
+  // Optional fields
+  legend && cy.get('@fieldCheckbox').find('legend').should('have.text', legend)
+  hint &&
+    cy
+      .get('@fieldCheckbox')
+      .find('[data-test="hint-text"]')
+      .should('have.text', hint)
+  // Mandatory fields
   cy.get('@fieldCheckbox')
-    .find('input')
-    .should('have.attr', 'value', value)
-    .should(checked ? 'be.checked' : 'not.be.checked')
+    .find('input[type="checkbox"]')
+    .should('have.length', options.length)
+    .get('@fieldCheckbox')
+    .find('label')
+    .each((label, index) => {
+      // Each label wraps an input
+      cy.get(label)
+        .should('have.text', options[index].label)
+        .find('input[type="checkbox"]')
+        .should(options[index].checked ? 'be.checked' : 'not.be.checked')
+        .should('have.attr', 'aria-label', options[index].label)
+    })
 }
 
 const assertFieldTypeahead = ({
@@ -355,6 +368,7 @@ const assertFieldInput = ({
   hint = undefined,
   value = undefined,
   ignoreHint = false,
+  placeholder,
 }) =>
   cy
     .wrap(element)
@@ -380,6 +394,11 @@ const assertFieldInput = ({
       ($el) =>
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
+    .then(
+      ($el) =>
+        placeholder &&
+        cy.wrap($el).should('have.attr', 'placeholder', placeholder)
+    )
 
 const assertFieldInputNoLabel = ({ element, value = undefined }) =>
   cy
@@ -393,7 +412,7 @@ const assertFieldInputNoLabel = ({ element, value = undefined }) =>
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
-const assertFieldTextarea = ({ element, label, hint, value }) =>
+const assertFieldTextarea = ({ element, label, hint, value, wordCount }) =>
   cy
     .wrap(element)
     .find('label')
@@ -411,6 +430,9 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
     .parent()
     .find('textarea')
     .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
+    .parent()
+    .find('p')
+    .then(($el) => wordCount && cy.wrap($el).should('have.text', wordCount))
 
 const assertFieldTextareaNoLabel = ({ element, value = undefined }) =>
   cy
@@ -886,7 +908,7 @@ module.exports = {
   assertFieldRadios,
   assertFieldRadiosWithLegend,
   assertFieldRadiosWithoutLabel,
-  assertFieldCheckbox,
+  assertFieldCheckboxes,
   assertFieldAddress,
   assertFieldUneditable,
   assertFormActions,
