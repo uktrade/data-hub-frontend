@@ -93,6 +93,7 @@ const PaginatedResource = multiInstance({
       {({ location }) => {
         const qsParams = qs.parse(location.search.slice(1))
         const routePage = parseInt(qsParams.page, 10) || 1
+        const totalPages = result ? Math.ceil(result.count / pageSize) : 0
 
         return (
           <Task>
@@ -127,12 +128,10 @@ const PaginatedResource = multiInstance({
                         totalItems={result.count}
                         collectionName={name}
                       />
-                      <StyledCollectionSort
-                        totalPages={Math.floor(result.count / pageSize)}
-                      />
+                      <StyledCollectionSort totalPages={totalPages} />
                       {result ? children(result.results) : null}
                       <Pagination
-                        totalPages={Math.ceil(result.count / pageSize)}
+                        totalPages={totalPages}
                         activePage={routePage}
                         onPageClick={(clickedPage) => {
                           onPageClick(clickedPage)
