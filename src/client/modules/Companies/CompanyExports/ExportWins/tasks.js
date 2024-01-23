@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-import { currencyGBP } from '../../../../../../client/utils/number-utils'
-import { GREEN, BLUE } from '../../../../../../client/utils/colours'
+import { currencyGBP } from '../../../../utils/number-utils'
+import { GREEN, BLUE } from '../../../../utils/colours'
 
 import { NOT_IMPLEMENTED } from './state'
 
-const { format } = require('../../../../../../client/utils/date')
+const { format } = require('../../../../utils/date')
 
 function getBadges(win) {
   const badges = []

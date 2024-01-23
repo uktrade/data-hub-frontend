@@ -52,15 +52,6 @@ const accountManagementDisplayLabels = {
   one_list_group_global_account_manager: 'Global Account Manager',
 }
 
-const exportDetailsLabels = {
-  exportExperienceCategory: 'Export win category',
-  exportToCountries: 'Currently exporting to',
-  futureInterestCountries: 'Future countries of interest',
-  noInterestCountries: 'Countries of no interest',
-  greatProfile: 'great.gov.uk business profile',
-  exportPotential: 'Export potential',
-}
-
 const aboutLabels = {
   business_type: 'Business type',
   trading_names: 'Trading names',
@@ -79,38 +70,12 @@ const businessHierarchyLabels = {
   global_headquarters: 'Global HQ',
 }
 
-const exportPotentialLabels = {
-  very_high: {
-    text: 'Very High',
-    description: 'Most companies like this one are exporters',
-  },
-  high: {
-    text: 'High',
-    description: 'This business shares some features with successful exporters',
-  },
-  medium: {
-    text: 'Medium',
-    description: "Some businesses that look like this one export, others don't",
-  },
-  low: {
-    text: 'Low',
-    description:
-      'This business shares many features with companies that do not export',
-  },
-  very_low: {
-    text: 'Very Low',
-    description: "Most of the businesses like this aren't exporters",
-  },
-}
-
 module.exports = {
   companyDetailsLabels,
   companyTypeOptions,
   hqLabels,
   accountManagementDisplayLabels,
-  exportDetailsLabels,
   address,
   aboutLabels,
   businessHierarchyLabels,
-  exportPotentialLabels,
 }

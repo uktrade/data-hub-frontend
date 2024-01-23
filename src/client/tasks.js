@@ -1,10 +1,10 @@
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
+import * as exportsHistoryTasks from './modules/Companies/CompanyExports/ExportHistory/tasks.js'
 import referralListTask from './components/ReferralList/tasks'
 import { TASK_SAVE_REFERRAL } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
-import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
+import * as exportWinsTasks from './modules/Companies/CompanyExports/ExportWins/tasks.js'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
 import addCompanyPostcodeToRegionTask, {
@@ -142,7 +142,7 @@ import { TASK_GET_REMINDER_SUMMARY } from './components/NotificationAlert/state'
 
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
-import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
+import * as exportsEdit from './modules/Companies/CompanyExports/tasks.js'
 
 import {
   saveContact,

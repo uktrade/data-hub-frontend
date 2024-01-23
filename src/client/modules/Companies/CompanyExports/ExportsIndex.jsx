@@ -7,15 +7,15 @@ import { SPACING } from '@govuk-react/constants'
 import WarningText from '@govuk-react/warning-text'
 import { useParams } from 'react-router-dom'
 
-import { SummaryTable } from '../../../../../client/components/'
-import urls from '../../../../../lib/urls'
-import ExportWins from './ExportWins/'
+import { SummaryTable } from '../../../components'
+import urls from '../../../../lib/urls'
+import ExportWins from './ExportWins'
 import GreatProfile from './GreatProfile'
-import { CompanyResource } from '../../../../../client/components/Resource'
-import CompanyLayoutNew from '../../../../../client/components/Layout/CompanyLayoutNew'
-import { exportDetailsLabels, exportPotentialLabels } from '../../../labels'
-import { transformExportCountries } from '../transformer'
-import DefaultLayoutBase from '../../../../../client/components/Layout/DefaultLayoutBase'
+import { CompanyResource } from '../../../components/Resource'
+import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import { exportDetailsLabels, exportPotentialLabels } from './labels'
+import { transformExportCountries } from './transformers'
+import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;

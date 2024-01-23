@@ -91,8 +91,8 @@ import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrders
 import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
-import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
-import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory'
+import ExportsIndex from './modules/Companies/CompanyExports/ExportsIndex'
+import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
 
 const routes = {
   companies: [

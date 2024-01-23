@@ -7,19 +7,19 @@ import InsetText from '@govuk-react/inset-text'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { CollectionList, Metadata } from '../../../../../../client/components/'
+import { CollectionList, Metadata } from '../../../../components'
 import { state2props } from './state'
 import {
   EXPORTS_HISTORY__LOADED,
   EXPORTS_HISTORY__SELECT_PAGE,
-} from '../../../../../../client/actions'
+} from '../../../../actions'
 import {
   CompanyResource,
   CountriesResource,
-} from '../../../../../../client/components/Resource'
-import CompanyLayoutNew from '../../../../../../client/components/Layout/CompanyLayoutNew'
-import urls from '../../../../../../lib/urls'
-import DefaultLayoutBase from '../../../../../../client/components/Layout/DefaultLayoutBase'
+} from '../../../../components/Resource'
+import CompanyLayoutNew from '../../../../components/Layout/CompanyLayoutNew'
+import urls from '../../../../../lib/urls'
+import DefaultLayoutBase from '../../../../components/Layout/DefaultLayoutBase'
 
 const StyledDetails = styled(Details)`
   margin: ${SPACING.SCALE_3} 0 0 0;
@@ -82,7 +82,7 @@ const ExportsHistory = ({
               { text: countryName },
             ]}
             returnUrl={returnUrl}
-            pageTitle={'Export countries history'}
+            pageTitle="Export countries history"
           >
             <InsetText>
               You can only see the history of countries that were added or
