@@ -30,9 +30,10 @@ const sortbyMapping = {
   company_ascending: 'company.name:asc',
   project_ascending: 'investment_project.name:asc',
 }
+
 const statusMapping = {
-  active: { archived: false },
-  completed: { archived: true },
+  active: { status: 'active' },
+  completed: { status: 'complete' },
 }
 
 export const state2props = ({ router, ...state }) => {
@@ -50,6 +51,7 @@ export const state2props = ({ router, ...state }) => {
     sortby: 'due_date:asc',
     company: undefined,
     project: undefined,
+    status: undefined,
   }
 
   const assignedToMapping = {
