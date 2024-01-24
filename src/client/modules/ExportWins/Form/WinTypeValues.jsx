@@ -35,8 +35,10 @@ export const WinTypeValues = ({ label, name, years = 5, values }) => {
   const year = getYearFromWinType(name, values)
   return (
     <WinTypeContainer>
-      <StyledLabel>{label}</StyledLabel>
-      <StyledHintParagraph>(round to nearest £)</StyledHintParagraph>
+      <StyledLabel data-test="label">{label}</StyledLabel>
+      <StyledHintParagraph data-test="hint">
+        (round to nearest £)
+      </StyledHintParagraph>
       <FieldCurrencyContainer>
         {[...Array(years).keys()].map((index) => (
           <FieldCurrency
@@ -48,7 +50,7 @@ export const WinTypeValues = ({ label, name, years = 5, values }) => {
           />
         ))}
       </FieldCurrencyContainer>
-      <StyledParagraph>
+      <StyledParagraph data-test="total">
         Totalling over {year} {pluralize('year', year)}:{' '}
         {formatValue(sumWinTypeYearlyValues(name, values))}
       </StyledParagraph>
