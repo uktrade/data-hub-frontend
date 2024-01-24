@@ -11,6 +11,8 @@ import urls from '../../../../lib/urls'
 export default () => (
   <ExportWinsResource.Paginated
     id="unconfirmed-export-wins"
+    // TODO: The filtering is not yet implemented in the API
+    // update the payload once it's implemented
     payload={{ filter: 'unconfirmed' }}
   >
     {(page) => (

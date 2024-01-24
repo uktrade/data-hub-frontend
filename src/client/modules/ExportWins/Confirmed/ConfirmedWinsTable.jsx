@@ -61,6 +61,8 @@ export const ExportWinsTable = ({ exportWins }) => (
 export default () => (
   <ExportWinsResource.Paginated
     id="confirmed-export-wins"
+    // TODO: The filtering is not yet implemented in the API
+    // update the payload once it's implemented
     payload={{ filter: 'confirmed' }}
   >
     {(page) => <ExportWinsTable exportWins={page} />}
