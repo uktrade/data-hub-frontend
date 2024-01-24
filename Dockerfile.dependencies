@@ -1,74 +1,51 @@
-FROM node:18.15.0-buster
+# A base image with all operating system dependencies, no Cypress, and some browsers.
+# See https://github.com/cypress-io/cypress-docker-images for more info.
 
-ENV DOCKERIZE_VERSION      v0.6.1
-ENV NPM_CONFIG_LOGLEVEL    warn
-ENV NPM_CONFIG_UNSAFE_PERM true
-ENV TZ                     Europe/London
-ENV TERM                   xterm
-ENV LANG                   C.UTF-8
-ENV NODE_ENV               development
+FROM cypress/browsers:node-18.15.0-chrome-106.0.5249.61-1-ff-99.0.1-edge-114.0.1823.51-1
 
-# Install common dependencies
-RUN apt-get install -y \
-  tzdata \
-  wget \
-  curl \
-  make \
-  git
+# Setting environment variables
+ENV DOCKERIZE_VERSION v0.7.0
+ENV TZ Europe/London
+ENV TERM xterm
+ENV LANG C.UTF-8
+ENV NODE_ENV development
+ENV HOME=/home/node
+ENV PATH="$HOME/.local/bin:$PATH"
+ENV NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
+ENV npm_config_prefix="$HOME/.local"
+ENV CYPRESS_CACHE_FOLDER="$HOME/.cache/Cypress"
+
+# Overwrite CI env variable which is set in the parent cypress/browsers image to avoid nodemon crashing
+ENV CI=false
 
 # Install dockerize
-RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-  && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-  && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+RUN wget --quiet --https-only "https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" \
+  && tar -C /usr/local/bin -xzvf "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" \
+  && rm "dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz"
 
-# Install Cypress dependencies
-RUN apt-get update && apt-get install -y \
-  libgtk2.0-0 \
-  libgtk-3-0 \
-  libgbm-dev \
-  libnotify-dev \
-  libnss3 \
-  libxss1 \
-  libasound2 \
-  libxtst6 \
-  xauth \
-  xvfb
-
-# Install visual test dependencies
-RUN apt-get install -y imagemagick libgbm1
-
-# Install Chrome
-RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 libu2f-udev libvulkan1 \
-  && curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O \
-  && dpkg -i google-chrome-stable_current_amd64.deb \
-  && rm google-chrome-stable_current_amd64.deb \
-  && google-chrome --version
-
-# Set timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+# Configure tzdata package in case it's not already
+RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime \
+  && echo "$TZ" > /etc/timezone \
   && echo "Timezone: $(date +%z)"
 
-RUN mkdir -p /home/node
-RUN chown -R node: /home/node
-RUN mkdir -p /usr/src/app
-RUN chown -R node: /usr/src/app
-RUN chmod -R 775 /usr/src/app
+# Prepare node user environment
+RUN mkdir -p "$HOME" /usr/src/app \
+  && chown -R node: "$HOME" /usr/src/app \
+  && chmod -R 775 /usr/src/app
 
+# Switch to non-root user for subsequent commands
 USER node
-ENV HOME=/home/node
 
-# Install cypress
-ENV PATH=$HOME/.local/bin:$PATH
-ENV NODE_PATH=$HOME/.local/lib/node_modules:$NODE_PATH
-ENV npm_config_prefix=$HOME/.local
+# Copying package files with correct ownership
+COPY --chown=node:node package*.json "$HOME/"
 
-COPY --chown=1000:1000 package.json .
-COPY --chown=1000:1000 package-lock.json .
-RUN npm install -g cypress@12.17.4
-RUN cypress verify
+# Set the working directory to the app directory, as this is where most subsequent commands will execute
+WORKDIR $HOME
 
-RUN cypress cache path
-RUN cypress cache list
-RUN cypress info
-RUN cypress version
-
+# Install specific version of cypress
+RUN npm install -g cypress@12.17.4 \
+  && npx cypress verify \
+  && npx cypress cache path \
+  && npx cypress cache list \
+  && npx cypress info \
+  && npx cypress version
