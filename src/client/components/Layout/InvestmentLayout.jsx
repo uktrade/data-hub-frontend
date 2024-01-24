@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
@@ -26,9 +26,6 @@ const InvestmentLayout = ({
   localHeaderChildren,
 }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
-  useEffect(() => {
-    document.title = `${pageTitle} - DBT Data Hub`
-  }, [pageTitle])
   return (
     <>
       <GlobalStyles />
@@ -43,6 +40,7 @@ const InvestmentLayout = ({
           breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
         }
         useReactRouter={useReactRouter}
+        pageTitle={pageTitle}
       >
         {localHeaderChildren}
       </InvestmentLocalHeader>

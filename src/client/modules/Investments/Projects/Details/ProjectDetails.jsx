@@ -74,7 +74,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
       projectId={projectId}
       projectName={<InvestmentName id={projectId} />}
       breadcrumbs={{ text: <InvestmentName id={projectId} /> }}
-      pageTitle="Page title"
+      pageTitle="Project details"
     >
       <InvestmentResource id={projectId}>
         {(project) => (
