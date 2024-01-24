@@ -6,14 +6,12 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 import { CollectionList } from '../../../components'
 import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
-import {
-  InteractionCollectionResource,
-  InvestmentResource,
-} from '../../../components/Resource'
+import { InteractionCollectionResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
 import { INTERACTIONS__LOADED } from '../../../actions'
 import { TASK_GET_INTERACTIONS_LIST } from '../../Interactions/CollectionList/state'
+import InvestmentName from './InvestmentName'
+import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
 const ProjectInteractions = () => {
   const history = useHistory()
@@ -40,67 +38,68 @@ const ProjectInteractions = () => {
     },
   }
   return (
-    <InteractionCollectionResource payload={payload}>
-      {(_, count, rawData) => {
-        const interactions = rawData.results.map(transformInteractionToListItem)
-        const sortOptions = [
-          {
-            name: 'Recently created',
-            value: '-date',
-          },
-          {
-            name: 'Oldest',
-            value: 'date',
-          },
-        ]
+    <ProjectLayoutNew
+      projectId={projectId}
+      projectName={<InvestmentName id={projectId} />}
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Interactions' },
+      ]}
+      pageTitle="Interactions"
+    >
+      <InteractionCollectionResource payload={payload}>
+        {(_, count, rawData) => {
+          const interactions = rawData.results.map(
+            transformInteractionToListItem
+          )
+          const sortOptions = [
+            {
+              name: 'Recently created',
+              value: '-date',
+            },
+            {
+              name: 'Oldest',
+              value: 'date',
+            },
+          ]
 
-        return (
-          <InvestmentResource id={projectId}>
-            {(project) => (
-              <ProjectLayout
-                project={project}
-                breadcrumbs={[
-                  {
-                    link: urls.investments.projects.details(project.id),
-                    text: project.name,
-                  },
-                  { text: 'Interactions' },
-                ]}
-                pageTitle="Interactions"
-              >
-                <H2 size={LEVEL_SIZE[3]}>Investment Interactions</H2>
-                <p>
-                  An interaction could be a meeting, call, email or another
-                  activity associated with this investment.
-                </p>
-                <CollectionList
-                  collectionName="interaction"
-                  items={interactions}
-                  count={count}
-                  isComplete={true}
-                  onPageClick={(currentPage) =>
-                    history.push({
-                      search: qs.stringify({
-                        ...parsedQueryString,
-                        page: currentPage,
-                      }),
-                    })
-                  }
-                  taskProps={collectionListTask}
-                  activePage={activePage}
-                  sortOptions={count ? sortOptions : null}
-                  addItemUrl={urls.investments.projects.interactions.createType(
-                    projectId,
-                    'investment',
-                    'interaction'
-                  )}
-                />
-              </ProjectLayout>
-            )}
-          </InvestmentResource>
-        )
-      }}
-    </InteractionCollectionResource>
+          return (
+            <>
+              <H2 size={LEVEL_SIZE[3]}>Investment Interactions</H2>
+              <p>
+                An interaction could be a meeting, call, email or another
+                activity associated with this investment.
+              </p>
+              <CollectionList
+                collectionName="interaction"
+                items={interactions}
+                count={count}
+                isComplete={true}
+                onPageClick={(currentPage) =>
+                  history.push({
+                    search: qs.stringify({
+                      ...parsedQueryString,
+                      page: currentPage,
+                    }),
+                  })
+                }
+                taskProps={collectionListTask}
+                activePage={activePage}
+                sortOptions={count ? sortOptions : null}
+                addItemUrl={urls.investments.projects.interactions.createType(
+                  projectId,
+                  'investment',
+                  'interaction'
+                )}
+              />
+            </>
+          )
+        }}
+      </InteractionCollectionResource>
+    </ProjectLayoutNew>
   )
 }
 

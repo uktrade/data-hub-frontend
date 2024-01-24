@@ -20,6 +20,7 @@ import urls from '../../../../lib/urls'
 import { format } from '../../../utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
+import InvestmentName from './InvestmentName'
 
 const NOT_KNOWN = 'Not known'
 
@@ -97,20 +98,20 @@ const landingTable = (ukCompany = null, actualLandDate) => (
   </SummaryTable>
 )
 
-const InvestmentName = (props) => (
-  <InvestmentResource.Inline {...props}>
-    {(project) => project.name}
-  </InvestmentResource.Inline>
-)
-
 const ProjectEvaluation = () => {
   const { projectId } = useParams()
   return (
     <ProjectLayoutNew
       projectId={projectId}
       projectName={<InvestmentName id={projectId} />}
-      breadcrumbs={{ text: <InvestmentName id={projectId} /> }}
-      pageTitle="Evaluations"
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Evaluation' },
+      ]}
+      pageTitle="Evaluation"
     >
       <InvestmentResource id={projectId}>
         {(project) => (

@@ -6,10 +6,10 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from './constants'
 import EditHistory from '../../../components/EditHistory/EditHistory'
-import { InvestmentResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 import { formatMediumDateTime, isDateValid } from '../../../utils/date'
+import InvestmentName from './InvestmentName'
 
 function getValue(value) {
   if (isBoolean(value)) {
@@ -33,11 +33,6 @@ function getUpdatedBy(timestamp, changedBy) {
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 
-const InvestmentName = (props) => (
-  <InvestmentResource.Inline {...props}>
-    {(project) => project.name}
-  </InvestmentResource.Inline>
-)
 const ProjectEditHistory = () => {
   const { projectId } = useParams()
   return (

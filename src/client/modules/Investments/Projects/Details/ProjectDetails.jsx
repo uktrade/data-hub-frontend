@@ -27,6 +27,7 @@ import { format } from '../../../../utils/date'
 import { DATE_LONG_FORMAT_1 } from '../../../../../common/constants'
 import { GREY_3, BLACK } from '../../../../utils/colours'
 import { currencyGBP } from '../../../../utils/number-utils'
+import InvestmentName from '../InvestmentName'
 
 const checkIfRequirementsStarted = (project) => {
   const requirementsArrays = [
@@ -60,12 +61,6 @@ const checkIfValueStarted = (project) => {
 
   return !valueFields.every((field) => field == null)
 }
-
-const InvestmentName = (props) => (
-  <InvestmentResource.Inline {...props}>
-    {(project) => project.name}
-  </InvestmentResource.Inline>
-)
 
 const ProjectDetails = ({ currentAdviserId }) => {
   const { projectId } = useParams()
