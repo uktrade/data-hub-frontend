@@ -300,24 +300,29 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from the url', () => {
-      testFilterFromUrl(element, 'status=active', { archived: false }, 'Active')
+      testFilterFromUrl(
+        element,
+        'status=active',
+        { status: 'active' },
+        'Active'
+      )
     })
 
     it('should filter completed status from the url', () => {
       testFilterFromUrl(
         element,
         'status=completed',
-        { archived: true },
+        { status: 'complete' },
         'Completed'
       )
     })
 
     it('should filter active status from user input', () => {
-      testFilterFromUserInput(element, { archived: false }, 'Active')
+      testFilterFromUserInput(element, { status: 'active' }, 'Active')
     })
 
     it('should filter completed status from user input', () => {
-      testFilterFromUserInput(element, { archived: true }, 'Completed')
+      testFilterFromUserInput(element, { status: 'complete' }, 'Completed')
     })
   })
 
