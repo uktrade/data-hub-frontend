@@ -488,6 +488,106 @@ describe('Adding an export win', () => {
       })
     })
 
+    it('should render the WinTypeValues component for each win type', () => {
+      const exportWinCheckbox = '[data-test="checkbox-export_win"]'
+      const exportWinTypeValues = '[data-test="win-type-values-export_win"]'
+      const businessSuccessCheckbox =
+        '[data-test="checkbox-business_success_win"]'
+      const businessSuccessTypeValues =
+        '[data-test="win-type-values-business_success_win"]'
+      const odiCheckbox = '[data-test="checkbox-odi_win"]'
+      const odiWinTypeValues = '[data-test="win-type-values-odi_win"]'
+
+      cy.get(winType).as('winType')
+
+      // Export win
+      cy.get('@winType')
+        .find(exportWinTypeValues)
+        .should('not.exist')
+        .get('@winType')
+        .find(exportWinCheckbox)
+        .check()
+        .next()
+        .get(exportWinTypeValues)
+        .should('exist')
+
+      // Business type
+      cy.get('@winType')
+        .find(businessSuccessTypeValues)
+        .should('not.exist')
+        .get('@winType')
+        .find(businessSuccessCheckbox)
+        .check()
+        .next()
+        .get(businessSuccessTypeValues)
+        .should('exist')
+
+      // ODI
+      cy.get('@winType')
+        .find(odiWinTypeValues)
+        .should('not.exist')
+        .get('@winType')
+        .find(odiCheckbox)
+        .check()
+        .next()
+        .get(odiWinTypeValues)
+        .should('exist')
+    })
+
+    it('should render the total export value across all 3 win types', () => {
+      cy.get(winType).as('winType')
+
+      // Check the Export checkbox to render the input fields
+      cy.get('@winType').find('[data-test="checkbox-export_win"]').check()
+
+      const exportWinFields = [
+        '[data-test="export-win-0-input"]',
+        '[data-test="export-win-1-input"]',
+        '[data-test="export-win-2-input"]',
+        '[data-test="export-win-3-input"]',
+        '[data-test="export-win-4-input"]',
+      ]
+      exportWinFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
+      )
+
+      // Check the Business success checkbox to render the input fields
+      cy.get('@winType')
+        .find('[data-test="checkbox-business_success_win"]')
+        .check()
+
+      const businessSuccessFields = [
+        '[data-test="business-success-win-0-input"]',
+        '[data-test="business-success-win-1-input"]',
+        '[data-test="business-success-win-2-input"]',
+        '[data-test="business-success-win-3-input"]',
+        '[data-test="business-success-win-4-input"]',
+      ]
+      businessSuccessFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
+      )
+
+      // Check the ODI checkbox to render the input fields
+      cy.get('@winType').find('[data-test="checkbox-odi_win"]').check()
+
+      const odiFields = [
+        '[data-test="odi-win-0-input"]',
+        '[data-test="odi-win-1-input"]',
+        '[data-test="odi-win-2-input"]',
+        '[data-test="odi-win-3-input"]',
+        '[data-test="odi-win-4-input"]',
+      ]
+      odiFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
+      )
+
+      // Assert the total export value
+      cy.get('[data-test="total-export-value"]').should(
+        'have.text',
+        'Total export value: £15,000,000'
+      )
+    })
+
     it('should render Goods and Services', () => {
       assertFieldCheckboxes({
         element: goodsVsServices,

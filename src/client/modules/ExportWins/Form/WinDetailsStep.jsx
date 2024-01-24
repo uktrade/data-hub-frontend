@@ -189,7 +189,7 @@ const WinDetailsStep = () => {
       />
 
       {values?.win_type?.length > 1 && (
-        <StyledExportTotal>
+        <StyledExportTotal data-test="total-export-value">
           Total export value:{' '}
           {formatValue(sumAllWinTypeYearlyValues(values?.win_type, values))}
         </StyledExportTotal>

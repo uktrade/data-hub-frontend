@@ -34,7 +34,7 @@ const StyledParagraph = styled('p')({
 export const WinTypeValues = ({ label, name, years = 5, values }) => {
   const year = getYearFromWinType(name, values)
   return (
-    <WinTypeContainer>
+    <WinTypeContainer data-test={`win-type-values-${name}`}>
       <StyledLabel data-test="label">{label}</StyledLabel>
       <StyledHintParagraph data-test="hint">
         (round to nearest £)
