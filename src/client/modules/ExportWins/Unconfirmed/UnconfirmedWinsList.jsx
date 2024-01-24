@@ -21,7 +21,7 @@ export default () => (
           <li key={item.id}>
             <CollectionItem
               headingText={item.company.name}
-              headingUrl={`${urls.companies.detail(item.company.id)}`}
+              headingUrl={urls.companies.detail(item.company.id)}
               metadata={[
                 { label: 'Destination', value: item.country.name },
                 { label: 'Contact name', value: item.customer_name },
