@@ -47,7 +47,7 @@ export const ProjectLayoutNew = ({
     <InvestmentLayout
       projectId={projectId}
       heading={projectName}
-      pageTitle={`${pageTitle} - ${projectName} - Projects - Investments`}
+      pageTitle={pageTitle}
       breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
       flashMessages={flashMessages}
       useReactRouter={false}

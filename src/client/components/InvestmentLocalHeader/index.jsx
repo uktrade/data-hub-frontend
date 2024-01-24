@@ -11,6 +11,7 @@ import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 import FlashMessages from '../LocalHeader/FlashMessages'
 import { InvestmentResource } from '../Resource'
 import urls from '../../../lib/urls'
+import WatchTextContent from '../WatchTextContent'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -46,6 +47,7 @@ const InvestmentLocalHeader = ({
   projectId,
   children,
   useReactRouter = false,
+  pageTitle,
 }) => {
   const renderChildren = (project) => {
     return Children.map(children, (child) => {
@@ -88,6 +90,14 @@ const InvestmentLocalHeader = ({
         <InvestmentResource id={projectId}>
           {(project) => (
             <>
+              <WatchTextContent
+                onTextContentChange={(text) => {
+                  document.title = text
+                }}
+              >
+                {pageTitle} - {project.name} - Projects - Investments - DBT Data
+                Hub
+              </WatchTextContent>
               <StyledLink
                 data-test="heading-link"
                 href={urls.companies.detail(project.investorCompany.id)}

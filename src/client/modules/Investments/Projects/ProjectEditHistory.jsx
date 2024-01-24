@@ -40,7 +40,6 @@ const InvestmentName = (props) => (
 )
 const ProjectEditHistory = () => {
   const { projectId } = useParams()
-  // const projectId = 'asdf'
   return (
     <ProjectLayoutNew
       projectId={projectId}
