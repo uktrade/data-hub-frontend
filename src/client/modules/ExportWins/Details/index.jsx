@@ -131,8 +131,7 @@ const Detail = () => (
                 </SummaryTable.Row>
               </SummaryTable>
               <VerticalSpacer>
-                {/* {!exportWin?.isLineManagerConfirmed && ( */}
-                {true && (
+                {exportWin?.isLineManagerConfirmed && (
                   <Link
                     as={ReactRouterLink}
                     to={urls.companies.exportWins.customerFeedback(winId)}
