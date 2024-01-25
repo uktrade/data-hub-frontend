@@ -1,10 +1,10 @@
-import React, { Children, Fragment, cloneElement } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import Main from '@govuk-react/main'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
-import { Link } from 'react-router-dom'
+import { Link } from 'govuk-react'
 
 import { GREY_4 } from '../../../client/utils/colours'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
@@ -12,6 +12,7 @@ import FlashMessages from '../LocalHeader/FlashMessages'
 import { InvestmentResource } from '../Resource'
 import urls from '../../../lib/urls'
 import WatchTextContent from '../WatchTextContent'
+import InvestmentProjectLocalHeader from '../InvestmentProjectLocalHeader'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -30,7 +31,7 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-top: 0;
 `
 
-const StyledLink = styled('a')({
+const StyledLink = styled(Link)({
   fontSize: 20,
   display: 'inline-block',
   fontFamily: 'Arial, sans-serif',
@@ -45,18 +46,8 @@ const InvestmentLocalHeader = ({
   breadcrumbs,
   flashMessages,
   projectId,
-  children,
-  useReactRouter = false,
   pageTitle,
 }) => {
-  const renderChildren = (project) => {
-    return Children.map(children, (child) => {
-      return cloneElement(child, {
-        investment: project,
-      })
-    })
-  }
-
   return (
     <StyledHeader
       aria-label="local header"
@@ -68,19 +59,9 @@ const InvestmentLocalHeader = ({
         <BreadcrumbsWrapper data-test="breadcrumbs">
           {breadcrumbs?.map((breadcrumb) =>
             breadcrumb.link ? (
-              useReactRouter && breadcrumb.text !== 'Home' ? (
-                <Breadcrumbs.Link
-                  as={Link}
-                  key={breadcrumb.link}
-                  to={breadcrumb.link}
-                >
-                  {breadcrumb.text}
-                </Breadcrumbs.Link>
-              ) : (
-                <Breadcrumbs.Link key={breadcrumb.link} href={breadcrumb.link}>
-                  {breadcrumb.text}
-                </Breadcrumbs.Link>
-              )
+              <Breadcrumbs.Link key={breadcrumb.link} href={breadcrumb.link}>
+                {breadcrumb.text}
+              </Breadcrumbs.Link>
             ) : (
               <Fragment key={breadcrumb.text}>{breadcrumb.text}</Fragment>
             )
@@ -107,7 +88,7 @@ const InvestmentLocalHeader = ({
               <LocalHeaderHeading data-test="heading">
                 {project.name}
               </LocalHeaderHeading>
-              {renderChildren(project)}
+              <InvestmentProjectLocalHeader investment={project} />
             </>
           )}
         </InvestmentResource>

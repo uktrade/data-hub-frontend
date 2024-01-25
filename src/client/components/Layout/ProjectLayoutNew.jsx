@@ -6,12 +6,7 @@ import GridRow from '@govuk-react/grid-row'
 import { SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
 
-import {
-  InvestmentLayout,
-  InvestmentProjectLocalHeader,
-  LocalNav,
-  LocalNavLink,
-} from '../../components'
+import { InvestmentLayout, LocalNav, LocalNavLink } from '../../components'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
@@ -36,7 +31,6 @@ const localProjectUrl = (url, projectId) => projectId && url(projectId)
 
 export const ProjectLayoutNew = ({
   projectId,
-  projectName,
   breadcrumbs,
   pageTitle,
   children,
@@ -46,12 +40,9 @@ export const ProjectLayoutNew = ({
   return (
     <InvestmentLayout
       projectId={projectId}
-      heading={projectName}
       pageTitle={pageTitle}
       breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
       flashMessages={flashMessages}
-      useReactRouter={false}
-      localHeaderChildren={<InvestmentProjectLocalHeader />}
     >
       <GridRow>
         <GridCol setWidth="one-quarter">
@@ -156,7 +147,6 @@ export const ProjectLayoutNew = ({
 
 ProjectLayoutNew.propTypes = {
   projectId: PropTypes.string.isRequired,
-  projectName: PropTypes.node.isRequired,
   pageTitle: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   userPermissions: PropTypes.array.isRequired,

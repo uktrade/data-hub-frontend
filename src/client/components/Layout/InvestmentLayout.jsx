@@ -15,35 +15,16 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-const InvestmentLayout = ({
-  projectId,
-  heading,
-  pageTitle,
-  flashMessages,
-  breadcrumbs,
-  children,
-  useReactRouter = false,
-  localHeaderChildren,
-}) => {
+const InvestmentLayout = ({ children, ...props }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   return (
     <>
-      <GlobalStyles />
+      <GlobalStyles />f
       <DataHubHeader
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      <InvestmentLocalHeader
-        projectId={projectId}
-        flashMessages={flashMessages}
-        breadcrumbs={
-          breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
-        }
-        useReactRouter={useReactRouter}
-        pageTitle={pageTitle}
-      >
-        {localHeaderChildren}
-      </InvestmentLocalHeader>
+      <InvestmentLocalHeader {...props} />
       <Main>
         <GridRow>
           <GridCol>{children}</GridCol>
@@ -55,13 +36,27 @@ const InvestmentLayout = ({
 }
 
 InvestmentLayout.propTypes = {
-  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  headingLink: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-  }),
-  subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  projectId: PropTypes.string.isRequired,
   pageTitle: PropTypes.string.isRequired,
+  flashMessages: PropTypes.shape({
+    type: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          body: PropTypes.string.isRequired,
+          heading: PropTypes.string.isRequired,
+          id: PropTypes.string,
+        })
+      ),
+      PropTypes.arrayOf(PropTypes.string).isRequired,
+    ]),
+  }),
+  breadcrumbs: PropTypes.arrayOf(
+    PropTypes.shape({
+      link: PropTypes.string,
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+        .isRequired,
+    })
+  ),
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 

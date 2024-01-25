@@ -79,11 +79,11 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
       <MetaListItem text="Created on">
         {formatMediumDateTime(investment.createdOn)}
       </MetaListItem>
-      {investment.createdBy?.ditTeam?.name ? (
+      {investment.createdBy?.ditTeam?.name && (
         <MetaListItem text="Created by">
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
-      ) : null}
+      )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
       <Timeline
@@ -108,7 +108,7 @@ InvestmentProjectLocalHeader.propTypes = {
   /**
    * An investment project
    */
-  investment: PropTypes.object,
+  investment: PropTypes.object.isRequired,
 }
 
 export default InvestmentProjectLocalHeader
