@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { CollectionList } from '../../../../components'
 import { state2props, NOT_IMPLEMENTED } from './state'
+import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
 import {
   EXPORT_WINS__LOADED,
   EXPORT_WINS__SELECT_PAGE,
@@ -33,6 +34,7 @@ function ExportWins(state) {
     name: 'Export wins',
     id: 'exportWins',
     progressMessage: 'Loading Exports Wins...',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload: { companyId, companyName, activePage },
       onSuccessDispatch: EXPORT_WINS__LOADED,

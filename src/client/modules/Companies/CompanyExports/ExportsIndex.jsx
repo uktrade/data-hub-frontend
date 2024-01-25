@@ -12,7 +12,7 @@ import urls from '../../../../lib/urls'
 import ExportWins from './ExportWins'
 import GreatProfile from './GreatProfile'
 import { CompanyResource } from '../../../components/Resource'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { exportDetailsLabels, exportPotentialLabels } from './labels'
 import { transformExportCountries } from './transformers'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
@@ -26,17 +26,15 @@ const StyledLink = styled(Link)`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
-const ExportsIndex = ({ returnUrl, flashMessages }) => {
+const ExportsIndex = () => {
   const { companyId } = useParams()
   return (
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Exports' }]}
-            returnUrl={returnUrl}
-            flashMessages={flashMessages}
             pageTitle="Export"
           >
             <SummaryTable
@@ -177,7 +175,7 @@ const ExportsIndex = ({ returnUrl, flashMessages }) => {
               </p>
             </Details>
             <ExportWins companyId={companyId} companyName={company.name} />
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>

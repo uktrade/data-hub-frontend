@@ -17,9 +17,10 @@ import {
   CompanyResource,
   CountriesResource,
 } from '../../../../components/Resource'
-import CompanyLayoutNew from '../../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../../components/Layout/CompanyLayout'
 import urls from '../../../../../lib/urls'
 import DefaultLayoutBase from '../../../../components/Layout/DefaultLayoutBase'
+import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
 
 const StyledDetails = styled(Details)`
   margin: ${SPACING.SCALE_3} 0 0 0;
@@ -50,7 +51,6 @@ const ExportsHistory = ({
   onPageClick,
   activePage,
   isComplete,
-  returnUrl,
 }) => {
   const { companyId, countryId } = useParams()
 
@@ -58,6 +58,7 @@ const ExportsHistory = ({
     name: 'Exports history',
     id: 'exportsHistory',
     progressMessage: 'loading Exports History',
+    renderProgress: listSkeletonPlaceholder(),
     startOnRender: {
       payload: { companyId, countryId, activePage },
       onSuccessDispatch: EXPORTS_HISTORY__LOADED,
@@ -72,7 +73,7 @@ const ExportsHistory = ({
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[
               {
@@ -81,7 +82,6 @@ const ExportsHistory = ({
               },
               { text: countryName },
             ]}
-            returnUrl={returnUrl}
             pageTitle="Export countries history"
           >
             <InsetText>
@@ -98,7 +98,7 @@ const ExportsHistory = ({
               isComplete={isComplete}
               metadataRenderer={metadataRenderer}
             />
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
