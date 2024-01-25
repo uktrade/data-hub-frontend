@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
@@ -14,7 +13,7 @@ import {
 } from './TableCards'
 import { FILTER_FEED_TYPE } from '../../../../apps/companies/apps/activity-feed/constants'
 import { CompanyResource } from '../../../components/Resource/index'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 const CardContainer = styled('div')`
@@ -23,16 +22,16 @@ const CardContainer = styled('div')`
   margin-bottom: 20px;
 `
 
-const CompanyOverview = ({ flashMessages }) => {
+const CompanyOverview = () => {
   const { companyId } = useParams()
   return (
-    <DefaultLayoutBase pageTitle="Overview - Companies">
+    <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Overview' }]}
-            flashMessages={flashMessages}
+            pageTitle="Overview"
           >
             <GridRow>
               <GridCol columnOneHalf={true}>
@@ -69,15 +68,11 @@ const CompanyOverview = ({ flashMessages }) => {
                 </CardContainer>
               </GridCol>
             </GridRow>
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
   )
-}
-
-CompanyOverview.propTypes = {
-  flashMessages: PropTypes.object,
 }
 
 export default CompanyOverview
