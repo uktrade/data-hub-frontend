@@ -141,7 +141,7 @@ export const urlTestExclusions = [
   { url: '/oauth/' },
   { url: '/oauth/callback/' },
   { url: '/oauth/sign-out/' },
-  { url: '/exportwins/1/details' },
+  { url: '/exportwins/1/customer-feedback' },
   { url: '/exportwins/unconfirmed/' },
   { url: '/companies/e59a2b0f-7d84-4de7-bc1e-f70339f4255f/overview' },
   // Exclude all metadata
