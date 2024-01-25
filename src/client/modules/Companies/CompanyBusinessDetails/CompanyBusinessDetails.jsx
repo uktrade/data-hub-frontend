@@ -20,7 +20,7 @@ import {
   CompanyResource,
   RelatedCompaniesCountResource,
 } from '../../../components/Resource'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import Task from '../../../components/Task'
 import urls from '../../../../lib/urls'
 import { format } from '../../../utils/date'
@@ -63,19 +63,17 @@ const COMPANY_DISSOLVED_OPTION = 'Company is dissolved'
 const CompanyBusinessDetails = ({
   globalUltimate,
   isDnbPending,
-  flashMessages,
   csrfToken,
   userPermissions,
 }) => {
   const { companyId } = useParams()
   return (
-    <DefaultLayoutBase pageTitle="Business details - Companies">
+    <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Business details' }]}
-            flashMessages={flashMessages}
             csrfToken={csrfToken}
             pageTitle="Business details"
           >
@@ -224,7 +222,7 @@ const CompanyBusinessDetails = ({
                 ]}
               />
             </StyledRoot>
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
@@ -232,7 +230,6 @@ const CompanyBusinessDetails = ({
 }
 
 CompanyBusinessDetails.propTypes = {
-  flashMessages: PropTypes.object,
   csrfToken: PropTypes.string,
   permissions: PropTypes.array,
 }
