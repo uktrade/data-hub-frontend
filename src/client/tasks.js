@@ -433,9 +433,6 @@ import {
 import { saveTaskDetail } from './modules/Tasks/TaskForm/tasks'
 import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
 
-import { TASK_GET_EXPORT_WIN_DETAILS } from './modules/ExportWins/Details/state'
-import { getExportWinDetails } from './modules/ExportWins/Details/tasks'
-
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
 import { saveExportWin } from './modules/ExportWins/Form/tasks'
 
@@ -668,7 +665,6 @@ export const tasks = {
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
   [TASK_COMPLETE_ORDER]: completeOrder,
-  [TASK_GET_EXPORT_WIN_DETAILS]: getExportWinDetails,
   [TASK_SAVE_TASK_ASSIGNED_TO_ME_FROM_OTHERS_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveTaskAssignedToMeFromOthersExportSubscriptions,
   [TASK_EDIT_ORDER_CONTACT]: updateOrder,

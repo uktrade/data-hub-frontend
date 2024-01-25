@@ -5,11 +5,11 @@ import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import { DefaultLayout, SummaryTable } from '../../../components'
-import urls from '../../../../lib/urls'
-import { formatMediumDate } from '../../../utils/date'
-import { currencyGBP } from '../../../utils/number-utils'
-import ExportWin from '../../../components/Resource/ExportWin'
+import { DefaultLayout, SummaryTable } from '../../components'
+import urls from '../../../lib/urls'
+import { formatMediumDate } from '../../utils/date'
+import { currencyGBP } from '../../utils/number-utils'
+import ExportWin from '../../components/Resource/ExportWin'
 
 const VerticalSpacer = styled.div`
   display: flex;
