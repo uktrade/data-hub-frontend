@@ -14,77 +14,78 @@ import {
   transformValuesToArray,
 } from './transformers'
 import { InvestmentResource } from '../../../../components/Resource'
-import ProjectLayout from '../../../../components/Layout/ProjectLayout'
+import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew.jsx'
+import InvestmentName from '../InvestmentName.jsx'
 
 const EditTeamMembers = () => {
   const { projectId } = useParams()
   return (
-    <InvestmentResource id={projectId}>
-      {(project) => (
-        <ProjectLayout
-          project={project}
-          breadcrumbs={[
-            {
-              link: urls.investments.projects.details(project.id),
-              text: project.name,
-            },
-            {
-              link: urls.investments.projects.team(project.id),
-              text: 'Project team',
-            },
-            { text: 'Team members' },
-          ]}
-          pageTitle="Team members"
-        >
-          <Form
-            id="project-edit-team-members"
-            analyticsFormName="projectEditTeamMembers"
-            cancelButtonLabel="Back"
-            cancelRedirectTo={() => urls.investments.projects.team(project.id)}
-            initialValues={transformTeamMembersForFieldAddAnother(
-              project.teamMembers
-            )}
-            submissionTaskName={TASK_EDIT_PROJECT_TEAM_MEMBERS}
-            transformPayload={(values) => ({
-              teamMembers: transformValuesToArray(values),
-              id: project.id,
-            })}
-            flashMessage={() => 'Investment details updated'}
-            redirectTo={() => urls.investments.projects.team(project.id)}
-          >
-            <FieldAddAnother
-              name="edit-team-members"
-              itemName="team member"
-              dataTestPrefix="team-member-field-"
-              legend="Assign project specialist and team members"
-              initialChildGroupCount={
-                project.teamMembers.length === 0
-                  ? 1
-                  : project.teamMembers.length
+    <ProjectLayoutNew
+      projectId={projectId}
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Team members' },
+      ]}
+      pageTitle="Team members"
+    >
+      <InvestmentResource id={projectId}>
+        {(project) => (
+          <>
+            <Form
+              id="project-edit-team-members"
+              analyticsFormName="projectEditTeamMembers"
+              cancelButtonLabel="Back"
+              cancelRedirectTo={() =>
+                urls.investments.projects.team(project.id)
               }
-            >
-              {({ groupIndex }) => (
-                <>
-                  <FieldAdvisersTypeahead
-                    name={`adviser_${groupIndex}`}
-                    label="Team member"
-                    placeholder="Search team member"
-                    required="Select at least one adviser"
-                    aria-label="Select an adviser"
-                  />
-                  <FieldInput
-                    name={`role_${groupIndex}`}
-                    type="text"
-                    label="Role"
-                    required="Enter a role for the adviser"
-                  />
-                </>
+              initialValues={transformTeamMembersForFieldAddAnother(
+                project.teamMembers
               )}
-            </FieldAddAnother>
-          </Form>
-        </ProjectLayout>
-      )}
-    </InvestmentResource>
+              submissionTaskName={TASK_EDIT_PROJECT_TEAM_MEMBERS}
+              transformPayload={(values) => ({
+                teamMembers: transformValuesToArray(values),
+                id: project.id,
+              })}
+              flashMessage={() => 'Investment details updated'}
+              redirectTo={() => urls.investments.projects.team(project.id)}
+            >
+              <FieldAddAnother
+                name="edit-team-members"
+                itemName="team member"
+                dataTestPrefix="team-member-field-"
+                legend="Assign project specialist and team members"
+                initialChildGroupCount={
+                  project.teamMembers.length === 0
+                    ? 1
+                    : project.teamMembers.length
+                }
+              >
+                {({ groupIndex }) => (
+                  <>
+                    <FieldAdvisersTypeahead
+                      name={`adviser_${groupIndex}`}
+                      label="Team member"
+                      placeholder="Search team member"
+                      required="Select at least one adviser"
+                      aria-label="Select an adviser"
+                    />
+                    <FieldInput
+                      name={`role_${groupIndex}`}
+                      type="text"
+                      label="Role"
+                      required="Enter a role for the adviser"
+                    />
+                  </>
+                )}
+              </FieldAddAnother>
+            </Form>
+          </>
+        )}
+      </InvestmentResource>
+    </ProjectLayoutNew>
   )
 }
 
