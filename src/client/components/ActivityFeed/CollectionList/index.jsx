@@ -38,7 +38,7 @@ import Activity from '../Activity'
 
 import { CompanyResource } from '../../Resource'
 import DefaultLayoutBase from '../../Layout/DefaultLayoutBase'
-import CompanyLayoutNew from '../../Layout/CompanyLayoutNew'
+import CompanyLayout from '../../Layout/CompanyLayout'
 
 const FiltersCheckboxGroupWithNext = styled(Filters.CheckboxGroup)({
   marginBottom: 0,
@@ -64,8 +64,6 @@ const CompanyActivityCollection = ({
   selectedFilters,
   currentAdviserId,
   dnbHierarchyCount,
-  flashMessages,
-  returnUrl,
   ...props
 }) => {
   const { companyId } = useParams()
@@ -131,11 +129,9 @@ const CompanyActivityCollection = ({
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Activity Feed' }]}
-            flashMessages={flashMessages}
-            returnUrl={returnUrl}
             pageTitle="Activities"
           >
             <FilteredCollectionList
@@ -218,7 +214,7 @@ const CompanyActivityCollection = ({
                 />
               </CollectionFilters>
             </FilteredCollectionList>
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
