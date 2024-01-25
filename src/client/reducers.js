@@ -169,9 +169,6 @@ import oneListDetailsReducer from './modules/Companies/CoreTeam/reducer'
 import { ID as TASK_DETAILS_ID } from './modules/Tasks/TaskDetails/state'
 import taskDetailsReducer from './modules/Tasks/TaskDetails/reducer'
 
-import { ID as EXPORT_WINS_DETAILS_ID } from './modules/ExportWins/Details/state'
-import exportWinDetailsTaskReducer from './modules/ExportWins/Details/reducer'
-
 import { ID as OMIS_COMPANY_SELECT_ID } from './modules/Omis/CreateOrder/CompanySelect/state'
 import omisCompanyReducer from './modules/Omis/CreateOrder/CompanySelect/reducer.js'
 
@@ -282,7 +279,6 @@ export const reducers = {
   [RECIPIENT_COMPANY_LIST_ID]: recipientCompanyReducer,
   [ONE_LIST_DETAILS_ID]: oneListDetailsReducer,
   [TASK_DETAILS_ID]: taskDetailsReducer,
-  [EXPORT_WINS_DETAILS_ID]: exportWinDetailsTaskReducer,
   [OMIS_COMPANY_SELECT_ID]: omisCompanyReducer,
   [GET_MY_TASKS_ID]: getMyTasksReducer,
   [INTERACTION_ID]: getInteractionReducer,
