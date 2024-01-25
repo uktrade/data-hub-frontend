@@ -11,7 +11,6 @@ const CompanyLayout = ({
   company,
   breadcrumbs,
   children,
-  returnUrl,
   flashMessages,
   pageTitle,
   isInvestment = false,
@@ -29,7 +28,6 @@ const CompanyLayout = ({
       breadcrumbs={breadcrumbs}
       flashMessages={flashMessages}
       company={company}
-      returnUrl={returnUrl}
     />
     <Main>
       <CompanyTabbedLocalNavigation company={company} />
