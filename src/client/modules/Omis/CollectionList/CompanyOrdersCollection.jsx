@@ -12,7 +12,7 @@ import { ORDERS__LOADED } from '../../../actions'
 import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { CompanyResource } from '../../../components/Resource'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 import {
@@ -70,7 +70,7 @@ const CompanyOrdersCollection = ({
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Orders (OMIS)' }]}
             returnUrl={returnUrl}
@@ -104,7 +104,7 @@ const CompanyOrdersCollection = ({
                 sortby: 'created_on:desc',
               }}
             />
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
