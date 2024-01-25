@@ -398,7 +398,7 @@ describe('Adding an export win', () => {
     it('should render a hint', () => {
       cy.get('[data-test="hint"]').should(
         'have.text',
-        'The customer will be asked to confirm this infomation.'
+        'The customer will be asked to confirm this information.'
       )
     })
 

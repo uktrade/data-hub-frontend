@@ -53,7 +53,7 @@ const WinDetailsStep = () => {
     <Step name={steps.WIN_DETAILS}>
       <H3 data-test="step-heading">Win details</H3>
       <StyledHintParagraph data-test="hint">
-        The customer will be asked to confirm this infomation.
+        The customer will be asked to confirm this information.
       </StyledHintParagraph>
       <ResourceOptionsField
         name="country"
@@ -133,7 +133,7 @@ const WinDetailsStep = () => {
                 <UnorderedList listStyleType="bullet">
                   <ListItem>
                     the exchange of ownership of goods/services from a
-                    subsidiary of an eligible UK company to a non_UK resident.
+                    subsidiary of an eligible UK company to a non-UK resident.
                   </ListItem>
                   <ListItem>
                     in financial services, the value of assets under management
