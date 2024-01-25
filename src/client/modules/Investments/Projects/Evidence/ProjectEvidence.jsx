@@ -21,7 +21,6 @@ const ProjectEvidence = () => {
   return (
     <ProjectLayoutNew
       projectId={projectId}
-      projectName={<InvestmentName id={projectId} />}
       breadcrumbs={[
         {
           link: urls.investments.projects.details(projectId),
