@@ -5,17 +5,26 @@ import GridRow from '@govuk-react/grid-row'
 
 import { CompanyLocalHeader, CompanyTabbedLocalNavigation, Main } from '..'
 import CompanyInvestmentSubNavigation from '../CompanyTabbedLocalNavigation/CompanyInvestmentTab'
+import WatchTextContent from '../WatchTextContent'
 
 const CompanyLayout = ({
   company,
-  flashMessages,
   breadcrumbs,
   children,
   returnUrl,
+  flashMessages,
+  pageTitle,
   isInvestment = false,
   isLCP = false,
 }) => (
   <>
+    <WatchTextContent
+      onTextContentChange={(text) => {
+        document.title = text
+      }}
+    >
+      {pageTitle} - {company.name} - Companies - DBT Data Hub
+    </WatchTextContent>
     <CompanyLocalHeader
       breadcrumbs={breadcrumbs}
       flashMessages={flashMessages}
@@ -31,6 +40,7 @@ const CompanyLayout = ({
         <GridCol>{children}</GridCol>
       </GridRow>
     </Main>
+    <br />
   </>
 )
 
