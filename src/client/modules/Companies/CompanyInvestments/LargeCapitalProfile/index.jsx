@@ -5,13 +5,13 @@ import {
   CompanyResource,
   LargeInvestorProfileResource,
 } from '../../../../components/Resource'
-import CompanyLayoutNew from '../../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../../components/Layout/DefaultLayoutBase'
 
 import CreateLargeCapitalProfile from './CreateLargeCapitalProfile'
 import EditLargeCapitalProfile from './EditLargeCapitalProfile'
 
-const LargeCapitalProfile = ({ flashMessages }) => {
+const LargeCapitalProfile = () => {
   const { companyId } = useParams()
   return (
     <DefaultLayoutBase>
@@ -19,10 +19,9 @@ const LargeCapitalProfile = ({ flashMessages }) => {
         {(profile) => (
           <CompanyResource id={companyId}>
             {(company) => (
-              <CompanyLayoutNew
+              <CompanyLayout
                 company={company}
                 breadcrumbs={[{ text: 'Investments' }]}
-                flashMessages={flashMessages}
                 isInvestment={true}
                 isLCP={true}
                 pageTitle="Large capital profile"
@@ -32,7 +31,7 @@ const LargeCapitalProfile = ({ flashMessages }) => {
                 ) : (
                   <CreateLargeCapitalProfile companyId={companyId} />
                 )}
-              </CompanyLayoutNew>
+              </CompanyLayout>
             )}
           </CompanyResource>
         )}
