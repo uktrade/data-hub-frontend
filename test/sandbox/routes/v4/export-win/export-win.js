@@ -45,11 +45,6 @@ export const getExportWinCollection = (req, res) => {
   })
 }
 
-const getExportWin = (req, res) => {
+export const getExportWin = (req, res) => {
   res.json(fakeExportWin())
-}
-
-module.exports = {
-  getExportWinCollection,
-  getExportWin,
 }
