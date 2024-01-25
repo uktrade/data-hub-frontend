@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { Metadata, NewWindowLink } from '../../../components'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import {
   CompanyObjectivesCountResource,
   CompanyObjectivesResource,
@@ -249,18 +249,16 @@ const objectiveMetadata = (objective) => {
   return rows
 }
 
-const AccountManagement = ({ flashMessages, csrfToken, permissions }) => {
+const AccountManagement = ({ permissions }) => {
   const { companyId } = useParams()
 
   return (
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Account management' }]}
-            flashMessages={flashMessages}
-            csrfToken={csrfToken}
             pageTitle="Account management"
           >
             <DataWorkspaceAccountPlan company={company} />
@@ -302,7 +300,7 @@ const AccountManagement = ({ flashMessages, csrfToken, permissions }) => {
               or email{' '}
               <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
             </Details>
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>

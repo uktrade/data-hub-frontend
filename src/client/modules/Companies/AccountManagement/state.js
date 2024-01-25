@@ -16,6 +16,5 @@ export const state2props = (state) => {
 }
 
 export const state2propsMainTab = (state) => ({
-  csrfToken: state.csrfToken,
   permissions: state.userPermissions,
 })
