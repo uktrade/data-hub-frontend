@@ -18,6 +18,12 @@ const VerticalSpacer = styled.div`
   margin-bottom: ${SPACING.SCALE_5};
 `
 
+const NormalFontWeightRow = styled(SummaryTable.Row)`
+  & th {
+    font-weight: normal;
+  }
+`
+
 const ExportWinTitle = (props) => (
   <ExportWin.Inline {...props}>
     {(exportWin) => (
@@ -94,9 +100,9 @@ const Detail = () => (
                     Object.keys(groupedBreakdowns).length > 1 &&
                     Object.entries(groupedBreakdowns).map(
                       ([k, { total, yearCount }]) => (
-                        <SummaryTable.Row key={k} heading={k}>
+                        <NormalFontWeightRow key={k} heading={k}>
                           {`${currencyGBP(total)} over ${yearCount} years`}
-                        </SummaryTable.Row>
+                        </NormalFontWeightRow>
                       )
                     )}
                   <SummaryTable.Row heading="Total value">
