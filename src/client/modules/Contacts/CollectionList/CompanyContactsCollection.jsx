@@ -7,7 +7,7 @@ import { CONTACTS__LOADED } from '../../../actions'
 import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { CompanyResource } from '../../../components/Resource'
-import CompanyLayoutNew from '../../../components/Layout/CompanyLayoutNew'
+import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 import {
@@ -20,7 +20,6 @@ const CompanyContactsCollection = ({
   payload,
   optionMetadata,
   selectedFilters,
-  returnUrl,
   ...props
 }) => {
   const { companyId } = useParams()
@@ -43,10 +42,9 @@ const CompanyContactsCollection = ({
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
         {(company) => (
-          <CompanyLayoutNew
+          <CompanyLayout
             company={company}
             breadcrumbs={[{ text: 'Contacts' }]}
-            returnUrl={returnUrl}
             pageTitle="Contacts"
           >
             {company.archived ? (
@@ -78,7 +76,7 @@ const CompanyContactsCollection = ({
                 page: 1,
               }}
             />
-          </CompanyLayoutNew>
+          </CompanyLayout>
         )}
       </CompanyResource>
     </DefaultLayoutBase>
