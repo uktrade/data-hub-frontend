@@ -20,7 +20,7 @@ import OfficerDetailsStep from './OfficerDetailsStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
-import SupportGivenStep from './SupportGivenStep'
+import SupportProvidedStep from './SupportProvidedStep'
 import CheckBeforeSendingStep from './CheckBeforeSending'
 
 const StyledLoadingBox = styled(LoadingBox)({
@@ -87,7 +87,7 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
                 <CreditForThisWinStep {...stepProps} />
                 <CustomerDetailsStep {...stepProps} />
                 <WinDetailsStep {...stepProps} />
-                <SupportGivenStep {...stepProps} />
+                <SupportProvidedStep {...stepProps} />
                 <CheckBeforeSendingStep {...stepProps} />
                 <pre>{JSON.stringify(values, null, 2)}</pre>
               </>
