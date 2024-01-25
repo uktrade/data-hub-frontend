@@ -33,6 +33,7 @@ const ExportWinTitle = (props) => (
     )}
   </ExportWin.Inline>
 )
+
 const Detail = () => (
   <Route>
     {({
