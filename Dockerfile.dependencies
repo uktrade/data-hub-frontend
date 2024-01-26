@@ -1,9 +1,11 @@
-# A base image with all operating system dependencies, no Cypress, and some browsers.
+# A base image with all operating system dependencies, but no Cypress or browsers.
 # See https://github.com/cypress-io/cypress-docker-images for more info.
 
-FROM cypress/browsers:node-18.15.0-chrome-106.0.5249.61-1-ff-99.0.1-edge-114.0.1823.51-1
+FROM cypress/base:18.15.0
 
 # Setting environment variables
+ENV CHROME_VERSION=121.0.6167.85-1
+ENV CHROME_DOWNLOAD_URL=https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 ENV DOCKERIZE_VERSION v0.7.0
 ENV TZ Europe/London
 ENV TERM xterm
@@ -15,7 +17,7 @@ ENV NODE_PATH="$HOME/.local/lib/node_modules:$NODE_PATH"
 ENV npm_config_prefix="$HOME/.local"
 ENV CYPRESS_CACHE_FOLDER="$HOME/.cache/Cypress"
 
-# Overwrite CI env variable which is set in the parent cypress/browsers image to avoid nodemon crashing
+# Overwrite CI env variable which is set in the parent cypress/base image to avoid nodemon crashing
 ENV CI=false
 
 # Install dockerize
@@ -27,6 +29,14 @@ RUN wget --quiet --https-only "https://github.com/jwilder/dockerize/releases/dow
 RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime \
   && echo "$TZ" > /etc/timezone \
   && echo "Timezone: $(date +%z)"
+
+# Install Google Chrome
+RUN wget --no-verbose -O /tmp/chrome.deb $CHROME_DOWNLOAD_URL \
+  && apt-get update \
+  && apt-get install -y /tmp/chrome.deb \
+  && rm /tmp/chrome.deb \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # Prepare node user environment
 RUN mkdir -p "$HOME" /usr/src/app \
