@@ -11,7 +11,6 @@ import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrap
 import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
-import CompanyActivityCollection from './components/ActivityFeed/CollectionList'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
@@ -21,30 +20,21 @@ import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotF
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListForm from '../apps/company-lists/client/CreateListForm'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
-import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
-import CompanyOverview from '../apps/companies/apps/company-overview/client/CompanyOverview'
-import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
-import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
-import CompanyOrdersCollection from '../client/modules/Omis/CollectionList/CompanyOrdersCollection'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
-import CompaniesContactsCollection from '../client/modules/Contacts/CollectionList/CompanyContactsCollection.jsx'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
-import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
-import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
-import AccountManagement from './modules/Companies/AccountManagement'
 
 import Footer from '../client/components/Footer'
 
@@ -154,14 +144,6 @@ function App() {
             <FindCompany csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
-        <Mount selector="#activity-feed-app">
-          {(props) => (
-            <CompanyActivityCollection
-              companyInteractionsTab={true}
-              {...props}
-            />
-          )}
-        </Mount>
         <Mount selector="#dashboard">
           {(props) => (
             <PersonalisedDashboard
@@ -192,29 +174,15 @@ function App() {
         <Mount selector="#dnb-hierarchy">
           {(props) => <CompanyHierarchy {...props} />}
         </Mount>
-        <Mount selector="#company-business-details">
-          {(props) => (
-            <CompanyBusinessDetails
-              csrfToken={globalProps.csrfToken}
-              {...props}
-            />
-          )}
-        </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (
             <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
           )}
         </Mount>
-        <Mount selector="#company-export-index-page">
-          {(props) => <ExportsIndex {...props} />}
-        </Mount>
         <Mount selector="#send-referral-form">
           {(props) => (
             <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
           )}
-        </Mount>
-        <Mount selector="#company-export-full-history">
-          {(props) => <ExportsHistory {...props} />}
         </Mount>
         <Mount selector="#referral-details">
           {(props) => <ReferralDetails {...props} />}
@@ -241,15 +209,6 @@ function App() {
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
         </Mount>
-        <Mount selector="#company-overview">
-          {(props) => <CompanyOverview {...props} />}
-        </Mount>
-        <Mount selector="#company-projects-collection">
-          {(props) => <CompanyProjectsCollection {...props} />}
-        </Mount>
-        <Mount selector="#company-contacts-collection">
-          {(props) => <CompaniesContactsCollection {...props} />}
-        </Mount>
         <Mount selector="#dashboard-local-header">
           {(props) => (
             <SearchLocalHeader
@@ -257,9 +216,6 @@ function App() {
               flashMessage={props.flashMessage}
             />
           )}
-        </Mount>
-        <Mount selector="#company-orders-collection">
-          {(props) => <CompanyOrdersCollection {...props} />}
         </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}
@@ -279,16 +235,8 @@ function App() {
         <Mount selector="#orders-reconciliation-collection">
           {(props) => <OrdersReconciliationCollection {...props} />}
         </Mount>
-        <Mount selector="#company-large-capital-profile">
-          {(props) => <LargeCapitalProfile {...props} />}
-        </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
-        </Mount>
-        <Mount selector="#account-management">
-          {(props) => (
-            <AccountManagement csrfToken={globalProps.csrfToken} {...props} />
-          )}
         </Mount>
 
         <Mount selector="#react-app">

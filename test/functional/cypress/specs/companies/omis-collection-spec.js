@@ -205,11 +205,12 @@ describe('Company Orders (OMIS) Collection Page', () => {
             total_subtotal_cost: 23218.0,
           },
         },
-      }).as('apiRequest')
+      }).as('archivedApiRequest')
       cy.visit(urls.companies.orders(archivedLtd.id))
-      assertPayload('@apiRequest', {
+      assertPayload('@archivedApiRequest', {
         offset: 0,
         limit: 10,
+        sortby: 'created_on:desc',
         company: archivedLtd.id,
       })
     })

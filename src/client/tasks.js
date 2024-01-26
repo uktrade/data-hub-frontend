@@ -1,10 +1,10 @@
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
+import * as exportsHistoryTasks from './modules/Companies/CompanyExports/ExportHistory/tasks.js'
 import referralListTask from './components/ReferralList/tasks'
 import { TASK_SAVE_REFERRAL } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
-import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
+import * as exportWinsTasks from './modules/Companies/CompanyExports/ExportWins/tasks.js'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
 import addCompanyPostcodeToRegionTask, {
@@ -25,8 +25,9 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import {
   DNB__CHECK_PENDING_REQUEST,
   TASK_ARCHIVE_COMPANY,
-} from '../apps/companies/apps/business-details/client/state'
-import * as businessDetails from '../apps/companies/apps/business-details/client/tasks'
+  TASK_GET_GLOBAL_ULTIMATE,
+} from './modules/Companies/CompanyBusinessDetails/state.js'
+import * as businessDetails from './modules/Companies/CompanyBusinessDetails/tasks.js'
 
 import {
   TASK_GET_COMPANIES_LIST,
@@ -104,8 +105,8 @@ import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
   TASK_GET_PROJECT_WON_COUNT,
-} from '../apps/companies/apps/company-overview/overview-table-cards/state'
-import * as overviewInvestmentProjectTasks from '../apps/companies/apps/company-overview/overview-table-cards/tasks'
+} from './modules/Companies/CompanyOverview/TableCards/state.js'
+import * as overviewInvestmentProjectTasks from './modules/Companies/CompanyOverview/TableCards/tasks.js'
 
 import {
   TASK_SEARCH_COMPANY,
@@ -141,7 +142,7 @@ import { TASK_GET_REMINDER_SUMMARY } from './components/NotificationAlert/state'
 
 import { TASK_GET_TYPEAHEAD_OPTIONS } from './components/Typeahead/state'
 
-import * as exportsEdit from '../apps/companies/apps/exports/client/tasks'
+import * as exportsEdit from './modules/Companies/CompanyExports/tasks.js'
 
 import {
   saveContact,
@@ -309,8 +310,16 @@ import {
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
 import { getDnbFamilyTree } from './modules/Companies/CompanyHierarchy/tasks'
 
-import { TASK_GET_GLOBAL_HQ_LIST } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
-import { getGlobalHeadquartersCollection } from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
+import {
+  TASK_GET_GLOBAL_HQ_LIST,
+  TASK_SET_GLOBAL_HQ,
+  TASK_REMOVE_GLOBAL_HQ,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/state'
+import {
+  getGlobalHeadquartersCollection,
+  setGlobalHq,
+  removeGlobalHq,
+} from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/tasks'
 
 import { TASK_GET_SUBSIDIARY_LIST } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/state'
 import { getSubsidiaryCollection } from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary/tasks'
@@ -674,4 +683,7 @@ export const tasks = {
   [TASK_PROPOSITION_COMPLETE]: completeInvestmentPropositions,
   [TASK_GET_EXPORT_PROJECT]: getExportProject,
   [TASK_GET_EXPORT_WIN]: getExportWin,
+  [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
+  [TASK_SET_GLOBAL_HQ]: setGlobalHq,
+  [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
 }

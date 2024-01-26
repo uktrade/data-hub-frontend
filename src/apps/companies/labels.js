@@ -52,15 +52,6 @@ const accountManagementDisplayLabels = {
   one_list_group_global_account_manager: 'Global Account Manager',
 }
 
-const exportDetailsLabels = {
-  exportExperienceCategory: 'Export win category',
-  exportToCountries: 'Currently exporting to',
-  futureInterestCountries: 'Future countries of interest',
-  noInterestCountries: 'Countries of no interest',
-  greatProfile: 'great.gov.uk business profile',
-  exportPotential: 'Export potential',
-}
-
 const aboutLabels = {
   business_type: 'Business type',
   trading_names: 'Trading names',
@@ -79,59 +70,12 @@ const businessHierarchyLabels = {
   global_headquarters: 'Global HQ',
 }
 
-const exportPotentialLabels = {
-  very_high: {
-    text: 'Very High',
-    description: 'Most companies like this one are exporters',
-  },
-  high: {
-    text: 'High',
-    description: 'This business shares some features with successful exporters',
-  },
-  medium: {
-    text: 'Medium',
-    description: "Some businesses that look like this one export, others don't",
-  },
-  low: {
-    text: 'Low',
-    description:
-      'This business shares many features with companies that do not export',
-  },
-  very_low: {
-    text: 'Very Low',
-    description: "Most of the businesses like this aren't exporters",
-  },
-}
-
-const exportSegmentsLabels = {
-  hep: 'High export potential',
-  'non-hep': 'Not high export potential',
-}
-const exportSubSegmentsLabels = {
-  sustain_nurture_and_grow: 'Sustain: nurture & grow',
-  sustain_develop_export_capability: 'Sustain: develop export capability',
-  sustain_communicate_benefits: 'Sustain: communicate benefits',
-  sustain_increase_competitiveness: 'Sustain: increase competitiveness',
-  reassure_nurture_and_grow: 'Reassure: nurture & grow',
-  reassure_develop_export_capability: 'Reassure: develop export capability',
-  reassure_leave_be: 'Reassure: leave be',
-  reassure_change_the_game: 'Reassure: change the game',
-  promote_develop_export_capability: 'Promote: develop export capability',
-  promote_communicate_benefits: 'Promote: communicate benefits',
-  promote_change_the_game: 'Promote: change the game',
-  challenge: 'Challenge',
-}
-
 module.exports = {
   companyDetailsLabels,
   companyTypeOptions,
   hqLabels,
   accountManagementDisplayLabels,
-  exportDetailsLabels,
   address,
   aboutLabels,
   businessHierarchyLabels,
-  exportPotentialLabels,
-  exportSegmentsLabels,
-  exportSubSegmentsLabels,
 }

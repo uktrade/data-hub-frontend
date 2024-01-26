@@ -39,6 +39,7 @@ const AddRemoveFromListForm = ({
     list = cleanedList
     return { list, token, companyId }
   }
+
   return (
     <Form
       id="add-remove-from-list"

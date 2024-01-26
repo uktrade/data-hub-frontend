@@ -4,10 +4,7 @@ import {
   assertMetadataItem,
   assertListLength,
 } from '../../support/collection-list-assertions'
-import {
-  assertCompanyBreadcrumbs,
-  assertFlashMessage,
-} from '../../support/assertions'
+import { assertCompanyBreadcrumbs } from '../../support/assertions'
 import { collectionListRequest } from '../../support/actions'
 import urls from '../../../../../src/lib/urls'
 
@@ -119,21 +116,25 @@ describe('Link Global HQ', () => {
       assertMetadataItem('@secondListItem', 'Company Corp, Company Ltd')
     })
 
-    it('should link the global HQ', () => {
-      cy.contains('Global HQ Test Company').click()
-
-      assertFlashMessage('You’ve linked the Global Headquarters')
+    it('should render the correct URL', () => {
+      cy.contains('Global HQ Test Company').should(
+        'have.attr',
+        'href',
+        urls.companies.hierarchies.ghq.add(testCompany.id, company1.id)
+      )
     })
   })
 
-  context('should remove global HQ', () => {
+  context('When a company has a Global HQ', () => {
     before(() => {
       cy.visit(urls.companies.businessDetails(companyWithGlobalHQ.id))
     })
-    it('should remove the global HQ', () => {
-      cy.contains('Remove link').click()
-
-      assertFlashMessage('You’ve removed the link to Global Headquarters')
+    it('should render the removal link', () => {
+      cy.contains('Remove link').should(
+        'have.attr',
+        'href',
+        urls.companies.hierarchies.ghq.remove(companyWithGlobalHQ.id)
+      )
     })
   })
 })

@@ -9,12 +9,7 @@ describe('Company router', () => {
       '/:companyId/unarchive',
       '/:companyId',
       '/:companyId/details',
-      '/:companyId/business-details',
-      '/:companyId/hierarchies/ghq/:globalHqId/add',
-      '/:companyId/hierarchies/ghq/remove',
       '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add',
-      '/:companyId/contacts',
-      '/:companyId/orders',
       '/:companyId/manage-company-list',
       '/:companyId/subsidiaries',
     ])

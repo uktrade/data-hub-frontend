@@ -10,8 +10,8 @@ import referralsReducer from '../apps/companies/apps/referrals/details/client/re
 import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
 import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
 
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
-import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
+import { ID as EXPORTS_HISTORY_ID } from './modules/Companies/CompanyExports/ExportHistory/state.js'
+import exportsHistoryReducer from './modules/Companies/CompanyExports/ExportHistory/reducer.js'
 
 import TabNav from './components/TabNav'
 
@@ -23,8 +23,8 @@ import Typeahead from './components/Typeahead/Typeahead'
 
 import FieldAddAnother from './components/Form/elements/FieldAddAnother/FieldAddAnother'
 
-import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
-import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
+import { ID as EXPORTS_WINS_ID } from './modules/Companies/CompanyExports/ExportWins/state.js'
+import exportWinsReducer from './modules/Companies/CompanyExports/ExportWins/reducer.js'
 
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
@@ -35,8 +35,8 @@ import investmentOpportunitiesListReducer from './modules/Investments/Opportunit
 import { ID as INVESTMENT_OPPORTUNITIES_DETAILS_ID } from './modules/Investments/Opportunities/state'
 import investmentOpportunitiesDetailsReducer from './modules/Investments/Opportunities/reducer'
 
-import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
-import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
+import { ID as DNB_CHECK_ID } from './modules/Companies/CompanyBusinessDetails/state.js'
+import dnbCheckReducer from './modules/Companies/CompanyBusinessDetails/reducer.js'
 
 import { ID as INVESTMENT_PROFILES_ID } from './modules/Investments/Profiles/state'
 import investmentProfileReducer from './modules/Investments/Profiles/reducer'
@@ -50,12 +50,12 @@ import {
 import {
   OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
   OVERVIEW_COMPANY_PROJECTS_LIST_ID,
-} from '../apps/companies/apps/company-overview/overview-table-cards/state'
+} from './modules/Companies/CompanyOverview/TableCards/state.js'
 
 import investmentProjectsReducer from './modules/Investments/Projects/reducer'
 import investmentProjectReducer from './modules/Investments/Projects/investmentProjectReducer'
-import overviewInvestmentProjectReducer from '../apps/companies/apps/company-overview/overview-table-cards/reducer'
-import overviewExportWinsReducer from '../apps/companies/apps/company-overview/overview-table-cards/exportStatusReducer'
+import overviewInvestmentProjectReducer from './modules/Companies/CompanyOverview/TableCards/reducer.js'
+import overviewExportWinsReducer from './modules/Companies/CompanyOverview/TableCards/exportStatusReducer.js'
 
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'

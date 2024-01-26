@@ -109,6 +109,20 @@ const reactRoutes = [
   '/tasks/:taskId/details',
   '/tasks/create',
   '/tasks/:taskId/edit',
+  '/companies/:companyId/overview',
+  '/companies/:companyId/business-details',
+  '/companies/:companyId/hierarchies/ghq/:globalHqId/add',
+  '/companies/:companyId/hierarchies/ghq/remove',
+  '/companies/:companyId/activity',
+  '/companies/:companyId/contacts',
+  '/companies/:companyId/orders',
+  '/companies/:companyId/account-management',
+  '/companies/:companyId/investments',
+  '/companies/:companyId/investments/projects',
+  '/companies/:companyId/investments/large-capital-profile',
+  '/companies/:companyId/exports',
+  '/companies/:companyId/exports/history',
+  '/companies/:companyId/exports/history/:countryId',
 ]
 
 reactRoutes.forEach((path) => {
