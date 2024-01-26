@@ -65,14 +65,6 @@ const InvestmentLocalHeader = ({ breadcrumbs, flashMessages, projectId }) => {
         <InvestmentResource id={projectId}>
           {(project) => (
             <>
-              {/* <WatchTextContent
-                onTextContentChange={(text) => {
-                  document.title = text
-                }}
-              >
-                {pageTitle} - {project.name} - Projects - Investments - DBT Data
-                Hub
-              </WatchTextContent> */}
               <StyledLink
                 data-test="heading-link"
                 href={urls.companies.detail(project.investorCompany.id)}

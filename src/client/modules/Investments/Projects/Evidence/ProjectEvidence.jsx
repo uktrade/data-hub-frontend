@@ -32,17 +32,6 @@ const ProjectEvidence = () => {
     >
       <InvestmentEvidenceResource id={projectId}>
         {(evidence) => (
-          // <ProjectLayout
-          //   project={project}
-          //   breadcrumbs={[
-          //     {
-          //       link: urls.investments.projects.details(project.id),
-          //       text: project.name,
-          //     },
-          //     { text: 'Evidence' },
-          //   ]}
-          //   pageTitle="Evidence"
-          // >
           <>
             <H2 size={LEVEL_SIZE[3]} data-test="evidence-heading">
               Evidence

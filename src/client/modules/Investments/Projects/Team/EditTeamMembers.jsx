@@ -27,6 +27,10 @@ const EditTeamMembers = () => {
           link: urls.investments.projects.details(projectId),
           text: <InvestmentName id={projectId} />,
         },
+        {
+          link: urls.investments.projects.team(projectId),
+          text: 'Project team',
+        },
         { text: 'Team members' },
       ]}
       pageTitle="Team members"
