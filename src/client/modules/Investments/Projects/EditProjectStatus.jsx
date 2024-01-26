@@ -17,9 +17,10 @@ const EditProjectStatus = () => {
     <DefaultLayout
       heading={'Change project status'}
       pageTitle={
-        'Change project status - ' +
-        <InvestmentName id={projectId} /> +
-        ' - Projects - Investments'
+        <>
+          Change project status - <InvestmentName id={projectId} /> - Projects -
+          Investments
+        </>
       }
       breadcrumbs={buildProjectBreadcrumbs([
         {
