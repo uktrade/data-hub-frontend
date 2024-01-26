@@ -15,6 +15,7 @@ import Task from '../Task'
 import { COMPANY_LISTS__COMPANY_IN_LOADED } from '../../actions'
 import { ID, TASK_GET_LISTS_COMPANY_IS_IN, state2props } from './state'
 import LocalHeaderCompanyRefer from './LocalHeaderCompanyRefer'
+import urls from '../../../lib/urls'
 
 const StyledCompanyListButton = styled('button')`
   display: inline-table;
@@ -45,7 +46,9 @@ const StyledAddButton = styled(StyledCompanyListButton)`
 
 export const LocalHeaderCompanyLists = ({ results, companyId }) => {
   const handleClickAddRemove = () => {
-    window.location.href = `/companies/${companyId}/lists/add-remove?returnUrl=${window.location.pathname}`
+    window.location.href = `${urls.companies.lists.addRemove(
+      companyId
+    )}?returnUrl=${window.location.pathname}`
   }
   return (
     <Task.Status
