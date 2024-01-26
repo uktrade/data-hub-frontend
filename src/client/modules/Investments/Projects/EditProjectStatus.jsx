@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
 import { DefaultLayout, FieldRadios, Form } from '../../../components'
@@ -63,10 +62,6 @@ const EditProjectStatus = () => {
       </InvestmentResource>
     </DefaultLayout>
   )
-}
-
-EditProjectStatus.propTypes = {
-  changeMe: PropTypes.string.isRequired,
 }
 
 export default EditProjectStatus

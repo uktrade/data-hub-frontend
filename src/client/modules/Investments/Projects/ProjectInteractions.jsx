@@ -8,8 +8,6 @@ import { CollectionList } from '../../../components'
 import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
 import { InteractionCollectionResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import { INTERACTIONS__LOADED } from '../../../actions'
-import { TASK_GET_INTERACTIONS_LIST } from '../../Interactions/CollectionList/state'
 import InvestmentName from './InvestmentName'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
@@ -28,15 +26,6 @@ const ProjectInteractions = () => {
     sortby: parsedQueryString.sortby,
   }
 
-  const collectionListTask = {
-    name: TASK_GET_INTERACTIONS_LIST,
-    id: projectId,
-    progressMessage: 'Loading interactions',
-    startOnRender: {
-      payload: payload,
-      onSuccessDispatch: INTERACTIONS__LOADED,
-    },
-  }
   return (
     <ProjectLayoutNew
       projectId={projectId}
@@ -85,7 +74,6 @@ const ProjectInteractions = () => {
                     }),
                   })
                 }
-                taskProps={collectionListTask}
                 activePage={activePage}
                 sortOptions={count ? sortOptions : null}
                 addItemUrl={urls.investments.projects.interactions.createType(
