@@ -278,16 +278,39 @@ make: *** [visual-component-tests] Error 1
 After following the above steps, you may find the visual tests eventually start, but get stuck (or hang) on the first. You might see console output similar to:
 
 ```
-> test:visual-component
-> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual-component/cypress/specs/**/*.js"]}' --browser chrome
+> test:visual
+> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual/cypress/specs/**/*.js"]}' --browser chrome
 
-[125:0123/090101.393020:ERROR:node_bindings.cc(279)] Most NODE_OPTIONs are not supported in packaged apps. See documentation for more details.
+[1356:0126/105317.072419:ERROR:node_bindings.cc(279)] Most NODE_OPTIONs are not supported in packaged apps. See documentation for more details.
 
-DevTools listening on ws://127.0.0.1:39919/devtools/browser/641efdf5-1f09-42da-9409-027f3d7d6ae7
-[315:0123/090102.938113:ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
+DevTools listening on ws://127.0.0.1:35493/devtools/browser/c8f21391-8172-4dfa-bcf9-dd69079a53fe
+libva error: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
+[1566:0126/105318.610695:ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
 Couldn't find tsconfig.json. tsconfig-paths will be skipped
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        12.17.4                                                                        │
+  │ Browser:        Chrome 106 (headless)                                                          │
+  │ Node Version:   v18.15.0 (/usr/local/bin/node)                                                 │
+  │ Specs:          7 found (community-spec.js, company-spec.js, contact-spec.js, event-spec.js, i │
+  │                 nteraction-spec.js, investment-spec.js, omis-spec.js)                          │
+  │ Searched:       test/visual/cypress/specs/**/*.js                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Running:  community-spec.js                                                               (1 of 7)
+
+
+  community page
+Hangs here...
 ```
 
-We are still investigating the root cause of this issue, but preliminary results point to the frontend dependencies docker image, and how that has been built.
+Preliminary results point to this being an issue only for those on M1 and M2 machines when trying to run the tests locally, within Docker. We think this is due to an incompatibility between the docker images and the ARM architecture, however, we are still investigating this.
 
-We believe this issue only arises when running the tests locally and CircleCI should continue to run the tests without problems.
+Please note that CircleCI should continue to run the tests without problems.
