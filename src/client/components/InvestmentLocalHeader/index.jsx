@@ -11,7 +11,6 @@ import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 import FlashMessages from '../LocalHeader/FlashMessages'
 import { InvestmentResource } from '../Resource'
 import urls from '../../../lib/urls'
-import WatchTextContent from '../WatchTextContent'
 import InvestmentProjectLocalHeader from '../InvestmentProjectLocalHeader'
 
 // Using <div> as there is already a <header> on the page
@@ -42,12 +41,7 @@ const StyledLink = styled(Link)({
 /**
  * The generic local header component.
  */
-const InvestmentLocalHeader = ({
-  breadcrumbs,
-  flashMessages,
-  projectId,
-  pageTitle,
-}) => {
+const InvestmentLocalHeader = ({ breadcrumbs, flashMessages, projectId }) => {
   return (
     <StyledHeader
       aria-label="local header"
@@ -71,14 +65,14 @@ const InvestmentLocalHeader = ({
         <InvestmentResource id={projectId}>
           {(project) => (
             <>
-              <WatchTextContent
+              {/* <WatchTextContent
                 onTextContentChange={(text) => {
                   document.title = text
                 }}
               >
                 {pageTitle} - {project.name} - Projects - Investments - DBT Data
                 Hub
-              </WatchTextContent>
+              </WatchTextContent> */}
               <StyledLink
                 data-test="heading-link"
                 href={urls.companies.detail(project.investorCompany.id)}

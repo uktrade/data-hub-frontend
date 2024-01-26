@@ -8,6 +8,7 @@ import Footer from '../Footer'
 import Main from '../Main'
 import DataHubHeader from '../DataHubHeader'
 import { InvestmentLocalHeader } from '../../components'
+import WatchTextContent from '../WatchTextContent'
 
 const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
@@ -15,11 +16,18 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-const InvestmentLayout = ({ children, ...props }) => {
+const InvestmentLayout = ({ children, pageTitle, ...props }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   return (
     <>
-      <GlobalStyles />f
+      <WatchTextContent
+        onTextContentChange={(text) => {
+          document.title = text
+        }}
+      >
+        {pageTitle} - DBT Data Hub
+      </WatchTextContent>
+      <GlobalStyles />
       <DataHubHeader
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
@@ -37,7 +45,7 @@ const InvestmentLayout = ({ children, ...props }) => {
 
 InvestmentLayout.propTypes = {
   projectId: PropTypes.string.isRequired,
-  pageTitle: PropTypes.string.isRequired,
+  pageTitle: PropTypes.node.isRequired,
   flashMessages: PropTypes.shape({
     type: PropTypes.oneOfType([
       PropTypes.arrayOf(

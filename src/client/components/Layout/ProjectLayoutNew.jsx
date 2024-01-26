@@ -10,6 +10,7 @@ import { InvestmentLayout, LocalNav, LocalNavLink } from '../../components'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import { buildProjectBreadcrumbs } from '../../modules/Investments/utils'
+import InvestmentName from '../../modules/Investments/Projects/InvestmentName'
 
 const StyledNavWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_5};
@@ -40,7 +41,12 @@ export const ProjectLayoutNew = ({
   return (
     <InvestmentLayout
       projectId={projectId}
-      pageTitle={pageTitle}
+      pageTitle={
+        <>
+          {pageTitle} - <InvestmentName id={projectId} /> - Projects -
+          Investments
+        </>
+      }
       breadcrumbs={buildProjectBreadcrumbs(breadcrumbs)}
       flashMessages={flashMessages}
     >
