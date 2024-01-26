@@ -38,6 +38,7 @@ const CollectionList = ({
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
+
   return (
     <GridRow>
       <GridCol setWidth="full">
@@ -103,16 +104,16 @@ const CollectionList = ({
                         <CollectionItem {...item} key={i} />
                       ))}
                     </ol>
-                    <Pagination
-                      totalPages={totalPages}
-                      onPageClick={onPageClick}
-                      activePage={activePage}
-                    />
                   </>
                 )
               }
             </Task.Status>
           )}
+          <Pagination
+            totalPages={totalPages}
+            onPageClick={onPageClick}
+            activePage={activePage}
+          />
         </article>
       </GridCol>
     </GridRow>
