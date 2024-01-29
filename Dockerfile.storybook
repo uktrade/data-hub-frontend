@@ -3,10 +3,17 @@ FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:3.2.0
 ARG CURRENT_UID
 ARG CURRENT_GID
 
+# Use root user to perform privileged operations
 USER root
-RUN chown -R $CURRENT_UID:$CURRENT_GID /home/node
-RUN chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
 
+# Create directories for cypress-visual-* artifacts to be mounted
+RUN mkdir -p /usr/src/app/cypress-visual-report && \
+    mkdir -p /usr/src/app/cypress-visual-screenshots && \
+    # Set permissions
+    chown -R $CURRENT_UID:$CURRENT_GID /home/node && \
+    chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
+
+# Set the working directory to the app directory
 WORKDIR /usr/src/app
 
 # Install dev packages
@@ -14,6 +21,7 @@ COPY --chown=$CURRENT_UID:$CURRENT_GID package.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID package-lock.json .
 COPY --chown=$CURRENT_UID:$CURRENT_GID .npmrc .
 
+# Switch to the non-root user identified by CURRENT_UID and CURRENT_GID
 USER "$CURRENT_UID:$CURRENT_GID"
 CMD npm config set loglevel info
 
@@ -26,4 +34,3 @@ COPY --chown=$CURRENT_UID:$CURRENT_GID . .
 RUN npm run storybook:build
 
 EXPOSE 65200
-
