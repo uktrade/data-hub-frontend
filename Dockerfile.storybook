@@ -11,7 +11,8 @@ RUN mkdir -p /usr/src/app/cypress-visual-report && \
     mkdir -p /usr/src/app/cypress-visual-screenshots && \
     # Set permissions
     chown -R $CURRENT_UID:$CURRENT_GID /home/node && \
-    chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
+    chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app && \
+    chmod -R 777 /usr/src/app/cypress-visual-report /usr/src/app/cypress-visual-screenshots
 
 # Set the working directory to the app directory
 WORKDIR /usr/src/app
