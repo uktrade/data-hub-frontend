@@ -4,7 +4,6 @@ import { H3 } from '@govuk-react/heading'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { Step, FieldTypeahead, FieldCheckboxes } from '../../../components'
 import { OPTION_YES } from '../../../../common/constants'
-import { idNameToValueLabel } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
 import {
@@ -25,7 +24,6 @@ const SupportProvidedStep = () => (
       label="High Value Campaign (HVC) code (optional)"
       hint="If the win was linked to a HVC, select the appropriate campaign."
       resource={HvcResource}
-      resultToOptions={(results) => results.map(idNameToValueLabel)}
       field={FieldTypeahead}
     />
     <ResourceOptionsField
@@ -33,37 +31,27 @@ const SupportProvidedStep = () => (
       id="type-of-support"
       label="What type of support was given?"
       hint="You can add up to 5 types of support."
-      required="Select at least one type of support"
       field={FieldTypeahead}
       resource={SupportTypeResource}
-      resultToOptions={(results) => results.map(idNameToValueLabel)}
       fullWidth={true}
       isMulti={true}
+      required="Select at least one type of support"
       validate={(value) =>
-        value?.length === 0
-          ? 'Choose a support type'
-          : value?.length > 5
-            ? 'Choose a maximum of 5 types of support'
-            : null
+        value?.length > 5 && 'Select a maximum of 5 types of support'
       }
     />
     <ResourceOptionsField
       name="associated_programme"
       id="associated-programme"
-      label="What there as DBT campaign or event that contributed to this win?"
+      label="Was there a DBT campaign or event that contributed to this win?"
       hint="You can add up to 5 campaigns or events."
-      required="Select at least one type of DBT campaign or event"
       field={FieldTypeahead}
       resource={AssociatedProgrammeResource}
-      resultToOptions={(results) => results.map(idNameToValueLabel)}
       fullWidth={true}
       isMulti={true}
+      required="Select at least one type of DBT campaign or event"
       validate={(value) =>
-        value?.length === 0
-          ? 'Choose a DBT campaign or event'
-          : value?.length > 5
-            ? 'Choose a maximum of 5 DBT campaigns or events'
-            : null
+        value?.length > 5 && 'Select a maximum of 5 DBT campaigns or events'
       }
     />
     <FieldCheckboxes

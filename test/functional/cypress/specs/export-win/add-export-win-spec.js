@@ -735,7 +735,7 @@ describe('Adding an export win', () => {
         assertFieldTypeahead({
           element,
           label:
-            'What there as DBT campaign or event that contributed to this win?',
+            'Was there a DBT campaign or event that contributed to this win?',
           hint: 'You can add up to 5 campaigns or events.',
         })
       })
