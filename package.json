@@ -73,7 +73,7 @@
     "@nivo/pie": "^0.84.0",
     "@nivo/tooltip": "^0.84.0",
     "@redux-devtools/extension": "^3.3.0",
-    "@reduxjs/toolkit": "^1.9.7",
+    "@reduxjs/toolkit": "^2.1.0",
     "@sentry/browser": "^7.91.0",
     "@sentry/node": "^7.91.0",
     "@sentry/react": "^7.91.0",
