@@ -6,13 +6,9 @@ ARG CURRENT_GID
 # Use root user to perform privileged operations
 USER root
 
-# Create directories for cypress-visual-* artifacts to be mounted
-RUN mkdir -p /usr/src/app/cypress-visual-report && \
-    mkdir -p /usr/src/app/cypress-visual-screenshots && \
-    # Set permissions
-    chown -R $CURRENT_UID:$CURRENT_GID /home/node && \
-    chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app && \
-    chmod -R 777 /usr/src/app/cypress-visual-report /usr/src/app/cypress-visual-screenshots
+# Set permissions
+RUN chown -R $CURRENT_UID:$CURRENT_GID /home/node && \
+    chown -R $CURRENT_UID:$CURRENT_GID /usr/src/app
 
 # Set the working directory to the app directory
 WORKDIR /usr/src/app
