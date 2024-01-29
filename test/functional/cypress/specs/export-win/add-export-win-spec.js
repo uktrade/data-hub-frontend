@@ -284,7 +284,6 @@ describe('Adding an export win', () => {
   })
 
   context('Customer details', () => {
-    // The 4 typeaheads on the form step
     const contacts = '[data-test="field-company_contacts"]'
     const location = '[data-test="field-customer_location"]'
     const potential = '[data-test="field-business_potential"]'
@@ -398,7 +397,7 @@ describe('Adding an export win', () => {
     it('should render a hint', () => {
       cy.get('[data-test="hint"]').should(
         'have.text',
-        'The customer will be asked to confirm this infomation.'
+        'The customer will be asked to confirm this information.'
       )
     })
 
@@ -666,14 +665,14 @@ describe('Adding an export win', () => {
     it('should complete this step and continue to "Support provided"', () => {
       cy.get(country).selectTypeaheadOption('United states')
       cy.get(date).as('winDate')
-      cy.get('@winDate').find('[data-test="date-month"]').type('03')
-      cy.get('@winDate').find('[data-test="date-year"]').type('2023')
+      cy.get('@winDate').find('[data-test="date-month"]').type(month)
+      cy.get('@winDate').find('[data-test="date-year"]').type(year)
       cy.get(description).find('textarea').type('Foo bar baz')
       cy.get(nameOfCustomer).find('input').type('David French')
       cy.get(confidential).find('input[type="checkbox"]').check()
       cy.get(businessType).find('input').type('Contract')
       cy.get(winType).find('[data-test="checkbox-export_win"]').check()
-      cy.get(goodsVsServices).find('input[type="checkbox"]').eq(0).check()
+      cy.get(goodsVsServices).find('input[type="checkbox"]').eq(0).check() // Goods
       cy.get(nameOfExport).find('input').type('Biscuits')
       cy.get(sector).selectTypeaheadOption('Advanced Engineering')
       clickContinueAndAssertUrl(supportProvided)
@@ -681,8 +680,126 @@ describe('Adding an export win', () => {
   })
 
   context('Support provided', () => {
-    it('should complete this step and continue to "Check before sending"', () => {
+    const hvc = '[data-test="field-hvc"]'
+    const typeOfSupport = '[data-test="field-type_of_support"]'
+    const associatedProgramme = '[data-test="field-associated_programme"]'
+    const personallyConfirmed = '[data-test="field-is_personally_confirmed"]'
+    const lineManagerConfirmed = '[data-test="field-is_line_manager_confirmed"]'
+
+    beforeEach(() => {
+      cy.intercept('/api-proxy/v4/metadata/hvc', [
+        { id: '1', name: 'Australia Consumer Goods & Retail: E004' },
+      ])
+      cy.intercept('/api-proxy/v4/metadata/support-type', [
+        { id: '1', name: 'Market entry advice and support – DIT/FCO in UK' },
+      ])
+      cy.intercept('/api-proxy/v4/metadata/associated-programme', [
+        { id: '1', name: 'Afterburner' },
+      ])
       cy.visit(`${urls.companies.exportWins.create()}${supportProvided}`)
+    })
+
+    it('should render a step heading', () => {
+      cy.get('[data-test="step-heading"]').should('have.text', 'Support given')
+    })
+
+    it('should render a hint', () => {
+      cy.get('[data-test="hint"]').should(
+        'have.text',
+        'Did any of these help the customer achieve this win?'
+      )
+    })
+
+    it('should render a typeahead for high value campaign', () => {
+      cy.get(hvc).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'High Value Campaign (HVC) code (optional)',
+          hint: 'If the win was linked to a HVC, select the appropriate campaign.',
+        })
+      })
+    })
+
+    it('should render a support given typeahead', () => {
+      cy.get(typeOfSupport).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'What type of support was given?',
+          hint: 'You can add up to 5 types of support.',
+        })
+      })
+    })
+
+    it('should render an associated programme typeahead', () => {
+      cy.get(associatedProgramme).then((element) => {
+        assertFieldTypeahead({
+          element,
+          label:
+            'Was there a DBT campaign or event that contributed to this win?',
+          hint: 'You can add up to 5 campaigns or events.',
+        })
+      })
+    })
+
+    it('should render personally confirmed checkbox', () => {
+      assertFieldCheckboxes({
+        element: personallyConfirmed,
+        options: [
+          {
+            label: 'I confirm that this information is complete and accurate.',
+            checked: false,
+          },
+        ],
+      })
+    })
+
+    it('should render a manager confirmed checkbox', () => {
+      assertFieldCheckboxes({
+        element: lineManagerConfirmed,
+        options: [
+          {
+            label:
+              'My line manager has agreed that this win should be recorded.',
+            checked: false,
+          },
+        ],
+      })
+    })
+
+    it('should display validation error messages on mandatory fields', () => {
+      clickContinueButton()
+      assertErrorSummary([
+        'Select at least one type of support',
+        'Select at least one type of DBT campaign or event',
+        'Confirm that this information is complete and accurate',
+        'Confirm your line manager has agreed that this win should be recorded',
+      ])
+      assertFieldError(
+        cy.get(typeOfSupport),
+        'Select at least one type of support',
+        true
+      )
+      assertFieldError(
+        cy.get(associatedProgramme),
+        'Select at least one type of DBT campaign or event',
+        true
+      )
+      cy.get(personallyConfirmed).should(
+        'contain',
+        'Confirm that this information is complete and accurate'
+      )
+      cy.get(lineManagerConfirmed).should(
+        'contain',
+        'Confirm your line manager has agreed that this win should be recorded'
+      )
+    })
+
+    it('should complete this step and continue to "Check before sending"', () => {
+      cy.get(hvc).selectTypeaheadOption('Aus')
+      cy.get(typeOfSupport).selectTypeaheadOption('Mar')
+      cy.get(associatedProgramme).selectTypeaheadOption('Aft')
+      cy.get(personallyConfirmed).find('[data-test="checkbox-yes"]').check()
+      cy.get(lineManagerConfirmed).find('[data-test="checkbox-yes"]').check()
       clickContinueAndAssertUrl(checkBeforeSending)
     })
   })
