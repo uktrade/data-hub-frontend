@@ -394,10 +394,16 @@ module.exports = {
           '/investments',
           '/projects/:investmentId/propositions/:propositionId/abandon'
         ),
-        document: url(
-          '/investments',
-          '/projects/:investmentId/propositions/:propositionId/document'
-        ),
+        document: {
+          index: url(
+            '/investments',
+            '/projects/:investmentId/propositions/:propositionId/document'
+          ),
+          delete: url(
+            '/investments',
+            '/projects/:investmentId/propositions/:propositionId/document/:documentId/delete'
+          ),
+        },
         complete: url(
           '/investments',
           '/projects/:investmentId/propositions/:propositionId/complete'

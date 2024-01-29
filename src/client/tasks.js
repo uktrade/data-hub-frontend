@@ -301,10 +301,12 @@ import { TASK_GET_LISTS_COMPANY_IS_IN } from './components/CompanyLocalHeader/st
 import {
   TASK_CREATE_INVESTMENT_PROPOSITION,
   TASK_ABANDON_INVESTMENT_PROPOSITION,
+  TASK_DELETE_PROPOSITION_DOCUMENT,
 } from './modules/Investments/Projects/Propositions/state'
 import {
   createInvestmentProposition,
   abandonInvestmentProposition,
+  deletePropositionDocument,
 } from './modules/Investments/Projects/Propositions/tasks'
 
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
@@ -635,6 +637,7 @@ export const tasks = {
   [TASK_GET_ONE_LIST_DETAILS]: getOneListDetails,
   [TASK_ARCHIVE_OBJECTIVE]: archiveObjective,
   [TASK_DELETE_PROJECT_DOCUMENT]: deleteProjectDocument,
+  [TASK_DELETE_PROPOSITION_DOCUMENT]: deletePropositionDocument,
   [TASK_EDIT_OMIS_QUOTE_INFORMATION]: updateOrder,
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,

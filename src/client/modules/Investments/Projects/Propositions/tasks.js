@@ -11,3 +11,11 @@ export const abandonInvestmentProposition = (values) =>
     `v3/investment/${values.projectId}/proposition/${values.propositionId}/abandon`,
     values
   )
+
+export const deletePropositionDocument = (values) => {
+  const options = {
+    url: `v3/investment/${values.projectId}/proposition/${values.propositionId}/document/${values.documentId}`,
+    method: 'DELETE',
+  }
+  return apiProxyAxios(options)
+}

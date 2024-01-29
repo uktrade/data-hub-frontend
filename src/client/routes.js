@@ -73,6 +73,7 @@ import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
 import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
+import DeletePropositionDocument from './modules/Investments/Projects/Propositions/DeletePropositionDocument'
 import AttendeeSearch from './modules/Events/AttendeeSearch/AttendeeSearch'
 import CreateUKInvestmentOpportunity from './modules/Investments/Opportunities/CreateUKInvestmentOpportunity'
 import OpportunityChangeStatusForm from './modules/Investments/Opportunities/OpportunityChangeStatusForm'
@@ -638,6 +639,11 @@ const routes = {
       path: '/investments/projects/:projectId/propositions/create/proposition',
       module: 'datahub:investments',
       component: CreateProposition,
+    },
+    {
+      path: '/investments/projects/:projectId/propositions/:propositionId/document/:documentId/delete',
+      module: 'datahub:investments',
+      component: DeletePropositionDocument,
     },
   ],
   tasks: [

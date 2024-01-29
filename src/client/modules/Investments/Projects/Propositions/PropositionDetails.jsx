@@ -125,7 +125,7 @@ const PropositionDetails = ({
                     {checkStatus(proposition.status) && (
                       <>
                         <Link
-                          href={urls.investments.projects.proposition.document(
+                          href={urls.investments.projects.proposition.document.index(
                             investmentProjectId,
                             propositionId
                           )}
