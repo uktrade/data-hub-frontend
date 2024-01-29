@@ -8,6 +8,9 @@ services:
       args:
         CURRENT_UID: ${CURRENT_UID}
         CURRENT_GID: ${CURRENT_GID}
+    volumes:
+      - ./cypress-visual-screenshots:/usr/src/app/cypress-visual-screenshots
+      - ./cypress-visual-report:/usr/src/app/cypress-visual-report
     ports:
       - '65200:65200'
     env_file: .env
