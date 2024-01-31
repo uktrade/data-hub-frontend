@@ -1,6 +1,9 @@
 import { getTwelveMonthsAgo } from '../../../../../src/client/modules/ExportWins/Form/utils'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
+import { advisersListFaker } from '../../fakers/advisers'
+import { teamTypeListFaker } from '../../fakers/team-type'
+import { hqTeamListFaker } from '../../fakers/hq-team'
 import urls from '../../../../../src/lib/urls'
 import {
   assertUrl,
@@ -15,121 +18,40 @@ import {
   assertFieldRadiosWithLegend,
 } from '../../support/assertions'
 
-const company = companyFaker()
-
-const twelveMonthsAgo = getTwelveMonthsAgo()
-const month = twelveMonthsAgo.getMonth() + 1
-const year = twelveMonthsAgo.getFullYear()
-
-const officerDetailsStep = `?step=officer_details&company=${company.id}`
-const creditForThisWinStep = `?step=credit_for_this_win&company=${company.id}`
-const customerDetailsStep = `?step=customer_details&company=${company.id}`
-const winDetailsStep = `?step=win_details&company=${company.id}`
-const supportProvidedStep = `?step=support_provided&company=${company.id}`
-
-const formFields = {
-  officerDetails: {
-    heading: '[data-test="step-heading"]',
-    leadOfficer: '[data-test="field-lead_officer"]',
-    teamType: '[data-test="field-team_type"]',
-    hqTeam: '[data-test="field-hq_team"]',
-    teamMembers: '[data-test="field-team_members"]',
-    teamMembersHintText: '[data-test="hint-text"]',
-  },
-  creditForThisWin: {
-    heading: '[data-test="step-heading"]',
-    hint: '[data-test="hint"]',
-    hintText: '[data-test="hint-text"]',
-    radiosBtns: '[data-test="field-credit_for_win"]',
-    radiosBtnYes: '[data-test="credit-for-win-yes"]',
-    radiosBtnNo: '[data-test="credit-for-win-no"]',
-    addAnother: '[data-test="field-addAnother"]',
-    contributingOfficer: '[data-test="field-contributing_officer_0"]',
-    teamType: '[data-test="field-team_type_0"]',
-    hqTeam: '[data-test="field-hq_team_0"]',
-  },
-  customerDetails: {
-    heading: '[data-test="step-heading"]',
-    contacts: '[data-test="field-company_contacts"]',
-    addContactLink: '[data-test="add-a-new-contact-link"]',
-    details: '[data-test="contact-information-details"]',
-    location: '[data-test="field-customer_location"]',
-    potential: '[data-test="field-business_potential"]',
-    experience: '[data-test="field-export_experience"]',
-  },
-  winDetails: {
-    heading: '[data-test="step-heading"]',
-    hint: '[data-test="hint"]',
-    country: '[data-test="field-country"]',
-    date: '[data-test="field-date"]',
-    dateMonth: '[data-test="date-month"]',
-    dateYear: '[data-test="date-year"]',
-    description: '[data-test="field-description"]',
-    nameOfCustomer: '[data-test="field-name_of_customer"]',
-    confidential: '[data-test="field-name_of_customer_confidential"]',
-    businessType: '[data-test="field-business_type"]',
-    winType: '[data-test="field-win_type"]',
-    goodsVsServices: '[data-test="field-goods_vs_services"]',
-    nameOfExport: '[data-test="field-name_of_export"]',
-    sector: '[data-test="field-sector"]',
-    exportWinCheckbox: '[data-test="checkbox-export_win"]',
-    businessSuccessCheckbox: '[data-test="checkbox-business_success_win"]',
-    odiCheckbox: '[data-test="checkbox-odi_win"]',
-    winTypeValuesExport: '[data-test="win-type-values-export_win"]',
-    winTypeValuesBusSupp: '[data-test="win-type-values-business_success_win"]',
-    winTypeValuesODI: '[data-test="win-type-values-odi_win"]',
-    totalExportValue: '[data-test="total-export-value"]',
-  },
-  supportProvided: {
-    heading: '[data-test="step-heading"]',
-    hint: '[data-test="hint"]',
-    hvc: '[data-test="field-hvc"]',
-    typeOfSupport: '[data-test="field-type_of_support"]',
-    associatedProgramme: '[data-test="field-associated_programme"]',
-    personallyConfirmed: '[data-test="field-is_personally_confirmed"]',
-    lineManagerConfirmed: '[data-test="field-is_line_manager_confirmed"]',
-  },
-}
-
 const clickContinueAndAssertUrl = (url) => {
   clickContinueButton()
   assertUrl(url)
 }
 
 describe('Adding an export win', () => {
+  const company = companyFaker()
+
+  // Form steps and query params
+  const officerDetails = `?step=officer_details&company=${company.id}`
+  const creditForThisWin = `?step=credit_for_this_win&company=${company.id}`
+  const customerDetails = `?step=customer_details&company=${company.id}`
+  const winDetails = `?step=win_details&company=${company.id}`
+  const supportProvided = `?step=support_provided&company=${company.id}`
+  const checkBeforeSending = `?step=check_before_sending&company=${company.id}`
+
   beforeEach(() => {
     cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company)
     cy.intercept('/api-proxy/adviser/?*', {
-      results: [
-        { id: '100', name: 'David Meyer' },
-        { id: '101', name: 'John Smith' },
-      ],
+      results: [...advisersListFaker(2), { id: '1', name: 'David Meyer' }],
     })
-    cy.intercept('GET', '/api-proxy/v4/metadata/team-type', [
-      { id: '200', name: 'Investment (ITFG or IG)' },
-      { id: '201', name: 'Trade (TD or ST)' },
+    cy.intercept('GET', `/api-proxy/v4/metadata/team-type`, [
+      ...teamTypeListFaker(2),
+      { id: '1', name: 'Investment (ITFG or IG)' },
     ])
     cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-      { id: '300', name: 'DIT Education' },
-      { id: '301', name: 'Healthcare UK' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-      { id: '400', name: 'Australia Consumer Goods & Retail: E004' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/support-type', [
-      {
-        id: '500',
-        name: 'Market entry advice and support – DIT/FCO in UK',
-      },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-      { id: '600', name: 'Afterburner' },
+      ...hqTeamListFaker(2),
+      { id: '1', name: 'DIT Education' },
     ])
   })
 
   context('Page headers', () => {
     it('should render both the header and subheader', () => {
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+      cy.visit(`${urls.companies.exportWins.create()}${officerDetails}`)
       assertLocalHeader('Add export win')
       cy.get('[data-test="subheading"]').should(
         'have.text',
@@ -139,18 +61,20 @@ describe('Adding an export win', () => {
   })
 
   context('Officer details', () => {
-    const { officerDetails } = formFields
-
     beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+      cy.visit(`${urls.companies.exportWins.create()}${officerDetails}`)
     )
 
     it('should render an officer details heading', () => {
-      cy.get(officerDetails.heading).should('have.text', 'Officer details')
+      cy.get('[data-test="step-heading"]').should(
+        'have.text',
+        'Officer details'
+      )
     })
 
     it('should render Lead Officer name label and a Typeahead', () => {
-      cy.get(officerDetails.leadOfficer).then((element) => {
+      const leadOfficer = '[data-test="field-lead_officer"]'
+      cy.get(leadOfficer).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Lead officer name',
@@ -159,20 +83,22 @@ describe('Adding an export win', () => {
     })
 
     it('should render both Team Type and HQ Team', () => {
+      const teamType = '[data-test="field-team_type"]'
+      const hqTeam = '[data-test="field-hq_team"]'
       // The HQ Team field is not visible until a team has been selected
-      cy.get(officerDetails.hqTeam).should('not.exist')
-      cy.get(officerDetails.teamType).then((element) => {
+      cy.get(hqTeam).should('not.exist')
+      cy.get(teamType).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Team type',
         })
       })
-      cy.get(officerDetails.teamType).find('input').as('teamTypeInput')
+      cy.get(teamType).find('input').as('teamTypeInput')
       cy.get('@teamTypeInput').type('Inv')
       cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
       // Now the user has selected a team the HQ Team field is visible
-      cy.get(officerDetails.hqTeam).should('exist')
-      cy.get(officerDetails.hqTeam).then((element) => {
+      cy.get(hqTeam).should('exist')
+      cy.get(hqTeam).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'HQ team, region or post',
@@ -181,33 +107,28 @@ describe('Adding an export win', () => {
     })
 
     it('should render a Team Members Typeahead and hint text', () => {
-      cy.get(officerDetails.teamMembers).then((element) => {
+      cy.get('[data-test="field-team_members"]').then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Team members (optional)',
         })
       })
-      cy.get(officerDetails.teamMembersHintText).should(
+      cy.get('[data-test="hint-text"]').should(
         'have.text',
         'You can add up to 5 team members. They will be notified when this win is updated.'
       )
     })
 
     it('should display validation error messages on mandatory fields', () => {
+      const teamType = '[data-test="field-team_type"]'
+      const leadOfficer = '[data-test="field-lead_officer"]'
+      const hqTeam = '[data-test="field-hq_team"]'
       clickContinueButton()
       assertErrorSummary(['Enter a lead officer', 'Select a team type'])
-      assertFieldError(
-        cy.get(officerDetails.leadOfficer),
-        'Enter a lead officer',
-        false
-      )
-      assertFieldError(
-        cy.get(officerDetails.teamType),
-        'Select a team type',
-        false
-      )
+      assertFieldError(cy.get(leadOfficer), 'Enter a lead officer', false)
+      assertFieldError(cy.get(teamType), 'Select a team type', false)
       // Select a team to reveal the HQ Team field
-      cy.get(officerDetails.teamType).find('input').as('teamTypeInput')
+      cy.get(teamType).find('input').as('teamTypeInput')
       cy.get('@teamTypeInput').type('Inv')
       cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
       clickContinueButton()
@@ -215,73 +136,77 @@ describe('Adding an export win', () => {
         'Enter a lead officer',
         'Select HQ team, region or post',
       ])
-      assertFieldError(
-        cy.get(officerDetails.hqTeam),
-        'Select HQ team, region or post',
-        false
-      )
+      assertFieldError(cy.get(hqTeam), 'Select HQ team, region or post', false)
+    })
+
+    it('should complete this step and continue to "Credit for this win"', () => {
+      const leadOfficer = '[data-test="field-lead_officer"]'
+      const teamType = '[data-test="field-team_type"]'
+      const hqTeam = '[data-test="field-hq_team"]'
+      cy.get(leadOfficer).selectTypeaheadOption('David')
+      cy.get(teamType).selectTypeaheadOption('Investment (ITFG or IG)')
+      cy.get(hqTeam).selectTypeaheadOption('DIT Education')
+      clickContinueAndAssertUrl(creditForThisWin)
     })
   })
 
   context('Credit for this win', () => {
-    const { creditForThisWin } = formFields
-
     beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${creditForThisWinStep}`)
+      cy.visit(`${urls.companies.exportWins.create()}${creditForThisWin}`)
     )
 
     it('should render a step heading', () => {
-      cy.get(creditForThisWin.heading).should(
+      cy.get('[data-test="step-heading"]').should(
         'have.text',
         'Credit for this win'
       )
     })
 
     it('should render a hint', () => {
-      cy.get(creditForThisWin.hint).should(
+      cy.get('[data-test="hint"]').should(
         'have.text',
         'Other teams that helped with this win should be added so they can be credited, this will not reduce your credit for this win.'
       )
     })
 
     it('should render two unselected radio buttons', () => {
-      cy.get(creditForThisWin.radiosBtns).then((element) => {
+      cy.get('[data-test="field-credit_for_win"]').then((element) => {
         assertFieldRadiosWithLegend({
           element,
           legend: 'Did any other teams help with this win?',
           optionsCount: 2,
         })
       })
-      cy.get(creditForThisWin.radiosBtnYes)
+      cy.get('[data-test="credit-for-win-yes"]')
         .should('not.be.checked')
         .parent()
         .should('have.text', 'Yes')
-      cy.get(creditForThisWin.radiosBtnNo)
+      cy.get('[data-test="credit-for-win-no"]')
         .should('not.be.checked')
         .parent()
         .should('have.text', 'No')
     })
 
     it('should go to the next step when selecting "No" and then "Continue"', () => {
-      cy.get(creditForThisWin.radiosBtnNo).check()
-      clickContinueAndAssertUrl(customerDetailsStep)
+      cy.get('[data-test="credit-for-win-no"]').check()
+      clickContinueAndAssertUrl(customerDetails)
     })
 
     it('should render a legend and hint text', () => {
-      cy.get(creditForThisWin.radiosBtnYes).check()
-      cy.get(creditForThisWin.addAnother)
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-addAnother"]')
         .find('legend')
         .eq(0)
         .should('have.text', 'Contributing advisers')
-      cy.get(creditForThisWin.hintText).should(
+      cy.get('[data-test="hint-text"]').should(
         'have.text',
         'Up to 5 advisers can be added.'
       )
     })
 
     it('should render a Typeahead for the contributing officer', () => {
-      cy.get(creditForThisWin.radiosBtnYes).check()
-      cy.get(creditForThisWin.contributingOfficer).then((element) => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-contributing_officer_0"]').then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Contributing officer',
@@ -290,8 +215,8 @@ describe('Adding an export win', () => {
     })
 
     it('should render a Typeahead for the team type', () => {
-      cy.get(creditForThisWin.radiosBtnYes).check()
-      cy.get(creditForThisWin.teamType).then((element) => {
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="field-team_type_0"]').then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Team type',
@@ -300,8 +225,8 @@ describe('Adding an export win', () => {
     })
 
     it('should render an "Add another" button', () => {
-      cy.get(creditForThisWin.radiosBtnYes).check()
-      cy.get(creditForThisWin.addAnother).should('exist')
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get('[data-test="add-another"]').should('exist')
     })
 
     it('should display validation error messages on mandatory fields', () => {
@@ -309,26 +234,28 @@ describe('Adding an export win', () => {
       // Assert Yes and No radio buttons
       assertErrorSummary(['Select Yes or No'])
       assertFieldError(
-        cy.get(creditForThisWin.radiosBtns),
+        cy.get('[data-test="field-credit_for_win"]'),
         'Select Yes or No',
         true
       )
-      cy.get(creditForThisWin.radiosBtnYes).check()
+      cy.get('[data-test="credit-for-win-yes"]').check()
       clickContinueButton()
       // Assert Contributing officer and Team type
       assertErrorSummary(['Enter a contributing officer', 'Enter a team type'])
       assertFieldError(
-        cy.get(creditForThisWin.contributingOfficer),
+        cy.get('[data-test="field-contributing_officer_0"]'),
         'Enter a contributing officer',
         false
       )
       assertFieldError(
-        cy.get(creditForThisWin.teamType),
+        cy.get('[data-test="field-team_type_0"]'),
         'Enter a team type',
         false
       )
       // Select a team type to render the HQ team, region or post field
-      cy.get(creditForThisWin.teamType).find('input').as('teamTypeInput')
+      cy.get('[data-test="field-team_type_0"]')
+        .find('input')
+        .as('teamTypeInput')
       cy.get('@teamTypeInput').type('Inv')
       cy.get('@teamTypeInput').type('{downarrow}{enter}{esc}')
       clickContinueButton()
@@ -338,31 +265,48 @@ describe('Adding an export win', () => {
         'Enter a HQ team, region or post',
       ])
       assertFieldError(
-        cy.get(creditForThisWin.hqTeam),
+        cy.get('[data-test="field-hq_team_0"]'),
         'Enter a HQ team, region or post',
         false
       )
     })
+
+    it('should complete this step and continue to "Customer details"', () => {
+      const contributingOfficer = '[data-test="field-contributing_officer_0"]'
+      const teamType = '[data-test="field-team_type_0"]'
+      const hqTeam = '[data-test="field-hq_team_0"]'
+      cy.get('[data-test="credit-for-win-yes"]').check()
+      cy.get(contributingOfficer).selectTypeaheadOption('David')
+      cy.get(teamType).selectTypeaheadOption('Investment (ITFG or IG)')
+      cy.get(hqTeam).selectTypeaheadOption('DIT Education')
+      clickContinueAndAssertUrl(customerDetails)
+    })
   })
 
   context('Customer details', () => {
-    const { customerDetails } = formFields
+    const contacts = '[data-test="field-company_contacts"]'
+    const location = '[data-test="field-customer_location"]'
+    const potential = '[data-test="field-business_potential"]'
+    const experience = '[data-test="field-export_experience"]'
 
     beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${customerDetailsStep}`)
+      cy.visit(`${urls.companies.exportWins.create()}${customerDetails}`)
     )
 
     it('should render a step heading', () => {
-      cy.get(customerDetails.heading).should('have.text', 'Customer details')
+      cy.get('[data-test="step-heading"]').should(
+        'have.text',
+        'Customer details'
+      )
     })
 
     it('should show a contact link and details', () => {
-      cy.get(customerDetails.addContactLink).should('be.visible')
-      cy.get(customerDetails.details).should('be.visible')
+      cy.get('[data-test="add-a-new-contact-link"]').should('be.visible')
+      cy.get('[data-test="contact-information-details"]').should('be.visible')
     })
 
     it('should render Company contacts label and a Typeahead', () => {
-      cy.get(customerDetails.contacts).then((element) => {
+      cy.get(contacts).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Company contacts',
@@ -372,7 +316,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render HQ location label and a Typeahead', () => {
-      cy.get(customerDetails.location).then((element) => {
+      cy.get(location).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'HQ location',
@@ -381,7 +325,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render Export potential label and a Typeahead', () => {
-      cy.get(customerDetails.potential).then((element) => {
+      cy.get(potential).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Export potential',
@@ -390,7 +334,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render Export potential label and a Typeahead', () => {
-      cy.get(customerDetails.experience).then((element) => {
+      cy.get(experience).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Export experience',
@@ -407,49 +351,58 @@ describe('Adding an export win', () => {
         'Select export potential',
         'Select export experience',
       ])
-      assertFieldError(
-        cy.get(customerDetails.contacts),
-        'Select a contact',
-        true
+      assertFieldError(cy.get(contacts), 'Select a contact', true)
+      assertFieldError(cy.get(location), 'Select HQ location', false)
+      assertFieldError(cy.get(potential), 'Select export potential', false)
+      assertFieldError(cy.get(experience), 'Select export experience', true)
+    })
+
+    it('should complete this step and continue to "Win details"', () => {
+      cy.get(contacts).selectTypeaheadOption('Joseph Woof')
+      cy.get(location).selectTypeaheadOption('Scotland')
+      cy.get(potential).selectTypeaheadOption(
+        'The company is a Medium Sized Business'
       )
-      assertFieldError(
-        cy.get(customerDetails.location),
-        'Select HQ location',
-        false
-      )
-      assertFieldError(
-        cy.get(customerDetails.potential),
-        'Select export potential',
-        false
-      )
-      assertFieldError(
-        cy.get(customerDetails.experience),
-        'Select export experience',
-        true
-      )
+      cy.get(experience).selectTypeaheadOption('Never exported')
+      clickContinueAndAssertUrl(winDetails)
     })
   })
 
   context('Win details', () => {
-    const { winDetails } = formFields
+    // Helpers
+    const twelveMonthsAgo = getTwelveMonthsAgo()
+    const month = twelveMonthsAgo.getMonth() + 1
+    const year = twelveMonthsAgo.getFullYear()
+
+    // Fields
+    const country = '[data-test="field-country"]'
+    const date = '[data-test="field-date"]'
+    const description = '[data-test="field-description"]'
+    const nameOfCustomer = '[data-test="field-name_of_customer"]'
+    const confidential = '[data-test="field-name_of_customer_confidential"]'
+    const businessType = '[data-test="field-business_type"]'
+    const winType = '[data-test="field-win_type"]'
+    const goodsVsServices = '[data-test="field-goods_vs_services"]'
+    const nameOfExport = '[data-test="field-name_of_export"]'
+    const sector = '[data-test="field-sector"]'
 
     beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${winDetailsStep}`)
+      cy.visit(`${urls.companies.exportWins.create()}${winDetails}`)
     )
 
     it('should render a step heading', () => {
-      cy.get(winDetails.heading).should('have.text', 'Win details')
+      cy.get('[data-test="step-heading"]').should('have.text', 'Win details')
     })
 
     it('should render a hint', () => {
-      cy.get(winDetails.hint).should(
+      cy.get('[data-test="hint"]').should(
         'have.text',
         'The customer will be asked to confirm this information.'
       )
     })
 
     it('should render Destination country label and a Typeahead', () => {
-      cy.get(winDetails.country).then((element) => {
+      cy.get(country).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Destination country',
@@ -458,7 +411,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render the Win date', () => {
-      cy.get(winDetails.date).then((element) => {
+      cy.get(date).then((element) => {
         // Both Month and Year labels are tested within the assertion
         assertFieldDateShort({
           element,
@@ -469,7 +422,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render Summary of the support given', () => {
-      cy.get(winDetails.description).then((element) => {
+      cy.get(description).then((element) => {
         assertFieldTextarea({
           element,
           label: 'Summary of the support given',
@@ -480,7 +433,7 @@ describe('Adding an export win', () => {
     })
 
     it('should renderer Overseas customer', () => {
-      cy.get(winDetails.nameOfCustomer).then((element) => {
+      cy.get(nameOfCustomer).then((element) => {
         assertFieldInput({
           element,
           label: 'Overseas customer',
@@ -491,7 +444,7 @@ describe('Adding an export win', () => {
 
     it('should render a Confidential checkbox', () => {
       assertFieldCheckboxes({
-        element: winDetails.confidential,
+        element: confidential,
         hint: 'Check this box if your customer has asked for this not to be public (optional).',
         options: [
           {
@@ -503,7 +456,7 @@ describe('Adding an export win', () => {
     })
 
     it('should renderer a type of business deal', () => {
-      cy.get(winDetails.businessType).then((element) => {
+      cy.get(businessType).then((element) => {
         assertFieldInput({
           element,
           label: 'Type of business deal',
@@ -515,7 +468,7 @@ describe('Adding an export win', () => {
 
     it('should render Type of win ', () => {
       assertFieldCheckboxes({
-        element: winDetails.winType,
+        element: winType,
         legend: 'Type of win',
         options: [
           {
@@ -535,83 +488,108 @@ describe('Adding an export win', () => {
     })
 
     it('should render the WinTypeValues component for each win type', () => {
-      cy.get(winDetails.winType).as('winType')
+      const exportWinCheckbox = '[data-test="checkbox-export_win"]'
+      const exportWinTypeValues = '[data-test="win-type-values-export_win"]'
+      const businessSuccessCheckbox =
+        '[data-test="checkbox-business_success_win"]'
+      const businessSuccessTypeValues =
+        '[data-test="win-type-values-business_success_win"]'
+      const odiCheckbox = '[data-test="checkbox-odi_win"]'
+      const odiWinTypeValues = '[data-test="win-type-values-odi_win"]'
+
+      cy.get(winType).as('winType')
 
       // Export win
       cy.get('@winType')
-        .find(winDetails.winTypeValuesExport)
+        .find(exportWinTypeValues)
         .should('not.exist')
         .get('@winType')
-        .find(winDetails.exportWinCheckbox)
+        .find(exportWinCheckbox)
         .check()
         .next()
-        .get(winDetails.winTypeValuesExport)
+        .get(exportWinTypeValues)
         .should('exist')
 
       // Business type
       cy.get('@winType')
-        .find(winDetails.winTypeValuesBusSupp)
+        .find(businessSuccessTypeValues)
         .should('not.exist')
         .get('@winType')
-        .find(winDetails.businessSuccessCheckbox)
+        .find(businessSuccessCheckbox)
         .check()
         .next()
-        .get(winDetails.winTypeValuesBusSupp)
+        .get(businessSuccessTypeValues)
         .should('exist')
 
       // ODI
       cy.get('@winType')
-        .find(winDetails.winTypeValuesODI)
+        .find(odiWinTypeValues)
         .should('not.exist')
         .get('@winType')
-        .find(winDetails.odiCheckbox)
+        .find(odiCheckbox)
         .check()
         .next()
-        .get(winDetails.winTypeValuesODI)
+        .get(odiWinTypeValues)
         .should('exist')
     })
 
     it('should render the total export value across all 3 win types', () => {
-      cy.get(winDetails.winType).as('winType')
+      cy.get(winType).as('winType')
 
-      // Check all 3 win types to render 15 (3 x 5) inputs
-      cy.get('@winType').find(winDetails.exportWinCheckbox).check()
-      cy.get('@winType').find(winDetails.businessSuccessCheckbox).check()
-      cy.get('@winType').find(winDetails.odiCheckbox).check()
+      // Check the Export checkbox to render the input fields
+      cy.get('@winType').find('[data-test="checkbox-export_win"]').check()
 
-      const inputs = [...Array(5).keys()]
-
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="export-win-${index}-input"]`)
-          .type('1000000')
+      const exportWinFields = [
+        '[data-test="export-win-0-input"]',
+        '[data-test="export-win-1-input"]',
+        '[data-test="export-win-2-input"]',
+        '[data-test="export-win-3-input"]',
+        '[data-test="export-win-4-input"]',
+      ]
+      exportWinFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
       )
 
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="business-success-win-${index}-input"]`)
-          .type('2000000')
+      // Check the Business success checkbox to render the input fields
+      cy.get('@winType')
+        .find('[data-test="checkbox-business_success_win"]')
+        .check()
+
+      const businessSuccessFields = [
+        '[data-test="business-success-win-0-input"]',
+        '[data-test="business-success-win-1-input"]',
+        '[data-test="business-success-win-2-input"]',
+        '[data-test="business-success-win-3-input"]',
+        '[data-test="business-success-win-4-input"]',
+      ]
+      businessSuccessFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
       )
 
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="odi-win-${index}-input"]`)
-          .type('3000000')
+      // Check the ODI checkbox to render the input fields
+      cy.get('@winType').find('[data-test="checkbox-odi_win"]').check()
+
+      const odiFields = [
+        '[data-test="odi-win-0-input"]',
+        '[data-test="odi-win-1-input"]',
+        '[data-test="odi-win-2-input"]',
+        '[data-test="odi-win-3-input"]',
+        '[data-test="odi-win-4-input"]',
+      ]
+      odiFields.forEach((dataTest) =>
+        cy.get('@winType').find(dataTest).type('1000000')
       )
 
       // Assert the total export value
-      cy.get(winDetails.totalExportValue).should(
+      cy.get('[data-test="total-export-value"]').should(
         'have.text',
-        'Total export value: £30,000,000'
+        'Total export value: £15,000,000'
       )
     })
 
     it('should render Goods and Services', () => {
       assertFieldCheckboxes({
-        element: winDetails.goodsVsServices,
+        element: goodsVsServices,
         legend: 'What does the value relate to?',
         hint: 'Select goods or services',
         options: [
@@ -628,7 +606,7 @@ describe('Adding an export win', () => {
     })
 
     it('should renderer name of goods or services', () => {
-      cy.get(winDetails.nameOfExport).then((element) => {
+      cy.get(nameOfExport).then((element) => {
         assertFieldInput({
           element,
           label: 'Name of goods or services',
@@ -639,7 +617,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render a sector label and typeahead', () => {
-      cy.get(winDetails.sector).then((element) => {
+      cy.get(sector).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'Sector',
@@ -660,62 +638,80 @@ describe('Adding an export win', () => {
         'Enter the name of goods or services',
         'Enter a sector',
       ])
+      assertFieldError(cy.get(country), 'Choose a destination country', false)
+      assertFieldError(cy.get(date), 'Enter the win date', true)
+      assertFieldError(cy.get(description), 'Enter a summary', true)
       assertFieldError(
-        cy.get(winDetails.country),
-        'Choose a destination country',
-        false
-      )
-      assertFieldError(cy.get(winDetails.date), 'Enter the win date', true)
-      assertFieldError(cy.get(winDetails.description), 'Enter a summary', true)
-      assertFieldError(
-        cy.get(winDetails.nameOfCustomer),
+        cy.get(nameOfCustomer),
         'Enter the name of the overseas customer',
         false
       )
       assertFieldError(
-        cy.get(winDetails.businessType),
+        cy.get(businessType),
         'Enter the type of business deal',
         true
       )
-      assertFieldError(
-        cy.get(winDetails.winType),
-        'Choose at least one type of win',
-        true
-      )
+      assertFieldError(cy.get(winType), 'Choose at least one type of win', true)
       // We can't use assertFieldError here as it picks up the wrong span
-      cy.get(winDetails.goodsVsServices).should(
-        'contain',
-        'Select at least one option'
-      )
+      cy.get(goodsVsServices).should('contain', 'Select at least one option')
       assertFieldError(
-        cy.get(winDetails.nameOfExport),
+        cy.get(nameOfExport),
         'Enter the name of goods or services',
         true
       )
-      assertFieldError(cy.get(winDetails.sector), 'Enter a sector', false)
+      assertFieldError(cy.get(sector), 'Enter a sector', false)
+    })
+
+    it('should complete this step and continue to "Support provided"', () => {
+      cy.get(country).selectTypeaheadOption('United states')
+      cy.get(date).as('winDate')
+      cy.get('@winDate').find('[data-test="date-month"]').type(month)
+      cy.get('@winDate').find('[data-test="date-year"]').type(year)
+      cy.get(description).find('textarea').type('Foo bar baz')
+      cy.get(nameOfCustomer).find('input').type('David French')
+      cy.get(confidential).find('input[type="checkbox"]').check()
+      cy.get(businessType).find('input').type('Contract')
+      cy.get(winType).find('[data-test="checkbox-export_win"]').check()
+      cy.get(goodsVsServices).find('input[type="checkbox"]').eq(0).check() // Goods
+      cy.get(nameOfExport).find('input').type('Biscuits')
+      cy.get(sector).selectTypeaheadOption('Advanced Engineering')
+      clickContinueAndAssertUrl(supportProvided)
     })
   })
 
   context('Support provided', () => {
-    const { supportProvided } = formFields
+    const hvc = '[data-test="field-hvc"]'
+    const typeOfSupport = '[data-test="field-type_of_support"]'
+    const associatedProgramme = '[data-test="field-associated_programme"]'
+    const personallyConfirmed = '[data-test="field-is_personally_confirmed"]'
+    const lineManagerConfirmed = '[data-test="field-is_line_manager_confirmed"]'
 
-    before(() => {
-      cy.visit(`${urls.companies.exportWins.create()}${supportProvidedStep}`)
+    beforeEach(() => {
+      cy.intercept('/api-proxy/v4/metadata/hvc', [
+        { id: '1', name: 'Australia Consumer Goods & Retail: E004' },
+      ])
+      cy.intercept('/api-proxy/v4/metadata/support-type', [
+        { id: '1', name: 'Market entry advice and support – DIT/FCO in UK' },
+      ])
+      cy.intercept('/api-proxy/v4/metadata/associated-programme', [
+        { id: '1', name: 'Afterburner' },
+      ])
+      cy.visit(`${urls.companies.exportWins.create()}${supportProvided}`)
     })
 
     it('should render a step heading', () => {
-      cy.get(supportProvided.heading).should('have.text', 'Support given')
+      cy.get('[data-test="step-heading"]').should('have.text', 'Support given')
     })
 
     it('should render a hint', () => {
-      cy.get(supportProvided.hint).should(
+      cy.get('[data-test="hint"]').should(
         'have.text',
         'Did any of these help the customer achieve this win?'
       )
     })
 
     it('should render a typeahead for high value campaign', () => {
-      cy.get(supportProvided.hvc).then((element) => {
+      cy.get(hvc).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'High Value Campaign (HVC) code (optional)',
@@ -725,7 +721,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render a support given typeahead', () => {
-      cy.get(supportProvided.typeOfSupport).then((element) => {
+      cy.get(typeOfSupport).then((element) => {
         assertFieldTypeahead({
           element,
           label: 'What type of support was given?',
@@ -735,7 +731,7 @@ describe('Adding an export win', () => {
     })
 
     it('should render an associated programme typeahead', () => {
-      cy.get(supportProvided.associatedProgramme).then((element) => {
+      cy.get(associatedProgramme).then((element) => {
         assertFieldTypeahead({
           element,
           label:
@@ -747,7 +743,7 @@ describe('Adding an export win', () => {
 
     it('should render personally confirmed checkbox', () => {
       assertFieldCheckboxes({
-        element: supportProvided.personallyConfirmed,
+        element: personallyConfirmed,
         options: [
           {
             label: 'I confirm that this information is complete and accurate.',
@@ -759,7 +755,7 @@ describe('Adding an export win', () => {
 
     it('should render a manager confirmed checkbox', () => {
       assertFieldCheckboxes({
-        element: supportProvided.lineManagerConfirmed,
+        element: lineManagerConfirmed,
         options: [
           {
             label:
@@ -779,23 +775,32 @@ describe('Adding an export win', () => {
         'Confirm your line manager has agreed that this win should be recorded',
       ])
       assertFieldError(
-        cy.get(supportProvided.typeOfSupport),
+        cy.get(typeOfSupport),
         'Select at least one type of support',
         true
       )
       assertFieldError(
-        cy.get(supportProvided.associatedProgramme),
+        cy.get(associatedProgramme),
         'Select at least one type of DBT campaign or event',
         true
       )
-      cy.get(supportProvided.personallyConfirmed).should(
+      cy.get(personallyConfirmed).should(
         'contain',
         'Confirm that this information is complete and accurate'
       )
-      cy.get(supportProvided.lineManagerConfirmed).should(
+      cy.get(lineManagerConfirmed).should(
         'contain',
         'Confirm your line manager has agreed that this win should be recorded'
       )
+    })
+
+    it('should complete this step and continue to "Check before sending"', () => {
+      cy.get(hvc).selectTypeaheadOption('Aus')
+      cy.get(typeOfSupport).selectTypeaheadOption('Mar')
+      cy.get(associatedProgramme).selectTypeaheadOption('Aft')
+      cy.get(personallyConfirmed).find('[data-test="checkbox-yes"]').check()
+      cy.get(lineManagerConfirmed).find('[data-test="checkbox-yes"]').check()
+      clickContinueAndAssertUrl(checkBeforeSending)
     })
   })
 })
