@@ -174,7 +174,9 @@ export const transformFormValuesForAPI = (values) => ({
   lead_officer: values.lead_officer.value,
   team_type: values.team_type.value,
   hq_team: values.hq_team.value,
-  team_members: values.team_members.map((member) => member.value),
+  team_members: values.team_members
+    ? values.team_members.map((member) => member.value)
+    : [],
   // Credit for this win
   advisers: transformContributingOfficersToAdvisers(values),
   // Customer details
