@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
+import { kebabCase } from 'lodash'
 
 import { useFormContext } from '../hooks'
 import ButtonLink from '../../ButtonLink'
@@ -64,7 +65,7 @@ function Step({
     if (typeof forwardButton === 'undefined') {
       const label = isLastStep() ? submitButtonLabel : 'Continue'
       return (
-        <Button data-test={label.toLowerCase()} name="forward">
+        <Button data-test={kebabCase(label.toLowerCase())} name="forward">
           {label}
         </Button>
       )

@@ -1002,11 +1002,14 @@ describe('Adding an export win', () => {
     })
 
     it('should POST to the API and have the correct payload', () => {
-      cy.get('[data-test="submit"]').should('have.text', 'Submit')
+      cy.get('[data-test="confirm-and-send-to-customer"]').should(
+        'have.text',
+        'Confirm and send to customer'
+      )
       cy.intercept('POST', '/api-proxy/v4/export_win', {
         statusCode: 201,
       }).as('apiRequest')
-      cy.get('[data-test="submit"]').click()
+      cy.get('[data-test="confirm-and-send-to-customer"]').click()
       cy.wait('@apiRequest').then(({ request }) => {
         expect(omit(request.body, '_csrf')).to.deep.equal({
           lead_officer: '100',
