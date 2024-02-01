@@ -1,4 +1,7 @@
+import { omit } from 'lodash'
+
 import { getTwelveMonthsAgo } from '../../../../../src/client/modules/ExportWins/Form/utils'
+import { winTypeId } from '../../../../../src/client/modules/ExportWins/Form/constants'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
 import urls from '../../../../../src/lib/urls'
@@ -8,6 +11,7 @@ import {
   assertFieldError,
   assertLocalHeader,
   assertErrorSummary,
+  assertSummaryTable,
   assertFieldTextarea,
   assertFieldTypeahead,
   assertFieldDateShort,
@@ -26,6 +30,7 @@ const creditForThisWinStep = `?step=credit_for_this_win&company=${company.id}`
 const customerDetailsStep = `?step=customer_details&company=${company.id}`
 const winDetailsStep = `?step=win_details&company=${company.id}`
 const supportProvidedStep = `?step=support_provided&company=${company.id}`
+const checkBeforeSendingStep = `?step=check_before_sending&company=${company.id}`
 
 const formFields = {
   officerDetails: {
@@ -95,6 +100,18 @@ const clickContinueAndAssertUrl = (url) => {
   clickContinueButton()
   assertUrl(url)
 }
+
+const populateWinWithValues = ({ alias, winType, values }) =>
+  values.forEach((value, index) =>
+    cy.get(alias).find(`[data-test="${winType}-${index}-input"]`).type(value)
+  )
+
+const createBreakdown = ({ type, values }) =>
+  values.map((value, index) => ({
+    type,
+    year: index + 1,
+    value,
+  }))
 
 describe('Adding an export win', () => {
   beforeEach(() => {
@@ -579,33 +596,28 @@ describe('Adding an export win', () => {
       cy.get('@winType').find(winDetails.businessSuccessCheckbox).check()
       cy.get('@winType').find(winDetails.odiCheckbox).check()
 
-      const inputs = [...Array(5).keys()]
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'export-win',
+        values: ['1000000', '1000000', '1000000', '1000000', '1000000'], // 5M
+      })
 
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="export-win-${index}-input"]`)
-          .type('1000000')
-      )
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'business-success-win',
+        values: ['2000000', '2000000', '2000000', '2000000', '2000000'], // 10M
+      })
 
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="business-success-win-${index}-input"]`)
-          .type('2000000')
-      )
-
-      inputs.forEach((index) =>
-        cy
-          .get('@winType')
-          .find(`[data-test="odi-win-${index}-input"]`)
-          .type('3000000')
-      )
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'odi-win',
+        values: ['3000000', '3000000', '3000000', '3000000', '3000000'], // 15M
+      })
 
       // Assert the total export value
       cy.get(winDetails.totalExportValue).should(
         'have.text',
-        'Total export value: £30,000,000'
+        'Total export value: £30,000,000' // 5M + 10M + 15M
       )
     })
 
@@ -796,6 +808,257 @@ describe('Adding an export win', () => {
         'contain',
         'Confirm your line manager has agreed that this win should be recorded'
       )
+    })
+  })
+
+  context('Check before sending', () => {
+    const {
+      officerDetails,
+      creditForThisWin,
+      customerDetails,
+      winDetails,
+      supportProvided,
+    } = formFields
+
+    before(() => {
+      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+    })
+
+    it('should complete the entire export win user journey', () => {
+      // Officer details
+      cy.get(officerDetails.leadOfficer).selectTypeaheadOption('David')
+      cy.get(officerDetails.teamType).selectTypeaheadOption(
+        'Investment (ITFG or IG)'
+      )
+      cy.get(officerDetails.hqTeam).selectTypeaheadOption('DIT Education')
+
+      clickContinueAndAssertUrl(creditForThisWinStep)
+
+      // Credit for this win
+      cy.get(creditForThisWin.radiosBtnYes).check()
+      cy.get(creditForThisWin.contributingOfficer).selectTypeaheadOption('John')
+      cy.get(creditForThisWin.teamType).selectTypeaheadOption(
+        'Trade (TD or ST)'
+      )
+      cy.get(creditForThisWin.hqTeam).selectTypeaheadOption('Healthcare UK')
+
+      clickContinueAndAssertUrl(customerDetailsStep)
+
+      // Customer details
+      cy.get(customerDetails.contacts).selectTypeaheadOption('Joseph Woof')
+      cy.get(customerDetails.location).selectTypeaheadOption('Scotland')
+      cy.get(customerDetails.potential).selectTypeaheadOption(
+        'The company is a Medium Sized Business'
+      )
+      cy.get(customerDetails.experience).selectTypeaheadOption('Never exported')
+
+      clickContinueAndAssertUrl(winDetailsStep)
+
+      // Win details
+      cy.get(winDetails.country).selectTypeaheadOption('United states')
+      cy.get(winDetails.dateMonth).type(month)
+      cy.get(winDetails.dateYear).type(year)
+      cy.get(winDetails.description).find('textarea').type('Foo bar baz')
+      cy.get(winDetails.nameOfCustomer).find('input').type('David French')
+      cy.get(winDetails.confidential).find('input').check()
+      cy.get(winDetails.businessType).find('input').type('Contract')
+
+      cy.get(winDetails.winType).as('winType')
+
+      // Check all 3 win types to render 15 (3 x 5) inputs
+      cy.get('@winType').find(winDetails.exportWinCheckbox).check()
+      cy.get('@winType').find(winDetails.businessSuccessCheckbox).check()
+      cy.get('@winType').find(winDetails.odiCheckbox).check()
+
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'export-win',
+        values: ['1000000', '1000000', '1000000', '1000000', '1000000'], // 5M
+      })
+
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'business-success-win',
+        values: ['2000000', '2000000', '2000000', '2000000', '2000000'], // 10M
+      })
+
+      populateWinWithValues({
+        alias: '@winType',
+        winType: 'odi-win',
+        values: ['3000000', '3000000', '3000000', '3000000', '3000000'], // 15M
+      })
+
+      cy.get(winDetails.goodsVsServices).find('input').eq(0).check() // Goods
+      cy.get(winDetails.nameOfExport).find('input').type('Biscuits')
+      cy.get(winDetails.sector).selectTypeaheadOption('Advanced Engineering')
+
+      clickContinueAndAssertUrl(supportProvidedStep)
+
+      // Suppport Provided
+      cy.get(supportProvided.hvc).selectTypeaheadOption('Aus')
+      cy.get(supportProvided.typeOfSupport).selectTypeaheadOption('Mar')
+      cy.get(supportProvided.associatedProgramme).selectTypeaheadOption('Aft')
+      cy.get(supportProvided.personallyConfirmed)
+        .find('[data-test="checkbox-yes"]')
+        .check()
+      cy.get(supportProvided.lineManagerConfirmed)
+        .find('[data-test="checkbox-yes"]')
+        .check()
+
+      clickContinueAndAssertUrl(checkBeforeSendingStep)
+    })
+
+    it('should render a step heading', () => {
+      cy.get('[data-test="step-heading"]').should(
+        'have.text',
+        'Check before sending'
+      )
+    })
+
+    it('should render an officer details table', () => {
+      assertSummaryTable({
+        dataTest: 'officer-details',
+        heading: 'Officer details',
+        showEditLink: false,
+        content: {
+          'Lead officer name': 'David Meyer',
+          'Team type': 'Investment (ITFG or IG)',
+          'HQ Team, region or post': 'DIT Education',
+          'Team members (optional)': 'Not set',
+        },
+      })
+    })
+
+    it('should render a credit for this win table', () => {
+      assertSummaryTable({
+        dataTest: 'credit-for-this-win',
+        heading: 'Credit for this win',
+        showEditLink: false,
+        content: {
+          'Did any other teams help with this win?':
+            'YesContributing teams and advisersContributing officer: John SmithTeam ' +
+            'type: Trade (TD or ST)HQ team, region or post: Healthcare UK',
+        },
+      })
+    })
+
+    it('should render a customer details table', () => {
+      assertSummaryTable({
+        dataTest: 'customer-details',
+        heading: 'Customer details',
+        showEditLink: false,
+        content: {
+          'Contact name': 'Joseph Woof',
+          'HQ location': 'Scotland',
+          'Export potential': 'The company is a Medium Sized Business',
+          'Export experience': 'Never exported',
+        },
+      })
+    })
+
+    it('should render a win details table', () => {
+      assertSummaryTable({
+        dataTest: 'win-details',
+        heading: 'Win details',
+        showEditLink: false,
+        content: {
+          Destination: 'United States',
+          'Date won': `${month}/${year}`,
+          'Summary of support given': 'Foo bar baz',
+          'Overseas customer': 'David French',
+          Confidential: 'Yes',
+          'Type of win': 'Contract',
+          'Export value': '£5,000,000 over 5 years',
+          'Business success value': '£10,000,000 over 5 years',
+          'Outward Direct Investment (ODI) value': '£15,000,000 over 5 years',
+          'Total value': '£30,000,000 over 5 years',
+          'What does the value relate to?': 'Goods',
+          'Type of goods or services': 'Biscuits',
+          Sector: 'Advanced Engineering',
+        },
+      })
+    })
+
+    it('should render a support given table', () => {
+      assertSummaryTable({
+        dataTest: 'support-given',
+        heading: 'Support given',
+        showEditLink: false,
+        content: {
+          'HVC code': 'Australia Consumer Goods & Retail: E004',
+          'What type of support was given?':
+            'Market entry advice and support – DIT/FCO in UK',
+          'Was there a DBT campaign or event that contributed to this win?':
+            'Afterburner',
+        },
+      })
+    })
+
+    it('should render warning text', () => {
+      cy.get('[data-test="warning-text"]').should(
+        'contain',
+        'This information will be sent to  so they can confirm the export win.'
+      )
+    })
+
+    it('should POST to the API and have the correct payload', () => {
+      cy.get('[data-test="submit"]').should('have.text', 'Submit')
+      cy.intercept('POST', '/api-proxy/v4/export_win', {
+        statusCode: 201,
+      }).as('apiRequest')
+      cy.get('[data-test="submit"]').click()
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(omit(request.body, '_csrf')).to.deep.equal({
+          lead_officer: '100',
+          team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
+          hq_team: '300',
+          team_members: [],
+          advisers: [
+            {
+              adviser: '101',
+              hq_team: '301',
+              team_type: '201',
+            },
+          ],
+          company_contacts: ['5e75d636-1d24-416a-aaf0-3fb220d594ce'],
+          customer_location: '8c4cd12a-6095-e211-a939-e4115bead28a',
+          business_potential: 'e4d74957-60a4-4eab-a17b-d4c7b792ad25',
+          export_experience: '051a0362-d1a9-41c0-8a58-3171e5f59a8e',
+          country: '81756b9a-5d95-e211-a939-e4115bead28a',
+          date: `${year}-${month}-01`,
+          description: 'Foo bar baz',
+          name_of_customer: 'David French',
+          name_of_customer_confidential: true,
+          business_type: 'Contract',
+          breakdowns: [
+            ...createBreakdown({
+              type: winTypeId.EXPORT,
+              values: ['1000000', '1000000', '1000000', '1000000', '1000000'],
+            }),
+            ...createBreakdown({
+              type: winTypeId.BUSINESS_SUCCESS,
+              values: ['2000000', '2000000', '2000000', '2000000', '2000000'],
+            }),
+            ...createBreakdown({
+              type: winTypeId.ODI,
+              values: ['3000000', '3000000', '3000000', '3000000', '3000000'],
+            }),
+          ],
+          goods_vs_services: '456e951d-a633-4f21-afde-d41381407efe',
+          name_of_export: 'Biscuits',
+          sector: 'af959812-6095-e211-a939-e4115bead28a',
+          hvc: '400',
+          type_of_support: ['500'],
+          associated_programme: ['600'],
+          is_personally_confirmed: true,
+          is_line_manager_confirmed: true,
+          total_expected_export_value: 5000000,
+          total_expected_non_export_value: 10000000,
+          total_expected_odi_value: 15000000,
+          company: company.id,
+          adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
+        })
+      })
     })
   })
 })
