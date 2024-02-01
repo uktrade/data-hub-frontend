@@ -80,19 +80,14 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
             id: queryParams.export || queryParams.exportwin,
           }}
         >
-          {({ values }) => {
-            return (
-              <>
-                <OfficerDetailsStep {...stepProps} />
-                <CreditForThisWinStep {...stepProps} />
-                <CustomerDetailsStep {...stepProps} />
-                <WinDetailsStep {...stepProps} />
-                <SupportProvidedStep {...stepProps} />
-                <CheckBeforeSendingStep {...stepProps} />
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-              </>
-            )
-          }}
+          <>
+            <OfficerDetailsStep {...stepProps} />
+            <CreditForThisWinStep {...stepProps} />
+            <CustomerDetailsStep {...stepProps} />
+            <WinDetailsStep {...stepProps} />
+            <SupportProvidedStep {...stepProps} />
+            <CheckBeforeSendingStep {...stepProps} />
+          </>
         </Form>
       </FormLayout>
     </DefaultLayout>
