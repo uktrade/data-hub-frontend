@@ -124,6 +124,9 @@ export const urlTestExclusions = [
     url: '/investments/projects/:investmentId/propositions/:propositionId/document',
   },
   {
+    url: '/investments/projects/:investmentId/propositions/:propositionId/document/:documentId/delete',
+  },
+  {
     url: '/investments/projects/:investmentId/propositions/:propositionId/complete',
   },
   { url: '/investments/projects/:investmentId/propositions/:propositionId' },

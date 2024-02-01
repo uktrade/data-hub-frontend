@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'govuk-react'
+import styled from 'styled-components'
 
 import { transformValueForAPI } from '../../../../utils/date'
 import { VIRUS_SCAN_STATUSES } from '../constants'
+
+import urls from '../../../../../lib/urls'
 
 export const buildPropositionUrl = (propositionId, projectId) =>
   `v3/investment/${projectId}/proposition/${propositionId}`
@@ -45,25 +48,43 @@ export const transformAbandonedPropositionForAPI = ({
   }
 }
 
+const StyledSpan = styled('span')`
+  padding-left: 10px;
+`
 const buildDocumentLink = (
   avClean,
   documentId,
   propositionId,
   projectId,
   originalFilename
-) =>
-  avClean ? (
-    <Link
-      href={`/investments/projects/${projectId}/propositions/${propositionId}/download/${documentId}`}
-      aria-label={`Download the document ${originalFilename}`}
-    >
-      Download
-    </Link>
-  ) : (
-    <strong>
-      The file didn't pass virus scanning, contact your administrator
-    </strong>
-  )
+) => (
+  <>
+    {avClean ? (
+      <Link
+        href={`/investments/projects/${projectId}/propositions/${propositionId}/download/${documentId}`}
+        aria-label={`Download the document ${originalFilename}`}
+      >
+        Download
+      </Link>
+    ) : (
+      <strong>
+        The file didn't pass virus scanning, contact your administrator
+      </strong>
+    )}
+    <StyledSpan>
+      <Link
+        href={urls.investments.projects.proposition.document.delete(
+          projectId,
+          propositionId,
+          documentId
+        )}
+        data-test="delete-link"
+      >
+        Delete
+      </Link>
+    </StyledSpan>
+  </>
+)
 
 export const transformDocumentStatus = (
   originalFilename,
