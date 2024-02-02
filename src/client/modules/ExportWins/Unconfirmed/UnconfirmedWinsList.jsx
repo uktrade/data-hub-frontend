@@ -1,10 +1,12 @@
 import React from 'react'
 import { Button } from 'govuk-react'
 
-import { SecondaryButton, CollectionItem } from '../../../components'
+import { CollectionItem } from '../../../components'
 import { formatMediumDate } from '../../../utils/date'
 import { currencyGBP } from '../../../utils/number-utils'
 import ExportWinsResource from '../../../components/Resource/ExportWins'
+
+import urls from '../../../../lib/urls'
 
 export default () => (
   <ExportWinsResource.Paginated
@@ -17,7 +19,7 @@ export default () => (
           <li key={item.id}>
             <CollectionItem
               headingText={item.company.name}
-              headingUrl={`company-url/${item.company.id}`}
+              headingUrl={`${urls.companies.detail(item.company.id)}`}
               metadata={[
                 { label: 'Destination', value: item.country.name },
                 { label: 'Contact name', value: item.customer_name },
@@ -33,9 +35,6 @@ export default () => (
                   <Button as="a" href={`review/${item.id}`}>
                     Review export win
                   </Button>
-                  <SecondaryButton as="a" href={`edit/${item.id}`}>
-                    Edit export win
-                  </SecondaryButton>
                 </div>
               }
             />

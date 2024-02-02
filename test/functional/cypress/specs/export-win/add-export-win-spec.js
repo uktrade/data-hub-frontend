@@ -1006,7 +1006,7 @@ describe('Adding an export win', () => {
         'have.text',
         'Confirm and send to customer'
       )
-      cy.intercept('POST', '/api-proxy/v4/export_win', {
+      cy.intercept('POST', '/api-proxy/v4/export-win', {
         statusCode: 201,
       }).as('apiRequest')
       cy.get('[data-test="confirm-and-send-to-customer"]').click()

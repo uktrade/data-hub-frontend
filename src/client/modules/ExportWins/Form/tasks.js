@@ -5,6 +5,8 @@ import {
   transformExportProjectForForm,
 } from './transformers'
 
+const exportWinEndpoint = '/v4/export-win'
+
 export const getExportProject = ({ id }) =>
   apiProxyAxios
     .get(`/v4/export/${id}`)
@@ -12,14 +14,14 @@ export const getExportProject = ({ id }) =>
 
 export const getExportWin = ({ id }) =>
   apiProxyAxios
-    .get(`/v4/export_win/${id}`)
+    .get(`${exportWinEndpoint}/${id}`)
     .then(({ data }) => transformExportWinForForm(data))
 
 export const saveExportWin = ({ exportWinId, payload }) => {
   const request = exportWinId ? apiProxyAxios.patch : apiProxyAxios.post
   const endpoint = exportWinId
-    ? `/v4/export_win/${exportWinId}`
-    : '/v4/export_win'
+    ? `${exportWinEndpoint}/${exportWinId}`
+    : exportWinEndpoint
 
   return request(endpoint, payload)
 }
