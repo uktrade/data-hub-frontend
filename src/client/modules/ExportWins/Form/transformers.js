@@ -212,7 +212,7 @@ export const transformFormValuesForAPI = (values) => ({
   name_of_export: values.name_of_export,
   sector: values.sector.value,
   // Support given
-  hvc: values.hvc.value,
+  ...(values.hvc && { hvc: values.hvc.value }), // optional field
   type_of_support: values.type_of_support.map((support) => support.value),
   associated_programme: values.associated_programme.map((c) => c.value),
   is_personally_confirmed: values.is_personally_confirmed[0] === OPTION_YES,
