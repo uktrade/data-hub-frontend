@@ -24,7 +24,7 @@ const ButtonWrapper = styled.div`
 export const TaskButtons = ({ task, returnUrl }) => (
   <>
     <GridRow>
-      {!task.archived && (
+      {!task.status && (
         <Form
           id="archive-task-form"
           analyticsFormName="archiveTaskForm"
@@ -42,7 +42,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
         </Form>
       )}
       <ButtonWrapper>
-        {!task.archived && (
+        {!task.status && (
           <Button
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}

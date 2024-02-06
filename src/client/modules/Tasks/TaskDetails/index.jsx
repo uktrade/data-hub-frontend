@@ -21,7 +21,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
 
   const taskTitle = task ? task.title : ''
-  const archivedTag = task?.archived && (
+  const statusTag = task?.status && (
     <StyledTag colour="green" data-test="activity-kind-label">
       COMPLETED
     </StyledTag>
@@ -30,7 +30,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
   return (
     <DefaultLayout
       heading={taskTitle}
-      subheading={archivedTag}
+      subheading={statusTag}
       pageTitle={taskTitle}
       breadcrumbs={breadcrumbs}
       useReactRouter={false}
