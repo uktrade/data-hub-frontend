@@ -94,6 +94,7 @@ import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/Co
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
 import ExportsIndex from './modules/Companies/CompanyExports/ExportsIndex'
 import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
+import InvestmentProjectAdmin from './modules/Investments/Projects/Admin/InvestmentProjectAdmin'
 
 const routes = {
   companies: [
@@ -582,6 +583,11 @@ const routes = {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',
       module: 'datahub:investments',
       component: DeleteProjectDocument,
+    },
+    {
+      path: '/investments/projects/:projectId/admin',
+      module: 'datahub:investments',
+      component: InvestmentProjectAdmin,
     },
     {
       path: '/investments/projects',
