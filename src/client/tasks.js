@@ -10,8 +10,6 @@ import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/Ex
 import addCompanyPostcodeToRegionTask, {
   createCompany,
 } from '../apps/companies/apps/add-company/client/tasks'
-import { TASK_UPDATE_STAGE } from '../apps/investments/views/admin/client/state'
-import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
 import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
 import {
   TASK_GET_ACTIVE_EVENTS,
@@ -438,6 +436,8 @@ import {
   getExportProject,
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
+import { TASK_UPDATE_STAGE } from './modules/Investments/Projects/Admin/state'
+import * as investmentAdminTasks from './modules/Investments/Projects/Admin/tasks'
 
 export const tasks = {
   'Create list': createList,

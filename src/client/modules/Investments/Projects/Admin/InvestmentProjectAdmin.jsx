@@ -5,7 +5,6 @@ import { H4, InsetText } from 'govuk-react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import { TASK_UPDATE_STAGE } from '../../../../../apps/investments/views/admin/client/state'
 import urls from '../../../../../lib/urls'
 import {
   InvestmentProjectStageResource,
@@ -20,6 +19,7 @@ import {
   FormLayout,
 } from '../../../../components'
 import { FORM_LAYOUT } from '../../../../../common/constants'
+import { TASK_UPDATE_STAGE } from './state'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};
@@ -88,26 +88,6 @@ const InvestmentProjectAdmin = () => {
           </FormLayout>
         )}
       </InvestmentResource>
-      {/* <InsetText>
-        <p>Project name:</p>
-        <StyledP>Current stage: </StyledP>
-      </InsetText>
-      <Form
-        cancelRedirectTo={() => urls.investments.projects.details(projectId)}
-        analyticsFormName="investmentProjectAdmin"
-        flashMessage={() => 'Project stage saved'}
-        id="investmentProjectAdmin"
-        redirectTo={() => urls.investments.projects.details(projectId)}
-        submissionTaskName={TASK_UPDATE_STAGE}
-        transformPayload={(values) => ({ values, projectId })}
-      >
-        <H4 as="h2">Change the stage to</H4>
-        <FieldRadios
-          name="projectStageId"
-          required="Select a new stage"
-          options={newStageOptions}
-        />
-      </Form> */}
     </DefaultLayout>
   )
 }
