@@ -183,6 +183,7 @@ const TaskFormFields = ({
                               payload: {
                                 limit: 250,
                                 companyId: companyId,
+                                adviser: [currentAdviserId],
                               },
                               onSuccessDispatch: INVESTMENTS__PROJECTS_LOADED,
                             })
