@@ -69,3 +69,8 @@ export const completeInvestmentPropositions = (values) =>
       `v3/investment/${values.investmentProjectId}/proposition/${values.propositionId}/complete`
     )
     .then(({ data }) => data)
+
+export const updateProjectStage = ({ values, projectId }) =>
+  apiProxyAxios.post(`/v3/investment/${projectId}/update-stage`, {
+    stage: { id: values.projectStageId },
+  })

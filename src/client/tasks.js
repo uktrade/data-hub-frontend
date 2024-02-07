@@ -97,6 +97,7 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
   TASK_GET_INVESTMENT_PROJECT,
+  TASK_UPDATE_STAGE,
 } from './modules/Investments/Projects/state'
 import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
@@ -436,8 +437,6 @@ import {
   getExportProject,
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
-import { TASK_UPDATE_STAGE } from './modules/Investments/Projects/Admin/state'
-import * as investmentAdminTasks from './modules/Investments/Projects/Admin/tasks'
 
 export const tasks = {
   'Create list': createList,
@@ -465,7 +464,7 @@ export const tasks = {
   [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
   [TASK_GET_INTERACTION_INITIAL_VALUES]:
     addInteractionFormTasks.getInitialFormValues,
-  [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
+  [TASK_UPDATE_STAGE]: investmentProjectTasks.updateProjectStage,
   [TASK_SAVE_OPPORTUNITY_DETAILS]:
     investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
   [TASK_SAVE_OPPORTUNITY_STATUS]:

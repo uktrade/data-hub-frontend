@@ -34,7 +34,6 @@ import InteractionDetails from './modules/Interactions/InteractionDetails'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
-import InvestmentProjectAdmin from './modules/Investments/Projects/Admin/InvestmentProjectAdmin.jsx'
 
 import Footer from '../client/components/Footer'
 
@@ -189,9 +188,6 @@ function App() {
         </Mount>
         <Mount selector="#interaction-referral-details">
           {(props) => <InteractionReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#investment-project-admin">
-          {(props) => <InvestmentProjectAdmin {...props} />}
         </Mount>
         <Mount selector="#flash-messages">
           {(props) => <FlashMessages {...props} />}

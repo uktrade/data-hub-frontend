@@ -5,20 +5,20 @@ import { H4, InsetText } from 'govuk-react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import urls from '../../../../../lib/urls'
+import urls from '../../../../lib/urls'
 import {
   InvestmentProjectStageResource,
   InvestmentResource,
-} from '../../../../components/Resource'
-import { buildProjectBreadcrumbs } from '../../utils'
-import { transformObjectToOption } from '../../../../../apps/transformers'
+} from '../../../components/Resource'
+import { buildProjectBreadcrumbs } from '../utils'
+import { transformObjectToOption } from '../../../../apps/transformers'
 import {
   DefaultLayout,
   FieldRadios,
   Form,
   FormLayout,
-} from '../../../../components'
-import { FORM_LAYOUT } from '../../../../../common/constants'
+} from '../../../components'
+import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_UPDATE_STAGE } from './state'
 
 const StyledP = styled('p')`
