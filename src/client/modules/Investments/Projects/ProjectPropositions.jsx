@@ -7,18 +7,16 @@ import { get } from 'lodash'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 import { CollectionList } from '../../../components'
-import {
-  InvestmentResource,
-  PropositionCollectionResource,
-} from '../../../components/Resource'
+import { PropositionCollectionResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import { transformPropositionToListItem } from './transformers'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
 
 import { ID, TASK_PROPOSITION_COMPLETE, propositionState2props } from './state'
 import { PROPOSITION_COMPLETE } from '../../../../client/actions'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import Task from '../../../../client/components/Task'
+import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
+import InvestmentName from './InvestmentName'
 
 const buttonRenderer =
   (taskCompleteStatus) =>
@@ -105,81 +103,79 @@ const ProjectPropositions = ({
     }
   }, [taskState.status, taskState.errorMessage, writeFlashMessage])
   return (
-    <PropositionCollectionResource
-      payload={{
-        investment_project_id: projectId,
-        limit: 10,
-        offset: activePage * 10 - 10,
-        sortby: parsedQueryString.sortby,
-      }}
+    <ProjectLayoutNew
+      projectId={projectId}
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Propositions' },
+      ]}
+      pageTitle="Propositions"
+      flashMessages={
+        completeStatus === 'completed'
+          ? { success: ['Proposition Completed'] }
+          : taskState.status === 'error'
+            ? { error: [taskState.errorMessage] }
+            : null
+      }
     >
-      {(_, count, rawData) => {
-        const propositions = rawData.results.map((item) =>
-          transformPropositionToListItem(item)
-        )
-        const sortOptions = [
-          {
-            name: 'Recently created',
-            value: '-created_on',
-          },
-          {
-            name: 'Oldest',
-            value: 'created_on',
-          },
-        ]
+      <PropositionCollectionResource
+        payload={{
+          investment_project_id: projectId,
+          limit: 10,
+          offset: activePage * 10 - 10,
+          sortby: parsedQueryString.sortby,
+        }}
+      >
+        {(_, count, rawData) => {
+          const propositions = rawData.results.map((item) =>
+            transformPropositionToListItem(item)
+          )
+          const sortOptions = [
+            {
+              name: 'Recently created',
+              value: '-created_on',
+            },
+            {
+              name: 'Oldest',
+              value: 'created_on',
+            },
+          ]
 
-        return (
-          <InvestmentResource id={projectId}>
-            {(project) => (
-              <ProjectLayout
-                project={project}
-                breadcrumbs={[
-                  {
-                    link: urls.investments.projects.details(project.id),
-                    text: project.name,
-                  },
-                  { text: 'Propositions' },
-                ]}
-                pageTitle="Propositions"
-                flashMessages={
-                  completeStatus === 'completed'
-                    ? { success: ['Proposition Completed'] }
-                    : taskState.status === 'error'
-                      ? { error: [taskState.errorMessage] }
-                      : null
+          return (
+            <>
+              <H2 size={LEVEL_SIZE[3]}>Investment Propositions</H2>
+              <p>
+                You can record and manage propositions requested by investors
+                and view the details of previous and current propositions.
+              </p>
+              <CollectionList
+                footerRenderer={buttonRenderer(completeStatus)}
+                collectionName="proposition"
+                items={propositions}
+                count={count}
+                isComplete={true}
+                onPageClick={(currentPage) =>
+                  history.push({
+                    search: qs.stringify({
+                      ...parsedQueryString,
+                      page: currentPage,
+                    }),
+                  })
                 }
-              >
-                <H2 size={LEVEL_SIZE[3]}>Investment Propositions</H2>
-                <p>
-                  You can record and manage propositions requested by investors
-                  and view the details of previous and current propositions.
-                </p>
-                <CollectionList
-                  footerRenderer={buttonRenderer(completeStatus)}
-                  collectionName="proposition"
-                  items={propositions}
-                  count={count}
-                  isComplete={true}
-                  onPageClick={(currentPage) =>
-                    history.push({
-                      search: qs.stringify({
-                        ...parsedQueryString,
-                        page: currentPage,
-                      }),
-                    })
-                  }
-                  activePage={activePage}
-                  sortOptions={count ? sortOptions : null}
-                  addItemUrl={urls.investments.projects.proposition.create(
-                    projectId
-                  )}
-                />
-              </ProjectLayout>
-            )}
-          </InvestmentResource>
-        )
-      }}
-    </PropositionCollectionResource>
+                activePage={activePage}
+                sortOptions={count ? sortOptions : null}
+                addItemUrl={urls.investments.projects.proposition.create(
+                  projectId
+                )}
+              />
+            </>
+          )
+        }}
+      </PropositionCollectionResource>
+    </ProjectLayoutNew>
   )
 }
 

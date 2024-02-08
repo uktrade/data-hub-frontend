@@ -20,16 +20,11 @@ import {
 } from '../../../components'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_UPDATE_STAGE } from './state'
+import InvestmentName from './InvestmentName'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};
 `
-
-const InvestmentName = (props) => (
-  <InvestmentResource.Inline {...props}>
-    {(project) => project.name}
-  </InvestmentResource.Inline>
-)
 
 const InvestmentProjectAdmin = () => {
   const { projectId } = useParams()

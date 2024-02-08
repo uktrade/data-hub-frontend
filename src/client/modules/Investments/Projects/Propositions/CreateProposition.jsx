@@ -15,25 +15,35 @@ import { transformPropositionForAPI } from './transformers'
 import { TASK_CREATE_INVESTMENT_PROPOSITION } from './state'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 import { buildProjectBreadcrumbs } from '../../utils'
+import InvestmentName from '../InvestmentName'
 
 const CreateProposition = () => {
   const { projectId } = useParams()
   return (
-    <InvestmentResource id={projectId}>
-      {(project) => (
-        <DefaultLayout
-          heading={`Add proposition for ${project.name}`}
-          pageTitle={`Add proposition for ${project.name} - ${project.name} - Projects - Investments`}
-          breadcrumbs={buildProjectBreadcrumbs([
-            {
-              link: urls.investments.projects.details(project.id),
-              text: project.name,
-            },
-            {
-              text: 'Add proposition',
-            },
-          ])}
-        >
+    <DefaultLayout
+      heading={
+        <>
+          Add proposition for <InvestmentName id={projectId} />
+        </>
+      }
+      pageTitle={
+        <>
+          Add proposition for <InvestmentName id={projectId} /> -{' '}
+          <InvestmentName id={projectId} /> - Projects - Investments
+        </>
+      }
+      breadcrumbs={buildProjectBreadcrumbs([
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        {
+          text: 'Add proposition',
+        },
+      ])}
+    >
+      <InvestmentResource id={projectId}>
+        {() => (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Form
               id="create-investment-proposition"
@@ -79,9 +89,9 @@ const CreateProposition = () => {
               />
             </Form>
           </FormLayout>
-        </DefaultLayout>
-      )}
-    </InvestmentResource>
+        )}
+      </InvestmentResource>
+    </DefaultLayout>
   )
 }
 

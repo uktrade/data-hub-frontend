@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
 import { DefaultLayout, FieldRadios, Form } from '../../../components'
@@ -9,24 +8,30 @@ import { TASK_EDIT_INVESTMENT_PROJECT_STATUS } from './state'
 import { investmentProjectStatuses } from './constants'
 import { transformProjectStatusForApi } from './transformers'
 import { buildProjectBreadcrumbs } from '../utils'
+import InvestmentName from './InvestmentName'
 
 const EditProjectStatus = () => {
-  const investmentProject = useParams()
+  const { projectId } = useParams()
   return (
-    <InvestmentResource id={investmentProject.projectId}>
-      {(project) => (
-        <DefaultLayout
-          heading={'Change project status'}
-          pageTitle={`Change project status - ${project.name} - Projects - Investments`}
-          breadcrumbs={buildProjectBreadcrumbs([
-            {
-              link: urls.investments.projects.details(project.id),
-              text: project.name,
-            },
-            { text: 'Change project status' },
-          ])}
-          useReactRouter={false}
-        >
+    <DefaultLayout
+      heading={'Change project status'}
+      pageTitle={
+        <>
+          Change project status - <InvestmentName id={projectId} /> - Projects -
+          Investments
+        </>
+      }
+      breadcrumbs={buildProjectBreadcrumbs([
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Change project status' },
+      ])}
+      useReactRouter={false}
+    >
+      <InvestmentResource id={projectId}>
+        {(project) => (
           <Form
             id="edit-project-status"
             analyticsFormName="editInvestmentProjectStatus"
@@ -53,14 +58,10 @@ const EditProjectStatus = () => {
               }))}
             />
           </Form>
-        </DefaultLayout>
-      )}
-    </InvestmentResource>
+        )}
+      </InvestmentResource>
+    </DefaultLayout>
   )
-}
-
-EditProjectStatus.propTypes = {
-  changeMe: PropTypes.string.isRequired,
 }
 
 export default EditProjectStatus

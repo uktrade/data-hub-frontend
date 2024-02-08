@@ -9,18 +9,15 @@ import qs from 'qs'
 import { CollectionList } from '../../../components'
 import { InvestmentProjectTasksResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import ProjectLayout from '../../../components/Layout/ProjectLayout'
 import { transformTaskToListItem } from './transformers'
 import { ITEMS_PER_PAGE } from './constants'
-import Task from '../../../components/Task'
-import {
-  INVESTMENT_PROJECT_ID,
-  TASK_GET_INVESTMENT_PROJECT,
-  investmentProjectState2props,
-} from './state'
-import { INVESTMENT__PROJECT_LOADED } from '../../../actions'
 
-const ProjectTasks = ({ project }) => {
+import { investmentProjectState2props } from './state'
+
+import InvestmentName from './InvestmentName'
+import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
+
+const ProjectTasks = () => {
   const { projectId } = useParams()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(useSearchParam('page'), 10) || 1
@@ -31,23 +28,18 @@ const ProjectTasks = ({ project }) => {
   const onPageClick = (page) => {
     setActivePage(page)
   }
-
   const returnUrl = encodeURIComponent(location.pathname + location.search)
 
   return (
-    <ProjectLayout
-      project={project}
-      breadcrumbs={
-        project
-          ? [
-              {
-                link: urls.investments.projects.details(project.id),
-                text: project.name,
-              },
-              { text: 'Tasks' },
-            ]
-          : []
-      }
+    <ProjectLayoutNew
+      projectId={projectId}
+      breadcrumbs={[
+        {
+          link: urls.investments.projects.details(projectId),
+          text: <InvestmentName id={projectId} />,
+        },
+        { text: 'Tasks' },
+      ]}
       pageTitle="Tasks"
     >
       <H2 size={LEVEL_SIZE[3]}>Investment tasks</H2>
@@ -56,14 +48,6 @@ const ProjectTasks = ({ project }) => {
         investment project. Once a task is marked as complete it will not be
         visible here.
       </p>
-      <Task.Status
-        name={TASK_GET_INVESTMENT_PROJECT}
-        id={INVESTMENT_PROJECT_ID}
-        startOnRender={{
-          payload: projectId,
-          onSuccessDispatch: INVESTMENT__PROJECT_LOADED,
-        }}
-      />
       <InvestmentProjectTasksResource
         payload={{
           investment_project: projectId,
@@ -105,7 +89,7 @@ const ProjectTasks = ({ project }) => {
           )
         }}
       </InvestmentProjectTasksResource>
-    </ProjectLayout>
+    </ProjectLayoutNew>
   )
 }
 
