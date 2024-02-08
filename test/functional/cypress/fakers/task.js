@@ -29,7 +29,6 @@ const taskFaker = (overrides = {}) => ({
   modifiedBy: basicAdviserFaker(),
   modifiedOn: faker.date.past().toISOString(),
   createdOn: faker.date.past().toISOString(),
-  status: 'active',
 
   ...overrides,
 })
