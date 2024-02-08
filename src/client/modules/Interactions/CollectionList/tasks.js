@@ -63,25 +63,14 @@ const getInteractions = ({
   date_before,
   date_after,
   sortby = 'date:desc',
-  sector_descends,
-  sub_sector_descends,
+  sector_descends = [], // Default to empty array if not provided
+  sub_sector_descends = [], // Default to empty array if not provided
   was_policy_feedback_provided,
   policy_areas,
   policy_issue_types,
   company_one_list_group_tier,
   dit_participants__team,
 }) => {
-  const getSectors = (sector_descends, sub_sector_descends) => {
-    if (sector_descends && sub_sector_descends) {
-      return [...sector_descends, ...sub_sector_descends]
-    }
-    if (sub_sector_descends) {
-      return sub_sector_descends
-    }
-    if (sector_descends) {
-      return sector_descends
-    }
-  }
   return apiProxyAxios
     .post('/v3/search/interaction', {
       limit,
@@ -94,7 +83,7 @@ const getInteractions = ({
       date_before,
       date_after,
       service,
-      sector_descends: getSectors(sector_descends, sub_sector_descends),
+      sector_descends: [...sector_descends, ...sub_sector_descends],
       was_policy_feedback_provided,
       policy_areas,
       policy_issue_types,
