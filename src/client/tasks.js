@@ -10,8 +10,6 @@ import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/Ex
 import addCompanyPostcodeToRegionTask, {
   createCompany,
 } from '../apps/companies/apps/add-company/client/tasks'
-import { TASK_UPDATE_STAGE } from '../apps/investments/views/admin/client/state'
-import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
 import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
 import {
   TASK_GET_ACTIVE_EVENTS,
@@ -99,6 +97,7 @@ import {
   TASK_EDIT_INVESTMENT_PROJECT_STATUS,
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
   TASK_GET_INVESTMENT_PROJECT,
+  TASK_UPDATE_STAGE,
 } from './modules/Investments/Projects/state'
 import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
@@ -465,7 +464,7 @@ export const tasks = {
   [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
   [TASK_GET_INTERACTION_INITIAL_VALUES]:
     addInteractionFormTasks.getInitialFormValues,
-  [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
+  [TASK_UPDATE_STAGE]: investmentProjectTasks.updateProjectStage,
   [TASK_SAVE_OPPORTUNITY_DETAILS]:
     investmentOpportunitiesDetailsTasks.saveOpportunityDetails,
   [TASK_SAVE_OPPORTUNITY_STATUS]:

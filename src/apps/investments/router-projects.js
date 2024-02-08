@@ -13,7 +13,6 @@ const { shared } = require('./middleware')
 
 const { create, editHistory } = require('./controllers')
 
-const { renderAdminView } = require('./controllers/admin')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
 const { postUpload } = require('../documents/middleware/upload')
 
@@ -59,7 +58,5 @@ router.use(
 )
 
 router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
-
-router.get('/:investmentId/admin', renderAdminView)
 
 module.exports = router

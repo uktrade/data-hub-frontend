@@ -23,7 +23,6 @@ import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from './modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
-import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import InvestmentProjectForm from '../apps/investments/client/projects/create/InvestmentProjectForm'
@@ -189,9 +188,6 @@ function App() {
         </Mount>
         <Mount selector="#interaction-referral-details">
           {(props) => <InteractionReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#investment-project-admin">
-          {(props) => <InvestmentProjectAdmin {...props} />}
         </Mount>
         <Mount selector="#flash-messages">
           {(props) => <FlashMessages {...props} />}
