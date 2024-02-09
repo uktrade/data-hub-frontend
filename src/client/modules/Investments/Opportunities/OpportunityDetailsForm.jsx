@@ -191,8 +191,8 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
               <p>
                 If the asset class you wish to select is not shown above, then
                 request it from&nbsp;
-                <a href={`mailto:capitalinvestment@trade.gov.uk`}>
-                  capitalinvestment@trade.gov.uk
+                <a href={`mailto:capitalinvestment@businessandtrade.gov.uk`}>
+                  capitalinvestment@businessandtrade.gov.uk
                 </a>
                 .
               </p>

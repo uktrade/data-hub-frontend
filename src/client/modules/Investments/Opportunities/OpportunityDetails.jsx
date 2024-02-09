@@ -117,7 +117,7 @@ const OpportunityDetails = ({
       </OpportunitySection>
       <StyledDetails summary="Need to delete this opportunity?">
         To delete this opportunity, email{' '}
-        <Link>capitalinvestment@trade.gov.uk</Link>
+        <Link>capitalinvestment@businessandtrade.gov.uk</Link>
       </StyledDetails>
     </>
   )

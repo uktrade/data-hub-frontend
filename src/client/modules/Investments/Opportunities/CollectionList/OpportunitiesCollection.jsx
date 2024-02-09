@@ -34,8 +34,8 @@ const LargeCapitalOpportunityCollection = ({
 
       <p>
         For further information email 
-        <Link href="mailto:capitalinvestment@trade.gov.uk">
-          capitalinvestment@trade.gov.uk
+        <Link href="mailto:capitalinvestment@businessandtrade.gov.uk">
+          capitalinvestment@businessandtrade.gov.uk
         </Link>
       </p>
     </div>

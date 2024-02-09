@@ -125,7 +125,7 @@ const OpportunityRequirementsForm = (state) => {
                 />
                 <StyledP>
                   If you can’t see the type of investment you need, request it
-                  from <Link>capitalinvestment@trade.gov.uk</Link>.
+                  from <Link>capitalinvestment@businessandtrade.gov.uk</Link>.
                 </StyledP>
                 <FieldRadios
                   legend="Estimated return rate"
