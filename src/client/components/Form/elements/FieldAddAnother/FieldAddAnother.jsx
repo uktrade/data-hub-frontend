@@ -48,6 +48,7 @@ const FieldAddAnother = ({
   remove,
   // State props
   items = _(initialChildGroupCount).range().keyBy().value(),
+  buttonMargin,
 }) => {
   const fieldGroupIds = Object.keys(items)
 
@@ -95,6 +96,7 @@ const FieldAddAnother = ({
               aria-label={`Add a ${indexToOrdinal(
                 fieldGroupIds.length || 0
               )} ${itemName}`}
+              margin={buttonMargin}
             >
               {buttonText ? buttonText : `Add another ${itemName}`}
             </SecondaryButton>

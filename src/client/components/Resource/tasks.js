@@ -88,6 +88,7 @@ import OmisMarkets from './OmisMarkets'
 import OrderPayment from './OrderPayment'
 import TaskCompaniesAndProjects from './TaskCompaniesAndProjects'
 import CompanyAuditHistory from './CompanyAuditHistory'
+import EvidenceTag from './EvidenceTag'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -180,4 +181,5 @@ export default {
   ...OrderPayment.tasks,
   ...TaskCompaniesAndProjects.tasks,
   ...CompanyAuditHistory.tasks,
+  ...EvidenceTag.tasks,
 }
