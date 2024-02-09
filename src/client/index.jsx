@@ -37,7 +37,6 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
 import Footer from '../client/components/Footer'
 
-import ContactForm from '../client/components/ContactForm'
 import { ProtectedRoute } from '../client/components'
 import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
@@ -202,9 +201,6 @@ function App() {
           )}
         </Mount>
         <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
-        <Mount selector="#contact-form">
-          {(props) => <ContactForm {...props} id="contact-form" />}
-        </Mount>
         <Mount selector="#dashboard-local-header">
           {(props) => (
             <SearchLocalHeader

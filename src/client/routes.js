@@ -1,5 +1,6 @@
 import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
+import ContactForm from './components/ContactForm'
 import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
 import EventAventriDetails from './modules/Events/EventAventriDetails'
@@ -254,6 +255,16 @@ const routes = {
       path: '/contacts',
       module: 'datahub:contacts',
       component: ContactsCollectionList,
+    },
+    {
+      path: '/contacts/create',
+      module: 'datahub:contacts',
+      component: ContactForm,
+    },
+    {
+      path: '/contacts/:contactId/edit',
+      module: 'datahub:contacts',
+      component: ContactForm,
     },
   ],
   community: [
