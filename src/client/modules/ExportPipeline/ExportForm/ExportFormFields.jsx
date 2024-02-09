@@ -29,8 +29,7 @@ import {
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import Task from '../../../components/Task'
 
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
-import { TASK_SAVE_EXPORT, ID as STATE_ID } from './state'
+import { TASK_SAVE_EXPORT } from './state'
 
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
 import { validateTeamMembers } from './validation'
@@ -177,29 +176,10 @@ const ExportFormFields = ({
                   }
                   autoScroll={values.scrollToContact}
                 />
-                <Task>
-                  {(getTask) => {
-                    const openContactFormTask = getTask(
-                      TASK_REDIRECT_TO_CONTACT_FORM,
-                      STATE_ID
-                    )
-                    return (
-                      <ContactInformation
-                        companyId={exportItem.company.id}
-                        onOpenContactForm={({ redirectUrl }) => {
-                          openContactFormTask.start({
-                            payload: {
-                              values,
-                              url: redirectUrl,
-                              storeId: STATE_ID,
-                            },
-                          })
-                        }}
-                      />
-                    )
-                  }}
-                </Task>
-
+                <ContactInformation
+                  companyId={exportItem.company.id}
+                  redirectMode="soft"
+                />
                 <ResourceOptionsField
                   resource={ExportExperienceResource}
                   field={FieldRadios}

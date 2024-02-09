@@ -5,11 +5,7 @@ import { transformAPIValuesForForm } from '../transformers'
 export const ID = 'exportForm'
 export const TASK_SAVE_EXPORT = 'TASK_SAVE_EXPORT'
 
-export const overwriteObjectWithSessionStorageValues = (
-  exportItem,
-  searchParams
-) => {
-  const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(ID))
+export const addContactToItem = (item, searchParams) => {
   const contactLabel = searchParams.get('new-contact-name')
   const contactValue = searchParams.get('new-contact-id')
   const newContact =
@@ -17,19 +13,16 @@ export const overwriteObjectWithSessionStorageValues = (
       ? { value: contactValue, label: contactLabel }
       : null
 
-  if (valuesFromStorage && newContact) {
-    const mergedValues = {
-      ...transformAPIValuesForForm(exportItem),
-      ...valuesFromStorage,
-    }
-
+  if (newContact) {
+    const formValues = transformAPIValuesForForm(item)
     return {
-      ...mergedValues,
-      contacts: [...mergedValues.contacts, newContact],
+      ...formValues,
+      contacts: [...formValues.contacts, newContact],
       scrollToContact: true,
     }
   }
-  return { ...transformAPIValuesForForm(exportItem) }
+
+  return { ...transformAPIValuesForForm(item) }
 }
 
 export const state2props = (state, { location }) => {
@@ -39,19 +32,19 @@ export const state2props = (state, { location }) => {
 
   if (exportItem) {
     return {
-      exportItem: overwriteObjectWithSessionStorageValues(
-        exportItem,
-        searchParams
-      ),
+      exportItem: addContactToItem(exportItem, searchParams),
     }
   }
 
   if (company) {
     return {
-      exportItem: overwriteObjectWithSessionStorageValues(
+      exportItem: addContactToItem(
         {
           company,
-          owner: { id: state.currentAdviserId, name: state.currentAdviserName },
+          owner: {
+            id: state.currentAdviserId,
+            name: state.currentAdviserName,
+          },
         },
         searchParams
       ),
