@@ -125,6 +125,7 @@ const reactRoutes = [
   '/companies/:companyId/exports',
   '/companies/:companyId/exports/history',
   '/companies/:companyId/exports/history/:countryId',
+  '/omis/:orderId/quote',
 ]
 
 reactRoutes.forEach((path) => {
