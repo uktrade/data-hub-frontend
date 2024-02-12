@@ -1,6 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { useLocation, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import urls from '../../../../lib/urls'
 import { COMPANY_LOADED } from '../../../actions'
@@ -77,6 +78,10 @@ const ExportFormAdd = ({ exportItem }) => {
       />
     </DefaultLayout>
   )
+}
+
+ExportFormAdd.propTypes = {
+  exportItem: PropTypes.object,
 }
 
 export default withRouter(connect(state2props)(ExportFormAdd))

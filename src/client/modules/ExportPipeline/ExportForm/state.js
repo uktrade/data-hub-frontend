@@ -1,55 +1,45 @@
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
 import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
 import { transformAPIValuesForForm } from '../transformers'
+import { getQueryParamsFromLocation } from '../../../utils/url'
 
 export const ID = 'exportForm'
 export const TASK_SAVE_EXPORT = 'TASK_SAVE_EXPORT'
 
-export const addContactToItem = (item, searchParams) => {
-  const contactLabel = searchParams.get('new-contact-name')
-  const contactValue = searchParams.get('new-contact-id')
-  const newContact =
-    contactLabel && contactValue
-      ? { value: contactValue, label: contactLabel }
-      : null
-
-  if (newContact) {
-    const formValues = transformAPIValuesForForm(item)
-    return {
-      ...formValues,
-      contacts: [...formValues.contacts, newContact],
-      scrollToContact: true,
-    }
-  }
-
-  return { ...transformAPIValuesForForm(item) }
+const getContactFromLocation = (location) => {
+  const queryParams = getQueryParamsFromLocation(location)
+  const label = queryParams['new-contact-name']
+  const value = queryParams['new-contact-id']
+  return label && value ? { value, label } : null
 }
 
 export const state2props = (state, { location }) => {
-  const company = state[COMPANY_DETAILS_ID].company
-  const exportItem = state[EXPORT_DETAILS_ID].exportItem
-  const searchParams = new URLSearchParams(location.search)
+  const { exportItem } = state[EXPORT_DETAILS_ID]
+  const { company } = state[COMPANY_DETAILS_ID]
 
-  if (exportItem) {
-    return {
-      exportItem: addContactToItem(exportItem, searchParams),
-    }
+  if (!exportItem && !company) {
+    return { exportItem: null }
   }
 
-  if (company) {
-    return {
-      exportItem: addContactToItem(
-        {
-          company,
-          owner: {
-            id: state.currentAdviserId,
-            name: state.currentAdviserName,
-          },
+  const formValues = exportItem
+    ? transformAPIValuesForForm(exportItem)
+    : transformAPIValuesForForm({
+        company,
+        owner: {
+          id: state.currentAdviserId,
+          name: state.currentAdviserName,
         },
-        searchParams
-      ),
-    }
-  }
+      })
 
-  return { exportItem: null }
+  const contact = getContactFromLocation(location)
+
+  return {
+    exportItem: {
+      ...formValues,
+      ...(contact && {
+        contacts: [...formValues.contacts, contact],
+        scrollToContact: true,
+      }),
+    },
+  }
 }
