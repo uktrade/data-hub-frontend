@@ -29,6 +29,7 @@ import advisersListFaker, {
 import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
+import { investmentProjectFaker } from '../../../../../functional/cypress/fakers/investment-projects'
 
 describe('Task form', () => {
   const Component = (props) => (
