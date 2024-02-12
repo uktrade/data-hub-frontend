@@ -14,13 +14,13 @@ describe('Referrals', () => {
   const company = fixtures.company.create.lambda()
   const contact = fixtures.contact.create(company.pk)
 
-  before(() => {
+  beforeEach(() => {
     cy.loadFixture([company])
     cy.loadFixture([contact])
-    cy.visit(urls.companies.referrals.send(company.pk))
   })
   context('when adding a referral', () => {
-    it('should create a referral for a company', () => {
+    it('should create a referral for a company and display it on the homepage', () => {
+      cy.visit(urls.companies.referrals.send(company.pk))
       selectFirstMockedTypeaheadOption({
         element: selectors.sendReferral.adviserField,
         input: 'dennis',
@@ -38,29 +38,34 @@ describe('Referrals', () => {
         .eq(2)
         .click()
       assertFlashMessage('Referral sent')
-    })
-  })
-  context('when viewing a referral', () => {
-    it('should display the new referral on the homepage', () => {
       cy.get('[data-test="flash"]').find('a').eq(0).click()
-      cy.get(selectors.tabbedNav().item(2)).click()
-      cy.selectDhTablistTab('Dashboard', 'Referrals').within(() => {
-        cy.get('select').select('Sent referrals')
-        cy.contains('h3', '1 sent referral')
-          .parent()
-          .parent()
-          .find('ol li')
-          .should('contain', 'Lambda plc')
-          .find('h2 a')
-          .last()
-          .should('contain', 'Example subject')
-          .click()
-      })
+      cy.get('select').select('Sent referrals')
+      cy.contains('h3', '1 sent referral')
+        .parent()
+        .parent()
+        .find('ol li')
+        .should('contain', 'Lambda plc')
+        .find('h2 a')
+        .last()
+        .should('contain', 'Example subject')
+        .click()
     })
   })
 
   context('when accepting a referral', () => {
-    it('should create an interaction successfully', () => {
+    it('should create an interaction successfully and display the referral in the interaction', () => {
+      cy.visit(urls.companies.referrals.list())
+      cy.get('select').select('Sent referrals')
+      cy.contains('h3', '1 sent referral')
+        .parent()
+        .parent()
+        .find('ol li')
+        .should('contain', 'Lambda plc')
+        .find('h2 a')
+        .last()
+        .should('contain', 'Example subject')
+        .click()
+
       cy.get('details').next().find('a:first-child').click()
       cy.get(selectors.createInteractionContext.export.theme).click()
       cy.get(selectors.createInteractionContext.export.interaction).click()
@@ -78,9 +83,8 @@ describe('Referrals', () => {
       cy.get(formSelectors.countriesDiscussed.no).click()
       cy.get(formSelectors.exportBarrier.no).click()
       cy.get(formSelectors.add).click()
-    })
 
-    it('should display the referral in the interaction', () => {
+      // should display the referral in the interaction
       cy.get(selectors.interaction.details.interaction.referralDetails)
         .should('contain', 'This interaction is linked to a referral')
         .parents()

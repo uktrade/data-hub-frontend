@@ -162,15 +162,12 @@ const assertInteractionDetails = ({
 }
 
 describe('Interactions Collections', () => {
-  before(() => {
+  beforeEach(() => {
     collectionListRequest(
       'v3/search/interaction',
       interactionsList,
       interactions.index()
     )
-  })
-
-  beforeEach(() => {
     cy.get('[data-test="collection-list"]').as('collectionList')
     cy.get('[data-test="collection-item"]').as('collectionItems')
   })

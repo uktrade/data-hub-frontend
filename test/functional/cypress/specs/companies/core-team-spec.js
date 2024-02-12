@@ -23,7 +23,7 @@ const coreTeamResponse = {
 
 describe('One List core team', () => {
   context('when viewing a One List Tier company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.accountManagement.index(company.id))
     })
 

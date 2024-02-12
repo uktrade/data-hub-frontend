@@ -11,7 +11,7 @@ describe('LEP Permission', () => {
   describe('activity', () => {
     const company = fixtures.company.create.corp()
 
-    before(() => {
+    beforeEach(() => {
       cy.loadFixture([company])
       cy.visit(urls.companies.detail(company.pk))
     })
@@ -32,7 +32,7 @@ describe('LEP Permission', () => {
   })
 
   describe('dashboard', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.dashboard.investmentProjects())
     })
 

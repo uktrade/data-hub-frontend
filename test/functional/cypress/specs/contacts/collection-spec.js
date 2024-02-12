@@ -72,11 +72,8 @@ describe('Contacts Collections', () => {
     ...contactsListFaker(7),
   ]
 
-  before(() => {
-    collectionListRequest('v3/search/contact', contactsList, contacts.index())
-  })
-
   beforeEach(() => {
+    collectionListRequest('v3/search/contact', contactsList, contacts.index())
     getCollectionList()
     cy.get('@collectionItems').eq(1).as('secondListItem')
     cy.get('@collectionItems').eq(2).as('thirdListItem')
@@ -98,77 +95,34 @@ describe('Contacts Collections', () => {
   })
 
   context('UK contact', () => {
-    it('should have a link with the contact name', () => {
+    it('should render the correct elements', () => {
       assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
-    })
-
-    it('should contain a primary contact tag', () => {
       assertTag('@firstListItem', 'Primary')
-    })
-
-    it('should not contain an archived tag', () => {
       assertTagNotPresent('@firstListItem', 'Archived')
-    })
-
-    it('should not contain an unknown email tag', () => {
       assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
-    })
-
-    it('should render the updated date and time', () => {
       assertUpdatedOn('@firstListItem', 'Updated on 10 Aug 2020, 8:09pm')
-    })
-
-    it('should render the company name', () => {
       assertMetadataItem(
         '@firstListItem',
         'Company Murray, Price and Hodkiewicz'
       )
-    })
-
-    it('should render the job title', () => {
       assertMetadataItem(
         '@firstListItem',
         'Job title Dynamic Accountability Administrator'
       )
-    })
-
-    it('should render the sector', () => {
       assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
-    })
-
-    it('should render the country', () => {
       assertMetadataItem('@firstListItem', 'Country United Kingdom')
-    })
-
-    it('should render the UK region', () => {
       assertMetadataItem('@firstListItem', 'UK region London')
-    })
-
-    it('should render the UK telephone number', () => {
       assertMetadataItem('@firstListItem', 'Phone number +44 02071234567')
-    })
-
-    it('should render the email', () => {
       assertMetadataItem('@firstListItem', 'Email gloria33@gmail.com')
     })
   })
 
   context('Foreign contact', () => {
-    it('should have a link with the contact name', () => {
+    it('should render the correct elements', () => {
       assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
-    })
-
-    it('should not contain a primary contact tag', () => {
       assertTagShouldNotExist('@secondListItem')
-    })
-
-    it('should render the foreign country', () => {
       assertMetadataItem('@secondListItem', 'Country United States')
-    })
-    it('should not render the UK region', () => {
       assertMetadataItemNotPresent('@secondListItem', 'UK region')
-    })
-    it('should render the telephone number', () => {
       assertMetadataItem('@secondListItem', 'Phone number 0045 48770000')
     })
   })

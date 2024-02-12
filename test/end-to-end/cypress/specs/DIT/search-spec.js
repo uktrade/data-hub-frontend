@@ -2,7 +2,7 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
 describe('Search', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.dashboard.index())
 
     cy.get('#search-input').type('fred').type('{enter}')

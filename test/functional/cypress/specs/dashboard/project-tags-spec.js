@@ -15,7 +15,7 @@ import {
 describe('Dashboard - Investment project tags', () => {
   const summary = investmentProjectSummaryFaker()
 
-  after(() => {
+  afterEach(() => {
     cy.resetUser()
   })
 

@@ -16,7 +16,7 @@ const interactionsList = interactionsListFaker(10)
 
 describe('The interactions tab on an opportunity page', () => {
   context('When the opportunity has one interaction linked', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/interaction?large_capital_opportunity_id=${incompleteOpportunity.id}&limit=10&offset=0`,
@@ -28,11 +28,11 @@ describe('The interactions tab on an opportunity page', () => {
         }
       ).as('apiRequest')
       cy.visit(urls.investments.opportunities.details(incompleteOpportunity.id))
+      cy.get('[data-test="tablist"] button').contains('Interactions').click()
+      cy.wait('@apiRequest')
     })
 
     it('should display the interactions list after clicking the interactions tab', () => {
-      cy.get('[data-test="tablist"] button').contains('Interactions').click()
-      cy.wait('@apiRequest')
       cy.get('[data-test="collection-header').should(
         'have.text',
         '1 interaction'

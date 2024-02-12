@@ -27,7 +27,7 @@ const autoCompleteAdvisers =
 
 describe('Add generic task', () => {
   context('When visiting the create a task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(tasks.create())
     })
 
@@ -104,7 +104,7 @@ describe('Add investment project task', () => {
   const fixture = investment.investmentWithDetails
 
   context('When visiting the create a task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v3/investment/${fixture.id}`, fixture).as(
         'investmentProjectAPIRequest'
       )
@@ -146,7 +146,7 @@ describe('Add investment project task', () => {
 describe('Add company task', () => {
   const company = companyFaker()
   context('When visiting the create a task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(tasks.create())
     })
 
@@ -167,7 +167,7 @@ describe('Add interaction task', () => {
   const fixture = interaction.withReferral
 
   context('When visiting the create a task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/interaction/${fixture.id}`,

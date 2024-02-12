@@ -9,7 +9,7 @@ const apiEndpoint = '/api-proxy/v3/search/investment_project'
 
 describe('Download CSV', () => {
   context('When there are 0 projects', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: [],
@@ -25,7 +25,7 @@ describe('Download CSV', () => {
 
   context('When there is a single project', () => {
     const investmentList = investmentProjectListFaker()
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: investmentList,
@@ -60,7 +60,7 @@ describe('Download CSV', () => {
 
   context('When there are 4999 projects', () => {
     const investmentList = investmentProjectListFaker(9)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: investmentList,
@@ -79,7 +79,7 @@ describe('Download CSV', () => {
 
   context('When there are 5000 projects', () => {
     const investmentList = investmentProjectListFaker(10)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: investmentList,
@@ -119,7 +119,7 @@ describe('Download CSV', () => {
       level_of_involvement_simplified: 'involved',
     }
     const queryString = qs.stringify(filters)
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', apiEndpoint, {
         body: {
           results: investmentList,

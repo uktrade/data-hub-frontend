@@ -106,7 +106,7 @@ describe('View edit subscribers page', () => {
   })
 
   context('When there are existing subscribers', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.omis.edit.subscribers(draftOrder.id))
     })
 

@@ -98,7 +98,7 @@ const investmentTypeTests = () => {
 }
 
 describe('Adding an investment via "Companies"', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.companies.investments.companyInvestmentProjects(usCompany.id))
     cy.get('[data-test="add-collection-item-button"]').click()
   })
@@ -119,7 +119,7 @@ describe('Adding an investment via "Companies"', () => {
 })
 
 describe('Adding an investment via "Investments"', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.investments.projects.index())
     cy.get('[data-test="add-collection-item-button"]').click()
   })
@@ -193,7 +193,7 @@ describe('Adding an investment via "Investments"', () => {
 })
 
 describe('Investment Detail Step Form Content', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.investments.projects.index())
     cy.get('[data-test="add-collection-item-button"]').click()
     cy.get('input[data-test="company-name"]').clear()
@@ -401,7 +401,7 @@ describe('Validation error messages', () => {
   const validationErrorMessageOtherBusinessActivities =
     "Enter an 'Other' business activity"
 
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.investments.projects.index())
     cy.get('[data-test="add-collection-item-button"]').click()
     cy.get('input[data-test="company-name"]').clear()

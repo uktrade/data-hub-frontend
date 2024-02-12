@@ -72,15 +72,12 @@ describe('Link Global HQ', () => {
   const companyList = [company1, company2, company3, ...otherCompanies]
 
   context('should render the Global HQ list', () => {
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v4/search/company',
         companyList,
         urls.companies.hierarchies.ghq.link(testCompany.id)
       )
-    })
-
-    beforeEach(() => {
       getCollectionList()
       cy.get('@collectionItems').eq(1).as('secondListItem')
       cy.get('@collectionItems').eq(2).as('thirdListItem')

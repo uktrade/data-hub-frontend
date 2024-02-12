@@ -105,7 +105,9 @@ describe('Send a referral form', () => {
         enterSubjectDefault()
         enterNotesDefault()
         enterContactDefault()
+
         cy.contains('button', 'Continue').click()
+
         cy.contains('Check referral details').should('be.visible')
         cy.get('table')
           .should('contain', 'Shawn Cohen')
@@ -142,7 +144,7 @@ describe('Send a referral form', () => {
   )
 
   context(
-    'when "Continue" button is clicked after all fields filled in',
+    'when "Continue" then "Edit" button is clicked after all fields filled in',
     () => {
       it('the input data should appear in the form when "Edit Referral" is clicked', () => {
         cy.visit(
@@ -152,8 +154,10 @@ describe('Send a referral form', () => {
         enterSubjectDefault()
         enterNotesDefault()
         enterContactDefault()
+
         cy.contains('button', 'Continue').click()
         cy.contains('Edit Referral').click()
+
         cy.get(selectors.sendReferral.adviserField)
           .find('input')
           .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
@@ -177,6 +181,9 @@ describe('Send a referral form', () => {
     'When the "Cancel" link is clicked from the confirmation component',
     () => {
       it('should return to the company page', () => {
+        cy.visit(
+          urls.companies.referrals.send(fixtures.company.withContacts.id)
+        )
         enterAdviserDefault()
         enterSubjectDefault()
         enterNotesDefault()

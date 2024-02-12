@@ -10,7 +10,7 @@ import {
 const { draftOrder } = fixtures.omis
 
 describe('Cancel order', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.omis.cancel(draftOrder.id))
   })
 

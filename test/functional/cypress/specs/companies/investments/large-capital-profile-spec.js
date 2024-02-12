@@ -17,7 +17,7 @@ const largeCapitalProfileNew = companies.investments.largeCapitalProfile(
 
 describe('Company Investments and Large capital profile', () => {
   context('when viewing the tabbed area content', () => {
-    before(() => cy.visit(largeCapitalProfile))
+    beforeEach(() => cy.visit(largeCapitalProfile))
 
     it('should display the "Large capital investor profile" subheading', () => {
       cy.get(selectors.subHeading).should(
@@ -28,7 +28,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when clicking on a profile summary', () => {
-    before(() => cy.visit(largeCapitalProfile))
+    beforeEach(() => cy.visit(largeCapitalProfile))
 
     it('should expand the "Investor details" summary and have an edit button', () => {
       cy.get('#investor_details_toggle-toggle-button-open')
@@ -53,7 +53,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the incomplete fields on each summary', () => {
-    before(() => cy.visit(largeCapitalProfile))
+    beforeEach(() => cy.visit(largeCapitalProfile))
 
     it('should display "1 field incomplete"', () => {
       cy.get('[data-test=investor_details-incomplete-fields]').should(
@@ -80,7 +80,7 @@ describe('Company Investments and Large capital profile', () => {
   context(
     'when viewing a single incomplete field within "Investor details"',
     () => {
-      before(() => cy.visit(largeCapitalProfile))
+      beforeEach(() => cy.visit(largeCapitalProfile))
 
       it(`should display both Investor description and INCOMPLETE`, () => {
         cy.get('#investor_details_toggle-toggle-button-open').click()
@@ -102,7 +102,7 @@ describe('Company Investments and Large capital profile', () => {
   context(
     'when viewing all incomplete fields within "Investor details"',
     () => {
-      before(() => cy.visit(largeCapitalProfileNew))
+      beforeEach(() => cy.visit(largeCapitalProfileNew))
 
       it(`should display INCOMPLETE for all fields`, () => {
         cy.get('#investor_details_toggle-toggle-button-open').click()
@@ -124,7 +124,7 @@ describe('Company Investments and Large capital profile', () => {
   context(
     'when viewing all incomplete fields within "Investor requirements"',
     () => {
-      before(() => cy.visit(largeCapitalProfileNew))
+      beforeEach(() => cy.visit(largeCapitalProfileNew))
 
       it(`should display INCOMPLETE for all fields`, () => {
         cy.get('#investor_requirements_toggle-toggle-button-open').click()
@@ -147,7 +147,7 @@ describe('Company Investments and Large capital profile', () => {
   )
 
   context('when viewing all incomplete fields within "Location"', () => {
-    before(() => cy.visit(largeCapitalProfileNew))
+    beforeEach(() => cy.visit(largeCapitalProfileNew))
 
     it(`should display INCOMPLETE for all fields`, () => {
       cy.get('#location_toggle-toggle-button-open').click()
@@ -163,7 +163,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the "Investor requirements" edit section', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(largeCapitalProfile)
       cy.get('#investor_requirements_toggle-toggle-button-open').click()
       cy.get('[data-test=investor_requirements_button]').click()
@@ -217,7 +217,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the "Investor requirements" details section', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(largeCapitalProfile)
       cy.get('#investor_requirements_toggle-toggle-button-open').click()
     })
@@ -248,7 +248,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the "Location" details section', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(largeCapitalProfile)
       cy.get('#location_toggle-toggle-button-open').click()
     })

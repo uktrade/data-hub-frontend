@@ -13,7 +13,8 @@ describe('Dashboard - My projects list', () => {
 
   const myProjects = [project1, ...otherProjects]
 
-  before(() => {
+  beforeEach(() => {
+    cy.resetUser()
     cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
       body: {
         count: myProjects.length,
@@ -23,13 +24,6 @@ describe('Dashboard - My projects list', () => {
     cy.visit('/')
     cy.wait('@apiRequest')
     cy.get('[data-test="tablist"] button').contains('Investment').click()
-  })
-
-  after(() => {
-    cy.resetUser()
-  })
-
-  beforeEach(() => {
     cy.get('[data-test="projects-list-item"]').eq(0).as('firstListItem')
   })
 

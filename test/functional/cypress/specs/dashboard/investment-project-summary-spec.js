@@ -18,11 +18,8 @@ describe('Investment projects summary', () => {
   const { prospect, assign_pm, active, verify_win, won } =
     investmentProjectSummary
 
-  after(() => {
-    cy.resetUser()
-  })
-
   beforeEach(() => {
+    cy.resetUser()
     cy.intercept('POST', `/api-proxy/v3/search/investment_project`, {
       body: {
         count: 1,

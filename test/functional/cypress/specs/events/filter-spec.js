@@ -12,7 +12,7 @@ const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
 const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
 describe('events Collections Filter', () => {
   context('with the events activity stream feature flag enabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(events.index())
     })
 
@@ -22,7 +22,7 @@ describe('events Collections Filter', () => {
       const queryParamWithName = qs.stringify({ name: 'Big Event' })
 
       context('should filter from user input', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&name=Big+Event&page=1`
@@ -34,13 +34,11 @@ describe('events Collections Filter', () => {
           cy.wait('@nameRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
-        })
 
-        it('should add name from user input to query param', () => {
+          // Should add input to URL query param
           cy.url().should('include', queryParamWithName)
-        })
 
-        it('should not add anything to the query param if the name is backspaced', () => {
+          // Should not add anything to the query param if the name is backspaced
           cy.get(element).type(`{selectAll}{backspace}{enter}`)
           cy.url().should('not.include', queryParamWithName)
         })
@@ -70,7 +68,7 @@ describe('events Collections Filter', () => {
       const queryParamWithLatestStartDate = 'latest_start_date=2020-11-10'
 
       context('should filter from user input', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept(
             'GET',
             `${events.activity.data()}?sortBy=modified_on:desc&earliestStartDate=2020-11-01&latestStartDate=2020-11-10&page=1`
@@ -146,18 +144,18 @@ describe('events Collections Filter', () => {
       const queryParamWithAventriId = 'aventri_id=200300400'
       const queryParamWithInvalidAventriId = 'aventri_id=Testing %'
 
-      context('should filter from user input', () => {
-        before(() => {
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
-          ).as('aventriIdRequest')
-        })
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `${events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
+        ).as('aventriIdRequest')
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Aventri')
+          .click()
+      })
 
+      context('should filter from user input', () => {
         it('should pass the aventri Id to the controller', () => {
-          cy.get('[data-test="toggle-section-button"]')
-            .contains('Aventri')
-            .click()
           cy.get(element).type(`${aventriId}{enter}`)
           cy.wait('@aventriIdRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
@@ -196,13 +194,6 @@ describe('events Collections Filter', () => {
           cy.get(element).should('have.value', aventriId)
         })
       })
-
-      after(() => {
-        cy.get('[data-test="toggle-section-button"]')
-          .contains('Aventri')
-          .click()
-        cy.get(element).clear()
-      })
     })
 
     context('Country', () => {
@@ -210,26 +201,26 @@ describe('events Collections Filter', () => {
       const queryParamWithCountry = 'address_country%5B0%5D=Brazil'
       const countryName = 'Brazil'
 
-      context('should filter from user input and apply filter chips', () => {
-        before(() => {
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
-          ).as('countryRequest')
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `${events.activity.data()}?sortBy=modified_on:desc&page=1&addressCountry[]=${countryName}`
+        ).as('countryRequest')
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Location')
+          .click({ force: true })
+
+        testTypeahead({
+          element,
+          label: 'Country',
+          input: 'braz',
+          placeholder: 'Search country',
+          expectedOption: 'Brazil',
         })
+      })
 
+      context('should filter from user input and apply filter chips', () => {
         it('should pass the country to the controller', () => {
-          cy.get('[data-test="toggle-section-button"]')
-            .contains('Location')
-            .click({ force: true })
-          testTypeahead({
-            element,
-            label: 'Country',
-            input: 'braz',
-            placeholder: 'Search country',
-            expectedOption: 'Brazil',
-          })
-
           cy.wait('@countryRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
@@ -245,11 +236,8 @@ describe('events Collections Filter', () => {
       })
 
       context('should remove country selection', () => {
-        it('should remove filter chips', () => {
+        it('should remove filter chips and remove the country from the url', () => {
           cy.get('[data-test="typeahead-chip"] > button').click()
-        })
-
-        it('should remove the country from the url', () => {
           cy.url().should('not.include', queryParamWithCountry)
         })
       })
@@ -262,21 +250,25 @@ describe('events Collections Filter', () => {
       const ukRegion = '1718e330-6095-e211-a939-e4115bead28a'
       const ukRegionLabel = 'All'
 
-      context('should filter from user input and apply filter chips', () => {
-        before(() => {
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
-          ).as('ukRegionRequest')
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `${events.activity.data()}?sortBy=modified_on:desc&ukRegion[]=${ukRegion}&page=1`
+        ).as('ukRegionRequest')
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Location')
+          .click({ force: true })
+        testTypeahead({
+          element,
+          label: 'UK region',
+          input: 'all',
+          placeholder: 'Search UK region',
+          expectedOption: ukRegionLabel,
         })
+      })
+
+      context('should filter from user input and apply filter chips', () => {
         it('should pass the uk Region to the controller', () => {
-          testTypeahead({
-            element,
-            label: 'UK region',
-            input: 'all',
-            placeholder: 'Search UK region',
-            expectedOption: ukRegionLabel,
-          })
           cy.wait('@ukRegionRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
@@ -293,12 +285,9 @@ describe('events Collections Filter', () => {
           )
         })
 
-        context('should remove Uk Region selection', () => {
+        context('should remove Uk Region selection and from the url', () => {
           it('should remove filter chips', () => {
             cy.get('[data-test="typeahead-chip"] > button').click()
-          })
-
-          it('should remove the Uk Region from the url', () => {
             cy.url().should('not.include', queryParamWithUkRegion)
           })
         })
@@ -311,27 +300,26 @@ describe('events Collections Filter', () => {
       const queryParamWithAdvisor = `organiser%5B0%5D=${adviserId}`
       const adviserName = 'Puck Head'
 
-      context('should filter from user input and apply filter chips', () => {
-        before(() => {
-          cy.intercept('POST', searchEndpoint).as('apiRequest')
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
-          ).as('organiserRequest')
-          cy.get('[data-test="toggle-section-button"]')
-            .contains('Organiser')
-            .click()
+      beforeEach(() => {
+        cy.intercept('POST', searchEndpoint).as('apiRequest')
+        cy.intercept(
+          'GET',
+          `${events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
+        ).as('organiserRequest')
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Organiser')
+          .click()
+        testTypeahead({
+          element,
+          label: 'Organiser',
+          input: 'puc',
+          placeholder: '',
+          expectedOption: adviserName,
         })
+      })
 
+      context('should filter from user input and apply filter chips', () => {
         it('should pass the organiser to the controller', () => {
-          testTypeahead({
-            element,
-            label: 'Organiser',
-            input: 'puc',
-            placeholder: '',
-            expectedOption: adviserName,
-          })
-
           cy.wait('@organiserRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })
@@ -347,11 +335,8 @@ describe('events Collections Filter', () => {
       })
 
       context('should remove organiser selection', () => {
-        it('should remove filter chips', () => {
+        it('should remove filter chips and remove the organiser from the url', () => {
           cy.get('[data-test="typeahead-chip"] > button').click()
-        })
-
-        it('should remove the organiser from the url', () => {
           cy.url().should('not.include', queryParamWithAdvisor)
         })
       })
@@ -364,7 +349,7 @@ describe('events Collections Filter', () => {
       const queryParamWithEventType = `event_type%5B0%5D=${eventType.id}`
 
       context('should filter from user input and apply filter chips', () => {
-        before(() => {
+        beforeEach(() => {
           cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
             'eventTypeApiRequest'
           )
@@ -374,15 +359,14 @@ describe('events Collections Filter', () => {
               eventType.id
             }`
           ).as('eventTypeRequest')
-        })
-
-        it('should pass the event type to the controller', () => {
           cy.visit(events.index())
           cy.get('[data-test="toggle-section-button"]')
             .contains('Type of event')
             .click()
           testCheckBoxGroup({ element, value: eventType.id })
+        })
 
+        it('should pass the event type to the controller', () => {
           cy.wait('@eventTypeRequest').then((request) => {
             expect(request.response.statusCode).to.eql(200)
           })

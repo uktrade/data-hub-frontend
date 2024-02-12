@@ -29,7 +29,7 @@ const assertBreadcrumbs = (crumbText) => {
 describe('Match a company', () => {
   context('US company', () => {
     context('when viewing a US company', () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
       })
 
@@ -51,7 +51,7 @@ describe('Match a company', () => {
     context(
       'when an unmatched US company from the search results is clicked',
       () => {
-        before(() => {
+        beforeEach(() => {
           cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
           performSearch()
           cy.contains('Some unmatched US company').click()
@@ -91,7 +91,7 @@ describe('Match a company', () => {
     )
 
     context(`when "I still can't find what I'm looking for" is clicked`, () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
         performSearch()
         cy.contains("I can't find what I'm looking for").click()
@@ -115,7 +115,7 @@ describe('Match a company', () => {
   })
 
   context('when viewing "Search for verified business details" page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.match.index(company.id))
     })
 
@@ -182,7 +182,7 @@ describe('Match a company', () => {
   context(
     'when the "Find company" button is clicked without providing a company name',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
       })
 
@@ -208,7 +208,7 @@ describe('Match a company', () => {
   context(
     'when the "Find company" button is clicked providing a company name',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
         performSearch()
       })
@@ -225,7 +225,7 @@ describe('Match a company', () => {
   )
 
   context(`when "I still can't find what I'm looking for" is clicked`, () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.match.index(company.id))
       performSearch()
       cy.contains("I can't find what I'm looking for").click()
@@ -318,7 +318,7 @@ describe('Match a company', () => {
   context(
     `when the "Send" button is clicked without completing either field`,
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.cannotFind(company.id))
         cy.get('main button').click()
       })
@@ -350,7 +350,7 @@ describe('Match a company', () => {
   context(
     `when the "Send" button is clicked after completing both fields`,
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.cannotFind(company.id))
       })
 
@@ -383,7 +383,7 @@ describe('Match a company', () => {
   context(
     'when an unmatched company from the search results is clicked',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
         performSearch()
         cy.contains('Some unmatched company').click()
@@ -469,7 +469,7 @@ describe('Match a company', () => {
   )
 
   context('when company matching is confirmed', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.match.confirmation(company.id, DUNS_NUMBER_NOT_MATCHED)
       )
@@ -494,7 +494,7 @@ describe('Match a company', () => {
   context(
     'when an already matched company from the search results is clicked',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
         performSearch()
         cy.contains('Some matched company').click()
@@ -553,22 +553,20 @@ describe('Match a company', () => {
     }
   )
 
-  context('when company merge request is confirmed', () => {
-    before(() => {
+  context('when doing a company merge', () => {
+    it('should redirect to the company page', () => {
       cy.visit(
         urls.companies.match.confirmation(company.id, DUNS_NUMBER_MATCHED)
       )
-      cy.get('button:contains("Request merge")').click()
-    })
 
-    it('should redirect to the company page', () => {
+      // Do merge
+      cy.get('button:contains("Request merge")').click()
+
+      // Assert redirect and flash message
       cy.location('pathname').should(
         'eq',
         urls.companies.overview.index(company.id)
       )
-    })
-
-    it('displays the "Company record update request sent" flash message', () => {
       assertFlashMessage(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )

@@ -40,13 +40,13 @@ const autoCompleteAdvisers =
   require('../../../../sandbox/fixtures/autocomplete-adviser-list.json').results
 
 describe('Export pipeline edit', () => {
-  before(() => {
+  beforeEach(() => {
     // Clear the session storage to avoid caching of contact form data in the application sessionStorage
     Cypress.session.clearCurrentSessionData()
   })
 
   context('when editing an export for unknown company id', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/export/a/edit')
     })
 
@@ -300,7 +300,7 @@ describe('Export pipeline edit', () => {
 
     context('when the a new contact is added', () => {
       const newContact = contactFaker()
-      before(() => {
+      beforeEach(() => {
         cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
           'postContactApiRequest'
         )
@@ -323,7 +323,7 @@ describe('Export pipeline edit', () => {
     })
 
     context('when the form contains valid data and is submitted', () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('PATCH', `/api-proxy/v4/export/${exportItem.id}`, {
           title: exportItem.title,
         }).as('patchExportItemApiRequest')

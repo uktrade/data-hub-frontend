@@ -8,7 +8,7 @@ const {
 
 describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.subsidiaries.index(fixtures.company.oneListCorp.id)
       )
@@ -34,7 +34,7 @@ describe('Companies subsidiaries', () => {
   })
 
   context('when viewing subsidiaries for a Data Hub company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.companies.subsidiaries.index(fixtures.company.venusLtd.id))
     })
 
@@ -58,7 +58,7 @@ describe('Companies subsidiaries', () => {
   })
 
   context('when viewing subsidiaries for an archived company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.companies.subsidiaries.index(fixtures.company.archivedLtd.id)
       )
@@ -86,7 +86,7 @@ describe('Companies subsidiaries', () => {
   context(
     'when viewing a company which is a D&B Global Ultimate and Global HQ at the same time',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.subsidiaries.index(
             fixtures.company.dnBGlobalUltimateAndGlobalHq.id

@@ -6,7 +6,7 @@ const endpoint =
 
 describe('Settings - Task amended by others', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.myTasks.taskAmendedByOthers())
     })
 

@@ -29,7 +29,7 @@ const convertBoolToInvertedYesNo = (valueToCheck) =>
 
 describe('Edit the value details of a project', () => {
   context('When viewing a project with no value fields set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectNoValue.id))
     })
 
@@ -202,6 +202,11 @@ describe('Edit the value details of a project', () => {
     })
 
     it('should not submit the form if the investment inputs are empty', () => {
+      cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
+      cy.get(
+        '[data-test="client-cannot-provide-foreign-investment-yes"]'
+      ).click()
+
       cy.get('[data-test="submit-button"]').click()
       assertErrorSummary([
         'Enter the total investment',
@@ -210,7 +215,7 @@ describe('Edit the value details of a project', () => {
     })
   })
   context('When viewing a project with all value fields set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectWithValue.id))
     })
 
@@ -370,7 +375,7 @@ describe('Edit the value details of a project', () => {
     })
   })
   context('When viewing a project with no sector and no capital value', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectWithNoSectorOrCapital.id))
     })
     it('should display the correct message in the GVA field', () => {
@@ -386,7 +391,7 @@ describe('Edit the value details of a project', () => {
     })
   })
   context('When viewing a project with capital value but no sector', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectWithCapitalButNoSector.id))
     })
     it('should display the correct message in the GVA field', () => {
@@ -404,7 +409,7 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a non-FDI project with a land date before April 2020',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(investments.projects.editValue(projectNotFDI.id))
       })
       it('should not display the Project Value field', () => {
@@ -419,25 +424,32 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
-  context('When one land date is null and one is before 01/04/2020 ', () => {
-    before(() => {
-      cy.visit(investments.projects.details(projectLandingBeforeApril.id))
-      cy.contains('Edit value').click()
-    })
-    it('should display the Project Value field', () => {
-      cy.get('[data-test="field-fdi_value"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Project value',
-          optionsCount: 3,
+
+  context(
+    'When one land date is null and one is beforeEach 01/04/2020 ',
+    () => {
+      beforeEach(() => {
+        cy.visit(investments.projects.details(projectLandingBeforeApril.id))
+        cy.contains('Edit value').click()
+      })
+
+      it('should display the Project Value field', () => {
+        cy.get('[data-test="field-fdi_value"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Project value',
+            optionsCount: 3,
+          })
         })
       })
-    })
-  })
+    }
+  )
+
   context('When both dates are before 01/04/2020', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectBothDatesBeforeApril.id))
     })
+
     it('should display the Project Value field', () => {
       cy.get('[data-test="field-fdi_value"]').then((element) => {
         assertFieldRadios({
@@ -449,8 +461,9 @@ describe('Edit the value details of a project', () => {
       })
     })
   })
+
   context('When one date is before 01/04/2020 and one is after', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         investments.projects.editValue(projectOneLandDateEitherSideApril.id)
       )
@@ -467,37 +480,45 @@ describe('Edit the value details of a project', () => {
       })
     })
   })
+
   context('When one date is null and one date is after 01/04/2020', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectLandingAfterApril.id))
     })
+
     it('should not display the Project Value field', () => {
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
+
   context('When both dates are after 01/04/2020', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectBothDatesAfterApril.id))
     })
+
     it('should not display the Project Value field', () => {
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
+
   context('When both land date fields are empty', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.projects.editValue(projectNoLandingDates.id))
     })
+
     it('should not display the Project Value field', () => {
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
+
   context(
     'When viewing a project created before a salary range is disabled',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(investments.projects.editValue(projectCreatedBefore.id))
       })
-      it('should display the salary range for £25,000 – £29,000 when the project was created before the disable date', () => {
+
+      it('should display the salary range for £25,000 - £29,000 when the project was created before the disable date', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
@@ -508,12 +529,14 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
   context(
     'When viewing a project created on the same day a salary range is disabled',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(investments.projects.editValue(projectCreatedSame.id))
       })
+
       it('should not display the salary range for £25,000 – £29,000', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
@@ -525,12 +548,14 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
   context(
     'When viewing a project created after a salary range is disabled',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(investments.projects.editValue(projectCreatedAfter.id))
       })
+
       it('should not display the salary range for £25,000 – £29,000', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({

@@ -104,7 +104,7 @@ describe('Company Contacts Collections', () => {
   })
 
   context('Viewing the companies contacts collection list page', () => {
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v3/search/contact',
         contacts,
@@ -151,15 +151,12 @@ describe('Company Contacts Collections', () => {
   })
 
   context('UK contact', () => {
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v3/search/contact',
         contacts,
         companies.contacts(dnbFixture.id)
       )
-    })
-
-    beforeEach(() => {
       cy.get('[data-test="collection-item"]').eq(0).as('firstListItem')
     })
 
@@ -215,15 +212,12 @@ describe('Company Contacts Collections', () => {
   })
 
   context('Foreign contact', () => {
-    before(() => {
+    beforeEach(() => {
       collectionListRequest(
         'v3/search/contact',
         contacts,
         companies.contacts(dnbFixture.id)
       )
-    })
-
-    beforeEach(() => {
       cy.get('[data-test="collection-item"]').eq(1).as('secondListItem')
     })
 
@@ -268,7 +262,7 @@ describe('Company Contacts Collections', () => {
   })
 
   context('when viewing contacts for an archived company', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(companies.contacts(archivedFixture))
     })
 

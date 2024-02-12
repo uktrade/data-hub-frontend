@@ -1,15 +1,9 @@
 import { dashboard, investments } from '../../../../../src/lib/urls'
 
 describe('Dashboard - Investment project next steps', () => {
-  before(() => {
-    cy.visit(dashboard.investmentProjects())
-  })
-
-  after(() => {
-    cy.resetUser()
-  })
-
   beforeEach(() => {
+    cy.resetUser()
+    cy.visit(dashboard.investmentProjects())
     cy.get('[data-test="investment-steps"]').as('nexSteps')
     cy.get('[data-test="project-details"]').eq(0).as('firstProjectDetails')
     cy.get('[data-test="investment-steps"]').eq(0).as('moreThanThreeSteps')

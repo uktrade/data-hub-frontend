@@ -27,7 +27,7 @@ describe('View edit team members page', () => {
   })
 
   context('When there are existing advisers and roles', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.editTeamMembers(projectWithCompleteTeam.id)
       )
@@ -85,7 +85,7 @@ describe('View edit team members page', () => {
   })
 
   context('When there are no existing advisers and roles', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.editTeamMembers(projectWithIncompleteTeam.id)
       )
@@ -108,7 +108,7 @@ describe('View edit team members page', () => {
   })
 
   context('When successfully saved', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.editTeamMembers(projectWithIncompleteTeam.id)
       )

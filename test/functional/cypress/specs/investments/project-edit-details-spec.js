@@ -14,7 +14,7 @@ const {
 const project = require('../../fixtures/investment/investment-no-existing-requirements.json')
 
 describe('Editing the project summary', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.investments.projects.editDetails(project.id))
   })
 

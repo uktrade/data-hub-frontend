@@ -23,7 +23,7 @@ describe('Edit generic task', () => {
   const endpoint = `/api-proxy/v4/task/${task.id}`
 
   context('When visiting the edit task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/task/${task.id}`, task)
       cy.visit(tasks.edit(task.id))
     })
@@ -66,7 +66,7 @@ describe('Edit investment project task', () => {
   const endpoint = `/api-proxy/v4/task/${investmentProjectTask.id}`
 
   context('When visiting the edit task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/task/${investmentProjectTask.id}`,
@@ -220,7 +220,7 @@ describe('Edit company task', () => {
   const endpoint = `/api-proxy/v4/task/${companyTask.id}`
 
   context('When visiting the edit task page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/task/${companyTask.id}`, companyTask)
       cy.visit(tasks.edit(companyTask.id))
     })

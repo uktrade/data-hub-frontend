@@ -1,6 +1,7 @@
 version: '3'
 services:
   frontend:
+    platform: linux/amd64
     build:
       context: .
       args:

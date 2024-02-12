@@ -23,7 +23,7 @@ function assertRelatedCompaniesPage({
   areTabsVisible,
   companiesInHierarchy,
 }) {
-  before(() => {
+  beforeEach(() => {
     cy.visit(urls.companies.dnbHierarchy.index(company.id))
   })
 

@@ -24,7 +24,7 @@ const convertBoolToYesNoWithNullCheck = (valueToCheck) =>
   valueToCheck === null ? null : convertBoolToYesNo(valueToCheck)
 
 const testProjectRequirementsForm = ({ project }, dataTest) => {
-  before(() => {
+  beforeEach(() => {
     navigateToForm({ project }, dataTest)
   })
 
@@ -202,11 +202,11 @@ describe('Edit the requirements of a project', () => {
   )
 
   context('When making changes to all fields', () => {
-    before(() => {
+    beforeEach(() => {
       navigateToForm({ project: projectNoExistingRequirements }, 'add')
     })
 
-    it('should allow the user to fill in all fields', () => {
+    it('should allow the user to fill in all fields, redirect upon submission, and display a flash message', () => {
       cy.get('[data-test="field-strategic_drivers"]')
         .selectTypeaheadOption('Skills seeking')
         .selectTypeaheadOption('Cost reduction')
@@ -239,17 +239,13 @@ describe('Edit the requirements of a project', () => {
         .selectTypeaheadOption('Coast to Capital LEP')
 
       cy.get('[data-test="submit-button"]').click()
-    })
 
-    it('should redirect the user to the details screen', () => {
       cy.url().should(
         'include',
         investments.projects.details(projectNoExistingRequirements.id)
       )
       cy.url().should('not.include', 'edit-requirements')
-    })
 
-    it('should display a flash message to inform the user of the change', () => {
       cy.get('[data-test="flash"]').contains('Investment requirements updated')
     })
   })

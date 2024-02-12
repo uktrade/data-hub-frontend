@@ -5,7 +5,7 @@ const endpoint = '/api-proxy/v4/reminder/subscription/my-tasks-task-overdue'
 
 describe('Settings - task overdue', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.myTasks.taskOverdue())
     })
 

@@ -56,17 +56,12 @@ describe('Company Activity Feed Filter', () => {
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
+
       assertRequestUrl('@apiRequest', minimumRequest)
     })
   })
 
   context('Filters', () => {
-    before(() => {
-      cy.visit(
-        urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
-      )
-    })
-
     context('Created by', () => {
       const expectedRequestAdviserUrl = `?size=10&from=0&ditParticipantsAdviser[]=${adviser.id}&sortby=date:desc`
       const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
@@ -85,6 +80,7 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
+
         assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
 
         /*

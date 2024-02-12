@@ -39,7 +39,7 @@ const assertTwoCheckboxes = (
 
 describe('Settings - approaching estimated land dates', () => {
   context('Page breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.investments.estimatedLandDate())
     })
 
@@ -62,7 +62,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Settings - the basics', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],
@@ -106,7 +106,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Settings - disabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [],
@@ -135,7 +135,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Reminders - enabled (30 days)', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],
@@ -167,7 +167,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Reminders - enabled (60 days)', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [60],
@@ -193,7 +193,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Reminders - enabled (30 and 60 days)', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30, 60],
@@ -219,7 +219,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Email notifications - the basics', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.reminders.settings.investments.estimatedLandDate())
     })
 
@@ -247,7 +247,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Email notifications - disabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],
@@ -270,7 +270,7 @@ describe('Settings - approaching estimated land dates', () => {
   })
 
   context('Email notifications - enabled', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', endpoint, {
         body: {
           reminder_days: [30],

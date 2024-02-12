@@ -2,12 +2,8 @@ const selectors = require('../../../../selectors')
 const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Delete company list page', () => {
-  beforeEach(function () {
-    Cypress.Cookies.preserveOnce('datahub.sid')
-  })
-
   context('when viewing "Delete company list"', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/company-lists/2a8fb06f-2099-44d6-b404-e0fae0b9ea59/delete')
     })
 
@@ -47,7 +43,7 @@ describe('Delete company list page', () => {
   })
 
   context('after clicking the "Delete list" button', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/company-lists/2a8fb06f-2099-44d6-b404-e0fae0b9ea59/delete')
       cy.get(selectors.companyList.delete.deleteButton).click()
     })

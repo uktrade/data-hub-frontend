@@ -7,7 +7,7 @@ describe('Companies business details', () => {
   context(
     'when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.businessDetails(fixtures.company.oneListCorp.id)
         )
@@ -58,7 +58,7 @@ describe('Companies business details', () => {
   context(
     'when viewing business details for a Dun & Bradstreet company with a global ultimate',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.businessDetails(fixtures.company.dnbGlobalUltimate.id)
         )
@@ -81,7 +81,7 @@ describe('Companies business details', () => {
   context(
     'when viewing business details for a Data Hub company on the One List in the UK',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(urls.companies.businessDetails(fixtures.company.venusLtd.id))
       })
 
@@ -104,7 +104,7 @@ describe('Companies business details', () => {
   context(
     'when viewing business details for an automatically archived Data Hub company',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.businessDetails(
             fixtures.company.automaticallyArchivedLtd.id
@@ -127,7 +127,7 @@ describe('Companies business details', () => {
   context(
     'when viewing business details for an archived Data Hub company',
     () => {
-      before(() => {
+      beforeEach(() => {
         cy.visit(
           urls.companies.businessDetails(fixtures.company.archivedLtd.id)
         )

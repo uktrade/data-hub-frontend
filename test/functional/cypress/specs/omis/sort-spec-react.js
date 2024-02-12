@@ -4,7 +4,7 @@ const searchEndpoint = '/api-proxy/v3/search/order'
 
 describe('Order Collections Sort', () => {
   context('Default sort', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(omis.index())
     })

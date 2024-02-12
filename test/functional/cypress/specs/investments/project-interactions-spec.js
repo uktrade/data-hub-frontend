@@ -12,7 +12,7 @@ const interactionsList = interactionsListFaker(10)
 
 describe('Investment project interactions', () => {
   context('When the project has one interaction linked', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/interaction?investment_project_id=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0`,

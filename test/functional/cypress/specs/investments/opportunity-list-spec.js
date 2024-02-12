@@ -6,7 +6,7 @@ const { investments } = require('../../../../../src/lib/urls')
 
 describe('Investment opportunities', () => {
   context('When there are 12 opportunities and viewing the first page', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(investments.opportunities.index())
     })
 

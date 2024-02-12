@@ -6,7 +6,7 @@ const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Edit company list page', () => {
   context('when viewing "Edit company list"', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/company-lists/${multipleList.id}/rename`)
     })
 
@@ -50,7 +50,7 @@ describe('Edit company list page', () => {
   })
 
   context('After editing the list and clicking the "Save" button', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/company-lists/${multipleList.id}/rename`)
       cy.get(selectors.companyList.edit.form.input)
         .clear()

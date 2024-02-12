@@ -85,7 +85,7 @@ describe('Settings: reminders and email notifications', () => {
   })
 
   context('Breadcrumbs and title', () => {
-    before(() => {
+    beforeEach(() => {
       interceptAPICalls()
       cy.visit(urls.reminders.settings.index())
       waitForAPICalls()
@@ -118,7 +118,8 @@ describe('Settings: reminders and email notifications', () => {
       '&my_tasks_task_amended_by_others=true' +
       '&my_tasks_task_overdue=true' +
       '&my_tasks_task_completed=true'
-    before(() => {
+
+    beforeEach(() => {
       interceptAPICalls()
       cy.visit(`${urls.reminders.settings.index()}?${queryParams}`)
       waitForAPICalls()

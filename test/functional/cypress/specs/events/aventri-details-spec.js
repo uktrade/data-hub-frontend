@@ -15,7 +15,7 @@ describe('Event Aventri Details', () => {
   const aventriLinkText = 'View in Aventri (opens in new tab)'
 
   context('when it is a valid event ', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.events.aventri.details(eventInPastId))
     })
     it('should display aventri event name in breadcrumb', () => {

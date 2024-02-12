@@ -9,7 +9,7 @@ const {
 
 describe('DBT Permission', () => {
   describe('dashboard', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.dashboard.index())
     })
 
@@ -45,7 +45,7 @@ describe('DBT Permission', () => {
   describe('activity', () => {
     const company = fixtures.company.create.corp()
 
-    before(() => {
+    beforeEach(() => {
       cy.loadFixture([company])
       cy.visit(urls.companies.detail(company.pk))
     })
@@ -72,7 +72,7 @@ describe('DBT Permission', () => {
     const company = fixtures.company.create.defaultCompany('local nav testing')
     const contact = fixtures.contact.create(company.pk)
 
-    before(() => {
+    beforeEach(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
       cy.visit(urls.contacts.contact(contact.pk))
@@ -88,7 +88,7 @@ describe('DBT Permission', () => {
   })
 
   describe('investment', () => {
-    before(() => {
+    beforeEach(() => {
       const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
       cy.visit(urls.investments.projects.details(investmentProject.pk))
@@ -109,7 +109,7 @@ describe('DBT Permission', () => {
   })
 
   describe('event', () => {
-    before(() => {
+    beforeEach(() => {
       const event = fixtures.event.create.defaultEvent()
       cy.loadFixture([event])
       cy.visit(urls.events.details(event.pk))

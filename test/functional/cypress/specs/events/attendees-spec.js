@@ -9,7 +9,7 @@ const {
 
 describe('Event Attendees', () => {
   context('Enabled events', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/events/${fixtures.event.oneDayExhibition.id}/attendees`)
       cy.get('.c-collection').as('collectionList')
     })
@@ -62,7 +62,7 @@ describe('Event Attendees', () => {
     })
   })
   context('Disabled events', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(`/events/${fixtures.event.teddyBearExpo.id}/attendees`)
     })
 

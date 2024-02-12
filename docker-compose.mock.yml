@@ -1,6 +1,7 @@
 version: '3'
 services:
   frontend:
+    platform: linux/amd64
     depends_on:
       - mock-api
     entrypoint: dockerize -wait tcp://mock-api:8000 -timeout 3m -wait-retry-interval 5s
@@ -17,6 +18,7 @@ services:
       ACCOUNT_PLAN_URLS: '{"000000001": "/some-test-account-plan-url", "123456789": "/some-other-test-account-plan-url"}'
 
   mock-api:
+    platform: linux/amd64
     build: ./test/sandbox
     volumes:
       - ./test/sandbox:/usr/src/app

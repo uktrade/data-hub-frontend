@@ -105,7 +105,7 @@ describe('View edit assignees page', () => {
   })
 
   context('When there are existing assignees', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(urls.omis.edit.assignees(draftOrder.id))
     })
 

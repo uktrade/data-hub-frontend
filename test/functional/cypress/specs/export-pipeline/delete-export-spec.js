@@ -12,7 +12,7 @@ describe('Export pipeline delete', () => {
   const exportItem = exportFaker()
 
   context('when deleting an export for unknown export id', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/export/a/edit')
     })
 
@@ -30,7 +30,7 @@ describe('Export pipeline delete', () => {
   context('when deleting an export for known export id', () => {
     const deletePageUrl = urls.exportPipeline.delete(exportItem.id)
 
-    before(() => {
+    beforeEach(() => {
       cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
         body: exportItem,
       })
@@ -79,7 +79,7 @@ describe('Export pipeline delete', () => {
     })
 
     context('when the delete form is submitted', () => {
-      before(() => {
+      beforeEach(() => {
         cy.intercept('GET', `/api-proxy/v4/export/${exportItem.id}`, {
           body: exportItem,
         })

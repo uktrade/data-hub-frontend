@@ -73,7 +73,7 @@ describe('Outstanding Proposition Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       cy.setUserFeatureGroups(['investment-notifications'])
       interceptApiCalls()
       cy.visit(urls.reminders.investments.outstandingPropositions())

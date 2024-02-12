@@ -75,7 +75,7 @@ describe('Edit client relationship management page', () => {
   })
 
   context('When rendering the hidden help text', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
@@ -138,7 +138,7 @@ describe('Edit client relationship management page', () => {
   })
 
   context('When the client relationship manager is deleted', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
@@ -155,20 +155,19 @@ describe('Edit client relationship management page', () => {
   })
 
   context('When the client relationship manager is edited', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-    })
-
-    it('should allow the editing of the client relationship manager', () => {
       selectFirstMockedTypeaheadOption({
         element: '[data-test="field-client_relationship_manager"]',
         input: 'Shawn',
       })
+    })
 
+    it('should allow the editing of the client relationship manager', () => {
       cy.get('[data-test="typeahead-input"]').should(
         'have.attr',
         'value',
@@ -197,7 +196,7 @@ describe('Edit client relationship management page', () => {
   })
 
   context('When the global account manager is set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
@@ -211,7 +210,7 @@ describe('Edit client relationship management page', () => {
   })
 
   context('When the global account manager is not set', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoGlobalAccountManager.id

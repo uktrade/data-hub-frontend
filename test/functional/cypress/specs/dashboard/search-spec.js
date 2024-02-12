@@ -2,15 +2,9 @@ const urls = require('../../../../../src/lib/urls')
 
 describe('Dashboard search', () => {
   context('Search form attributes and text', () => {
-    before(() => {
-      cy.visit('/')
-    })
-
-    after(() => {
-      cy.resetUser()
-    })
-
     beforeEach(() => {
+      cy.resetUser()
+      cy.visit('/')
       cy.get('[data-test="search-data-hub"] form').as('form')
     })
 
@@ -66,15 +60,9 @@ describe('Dashboard search', () => {
   })
 
   context('Searching for something on Data Hub', () => {
-    before(() => {
-      cy.visit('/')
-    })
-
-    after(() => {
-      cy.resetUser()
-    })
-
     beforeEach(() => {
+      cy.resetUser()
+      cy.visit('/')
       cy.get('[data-test="search-data-hub"] form').as('form')
     })
 

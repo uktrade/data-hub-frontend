@@ -39,11 +39,10 @@ const transformOptions = (options) =>
 describe('Dashboard - my projects list filters', () => {
   const summary = investmentProjectSummaryFaker()
 
-  after(() => {
+  beforeEach(() => {
     cy.resetUser()
+    cy.clearSessionStorage()
   })
-
-  beforeEach(() => cy.clearSessionStorage())
 
   context('When a filter is applied and there are zero projects', () => {
     before(() => {
@@ -74,7 +73,12 @@ describe('Dashboard - my projects list filters', () => {
       )
     })
   })
+
   context('Dashboard filter options', () => {
+    beforeEach(() => {
+      cy.visit(urls.dashboard.investmentProjects())
+    })
+
     it('should render the stage options', () => {
       cy.get('[data-test="stage-select"] option').then((stageOptions) => {
         expect(transformOptions(stageOptions)).to.deep.eq([

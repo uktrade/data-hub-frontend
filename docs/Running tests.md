@@ -198,10 +198,13 @@ or
 
 ## Visual Tests
 
-The aim of this suite is taking screenshots from pages and comparing to baselines
-to ensure consistency between builds.
+The aim of this suite is taking screenshots from pages and comparing to baselines to ensure consistency between builds.
 
-**NOTE** Compression algorithm differences can cause test failures between operating systems, and underlying C-library differences. To run these tests **you must use Docker**, which is also what Circle CI uses. Similarly when updating the baseline files, they must be generated using Docker as well (otherwise Circle CI will fail).
+**NOTE**: Compression algorithm differences can cause test failures between operating systems, and underlying C-library differences. To run these tests **you must use Docker**, which is also what Circle CI uses. Similarly when updating the baseline files, they must be generated using Docker as well (otherwise Circle CI will fail).
+
+### Setup
+
+Please ensure you have the sandbox environment file enabled, and set the environment variable `REDIS_HOST=redis`.
 
 ### Folder structure
 
@@ -235,6 +238,10 @@ Updating the baseline consists in 2 steps:
 
 The aim of this suite is taking screenshots from storybook and comparing to baselines
 to ensure consistency between builds.
+
+### Setup
+
+Please ensure you have the sandbox environment file enabled, and set the environment variable `REDIS_HOST=redis`.
 
 ### Folder structure
 

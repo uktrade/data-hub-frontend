@@ -711,7 +711,7 @@ describe('Adding an export win', () => {
   context('Support provided', () => {
     const { supportProvided } = formFields
 
-    before(() => {
+    beforeEach(() => {
       cy.visit(`${urls.companies.exportWins.create()}${supportProvidedStep}`)
     })
 
@@ -811,7 +811,8 @@ describe('Adding an export win', () => {
     })
   })
 
-  context('Check before sending', () => {
+  // Disable testIsolation due to multi step form with lots of data.
+  context('Check before sending', { testIsolation: false }, () => {
     const {
       officerDetails,
       creditForThisWin,

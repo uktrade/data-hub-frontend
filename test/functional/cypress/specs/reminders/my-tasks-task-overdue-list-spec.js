@@ -77,7 +77,7 @@ describe('My Tasks Task Overdue Reminders', () => {
   }
 
   context('Reminders List', () => {
-    before(() => {
+    beforeEach(() => {
       interceptApiCalls()
       cy.visit(urls.reminders.myTasks.taskOverdue())
       cy.wait('@remindersApiRequest')
