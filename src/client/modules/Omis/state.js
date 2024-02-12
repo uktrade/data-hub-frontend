@@ -14,7 +14,6 @@ export const TASK_SAVE_ORDER_ASSIGNEES = 'TASK_SAVE_ORDER_ASSIGNEES'
 export const TASK_SAVE_ORDER_SUBSCRIBERS = 'TASK_SAVE_ORDER_SUBSCRIBERS'
 export const TASK_SET_LEAD_ADVISER = 'TASK_SET_LEAD_ADVISER'
 
-export const EDIT_CONTACT_ID = 'editOmisContactId'
 export const SET_LEAD_ADVISER_ID = 'setLeadAdviserId'
 
 export const state2props = (state) => ({
