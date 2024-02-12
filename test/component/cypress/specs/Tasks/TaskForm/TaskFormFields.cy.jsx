@@ -1,5 +1,6 @@
 import React from 'react'
 import { capitalize } from 'lodash'
+import { faker } from '@faker-js/faker'
 
 import DataHubProvider from '../../provider'
 import {
@@ -27,6 +28,7 @@ import advisersListFaker, {
 } from '../../../../../functional/cypress/fakers/advisers'
 import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
+import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
 
 describe('Task form', () => {
   const Component = (props) => (
@@ -354,7 +356,6 @@ describe('Task form', () => {
       'When an investment project task form renders with existing data',
       () => {
         const task = taskWithInvestmentProjectFaker()
-
         beforeEach(() => {
           cy.mount(
             <Component
@@ -388,6 +389,51 @@ describe('Task form', () => {
         })
       }
     )
+    context('Ensure adviser is passed to the investment project search', () => {
+      const currentAdviserId = faker.string.uuid()
+      const company = companyFaker()
+      const task = taskWithInvestmentProjectFaker({
+        investmentCompany: company,
+        advisers: [currentAdviserId],
+      })
+
+      it('should include adviser parameter for API call', () => {
+        cy.intercept('GET', '/api-proxy/v4/company*', {
+          count: 1,
+          next: null,
+          previous: null,
+          results: [company],
+        }).as('companySearch')
+        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
+          count: 1,
+          results: [investmentProjectFaker()],
+        }).as('investmentProjectSearch')
+        cy.mount(
+          <Component
+            cancelRedirectUrl={urls.companies.index()}
+            task={transformAPIValuesForForm(task, currentAdviserId)}
+            currentAdviserId={currentAdviserId}
+          />
+        )
+        cy.get('[data-test="field-company"] input').type(
+          task.investmentProject.investorCompany.name
+        )
+        cy.get('#field-company')
+          .find('[data-test="typeahead-input"]')
+          .blur()
+          .click()
+        cy.wait('@companySearch')
+        cy.get('#field-company')
+          .find('[data-test="typeahead-menu-option"]')
+          .click()
+        cy.wait('@investmentProjectSearch').then((interception) => {
+          cy.wrap(interception.request.body.adviser[0]).should(
+            'eq',
+            currentAdviserId
+          )
+        })
+      })
+    })
 
     context(
       'When a task form renders with existing data that is assigned to me',
