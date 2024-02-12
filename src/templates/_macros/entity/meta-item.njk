@@ -1,5 +1,3 @@
-{% from '../common.njk' import FromNow %}
-
 {##
  # Render meta data item
  # @param {object} props
@@ -29,8 +27,6 @@
       {% set metaItemValue = props.value | formatDate('MMMM yyyy') %}
     {% elif props.type === 'datetime' %}
       {% set metaItemValue = props.value | formatDateTime %}
-    {% elif props.type === 'fromNow' %}
-      {% set metaItemValue = FromNow({ datetime: props.value }) %}
     {% elif props.type === 'address' %}
       {% set metaItemValue = props.value | formatAddress %}
     {% else %}
