@@ -9,7 +9,7 @@ ignore_ghpages: &ignore_ghpages
 jobs:
   lint:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
 
   unit_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -46,11 +46,11 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - 'project/unit-coverage/*'
+            - "project/unit-coverage/*"
 
   unit_client_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -68,7 +68,7 @@ jobs:
 
   functional_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     parallelism: 9
     resource_class: xlarge
@@ -94,11 +94,11 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - 'project/partial-coverage/*'
+            - "project/partial-coverage/*"
 
   a11y_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -111,7 +111,7 @@ jobs:
 
   visual_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -126,7 +126,7 @@ jobs:
 
   visual_component_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -141,7 +141,7 @@ jobs:
 
   e2e_tests_dit:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     parallelism: 1
     resource_class: xlarge
@@ -157,7 +157,7 @@ jobs:
 
   e2e_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     parallelism: 1
     resource_class: xlarge
@@ -173,7 +173,7 @@ jobs:
 
   component_tests:
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:2023.10.1
       docker_layer_caching: true
     steps:
       - checkout
@@ -189,7 +189,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - '0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0'
+            - "0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0"
       - run: npm install storybook
       - run:
           name: Release storybook
