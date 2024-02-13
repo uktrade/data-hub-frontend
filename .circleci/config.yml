@@ -9,7 +9,7 @@ ignore_ghpages: &ignore_ghpages
 jobs:
   lint:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
 
   unit_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -50,7 +50,7 @@ jobs:
 
   unit_client_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: false
     steps:
       - checkout
@@ -68,7 +68,7 @@ jobs:
 
   functional_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     parallelism: 9
     resource_class: xlarge
@@ -98,7 +98,7 @@ jobs:
 
   a11y_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -111,7 +111,7 @@ jobs:
 
   visual_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -126,7 +126,7 @@ jobs:
 
   visual_component_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     resource_class: xlarge
     steps:
@@ -141,7 +141,7 @@ jobs:
 
   e2e_tests_dit:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     parallelism: 1
     resource_class: xlarge
@@ -157,7 +157,7 @@ jobs:
 
   e2e_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     parallelism: 1
     resource_class: xlarge
@@ -173,7 +173,7 @@ jobs:
 
   component_tests:
     machine:
-      image: ubuntu-2004:2023.10.1
+      image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
     steps:
       - checkout
