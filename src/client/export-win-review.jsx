@@ -14,9 +14,6 @@ import Review from './modules/ExportWins/Review'
 import ThankYou from './modules/ExportWins/Review/ThankYou'
 import { patchExportWinReview } from './modules/ExportWins/tasks'
 
-const Wtf = (props) =>
-  <pre>{JSON.stringify(props, null, 2)}</pre>
-
 window.addEventListener('DOMContentLoaded', () =>
   ReactDOM.render(
     <DataHubProvider

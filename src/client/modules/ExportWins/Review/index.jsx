@@ -243,7 +243,7 @@ const CustomerFeedback = ({token}) =>
     supertitle={<Supertitle/>}
   >
     <ExportWinReview id={token}>
-      {({win, company_contact: {name}}) =>
+      {({win, companyContact}) =>
         <Form
           id={FORM_ID}
           analyticsFormName={FORM_ID}
@@ -275,7 +275,7 @@ const CustomerFeedback = ({token}) =>
         >
           {formData =>
             <>
-              <Step1 {...{win, name}} />
+              <Step1 {...{win, name: companyContact?.name}} />
               {formData.values.agree_with_win === 'yes' ?
                 <>
                   <Step2Agree/>
