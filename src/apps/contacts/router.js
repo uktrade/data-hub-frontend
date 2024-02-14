@@ -15,7 +15,6 @@ const {
   handleRoutePermissions,
 } = require('../middleware')
 const { getCommon, getDetails } = require('./controllers/details')
-const createAndEdit = require('./controllers/create-and-edit')
 const { unarchiveContact } = require('./controllers/archive')
 const { getAudit } = require('./controllers/audit')
 const { renderContactActivityForEntity } = require('./controllers/activity')
@@ -25,8 +24,6 @@ const { setInteractionsDetails } = require('./middleware/interactions')
 const {
   fetchActivitiesForContact,
 } = require('../companies/apps/activity-feed/controllers')
-
-router.get(['/create', '/:contactId/edit'], createAndEdit)
 
 router.get('/export', getRequestBody(QUERY_FIELDS), exportCollection('contact'))
 

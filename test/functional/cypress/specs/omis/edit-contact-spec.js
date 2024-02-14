@@ -1,7 +1,6 @@
 import fixtures from '../../fixtures/index'
 import urls from '../../../../../src/lib/urls'
 import {
-  assertDetails,
   assertErrorSummary,
   assertFieldTypeahead,
   assertFlashMessage,
@@ -28,14 +27,7 @@ describe('Edit order contact', () => {
   })
 
   it('should render the details component', () => {
-    cy.get('[data-test="contact-not-listed"]').then((element) => {
-      assertDetails({
-        element,
-        summary: 'Is the contact you are looking for not listed?',
-        content:
-          'If the contact you are looking for is not listed you can add a new contact.',
-      })
-    })
+    cy.get('[data-test="add-a-new-contact-link"]').should('exist')
   })
 
   it('should not submit the form if no contact is selected', () => {
@@ -68,7 +60,7 @@ describe('Edit order contact', () => {
     })
 
     it('should redirect the user back to the edit contact form after the contact is added', () => {
-      cy.get('[data-test="contact-not-listed"]').click()
+      cy.get('[data-test="add-a-new-contact-link"]').click()
       cy.contains('a', 'add a new contact').click()
 
       cy.contains('a', 'Cancel').should(

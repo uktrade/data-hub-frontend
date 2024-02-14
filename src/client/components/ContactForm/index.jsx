@@ -1,14 +1,12 @@
-import qs from 'qs'
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
-import Link from '@govuk-react/link'
+import { Switch, Route } from 'react-router-dom'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import Label from '@govuk-react/label'
-
-import multiInstance from '../../utils/multiinstance'
-import { CONTACT_FORM__SUBMIT } from '../../actions'
+import Link from '@govuk-react/link'
+import PropTypes from 'prop-types'
+import _ from 'lodash'
+import qs from 'qs'
 
 import Form from '../Form'
 import {
@@ -33,6 +31,7 @@ import {
 
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
+import { getQueryParamsFromLocation } from '../../utils/url'
 import urls from '../../../lib/urls'
 
 const YES = 'Yes'
@@ -70,7 +69,7 @@ const StyledLabel = styled(Label)`
   font-weight: ${FONT_WEIGHTS.bold};
 `
 
-const _ContactForm = ({
+const ContactForm = ({
   update,
   contactId,
   // Needed for linking the newly created contact to a company and breadcrumbs
@@ -88,8 +87,8 @@ const _ContactForm = ({
   addressCountry,
   // State props
   dispatch,
-  id,
   notes: moreDetails,
+  redirectMode = 'hard',
   ...props
 }) => {
   const findAdministrativeAreas = useAdministrativeAreaLookup()
@@ -219,14 +218,16 @@ const _ContactForm = ({
                       onSuccess={(
                         result,
                         values,
-                        { hardRedirect, flashMessage }
+                        { flashMessage, hardRedirect, softRedirect }
                       ) => {
                         flashMessage(
                           update
                             ? 'Contact record updated'
                             : `You have successfully added a new contact ${result.name}`
                         )
-                        hardRedirect(redirectTo(result))
+                        redirectMode === 'hard'
+                          ? hardRedirect(redirectTo(result))
+                          : softRedirect(redirectTo(result))
                       }}
                       submitButtonLabel={
                         update ? 'Save and return' : 'Add contact'
@@ -361,20 +362,6 @@ const _ContactForm = ({
   )
 }
 
-export const ContactForm = multiInstance({
-  name: 'ContactForm',
-  actionPattern: 'CONTACT_FORM__',
-  reducer: (state, { type }) => {
-    switch (type) {
-      case CONTACT_FORM__SUBMIT:
-        return {}
-      default:
-        return state
-    }
-  },
-  component: _ContactForm,
-})
-
 const requiredProps = {
   update: PropTypes.any,
   company: PropTypes.shape({
@@ -400,20 +387,24 @@ ContactForm.propTypes = {
   addressCounty: PropTypes.string,
   addressPostcode: PropTypes.string,
   notes: PropTypes.string,
+  redirectMode: PropTypes.oneOf([
+    'hard', // window.location.href
+    'soft', // React Router
+  ]),
 }
 
-export const CreateContactForm = ({ companyId, id }) => (
-  <ContactForm companyId={companyId} id={id} />
+export const CreateContactForm = ({ companyId, redirectMode }) => (
+  <ContactForm companyId={companyId} redirectMode={redirectMode} />
 )
 
 CreateContactForm.propTypes = requiredProps
 
-export const UpdateContactForm = ({ contactId, id }) => (
+export const UpdateContactForm = ({ contactId, redirectMode }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <ContactForm
         {...contact}
-        id={id}
+        redirectMode={redirectMode}
         contactId={contact.id}
         update={true}
         companyId={contact.company.id}
@@ -427,9 +418,26 @@ UpdateContactForm.propTypes = {
   contactId: PropTypes.string.isRequired,
 }
 
-export default ({ contactId, companyId, id }) =>
-  contactId ? (
-    <UpdateContactForm contactId={contactId} id={id} />
-  ) : (
-    <CreateContactForm companyId={companyId} id={id} />
-  )
+export default () => (
+  <Switch>
+    <Route
+      exact={true}
+      paths={['/contacts/create', '/contacts/:contactId/edit']}
+    >
+      {({ location, match }) => {
+        const queryParams = getQueryParamsFromLocation(location)
+        return match.params.contactId ? (
+          <UpdateContactForm
+            contactId={match.params.contactId}
+            redirectMode={queryParams.redirect_mode}
+          />
+        ) : (
+          <CreateContactForm
+            companyId={queryParams.company}
+            redirectMode={queryParams.redirect_mode}
+          />
+        )
+      }}
+    </Route>
+  </Switch>
+)

@@ -1,62 +1,45 @@
 import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
 import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
 import { transformAPIValuesForForm } from '../transformers'
+import { getQueryParamsFromLocation } from '../../../utils/url'
 
 export const ID = 'exportForm'
 export const TASK_SAVE_EXPORT = 'TASK_SAVE_EXPORT'
 
-export const overwriteObjectWithSessionStorageValues = (
-  exportItem,
-  searchParams
-) => {
-  const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(ID))
-  const contactLabel = searchParams.get('new-contact-name')
-  const contactValue = searchParams.get('new-contact-id')
-  const newContact =
-    contactLabel && contactValue
-      ? { value: contactValue, label: contactLabel }
-      : null
-
-  if (valuesFromStorage && newContact) {
-    const mergedValues = {
-      ...transformAPIValuesForForm(exportItem),
-      ...valuesFromStorage,
-    }
-
-    return {
-      ...mergedValues,
-      contacts: [...mergedValues.contacts, newContact],
-      scrollToContact: true,
-    }
-  }
-  return { ...transformAPIValuesForForm(exportItem) }
+const getContactFromLocation = (location) => {
+  const queryParams = getQueryParamsFromLocation(location)
+  const label = queryParams['new-contact-name']
+  const value = queryParams['new-contact-id']
+  return label && value ? { value, label } : null
 }
 
 export const state2props = (state, { location }) => {
-  const company = state[COMPANY_DETAILS_ID].company
-  const exportItem = state[EXPORT_DETAILS_ID].exportItem
-  const searchParams = new URLSearchParams(location.search)
+  const { exportItem } = state[EXPORT_DETAILS_ID]
+  const { company } = state[COMPANY_DETAILS_ID]
 
-  if (exportItem) {
-    return {
-      exportItem: overwriteObjectWithSessionStorageValues(
-        exportItem,
-        searchParams
-      ),
-    }
+  if (!exportItem && !company) {
+    return { exportItem: null }
   }
 
-  if (company) {
-    return {
-      exportItem: overwriteObjectWithSessionStorageValues(
-        {
-          company,
-          owner: { id: state.currentAdviserId, name: state.currentAdviserName },
+  const formValues = exportItem
+    ? transformAPIValuesForForm(exportItem)
+    : transformAPIValuesForForm({
+        company,
+        owner: {
+          id: state.currentAdviserId,
+          name: state.currentAdviserName,
         },
-        searchParams
-      ),
-    }
-  }
+      })
 
-  return { exportItem: null }
+  const contact = getContactFromLocation(location)
+
+  return {
+    exportItem: {
+      ...formValues,
+      ...(contact && {
+        contacts: [...formValues.contacts, contact],
+        scrollToContact: true,
+      }),
+    },
+  }
 }

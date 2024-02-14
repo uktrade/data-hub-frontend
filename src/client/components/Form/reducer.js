@@ -9,6 +9,7 @@ import {
   FORM__ERRORED,
   FORM__FORWARD,
   FORM__LOADED,
+  FORM__UNMOUNT,
   FORM__RESOLVED,
   FORM__STEP_DEREGISTER,
   FORM__STEP_REGISTER,
@@ -36,6 +37,7 @@ export default (
         values: {
           ...state.values,
           ...action.initialValues,
+          ...state.previousValues,
         },
         currentStep: action.initialStepIndex,
       }
@@ -122,6 +124,11 @@ export default (
       return {
         ...state,
         currentStep: state.currentStep + 1,
+        previousValues: state.values,
+      }
+    case FORM__UNMOUNT:
+      return {
+        ...state,
         previousValues: state.values,
       }
     case FORM__BACK:

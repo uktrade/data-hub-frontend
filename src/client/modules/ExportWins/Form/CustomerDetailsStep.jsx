@@ -3,13 +3,9 @@ import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
 import { Step, FieldTypeahead, ContactInformation } from '../../../components'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { useFormContext } from '../../../../client/components/Form/hooks'
 import { idNameToValueLabel } from '../../../../client/utils'
-import Task from '../../../components/Task'
-import { ID } from './state'
 import { steps } from './constants'
 import {
   UKRegionsResource,
@@ -19,7 +15,6 @@ import {
 } from '../../../components/Resource'
 
 const CustomerDetailsStep = () => {
-  const { values } = useFormContext()
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const companyId = queryParams.company
@@ -39,25 +34,7 @@ const CustomerDetailsStep = () => {
         autoScroll={true}
         resultToOptions={({ results }) => results.map(idNameToValueLabel)}
       />
-      <Task>
-        {(getTask) => {
-          const openContactFormTask = getTask(TASK_REDIRECT_TO_CONTACT_FORM, ID)
-          return (
-            <ContactInformation
-              companyId={companyId}
-              onOpenContactForm={({ redirectUrl }) => {
-                openContactFormTask.start({
-                  payload: {
-                    values,
-                    url: redirectUrl,
-                    storeId: ID,
-                  },
-                })
-              }}
-            />
-          )
-        }}
-      </Task>
+      <ContactInformation companyId={companyId} redirectMode="soft" />
       <ResourceOptionsField
         name="customer_location"
         id="customer-location"

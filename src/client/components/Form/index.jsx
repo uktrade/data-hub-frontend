@@ -91,6 +91,7 @@ const _Form = ({
 
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
+    return () => props.onUnmount(values)
   }, [])
   useEffect(() => {
     scrollToTopOnStep && window.scrollTo(0, 0)
@@ -401,6 +402,11 @@ const dispatchToProps = (dispatch) => ({
       type: 'FORM__LOADED',
       initialValues,
       initialStepIndex,
+    }),
+  onUnmount: (values) =>
+    dispatch({
+      type: 'FORM__UNMOUNT',
+      values,
     }),
   resetResolved: () =>
     dispatch({

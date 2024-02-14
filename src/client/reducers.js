@@ -121,7 +121,6 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource/Resource'
 import PaginatedResource from './components/Resource/Paginated'
 
-import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
 
 import { ID as FLASH_MESSAGE_ID } from './components/LocalHeader/state'
@@ -233,7 +232,6 @@ export const reducers = {
   ...RoutedInput.reducerSpread,
   ...Resource.reducerSpread,
   ...PaginatedResource.reducerSpread,
-  ...ContactForm.reducerSpread,
   ...Form.reducerSpread,
   ...FieldAddAnother.reducerSpread,
   // A reducer is required to be able to set a preloadedState parameter

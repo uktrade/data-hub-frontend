@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { Details, Link, Paragraph, ListItem, UnorderedList } from 'govuk-react'
-import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
+import styled from 'styled-components'
 
 import urls from '../../../lib/urls'
 
@@ -9,24 +10,36 @@ const StyledDetails = styled(Details)`
   margin-top: ${SPACING_POINTS[1]};
 `
 
-const ContactInformation = ({ onOpenContactForm, companyId }) => {
+const ContactInformation = ({
+  onOpenContactForm,
+  companyId,
+  redirectMode = 'hard',
+}) => {
   const redirectUrl = urls.contacts.create(companyId, {
+    redirect_mode: redirectMode,
     origin_url: window.location.pathname,
     origin_search: btoa(window.location.search),
   })
   return (
     <>
       If your contact is not listed{' '}
-      <Link
-        data-test="add-a-new-contact-link"
-        onClick={(e) => {
-          e.preventDefault()
-          onOpenContactForm({ event: e, redirectUrl })
-        }}
-        href={redirectUrl}
-      >
-        add a new contact
-      </Link>
+      {redirectMode === 'hard' ? (
+        <Link
+          data-test="add-a-new-contact-link"
+          onClick={(e) => {
+            e.preventDefault()
+            onOpenContactForm({ event: e, redirectUrl })
+          }}
+          href={redirectUrl}
+        >
+          add a new contact
+        </Link>
+      ) : (
+        // A soft redirect using React Router
+        <ReactRouterLink data-test="add-a-new-contact-link" to={redirectUrl}>
+          add a new contact
+        </ReactRouterLink>
+      )}
       . You will leave this page to enter details, once added you will return
       here. The information you added will have been saved.
       <StyledDetails
