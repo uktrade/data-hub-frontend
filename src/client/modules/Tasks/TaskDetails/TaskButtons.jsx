@@ -10,6 +10,7 @@ import { Form } from '../../../components'
 import urls from '../../../../lib/urls'
 import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
+import { STATUS } from '../TaskForm/constants'
 
 const ButtonWrapper = styled.div`
   min-height: 71px;
@@ -24,7 +25,7 @@ const ButtonWrapper = styled.div`
 export const TaskButtons = ({ task, returnUrl }) => (
   <>
     <GridRow>
-      {!task.status && (
+      {task.status == STATUS.ACTIVE && (
         <Form
           id="archive-task-form"
           analyticsFormName="archiveTaskForm"
@@ -42,7 +43,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
         </Form>
       )}
       <ButtonWrapper>
-        {!task.status && (
+        {task.status == STATUS.ACTIVE && (
           <Button
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}
