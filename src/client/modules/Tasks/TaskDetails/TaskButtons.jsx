@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 import { Form } from '../../../components'
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
+import { TASK_SAVE_STATUS_COMPLETE, buttonState2props } from './state'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { STATUS } from '../TaskForm/constants'
 
@@ -27,11 +27,11 @@ export const TaskButtons = ({ task, returnUrl }) => (
     <GridRow>
       {task.status == STATUS.ACTIVE && (
         <Form
-          id="archive-task-form"
-          analyticsFormName="archiveTaskForm"
+          id="task-save-status-complete-form"
+          analyticsFormName="taskSaveStatusCompleteForm"
           redirectTo={() => urls.dashboard.myTasks()}
           cancelRedirectTo={false}
-          submissionTaskName={TASK_ARCHIVE_TASK}
+          submissionTaskName={TASK_SAVE_STATUS_COMPLETE}
           transformPayload={() => ({
             taskId: task.id,
           })}
