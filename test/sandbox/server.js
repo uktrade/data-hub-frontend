@@ -92,6 +92,9 @@ import {
   getPayments,
   createPayments,
   getQuote,
+  getQuotePreview,
+  createQuote,
+  cancelQuote,
 } from './routes/v3/omis/omis.js'
 import {
   featureFlag,
@@ -564,6 +567,9 @@ app.put('/v3/omis/order/:id/subscriber-list', subscriberList)
 app.get('/v3/omis/order/:id/payment', getPayments)
 app.post('/v3/omis/order/:id/payment', createPayments)
 app.get('/v3/omis/order/:id/quote', getQuote)
+app.post('/v3/omis/order/:id/quote', createQuote)
+app.post('/v3/omis/order/:id/quote/preview', getQuotePreview)
+app.post('/v3/omis/order/:id/quote/cancel', cancelQuote)
 app.patch('/v3/omis/order/:id/assignee', getAssignees)
 app.post('/v3/omis/order/:id/cancel', getOrderById)
 app.post('/v3/omis/order/:id/complete', getOrderById)

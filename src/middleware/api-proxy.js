@@ -80,6 +80,9 @@ const ALLOWLIST = [
   '/v3/omis/order',
   '/v4/search/task',
   '/v4/task/companies-and-projects',
+  '/v3/omis/order/:id/quote',
+  '/v3/omis/order/:id/quote/preview',
+  '/v3/omis/order/:id/quote/cancel',
 ]
 
 module.exports = (app) => {

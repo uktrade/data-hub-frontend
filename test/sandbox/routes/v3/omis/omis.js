@@ -5,10 +5,13 @@ import assignees from '../../../fixtures/v3/omis/assignees.json' assert { type: 
 import invoice from '../../../fixtures/v3/omis/invoice.json' assert { type: 'json' }
 import payments from '../../../fixtures/v3/omis/payments.json' assert { type: 'json' }
 import quote from '../../../fixtures/v3/omis/quote.json' assert { type: 'json' }
+import quotePreview from '../../../fixtures/v3/omis/quote-preview.json' assert { type: 'json' }
 import quoteAccepted from '../../../fixtures/v3/omis/quote-accepted.json' assert { type: 'json' }
 import subscribers from '../../../fixtures/v3/omis/subscribers.json' assert { type: 'json' }
 import quoteAwaitOrder from '../../../fixtures/v3/omis/quote-awaiting-order.json' assert { type: 'json' }
 import emptyOrder from '../../../fixtures/v3/omis/empty-order.json' assert { type: 'json' }
+import quoteNotAccepted from '../../../fixtures/v3/omis/quote-not-accepted.json' assert { type: 'json' }
+import quoteCancelled from '../../../fixtures/v3/omis/quote-cancelled.json' assert { type: 'json' }
 
 export const getAssignees = function (req, res) {
   res.json(assignees)
@@ -40,7 +43,25 @@ export const createPayments = function (req, res) {
 }
 
 export const getQuote = function (req, res) {
-  res.json(quote)
+  if (req.params.id === quoteAwaitOrder.id) {
+    return res.json(quoteNotAccepted)
+  }
+  if (req.params.id === cancelledOrder.id) {
+    return res.json(quoteCancelled)
+  }
+  return res.json(quote)
+}
+
+export const createQuote = function (req, res) {
+  res.sendStatus(200)
+}
+
+export const cancelQuote = function (req, res) {
+  res.sendStatus(200)
+}
+
+export const getQuotePreview = function (req, res) {
+  res.json(quotePreview)
 }
 
 export const subscriberList = function (req, res) {
