@@ -10,6 +10,11 @@ import { deepKeysToCamelCase } from '../../utils'
 import ProgressIndicator from '../ProgressIndicator'
 import Err from '../Task/Error'
 import PaginatedResource from './Paginated'
+import ResourceOptionsField from '../Form/elements/ResourceOptionsField'
+import FieldRadios from '../Form/elements/FieldRadios'
+import FieldCheckboxes from '../Form/elements/FieldCheckboxes'
+import FieldTypeahead from '../Form/elements/FieldTypeahead'
+import FieldSelect from '../Form/elements/FieldSelect'
 
 /**
  * @function Resource
@@ -274,5 +279,26 @@ export const createMetadataResource = (name, endpoint) => {
   Component.tasks = EntityResource.tasks
   Component.transformer = transformer
   Component.taskName = name
+
+  Component.FieldOptions = (props) => (
+    <ResourceOptionsField id="__METADATA__" {...props} resource={Component} />
+  )
+ 
+  Component.FieldRadios = (props) => (
+    <Component.FieldOptions {...props} field={FieldRadios} />
+  )
+
+  Component.FieldSelect = (props) => (
+    <Component.FieldOptions {...props} field={FieldSelect} />
+  )
+
+  Component.FieldCheckboxes = (props) => (
+    <Component.FieldOptions {...props} field={FieldCheckboxes} />
+  )
+
+  Component.FieldTypeahead = (props) => (
+    <Component.FieldOptions {...props} field={FieldTypeahead} />
+  )
+
   return Component
 }

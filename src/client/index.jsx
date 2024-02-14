@@ -47,7 +47,7 @@ import ErrorFallback from './components/ErrorFallback'
 
 import { tasks } from './tasks'
 
-import { store, history, sagaMiddleware } from './middleware'
+// import { store, history, sagaMiddleware } from './middleware'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -97,9 +97,10 @@ function App() {
       onError={(error) => ReactSentry.captureException(error)}
     >
       <Provider
-        sagaMiddleware={sagaMiddleware}
-        history={history}
-        store={store}
+        // TODO: Why is this not internal to DatahubProvider?
+        // sagaMiddleware={sagaMiddleware}
+        // history={history}
+        // store={store}
         tasks={tasks}
       >
         <Mount selector="#data-hub-header">

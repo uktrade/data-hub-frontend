@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+import _ from 'lodash'
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
@@ -6,7 +8,10 @@ import { createBrowserHistory } from 'history'
 
 import { reducers } from './reducers'
 
+const nunjucksProps = JSON.parse(document.getElementById('react-app').dataset.props || '{}')
+
 const preloadedState = {
+  ...nunjucksProps,
   referrerUrl: window.document.referrer,
 }
 
@@ -19,11 +24,18 @@ const history = createBrowserHistory({
   basename: queryString.stringify(new URL(document.baseURI).pathname),
 })
 
+// FIXME: Store is not middleware and should not be here
 const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
   middleware: [sagaMiddleware, routerMiddleware(history)],
   preloadedState,
-  reducer: { ...reducers, router: connectRouter(history) },
+  reducer: {
+    // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
+    ..._.mapValues(preloadedState, () => (state = null) => state),
+    ...reducers,
+    router: connectRouter(history),
+  },
 })
+
 
 export { store, history, sagaMiddleware }

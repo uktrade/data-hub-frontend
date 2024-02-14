@@ -16,9 +16,7 @@ const StartServerAfterBuild = () => {
   return {
     apply: (compiler) => {
       compiler.hooks.done.tap('StartServerAfterBuild', () => {
-        if (server) {
-          server.stdin.write('rs\n')
-        } else {
+        if (!server) {
           server = spawn(
             "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
             { stdio: ['pipe', 'inherit', 'inherit'], shell: true }
@@ -42,6 +40,9 @@ module.exports = (env) => ({
       'react-app-polyfill/stable',
       'details-element-polyfill',
       './src/client/index.jsx',
+    ],
+    'export-win-review': [
+      './src/client/export-win-review.jsx',
     ],
   },
   output: {

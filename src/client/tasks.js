@@ -434,6 +434,7 @@ import {
   getExportProject,
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
+import { patchExportWinReview } from './modules/ExportWins/tasks.js'
 
 export const tasks = {
   'Create list': createList,
@@ -684,4 +685,5 @@ export const tasks = {
   [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
   [TASK_SET_GLOBAL_HQ]: setGlobalHq,
   [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
+  TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
 }

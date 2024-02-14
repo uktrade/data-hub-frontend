@@ -65,6 +65,7 @@ const _Form = ({
   redirectMode = 'hard',
   scrollToTopOnStep = false,
   showStepInUrl = false,
+  // FIXME: Not used
   reactRouterRedirect,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
@@ -72,6 +73,7 @@ const _Form = ({
   onError,
   submitButtonLabel = 'Save',
   submitButtonColour = BUTTON_COLOUR,
+  hideErrors,
   // State props
   onLoad,
   result,
@@ -295,7 +297,8 @@ const _Form = ({
                                           }
                                           redirectMode === 'soft' &&
                                             redirectTo &&
-                                            history.push(
+                                            // TODO: Will this break any existing functionality?
+                                            history.replace(
                                               redirectTo(result, values)
                                             )
                                           onSuccess &&
@@ -303,7 +306,7 @@ const _Form = ({
                                               flashMessage:
                                                 props.writeFlashMessage,
                                               hardRedirect,
-                                              softRedirect: history.push,
+                                              softRedirect: history.replace,
                                             })
                                           props.resetResolved()
                                         }
@@ -340,7 +343,7 @@ const _Form = ({
                                   when={resolved}
                                 />
                               )}
-                            {!isEmpty(errors) && (
+                            {!hideErrors && !isEmpty(errors) && (
                               <ErrorSummary
                                 ref={ref}
                                 // TODO: Rewrite the tests that rely on this and remove it
@@ -468,12 +471,23 @@ const dispatchToProps = (dispatch) => ({
       type: 'FORM__STEP_DEREGISTER',
       stepName,
     }),
-  writeFlashMessage: (message) =>
+  writeFlashMessage: (message) => {
+    if (typeof message === 'string') {
+      dispatch({
+        type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
+        messageType: 'success',
+        message,
+      })
+      return
+    }
+
+    const [heading, body, messageType] = message
     dispatch({
       type: 'FLASH_MESSAGE__WRITE_TO_SESSION',
-      messageType: 'success',
-      message,
-    }),
+      messageType,
+      message: [heading, body],
+    })
+  }
 })
 
 /**
@@ -520,7 +534,7 @@ const dispatchToProps = (dispatch) => ({
  * `window.location.href`, the _soft_ mode uses React-Router.
  * @param {Props['flashMessage']} [props.flashMessage] - A function which should
  * convert the result of the submission task and the submitted form values into
- * a flash message text or a tuple of `[heading, body]`, which will be used as
+ * a flash message text or a tuple of `[heading, body, type]`, which will be used as
  * a flash message when the submission task resolves.
  * @param {Props['initialValues']} [props.initialValues] - An object mapping
  * field names to their initial values.

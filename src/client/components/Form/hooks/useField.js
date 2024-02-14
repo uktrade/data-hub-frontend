@@ -21,6 +21,7 @@ function useField({
     const validators = castArray(validate).filter((v) => v)
 
     if (required) {
+      // FIXME: Change isEmpty to check for null and undefined the (??) operator
       validators.unshift((value) => (isEmpty(value) ? required : null))
     }
 

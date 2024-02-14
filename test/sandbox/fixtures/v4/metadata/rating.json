@@ -1,0 +1,32 @@
+[
+  {
+    "id": "471ce323-266f-4af5-bdd6-e38b30f78ce2",
+    "name": "Didn't help",
+    "disabled_on": null
+  },
+  {
+    "id": "740f9e5e-0d26-4dff-900a-1db7e2205267",
+    "name": "Very little",
+    "disabled_on": null
+  },
+  {
+    "id": "aeb0298b-8ac8-44ff-a371-41d5bd8328d5",
+    "name": "Some extent",
+    "disabled_on": null
+  },
+  {
+    "id": "8d878413-ffc2-4562-92c9-98414d08d714",
+    "name": "Great extent",
+    "disabled_on": null
+  },
+  {
+    "id": "7efd335d-f963-4c34-8a4f-2ae57419d632",
+    "name": "Completely",
+    "disabled_on": null
+  },
+  {
+    "id": "dbfc571c-ffbe-4ef8-8840-16364ed46824",
+    "name": "N/A",
+    "disabled_on": null
+  }
+]

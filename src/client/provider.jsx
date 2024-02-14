@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
 
 import rootSaga from './root-saga'
+import * as middleware from './middleware'
 
 const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
   sagaMiddleware.run(rootSaga(tasks))
@@ -27,9 +28,9 @@ const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
  */
 const DataHubProvider = ({
   tasks,
-  store,
-  history,
-  sagaMiddleware,
+  store = middleware.store,
+  history = middleware.history,
+  sagaMiddleware = middleware.sagaMiddleware,
   children,
 }) => {
   runMiddlewareOnce(tasks, sagaMiddleware)

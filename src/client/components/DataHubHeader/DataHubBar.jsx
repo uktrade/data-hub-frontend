@@ -26,13 +26,15 @@ const googleAnalyticsUTM = qs.stringify({
   utm_content: DATA_WORKSPACE,
 })
 
-const Layout = styled.div({
+const Root = styled.div({
+  background: BLACK,
+  textAlign: 'center',
+})
+
+const CenteredContent = styled.div({
   maxWidth: 960,
   marginLeft: 'auto',
   marginRight: 'auto',
-})
-
-const RootContainer = styled.div({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -160,8 +162,8 @@ const DataHubBar = ({
   showVerticalNav,
   hasFeatureGroup,
 }) => (
-  <Layout>
-    <RootContainer>
+  <Root>
+    <CenteredContent>
       <DataHubContainer>
         <VisuallyHidden>Department for Business and Trade</VisuallyHidden>
         <StyledLogoNavLink as="a" href="/">
@@ -197,8 +199,8 @@ const DataHubBar = ({
           Menu
         </MobileMenuButton>
       </Container>
-    </RootContainer>
-  </Layout>
+    </CenteredContent>
+  </Root>
 )
 
 DataHubBar.propTypes = {

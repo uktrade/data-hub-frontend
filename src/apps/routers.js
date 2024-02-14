@@ -29,6 +29,8 @@ const reactRoutes = [
   '/exportwins/create',
   '/exportwins/confirmed',
   '/exportwins/unconfirmed',
+  '/exportwins/review/:token',
+  '/exportwins/review-win/thankyou',
   '/exportwins/:winId/details',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',

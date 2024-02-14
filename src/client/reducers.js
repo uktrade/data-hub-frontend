@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
 
@@ -178,41 +180,7 @@ import getMyTasksReducer from './components/Dashboard/my-tasks/reducer'
 import { ID as INTERACTION_ID } from './modules/Interactions/InteractionDetails/state'
 import getInteractionReducer from './modules/Interactions/InteractionDetails/reducer'
 
-const parseProps = (domNode) => {
-  if (!domNode) {
-    return {
-      modulePermissions: [],
-      currentAdviserId: '',
-      currentAdviserName: '',
-      activeFeatures: null,
-      activeFeatureGroups: null,
-      userPermissions: [],
-      csrfToken: '',
-    }
-  }
-  return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
-}
-
-const appWrapper = document.getElementById('react-app')
-
-const {
-  modulePermissions,
-  currentAdviserId,
-  currentAdviserName,
-  activeFeatures,
-  activeFeatureGroups,
-  userPermissions,
-  csrfToken,
-} = parseProps(appWrapper)
-
 export const reducers = {
-  currentAdviserId: () => currentAdviserId,
-  currentAdviserName: () => currentAdviserName,
-  activeFeatures: () => activeFeatures,
-  activeFeatureGroups: () => activeFeatureGroups,
-  modulePermissions: () => modulePermissions,
-  userPermissions: () => userPermissions,
-  csrfToken: () => csrfToken,
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,
   [COMPANY_LISTS_STATE_ID]: companyListsReducer,
@@ -233,8 +201,6 @@ export const reducers = {
   ...ContactForm.reducerSpread,
   ...Form.reducerSpread,
   ...FieldAddAnother.reducerSpread,
-  // A reducer is required to be able to set a preloadedState parameter
-  referrerUrl: (state = {}) => state,
   [DNB_CHECK_ID]: dnbCheckReducer,
   [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
   [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,

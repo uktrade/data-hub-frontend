@@ -20,6 +20,7 @@ import ExportWins from './modules/ExportWins/'
 import AddExportWinForm from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Redirect'
 import ExportWinDetails from './modules/ExportWins/Details'
+import ExportWinReview from './modules/ExportWins/Review'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Community from './modules/Community'
@@ -95,6 +96,7 @@ import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCap
 import ExportsIndex from './modules/Companies/CompanyExports/ExportsIndex'
 import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
 import InvestmentProjectAdmin from './modules/Investments/Projects/InvestmentProjectAdmin'
+import ThankYou from './modules/ExportWins/Review/ThankYou'
 
 const routes = {
   companies: [
@@ -453,6 +455,11 @@ const routes = {
   ],
   exportWins: [
     {
+      path: '/exportwins/review/:token',
+      module: 'datahub:companies',
+      component: ExportWinReview,
+    },
+    {
       path: '/exportwins/unconfirmed',
       module: 'datahub:companies',
       component: ExportWins,
@@ -476,6 +483,11 @@ const routes = {
       path: '/exportwins/create',
       module: 'datahub:companies',
       component: AddExportWinForm,
+    },
+    {
+      path: '/exportwins/review-win/thankyou',
+      module: 'datahub:companies',
+      component: ThankYou,
     },
   ],
   investments: [

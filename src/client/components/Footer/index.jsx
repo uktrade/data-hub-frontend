@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { spacing, typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
+import PropTypes from 'prop-types'
 
 import {
   FOOTER_BACKGROUND,
@@ -108,64 +109,36 @@ const Container = styled(InnerContainer)`
   flex-wrap: wrap;
 `
 
+export const LINKS = {
+  'Request support': urls.support(),
+  'Help Centre': urls.external.helpCentre.dhHomepage(),
+  'Privacy Notice': urls.external.helpCentre.privacyNotice(),
+  Cookies: urls.external.helpCentre.cookies(),
+  'Accessibility Statement': urls.external.helpCentre.accessibilityStatement(),
+}
+
 /**
  * The Footer displayed in all pages across the Data Hub site.
+ * @param {Object} props
+ * @param {Record<string, string>} [props.links = typeof LINKS] - bla
  */
-export default function Footer() {
+export default function Footer({ links = LINKS, ...props }) {
   return (
-    <StyledFooter>
+    <StyledFooter {...props}>
       <Container>
         <StyleList>
-          <li>
-            <FooterLink
-              href={urls.support()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Request Support (opens in new tab)"
-            >
-              Request Support
-            </FooterLink>
-          </li>
-          <li>
-            <FooterLink
-              href={urls.external.helpCentre.dhHomepage()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Help Centre (opens in new tab)"
-            >
-              Help Centre
-            </FooterLink>
-          </li>
-          <li>
-            <FooterLink
-              href={urls.external.helpCentre.privacyNotice()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Privacy Notice (opens in new tab)"
-            >
-              Privacy Notice
-            </FooterLink>
-          </li>
-          <li>
-            <FooterLink
-              href={urls.external.helpCentre.cookies()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Cookies (opens in new tab)"
-            >
-              Cookies
-            </FooterLink>
-          </li>
-          <li>
-            <FooterLink
-              href={urls.external.helpCentre.accessibilityStatement()}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Accessibility Statement (opens in new tab)"
-            >
-              Accessibility Statement
-            </FooterLink>
-          </li>
+          {Object.entries(links).map(([label, href]) => (
+            <li key={label}>
+              <FooterLink
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${label} (opens in new tab)`}
+              >
+                {label}
+              </FooterLink>
+            </li>
+          ))}
         </StyleList>
         <CopyrightLink
           href={urls.external.copyright}
@@ -178,4 +151,7 @@ export default function Footer() {
       </Container>
     </StyledFooter>
   )
+}
+
+Footer.propTypes = {
 }
