@@ -51,3 +51,5 @@ export const bothGoodsAndServices = {
   label: 'Both goods and services',
   value: GOODS_AND_SERVICES_ID,
 }
+
+export const contributingAdvisersLimit = 5

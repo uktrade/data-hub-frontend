@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
@@ -8,9 +8,10 @@ import { Step, FieldTypeahead, ContactInformation } from '../../../components'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { idNameToValueLabel } from '../../../../client/utils'
+import { OPTION_YES } from '../../../../common/constants'
 import Task from '../../../components/Task'
 import { ID } from './state'
-import { steps } from './constants'
+import { steps, contributingAdvisersLimit } from './constants'
 import {
   UKRegionsResource,
   CompanyContactsResource,
@@ -18,11 +19,36 @@ import {
   BusinessPotentialResource,
 } from '../../../components/Resource'
 
-const CustomerDetailsStep = () => {
-  const { values } = useFormContext()
+const CustomerDetailsStep = ({ sessionStorageFormValues }) => {
+  const [sessionStorageValues] = useState(sessionStorageFormValues)
+  const { values, setFieldValue } = useFormContext()
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const companyId = queryParams.company
+
+  useEffect(() => {
+    // Please refer to the comments in state.js to understand
+    // why form values are being written here.
+    if (sessionStorageValues) {
+      // Lead officer form step fields
+      setFieldValue('lead_officer', sessionStorageValues.lead_officer)
+      setFieldValue('team_type', sessionStorageValues.team_type)
+      setFieldValue('hq_team', sessionStorageValues.hq_team)
+      setFieldValue('team_members', sessionStorageValues.team_members)
+      // Credit for this win form step fields
+      setFieldValue('credit_for_win', sessionStorageValues.credit_for_win)
+      if (sessionStorageValues.credit_for_win === OPTION_YES) {
+        const fieldNames = ['team_type', 'contributing_officer', 'hq_team']
+        fieldNames.forEach((fieldName) =>
+          [...Array(contributingAdvisersLimit).keys()].forEach((index) => {
+            const field = `${fieldName}_${index}`
+            const fieldValue = sessionStorageValues?.[field]
+            fieldValue && setFieldValue(field, fieldValue)
+          })
+        )
+      }
+    }
+  }, [sessionStorageValues])
 
   return (
     <Step name={steps.CUSTOMER_DETAILS}>

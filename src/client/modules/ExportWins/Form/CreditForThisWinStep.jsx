@@ -7,7 +7,7 @@ import { useFormContext } from '../../../../client/components/Form/hooks'
 import { OPTION_YES, OPTIONS_YES_NO } from '../../../../common/constants'
 import { MID_GREY } from '../../../../client/utils/colours'
 import { StyledHintParagraph } from './styled'
-import { steps } from './constants'
+import { steps, contributingAdvisersLimit } from './constants'
 import {
   TeamTypeResource,
   HQTeamRegionOrPostsResource,
@@ -60,7 +60,7 @@ const CreditForThisWinStep = () => {
             hint="Up to 5 advisers can be added."
             itemName="contributing-adviser"
             buttonText="Add another"
-            limitChildGroupCount={5}
+            limitChildGroupCount={contributingAdvisersLimit}
             dataTestPrefix="contributing-advisers-"
             initialChildGroupCount={officerCount || 1}
           >

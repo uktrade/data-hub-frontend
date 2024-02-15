@@ -28,7 +28,12 @@ const StyledLoadingBox = styled(LoadingBox)({
   width: SPACING.SCALE_5,
 })
 
-const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
+const AddExportWinForm = ({
+  isEditing,
+  csrfToken,
+  currentAdviserId,
+  sessionStorageFormValues,
+}) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const company = queryParams.company
@@ -80,14 +85,24 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
             id: queryParams.export || queryParams.exportwin,
           }}
         >
-          <>
-            <OfficerDetailsStep {...stepProps} />
-            <CreditForThisWinStep {...stepProps} />
-            <CustomerDetailsStep {...stepProps} />
-            <WinDetailsStep {...stepProps} />
-            <SupportProvidedStep {...stepProps} />
-            <CheckBeforeSendingStep {...stepProps} />
-          </>
+          {({ values }) => {
+            return (
+              <>
+                <OfficerDetailsStep {...stepProps} />
+                <CreditForThisWinStep {...stepProps} />
+                <CustomerDetailsStep
+                  {...stepProps}
+                  sessionStorageFormValues={sessionStorageFormValues}
+                />
+                <WinDetailsStep {...stepProps} />
+                <SupportProvidedStep {...stepProps} />
+                <CheckBeforeSendingStep {...stepProps} />
+                <pre>
+                  <code>{JSON.stringify(values, null, 2)}</code>
+                </pre>
+              </>
+            )
+          }}
         </Form>
       </FormLayout>
     </DefaultLayout>
