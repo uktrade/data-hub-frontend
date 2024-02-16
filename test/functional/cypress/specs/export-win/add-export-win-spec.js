@@ -206,7 +206,7 @@ describe('Adding an export win', () => {
       })
       cy.get(officerDetails.teamMembersHintText).should(
         'have.text',
-        'You can add up to 5 team members. They will be notified when this win is updated.'
+        'You can add up to 5 team members. They will not be credited for the win but will be notified when this win is updated.'
       )
     })
 

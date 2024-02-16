@@ -75,7 +75,7 @@ const OfficerDetailsStep = () => {
       <FieldAdvisersTypeahead
         name="team_members"
         label="Team members (optional)"
-        hint="You can add up to 5 team members. They will be notified when this win is updated."
+        hint="You can add up to 5 team members. They will not be credited for the win but will be notified when this win is updated."
         validate={validators.validateTeamMembers}
         isMulti={true}
       />
