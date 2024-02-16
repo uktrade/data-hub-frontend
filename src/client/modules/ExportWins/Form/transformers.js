@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 
 import { convertDateToFieldDateObject } from '../../../../client/utils/date'
 import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
-import { getTwelveMonthsAgo, sumWinTypeYearlyValues } from './utils'
+import { sumWinTypeYearlyValues, isDateWithinLastTwelveMonths } from './utils'
 import { idNameToValueLabel } from '../../../../client/utils'
 import {
   winTypeId,
@@ -31,13 +31,6 @@ const transformYearlyValuesToBreakdowns = (key, id, values) =>
       year: parseInt(k[k.length - 1], 10) + 1,
       value: values[k],
     }))
-
-const isEstimatedWinDateValid = (estimatedWinDate) => {
-  // Business date logic
-  const today = new Date()
-  const from = getTwelveMonthsAgo()
-  return estimatedWinDate >= from && estimatedWinDate <= today
-}
 
 const transformAdvisersToContributingOfficers = (advisers = []) =>
   advisers.reduce(
@@ -118,7 +111,7 @@ export const transformExportProjectForForm = (exportProject) => {
         ? idNameToValueLabel(exportProject.contacts[0])
         : null, // Get the user to choose the contact
     // Win Details
-    date: isEstimatedWinDateValid(date) && {
+    date: isDateWithinLastTwelveMonths(date) && {
       year: String(date.getFullYear()),
       month: String(date.getMonth() + 1),
     },

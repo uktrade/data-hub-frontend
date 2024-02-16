@@ -119,3 +119,10 @@ export const getTwelveMonthsAgo = () => {
   const today = new Date()
   return new Date(today.getFullYear() - 1, today.getMonth(), 1)
 }
+
+export const isDateWithinLastTwelveMonths = (date) => {
+  // Business date logic
+  const today = new Date()
+  const from = getTwelveMonthsAgo()
+  return date >= from && date <= today
+}
