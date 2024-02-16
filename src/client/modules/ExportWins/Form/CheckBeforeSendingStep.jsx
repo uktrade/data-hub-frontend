@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
-import { useFormContext } from '../../../../client/components/Form/hooks'
+import { useFormContext } from '../../../components/Form/hooks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import { steps } from './constants'
 import {

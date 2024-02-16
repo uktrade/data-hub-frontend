@@ -21,7 +21,7 @@ import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
-import CheckBeforeSendingStep from './CheckBeforeSending'
+import CheckBeforeSendingStep from './CheckBeforeSendingStep'
 
 const StyledLoadingBox = styled(LoadingBox)({
   height: 16,
