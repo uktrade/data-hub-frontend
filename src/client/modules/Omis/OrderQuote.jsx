@@ -30,6 +30,7 @@ import {
   formatMediumDateTime,
   isDateInFuture,
 } from '../../utils/date'
+import { STATUS } from './constants'
 
 const StyledInsetText = styled(InsetText)`
   margin-bottom: -${SPACING.SCALE_2};
@@ -55,7 +56,7 @@ const StyledWarningText = styled(WarningText)`
 
 const SetHeading = ({ id }) => (
   <OrderResource.Inline id={id}>
-    {(order) => (order.status === 'draft' ? 'Quote preview' : 'Quote')}
+    {(order) => (order.status === STATUS.DRAFT ? 'Quote preview' : 'Quote')}
   </OrderResource.Inline>
 )
 
@@ -170,7 +171,7 @@ const OrderQuote = ({ quotePreview }) => {
       <OrderResource id={orderId}>
         {(order) => (
           <>
-            {order.status === 'draft' && (
+            {order.status === STATUS.DRAFT && (
               <Task.Status
                 name={TASK_PREVIEW_QUOTE}
                 id={PREVIEW_QUOTE_ID}
@@ -228,7 +229,7 @@ const OrderQuote = ({ quotePreview }) => {
                 )}
               </Task.Status>
             )}
-            {order.status === 'quote_awaiting_acceptance' && (
+            {order.status === STATUS.QUOTE_AWAITING_ACCEPTANCE && (
               <OrderQuoteResource id={orderId}>
                 {(quote) => (
                   <Form
@@ -267,14 +268,14 @@ const OrderQuote = ({ quotePreview }) => {
                 )}
               </OrderQuoteResource>
             )}
-            {order.status != 'draft' &&
-              order.status != 'quote_awaiting_acceptance' && (
+            {order.status != STATUS.DRAFT &&
+              order.status != STATUS.QUOTE_AWAITING_ACCEPTANCE && (
                 <OrderQuoteResource id={orderId}>
                   {(quote) => (
                     <>
                       <SentOn quote={quote} />
                       <AcceptedOn quote={quote} />
-                      {order.status === 'cancelled' && (
+                      {order.status === STATUS.CANCELLED && (
                         <>
                           <StyledHeading data-test="cancelled-on-heading">
                             Cancelled on
