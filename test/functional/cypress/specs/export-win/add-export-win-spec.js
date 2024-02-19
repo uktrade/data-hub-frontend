@@ -9,6 +9,7 @@ import {
   assertUrl,
   assertFieldInput,
   assertFieldError,
+  assertBreadcrumbs,
   assertLocalHeader,
   assertErrorSummary,
   assertSummaryTable,
@@ -19,7 +20,9 @@ import {
   assertFieldRadiosWithLegend,
 } from '../../support/assertions'
 
-const company = companyFaker()
+const company = companyFaker({
+  name: 'Advanced Mini Devices',
+})
 
 const twelveMonthsAgo = getTwelveMonthsAgo()
 const month = twelveMonthsAgo.getMonth() + 1
@@ -142,6 +145,18 @@ describe('Adding an export win', () => {
     cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
       { id: '600', name: 'Afterburner' },
     ])
+  })
+
+  context('Breadcrumbs', () => {
+    it('should render the breadcrumbs', () => {
+      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+      assertBreadcrumbs({
+        Home: urls.dashboard.index(),
+        Companies: urls.companies.index(),
+        [company.name.toUpperCase()]: urls.companies.detail(company.id),
+        'Add export win': null,
+      })
+    })
   })
 
   context('Page headers', () => {

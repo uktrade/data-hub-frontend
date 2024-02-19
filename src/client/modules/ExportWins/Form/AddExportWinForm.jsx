@@ -1,9 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import LoadingBox from '@govuk-react/loading-box'
-import { SPACING } from '@govuk-react/constants'
-import styled from 'styled-components'
 
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { DefaultLayout, Form, FormLayout } from '../../../components'
@@ -23,15 +20,16 @@ import WinDetailsStep from './WinDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
 import CheckBeforeSendingStep from './CheckBeforeSending'
 
-const StyledLoadingBox = styled(LoadingBox)({
-  height: 16,
-  width: SPACING.SCALE_5,
-})
+const CompanyName = ({ companyId }) => (
+  <CompanyResource.Inline id={companyId}>
+    {(company) => company.name.toUpperCase()}
+  </CompanyResource.Inline>
+)
 
 const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
-  const company = queryParams.company
+  const companyId = queryParams.company
   const stepProps = { isEditing }
 
   const initialValuesTaskName = queryParams.export
@@ -42,21 +40,24 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
 
   return (
     <DefaultLayout
-      heading={`${isEditing ? 'Edit' : 'Add'} export win`}
-      subheading={
-        <CompanyResource
-          taskStatusProps={{
-            renderProgress: () => (
-              <StyledLoadingBox backgroundColorOpacity={0} loading={true} />
-            ),
-          }}
-          id={queryParams.company}
-        >
-          {(company) => company.name.toUpperCase()}
-        </CompanyResource>
-      }
+      heading="Add export win"
       pageTitle="Add export win"
-      breadcrumbs={[]}
+      subheading={<CompanyName companyId={companyId} />}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
+        {
+          link: urls.companies.detail(companyId),
+          text: <CompanyName companyId={companyId} />,
+        },
+        { text: 'Add export win' },
+      ]}
     >
       <FormLayout>
         <Form
@@ -71,7 +72,7 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
             exportWinId: queryParams.exportwin,
             payload: {
               ...transformFormValuesForAPI(values),
-              company,
+              company: companyId,
               _csrf: csrfToken,
               adviser: currentAdviserId,
             },
