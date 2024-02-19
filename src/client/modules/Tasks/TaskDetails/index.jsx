@@ -11,6 +11,7 @@ import TaskDetailsTable from './TaskDetailsTable'
 import { ID, TASK_GET_TASK_DETAILS, state2props } from './state'
 import { TASK_DETAILS_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
+import { STATUS } from '../TaskForm/constants'
 
 const StyledTag = styled(Tag)`
   display: 'block',
@@ -21,7 +22,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
 
   const taskTitle = task ? task.title : ''
-  const archivedTag = task?.archived && (
+  const statusTag = task?.status == STATUS.COMPLETED && (
     <StyledTag colour="green" data-test="activity-kind-label">
       COMPLETED
     </StyledTag>
@@ -30,7 +31,7 @@ const TaskDetails = ({ task, breadcrumbs }) => {
   return (
     <DefaultLayout
       heading={taskTitle}
-      subheading={archivedTag}
+      subheading={statusTag}
       pageTitle={taskTitle}
       breadcrumbs={breadcrumbs}
       useReactRouter={false}

@@ -13,6 +13,7 @@ import urls from '../../../../../../src/lib/urls'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 import Provider from '../../provider'
+import { STATUS } from '../../../../../../src/client/modules/Tasks/TaskForm/constants'
 
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
@@ -24,7 +25,7 @@ describe('My Tasks on the Dashboard', () => {
   )
   // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
-  myTasksList[1].archived = true
+  myTasksList[1].status = STATUS.COMPLETED
 
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
