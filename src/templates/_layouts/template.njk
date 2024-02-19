@@ -1,6 +1,6 @@
-{% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{% from "button/macro.njk" import govukButton %}
-{% from "details/macro.njk" import govukDetails %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "_macros/form.njk" import FormGroup, Fieldset, TextField, AddAnother, Link, FormSubHeading, MultipleChoiceField, PreviouslySelected, HiddenField, DateFieldset, DateField, UneditableField %}
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/common.njk" import LocalHeader with context %}
@@ -12,7 +12,7 @@
   {% extends "./xhr.njk" %}
 {% else %}
   {# This one: https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/template.njk #}
-  {% extends "template.njk" %}
+  {% extends "govuk/template.njk" %}
 {% endif %}
 
 {# Remove the skipLink from the base template #}
