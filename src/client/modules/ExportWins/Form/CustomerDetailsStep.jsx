@@ -3,13 +3,11 @@ import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
-import { Step, FieldTypeahead, ContactInformation } from '../../../components'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { useFormContext } from '../../../../client/components/Form/hooks'
 import { idNameToValueLabel } from '../../../../client/utils'
-import Task from '../../../components/Task'
-import { ID } from './state'
+import { Step, FieldTypeahead } from '../../../components'
+import { StyledHintParagraph } from './styled'
+
 import { steps } from './constants'
 import {
   UKRegionsResource,
@@ -19,7 +17,6 @@ import {
 } from '../../../components/Resource'
 
 const CustomerDetailsStep = () => {
-  const { values } = useFormContext()
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const companyId = queryParams.company
@@ -39,25 +36,10 @@ const CustomerDetailsStep = () => {
         autoScroll={true}
         resultToOptions={({ results }) => results.map(idNameToValueLabel)}
       />
-      <Task>
-        {(getTask) => {
-          const openContactFormTask = getTask(TASK_REDIRECT_TO_CONTACT_FORM, ID)
-          return (
-            <ContactInformation
-              companyId={companyId}
-              onOpenContactForm={({ redirectUrl }) => {
-                openContactFormTask.start({
-                  payload: {
-                    values,
-                    url: redirectUrl,
-                    storeId: ID,
-                  },
-                })
-              }}
-            />
-          )
-        }}
-      </Task>
+      <StyledHintParagraph data-test="contact-hint">
+        To select a customer contact name, it must have already been added to
+        Data Hub. If not listed, go to the company page to add them.
+      </StyledHintParagraph>
       <ResourceOptionsField
         name="customer_location"
         id="customer-location"

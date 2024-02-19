@@ -18,7 +18,7 @@ import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
-import CheckBeforeSendingStep from './CheckBeforeSending'
+import CheckBeforeSendingStep from './CheckBeforeSendingStep'
 
 const CompanyName = ({ companyId }) => (
   <CompanyResource.Inline id={companyId}>

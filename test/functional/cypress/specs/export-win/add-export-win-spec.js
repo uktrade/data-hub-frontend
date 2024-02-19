@@ -59,8 +59,7 @@ const formFields = {
   customerDetails: {
     heading: '[data-test="step-heading"]',
     contacts: '[data-test="field-company_contacts"]',
-    addContactLink: '[data-test="add-a-new-contact-link"]',
-    details: '[data-test="contact-information-details"]',
+    contactHint: '[data-test="contact-hint"]',
     location: '[data-test="field-customer_location"]',
     potential: '[data-test="field-business_potential"]',
     experience: '[data-test="field-export_experience"]',
@@ -388,9 +387,11 @@ describe('Adding an export win', () => {
       cy.get(customerDetails.heading).should('have.text', 'Customer details')
     })
 
-    it('should show a contact link and details', () => {
-      cy.get(customerDetails.addContactLink).should('be.visible')
-      cy.get(customerDetails.details).should('be.visible')
+    it('should render a contact hint', () => {
+      cy.get(customerDetails.contactHint).should(
+        'have.text',
+        'To select a customer contact name, it must have already been added to Data Hub. If not listed, go to the company page to add them.'
+      )
     })
 
     it('should render Company contacts label and a Typeahead', () => {

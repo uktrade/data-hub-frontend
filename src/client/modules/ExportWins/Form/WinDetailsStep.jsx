@@ -9,6 +9,7 @@ import CountriesResource from '../../../components/Resource/Countries'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { SectorResource } from '../../../components/Resource'
 import { OPTION_YES } from '../../../../common/constants'
+import { validateWinDate } from './validators'
 import { WinTypeValues } from './WinTypeValues'
 import { StyledHintParagraph } from './styled'
 import {
@@ -70,6 +71,7 @@ const WinDetailsStep = () => {
         hint={`For example ${month} ${year}, date of win must be in the last 12 months.`}
         required="Enter the win date"
         invalid="Enter a valid date"
+        validate={validateWinDate}
       />
       <FieldTextarea
         name="description"
