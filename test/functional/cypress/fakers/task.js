@@ -4,6 +4,7 @@ import { pick } from 'lodash'
 import { listFaker } from './utils'
 import { companyFaker } from './companies'
 import { interactionFaker } from './interactions'
+import { STATUS } from '../../../../src/client/modules/Tasks/TaskForm/constants'
 
 const basicAdviserFaker = (overrides = {}) => ({
   name: faker.person.fullName(),
@@ -29,7 +30,7 @@ const taskFaker = (overrides = {}) => ({
   modifiedBy: basicAdviserFaker(),
   modifiedOn: faker.date.past().toISOString(),
   createdOn: faker.date.past().toISOString(),
-  status: 'active',
+  status: STATUS.ACTIVE,
 
   ...overrides,
 })
