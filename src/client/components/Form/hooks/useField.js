@@ -37,12 +37,15 @@ function useField({
 
   const fieldState = getFieldState(name, initialValue)
 
+  // console.log('**** fieldstate ****')
+  // console.log(fieldState)
   return {
     name,
     value: fieldState.value,
     error: fieldState.error,
     touched: fieldState.touched,
     onChange: (e) => setFieldValue(name, e.target.value),
+    onChangeFileUpload: (e) => setFieldValue(name, e.target.files[0]),
     onBlur: () => setFieldTouched(name, true),
   }
 }

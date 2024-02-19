@@ -1,6 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { FileUpload } from 'govuk-react'
 
 import {
   DefaultLayout,
@@ -20,6 +19,8 @@ import {
 import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField/index.jsx'
 import { buildProjectBreadcrumbs } from '../../utils.js'
 import { FORM_LAYOUT } from '../../../../../common/constants.js'
+import FieldFileUpload from '../../../../components/Form/elements/FieldFileUpload/index.jsx'
+import { transformEvidenceForApi } from './transformers.js'
 
 const InvestmentName = (props) => (
   <InvestmentResource.Inline {...props}>
@@ -62,24 +63,33 @@ const AddProjectDocument = () => {
           submissionTaskName={TASK_ADD_PROJECT_DOCUMENT}
           submitButtonLabel="Upload"
           redirectTo={() => urls.investments.projects.evidence.index(projectId)}
+          flashMessage={() => '1 File Uploaded'}
+          transformPayload={(values) => ({
+            projectId,
+            values: transformEvidenceForApi(values),
+          })}
         >
-          <FileUpload />
+          <FieldFileUpload
+            name="file_upload"
+            required="Choose a document"
+            label="Choose evidence document"
+          />
           <FieldWrapper
-            name="verification-criteria"
-            legend="Verifiation criteria"
+            name="verification_criteria"
+            legend="Verification criteria"
             showBorder={true}
           >
             <FieldAddAnother
-              name="add-verifiction-criteria"
+              name="add_verifiction_criteria"
               itemName="verification criteria"
-              dataTestPrefix="criteria-field-"
+              dataTestPrefix="criteria_field_"
               buttonText="Add another"
               buttonMargin={0}
             >
               {({ groupIndex }) => (
                 <ResourceOptionsField
-                  id={`criteria-${groupIndex}`}
-                  name={`criteria-${groupIndex}`}
+                  id={`criteria_${groupIndex}`}
+                  name={`criteria_${groupIndex}`}
                   emptyOption="-- Select criteria --"
                   required="Select a criteria"
                   fullWidth={true}

@@ -332,8 +332,14 @@ import {
 } from './modules/Investments/Projects/Team/state'
 import { updateTeamMembers } from './modules/Investments/Projects/Team/tasks'
 
-import { TASK_DELETE_PROJECT_DOCUMENT } from './modules/Investments/Projects/Evidence/state'
-import { deleteProjectDocument } from './modules/Investments/Projects/Evidence/tasks'
+import {
+  TASK_ADD_PROJECT_DOCUMENT,
+  TASK_DELETE_PROJECT_DOCUMENT,
+} from './modules/Investments/Projects/Evidence/state'
+import {
+  addProjectDocument,
+  deleteProjectDocument,
+} from './modules/Investments/Projects/Evidence/tasks'
 
 import {
   TASK_EDIT_INVESTMENT_PROJECT_REQUIREMENTS,
@@ -697,4 +703,5 @@ export const tasks = {
   [TASK_PREVIEW_QUOTE]: previewQuote,
   [TASK_CREATE_QUOTE]: createQuote,
   [TASK_CANCEL_QUOTE]: cancelQuote,
+  [TASK_ADD_PROJECT_DOCUMENT]: addProjectDocument,
 }
