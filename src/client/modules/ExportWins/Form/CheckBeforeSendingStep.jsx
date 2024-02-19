@@ -50,8 +50,8 @@ const CheckBeforeSendingStep = ({ isEditing }) => {
       <WinDetailsTable {...props} />
       <SupportGivenTable {...props} />
       <WarningText data-test="warning-text">
-        This information will be sent to {values.contact?.label} so they can
-        confirm the export win.
+        This information will be sent to {values.company_contacts?.email} so
+        they can confirm the export win.
       </WarningText>
       {/*
           TODO: We have to include this hidden field 

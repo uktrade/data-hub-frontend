@@ -69,6 +69,12 @@ const getWinTypesFromBreakdowns = (breakdowns) => {
   return Array.from(winTypeSet)
 }
 
+const transformCompanyContact = ({ id, name, email }) => ({
+  value: id,
+  label: name,
+  email,
+})
+
 export const transformTeamsAndAdvisers = (values) =>
   Object.keys(values)
     .filter((key) => key.startsWith('contributing_officer_'))
@@ -101,14 +107,15 @@ export const transformExportProjectForForm = (exportProject) => {
     lead_officer: idNameToValueLabel(exportProject.owner),
     team_members: exportProject.team_members.map(idNameToValueLabel),
     // Customer details
-    export_experience:
-      // We need the check here as exporter_experience is
-      // optional within the Export project form
-      exportProject.exporter_experience &&
-      idNameToValueLabel(exportProject.exporter_experience).value,
-    contact:
+    // The exporter experience field is optional when adding an Export Project
+    ...(exportProject.exporter_experience && {
+      export_experience: [
+        idNameToValueLabel(exportProject.exporter_experience),
+      ],
+    }),
+    company_contacts:
       exportProject.contacts.length === 1
-        ? idNameToValueLabel(exportProject.contacts[0])
+        ? transformCompanyContact(exportProject.contacts[0])
         : null, // Get the user to choose the contact
     // Win Details
     date: isDateWithinLastTwelveMonths(date) && {
@@ -130,7 +137,7 @@ export const transformExportWinForForm = (exportWin) => ({
   credit_for_win: exportWin.advisers.length ? OPTION_YES : OPTION_NO,
   ...transformAdvisersToContributingOfficers(exportWin.advisers),
   // Customer details
-  company_contacts: idNameToValueLabel(exportWin.company_contacts[0]),
+  company_contacts: transformCompanyContact(exportWin.company_contacts[0]),
   customer_location: idNameToValueLabel(exportWin.customer_location),
   business_potential: idNameToValueLabel(exportWin.business_potential),
   export_experience: idNameToValueLabel(exportWin.export_experience),

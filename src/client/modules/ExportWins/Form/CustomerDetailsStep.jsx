@@ -4,10 +4,8 @@ import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
-import { idNameToValueLabel } from '../../../../client/utils'
 import { Step, FieldTypeahead } from '../../../components'
 import { StyledHintParagraph } from './styled'
-
 import { steps } from './constants'
 import {
   UKRegionsResource,
@@ -34,7 +32,13 @@ const CustomerDetailsStep = () => {
         resource={CompanyContactsResource}
         field={FieldTypeahead}
         autoScroll={true}
-        resultToOptions={({ results }) => results.map(idNameToValueLabel)}
+        resultToOptions={({ results }) =>
+          results.map(({ id, name, email }) => ({
+            value: id,
+            label: name,
+            email,
+          }))
+        }
       />
       <StyledHintParagraph data-test="contact-hint">
         To select a customer contact name, it must have already been added to
