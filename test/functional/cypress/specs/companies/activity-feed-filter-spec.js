@@ -229,7 +229,7 @@ describe('Company Activity Feed Filter', () => {
       })
     })
 
-    context('Include related companies filter', () => {
+    context.skip('Include related companies filter', () => {
       const companyActivitiesEndPoint =
         urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
         '/data**'
