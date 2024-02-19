@@ -395,6 +395,9 @@ import {
   TASK_SAVE_ORDER_ASSIGNEES,
   TASK_SAVE_ORDER_SUBSCRIBERS,
   TASK_SET_LEAD_ADVISER,
+  TASK_PREVIEW_QUOTE,
+  TASK_CREATE_QUOTE,
+  TASK_CANCEL_QUOTE,
 } from './modules/Omis/state'
 import {
   cancelOrder,
@@ -405,6 +408,9 @@ import {
   saveOrderAssignees,
   saveOrderSubscribers,
   setLeadAdviser,
+  previewQuote,
+  createQuote,
+  cancelQuote,
 } from './modules/Omis/tasks'
 
 import { TASK_GET_COMPANIES } from './modules/Omis/CreateOrder/CompanySelect/state'
@@ -688,4 +694,7 @@ export const tasks = {
   [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
   [TASK_SET_GLOBAL_HQ]: setGlobalHq,
   [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
+  [TASK_PREVIEW_QUOTE]: previewQuote,
+  [TASK_CREATE_QUOTE]: createQuote,
+  [TASK_CANCEL_QUOTE]: cancelQuote,
 }

@@ -13,10 +13,16 @@ export const TASK_EDIT_ORDER_CONTACT = 'TASK_EDIT_ORDER_CONTACT'
 export const TASK_SAVE_ORDER_ASSIGNEES = 'TASK_SAVE_ORDER_ASSIGNEES'
 export const TASK_SAVE_ORDER_SUBSCRIBERS = 'TASK_SAVE_ORDER_SUBSCRIBERS'
 export const TASK_SET_LEAD_ADVISER = 'TASK_SET_LEAD_ADVISER'
+export const TASK_PREVIEW_QUOTE = 'TASK_PREVIEW_QUOTE'
+export const TASK_CREATE_QUOTE = 'TASK_CREATE_QUOTE'
+export const TASK_CANCEL_QUOTE = 'TASK_CANCEL_QUOTE'
 
 export const EDIT_CONTACT_ID = 'editOmisContactId'
 export const SET_LEAD_ADVISER_ID = 'setLeadAdviserId'
+export const PREVIEW_QUOTE_ID = 'previewQuote'
 
 export const state2props = (state) => ({
   csrfToken: state.csrfToken,
 })
+
+export const quoteState2props = (state) => state[PREVIEW_QUOTE_ID]

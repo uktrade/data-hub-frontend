@@ -104,8 +104,6 @@
         {% set value = props.value | formatDate('MMMM yyyy') %}
       {% elif props.type === 'datetime' %}
         {% set value = props.value | formatDateTime %}
-      {% elif props.type === 'fromNow' %}
-        {% set value = FromNow({ datetime: props.value }) %}
       {% else %}
         {% set value = props.value %}
       {% endif %}

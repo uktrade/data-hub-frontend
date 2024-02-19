@@ -1,0 +1,27 @@
+{
+    "created_on": "2021-02-02T14:13:10.030533Z",
+    "created_by": {
+        "name": "Miranda Pottinger",
+        "first_name": "Miranda",
+        "last_name": "Pottinger",
+        "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
+    },
+    "cancelled_on": "2021-02-02T14:13:10.030533Z",
+    "cancelled_by": {
+        "name": "Miranda Pottinger",
+        "first_name": "Miranda",
+        "last_name": "Pottinger",
+        "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
+      },
+    "accepted_on": "2022-02-02T14:13:10.030533Z",
+    "accepted_by": {
+      "name": "Miranda Pottinger",
+      "first_name": "Miranda",
+      "last_name": "Pottinger",
+      "id": "d5b8be3f-d9da-411e-8acf-f85986e3b4dd"
+    },
+    "expires_on": "2021-03-04",
+    "content": "Date: 2 Feb 2021\n\n# Quote for the Provision of an Overseas Market Introduction Service (“OMIS”): {{order_reference}} (the **Quote**)\n\nWe, the Department for Business and Trade (**DBT**) agree to provide you {{company_name}} of {{company_address}} with the Services on the terms set out in this Quote.\n\nThe **Services** are those described below:\n\n{{order_description}}\n\nDBT will deliver the Services on or before the **Delivery Date** which shall be 17 December 2022.\n\nIn exchange for these Services you agree to pay the **Charges** which shall be £12 (excluding VAT) on or before the **Payment Date** which shall be the earliest of: the date 30 days from the date of the relevant invoice; or the date 10 days before the Delivery Date. The Payment Date will be specified on your invoice.\n\nAll correspondence will be between our representatives set out below:\n\nThe **DBT Contact** shall be lead_assignee_name. If you do not have contact details for the DBT Contact, please contact generic_contact_email.\n\nThe **Customer Contact** shall be contact_name of company_name, company_address and contact_email.",
+    "terms_and_conditions": "**ANNEX 1**\n\n**TERMS &amp; CONDITIONS FOR DELIVERY OF DEPARTMENT FOR INTERNATIONAL TRADE OVERSEAS MARKET INTRODUCTION SERVICE**\n\n1. **INTERPRETATION**"
+  }
+  

@@ -1,7 +1,5 @@
 const proxyquire = require('proxyquire')
 
-const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
-const companyData = require('../../../../test/unit/data/company.json')
 const orderData = require('../../../../test/unit/data/omis/simple-order.json')
 
 describe('OMIS middleware', () => {
@@ -39,86 +37,6 @@ describe('OMIS middleware', () => {
           getById: this.getByIdStub,
         },
       },
-    })
-  })
-
-  describe('setCompany()', () => {
-    beforeEach(() => {
-      this.companyId = 'c-1234567890'
-    })
-
-    context('when get company resolves', () => {
-      beforeEach(() => {
-        this.getDitCompanyStub.resolves(companyData)
-      })
-
-      it('should call getDitCompany() with correct arguments', async () => {
-        await this.middleware.setCompany(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy,
-          this.companyId
-        )
-
-        expect(this.getDitCompanyStub).to.have.been.calledWith(
-          this.reqMock,
-          this.companyId
-        )
-      })
-
-      it('should set a company property on locals', async () => {
-        await this.middleware.setCompany(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy,
-          this.companyId
-        )
-
-        expect(this.resMock.locals).to.have.property('company')
-        expect(this.resMock.locals.company).to.deep.equal(companyData)
-      })
-
-      it('should call next with no errors', async () => {
-        await this.middleware.setCompany(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy,
-          this.companyId
-        )
-
-        expect(this.nextSpy).to.have.been.calledWith()
-      })
-    })
-
-    context('when a company rejects', () => {
-      beforeEach(() => {
-        this.error = {
-          statusCode: 404,
-        }
-        this.getDitCompanyStub.rejects(this.error)
-      })
-
-      it('should call next with an error', async () => {
-        await this.middleware.setCompany(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy,
-          this.companyId
-        )
-
-        expect(this.nextSpy).to.have.been.calledWith(this.error)
-      })
-
-      it('should not set a company property on locals', async () => {
-        await this.middleware.setCompany(
-          this.reqMock,
-          this.resMock,
-          this.nextSpy,
-          this.companyId
-        )
-
-        expect(this.resMock.locals).to.not.have.property('company')
-      })
     })
   })
 
@@ -330,54 +248,6 @@ describe('OMIS middleware', () => {
       it('should call next with an error', () => {
         expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
-    })
-  })
-
-  describe('setOrderBreadcrumb()', () => {
-    beforeEach(() => {
-      this.resMock.locals.order = {
-        id: '123456789',
-        reference: '12345/AS',
-      }
-    })
-
-    it('should call setHomeBreadcrumb with order reference', () => {
-      this.middleware.setOrderBreadcrumb({}, this.resMock, this.nextSpy)
-
-      expect(this.setHomeBreadcrumbStub).to.have.been.calledOnce
-      expect(this.setHomeBreadcrumbStub).to.have.been.calledWith('12345/AS')
-
-      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
-      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith(
-        {},
-        this.resMock,
-        this.nextSpy
-      )
-    })
-  })
-
-  describe('translate()', () => {
-    beforeEach(() => {
-      this.middlewareParameters = buildMiddlewareParameters({})
-
-      this.middleware.translate(
-        this.middlewareParameters.reqMock,
-        this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy
-      )
-    })
-
-    it('should set the translate function', () => {
-      const actual = this.middlewareParameters.resMock.locals.translate(
-        'fields.contact.label'
-      )
-      expect(actual).to.equal('Contact responsible for the order')
-    })
-
-    it('should call next()', () => {
-      expect(
-        this.middlewareParameters.nextSpy
-      ).to.have.been.calledOnceWithExactly()
     })
   })
 })

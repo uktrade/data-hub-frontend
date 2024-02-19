@@ -83,6 +83,10 @@ module.exports = {
     assignees: require('../../../sandbox/fixtures/v3/omis/assignees.json'),
     subscribers: require('../../../sandbox/fixtures/v3/omis/subscribers.json'),
     emptyOrder: require('../../../sandbox/fixtures/v3/omis/empty-order.json'),
+    quoteNotAccepted: require('../../../sandbox/fixtures/v3/omis/quote-not-accepted.json'),
+    quotePreview: require('../../../sandbox/fixtures/v3/omis/quote-preview.json'),
+    quoteCancelled: require('../../../sandbox/fixtures/v3/omis/quote-cancelled.json'),
+    quote: require('../../../sandbox/fixtures/v3/omis/quote.json'),
   },
   referrals: {
     referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),

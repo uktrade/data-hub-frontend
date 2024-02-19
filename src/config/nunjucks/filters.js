@@ -38,7 +38,6 @@ const {
   isUnparsedDateValid,
   isDateValid,
   format,
-  getDifferenceInWords,
 } = require('../../client/utils/date')
 require('numeral/locales/en-gb')
 const {
@@ -197,10 +196,6 @@ const filters = {
       address.area && featureFlag ? address.area.name : null,
       address.country?.name,
     ]).join(join)
-  },
-
-  fromNow: (value) => {
-    return getDifferenceInWords(value)
   },
 
   applyClassModifiers(className, modifier) {

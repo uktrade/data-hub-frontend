@@ -44,3 +44,14 @@ export const setLeadAdviser = (values) =>
     `v3/omis/order/${values.orderId}/assignee`,
     transformLeadAdviserForApi(values)
   )
+
+export const previewQuote = (id) =>
+  apiProxyAxios
+    .post(`v3/omis/order/${id}/quote/preview`)
+    .then(({ data }) => data)
+
+export const createQuote = ({ id }) =>
+  apiProxyAxios.post(`v3/omis/order/${id}/quote`)
+
+export const cancelQuote = ({ id }) =>
+  apiProxyAxios.post(`v3/omis/order/${id}/quote/cancel`)

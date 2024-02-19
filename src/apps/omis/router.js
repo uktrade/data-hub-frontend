@@ -7,13 +7,11 @@ const {
   removeBreadcrumb,
   handleRoutePermissions,
 } = require('../middleware')
-const { setOrder, translate } = require('./middleware')
+const { setOrder } = require('./middleware')
 
 const viewApp = require('./apps/view')
 const listApp = require('./apps/list')
 const reconciliationApp = require('./apps/reconciliation')
-
-router.use(translate)
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -26,5 +24,4 @@ router.use(
   reconciliationApp.router
 )
 router.use(viewApp.mountpath, viewApp.router)
-
 module.exports = router

@@ -95,6 +95,7 @@ import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCap
 import ExportsIndex from './modules/Companies/CompanyExports/ExportsIndex'
 import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
 import InvestmentProjectAdmin from './modules/Investments/Projects/InvestmentProjectAdmin'
+import OrderQuote from './modules/Omis/OrderQuote'
 
 const routes = {
   companies: [
@@ -407,6 +408,11 @@ const routes = {
       path: '/omis/:orderId/reconciliation/payment-receipt',
       module: 'datahub:orders',
       component: PaymentReceipt,
+    },
+    {
+      path: '/omis/:orderId/quote',
+      module: 'datahub:orders',
+      component: OrderQuote,
     },
   ],
   reminders: [

@@ -181,6 +181,9 @@ import getMyTasksReducer from './components/Dashboard/my-tasks/reducer'
 import { ID as INTERACTION_ID } from './modules/Interactions/InteractionDetails/state'
 import getInteractionReducer from './modules/Interactions/InteractionDetails/reducer'
 
+import { PREVIEW_QUOTE_ID } from './modules/Omis/state'
+import orderQuoteReducer from './modules/Omis/reducer'
+
 const parseProps = (domNode) => {
   if (!domNode) {
     return {
@@ -287,4 +290,5 @@ export const reducers = {
   [GET_MY_TASKS_ID]: getMyTasksReducer,
   [INTERACTION_ID]: getInteractionReducer,
   [PROPOSITION_COMPLETE_ID]: investmentProjectsReducer,
+  [PREVIEW_QUOTE_ID]: orderQuoteReducer,
 }

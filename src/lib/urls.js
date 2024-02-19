@@ -87,6 +87,15 @@ module.exports = {
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
     dataWorkspace: (id) =>
       `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
+    omis: 'https://omis.trade.gov.uk/',
+    nationalArchives: {
+      openGovLicence:
+        'http://www.nationalarchives.gov.uk/doc/open-government-licence',
+    },
+    great: {
+      privacyPolicy: 'https://www.great.gov.uk/uk/privacy-policy/',
+    },
+    govUkHomepage: 'https://www.gov.uk/',
     digitalWorkspace: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
