@@ -44,7 +44,7 @@ describe('Task buttons', () => {
   })
 
   context('When a task is completed', () => {
-    const task = taskWithInvestmentProjectFaker({ archived: true })
+    const task = taskWithInvestmentProjectFaker({ status: 'complete' })
 
     beforeEach(() => {
       cy.mount(<Component task={task} />)
