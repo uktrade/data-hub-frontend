@@ -1,3 +1,6 @@
+import countries from '../../../../../test/sandbox/fixtures/v4/metadata/country.json'
+import businessPotential from '../../../../../test/sandbox/fixtures/v4/metadata/business-potential.json'
+
 const CONTACT = {
   id: 'some-random-contact-id',
   companyId: '008ba003-b528-4e79-b209-49fcfcceb371',
@@ -32,6 +35,8 @@ export default {
           })
     ),
   TASK_GET_REMINDER_SUMMARY: () => Promise.resolve('???'),
+  Countries: () => countries,
+  BusinessPotential: () => businessPotential,
   Contact: () => {
     return new Promise((resolve, reject) => {
       Math.random() > 0.5

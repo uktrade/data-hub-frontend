@@ -10,6 +10,11 @@ import { deepKeysToCamelCase } from '../../utils'
 import ProgressIndicator from '../ProgressIndicator'
 import Err from '../Task/Error'
 import PaginatedResource from './Paginated'
+import ResourceOptionsField from '../Form/elements/ResourceOptionsField'
+import FieldRadios from '../Form/elements/FieldRadios'
+import FieldCheckboxes from '../Form/elements/FieldCheckboxes'
+import FieldTypeahead from '../Form/elements/FieldTypeahead'
+import FieldSelect from '../Form/elements/FieldSelect'
 
 /**
  * @function Resource
@@ -240,6 +245,13 @@ export const createCollectionResource = (name, endpoint) => {
  * API task to the specified {endpoint}. The total collection count is passed
  * as the second argument to the component's {children} function and the raw
  * response data as third.
+ * The resulting component also comes with these form field subcomponents,
+ * which you can use with the `<Form/>` component:
+ * - `FieldOptions`
+ * - `FieldRadios`
+ * - `FieldSelect`
+ * - `FieldCheckboxes`
+ * - `FieldTypeahead`
  * @example
  * // Create a Resource component pre-bound to name="Company"
  * const CountriesResource = createMetadataResource('Countries', 'country')
@@ -255,6 +267,16 @@ export const createCollectionResource = (name, endpoint) => {
  *     <pre>{JSON.stringify({total, countries, rawData}, null, 2)}</pre>
  *   }
  * </CountriesResource>
+ *
+ * // Form field sub-components
+ * <Form
+ *   // ...
+ * >
+ *   <CountriesResource.FieldRadios name="countryRadios"/>
+ *   <CountriesResource.FieldSelect name="countrySelect"/>
+ *   <CountriesResource.FieldCheckboxes name="countryCheckboxes"/>
+ *   <CountriesResource.FieldTypeahead name="countryTypeahead"/>
+ * </Form>
  */
 export const createMetadataResource = (name, endpoint) => {
   const EntityResource = createEntityResource(
@@ -274,5 +296,26 @@ export const createMetadataResource = (name, endpoint) => {
   Component.tasks = EntityResource.tasks
   Component.transformer = transformer
   Component.taskName = name
+
+  Component.FieldOptions = (props) => (
+    <ResourceOptionsField id="__METADATA__" {...props} resource={Component} />
+  )
+
+  Component.FieldRadios = (props) => (
+    <Component.FieldOptions {...props} field={FieldRadios} />
+  )
+
+  Component.FieldSelect = (props) => (
+    <Component.FieldOptions {...props} field={FieldSelect} />
+  )
+
+  Component.FieldCheckboxes = (props) => (
+    <Component.FieldOptions {...props} field={FieldCheckboxes} />
+  )
+
+  Component.FieldTypeahead = (props) => (
+    <Component.FieldOptions {...props} field={FieldTypeahead} />
+  )
+
   return Component
 }
