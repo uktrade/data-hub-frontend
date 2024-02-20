@@ -31,10 +31,10 @@ export const EditExportWin = ({ location, match }) => {
     <ExportWinForm
       title="Edit export win"
       companyId={queryParams.company}
-      exportWinId={match.params.exportWinId}
+      exportWinId={match.params.winId}
       initialValuesTaskName={TASK_GET_EXPORT_WIN}
       initialValuesPayload={{
-        id: match.params.exportWinId,
+        id: match.params.winId,
       }}
     />
   )

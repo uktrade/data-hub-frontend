@@ -484,7 +484,7 @@ const routes = {
       component: CreateExportWin,
     },
     {
-      path: '/exportwins/:exportWinId/edit',
+      path: '/exportwins/:winId/edit',
       module: 'datahub:companies',
       component: EditExportWin,
     },
