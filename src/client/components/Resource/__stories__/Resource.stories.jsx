@@ -1,10 +1,13 @@
 import React from 'react'
 
+import Form from '../../Form'
 import TabNav from '../../TabNav'
 import Contact from '../Contact'
 import Company from '../Company'
 import Resource from '../Resource'
 import { InlineTemplate } from '../../Task/__stories__/utils'
+import Countries from '../Countries'
+import BusinessPotential from '../BusinessPotential'
 
 const Json = ({ children }) => <pre>{JSON.stringify(children, null, 2)}</pre>
 
@@ -87,4 +90,24 @@ export const Inline = () => (
     dismissable={<ContactName id="foo" />}
     noRetry={<ContactName id="foo" dismissable={false} noRetry={true} />}
   />
+)
+
+export const MetadataFormFields = () => (
+  <Form id="my-form">
+    {({ values }) => (
+      <>
+        <Countries.FieldSelect name="countrySelect" label="Country" />
+        <Countries.FieldTypeahead name="countryTypeahead" label="Country" />
+        <BusinessPotential.FieldRadios
+          name="businessPotentialRadios"
+          label="Business potential"
+        />
+        <BusinessPotential.FieldCheckboxes
+          name="businessPotentialCheckboxes"
+          label="Business potential"
+        />
+        <Json>{values}</Json>
+      </>
+    )}
+  </Form>
 )
