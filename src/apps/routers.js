@@ -27,6 +27,7 @@ const reactRoutes = [
   '/export/:exportId/delete',
   '/exportwins',
   '/exportwins/create',
+  '/exportwins/:exportWinId/edit',
   '/exportwins/confirmed',
   '/exportwins/unconfirmed',
   '/exportwins/:winId/details',
