@@ -21,12 +21,7 @@ const preloadedState = {
 
 const sagaMiddleware = createSagaMiddleware()
 
-const history = createBrowserHistory({
-  // The baseURI is set to the <base/> tag by the spaFallbackSpread
-  // middleware, which should be applied to each Express route where
-  // react-router is expected to be used.
-  basename: encodeURIComponent(new URL(document.baseURI).pathname),
-})
+const history = createBrowserHistory()
 
 const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
