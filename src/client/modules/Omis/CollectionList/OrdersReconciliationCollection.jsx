@@ -12,6 +12,7 @@ import { ORDERS__LOADED, ORDERS__METADATA_LOADED } from '../../../actions'
 
 import {
   CollectionFilters,
+  DefaultLayout,
   FilteredCollectionList,
   Filters,
 } from '../../../components'
@@ -83,60 +84,62 @@ const OrdersReconciliationCollection = ({
   )
 
   return (
-    <FilteredCollectionList
-      {...props}
-      collectionName="order"
-      sortOptions={optionMetadata.sortOptions}
-      taskProps={collectionListTask}
-      selectedFilters={selectedFilters}
-      entityName="order"
-      entityNamePlural="orders"
-      titleRenderer={TitleRenderer}
-    >
-      <CollectionFilters taskProps={collectionListMetadataTask}>
-        <Filters.CheckboxGroup
-          legend={LABELS.status}
-          name="status"
-          qsParam="status"
-          options={optionMetadata.statusOptions}
-          selectedOptions={selectedFilters.statuses.options}
-          data-test="status-filter"
-          groupId="status-filter"
-        />
-        <Filters.Input
-          id="OrdersReconciliationCollection.reference"
-          qsParam="reference"
-          name="reference"
-          label={LABELS.reference}
-          placeholder="Search order reference"
-          data-test="reference-filter"
-        />
-        <Filters.Input
-          id="OrdersReconciliationCollection.company-name"
-          qsParam="company_name"
-          name="company_name"
-          label={LABELS.companyName}
-          placeholder="Search company name"
-          data-test="company-name-filter"
-        />
-        <Filters.Input
-          id="OrdersReconciliationCollection.net-amount"
-          qsParam="subtotal_cost"
-          name="subtotal_cost"
-          label={LABELS.netAmount}
-          placeholder="Search net amount"
-          data-test="net-amount-filter"
-        />
-        <Filters.Input
-          id="OrdersReconciliationCollection.gross-amount"
-          qsParam="total_cost"
-          name="total_cost"
-          label={LABELS.grossAmount}
-          placeholder="Search gross amount"
-          data-test="gross-amount-filter"
-        />
-      </CollectionFilters>
-    </FilteredCollectionList>
+    <DefaultLayout heading="Orders (OMIS)" pageTitle="Orders (OMIS)">
+      <FilteredCollectionList
+        {...props}
+        collectionName="order"
+        sortOptions={optionMetadata.sortOptions}
+        taskProps={collectionListTask}
+        selectedFilters={selectedFilters}
+        entityName="order"
+        entityNamePlural="orders"
+        titleRenderer={TitleRenderer}
+      >
+        <CollectionFilters taskProps={collectionListMetadataTask}>
+          <Filters.CheckboxGroup
+            legend={LABELS.status}
+            name="status"
+            qsParam="status"
+            options={optionMetadata.statusOptions}
+            selectedOptions={selectedFilters.statuses.options}
+            data-test="status-filter"
+            groupId="status-filter"
+          />
+          <Filters.Input
+            id="OrdersReconciliationCollection.reference"
+            qsParam="reference"
+            name="reference"
+            label={LABELS.reference}
+            placeholder="Search order reference"
+            data-test="reference-filter"
+          />
+          <Filters.Input
+            id="OrdersReconciliationCollection.company-name"
+            qsParam="company_name"
+            name="company_name"
+            label={LABELS.companyName}
+            placeholder="Search company name"
+            data-test="company-name-filter"
+          />
+          <Filters.Input
+            id="OrdersReconciliationCollection.net-amount"
+            qsParam="subtotal_cost"
+            name="subtotal_cost"
+            label={LABELS.netAmount}
+            placeholder="Search net amount"
+            data-test="net-amount-filter"
+          />
+          <Filters.Input
+            id="OrdersReconciliationCollection.gross-amount"
+            qsParam="total_cost"
+            name="total_cost"
+            label={LABELS.grossAmount}
+            placeholder="Search gross amount"
+            data-test="gross-amount-filter"
+          />
+        </CollectionFilters>
+      </FilteredCollectionList>
+    </DefaultLayout>
   )
 }
 export default connect(reconciliationOrdersState2props)(
