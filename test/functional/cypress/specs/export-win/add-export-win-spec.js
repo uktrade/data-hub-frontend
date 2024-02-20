@@ -4,6 +4,7 @@ import { getTwelveMonthsAgo } from '../../../../../src/client/modules/ExportWins
 import { winTypeId } from '../../../../../src/client/modules/ExportWins/Form/constants'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
+import { contactFaker } from '../../fakers/contacts'
 import urls from '../../../../../src/lib/urls'
 import {
   assertUrl,
@@ -118,6 +119,16 @@ const createBreakdown = ({ type, values }) =>
 describe('Adding an export win', () => {
   beforeEach(() => {
     cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company)
+    cy.intercept('GET', `/api-proxy/v4/contact?company_id=${company.id}`, {
+      results: [
+        contactFaker({
+          name: 'Joseph Barker',
+          email: 'joseph.barker@test.com',
+          id: '000',
+        }),
+      ],
+    })
+
     cy.intercept('/api-proxy/adviser/?*', {
       results: [
         { id: '100', name: 'David Meyer' },
@@ -862,7 +873,7 @@ describe('Adding an export win', () => {
       clickContinueAndAssertUrl(customerDetailsStep)
 
       // Customer details
-      cy.get(customerDetails.contacts).selectTypeaheadOption('Joseph Woof')
+      cy.get(customerDetails.contacts).selectTypeaheadOption('Joseph Barker')
       cy.get(customerDetails.location).selectTypeaheadOption('Scotland')
       cy.get(customerDetails.potential).selectTypeaheadOption(
         'The company is a Medium Sized Business'
@@ -965,7 +976,7 @@ describe('Adding an export win', () => {
         heading: 'Customer details',
         showEditLink: false,
         content: {
-          'Contact name': 'Joseph Woof',
+          'Contact name': 'Joseph Barker',
           'HQ location': 'Scotland',
           'Export potential': 'The company is a Medium Sized Business',
           'Export experience': 'Never exported',
@@ -1014,7 +1025,7 @@ describe('Adding an export win', () => {
     it('should render warning text', () => {
       cy.get('[data-test="warning-text"]').should(
         'contain',
-        'This information will be sent to  so they can confirm the export win.'
+        'This information will be sent to joseph.barker@test.com so they can confirm the export win.'
       )
     })
 
@@ -1040,7 +1051,7 @@ describe('Adding an export win', () => {
               team_type: '201',
             },
           ],
-          company_contacts: ['5e75d636-1d24-416a-aaf0-3fb220d594ce'],
+          company_contacts: ['000'],
           customer_location: '8c4cd12a-6095-e211-a939-e4115bead28a',
           business_potential: 'e4d74957-60a4-4eab-a17b-d4c7b792ad25',
           export_experience: '051a0362-d1a9-41c0-8a58-3171e5f59a8e',
