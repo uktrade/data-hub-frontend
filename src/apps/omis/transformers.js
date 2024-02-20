@@ -77,29 +77,6 @@ function transformOrderToListItem({
   return item
 }
 
-function transformOrderToTableItem({
-  id,
-  reference,
-  payment_due_date,
-  company,
-  subtotal_cost,
-  total_cost,
-} = {}) {
-  if (!id || !reference) {
-    return
-  }
-
-  return {
-    id,
-    reference,
-    payment_due_date,
-    company: get(company, 'name'),
-    subtotal_cost: parseInt(subtotal_cost) / 100,
-    total_cost: parseInt(total_cost) / 100,
-  }
-}
-
 module.exports = {
   transformOrderToListItem,
-  transformOrderToTableItem,
 }

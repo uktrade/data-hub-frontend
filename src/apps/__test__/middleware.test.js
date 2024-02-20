@@ -267,47 +267,6 @@ describe('Apps middleware', () => {
     })
   })
 
-  describe('setDefaultQuery()', () => {
-    beforeEach(() => {
-      this.resMock = {
-        redirect: sinon.spy(),
-      }
-    })
-
-    it('should redirect to default query if initial query is empty', () => {
-      const reqMock = {
-        query: {},
-        originalUrl: '/sub-app',
-      }
-      this.middleware.setDefaultQuery({
-        filter: 'apple',
-        sortby: 'sweetness',
-      })(reqMock, this.resMock, this.nextSpy)
-
-      expect(this.nextSpy).to.not.have.been.called
-      expect(this.resMock.redirect).to.be.calledWith(
-        '?filter=apple&sortby=sweetness'
-      )
-    })
-
-    it('should not redirect if query contains properties', () => {
-      const reqMock = {
-        query: {
-          filter: 'pear',
-        },
-        originalUrl: '/sub-app',
-      }
-
-      this.middleware.setDefaultQuery({
-        filter: 'apple',
-        sortby: 'sweetness',
-      })(reqMock, this.resMock, this.nextSpy)
-
-      expect(this.nextSpy).to.have.been.called
-      expect(this.resMock.redirect).to.not.have.been.called
-    })
-  })
-
   describe('handleRoutePermissions()', () => {
     const mockUrl = '/mock-url'
 

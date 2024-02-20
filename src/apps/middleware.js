@@ -1,4 +1,4 @@
-const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
+const { get, assign, intersection, isUndefined } = require('lodash')
 const queryString = require('qs')
 const { parse } = require('url')
 const path = require('path')
@@ -20,11 +20,6 @@ function setHomeBreadcrumb(text) {
     }
     next()
   }
-}
-
-function removeBreadcrumb(req, res, next) {
-  res.removeBreadcrumb()
-  next()
 }
 
 function isPermittedRoute(pathname, routes, userPermissions) {
@@ -77,15 +72,6 @@ function setLocalNav(items = [], appendBaseUrl = true) {
   }
 }
 
-function setDefaultQuery(query = {}) {
-  return function handleDefaultRedirect(req, res, next) {
-    if (isEmpty(req.query)) {
-      return res.redirect(`?${queryString.stringify(query)}`)
-    }
-    next()
-  }
-}
-
 function redirectToFirstNavItem(req, res) {
   return res.redirect(res.locals.localNavItems[0].url)
 }
@@ -99,10 +85,8 @@ function redirectWithQueryString(req, res, relativeUrl) {
 
 module.exports = {
   setHomeBreadcrumb,
-  removeBreadcrumb,
   setLocalNav,
   redirectToFirstNavItem,
-  setDefaultQuery,
   handleRoutePermissions,
   isPermittedRoute,
   redirectWithQueryString,
