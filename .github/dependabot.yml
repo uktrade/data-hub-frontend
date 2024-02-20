@@ -10,21 +10,12 @@ updates:
   open-pull-requests-limit: 10
   ignore:
 # When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx backlog.
-  - dependency-name: govuk-frontend # TET-219
-    versions:
-    - ">= 0"
   - dependency-name: react-redux # TET-154
     versions:
     - "> 7.2.8"
   - dependency-name: react-router-dom # TET-34
     versions:
     - "> 5.3.0"
-  - dependency-name: axios # TET-354
-    versions:
-    - "> 0.27.2"
-  - dependency-name: cypress # TET-372
-    versions:
-    - "> 11.2.0"
   - dependency-name: jsdom # TET-371
     versions:
       - "> 20.0.3"
