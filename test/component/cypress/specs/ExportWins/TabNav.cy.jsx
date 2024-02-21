@@ -11,7 +11,7 @@ describe('Export wins tab navigation', () => {
     <DataHubProvider>
       <ExportWins
         location={{
-          pathname: '/exportwins/unconfirmed',
+          pathname: '/exportwins/sent',
         }}
         {...props}
       />
@@ -19,24 +19,24 @@ describe('Export wins tab navigation', () => {
   )
 
   context('when rendering the breadcrumbs', () => {
-    it('should render both Home and Unconfirmed', () => {
+    it('should render both Home and Sent', () => {
       cy.mount(<Component />)
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        Unconfirmed: null,
+        Sent: null,
       })
     })
-    it('should render both Home and Confirmed', () => {
+    it('should render both Home and Won', () => {
       cy.mount(
         <Component
           location={{
-            pathname: '/exportwins/confirmed',
+            pathname: '/exportwins/won',
           }}
         />
       )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        Confirmed: null,
+        Won: null,
       })
     })
   })
@@ -49,11 +49,11 @@ describe('Export wins tab navigation', () => {
   })
 
   context('When rendering the TabNav component', () => {
-    it('should display both Unconfirmed and Confirmed tabs', () => {
+    it('should display both Sent and Won tabs', () => {
       cy.mount(<Component />)
       cy.get('[data-test="tablist"]').should('exist')
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', ['Unconfirmed', 'Confirmed'])
+      assertLocalNav('@tabItems', ['Sent', 'Won'])
     })
   })
 })

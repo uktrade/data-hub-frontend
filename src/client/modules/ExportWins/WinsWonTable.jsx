@@ -1,18 +1,19 @@
 import React from 'react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { Table, Link } from 'govuk-react'
 import styled from 'styled-components'
-import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
 
-import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDate } from '../../../utils/date'
-import ExportWinsResource from '../../../components/Resource/ExportWins'
-import urls from '../../../../lib/urls'
+import ExportWinsResource from '../../components/Resource/ExportWins'
+import { currencyGBP } from '../../utils/number-utils'
+import { formatMediumDate } from '../../utils/date'
+import { WIN_FILTERS } from './constants'
+import urls from '../../../lib/urls'
 
 const NoWrapCell = styled(Table.Cell)`
   white-space: nowrap;
 `
 
-export const ExportWinsTable = ({ exportWins }) => (
+export const WinsWonTable = ({ exportWins }) => (
   <Table
     head={
       <Table.Row>
@@ -36,7 +37,10 @@ export const ExportWinsTable = ({ exportWins }) => (
       }) => (
         <Table.Row key={id}>
           <Table.Cell>
-            <Link as={ReactRouterLink} to={urls.companies.detail(company.id)}>
+            <Link
+              as={ReactRouterLink}
+              to={urls.companies.overview.index(company.id)}
+            >
               {company.name}
             </Link>
           </Table.Cell>
@@ -47,8 +51,12 @@ export const ExportWinsTable = ({ exportWins }) => (
             {formatMediumDate(customer_response?.created_on)}
           </NoWrapCell>
           <NoWrapCell>
-            {/* TODO: Add target to the link once the path is decided */}
-            <Link as={ReactRouterLink}>View details</Link>
+            <Link
+              as={ReactRouterLink}
+              to={urls.companies.exportWins.details(id)}
+            >
+              View details
+            </Link>
           </NoWrapCell>
         </Table.Row>
       )
@@ -58,9 +66,9 @@ export const ExportWinsTable = ({ exportWins }) => (
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="unconfirmed-export-wins"
-    payload={{ filter: 'confirmed' }}
+    id="export-wins-won"
+    payload={{ confirmed: WIN_FILTERS.WON }}
   >
-    {(page) => <ExportWinsTable exportWins={page} />}
+    {(page) => <WinsWonTable exportWins={page} />}
   </ExportWinsResource.Paginated>
 )

@@ -27,14 +27,12 @@ const fakeExportWin = (_, i) => ({
   },
 })
 
-const CONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
-const UNCONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
+const WON_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
+const SENT_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
 
 export const getExportWinCollection = (req, res) => {
   const exportWins =
-    req.query.filter === 'unconfirmed'
-      ? UNCONFIRMED_EXPORT_WINS
-      : CONFIRMED_EXPORT_WINS
+    req.query.filter === 'sent' ? SENT_EXPORT_WINS : WON_EXPORT_WINS
 
   const limit = parseInt(req.query.limit, 10)
   const offset = parseInt(req.query.offset, 10)

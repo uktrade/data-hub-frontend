@@ -465,12 +465,12 @@ const routes = {
   ],
   exportWins: [
     {
-      path: '/exportwins/unconfirmed',
+      path: '/exportwins/sent',
       module: 'datahub:companies',
       component: ExportWins,
     },
     {
-      path: '/exportwins/confirmed',
+      path: '/exportwins/won',
       module: 'datahub:companies',
       component: ExportWins,
     },
