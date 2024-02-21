@@ -65,7 +65,6 @@ const _Form = ({
   redirectMode = 'hard',
   scrollToTopOnStep = false,
   showStepInUrl = false,
-  reactRouterRedirect,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
   onSuccess,
@@ -293,9 +292,10 @@ const _Form = ({
                                             )
                                             props.writeFlashMessage(message)
                                           }
+                                          // TODO: Remove this once we can navigate to Express routes with React Router
                                           redirectMode === 'soft' &&
                                             redirectTo &&
-                                            history.push(
+                                            history.replace(
                                               redirectTo(result, values)
                                             )
                                           onSuccess &&
@@ -303,7 +303,7 @@ const _Form = ({
                                               flashMessage:
                                                 props.writeFlashMessage,
                                               hardRedirect,
-                                              softRedirect: history.push,
+                                              softRedirect: history.replace,
                                             })
                                           props.resetResolved()
                                         }
