@@ -1,29 +1,4 @@
-const { search, exportSearch } = require('../services')
-const { transformApiResponseToSearchCollection } = require('../transformers')
-
-function getCollection(searchEntity, entityDetails, ...itemTransformers) {
-  return async function (req, res, next) {
-    try {
-      res.locals.results = await search({
-        searchEntity,
-        requestBody: req.body,
-        req,
-        page: req.query.page,
-        isAggregation: false,
-      }).then(
-        transformApiResponseToSearchCollection(
-          { query: req.query },
-          entityDetails,
-          ...itemTransformers
-        )
-      )
-
-      next()
-    } catch (error) {
-      next(error)
-    }
-  }
-}
+const { exportSearch } = require('../services')
 
 function exportCollection(searchEntity) {
   return async function (req, res, next) {
@@ -45,5 +20,4 @@ function exportCollection(searchEntity) {
 
 module.exports = {
   exportCollection,
-  getCollection,
 }

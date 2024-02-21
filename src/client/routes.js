@@ -96,6 +96,7 @@ import ExportsIndex from './modules/Companies/CompanyExports/ExportsIndex'
 import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
 import InvestmentProjectAdmin from './modules/Investments/Projects/InvestmentProjectAdmin'
 import OrderQuote from './modules/Omis/OrderQuote'
+import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 
 const routes = {
   companies: [
@@ -413,6 +414,11 @@ const routes = {
       path: '/omis/:orderId/quote',
       module: 'datahub:orders',
       component: OrderQuote,
+    },
+    {
+      path: '/omis/reconciliation',
+      module: 'datahub:orders',
+      component: OrdersReconciliationCollection,
     },
   ],
   reminders: [

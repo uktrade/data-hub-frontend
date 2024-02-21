@@ -31,7 +31,6 @@ import ContactLocalHeader from './components/ContactLocalHeader'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import InteractionDetails from './modules/Interactions/InteractionDetails'
-import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import PropositionDetails from './modules/Investments/Projects/Propositions/PropositionDetails'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 
@@ -220,9 +219,6 @@ function App() {
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}
-        </Mount>
-        <Mount selector="#orders-reconciliation-collection">
-          {(props) => <OrdersReconciliationCollection {...props} />}
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}

@@ -7,6 +7,7 @@ import {
 import { getPageOffset } from '../../../utils/pagination'
 import { metadata } from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
+import { STATUS } from '../constants'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
@@ -66,7 +67,14 @@ export const getOrdersReconciliation = ({
     .post('/v3/search/order', {
       limit,
       offset: getPageOffset({ limit, page }),
-      status,
+      status: status
+        ? status
+        : [
+            STATUS.QUOTE_ACCEPTED,
+            STATUS.PAID,
+            STATUS.CANCELLED,
+            STATUS.COMPLETE,
+          ],
       sortby,
       uk_region,
       reference,
