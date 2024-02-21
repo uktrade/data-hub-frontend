@@ -78,7 +78,7 @@ describe('Export wins table', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.detail(exportWin.company.id)
+          urls.companies.overview.index(exportWin.company.id)
         )
     )
 
