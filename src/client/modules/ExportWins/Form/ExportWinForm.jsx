@@ -1,24 +1,18 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { getQueryParamsFromLocation } from '../../../../client/utils/url'
+import { state2props, TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
 import { DefaultLayout, Form, FormLayout } from '../../../components'
 import { CompanyResource } from '../../../components/Resource'
 import { transformFormValuesForAPI } from './transformers'
 import urls from '../../../../lib/urls'
-import {
-  state2props,
-  TASK_GET_EXPORT_WIN,
-  TASK_GET_EXPORT_PROJECT,
-  TASK_GET_EXPORT_WINS_SAVE_FORM,
-} from './state'
-import OfficerDetailsStep from './OfficerDetailsStep'
+
+import CheckBeforeSendingStep from './CheckBeforeSendingStep'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
-import WinDetailsStep from './WinDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
-import CheckBeforeSendingStep from './CheckBeforeSendingStep'
+import OfficerDetailsStep from './OfficerDetailsStep'
+import WinDetailsStep from './WinDetailsStep'
 
 const CompanyName = ({ companyId }) => (
   <CompanyResource.Inline id={companyId}>
@@ -26,22 +20,20 @@ const CompanyName = ({ companyId }) => (
   </CompanyResource.Inline>
 )
 
-const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
-  const companyId = queryParams.company
-  const stepProps = { isEditing }
-
-  const initialValuesTaskName = queryParams.export
-    ? TASK_GET_EXPORT_PROJECT
-    : queryParams.exportwin
-      ? TASK_GET_EXPORT_WIN
-      : null
-
+const ExportWinForm = ({
+  title,
+  companyId,
+  exportWinId,
+  initialValuesTaskName,
+  initialValuesPayload,
+  csrfToken,
+  currentAdviserId,
+}) => {
+  const stepProps = { isEditing: !!exportWinId }
   return (
     <DefaultLayout
-      heading="Add export win"
-      pageTitle="Add export win"
+      heading={title}
+      pageTitle={title}
       subheading={<CompanyName companyId={companyId} />}
       breadcrumbs={[
         {
@@ -56,20 +48,20 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
           link: urls.companies.detail(companyId),
           text: <CompanyName companyId={companyId} />,
         },
-        { text: 'Add export win' },
+        { text: title },
       ]}
     >
       <FormLayout>
         <Form
-          id="add-export-win"
+          id="export-win-form"
           showStepInUrl={true}
           cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
           redirectTo={() => urls.companies.exportWins.unconfirmed()}
-          analyticsFormName="addExportWin"
+          analyticsFormName="exportWinForm"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
           initialValuesTaskName={initialValuesTaskName}
           transformPayload={(values) => ({
-            exportWinId: queryParams.exportwin,
+            exportWinId,
             payload: {
               ...transformFormValuesForAPI(values),
               company: companyId,
@@ -77,9 +69,7 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
               adviser: currentAdviserId,
             },
           })}
-          initialValuesPayload={{
-            id: queryParams.export || queryParams.exportwin,
-          }}
+          initialValuesPayload={initialValuesPayload}
         >
           <>
             <OfficerDetailsStep {...stepProps} />
@@ -95,4 +85,4 @@ const AddExportWinForm = ({ isEditing, csrfToken, currentAdviserId }) => {
   )
 }
 
-export default connect(state2props)(AddExportWinForm)
+export default connect(state2props)(ExportWinForm)
