@@ -4,7 +4,6 @@ import { createGlobalStyle } from 'styled-components'
 
 import '../src/client/components'
 import DataHubProvider from '../src/client/provider'
-import { store, history, sagaMiddleware } from '../src/client/middleware'
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import typeaheadTasks from '../src/client/components/Typeahead/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
@@ -25,9 +24,6 @@ export const decorators = [
     <>
       <GlobalStyle />
       <DataHubProvider
-        sagaMiddleware={sagaMiddleware}
-        history={history}
-        store={store}
         tasks={{
           ...taskStoriesTasks,
           ...contactTasks,

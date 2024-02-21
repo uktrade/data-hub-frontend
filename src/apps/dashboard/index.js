@@ -2,7 +2,6 @@ const router = require('express').Router()
 
 const urls = require('../../lib/urls')
 const { renderDashboard } = require('./controllers')
-const spaBasePath = require('../../middleware/spa-base-path')
 
 module.exports = {
   router: router.get(
@@ -15,7 +14,6 @@ module.exports = {
       urls.exportPipeline.index(),
       urls.dashboard.myTasks(),
     ],
-    spaBasePath(urls.dashboard.index.route),
     renderDashboard
   ),
 }
