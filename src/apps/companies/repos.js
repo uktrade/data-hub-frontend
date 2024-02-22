@@ -65,15 +65,6 @@ function updateCompany(req, companyId, body) {
   })
 }
 
-function getCompanyAuditLog(req, companyId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v4/company/${companyId}/audit`,
-    qs: { limit, offset },
-  })
-}
-
 function getCompanySubsidiaries(req, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
@@ -164,7 +155,6 @@ module.exports = {
   archiveCompany,
   unarchiveCompany,
   updateCompany,
-  getCompanyAuditLog,
   getCompanySubsidiaries,
   getGlobalUltimateHierarchy,
   getOneListGroupCoreTeam,

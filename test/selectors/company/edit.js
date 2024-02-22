@@ -11,5 +11,4 @@ module.exports = {
   notHqHierarchy:
     '#field-headquarter_type > fieldset > div > label:nth-child(2)',
   saveButton: 'button:contains("Submit")',
-  history: '#company-edit-history',
 }
