@@ -10,6 +10,8 @@ import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 
+import { Router } from 'react-router-dom-v5-compat'
+
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
 
@@ -66,7 +68,9 @@ const DataHubProvider = ({ tasks, children }) => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+      <Router history={history}>
+        <CompatRouter>{children}</CompatRouter>
+      </Router>
     </Provider>
   )
 }
