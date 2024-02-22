@@ -20,18 +20,30 @@ const StyledTag = styled(Tag)`
 
 const TaskDetails = ({ task, breadcrumbs }) => {
   const { taskId } = useParams()
-
   const taskTitle = task ? task.title : ''
   const statusTag = task?.status == STATUS.COMPLETED && (
     <StyledTag colour="green" data-test="activity-kind-label">
       COMPLETED
     </StyledTag>
   )
+  const archivedTag = task?.archived && (
+    <StyledTag colour="red" data-test="activity-kind-label">
+      DELETED
+    </StyledTag>
+  )
+  const subheading =
+    archivedTag || statusTag ? (
+      <>
+        {archivedTag} {statusTag}
+      </>
+    ) : (
+      ''
+    )
 
   return (
     <DefaultLayout
       heading={taskTitle}
-      subheading={statusTag}
+      subheading={subheading}
       pageTitle={taskTitle}
       breadcrumbs={breadcrumbs}
       useReactRouter={false}

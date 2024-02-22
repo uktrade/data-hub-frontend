@@ -6,7 +6,7 @@ export const getMyTasks = ({
   not_created_by,
   advisers,
   not_advisers,
-  archived,
+  archived = false,
   sortby = 'due_date:asc',
   company,
   project,
