@@ -52,8 +52,8 @@ const assertTag = (item, badgeText) => {
     .should('contain', badgeText)
 }
 
-const assertBadgeNotPresent = (item, badgeText) => {
-  cy.get(item).find('[data-test="badge"]').should('not.contain', badgeText)
+const assertBadgeNotPresent = (item) => {
+  cy.get(item).find('[data-test="badge"]').should('not.exist')
 }
 
 const assertTagNotPresent = (item, badgeText) => {

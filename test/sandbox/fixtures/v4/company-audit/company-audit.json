@@ -153,6 +153,11 @@
                 98771,
                 98772
             ]
+            ,
+            "headquarter_type": [
+              "ehq",
+              "ukhq"
+            ]
         }
       },
       {
@@ -182,6 +187,10 @@
             "archived_by": [
                 "Paul Gain",
                 null
+            ],
+            "headquarter_type": [
+              "ghq",
+              "ehq"
             ]
         }
     },
@@ -227,21 +236,9 @@
       "timestamp": "2020-11-06T14:16:42.923800Z",
       "comment": "",
       "changes": {
-          "archived": [
-              false,
-              true
-          ],
-          "archived_on": [
+          "headquarter_type": [
               null,
-              "2020-11-06T14:16:42.982000Z"
-          ],
-          "archived_reason": [
-              null,
-              "Company is dissolved"
-          ],
-          "archived_by": [
-              null,
-              "Pippo Raimondi"
+              "ghq"
           ]
       }
     },

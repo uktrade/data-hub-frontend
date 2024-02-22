@@ -1,30 +1,40 @@
-const {
-  assertLocalHeader,
-  assertBreadcrumbs,
-} = require('../../support/assertions')
-const fixtures = require('../../fixtures')
-const { editHistory } = require('../../../../selectors')
-const urls = require('../../../../../src/lib/urls')
+import { assertLocalHeader, assertBreadcrumbs } from '../../support/assertions'
+import {
+  assertBadge,
+  assertBadgeNotPresent,
+} from '../../support/collection-list-assertions'
+import fixtures from '../../fixtures'
+import urls from '../../../../../src/lib/urls'
+import { NOT_SET } from '../../../../../src/client/modules/Companies/CompanyBusinessDetails/CompanyEditHistory/constants'
 
-const assertChanges = (table, caption, beforeChange, afterChange) => {
-  cy.get(table.caption).should('have.text', caption)
-  cy.get(table.beforeChangeText).should(
-    'have.text',
-    'Information before change'
-  )
-  cy.get(table.beforeChangeValue).should('have.text', beforeChange)
-  cy.get(table.afterChangeText).should('have.text', 'Information after change')
-  cy.get(table.afterChangeValue).should('have.text', afterChange)
+const assertChanges = (itemNo, field, oldVal, newVal) => {
+  it(`should display the changes to "${field}"`, () => {
+    cy.get(`@listItem${itemNo}`)
+      .should('contain', field)
+      .and('contain', oldVal)
+      .and('contain', newVal)
+  })
 }
 
 describe('Edit History', () => {
   beforeEach(() => {
     cy.visit(urls.companies.editHistory.index(fixtures.company.venusLtd.id))
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('listItem1')
+    cy.get('@collectionItems').eq(1).as('listItem2')
+    cy.get('@collectionItems').eq(2).as('listItem3')
+    cy.get('@collectionItems').eq(3).as('listItem4')
+    cy.get('@collectionItems').eq(4).as('listItem5')
+    cy.get('@collectionItems').eq(5).as('listItem6')
+    cy.get('@collectionItems').eq(6).as('listItem7')
+    cy.get('@collectionItems').eq(7).as('listItem8')
+    cy.get('@collectionItems').eq(8).as('listItem9')
+    cy.get('@collectionItems').eq(9).as('listItem10')
   })
 
   context('when viewing the "Edit History" page', () => {
     it('should render the header', () => {
-      assertLocalHeader('Edit History')
+      assertLocalHeader('Edit history')
     })
 
     it('should render breadcrumbs', () => {
@@ -35,109 +45,64 @@ describe('Edit History', () => {
         'Business details': urls.companies.businessDetails(
           fixtures.company.venusLtd.id
         ),
-        'Edit History': null,
+        'Edit history': null,
       })
+    })
+
+    it('should render the collection header', () => {
+      cy.get('[data-test="collection-header-name"]')
+        .should('exist')
+        .should('contain', '11 changes to company business details')
+    })
+
+    it('should render the correct badges', () => {
+      assertBadge('@listItem1', '5 changes')
+      assertBadge('@listItem3', '1 change')
+      assertBadgeNotPresent('@listItem4')
     })
   })
 
   context('when viewing an address change', () => {
     it('should display the date when the update occurred and by whom', () => {
-      cy.get(editHistory.change(1).updated).should(
-        'have.text',
+      cy.get('@listItem1').should(
+        'contain',
         'Updated on 10 Dec 2019, 5:58pm by Paul Gain'
       )
     })
 
-    it('should display the changes to "Address line 1"', () => {
-      assertChanges(
-        editHistory.change(1).table(2),
-        'Address line 1',
-        '14 Wharf Road',
-        '16 Wharf Road'
-      )
-    })
-
-    it('should display the changes to "Address line 2 (optional)"', () => {
-      assertChanges(
-        editHistory.change(1).table(3),
-        'Address line 2 (optional)',
-        'Not set',
-        'Westminster'
-      )
-    })
-
-    it('should display the changes to "Address town"', () => {
-      assertChanges(
-        editHistory.change(1).table(4),
-        'Address town',
-        'Brentwood',
-        'London'
-      )
-    })
-
-    it('should display the changes to "Address county"', () => {
-      assertChanges(
-        editHistory.change(1).table(5),
-        'Address county',
-        'Essex',
-        'Greater London'
-      )
-    })
-
-    it('should display the changes to "Address postcode"', () => {
-      assertChanges(
-        editHistory.change(1).table(6),
-        'Address postcode',
-        'CM14 4LQ',
-        'SW1H 9AJ'
-      )
-    })
+    assertChanges(1, 'Address line 1', '14 Wharf Road', '16 Wharf Road')
+    assertChanges(1, 'Address line 2', NOT_SET, 'Westminster')
+    assertChanges(1, 'Address town', 'Brentwood', 'London')
+    assertChanges(1, 'Address county', 'Essex', 'Greater London')
+    assertChanges(1, 'Address postcode', 'CM14 4LQ', 'SW1H 9AJ')
   })
 
   context('when viewing a sector, region and description change', () => {
-    it('should display the changes to "Business description (optional)"', () => {
-      assertChanges(
-        editHistory.change(2).table(2),
-        'Business description (optional)',
-        'Not set',
-        'Superior editing services'
-      )
-    })
+    assertChanges(
+      2,
+      'Business description',
+      NOT_SET,
+      'Superior editing services'
+    )
 
-    it('should display the changes to "DBT sector"', () => {
-      assertChanges(
-        editHistory.change(2).table(3),
-        'DBT sector',
-        'Biotechnology and Pharmaceuticals',
-        'Airports'
-      )
-    })
+    assertChanges(
+      2,
+      'DBT sector',
+      'Biotechnology and Pharmaceuticals',
+      'Airports'
+    )
 
-    it('should display the changes to "DBT region"', () => {
-      assertChanges(
-        editHistory.change(2).table(4),
-        'DBT region',
-        'South East',
-        'London'
-      )
-    })
+    assertChanges(2, 'DBT region', 'South East', 'London')
   })
 
   context('when viewing a "Trading name" change', () => {
-    it('should display the changes to "Trading name(s)"', () => {
-      assertChanges(
-        editHistory.change(3).table(2),
-        'Trading name(s)',
-        'Not set',
-        'Edit History Enterprises'
-      )
-    })
+    assertChanges(3, 'Trading name(s)', NOT_SET, 'Edit History Enterprises')
   })
 
   context('when the user does not have a first or last name', () => {
     it("should display the user's email address", () => {
-      cy.get(editHistory.change(4).updated).should(
-        'have.text',
+      cy.get('@listItem4').should(
+        'contain',
         'Updated on 10 Dec 2019, 6:01pm by paul.gain@digital.trade.gov.uk'
       )
     })
@@ -145,119 +110,66 @@ describe('Edit History', () => {
 
   context('when the user is null it must be an "Automatic update"', () => {
     it('should display that is was automatically updated', () => {
-      cy.get(editHistory.change(5).updated).should(
-        'have.text',
+      cy.get('@listItem5').should(
+        'contain',
         'Automatically updated on 9 Jan 2020, 12:00am'
       )
     })
 
-    it('should update the turnover', () => {
-      assertChanges(
-        editHistory.change(5).table(2),
-        'Turnover',
-        '£2,400,000',
-        '£1,800,000'
-      )
-    })
-
-    it('should show whether or not the turnover was estimated', () => {
-      assertChanges(
-        editHistory.change(5).table(3),
-        'Is turnover estimated',
-        'Yes',
-        'Not set'
-      )
-    })
-
-    it('should show whether or not the number of employees was estimated', () => {
-      assertChanges(
-        editHistory.change(5).table(4),
-        'Is number of employees estimated',
-        'Not set',
-        'Yes'
-      )
-    })
+    assertChanges(5, 'Turnover', '£2,400,000', '£1,800,000')
+    assertChanges(5, 'Is turnover estimated', 'Yes', NOT_SET)
+    assertChanges(5, 'Is number of employees estimated', NOT_SET, 'Yes')
   })
 
   context('when the user saves without making changes', () => {
     it('should display a message', () => {
-      cy.get(editHistory.change(6).noChanges).should(
-        'have.text',
+      cy.get('@listItem6').should(
+        'contain',
         'No changes were made to business details in this update'
       )
     })
   })
 
-  context('when the user updates "Number of employees (optional)"', () => {
-    it('should display the number of employees', () => {
-      assertChanges(
-        editHistory.change(7).table(2),
-        'Number of employees (optional)',
-        '98771',
-        '98772'
-      )
-    })
+  context('when the user updates "Number of employees"', () => {
+    assertChanges(7, 'Number of employees', '98771', '98772')
   })
 
   context('when the user has unarchived a company', () => {
-    it('should show the company is no longer archived', () => {
-      assertChanges(
-        editHistory.change(8).table(2),
-        'Archived',
-        'Archived',
-        'Not Archived'
-      )
-    })
-
-    it('should show the reason why it was unarchived', () => {
-      assertChanges(
-        editHistory.change(8).table(3),
-        'Archived reason',
-        'Archived by mistake',
-        'Not set'
-      )
-    })
+    assertChanges(8, 'Archived', 'Archived', 'Not Archived')
+    assertChanges(8, 'Archived reason', 'Archived by mistake', NOT_SET)
   })
 
   context('when the user has archived a company', () => {
-    it('should show the company is archived', () => {
-      assertChanges(
-        editHistory.change(9).table(2),
-        'Archived',
-        'Not Archived',
-        'Archived'
-      )
-    })
-
-    it('should show the reason why it was archived', () => {
-      assertChanges(
-        editHistory.change(9).table(3),
-        'Archived reason',
-        'Not set',
-        'Company is dissolved'
-      )
-    })
+    assertChanges(9, 'Archived', 'Not Archived', 'Archived')
+    assertChanges(9, 'Archived reason', NOT_SET, 'Company is dissolved')
   })
 
   context('when a company becomes a "Global Ultimate"', () => {
-    it('should display the changes to the "Global Ultimate Duns Number"', () => {
-      assertChanges(
-        editHistory.change(5).table(5),
-        'Global Ultimate Duns Number',
-        'Not set',
-        '561652707'
-      )
-    })
+    assertChanges(5, 'Global Ultimate Duns Number', NOT_SET, '561652707')
+  })
+
+  context('when viewing a HQ change', () => {
+    assertChanges(7, 'Headquarter type', 'European HQ', 'UK HQ')
+    assertChanges(8, 'Headquarter type', 'Global HQ', 'European HQ')
+    assertChanges(10, 'Headquarter type', NOT_SET, 'Global HQ')
   })
 
   context('when there are more than 10 entries', () => {
     it('should display the pagination', () => {
-      cy.get('[data-test="page-number"]').should('be.visible', true)
+      cy.get('[data-page-number="2"]').should('be.visible', true)
+      cy.get('[data-test="pagination-summary"]').should(
+        'contain',
+        'Page 1 of 2'
+      )
     })
 
-    it('should display the pagination', () => {
-      cy.get('[data-test="page-number"]').click()
+    it('should render the next page when the button is clicked', () => {
+      cy.get('[data-page-number="2"]').click()
       cy.url().should('include', '?page=2')
+      cy.get('[data-test="pagination-summary"]').should(
+        'contain',
+        'Page 2 of 2'
+      )
     })
   })
 })
