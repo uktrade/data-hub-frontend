@@ -1,7 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
-import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
+
+import { Router } from 'react-router-dom-v5-compat'
 
 import rootSaga from './root-saga'
 
@@ -36,7 +37,9 @@ const DataHubProvider = ({
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+      <Router history={history}>
+        <CompatRouter>{children}</CompatRouter>
+      </Router>
     </Provider>
   )
 }
