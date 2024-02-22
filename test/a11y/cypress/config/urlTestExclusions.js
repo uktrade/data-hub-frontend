@@ -132,6 +132,11 @@ export const urlTestExclusions = [
   { url: '/investments/projects/:investmentId/propositions/:propositionId' },
   { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
   { url: '/companies/:companyId/hierarchies/ghq/remove' },
+  // API calls with redirect
+  { url: '/tasks/:taskId/status-complete' },
+  { url: '/tasks/:taskId/status-active' },
+  { url: '/tasks/:taskId/archive' },
+  { url: '/tasks/:taskId/unarchive' },
   // 501 errors
   { url: '/api-proxy/v4/company/:companyId/export-win' },
   { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },
