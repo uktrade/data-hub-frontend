@@ -12,21 +12,13 @@ import {
 import urls from '../../../../../lib/urls.js'
 import FieldAddAnother from '../../../../components/Form/elements/FieldAddAnother/index.jsx'
 import { TASK_ADD_PROJECT_DOCUMENT } from './state.js'
-import {
-  EvidenceTagResource,
-  InvestmentResource,
-} from '../../../../components/Resource/index.jsx'
+import { EvidenceTagResource } from '../../../../components/Resource/index.jsx'
 import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField/index.jsx'
 import { buildProjectBreadcrumbs } from '../../utils.js'
 import { FORM_LAYOUT } from '../../../../../common/constants.js'
 import FieldFileUpload from '../../../../components/Form/elements/FieldFileUpload/index.jsx'
 import { transformEvidenceForApi } from './transformers.js'
-
-const InvestmentName = (props) => (
-  <InvestmentResource.Inline {...props}>
-    {(project) => project.name}
-  </InvestmentResource.Inline>
-)
+import InvestmentName from '../InvestmentName.jsx'
 
 const AddProjectDocument = () => {
   const { projectId } = useParams()
