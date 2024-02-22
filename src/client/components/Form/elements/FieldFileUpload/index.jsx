@@ -12,13 +12,15 @@ const FieldFileUpload = ({ name, required, label }) => {
   })
 
   return (
-    <FieldWrapper name={name} label={label}>
+    <FieldWrapper name={name}>
       <FileUpload
         name={name}
         onChange={onChangeFileUpload}
         onBlur={onBlur}
         meta={{ error, touched }}
-      />
+      >
+        <strong>{label}</strong>
+      </FileUpload>
     </FieldWrapper>
   )
 }
