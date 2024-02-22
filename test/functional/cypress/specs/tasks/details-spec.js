@@ -7,15 +7,15 @@ import {
 import {
   assertSummaryTable,
   assertBreadcrumbs,
-  assertPayload,
   assertUrl,
 } from '../../support/assertions'
 import { clickButton } from '../../support/actions'
 import interactionsListFaker from '../../fakers/interactions'
+import { STATUS } from '../../../../../src/client/modules/Tasks/TaskForm/constants'
 
 describe('View details for a generic task', () => {
-  const genericTaskCompleted = taskFaker({ archived: true })
-  const genericTaskNotCompleteTask = taskFaker({ archived: false })
+  const genericTaskCompleted = taskFaker({ status: STATUS.COMPLETED })
+  const genericTaskNotCompleteTask = taskFaker({ status: STATUS.ACTIVE })
 
   context('When visiting a completed task details', () => {
     beforeEach(() => {
@@ -71,17 +71,6 @@ describe('View details for a generic task', () => {
 
       cy.get('[data-test="activity-kind-label"]').should('not.exist')
     })
-
-    it('should redirect to the dashboard and show the Flash message after marking as complete', () => {
-      cy.intercept(
-        'POST',
-        `/api-proxy/v4/task/${genericTaskNotCompleteTask.id}/archive`,
-        {}
-      ).as('postTaskArchiveApiRequest')
-      clickButton('Mark as complete')
-      assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
-      assertUrl(dashboard.myTasks())
-    })
   })
 })
 
@@ -91,7 +80,7 @@ describe('View details for task that is assigned to an investment project', () =
   })
 
   context('When visiting a not complete task details', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/task/${investmentProjectTask.id}`,
@@ -104,11 +93,11 @@ describe('View details for task that is assigned to an investment project', () =
     it('should redirect to the investment project and show the Flash message after marking as complete', () => {
       cy.intercept(
         'POST',
-        `/api-proxy/v4/task/${investmentProjectTask.id}/archive`,
+        `/api-proxy/v4/task/${investmentProjectTask.id}/status-complete`,
         {}
-      ).as('postTaskArchiveApiRequest')
+      ).as('postTaskStatusCompleteApiRequest')
       clickButton('Mark as complete')
-      assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
+      cy.wait('@postTaskStatusCompleteApiRequest')
       assertUrl(dashboard.myTasks())
     })
   })
@@ -118,7 +107,7 @@ describe('View details for task that is assigned to a company', () => {
   const companyTask = taskWithCompanyFaker({ archived: false })
 
   context('When visiting a not complete task details', () => {
-    before(() => {
+    beforeEach(() => {
       cy.intercept(
         'GET',
         `/api-proxy/v4/task/${companyTask.id}`,
@@ -131,11 +120,11 @@ describe('View details for task that is assigned to a company', () => {
     it('should redirect to the investment project and show the Flash message after marking as complete', () => {
       cy.intercept(
         'POST',
-        `/api-proxy/v4/task/${companyTask.id}/archive`,
+        `/api-proxy/v4/task/${companyTask.id}/status-complete`,
         {}
-      ).as('postTaskArchiveApiRequest')
+      ).as('postTaskStatusCompleteApiRequest')
       clickButton('Mark as complete')
-      assertPayload('@postTaskArchiveApiRequest', { reason: 'completed' })
+      cy.wait('@postTaskStatusCompleteApiRequest')
       assertUrl(dashboard.myTasks())
     })
   })

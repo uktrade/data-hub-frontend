@@ -419,10 +419,12 @@ import { TASK_CREATE_ORDER } from './modules/Omis/CreateOrder/state'
 import { createOrder } from './modules/Omis/CreateOrder/tasks'
 
 import {
+  saveTaskStatusActive,
   saveTaskStatusComplete,
   getTaskDetail,
 } from './modules/Tasks/TaskDetails/tasks'
 import {
+  TASK_SAVE_STATUS_ACTIVE,
   TASK_SAVE_STATUS_COMPLETE,
   TASK_GET_TASK_DETAILS,
 } from './modules/Tasks/TaskDetails/state'
@@ -651,6 +653,7 @@ export const tasks = {
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
   [TASK_SAVE_STATUS_COMPLETE]: saveTaskStatusComplete,
+  [TASK_SAVE_STATUS_ACTIVE]: saveTaskStatusActive,
   [TASK_RECONCILE_OMIS_PAYMENT]: savePayment,
   [TASK_SAVE_TASK_DETAILS]: saveTaskDetail,
   [TASK_EDIT_INVOICE_DETAILS]: updateOrder,
