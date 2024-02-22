@@ -116,6 +116,9 @@ import {
   documentDownload,
   postInvestmentProject,
   postInvestmentProjectEditTeams,
+  investmentProjectEvidenceUpload,
+  investmentProjectEvidenceUploadCallback,
+  deleteInvestmentProjectEvidence,
 } from './routes/v3/investment/investment-projects.js'
 import { getCompanies } from './routes/v3/search/company.js'
 import { contacts } from './routes/v3/search/contact.js'
@@ -548,6 +551,18 @@ app.get('/v3/investment/:investmentId/audit', investmentProjectAudit)
 app.get(
   '/v3/investment/:investmentId/evidence-document',
   investmentProjectEvidence
+)
+app.post(
+  '/v3/investment/:id/evidence-document',
+  investmentProjectEvidenceUpload
+)
+app.post(
+  '/v3/investment/:id/evidence-document/:documentId/upload-callback',
+  investmentProjectEvidenceUploadCallback
+)
+app.delete(
+  '/v3/investment/:id/evidence-document/:documentId',
+  deleteInvestmentProjectEvidence
 )
 app.get(
   '/v3/investment/:investmentId/evidence-document/:documentId/download',
