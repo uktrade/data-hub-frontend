@@ -16,9 +16,9 @@ import {
 } from './modules/ExportPipeline/ExportForm'
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
 import ExportDetails from './modules/ExportPipeline/ExportDetails'
-import ExportWins from './modules/ExportWins/'
+import ExportWinsTabNav from './modules/ExportWins/Status/ExportWinsTabNav'
 import { CreateExportWin, EditExportWin } from './modules/ExportWins/Form'
-import ExportWinsRedirect from './modules/ExportWins/Redirect'
+import ExportWinsRedirect from './modules/ExportWins/Status/Redirect'
 import ExportWinDetails from './modules/ExportWins/Details'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
@@ -465,14 +465,19 @@ const routes = {
   ],
   exportWins: [
     {
+      path: '/exportwins/rejected',
+      module: 'datahub:companies',
+      component: ExportWinsTabNav,
+    },
+    {
       path: '/exportwins/sent',
       module: 'datahub:companies',
-      component: ExportWins,
+      component: ExportWinsTabNav,
     },
     {
       path: '/exportwins/won',
       module: 'datahub:companies',
-      component: ExportWins,
+      component: ExportWinsTabNav,
     },
     {
       path: '/exportwins',

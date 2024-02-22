@@ -8,6 +8,7 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/exports' },
   { url: '/exportwins/' },
   { url: '/exportwins/sent/' },
+  { url: '/exportwins/rejected/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
   { url: '/companies/:companyId/account-management' },
   { url: '/company-lists/' },
@@ -143,6 +144,7 @@ export const urlTestExclusions = [
   { url: '/oauth/sign-out/' },
   { url: '/exportwins/1/details' },
   { url: '/exportwins/sent/' },
+  { url: '/exportwins/rejected/' },
   { url: '/companies/e59a2b0f-7d84-4de7-bc1e-f70339f4255f/overview' },
   // Exclude all metadata
   { url: '/api-proxy/v4/metadata/likelihood-to-land' },

@@ -1,15 +1,16 @@
 import React from 'react'
 import { capitalize } from 'lodash'
 
-import { DefaultLayout } from '../../components'
-import TabNav from '../../components/TabNav'
+import { DefaultLayout } from '../../../components'
+import TabNav from '../../../components/TabNav'
+import WinsRejectedList from './WinsRejectedList'
 import WinsSentList from './WinsSentList'
 import WinsWonTable from './WinsWonTable'
-import urls from '../../../lib/urls'
+import urls from '../../../../lib/urls'
 
 const TITLE = /([^\/]+$)/
 
-const ExportWins = ({ location }) => {
+const ExportWinsTabNav = ({ location }) => {
   const title = TITLE.exec(location.pathname)[0]
   return (
     <DefaultLayout
@@ -25,6 +26,10 @@ const ExportWins = ({ location }) => {
         label="Export wins tab nav"
         routed={true}
         tabs={{
+          [urls.companies.exportWins.rejected()]: {
+            label: 'Rejected',
+            content: <WinsRejectedList />,
+          },
           [urls.companies.exportWins.sent()]: {
             label: 'Sent',
             content: <WinsSentList />,
@@ -39,4 +44,4 @@ const ExportWins = ({ location }) => {
   )
 }
 
-export default ExportWins
+export default ExportWinsTabNav
