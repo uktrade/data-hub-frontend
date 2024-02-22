@@ -6,7 +6,8 @@ type Values = Record<string, string>
 type Errors = Record<string, string>
 type FlashMessageHeading = string
 type FlashMessageBody = string
-type FlashMessage = FlashMessageBody | [FlashMessageHeading, FlashMessageBody]
+type FlashMessageType = 'info' | 'success' | 'warning' | 'error' | 'muted'
+type FlashMessage = FlashMessageBody | [FlashMessageHeading, FlashMessageBody, FlashMessageType?]
 
 type ChildFn = ({
   errors: Errors,
