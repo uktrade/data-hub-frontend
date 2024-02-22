@@ -1,7 +1,7 @@
 import React from 'react'
 
 import DataHubProvider from '../provider'
-import { ExportWinsTable } from '../../../../../src/client/modules/ExportWins/Confirmed/ConfirmedWinsTable'
+import { WinsWonTable } from '../../../../../src/client/modules/ExportWins/WinsWonTable'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { formatMediumDate } from '../../../../../src/client/utils/date'
@@ -53,7 +53,7 @@ describe('Export wins table', () => {
 
     cy.mount(
       <DataHubProvider>
-        <ExportWinsTable exportWins={EXPORT_WINS} />
+        <WinsWonTable exportWins={EXPORT_WINS} />
       </DataHubProvider>
     )
 
@@ -78,7 +78,7 @@ describe('Export wins table', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.detail(exportWin.company.id)
+          urls.companies.overview.index(exportWin.company.id)
         )
     )
 

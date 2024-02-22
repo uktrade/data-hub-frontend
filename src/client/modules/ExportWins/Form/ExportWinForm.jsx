@@ -55,8 +55,8 @@ const ExportWinForm = ({
         <Form
           id="export-win-form"
           showStepInUrl={true}
-          cancelRedirectTo={() => urls.companies.exportWins.unconfirmed()}
-          redirectTo={() => urls.companies.exportWins.unconfirmed()}
+          cancelRedirectTo={() => urls.companies.exportWins.sent()}
+          redirectTo={() => urls.companies.exportWins.sent()}
           analyticsFormName="exportWinForm"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
           initialValuesTaskName={initialValuesTaskName}

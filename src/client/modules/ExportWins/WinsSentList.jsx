@@ -1,17 +1,18 @@
 import React from 'react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { Button } from 'govuk-react'
 
-import { CollectionItem } from '../../../components'
-import { formatMediumDate } from '../../../utils/date'
-import { currencyGBP } from '../../../utils/number-utils'
-import ExportWinsResource from '../../../components/Resource/ExportWins'
-
-import urls from '../../../../lib/urls'
+import ExportWinsResource from '../../components/Resource/ExportWins'
+import { currencyGBP } from '../../utils/number-utils'
+import { formatMediumDate } from '../../utils/date'
+import { CollectionItem } from '../../components'
+import { WIN_FILTERS } from './constants'
+import urls from '../../../lib/urls'
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="unconfirmed-export-wins"
-    payload={{ filter: 'unconfirmed' }}
+    id="export-wins-sent"
+    payload={{ confirmed: WIN_FILTERS.SENT }}
   >
     {(page) => (
       <ul>
@@ -19,7 +20,7 @@ export default () => (
           <li key={item.id}>
             <CollectionItem
               headingText={item.company.name}
-              headingUrl={`${urls.companies.detail(item.company.id)}`}
+              headingUrl={urls.companies.overview.index(item.company.id)}
               metadata={[
                 { label: 'Destination', value: item.country.name },
                 { label: 'Contact name', value: item.customer_name },
@@ -31,11 +32,12 @@ export default () => (
                 { label: 'Date modified', value: '???' },
               ]}
               buttons={
-                <div style={{ display: 'flex', gap: 10 }}>
-                  <Button as="a" href={`review/${item.id}`}>
-                    Review export win
-                  </Button>
-                </div>
+                <Button
+                  as={ReactRouterLink}
+                  to={urls.companies.exportWins.details(item.id)}
+                >
+                  Review export win
+                </Button>
               }
             />
           </li>
