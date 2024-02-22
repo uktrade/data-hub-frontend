@@ -6,6 +6,6 @@ export const transformEvidenceForApi = (values) => {
   return {
     tags,
     comment: values.comment,
-    file: values.file_upload,
+    file: values.file_upload[0],
   }
 }

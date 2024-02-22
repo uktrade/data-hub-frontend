@@ -5,17 +5,16 @@ import { FileUpload } from 'govuk-react'
 import FieldWrapper from '../FieldWrapper'
 import { useField } from '../../hooks'
 
-const FieldFileUpload = ({ name, label }) => {
+const FieldFileUpload = ({ name, required, label }) => {
   const { error, touched, onBlur, onChangeFileUpload } = useField({
     name,
-    // required,
+    required,
   })
 
   return (
     <FieldWrapper name={name} label={label}>
       <FileUpload
         name={name}
-        // onChange={onChange}
         onChange={onChangeFileUpload}
         onBlur={onBlur}
         meta={{ error, touched }}

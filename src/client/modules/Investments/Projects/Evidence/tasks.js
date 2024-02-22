@@ -13,26 +13,37 @@ export const deleteProjectDocument = (values) => {
 export const addProjectDocument = async ({ projectId, values }) => {
   const { tags, comment, file } = values
 
+  const fiveGigabytes = 5000 * 1024 * 1024
+  if (file.size > fiveGigabytes) {
+    throw 'File must be no larger than 5GB'
+  }
+
   const { data: documentUploadData } = await apiProxyAxios.post(
     `v3/investment/${projectId}/evidence-document`,
     { tags, comment, original_filename: file.name }
   )
 
-  return await uploadDocumentToS3(file, documentUploadData, projectId)
-}
-
-const uploadDocumentToS3 = async (file, documentUploadData, projectId) => {
   const { signed_upload_url: s3Url, id } = documentUploadData
+  // This try catch block allows a rollback on the upload if the either of the
+  // 2 calls below fail. The call above doesn't need to be in the try catch block
+  // because if it fails no data will have been added to the database or to s3, and
+  // the error will be caught within the task
   try {
-    await axios.put(s3Url, file, {
-      headers: { 'Content-type': 'applications/octet-stream' },
-    })
+    await uploadDocumentToS3(s3Url, file)
 
     return await apiProxyAxios.post(
       `v3/investment/${projectId}/evidence-document/${id}/upload-callback`
     )
   } catch (err) {
-    throw new Error(err)
-    // return
+    await apiProxyAxios.delete(
+      `v3/investment/${projectId}/evidence-document/${id}`
+    )
+    throw true
   }
+}
+
+const uploadDocumentToS3 = async (s3Url, file) => {
+  return await axios.put(s3Url, file, {
+    headers: { 'Content-type': 'applications/octet-stream' },
+  })
 }
