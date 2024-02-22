@@ -97,6 +97,7 @@ import ExportsHistory from './modules/Companies/CompanyExports/ExportHistory'
 import InvestmentProjectAdmin from './modules/Investments/Projects/InvestmentProjectAdmin'
 import OrderQuote from './modules/Omis/OrderQuote'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
+import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
 
 const routes = {
   companies: [
@@ -249,6 +250,11 @@ const routes = {
       path: '/companies/:companyId/exports/history/:countryId',
       module: 'datahub:companies',
       component: ExportsHistory,
+    },
+    {
+      path: '/companies/:companyId/edit-history',
+      module: 'datahub:companies',
+      component: CompanyEditHistory,
     },
   ],
   contacts: [

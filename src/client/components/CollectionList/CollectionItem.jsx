@@ -154,7 +154,8 @@ CollectionItem.propTypes = {
   ),
   metadata: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.string,
+      key: PropTypes.string,
       value: PropTypes.node.isRequired,
     })
   ),

@@ -212,7 +212,10 @@ export const createEntityResource = (name, endpoint) => {
  * </CompanyResource.Paginated>
  */
 export const createCollectionResource = (name, endpoint) => {
-  const EntityResource = createEntityResource(name, () => endpoint)
+  const EntityResource =
+    typeof endpoint === 'function'
+      ? createEntityResource(name, (endpoint) => endpoint)
+      : createEntityResource(name, () => endpoint)
   const transformer = (rawResult) => [
     deepKeysToCamelCase(rawResult.results),
     rawResult.count,
