@@ -447,6 +447,7 @@ import {
   getExportProject,
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
+import { patchExportWinReview } from './modules/ExportWins/tasks.js'
 
 export const tasks = {
   'Create list': createList,
@@ -702,4 +703,5 @@ export const tasks = {
   [TASK_PREVIEW_QUOTE]: previewQuote,
   [TASK_CREATE_QUOTE]: createQuote,
   [TASK_CANCEL_QUOTE]: cancelQuote,
+  TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
 }
