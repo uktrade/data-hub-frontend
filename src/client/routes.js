@@ -45,7 +45,7 @@ import ProjectPropositions from './modules/Investments/Projects/ProjectPropositi
 import EditClientRelationshipManagement from './modules/Investments/Projects/Team/EditClientRelationshipManagement'
 import EditProjectManagement from './modules/Investments/Projects/Team/EditProjectManagement'
 import EditTeamMembers from './modules/Investments/Projects/Team/EditTeamMembers'
-import ProjectEditHistory from './modules/Investments/Projects/ProjectEditHistory'
+import ProjectEditHistory from './modules/Investments/Projects/EditHistory/ProjectEditHistory'
 import ProjectEvidence from './modules/Investments/Projects/Evidence/ProjectEvidence'
 import DeleteProjectDocument from './modules/Investments/Projects/Evidence/DeleteProjectDocument'
 import InvestmentCollections from './modules/Investments/InvestmentCollections'
