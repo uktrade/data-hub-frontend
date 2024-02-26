@@ -71,7 +71,8 @@
         "average_salary": [ "Below £25,000", "£35,000 and above" ],
         "number_safeguarded_jobs": [ 1, 123123 ],
         "r_and_d_budget": [ false, true ],
-        "non_fdi_r_and_d_budget": [ true, false ]
+        "non_fdi_r_and_d_budget": [ true, false ],
+        "total_investment": [ null, 123456789]
       },
       "note": null
     }
