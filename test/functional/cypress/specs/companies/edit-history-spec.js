@@ -5,7 +5,7 @@ import {
 } from '../../support/collection-list-assertions'
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { NOT_SET } from '../../../../../src/client/modules/Companies/CompanyBusinessDetails/CompanyEditHistory/constants'
+import { NOT_SET } from '../../../../../src/client/components/AuditHistory/constants'
 
 const assertChanges = (itemNo, field, oldVal, newVal) => {
   it(`should display the changes to "${field}"`, () => {

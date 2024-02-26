@@ -5,8 +5,8 @@ import urls from '../../../../../lib/urls'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
 import { ProjectAuditHistoryResource } from '../../../../components/Resource'
-import { transformAuditResponseToCollection } from './transformers'
-import { CollectionItem } from '../../../../components'
+import { getValue, mapFieldNameToLabel } from './transformers'
+import { AuditHistory } from '../../../../components'
 
 const ProjectEditHistory = () => {
   const { projectId } = useParams()
@@ -22,24 +22,13 @@ const ProjectEditHistory = () => {
       ]}
       pageTitle="Edit history"
     >
-      <ProjectAuditHistoryResource.Paginated
+      <AuditHistory
+        resource={ProjectAuditHistoryResource}
         id={`v3/investment/${projectId}/audit`}
-      >
-        {(projectAuditHistory) => (
-          <ul>
-            {transformAuditResponseToCollection(projectAuditHistory).map(
-              (item) => (
-                <CollectionItem
-                  key={item.id}
-                  headingText={item.headingText}
-                  metadata={item.metadata}
-                  badges={item.badges}
-                />
-              )
-            )}
-          </ul>
-        )}
-      </ProjectAuditHistoryResource.Paginated>
+        valueTransformer={getValue}
+        fieldMapper={mapFieldNameToLabel}
+        auditType="the project"
+      />
     </ProjectLayoutNew>
   )
 }

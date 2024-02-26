@@ -8,7 +8,7 @@ const {
 } = require('../../../../functional/cypress/support/assertions')
 const {
   NOT_SET,
-} = require('../../../../../src/client/modules/Companies/CompanyBusinessDetails/CompanyEditHistory/constants')
+} = require('../../../../../src/client/components/AuditHistory/constants')
 const {
   assertBadge,
 } = require('../../../../functional/cypress/support/collection-list-assertions')

@@ -5,9 +5,10 @@ import {
   CompanyResource,
   CompanyAuditHistoryResource,
 } from '../../../../components/Resource'
-import { CollectionItem, DefaultLayout } from '../../../../components'
-import { transformResponseToCollection } from './transformers'
+import { AuditHistory, DefaultLayout } from '../../../../components'
+import { getValue, mapFieldNameToLabel } from './transformers'
 import urls from '../../../../../lib/urls'
+import { EXCLUDED_FIELDS } from './constants'
 
 const CompanyName = ({ id }) => (
   <CompanyResource.Inline id={id}>
@@ -43,22 +44,14 @@ const CompanyEditHistory = () => {
         { text: 'Edit history' },
       ]}
     >
-      <CompanyAuditHistoryResource.Paginated
+      <AuditHistory
+        resource={CompanyAuditHistoryResource}
         id={`v4/company/${companyId}/audit`}
-      >
-        {(companyAuditHistory) => (
-          <ul>
-            {transformResponseToCollection(companyAuditHistory).map((item) => (
-              <CollectionItem
-                key={item.id}
-                headingText={item.headingText}
-                metadata={item.metadata}
-                badges={item.badges}
-              />
-            ))}
-          </ul>
-        )}
-      </CompanyAuditHistoryResource.Paginated>
+        valueTransformer={getValue}
+        fieldMapper={mapFieldNameToLabel}
+        excludedFields={EXCLUDED_FIELDS}
+        auditType="business details"
+      />
     </DefaultLayout>
   )
 }

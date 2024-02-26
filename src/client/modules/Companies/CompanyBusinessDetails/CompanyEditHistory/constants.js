@@ -1,9 +1,5 @@
 export const ARCHIVED = 'Archived'
 export const NOT_ARCHIVED = 'Not Archived'
-export const YES = 'Yes'
-export const NO = 'No'
-
-export const CHANGE_TYPE_TEXT = 'business details'
 
 export const EXCLUDED_FIELDS = ['archived_by', 'archived_on', 'dnb_modified_on']
 
@@ -40,4 +36,3 @@ export const HEADQUARTER_TYPES = {
 }
 
 export const AUTOMATIC_UPDATE = 'automaticUpdate'
-export const NOT_SET = 'Not set'

@@ -1,6 +1,5 @@
 export const TRUE = 'True'
 export const FALSE = 'False'
-export const NOT_SET = 'Not set'
 
 export const PROJECT_FIELD_NAME_TO_LABEL_MAP = {
   fdi_type: 'FDI type',
