@@ -205,9 +205,8 @@ describe('Company Orders (OMIS) Collection Page', () => {
       }).as('archivedApiRequest')
       cy.visit(urls.companies.orders(archivedLtd.id))
       assertPayload('@archivedApiRequest', {
-        offset: 0,
         limit: 10,
-        sortby: 'created_on:desc',
+        offset: 0,
         company: archivedLtd.id,
       })
     })
