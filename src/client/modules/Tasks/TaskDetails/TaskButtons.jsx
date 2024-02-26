@@ -49,9 +49,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
           flashMessage={() => 'Task marked as complete'}
           submitButtonLabel="Mark as complete"
           initialValues={task}
-        >
-          {() => <></>}
-        </Form>
+        />
       )}
       <ButtonWrapper>
         {!task.archived && task.status == STATUS.ACTIVE && (
@@ -91,9 +89,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
             flashMessage={() => 'Task deleted'}
             submitButtonLabel="Delete task"
             initialValues={task}
-          >
-            {() => <></>}
-          </Form>
+          />
         </DeleteTaskWrapper>
       )}
       <ButtonWrapper>
