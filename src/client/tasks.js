@@ -444,6 +444,9 @@ import {
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
 
+import { resendExportWin } from '../client/modules/ExportWins/Status/tasks'
+import { TASK_RESEND_EXPORT_WIN } from './modules/ExportWins/Status/state'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -697,4 +700,5 @@ export const tasks = {
   [TASK_PREVIEW_QUOTE]: previewQuote,
   [TASK_CREATE_QUOTE]: createQuote,
   [TASK_CANCEL_QUOTE]: cancelQuote,
+  [TASK_RESEND_EXPORT_WIN]: resendExportWin,
 }
