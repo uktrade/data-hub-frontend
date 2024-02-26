@@ -8,3 +8,6 @@ export const saveTaskStatusComplete = ({ taskId }) =>
 
 export const saveTaskStatusActive = ({ taskId }) =>
   apiProxyAxios.post(`/v4/task/${taskId}/status-active`)
+
+export const deleteTask = ({ taskId }) =>
+  apiProxyAxios.post(`/v4/task/${taskId}/archive`, { reason: 'deleted' })

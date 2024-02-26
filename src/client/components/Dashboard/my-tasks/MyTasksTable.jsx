@@ -47,7 +47,11 @@ const rows = ({ results }) => {
         <ul>{transformAdvisersListItem(task.advisers)}</ul>
       </Table.Cell>
       <Table.Cell setWidth="10%">
-        {task.status == STATUS.COMPLETED ? 'Completed' : 'Active'}
+        {task.archived
+          ? 'Deleted'
+          : task.status == STATUS.COMPLETED
+            ? 'Completed'
+            : 'Active'}
       </Table.Cell>
     </Table.Row>
   ))

@@ -23,6 +23,7 @@ describe('Task filters', () => {
     offset: 0,
     adviser: [myAdviserId],
     sortby: 'due_date:asc',
+    archived: false,
   }
   //Remap investment_project property to investmentProject so it displays in the Task List UI properly
   TaskList[0].investment_project = TaskList[0].investmentProject
@@ -234,6 +235,7 @@ describe('Task filters', () => {
           offset: 0,
           adviser: [myAdviserId],
           sortby: sortBy,
+          archived: false,
         })
         assertListItems({ length: 1 })
       })
