@@ -3,11 +3,11 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import { Table, Link } from 'govuk-react'
 import styled from 'styled-components'
 
-import ExportWinsResource from '../../components/Resource/ExportWins'
-import { currencyGBP } from '../../utils/number-utils'
-import { formatMediumDate } from '../../utils/date'
+import ExportWinsResource from '../../../components/Resource/ExportWins'
+import { currencyGBP } from '../../../utils/number-utils'
+import { formatMediumDate } from '../../../utils/date'
 import { WIN_FILTERS } from './constants'
-import urls from '../../../lib/urls'
+import urls from '../../../../lib/urls'
 
 const NoWrapCell = styled(Table.Cell)`
   white-space: nowrap;

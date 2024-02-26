@@ -30,6 +30,7 @@ const reactRoutes = [
   '/exportwins/:winId/edit',
   '/exportwins/won',
   '/exportwins/sent',
+  '/exportwins/rejected',
   '/exportwins/:winId/details',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',

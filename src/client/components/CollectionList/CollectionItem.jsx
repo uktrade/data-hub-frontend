@@ -75,6 +75,7 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
+  buttonRenderer,
   footerRenderer,
   footerdata,
 }) => (
@@ -129,7 +130,18 @@ const CollectionItem = ({
     ) : (
       <Metadata rows={metadata} />
     )}
-    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+    {/* 
+      TODO: Tech-debt, this needs to be refactored so we have a consistent
+      way of rendering buttons, ideally we should use the buttonRenderer
+      prop as a function that returns a JSX element and do away with the
+      buttons prop altogether as it's completely inflexible.
+    */}
+    {buttons ? (
+      <StyledButtonWrapper>{buttons}</StyledButtonWrapper>
+    ) : buttonRenderer ? (
+      buttonRenderer()
+    ) : null}
+
     {footerRenderer && (
       <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
     )}
@@ -161,6 +173,7 @@ CollectionItem.propTypes = {
   type: PropTypes.string,
   metadataRenderer: PropTypes.func,
   titleRenderer: PropTypes.func,
+  buttonRenderer: PropTypes.func,
   footerRenderer: PropTypes.func,
 }
 

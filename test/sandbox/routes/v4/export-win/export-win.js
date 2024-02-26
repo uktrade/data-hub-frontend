@@ -14,6 +14,13 @@ const fakeExportWin = (_, i) => ({
     id: faker.string.uuid(),
     name: faker.location.country(),
   },
+  company_contacts: [
+    {
+      id: faker.string.uuid(),
+      name: faker.company.name(),
+      email: faker.internet.email(),
+    },
+  ],
   customer_name: faker.person.fullName(),
   customer_job_title: faker.person.jobTitle(),
   customer_email_address: faker.internet.email(),

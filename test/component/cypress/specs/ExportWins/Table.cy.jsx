@@ -1,7 +1,7 @@
 import React from 'react'
 
 import DataHubProvider from '../provider'
-import { WinsWonTable } from '../../../../../src/client/modules/ExportWins/WinsWonTable'
+import { WinsWonTable } from '../../../../../src/client/modules/ExportWins/Status/WinsWonTable'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { formatMediumDate } from '../../../../../src/client/utils/date'

@@ -222,8 +222,9 @@ module.exports = {
       index: url('/exportwins'),
       create: url('/exportwins/create'),
       details: url('/exportwins', '/:winId/details'),
-      won: url('/exportwins/won'),
+      rejected: url('/exportwins/rejected'),
       sent: url('/exportwins/sent'),
+      won: url('/exportwins/won'),
     },
     overview: {
       index: url('/companies', '/:companyId/overview'),

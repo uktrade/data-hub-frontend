@@ -2,16 +2,16 @@ import React from 'react'
 
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
 import { assertLocalNav } from '../../../../end-to-end/cypress/support/assertions'
-import ExportWins from '../../../../../src/client/modules/ExportWins'
+import ExportWinsTabNav from '../../../../../src/client/modules/ExportWins/Status/ExportWinsTabNav'
 import urls from '../../../../../src/lib/urls'
 import DataHubProvider from '../provider'
 
 describe('Export wins tab navigation', () => {
   const Component = (props) => (
     <DataHubProvider>
-      <ExportWins
+      <ExportWinsTabNav
         location={{
-          pathname: '/exportwins/sent',
+          pathname: '/exportwins/rejected',
         }}
         {...props}
       />
@@ -19,8 +19,21 @@ describe('Export wins tab navigation', () => {
   )
 
   context('when rendering the breadcrumbs', () => {
-    it('should render both Home and Sent', () => {
+    it('should render both Home and Rejected', () => {
       cy.mount(<Component />)
+      assertBreadcrumbs({
+        Home: urls.dashboard.index(),
+        Rejected: null,
+      })
+    })
+    it('should render both Home and Sent', () => {
+      cy.mount(
+        <Component
+          location={{
+            pathname: '/exportwins/sent',
+          }}
+        />
+      )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         Sent: null,
@@ -49,11 +62,11 @@ describe('Export wins tab navigation', () => {
   })
 
   context('When rendering the TabNav component', () => {
-    it('should display both Sent and Won tabs', () => {
+    it('should render three tabs: Rejected, Sent and Won', () => {
       cy.mount(<Component />)
       cy.get('[data-test="tablist"]').should('exist')
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', ['Sent', 'Won'])
+      assertLocalNav('@tabItems', ['Rejected', 'Sent', 'Won'])
     })
   })
 })
