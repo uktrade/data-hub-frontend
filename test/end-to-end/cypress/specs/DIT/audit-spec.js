@@ -6,6 +6,12 @@ const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
 const {
   assertFlashMessage,
 } = require('../../../../functional/cypress/support/assertions')
+const {
+  NOT_SET,
+} = require('../../../../../src/client/modules/Companies/CompanyBusinessDetails/CompanyEditHistory/constants')
+const {
+  assertBadge,
+} = require('../../../../functional/cypress/support/collection-list-assertions')
 
 const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
 let companyObj
@@ -30,11 +36,21 @@ describe('Company', () => {
     )
 
     cy.visit(urls.companies.editHistory.index(companyObj.pk))
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('listItem1')
 
-    cy.get(selectors.editHistory.change(1).updated)
+    cy.get('@listItem1')
       .should('contain', todaysDate)
       .and('contain', 'DIT Staff')
-    cy.get(selectors.companyEdit.history).should('contain', '1 change')
+      .and('contain', "Company's website")
+      .and('contain', NOT_SET)
+      .and('contain', 'http://www.example.com')
+
+    cy.get('[data-test="collection-header-name"]')
+      .should('exist')
+      .should('contain', '1 change')
+
+    assertBadge('@listItem1', '1 change')
   })
 })
 

@@ -12,7 +12,6 @@ import Provider from './provider'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
-import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
@@ -113,11 +112,6 @@ function App() {
         <Mount selector="#edit-company-form">
           {(props) => (
             <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
-          )}
-        </Mount>
-        <Mount selector="#company-edit-history">
-          {(props) => (
-            <CompanyEditHistory csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
         <Mount selector="#match-confirmation">
