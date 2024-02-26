@@ -7,8 +7,6 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/edit-history' },
   { url: '/companies/:companyId/exports' },
   { url: '/exportwins/' },
-  { url: '/exportwins/sent/' },
-  { url: '/exportwins/rejected/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
   { url: '/companies/:companyId/account-management' },
   { url: '/company-lists/' },
