@@ -168,7 +168,7 @@ describe('View details for task that is assigned to an investment project', () =
       assertUrl(dashboard.myTasks())
     })
 
-    it('should redirect to the investment project and show the Flash message after marking as complete', () => {
+    it('should redirect to the investment project and show the Flash message after deleting', () => {
       cy.intercept(
         'POST',
         `/api-proxy/v4/task/${investmentProjectTask.id}/archive`,
