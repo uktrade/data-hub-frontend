@@ -57,7 +57,6 @@ const AddObjectiveButton = styled(GridCol)`
 const ArchivedObjectivesLink = styled(GridCol)`
   padding-top: 7px;
 `
-const oneListEmail = 'one.list@invest-trade.uk'
 
 const canEditOneList = (permissions) =>
   permissions &&
@@ -298,7 +297,7 @@ const AccountManagement = ({ permissions }) => {
                 Digital Workspace
               </NewWindowLink>{' '}
               or email{' '}
-              <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+              <Link href={`mailto:${ONE_LIST_EMAIL}`}>{ONE_LIST_EMAIL}</Link>
             </Details>
           </CompanyLayout>
         )}
