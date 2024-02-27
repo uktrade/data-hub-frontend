@@ -50,6 +50,8 @@ const assertValueTable = (dataTest, expected) => {
   })
 }
 
+// FIXME: The assertion only asserts subset of rows,
+// but it should assert exact list including order
 const assertSummaryTable = ({
   dataTest,
   heading,
@@ -868,6 +870,7 @@ const assertTypeaheadValues = (selector, values) => {
  * Assert that a link exists and that the href url is correct
  */
 const assertLink = (dataTest, expected) => {
+  // FIXME: Should also assert the link text
   cy.get(`[data-test=${dataTest}]`)
     .should('exist')
     .should('have.attr', 'href', expected)

@@ -45,6 +45,7 @@ const fakeExportWin = () => ({
       email: faker.internet.email(),
     },
   ],
+  name_of_export: faker.commerce.productName(),
   customer_name: faker.person.fullName(),
   customer_job_title: faker.person.jobTitle(),
   customer_email_address: faker.internet.email(),

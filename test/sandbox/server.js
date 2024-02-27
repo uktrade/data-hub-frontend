@@ -530,7 +530,7 @@ app.post('/v4/event', createEvent)
 
 // V4 Export Win
 app.get('/v4/export_win', getExportWinCollection)
-app.get('/v4/export_win/:exportWinId', getExportWin)
+app.get('/v4/export-win/:exportWinId', getExportWin)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', featureFlag)
