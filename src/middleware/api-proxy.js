@@ -57,6 +57,7 @@ const ALLOWLIST = [
   '/v3/event/',
   '/v4/event/',
   '/v4/export-win/',
+  '/v4/export-win/:exportWinId',
   '/v4/event/:id',
   '/v3/omis/order/:id/assignee',
   '/v3/omis/order/:id/subscriber-list',

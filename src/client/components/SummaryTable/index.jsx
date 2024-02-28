@@ -64,7 +64,7 @@ const StyledTableRow = styled(Table.Row)`
     `}
 `
 
-SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag }) => {
+SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag, ...props }) => {
   if (hideWhenEmpty && isEmpty(children)) {
     return null
   }
@@ -72,7 +72,7 @@ SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag }) => {
   const renderChildren = () => {
     if (Array.isArray(children)) {
       return (
-        <StyledCellList>
+        <StyledCellList {...props}>
           {children
             .filter((c) => c)
             .map((c, index) => (
@@ -86,7 +86,7 @@ SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag }) => {
   }
 
   return (
-    <StyledTableRow invalid={flag}>
+    <StyledTableRow invalid={flag} {...props}>
       {heading && <Table.CellHeader>{heading}</Table.CellHeader>}
       <Table.Cell>{renderChildren()}</Table.Cell>
     </StyledTableRow>

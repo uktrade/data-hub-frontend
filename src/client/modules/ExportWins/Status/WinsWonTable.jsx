@@ -32,8 +32,8 @@ export const WinsWonTable = ({ exportWins }) => (
         company,
         country,
         date,
-        customer_response,
         total_expected_export_value,
+        customer_response,
       }) => (
         <Table.Row key={id}>
           <Table.Cell>

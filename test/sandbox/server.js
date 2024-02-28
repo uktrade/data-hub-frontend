@@ -285,7 +285,10 @@ import { person, bulkPerson } from './routes/api/consentService.js'
 
 import { createCompaniesSearch } from './routes/api/dnbService.js'
 import { tasks } from './routes/v4/search/tasks.js'
-import { getExportWinCollection } from './routes/v4/export-win/export-win.js'
+import {
+  getExportWin,
+  getExportWinCollection,
+} from './routes/v4/export-win/export-win.js'
 
 // Data store service (github.com/uktrade/data-store-service)
 app.get('/api/v1/get-postcode-data/', toRegion)
@@ -526,7 +529,8 @@ app.patch('/v4/event/:eventId', patchEvent)
 app.post('/v4/event', createEvent)
 
 // V4 Export Win
-app.get('/v4/export-win', getExportWinCollection)
+app.get('/v4/export_win', getExportWinCollection)
+app.get('/v4/export-win/:exportWinId', getExportWin)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', featureFlag)
