@@ -8,17 +8,17 @@ import {
   FieldWrapper,
   Form,
   FormLayout,
-} from '../../../../components/index.jsx'
-import urls from '../../../../../lib/urls.js'
-import FieldAddAnother from '../../../../components/Form/elements/FieldAddAnother/index.jsx'
-import { TASK_ADD_PROJECT_DOCUMENT } from './state.js'
-import { EvidenceTagResource } from '../../../../components/Resource/index.jsx'
-import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField/index.jsx'
-import { buildProjectBreadcrumbs } from '../../utils.js'
-import { FORM_LAYOUT } from '../../../../../common/constants.js'
-import FieldFileUpload from '../../../../components/Form/elements/FieldFileUpload/index.jsx'
-import { transformEvidenceForApi } from './transformers.js'
-import InvestmentName from '../InvestmentName.jsx'
+} from '../../../../components'
+import urls from '../../../../../lib/urls'
+import FieldAddAnother from '../../../../components/Form/elements/FieldAddAnother'
+import { TASK_ADD_PROJECT_DOCUMENT } from './state'
+import { EvidenceTagResource } from '../../../../components/Resource'
+import ResourceOptionsField from '../../../../components/Form/elements/ResourceOptionsField'
+import { buildProjectBreadcrumbs } from '../../utils'
+import { FORM_LAYOUT } from '../../../../../common/constants'
+import FieldFileUpload from '../../../../components/Form/elements/FieldFileUpload'
+import { transformEvidenceForApi } from './transformers'
+import InvestmentName from '../InvestmentName'
 
 const AddProjectDocument = () => {
   const { projectId } = useParams()
