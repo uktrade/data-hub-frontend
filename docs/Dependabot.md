@@ -24,7 +24,7 @@ The `@babel/core` and `@babel/preset-env` packages should, where possible, be ke
 
 ### Cypress
 
-When Cypress is updated, the version used in [`Dockerfile.dependencies`](https://github.com/uktrade/data-hub-frontend/blob/main/Dockerfile.dependencies#L69) needs to be updated as well.
+When Cypress is updated, the version used in [`Dockerfile.dependencies`](https://github.com/uktrade/data-hub-frontend/blob/main/Dockerfile.dependencies#L69) needs to be updated as well. You will need to create a new dependencies image and push it to Google Cloud ([follow the instructions in the Docker readme](./Docker.md)) before raising the main Dependabot PR.
 
 ### React
 
