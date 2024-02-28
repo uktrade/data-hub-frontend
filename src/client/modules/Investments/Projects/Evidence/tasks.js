@@ -1,6 +1,10 @@
 import axios from 'axios'
 
 import { apiProxyAxios } from '../../../../components/Task/utils'
+import {
+  MAX_FILE_SIZE,
+  MAX_FILE_SIZE_ERR_MSG,
+} from '../../../../utils/file-upload-size'
 
 export const deleteProjectDocument = (values) => {
   const options = {
@@ -13,9 +17,8 @@ export const deleteProjectDocument = (values) => {
 export const addProjectDocument = async ({ projectId, values }) => {
   const { tags, comment, file } = values
 
-  const fiveGigabytes = 5000 * 1024 * 1024
-  if (file.size > fiveGigabytes) {
-    throw 'File must be no larger than 5GB'
+  if (file.size > MAX_FILE_SIZE) {
+    throw MAX_FILE_SIZE_ERR_MSG
   }
 
   const { data: documentUploadData } = await apiProxyAxios.post(
