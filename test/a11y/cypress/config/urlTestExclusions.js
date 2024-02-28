@@ -69,6 +69,7 @@ export const urlTestExclusions = [
   { url: '/reminders/settings/my-tasks-task-completed/' },
   { url: '/export/' },
   { url: '/tasks/:taskId/edit' },
+  { url: '/companies/:companyId/overview' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },
@@ -131,6 +132,7 @@ export const urlTestExclusions = [
   { url: '/investments/projects/:investmentId/propositions/:propositionId' },
   { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
   { url: '/companies/:companyId/hierarchies/ghq/remove' },
+  { url: '/companies/:companyId' },
   // API calls with redirect
   { url: '/tasks/:taskId/status-complete' },
   { url: '/tasks/:taskId/status-active' },

@@ -25,7 +25,7 @@ const history = createBrowserHistory()
 
 const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
-  middleware: [sagaMiddleware, routerMiddleware(history)],
+  middleware: () => [sagaMiddleware, routerMiddleware(history)],
   preloadedState,
   reducer: {
     // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
