@@ -109,7 +109,7 @@ const Container = styled(InnerContainer)`
 `
 
 export const LINKS = {
-  'Request support': urls.support(),
+  'Request Support': urls.support(),
   'Help Centre': urls.external.helpCentre.dhHomepage(),
   'Privacy Notice': urls.external.helpCentre.privacyNotice(),
   Cookies: urls.external.helpCentre.cookies(),
