@@ -23,6 +23,7 @@ describe('Task filters', () => {
     offset: 0,
     adviser: [myAdviserId],
     sortby: 'due_date:asc',
+    archived: false,
   }
   //Remap investment_project property to investmentProject so it displays in the Task List UI properly
   TaskList[0].investment_project = TaskList[0].investmentProject
@@ -234,6 +235,7 @@ describe('Task filters', () => {
           offset: 0,
           adviser: [myAdviserId],
           sortby: sortBy,
+          archived: false,
         })
         assertListItems({ length: 1 })
       })
@@ -300,24 +302,29 @@ describe('Task filters', () => {
     })
 
     it('should filter active status from the url', () => {
-      testFilterFromUrl(element, 'status=active', { archived: false }, 'Active')
+      testFilterFromUrl(
+        element,
+        'status=active',
+        { status: 'active' },
+        'Active'
+      )
     })
 
     it('should filter completed status from the url', () => {
       testFilterFromUrl(
         element,
         'status=completed',
-        { archived: true },
+        { status: 'complete' },
         'Completed'
       )
     })
 
     it('should filter active status from user input', () => {
-      testFilterFromUserInput(element, { archived: false }, 'Active')
+      testFilterFromUserInput(element, { status: 'active' }, 'Active')
     })
 
     it('should filter completed status from user input', () => {
-      testFilterFromUserInput(element, { archived: true }, 'Completed')
+      testFilterFromUserInput(element, { status: 'complete' }, 'Completed')
     })
   })
 

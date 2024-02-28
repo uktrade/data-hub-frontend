@@ -9,3 +9,10 @@ export const OPTIONS = {
     { label: 'Someone else', value: OPTION_SOMEONE_ELSE },
   ],
 }
+
+const STATUS_ACTIVE = 'active'
+const STATUS_COMPLETED = 'complete'
+export const STATUS = {
+  ACTIVE: STATUS_ACTIVE,
+  COMPLETED: STATUS_COMPLETED,
+}

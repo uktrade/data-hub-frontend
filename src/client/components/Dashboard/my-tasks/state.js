@@ -9,6 +9,7 @@ import {
   ME_OTHERS_LIST_OPTIONS,
   SHOW_ALL_OPTION,
 } from './constants'
+import { STATUS } from '../../../modules/Tasks/TaskForm/constants'
 
 export const ID = 'getMyTasks'
 export const TASK_GET_MY_TASKS = 'TASK_GET_MY_TASKS'
@@ -30,9 +31,10 @@ const sortbyMapping = {
   company_ascending: 'company.name:asc',
   project_ascending: 'investment_project.name:asc',
 }
+
 const statusMapping = {
-  active: { archived: false },
-  completed: { archived: true },
+  active: { status: STATUS.ACTIVE },
+  completed: { status: STATUS.COMPLETED },
 }
 
 export const state2props = ({ router, ...state }) => {
@@ -50,6 +52,7 @@ export const state2props = ({ router, ...state }) => {
     sortby: 'due_date:asc',
     company: undefined,
     project: undefined,
+    status: undefined,
   }
 
   const assignedToMapping = {

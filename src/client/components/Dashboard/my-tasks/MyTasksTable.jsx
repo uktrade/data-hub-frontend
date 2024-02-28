@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { formatMediumDate } from '../../../utils/date'
 import urls from '../../../../lib/urls'
+import { STATUS } from '../../../modules/Tasks/TaskForm/constants'
 
 export const transformAdvisersListItem = (advisers) => {
   return advisers.map((adviser, index) => (
@@ -46,7 +47,11 @@ const rows = ({ results }) => {
         <ul>{transformAdvisersListItem(task.advisers)}</ul>
       </Table.Cell>
       <Table.Cell setWidth="10%">
-        {task.archived ? 'Completed' : 'Active'}
+        {task.archived
+          ? 'Deleted'
+          : task.status == STATUS.COMPLETED
+            ? 'Completed'
+            : 'Active'}
       </Table.Cell>
     </Table.Row>
   ))

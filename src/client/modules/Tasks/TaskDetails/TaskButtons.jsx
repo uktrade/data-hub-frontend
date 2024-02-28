@@ -8,8 +8,13 @@ import styled from 'styled-components'
 
 import { Form } from '../../../components'
 import urls from '../../../../lib/urls'
-import { TASK_ARCHIVE_TASK, buttonState2props } from './state'
-import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
+import {
+  TASK_DELETE,
+  TASK_SAVE_STATUS_COMPLETE,
+  buttonState2props,
+} from './state'
+import { GREY_3, RED, TEXT_COLOUR } from '../../../utils/colours'
+import { STATUS } from '../TaskForm/constants'
 
 const ButtonWrapper = styled.div`
   min-height: 71px;
@@ -21,28 +26,33 @@ const ButtonWrapper = styled.div`
   }
 `
 
+const DeleteTaskWrapper = styled.div`
+  * {
+    margin-left: ${SPACING.SCALE_1};
+  }
+`
+
 export const TaskButtons = ({ task, returnUrl }) => (
   <>
     <GridRow>
-      {!task.archived && (
+      {!task.archived && task.status == STATUS.ACTIVE && (
         <Form
-          id="archive-task-form"
-          analyticsFormName="archiveTaskForm"
+          id="task-save-status-complete-form"
+          data-test="task-save-status-complete-form"
+          analyticsFormName="taskSaveStatusCompleteForm"
           redirectTo={() => urls.dashboard.myTasks()}
           cancelRedirectTo={false}
-          submissionTaskName={TASK_ARCHIVE_TASK}
+          submissionTaskName={TASK_SAVE_STATUS_COMPLETE}
           transformPayload={() => ({
             taskId: task.id,
           })}
           flashMessage={() => 'Task marked as complete'}
           submitButtonLabel="Mark as complete"
           initialValues={task}
-        >
-          {() => <></>}
-        </Form>
+        />
       )}
       <ButtonWrapper>
-        {!task.archived && (
+        {!task.archived && task.status == STATUS.ACTIVE && (
           <Button
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}
@@ -62,6 +72,27 @@ export const TaskButtons = ({ task, returnUrl }) => (
         >
           Create similar task
         </Button>
+      </ButtonWrapper>
+      {!task.archived && (
+        <DeleteTaskWrapper>
+          <Form
+            id="task-delete-form"
+            data-test="task-delete-form"
+            analyticsFormName="taskDeleteForm"
+            redirectTo={() => urls.dashboard.myTasks()}
+            cancelRedirectTo={false}
+            submissionTaskName={TASK_DELETE}
+            transformPayload={() => ({
+              taskId: task.id,
+            })}
+            submitButtonColour={RED}
+            flashMessage={() => 'Task deleted'}
+            submitButtonLabel="Delete task"
+            initialValues={task}
+          />
+        </DeleteTaskWrapper>
+      )}
+      <ButtonWrapper>
         <Link
           data-test="task-back-link"
           href={returnUrl ?? urls.dashboard.myTasks()}

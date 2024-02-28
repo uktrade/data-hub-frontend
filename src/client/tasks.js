@@ -418,10 +418,17 @@ import { getOmisCompanies } from './modules/Omis/CreateOrder/CompanySelect/tasks
 import { TASK_CREATE_ORDER } from './modules/Omis/CreateOrder/state'
 import { createOrder } from './modules/Omis/CreateOrder/tasks'
 
-import { archiveTask, getTaskDetail } from './modules/Tasks/TaskDetails/tasks'
 import {
-  TASK_ARCHIVE_TASK,
+  saveTaskStatusActive,
+  saveTaskStatusComplete,
+  getTaskDetail,
+  deleteTask,
+} from './modules/Tasks/TaskDetails/tasks'
+import {
+  TASK_SAVE_STATUS_ACTIVE,
+  TASK_SAVE_STATUS_COMPLETE,
   TASK_GET_TASK_DETAILS,
+  TASK_DELETE,
 } from './modules/Tasks/TaskDetails/state'
 import { saveTaskDetail } from './modules/Tasks/TaskForm/tasks'
 import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
@@ -647,7 +654,9 @@ export const tasks = {
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
-  [TASK_ARCHIVE_TASK]: archiveTask,
+  [TASK_SAVE_STATUS_COMPLETE]: saveTaskStatusComplete,
+  [TASK_SAVE_STATUS_ACTIVE]: saveTaskStatusActive,
+  [TASK_DELETE]: deleteTask,
   [TASK_RECONCILE_OMIS_PAYMENT]: savePayment,
   [TASK_SAVE_TASK_DETAILS]: saveTaskDetail,
   [TASK_EDIT_INVOICE_DETAILS]: updateOrder,
