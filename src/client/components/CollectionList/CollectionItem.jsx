@@ -45,12 +45,13 @@ const StyledLinkHeader = styled(StyledHeader)`
 `
 
 const StyledSubheading = styled('h4')`
-  font-size: 14px;
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '14px')};
   line-height: 20px;
   color: ${DARK_GREY};
   font-weight: normal;
   margin: -${SPACING.SCALE_3} 0 ${SPACING.SCALE_2} 0;
 `
+
 const StyledButtonWrapper = styled('div')`
   margin-bottom: -30px;
   margin-right: 10px;
@@ -66,6 +67,7 @@ const StyledFooterWrapper = styled('div')`
 const CollectionItem = ({
   headingText,
   subheading,
+  subheadingUrl,
   headingUrl,
   badges,
   tags,
@@ -75,7 +77,6 @@ const CollectionItem = ({
   titleRenderer = null,
   useReactRouter = false,
   buttons,
-  buttonRenderer,
   footerRenderer,
   footerdata,
 }) => (
@@ -123,25 +124,22 @@ const CollectionItem = ({
     ) : (
       <StyledHeader>{headingText}</StyledHeader>
     )}
-    {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
+    {subheading ? (
+      subheadingUrl ? (
+        <StyledSubheading fontSize={16}>
+          <Link href={subheadingUrl}>{subheading}</Link>
+        </StyledSubheading>
+      ) : (
+        <StyledSubheading>{subheading}</StyledSubheading>
+      )
+    ) : null}
 
     {metadataRenderer ? (
       metadataRenderer(metadata)
     ) : (
       <Metadata rows={metadata} />
     )}
-    {/* 
-      TODO: Tech-debt, this needs to be refactored so we have a consistent
-      way of rendering buttons, ideally we should use the buttonRenderer
-      prop as a function that returns a JSX element and do away with the
-      buttons prop altogether as it's completely inflexible.
-    */}
-    {buttons ? (
-      <StyledButtonWrapper>{buttons}</StyledButtonWrapper>
-    ) : buttonRenderer ? (
-      buttonRenderer()
-    ) : null}
-
+    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
     {footerRenderer && (
       <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
     )}
@@ -152,6 +150,7 @@ CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
   headingText: PropTypes.string.isRequired,
   subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  subheadingUrl: PropTypes.string,
   badges: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
