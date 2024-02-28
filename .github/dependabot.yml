@@ -22,6 +22,9 @@ updates:
   - dependency-name: formidable 
     versions:
       - "> 2.1.2"
+  - dependency-name: webpack-dev-server # Waiting for Cypress to add support
+    versions:
+      - "> 4.15.1"
 
   # These are part of dependency groups and should be updated via the relevant script.
   - dependency-name: "@storybook/addon-a11y"
