@@ -98,6 +98,7 @@ import InvestmentProjectAdmin from './modules/Investments/Projects/InvestmentPro
 import OrderQuote from './modules/Omis/OrderQuote'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
+import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProjectDocument'
 
 const routes = {
   companies: [
@@ -606,6 +607,11 @@ const routes = {
       path: '/investments/projects/:projectId/evidence',
       module: 'datahub:investments',
       component: ProjectEvidence,
+    },
+    {
+      path: '/investments/projects/:projectId/evidence/add-new',
+      module: 'datahub:investments',
+      component: AddProjectDocument,
     },
     {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',

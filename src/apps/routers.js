@@ -63,6 +63,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/edit-team-members',
   '/investments/projects/:projectId/edit-history',
   '/investments/projects/:projectId/evidence',
+  '/investments/projects/:projectId/evidence/add-new',
   '/investments/projects/:projectId/evidence/:documentId/delete',
   '/investments/projects/:projectId/admin',
   '/investments',

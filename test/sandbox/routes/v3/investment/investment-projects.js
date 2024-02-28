@@ -4,6 +4,7 @@ import projectAudit from '../../../fixtures/v3/investment/project-audit.json' as
 import projectEvidence from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
 import projectNoEvidence from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
 import projectDocumentDownload from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
+import projectUploadEvidence from '../../../fixtures/v3/investment/project-upload-evidence.json' assert { type: 'json' }
 
 var allProjectsMap = {}
 allProjects.results.forEach(function (project) {
@@ -28,6 +29,18 @@ export const investmentProjectEvidence = function (req, res) {
       ? projectNoEvidence
       : projectEvidence
   )
+}
+
+export const investmentProjectEvidenceUpload = function (req, res) {
+  res.json(projectUploadEvidence)
+}
+
+export const investmentProjectEvidenceUploadCallback = function (req, res) {
+  res.sendStatus(200)
+}
+
+export const deleteInvestmentProjectEvidence = function (req, res) {
+  res.sendStatus(200)
 }
 
 export const documentDownload = function (req, res) {

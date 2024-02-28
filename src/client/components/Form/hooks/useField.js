@@ -43,6 +43,7 @@ function useField({
     error: fieldState.error,
     touched: fieldState.touched,
     onChange: (e) => setFieldValue(name, e.target.value),
+    onChangeFileUpload: (e) => setFieldValue(name, e.target.files),
     onBlur: () => setFieldTouched(name, true),
   }
 }

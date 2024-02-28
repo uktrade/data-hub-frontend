@@ -13,15 +13,8 @@ const { shared } = require('./middleware')
 
 const { create, editHistory } = require('./controllers')
 
-const { renderAddEvidence } = require('./apps/evidence/controllers/create')
-const { postUpload } = require('../documents/middleware/upload')
-
 const { setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
-const {
-  setEvidenceReturnUrl,
-  setEvidenceDocumentsOptions,
-} = require('./middleware/evidence')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
@@ -45,11 +38,6 @@ router.get('/create/:companyId?', create.start.renderCreatePage)
 
 // Add investment from Investments
 router.get('/create', create.start.renderCreatePage)
-
-router
-  .route('/:investmentId/evidence/add-new')
-  .get(setEvidenceReturnUrl, renderAddEvidence)
-  .post(setEvidenceReturnUrl, setEvidenceDocumentsOptions, postUpload)
 
 router.use(
   urls.investments.projects.interactions.index.route,
