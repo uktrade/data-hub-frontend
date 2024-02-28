@@ -1,18 +1,11 @@
 import React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
-import { Button } from 'govuk-react'
-import styled from 'styled-components'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDate } from '../../../utils/date'
+import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { WIN_FILTERS } from './constants'
 import urls from '../../../../lib/urls'
-
-const ButtonContainer = styled('div')({
-  marginTop: 10,
-})
 
 export default () => (
   <ExportWinsResource.Paginated
@@ -24,8 +17,10 @@ export default () => (
         {page.map((item) => (
           <li key={item.id}>
             <CollectionItem
-              headingText={item.company.name}
-              headingUrl={urls.companies.overview.index(item.company.id)}
+              headingText={`${item.name_of_export} to ${item?.country?.name}`}
+              headingUrl={urls.companies.exportWins.details(item.id)}
+              subheading={item.company.name}
+              subheadingUrl={urls.companies.overview.index(item.company.id)}
               metadata={[
                 { label: 'Destination: ', value: item.country.name },
                 {
@@ -39,16 +34,15 @@ export default () => (
                   value: currencyGBP(item.total_expected_export_value),
                 },
                 { label: 'Date won: ', value: formatMediumDate(item.date) },
-                { label: 'First sent: ', value: '???' },
-                { label: 'Last sent: ', value: '???' },
+                {
+                  label: 'First sent: ',
+                  value: formatMediumDateTime(item.first_sent),
+                },
+                {
+                  label: 'Last sent: ',
+                  value: formatMediumDateTime(item.last_sent),
+                },
               ]}
-              buttonRenderer={() => (
-                <ButtonContainer>
-                  <Button as={ReactRouterLink} onClick={() => alert('TODO')}>
-                    Resend export win
-                  </Button>
-                </ButtonContainer>
-              )}
             />
           </li>
         ))}
