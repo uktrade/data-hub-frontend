@@ -2,7 +2,7 @@ import React from 'react'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDate } from '../../../utils/date'
+import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { WIN_FILTERS } from './constants'
 import urls from '../../../../lib/urls'
@@ -34,8 +34,14 @@ export default () => (
                   value: currencyGBP(item.total_expected_export_value),
                 },
                 { label: 'Date won: ', value: formatMediumDate(item.date) },
-                { label: 'First sent: ', value: '???' },
-                { label: 'Last sent: ', value: '???' },
+                {
+                  label: 'First sent: ',
+                  value: formatMediumDateTime(item.first_sent),
+                },
+                {
+                  label: 'Last sent: ',
+                  value: formatMediumDateTime(item.last_sent),
+                },
               ]}
             />
           </li>
