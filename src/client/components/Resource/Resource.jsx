@@ -35,6 +35,8 @@ import FieldSelect from '../Form/elements/FieldSelect'
  * @param {any} [progressBox] - If truthy, the {LoadingBox} will be used as
  * the task status component. Note that in such case {props.children} will be
  * also called before the task resolves with the resut being {undefined}.
+ * @param {string | JSX.Element} [notFoundViewx] - If set, this will be rendered when
+ * the task rejects an object with the `httpStatusCode: 404` property.
  * @example
  * <Resource name="My task name" id="foo" payload={123}>
  *   {result =>
@@ -61,9 +63,16 @@ const Resource = multiInstance({
     transformer = (x) => [x],
     progressBox,
     noRetry,
-  }) =>
-    progressBox ? (
+    notFoundView,
+  }) => {
+    const renderError = (props) =>
+      props.errorMessage.httpStatusCode === 404
+        ? notFoundView
+        : taskStatusProps?.renderError(props) || Err(props)
+
+    return progressBox ? (
       <LoadingBox
+        renderError={notFoundView && renderError}
         {...taskStatusProps}
         name={name}
         id={id}
@@ -78,6 +87,7 @@ const Resource = multiInstance({
       </LoadingBox>
     ) : (
       <Task.Status
+        renderError={notFoundView && renderError}
         {...taskStatusProps}
         name={name}
         id={id}
@@ -89,7 +99,8 @@ const Resource = multiInstance({
       >
         {() => result !== undefined && children(...transformer(result))}
       </Task.Status>
-    ),
+    )
+  },
 })
 
 Resource.propTypes = {
@@ -106,6 +117,8 @@ Resource.propTypes = {
  */
 Resource.Inline = (props) => (
   <Resource
+    // notFoundView={<NotFound.Inline/>}
+    notFoundView={<Err.Inline errorMessage="404 Not found" />}
     {...props}
     taskStatusProps={{
       dismissable: false,
