@@ -83,3 +83,72 @@ export const getExportWinCollection = (req, res) => {
 export const getExportWin = (req, res) => {
   res.json(fakeExportWin())
 }
+
+export const getExportWinReview = (req, res) => {
+  if (req.params.token === 'non-existent') {
+    return res.status(404).json({ error: 'Not found' })
+  }
+  res.json({
+    win: fakeExportWin(),
+    company_contact: {
+      name: faker.person.fullName(),
+    },
+    agree_with_win: false,
+    name: 'John Doe',
+    comments: 'Comments',
+    our_support: {
+      id: faker.string.uuid(),
+      name: 'Our support',
+    },
+    access_to_contacts: {
+      id: faker.string.uuid(),
+      name: 'Access to contacts',
+    },
+    access_to_information: {
+      id: faker.string.uuid(),
+      name: 'Access to informaiton',
+    },
+    improved_profile: {
+      id: faker.string.uuid(),
+      name: 'Improved profile',
+    },
+    gained_confidence: {
+      id: faker.string.uuid(),
+      name: 'Gained confidence',
+    },
+    developed_relationships: {
+      id: faker.string.uuid(),
+      name: 'Developer relationship',
+    },
+    overcame_problem: {
+      id: faker.string.uuid(),
+      name: 'Overcame problem',
+    },
+    involved_state_enterprise: 'Involved state enterprise',
+    interventions_were_prerequisite: 'Interventions were prerequisite',
+    support_improved_speed: 'Support improved speed',
+    expected_portion_without_help: {
+      id: faker.string.uuid(),
+      name: 'Expected portion without help',
+    },
+    last_export: {
+      id: faker.string.uuid(),
+      name: 'Last export',
+    },
+    company_was_at_risk_of_not_exporting: false,
+    has_explicit_export_plans: false,
+    has_enabled_expansion_into_new_market: false,
+    has_increased_exports_as_percent_of_turnover: false,
+    has_enabled_expansion_into_existing_market: false,
+    case_study_willing: false,
+    marketing_source: {
+      id: faker.string.uuid(),
+      name: 'Marketing source',
+    },
+    other_marketing_source: 'Other marketing source',
+  })
+}
+
+export const patchExportWinReview = (req, res) =>
+  // TODO: Update this to correct response
+  res.json({ foo: 'bar' })

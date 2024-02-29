@@ -1,15 +1,18 @@
 import React from 'react'
-import { Link } from 'govuk-react'
-import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
-import styled from 'styled-components'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { Link } from 'govuk-react'
 import pluralize from 'pluralize'
 
-import { DefaultLayout, SummaryTable } from '../../components'
-import urls from '../../../lib/urls'
-import { formatMediumDate } from '../../utils/date'
-import { currencyGBP } from '../../utils/number-utils'
-import ExportWin from '../../components/Resource/ExportWin'
+import { DefaultLayout, SummaryTable } from '../../../components'
+import ExportWin from '../../../components/Resource/ExportWin'
+import { currencyGBP } from '../../../utils/number-utils'
+import { formatMediumDate } from '../../../utils/date'
+import { ResendExportWin } from './ResendExportWin'
+import urls from '../../../../lib/urls'
+import { state2props } from './state'
 
 const VerticalSpacer = styled.div`
   display: flex;
@@ -115,51 +118,58 @@ export const Summary = ({ exportWin, children }) => {
   )
 }
 
-const Detail = ({
-  match: {
-    params: { winId },
-  },
-}) => (
-  <DefaultLayout
-    heading={<ExportWinTitle id={winId} />}
-    pageTitle={<ExportWinTitle id={winId} />}
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.exportWins.index(),
-        text: 'Export wins',
-      },
-      { text: <ExportWinTitle id={winId} /> },
-    ]}
-  >
-    <ExportWin id={winId} progressBox={true}>
-      {(exportWin) => (
-        <>
-          <Summary exportWin={exportWin} />
-          <VerticalSpacer>
-            {exportWin?.isPersonallyConfirmed && (
-              <Link
-                as={ReactRouterLink}
-                to={urls.companies.exportWins.customerFeedback(winId)}
-              >
-                View customer feedback
-              </Link>
-            )}
-            <Link
-              data-test="export-wins-link"
-              as={ReactRouterLink}
-              to={urls.companies.exportWins.index()}
-            >
-              Export wins
-            </Link>
-          </VerticalSpacer>
-        </>
-      )}
-    </ExportWin>
-  </DefaultLayout>
-)
+const Detail = (props) => {
+  const { winId } = props.match.params
+  const success = props[winId]?.success
+  const flashMessage = success && { success: ['Successfully sent'] }
 
-export default Detail
+  return (
+    <DefaultLayout
+      heading={<ExportWinTitle id={winId} />}
+      pageTitle={<ExportWinTitle id={winId} />}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.exportWins.index(),
+          text: 'Export wins',
+        },
+        { text: <ExportWinTitle id={winId} /> },
+      ]}
+      flashMessages={flashMessage}
+    >
+      <ExportWin id={winId} progressBox={true}>
+        {(exportWin) => {
+          return (
+            <>
+              <Summary exportWin={exportWin}/>
+              hehehe
+              {exportWin && <ResendExportWin id={exportWin.id} />}
+              <VerticalSpacer>
+                {exportWin?.isPersonallyConfirmed && (
+                  <Link
+                    as={ReactRouterLink}
+                    to={urls.companies.exportWins.customerFeedback(winId)}
+                  >
+                    View customer feedback
+                  </Link>
+                )}
+                <Link
+                  data-test="export-wins-link"
+                  as={ReactRouterLink}
+                  to={urls.companies.exportWins.index()}
+                >
+                  Export wins
+                </Link>
+              </VerticalSpacer>
+            </>
+          )
+        }}
+      </ExportWin>
+    </DefaultLayout>
+  )
+}
+
+export default connect(state2props)(Detail)
