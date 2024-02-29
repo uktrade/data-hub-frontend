@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
+
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled, { ThemeProvider } from 'styled-components'
@@ -76,7 +77,7 @@ const PersonalisedDashboard = ({
   dataHubFeed,
   hasTasks,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const previouslySelectedTabPath = readFromLocalStorage(DASHBOARD_TAB)
 
@@ -84,7 +85,7 @@ const PersonalisedDashboard = ({
     previouslySelectedTabPath &&
     previouslySelectedTabPath !== window.location.pathname
   ) {
-    history.push(previouslySelectedTabPath)
+    navigate(previouslySelectedTabPath)
   }
 
   return (

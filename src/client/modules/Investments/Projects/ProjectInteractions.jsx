@@ -2,7 +2,8 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
 
 import { CollectionList } from '../../../components'
 import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
@@ -12,7 +13,7 @@ import InvestmentName from './InvestmentName'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
 const ProjectInteractions = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(parsedQueryString.page, 10) || 1
@@ -67,7 +68,7 @@ const ProjectInteractions = () => {
                 count={count}
                 isComplete={true}
                 onPageClick={(currentPage) =>
-                  history.push({
+                  navigate({
                     search: qs.stringify({
                       ...parsedQueryString,
                       page: currentPage,

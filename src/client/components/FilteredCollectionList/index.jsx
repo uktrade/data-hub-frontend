@@ -3,7 +3,9 @@
 
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Route, useHistory, useLocation } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
+
 import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
@@ -93,7 +95,7 @@ const FilteredCollectionList = ({
   useReactRouter = false,
   collectionItemTemplate = collectionItemTemplateDefault,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
 
   const totalPages = Math.ceil(
@@ -103,7 +105,7 @@ const FilteredCollectionList = ({
 
   useEffect(() => {
     if (defaultQueryParams && isEmpty(qsParams)) {
-      history.push({
+      navigate({
         search: qs.stringify({
           ...defaultQueryParams,
         }),
@@ -174,7 +176,7 @@ const FilteredCollectionList = ({
                   activePage={initialPage}
                   onPageClick={(page, e) => {
                     e.preventDefault()
-                    history.push({
+                    navigate({
                       search: qs.stringify({
                         ...qsParams,
                         page,
