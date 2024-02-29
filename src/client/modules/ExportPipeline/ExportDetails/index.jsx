@@ -131,7 +131,7 @@ const ExportDetailsForm = ({ exportItem }) => {
                     />
                   </SummaryTable.Row>
                   <SummaryTable.Row
-                    heading="Estimated date for Win"
+                    heading="Estimated date for win"
                     hideWhenEmpty={false}
                   >
                     {isEmpty(exportItem.estimated_win_date)
