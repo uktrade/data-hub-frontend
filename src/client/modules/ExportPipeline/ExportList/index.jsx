@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
-import { UnorderedList, ListItem, H2 } from 'govuk-react'
+import { UnorderedList, ListItem, H2, Link } from 'govuk-react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -13,6 +13,7 @@ import { MID_GREY } from '../../../utils/colours'
 import ListItemRenderer from './ItemRenderer'
 import Task from '../../../components/Task'
 import ExportSelect from './ExportSelect'
+import urls from '../../../../lib/urls'
 import ExportDate from './ExportDate'
 import List from './List'
 
@@ -68,8 +69,18 @@ const HeaderContainer = styled('div')({
   marginTop: 30,
 })
 
+const LinkContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: 5,
+  alignItems: 'end',
+  gap: 10,
+})
+
 const StyledButtonLink = styled(ButtonLink)({
   marginBottom: 0,
+  border: 0,
+  padding: 0,
 })
 
 const ListContainer = styled('div')({
@@ -83,6 +94,7 @@ const ExportList = ({
   maxItemsToPaginate,
   payload,
   filters,
+  hasExportWinFeatureGroup,
 }) => {
   const history = useHistory()
   const maxItems = Math.min(count, maxItemsToPaginate)
@@ -168,11 +180,24 @@ const ExportList = ({
               </StyledResultCount>{' '}
               Exports
             </StyledHeader>
-            {filters.areActive && (
-              <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
-                Remove all filters
-              </StyledButtonLink>
-            )}
+            <LinkContainer>
+              {filters.areActive && (
+                <StyledButtonLink
+                  onClick={onClearAll}
+                  data-test="clear-filters"
+                >
+                  Remove all filters
+                </StyledButtonLink>
+              )}
+              {hasExportWinFeatureGroup && (
+                <Link
+                  href={urls.companies.exportWins.index()}
+                  data-test="export-wins"
+                >
+                  Export wins
+                </Link>
+              )}
+            </LinkContainer>
           </HeaderContainer>
         </>
       )}
@@ -239,6 +264,7 @@ ExportList.propTypes = {
   results: PropTypes.array,
   itemsPerPage: PropTypes.number,
   maxItemsToPaginate: PropTypes.number,
+  hasExportWinFeatureGroup: PropTypes.bool,
 }
 
 export default connect(state2props)(ExportList)

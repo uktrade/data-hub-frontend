@@ -28,6 +28,8 @@ const areFiltersActive = (queryParams) => {
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
   const { sectorOptions, countryOptions, ownerOptions } = state[ID]
+  const hasExportWinFeatureGroup =
+    state.activeFeatureGroups?.includes('export-wins')
   return {
     ...state[ID],
     payload: {
@@ -55,5 +57,6 @@ export const state2props = ({ router, ...state }) => {
         options: SORT_OPTIONS,
       },
     },
+    hasExportWinFeatureGroup,
   }
 }
