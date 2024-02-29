@@ -31,6 +31,9 @@ const reactRoutes = [
   '/exportwins/won',
   '/exportwins/sent',
   '/exportwins/rejected',
+  // TODO: These should not stay here
+  '/exportwins/review/:token',
+  '/exportwins/review-win/thankyou',
   '/exportwins/:winId/details',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',

@@ -54,6 +54,8 @@ const startOnRenderPropTypes = {
  * @property {Boolean} progress - Whether the task is in progress
  * @property {Boolean} error - Whether the task is in error state
  * @property {(name, id, StartOptions) => void} start - Starts a task.
+ * FIXME: This is out of sync with the code,
+ * there are more properties which should be added here
  */
 
 /**
@@ -263,6 +265,10 @@ Task.Status = ({
             progress &&
             renderProgress({ message: progressMessage, noun })}
           {error &&
+            // FIXME: This shouldn't be done here as a task can be any async function not only a http request
+            // to the API. The proper place to do this is in the resource.
+            // Moreover, it's not the best idea to rely on the concrete wording of the error message,
+            // but rather the `responseStatusCode`
             (errorMessage ===
             'You do not have permission to perform this action.' ? (
               <AccessDenied />

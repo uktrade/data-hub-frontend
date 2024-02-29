@@ -16,6 +16,10 @@ import FieldCheckboxes from '../Form/elements/FieldCheckboxes'
 import FieldTypeahead from '../Form/elements/FieldTypeahead'
 import FieldSelect from '../Form/elements/FieldSelect'
 
+const ErrorView = ({ notFoundView, ...props }) =>
+  // FIXME: It's a bit misleading that errorMessage is an object
+  props.errorMessage.httpStatusCode === 404 ? notFoundView : <Err {...props} />
+
 /**
  * @function Resource
  * This component abstracts away the loading of a resource which has an ID.
@@ -61,6 +65,7 @@ const Resource = multiInstance({
     transformer = (x) => [x],
     progressBox,
     noRetry,
+    notFoundView,
   }) =>
     progressBox ? (
       <LoadingBox
@@ -73,6 +78,9 @@ const Resource = multiInstance({
           payload,
           ignoreIfInProgress: true,
         }}
+        renderError={(props) => (
+          <ErrorView {...props} notFoundView={notFoundView} />
+        )}
       >
         {result ? children(...transformer(result)) : children()}
       </LoadingBox>
@@ -86,6 +94,9 @@ const Resource = multiInstance({
           onSuccessDispatch: 'RESOURCE',
           payload,
         }}
+        renderError={(props) => (
+          <ErrorView {...props} notFoundView={notFoundView} />
+        )}
       >
         {() => result !== undefined && children(...transformer(result))}
       </Task.Status>

@@ -114,12 +114,14 @@ app.use(
   )
 )
 
+app.use(locals)
 app.use(title())
 app.use(breadcrumbs.init())
 app.use(breadcrumbs.setHome())
-app.use(locals)
-app.use(redisCheck)
 
+app.use(require('./apps/__export-wins-review'))
+
+app.use(redisCheck)
 app.use(sessionStore)
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
@@ -152,6 +154,7 @@ app.use(routers)
 // Sentry error handler must come before other error middleware
 reporter.handleErrors(app)
 
+// TODO: Move to the top?
 app.use(errors.notFound)
 app.use(errors.badRequest)
 app.use(errors.catchAll)

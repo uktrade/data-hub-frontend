@@ -57,6 +57,7 @@ const ALLOWLIST = [
   '/v3/event/',
   '/v4/event/',
   '/v4/export-win/',
+  '/v4/export-win/review/:token',
   '/v4/export-win/:exportWinId',
   '/v4/event/:id',
   '/v3/omis/order/:id/assignee',
@@ -103,6 +104,7 @@ module.exports = (app) => {
         )
 
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
+
         // this is required to be able to handle POST requests and avoid a conflict with bodyParser
         // issue here -> https://github.com/chimurai/http-proxy-middleware/issues/320
         if (req.body) {

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 const ProtectedLink = ({ module, modulePermissions, children = null }) =>
-  modulePermissions.includes(module) ? children : null
+  modulePermissions?.includes(module) ? children : null
 
 ProtectedLink.propTypes = {
   module: PropTypes.string.isRequired,

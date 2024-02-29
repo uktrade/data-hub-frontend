@@ -47,6 +47,8 @@ function* startTask(task, action) {
         type: TASK__ERROR,
         id,
         name,
+        // FIXME: We shouldn't call this errorMessage as it doesn't necessarily
+        // need to be a string
         errorMessage: error,
       })
     }
