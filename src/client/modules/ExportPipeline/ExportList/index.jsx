@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
 import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 import { UnorderedList, ListItem, H2, Link } from 'govuk-react'
 import styled from 'styled-components'
@@ -96,13 +96,13 @@ const ExportList = ({
   filters,
   hasExportWinFeatureGroup,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const maxItems = Math.min(count, maxItemsToPaginate)
   const totalPages = Math.ceil(maxItems / itemsPerPage)
   const hasZeroExports = !filters.areActive && count === 0
 
   const onClearAll = () => {
-    history.push({
+    navigate({
       search: qs.stringify({
         page: 1,
       }),
@@ -242,7 +242,7 @@ const ExportList = ({
                   activePage={payload.page}
                   onPageClick={(page, e) => {
                     e.preventDefault()
-                    history.push({
+                    navigate({
                       search: qs.stringify({
                         ...payload,
                         page,

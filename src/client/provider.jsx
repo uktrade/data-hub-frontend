@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 
-import { Router } from 'react-router-dom-v5-compat'
+import { Router, CompatRouter } from 'react-router-dom-v5-compat'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'

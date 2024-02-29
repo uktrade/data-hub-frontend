@@ -1,7 +1,9 @@
 import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { Route, useHistory, useLocation } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
+
 import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
@@ -85,7 +87,7 @@ const _Form = ({
   goToStep,
   ...props
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const qsParams = qs.parse(location.search.slice(1))
 
@@ -100,7 +102,7 @@ const _Form = ({
       if (qsParams.step) {
         goToStep(qsParams.step || steps[initialStepIndex])
       } else {
-        history.replace({
+        navigate({
           search: qs.stringify({
             ...qsParams,
             step: steps[initialStepIndex],
