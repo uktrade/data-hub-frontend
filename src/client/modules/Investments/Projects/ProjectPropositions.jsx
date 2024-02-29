@@ -4,7 +4,8 @@ import { H2, Button, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
 import { get } from 'lodash'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
 
 import { CollectionList } from '../../../components'
 import { PropositionCollectionResource } from '../../../components/Resource'
@@ -86,7 +87,7 @@ const ProjectPropositions = ({
   getFlashMessagesFromSession,
   completeStatus,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(parsedQueryString.page, 10) || 1
@@ -158,7 +159,7 @@ const ProjectPropositions = ({
                 count={count}
                 isComplete={true}
                 onPageClick={(currentPage) =>
-                  history.push({
+                  navigate({
                     search: qs.stringify({
                       ...parsedQueryString,
                       page: currentPage,

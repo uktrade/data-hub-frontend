@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom-v5-compat'
+
 import { Select } from 'govuk-react'
 import styled from 'styled-components'
 import { get, kebabCase } from 'lodash'
@@ -12,7 +14,7 @@ const StyledSelect = styled(Select)({
 })
 
 const ExportSelect = ({ label, options = [], qsParam }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const [value, setValue] = useState()
 
@@ -22,7 +24,7 @@ const ExportSelect = ({ label, options = [], qsParam }) => {
   useEffect(() => setValue(initialValue), [initialValue])
 
   const onChange = (e) => {
-    history.push({
+    navigate({
       search: qs.stringify({
         ...qsParams,
         [qsParam]: e.target.value,
