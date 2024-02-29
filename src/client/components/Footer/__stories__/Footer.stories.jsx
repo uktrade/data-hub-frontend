@@ -7,3 +7,12 @@ export default {
   title: 'Footer',
 }
 export const Footer = () => <Component />
+export const CustomLinks = () => (
+  <Component
+    links={{
+      Foo: '/foo',
+      Bar: '/bar',
+      Baz: '/baz',
+    }}
+  />
+)
