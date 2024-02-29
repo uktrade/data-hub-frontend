@@ -42,7 +42,7 @@ describe('Export Details summary ', () => {
         Owner: exportItem.owner.name,
         'Team members': exportItem.team_members.map((obj) => obj.name).join(''),
         'Total estimated export value': estimatedExportValue,
-        'Estimated date for Win': estimatedWinDate,
+        'Estimated date for win': estimatedWinDate,
         Status: capitalize(exportItem.status),
         'Export potential': capitalize(exportItem.export_potential),
         Destination: exportItem.destination_country.name,
