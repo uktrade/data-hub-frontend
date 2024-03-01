@@ -7,8 +7,8 @@
         "id": 5197,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -20,8 +20,8 @@
         "id": 5191,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "firstame": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -32,26 +32,40 @@
             true,
             false
           ],
-          "archivedOn": [
+          "archived_on": [
             "2022-05-18T09:55:10.111000Z",
             null
           ],
-          "archivedReason": [
+          "archived_reason": [
             "Left the company",
             ""
           ],
-          "archivedBy": [
+          "archived_by": [
             "Joseph Woof",
             null
-          ]
+          ],
+          "address_same_as_company": [true, false],
+          "primary": [false, true],
+          "first_name": ["Andras", "Andreas"],
+          "last_name": ["Old last name", "New last name"],
+          "job_title": ["Old job title", "New job title"],
+          "full_telephone_number": [null, "01234567890"],
+          "email": [null, "test@example.com"],
+          "address_1": [null, "Test Line 1"],
+          "address_2": [null, "Test Line 2"],
+          "address_town": [null, "Test Town"],
+          "address_county": [null, "Test county"],
+          "address_country": [null, "Baker Island"],
+          "address_postcode": [null, "TE5 5ST"],
+          "notes": [null, "Notes about the contact"]
         }
       },
       {
         "id": 5190,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -68,8 +82,8 @@
         "id": 5189,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -80,15 +94,15 @@
             true,
             false
           ],
-          "archivedOn": [
+          "archived_on": [
             "2022-05-18T09:50:28.396000Z",
             null
           ],
-          "archivedReason": [
+          "archived_reason": [
             "Left the company",
             ""
           ],
-          "archivedBy": [
+          "archived_by": [
             "Joseph Woof",
             null
           ]
@@ -98,8 +112,8 @@
         "id": 5188,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -110,15 +124,15 @@
             false,
             true
           ],
-          "archivedOn": [
+          "archived_on": [
             null,
             "2022-05-18T09:50:28.396000Z"
           ],
-          "archivedReason": [
+          "archived_reason": [
             "",
             "Left the company"
           ],
-          "archivedBy": [
+          "archived_by": [
             null,
             "Joseph Woof"
           ]
@@ -128,8 +142,8 @@
         "id": 5187,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -140,15 +154,15 @@
             true,
             false
           ],
-          "archivedOn": [
+          "archived_on": [
             "2022-05-18T09:17:24.069000Z",
             null
           ],
-          "archivedReason": [
+          "archived_reason": [
             "Left the company",
             ""
           ],
-          "archivedBy": [
+          "archived_by": [
             "Joseph Woof",
             null
           ]
@@ -158,8 +172,8 @@
         "id": 5186,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -170,15 +184,15 @@
             false,
             true
           ],
-          "archivedOn": [
+          "archived_on": [
             null,
             "2022-05-18T09:17:24.069000Z"
           ],
-          "archivedReason": [
+          "archived_reason": [
             "",
             "Left the company"
           ],
-          "archivedBy": [
+          "archived_by": [
             null,
             "Joseph Woof"
           ]
@@ -188,8 +202,8 @@
         "id": 5164,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -200,15 +214,15 @@
             true,
             false
           ],
-          "archivedOn": [
+          "archived_on": [
             "2022-05-17T14:28:01.669000Z",
             null
           ],
-          "archivedReason": [
+          "archived_reason": [
             "Left the company",
             ""
           ],
-          "archivedBy": [
+          "archived_by": [
             "Joseph Woof",
             null
           ]
@@ -218,8 +232,8 @@
         "id": 5163,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -230,15 +244,15 @@
             false,
             true
           ],
-          "archivedOn": [
+          "archived_on": [
             null,
             "2022-05-17T14:28:01.669000Z"
           ],
-          "archivedReason": [
+          "archived_reason": [
             "",
             "Left the company"
           ],
-          "archivedBy": [
+          "archived_by": [
             null,
             "Joseph Woof"
           ]
@@ -248,8 +262,8 @@
         "id": 5162,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstName": "Joseph",
-          "lastName": "Woof",
+          "first_name": "Joseph",
+          "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
         },
@@ -260,15 +274,15 @@
             true,
             false
           ],
-          "archivedOn": [
+          "archived_on": [
             "2022-05-17T14:23:52.389000Z",
             null
           ],
-          "archivedReason": [
+          "archived_reason": [
             "Left the company",
             ""
           ],
-          "archivedBy": [
+          "archived_by": [
             "Joseph Woof",
             null
           ]
