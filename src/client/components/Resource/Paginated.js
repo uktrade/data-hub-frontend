@@ -128,7 +128,9 @@ const PaginatedResource = multiInstance({
                         totalItems={result.count}
                         collectionName={name}
                       />
-                      <StyledCollectionSort totalPages={totalPages} />
+                      {totalPages > 0 && (
+                        <StyledCollectionSort totalPages={totalPages} />
+                      )}
                       {result ? children(result.results) : null}
                       <Pagination
                         totalPages={totalPages}
@@ -145,6 +147,7 @@ const PaginatedResource = multiInstance({
                           })
                         }}
                       />
+                      {totalPages === 1 && <br />}
                     </LoadingBox>
                   ) : (
                     <Task.Status name={name} id={id} />
