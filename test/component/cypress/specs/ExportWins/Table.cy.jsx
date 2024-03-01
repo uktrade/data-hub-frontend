@@ -13,7 +13,7 @@ const exportWinToRow = (exportWin) => [
   exportWin.country.name,
   currencyGBP(exportWin.total_expected_export_value),
   formatMediumDate(exportWin.date),
-  formatMediumDate(exportWin.customer_response.created_on),
+  formatMediumDate(exportWin.customer_response.responded_on),
   'View details',
 ]
 
@@ -31,7 +31,7 @@ describe('Export wins table', () => {
         total_expected_export_value: 1111111,
         date: '1111-11-11',
         customer_response: {
-          created_on: '1212-12-12',
+          responded_on: '1212-12-12',
         },
       },
       {
@@ -45,7 +45,7 @@ describe('Export wins table', () => {
         total_expected_export_value: 222222,
         date: '0101-01-01',
         customer_response: {
-          created_on: '0202-02-02',
+          responded_on: '0202-02-02',
         },
       },
       exportWinsFaker(),
