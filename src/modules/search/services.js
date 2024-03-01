@@ -33,10 +33,9 @@ const mergeSectorAndSubSectorParams = (requestBody) => {
     ...(sub_sector_descends ? sub_sector_descends : []),
   ]
 
-  return {
-    ...reqBody,
-    sector_descends: mergedSectors,
-  }
+  return mergedSectors.length
+    ? { ...reqBody, sector_descends: mergedSectors }
+    : reqBody
 }
 
 function search({
