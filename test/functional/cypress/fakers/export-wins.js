@@ -26,6 +26,6 @@ export const exportWinsFaker = () => ({
   }),
   date: faker.date.anytime().toISOString(),
   customer_response: {
-    created_on: faker.date.anytime().toISOString(),
+    responded_on: faker.date.anytime().toISOString(),
   },
 })

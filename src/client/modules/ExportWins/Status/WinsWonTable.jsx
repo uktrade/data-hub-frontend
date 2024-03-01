@@ -48,7 +48,7 @@ export const WinsWonTable = ({ exportWins }) => (
           <Table.Cell>{currencyGBP(total_expected_export_value)}</Table.Cell>
           <NoWrapCell>{formatMediumDate(date)}</NoWrapCell>
           <NoWrapCell>
-            {formatMediumDate(customer_response?.created_on)}
+            {formatMediumDate(customer_response.responded_on)}
           </NoWrapCell>
           <NoWrapCell>
             <Link
