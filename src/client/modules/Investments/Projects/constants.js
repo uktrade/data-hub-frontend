@@ -50,11 +50,6 @@ export const VIRUS_SCAN_STATUSES = {
   ),
 }
 
-export const CHANGE_TYPE_TEXT = 'the project'
-export const TRUE = 'True'
-export const FALSE = 'False'
-export const NOT_SET = 'Not set'
-
 export const LABELS = {
   stage: 'Stage',
   sector: 'Sector',

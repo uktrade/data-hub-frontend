@@ -90,6 +90,7 @@ import OrderPayment from './OrderPayment'
 import TaskCompaniesAndProjects from './TaskCompaniesAndProjects'
 import CompanyAuditHistory from './CompanyAuditHistory'
 import EvidenceTag from './EvidenceTag'
+import ProjectAuditHistory from './ProjectAuditHistory'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -184,4 +185,5 @@ export default {
   ...TaskCompaniesAndProjects.tasks,
   ...CompanyAuditHistory.tasks,
   ...EvidenceTag.tasks,
+  ...ProjectAuditHistory.tasks,
 }

@@ -24,7 +24,6 @@ exports.companyDnbHierarchy = {
 
 exports.eventCreate = require('./event/createOrEdit')
 
-exports.editHistory = require('./edit-history')
 exports.entityCollection = require('./entity-collection')
 
 exports.interaction = {

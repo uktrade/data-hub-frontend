@@ -11,7 +11,7 @@ const {
 
 const { shared } = require('./middleware')
 
-const { create, editHistory } = require('./controllers')
+const { create } = require('./controllers')
 
 const { setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
@@ -26,11 +26,6 @@ router.get(
   '/export',
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   exportCollection('investment_project')
-)
-
-router.get(
-  urls.investments.editHistory.data.route,
-  editHistory.fetchProjectsHistoryHandler
 )
 
 // Add investment from Companies

@@ -8,9 +8,10 @@ const {
 } = require('../../../../functional/cypress/support/assertions')
 const {
   NOT_SET,
-} = require('../../../../../src/client/modules/Companies/CompanyBusinessDetails/CompanyEditHistory/constants')
+} = require('../../../../../src/client/components/AuditHistory/constants')
 const {
   assertBadge,
+  assertBadgeNotPresent,
 } = require('../../../../functional/cypress/support/collection-list-assertions')
 
 const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
@@ -102,15 +103,18 @@ describe('Investment Project', () => {
     assertFlashMessage('Investment details updated')
 
     cy.visit(urls.investments.editHistory.index(investmentProjectObj.pk))
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('listItem1')
 
-    cy.get(selectors.editHistory.change(1).updated)
+    cy.get('@listItem1')
       .should('contain', todaysDate)
       .and('contain', 'DIT Staff')
+      .and('contain', 'No changes were made to the project in this update')
 
-    cy.get(selectors.editHistory.change(1).noChanges).should(
-      'have.text',
-      'No changes were made to the project in this update'
-    )
-    cy.get('h3').should('contain', '1 change')
+    cy.get('[data-test="collection-header-name"]')
+      .should('exist')
+      .should('contain', '1 project change')
+
+    assertBadgeNotPresent('@listItem1')
   })
 })

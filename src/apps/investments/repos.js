@@ -8,16 +8,6 @@ function getInvestment(req, investmentId) {
   )
 }
 
-function getInvestmentProjectAuditLog(req, investmentId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v3/investment/${investmentId}/audit`,
-    qs: { limit, offset },
-  })
-}
-
 module.exports = {
   getInvestment,
-  getInvestmentProjectAuditLog,
 }
