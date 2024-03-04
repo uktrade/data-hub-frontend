@@ -5,6 +5,7 @@ import {
   assertLocalHeader,
   assertLink,
 } from '../../../../functional/cypress/support/assertions'
+import { WIN_STATUS } from '../../../../../src/client/modules/ExportWins/Status/constants'
 import Details from '../../../../../src/client/modules/ExportWins/Details'
 import urls from '../../../../../src/lib/urls'
 import DataHubProvider from '../provider'
@@ -45,6 +46,9 @@ const EXPORT_WIN = {
       year: 3,
     },
   ],
+  customer_response: {
+    agree_with_win: WIN_STATUS.SENT, // the default
+  },
 }
 
 const EXPECTED_ROWS = {
@@ -334,6 +338,51 @@ describe('ExportWins/Details', () => {
         } else {
           cy.contains('View customer feedback').should('not.exist')
         }
+      })
+    }
+  )
+
+  context(
+    'When the "Resend export win" button is hidden/shown on the details page',
+    () => {
+      it('should not be visible when the status of the export win is "rejected"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.REJECTED,
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('not.exist')
+      })
+      it('should be visible when the status of the export win is "sent"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.SENT,
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('exist')
+      })
+      it('should not be visible when the status of the export win is "won"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.WON,
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('not.exist')
       })
     }
   )
