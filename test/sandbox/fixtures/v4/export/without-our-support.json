@@ -1,0 +1,37 @@
+[
+  {
+    "id": "9a23de5e-6961-4cb0-a8a1-03c31b7ee4b3",
+    "name": "No value without our help",
+    "disabled_on": null
+  },
+  {
+    "id": "4a4fd78b-c6fe-434d-a81c-3cc47226e09c",
+    "name": "Up to 20% of the total expected value without our help",
+    "disabled_on": null
+  },
+  {
+    "id": "be65c0c4-c35e-4876-a035-21ea40134e9f",
+    "name": "Up to 40%",
+    "disabled_on": null
+  },
+  {
+    "id": "4f463265-5172-4b76-b7ce-42e8011ff856",
+    "name": "Up to 60%",
+    "disabled_on": null
+  },
+  {
+    "id": "a44251c1-ab7e-4357-af87-de161c6b373c",
+    "name": "Up to 80%",
+    "disabled_on": null
+  },
+  {
+    "id": "e25d8d73-6d06-42d4-9b36-99123084ad50",
+    "name": "More than 80%",
+    "disabled_on": null
+  },
+  {
+    "id": "6ff5db71-ad1c-4e45-8dd5-4e5a9ce39e7c",
+    "name": "You could have won the entire value or similar without our help",
+    "disabled_on": null
+  }
+]
