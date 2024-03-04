@@ -1,12 +1,7 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import styled from 'styled-components'
-import {H1} from 'govuk-react'
-import {
-  FONT_SIZE,
-  FONT_WEIGHTS,
-  SPACING,
-} from '@govuk-react/constants'
+import { H1 } from 'govuk-react'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import Footer from '../../../components/Footer'
 import { BLACK, WHITE, LIGHT_GREY } from '../../../utils/colours'
@@ -66,25 +61,24 @@ const Title = styled(H1)({
   marginBottom: SPACING.SCALE_5,
 })
 
-const Layout = ({children, title, supertitle, headingContent}) =>
+const Layout = ({ children, title, supertitle, headingContent }) => (
   <Grid>
-    <MainBarBackground/>
-    <MainBar>
-      Department for Business & Trade
-    </MainBar>
-    <HeaderBackground/>
+    <MainBarBackground />
+    <MainBar>Department for Business & Trade</MainBar>
+    <HeaderBackground />
     <Header>
       <p>{supertitle}</p>
       <Title>{title}</Title>
       {headingContent}
     </Header>
-    <Main>
-      {children}
-    </Main>
-    <GridCellFooter links={{
-      'Privacy Policy': 'http://example.com/not-implemented-yet',
-      'Accessibility Statement': 'http://example.com/not-implemented-yet',
-    }} />
+    <Main>{children}</Main>
+    <GridCellFooter
+      links={{
+        'Privacy Policy': 'http://example.com/not-implemented-yet',
+        'Accessibility Statement': 'http://example.com/not-implemented-yet',
+      }}
+    />
   </Grid>
+)
 
 export default Layout

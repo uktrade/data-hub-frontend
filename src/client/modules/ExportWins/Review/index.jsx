@@ -1,18 +1,25 @@
-/* eslint-disable prettier/prettier */
 import _ from 'lodash'
-import React from "react"
-import {H2, H4} from 'govuk-react'
-import {Route, Switch} from 'react-router-dom'
+import React from 'react'
+import { H2, H4 } from 'govuk-react'
+import { Route, Switch } from 'react-router-dom'
 
-import Layout from "./Layout"
-import {Form, FieldInput, FieldRadios, Step, SummaryTable, FieldTextarea, FieldCheckboxes} from '../../../components'
+import Layout from './Layout'
+import {
+  Form,
+  FieldInput,
+  FieldRadios,
+  Step,
+  SummaryTable,
+  FieldTextarea,
+  FieldCheckboxes,
+} from '../../../components'
 import State from '../../../components/State'
 import ExportWinReview from '../../../components/Resource/ExportWinReview'
-import { Summary } from "../Details"
-import Rating from "../../../components/Resource/Rating"
-import Experience from "../../../components/Resource/Experience"
-import { WithoutOurSupport } from "../../../components/Resource"
-import MarketingSource from "../../../components/Resource/MarketingSource"
+import { Summary } from '../Details'
+import Rating from '../../../components/Resource/Rating'
+import Experience from '../../../components/Resource/Experience'
+import { WithoutOurSupport } from '../../../components/Resource'
+import MarketingSource from '../../../components/Resource/MarketingSource'
 import Err from '../../../components/Task/Error'
 
 import ThankYou from './ThankYou'
@@ -20,76 +27,84 @@ import ThankYou from './ThankYou'
 const FORM_ID = 'export-wins-customer-feedback'
 
 const NotFound = (props) =>
-  props.errorMessage?.httpStatusCode === 404
-  ?
-  <>
-    <H4 as="h2">The link you used has expired</H4>
-    <p>
-      Please get in touch with the Department of Business and Trade
-      contact mentioned in your email, who will be able to send you a new link.
-    </p>
-  </>
-  : Err(props)
+  props.errorMessage?.httpStatusCode === 404 ? (
+    <>
+      <H4 as="h2">The link you used has expired</H4>
+      <p>
+        Please get in touch with the Department of Business and Trade contact
+        mentioned in your email, who will be able to send you a new link.
+      </p>
+    </>
+  ) : (
+    Err(props)
+  )
 
-const transformPayload = token => ({checkboxes1 = [], checkboxes2 = [], ...values}) => ({
-  token,
-  review: {
-    ...values,
-    ...Object.fromEntries([
-      ...checkboxes1,
-      ...checkboxes2,
-    ].map(x => [x, true])),
-    ..._(values)
-      .pick(['agree_with_win', 'case_study_willing'])
-      .mapValues(value => value === 'yes' ? true : false)
-      .value(),
-    ..._(values)
-      .pick([
-        'access_to_contacts',
-        'access_to_information',
-        'developed_relationships',
-        'expected_portion_without_help',
-        'gained_confidence',
-        'improved_profile',
-        'last_export',
-        'marketing_source',
-        'our_support',
-        'overcame_problem',
-      ])
-      .mapValues(id => ({id}))
-      .value(),
-  },
-})
+const transformPayload =
+  (token) =>
+  ({ checkboxes1 = [], checkboxes2 = [], ...values }) => ({
+    token,
+    review: {
+      ...values,
+      ...Object.fromEntries(
+        [...checkboxes1, ...checkboxes2].map((x) => [x, true])
+      ),
+      ..._(values)
+        .pick(['agree_with_win', 'case_study_willing'])
+        .mapValues((value) => (value === 'yes' ? true : false))
+        .value(),
+      ..._(values)
+        .pick([
+          'access_to_contacts',
+          'access_to_information',
+          'developed_relationships',
+          'expected_portion_without_help',
+          'gained_confidence',
+          'improved_profile',
+          'last_export',
+          'marketing_source',
+          'our_support',
+          'overcame_problem',
+        ])
+        .mapValues((id) => ({ id }))
+        .value(),
+    },
+  })
 
-const FieldComments = () =>
+const FieldComments = () => (
   <FieldTextarea
     name="comments"
     label="Comments (optional)"
     hint="Please provide feedback on the help we have provided. If any of the information is incorrect please provide details."
   />
+)
 
-const CurrentFormStepInfo = () =>
+const CurrentFormStepInfo = () => (
   <State>
-    {({Form}) => {
+    {({ Form }) => {
       if (!Form?.[FORM_ID]) return null
-      const {currentStep, steps} = Form[FORM_ID]
+      const { currentStep, steps } = Form[FORM_ID]
       const isFirstStep = currentStep === 0
       const informationNeedsRevising = steps.length === 2
       // We only want to show the form step info when the user
       // confirms that the presented information is correct
       if (isFirstStep || informationNeedsRevising) return null
-      return <>Step {currentStep} of {steps.length - 1}</>
+      return (
+        <>
+          Step {currentStep} of {steps.length - 1}
+        </>
+      )
     }}
   </State>
+)
 
-const Step1 = ({win, name}) =>
+const Step1 = ({ win, name }) => (
   <Step name="1">
     <p>Hi {name},</p>
     <p>
-      Thank you for taking the time to review our record
-      of your recent export success.
+      Thank you for taking the time to review our record of your recent export
+      success.
     </p>
-    <hr/>
+    <hr />
     <H2>Details of your recent success</H2>
     <Summary exportWin={win}>
       <SummaryTable.Row heading="Summary of support received">
@@ -102,28 +117,31 @@ const Step1 = ({win, name}) =>
       name="agree_with_win"
       required="Choose one of the options"
       options={[
-        {label: 'I confirm this information is correct', value: 'yes'},
-        {label: 'Some of this information needs revising', value: 'no'},
+        { label: 'I confirm this information is correct', value: 'yes' },
+        { label: 'Some of this information needs revising', value: 'no' },
       ]}
     />
   </Step>
+)
 
-const Step2Agree = () =>
+const Step2Agree = () => (
   <Step name="2-agree">
     <WithoutOurSupport.FieldRadios
       name="expected_portion_without_help"
       legend="What value do you estimate you would have achieved without our support?"
       required="Choose one of the options"
     />
-    <FieldComments/>
+    <FieldComments />
   </Step>
+)
 
-const Step2Disagree = () =>
+const Step2Disagree = () => (
   <Step name="2-disagree">
-    <FieldComments/>
+    <FieldComments />
   </Step>
+)
 
-const Step3 = () =>
+const Step3 = () => (
   <Step name="3">
     <H2>The extent our support helped</H2>
     <Rating.FieldRadios
@@ -162,8 +180,9 @@ const Step3 = () =>
       required="Choose one of the options"
     />
   </Step>
+)
 
-const Step4 = () =>
+const Step4 = () => (
   <Step name="4">
     <H2>About this win</H2>
     <FieldCheckboxes
@@ -171,7 +190,8 @@ const Step4 = () =>
       legend="Please tick all that apply to this win:"
       options={[
         {
-          label: 'The win involved a foreign government or state-owned enterprise (eg as an intermediary or facilitator)',
+          label:
+            'The win involved a foreign government or state-owned enterprise (eg as an intermediary or facilitator)',
           value: 'involved_state_enterprise',
         },
         {
@@ -197,22 +217,26 @@ const Step4 = () =>
           value: 'has_enabled_expansion_into_existing_market',
         },
         {
-          label: 'It enabled you to increase exports as a proportion of your turnover',
+          label:
+            'It enabled you to increase exports as a proportion of your turnover',
           value: 'has_increased_exports_as_percent_of_turnover',
         },
         {
-          label: "If you hadn't achieved this win, your company might have stopped exporting",
+          label:
+            "If you hadn't achieved this win, your company might have stopped exporting",
           value: 'company_was_at_risk_of_not_exporting',
         },
         {
-          label: 'Apart from this win, you already have plans to export in the next 12 months',
+          label:
+            'Apart from this win, you already have plans to export in the next 12 months',
           value: 'has_explicit_export_plans',
         },
       ]}
     />
   </Step>
+)
 
-const Step5 = () =>
+const Step5 = () => (
   <Step name="5">
     <H2>Your export experience</H2>
     <Experience.FieldRadios
@@ -221,8 +245,9 @@ const Step5 = () =>
       required="Choose one of the options"
     />
   </Step>
+)
 
-const Step6 = () =>
+const Step6 = () => (
   <Step name="6">
     <H2>Marketing</H2>
     <FieldRadios
@@ -230,42 +255,45 @@ const Step6 = () =>
       legend="Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?"
       required="Choose one of the options"
       options={[
-        {label: 'Yes', value: 'yes'},
-        {label: 'No', value: 'no'},
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
       ]}
     />
     <MarketingSource.FieldRadios
       name="marketing_source"
       legend="How did you first hear about DBT (or it predecessor, DIT)?"
       required="Choose one of the options"
-      interceptOption={option =>
+      interceptOption={(option) =>
         option.label.endsWith('(please specify)')
           ? {
-            ...option,
-            children:
-              <FieldInput
-                name="other_marketing_source"
-                type="text"
-                label="Label comes later"
-                required="Please specify"
-              />,
-          }
+              ...option,
+              children: (
+                <FieldInput
+                  name="other_marketing_source"
+                  type="text"
+                  label="Label comes later"
+                  required="Please specify"
+                />
+              ),
+            }
           : option
       }
     />
   </Step>
+)
 
-const Review = ({token}) =>
+const Review = ({ token }) => (
   <Layout
     title="Tell us what made a difference"
-    supertitle={<CurrentFormStepInfo/>}
+    supertitle={<CurrentFormStepInfo />}
   >
-    <ExportWinReview id={token}
+    <ExportWinReview
+      id={token}
       taskStatusProps={{
         renderError: NotFound,
       }}
     >
-      {(review) =>
+      {(review) => (
         <Form
           id={FORM_ID}
           analyticsFormName={FORM_ID}
@@ -274,10 +302,10 @@ const Review = ({token}) =>
           redirectMode="soft"
           redirectTo={() => '/exportwins/review-win/thankyou'}
           transformPayload={transformPayload(token)}
-          flashMessage={(_, {agree_with_win}) =>
+          flashMessage={(_, { agree_with_win }) =>
             agree_with_win === 'yes'
-              // TODO: Move to constants
-              ? [
+              ? // TODO: Move to constants
+                [
                   'Success',
                   'Thank you for taking time to review this export win',
                   'success',
@@ -296,35 +324,37 @@ const Review = ({token}) =>
                 ]
           }
         >
-          {formData =>
+          {(formData) => (
             <>
-              <Step1
-                win={review.win}
-                name={review?.companyContact?.name}
-              />
-              {formData.values.agree_with_win === 'yes' ?
+              <Step1 win={review.win} name={review?.companyContact?.name} />
+              {formData.values.agree_with_win === 'yes' ? (
                 <>
-                  <Step2Agree/>
-                  <Step3/>
-                  <Step4/>
-                  <Step5/>
-                  <Step6/>
+                  <Step2Agree />
+                  <Step3 />
+                  <Step4 />
+                  <Step5 />
+                  <Step6 />
                 </>
-                : <Step2Disagree/>
-              }
+              ) : (
+                <Step2Disagree />
+              )}
             </>
-          }
+          )}
         </Form>
-      }
+      )}
     </ExportWinReview>
   </Layout>
+)
 
-export default () =>
+export default () => (
   <Switch>
     <Route exact={true} path="/exportwins/review/:token">
-      {({match}) =>
-        <Review token={match.params.token}/>
-      }
+      {({ match }) => <Review token={match.params.token} />}
     </Route>
-    <Route exact={true} path="/exportwins/review-win/thankyou" component={ThankYou}/>
+    <Route
+      exact={true}
+      path="/exportwins/review-win/thankyou"
+      component={ThankYou}
+    />
   </Switch>
+)
