@@ -75,6 +75,24 @@ const assertSummaryTable = ({
   }
 }
 
+/**
+ * @param {{rows: [string, string | number][]}} options
+ */
+const assertSummaryTableStrict = ({ rows }) => {
+  cy.get('[data-component="SummaryTable"] tr')
+    .as('rows')
+    .should('have.length', rows.length)
+
+  rows.forEach(([key, val], i) => {
+    cy.get('@rows')
+      .eq(i)
+      .within(() => {
+        cy.get('th').should('have.length', 1).should('have.text', key)
+        cy.get('td').should('have.length', 1).should('have.text', val)
+      })
+  })
+}
+
 const assertGovReactTable = ({ element, headings, rows }) => {
   cy.get(element).as('table')
 
@@ -918,6 +936,7 @@ module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
+  assertSummaryTableStrict,
   assertGovReactTable,
   assertBreadcrumbs,
   testBreadcrumbs,
