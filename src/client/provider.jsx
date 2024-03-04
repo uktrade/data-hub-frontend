@@ -1,16 +1,13 @@
 import React from 'react'
 import _ from 'lodash'
-import {
-  ConnectedRouter,
-  connectRouter,
-  routerMiddleware,
-} from 'connected-react-router'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
-
-import { Router, CompatRouter } from 'react-router-dom-v5-compat'
+import { createReduxHistoryContext } from 'redux-first-history'
+import queryString from 'qs'
+import { Router } from 'react-router-dom'
+import { CompatRouter } from 'react-router-dom-v5-compat'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
@@ -21,13 +18,21 @@ const preloadedState = {
   referrerUrl: window.document.referrer,
 }
 
-const sagaMiddleware = createSagaMiddleware()
+const browserHistory = createBrowserHistory({
+  // The baseURI is set to the <base/> tag by the spaFallbackSpread
+  // middleware, which should be applied to each Express route where
+  // react-router is expected to be used.
+  basename: queryString.stringify(new URL(document.baseURI).pathname),
+})
 
-const history = createBrowserHistory()
+const { createReduxHistory, routerMiddleware, routerReducer } =
+  createReduxHistoryContext({ history: browserHistory })
+
+const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
-  middleware: () => [sagaMiddleware, routerMiddleware(history)],
+  middleware: () => [sagaMiddleware, routerMiddleware],
   preloadedState,
   reducer: {
     // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
@@ -38,9 +43,11 @@ const store = configureStore({
           state
     ),
     ...reducers,
-    router: connectRouter(history),
+    router: routerReducer,
   },
 })
+
+const history = createReduxHistory(store)
 
 const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
   sagaMiddleware.run(rootSaga(tasks))
