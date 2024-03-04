@@ -10,6 +10,7 @@ import urls from '../../../../lib/urls'
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-rejected"
+    noResults="You don't have any rejected export wins."
     payload={{ confirmed: WIN_STATUS.REJECTED }}
   >
     {(page) => (

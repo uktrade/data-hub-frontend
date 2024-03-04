@@ -28,6 +28,8 @@ describe('Resource/Paginated', () => {
       </DataHubProvider>
     )
 
+    cy.get('[data-test="no-results"]').should('not.exist')
+
     cy.get('pre').as('page').should('have.text', JSON.stringify(PAGES[0]))
 
     cy.get('[data-test="pagination-summary"]')
@@ -107,5 +109,56 @@ describe('Resource/Paginated', () => {
     // The resource should reload
     cy.contains('Loading')
     cy.get('pre').as('page').should('have.text', JSON.stringify(PAGES[0]))
+  })
+
+  it('Should render the default no results message', () => {
+    cy.mount(
+      <DataHubProvider
+        resetTasks={true}
+        tasks={{
+          foo: () => ({
+            count: 0,
+            results: [],
+          }),
+        }}
+      >
+        <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
+          {(page) => <pre>{JSON.stringify(page)}</pre>}
+        </PaginatedResource>
+      </DataHubProvider>
+    )
+    cy.get('[data-test="pagination-summary"]').should('not.exist')
+    cy.get('[data-test="pagination"]').should('not.exist')
+    cy.get('[data-test="no-results"]').should(
+      'have.text',
+      "You don't have any results"
+    )
+  })
+
+  it('Should override the default results message"', () => {
+    cy.mount(
+      <DataHubProvider
+        resetTasks={true}
+        tasks={{
+          foo: () => ({
+            count: 0,
+            results: [],
+          }),
+        }}
+      >
+        <PaginatedResource
+          name="foo"
+          id="whatever"
+          pageSize={PAGE_SIZE}
+          noResults="You don't have any sent export wins."
+        >
+          {(page) => <pre>{JSON.stringify(page)}</pre>}
+        </PaginatedResource>
+      </DataHubProvider>
+    )
+    cy.get('[data-test="no-results"]').should(
+      'have.text',
+      "You don't have any sent export wins."
+    )
   })
 })
