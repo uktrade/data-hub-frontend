@@ -1,6 +1,3 @@
-export const ARCHIVED = 'Archived'
-export const NOT_ARCHIVED = 'Not Archived'
-
 export const EXCLUDED_FIELDS = ['archived_by', 'archived_on', 'dnb_modified_on']
 
 export const COMPANY_FIELD_NAME_TO_LABEL_MAP = {

@@ -70,7 +70,7 @@ describe('Contact', () => {
       .next()
       .find('input')
       .clear()
-      .type('1234')
+      .type('44 87643213456')
   })
 
   it('should display name of the person who made contact record changes', () => {
@@ -81,9 +81,17 @@ describe('Contact', () => {
 
     cy.get('[data-test=collection-item]')
       .should('contain', 'DIT Staff')
-      .and('contain', '3 changes')
       .and('contain', todaysDate)
-    cy.get('[data-test=audit-results]').should('contain', '1 result')
+      .and('contain', 'Job title')
+      .and('contain', 'Not set')
+      .and('contain', 'Freerider')
+      .and('contain', 'Full telephone number')
+      .and('contain', '44 67890123432')
+      .and('contain', '44 87643213456')
+    cy.get('[data-test="collection-header-name"]')
+      .should('exist')
+      .should('have.text', '1 contact change')
+    assertBadge('[data-test=collection-item]', '2 changes')
   })
 })
 
