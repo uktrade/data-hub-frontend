@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 import qs from 'qs'
 
 import styled from 'styled-components'
@@ -88,75 +89,72 @@ const PaginatedResource = multiInstance({
     onPageClick,
     currentPage,
     result,
-  }) => (
-    <Route>
-      {({ location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        const routePage = parseInt(qsParams.page, 10) || 1
-        const totalPages = result ? Math.ceil(result.count / pageSize) : 0
+  }) => {
+    return (
+      <Task>
+        {(getTask) => {
+          const location = useLocation()
+          const qsParams = qs.parse(location.search.slice(1))
+          const routePage = parseInt(qsParams.page, 10) || 1
+          const totalPages = result ? Math.ceil(result.count / pageSize) : 0
 
-        return (
-          <Task>
-            {(getTask) => {
-              const task = getTask(name, id)
-              return (
-                <>
-                  <Task.StartOnRender
-                    name={name}
-                    id={id}
-                    payload={{
-                      ...payload,
-                      limit: pageSize,
-                      offset: (routePage - 1) * pageSize,
-                    }}
-                    onSuccessDispatch={PAGINATED_RESOURCE__ON_SUCCESS}
+          const task = getTask(name, id)
+          return (
+            <>
+              <Task.StartOnRender
+                name={name}
+                id={id}
+                payload={{
+                  ...payload,
+                  limit: pageSize,
+                  offset: (routePage - 1) * pageSize,
+                }}
+                onSuccessDispatch={PAGINATED_RESOURCE__ON_SUCCESS}
+              />
+              {currentPage && (
+                <Redirect
+                  to={{
+                    ...location,
+                    search: qs.stringify({
+                      ...qsParams,
+                      page: currentPage,
+                    }),
+                  }}
+                />
+              )}
+              {result ? (
+                <LoadingBox name={name} id={id}>
+                  <CollectionHeader
+                    totalItems={result.count}
+                    collectionName={name}
                   />
-                  {currentPage && (
-                    <Redirect
-                      to={{
-                        ...location,
-                        search: qs.stringify({
-                          ...qsParams,
-                          page: currentPage,
-                        }),
-                      }}
-                    />
-                  )}
-                  {result ? (
-                    <LoadingBox name={name} id={id}>
-                      <CollectionHeader
-                        totalItems={result.count}
-                        collectionName={name}
-                      />
-                      <StyledCollectionSort totalPages={totalPages} />
-                      {result ? children(result.results) : null}
-                      <Pagination
-                        totalPages={totalPages}
-                        activePage={routePage}
-                        onPageClick={(clickedPage) => {
-                          onPageClick(clickedPage)
-                          task?.start({
-                            onSuccessDispatch: PAGINATED_RESOURCE__ON_SUCCESS,
-                            payload: {
-                              ...payload,
-                              limit: pageSize,
-                              offset: (clickedPage - 1) * pageSize,
-                            },
-                          })
-                        }}
-                      />
-                    </LoadingBox>
-                  ) : (
-                    <Task.Status name={name} id={id} />
-                  )}
-                </>
-              )
-            }}
-          </Task>
-        )
-      }}
-    </Route>
-  ),
+                  <StyledCollectionSort totalPages={totalPages} />
+                  {result ? children(result.results) : null}
+                  <Pagination
+                    totalPages={totalPages}
+                    activePage={routePage}
+                    onPageClick={(clickedPage) => {
+                      onPageClick(clickedPage)
+                      task?.start({
+                        onSuccessDispatch: PAGINATED_RESOURCE__ON_SUCCESS,
+                        payload: {
+                          ...payload,
+                          limit: pageSize,
+                          offset: (clickedPage - 1) * pageSize,
+                        },
+                      })
+                    }}
+                  />
+                </LoadingBox>
+              ) : (
+                <Task.Status name={name} id={id} />
+              )}
+            </>
+          )
+        }}
+      </Task>
+    )
+  },
 })
 
 PaginatedResource.propTypes = {

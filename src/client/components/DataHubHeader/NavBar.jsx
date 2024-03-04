@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom-v5-compat'
+
 import styled from 'styled-components'
 import {
   FONT_SIZE,
@@ -116,7 +118,13 @@ const NavBar = ({ onShowVerticalNav, showVerticalNav, disableReactRouter }) => {
             <ProtectedLink module={module} key={i}>
               {useRouter && !disableReactRouter ? (
                 <StyledListItem>
-                  <StyledNavLink to={to} activeClassName="active" {...rest}>
+                  <StyledNavLink
+                    to={to}
+                    className={({ isActive }) =>
+                      isActive ?? { styledLinkActive }
+                    }
+                    {...rest}
+                  >
                     {label}
                   </StyledNavLink>
                 </StyledListItem>

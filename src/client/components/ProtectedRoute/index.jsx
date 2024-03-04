@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { CompatRoute } from 'react-router-dom-v5-compat'
 
 import AccessDenied from '../AccessDenied'
 
@@ -14,7 +14,7 @@ export const ProtectedRoute = ({
 }) =>
   routePermissions.every((p) => userPermissions.includes(p)) &
   modulePermissions.includes(module) ? (
-    <Route {...rest} />
+    <CompatRoute {...rest} />
   ) : (
     <AccessDenied />
   )
