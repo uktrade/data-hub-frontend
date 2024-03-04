@@ -20,7 +20,7 @@
         "id": 5191,
         "user": {
           "id": "681e4af7-707d-4913-aa44-3551dd83afad",
-          "firstame": "Joseph",
+          "first_name": "Joseph",
           "last_name": "Woof",
           "name": "Joseph Woof",
           "email": "Joseph.Woof@example.com"
