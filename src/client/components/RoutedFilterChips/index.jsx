@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
-import { Route } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+
 import { omit } from 'lodash'
 
 import { Chip } from '..'
@@ -29,27 +30,27 @@ const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
     .filter(Boolean)[0]
 }
 
-const RoutedFilterChips = ({ qsParamName, selectedOptions = [], ...props }) => (
-  <Route>
-    {({ location, history }) => {
-      const clearFilter = (value) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        const newQsParams = removeParamFromQs(qsParams, qsParamName, value)
-        history.push({ search: qs.stringify(newQsParams) })
-      }
-      return selectedOptions.map(({ value, label, categoryLabel }) => (
-        <Chip
-          key={value}
-          value={value}
-          onClick={() => clearFilter(value)}
-          {...props}
-        >
-          {categoryLabel ? `${categoryLabel}: ${label}` : label}
-        </Chip>
-      ))
-    }}
-  </Route>
-)
+const RoutedFilterChips = ({ qsParamName, selectedOptions = [], ...props }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const clearFilter = (value) => {
+    const qsParams = qs.parse(location.search.slice(1))
+    const newQsParams = removeParamFromQs(qsParams, qsParamName, value)
+    navigate({ search: qs.stringify(newQsParams) })
+  }
+
+  return selectedOptions.map(({ value, label, categoryLabel }) => (
+    <Chip
+      key={value}
+      value={value}
+      onClick={() => clearFilter(value)}
+      {...props}
+    >
+      {categoryLabel ? `${categoryLabel}: ${label}` : label}
+    </Chip>
+  ))
+}
 
 RoutedFilterChips.propTypes = {
   qsParamName: PropTypes.string.isRequired,

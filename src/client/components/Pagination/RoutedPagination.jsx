@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Route } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom-v5-compat'
 import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
@@ -180,73 +180,75 @@ const Pagination = ({
     }
   }
 
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const qsParams = qs.parse(location.search.slice(1))
+  const handleOnClick = (pageNumber, e) => {
+    e.preventDefault()
+    setPage(pageNumber)
+    navigate({
+      search: qs.stringify({
+        ...qsParams,
+        page: pageNumber,
+      }),
+    })
+  }
+
   return (
-    <Route>
-      {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        const handleOnClick = (pageNumber, e) => {
-          e.preventDefault()
-          setPage(pageNumber)
-          history.push({
-            search: qs.stringify({
-              ...qsParams,
-              page: pageNumber,
-            }),
-          })
-        }
-        return pages?.length > 1 ? (
-          <StyledNav
-            data-test="pagination"
-            aria-label={`Pagination: total ${totalPages}`}
-            data-total-pages={totalPages}
-          >
-            <StyledPaginationList>
-              {currentPage !== 1 && (
-                <StyledPaginationPiece>
+    <>
+      {pages?.length > 1 ? (
+        <StyledNav
+          data-test="pagination"
+          aria-label={`Pagination: total ${totalPages}`}
+          data-total-pages={totalPages}
+        >
+          <StyledPaginationList>
+            {currentPage !== 1 && (
+              <StyledPaginationPiece>
+                <StyledPaginationLink
+                  onClick={(e) => handleOnClick(currentPage - 1, e)}
+                  data-test="previous"
+                  href="#"
+                >
+                  {PAGINATION_PIECE_PREVIOUS}
+                </StyledPaginationLink>
+              </StyledPaginationPiece>
+            )}
+            {pages.map((page, index) => {
+              const isActive = currentPage === page
+              return (
+                <StyledPaginationPiece key={index}>
                   <StyledPaginationLink
-                    onClick={(e) => handleOnClick(currentPage - 1, e)}
-                    data-test="previous"
+                    $isActive={isActive}
+                    onClick={(e) => handleOnClick(page, e)}
+                    data-page-number={page}
+                    data-test={`${isActive && 'page-number-active'}`}
+                    aria-label={`Page ${page}`}
+                    aria-current={isActive ? 'page' : false}
+                    ref={(el) => (linkRefs.current[index] = el)}
                     href="#"
                   >
-                    {PAGINATION_PIECE_PREVIOUS}
+                    {page}
                   </StyledPaginationLink>
                 </StyledPaginationPiece>
-              )}
-              {pages.map((page, index) => {
-                const isActive = currentPage === page
-                return (
-                  <StyledPaginationPiece key={index}>
-                    <StyledPaginationLink
-                      $isActive={isActive}
-                      onClick={(e) => handleOnClick(page, e)}
-                      data-page-number={page}
-                      data-test={`${isActive && 'page-number-active'}`}
-                      aria-label={`Page ${page}`}
-                      aria-current={isActive ? 'page' : false}
-                      ref={(el) => (linkRefs.current[index] = el)}
-                      href="#"
-                    >
-                      {page}
-                    </StyledPaginationLink>
-                  </StyledPaginationPiece>
-                )
-              })}
-              {currentPage !== totalPages && (
-                <StyledPaginationPiece>
-                  <StyledPaginationLink
-                    onClick={(e) => handleOnClick(currentPage + 1, e)}
-                    data-test="next"
-                    href="#"
-                  >
-                    {PAGINATION_PIECE_NEXT}
-                  </StyledPaginationLink>
-                </StyledPaginationPiece>
-              )}
-            </StyledPaginationList>
-          </StyledNav>
-        ) : null
-      }}
-    </Route>
+              )
+            })}
+            {currentPage !== totalPages && (
+              <StyledPaginationPiece>
+                <StyledPaginationLink
+                  onClick={(e) => handleOnClick(currentPage + 1, e)}
+                  data-test="next"
+                  href="#"
+                >
+                  {PAGINATION_PIECE_NEXT}
+                </StyledPaginationLink>
+              </StyledPaginationPiece>
+            )}
+          </StyledPaginationList>
+        </StyledNav>
+      ) : null}
+    </>
   )
 }
 

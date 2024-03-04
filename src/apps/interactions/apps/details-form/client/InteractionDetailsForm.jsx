@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
@@ -70,6 +70,8 @@ const InteractionDetailsForm = ({
   referral,
   ...props
 }) => {
+  const location = useLocation()
+
   return (
     <Task>
       {(getTask) => {
@@ -78,108 +80,99 @@ const InteractionDetailsForm = ({
           STATE_ID
         )
         const companyIds = [companyId]
+        const contactCreated = location.search.includes('new-contact-name')
         return (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
-            <Route>
-              {({ location }) => {
-                const contactCreated =
-                  location.search.includes('new-contact-name')
-                return (
-                  <Form
-                    id={STATE_ID}
-                    submissionTaskName={TASK_SAVE_INTERACTION}
-                    analyticsFormName={
-                      interactionId ? 'editInteraction' : 'createInteraction'
-                    }
-                    analyticsData={(values) =>
-                      _.pick(
-                        values,
-                        'was_policy_feedback_provided',
-                        'were_countries_discussed'
-                      )
-                    }
-                    initialValuesPayload={{
-                      companyId,
-                      referral,
-                      investmentId,
-                      contactId,
-                      user,
-                      interactionId,
-                    }}
-                    initialValuesTaskName={TASK_GET_INTERACTION_INITIAL_VALUES}
-                    transformPayload={(values) => ({
-                      values,
-                      companyIds,
-                      referralId: referral?.id,
-                    })}
-                    initialStepIndex={contactCreated && !interactionId ? 1 : 0}
-                    redirectTo={({ data }) =>
-                      getReturnLink(
-                        companyId,
-                        referral?.id,
-                        investmentId,
-                        contactId,
-                        data.id
-                      )
-                    }
-                    flashMessage={({ data }) =>
-                      getFlashMessage(
-                        interactionId,
-                        data.was_policy_feedback_provided
-                      )
-                    }
-                    scrollToTopOnStep={true}
-                    showStepInUrl={true}
-                  >
-                    {({ values, currentStep }) => (
-                      <>
-                        {/* Step registered if creating the interaction
-                  and haven't come from an investment project */}
-                        {!interactionId && !investmentId && (
-                          <Step
-                            name="interaction_type"
-                            cancelUrl={urls.companies.detail(companyId)}
-                          >
-                            {() => <StepInteractionType />}
-                          </Step>
-                        )}
-
-                        <Step
-                          name="interaction_details"
-                          forwardButton={
-                            interactionId
-                              ? 'Save interaction'
-                              : 'Add interaction'
-                          }
-                        >
-                          {() => (
-                            <StepInteractionDetails
-                              companyId={companyId}
-                              onOpenContactForm={({ event, redirectUrl }) => {
-                                event.target.blur()
-                                openContactFormTask.start({
-                                  payload: {
-                                    values,
-                                    currentStep,
-                                    companyId,
-                                    url: redirectUrl,
-                                    storeId: STATE_ID,
-                                  },
-                                })
-                              }}
-                              {
-                                ...props
-                                /** The props contains values object from this form */
-                              }
-                            />
-                          )}
-                        </Step>
-                      </>
-                    )}
-                  </Form>
+            <Form
+              id={STATE_ID}
+              submissionTaskName={TASK_SAVE_INTERACTION}
+              analyticsFormName={
+                interactionId ? 'editInteraction' : 'createInteraction'
+              }
+              analyticsData={(values) =>
+                _.pick(
+                  values,
+                  'was_policy_feedback_provided',
+                  'were_countries_discussed'
                 )
+              }
+              initialValuesPayload={{
+                companyId,
+                referral,
+                investmentId,
+                contactId,
+                user,
+                interactionId,
               }}
-            </Route>
+              initialValuesTaskName={TASK_GET_INTERACTION_INITIAL_VALUES}
+              transformPayload={(values) => ({
+                values,
+                companyIds,
+                referralId: referral?.id,
+              })}
+              initialStepIndex={contactCreated && !interactionId ? 1 : 0}
+              redirectTo={({ data }) =>
+                getReturnLink(
+                  companyId,
+                  referral?.id,
+                  investmentId,
+                  contactId,
+                  data.id
+                )
+              }
+              flashMessage={({ data }) =>
+                getFlashMessage(
+                  interactionId,
+                  data.was_policy_feedback_provided
+                )
+              }
+              scrollToTopOnStep={true}
+              showStepInUrl={true}
+            >
+              {({ values, currentStep }) => (
+                <>
+                  {/* Step registered if creating the interaction
+                  and haven't come from an investment project */}
+                  {!interactionId && !investmentId && (
+                    <Step
+                      name="interaction_type"
+                      cancelUrl={urls.companies.detail(companyId)}
+                    >
+                      {() => <StepInteractionType />}
+                    </Step>
+                  )}
+
+                  <Step
+                    name="interaction_details"
+                    forwardButton={
+                      interactionId ? 'Save interaction' : 'Add interaction'
+                    }
+                  >
+                    {() => (
+                      <StepInteractionDetails
+                        companyId={companyId}
+                        onOpenContactForm={({ event, redirectUrl }) => {
+                          event.target.blur()
+                          openContactFormTask.start({
+                            payload: {
+                              values,
+                              currentStep,
+                              companyId,
+                              url: redirectUrl,
+                              storeId: STATE_ID,
+                            },
+                          })
+                        }}
+                        {
+                          ...props
+                          /** The props contains values object from this form */
+                        }
+                      />
+                    )}
+                  </Step>
+                </>
+              )}
+            </Form>
           </FormLayout>
         )
       }}

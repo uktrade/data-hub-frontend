@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 
@@ -56,20 +56,19 @@ export const LocalNavLink = ({
   href,
   dataTest = 'local-nav-link',
   ...rest
-}) => (
-  <Route>
-    {({ location: { pathname } }) => {
-      const NavLink = href?.includes(pathname)
-        ? StyledActiveLink
-        : StyledInactiveLink
-      return (
-        <NavLink href={href} data-test={dataTest} {...rest}>
-          {children}
-        </NavLink>
-      )
-    }}
-  </Route>
-)
+}) => {
+  const location = useLocation()
+
+  const NavLink = href?.includes(location.pathname)
+    ? StyledActiveLink
+    : StyledInactiveLink
+
+  return (
+    <NavLink href={href} data-test={dataTest} {...rest}>
+      {children}
+    </NavLink>
+  )
+}
 
 LocalNav.propTypes = {
   dataTest: PropTypes.string,

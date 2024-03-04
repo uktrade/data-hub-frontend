@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash'
-// import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import { CompatRouter } from 'react-router-dom-v5-compat'

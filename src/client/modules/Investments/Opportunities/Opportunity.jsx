@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 import styled from 'styled-components'
 
 import { DefaultLayout, Main } from '../../../components'
@@ -24,73 +25,67 @@ const getCurrentTab = (currentPath) =>
 
 const Opportunity = ({ opportunity }) => {
   const { opportunityId } = useParams()
+  const location = useLocation()
   return (
-    <Route>
-      {({ location }) => (
-        <Task.Status
-          name={TASK_GET_OPPORTUNITY_DETAILS}
-          id={ID}
-          progressMessage="Loading opportunity"
-          startOnRender={{
-            payload: {
-              opportunityId,
-            },
-            onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
-          }}
-        >
-          {() =>
-            opportunity.detailsFields.name && (
-              <DefaultLayout
-                pageTitle="Investments"
-                heading={opportunity.detailsFields.name}
-                breadcrumbs={[
-                  { link: urls.dashboard.index(), text: 'Home' },
-                  { link: urls.investments.index(), text: 'Investments' },
-                  {
-                    link: urls.investments.opportunities.index(),
-                    text: 'UK opportunities',
-                  },
-                  {
-                    link: urls.investments.opportunities.details(
-                      opportunity.id
+    <Task.Status
+      name={TASK_GET_OPPORTUNITY_DETAILS}
+      id={ID}
+      progressMessage="Loading opportunity"
+      startOnRender={{
+        payload: {
+          opportunityId,
+        },
+        onSuccessDispatch: INVESTMENT_OPPORTUNITY_DETAILS__LOADED,
+      }}
+    >
+      {() =>
+        opportunity.detailsFields.name && (
+          <DefaultLayout
+            pageTitle="Investments"
+            heading={opportunity.detailsFields.name}
+            breadcrumbs={[
+              { link: urls.dashboard.index(), text: 'Home' },
+              { link: urls.investments.index(), text: 'Investments' },
+              {
+                link: urls.investments.opportunities.index(),
+                text: 'UK opportunities',
+              },
+              {
+                link: urls.investments.opportunities.details(opportunity.id),
+                text: opportunity.detailsFields.name,
+              },
+              { text: getCurrentTab(location.pathname) },
+            ]}
+            localHeaderChildren={<OpportunityDetailsHeader />}
+          >
+            <StyledMain>
+              <TabNav
+                id="opportunity-tab-nav"
+                label="Opportunity tab nav"
+                routed={true}
+                tabs={{
+                  [urls.investments.opportunities.details(opportunityId)]: {
+                    label: 'Details',
+                    content: (
+                      <OpportunityDetails opportunityId={opportunityId} />
                     ),
-                    text: opportunity.detailsFields.name,
                   },
-                  { text: getCurrentTab(location.pathname) },
-                ]}
-                localHeaderChildren={<OpportunityDetailsHeader />}
-              >
-                <StyledMain>
-                  <TabNav
-                    id="opportunity-tab-nav"
-                    label="Opportunity tab nav"
-                    routed={true}
-                    tabs={{
-                      [urls.investments.opportunities.details(opportunityId)]: {
-                        label: 'Details',
-                        content: (
-                          <OpportunityDetails opportunityId={opportunityId} />
-                        ),
-                      },
-                      [urls.investments.opportunities.interactions(
-                        opportunityId
-                      )]: {
-                        label: 'Interactions',
-                        content: (
-                          <OpportunityInteractions
-                            opportunityId={opportunityId}
-                          />
-                        ),
-                      },
-                    }}
-                  />
-                </StyledMain>
-              </DefaultLayout>
-            )
-          }
-        </Task.Status>
-      )}
-    </Route>
+                  [urls.investments.opportunities.interactions(opportunityId)]:
+                    {
+                      label: 'Interactions',
+                      content: (
+                        <OpportunityInteractions
+                          opportunityId={opportunityId}
+                        />
+                      ),
+                    },
+                }}
+              />
+            </StyledMain>
+          </DefaultLayout>
+        )
+      }
+    </Task.Status>
   )
 }
 

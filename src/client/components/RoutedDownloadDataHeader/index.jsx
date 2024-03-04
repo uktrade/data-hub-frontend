@@ -1,8 +1,8 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import qs from 'qs'
 import PropTypes from 'prop-types'
 import { isArray } from 'lodash'
+import { useLocation } from 'react-router-dom-v5-compat'
 
 import DownloadDataHeader from '../DownloadDataHeader'
 
@@ -36,17 +36,9 @@ const getDownloadLinkFromLocation = (location, baseDownloadLink) => {
 }
 
 const RoutedDownloadDataHeader = ({ baseDownloadLink, ...props }) => {
-  return (
-    <Route>
-      {({ location }) => {
-        const downloadLink = getDownloadLinkFromLocation(
-          location,
-          baseDownloadLink
-        )
-        return <DownloadDataHeader downloadLink={downloadLink} {...props} />
-      }}
-    </Route>
-  )
+  const location = useLocation()
+  const downloadLink = getDownloadLinkFromLocation(location, baseDownloadLink)
+  return <DownloadDataHeader downloadLink={downloadLink} {...props} />
 }
 
 RoutedDownloadDataHeader.propTypes = {
