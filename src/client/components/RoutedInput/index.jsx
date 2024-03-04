@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Input from '@govuk-react/input'
 import PropTypes from 'prop-types'
 import qs from 'qs'
-import { Route } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 
 import multiInstance from '../../utils/multiinstance'
 import { useTextCaretPosition } from './useTextCaretPosition'
@@ -37,39 +37,37 @@ const RoutedInput = ({
     }
   }, [selectedValue, qsValue])
 
-  return (
-    <Route>
-      {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        const writeQs = () =>
-          history.replace({
-            search: qs.stringify({
-              ...qsParams,
-              [qsParam]: value,
-            }),
-          })
+  const location = useLocation()
+  const navigate = useNavigate()
 
-        return (
-          <Input
-            {...props}
-            ref={ref}
-            value={value}
-            type={type}
-            onChange={(e) => {
-              onChange(e.target.value)
-              updateTextCaret()
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                onEnter(e.target.value)
-                writeQs()
-              }
-            }}
-            onBlur={writeQs}
-          />
-        )
+  const qsParams = qs.parse(location.search.slice(1))
+  const writeQs = () =>
+    navigate({
+      search: qs.stringify({
+        ...qsParams,
+        [qsParam]: value,
+      }),
+      replace: true,
+    })
+
+  return (
+    <Input
+      {...props}
+      ref={ref}
+      value={value}
+      type={type}
+      onChange={(e) => {
+        onChange(e.target.value)
+        updateTextCaret()
       }}
-    </Route>
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          onEnter(e.target.value)
+          writeQs()
+        }
+      }}
+      onBlur={writeQs}
+    />
   )
 }
 

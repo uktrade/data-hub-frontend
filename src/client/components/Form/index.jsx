@@ -1,7 +1,7 @@
 import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { Route, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom-v5-compat'
 
 import qs from 'qs'
@@ -189,7 +189,7 @@ const _Form = ({
                       currentStep: props.currentStep,
                     })
                     if (showStepInUrl) {
-                      history.push({
+                      navigate({
                         search: qs.stringify({
                           ...qsParams,
                           step: steps[props.currentStep - 1],
@@ -254,7 +254,7 @@ const _Form = ({
                                     currentStep: props.currentStep,
                                   })
                                   if (showStepInUrl) {
-                                    history.push({
+                                    navigate({
                                       search: qs.stringify({
                                         ...qsParams,
                                         step: steps[props.currentStep + 1],
@@ -270,51 +270,43 @@ const _Form = ({
                               }
                             }}
                           >
-                            <Route>
-                              {({ history }) => (
-                                <HardRedirect>
-                                  {(hardRedirect) => (
-                                    <Effect
-                                      dependencyList={[
-                                        submissionTaskName,
-                                        id,
-                                        resolved,
-                                        result,
-                                      ]}
-                                      effect={() => {
-                                        if (resolved && !result?.errors) {
-                                          analytics(
-                                            'Submission request success',
-                                            analyticsData &&
-                                              analyticsData(values)
-                                          )
-                                          if (flashMessage) {
-                                            const message = flashMessage(
-                                              result,
-                                              values
-                                            )
-                                            props.writeFlashMessage(message)
-                                          }
-                                          redirectMode === 'soft' &&
-                                            redirectTo &&
-                                            history.push(
-                                              redirectTo(result, values)
-                                            )
-                                          onSuccess &&
-                                            onSuccess(result, values, {
-                                              flashMessage:
-                                                props.writeFlashMessage,
-                                              hardRedirect,
-                                              softRedirect: history.push,
-                                            })
-                                          props.resetResolved()
-                                        }
-                                      }}
-                                    />
-                                  )}
-                                </HardRedirect>
+                            <HardRedirect>
+                              {(hardRedirect) => (
+                                <Effect
+                                  dependencyList={[
+                                    submissionTaskName,
+                                    id,
+                                    resolved,
+                                    result,
+                                  ]}
+                                  effect={() => {
+                                    if (resolved && !result?.errors) {
+                                      analytics(
+                                        'Submission request success',
+                                        analyticsData && analyticsData(values)
+                                      )
+                                      if (flashMessage) {
+                                        const message = flashMessage(
+                                          result,
+                                          values
+                                        )
+                                        props.writeFlashMessage(message)
+                                      }
+                                      redirectMode === 'soft' &&
+                                        redirectTo &&
+                                        navigate(redirectTo(result, values))
+                                      onSuccess &&
+                                        onSuccess(result, values, {
+                                          flashMessage: props.writeFlashMessage,
+                                          hardRedirect,
+                                          softRedirect: navigate,
+                                        })
+                                      props.resetResolved()
+                                    }
+                                  }}
+                                />
                               )}
-                            </Route>
+                            </HardRedirect>
                             <Effect
                               dependencyList={[initialValues]}
                               effect={() =>

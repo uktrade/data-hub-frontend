@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Route, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom-v5-compat'
 
 import { GridRow, GridCol } from 'govuk-react'
@@ -113,83 +113,74 @@ const FilteredCollectionList = ({
     }
   }, [])
 
+  const initialPage = getPageNumber(qsParams)
   return (
-    <Route>
-      {() => {
-        const initialPage = getPageNumber(qsParams)
-        return (
-          <GridRow data-test="collection-list">
-            {children}
-            <GridCol>
-              <article>
-                {isComplete && (
-                  <FilteredCollectionHeader
-                    totalItems={count}
-                    summary={summary}
-                    collectionName={collectionName}
-                    hasFilters={children !== undefined}
-                    selectedFilters={selectedFilters}
-                    addItemUrl={addItemUrl}
-                    useReactRouter={useReactRouter}
-                  />
-                )}
-                {sortOptions && (
-                  <CollectionSort
-                    sortOptions={sortOptions}
-                    totalPages={totalPages}
-                  />
-                )}
-                {baseDownloadLink && (
-                  <RoutedDownloadDataHeader
-                    count={count}
-                    maxItems={maxItemsToDownload}
-                    data-test="download-data-header"
-                    baseDownloadLink={baseDownloadLink}
-                    entityName={entityName}
-                    entityNamePlural={entityNamePlural}
-                  />
-                )}
-                <Task.Status {...taskProps}>
-                  {() =>
-                    isComplete && (
-                      <ol aria-live="polite">
-                        {results.map((item, index) => (
-                          <Analytics key={`${item.id}-${index}`}>
-                            {(pushAnalytics) =>
-                              collectionItemTemplate(
-                                item,
-                                titleRenderer,
-                                useReactRouter,
-                                pushAnalytics,
-                                selectedFilters,
-                                sanitizeFiltersForAnalytics
-                              )
-                            }
-                          </Analytics>
-                        ))}
-                      </ol>
-                    )
-                  }
-                </Task.Status>
-                <Pagination
-                  totalPages={totalPages}
-                  activePage={initialPage}
-                  onPageClick={(page, e) => {
-                    e.preventDefault()
-                    navigate({
-                      search: qs.stringify({
-                        ...qsParams,
-                        page,
-                      }),
-                    })
-                  }}
-                />
-              </article>
-            </GridCol>
-          </GridRow>
-        )
-      }}
-    </Route>
+    <GridRow data-test="collection-list">
+      {children}
+      <GridCol>
+        <article>
+          {isComplete && (
+            <FilteredCollectionHeader
+              totalItems={count}
+              summary={summary}
+              collectionName={collectionName}
+              hasFilters={children !== undefined}
+              selectedFilters={selectedFilters}
+              addItemUrl={addItemUrl}
+              useReactRouter={useReactRouter}
+            />
+          )}
+          {sortOptions && (
+            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
+          )}
+          {baseDownloadLink && (
+            <RoutedDownloadDataHeader
+              count={count}
+              maxItems={maxItemsToDownload}
+              data-test="download-data-header"
+              baseDownloadLink={baseDownloadLink}
+              entityName={entityName}
+              entityNamePlural={entityNamePlural}
+            />
+          )}
+          <Task.Status {...taskProps}>
+            {() =>
+              isComplete && (
+                <ol aria-live="polite">
+                  {results.map((item, index) => (
+                    <Analytics key={`${item.id}-${index}`}>
+                      {(pushAnalytics) =>
+                        collectionItemTemplate(
+                          item,
+                          titleRenderer,
+                          useReactRouter,
+                          pushAnalytics,
+                          selectedFilters,
+                          sanitizeFiltersForAnalytics
+                        )
+                      }
+                    </Analytics>
+                  ))}
+                </ol>
+              )
+            }
+          </Task.Status>
+          <Pagination
+            totalPages={totalPages}
+            activePage={initialPage}
+            onPageClick={(page, e) => {
+              e.preventDefault()
+              navigate({
+                search: qs.stringify({
+                  ...qsParams,
+                  page,
+                }),
+              })
+            }}
+          />
+        </article>
+      </GridCol>
+    </GridRow>
   )
 }
 

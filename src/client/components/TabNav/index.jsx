@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
-import { Route } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 import styled from 'styled-components'
 import { get } from 'lodash'
 import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
@@ -155,100 +155,97 @@ const TabNav = ({
   routed,
   keepQueryParams = false,
 }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   const tabKeys = Object.keys(tabs)
   const tablistRef = useRef()
+  selectedIndex = routed ? location.pathname : selectedIndex
+  const isSelectedValid = tabKeys.includes(selectedIndex)
 
   useEffect(() => {
     tablistRef.current?.querySelectorAll('[role=tab]')[focusIndex]?.focus()
   }, [focusIndex, selectedIndex])
 
   return (
-    <Route>
-      {({ location: { pathname, search }, history }) => {
-        selectedIndex = routed ? pathname : selectedIndex
-        const isSelectedValid = tabKeys.includes(selectedIndex)
+    <>
+      <StyledTablist
+        tabIndex={-1}
+        role="tablist"
+        ref={tablistRef}
+        data-test="tablist"
+        aria-label={label}
+        onKeyUp={({ keyCode }) => {
+          const totalTabs = tabKeys.length
+          const foundIndex = tabKeys.indexOf(selectedIndex?.toString())
+          const currentFocusIndex =
+            focusIndex !== undefined
+              ? focusIndex
+              : selectedIndex === undefined || foundIndex === -1
+                ? 0
+                : foundIndex
 
-        return (
-          <>
-            <StyledTablist
-              tabIndex={-1}
-              role="tablist"
-              ref={tablistRef}
-              data-test="tablist"
-              aria-label={label}
-              onKeyUp={({ keyCode }) => {
-                const totalTabs = tabKeys.length
-                const foundIndex = tabKeys.indexOf(selectedIndex?.toString())
-                const currentFocusIndex =
-                  focusIndex !== undefined
-                    ? focusIndex
-                    : selectedIndex === undefined || foundIndex === -1
+          if (keyCode === RIGHT_ARROW_KEY) {
+            onFocusChange((currentFocusIndex + 1) % totalTabs)
+          }
+
+          if (keyCode === LEFT_ARROW_KEY) {
+            onFocusChange(
+              ((currentFocusIndex < 1 ? totalTabs : currentFocusIndex) - 1) %
+                totalTabs
+            )
+          }
+        }}
+      >
+        {Object.entries(tabs).map(([key, { label }], index) => {
+          const selected = isSelectedValid
+            ? key === selectedIndex
+            : key.length > 1 && selectedIndex.startsWith(key)
+
+          const Button = selected ? StyledSelectedButton : StyledButton
+          const tabId = createId(id, key, routed)
+          return (
+            <StyledSpan key={tabId} data-test="tab-item">
+              <Button
+                role="tab"
+                aria-selected={selected}
+                id={tabId}
+                tabIndex={
+                  // If no tab is selected...
+                  selectedIndex === undefined && !index
+                    ? // ...only the first tab participates in the tabindex
+                      0
+                    : // Otherwise, only the selected tab participates in tabindex
+                      selected
                       ? 0
-                      : foundIndex
-
-                if (keyCode === RIGHT_ARROW_KEY) {
-                  onFocusChange((currentFocusIndex + 1) % totalTabs)
+                      : -1
                 }
-
-                if (keyCode === LEFT_ARROW_KEY) {
-                  onFocusChange(
-                    ((currentFocusIndex < 1 ? totalTabs : currentFocusIndex) -
-                      1) %
-                      totalTabs
-                  )
-                }
-              }}
-            >
-              {Object.entries(tabs).map(([key, { label }], index) => {
-                const selected = isSelectedValid
-                  ? key === selectedIndex
-                  : key.length > 1 && selectedIndex.startsWith(key)
-
-                const Button = selected ? StyledSelectedButton : StyledButton
-                const tabId = createId(id, key, routed)
-                return (
-                  <StyledSpan key={tabId} data-test="tab-item">
-                    <Button
-                      role="tab"
-                      aria-selected={selected}
-                      id={tabId}
-                      tabIndex={
-                        // If no tab is selected...
-                        selectedIndex === undefined && !index
-                          ? // ...only the first tab participates in the tabindex
-                            0
-                          : // Otherwise, only the selected tab participates in tabindex
-                            selected
-                            ? 0
-                            : -1
-                      }
-                      onClick={() => {
-                        onChange(key, index)
-                        onTabChange && onTabChange({ path: key })
-                        if (routed && !selected) {
-                          const url = keepQueryParams ? `${key}${search}` : key
-                          history.push(url)
-                        }
-                      }}
-                    >
-                      {label}
-                    </Button>
-                  </StyledSpan>
-                )
-              })}
-            </StyledTablist>
-            <StyledTabpanel
-              role="tabpanel"
-              tabIndex={-1}
-              aria-labelledby={createId(id, selectedIndex, true)}
-              data-test="tabpanel"
-            >
-              {getContent(tabs, tabKeys, selectedIndex)}
-            </StyledTabpanel>
-          </>
-        )
-      }}
-    </Route>
+                onClick={() => {
+                  onChange(key, index)
+                  onTabChange && onTabChange({ path: key })
+                  if (routed && !selected) {
+                    const url = keepQueryParams
+                      ? `${key}${location.search}`
+                      : key
+                    navigate(url)
+                  }
+                }}
+              >
+                {label}
+              </Button>
+            </StyledSpan>
+          )
+        })}
+      </StyledTablist>
+      <StyledTabpanel
+        role="tabpanel"
+        tabIndex={-1}
+        aria-labelledby={createId(id, selectedIndex, true)}
+        data-test="tabpanel"
+      >
+        {getContent(tabs, tabKeys, selectedIndex)}
+      </StyledTabpanel>
+    </>
   )
 }
 

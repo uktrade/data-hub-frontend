@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import qs from 'qs'
-import { Route } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 import styled from 'styled-components'
 
 import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
@@ -38,42 +38,42 @@ const RoutedTypeahead = ({
   options,
   labelAsQueryParam,
   ...props
-}) => (
-  <Route>
-    {({ history, location }) => {
-      const qsParams = qs.parse(location.search.slice(1))
-      return (
-        <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
-          <Typeahead
-            name={name}
-            aria-label={label ? label : name}
-            placeholder={placeholder}
-            initialOptions={options}
-            closeMenuOnSelect={closeMenuOnSelect}
-            isMulti={isMulti}
-            value={selectedOptions.map(({ value, label }) => ({
-              value,
-              label,
-            }))}
-            loadOptions={loadOptions}
-            noOptionsMessage={noOptionsMessage}
-            onChange={(pickedOptions) => {
-              history.push({
-                search: qs.stringify({
-                  ...qsParams,
-                  ...(!labelAsQueryParam
-                    ? getParamIds(qsParam, pickedOptions)
-                    : getParamLabels(qsParam, pickedOptions)),
-                  page: 1,
-                }),
-              })
-            }}
-          />
-        </StyledFieldWrapper>
-      )
-    }}
-  </Route>
-)
+}) => {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const qsParams = qs.parse(location.search.slice(1))
+
+  return (
+    <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
+      <Typeahead
+        name={name}
+        aria-label={label ? label : name}
+        placeholder={placeholder}
+        initialOptions={options}
+        closeMenuOnSelect={closeMenuOnSelect}
+        isMulti={isMulti}
+        value={selectedOptions.map(({ value, label }) => ({
+          value,
+          label,
+        }))}
+        loadOptions={loadOptions}
+        noOptionsMessage={noOptionsMessage}
+        onChange={(pickedOptions) => {
+          navigate({
+            search: qs.stringify({
+              ...qsParams,
+              ...(!labelAsQueryParam
+                ? getParamIds(qsParam, pickedOptions)
+                : getParamLabels(qsParam, pickedOptions)),
+              page: 1,
+            }),
+          })
+        }}
+      />
+    </StyledFieldWrapper>
+  )
+}
 
 RoutedTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
