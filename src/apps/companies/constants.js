@@ -5,6 +5,7 @@ const QUERY_FIELDS_MAP = {
   archived: 'archived',
   name: 'name',
   sectorDescends: 'sector_descends',
+  subSectorDescends: 'sub_sector_descends',
   country: 'country',
   ukRegion: 'uk_region',
   headquarterType: 'headquarter_type',
