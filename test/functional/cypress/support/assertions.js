@@ -242,6 +242,35 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
           .should('have.text', value)
     )
 
+/**
+ * @param {{inputName: string, options: string[], legend?: string, selectIndex?: number}} options
+ */
+const assertFieldRadiosStrict = ({ inputName, options, legend, selectIndex }) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      if (legend) {
+        cy.get('legend').should('have.text', legend)
+      }
+
+      cy.get('input[type="radio"]')
+        .should('have.length', options.length)
+        .each(($el, i) => {
+          const label = options[i]
+          const wrapped = cy
+            .wrap($el)
+            .should('have.attr', 'aria-label', label)
+            .parent()
+            .should('match', 'label')
+            .should('have.text', label)
+
+          if (i === selectIndex) {
+            wrapped.click()
+          }
+        })
+    })
+
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
 // Use this assertion for radios which have legends applied.
 const assertFieldRadiosWithLegend = ({
@@ -407,6 +436,7 @@ const assertFieldInputNoLabel = ({ element, value = undefined }) =>
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
+// FIXME: Make element optional, because it's a real pain to use
 const assertFieldTextarea = ({ element, label, hint, value, wordCount }) => {
   cy.wrap(element)
     .find('label')
@@ -901,6 +931,7 @@ module.exports = {
   assertFieldSelect,
   assertSelectOptions,
   assertFieldRadios,
+  assertFieldRadiosStrict,
   assertFieldRadiosWithLegend,
   assertFieldRadiosWithoutLabel,
   assertFieldCheckboxes,
