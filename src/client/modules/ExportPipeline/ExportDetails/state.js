@@ -4,4 +4,5 @@ export const ID = 'exportDetails'
 
 export const state2props = ({ ...state }) => ({
   exportItem: state[ID].exportItem,
+  hasExportWinFeatureGroup: state.activeFeatureGroups?.includes('export-wins'),
 })

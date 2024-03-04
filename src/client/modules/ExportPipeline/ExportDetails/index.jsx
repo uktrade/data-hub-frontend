@@ -70,7 +70,7 @@ const getBreadcrumbs = (exportItem) => {
   return defaultBreadcrumbs
 }
 
-const ExportDetailsForm = ({ exportItem }) => {
+const ExportDetailsForm = ({ exportItem, hasExportWinFeatureGroup }) => {
   const { exportId } = useParams()
 
   return (
@@ -189,6 +189,15 @@ const ExportDetailsForm = ({ exportItem }) => {
                   >
                     Edit
                   </Button>
+                  {hasExportWinFeatureGroup && (
+                    <Button
+                      as={Link}
+                      href={`${urls.companies.exportWins.create()}?step=officer_details&company=${exportItem.company.id}&export=${exportId}`}
+                      data-test="convert-to-export-win"
+                    >
+                      Convert to export win
+                    </Button>
+                  )}
                   <Link
                     href={urls.exportPipeline.delete(exportId)}
                     data-test="delete-export-details-button"

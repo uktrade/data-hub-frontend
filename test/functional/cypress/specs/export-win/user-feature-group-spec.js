@@ -1,6 +1,6 @@
 import qs from 'qs'
 
-import { exportListFaker } from '../../fakers/export'
+import { exportListFaker, exportFaker } from '../../fakers/export'
 import urls from '../../../../../src/lib/urls'
 
 describe('Export win user feature groups', () => {
@@ -50,6 +50,26 @@ describe('Export win user feature groups', () => {
       cy.setUserFeatureGroups([])
       cy.visit(urls.exportPipeline.index())
       cy.get('[data-test="export-wins"]').should('not.exist')
+    })
+  })
+
+  context('Export project details page"', () => {
+    beforeEach(() => {
+      cy.intercept('GET', '/api-proxy/v4/export/1', exportFaker()).as(
+        'apiRequest'
+      )
+    })
+
+    it('should show the "Convert to export win" button when the feature is active', () => {
+      cy.setUserFeatureGroups(['export-wins'])
+      cy.visit(urls.exportPipeline.details('1'))
+      cy.get('[data-test="convert-to-export-win"]').should('exist')
+    })
+
+    it('should hide the "Convert to export win" button when the feature is inactive', () => {
+      cy.setUserFeatureGroups([])
+      cy.visit(urls.exportPipeline.details('1'))
+      cy.get('[data-test="convert-to-export-win"]').should('not.exist')
     })
   })
 })
