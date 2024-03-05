@@ -9,4 +9,6 @@ export const validateTeamMembers = (team_members) =>
     : null
 
 export const validateWinDate = ({ month, year }) =>
-  !isDateWithinLastTwelveMonths(new Date(year, month - 1))
+  isDateWithinLastTwelveMonths(new Date(year, month - 1))
+    ? null
+    : 'Date must be in the last 12 months'
