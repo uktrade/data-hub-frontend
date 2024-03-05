@@ -69,6 +69,7 @@ export const WinsWonTable = ({ exportWins }) => {
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-won"
+    heading="Export win"
     noResults="You don't have any won export wins."
     payload={{ confirmed: WIN_STATUS.WON }}
   >

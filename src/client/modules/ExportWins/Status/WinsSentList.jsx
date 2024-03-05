@@ -10,6 +10,7 @@ import urls from '../../../../lib/urls'
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-sent"
+    heading="Export win"
     noResults="You don't have any sent export wins."
     payload={{ confirmed: WIN_STATUS.SENT }}
   >

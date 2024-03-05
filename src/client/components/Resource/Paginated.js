@@ -80,6 +80,7 @@ const PaginatedResource = multiInstance({
   }),
   component: ({
     name,
+    heading,
     id,
     children,
     pageSize = 10,
@@ -129,7 +130,7 @@ const PaginatedResource = multiInstance({
                     <LoadingBox name={name} id={id}>
                       <CollectionHeader
                         totalItems={result.count}
-                        collectionName={name}
+                        collectionName={heading || name}
                       />
                       {totalPages > 0 && (
                         <StyledCollectionSort totalPages={totalPages} />

@@ -1,3 +1,3 @@
 import { createCollectionResource } from './Resource'
 
-export default createCollectionResource('Export wins', 'v4/export-win')
+export default createCollectionResource('Export Wins', 'v4/export-win')
