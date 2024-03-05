@@ -99,6 +99,7 @@ import OrderQuote from './modules/Omis/OrderQuote'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
 import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProjectDocument'
+import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 
 const routes = {
   companies: [
@@ -505,6 +506,11 @@ const routes = {
       path: '/exportwins/:winId/edit',
       module: 'datahub:companies',
       component: EditExportWin,
+    },
+    {
+      path: '/exportwins/:winId/customer-feedback',
+      module: 'datahub:companies',
+      component: CustomerFeedback,
     },
   ],
   investments: [

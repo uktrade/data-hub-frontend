@@ -36,6 +36,9 @@ const EXPORT_WIN = {
     name: 'Services',
   },
   is_personally_confirmed: false,
+  customer_response: {
+    agree_with_win: false,
+  },
   breakdowns: [
     {
       type: {
@@ -74,7 +77,9 @@ describe('ExportWins/Details', () => {
       testTitle: 'Confirmed',
       exportWinAPIResponse: {
         ...EXPORT_WIN,
-        is_personally_confirmed: true,
+        customer_response: {
+          agree_with_win: true,
+        },
       },
       tableRows: {
         ...EXPECTED_ROWS,
@@ -86,7 +91,6 @@ describe('ExportWins/Details', () => {
       testTitle: 'Unconfirmed',
       exportWinAPIResponse: {
         ...EXPORT_WIN,
-        is_personally_confirmed: false,
       },
       tableRows: {
         ...EXPECTED_ROWS,

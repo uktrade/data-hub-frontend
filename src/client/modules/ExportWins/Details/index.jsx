@@ -14,7 +14,7 @@ import { ResendExportWin } from './ResendExportWin'
 import urls from '../../../../lib/urls'
 import { state2props } from './state'
 
-const VerticalSpacer = styled.div`
+export const VerticalSpacer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${SPACING.SCALE_1};
@@ -27,7 +27,7 @@ const NormalFontWeightRow = styled(SummaryTable.Row)`
   }
 `
 
-const ExportWinTitle = (props) => (
+export const ExportWinTitle = (props) => (
   <ExportWin.Inline {...props}>
     {(exportWin) => (
       <>
@@ -35,6 +35,16 @@ const ExportWinTitle = (props) => (
       </>
     )}
   </ExportWin.Inline>
+)
+
+export const ExportWinsLink = () => (
+  <Link
+    data-test="export-wins-link"
+    as={ReactRouterLink}
+    to={urls.companies.exportWins.index()}
+  >
+    Export wins
+  </Link>
 )
 
 const groupBreakdowns = (breakdowns) => {
@@ -144,12 +154,12 @@ const Detail = (props) => {
                 </SummaryTable.Row>
                 <SummaryTable.Row heading="Export win confirmed">
                   {exportWin &&
-                    (exportWin.isPersonallyConfirmed ? 'Yes' : 'No')}
+                    (exportWin.customerResponse.agreeWithWin ? 'Yes' : 'No')}
                 </SummaryTable.Row>
               </Summary>
               {exportWin && <ResendExportWin id={exportWin.id} />}
               <VerticalSpacer>
-                {exportWin?.isPersonallyConfirmed && (
+                {exportWin?.customerResponse.agreeWithWin && (
                   <Link
                     as={ReactRouterLink}
                     to={urls.companies.exportWins.customerFeedback(winId)}
@@ -157,13 +167,7 @@ const Detail = (props) => {
                     View customer feedback
                   </Link>
                 )}
-                <Link
-                  data-test="export-wins-link"
-                  as={ReactRouterLink}
-                  to={urls.companies.exportWins.index()}
-                >
-                  Export wins
-                </Link>
+                <ExportWinsLink />
               </VerticalSpacer>
             </>
           )
