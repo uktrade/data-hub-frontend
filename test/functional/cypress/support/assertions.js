@@ -76,21 +76,30 @@ const assertSummaryTable = ({
 }
 
 /**
- * @param {{rows: [string, string | number][]}} options
+ * @param {{rows: [string, string | number][], caption?: string}} options
  */
-const assertSummaryTableStrict = ({ rows }) => {
-  cy.get('[data-component="SummaryTable"] tr')
-    .as('rows')
-    .should('have.length', rows.length)
+const assertSummaryTableStrict = ({ caption, rows }) => {
+  const assertRows = (el) => {
+    cy.wrap(el).find('tr').as('rows').should('have.length', rows.length)
 
-  rows.forEach(([key, val], i) => {
-    cy.get('@rows')
-      .eq(i)
-      .within(() => {
-        cy.get('th').should('have.length', 1).should('have.text', key)
-        cy.get('td').should('have.length', 1).should('have.text', val)
-      })
-  })
+    rows.forEach(([key, val], i) => {
+      cy.get('@rows')
+        .eq(i)
+        .within(() => {
+          cy.get('th').should('have.length', 1).should('have.text', key)
+          cy.get('td').should('have.length', 1).should('have.text', val)
+        })
+    })
+  }
+
+  if (caption) {
+    cy.contains('caption', caption)
+      .closest('[data-component="SummaryTable"]')
+      .then(assertRows)
+    return
+  }
+
+  cy.get('[data-component="SummaryTable"]').then(assertRows)
 }
 
 const assertGovReactTable = ({ element, headings, rows }) => {

@@ -54,15 +54,68 @@ const fakeExportWin = () => ({
     max: 10_000_000,
   }),
   date: faker.date.anytime(),
-  customer_response: {
-    created_on: faker.date.anytime(),
-  },
   goods_vs_services: {
     id: faker.string.uuid(),
     name: faker.helpers.arrayElement(['Goods', 'Services']),
   },
   breakdowns: faker.helpers.multiple(fakeBreakdown),
   description: faker.lorem.lines(),
+  customer_response: {
+    id: faker.string.uuid(),
+    our_support: {
+      name: 'Very little',
+      id: faker.string.uuid(),
+    },
+    access_to_contacts: {
+      name: 'Great extent',
+      id: faker.string.uuid(),
+    },
+    access_to_information: {
+      name: 'Great extent',
+      id: faker.string.uuid(),
+    },
+    improved_profile: {
+      name: 'Completely',
+      id: faker.string.uuid(),
+    },
+    gained_confidence: {
+      name: "Didn't help",
+      id: faker.string.uuid(),
+    },
+    developed_relationships: {
+      name: 'Completely',
+      id: faker.string.uuid(),
+    },
+    overcame_problem: {
+      name: 'N/A',
+      id: faker.string.uuid(),
+    },
+    involved_state_enterprise: true,
+    support_improved_speed: true,
+    expected_portion_without_help: {
+      name: 'Up to 40%',
+      id: faker.string.uuid(),
+    },
+    last_export: {
+      name: 'Apart from this win, we have exported in the last 12 months',
+      id: faker.string.uuid(),
+    },
+    has_enabled_expansion_into_new_market: false,
+    has_enabled_expansion_into_existing_market: true,
+    has_increased_exports_as_percent_of_turnover: false,
+    company_was_at_risk_of_not_exporting: true,
+    has_explicit_export_plans: false,
+    agree_with_win: true,
+    case_study_willing: false,
+    comments: 'Test only',
+    name: '',
+    marketing_source: {
+      name: 'Advertisements I saw or read about the Exporting is GREAT campaign',
+      id: faker.string.uuid(),
+    },
+    other_marketing_source: '',
+    responded_on: null,
+  },
 })
 
 const WON_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
