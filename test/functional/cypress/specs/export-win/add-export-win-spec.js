@@ -446,14 +446,14 @@ describe('Adding an export win', () => {
     it('should display validation error messages on mandatory fields', () => {
       clickContinueButton()
       assertErrorSummary([
-        'Select a contact',
+        'Select a company contact',
         'Select HQ location',
         'Select export potential',
         'Select export experience',
       ])
       assertFieldError(
         cy.get(customerDetails.contacts),
-        'Select a contact',
+        'Select a company contact',
         true
       )
       assertFieldError(
@@ -732,6 +732,36 @@ describe('Adding an export win', () => {
         true
       )
       assertFieldError(cy.get(winDetails.sector), 'Enter a sector', false)
+    })
+
+    it('should display a validation error message when the win date is in the future', () => {
+      const today = new Date()
+      // Indexing starts at zero (0 - 11) so we have to increment by 2 for next month
+      const month = today.getMonth() + 2
+      const year = today.getFullYear()
+      cy.get(winDetails.dateMonth).type(month)
+      cy.get(winDetails.dateYear).type(year)
+      clickContinueButton()
+      assertFieldError(
+        cy.get(winDetails.date),
+        'Date must be in the last 12 months',
+        true
+      )
+    })
+
+    it('should display a validation error message when the win date is greater than twelve months ago', () => {
+      const today = new Date()
+      // Indexing starts at zero (0 - 11) so no need to decrement by 1
+      const month = today.getMonth()
+      const year = today.getFullYear() - 1
+      cy.get(winDetails.dateMonth).type(month)
+      cy.get(winDetails.dateYear).type(year)
+      clickContinueButton()
+      assertFieldError(
+        cy.get(winDetails.date),
+        'Date must be in the last 12 months',
+        true
+      )
     })
   })
 

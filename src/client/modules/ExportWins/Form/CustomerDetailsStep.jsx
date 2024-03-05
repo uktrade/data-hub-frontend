@@ -5,6 +5,7 @@ import { H3 } from '@govuk-react/heading'
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { Step, FieldTypeahead } from '../../../components'
+import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
 import {
@@ -27,7 +28,7 @@ const CustomerDetailsStep = () => {
         id={companyId}
         label="Company contacts"
         hint="This contact will be emailed to approve the win."
-        required="Select a contact"
+        required="Select a company contact"
         placeholder="Select contact"
         resource={CompanyContactsResource}
         field={FieldTypeahead}
@@ -51,6 +52,9 @@ const CustomerDetailsStep = () => {
         required="Select HQ location"
         field={FieldTypeahead}
         resource={UKRegionsResource}
+        resultToOptions={(result) =>
+          idNamesToValueLabels(result.filter(({ name }) => name !== 'All'))
+        }
         fullWidth={true}
       />
       <ResourceOptionsField
