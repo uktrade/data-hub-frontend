@@ -36,7 +36,7 @@ const dummyExportWin = (prefix, booleans) => ({
     has_explicit_export_plans: booleans,
 
     last_export: { name: `${prefix}-last_export` },
-    case_study_willing: { name: `${prefix}-case_study_willing` },
+    case_study_willing: booleans,
     marketing_source: { name: `${prefix}-marketing_source` },
   },
 })
@@ -103,7 +103,7 @@ describe('ExportWins/CustomerFeedback', () => {
       assertSummaryTableStrict({
         caption: '4. Marketing',
         rows: [
-          ['Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?', win.customer_response.case_study_willing.name],
+          ['Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?', toYesNo(win.customer_response.case_study_willing)],
           ['How did you first hear about DBT(or it predecessor, DIT)?', win.customer_response.marketing_source.name],
         ],
       })
