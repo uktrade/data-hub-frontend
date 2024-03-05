@@ -74,6 +74,44 @@ const groupBreakdowns = (breakdowns) => {
   }
 }
 
+export const Summary = ({ exportWin, children }) => {
+  const { groups, totalAmount, totalYears } = exportWin
+    ? groupBreakdowns(exportWin.breakdowns)
+    : {}
+
+  return (
+    <SummaryTable data-test="export-wins-details-table">
+      <SummaryTable.Row heading="Goods or services">
+        {exportWin?.goodsVsServices.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Destination country">
+        {exportWin?.country.name}
+      </SummaryTable.Row>
+      {exportWin &&
+        Object.keys(groups).length > 1 &&
+        Object.entries(groups).map(([k, { total, yearRange }]) => {
+          const years = yearRange.max - yearRange.min + 1
+          return (
+            <NormalFontWeightRow key={k} heading={k}>
+              {`${currencyGBP(total)} over ${years} ${pluralize('year', years)}`}
+            </NormalFontWeightRow>
+          )
+        })}
+      <SummaryTable.Row heading="Total value">
+        {exportWin &&
+          `${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Date won">
+        {exportWin && formatMediumDate(exportWin.date)}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Lead officer name">
+        {exportWin?.leadOfficer.name}
+      </SummaryTable.Row>
+      {children}
+    </SummaryTable>
+  )
+}
+
 const Detail = (props) => {
   const { winId } = props.match.params
   const success = props[winId]?.success
@@ -98,39 +136,9 @@ const Detail = (props) => {
     >
       <ExportWin id={winId} progressBox={true}>
         {(exportWin) => {
-          const { groups, totalAmount, totalYears } = exportWin
-            ? groupBreakdowns(exportWin.breakdowns)
-            : {}
-
           return (
             <>
-              <SummaryTable data-test="export-wins-details-table">
-                <SummaryTable.Row heading="Goods or services">
-                  {exportWin?.goodsVsServices.name}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Destination country">
-                  {exportWin?.country.name}
-                </SummaryTable.Row>
-                {exportWin &&
-                  Object.keys(groups).length > 1 &&
-                  Object.entries(groups).map(([k, { total, yearRange }]) => {
-                    const years = yearRange.max - yearRange.min + 1
-                    return (
-                      <NormalFontWeightRow key={k} heading={k}>
-                        {`${currencyGBP(total)} over ${years} ${pluralize('year', years)}`}
-                      </NormalFontWeightRow>
-                    )
-                  })}
-                <SummaryTable.Row heading="Total value">
-                  {exportWin &&
-                    `${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Date won">
-                  {exportWin && formatMediumDate(exportWin.date)}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Lead officer name">
-                  {exportWin?.leadOfficer.name}
-                </SummaryTable.Row>
+              <Summary exportWin={exportWin}>
                 <SummaryTable.Row heading="Comments">
                   {exportWin?.comments}
                 </SummaryTable.Row>
@@ -138,7 +146,7 @@ const Detail = (props) => {
                   {exportWin &&
                     (exportWin.isPersonallyConfirmed ? 'Yes' : 'No')}
                 </SummaryTable.Row>
-              </SummaryTable>
+              </Summary>
               {exportWin && <ResendExportWin id={exportWin.id} />}
               <VerticalSpacer>
                 {exportWin?.isPersonallyConfirmed && (

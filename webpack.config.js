@@ -43,6 +43,7 @@ module.exports = (env) => ({
       'details-element-polyfill',
       './src/client/index.jsx',
     ],
+    'export-win-review': ['./src/client/export-win-review.jsx'],
   },
   output: {
     path: config.buildDir,

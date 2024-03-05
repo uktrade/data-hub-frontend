@@ -1,7 +1,5 @@
 require('dotenv').config()
 
-// require('elastic-apm-node').start()
-
 const path = require('path')
 const bodyParser = require('body-parser')
 const compression = require('compression')
@@ -114,12 +112,14 @@ app.use(
   )
 )
 
+app.use(locals)
 app.use(title())
 app.use(breadcrumbs.init())
 app.use(breadcrumbs.setHome())
-app.use(locals)
-app.use(redisCheck)
 
+app.use(require('./apps/__export-wins-review'))
+
+app.use(redisCheck)
 app.use(sessionStore)
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))

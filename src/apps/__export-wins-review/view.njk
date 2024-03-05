@@ -1,0 +1,18 @@
+{% extends "_layouts/template.njk" %}
+
+{% block header %}{% endblock %}
+{% block local_header %}{% endblock %}
+{% block bodyStart %}{% endblock %}
+{% block main %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block bodyEnd %}
+  <div id="react-app">
+    <noscript>Please enable JavaScript in your browser to see the content.</noscript>
+  </div>
+
+  <!--[if gt IE 8]><!-->
+  <script src="{{ getAssetPath('app.js') }}"></script>
+  <script src="{{ getAssetPath('export-win-review.js') }}"></script>
+  <!--<![endif]-->
+{% endblock %}
