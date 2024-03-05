@@ -220,12 +220,14 @@ module.exports = {
     },
     exportWins: {
       index: url('/exportwins'),
-      create: url('/exportwins/create'),
-      details: url('/exportwins', '/:winId/details'),
-      rejected: url('/exportwins/rejected'),
-      sent: url('/exportwins/sent'),
       won: url('/exportwins/won'),
+      sent: url('/exportwins/sent'),
+      rejected: url('/exportwins/rejected'),
       edit: url('/exportwins', '/:winId/edit'),
+      details: url('/exportwins', '/:winId/details'),
+      create: url('/exportwins/create?company=', ':companyId'),
+      createFromExport: (companyId, exportId) =>
+        `/exportwins/create?company=${companyId}&export=${exportId}`,
       customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {

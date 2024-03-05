@@ -193,7 +193,7 @@ const CompanyLocalHeader = ({
                 <Button
                   as={StyledButtonLink}
                   data-test="header-add-export-win"
-                  href={`${urls.companies.exportWins.create()}?step=officer_details&company=${company.id}`}
+                  href={urls.companies.exportWins.create(company.id)}
                   aria-label={`Add export win`}
                   buttonColour={GREY_3}
                   buttonTextColour={TEXT_COLOUR}

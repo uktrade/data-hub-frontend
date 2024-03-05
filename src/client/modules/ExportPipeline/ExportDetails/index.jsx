@@ -192,7 +192,10 @@ const ExportDetailsForm = ({ exportItem, hasExportWinFeatureGroup }) => {
                   {hasExportWinFeatureGroup && (
                     <Button
                       as={Link}
-                      href={`${urls.companies.exportWins.create()}?step=officer_details&company=${exportItem.company.id}&export=${exportId}`}
+                      href={urls.companies.exportWins.createFromExport(
+                        exportItem.company.id,
+                        exportId
+                      )}
                       data-test="convert-to-export-win"
                     >
                       Convert to export win
