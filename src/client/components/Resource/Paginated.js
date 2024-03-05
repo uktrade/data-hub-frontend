@@ -88,12 +88,14 @@ const PaginatedResource = multiInstance({
     onPageClick,
     currentPage,
     result,
+    noResults = "You don't have any results",
   }) => (
     <Route>
       {({ location }) => {
         const qsParams = qs.parse(location.search.slice(1))
         const routePage = parseInt(qsParams.page, 10) || 1
         const totalPages = result ? Math.ceil(result.count / pageSize) : 0
+        const hasZeroResults = result?.count === 0
 
         return (
           <Task>
@@ -122,6 +124,7 @@ const PaginatedResource = multiInstance({
                       }}
                     />
                   )}
+
                   {result ? (
                     <LoadingBox name={name} id={id}>
                       <CollectionHeader
@@ -152,6 +155,7 @@ const PaginatedResource = multiInstance({
                   ) : (
                     <Task.Status name={name} id={id} />
                   )}
+                  {hasZeroResults && <p data-test="no-results">{noResults}</p>}
                 </>
               )
             }}
