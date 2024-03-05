@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
-import { WIN_FILTERS } from './constants'
+import { WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 const NoWrapCell = styled(Table.Cell)`
@@ -67,7 +67,7 @@ export const WinsWonTable = ({ exportWins }) => (
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-won"
-    payload={{ confirmed: WIN_FILTERS.WON }}
+    payload={{ confirmed: WIN_STATUS.WON }}
   >
     {(page) => <WinsWonTable exportWins={page} />}
   </ExportWinsResource.Paginated>

@@ -13,6 +13,7 @@ import { formatMediumDate } from '../../../utils/date'
 import { ResendExportWin } from './ResendExportWin'
 import urls from '../../../../lib/urls'
 import { state2props } from './state'
+import { WIN_STATUS } from '../Status/constants'
 
 const VerticalSpacer = styled.div`
   display: flex;
@@ -147,7 +148,10 @@ const Detail = (props) => {
                     (exportWin.isPersonallyConfirmed ? 'Yes' : 'No')}
                 </SummaryTable.Row>
               </Summary>
-              {exportWin && <ResendExportWin id={exportWin.id} />}
+              {exportWin &&
+                exportWin.customerResponse.agreeWithWin === WIN_STATUS.SENT && (
+                  <ResendExportWin id={exportWin.id} />
+                )}
               <VerticalSpacer>
                 {exportWin?.isPersonallyConfirmed && (
                   <Link
