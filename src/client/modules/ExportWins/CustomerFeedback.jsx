@@ -99,7 +99,7 @@ const CustomerFeedback = ({
             </SummaryTable>
             <SummaryTable caption="4. Marketing">
               <SummaryTable.Row heading="Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?">
-                {response.case_study_willing?.name}
+                {toYesNo(response.case_study_willing)}
               </SummaryTable.Row>
               <SummaryTable.Row heading="How did you first hear about DBT(or it predecessor, DIT)?">
                 {response.marketing_source?.name}
