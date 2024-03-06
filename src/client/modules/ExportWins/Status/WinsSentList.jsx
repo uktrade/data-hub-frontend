@@ -12,7 +12,9 @@ export default () => (
     id="export-wins-sent"
     heading="Export win"
     noResults="You don't have any sent export wins."
-    payload={{ confirmed: WIN_STATUS.SENT }}
+    // We have to send null as a string otherwise
+    // it's stripped out of the payload by Axois
+    payload={{ confirmed: String(WIN_STATUS.SENT) }}
   >
     {(page) => (
       <ul>
