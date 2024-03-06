@@ -107,7 +107,7 @@ const fakeExportWin = () => ({
     has_explicit_export_plans: false,
     agree_with_win: true,
     case_study_willing: false,
-    comments: 'Test only',
+    comments: faker.lorem.paragraph(),
     name: '',
     marketing_source: {
       name: 'Advertisements I saw or read about the Exporting is GREAT campaign',
@@ -140,7 +140,7 @@ export const getExportWin = (req, res) => {
 
 export const getExportWinReview = (req, res) => {
   if (req.params.token === 'non-existent') {
-    return res.status(404).json({ error: 'Not found' })
+    return res.status(404).json({ detail: 'Not found' })
   }
   res.json({
     win: fakeExportWin(),

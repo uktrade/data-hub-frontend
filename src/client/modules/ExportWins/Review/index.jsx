@@ -70,14 +70,6 @@ const transformPayload =
     },
   })
 
-const FieldComments = () => (
-  <FieldTextarea
-    name="comments"
-    label="Comments (optional)"
-    hint="Please provide feedback on the help we have provided. If any of the information is incorrect please provide details."
-  />
-)
-
 const CurrentFormStepInfo = () => (
   <State>
     {({ Form }) => {
@@ -115,7 +107,7 @@ const Step1 = ({ win, name }) => (
     {/* TODO: Create a FieldBoolean component */}
     <FieldRadios
       name="agree_with_win"
-      required="Choose one of the options"
+      required="Select if the information is correct or needs revising"
       options={[
         { label: 'I confirm this information is correct', value: 'yes' },
         { label: 'Some of this information needs revising', value: 'no' },
@@ -129,15 +121,24 @@ const Step2Agree = () => (
     <WithoutOurSupport.FieldRadios
       name="expected_portion_without_help"
       legend="What value do you estimate you would have achieved without our support?"
-      required="Choose one of the options"
+      required="Select the estimated support value"
     />
-    <FieldComments />
+    <FieldTextarea
+      name="comments"
+      label="Comments (optional)"
+      hint="Please provide feedback on the help we have provided. If any of the information is incorrect please provide details."
+    />
   </Step>
 )
 
 const Step2Disagree = () => (
   <Step name="2-disagree">
-    <FieldComments />
+    <FieldTextarea
+      name="comments"
+      label="Comments"
+      required="Please let us know what information was incorrect"
+      hint="Please let us know what information was incorrect"
+    />
   </Step>
 )
 
@@ -147,37 +148,37 @@ const Step3 = () => (
     <Rating.FieldRadios
       name="our_support"
       legend="Securing the win overall?"
-      required="Choose one of the options"
+      required="Select how much we helped with securing the win"
     />
     <Rating.FieldRadios
       name="access_to_contacts"
       legend="Gaining access to contacts?"
-      required="Choose one of the options"
+      required="Select how we helped with access to contacts"
     />
     <Rating.FieldRadios
       name="access_to_information"
       legend="Getting information or improved understanding of the country?"
-      required="Choose one of the options"
+      required="Select how we helped with information or understanding of the country"
     />
     <Rating.FieldRadios
       name="improved_profile"
       legend="Improving your profile or credibility in the country?"
-      required="Choose one of the options"
+      required="Select how we helped with improving your profile or credibility in the country"
     />
     <Rating.FieldRadios
       name="gained_confidence"
       legend="Having confidence to explore or expand in the country?"
-      required="Choose one of the options"
+      required="Select how we helped gain confidence or expand in the country"
     />
     <Rating.FieldRadios
       name="developed_relationships"
       legend="Developing or nurturing critical relationships?"
-      required="Choose one of the options"
+      required="Select how we helped to develop or nurture critical relationships"
     />
     <Rating.FieldRadios
       name="overcame_problem"
       legend="Overcoming a problem in the country (eg legal, regulatory, commercial)"
-      required="Choose one of the options"
+      required="Select how we helped overcome a problem in the country"
     />
   </Step>
 )
@@ -242,7 +243,7 @@ const Step5 = () => (
     <Experience.FieldRadios
       name="last_export"
       legend="Apart from this win, when did your company last export goods or services?"
-      required="Choose one of the options"
+      required="Select when your company last exported goods or services"
     />
   </Step>
 )
@@ -253,7 +254,7 @@ const Step6 = () => (
     <FieldRadios
       name="case_study_willing"
       legend="Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?"
-      required="Choose one of the options"
+      required="Select if you are willing to feature your success in DBT / Exporting is GREAT marketing"
       options={[
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' },
@@ -262,7 +263,7 @@ const Step6 = () => (
     <MarketingSource.FieldRadios
       name="marketing_source"
       legend="How did you first hear about DBT (or it predecessor, DIT)?"
-      required="Choose one of the options"
+      required="Select where you first heard about DBT"
       interceptOption={(option) =>
         option.label.endsWith('(please specify)')
           ? {
