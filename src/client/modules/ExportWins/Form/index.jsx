@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom-v5-compat'
 
 import { TASK_GET_EXPORT_WIN, TASK_GET_EXPORT_PROJECT } from './state'
 import ExportWinForm from './ExportWinForm'
@@ -42,56 +43,64 @@ const ExportWinStatus = (props) => (
 // If we're converting an export project to an export win
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
-export const CreateExportWin = ({ match }) => (
-  <ExportWinForm
-    heading="Add export win"
-    subheading={<CompanyName companyId={match.params.companyId} />}
-    exportId={match.params.exportId}
-    companyId={match.params.companyId}
-    initialValuesTaskName={
-      match.params.exportId ? TASK_GET_EXPORT_PROJECT : null
-    }
-    initialValuesPayload={{ id: match.params.exportId }}
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.index(),
-        text: 'Companies',
-      },
-      {
-        link: urls.companies.detail(match.params.companyId),
-        text: <CompanyName companyId={match.params.companyId} />,
-      },
-      { text: 'Add export win' },
-    ]}
-  />
-)
+export const CreateExportWin = () => {
+  const location = useLocation()
+  const queryParams = getQueryParamsFromLocation(location)
+  return (
+    <ExportWinForm
+      heading="Add export win"
+      subheading={<CompanyName companyId={queryParams.companyId} />}
+      exportId={queryParams.exportId}
+      companyId={queryParams.companyId}
+      initialValuesTaskName={
+        queryParams.exportId ? TASK_GET_EXPORT_PROJECT : null
+      }
+      initialValuesPayload={{ id: queryParams.exportId }}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
+        {
+          link: urls.companies.detail(queryParams.companyId),
+          text: <CompanyName companyId={queryParams.companyId} />,
+        },
+        { text: 'Add export win' },
+      ]}
+    />
+  )
+}
 
 // Here we're editing an existing win so we'll have the export win id.
-export const EditExportWin = ({ match }) => (
-  <ExportWinForm
-    heading={<ExportWinTitle id={match.params.winId} />}
-    subheading={<ExportWinSubTitle id={match.params.winId} />}
-    isEditing={true}
-    companyId={match.params.companyId}
-    exportWinId={match.params.winId}
-    initialValuesTaskName={TASK_GET_EXPORT_WIN}
-    initialValuesPayload={{
-      id: match.params.winId,
-    }}
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.exportWins.pending(),
-        text: 'Export wins',
-      },
-      { text: <ExportWinStatus id={match.params.winId} /> },
-    ]}
-  />
-)
+export const EditExportWin = () => {
+  const location = useLocation()
+  const queryParams = getQueryParamsFromLocation(location)
+  return (
+    <ExportWinForm
+      heading={<ExportWinTitle id={queryParams.winId} />}
+      subheading={<ExportWinSubTitle id={queryParams.winId} />}
+      isEditing={true}
+      companyId={queryParams.companyId}
+      exportWinId={queryParams.winId}
+      initialValuesTaskName={TASK_GET_EXPORT_WIN}
+      initialValuesPayload={{
+        id: queryParams.winId,
+      }}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.exportWins.pending(),
+          text: 'Export wins',
+        },
+        { text: <ExportWinStatus id={queryParams.winId} /> },
+      ]}
+    />
+  )
+}

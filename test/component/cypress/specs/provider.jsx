@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { CompatRouter } from 'react-router-dom-v5-compat'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -46,7 +47,9 @@ export default ({ children, tasks = appTasks, resetTasks = false }) => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter history={history}>{children}</BrowserRouter>
+      <BrowserRouter history={history}>
+        <CompatRouter>{children}</CompatRouter>
+      </BrowserRouter>
     </Provider>
   )
 }
