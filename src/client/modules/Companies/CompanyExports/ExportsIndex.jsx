@@ -5,7 +5,7 @@ import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
 import WarningText from '@govuk-react/warning-text'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'

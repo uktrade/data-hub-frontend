@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { TASK_SAVE_ORDER_SUBSCRIBERS } from './state'
 import { transformSubscribersForTypeahead } from './transformers'

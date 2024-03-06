@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
-import { useLocation } from 'react-router-dom-v5-compat'
+import { useLocation, Navigate } from 'react-router-dom-v5-compat'
 import qs from 'qs'
 
 import styled from 'styled-components'
@@ -112,7 +111,7 @@ const PaginatedResource = multiInstance({
                 onSuccessDispatch={PAGINATED_RESOURCE__ON_SUCCESS}
               />
               {currentPage && (
-                <Redirect
+                <Navigate
                   to={{
                     ...location,
                     search: qs.stringify({

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 
 import { Select } from 'govuk-react'
 import styled from 'styled-components'

@@ -1,8 +1,7 @@
 import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'

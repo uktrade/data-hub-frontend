@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom-v5-compat'
 import { connect } from 'react-redux'
 import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'

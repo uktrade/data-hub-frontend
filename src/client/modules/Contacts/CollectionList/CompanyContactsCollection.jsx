@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Details } from 'govuk-react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { CONTACTS__LOADED } from '../../../actions'
 import { FilteredCollectionList } from '../../../components'

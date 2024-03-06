@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 import { H2, InsetText, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 

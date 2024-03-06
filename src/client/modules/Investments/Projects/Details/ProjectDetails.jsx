@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 import { connect } from 'react-redux'
 import { Button, InsetText, Link } from 'govuk-react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import ProjectIncompleteFields from '../ProjectIncompleteFields'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 import { GridCol, GridRow, H4 } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'

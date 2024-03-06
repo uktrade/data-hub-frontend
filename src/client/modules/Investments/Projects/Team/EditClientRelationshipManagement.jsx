@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { Form } from '../../../../components'
 import FieldAdvisersTypeahead from '../../../../components/Form/elements/FieldAdvisersTypeahead'

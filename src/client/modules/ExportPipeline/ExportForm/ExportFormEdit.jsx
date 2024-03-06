@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
