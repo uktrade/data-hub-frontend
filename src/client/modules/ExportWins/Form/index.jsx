@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom-v5-compat'
 
 import { TASK_GET_EXPORT_WIN, TASK_GET_EXPORT_PROJECT } from './state'
 import { getQueryParamsFromLocation } from '../../../utils/url'
@@ -7,7 +8,8 @@ import ExportWinForm from './ExportWinForm'
 // If we're converting an export project to an export win
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
-export const CreateExportWin = ({ location }) => {
+export const CreateExportWin = () => {
+  const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   return (
     <ExportWinForm

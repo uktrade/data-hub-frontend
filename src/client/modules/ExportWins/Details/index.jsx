@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -75,7 +76,7 @@ const groupBreakdowns = (breakdowns) => {
 }
 
 const Detail = (props) => {
-  const { winId } = props.match.params
+  const { winId } = useParams()
   const success = props[winId]?.success
   const flashMessage = success && { success: ['Successfully sent'] }
 
