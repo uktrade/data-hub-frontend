@@ -5,7 +5,7 @@ import Link from '@govuk-react/link'
 import { Button } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { SummaryTable } from '../../../components'

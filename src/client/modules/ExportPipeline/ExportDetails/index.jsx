@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 import styled from 'styled-components'
 import { isEmpty, capitalize } from 'lodash'
 import Button from '@govuk-react/button'

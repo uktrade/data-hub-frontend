@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Switch } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
@@ -36,10 +35,10 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
-import { ProtectedRoute } from '../client/components'
+
 import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
-import routes from './routes'
+import Routes from './routes'
 
 import ErrorFallback from './components/ErrorFallback'
 
@@ -219,15 +218,7 @@ function App() {
         </Mount>
 
         <Mount selector="#react-app">
-          {() => (
-            <Switch>
-              {Object.keys(routes).map((module) =>
-                routes[module].map((route) => (
-                  <ProtectedRoute exact={route.exact || true} {...route} />
-                ))
-              )}
-            </Switch>
-          )}
+          <Routes />
         </Mount>
       </Provider>
     </ErrorBoundary>

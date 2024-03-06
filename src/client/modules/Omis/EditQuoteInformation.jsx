@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 import { connect } from 'react-redux'
 
 import { FieldDate, FieldTextarea, Form, FormLayout } from '../../components'

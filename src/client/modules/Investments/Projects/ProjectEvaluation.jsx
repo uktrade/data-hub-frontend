@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'govuk-react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { SummaryTable } from '../../../components'
 import {

@@ -5,7 +5,7 @@ import { Link, Details } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { ORDERS__LOADED } from '../../../actions'
 

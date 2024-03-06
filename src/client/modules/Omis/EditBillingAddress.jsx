@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom-v5-compat'
 
 import { FieldAddress, Form, FormLayout } from '../../components'
 import { OrderResource } from '../../components/Resource'

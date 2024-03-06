@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import qs from 'qs'

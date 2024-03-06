@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
 import { Select } from 'govuk-react'
 import styled from 'styled-components'
 import { get, kebabCase } from 'lodash'
 import qs from 'qs'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
-import { useNavigate } from 'react-router-dom-v5-compat'
 
 const StyledSelect = styled(Select)({
   select: {

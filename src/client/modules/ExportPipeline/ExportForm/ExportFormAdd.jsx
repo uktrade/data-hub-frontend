@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useLocation, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom-v5-compat'
 
 import urls from '../../../../lib/urls'
 import { COMPANY_LOADED } from '../../../actions'
