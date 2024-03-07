@@ -29,12 +29,14 @@ const twelveMonthsAgo = getTwelveMonthsAgo()
 const month = twelveMonthsAgo.getMonth() + 1
 const year = twelveMonthsAgo.getFullYear()
 
-const officerDetailsStep = `?step=officer_details&company=${company.id}`
-const creditForThisWinStep = `?step=credit_for_this_win&company=${company.id}`
-const customerDetailsStep = `?step=customer_details&company=${company.id}`
-const winDetailsStep = `?step=win_details&company=${company.id}`
-const supportProvidedStep = `?step=support_provided&company=${company.id}`
-const checkBeforeSendingStep = `?step=check_before_sending&company=${company.id}`
+const create = urls.companies.exportWins.create(company.id)
+
+const officerDetailsStep = create + '&step=officer_details'
+const creditForThisWinStep = create + '&step=credit_for_this_win'
+const customerDetailsStep = create + '&step=customer_details'
+const winDetailsStep = create + '&step=win_details'
+const supportProvidedStep = create + '&step=support_provided'
+const checkBeforeSendingStep = create + '&step=check_before_sending'
 
 const formFields = {
   officerDetails: {
@@ -159,7 +161,7 @@ describe('Adding an export win', () => {
 
   context('Breadcrumbs', () => {
     it('should render the breadcrumbs', () => {
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+      cy.visit(officerDetailsStep)
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         Companies: urls.companies.index(),
@@ -171,7 +173,7 @@ describe('Adding an export win', () => {
 
   context('Page headers', () => {
     it('should render both the header and subheader', () => {
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
+      cy.visit(officerDetailsStep)
       assertLocalHeader('Add export win')
       cy.get('[data-test="subheading"]').should(
         'have.text',
@@ -183,9 +185,7 @@ describe('Adding an export win', () => {
   context('Officer details', () => {
     const { officerDetails } = formFields
 
-    beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
-    )
+    beforeEach(() => cy.visit(officerDetailsStep))
 
     it('should render an officer details heading', () => {
       cy.get(officerDetails.heading).should('have.text', 'Officer details')
@@ -268,9 +268,7 @@ describe('Adding an export win', () => {
   context('Credit for this win', () => {
     const { creditForThisWin } = formFields
 
-    beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${creditForThisWinStep}`)
-    )
+    beforeEach(() => cy.visit(creditForThisWinStep))
 
     it('should render a step heading', () => {
       cy.get(creditForThisWin.heading).should(
@@ -390,9 +388,7 @@ describe('Adding an export win', () => {
   context('Customer details', () => {
     const { customerDetails } = formFields
 
-    beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${customerDetailsStep}`)
-    )
+    beforeEach(() => cy.visit(customerDetailsStep))
 
     it('should render a step heading', () => {
       cy.get(customerDetails.heading).should('have.text', 'Customer details')
@@ -477,9 +473,7 @@ describe('Adding an export win', () => {
   context('Win details', () => {
     const { winDetails } = formFields
 
-    beforeEach(() =>
-      cy.visit(`${urls.companies.exportWins.create()}${winDetailsStep}`)
-    )
+    beforeEach(() => cy.visit(winDetailsStep))
 
     it('should render a step heading', () => {
       cy.get(winDetails.heading).should('have.text', 'Win details')
@@ -768,9 +762,7 @@ describe('Adding an export win', () => {
   context('Support provided', () => {
     const { supportProvided } = formFields
 
-    beforeEach(() => {
-      cy.visit(`${urls.companies.exportWins.create()}${supportProvidedStep}`)
-    })
+    beforeEach(() => cy.visit(supportProvidedStep))
 
     it('should render a step heading', () => {
       cy.get(supportProvided.heading).should('have.text', 'Support given')
@@ -878,9 +870,7 @@ describe('Adding an export win', () => {
       supportProvided,
     } = formFields
 
-    before(() => {
-      cy.visit(`${urls.companies.exportWins.create()}${officerDetailsStep}`)
-    })
+    before(() => cy.visit(officerDetailsStep))
 
     it('should complete the entire export win user journey', () => {
       // Officer details
