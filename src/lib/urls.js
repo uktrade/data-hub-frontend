@@ -225,9 +225,11 @@ module.exports = {
       rejected: url('/exportwins/rejected'),
       edit: url('/exportwins', '/:winId/edit'),
       details: url('/exportwins', '/:winId/details'),
-      create: url('/exportwins/create?company=', ':companyId'),
-      createFromExport: (companyId, exportId) =>
-        `/exportwins/create?company=${companyId}&export=${exportId}`,
+      create: url('/companies', '/:companyId/exportwins/create'),
+      createFromExport: url(
+        '/companies',
+        '/:companyId/export/:exportId/exportwins/create'
+      ),
       customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {

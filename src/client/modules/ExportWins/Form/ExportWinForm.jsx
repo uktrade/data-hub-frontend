@@ -22,6 +22,7 @@ const CompanyName = ({ companyId }) => (
 
 const ExportWinForm = ({
   title,
+  exportId,
   companyId,
   exportWinId,
   initialValuesTaskName,
@@ -29,7 +30,12 @@ const ExportWinForm = ({
   csrfToken,
   currentAdviserId,
 }) => {
-  const stepProps = { isEditing: !!exportWinId }
+  const stepProps = {
+    isEditing: !!exportWinId,
+    exportId,
+    companyId,
+    exportWinId,
+  }
   return (
     <DefaultLayout
       heading={title}
