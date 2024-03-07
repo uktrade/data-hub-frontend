@@ -14,7 +14,11 @@ import GreatProfile from './GreatProfile'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { exportDetailsLabels, exportPotentialLabels } from './labels'
-import { transformExportCountries } from './transformers'
+import {
+  buildExportPotential,
+  buildExportPotentialLastModified,
+  transformExportCountries,
+} from './transformers'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -68,7 +72,13 @@ const ExportsIndex = () => {
                 heading={exportDetailsLabels.exportPotential}
                 key={exportDetailsLabels.exportPotential}
               >
-                Unavailable
+                {buildExportPotential(company)}
+              </SummaryTable.Row>
+              <SummaryTable.Row
+                heading={exportDetailsLabels.lastModifiedPotential}
+                key={exportDetailsLabels.lastModifiedPotential}
+              >
+                {buildExportPotentialLastModified(company)}
               </SummaryTable.Row>
             </SummaryTable>
 
