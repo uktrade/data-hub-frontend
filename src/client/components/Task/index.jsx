@@ -143,7 +143,7 @@ const Task = connect(
     return {
       ...taskState,
       progress: taskState.status === 'progress',
-      error: taskState.status === 'error',
+      isError: taskState.status === 'error',
       start: (options) => start(name, id, options),
       cancel: () => cancel(name, id),
       retry: () => start(name, id, taskState),
@@ -240,7 +240,7 @@ Task.Status = ({
         start,
         status,
         progress,
-        error,
+        isError,
         payload,
         errorMessage,
         onSuccessDispatch,
@@ -262,7 +262,7 @@ Task.Status = ({
           {!progressOverlay &&
             progress &&
             renderProgress({ message: progressMessage, noun })}
-          {error &&
+          {isError &&
             (errorMessage ===
             'You do not have permission to perform this action.' ? (
               <AccessDenied />
