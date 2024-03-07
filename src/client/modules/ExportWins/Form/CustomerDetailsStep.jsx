@@ -1,9 +1,7 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { Step, FieldTypeahead } from '../../../components'
 import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
@@ -15,11 +13,7 @@ import {
   BusinessPotentialResource,
 } from '../../../components/Resource'
 
-const CustomerDetailsStep = () => {
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
-  const companyId = queryParams.company
-
+const CustomerDetailsStep = ({ companyId }) => {
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
       <H3 data-test="step-heading">Customer details</H3>

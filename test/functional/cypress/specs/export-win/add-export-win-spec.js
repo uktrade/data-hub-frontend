@@ -31,12 +31,12 @@ const year = twelveMonthsAgo.getFullYear()
 
 const create = urls.companies.exportWins.create(company.id)
 
-const officerDetailsStep = create + '&step=officer_details'
-const creditForThisWinStep = create + '&step=credit_for_this_win'
-const customerDetailsStep = create + '&step=customer_details'
-const winDetailsStep = create + '&step=win_details'
-const supportProvidedStep = create + '&step=support_provided'
-const checkBeforeSendingStep = create + '&step=check_before_sending'
+const officerDetailsStep = create + '?step=officer_details'
+const creditForThisWinStep = create + '?step=credit_for_this_win'
+const customerDetailsStep = create + '?step=customer_details'
+const winDetailsStep = create + '?step=win_details'
+const supportProvidedStep = create + '?step=support_provided'
+const checkBeforeSendingStep = create + '?step=check_before_sending'
 
 const formFields = {
   officerDetails: {
