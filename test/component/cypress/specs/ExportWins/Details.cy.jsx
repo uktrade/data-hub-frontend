@@ -30,7 +30,6 @@ const EXPORT_WIN = {
   country: {
     name: 'Australia',
   },
-  comments: 'Lorem ipsum dolor sit amet',
   total_expected_export_value: 2528571,
   date: '2024-03-26T14:29:01.521Z',
   goods_vs_services: {
@@ -60,7 +59,6 @@ const EXPECTED_ROWS = {
   'Total value': '£123,456 over 1 year',
   'Date won': '26 Mar 2024',
   'Lead officer name': 'Leo Jacobs',
-  Comments: EXPORT_WIN.comments,
   'Export win confirmed': 'No',
 }
 
@@ -70,26 +68,58 @@ describe('ExportWins/Details', () => {
   const Component = ({ exportWinAPIResponse }) => (
     <DataHubProvider
       resetTasks={true}
-      tasks={{ 'Export Win': () => exportWinAPIResponse }}
+      tasks={{
+        'Export Win': () => exportWinAPIResponse,
+        TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+      }}
     >
       <Details match={{ params: { winId: EXPORT_WIN.id } }} />
     </DataHubProvider>
   )
 
   ;[
+    // FIXME: There's no test case for rejected win
     {
       testTitle: 'Confirmed',
       exportWinAPIResponse: {
         ...EXPORT_WIN,
         customer_response: {
           agree_with_win: true,
+          comments: 'I agree',
         },
       },
-      tableRows: {
-        ...EXPECTED_ROWS,
-        'Export win confirmed': 'Yes',
-      },
+      tableRows: insertAfter(
+        {
+          ...EXPECTED_ROWS,
+          'Export win confirmed': 'Yes',
+        },
+        'Lead officer name',
+        {
+          Comments: 'I agree',
+        }
+      ),
       shouldHaveCustomerFeedbackLink: true,
+    },
+    {
+      testTitle: 'Rejected',
+      exportWinAPIResponse: {
+        ...EXPORT_WIN,
+        customer_response: {
+          agree_with_win: false,
+          comments: 'I disagree',
+        },
+      },
+      tableRows: insertAfter(
+        {
+          ...EXPECTED_ROWS,
+          'Export win confirmed': 'No',
+        },
+        'Lead officer name',
+        {
+          Comments: 'I disagree',
+        }
+      ),
+      shouldHaveCustomerFeedbackLink: false,
     },
     {
       testTitle: 'Unconfirmed',

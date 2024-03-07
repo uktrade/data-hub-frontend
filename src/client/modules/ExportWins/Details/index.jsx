@@ -150,9 +150,11 @@ const Detail = (props) => {
           return (
             <>
               <Summary exportWin={exportWin}>
-                <SummaryTable.Row heading="Comments">
-                  {exportWin?.comments}
-                </SummaryTable.Row>
+                {exportWin?.customerResponse?.agreeWithWin !== null && (
+                  <SummaryTable.Row heading="Comments">
+                    {exportWin?.customerResponse.comments}
+                  </SummaryTable.Row>
+                )}
                 <SummaryTable.Row heading="Export win confirmed">
                   {exportWin &&
                     (exportWin.customerResponse.agreeWithWin ? 'Yes' : 'No')}

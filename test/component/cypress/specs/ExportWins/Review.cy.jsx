@@ -423,10 +423,12 @@ describe('ExportWins/Review', () => {
       cy.get('#field-comments').then((el) =>
         assertFieldTextarea({
           element: el,
-          label: 'Comments (optional)',
-          hint: 'Please provide feedback on the help we have provided. If any of the information is incorrect please provide details.',
+          label: 'Comments',
+          hint: 'Please let us know what information was incorrect',
         })
       )
+
+      cy.get('#comments').type('Lorem ipsum dolor sit amet')
 
       cy.contains('button', 'Submit').click()
 
