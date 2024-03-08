@@ -5,6 +5,7 @@ export const exportDetailsLabels = {
   noInterestCountries: 'Countries of no interest',
   greatProfile: 'great.gov.uk business profile',
   exportPotential: 'Export potential',
+  lastModifiedPotential: 'Export potential last updated',
 }
 
 export const exportPotentialLabels = {

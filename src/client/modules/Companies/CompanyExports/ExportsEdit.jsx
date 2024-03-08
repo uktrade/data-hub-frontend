@@ -16,6 +16,10 @@ import {
   ExportExperienceCategoriesResource,
 } from '../../../components/Resource'
 import { transformArrayIdNameToValueLabel } from '../../../transformers'
+import {
+  buildExportPotential,
+  buildExportPotentialLastModified,
+} from './transformers'
 import { exportDetailsLabels } from './labels'
 import { buildCompanyBreadcrumbs } from '../utils'
 
@@ -77,9 +81,14 @@ const ExportsEdit = () => {
                       }}
                     />
                   </StyledDd>
-
                   <StyledDt>{exportDetailsLabels.exportPotential}</StyledDt>
-                  <StyledDd>Unavailable</StyledDd>
+                  <StyledDd>{buildExportPotential(company)}</StyledDd>
+                  <StyledDt>
+                    {exportDetailsLabels.lastModifiedPotential}
+                  </StyledDt>
+                  <StyledDd>
+                    {buildExportPotentialLastModified(company)}
+                  </StyledDd>
                 </dl>
                 <FieldInput
                   type="hidden"

@@ -10,6 +10,12 @@ export const buildExportPotential = (company) => {
     : 'No score given'
 }
 
+export const buildExportPotentialLastModified = (company) => {
+  return company.lastModifiedPotential
+    ? new Date(company.lastModifiedPotential).toISOString().split('T')[0]
+    : 'No score given'
+}
+
 export const transformCountriesForTypeahead = (exportCountries) => {
   const groupedExportCountries = groupExportCountries(exportCountries)
   return [
