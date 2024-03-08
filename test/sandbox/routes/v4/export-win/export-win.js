@@ -142,6 +142,9 @@ export const getExportWinReview = (req, res) => {
   if (req.params.token === 'non-existent') {
     return res.status(404).json({ detail: 'Not found' })
   }
+  if (req.params.token === 'server-error') {
+    return res.status(500).json({ detail: 'Server error' })
+  }
   res.json({
     win: fakeExportWin(),
     company_contact: {
