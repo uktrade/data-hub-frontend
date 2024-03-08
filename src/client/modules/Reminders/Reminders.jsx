@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom-v5-compat'
+import { useParams, Navigate } from 'react-router-dom-v5-compat'
 import { connect } from 'react-redux'
 
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
@@ -73,10 +73,9 @@ const ListContainer = styled('div')({
 
 export const Reminders = ({ defaultUrl }) => {
   const { reminderType } = useParams()
-  const navigate = useNavigate()
 
   if (!reminderType) {
-    navigate(defaultUrl)
+    return <Navigate to={defaultUrl} />
   }
   const subject = reminderTypeToLabel[reminderType]
   return (

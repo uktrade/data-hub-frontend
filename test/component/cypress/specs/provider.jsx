@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import { CompatRouter } from 'react-router-dom-v5-compat'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
@@ -40,6 +40,23 @@ export const dispatchResetAction = () => store.dispatch({ type: 'RESET' })
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
+export const MemoryProvider = ({
+  children,
+  tasks = appTasks,
+  resetTasks = false,
+  initialEntries,
+}) => {
+  // We only ever want to start the sagas once
+  resetTasks ? sagaMiddleware.run(rootSaga(tasks)) : runMiddlewareOnce(tasks)
+
+  return (
+    <Provider store={store}>
+      <MemoryRouter initialEntries={initialEntries}>
+        <CompatRouter>{children}</CompatRouter>
+      </MemoryRouter>
+    </Provider>
+  )
+}
 // TODO: Get rid of this and use createTestProvider in each test
 export default ({ children, tasks = appTasks, resetTasks = false }) => {
   // We only ever want to start the sagas once

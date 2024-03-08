@@ -9,13 +9,11 @@ export const ProtectedRoute = ({
   modulePermissions,
   userPermissions = [],
   routePermissions = [],
-  test123,
   ...rest
 }) => {
-  let RouteComponent = test123
   return routePermissions.every((p) => userPermissions.includes(p)) &
     modulePermissions.includes(module) ? (
-    <RouteComponent {...rest} />
+    <>{rest.children}</>
   ) : (
     <AccessDenied />
   )

@@ -1,26 +1,31 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom-v5-compat'
 
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
 import { assertLocalNav } from '../../../../end-to-end/cypress/support/assertions'
 import ExportWinsTabNav from '../../../../../src/client/modules/ExportWins/Status/ExportWinsTabNav'
 import urls from '../../../../../src/lib/urls'
-import DataHubProvider from '../provider'
+import { MemoryProvider } from '../provider'
 
 describe('Export wins tab navigation', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <ExportWinsTabNav
-        location={{
-          pathname: '/exportwins/rejected',
-        }}
-        {...props}
-      />
-    </DataHubProvider>
-  )
+  const Component = (props) => {
+    return (
+      <MemoryProvider initialEntries={props.initialEntries}>
+        <Routes>
+          <Route path={props.path} element={<ExportWinsTabNav />} />
+        </Routes>
+      </MemoryProvider>
+    )
+  }
 
   context('when rendering the breadcrumbs', () => {
     it('should render both Home and Rejected', () => {
-      cy.mount(<Component />)
+      cy.mount(
+        <Component
+          path="/exportwins/rejected"
+          initialEntries={['/exportwins/rejected']}
+        />
+      )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         'Export Wins': urls.companies.exportWins.index(),
@@ -35,6 +40,7 @@ describe('Export wins tab navigation', () => {
           }}
         />
       )
+
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         'Export Wins': urls.companies.exportWins.index(),
@@ -59,7 +65,12 @@ describe('Export wins tab navigation', () => {
 
   context('when rendering the title', () => {
     it('should render Export wins', () => {
-      cy.mount(<Component />)
+      cy.mount(
+        <Component
+          path="/exportwins/rejected"
+          initialEntries={['/exportwins/rejected']}
+        />
+      )
       cy.get('[data-test="heading"]').should('have.text', 'Export wins')
     })
   })

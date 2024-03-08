@@ -1,6 +1,6 @@
 import React from 'react'
-import { capitalize } from 'lodash'
 import { useLocation } from 'react-router-dom-v5-compat'
+import { capitalize } from 'lodash'
 
 import { DefaultLayout } from '../../../components'
 import TabNav from '../../../components/TabNav'
