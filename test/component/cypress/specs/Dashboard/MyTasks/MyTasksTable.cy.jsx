@@ -1,6 +1,4 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { CompatRouter } from 'react-router-dom-v5-compat'
 
 import {
   assertGovReactTable,
@@ -19,11 +17,7 @@ import { STATUS } from '../../../../../../src/client/modules/Tasks/TaskForm/cons
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
-      <BrowserRouter>
-        <CompatRouter>
-          <MyTasksContent {...props} />
-        </CompatRouter>
-      </BrowserRouter>
+      <MyTasksContent {...props} />
     </Provider>
   )
   // Create 3 tasks of which one is Archived
@@ -104,11 +98,7 @@ describe('My Tasks on the Dashboard', () => {
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
-      <BrowserRouter>
-        <CompatRouter>
-          <MyTasksContent {...props} />
-        </CompatRouter>
-      </BrowserRouter>
+      <MyTasksContent {...props} />
     </Provider>
   )
   const myTasks = {
@@ -139,11 +129,7 @@ describe('My Tasks on the Dashboard', () => {
 describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
-      <BrowserRouter>
-        <CompatRouter>
-          <MyTasksContent {...props} />
-        </CompatRouter>
-      </BrowserRouter>
+      <MyTasksContent {...props} />
     </Provider>
   )
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
