@@ -75,9 +75,9 @@ const groupBreakdowns = (breakdowns) => {
   }
 }
 
-const Detail = (props) => {
+const Detail = () => {
   const { winId } = useParams()
-  const success = props[winId]?.success
+  const success = winId?.success
   const flashMessage = success && { success: ['Successfully sent'] }
 
   return (

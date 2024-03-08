@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { CompatRouter } from 'react-router-dom-v5-compat'
 
 import {
   assertGovReactTable,
@@ -19,7 +20,9 @@ describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
       <BrowserRouter>
-        <MyTasksContent {...props} />
+        <CompatRouter>
+          <MyTasksContent {...props} />
+        </CompatRouter>
       </BrowserRouter>
     </Provider>
   )
@@ -102,7 +105,9 @@ describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
       <BrowserRouter>
-        <MyTasksContent {...props} />
+        <CompatRouter>
+          <MyTasksContent {...props} />
+        </CompatRouter>
       </BrowserRouter>
     </Provider>
   )
@@ -135,7 +140,9 @@ describe('My Tasks on the Dashboard', () => {
   const Component = (props) => (
     <Provider>
       <BrowserRouter>
-        <MyTasksContent {...props} />
+        <CompatRouter>
+          <MyTasksContent {...props} />
+        </CompatRouter>
       </BrowserRouter>
     </Provider>
   )

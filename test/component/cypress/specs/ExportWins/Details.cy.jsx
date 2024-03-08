@@ -65,7 +65,7 @@ describe('ExportWins/Details', () => {
       resetTasks={true}
       tasks={{ 'Export Win': () => exportWinAPIResponse }}
     >
-      <Details match={{ params: { winId: EXPORT_WIN.id } }} />
+      <Details winId={EXPORT_WIN.id} />
     </DataHubProvider>
   )
 
