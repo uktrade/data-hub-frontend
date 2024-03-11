@@ -109,9 +109,7 @@ export const transformExportProjectForForm = (exportProject) => {
     // Customer details
     // The exporter experience field is optional when adding an Export Project
     ...(exportProject.exporter_experience && {
-      export_experience: [
-        idNameToValueLabel(exportProject.exporter_experience),
-      ],
+      export_experience: idNameToValueLabel(exportProject.exporter_experience),
     }),
     company_contacts:
       exportProject.contacts.length === 1
