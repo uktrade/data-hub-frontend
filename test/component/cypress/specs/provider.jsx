@@ -40,6 +40,10 @@ export const dispatchResetAction = () => store.dispatch({ type: 'RESET' })
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
+/*
+ * For component testing where a component relies on useLocation, useNavigation
+ * hooks or other similar router hooks. This is due to changes in react router v6.
+ */
 export const MemoryProvider = ({
   children,
   tasks = appTasks,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
 import { GridCol, GridRow } from 'govuk-react'
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate, useParams } from 'react-router-dom-v5-compat'
 
 import urls from '../../../../lib/urls'
 import {
@@ -20,6 +20,7 @@ import {
   state2props,
   TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES,
 } from './state'
+import { EVENT_ATTENDEES_MAPPING } from '../../../../apps/companies/apps/activity-feed/constants'
 import { EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
@@ -29,11 +30,16 @@ import { ATTENDEES_SORT_OPTIONS } from './constants'
 
 const activityListSize = 20
 
+const mapUrlSlugToRegistrationStatus = (urlSlug) => {
+  const status = Object.entries(EVENT_ATTENDEES_MAPPING).find(
+    ([, value]) => value.urlSlug == urlSlug
+  )
+  return Array.isArray(status) ? status[0] : null
+}
+
 const EventAventriRegistrationStatus = ({
   name,
-  aventriEventId,
   aventriAttendees,
-  registrationStatus,
   registrationStatusCounts,
   defaultQueryParams = {
     page: 1,
@@ -46,6 +52,19 @@ const EventAventriRegistrationStatus = ({
   itemsPerPage = activityListSize,
   maxItemsToPaginate = 10000,
 }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const qsParams = qs.parse(location.search.slice(1))
+
+  if (isEmpty(qsParams)) {
+    navigate({
+      search: qs.stringify({
+        ...defaultQueryParams,
+      }),
+    })
+  }
+
   const breadcrumbs = [
     {
       link: urls.dashboard.index(),
@@ -62,17 +81,11 @@ const EventAventriRegistrationStatus = ({
   const totalPages = Math.ceil(
     Math.min(totalAttendees, maxItemsToPaginate) / itemsPerPage
   )
-  const navigate = useNavigate()
-  const location = useLocation()
-  const qsParams = qs.parse(location.search.slice(1))
 
-  if (isEmpty(qsParams)) {
-    navigate({
-      search: qs.stringify({
-        ...defaultQueryParams,
-      }),
-    })
-  }
+  const params = useParams()
+  const aventriEventId = params.aventriEventId
+  const registrationStatus = mapUrlSlugToRegistrationStatus(params.status)
+
   return (
     <DefaultLayout
       heading={name}
