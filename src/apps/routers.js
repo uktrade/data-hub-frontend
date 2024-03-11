@@ -33,6 +33,7 @@ const reactRoutes = [
   '/exportwins/sent',
   '/exportwins/rejected',
   '/exportwins/:winId/details',
+  '/exportwins/:winId/success',
   '/exportwins/:winId/customer-feedback',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',

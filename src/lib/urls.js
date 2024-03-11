@@ -230,6 +230,7 @@ module.exports = {
         '/companies',
         '/:companyId/export/:exportId/exportwins/create'
       ),
+      success: url('/exportwins', '/:winId/success'),
       customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {
