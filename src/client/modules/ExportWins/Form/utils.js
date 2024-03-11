@@ -120,6 +120,9 @@ export const getTwelveMonthsAgo = () => {
   return new Date(today.getFullYear() - 1, today.getMonth(), 1)
 }
 
+export const getRandomDate = ({ start, end }) =>
+  new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+
 export const isDateWithinLastTwelveMonths = (date) => {
   // Business date logic
   const today = new Date()

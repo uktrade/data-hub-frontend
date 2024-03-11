@@ -1,10 +1,14 @@
 import { omit } from 'lodash'
 
-import { getTwelveMonthsAgo } from '../../../../../src/client/modules/ExportWins/Form/utils'
+import {
+  getRandomDate,
+  getTwelveMonthsAgo,
+} from '../../../../../src/client/modules/ExportWins/Form/utils'
 import { winTypeId } from '../../../../../src/client/modules/ExportWins/Form/constants'
 import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
 import { contactFaker } from '../../fakers/contacts'
+import { exportFaker } from '../../fakers/export'
 import urls from '../../../../../src/lib/urls'
 import {
   assertUrl,
@@ -18,7 +22,9 @@ import {
   assertFieldTypeahead,
   assertFieldDateShort,
   assertFieldCheckboxes,
+  assertTypeaheadValues,
   assertFieldRadiosWithLegend,
+  assertSingleTypeaheadOptionSelected,
 } from '../../support/assertions'
 
 const company = companyFaker({
@@ -1109,6 +1115,115 @@ describe('Adding an export win', () => {
           company: company.id,
           adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
         })
+      })
+    })
+  })
+
+  context('Pre-propulating the form with an export project', () => {
+    const { officerDetails, customerDetails, winDetails } = formFields
+
+    const today = new Date()
+    const exportProject = exportFaker()
+    const create = urls.companies.exportWins.createFromExport(
+      company.id,
+      exportProject.id
+    )
+
+    const officerDetailsStep = create + '?step=officer_details'
+    const customerDetailsStep = create + '?step=customer_details'
+    const winDetailsStep = create + '?step=win_details'
+
+    const interceptExportApiCall = (overrides = {}) => {
+      cy.intercept('GET', `/api-proxy/v4/export/${exportProject.id}`, {
+        ...exportProject,
+        ...overrides,
+      })
+    }
+
+    beforeEach(() => {
+      cy.setUserFeatureGroups(['export-wins'])
+      interceptExportApiCall()
+    })
+
+    it('should pre-populate the lead officer field', () => {
+      cy.visit(officerDetailsStep)
+      cy.get(officerDetails.leadOfficer)
+        .find('input')
+        .should('have.value', exportProject.owner.name)
+    })
+
+    it('should pre-populate the team members field', () => {
+      cy.visit(officerDetailsStep)
+      assertTypeaheadValues(
+        '[data-test="field-team_members"]',
+        exportProject.team_members.map(({ name }) => name)
+      )
+    })
+
+    it('should pre-populate the exporter experience field', () => {
+      cy.visit(customerDetailsStep)
+      assertSingleTypeaheadOptionSelected({
+        element: customerDetails.experience,
+        expectedOption: exportProject.exporter_experience.name,
+      })
+    })
+
+    it('should pre-populate the export destination country', () => {
+      cy.visit(winDetailsStep)
+      assertSingleTypeaheadOptionSelected({
+        element: winDetails.country,
+        expectedOption: exportProject.destination_country.name,
+      })
+    })
+
+    it('should not pre-populate the win date when the estimated win date is greater than twelve months ago', () => {
+      const thirteenMonthsAgo = new Date(
+        today.getFullYear() - 1,
+        today.getMonth() - 1,
+        1
+      )
+
+      interceptExportApiCall({
+        estimated_win_date: thirteenMonthsAgo.toISOString(),
+      })
+
+      cy.visit(winDetailsStep)
+      cy.get(winDetails.dateMonth).should('have.value', '')
+      cy.get(winDetails.dateYear).should('have.value', '')
+    })
+
+    it('should pre-populate the win date when the estimated date is less than or equal to 12 months ago', () => {
+      const date = getRandomDate({
+        start: twelveMonthsAgo,
+        end: today,
+      })
+
+      interceptExportApiCall({
+        estimated_win_date: date.toISOString(),
+      })
+
+      cy.visit(winDetailsStep)
+      cy.get(winDetails.dateYear).should('have.value', date.getFullYear())
+      cy.get(winDetails.dateMonth).should('have.value', date.getMonth() + 1)
+    })
+
+    it('should not pre-populate the win date when the estimated date is in the future', () => {
+      const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1)
+
+      interceptExportApiCall({
+        estimated_win_date: nextMonth.toISOString(),
+      })
+
+      cy.visit(winDetailsStep)
+      cy.get(winDetails.dateYear).should('have.value', '')
+      cy.get(winDetails.dateMonth).should('have.value', '')
+    })
+
+    it('should pre-populate the sector', () => {
+      cy.visit(winDetailsStep)
+      assertSingleTypeaheadOptionSelected({
+        element: winDetails.sector,
+        expectedOption: exportProject.sector.name,
       })
     })
   })
