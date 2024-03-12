@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 /**
  * Generate fake data for a single export win.
  */
-export const exportWinsFaker = () => ({
+export const exportWinsFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   adviser: {
     id: faker.string.uuid(),
@@ -28,4 +28,5 @@ export const exportWinsFaker = () => ({
   customer_response: {
     responded_on: faker.date.anytime().toISOString(),
   },
+  ...overrides,
 })
