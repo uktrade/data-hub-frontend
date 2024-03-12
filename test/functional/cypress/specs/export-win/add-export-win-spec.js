@@ -672,7 +672,7 @@ describe('Adding an export win', () => {
       assertFieldCheckboxes({
         element: winDetails.goodsVsServices,
         legend: 'What does the value relate to?',
-        hint: 'Select goods or services',
+        hint: 'Select all that apply.',
         options: [
           {
             label: 'Goods',

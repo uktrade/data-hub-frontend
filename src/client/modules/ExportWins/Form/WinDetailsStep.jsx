@@ -200,7 +200,7 @@ const WinDetailsStep = () => {
       <FieldCheckboxes
         name="goods_vs_services"
         legend="What does the value relate to?"
-        hint="Select goods or services"
+        hint="Select all that apply."
         required="Select at least one option"
         options={goodsServicesOptions}
       />
