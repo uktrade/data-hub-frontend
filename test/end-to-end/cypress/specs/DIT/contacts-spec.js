@@ -78,12 +78,16 @@ describe('Contacts', () => {
       `A contact with this email already exists at ${COMPANY_NAME}.`
     ).should('exist')
 
+    cy.contains('button', 'Dismiss').click()
+
     // Clicking again should not be successful
     cy.clickSubmitButton('Add contact')
     cy.contains('You have successfully added a new contact').should('not.exist')
     cy.contains(
       `A contact with this email already exists at ${COMPANY_NAME}.`
     ).should('exist')
+
+    cy.contains('button', 'Dismiss').click()
 
     cy.get('[name="email"]').focus().clear().type(EMAIL_2)
     // Chaging the email should succeed
