@@ -4,7 +4,6 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
-import WarningText from '@govuk-react/warning-text'
 import { useParams } from 'react-router-dom'
 
 import { SummaryTable } from '../../../components'
@@ -81,11 +80,6 @@ const ExportsIndex = () => {
                 {buildExportPotentialLastModified(company)}
               </SummaryTable.Row>
             </SummaryTable>
-
-            <WarningText>
-              The export potential value is unavailable. This is because the
-              previous values were out of date. We are working to fix this.
-            </WarningText>
 
             <Details summary="What is export potential">
               The export potential score is a prediction of a company's
