@@ -3,8 +3,8 @@ import React from 'react'
 import DefaultLayout from '../Layout/DefaultLayout'
 
 const AccessDenied = ({ breadcrumbs }) => (
-  // FIXME: This shouldn't DefaultLayout as it can appear anywhere in a page in which case
-  // it completely breaks the layout.
+  // FIXME: This shouldn't use DefaultLayout as it can appear anywhere in a page
+  // and it completely breaks the layout.
   <DefaultLayout
     heading="You don't have permission to view this page"
     pageTitle="Access denied"
