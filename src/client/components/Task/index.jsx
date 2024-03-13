@@ -52,7 +52,7 @@ const startOnRenderPropTypes = {
  * @typedef Task
  * @property {'progress' | 'error'} status - The current status of the task
  * @property {Boolean} progress - Whether the task is in progress
- * @property {Boolean} isError - Whether the task is in error state
+ * @property {Boolean} hasError - Whether the task is in error state
  * @property {(name, id, StartOptions) => void} start - Starts a task.
  * @property {any} [payload=undefined] - The value of the payload with which the task was started.
  * @property {any} [error=undefined] - The value with wich the task rejected
@@ -149,7 +149,7 @@ const Task = connect(
     return {
       ...taskState,
       progress: taskState.status === 'progress',
-      isError: taskState.status === 'error',
+      hasError: taskState.status === 'error',
       start: (options) => start(name, id, options),
       cancel: () => cancel(name, id),
       retry: () => start(name, id, taskState),
@@ -246,7 +246,7 @@ Task.Status = ({
         start,
         status,
         progress,
-        isError,
+        hasError,
         payload,
         errorMessage,
         onSuccessDispatch,
@@ -269,7 +269,7 @@ Task.Status = ({
           {!progressOverlay &&
             progress &&
             renderProgress({ message: progressMessage, noun })}
-          {isError &&
+          {hasError &&
             // FIXME: This is shouldn't be done here and it shouldn't be done this way
             (errorMessage ===
             'You do not have permission to perform this action.' ? (

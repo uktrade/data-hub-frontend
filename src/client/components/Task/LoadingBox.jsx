@@ -50,7 +50,7 @@ export default ({ name, id, when, children, startOnRender, ...props }) => (
             effect={() => startOnRender && task.start(startOnRender)}
           />
           <StyledContentWrapper>
-            {task.isError ? (
+            {task.hasError ? (
               <>
                 {children}
                 <StyledErrorOverlay>

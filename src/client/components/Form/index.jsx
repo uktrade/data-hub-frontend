@@ -324,9 +324,9 @@ const _Form = ({
                               }
                             />
                             <Effect
-                              dependencyList={[submissionTask.isError]}
+                              dependencyList={[submissionTask.hasError]}
                               effect={() => {
-                                submissionTask.isError &&
+                                submissionTask.hasError &&
                                   analytics('Submission request error', {
                                     error: submissionTask.errorMessage,
                                   })
