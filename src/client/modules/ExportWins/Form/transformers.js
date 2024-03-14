@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 
 import { convertDateToFieldDateObject } from '../../../../client/utils/date'
 import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
-import { sumWinTypeYearlyValues, isDateWithinLastTwelveMonths } from './utils'
+import { sumWinTypeYearlyValues, isWithinLastTwelveMonths } from './utils'
 import { idNameToValueLabel } from '../../../../client/utils'
 import {
   winTypeId,
@@ -116,7 +116,7 @@ export const transformExportProjectForForm = (exportProject) => {
         ? transformCompanyContact(exportProject.contacts[0])
         : null, // Get the user to choose the contact
     // Win Details
-    date: isDateWithinLastTwelveMonths(date) && {
+    date: isWithinLastTwelveMonths(date) && {
       year: String(date.getFullYear()),
       month: String(date.getMonth() + 1),
     },

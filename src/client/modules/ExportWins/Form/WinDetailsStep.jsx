@@ -28,8 +28,8 @@ import {
 } from './constants'
 import {
   formatValue,
-  getTwelveMonthsAgo,
   sumAllWinTypeYearlyValues,
+  getDateTwelveMonthsAgoWithFirstDay,
 } from './utils'
 
 const MAX_WORDS = 100
@@ -46,7 +46,7 @@ const StyledExportTotal = styled('p')({
 
 const WinDetailsStep = () => {
   const { values } = useFormContext()
-  const twelveMonthsAgo = getTwelveMonthsAgo()
+  const twelveMonthsAgo = getDateTwelveMonthsAgoWithFirstDay()
   const month = twelveMonthsAgo.getMonth() + 1
   const year = twelveMonthsAgo.getFullYear()
 
