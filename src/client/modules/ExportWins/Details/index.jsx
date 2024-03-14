@@ -159,6 +159,11 @@ const Detail = (props) => {
                   {exportWin &&
                     (exportWin.customerResponse.agreeWithWin ? 'Yes' : 'No')}
                 </SummaryTable.Row>
+                {exportWin?.customerResponse?.agreeWithWin && (
+                  <SummaryTable.Row heading="What value do you estimate you would have achieved without our support">
+                    {exportWin?.customerResponse.ourSupport?.name}
+                  </SummaryTable.Row>
+                )}
               </Summary>
               {exportWin &&
                 exportWin.customerResponse.agreeWithWin === WIN_STATUS.SENT && (
