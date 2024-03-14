@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 import { GridCol, GridRow, H2, Link, Table } from 'govuk-react'
 import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 import { useReactToPrint } from 'react-to-print'

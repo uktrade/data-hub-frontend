@@ -4,7 +4,7 @@ import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 import InsetText from '@govuk-react/inset-text'
 
 import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'

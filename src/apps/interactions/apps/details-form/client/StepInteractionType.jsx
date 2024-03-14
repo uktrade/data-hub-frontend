@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom-v5-compat'
+import { useLocation } from 'react-router-dom'
 import InsetText from '@govuk-react/inset-text'
 import { omitBy, isUndefined } from 'lodash'
 

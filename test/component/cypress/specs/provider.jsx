@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, MemoryRouter } from 'react-router-dom'
-import { CompatRouter } from 'react-router-dom-v5-compat'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -52,9 +51,7 @@ export const MemoryProvider = ({
 
   return (
     <Provider store={store}>
-      <MemoryRouter initialEntries={initialEntries}>
-        <CompatRouter>{children}</CompatRouter>
-      </MemoryRouter>
+      <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
     </Provider>
   )
 }
@@ -64,9 +61,7 @@ export default ({ children, tasks = appTasks, resetTasks = false }) => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <CompatRouter>{children}</CompatRouter>
-      </BrowserRouter>
+      <BrowserRouter>{children}</BrowserRouter>
     </Provider>
   )
 }

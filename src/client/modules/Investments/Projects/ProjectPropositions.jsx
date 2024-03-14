@@ -4,7 +4,7 @@ import { H2, Button, Link } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
 import { get } from 'lodash'
-import { useNavigate, useLocation, useParams } from 'react-router-dom-v5-compat'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import { CollectionList } from '../../../components'
 import { PropositionCollectionResource } from '../../../components/Resource'

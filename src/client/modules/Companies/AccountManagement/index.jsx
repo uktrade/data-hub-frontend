@@ -4,7 +4,7 @@ import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { Metadata, NewWindowLink } from '../../../components'

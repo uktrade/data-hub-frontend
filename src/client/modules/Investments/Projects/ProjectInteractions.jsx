@@ -2,7 +2,7 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
-import { useNavigate, useLocation, useParams } from 'react-router-dom-v5-compat'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 
 import { CollectionList } from '../../../components'
 import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'

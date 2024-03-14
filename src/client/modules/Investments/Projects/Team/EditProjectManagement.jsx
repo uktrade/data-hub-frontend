@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from '@govuk-react/link'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import {
   Form,

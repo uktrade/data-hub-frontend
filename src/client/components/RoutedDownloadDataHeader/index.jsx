@@ -2,7 +2,7 @@ import React from 'react'
 import qs from 'qs'
 import PropTypes from 'prop-types'
 import { isArray } from 'lodash'
-import { useLocation } from 'react-router-dom-v5-compat'
+import { useLocation } from 'react-router-dom'
 
 import DownloadDataHeader from '../DownloadDataHeader'
 

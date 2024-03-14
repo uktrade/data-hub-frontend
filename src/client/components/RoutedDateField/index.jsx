@@ -1,7 +1,7 @@
 import React from 'react'
 import qs from 'qs'
 import { get } from 'lodash'
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import DateField from '../DateField'
 

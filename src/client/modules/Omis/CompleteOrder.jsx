@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 import { Details, Table } from 'govuk-react'
 
 import { FieldCheckboxes, FieldInput, Form, FormLayout } from '../../components'

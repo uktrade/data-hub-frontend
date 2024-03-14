@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams, Link as ReactRouterLink } from 'react-router-dom'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'

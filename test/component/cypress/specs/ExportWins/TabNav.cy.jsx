@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom-v5-compat'
+import { Route, Routes } from 'react-router-dom'
 
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
 import { assertLocalNav } from '../../../../end-to-end/cypress/support/assertions'

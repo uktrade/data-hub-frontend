@@ -6,8 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 import { createReduxHistoryContext } from 'redux-first-history'
 import queryString from 'qs'
-import { Router } from 'react-router-dom'
-import { CompatRouter } from 'react-router-dom-v5-compat'
+import { BrowserRouter } from 'react-router-dom'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
@@ -25,8 +24,9 @@ const browserHistory = createBrowserHistory({
   basename: queryString.stringify(new URL(document.baseURI).pathname),
 })
 
-const { createReduxHistory, routerMiddleware, routerReducer } =
-  createReduxHistoryContext({ history: browserHistory })
+const { routerMiddleware, routerReducer } = createReduxHistoryContext({
+  history: browserHistory,
+})
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -46,8 +46,6 @@ const store = configureStore({
     router: routerReducer,
   },
 })
-
-const history = createReduxHistory(store)
 
 const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
   sagaMiddleware.run(rootSaga(tasks))
@@ -75,9 +73,7 @@ const DataHubProvider = ({ tasks, children }) => {
 
   return (
     <Provider store={store}>
-      <Router history={history}>
-        <CompatRouter>{children}</CompatRouter>
-      </Router>
+      <BrowserRouter>{children}</BrowserRouter>
     </Provider>
   )
 }

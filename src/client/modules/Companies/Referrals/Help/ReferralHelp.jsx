@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import { DefaultLayout, NewWindowLink } from '../../../../components'
 import urls from '../../../../../lib/urls'

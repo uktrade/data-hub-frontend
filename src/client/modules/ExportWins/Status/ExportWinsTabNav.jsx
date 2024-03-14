@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom-v5-compat'
+import { useLocation } from 'react-router-dom'
 import { capitalize } from 'lodash'
 
 import { DefaultLayout } from '../../../components'

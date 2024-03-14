@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
-import { useNavigate, useLocation } from 'react-router-dom-v5-compat'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const StyledButtonLink = styled(ButtonLink)`
   font-size: ${FONT_SIZE.SIZE_16};
