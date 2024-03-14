@@ -47,7 +47,7 @@ services:
       driver: none
 
   postgres:
-    image: postgres:12
+    image: postgres:16
     ports:
       - "5432:5432"
     environment:
@@ -58,7 +58,7 @@ services:
       driver: none
 
   opensearch:
-    image: opensearchproject/opensearch:1.2.4
+    image: opensearchproject/opensearch:2.11.0
     ports:
       - '9200:9200'
       - '9300:9300'
@@ -75,7 +75,7 @@ services:
   activity-feed-reverseproxy:
     build: ./test/end-to-end/proxy
     ports:
-        - 8081:8081
+      - 8081:8081
     depends_on:
       - activity-feed
     logging:
