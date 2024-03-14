@@ -12,7 +12,7 @@ docker-e2e = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e
 docker-dev = COMPOSE_HTTP_TIMEOUT=300 docker-compose -p dh -f docker-compose.base.yml -f docker-compose.frontend.dev.yml
 docker-storybook = docker-compose -p dh -f docker-compose.storybook.yml
 
-wait-for-frontend = dockerize -wait tcp://localhost:3000/healthcheck -timeout 5m -wait-retry-interval 5s
+wait-for-frontend = dockerize -wait tcp://localhost:3000/pingdom -timeout 5m -wait-retry-interval 5s
 wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-retry-interval 5s
 wait-for-redis = dockerize -wait tcp://redis:6379 -timeout 5m
 
