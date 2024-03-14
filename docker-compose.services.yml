@@ -41,7 +41,7 @@ services:
       python -Wd manage.py runserver 0.0.0.0:8001"
 
   lbdb:
-    image: postgres:9.6.9-alpine
+    image: postgres:16
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
