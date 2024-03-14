@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Details, Paragraph } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import urls from '../../../../../../lib/urls'
 import {

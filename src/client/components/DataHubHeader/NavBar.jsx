@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useLocation, NavLink } from 'react-router-dom-v5-compat'
+import { useLocation, NavLink } from 'react-router-dom'
 
 import styled from 'styled-components'
 import {

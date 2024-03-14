@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { TASK_SAVE_TASK_DETAILS, state2props } from './state'

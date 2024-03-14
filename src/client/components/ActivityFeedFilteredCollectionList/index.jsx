@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import Task from '../Task'
 import CollectionSort from '../CollectionList/CollectionSort'

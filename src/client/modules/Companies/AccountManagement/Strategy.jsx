@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import { TASK_SAVE_STRATEGY } from './state'
 import { FORM_LAYOUT } from '../../../../common/constants'

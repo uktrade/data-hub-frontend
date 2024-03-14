@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Input from '@govuk-react/input'
 import PropTypes from 'prop-types'
 import qs from 'qs'
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import multiInstance from '../../utils/multiinstance'
 import { useTextCaretPosition } from './useTextCaretPosition'

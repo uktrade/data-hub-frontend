@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams, useLocation } from 'react-router-dom-v5-compat'
+import { useParams, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { DefaultLayout, Main } from '../../../components'

@@ -1,7 +1,7 @@
 import React from 'react'
 import qs from 'qs'
 import { get } from 'lodash'
-import { useNavigate, useLocation } from 'react-router-dom-v5-compat'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import Select from '../Select'
 

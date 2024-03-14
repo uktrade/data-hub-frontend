@@ -5,7 +5,7 @@ import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import InsetText from '@govuk-react/inset-text'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import { CollectionList, Metadata } from '../../../../components'
 import { state2props } from './state'

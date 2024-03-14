@@ -1,11 +1,7 @@
 import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import {
-  useNavigate,
-  useSearchParams,
-  useParams,
-} from 'react-router-dom-v5-compat'
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'
@@ -90,10 +86,11 @@ const _Form = ({
   goToStep,
   ...props
 }) => {
+  const location = useLocation()
   const navigate = useNavigate()
-  const params = useParams()
-
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const qsParams = qs.parse(location.search.slice(1))
 
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)
@@ -103,16 +100,19 @@ const _Form = ({
   }, [scrollToTopOnStep, props.currentStep])
   useEffect(() => {
     if (showStepInUrl) {
-      if (params.step) {
-        goToStep(params.step)
+      if (qsParams.step) {
+        goToStep(qsParams.step)
       } else {
-        searchParams.set(...qs.stringify(params))
-
-        searchParams.set('step', steps[initialStepIndex])
+        if (Object.keys(qsParams).length !== 0) {
+          searchParams.set(qs.stringify(...qsParams))
+        }
+        if (steps[initialStepIndex]) {
+          searchParams.set('step', steps[initialStepIndex])
+        }
         setSearchParams(searchParams, { replace: true })
       }
     }
-  }, [showStepInUrl, params.step, steps])
+  }, [showStepInUrl, qsParams.step, steps])
 
   // Update form errors after getting a response from API
   useEffect(() => {
@@ -191,10 +191,11 @@ const _Form = ({
                       currentStep: props.currentStep,
                     })
                     if (showStepInUrl) {
-                      searchParams.set(...qs.stringify(params))
-                      searchParams.set('step', steps[props.currentStep - 1])
-                      setSearchParams(searchParams, {
-                        replace: true,
+                      navigate({
+                        search: qs.stringify({
+                          ...qsParams,
+                          step: steps[props.currentStep - 1],
+                        }),
                       })
                     }
                   }}
@@ -255,14 +256,11 @@ const _Form = ({
                                     currentStep: props.currentStep,
                                   })
                                   if (showStepInUrl) {
-                                    searchParams.set(...qs.stringify(params))
-
-                                    searchParams.set(
-                                      'step',
-                                      steps[props.currentStep + 1]
-                                    )
-                                    setSearchParams(searchParams, {
-                                      replace: true,
+                                    navigate({
+                                      search: qs.stringify({
+                                        ...qsParams,
+                                        step: steps[props.currentStep + 1],
+                                      }),
                                     })
                                   }
                                 }

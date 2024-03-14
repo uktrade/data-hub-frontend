@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, Navigate } from 'react-router-dom-v5-compat'
+import { useParams, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'

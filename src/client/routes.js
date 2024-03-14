@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRoutes } from 'react-router-dom-v5-compat'
+import { useRoutes } from 'react-router-dom'
 
 import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'

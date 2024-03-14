@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { CompatRouter } from 'react-router-dom-v5-compat'
 import { isString } from 'lodash'
 
 import RoutedPagination from '../../../../../src/client/components/Pagination/RoutedPagination'
@@ -35,11 +34,9 @@ const assertPageQueryParam = (queryParamValue) =>
 
 const Component = (props) => (
   <BrowserRouter>
-    <CompatRouter>
-      <div style={{ height: '1100px' }}>
-        <RoutedPagination {...props} />
-      </div>
-    </CompatRouter>
+    <div style={{ height: '1100px' }}>
+      <RoutedPagination {...props} />
+    </div>
   </BrowserRouter>
 )
 

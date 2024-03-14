@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, H2, InsetText, Link, Table } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import {
   AdviserResource,

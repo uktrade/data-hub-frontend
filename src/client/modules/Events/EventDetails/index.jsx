@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { useParams, Link } from 'react-router-dom-v5-compat'
+import { useParams, Link } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'

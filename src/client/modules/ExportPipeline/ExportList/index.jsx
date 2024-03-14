@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom-v5-compat'
+import { useNavigate } from 'react-router-dom'
 import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 import { UnorderedList, ListItem, H2, Button, Link } from 'govuk-react'
 import styled from 'styled-components'

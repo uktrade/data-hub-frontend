@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import { ERROR_COLOUR } from '../../../../utils/colours'
 import Task from '../../../../components/Task'

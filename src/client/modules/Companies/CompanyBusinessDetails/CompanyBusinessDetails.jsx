@@ -6,7 +6,7 @@ import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { SPACING_POINTS } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom-v5-compat'
+import { useParams } from 'react-router-dom'
 
 import SectionAbout from './SectionAbout'
 import SectionAddresses from './SectionAddresses'

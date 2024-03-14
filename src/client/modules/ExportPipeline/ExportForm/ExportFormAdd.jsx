@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { useLocation } from 'react-router-dom-v5-compat'
+import { useLocation } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { COMPANY_LOADED } from '../../../actions'
@@ -80,4 +79,4 @@ const ExportFormAdd = ({ exportItem }) => {
   )
 }
 
-export default withRouter(connect(state2props)(ExportFormAdd))
+export default connect(state2props)(ExportFormAdd)

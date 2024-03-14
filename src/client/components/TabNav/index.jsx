@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { get } from 'lodash'
 import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
 import { GridCol, GridRow } from 'govuk-react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom-v5-compat'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import {
