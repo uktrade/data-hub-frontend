@@ -66,7 +66,7 @@ const FlashMessages = ({
     getFlashMessages()
     return () => clearFlashMessages()
   }, [])
-  return !isEmpty(flashMessages) ? (
+  return isEmpty(flashMessages) ? null : (
     <UnorderedList listStyleType="none" data-test="flash">
       {Object.entries(flashMessages).map(([type, messages]) => {
         /*
@@ -82,20 +82,30 @@ const FlashMessages = ({
                 <li key={body}>
                   <StyledStatusMessage colour={messageColours[parts[0]]}>
                     <StyledHeading>{heading}</StyledHeading>
-                    <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
+                    {typeof body === 'string' ? (
+                      <StyledBody dangerouslySetInnerHTML={{ __html: body }} />
+                    ) : (
+                      <StyledBody>{body}</StyledBody>
+                    )}
                   </StyledStatusMessage>
                 </li>
               ))
             : messages.map((body, i) => (
                 <li key={i}>
                   <StyledStatusMessage colour={messageColours[type]}>
-                    <StyledMessage dangerouslySetInnerHTML={{ __html: body }} />
+                    {typeof body === 'string' ? (
+                      <StyledMessage
+                        dangerouslySetInnerHTML={{ __html: body }}
+                      />
+                    ) : (
+                      <StyledMessage>{body}</StyledMessage>
+                    )}
                   </StyledStatusMessage>
                 </li>
               ))
       })}
     </UnorderedList>
-  ) : null
+  )
 }
 
 const flashMessagePropTypes = {

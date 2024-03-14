@@ -150,6 +150,7 @@ export const urlTestExclusions = [
   { url: '/exportwins/sent/' },
   { url: '/exportwins/rejected/' },
   { url: '/exportwins/:winId/edit' },
+  { url: '/exportwins/:winId/success' },
   { url: '/exportwins/:winId/customer-feedback' },
   { url: '/companies/:companyId/export/:exportId/exportwins/create' },
 

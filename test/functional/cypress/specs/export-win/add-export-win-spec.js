@@ -9,6 +9,7 @@ import { clickContinueButton } from '../../support/actions'
 import { companyFaker } from '../../fakers/companies'
 import { contactFaker } from '../../fakers/contacts'
 import { exportFaker } from '../../fakers/export'
+import { exportWinsFaker } from '../../fakers/export-wins'
 import urls from '../../../../../src/lib/urls'
 import {
   assertUrl,
@@ -30,6 +31,13 @@ import {
 const company = companyFaker({
   name: 'Advanced Mini Devices',
 })
+
+const exportWin = {
+  ...exportWinsFaker(),
+  country: { name: 'Dubai' },
+  name_of_export: 'Rolls Reece Cars',
+  company_contacts: [{ email: 'jeff.marks@test.com' }],
+}
 
 const twelveMonthsAgo = getTwelveMonthsAgo()
 const month = twelveMonthsAgo.getMonth() + 1
@@ -105,6 +113,13 @@ const formFields = {
     personallyConfirmed: '[data-test="field-is_personally_confirmed"]',
     lineManagerConfirmed: '[data-test="field-is_line_manager_confirmed"]',
   },
+  successPage: {
+    flash: '[data-test="flash"]',
+    heading: '[data-test="heading"]',
+    review: '[data-test="review"]',
+    email: '[data-test="email"]',
+    exportWinsLink: '[data-test="export-wins-link"]',
+  },
 }
 
 const clickContinueAndAssertUrl = (url) => {
@@ -163,6 +178,12 @@ describe('Adding an export win', () => {
     cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
       { id: '600', name: 'Afterburner' },
     ])
+    cy.intercept('POST', '/api-proxy/v4/export-win', {
+      statusCode: 201,
+    }).as('apiPostExportWin')
+    cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
+      'apiGetExportWin'
+    )
   })
 
   context('Breadcrumbs', () => {
@@ -652,7 +673,7 @@ describe('Adding an export win', () => {
       assertFieldCheckboxes({
         element: winDetails.goodsVsServices,
         legend: 'What does the value relate to?',
-        hint: 'Select goods or services',
+        hint: 'Select all that apply.',
         options: [
           {
             label: 'Goods',
@@ -1055,16 +1076,15 @@ describe('Adding an export win', () => {
       )
     })
 
-    it('should POST to the API and have the correct payload', () => {
+    it('should POST to the API and redirect to the success page', () => {
+      const successPageRegex = /\/exportwins\/[^/]+\/success/
+
       cy.get('[data-test="confirm-and-send-to-customer"]').should(
         'have.text',
         'Confirm and send to customer'
       )
-      cy.intercept('POST', '/api-proxy/v4/export-win', {
-        statusCode: 201,
-      }).as('apiRequest')
       cy.get('[data-test="confirm-and-send-to-customer"]').click()
-      cy.wait('@apiRequest').then(({ request }) => {
+      cy.wait('@apiPostExportWin').then(({ request }) => {
         expect(omit(request.body, '_csrf')).to.deep.equal({
           lead_officer: '100',
           team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
@@ -1116,6 +1136,34 @@ describe('Adding an export win', () => {
           adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
         })
       })
+      cy.location().should(({ pathname }) => {
+        expect(pathname).to.match(successPageRegex)
+      })
+    })
+
+    it('should render a success page', () => {
+      const { successPage } = formFields
+
+      cy.get(successPage.flash).should(
+        'have.text',
+        'The export win Rolls Reece Cars to Dubai has been sent to jeff.marks@test.com for review and confirmation.'
+      )
+
+      cy.get(successPage.heading).should('have.text', 'What happens next?')
+
+      cy.get(successPage.review).should(
+        'have.text',
+        'The customer will review the export win and have the option to provide feedback.'
+      )
+
+      cy.get(successPage.email).should(
+        'have.text',
+        'You will be sent an email once the customer has responded.'
+      )
+
+      cy.get(successPage.exportWinsLink)
+        .should('have.text', 'Export wins')
+        .should('have.attr', 'href', '/exportwins')
     })
   })
 
