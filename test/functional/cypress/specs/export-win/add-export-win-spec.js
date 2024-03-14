@@ -32,11 +32,12 @@ const company = companyFaker({
   name: 'Advanced Mini Devices',
 })
 
-const exportWin = exportWinsFaker({
+const exportWin = {
+  ...exportWinsFaker(),
   country: { name: 'Dubai' },
   name_of_export: 'Rolls Reece Cars',
   company_contacts: [{ email: 'jeff.marks@test.com' }],
-})
+}
 
 const twelveMonthsAgo = getTwelveMonthsAgo()
 const month = twelveMonthsAgo.getMonth() + 1
