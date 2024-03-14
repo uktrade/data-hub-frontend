@@ -99,7 +99,7 @@ describe('ExportWins/Review', () => {
 
     it("should render default error view if the review couldn't be loaded for", () => {
       const Provider = createTestProvider({
-        'Export Win Review': () => Promise.reject(),
+        'Export Win Review': () => Promise.reject({}),
       })
       cy.mount(
         <Provider>

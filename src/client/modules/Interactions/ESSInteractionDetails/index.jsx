@@ -45,6 +45,7 @@ const ESSInteractionDetails = ({
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >
+      {/* TODO: Use Resource */}
       <Task.Status
         name={TASK_GET_ESS_INTERACTION_DETAILS}
         id={ID}

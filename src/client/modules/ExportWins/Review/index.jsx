@@ -27,7 +27,7 @@ import ThankYou from './ThankYou'
 const FORM_ID = 'export-wins-customer-feedback'
 
 const NotFound = (props) =>
-  props.errorMessage?.httpStatusCode === 404 ? (
+  props.error?.httpStatusCode === 404 ? (
     <>
       <H4 as="h2">The link you used has expired</H4>
       <p>
