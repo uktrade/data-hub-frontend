@@ -295,7 +295,7 @@ Couldn't find tsconfig.json. tsconfig-paths will be skipped
   ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ Cypress:        12.17.4                                                                        │
   │ Browser:        Chrome 106 (headless)                                                          │
-  │ Node Version:   v18.15.0 (/usr/local/bin/node)                                                 │
+  │ Node Version:   v20.11.1 (/usr/local/bin/node)                                                 │
   │ Specs:          7 found (community-spec.js, company-spec.js, contact-spec.js, event-spec.js, i │
   │                 nteraction-spec.js, investment-spec.js, omis-spec.js)                          │
   │ Searched:       test/visual/cypress/specs/**/*.js                                              │
