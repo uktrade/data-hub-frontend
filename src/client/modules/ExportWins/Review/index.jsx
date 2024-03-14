@@ -1,7 +1,11 @@
 import _ from 'lodash'
 import React from 'react'
 import { H2, H4 } from 'govuk-react'
+import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
 import { Route, Switch } from 'react-router-dom'
+
+import { GREY_2 } from '../../../utils/colours'
 
 import Layout from './Layout'
 import {
@@ -25,6 +29,11 @@ import Err from '../../../components/Task/Error'
 import ThankYou from './ThankYou'
 
 const FORM_ID = 'export-wins-customer-feedback'
+
+const HR = styled.hr({
+  borderTop: `1px solid ${GREY_2}`,
+  margin: `${SPACING.SCALE_5} 0`,
+})
 
 const NotFound = (props) =>
   props.error?.httpStatusCode === 404 ? (
@@ -96,7 +105,7 @@ const Step1 = ({ win, name }) => (
       Thank you for taking the time to review our record of your recent export
       success.
     </p>
-    <hr />
+    <HR />
     <H2>Details of your recent success</H2>
     <Summary exportWin={win}>
       <SummaryTable.Row heading="Summary of support received">

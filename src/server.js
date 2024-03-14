@@ -113,11 +113,12 @@ app.use(
 )
 
 app.use(locals)
+
+app.use(require('./apps/__export-wins-review'))
+
 app.use(title())
 app.use(breadcrumbs.init())
 app.use(breadcrumbs.setHome())
-
-app.use(require('./apps/__export-wins-review'))
 
 app.use(redisCheck)
 app.use(sessionStore)
