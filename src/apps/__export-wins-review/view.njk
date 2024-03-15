@@ -1,18 +1,28 @@
-{% extends "_layouts/template.njk" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBT Export Wins</title>
+    <style>
+      html, body {
+        font-family: Arial,"Helvetica Neue",sans-serif;
+        font-size: 19px;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="react-app">
+      <noscript>Please enable JavaScript in your browser to see the content.</noscript>
+    </div>
 
-{% block header %}{% endblock %}
-{% block local_header %}{% endblock %}
-{% block bodyStart %}{% endblock %}
-{% block main %}{% endblock %}
-{% block footer %}{% endblock %}
-
-{% block bodyEnd %}
-  <div id="react-app">
-    <noscript>Please enable JavaScript in your browser to see the content.</noscript>
-  </div>
-
-  <!--[if gt IE 8]><!-->
-  <script src="{{ getAssetPath('app.js') }}"></script>
-  <script src="{{ getAssetPath('export-win-review.js') }}"></script>
-  <!--<![endif]-->
-{% endblock %}
+    <!--[if gt IE 8]><!-->
+    <script src="{{ getAssetPath('app.js') }}"></script>
+    <script src="{{ getAssetPath('export-win-review.js') }}"></script>
+    <!--<![endif]-->
+  </body>
+</html>
