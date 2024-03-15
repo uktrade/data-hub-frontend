@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Link } from 'govuk-react'
 import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
 
@@ -13,6 +14,12 @@ const toYesNo = (val) => {
   if (val === undefined || val === null) return
   return val ? 'Yes' : 'No'
 }
+
+const SummaryTable60PerCentHeader = styled(SummaryTable)({
+  '&& th': {
+    width: '60%',
+  },
+})
 
 const CustomerFeedback = ({
   match: {
@@ -43,7 +50,7 @@ const CustomerFeedback = ({
         const response = win?.customer_response || {}
         return (
           <>
-            <SummaryTable caption="1. To what extent did our support help in?">
+            <SummaryTable60PerCentHeader caption="1. To what extent did our support help in?">
               <SummaryTable.Row heading="Securing the win overall?">
                 {response.our_support?.name}
               </SummaryTable.Row>
@@ -65,8 +72,8 @@ const CustomerFeedback = ({
               <SummaryTable.Row heading="Overcoming a problem in the country (eg legal, regulatory, commercial)">
                 {response.overcame_problem?.name}
               </SummaryTable.Row>
-            </SummaryTable>
-            <SummaryTable caption="2. About this win">
+            </SummaryTable60PerCentHeader>
+            <SummaryTable60PerCentHeader caption="2. About this win">
               <SummaryTable.Row heading="The win involved a foreign government or state-owned enterprise (eg as an intermediary or facilitator)">
                 {toYesNo(response.involved_state_enterprise)}
               </SummaryTable.Row>
@@ -91,20 +98,20 @@ const CustomerFeedback = ({
               <SummaryTable.Row heading="Apart from this win, you already have plans to export in the next 12 months">
                 {toYesNo(response.has_explicit_export_plans)}
               </SummaryTable.Row>
-            </SummaryTable>
-            <SummaryTable caption="3. Your export experience">
+            </SummaryTable60PerCentHeader>
+            <SummaryTable60PerCentHeader caption="3. Your export experience">
               <SummaryTable.Row heading="Apart from this win, when did your company last export goods or services?">
                 {response.last_export?.name}
               </SummaryTable.Row>
-            </SummaryTable>
-            <SummaryTable caption="4. Marketing">
+            </SummaryTable60PerCentHeader>
+            <SummaryTable60PerCentHeader caption="4. Marketing">
               <SummaryTable.Row heading="Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?">
                 {toYesNo(response.case_study_willing)}
               </SummaryTable.Row>
               <SummaryTable.Row heading="How did you first hear about DBT(or it predecessor, DIT)?">
                 {response.marketing_source?.name}
               </SummaryTable.Row>
-            </SummaryTable>
+            </SummaryTable60PerCentHeader>
           </>
         )
       }}
