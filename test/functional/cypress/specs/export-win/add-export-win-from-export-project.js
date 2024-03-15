@@ -66,8 +66,10 @@ const exportProject = exportFaker({
   },
 })
 
-const createFromExport = urls.companies.exportWins.createFromExport
-const createFromExportUrl = createFromExport(company.id, exportProject.id)
+const createFromExportUrl = urls.companies.exportWins.createFromExport(
+  company.id,
+  exportProject.id
+)
 
 // All form step URLs (creating a win from an export project)
 const officerDetailsStep = `${createFromExportUrl}?step=officer_details`

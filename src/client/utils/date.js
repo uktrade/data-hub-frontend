@@ -14,7 +14,7 @@ const {
   differenceInCalendarDays,
   isSameDay,
   endOfToday,
-  startOfMonth,
+  startOfMonth: getStartOfMonth,
   endOfYesterday,
   format: formatFns,
   formatDistanceToNowStrict,
@@ -90,10 +90,6 @@ function isDateInFuture(date) {
 
 function parseDateISO(date) {
   return parseISO(date)
-}
-
-function getStartOfMonth(date) {
-  return startOfMonth(date)
 }
 
 /**

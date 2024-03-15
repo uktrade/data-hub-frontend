@@ -9,7 +9,7 @@ import {
   assertFieldError,
   assertErrorSummary,
   assertFieldTypeahead,
-  assertFieldRadiosWithLegend,
+  assertFieldRadiosStrict,
 } from '../../support/assertions'
 
 import { clickContinueButton } from '../../support/actions'
@@ -37,12 +37,10 @@ describe('Credit for this win', () => {
   })
 
   it('should render two unselected radio buttons', () => {
-    cy.get(creditForThisWin.radiosBtns).then((element) => {
-      assertFieldRadiosWithLegend({
-        element,
-        legend: 'Did any other teams help with this win?',
-        optionsCount: 2,
-      })
+    assertFieldRadiosStrict({
+      inputName: 'credit_for_win',
+      legend: 'Did any other teams help with this win?',
+      options: ['Yes', 'No'],
     })
     cy.get(creditForThisWin.radiosBtnYes)
       .should('not.be.checked')
