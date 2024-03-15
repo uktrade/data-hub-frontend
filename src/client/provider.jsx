@@ -24,9 +24,10 @@ const browserHistory = createBrowserHistory({
   basename: queryString.stringify(new URL(document.baseURI).pathname),
 })
 
-const { routerMiddleware, routerReducer } = createReduxHistoryContext({
-  history: browserHistory,
-})
+const { createReduxHistory, routerMiddleware, routerReducer } =
+  createReduxHistoryContext({
+    history: browserHistory,
+  })
 
 // TODO: Remove once DataHubProvider is implemented with createProvider
 const sagaMiddleware = createSagaMiddleware()
@@ -48,6 +49,7 @@ const store = configureStore({
     router: routerReducer,
   },
 })
+const history = createReduxHistory(store)
 
 const history = createReduxHistory(store)
 
@@ -107,7 +109,7 @@ const DataHubProvider = ({ tasks, children }) => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <BrowserRouter history={history}>{children}</BrowserRouter>
     </Provider>
   )
 }
