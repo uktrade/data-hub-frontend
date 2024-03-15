@@ -50,6 +50,7 @@ const EXPORT_WIN = {
   ],
   customer_response: {
     agree_with_win: WIN_STATUS.SENT, // the default
+    our_support: null,
   },
 }
 
@@ -78,7 +79,6 @@ describe('ExportWins/Details', () => {
   )
 
   ;[
-    // FIXME: There's no test case for rejected win
     {
       testTitle: 'Confirmed',
       exportWinAPIResponse: {
@@ -86,12 +86,17 @@ describe('ExportWins/Details', () => {
         customer_response: {
           agree_with_win: true,
           comments: 'I agree',
+          our_support: {
+            name: 'Not very much',
+          },
         },
       },
       tableRows: insertAfter(
         {
           ...EXPECTED_ROWS,
           'Export win confirmed': 'Yes',
+          'What value do you estimate you would have achieved without our support':
+            'Not very much',
         },
         'Lead officer name',
         {
@@ -412,6 +417,9 @@ describe('ExportWins/Details', () => {
               ...EXPORT_WIN,
               customer_response: {
                 agree_with_win: WIN_STATUS.WON,
+                our_support: {
+                  name: 'A fortune',
+                },
               },
             }}
           />
