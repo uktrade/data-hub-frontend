@@ -211,7 +211,7 @@ Please ensure you have the sandbox environment file enabled, and set the environ
 Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
 
 ```
-- cypress-visual-screenshots
+- cypress-image-diff-screenshots
   - baseline
   - comparison
   - diff
@@ -246,7 +246,7 @@ Please ensure you have the sandbox environment file enabled, and set the environ
 ### Folder structure
 
 ```
-- cypress-visual-screenshots
+- cypress-image-diff-screenshots
   - baseline
   - comparison
   - diff
