@@ -6,6 +6,7 @@ import {
   assertFieldRadiosStrict,
   assertFieldCheckboxes,
   assertFieldTextarea,
+  assertErrorSummary,
 } from '../../../../functional/cypress/support/assertions'
 import Review from '../../../../../src/client/modules/ExportWins/Review'
 import { createTestProvider } from '../provider'
@@ -148,7 +149,10 @@ describe('ExportWins/Review', () => {
 
       const MARKETING_SOURCE = [
         { id: 'marketing-source-a', name: 'marketing-source-A' },
-        { id: 'marketing-source-b', name: 'marketing-source-B' },
+        {
+          id: 'marketing-source-b',
+          name: 'marketing-source-B (please specify)',
+        },
         { id: 'marketing-source-c', name: 'marketing-source-C' },
       ]
 
@@ -286,15 +290,11 @@ describe('ExportWins/Review', () => {
         ],
       })
 
-      cy.contains(
-        'Our support was a prerequisite to generate this value'
-      ).click()
-
       assertFieldCheckboxes({
         element: '#field-checkboxes2',
         legend: 'Tick any that apply to this win:',
         options: [
-          { label: 'It enabled vou to expand into a new market' },
+          { label: 'It enabled you to expand into a new market' },
           {
             label: 'It enabled you to maintain or expand in an existing market',
           },
@@ -313,12 +313,22 @@ describe('ExportWins/Review', () => {
         ],
       })
 
+      cy.get('@continue').click()
+
+      // Assert errors
+      assertErrorSummary([
+        'Select at least 1 of the 3 options below.',
+        'Select at least 1 of the 5 options below.',
+      ])
+
+      cy.get('@continue').click()
+
       cy.contains(
-        'It enabled you to maintain or expand in an existing market'
+        'Our support was a prerequisite to generate this value'
       ).click()
 
       cy.contains(
-        "If you hadn't achieved this win, your company might have stopped exporting"
+        'It enabled you to maintain or expand in an existing market'
       ).click()
 
       cy.get('@continue').click()
@@ -354,7 +364,23 @@ describe('ExportWins/Review', () => {
         selectIndex: 1,
       })
 
-      cy.contains('button', 'Submit').click()
+      // There should appear an input field
+      cy.get('input#other_marketing_source')
+      cy.get('label[for="other_marketing_source"]').should(
+        'have.text',
+        'Other way you heard about DBT'
+      )
+
+      // The field should be required
+      cy.contains('button', 'Confirm and send').click()
+      assertErrorSummary([
+        'Enter a description of the other way you heard about DBT',
+      ])
+
+      // Fill out the field
+      cy.get('input#other_marketing_source').type('Blah blah blah')
+
+      cy.contains('button', 'Confirm and send').click()
 
       assertReviewed()
 
@@ -430,7 +456,7 @@ describe('ExportWins/Review', () => {
 
       cy.get('#comments').type('Lorem ipsum dolor sit amet')
 
-      cy.contains('button', 'Submit').click()
+      cy.contains('button', 'Confirm and send').click()
 
       assertReviewed()
 

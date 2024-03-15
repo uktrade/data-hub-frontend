@@ -132,7 +132,7 @@ const Step2Agree = () => (
 )
 
 const Step2Disagree = () => (
-  <Step name="2-disagree">
+  <Step name="2-disagree" submitButtonLabel="Confirm and send">
     <FieldTextarea
       name="comments"
       label="Comments"
@@ -189,6 +189,7 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes1"
       legend="Please tick all that apply to this win:"
+      required="Select at least 1 of the 3 options below."
       options={[
         {
           label:
@@ -208,9 +209,10 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes2"
       legend="Tick any that apply to this win:"
+      required="Select at least 1 of the 5 options below."
       options={[
         {
-          label: 'It enabled vou to expand into a new market',
+          label: 'It enabled you to expand into a new market',
           value: 'has_enabled_expansion_into_new_market',
         },
         {
@@ -249,7 +251,7 @@ const Step5 = () => (
 )
 
 const Step6 = () => (
-  <Step name="6">
+  <Step name="6" submitButtonLabel="Confirm and send">
     <H2>Marketing</H2>
     <FieldRadios
       name="case_study_willing"
@@ -272,8 +274,9 @@ const Step6 = () => (
                 <FieldInput
                   name="other_marketing_source"
                   type="text"
-                  label="Label comes later"
-                  required="Please specify"
+                  label="Other way you heard about DBT"
+                  required="Enter a description of the other way you heard about DBT"
+                  hint="Please describe the other way you heard about DBT"
                 />
               ),
             }
@@ -299,7 +302,6 @@ const Review = ({ token }) => (
           id={FORM_ID}
           analyticsFormName={FORM_ID}
           submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
-          // showStepInUrl={true}
           redirectMode="soft"
           redirectTo={() => '/exportwins/review-win/thankyou'}
           transformPayload={transformPayload(token)}
