@@ -5,7 +5,9 @@ import styled from 'styled-components'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import { useFormContext } from '../../../../client/components/Form/hooks'
+import { getStartDateOfTwelveMonthsAgo } from '../../../utils/date'
 import CountriesResource from '../../../components/Resource/Countries'
+import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { SectorResource } from '../../../components/Resource'
 import { OPTION_YES } from '../../../../common/constants'
@@ -26,11 +28,6 @@ import {
   winTypeOptions,
   goodsServicesOptions,
 } from './constants'
-import {
-  formatValue,
-  sumAllWinTypeYearlyValues,
-  getDateTwelveMonthsAgoWithFirstDay,
-} from './utils'
 
 const MAX_WORDS = 100
 
@@ -46,7 +43,7 @@ const StyledExportTotal = styled('p')({
 
 const WinDetailsStep = () => {
   const { values } = useFormContext()
-  const twelveMonthsAgo = getDateTwelveMonthsAgoWithFirstDay()
+  const twelveMonthsAgo = getStartDateOfTwelveMonthsAgo()
   const month = twelveMonthsAgo.getMonth() + 1
   const year = twelveMonthsAgo.getFullYear()
 

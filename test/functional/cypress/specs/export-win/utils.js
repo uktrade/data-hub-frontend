@@ -1,8 +1,8 @@
-import { getDateTwelveMonthsAgoWithFirstDay } from '../../../../../src/client/modules/ExportWins/Form/utils'
 import {
   subtractMonths,
   addMonths,
   getRandomDateInRange,
+  getStartDateOfTwelveMonthsAgo,
 } from '../../../../../src/client/utils/date'
 import { clickContinueButton } from '../../support/actions'
 import { assertUrl } from '../../support/assertions'
@@ -166,7 +166,7 @@ const getMonthAndYearFromDate = (date) => ({
 
 export const getDateWithinLastTwelveMonths = () =>
   getMonthAndYearFromDate(
-    getRandomDateInRange(getDateTwelveMonthsAgoWithFirstDay(), new Date())
+    getRandomDateInRange(getStartDateOfTwelveMonthsAgo(), new Date())
   )
 
 export const getDateThirteenMonthsAgo = () =>
