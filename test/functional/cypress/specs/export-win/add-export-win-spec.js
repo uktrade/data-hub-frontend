@@ -119,7 +119,6 @@ describe('Adding an export win', () => {
     })
   })
 
-  // Disable testIsolation due to multi step form with lots of data.
   context(
     'When the export win is created from scratch',
     { testIsolation: false },
@@ -157,8 +156,7 @@ describe('Adding an export win', () => {
           dateMonth: month,
           dateYear: year,
           description: 'Foo bar baz',
-          nameOfCustomer: 'David French',
-          isConfidential: true,
+          nameOfCustomerConfidential: true,
           businessType: 'Contract',
           exportValues: ['1000000', '1000000', '1000000', '1000000', '1000000'],
           businessSuccessValues: [
@@ -244,7 +242,6 @@ describe('Adding an export win', () => {
             Destination: 'United States',
             'Date won': `${month}/${year}`,
             'Summary of support given': 'Foo bar baz',
-            'Overseas customer': 'David French',
             Confidential: 'Yes',
             'Type of win': 'Contract',
             'Export value': '£5,000,000 over 5 years',
@@ -306,7 +303,7 @@ describe('Adding an export win', () => {
             country: '81756b9a-5d95-e211-a939-e4115bead28a',
             date: `${year}-${month}-01`,
             description: 'Foo bar baz',
-            name_of_customer: 'David French',
+            name_of_customer: 'confidential',
             name_of_customer_confidential: true,
             business_type: 'Contract',
             breakdowns: [

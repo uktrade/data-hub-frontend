@@ -56,8 +56,8 @@ export const fillWinDetails = ({
   dateMonth,
   dateYear,
   description,
+  nameOfCustomerConfidential,
   nameOfCustomer,
-  isConfidential,
   businessType,
   exportValues,
   businessSuccessValues,
@@ -76,10 +76,13 @@ export const fillWinDetails = ({
   description &&
     cy.get(winDetails.description).find('textarea').type(description)
 
-  nameOfCustomer &&
-    cy.get(winDetails.nameOfCustomer).find('input').type(nameOfCustomer)
+  nameOfCustomerConfidential
+    ? cy.get(winDetails.nameOfCustomerConfidentialYes).click()
+    : cy.get(winDetails.nameOfCustomerConfidentialNo).click()
 
-  isConfidential && cy.get(winDetails.confidential).find('input').check()
+  !nameOfCustomerConfidential &&
+    nameOfCustomer &&
+    cy.get(winDetails.nameOfCustomer).find('input').type(nameOfCustomer)
 
   businessType &&
     cy.get(winDetails.businessType).find('input').type(businessType)

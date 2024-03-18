@@ -55,7 +55,12 @@ export const formFields = {
     dateYear: '[data-test="date-year"]',
     description: '[data-test="field-description"]',
     nameOfCustomer: '[data-test="field-name_of_customer"]',
-    confidential: '[data-test="field-name_of_customer_confidential"]',
+    nameOfCustomerConfidential:
+      '[data-test="field-name_of_customer_confidential"]',
+    nameOfCustomerConfidentialYes:
+      '[data-test="name-of-customer-confidential-yes"]',
+    nameOfCustomerConfidentialNo:
+      '[data-test="name-of-customer-confidential-no"]',
     businessType: '[data-test="field-business_type"]',
     winType: '[data-test="field-win_type"]',
     goodsVsServices: '[data-test="field-goods_vs_services"]',
