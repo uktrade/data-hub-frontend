@@ -120,9 +120,9 @@ jobs:
           label: Run visual tests
           target: start-mock visual-tests
       - store_artifacts:
-          path: cypress-visual-screenshots
+          path: cypress-image-diff-screenshots
       - store_artifacts:
-          path: cypress-visual-report
+          path: cypress-image-diff-html-report
 
   visual_component_tests:
     machine:
@@ -135,9 +135,9 @@ jobs:
           label: Run visual tests
           target: start-storybook visual-component-tests
       - store_artifacts:
-          path: cypress-visual-screenshots
+          path: cypress-image-diff-screenshots
       - store_artifacts:
-          path: cypress-visual-report
+          path: cypress-image-diff-html-report
 
   e2e_tests_dit:
     machine:
