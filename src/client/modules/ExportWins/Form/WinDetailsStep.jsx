@@ -10,7 +10,6 @@ import CountriesResource from '../../../components/Resource/Countries'
 import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { SectorResource } from '../../../components/Resource'
-import { OPTION_YES } from '../../../../common/constants'
 import { validateWinDate } from './validators'
 import { WinTypeValues } from './WinTypeValues'
 import { StyledHintParagraph } from './styled'
@@ -18,6 +17,7 @@ import {
   Step,
   FieldDate,
   FieldInput,
+  FieldRadios,
   FieldTextarea,
   FieldTypeahead,
   FieldCheckboxes,
@@ -79,21 +79,29 @@ const WinDetailsStep = () => {
         maxWords={MAX_WORDS}
       />
 
-      <FieldInput
-        type="text"
-        name="name_of_customer"
-        label="Overseas customer"
-        required="Enter the name of the overseas customer"
-        placeholder="Add name"
-      />
-
-      <FieldCheckboxes
+      <FieldRadios
         name="name_of_customer_confidential"
-        hint="Check this box if your customer has asked for this not to be public (optional)."
+        label="Overseas customer"
+        hint="Is the customer's name confidential?"
+        required="Select Yes or No"
         options={[
           {
-            value: OPTION_YES,
-            label: 'Confidential',
+            label: 'Yes',
+            value: 'yes',
+          },
+          {
+            label: 'No',
+            value: 'no',
+            children: (
+              <FieldInput
+                type="text"
+                name="name_of_customer"
+                label="Customer's name"
+                hint="Enter the customer’s name, this will be displayed on Data Hub."
+                required="Enter the name of the overseas customer"
+                placeholder="Add name"
+              />
+            ),
           },
         ]}
       />

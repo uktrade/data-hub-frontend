@@ -42,14 +42,8 @@ describe('Credit for this win', () => {
       legend: 'Did any other teams help with this win?',
       options: ['Yes', 'No'],
     })
-    cy.get(creditForThisWin.radiosBtnYes)
-      .should('not.be.checked')
-      .parent()
-      .should('have.text', 'Yes')
-    cy.get(creditForThisWin.radiosBtnNo)
-      .should('not.be.checked')
-      .parent()
-      .should('have.text', 'No')
+    cy.get(creditForThisWin.radiosBtnYes).should('not.be.checked')
+    cy.get(creditForThisWin.radiosBtnNo).should('not.be.checked')
   })
 
   it('should go to the next step when selecting "No" and then "Continue"', () => {

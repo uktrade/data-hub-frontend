@@ -271,8 +271,8 @@ describe('Adding an export win from an export project', () => {
             dateMonth: null, // pre-populated but must be within the last 12 months
             dateYear: null, // pre-populated but must be within the last 12 months
             description: 'Foo bar baz',
+            nameOfCustomerConfidential: false,
             nameOfCustomer: 'David French',
-            isConfidential: true,
             businessType: 'Contract',
             exportValues: ['1000000'],
             goodsVsServices: 'goods',
@@ -332,10 +332,11 @@ describe('Adding an export win from an export project', () => {
               'country',
               'date',
               'sector',
+              'name_of_customer_confidential',
+              'name_of_customer',
             ])
           ).to.deep.equal({
-            // We only need to assert the fields that have
-            // been pre-populated from an export project
+            // Assert the fields that have been pre-populated from an export project
             lead_officer: exportProject.owner.id,
             team_members: exportProject.team_members.map(({ id }) => id),
             company_contacts: exportProject.contacts.map(({ id }) => id),
@@ -343,6 +344,9 @@ describe('Adding an export win from an export project', () => {
             country: exportProject.destination_country.id,
             date: `${year}-${month}-01`,
             sector: exportProject.sector.id,
+            // Assert the customer name and that it's not confidential
+            name_of_customer_confidential: false,
+            name_of_customer: 'David French',
           })
         })
 

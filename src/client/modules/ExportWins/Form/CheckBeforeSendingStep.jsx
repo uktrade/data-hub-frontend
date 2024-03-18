@@ -208,9 +208,11 @@ const WinDetailsTable = ({ values, goToStep }) => {
       <SummaryTable.Row heading="Summary of support given">
         {values.description}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="Overseas customer">
-        {values.name_of_customer}
-      </SummaryTable.Row>
+      {values.name_of_customer && (
+        <SummaryTable.Row heading="Overseas customer">
+          {values.name_of_customer}
+        </SummaryTable.Row>
+      )}
       <SummaryTable.Row heading="Confidential">
         {transformCustomerConfidential(values.name_of_customer_confidential)}
       </SummaryTable.Row>

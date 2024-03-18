@@ -16,6 +16,8 @@ import {
   goodsServicesIdToLabelMap,
 } from './constants'
 
+const CONFIDENTIAL = 'confidential'
+
 const transformContributingOfficersToAdvisers = (values) =>
   Object.keys(values)
     .filter((key) => key.startsWith('contributing_officer'))
@@ -147,8 +149,9 @@ export const transformExportWinForForm = (exportWin) => ({
   date: convertDateToFieldDateObject(exportWin.date),
   description: exportWin.description,
   name_of_customer: exportWin.name_of_customer,
-  name_of_customer_confidential:
-    exportWin.name_of_customer_confidential === true ? OPTION_YES : OPTION_NO,
+  name_of_customer_confidential: exportWin.name_of_customer_confidential
+    ? OPTION_YES
+    : OPTION_NO,
   business_type: exportWin.business_type,
   ...transformBreakdownsToYearlyValues(exportWin.breakdowns),
   win_type: getWinTypesFromBreakdowns(exportWin.breakdowns),
@@ -189,9 +192,12 @@ export const transformFormValuesForAPI = (values) => ({
   country: values.country.value,
   date: `${values.date.year}-${values.date.month}-01`,
   description: values.description,
-  name_of_customer: values.name_of_customer,
+  name_of_customer:
+    values.name_of_customer_confidential === OPTION_YES
+      ? CONFIDENTIAL
+      : values.name_of_customer,
   name_of_customer_confidential:
-    values.name_of_customer_confidential[0] === OPTION_YES,
+    values.name_of_customer_confidential === OPTION_YES,
   business_type: values.business_type,
   breakdowns: [
     ...transformYearlyValuesToBreakdowns(
