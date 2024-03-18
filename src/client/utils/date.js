@@ -15,6 +15,7 @@ const {
   isSameDay,
   endOfToday,
   startOfMonth: getStartOfMonth,
+  isWithinInterval,
   endOfYesterday,
   format: formatFns,
   formatDistanceToNowStrict,
@@ -28,6 +29,7 @@ const {
   subWeeks,
   differenceInCalendarMonths,
   isFuture,
+  isEqual: areDatesEqual,
 } = require('date-fns')
 
 const {
@@ -300,11 +302,33 @@ function getRandomDateInRange(startDate, endDate) {
     throw new Error('Start date and end date cannot be the same.')
   }
   if (startDate > endDate) {
-    throw new Error('Start date must be less than or equal to end date.')
+    throw new Error('Start date cannot be greater than end date.')
   }
   const daysDifference = differenceInDays(endDate, startDate)
   const randomNumberOfDays = Math.floor(Math.random() * (daysDifference + 1))
   return addDays(startDate, randomNumberOfDays)
+}
+
+/**
+ * Returns the start date (1st day) of the month twelve months ago from the current date.
+ * @returns {Date} The start date (1st day) of the month twelve months ago from the current date.
+ */
+function getStartDateOfTwelveMonthsAgo() {
+  return subMonths(getStartOfMonth(new Date()), 12)
+}
+
+/**
+ * Checks if a given date falls within the last twelve months from the current date.
+ * The last twelve months include the 1st of the month.
+ * @param {Date} date - The date to be checked.
+ * @returns {boolean} Returns true if the date falls within the last twelve months
+ * from the current date, otherwise false.
+ */
+function isWithinLastTwelveMonths(date) {
+  return isWithinInterval(date, {
+    start: getStartDateOfTwelveMonthsAgo(),
+    end: new Date(),
+  })
 }
 
 module.exports = {
@@ -345,5 +369,9 @@ module.exports = {
   parseDateISO,
   convertDateToFieldDateObject,
   getRandomDateInRange,
+  isWithinLastTwelveMonths,
+  getStartDateOfTwelveMonthsAgo,
   getStartOfMonth,
+  subtractMonths,
+  areDatesEqual,
 }
