@@ -261,7 +261,7 @@ describe('ExportWins/Review', () => {
         {
           inputName: 'overcame_problem',
           legend:
-            'Overcoming a problem in the country (eg legal, regulatory, commercial)',
+            'Overcoming a problem in the country (for example legal, regulatory, commercial)',
         },
       ].forEach(({ inputName, legend }) => {
         assertFieldRadiosStrict({
@@ -283,7 +283,7 @@ describe('ExportWins/Review', () => {
         options: [
           {
             label:
-              'The win involved a foreign government or state-owned enterprise (eg as an intermediary or facilitator)',
+              'The win involved a foreign government or state-owned enterprise (for example as an intermediary or facilitator)',
           },
           { label: 'Our support was a prerequisite to generate this value' },
           { label: 'Our support helped you achieve this win more quickly' },
@@ -317,8 +317,8 @@ describe('ExportWins/Review', () => {
 
       // Assert errors
       assertErrorSummary([
-        'Select at least 1 of the 3 options below.',
-        'Select at least 1 of the 5 options below.',
+        'Select at least 1 of the 3 options below',
+        'Select at least 1 of the 5 options below',
       ])
 
       cy.get('@continue').click()
