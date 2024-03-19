@@ -228,7 +228,7 @@ describe('Adding an export win from an export project', () => {
           fillOfficerDetails({
             leadOfficer: null, // pre-populated from the export project
             teamType: 'Investment (ITFG or IG)',
-            hqTeam: 'DIT Education',
+            hqTeam: 'ITFG - E-Business Projects Team',
             teamMembers: null, // pre-populated from the export project
           })
 
@@ -237,7 +237,7 @@ describe('Adding an export win from an export project', () => {
           fillCreditForThisWin({
             contributingOfficer: 'John',
             teamType: 'Trade (TD or ST)',
-            hqTeam: 'Healthcare UK',
+            hqTeam: 'TD - Events - Education',
           })
 
           clickContinueAndAssertUrl(customerDetailsStep)

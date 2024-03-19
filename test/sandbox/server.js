@@ -530,12 +530,6 @@ app.get('/v4/metadata/without-our-support', getWithoutOurSupport)
 app.get('/v4/metadata/support-type', getSupportType)
 app.get('/v4/metadata/hvc', getHVC)
 app.get('/v4/metadata/associated-programme', getAssociatedProgramme)
-
-// The endpoint 'hq-team-region-or-post' returns ~5000 lines of JSON,
-// it's never called directly. It's called with the query param filter
-// 'team_type' of which there are 8 team types (see /v4/metadata/team-type).
-// This endpoint is hardcoded to respond with a subset of data based
-// on the 'Other HQ Team' team type.
 app.get('/v4/metadata/hq-team-region-or-post', getHqTeamRegionOrPost)
 
 // Ping
