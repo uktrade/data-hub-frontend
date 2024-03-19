@@ -221,9 +221,6 @@ describe('Adding an export win from an export project', () => {
             }),
           ],
         })
-        cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-          { name: 'Afterburner' },
-        ])
       })
 
       it(

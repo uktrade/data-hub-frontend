@@ -253,6 +253,7 @@ import {
   getWithoutOurSupport,
   getSupportType,
   getHVC,
+  getAssociatedProgramme,
 } from './routes/v4/metadata/index.js'
 import { searchCompanies as __companies } from './routes/v4/search/company.js'
 import { companiesAutocomplete } from './routes/v4/search/company/autocomplete.js'
@@ -527,6 +528,7 @@ app.get('/v4/metadata/without-our-support', getWithoutOurSupport)
 
 app.get('/v4/metadata/support-type', getSupportType)
 app.get('/v4/metadata/hvc', getHVC)
+app.get('/v4/metadata/associated-programme', getAssociatedProgramme)
 
 // Ping
 app.get('/ping.xml', ping)

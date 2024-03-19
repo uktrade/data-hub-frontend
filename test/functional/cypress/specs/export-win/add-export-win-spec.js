@@ -76,9 +76,6 @@ describe('Adding an export win', () => {
       { id: '300', name: 'DIT Education' },
       { id: '301', name: 'Healthcare UK' },
     ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-      { id: '600', name: 'Afterburner' },
-    ])
     cy.intercept('POST', '/api-proxy/v4/export-win', {
       statusCode: 201,
     }).as('apiPostExportWin')
@@ -316,7 +313,7 @@ describe('Adding an export win', () => {
             sector: 'af959812-6095-e211-a939-e4115bead28a',
             hvc: '0240d283-ec44-4f33-b501-e2bf14e337b5',
             type_of_support: ['5560d2ee-b75b-48b0-b6ca-36d43653be61'],
-            associated_programme: ['600'],
+            associated_programme: ['b6f5c31a-aa45-4ae0-89bd-2eb3ab943f76'], // Afterburner
             is_personally_confirmed: true,
             is_line_manager_confirmed: true,
             total_expected_export_value: 5000000,
