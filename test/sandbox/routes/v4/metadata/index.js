@@ -63,7 +63,8 @@ import withoutOurSupport from '../../../fixtures/v4/export/without-our-support.j
 import supportType from '../../../fixtures/v4/metadata/support-type.json' assert { type: 'json' }
 import hvc from '../../../fixtures/v4/metadata/hvc.json' assert { type: 'json' }
 import associatedProgramme from '../../../fixtures/v4/metadata/associated-programme.json' assert { type: 'json' }
-import hqTeamRegionOrPost from '../../../fixtures/v4/metadata/hq-team-region-or-post.json' assert { type: 'json' }
+import hqTeamRegionOrPostInvestment from '../../../fixtures/v4/metadata/hq-team-region-or-post-investment.json' assert { type: 'json' }
+import hqTeamRegionOrPostTrade from '../../../fixtures/v4/metadata/hq-team-region-or-post-trade.json' assert { type: 'json' }
 
 export const getLikelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -331,5 +332,9 @@ export const getAssociatedProgramme = function (req, res) {
 }
 
 export const getHqTeamRegionOrPost = function (req, res) {
-  res.json(hqTeamRegionOrPost)
+  const hqTeamRegionOrPost = {
+    'a4839e09-e30e-492c-93b5-8ab2ef90b891': hqTeamRegionOrPostTrade, // Trade (TD or ST)
+    '42bdaf2e-ae19-4589-9840-5dbb67b50add': hqTeamRegionOrPostInvestment, // Investment (ITFG or IG)
+  }
+  res.json(hqTeamRegionOrPost[req.query.team_type] || {})
 }
