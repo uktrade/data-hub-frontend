@@ -76,9 +76,6 @@ describe('Adding an export win', () => {
       { id: '300', name: 'DIT Education' },
       { id: '301', name: 'Healthcare UK' },
     ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-      { id: '400', name: 'Australia Consumer Goods & Retail: E004' },
-    ])
     cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
       { id: '600', name: 'Afterburner' },
     ])
@@ -317,7 +314,7 @@ describe('Adding an export win', () => {
             goods_vs_services: '456e951d-a633-4f21-afde-d41381407efe',
             name_of_export: 'Biscuits',
             sector: 'af959812-6095-e211-a939-e4115bead28a',
-            hvc: '400',
+            hvc: '0240d283-ec44-4f33-b501-e2bf14e337b5',
             type_of_support: ['5560d2ee-b75b-48b0-b6ca-36d43653be61'],
             associated_programme: ['600'],
             is_personally_confirmed: true,

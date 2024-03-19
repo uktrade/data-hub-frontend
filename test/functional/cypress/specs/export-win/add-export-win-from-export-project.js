@@ -221,9 +221,6 @@ describe('Adding an export win from an export project', () => {
             }),
           ],
         })
-        cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-          { name: 'Australia Consumer Goods & Retail: E004' },
-        ])
         cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
           { name: 'Afterburner' },
         ])

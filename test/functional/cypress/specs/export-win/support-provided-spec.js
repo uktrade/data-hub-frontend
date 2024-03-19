@@ -15,9 +15,6 @@ describe('Support provided', () => {
     cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
       { name: 'Afterburner' },
     ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-      { name: 'Australia Consumer Goods & Retail: E004' },
-    ])
     cy.visit(supportProvidedStep)
   })
 
