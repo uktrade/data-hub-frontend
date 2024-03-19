@@ -68,16 +68,11 @@ const StyledFieldsetNoStyling = styled('fieldset')`
 `
 
 const StyledLegend = styled('legend')`
-  box-sizing: border-box;
-  display: table;
-  white-space: normal;
+  font-weight: 700;
   font-size: 19px;
   padding: 0;
   margin: 0;
   padding-bottom: ${SPACING.SCALE_1};
-  * {
-    margin-bottom: ${SPACING.SCALE_1} !important;
-  }
   ${(props) =>
     props.error &&
     `
@@ -137,7 +132,6 @@ const FieldInner = ({
     // FIXME: This shouldn't be a fieldset
     <StyledFieldset showBorder={showBorder}>
       <StyledLegend
-        className="govuk-heading-m"
         error={error}
         showBorder={showBorder}
         bigLegend={bigLegend}
