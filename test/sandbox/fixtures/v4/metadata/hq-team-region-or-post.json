@@ -1,0 +1,119 @@
+[
+  {
+    "id": "adc1596b-7468-487f-a251-e873f1732583",
+    "name": "DIT Education",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "88819506-2d67-4f7e-96f8-1f9d9a849bc5",
+    "name": "Healthcare UK",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "de6ce5d1-cdc5-4acb-ade2-0433cf695d7f",
+    "name": "Offshore Wind Investment Organisation",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "bc0fdcb7-76f7-4dac-9319-625986afedd2",
+    "name": "Tech City Project",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "1170a853-8459-44fc-98c8-d3fa181812cd",
+    "name": "BG - Tech City",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "ca498c9e-238d-4063-a7ae-f646c5325a0f",
+    "name": "Financial Services Organisation (FSO)",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "30eaa72c-2575-47b1-9cf0-41f92a615ae4",
+    "name": "Export Control Unit",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "11a33251-11a1-4584-b763-e5337ce83075",
+    "name": "Life Sciences Organisation",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "56a62305-aa36-46ec-867f-407bcf9a23e9",
+    "name": "UK Export Finance",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "c7d92da7-e04e-45bd-abae-473be99faf29",
+    "name": "GREAT BRITAIN Campaign",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "7290b44c-bcd6-4402-a851-4a24e4f5cde7",
+    "name": "DBT Scotland",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "59f61555-e10c-4698-8291-7e8c444c4c89",
+    "name": "DBT Northern Ireland",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  },
+  {
+    "id": "90008657-99ce-476c-8711-cb7c92e5407a",
+    "name": "DBT Wales",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Other HQ Team",
+      "id": "bbb7fad4-417c-411e-a40a-11184b0c635d"
+    }
+  }
+]

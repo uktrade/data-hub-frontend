@@ -209,10 +209,6 @@ describe('Adding an export win from an export project', () => {
         cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
           'apiGetExportWin'
         )
-        cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-          { name: 'DIT Education' },
-          { name: 'Healthcare UK' },
-        ])
         cy.intercept('GET', `/api-proxy/v4/contact?company_id=${company.id}`, {
           results: [
             contactFaker({

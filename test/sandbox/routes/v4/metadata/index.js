@@ -63,6 +63,7 @@ import withoutOurSupport from '../../../fixtures/v4/export/without-our-support.j
 import supportType from '../../../fixtures/v4/metadata/support-type.json' assert { type: 'json' }
 import hvc from '../../../fixtures/v4/metadata/hvc.json' assert { type: 'json' }
 import associatedProgramme from '../../../fixtures/v4/metadata/associated-programme.json' assert { type: 'json' }
+import hqTeamRegionOrPost from '../../../fixtures/v4/metadata/hq-team-region-or-post.json' assert { type: 'json' }
 
 export const getLikelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -327,4 +328,8 @@ export const getHVC = function (req, res) {
 
 export const getAssociatedProgramme = function (req, res) {
   res.json(associatedProgramme)
+}
+
+export const getHqTeamRegionOrPost = function (req, res) {
+  res.json(hqTeamRegionOrPost)
 }

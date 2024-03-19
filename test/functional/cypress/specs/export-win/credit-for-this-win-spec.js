@@ -17,13 +17,7 @@ import { clickContinueButton } from '../../support/actions'
 describe('Credit for this win', () => {
   const { creditForThisWin } = formFields
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-      { name: 'DIT Education' },
-      { name: 'Healthcare UK' },
-    ])
-    cy.visit(creditForThisWinStep)
-  })
+  beforeEach(() => cy.visit(creditForThisWinStep))
 
   it('should render a step heading', () => {
     cy.get(creditForThisWin.heading).should('have.text', 'Credit for this win')

@@ -72,10 +72,6 @@ describe('Adding an export win', () => {
       { id: '200', name: 'Investment (ITFG or IG)' },
       { id: '201', name: 'Trade (TD or ST)' },
     ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-      { id: '300', name: 'DIT Education' },
-      { id: '301', name: 'Healthcare UK' },
-    ])
     cy.intercept('POST', '/api-proxy/v4/export-win', {
       statusCode: 201,
     }).as('apiPostExportWin')
@@ -275,12 +271,12 @@ describe('Adding an export win', () => {
           expect(omit(request.body, '_csrf')).to.deep.equal({
             lead_officer: '100',
             team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
-            hq_team: '300',
+            hq_team: 'adc1596b-7468-487f-a251-e873f1732583', // DIT Education
             team_members: [],
             advisers: [
               {
                 adviser: '101',
-                hq_team: '301',
+                hq_team: '88819506-2d67-4f7e-96f8-1f9d9a849bc5', // Healthcare UK
                 team_type: '201',
               },
             ],
