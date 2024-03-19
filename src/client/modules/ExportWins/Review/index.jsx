@@ -186,7 +186,7 @@ const Step3 = () => (
     />
     <Rating.FieldRadios
       name="overcame_problem"
-      legend="Overcoming a problem in the country (eg legal, regulatory, commercial)"
+      legend="Overcoming a problem in the country (for example legal, regulatory, commercial)"
       required="Select how we helped overcome a problem in the country"
     />
   </Step>
@@ -198,11 +198,11 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes1"
       legend="Please tick all that apply to this win:"
-      required="Select at least 1 of the 3 options below."
+      required="Select at least 1 of the 3 options below"
       options={[
         {
           label:
-            'The win involved a foreign government or state-owned enterprise (eg as an intermediary or facilitator)',
+            'The win involved a foreign government or state-owned enterprise (for example as an intermediary or facilitator)',
           value: 'involved_state_enterprise',
         },
         {
@@ -218,7 +218,7 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes2"
       legend="Tick any that apply to this win:"
-      required="Select at least 1 of the 5 options below."
+      required="Select at least 1 of the 5 options below"
       options={[
         {
           label: 'It enabled you to expand into a new market',
