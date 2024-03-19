@@ -79,12 +79,6 @@ describe('Adding an export win', () => {
     cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
       { id: '400', name: 'Australia Consumer Goods & Retail: E004' },
     ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/support-type', [
-      {
-        id: '500',
-        name: 'Market entry advice and support – DIT/FCO in UK',
-      },
-    ])
     cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
       { id: '600', name: 'Afterburner' },
     ])
@@ -324,7 +318,7 @@ describe('Adding an export win', () => {
             name_of_export: 'Biscuits',
             sector: 'af959812-6095-e211-a939-e4115bead28a',
             hvc: '400',
-            type_of_support: ['500'],
+            type_of_support: ['5560d2ee-b75b-48b0-b6ca-36d43653be61'],
             associated_programme: ['600'],
             is_personally_confirmed: true,
             is_line_manager_confirmed: true,
