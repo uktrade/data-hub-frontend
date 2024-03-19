@@ -312,29 +312,10 @@ const Review = ({ token }) => (
           analyticsFormName={FORM_ID}
           submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
           redirectMode="soft"
-          redirectTo={() => '/exportwins/review-win/thankyou'}
-          transformPayload={transformPayload(token)}
-          flashMessage={(_, { agree_with_win }) =>
-            agree_with_win === 'yes'
-              ? // TODO: Move to constants
-                [
-                  'Success',
-                  'Thank you for taking time to review this export win',
-                  'success',
-                ]
-              : [
-                  'Important',
-                  `
-                  <p>Thank you for reviewing this export win</p>
-                  <p>
-                    As you have asked for some changes to be made,
-                    we will review your comments and may need to contact you
-                    if we need more information.
-                  </p>
-                  `,
-                  'info',
-                ]
+          redirectTo={(_, { agree_with_win }) =>
+            `/exportwins/review-win/thankyou?agree=${agree_with_win}`
           }
+          transformPayload={transformPayload(token)}
         >
           {(formData) => (
             <>

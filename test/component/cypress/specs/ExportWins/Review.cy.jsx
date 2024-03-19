@@ -22,9 +22,9 @@ const assertHeader = () => {
   cy.get('header h1').should('have.text', HEADING)
 }
 
-const assertReviewed = () => {
+const assertReviewed = ({ heading }) => {
   cy.contains(DBT_HEADING)
-  cy.get('header h1').should('have.text', 'Export win reviewed')
+  cy.get('header h1').should('have.text', heading)
   cy.get('main').should(
     'have.text',
     'Your feedback will help us to improve our support services.'
@@ -382,15 +382,12 @@ describe('ExportWins/Review', () => {
 
       cy.contains('button', 'Confirm and send').click()
 
-      assertReviewed()
+      assertReviewed({ heading: 'Export win reviewed' })
 
-      cy.get('[role="alert"').within(() => {
-        cy.contains('h2', /^Success$/)
-        cy.contains(
-          'p',
-          /^Thank you for taking time to review this export win$/
-        )
-      })
+      cy.get('[role="alert"').should(
+        'have.text',
+        'Thank you for taking time to review this export win.'
+      )
     })
 
     it('User disagrees with win', () => {
@@ -458,14 +455,13 @@ describe('ExportWins/Review', () => {
 
       cy.contains('button', 'Confirm and send').click()
 
-      assertReviewed()
+      assertReviewed({ heading: 'Export win reviewed and changes are needed' })
 
       cy.get('[role="alert"').within(() => {
-        cy.contains('h2', /^Important$/)
-        cy.contains('p', /^\s*Thank you for reviewing this export win\s*$/)
+        cy.contains('p', /^\s*Thank you for reviewing this export win.\s*$/)
         cy.contains(
           'p',
-          /^\s*As you have asked for some changes to be made, we will review your comments and may need to contact you if we need more information.\s*$/
+          /^\s*As you have asked for some changes to be made, we will review your comments and may need to contact you if we need more information.*$/
         )
       })
     })
