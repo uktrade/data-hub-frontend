@@ -70,6 +70,7 @@ const StyledFieldsetNoStyling = styled('fieldset')`
 const StyledLegend = styled('legend')`
   font-weight: 700;
   font-size: 19px;
+  line-height: 1.25;
   padding: 0;
   margin: 0;
   padding-bottom: ${SPACING.SCALE_1};
