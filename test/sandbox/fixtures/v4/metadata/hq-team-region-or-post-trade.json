@@ -1,0 +1,659 @@
+[
+  {
+    "id": "8923e259-617d-4581-830f-43bfaa572936",
+    "name": "TD - Events - Financial & Professional Business Services",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "2f883a06-5811-4668-878f-92a1e3de548d",
+    "name": "TD - Events - Education",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "b9afc253-5aa1-498f-b5d7-d43dad1ced82",
+    "name": "TD - Events - Services",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "64488de6-21b0-452c-9bd5-ee454a313c48",
+    "name": "TD - Events - Creative Industries",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "2f608479-8871-447f-9aab-334520b432c6",
+    "name": "TD - Events - Retail",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "2bec4f86-7ee9-4271-9e95-f9ec30685ce1",
+    "name": "TD - Events - Large Events Support",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "da679df0-8e7c-491d-a143-748bc012d7db",
+    "name": "TD - Events - Rapid Response",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "8cc04f14-d685-40e0-9e6f-f9092adb1762",
+    "name": "TD - Events - Large Events",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "042a3616-7c01-43e5-a451-fa303b5927dd",
+    "name": "TD - Events - Venture Capital",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "896e6159-817c-425d-8cb0-f45e06cf114a",
+    "name": "TD - Events - Energy",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "4e7ab807-2af1-4780-8f11-8e3ec63a5102",
+    "name": "TD - Events - Advanced Manufacturing",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "ead9276b-741c-48d7-a881-cc179bb79a4c",
+    "name": "TD - Events - Advanced Engineering",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "85e6f3b7-5f49-4743-b91e-b73681711cf6",
+    "name": "TD - Events - Agrifood",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "62102f3f-d60a-4ab4-81d9-bb8a683193e9",
+    "name": "TD - Events - Consumer Goods",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "b7d0ad8d-c044-4ddb-ab52-7f71741576e7",
+    "name": "TD - Events - Marine",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "4288a4ab-a3eb-42ea-b804-8fe24b06e86f",
+    "name": "TD - Events - Advanced Manufacturing - Support",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "87c4e825-69b0-4c94-b5fe-e73b50b8cece",
+    "name": "TD - Events - Planning and Procurement",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "ebba11e7-8195-4f1e-b272-8a19eea853b4",
+    "name": "TD - Finance & Performance",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "2e704222-02b6-4d21-b901-a220ab333855",
+    "name": "TD - Technology, Innovation and Events - Venture Capital Unit",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "4598486d-bed2-47e7-bd17-e7e4b561dc47",
+    "name": "TD - Technology, Innovation and Events - Science and Innovation",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "3732642e-e9fe-4447-9ab5-dc7f1850c5e8",
+    "name": "TD - Technology, Innovation and Events - Technology Partnerships",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "61d40dbe-c399-4a69-9c5a-12c84be11766",
+    "name": "TD - Technology, Innovation and Events - Open to Export",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "24447113-92ea-4615-846e-93f1539976c6",
+    "name": "TD - Technology, Innovation and Events",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "12fb6a60-3b83-4b1e-bbb8-c0a292219247",
+    "name": "TD - Events Delivery & Performance",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "28ce4378-887a-4877-ac85-3aeba84a80a6",
+    "name": "TD - Events - BDV",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "abaa6ec3-aff9-4cc6-bb56-29d097d4f998",
+    "name": "TD - Events - Markets",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "12b17cb8-1ef9-44bd-b139-940c60bdde21",
+    "name": "TD - TAP Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "a191b0f1-c052-4a7e-8177-38711ddb37d2",
+    "name": "TD - Business Development",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "dddc67dd-d779-4f15-a8ba-cdd63fc7bf6c",
+    "name": "TD - Events - Sport",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "11bf1e8b-ea81-467e-8f00-a1b27154fb20",
+    "name": "TD - Events - Infrastructure & Life Sciences",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "cdb4690a-6a36-48b2-b275-48877f78857f",
+    "name": "TD - Events - Infrastructure",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "a1c27db3-b6e4-4674-9402-acccefe17df7",
+    "name": "TD - Infrastructure & Life Sciences",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "46937dd0-ef9f-4476-b528-59fe42efa13e",
+    "name": "TD - Events - ICT",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "dad3618b-d324-4cec-8943-4c18ca9a9c2a",
+    "name": "TD - Events - Transport",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "58e5eb54-7a56-49c4-b903-8b5d9a11197a",
+    "name": "TD - Events - Healthcare",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "5769c374-ee37-4334-a692-dd36a749c20b",
+    "name": "TD - Events - Construction",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "3d4101d9-35f2-4227-bd5a-813c38bfcd4f",
+    "name": "TD - Events - Open to Export",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "ba8bc4c9-4b39-4c6b-aa4c-6e39a9da4388",
+    "name": "ST - Managing Director and PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "d4049d8a-03aa-4e24-9ca3-fe57260d42a8",
+    "name": "ST - Infrastructure and Life Science - Healthcare Pharma and Bio",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "14e0bb31-fc2d-4c32-bb4b-dc72b84dc5cf",
+    "name": "ST - Infrastructure & Life Science - Construction/Mass Transport",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "acf34c3f-fa58-4b16-85ba-03dd979f224b",
+    "name": "ST - Infrastructure and Life Science - Low Carbon Env Water",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "b6734d3e-1f20-404a-b024-079aeadc9b5c",
+    "name": "ST - Infrastructure and Life Science - High Value Opportunities",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "47b26824-e937-4571-ac3f-5f20d94b390a",
+    "name": "ST - Infrastructure and Life Science - Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "c393a697-a7dd-44a3-bf48-b8db1e0eb88b",
+    "name": "ST - Infrastructure and Life Science - Sport",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "4f416069-f820-4a8d-ba9e-136bc7efefd8",
+    "name": "ST - High Value Opportunities Activities",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "3257b17f-7b28-4ff4-bd5b-3078f25b5854",
+    "name": "ST - Service Industries - Education and Experience Economy",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "0585e0e4-7029-4f8b-8542-6c43d5f0606f",
+    "name": "ST - Service Industries - Financial Professional and Business",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "9236c0e2-8204-4bdb-932a-d6f330ad54de",
+    "name": "ST - Service Industries - Retail and Lifestyle",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "0142f34b-a1b4-4b41-8a49-ecb47a3a93fd",
+    "name": "ST - Service Industries - Agri-Food Drink & Aid Funded Business",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "fff29d6b-eef5-4516-8c82-ec52344c3ff5",
+    "name": "ST - Director - Service Industries",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "646bec22-e157-4ac7-b528-46d7e2d0f3d6",
+    "name": "ST - Service Industries - Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "80e06eef-4f3b-42b1-8dfd-7a52460b6147",
+    "name": "ST - Service Industries - Creative Industries",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "409f60b9-93e7-492b-8380-014763930fdb",
+    "name": "ST - Advanced Manufacturing - Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "fc52cbc3-5b9c-45a5-a999-9a991a872052",
+    "name": "ST - Advanced Manufacturing - Advanced Engineering",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "6ff6682a-74c2-4e68-bb0e-e86fe80ce4c6",
+    "name": "ST - Advanced Manufacturing - ICT",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "adda930b-c911-4bbc-a117-5bc50ed1c57e",
+    "name": "ST - Advanced Manufacturing - Energy",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "7cbb3075-ccf2-4e5e-b792-c5d0d7f4fb28",
+    "name": "ST - Middle East",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "95fa3711-8dcc-4dd4-9c88-cadc5a3734b4",
+    "name": "ST - Central and Latin America",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "412b6908-a354-47ae-a9dc-777b443cce20",
+    "name": "ST - Russia - Turkey - Central Asia",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "b27906e9-aead-4dbf-8640-e70850c83702",
+    "name": "ST - Africa",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "0acd579b-0f38-487d-bbd5-8b0af1f88013",
+    "name": "ST - Dir - Emerging Markets - China - Southern Asia",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "c011c70e-dfd8-426a-b478-15db6b6e246e",
+    "name": "ST - Emerging Markets - China - Southern Asia - Support",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "4a3ccd76-559d-4552-886e-34181f42fd49",
+    "name": "ST - Emerging Markets",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "5b1aeb3c-dade-49d3-a663-9c17be1c2157",
+    "name": "ST - China",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "33b5a935-11ea-4da4-9690-6e043d08ae31",
+    "name": "ST - South Asia",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "2579c26a-57d7-46ba-ad02-b7f4fd26e718",
+    "name": "ST - South East Asia",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "91769b69-d3fb-4b69-9f97-9bfdbc4101b8",
+    "name": "ST - Dir - Developed Markets",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "c0c08ec5-7b94-4211-a598-6fe5714971dc",
+    "name": "ST - Developed Markets - Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "fe6f4afa-2feb-49d9-b7ff-823eaff6392a",
+    "name": "ST - North America - East Asia - Australasia - Caribbean",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "cdc35063-74e9-49a5-a667-bec8c1be163a",
+    "name": "ST - Europe",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "77be6c68-218f-4df1-87ae-b4600e60a8a1",
+    "name": "ST - Group Resources - Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "7f08fc97-bc89-4827-bd33-3201696ca040",
+    "name": "ST - E-Exporting Programme",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  },
+  {
+    "id": "af8ceddb-4015-4b6c-88d0-23357eb91e25",
+    "name": "ST - Marine",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Trade (TD or ST)",
+      "id": "a4839e09-e30e-492c-93b5-8ab2ef90b891"
+    }
+  }
+]

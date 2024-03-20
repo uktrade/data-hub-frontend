@@ -209,10 +209,6 @@ describe('Adding an export win from an export project', () => {
         cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
           'apiGetExportWin'
         )
-        cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-          { name: 'DIT Education' },
-          { name: 'Healthcare UK' },
-        ])
         cy.intercept('GET', `/api-proxy/v4/contact?company_id=${company.id}`, {
           results: [
             contactFaker({
@@ -221,17 +217,6 @@ describe('Adding an export win from an export project', () => {
             }),
           ],
         })
-        cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-          { name: 'Australia Consumer Goods & Retail: E004' },
-        ])
-        cy.intercept('GET', '/api-proxy/v4/metadata/support-type', [
-          {
-            name: 'Market entry advice and support – DIT/FCO in UK',
-          },
-        ])
-        cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-          { name: 'Afterburner' },
-        ])
       })
 
       it(
@@ -243,7 +228,7 @@ describe('Adding an export win from an export project', () => {
           fillOfficerDetails({
             leadOfficer: null, // pre-populated from the export project
             teamType: 'Investment (ITFG or IG)',
-            hqTeam: 'DIT Education',
+            hqTeam: 'ITFG - E-Business Projects Team',
             teamMembers: null, // pre-populated from the export project
           })
 
@@ -252,7 +237,7 @@ describe('Adding an export win from an export project', () => {
           fillCreditForThisWin({
             contributingOfficer: 'John',
             teamType: 'Trade (TD or ST)',
-            hqTeam: 'Healthcare UK',
+            hqTeam: 'TD - Events - Education',
           })
 
           clickContinueAndAssertUrl(customerDetailsStep)

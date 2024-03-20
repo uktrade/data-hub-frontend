@@ -10,13 +10,7 @@ import {
 describe('Officer details', () => {
   const { officerDetails } = formFields
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-      { name: 'DIT Education' },
-      { name: 'Healthcare UK' },
-    ])
-    cy.visit(officerDetailsStep)
-  })
+  beforeEach(() => cy.visit(officerDetailsStep))
 
   it('should render an officer details heading', () => {
     cy.get(officerDetails.heading).should('have.text', 'Officer details')
