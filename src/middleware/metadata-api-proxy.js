@@ -64,6 +64,7 @@ const ALLOWLIST = [
   '/v4/metadata/team-type',
   '/v4/metadata/hq-team-region-or-post',
   '/v4/metadata/win-type',
+  '/v4/metadata/winukregion',
   '/v4/metadata/business-potential',
   '/v4/metadata/support-type',
   '/v4/metadata/expected-value-relation',
