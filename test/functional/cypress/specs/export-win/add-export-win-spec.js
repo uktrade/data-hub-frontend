@@ -175,7 +175,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'officer-details',
           heading: 'Officer details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Lead officer name': 'David Meyer',
             'Team type': 'Investment (ITFG or IG)',
@@ -189,7 +189,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'credit-for-this-win',
           heading: 'Credit for this win',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Did any other teams help with this win?':
               'YesContributing teams and advisersContributing officer: John SmithTeam ' +
@@ -202,7 +202,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'customer-details',
           heading: 'Customer details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Contact name': 'Joseph Barker',
             'HQ location': 'Scotland',
@@ -216,7 +216,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'win-details',
           heading: 'Win details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             Destination: 'United States',
             'Date won': `${month}/${year}`,
@@ -238,7 +238,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'support-given',
           heading: 'Support given',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'HVC code': 'Australia Consumer Goods & Retail: E004',
             'What type of support was given?':

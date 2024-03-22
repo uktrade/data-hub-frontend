@@ -162,7 +162,7 @@ export const transformExportWinForForm = (exportWin) => ({
   name_of_export: exportWin.name_of_export,
   sector: idNameToValueLabel(exportWin.sector),
   // Support given
-  hvc: idNameToValueLabel(exportWin.hvc),
+  hvc: exportWin.hvc && idNameToValueLabel(exportWin.hvc), // Optional field
   type_of_support: exportWin.type_of_support.map(idNameToValueLabel),
   associated_programme: exportWin.associated_programme.map(idNameToValueLabel),
   is_personally_confirmed: exportWin.is_personally_confirmed

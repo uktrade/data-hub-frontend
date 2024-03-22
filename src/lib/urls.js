@@ -223,14 +223,21 @@ module.exports = {
       won: url('/exportwins/won'),
       sent: url('/exportwins/sent'),
       rejected: url('/exportwins/rejected'),
-      edit: url('/exportwins', '/:winId/edit'),
       details: url('/exportwins', '/:winId/details'),
       create: url('/companies', '/:companyId/exportwins/create'),
+      edit: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=check_before_sending'
+      ),
+      editSuccess: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit-success'
+      ),
       createFromExport: url(
         '/companies',
         '/:companyId/export/:exportId/exportwins/create'
       ),
-      success: url('/exportwins', '/:winId/success'),
+      createSuccess: url('/exportwins', '/:winId/success'),
       customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {
