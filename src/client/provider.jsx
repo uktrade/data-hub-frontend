@@ -1,12 +1,12 @@
 import React from 'react'
 import _ from 'lodash'
 import { configureStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 import { createReduxHistoryContext } from 'redux-first-history'
 import queryString from 'qs'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
@@ -51,8 +51,6 @@ const store = configureStore({
 })
 const history = createReduxHistory(store)
 
-const history = createReduxHistory(store)
-
 // TODO: Remove once DataHubProvider is implemented with createProvider
 const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
   sagaMiddleware.run(rootSaga(tasks))
@@ -87,6 +85,10 @@ export const createProvider = ({ tasks, history, preloadedState }) => {
 }
 
 // TODO: Re-implement this in with createProvider
+const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
+  location,
+  action,
+}))(Router)
 /**
  * Provides state management and routing infrastructure required by the
  * stateful/routed components.
@@ -109,7 +111,9 @@ const DataHubProvider = ({ tasks, children }) => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter history={history}>{children}</BrowserRouter>
+      <ConnectedReactRouter navigator={history}>
+        {children}
+      </ConnectedReactRouter>
     </Provider>
   )
 }
