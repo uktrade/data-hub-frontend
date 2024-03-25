@@ -6,7 +6,7 @@ const redisClient = require('../../lib/redis-client')
 module.exports = [
   {
     name: 'api',
-    healthCheck: () => axios.get(`${config.apiRoot}/ping.xml`),
+    healthCheck: () => axios.get(`${config.apiRoot}/pingdom/ping.xml`),
   },
   {
     name: 'redis',
