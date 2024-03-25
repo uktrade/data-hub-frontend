@@ -161,7 +161,7 @@
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-syntax-import-assertions": "^7.22.5",
     "@babel/plugin-transform-class-properties": "^7.23.3",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.23.4",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
     "@babel/plugin-transform-object-rest-spread": "^7.23.4",
     "@babel/plugin-transform-optional-chaining": "^7.23.4",
     "@babel/preset-env": "^7.23.7",
