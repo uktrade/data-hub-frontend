@@ -5,7 +5,7 @@ import { NewWindowLink } from '../../../components'
 
 export default ({ profileStatus, companyNumber }) =>
   profileStatus === 'published' ? (
-    <NewWindowLink href={urls.external.greatProfile(companyNumber)}>
+    <NewWindowLink href={urls.external.great.companyProfile(companyNumber)}>
       "Find a supplier" profile
     </NewWindowLink>
   ) : profileStatus === 'unpublished' ? (

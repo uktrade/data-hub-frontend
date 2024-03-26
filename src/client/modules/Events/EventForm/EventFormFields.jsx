@@ -26,7 +26,7 @@ export const EventFormFields = ({ values }) => (
       <p>
         Find{' '}
         <Link
-          href={urls.external.helpCentre.tradeagreementGuidance()}
+          href={urls.external.helpCentre.tradeAgreementGuidance}
           target="_blank"
           aria-label="This will open in a new window"
         >

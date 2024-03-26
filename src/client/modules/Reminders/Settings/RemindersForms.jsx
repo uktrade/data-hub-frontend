@@ -81,7 +81,7 @@ const RemindersForms = () => {
       </>
       <FooterLink
         headingText="Need Help?"
-        linkUrl={urls.external.reminderAndSettings}
+        linkUrl={urls.external.helpCentre.reminderAndSettings}
         linkText="guidance on reminders and email notifications"
       />
     </DefaultLayout>

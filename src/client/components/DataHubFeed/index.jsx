@@ -41,7 +41,7 @@ const DataHubFeed = ({ items, feedLimit = 5 }) => (
           ))}
         </UnorderedList>
         <NewWindowLink
-          href={urls.external.helpCentre.allUpdates()}
+          href={urls.external.helpCentre.allUpdates}
           data-test={`data-hub-feed-view-all`}
         >
           View all Data Hub updates

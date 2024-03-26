@@ -218,7 +218,7 @@ const StepInteractionDetails = ({
       : null
 
   const helpUrl = (position) =>
-    urls.external.helpCentre.policyFeedback() +
+    urls.external.helpCentre.policyFeedback +
     '?' +
     qs.stringify({
       ..._.pick(values, ['theme', 'kind']),

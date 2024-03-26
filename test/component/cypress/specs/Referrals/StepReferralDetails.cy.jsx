@@ -62,7 +62,7 @@ describe('StepReferralDetails component', () => {
             'Referrals are for when you want to ask another DBT advisor to help out an account you are working on.Read more guidance here (opens in new tab)'
           )
 
-        assertLink('referral-guidance', urls.external.referrals)
+        assertLink('referral-guidance', urls.external.helpCentre.referrals)
       })
 
       it('should display the headings and four fields', () => {

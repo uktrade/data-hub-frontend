@@ -1,4 +1,4 @@
-const fixtures = require('../../../fixtures')
+const { company } = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 
@@ -57,7 +57,7 @@ describe('Company Export tab', () => {
     'when viewing the export tab for an active company with no export information and 8 Export Wins',
     () => {
       beforeEach(() => {
-        visitExportIndex(fixtures.company.dnbCorp.id)
+        visitExportIndex(company.dnbCorp.id)
       })
 
       it('should render a meta title', () => {
@@ -68,15 +68,13 @@ describe('Company Export tab', () => {
         assertBreadcrumbs({
           Home: '/',
           Companies: urls.companies.index(),
-          [fixtures.company.dnbCorp.name]: urls.companies.detail(
-            fixtures.company.dnbCorp.id
-          ),
+          [company.dnbCorp.name]: urls.companies.detail(company.dnbCorp.id),
           Exports: null,
         })
       })
 
       it('should render the "Exports" table', () => {
-        assertExportsTable(fixtures.company.dnbCorp.id, [
+        assertExportsTable(company.dnbCorp.id, [
           { label: 'Export win category', value: 'None' },
           { label: 'great.gov.uk business profile', value: 'No profile' },
           { label: 'Export potential', value: 'No score given' },
@@ -90,12 +88,16 @@ describe('Company Export tab', () => {
           "The export potential score is a prediction of a company's likelihood of exporting, and was originally created for the Find Exporters tool. DBT's data science team compared all HMRC export information with the features of all UK companies to find patterns; they then repeatedly tested their model against a subset of known-good data to improve it. The scores are as follows:Very High - Most companies like this one are exportersHigh - This business shares some features with successful exportersMedium - Some businesses that look like this one export, others don'tLow - This business shares many features with companies that do not exportVery Low - Most of the businesses like this aren't exportersWe are continuing to improve the algorithm so please do share your feedback or let us know of any anomalies through the support channel."
         )
         cy.contains('Find Exporters tool')
-          .should('have.attr', 'href', urls.external.findExporters())
+          .should(
+            'have.attr',
+            'href',
+            urls.external.dataWorkspace.findExporters
+          )
           .should('have.attr', 'aria-label', 'opens in a new tab')
       })
 
       it('should render the "Export countries information table', () => {
-        assertExportCountriesTable(fixtures.company.dnbCorp.id, [
+        assertExportCountriesTable(company.dnbCorp.id, [
           { label: 'Currently exporting to', value: 'None' },
           { label: 'Future countries of interest', value: 'None' },
           { label: 'Countries of no interest', value: 'None' },
@@ -106,7 +108,7 @@ describe('Company Export tab', () => {
         cy.contains('View full export countries history').should(
           'have.attr',
           'href',
-          urls.companies.exports.history.index(fixtures.company.dnbCorp.id)
+          urls.companies.exports.history.index(company.dnbCorp.id)
         )
       })
 
@@ -125,7 +127,7 @@ describe('Company Export tab', () => {
         cy.contains('Record your win').should(
           'have.attr',
           'href',
-          urls.external.exportWins()
+          urls.external.exportWins
         )
         cy.contains('Record your win')
           .should('have.attr', 'target', '_blank')
@@ -251,11 +253,11 @@ describe('Company Export tab', () => {
     'when viewing the export tab for an active company with export information in each field',
     () => {
       beforeEach(() => {
-        cy.visit(urls.companies.exports.index(fixtures.company.dnbLtd.id))
+        cy.visit(urls.companies.exports.index(company.dnbLtd.id))
       })
 
       it('should render the "Exports" table', () => {
-        assertExportsTable(fixtures.company.dnbLtd.id, [
+        assertExportsTable(company.dnbLtd.id, [
           { label: 'Export win category', value: 'Increasing export turnover' },
           {
             label: 'great.gov.uk business profile',
@@ -269,7 +271,7 @@ describe('Company Export tab', () => {
         cy.contains('"Find a supplier" profile').should(
           'have.attr',
           'href',
-          urls.external.greatProfile(fixtures.company.dnbLtd.company_number)
+          urls.external.great.companyProfile(company.dnbLtd.company_number)
         )
       })
 
@@ -277,12 +279,12 @@ describe('Company Export tab', () => {
         cy.contains('View full export countries history').should(
           'have.attr',
           'href',
-          urls.companies.exports.history.index(fixtures.company.dnbLtd.id)
+          urls.companies.exports.history.index(company.dnbLtd.id)
         )
       })
 
       it('should render the "Exports countries information" table', () => {
-        assertExportCountriesTable(fixtures.company.dnbLtd.id, [
+        assertExportCountriesTable(company.dnbLtd.id, [
           { label: 'Currently exporting to', value: 'France, Spain' },
           { label: 'Future countries of interest', value: 'Germany' },
           { label: 'Countries of no interest', value: 'Sweden' },
@@ -293,7 +295,7 @@ describe('Company Export tab', () => {
 
   context('when viewing exports for an archived company', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.exports.index(company.archivedLtd.id))
     })
 
     it('the edit exports link should not exist', () => {
@@ -330,7 +332,7 @@ describe('Company Export tab', () => {
 
     context('when the API for Export Wins returns a 501', () => {
       before(() => {
-        visitExports(fixtures.company.lambdaPlc.id)
+        visitExports(company.lambdaPlc.id)
       })
 
       it('shold not have an Export Wins list', () => {
@@ -342,37 +344,37 @@ describe('Company Export tab', () => {
 
     context('when the API for Export Wins returns a 500', () => {
       before(() => {
-        visitExports(fixtures.company.minimallyMinimalLtd.id)
+        visitExports(company.minimallyMinimalLtd.id)
       })
 
       it('should show an error message', () => {
-        assertErrorMessage(fixtures.company.minimallyMinimalLtd.name)
+        assertErrorMessage(company.minimallyMinimalLtd.name)
       })
     })
 
     context('when the API for Export Wins returns a 502', () => {
       before(() => {
-        visitExports(fixtures.company.investigationLimited.id)
+        visitExports(company.investigationLimited.id)
       })
 
       it('should show an error message', () => {
-        assertErrorMessage(fixtures.company.investigationLimited.name)
+        assertErrorMessage(company.investigationLimited.name)
       })
     })
 
     context('when the API for Export Wins returns a 404', () => {
       before(() => {
-        visitExports(fixtures.company.oneListCorp.id)
+        visitExports(company.oneListCorp.id)
       })
 
       it('should show an error message', () => {
-        assertErrorMessage(fixtures.company.oneListCorp.name)
+        assertErrorMessage(company.oneListCorp.name)
       })
     })
 
     context('When there is more than one page of results', () => {
       beforeEach(() => {
-        visitExports(fixtures.company.marsExportsLtd.id)
+        visitExports(company.marsExportsLtd.id)
       })
 
       it('should not display a download data header', () => {

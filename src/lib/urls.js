@@ -78,21 +78,25 @@ module.exports = {
     index: url('/testing'),
   },
   external: {
-    greatProfile: (id) =>
-      `https://www.great.gov.uk/international/trade/suppliers/${id}`,
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
-    findExporters: () =>
-      'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
-    exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
-    dataWorkspace: (id) =>
-      `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
+    exportWins: 'https://www.exportwins.service.trade.gov.uk/',
     omis: 'https://omis.trade.gov.uk/',
+    dataWorkspace: {
+      findExporters:
+        'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b',
+      accountPlans: (id) =>
+        `https://data.trade.gov.uk/visualisations/link/e69bbfde-0e68-49d3-ad81-ddffbad6bac6#p.CompanyID=${id}`,
+    },
     nationalArchives: {
+      copyright:
+        'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
       openGovLicence:
-        'http://www.nationalarchives.gov.uk/doc/open-government-licence',
+        'https://www.nationalarchives.gov.uk/doc/open-government-licence',
     },
     great: {
+      companyProfile: (id) =>
+        `https://www.great.gov.uk/international/trade/suppliers/${id}`,
       privacyPolicy: 'https://www.great.gov.uk/uk/privacy-policy/',
     },
     govUkHomepage: 'https://www.gov.uk/',
@@ -101,41 +105,37 @@ module.exports = {
         'https://people.trade.gov.uk/teams/department-for-international-trade',
       accountManagement:
         'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/',
-      accountManagementStrategyTeam:
-        'https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team',
     },
     helpCentre: {
       community: {
-        roadmap: () =>
+        roadmap:
           'https://data-services-help.trade.gov.uk/data-hub/updates/roadmap/data-hub-roadmap/ ',
-        feedback: () =>
+        feedback:
           'https://data-services-help.trade.gov.uk/data-hub/crm-community/feedback-or-propose-changes',
-        principles: () =>
+        principles:
           'https://data-services-help.trade.gov.uk/data-hub/crm-community/crm-principles',
-        training: () =>
+        training:
           'https://data-services-help.trade.gov.uk/data-hub/crm-community/training',
       },
-      accessibilityStatement: () =>
+      accessibilityStatement:
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/data-hub-accessibility-statement/data-hub-accessibility-statement/',
-      dhHomepage: () => 'https://data-services-help.trade.gov.uk/data-hub/',
-      policyFeedback: () =>
+      dhHomepage: 'https://data-services-help.trade.gov.uk/data-hub/',
+      policyFeedback:
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
-      tradeagreementGuidance: () =>
+      tradeAgreementGuidance:
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/trade-agreement-activity/recording-trade-agreement-activity/',
-      cookies: () =>
+      cookies:
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-cookie-policy/',
-      privacyNotice: () =>
+      privacyNotice:
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/data-hub-privacy-notice/',
-      allUpdates: () =>
+      allUpdates:
         'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/',
+      referrals:
+        'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/',
+      reminderAndSettings:
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
     },
-    copyright:
-      'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
-    referrals:
-      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/',
-    reminderAndSettings:
-      'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
-    euVIES: 'http://ec.europa.eu/taxation_customs/vies/',
+    euVIES: 'https://ec.europa.eu/taxation_customs/vies/',
   },
 
   dashboard: {
