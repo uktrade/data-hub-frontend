@@ -1,7 +1,7 @@
 import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'
@@ -88,7 +88,6 @@ const _Form = ({
 }) => {
   const location = useLocation()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const qsParams = qs.parse(location.search.slice(1))
 
@@ -101,15 +100,17 @@ const _Form = ({
   useEffect(() => {
     if (showStepInUrl) {
       if (qsParams.step) {
-        goToStep(qsParams.step)
+        goToStep(qsParams.step || steps[initialStepIndex])
       } else {
-        if (Object.keys(qsParams).length !== 0) {
-          searchParams.set(qs.stringify(...qsParams))
-        }
-        if (steps[initialStepIndex]) {
-          searchParams.set('step', steps[initialStepIndex])
-        }
-        setSearchParams(searchParams, { replace: true })
+        navigate(
+          {
+            search: qs.stringify({
+              ...qsParams,
+              step: steps[initialStepIndex],
+            }),
+          },
+          { replace: true }
+        )
       }
     }
   }, [showStepInUrl, qsParams.step, steps])

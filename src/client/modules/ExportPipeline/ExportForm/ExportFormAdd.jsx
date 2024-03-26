@@ -11,6 +11,7 @@ import {
 } from '../../Companies/CompanyDetails/state'
 import { state2props } from './state'
 import ExportFormFields from './ExportFormFields'
+import withRouter from './withRouter'
 
 const DISPLAY_ADD_EXPORT = 'Add export'
 
@@ -79,4 +80,4 @@ const ExportFormAdd = ({ exportItem }) => {
   )
 }
 
-export default connect(state2props)(ExportFormAdd)
+export default withRouter(connect(state2props)(ExportFormAdd))
