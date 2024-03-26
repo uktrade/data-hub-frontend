@@ -32,10 +32,10 @@ export const overwriteObjectWithSessionStorageValues = (
   return { ...transformAPIValuesForForm(exportItem) }
 }
 
-export const state2props = (state, { location }) => {
+export const state2props = (state, { router }) => {
   const company = state[COMPANY_DETAILS_ID].company
   const exportItem = state[EXPORT_DETAILS_ID].exportItem
-  const searchParams = new URLSearchParams(location.search)
+  const searchParams = new URLSearchParams(router.location.search)
 
   if (exportItem) {
     return {
