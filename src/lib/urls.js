@@ -225,6 +225,33 @@ module.exports = {
       rejected: url('/exportwins/rejected'),
       details: url('/exportwins', '/:winId/details'),
       create: url('/companies', '/:companyId/exportwins/create'),
+      createFromExport: url(
+        '/companies',
+        '/:companyId/export/:exportId/exportwins/create'
+      ),
+      createSuccess: url('/exportwins', '/:winId/success'),
+      customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
+      editOfficerDetails: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=officer_details'
+      ),
+      editCreditForThisWin: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=credit_for_this_win'
+      ),
+      editCustomerDetails: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=customer_details'
+      ),
+      editWinDetails: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=win_details'
+      ),
+      editSupportProvided: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=support_provided'
+      ),
+      // TODO: rename this to editSummary and rename check_before_sending to summary
       edit: url(
         '/companies',
         '/:companyId/exportwins/:winId/edit?step=check_before_sending'
@@ -233,12 +260,6 @@ module.exports = {
         '/companies',
         '/:companyId/exportwins/:winId/edit-success'
       ),
-      createFromExport: url(
-        '/companies',
-        '/:companyId/export/:exportId/exportwins/create'
-      ),
-      createSuccess: url('/exportwins', '/:winId/success'),
-      customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {
       index: url('/companies', '/:companyId/overview'),

@@ -1,17 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'govuk-react'
+import styled from 'styled-components'
+import { FONT_SIZE } from '@govuk-react/constants'
+import pluralize from 'pluralize'
 
 import { state2props, TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
-import { DefaultLayout, Form, FormLayout } from '../../../components'
-import { transformFormValuesForAPI } from './transformers'
-import urls from '../../../../lib/urls'
-
+import { steps, EMAIL } from './constants'
 import CheckBeforeSendingStep from './CheckBeforeSendingStep'
+import { transformFormValuesForAPI } from './transformers'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
 import OfficerDetailsStep from './OfficerDetailsStep'
 import WinDetailsStep from './WinDetailsStep'
+import urls from '../../../../lib/urls'
+import {
+  Form,
+  FormLayout,
+  DefaultLayout,
+  StatusMessage,
+} from '../../../components'
+
+const Spacer = styled('div')({
+  marginTop: 10,
+})
+
+const StyledStatusMessage = styled(StatusMessage)({
+  fontSize: FONT_SIZE.SIZE_20,
+  fontWeight: 700,
+  marginTop: 25,
+  marginBottom: 5,
+})
 
 const ExportWinForm = ({
   heading,
@@ -21,6 +41,8 @@ const ExportWinForm = ({
   companyId,
   exportWinId,
   breadcrumbs,
+  currentStepName,
+  excludedStepFields,
   initialValuesTaskName,
   initialValuesPayload,
   csrfToken,
@@ -32,12 +54,32 @@ const ExportWinForm = ({
     companyId,
     exportWinId,
   }
+
   return (
     <DefaultLayout
       pageTitle={heading}
       heading={heading}
       subheading={subheading}
       breadcrumbs={breadcrumbs}
+      localHeaderChildren={
+        isEditing ? (
+          currentStepName === steps.CHECK_BEFORE_SENDING ? (
+            <StyledStatusMessage>
+              To edit an export win
+              <Spacer>
+                Edit each section that needs changing then return to the summary
+                page. When you are happy with all the changes save the page.
+              </Spacer>
+            </StyledStatusMessage>
+          ) : excludedStepFields ? (
+            <StyledStatusMessage>
+              Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need
+              to update the {pluralize('section', excludedStepFields.length)}:{' '}
+              {excludedStepFields.join(', ')}
+            </StyledStatusMessage>
+          ) : null
+        ) : null
+      }
     >
       <FormLayout>
         <Form

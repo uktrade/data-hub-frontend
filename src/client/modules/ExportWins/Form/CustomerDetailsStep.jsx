@@ -13,7 +13,7 @@ import {
   WinUKRegions,
 } from '../../../components/Resource'
 
-const CustomerDetailsStep = ({ companyId }) => {
+const CustomerDetailsStep = ({ companyId, isEditing }) => {
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
       <H3 data-test="step-heading">Customer details</H3>
@@ -57,15 +57,17 @@ const CustomerDetailsStep = ({ companyId }) => {
         field={FieldTypeahead}
         resource={BusinessPotentialResource}
       />
-      <ResourceOptionsField
-        name="export_experience"
-        id="export-experience"
-        label="Export experience"
-        required="Select export experience"
-        hint="Your customer will be asked to confirm this information."
-        field={FieldTypeahead}
-        resource={ExportExperienceResource}
-      />
+      {!isEditing && (
+        <ResourceOptionsField
+          name="export_experience"
+          id="export-experience"
+          label="Export experience"
+          required="Select export experience"
+          hint="Your customer will be asked to confirm this information."
+          field={FieldTypeahead}
+          resource={ExportExperienceResource}
+        />
+      )}
     </Step>
   )
 }
