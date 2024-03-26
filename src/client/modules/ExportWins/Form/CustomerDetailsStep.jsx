@@ -52,8 +52,8 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => {
       <ResourceOptionsField
         name="business_potential"
         id="business-potential"
-        label="Export potential"
-        required="Select export potential"
+        label="Medium-sized and high potential companies"
+        required="Select medium-sized and high potential companies"
         field={FieldTypeahead}
         resource={BusinessPotentialResource}
       />
