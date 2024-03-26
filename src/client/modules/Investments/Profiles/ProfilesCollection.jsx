@@ -47,9 +47,8 @@ const LargeCapitalProfileCollection = ({
   isComplete,
   filterOptions,
 }) => {
-  const location = useLocation
-  const qsParams = qs.parse(location.search)
-  // const qsParams = qs.parse(location.search.slice(1))
+  const location = useLocation()
+  const qsParams = qs.parse(location.search.slice(1))
   const selectedCountries = resolveSelectedOptions(
     qsParams[QS_PARAMS.countryOfOrigin],
     filterOptions.countries
