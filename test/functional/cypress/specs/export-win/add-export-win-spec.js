@@ -171,6 +171,10 @@ describe('Adding an export win', () => {
         )
       })
 
+      it('should not render an edit status message', () => {
+        cy.get('[data-test="status-message"]').should('not.exist')
+      })
+
       it('should render an officer details table', () => {
         assertSummaryTable({
           dataTest: 'officer-details',

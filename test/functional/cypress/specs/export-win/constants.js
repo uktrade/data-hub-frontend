@@ -40,6 +40,7 @@ export const formFields = {
   },
   customerDetails: {
     heading: '[data-test="step-heading"]',
+    editStatusMessage: '[data-test="status-message"]',
     contacts: '[data-test="field-company_contacts"]',
     contactHint: '[data-test="contact-hint"]',
     location: '[data-test="field-customer_location"]',
@@ -48,6 +49,7 @@ export const formFields = {
   },
   winDetails: {
     heading: '[data-test="step-heading"]',
+    editStatusMessage: '[data-test="status-message"]',
     hint: '[data-test="hint"]',
     country: '[data-test="field-country"]',
     date: '[data-test="field-date"]',
