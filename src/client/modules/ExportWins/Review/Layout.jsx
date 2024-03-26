@@ -10,7 +10,7 @@ const Grid = styled.div({
   minHeight: '100vh',
   display: 'grid',
   gridTemplateRows: 'auto auto 1fr minmax(min-content, 30px)',
-  gridTemplateColumns: `1fr min(100vw, calc(960px + ${SPACING.SCALE_3} * 2)) 1fr`,
+  gridTemplateColumns: `1fr min(100vw, calc(960px + ${SPACING.SCALE_5} * 2)) 1fr`,
   gridTemplateAreas: `
     ". main-bar ."
     ". header ."
@@ -31,7 +31,7 @@ const MainBar = styled.div({
   fontWeight: FONT_WEIGHTS.bold,
   fontSize: FONT_SIZE.SIZE_27,
   color: WHITE,
-  padding: SPACING.SCALE_3,
+  padding: SPACING.SCALE_5,
 })
 
 const HeaderBackground = styled.div({
@@ -43,7 +43,7 @@ const HeaderBackground = styled.div({
 const Header = styled.header({
   gridArea: 'header',
   alignSelf: 'center',
-  padding: SPACING.SCALE_3,
+  padding: SPACING.SCALE_5,
   paddingBottom: SPACING.SCALE_5,
 })
 
@@ -54,6 +54,9 @@ const Main = styled.main({
 
 const GridCellFooter = styled(Footer)({
   gridArea: 'footer',
+  ul: {
+    padding: 0,
+  },
 })
 
 const Title = styled(H1)({
