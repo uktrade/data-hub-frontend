@@ -1,24 +1,19 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { Step, FieldTypeahead } from '../../../components'
+import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
 import {
-  UKRegionsResource,
   CompanyContactsResource,
   ExportExperienceResource,
   BusinessPotentialResource,
+  WinUKRegions,
 } from '../../../components/Resource'
 
-const CustomerDetailsStep = () => {
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
-  const companyId = queryParams.company
-
+const CustomerDetailsStep = ({ companyId }) => {
   return (
     <Step name={steps.CUSTOMER_DETAILS}>
       <H3 data-test="step-heading">Customer details</H3>
@@ -27,7 +22,7 @@ const CustomerDetailsStep = () => {
         id={companyId}
         label="Company contacts"
         hint="This contact will be emailed to approve the win."
-        required="Select a contact"
+        required="Select a company contact"
         placeholder="Select contact"
         resource={CompanyContactsResource}
         field={FieldTypeahead}
@@ -44,13 +39,14 @@ const CustomerDetailsStep = () => {
         To select a customer contact name, it must have already been added to
         Data Hub. If not listed, go to the company page to add them.
       </StyledHintParagraph>
-      <ResourceOptionsField
+      <WinUKRegions.FieldTypeahead
         name="customer_location"
         id="customer-location"
         label="HQ location"
         required="Select HQ location"
-        field={FieldTypeahead}
-        resource={UKRegionsResource}
+        resultToOptions={(result) =>
+          idNamesToValueLabels(result.filter(({ name }) => name !== 'All'))
+        }
         fullWidth={true}
       />
       <ResourceOptionsField

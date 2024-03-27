@@ -135,12 +135,12 @@ describe('Edit History', () => {
   })
 
   context('when the user has unarchived a company', () => {
-    assertChanges(8, 'Archived', 'Archived', 'Not Archived')
+    assertChanges(8, 'Archived', 'Archived', 'Not archived')
     assertChanges(8, 'Archived reason', 'Archived by mistake', NOT_SET)
   })
 
   context('when the user has archived a company', () => {
-    assertChanges(9, 'Archived', 'Not Archived', 'Archived')
+    assertChanges(9, 'Archived', 'Not archived', 'Archived')
     assertChanges(9, 'Archived reason', NOT_SET, 'Company is dissolved')
   })
 

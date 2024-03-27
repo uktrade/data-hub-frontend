@@ -247,6 +247,14 @@ import {
   getTradeAgreement,
   getExportYears,
   getExportExperience,
+  getExperience,
+  getRating,
+  getMarketingSource,
+  getWithoutOurSupport,
+  getSupportType,
+  getHVC,
+  getAssociatedProgramme,
+  getHqTeamRegionOrPost,
 } from './routes/v4/metadata/index.js'
 import { searchCompanies as __companies } from './routes/v4/search/company.js'
 import { companiesAutocomplete } from './routes/v4/search/company/autocomplete.js'
@@ -291,6 +299,8 @@ import { tasks } from './routes/v4/search/tasks.js'
 import {
   getExportWin,
   getExportWinCollection,
+  getExportWinReview,
+  patchExportWinReview,
 } from './routes/v4/export-win/export-win.js'
 
 // Data store service (github.com/uktrade/data-store-service)
@@ -443,6 +453,7 @@ app.get('/v4/metadata/evidence-tag', _evidenceTag)
 app.get('/v4/metadata/employee-range', _employeeRange)
 app.get('/v4/metadata/country', _country)
 app.get('/v4/metadata/uk-region', _ukRegion)
+app.get('/v4/metadata/winukregion', _ukRegion)
 app.get('/v4/metadata/administrative-area', getAdministrativeArea)
 app.get('/v4/metadata/referral-source-website', _referralSourceWebsite)
 app.get('/v4/metadata/referral-source-marketing', _referralSourceMarketing)
@@ -512,6 +523,16 @@ app.get('/v4/metadata/trade-agreement', getTradeAgreement)
 app.get('/v4/metadata/export-years', getExportYears)
 app.get('/v4/metadata/export-experience', getExportExperience)
 
+app.get('/v4/metadata/experience', getExperience)
+app.get('/v4/metadata/rating', getRating)
+app.get('/v4/metadata/marketing-source', getMarketingSource)
+app.get('/v4/metadata/without-our-support', getWithoutOurSupport)
+
+app.get('/v4/metadata/support-type', getSupportType)
+app.get('/v4/metadata/hvc', getHVC)
+app.get('/v4/metadata/associated-programme', getAssociatedProgramme)
+app.get('/v4/metadata/hq-team-region-or-post', getHqTeamRegionOrPost)
+
 // Ping
 app.get('/ping.xml', ping)
 
@@ -532,8 +553,10 @@ app.patch('/v4/event/:eventId', patchEvent)
 app.post('/v4/event', createEvent)
 
 // V4 Export Win
-app.get('/v4/export_win', getExportWinCollection)
+app.get('/v4/export-win', getExportWinCollection)
 app.get('/v4/export-win/:exportWinId', getExportWin)
+app.get('/v4/export-win/review/:token', getExportWinReview)
+app.patch('/v4/export-win/review/:token', patchExportWinReview)
 
 // V3 Feature Flag
 app.get('/v3/feature-flag', featureFlag)

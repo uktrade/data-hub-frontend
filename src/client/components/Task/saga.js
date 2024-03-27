@@ -47,7 +47,9 @@ function* startTask(task, action) {
         type: TASK__ERROR,
         id,
         name,
-        errorMessage: error,
+        error,
+        // FIXME: This should be handled on the renderError level
+        errorMessage: typeof error === 'string' ? error : error.message,
       })
     }
   }

@@ -220,12 +220,24 @@ module.exports = {
     },
     exportWins: {
       index: url('/exportwins'),
-      create: url('/exportwins/create'),
-      details: url('/exportwins', '/:winId/details'),
-      rejected: url('/exportwins/rejected'),
-      sent: url('/exportwins/sent'),
       won: url('/exportwins/won'),
-      edit: url('/exportwins', '/:winId/edit'),
+      sent: url('/exportwins/sent'),
+      rejected: url('/exportwins/rejected'),
+      details: url('/exportwins', '/:winId/details'),
+      create: url('/companies', '/:companyId/exportwins/create'),
+      edit: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit?step=check_before_sending'
+      ),
+      editSuccess: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/edit-success'
+      ),
+      createFromExport: url(
+        '/companies',
+        '/:companyId/export/:exportId/exportwins/create'
+      ),
+      createSuccess: url('/exportwins', '/:winId/success'),
       customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
     },
     overview: {

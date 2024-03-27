@@ -52,8 +52,14 @@ const startOnRenderPropTypes = {
  * @typedef Task
  * @property {'progress' | 'error'} status - The current status of the task
  * @property {Boolean} progress - Whether the task is in progress
- * @property {Boolean} error - Whether the task is in error state
+ * @property {Boolean} hasError - Whether the task is in error state
  * @property {(name, id, StartOptions) => void} start - Starts a task.
+ * @property {any} [payload=undefined] - The value of the payload with which the task was started.
+ * @property {any} [error=undefined] - The value with wich the task rejected
+ * @property {string} [errorMessage=undefined] - Error message extracted from {error.message}.
+ * @property {string} [onSuccessDispatch=undefined] - Action that will be dispatched when the task resolves
+ * @property {() => void} [dismissError=undefined] - When when the task is in `state === 'error'`
+ * will reset the tasks state.
  */
 
 /**
@@ -143,7 +149,7 @@ const Task = connect(
     return {
       ...taskState,
       progress: taskState.status === 'progress',
-      error: taskState.status === 'error',
+      hasError: taskState.status === 'error',
       start: (options) => start(name, id, options),
       cancel: () => cancel(name, id),
       retry: () => start(name, id, taskState),
@@ -240,11 +246,12 @@ Task.Status = ({
         start,
         status,
         progress,
-        error,
+        hasError,
         payload,
         errorMessage,
         onSuccessDispatch,
         dismissError,
+        error,
       } = getTask(name, id)
 
       const retry = () =>
@@ -262,13 +269,15 @@ Task.Status = ({
           {!progressOverlay &&
             progress &&
             renderProgress({ message: progressMessage, noun })}
-          {error &&
+          {hasError &&
+            // FIXME: This is shouldn't be done here and it shouldn't be done this way
             (errorMessage ===
             'You do not have permission to perform this action.' ? (
               <AccessDenied />
             ) : (
               renderError({
                 noun,
+                error,
                 errorMessage,
                 retry: !noRetry && retry,
                 dismiss: !noDismiss && dismissError,

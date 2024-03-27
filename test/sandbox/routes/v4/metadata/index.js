@@ -52,10 +52,19 @@ import capitalInvestmentDesiredDealRoles from '../../../fixtures/v4/metadata/cap
 import capitalInvestmentAssetClassInterest from '../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json' assert { type: 'json' }
 import capitalInvestmentValueTypes from '../../../fixtures/metadata/capital-investment-opportunity-value-types.json' assert { type: 'json' }
 import capitalInvestmentStatusTypes from '../../../fixtures/metadata/capital-investment-opportunity-status-types.json' assert { type: 'json' }
+import experience from '../../../fixtures/v4/metadata/experience.json' assert { type: 'json' }
+import rating from '../../../fixtures/v4/metadata/rating.json' assert { type: 'json' }
+import marketingSource from '../../../fixtures/v4/metadata/marketing-source.json' assert { type: 'json' }
 import oneListTier from '../../../fixtures/v4/metadata/one-list-tier.json' assert { type: 'json' }
 import tradeAgreement from '../../../fixtures/v4/metadata/trade-agreement.json' assert { type: 'json' }
 import estimatedYears from '../../../fixtures/v4/export/estimated-years.json' assert { type: 'json' }
 import exportExperience from '../../../fixtures/v4/export/export-experience.json' assert { type: 'json' }
+import withoutOurSupport from '../../../fixtures/v4/export/without-our-support.json' assert { type: 'json' }
+import supportType from '../../../fixtures/v4/metadata/support-type.json' assert { type: 'json' }
+import hvc from '../../../fixtures/v4/metadata/hvc.json' assert { type: 'json' }
+import associatedProgramme from '../../../fixtures/v4/metadata/associated-programme.json' assert { type: 'json' }
+import hqTeamRegionOrPostInvestment from '../../../fixtures/v4/metadata/hq-team-region-or-post-investment.json' assert { type: 'json' }
+import hqTeamRegionOrPostTrade from '../../../fixtures/v4/metadata/hq-team-region-or-post-trade.json' assert { type: 'json' }
 
 export const getLikelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -292,4 +301,40 @@ export const getExportYears = function (req, res) {
 
 export const getExportExperience = function (req, res) {
   res.json(exportExperience)
+}
+
+export const getExperience = function (req, res) {
+  res.json(experience)
+}
+
+export const getRating = function (req, res) {
+  res.json(rating)
+}
+
+export const getMarketingSource = function (req, res) {
+  res.json(marketingSource)
+}
+
+export const getWithoutOurSupport = function (req, res) {
+  res.json(withoutOurSupport)
+}
+
+export const getSupportType = function (req, res) {
+  res.json(supportType)
+}
+
+export const getHVC = function (req, res) {
+  res.json(hvc)
+}
+
+export const getAssociatedProgramme = function (req, res) {
+  res.json(associatedProgramme)
+}
+
+export const getHqTeamRegionOrPost = function (req, res) {
+  const hqTeamRegionOrPost = {
+    'a4839e09-e30e-492c-93b5-8ab2ef90b891': hqTeamRegionOrPostTrade, // Trade (TD or ST)
+    '42bdaf2e-ae19-4589-9840-5dbb67b50add': hqTeamRegionOrPostInvestment, // Investment (ITFG or IG)
+  }
+  res.json(hqTeamRegionOrPost[req.query.team_type] || {})
 }

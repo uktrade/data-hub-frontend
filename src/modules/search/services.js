@@ -26,6 +26,18 @@ const buildOptions = (isAggregation, searchUrl, body, entity) => {
   }
 }
 
+const mergeSectorAndSubSectorParams = (requestBody) => {
+  const { sub_sector_descends, sector_descends, ...reqBody } = requestBody
+  const mergedSectors = [
+    ...(sector_descends ? sector_descends : []),
+    ...(sub_sector_descends ? sub_sector_descends : []),
+  ]
+
+  return mergedSectors.length
+    ? { ...reqBody, sector_descends: mergedSectors }
+    : reqBody
+}
+
 function search({
   req,
   searchTerm: term = '',
@@ -68,7 +80,7 @@ function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   if (searchEntity == 'investment_project') {
     transformedRequestBody = transformLandDateFilters(requestBody)
   } else {
-    transformedRequestBody = requestBody
+    transformedRequestBody = mergeSectorAndSubSectorParams(requestBody)
   }
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
   // If the requested CSV export should contain policy feedback, we need to call
@@ -125,4 +137,5 @@ module.exports = {
   exportSearch,
   searchAutocomplete,
   searchDnbCompanies,
+  mergeSectorAndSubSectorParams,
 }

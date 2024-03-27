@@ -20,17 +20,17 @@ export const delay = curry((duration, task, payload) =>
 )
 
 export const catchApiError = ({ response, message }) =>
-  Promise.reject(
-    response?.data?.detail ||
+  Promise.reject({
+    message:
+      response?.data?.detail ||
       response?.text ||
       response?.data?.non_field_errors ||
-      (response?.data && {
-        errors: response.data,
-        httpStatusCode: response.status,
-      }) ||
       response?.statusText ||
-      message
-  )
+      response.data ||
+      message,
+    data: response.data,
+    httpStatusCode: response.status,
+  })
 
 /**
  * A custom Axios instance for easy access to the `/api-proxy` endpoint.

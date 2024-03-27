@@ -1,6 +1,3 @@
-import { createEntityResource } from './Resource'
+import { createCollectionResource } from './Resource'
 
-export default createEntityResource(
-  'ContactAuditHistory',
-  (id) => `v3/contact/${id}/audit`
-)
+export default createCollectionResource('contact change', (id) => id)

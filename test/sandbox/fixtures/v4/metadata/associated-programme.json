@@ -1,0 +1,562 @@
+[
+  {
+    "id": "74b3a682-f954-48f5-9aa4-00660c496c68",
+    "name": "Not applicable",
+    "disabled_on": null
+  },
+  {
+    "id": "b6f5c31a-aa45-4ae0-89bd-2eb3ab943f76",
+    "name": "Afterburner",
+    "disabled_on": null
+  },
+  {
+    "id": "e29aa1cf-4206-4b00-a41f-b5997b8ee332",
+    "name": "Aid Funded Business Service (AFBS)",
+    "disabled_on": null
+  },
+  {
+    "id": "40cb5fcf-9a7a-48d2-ad55-737405c64bd1",
+    "name": "Asia-Pacific Energy & Clean Growth",
+    "disabled_on": null
+  },
+  {
+    "id": "a28a21c8-63be-4ac9-99ba-0fe3bbfb5e0b",
+    "name": "British Business Network",
+    "disabled_on": null
+  },
+  {
+    "id": "a4c07157-9cd9-4a5b-b899-4a2092ecbeb7",
+    "name": "British Defence Staff - US",
+    "disabled_on": null
+  },
+  {
+    "id": "20610984-8835-41f5-bd38-49f34bdbc847",
+    "name": "Business Win FCO Involvement",
+    "disabled_on": null
+  },
+  {
+    "id": "28fbb072-3c63-43aa-9006-968051eda79a",
+    "name": "CEN Adv Manufacturing",
+    "disabled_on": null
+  },
+  {
+    "id": "d2ff110c-f25f-4d42-a67d-0a7cbbae2fad",
+    "name": "CEN Defence & Security",
+    "disabled_on": null
+  },
+  {
+    "id": "e0fa617a-7f0d-4bbf-96e7-970ee8dc73e1",
+    "name": "CEN Health & Life Science",
+    "disabled_on": null
+  },
+  {
+    "id": "9862011f-38fa-4e93-a02c-e5aa1bbced1c",
+    "name": "CEN Infrastructure",
+    "disabled_on": null
+  },
+  {
+    "id": "dfd2a6f9-b7c1-42aa-8a09-cd4c6cf20c04",
+    "name": "CEN Security",
+    "disabled_on": null
+  },
+  {
+    "id": "671be2c1-8964-4fbf-96ef-95dadcc55c29",
+    "name": "CEN Services",
+    "disabled_on": null
+  },
+  {
+    "id": "068bb557-a712-4c3f-9324-b592e02a199c",
+    "name": "Clean Growth Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "ec451127-948d-4ea1-b7fe-46113ddfda87",
+    "name": "Commonwealth Games",
+    "disabled_on": null
+  },
+  {
+    "id": "34a41aa8-cf75-44b8-87c8-bb5682366f3e",
+    "name": "Communication and Marketing",
+    "disabled_on": null
+  },
+  {
+    "id": "c9231409-656d-4608-8489-f6463335269f",
+    "name": "Design our future",
+    "disabled_on": null
+  },
+  {
+    "id": "2c276779-324a-4b53-b70e-7cd1a3bf9311",
+    "name": "Digital Trade Advisor",
+    "disabled_on": null
+  },
+  {
+    "id": "528f0d6a-b431-4718-aa13-0d14d1facb4d",
+    "name": "DIT Middle East & Pakistan Comms & Marketing campaigns",
+    "disabled_on": null
+  },
+  {
+    "id": "78dff753-797c-4521-8e6e-167f25d3d337",
+    "name": "Dubai Expo 2020",
+    "disabled_on": null
+  },
+  {
+    "id": "5f91f965-aa1e-4743-80dc-1fbc0a399acf",
+    "name": "E-Exporting",
+    "disabled_on": null
+  },
+  {
+    "id": "15d97c3e-52b6-456d-98b0-46f1018bd311",
+    "name": "EiG Referral",
+    "disabled_on": null
+  },
+  {
+    "id": "31ff0baa-1031-499c-813f-97730abbce00",
+    "name": "Emerging Markets Contract (Gulf)",
+    "disabled_on": null
+  },
+  {
+    "id": "792a8e5e-1b6b-4db7-b92c-98ec0b0e2641",
+    "name": "Emerging Markets Contract (LA)",
+    "disabled_on": null
+  },
+  {
+    "id": "760a90e6-5a4a-4287-8fc6-d5be6c4e8c54",
+    "name": "ESIF",
+    "disabled_on": null
+  },
+  {
+    "id": "69f882f4-f7ec-49be-bcbd-b9825452fa07",
+    "name": "Events Alliance",
+    "disabled_on": null
+  },
+  {
+    "id": "4c893454-2c88-40b6-9191-2e90427ca7be",
+    "name": "Expo 2019 Beijing",
+    "disabled_on": null
+  },
+  {
+    "id": "ef6c22ad-1a60-41df-897b-a83b337a420a",
+    "name": "Export Academy",
+    "disabled_on": null
+  },
+  {
+    "id": "b6274519-f237-433b-9b4e-c8388ddf64ff",
+    "name": "Export Communication Review Scheme (ECR)",
+    "disabled_on": null
+  },
+  {
+    "id": "af0599f7-9e08-488a-a257-7ea0ea4bbaf6",
+    "name": "Export Growth Service",
+    "disabled_on": null
+  },
+  {
+    "id": "e5640993-0be3-42cd-819e-ac646e4f0f9b",
+    "name": "Export Opportunities",
+    "disabled_on": null
+  },
+  {
+    "id": "c3887809-0cde-4f9e-9f12-ae751c8dcb3b",
+    "name": "Export Oriented FDI",
+    "disabled_on": null
+  },
+  {
+    "id": "dfffcf56-5823-41bb-8ff1-226efefe670e",
+    "name": "Exporting is GREAT (EiG)",
+    "disabled_on": null
+  },
+  {
+    "id": "62f00977-536d-495c-968f-e91afc4c7290",
+    "name": "FinTech",
+    "disabled_on": null
+  },
+  {
+    "id": "fa6e02d4-d864-4666-882c-ab8c7f6d04b4",
+    "name": "First Time Exporters Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "980ec4bb-34bf-4421-b67a-a37cbb52bdab",
+    "name": "Free Trade Agreements",
+    "disabled_on": null
+  },
+  {
+    "id": "ae76d02d-183e-45ae-bfe5-f0cccb320d85",
+    "name": "G2G Agreed Priority Project",
+    "disabled_on": null
+  },
+  {
+    "id": "f860195f-7ebe-4cc9-b553-c19adf576106",
+    "name": "GCP - RBS",
+    "disabled_on": null
+  },
+  {
+    "id": "c643fa4a-bd36-4dc6-9771-27e46d857768",
+    "name": "GCP - Santander",
+    "disabled_on": null
+  },
+  {
+    "id": "e6d112d1-107b-43a7-bfb4-0e20d1af4d7a",
+    "name": "Global Entrepreneur Programme (GEP)",
+    "disabled_on": null
+  },
+  {
+    "id": "7af439e7-5dfe-44ce-b72e-8fce92783031",
+    "name": "Global Growth Pilot",
+    "disabled_on": null
+  },
+  {
+    "id": "e4fe605c-bf58-459e-8c0a-f5b4ab9770ae",
+    "name": "Great British Food Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "827e093b-e738-4dd5-9fbc-11f5a49b3495",
+    "name": "GREAT Challenge Fund",
+    "disabled_on": null
+  },
+  {
+    "id": "ea489292-0e62-4858-831b-72afc53bcd29",
+    "name": "GREAT Festival of Innovation (GFEST)",
+    "disabled_on": null
+  },
+  {
+    "id": "761bb4b2-42c1-4015-89c6-31e7b2d506a7",
+    "name": "GREAT Food is GREAT",
+    "disabled_on": null
+  },
+  {
+    "id": "e2b2d2af-b113-449a-a80a-6fe85678c8ae",
+    "name": "GREAT Funded Activity",
+    "disabled_on": null
+  },
+  {
+    "id": "69152810-98c6-448f-bae7-8b4c480bbddd",
+    "name": "GREAT International Trade Campaign",
+    "disabled_on": null
+  },
+  {
+    "id": "2b21b1cd-6901-4be8-8a9a-c1b82324b591",
+    "name": "GREAT - Unicorn Kingdom Campaign - North America (2023)",
+    "disabled_on": null
+  },
+  {
+    "id": "db37c88b-d731-4fe9-87de-bf9e3a779194",
+    "name": "Grown in Britain Global Business Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "e7084a7f-efe8-4b04-bc66-08365975233c",
+    "name": "HAIC - Healthcare Artificial Intelligence Catalyst",
+    "disabled_on": null
+  },
+  {
+    "id": "25689107-7f1f-4cf8-8d18-cb134ff8eaae",
+    "name": "Innovation Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "98a2bff2-f959-488b-9640-46f4f71dd109",
+    "name": "International Festival for Business",
+    "disabled_on": null
+  },
+  {
+    "id": "b18935f7-b60c-4f79-8d9b-9ee383023093",
+    "name": "International Trade Show",
+    "disabled_on": null
+  },
+  {
+    "id": "49b72b44-d6f8-4039-8fea-0c6f02864afb",
+    "name": "Investment Promotion Programme (IPP)",
+    "disabled_on": null
+  },
+  {
+    "id": "37b7d6e2-ff31-43c0-8e1c-75021fdace1a",
+    "name": "JETCO",
+    "disabled_on": null
+  },
+  {
+    "id": "c6b060c7-b02a-46f7-a398-ee015b6d26aa",
+    "name": "Levelling Up",
+    "disabled_on": null
+  },
+  {
+    "id": "f3e8a90f-44c4-445f-8977-75664464a675",
+    "name": "Luxury Retail",
+    "disabled_on": null
+  },
+  {
+    "id": "2359a397-ea5c-40fa-bde7-cbab2f54f8c6",
+    "name": "Made in the UK",
+    "disabled_on": null
+  },
+  {
+    "id": "78c195d6-4569-4e72-9f2e-1f3410f9c62c",
+    "name": "Midlands Engine",
+    "disabled_on": null
+  },
+  {
+    "id": "f96483a1-3aa0-485a-9653-dbec5798d912",
+    "name": "MSB Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "18f29ef0-2675-4089-9bdf-70f17142a796",
+    "name": "National Partner Referral",
+    "disabled_on": null
+  },
+  {
+    "id": "dca49262-493a-44c1-94a8-0b7ec8ea91f2",
+    "name": "Northern Powerhouse (NPH)",
+    "disabled_on": null
+  },
+  {
+    "id": "eb1bb33f-0fed-4744-88a9-bed37e64ca72",
+    "name": "Offshore Wind Investment Organisation",
+    "disabled_on": null
+  },
+  {
+    "id": "3aeca122-48f3-4c24-9f41-49836f2a9bf2",
+    "name": "Overseas Market Introduction Service (OMIS)",
+    "disabled_on": null
+  },
+  {
+    "id": "9ace429b-d26d-4539-b5ab-9f419e5c6dcf",
+    "name": "Passport to Export (P2E)",
+    "disabled_on": null
+  },
+  {
+    "id": "f1c00d44-0437-400e-9732-d6202bdf46f6",
+    "name": "PM Trade Envoy",
+    "disabled_on": null
+  },
+  {
+    "id": "db57d4e5-7d8d-4065-a554-a4474aecc3b1",
+    "name": "PreCOP26",
+    "disabled_on": null
+  },
+  {
+    "id": "2407df99-a766-44cf-b0c4-535f3ff6f18b",
+    "name": "Prosperity Fund",
+    "disabled_on": null
+  },
+  {
+    "id": "f1e2e3f9-c262-4537-b544-6959d0fa3eae",
+    "name": "Science Superpower",
+    "disabled_on": null
+  },
+  {
+    "id": "5f451651-a664-4d99-99ca-2cd0e75b8557",
+    "name": "Shakespeare Lives",
+    "disabled_on": null
+  },
+  {
+    "id": "8da13cf1-34a4-496d-b8c2-7227e81867ac",
+    "name": "South by South West (SXSW)",
+    "disabled_on": null
+  },
+  {
+    "id": "baf3b7c4-bbb3-4400-aa26-1ed822c389d4",
+    "name": "Specialist Support",
+    "disabled_on": null
+  },
+  {
+    "id": "5e7b5f7e-b51c-4819-b9d3-4f2ef6740ecd",
+    "name": "Stakeholder Engagement",
+    "disabled_on": null
+  },
+  {
+    "id": "a3c5c0d6-f114-4c0b-b60b-3ee146aba473",
+    "name": "TCC - Third Country Collaboration",
+    "disabled_on": null
+  },
+  {
+    "id": "1099abf2-3e0b-43fc-9a7a-886e1a9e92a8",
+    "name": "Tradeshow Access Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "7d2c6fc2-3ea2-4466-82aa-9b837ce1fafc",
+    "name": "UK’s Finest",
+    "disabled_on": null
+  },
+  {
+    "id": "833f8f9d-f47d-4fb3-8580-28bbe7b8abe5",
+    "name": "Web-based Exporting Programme",
+    "disabled_on": null
+  },
+  {
+    "id": "cc9b5684-3392-4648-98f9-017b307d633e",
+    "name": "Britain Open for Business",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "d6558ca7-1719-41c8-b673-bd830d2ce250",
+    "name": "Catalyst Members Activities",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "2d9a6fe1-945b-441e-a476-85bc0d4b77b4",
+    "name": "CEN Adv Engineering",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "0466b04f-182d-42fc-8cf6-adeda1de5fc2",
+    "name": "CEN Energy",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "716cca4b-50a3-4c2a-92fc-243d81318419",
+    "name": "CEN Life Science",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "d989e55e-22eb-44fd-b5d4-f74241ac1246",
+    "name": "Emerging Markets Contract (CEE)",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "0f923255-20cb-4795-8401-c664509f70b5",
+    "name": "Emerging Markets Contract (Russia)",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "221211fc-a96c-485a-b78b-55c516d41eb6",
+    "name": "EY Specialist Business Win",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "6e6e517a-83f2-433f-9de6-4b32e3c47b2d",
+    "name": "GCP",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "da940c49-bb6e-46a0-8aff-beaba9be6aad",
+    "name": "GCP - Deloitte",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "456cc8f9-94e3-4399-bd5a-3efb1582cc88",
+    "name": "GCP - EY",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "f4e41e2a-d3c7-45c9-884b-f026ddff9ae8",
+    "name": "GCP - HSBC",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "79441425-b5a3-4b28-a14d-8e5a29c94d93",
+    "name": "GCP - KPMG",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "cfdc3eb0-24a3-4332-aa98-2d09dff81998",
+    "name": "GCP - Lloyds",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "e78caba0-7ba6-4c06-af12-fa77226d9d19",
+    "name": "GCP - PwC",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "7e898263-cd26-429b-b323-a215d5596a5a",
+    "name": "GCP - Standard Chartered",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "927ec52c-062c-42f6-b759-d366a8ef2170",
+    "name": "GREAT Branded Event Great Campaign",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "b7b3889e-cea1-4488-9ee2-5b2bf1b10071",
+    "name": "GREAT British House Rio",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "2c767629-a164-48ed-b625-043259183d54",
+    "name": "GREAT Weeks",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "6454570f-d62f-444d-8e1c-9b7664f98bc4",
+    "name": "HVO Specialist [involvement]",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "10302cb8-d720-4cf0-81c9-ff6973f94732",
+    "name": "III - Deal Ticket Size",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "d4af73c4-5d9c-46d7-b9ff-725c3eec1436",
+    "name": "Low Carbon Initiative",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "f81d2da6-316f-4db0-832e-9c7219fb9764",
+    "name": "Milan Expo 2015",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "90f22eae-f97c-4a68-a699-999ddf300405",
+    "name": "Music Export Growth Scheme (MEGS)",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "95f03f1a-407b-4a65-bdd7-91e061e2587b",
+    "name": "Olympics 2012",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "b073b6dc-2335-4ccb-9c1c-0b655ffff4f4",
+    "name": "PA Specialist Business Win",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "415563b3-80ee-44fb-a1e0-f10454ea65d7",
+    "name": "Red Arrows Tour 2019",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "96b0a9d8-8665-4565-92ab-77cd82b4218f",
+    "name": "Reshore UK",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "c44db42d-51f2-417e-b35c-441ad47e0b7b",
+    "name": "Rugby World Cup - Business Festival",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "394be5de-df46-4f0e-8253-05ac2519f511",
+    "name": "Technology Strategy Board (TSB)",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "785e3df3-6954-4f72-b33a-b043cb471a7d",
+    "name": "UK Israel Tech Hub",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "4c1396f1-80ba-4405-8892-1698e03bc46e",
+    "name": "Venture Capital",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "5b0ac9ac-258b-458c-99bc-ac12ad5f1142",
+    "name": "Astana Expo 2017",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "43c0aaf4-fe4d-48d4-9be1-f98eb6465307",
+    "name": "MIPIM 2018",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  },
+  {
+    "id": "66126a10-6c18-4b20-962d-a9233aa1a3db",
+    "name": "Great British Food Showcase 2019",
+    "disabled_on": "2023-10-27T09:59:03Z"
+  }
+]

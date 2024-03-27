@@ -1,0 +1,506 @@
+[
+  {
+    "id": "1e5aec69-c581-4356-b0ca-1f710d3d077d",
+    "name": "ITFG - E-Business Projects Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "71cb1a48-a62d-4682-9e5e-7bae5e346d07",
+    "name": "ITFG - Overseas Resources Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "e6258f94-d5d7-491a-b5be-7d7bd20be212",
+    "name": "ITFG - ICT & Data Policy and Support",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "2c3e48e0-c346-4ed4-aea1-3c15463370c5",
+    "name": "ITFG - E-Business Operational Support Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "c83017d7-3b6f-4174-95d5-bcc8ccb0c500",
+    "name": "ITFG - Director ITFG & PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "2dd0d5bd-5f38-4ff1-afe0-bdf581072a4e",
+    "name": "ITFG - Finance Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "baacae83-9ffa-4c98-9573-d82fa3e5861d",
+    "name": "ITFG - Business Planning Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "79c6fdc7-7d18-4ea0-bdb3-8883779b6f40",
+    "name": "IG - Regeneration Investment Organisation (RIO)",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "c1112eb0-7e7c-4d09-a0dc-88685bb71068",
+    "name": "IG - Global Accounts - Director & Deputy Director & PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "6f361a4b-3d85-4439-a758-c68581a6c545",
+    "name": "IG - Global Accounts - IT Software & Creative",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "66d885e4-8b13-482f-89f7-33db481ae162",
+    "name": "IG - Global Accounts - Electronics & Communications",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "b57685fa-a71e-4f04-a21c-22fcfb8946aa",
+    "name": "IG - Global Accounts - Financial & Business Services",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "3e730d5f-417d-4bd7-bae1-2cc1ffbd40c6",
+    "name": "IG - Global Accounts - Energy & Infrastructure",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "67001252-7a21-4877-a6bc-02530acdb693",
+    "name": "IG - Global Accounts - Adv Man - Auto, Rail MEPE",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "f72dfafb-2d32-46fd-9266-21df1386599a",
+    "name": "IG - Global Accounts - Adv Man - Aero, Space, Chem",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "04fba46e-0aa3-477f-b202-bdd38093e474",
+    "name": "IG - Global Accounts - Life Science, Agri- Tech",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "6ad8b33f-274f-47e6-8ce6-d5516c988faa",
+    "name": "IG - Global Operations - Global Entrepreneurs Programme",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "9b148202-614e-45bf-ab30-3a414d09e8d9",
+    "name": "IG - Global Operations - Graduate Entrepreneurs",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "bf937936-d1cf-435d-84f7-13b3d8cd9ab1",
+    "name": "IG - Global Operations - Network Linkages & Professional Development",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "b6f70956-208f-45c9-b444-aef8104ab03c",
+    "name": "IG - Global Operations - In Market Strategies & Development",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "78a9c209-9836-4899-80b0-68d0b66373bf",
+    "name": "IG - Strategy/Policy/Local Engagement - Director & PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "f8c7c5ef-9abb-4f86-9f0c-4d8740aabc21",
+    "name": "IG - Strategy/Policy/Local Engagement - Strategy",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "bfd94ea7-ff78-4077-b74b-83e8eee4b66f",
+    "name": "IG - Strategy/Policy/Local Engagement - Global Intelligence",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "a6bfdfc8-4c2e-4cee-9faf-c833a151c342",
+    "name": "IG - Strategy/Policy/Local Engagement - Local Engagement & Delivery",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "e32aadfa-6d30-4d3c-a73e-fb0edb797f51",
+    "name": "IG - Strategy/Policy/Local Engagement - National & Local Policy",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "5c5035ae-85f7-4935-a8b6-38981daaf6d2",
+    "name": "IG - Specialists - Advanced Manufacturing",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "7a41db8d-76a6-4b70-a234-94bc21a91a31",
+    "name": "IG - Specialists - Knowledge Intensive Industry",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "ca63ce65-ab55-4278-ba1c-6c216372d778",
+    "name": "IG - Specialists - Energy & Infrastructure",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "6135d4bb-d976-46c6-b5f5-83158c55f833",
+    "name": "IG - Specialists - Life Sciences",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "0a20649d-d01e-488b-8372-0d5db10d03f8",
+    "name": "IG - Finance & Business Planning",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "96d1313f-761e-40d2-b3af-fb92468b4377",
+    "name": "IG - Global Intelligence Unit",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "ec2c5b79-2208-4abb-a563-3b2f51420ad1",
+    "name": "IG - SR - Strategic Accounts",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "9555d2e3-a77c-4f0c-8465-7c35dae699d0",
+    "name": "IG - SR - Institutional Investment",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "5a489ec8-001a-490e-87dc-c1cff658d961",
+    "name": "IG - Global Operations - FDI Projects - Advanced Engineering",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "1c5eb56c-1846-43ad-bdd9-d4ec0850b15d",
+    "name": "IG - Global Operations - Director & PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "84716bcc-68f4-4dd8-b0cc-313fa7499ad8",
+    "name": "IG - Global Operations - FDI Projects - Energy and Infrastructure",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "abf77120-2265-4e1a-9622-1a358a7c45f8",
+    "name": "IG - Global Operations - Briefing Tours and Visits",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "cd72e07f-68bf-4af6-b915-4866d5695e09",
+    "name": "IG - Global Operations and Network Performance",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "58311a13-8662-47dd-af57-4f5c737fa8b0",
+    "name": "IG - Global Operations - Deputy Director",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "5db293a4-8227-4259-a90b-508bb5fb9e3f",
+    "name": "IG - Global Operations - Shared Services",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "e6a6cd57-5d00-4f3e-a037-5580274f0a26",
+    "name": "IG - UKAN Involvement",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "f3b21044-090c-46ba-b8a6-7ca71d07cd2d",
+    "name": "IG - Strategy & Policy - Resources and Finance",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "6c8ee169-90ae-4e3d-88a9-bf23fd8eaaa2",
+    "name": "IG - Strategy & Policy - FDI Projects - Financial Services",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "d13e173b-68a2-4f26-a68e-f96d77e83f7b",
+    "name": "IG - Strategy & Policy - FDI Contract - Networks & Partnerships",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "c387594c-5ffb-4f39-9153-a7889addb835",
+    "name": "Business Environment Advisory Team",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "0cbb194d-1844-47b4-8f1a-eda4814da318",
+    "name": "IG - Strategy & Policy - Briefing Tours and Visits",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "02354e61-ebf3-4e56-9710-56aad28e5088",
+    "name": "IG - Strategy & Policy - Director & PA",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "fd7fda9f-4710-4b9e-a074-02c669b86282",
+    "name": "IG - Strategy & Policy - FDI Projects - Electronics and Comms",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "9816a8d9-114d-4536-a3fa-25f87ca0c89f",
+    "name": "IG - Strategy & Policy - Deputy Director",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "87842c21-f939-4c40-8d5c-22ef9cf0e9d4",
+    "name": "IG - Strategy & Policy - Information Hub",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "33a05dff-4874-4902-b68d-7a340e5ef668",
+    "name": "IG - Strategy & Policy - Local Policy & Engagement - DAs & Eng",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "08493190-27d8-4185-b9e9-fcb2c60ed75a",
+    "name": "IG - CPI - FDI Projects - Life Sciences - Food & Drink",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "3a06564c-220f-427f-ae08-a124f2990043",
+    "name": "IG - CPI - FDI Projects - New Technologies",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "76099840-ad86-4542-81ca-1630363a4bab",
+    "name": "IG - Campaigns and Special Programmes",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "ab866dc5-33b4-40c7-a3aa-4566d7a55601",
+    "name": "IG - Tech City Investment Organisation",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  },
+  {
+    "id": "7b21307a-84bb-44c4-9d64-d9c6a0fe7427",
+    "name": "GREAT Investors",
+    "disabled_on": null,
+    "team_type": {
+      "name": "Investment (ITFG or IG)",
+      "id": "42bdaf2e-ae19-4589-9840-5dbb67b50add"
+    }
+  }
+]

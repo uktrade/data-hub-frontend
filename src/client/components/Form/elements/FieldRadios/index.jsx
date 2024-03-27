@@ -50,6 +50,7 @@ const FieldRadios = ({
   return (
     <FieldWrapper
       {...{ ...props, name, label, legend, hint, error, bigLegend }}
+      data-component="FieldRadios"
     >
       <MultiChoice meta={{ error, touched }}>
         {options.map(

@@ -23,6 +23,7 @@ import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
 import ExportWins from './ExportWins'
+import ExportWinReview from './ExportWinReview'
 import Sector from './Sector'
 import Export from './Export'
 import ExpectedValueRelation from './ExpectedValueRelation'
@@ -91,6 +92,7 @@ import TaskCompaniesAndProjects from './TaskCompaniesAndProjects'
 import CompanyAuditHistory from './CompanyAuditHistory'
 import EvidenceTag from './EvidenceTag'
 import ProjectAuditHistory from './ProjectAuditHistory'
+import WinUKRegions from './WinUKRegions'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -125,6 +127,7 @@ export default {
   ...ExportYears.tasks,
   ...ExportWin.tasks,
   ...ExportWins.tasks,
+  ...ExportWinReview.tasks,
   ...Sector.tasks,
   ...Export.tasks,
   ...LargeInvestorProfile.tasks,
@@ -177,6 +180,7 @@ export default {
   ...TaskOverdueSettings.tasks,
   ...UKRegions.tasks,
   ...WinType.tasks,
+  ...WinUKRegions.tasks,
   ...WithoutOurSupport.tasks,
   ...OrderQuote.tasks,
   ...TaskCompletedSettings.tasks,

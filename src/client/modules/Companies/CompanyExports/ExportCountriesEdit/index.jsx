@@ -29,27 +29,25 @@ const StyledP = styled.p`
   margin: 0;
 `
 
-function ErrorHandler({ errorMessage }) {
+function ErrorHandler({ error }) {
   return (
     <>
-      {errorMessage[API_ERROR] && (
+      {error[API_ERROR] && (
         <StatusMessage
           colour={ERROR_COLOUR}
           aria-labelledby="api-error-summary-title"
           role="alert"
         >
-          <StyledH2 id="api-error-summary-title">
-            {errorMessage[API_ERROR]}
-          </StyledH2>
+          <StyledH2 id="api-error-summary-title">{error[API_ERROR]}</StyledH2>
         </StatusMessage>
       )}
 
-      {errorMessage[API_WARN] && (
+      {error[API_WARN] && (
         <StatusMessage aria-labelledby="error-summary-title" role="alert">
           <StyledH2 id="error-summary-title">
             Export countries could not be saved, try again later.
           </StyledH2>
-          <StyledP>{errorMessage[API_WARN]}</StyledP>
+          <StyledP>{error[API_WARN]}</StyledP>
         </StatusMessage>
       )}
     </>

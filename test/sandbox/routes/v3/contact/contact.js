@@ -13,7 +13,6 @@ import aventriContact from '../../../fixtures/v4/activity-feed/aventri-attendees
 import ditContactforAventri from '../../../fixtures/v3/contact/contact-aventri.json' assert { type: 'json' }
 import noContact from '../../../fixtures/v3/contact/no-contact.json' assert { type: 'json' }
 import auditHistory from '../../../fixtures/v3/contact/contact-audit-history.json' assert { type: 'json' }
-import shortAuditHistory from '../../../fixtures/v3/contact/contact-audit-history-short.json' assert { type: 'json' }
 import emptyAuditHistory from '../../../fixtures/v3/contact/contact-audit-history-empty.json' assert { type: 'json' }
 import lambdaPlc from '../../../fixtures/v4/company/company-lambda-plc.json' assert { type: 'json' }
 import createContact from '../../../fixtures/v3/contact/contact-create.json' assert { type: 'json' }
@@ -117,7 +116,6 @@ export const archiveContact = function (req, res) {
 export const getAuditHistory = function (req, res) {
   const auditHistories = {
     '64f85710-eabd-4479-829c-1fd47e3595d0': auditHistory,
-    'e74f0a25-aeee-48bd-a483-ac29c47e81a4': shortAuditHistory,
   }
   res.json(auditHistories[req.params.contactId] || emptyAuditHistory)
 }

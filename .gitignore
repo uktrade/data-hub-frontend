@@ -57,6 +57,9 @@ visual-report
 cypress-visual-report
 cypress-visual-screenshots/comparison
 cypress-visual-screenshots/diff
+cypress-image-diff-html-report
+cypress-image-diff-screenshots/comparison
+cypress-image-diff-screenshots/diff
 
 # IDE configurations
 .vscode/

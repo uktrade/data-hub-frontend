@@ -9,7 +9,7 @@ module.exports = defineConfig({
   projectId: 'w97se2',
   e2e: {
     setupNodeEvents(on, config) {
-      const getCompareSnapshotsPlugin = require('cypress-image-diff-js/dist/plugin')
+      const getCompareSnapshotsPlugin = require('cypress-image-diff-js/plugin')
       getCompareSnapshotsPlugin(on, config)
       config.env.sandbox_url = process.env.API_ROOT
       return config

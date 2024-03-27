@@ -75,6 +75,33 @@ const assertSummaryTable = ({
   }
 }
 
+/**
+ * @param {{rows: [string, string | number][], caption?: string}} options
+ */
+const assertSummaryTableStrict = ({ caption, rows }) => {
+  const assertRows = (el) => {
+    cy.wrap(el).find('tr').as('rows').should('have.length', rows.length)
+
+    rows.forEach(([key, val], i) => {
+      cy.get('@rows')
+        .eq(i)
+        .within(() => {
+          cy.get('th').should('have.length', 1).should('have.text', key)
+          cy.get('td').should('have.length', 1).should('have.text', val)
+        })
+    })
+  }
+
+  if (caption) {
+    cy.contains('caption', caption)
+      .closest('[data-component="SummaryTable"]')
+      .then(assertRows)
+    return
+  }
+
+  cy.get('[data-component="SummaryTable"]').then(assertRows)
+}
+
 const assertGovReactTable = ({ element, headings, rows }) => {
   cy.get(element).as('table')
 
@@ -242,6 +269,44 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
           .should('have.text', value)
     )
 
+/**
+ * @param {{inputName: string, options: string[], legend?: string, selectIndex?: number}} options
+ */
+const assertFieldRadiosStrict = ({
+  inputName,
+  options,
+  legend,
+  hint,
+  selectIndex,
+}) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      if (legend) {
+        cy.get('legend').should('have.text', legend)
+      }
+      if (hint) {
+        cy.get('[data-test="hint-text"]').should('have.text', hint)
+      }
+
+      cy.get('input[type="radio"]')
+        .should('have.length', options.length)
+        .each(($el, i) => {
+          const label = options[i]
+          const wrapped = cy
+            .wrap($el)
+            .should('have.attr', 'aria-label', label)
+            .parent()
+            .should('match', 'label')
+            .should('have.text', label)
+
+          if (i === selectIndex) {
+            wrapped.click()
+          }
+        })
+    })
+
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
 // Use this assertion for radios which have legends applied.
 const assertFieldRadiosWithLegend = ({
@@ -407,6 +472,7 @@ const assertFieldInputNoLabel = ({ element, value = undefined }) =>
 const assertFieldHidden = ({ element, name, value }) =>
   cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
 
+// FIXME: Make element optional, because it's a real pain to use
 const assertFieldTextarea = ({ element, label, hint, value, wordCount }) => {
   cy.wrap(element)
     .find('label')
@@ -888,6 +954,7 @@ module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertSummaryTable,
+  assertSummaryTableStrict,
   assertGovReactTable,
   assertBreadcrumbs,
   testBreadcrumbs,
@@ -901,6 +968,7 @@ module.exports = {
   assertFieldSelect,
   assertSelectOptions,
   assertFieldRadios,
+  assertFieldRadiosStrict,
   assertFieldRadiosWithLegend,
   assertFieldRadiosWithoutLabel,
   assertFieldCheckboxes,
