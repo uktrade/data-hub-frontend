@@ -10,8 +10,11 @@ const {
   addDays: addDaysFns,
   addMonths: addMonthsFns,
   addYears: addYearsFns,
+  differenceInDays,
   differenceInCalendarDays,
+  isSameDay,
   endOfToday,
+  startOfMonth: getStartOfMonth,
   endOfYesterday,
   format: formatFns,
   formatDistanceToNowStrict,
@@ -285,6 +288,25 @@ function convertDateToFieldDateObject(date) {
   return { day: '', month: '', year: '' }
 }
 
+/**
+ * Generates a random date within the range specified by startDate and endDate (inclusive).
+ * @param {Date} startDate - The start date of the range.
+ * @param {Date} endDate - The end date of the range.
+ * @returns {Date} A random date within the specified range.
+ * @throws {Error} If startDate is greater than endDate or if startDate and endDate are the same date.
+ */
+function getRandomDateInRange(startDate, endDate) {
+  if (isSameDay(startDate, endDate)) {
+    throw new Error('Start date and end date cannot be the same.')
+  }
+  if (startDate > endDate) {
+    throw new Error('Start date must be less than or equal to end date.')
+  }
+  const daysDifference = differenceInDays(endDate, startDate)
+  const randomNumberOfDays = Math.floor(Math.random() * (daysDifference + 1))
+  return addDays(startDate, randomNumberOfDays)
+}
+
 module.exports = {
   addDays,
   addMonths,
@@ -322,4 +344,6 @@ module.exports = {
   isDateInFuture,
   parseDateISO,
   convertDateToFieldDateObject,
+  getRandomDateInRange,
+  getStartOfMonth,
 }

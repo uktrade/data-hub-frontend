@@ -13,8 +13,9 @@ import { formatMediumDate } from '../../../utils/date'
 import { ResendExportWin } from './ResendExportWin'
 import urls from '../../../../lib/urls'
 import { state2props } from './state'
+import { WIN_STATUS } from '../Status/constants'
 
-const VerticalSpacer = styled.div`
+export const VerticalSpacer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${SPACING.SCALE_1};
@@ -27,7 +28,7 @@ const NormalFontWeightRow = styled(SummaryTable.Row)`
   }
 `
 
-const ExportWinTitle = (props) => (
+export const ExportWinTitle = (props) => (
   <ExportWin.Inline {...props}>
     {(exportWin) => (
       <>
@@ -35,6 +36,16 @@ const ExportWinTitle = (props) => (
       </>
     )}
   </ExportWin.Inline>
+)
+
+export const ExportWinsLink = () => (
+  <Link
+    data-test="export-wins-link"
+    as={ReactRouterLink}
+    to={urls.companies.exportWins.index()}
+  >
+    Export wins
+  </Link>
 )
 
 const groupBreakdowns = (breakdowns) => {
@@ -74,6 +85,44 @@ const groupBreakdowns = (breakdowns) => {
   }
 }
 
+export const Summary = ({ exportWin, children }) => {
+  const { groups, totalAmount, totalYears } = exportWin
+    ? groupBreakdowns(exportWin.breakdowns)
+    : {}
+
+  return (
+    <SummaryTable data-test="export-wins-details-table">
+      <SummaryTable.Row heading="Goods or services">
+        {exportWin?.goodsVsServices.name}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Destination country">
+        {exportWin?.country.name}
+      </SummaryTable.Row>
+      {exportWin &&
+        Object.keys(groups).length > 1 &&
+        Object.entries(groups).map(([k, { total, yearRange }]) => {
+          const years = yearRange.max - yearRange.min + 1
+          return (
+            <NormalFontWeightRow key={k} heading={k}>
+              {`${currencyGBP(total)} over ${years} ${pluralize('year', years)}`}
+            </NormalFontWeightRow>
+          )
+        })}
+      <SummaryTable.Row heading="Total value">
+        {exportWin &&
+          `${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Date won">
+        {exportWin && formatMediumDate(exportWin.date)}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Lead officer name">
+        {exportWin?.leadOfficer.name}
+      </SummaryTable.Row>
+      {children}
+    </SummaryTable>
+  )
+}
+
 const Detail = () => {
   const { winId } = useParams()
   const success = winId?.success
@@ -98,50 +147,30 @@ const Detail = () => {
     >
       <ExportWin id={winId} progressBox={true}>
         {(exportWin) => {
-          const { groups, totalAmount, totalYears } = exportWin
-            ? groupBreakdowns(exportWin.breakdowns)
-            : {}
-
           return (
             <>
-              <SummaryTable data-test="export-wins-details-table">
-                <SummaryTable.Row heading="Goods or services">
-                  {exportWin?.goodsVsServices.name}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Destination country">
-                  {exportWin?.country.name}
-                </SummaryTable.Row>
-                {exportWin &&
-                  Object.keys(groups).length > 1 &&
-                  Object.entries(groups).map(([k, { total, yearRange }]) => {
-                    const years = yearRange.max - yearRange.min + 1
-                    return (
-                      <NormalFontWeightRow key={k} heading={k}>
-                        {`${currencyGBP(total)} over ${years} ${pluralize('year', years)}`}
-                      </NormalFontWeightRow>
-                    )
-                  })}
-                <SummaryTable.Row heading="Total value">
-                  {exportWin &&
-                    `${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Date won">
-                  {exportWin && formatMediumDate(exportWin.date)}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Lead officer name">
-                  {exportWin?.leadOfficer.name}
-                </SummaryTable.Row>
-                <SummaryTable.Row heading="Comments">
-                  {exportWin?.comments}
-                </SummaryTable.Row>
+              <Summary exportWin={exportWin}>
+                {exportWin?.customerResponse?.agreeWithWin !== null && (
+                  <SummaryTable.Row heading="Comments">
+                    {exportWin?.customerResponse.comments}
+                  </SummaryTable.Row>
+                )}
                 <SummaryTable.Row heading="Export win confirmed">
                   {exportWin &&
-                    (exportWin.isPersonallyConfirmed ? 'Yes' : 'No')}
+                    (exportWin.customerResponse.agreeWithWin ? 'Yes' : 'No')}
                 </SummaryTable.Row>
-              </SummaryTable>
-              {exportWin && <ResendExportWin id={exportWin.id} />}
+                {exportWin?.customerResponse?.agreeWithWin && (
+                  <SummaryTable.Row heading="What value do you estimate you would have achieved without our support">
+                    {exportWin?.customerResponse.ourSupport?.name}
+                  </SummaryTable.Row>
+                )}
+              </Summary>
+              {exportWin &&
+                exportWin.customerResponse.agreeWithWin === WIN_STATUS.SENT && (
+                  <ResendExportWin id={exportWin.id} />
+                )}
               <VerticalSpacer>
-                {exportWin?.isPersonallyConfirmed && (
+                {exportWin?.customerResponse.agreeWithWin && (
                   <Link
                     as={ReactRouterLink}
                     to={urls.companies.exportWins.customerFeedback(winId)}
@@ -149,13 +178,7 @@ const Detail = () => {
                     View customer feedback
                   </Link>
                 )}
-                <Link
-                  data-test="export-wins-link"
-                  as={ReactRouterLink}
-                  to={urls.companies.exportWins.index()}
-                >
-                  Export wins
-                </Link>
+                <ExportWinsLink />
               </VerticalSpacer>
             </>
           )

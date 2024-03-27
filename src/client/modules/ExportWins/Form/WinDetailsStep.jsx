@@ -28,8 +28,8 @@ import {
 } from './constants'
 import {
   formatValue,
-  getTwelveMonthsAgo,
   sumAllWinTypeYearlyValues,
+  getDateTwelveMonthsAgoWithFirstDay,
 } from './utils'
 
 const MAX_WORDS = 100
@@ -46,7 +46,7 @@ const StyledExportTotal = styled('p')({
 
 const WinDetailsStep = () => {
   const { values } = useFormContext()
-  const twelveMonthsAgo = getTwelveMonthsAgo()
+  const twelveMonthsAgo = getDateTwelveMonthsAgoWithFirstDay()
   const month = twelveMonthsAgo.getMonth() + 1
   const year = twelveMonthsAgo.getFullYear()
 
@@ -200,7 +200,7 @@ const WinDetailsStep = () => {
       <FieldCheckboxes
         name="goods_vs_services"
         legend="What does the value relate to?"
-        hint="Select goods or services"
+        hint="Select all that apply."
         required="Select at least one option"
         options={goodsServicesOptions}
       />

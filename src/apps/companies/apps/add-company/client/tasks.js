@@ -14,7 +14,7 @@ export const createCompany = ({ csrfToken, ...values }) => {
   return axios
     .post(postUrl, values)
     .catch((err) => {
-      return Promise.reject(err.response.data.error.message)
+      return Promise.reject(err.response.data.error.message[0])
     })
     .then((response) => response.data)
 }

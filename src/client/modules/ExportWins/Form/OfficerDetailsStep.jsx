@@ -1,11 +1,10 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
 import * as validators from './validators'
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { getQueryParamsFromLocation } from '../../../../client/utils/url'
+
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
 import {
@@ -18,23 +17,18 @@ import {
   FieldTypeahead,
 } from '../../../components'
 
-const OfficerDetailsStep = () => {
+const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
   const { values } = useFormContext()
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
-
   return (
     <Step
       name={steps.OFFICER_DETAILS}
       cancelUrl={
-        queryParams.export
-          ? urls.exportPipeline.details(queryParams.export)
-          : queryParams.companywin
-            ? urls.companies.exportWins.checkBeforeSending(
-                queryParams.companywin
-              )
-            : queryParams.company
-              ? urls.companies.overview.index(queryParams.company)
+        exportId
+          ? urls.exportPipeline.details(exportId)
+          : exportWinId
+            ? urls.companies.exportWins.checkBeforeSending(exportWinId)
+            : companyId
+              ? urls.companies.overview.index(companyId)
               : null
       }
     >

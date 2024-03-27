@@ -1,5 +1,5 @@
-export const WIN_FILTERS = {
-  SENT: 'null',
+export const WIN_STATUS = {
   REJECTED: false,
+  SENT: null,
   WON: true,
 }

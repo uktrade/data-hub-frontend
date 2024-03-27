@@ -14,6 +14,7 @@ const _ResendExportWin = ({ id }) => {
         return (
           <Button
             disabled={task.progress}
+            data-test="resend-export-win"
             onClick={() => {
               task.start({
                 payload: id,

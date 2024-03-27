@@ -15,5 +15,5 @@
  * @returns undefined
  */
 
-const compareSnapshotCommand = require('cypress-image-diff-js/dist/command')
+const compareSnapshotCommand = require('cypress-image-diff-js/command')
 compareSnapshotCommand()

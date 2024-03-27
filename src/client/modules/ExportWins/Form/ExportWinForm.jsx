@@ -22,6 +22,7 @@ const CompanyName = ({ companyId }) => (
 
 const ExportWinForm = ({
   title,
+  exportId,
   companyId,
   exportWinId,
   initialValuesTaskName,
@@ -29,7 +30,12 @@ const ExportWinForm = ({
   csrfToken,
   currentAdviserId,
 }) => {
-  const stepProps = { isEditing: !!exportWinId }
+  const stepProps = {
+    isEditing: !!exportWinId,
+    exportId,
+    companyId,
+    exportWinId,
+  }
   return (
     <DefaultLayout
       heading={title}
@@ -56,7 +62,9 @@ const ExportWinForm = ({
           id="export-win-form"
           showStepInUrl={true}
           cancelRedirectTo={() => urls.companies.exportWins.sent()}
-          redirectTo={() => urls.companies.exportWins.sent()}
+          redirectTo={(result) =>
+            urls.companies.exportWins.success(result.data.id)
+          }
           analyticsFormName="exportWinForm"
           submissionTaskName={TASK_GET_EXPORT_WINS_SAVE_FORM}
           initialValuesTaskName={initialValuesTaskName}

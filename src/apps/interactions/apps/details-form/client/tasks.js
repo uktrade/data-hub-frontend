@@ -354,7 +354,9 @@ export function saveInteraction({ values, companyIds, referralId }) {
     .catch((e) => {
       // Accounts for non-standard API error on contacts field
       const contactsError = e.response?.data?.contacts[0]
-      return contactsError ? Promise.reject(contactsError) : catchApiError(e)
+      return contactsError
+        ? Promise.reject(contactsError)
+        : catchApiError(e).message
     })
 }
 

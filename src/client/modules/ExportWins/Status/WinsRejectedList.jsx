@@ -4,13 +4,15 @@ import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
-import { WIN_FILTERS } from './constants'
+import { WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-rejected"
-    payload={{ confirmed: WIN_FILTERS.REJECTED }}
+    heading="Export win"
+    noResults="You don't have any rejected export wins."
+    payload={{ confirmed: WIN_STATUS.REJECTED }}
   >
     {(page) => (
       <ul>

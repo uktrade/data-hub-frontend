@@ -23,6 +23,7 @@ import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
 import ExportWins from './ExportWins'
+import ExportWinReview from './ExportWinReview'
 import Sector from './Sector'
 import Export from './Export'
 import ExpectedValueRelation from './ExpectedValueRelation'
@@ -125,6 +126,7 @@ export default {
   ...ExportYears.tasks,
   ...ExportWin.tasks,
   ...ExportWins.tasks,
+  ...ExportWinReview.tasks,
   ...Sector.tasks,
   ...Export.tasks,
   ...LargeInvestorProfile.tasks,

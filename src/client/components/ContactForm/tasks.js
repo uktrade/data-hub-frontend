@@ -8,13 +8,7 @@ export const saveContact = ({ contactId, values }) => {
   values.company = { id: values.company.id }
 
   return request(contactId ? `${endpoint}/${contactId}` : endpoint, values)
-    .catch((e) => {
-      if (e?.errors) {
-        return { data: e }
-      } else {
-        return Promise.reject(e.message)
-      }
-    })
+    .catch((e) => Promise.reject(e?.data?.email?.[0] || e.message))
     .then((response) => {
       return response.data
     })

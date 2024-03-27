@@ -79,7 +79,8 @@ describe('Company Export tab', () => {
         assertExportsTable(fixtures.company.dnbCorp.id, [
           { label: 'Export win category', value: 'None' },
           { label: 'great.gov.uk business profile', value: 'No profile' },
-          { label: 'Export potential', value: 'Unavailable' },
+          { label: 'Export potential', value: 'No score given' },
+          { label: 'Export potential last updated', value: 'No score given' },
         ])
       })
 
@@ -261,7 +262,8 @@ describe('Company Export tab', () => {
             value: '"Find a supplier" profile (opens in new tab)',
           },
 
-          { label: 'Export potential', value: 'Unavailable' },
+          { label: 'Export potential', value: 'Medium' },
+          { label: 'Export potential last updated', value: '2024-03-07' },
         ])
 
         cy.contains('"Find a supplier" profile').should(

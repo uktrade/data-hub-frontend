@@ -4,7 +4,6 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
-import WarningText from '@govuk-react/warning-text'
 import { useParams } from 'react-router-dom'
 
 import { SummaryTable } from '../../../components'
@@ -14,7 +13,11 @@ import GreatProfile from './GreatProfile'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import { exportDetailsLabels, exportPotentialLabels } from './labels'
-import { transformExportCountries } from './transformers'
+import {
+  buildExportPotential,
+  buildExportPotentialLastModified,
+  transformExportCountries,
+} from './transformers'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -68,14 +71,15 @@ const ExportsIndex = () => {
                 heading={exportDetailsLabels.exportPotential}
                 key={exportDetailsLabels.exportPotential}
               >
-                Unavailable
+                {buildExportPotential(company)}
+              </SummaryTable.Row>
+              <SummaryTable.Row
+                heading={exportDetailsLabels.lastModifiedPotential}
+                key={exportDetailsLabels.lastModifiedPotential}
+              >
+                {buildExportPotentialLastModified(company)}
               </SummaryTable.Row>
             </SummaryTable>
-
-            <WarningText>
-              The export potential value is unavailable. This is because the
-              previous values were out of date. We are working to fix this.
-            </WarningText>
 
             <Details summary="What is export potential">
               The export potential score is a prediction of a company's

@@ -6,6 +6,7 @@ import {
   assertLocalHeader,
   assertLink,
 } from '../../../../functional/cypress/support/assertions'
+import { WIN_STATUS } from '../../../../../src/client/modules/ExportWins/Status/constants'
 import Details from '../../../../../src/client/modules/ExportWins/Details'
 import urls from '../../../../../src/lib/urls'
 import { MemoryProvider } from '../provider'
@@ -30,13 +31,15 @@ const EXPORT_WIN = {
   country: {
     name: 'Australia',
   },
-  comments: 'Lorem ipsum dolor sit amet',
   total_expected_export_value: 2528571,
   date: '2024-03-26T14:29:01.521Z',
   goods_vs_services: {
     name: 'Services',
   },
   is_personally_confirmed: false,
+  customer_response: {
+    agree_with_win: false,
+  },
   breakdowns: [
     {
       type: {
@@ -46,6 +49,10 @@ const EXPORT_WIN = {
       year: 3,
     },
   ],
+  customer_response: {
+    agree_with_win: WIN_STATUS.SENT, // the default
+    our_support: null,
+  },
 }
 
 const EXPECTED_ROWS = {
@@ -54,7 +61,6 @@ const EXPECTED_ROWS = {
   'Total value': '£123,456 over 1 year',
   'Date won': '26 Mar 2024',
   'Lead officer name': 'Leo Jacobs',
-  Comments: EXPORT_WIN.comments,
   'Export win confirmed': 'No',
 }
 
@@ -66,7 +72,10 @@ describe('ExportWins/Details', () => {
     <MemoryProvider
       initialEntries={[`/exportwins/${EXPORT_WIN.id}/details`]}
       resetTasks={true}
-      tasks={{ 'Export Win': () => exportWinAPIResponse }}
+      tasks={{
+        'Export Win': () => exportWinAPIResponse,
+        TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+      }}
     >
       <Routes>
         <Route path={'/exportwins/:winId/details'} element={<Details />} />
@@ -79,19 +88,53 @@ describe('ExportWins/Details', () => {
       testTitle: 'Confirmed',
       exportWinAPIResponse: {
         ...EXPORT_WIN,
-        is_personally_confirmed: true,
+        customer_response: {
+          agree_with_win: true,
+          comments: 'I agree',
+          our_support: {
+            name: 'Not very much',
+          },
+        },
       },
-      tableRows: {
-        ...EXPECTED_ROWS,
-        'Export win confirmed': 'Yes',
-      },
+      tableRows: insertAfter(
+        {
+          ...EXPECTED_ROWS,
+          'Export win confirmed': 'Yes',
+          'What value do you estimate you would have achieved without our support':
+            'Not very much',
+        },
+        'Lead officer name',
+        {
+          Comments: 'I agree',
+        }
+      ),
       shouldHaveCustomerFeedbackLink: true,
+    },
+    {
+      testTitle: 'Rejected',
+      exportWinAPIResponse: {
+        ...EXPORT_WIN,
+        customer_response: {
+          agree_with_win: false,
+          comments: 'I disagree',
+        },
+      },
+      tableRows: insertAfter(
+        {
+          ...EXPECTED_ROWS,
+          'Export win confirmed': 'No',
+        },
+        'Lead officer name',
+        {
+          Comments: 'I disagree',
+        }
+      ),
+      shouldHaveCustomerFeedbackLink: false,
     },
     {
       testTitle: 'Unconfirmed',
       exportWinAPIResponse: {
         ...EXPORT_WIN,
-        is_personally_confirmed: false,
       },
       tableRows: {
         ...EXPECTED_ROWS,
@@ -339,6 +382,54 @@ describe('ExportWins/Details', () => {
         } else {
           cy.contains('View customer feedback').should('not.exist')
         }
+      })
+    }
+  )
+
+  context(
+    'When the "Resend export win" button is hidden/shown on the details page',
+    () => {
+      it('should not be visible when the status of the export win is "rejected"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.REJECTED,
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('not.exist')
+      })
+      it('should be visible when the status of the export win is "sent"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.SENT,
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('exist')
+      })
+      it('should not be visible when the status of the export win is "won"', () => {
+        cy.mount(
+          <Component
+            exportWinAPIResponse={{
+              ...EXPORT_WIN,
+              customer_response: {
+                agree_with_win: WIN_STATUS.WON,
+                our_support: {
+                  name: 'A fortune',
+                },
+              },
+            }}
+          />
+        )
+        cy.get('[data-test="resend-export-win"]').should('not.exist')
       })
     }
   )

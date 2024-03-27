@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 
 import { convertDateToFieldDateObject } from '../../../../client/utils/date'
 import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
-import { sumWinTypeYearlyValues, isDateWithinLastTwelveMonths } from './utils'
+import { sumWinTypeYearlyValues, isWithinLastTwelveMonths } from './utils'
 import { idNameToValueLabel } from '../../../../client/utils'
 import {
   winTypeId,
@@ -109,16 +109,14 @@ export const transformExportProjectForForm = (exportProject) => {
     // Customer details
     // The exporter experience field is optional when adding an Export Project
     ...(exportProject.exporter_experience && {
-      export_experience: [
-        idNameToValueLabel(exportProject.exporter_experience),
-      ],
+      export_experience: idNameToValueLabel(exportProject.exporter_experience),
     }),
     company_contacts:
       exportProject.contacts.length === 1
         ? transformCompanyContact(exportProject.contacts[0])
         : null, // Get the user to choose the contact
     // Win Details
-    date: isDateWithinLastTwelveMonths(date) && {
+    date: isWithinLastTwelveMonths(date) && {
       year: String(date.getFullYear()),
       month: String(date.getMonth() + 1),
     },

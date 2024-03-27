@@ -4,13 +4,17 @@ import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
-import { WIN_FILTERS } from './constants'
+import { WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-sent"
-    payload={{ confirmed: WIN_FILTERS.SENT }}
+    heading="Export win"
+    noResults="You don't have any sent export wins."
+    // We have to send null as a string otherwise
+    // it's stripped out of the payload by Axois
+    payload={{ confirmed: String(WIN_STATUS.SENT) }}
   >
     {(page) => (
       <ul>

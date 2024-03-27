@@ -1,13 +1,14 @@
 import { isBoolean, isNumber } from 'lodash'
 
 import { formatMediumDateTime, isDateValid } from '../../../../utils/date'
+import { COMPANY_FIELD_NAME_TO_LABEL_MAP, HEADQUARTER_TYPES } from './constants'
 import {
-  COMPANY_FIELD_NAME_TO_LABEL_MAP,
   ARCHIVED,
   NOT_ARCHIVED,
-  HEADQUARTER_TYPES,
-} from './constants'
-import { NOT_SET, YES, NO } from '../../../../components/AuditHistory/constants'
+  NOT_SET,
+  YES,
+  NO,
+} from '../../../../components/AuditHistory/constants'
 import { currencyGBP } from '../../../../utils/number-utils'
 import { transformFieldName } from '../../../../components/AuditHistory/transformers'
 
