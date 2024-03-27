@@ -82,7 +82,9 @@ const DataWorkspaceAccountPlan = ({ company }) => (
         </GridRow>
       </GridCol>
       <br />
-      <NewWindowLink href={urls.external.dataWorkspace(company.id)}>
+      <NewWindowLink
+        href={urls.external.dataWorkspace.accountPlans(company.id)}
+      >
         View {company.name}'s account plan
       </NewWindowLink>
     </GridCol>

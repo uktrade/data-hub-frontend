@@ -6,7 +6,7 @@ describe('urls', () => {
   describe('external', () => {
     it('should have the correct urls', () => {
       const companyNumber = faker.string.alphanumeric(8)
-      expect(urls.external.greatProfile(companyNumber)).to.equal(
+      expect(urls.external.great.companyProfile(companyNumber)).to.equal(
         `https://www.great.gov.uk/international/trade/suppliers/${companyNumber}`
       )
 
@@ -14,11 +14,11 @@ describe('urls', () => {
         `https://beta.companieshouse.gov.uk/company/${companyNumber}`
       )
 
-      expect(urls.external.findExporters()).to.equal(
+      expect(urls.external.dataWorkspace.findExporters).to.equal(
         'https://data.trade.gov.uk/datasets/4a0da123-a933-4250-90b5-df5cde34930b'
       )
 
-      expect(urls.external.exportWins()).to.equal(
+      expect(urls.external.exportWins).to.equal(
         'https://www.exportwins.service.trade.gov.uk/'
       )
     })

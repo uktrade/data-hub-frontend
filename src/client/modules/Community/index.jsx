@@ -72,9 +72,7 @@ const Community = () => {
             </StyledHeading>
             <StyledParagraph data-test="community-roadmap-paragraph">
               Our{' '}
-              <NewWindowLink
-                href={urls.external.helpCentre.community.roadmap()}
-              >
+              <NewWindowLink href={urls.external.helpCentre.community.roadmap}>
                 CRM roadmap
               </NewWindowLink>{' '}
               shows what we&apos;re currently working on and the work that is
@@ -90,7 +88,7 @@ const Community = () => {
             </StyledHeading>
             <StyledParagraph>
               Do you have a great idea? We would love to hear it. Tell us your{' '}
-              <Link href={urls.external.helpCentre.community.feedback()}>
+              <Link href={urls.external.helpCentre.community.feedback}>
                 feedback or experience
               </Link>{' '}
               using our CRM tools.
@@ -110,7 +108,7 @@ const Community = () => {
               relationship management and help us to plan and prioritise
               upcoming development.{' '}
               <NewWindowLink
-                href={urls.external.helpCentre.community.principles()}
+                href={urls.external.helpCentre.community.principles}
               >
                 Find out more about our CRM principles
               </NewWindowLink>
@@ -129,9 +127,7 @@ const Community = () => {
               We offer introductions to Data Hub and Data Workspace as well as
               bootcamps to help use our analysis and visualisation tools
               effectively.{' '}
-              <NewWindowLink
-                href={urls.external.helpCentre.community.training()}
-              >
+              <NewWindowLink href={urls.external.helpCentre.community.training}>
                 View available training
               </NewWindowLink>{' '}
               and sign up today!

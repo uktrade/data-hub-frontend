@@ -26,7 +26,7 @@ const SORTED_APP_GLOBAL_NAV_ITEMS = sortBy(
   (globalNavItem) => globalNavItem.order
 )
 const GLOBAL_NAV_ITEMS = concat(SORTED_APP_GLOBAL_NAV_ITEMS, {
-  path: urls.external.findExporters(),
+  path: urls.external.dataWorkspace.findExporters,
   label: 'Find exporters',
   key: 'find-exporters',
 })

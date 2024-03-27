@@ -110,10 +110,10 @@ const Container = styled(InnerContainer)`
 
 export const LINKS = {
   'Request Support': urls.support(),
-  'Help Centre': urls.external.helpCentre.dhHomepage(),
-  'Privacy Notice': urls.external.helpCentre.privacyNotice(),
-  Cookies: urls.external.helpCentre.cookies(),
-  'Accessibility Statement': urls.external.helpCentre.accessibilityStatement(),
+  'Help Centre': urls.external.helpCentre.dhHomepage,
+  'Privacy Notice': urls.external.helpCentre.privacyNotice,
+  Cookies: urls.external.helpCentre.cookies,
+  'Accessibility Statement': urls.external.helpCentre.accessibilityStatement,
 }
 
 /**
@@ -141,7 +141,7 @@ export default function Footer({ links = LINKS, ...props }) {
           ))}
         </StyleList>
         <CopyrightLink
-          href={urls.external.copyright}
+          href={urls.external.nationalArchives.copyright}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Crown copyright (opens in new tab)"

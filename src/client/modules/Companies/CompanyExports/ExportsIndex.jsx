@@ -85,7 +85,7 @@ const ExportsIndex = () => {
               The export potential score is a prediction of a company's
               likelihood of exporting, and was originally created for the{' '}
               <Link
-                href={urls.external.findExporters()}
+                href={urls.external.dataWorkspace.findExporters}
                 target="_blank"
                 aria-label="opens in a new tab"
               >
@@ -157,7 +157,7 @@ const ExportsIndex = () => {
             <p>
               <Link
                 data-test-id="exportWinsLink"
-                href={urls.external.exportWins()}
+                href={urls.external.exportWins}
                 target="_blank"
                 aria-label="opens in a new tab"
               >

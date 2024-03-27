@@ -51,7 +51,7 @@ describe('Dashboard', () => {
       cy.get('@infoFeedTopLink')
         .should('exist')
         .should('have.text', 'View all Data Hub updates (opens in new tab)')
-        .should('have.attr', 'href', urls.external.helpCentre.allUpdates())
+        .should('have.attr', 'href', urls.external.helpCentre.allUpdates)
     })
   })
 

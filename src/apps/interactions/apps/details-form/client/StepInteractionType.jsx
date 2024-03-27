@@ -44,7 +44,7 @@ const StepInteractionType = () => {
         <br />
         <br />
         For more information see{' '}
-        <NewWindowLink href={urls.external.helpCentre.tradeagreementGuidance()}>
+        <NewWindowLink href={urls.external.helpCentre.tradeAgreementGuidance}>
           recording trade agreement activity
         </NewWindowLink>
         .{' '}

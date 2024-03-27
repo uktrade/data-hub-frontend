@@ -1,6 +1,8 @@
 import urls from '../../../../../src/lib/urls'
 import { assertBreadcrumbs } from '../../support/assertions'
 
+const helpCentreLinks = urls.external.helpCentre.community
+
 describe('Community', () => {
   context('When visiting the Community page', () => {
     beforeEach(() => {
@@ -34,11 +36,7 @@ describe('Community', () => {
         .should('exist')
         .should('contain.text', "Take a look at what we're working on")
         .children()
-        .should(
-          'have.attr',
-          'href',
-          urls.external.helpCentre.community.roadmap()
-        )
+        .should('have.attr', 'href', helpCentreLinks.roadmap)
     })
 
     it('should display the feedback block', () => {
@@ -47,11 +45,7 @@ describe('Community', () => {
         .should('exist')
         .should('contain.text', 'Discuss and give feedback')
         .children()
-        .should(
-          'have.attr',
-          'href',
-          urls.external.helpCentre.community.feedback()
-        )
+        .should('have.attr', 'href', helpCentreLinks.feedback)
     })
 
     it('should display the principles block', () => {
@@ -60,11 +54,7 @@ describe('Community', () => {
         .should('exist')
         .should('contain.text', 'Our CRM principles')
         .children()
-        .should(
-          'have.attr',
-          'href',
-          urls.external.helpCentre.community.principles()
-        )
+        .should('have.attr', 'href', helpCentreLinks.principles)
     })
 
     it('should display the training block', () => {
@@ -73,11 +63,7 @@ describe('Community', () => {
         .should('exist')
         .should('contain.text', 'Sign up for training')
         .children()
-        .should(
-          'have.attr',
-          'href',
-          urls.external.helpCentre.community.training()
-        )
+        .should('have.attr', 'href', helpCentreLinks.training)
     })
 
     it('should display the user research block', () => {

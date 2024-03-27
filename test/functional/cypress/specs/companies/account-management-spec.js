@@ -246,7 +246,11 @@ describe('Company account management', () => {
     it('should navigate to the account plan page when the link is clicked', () => {
       cy.get('[data-test="newWindowLink"]')
         .should('exist')
-        .should('have.attr', 'href', urls.external.dataWorkspace(companyId))
+        .should(
+          'have.attr',
+          'href',
+          urls.external.dataWorkspace.accountPlans(companyId)
+        )
     })
   })
 })

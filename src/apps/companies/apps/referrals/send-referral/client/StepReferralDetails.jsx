@@ -39,7 +39,7 @@ const StepReferralDetails = ({
         <br />
         <NewWindowLink
           data-test="referral-guidance"
-          href={urls.external.referrals}
+          href={urls.external.helpCentre.referrals}
         >
           Read more guidance here
         </NewWindowLink>
