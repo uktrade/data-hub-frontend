@@ -44,16 +44,16 @@ const ExportWinStatus = (props) => (
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
 export const CreateExportWin = () => {
-  const params = useParams()
+  const { exportId, companyId } = useParams()
 
   return (
     <ExportWinForm
       heading="Add export win"
-      subheading={<CompanyName companyId={params.companyId} />}
-      exportId={params.exportId}
-      companyId={params.companyId}
-      initialValuesTaskName={params.exportId ? TASK_GET_EXPORT_PROJECT : null}
-      initialValuesPayload={{ id: params.exportId }}
+      subheading={<CompanyName companyId={companyId} />}
+      exportId={exportId}
+      companyId={companyId}
+      initialValuesTaskName={exportId ? TASK_GET_EXPORT_PROJECT : null}
+      initialValuesPayload={{ id: exportId }}
       breadcrumbs={[
         {
           link: urls.dashboard.index(),
@@ -64,8 +64,8 @@ export const CreateExportWin = () => {
           text: 'Companies',
         },
         {
-          link: urls.companies.detail(params.companyId),
-          text: <CompanyName companyId={params.companyId} />,
+          link: urls.companies.detail(companyId),
+          text: <CompanyName companyId={companyId} />,
         },
         { text: 'Add export win' },
       ]}
@@ -75,17 +75,17 @@ export const CreateExportWin = () => {
 
 // Here we're editing an existing win so we'll have the export win id.
 export const EditExportWin = () => {
-  const params = useParams()
+  const { winId, companyId } = useParams()
   return (
     <ExportWinForm
-      heading={<ExportWinTitle id={params.winId} />}
-      subheading={<ExportWinSubTitle id={params.winId} />}
+      heading={<ExportWinTitle id={winId} />}
+      subheading={<ExportWinSubTitle id={winId} />}
       isEditing={true}
-      companyId={params.companyId}
-      exportWinId={params.winId}
+      companyId={companyId}
+      exportWinId={winId}
       initialValuesTaskName={TASK_GET_EXPORT_WIN}
       initialValuesPayload={{
-        id: params.winId,
+        id: winId,
       }}
       breadcrumbs={[
         {
@@ -96,7 +96,7 @@ export const EditExportWin = () => {
           link: urls.companies.exportWins.sent(),
           text: 'Export wins',
         },
-        { text: <ExportWinStatus id={params.winId} /> },
+        { text: <ExportWinStatus id={winId} /> },
       ]}
     />
   )
