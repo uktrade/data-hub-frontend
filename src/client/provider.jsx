@@ -89,6 +89,35 @@ const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
   location,
   action,
 }))(Router)
+export const createProvider = ({ tasks, history, preloadedState }) => {
+  const sagaMiddleware = createSagaMiddleware()
+  const store = configureStore({
+    devTools: process.env.NODE_ENV === 'development',
+    middleware: () => [sagaMiddleware, routerMiddleware(history)],
+    preloadedState,
+    reducer: {
+      // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
+      ..._.mapValues(
+        preloadedState,
+        () =>
+          (state = null) =>
+            state
+      ),
+      ...reducers,
+      router: routerReducer,
+    },
+  })
+
+  sagaMiddleware.run(rootSaga(tasks))
+
+  return ({ children }) => (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+    </Provider>
+  )
+}
+
+// TODO: Re-implement this in with createProvider
 /**
  * Provides state management and routing infrastructure required by the
  * stateful/routed components.

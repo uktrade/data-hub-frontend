@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { TASK_GET_EXPORT_WIN, TASK_GET_EXPORT_PROJECT } from './state'
 import ExportWinForm from './ExportWinForm'

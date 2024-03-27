@@ -106,6 +106,7 @@ import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProje
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import AddPropositionDocument from './modules/Investments/Projects/Propositions/AddPropositionDocument'
 import ProtectedRoute from './components/ProtectedRoute/index'
+import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 
 function Routes() {
   const routes = useRoutes([
@@ -687,7 +688,7 @@ function Routes() {
       ),
     },
     {
-      path: '/exportwins/pending',
+      path: '/exportwins/sent',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <ExportWinsTabNav />
@@ -695,7 +696,7 @@ function Routes() {
       ),
     },
     {
-      path: '/exportwins/confirmed',
+      path: '/exportwins/won',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <ExportWinsTabNav />
@@ -711,7 +712,15 @@ function Routes() {
       ),
     },
     {
-      path: '/companies/:companyId/exportwins/create',
+      path: '/exportwins/:winId/details',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/exportwins/create',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CreateExportWin />
@@ -719,42 +728,10 @@ function Routes() {
       ),
     },
     {
-      path: '/companies/:companyId/export/:exportId/exportwins/create',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <CreateExportWin />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/exportwins/:winId/success',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <Success />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/companies/:companyId/exportwins/:winId/customer-feedback',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <CustomerFeedback />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/companies/:companyId/exportwins/:winId/edit',
+      path: '/exportwins/:winId/edit',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <EditExportWin />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/companies/:companyId/exportwins/:winId/edit-success',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <EditSuccess />
         </ProtectedRoute>
       ),
     },
@@ -1084,8 +1061,6 @@ function Routes() {
     },
   ])
 
-  // let router = useRoutes(routes);
   return routes
-  // return router;
 }
 export default Routes
