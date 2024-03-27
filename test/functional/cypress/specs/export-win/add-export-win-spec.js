@@ -61,33 +61,12 @@ describe('Adding an export win', () => {
         }),
       ],
     })
-
     cy.intercept('/api-proxy/adviser/?*', {
       results: [
         { id: '100', name: 'David Meyer' },
         { id: '101', name: 'John Smith' },
       ],
     })
-    cy.intercept('GET', '/api-proxy/v4/metadata/team-type', [
-      { id: '200', name: 'Investment (ITFG or IG)' },
-      { id: '201', name: 'Trade (TD or ST)' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hq-team-region-or-post?*', [
-      { id: '300', name: 'DIT Education' },
-      { id: '301', name: 'Healthcare UK' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-      { id: '400', name: 'Australia Consumer Goods & Retail: E004' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/support-type', [
-      {
-        id: '500',
-        name: 'Market entry advice and support – DIT/FCO in UK',
-      },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-      { id: '600', name: 'Afterburner' },
-    ])
     cy.intercept('POST', '/api-proxy/v4/export-win', {
       statusCode: 201,
     }).as('apiPostExportWin')
@@ -119,7 +98,6 @@ describe('Adding an export win', () => {
     })
   })
 
-  // Disable testIsolation due to multi step form with lots of data.
   context(
     'When the export win is created from scratch',
     { testIsolation: false },
@@ -130,7 +108,7 @@ describe('Adding an export win', () => {
         fillOfficerDetails({
           leadOfficer: 'David',
           teamType: 'Investment (ITFG or IG)',
-          hqTeam: 'DIT Education',
+          hqTeam: 'ITFG - E-Business Projects Team',
         })
 
         clickContinueAndAssertUrl(creditForThisWinStep)
@@ -138,7 +116,7 @@ describe('Adding an export win', () => {
         fillCreditForThisWin({
           contributingOfficer: 'John',
           teamType: 'Trade (TD or ST)',
-          hqTeam: 'Healthcare UK',
+          hqTeam: 'TD - Events - Education',
         })
 
         clickContinueAndAssertUrl(customerDetailsStep)
@@ -157,8 +135,7 @@ describe('Adding an export win', () => {
           dateMonth: month,
           dateYear: year,
           description: 'Foo bar baz',
-          nameOfCustomer: 'David French',
-          isConfidential: true,
+          nameOfCustomerConfidential: true,
           businessType: 'Contract',
           exportValues: ['1000000', '1000000', '1000000', '1000000', '1000000'],
           businessSuccessValues: [
@@ -198,11 +175,11 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'officer-details',
           heading: 'Officer details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Lead officer name': 'David Meyer',
             'Team type': 'Investment (ITFG or IG)',
-            'HQ Team, region or post': 'DIT Education',
+            'HQ Team, region or post': 'ITFG - E-Business Projects Team',
             'Team members (optional)': 'Not set',
           },
         })
@@ -212,11 +189,11 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'credit-for-this-win',
           heading: 'Credit for this win',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Did any other teams help with this win?':
               'YesContributing teams and advisersContributing officer: John SmithTeam ' +
-              'type: Trade (TD or ST)HQ team, region or post: Healthcare UK',
+              'type: Trade (TD or ST)HQ team, region or post: TD - Events - Education',
           },
         })
       })
@@ -225,7 +202,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'customer-details',
           heading: 'Customer details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Contact name': 'Joseph Barker',
             'HQ location': 'Scotland',
@@ -239,12 +216,11 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'win-details',
           heading: 'Win details',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             Destination: 'United States',
             'Date won': `${month}/${year}`,
             'Summary of support given': 'Foo bar baz',
-            'Overseas customer': 'David French',
             Confidential: 'Yes',
             'Type of win': 'Contract',
             'Export value': '£5,000,000 over 5 years',
@@ -262,7 +238,7 @@ describe('Adding an export win', () => {
         assertSummaryTable({
           dataTest: 'support-given',
           heading: 'Support given',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'HVC code': 'Australia Consumer Goods & Retail: E004',
             'What type of support was given?':
@@ -289,14 +265,14 @@ describe('Adding an export win', () => {
         cy.wait('@apiPostExportWin').then(({ request }) => {
           expect(omit(request.body, '_csrf')).to.deep.equal({
             lead_officer: '100',
-            team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add',
-            hq_team: '300',
+            team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add', // Investment (ITFG or IG)
+            hq_team: '1e5aec69-c581-4356-b0ca-1f710d3d077d', // ITFG - E-Business Projects Team
             team_members: [],
             advisers: [
               {
                 adviser: '101',
-                hq_team: '301',
-                team_type: '201',
+                team_type: 'a4839e09-e30e-492c-93b5-8ab2ef90b891', // Trade (TD or ST)
+                hq_team: '2f883a06-5811-4668-878f-92a1e3de548d', // TD - Events - Education
               },
             ],
             company_contacts: ['000'],
@@ -306,7 +282,7 @@ describe('Adding an export win', () => {
             country: '81756b9a-5d95-e211-a939-e4115bead28a',
             date: `${year}-${month}-01`,
             description: 'Foo bar baz',
-            name_of_customer: 'David French',
+            name_of_customer: 'confidential',
             name_of_customer_confidential: true,
             business_type: 'Contract',
             breakdowns: [
@@ -326,9 +302,9 @@ describe('Adding an export win', () => {
             goods_vs_services: '456e951d-a633-4f21-afde-d41381407efe',
             name_of_export: 'Biscuits',
             sector: 'af959812-6095-e211-a939-e4115bead28a',
-            hvc: '400',
-            type_of_support: ['500'],
-            associated_programme: ['600'],
+            hvc: '0240d283-ec44-4f33-b501-e2bf14e337b5', // Australia Consumer Goods & Retail: E004
+            type_of_support: ['5560d2ee-b75b-48b0-b6ca-36d43653be61'], // Market entry advice and support – DIT/FCO in UK
+            associated_programme: ['b6f5c31a-aa45-4ae0-89bd-2eb3ab943f76'], // Afterburner
             is_personally_confirmed: true,
             is_line_manager_confirmed: true,
             total_expected_export_value: 5000000,

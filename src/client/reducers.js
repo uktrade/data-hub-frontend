@@ -1,4 +1,3 @@
-import DropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
 
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
@@ -195,7 +194,6 @@ export const reducers = {
   [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
   ...TabNav.reducerSpread,
   ...ReferralList.reducerSpread,
-  ...DropdownMenu.reducerSpread,
   ...ToggleSection.reducerSpread,
   ...Typeahead.reducerSpread,
   ...RoutedInput.reducerSpread,

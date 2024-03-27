@@ -1,9 +1,5 @@
 import { currencyGBP } from '../../../../client/utils/number-utils'
-import {
-  subtractMonths,
-  isDateAfter,
-  getStartOfMonth,
-} from '../../../utils/date'
+
 /**
  * @param {String} winType the name of the win type
  * @param {Object} values the form values object containing the keys
@@ -118,21 +114,9 @@ export const getMaxYearFromWinTypes = (winTypes, values) =>
   Math.max(...winTypes.map((winType) => getYearFromWinType(winType, values)))
 
 /**
- * Returns a date that is 12 months ago from the current date that includes the 1st of the month
- * @returns {Date} A date that is 12 months ago from the current date that includes the 1st of the month
- */
-export const getDateTwelveMonthsAgoWithFirstDay = () =>
-  subtractMonths(getStartOfMonth(new Date()), 12)
-
-/**
  * Tests whether a given date is within the last twelve months and not in the future.
  * @param {Date} date - The date to test.
  * @returns {boolean} True if the date is within the last twelve months and not in the future, false otherwise.
  */
-export const isWithinLastTwelveMonths = (date) =>
-  // Business date logic
-  isDateAfter(date, new Date())
-    ? false // Date is in the future
-    : isDateAfter(date, getDateTwelveMonthsAgoWithFirstDay())
 
 export const formatValue = (sum) => currencyGBP(sum)

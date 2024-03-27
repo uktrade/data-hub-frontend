@@ -1,8 +1,8 @@
-import { getDateTwelveMonthsAgoWithFirstDay } from '../../../../../src/client/modules/ExportWins/Form/utils'
 import {
   subtractMonths,
   addMonths,
   getRandomDateInRange,
+  getStartDateOfTwelveMonthsAgo,
 } from '../../../../../src/client/utils/date'
 import { clickContinueButton } from '../../support/actions'
 import { assertUrl } from '../../support/assertions'
@@ -56,8 +56,8 @@ export const fillWinDetails = ({
   dateMonth,
   dateYear,
   description,
+  nameOfCustomerConfidential,
   nameOfCustomer,
-  isConfidential,
   businessType,
   exportValues,
   businessSuccessValues,
@@ -76,10 +76,13 @@ export const fillWinDetails = ({
   description &&
     cy.get(winDetails.description).find('textarea').type(description)
 
-  nameOfCustomer &&
-    cy.get(winDetails.nameOfCustomer).find('input').type(nameOfCustomer)
+  nameOfCustomerConfidential
+    ? cy.get(winDetails.nameOfCustomerConfidentialYes).click()
+    : cy.get(winDetails.nameOfCustomerConfidentialNo).click()
 
-  isConfidential && cy.get(winDetails.confidential).find('input').check()
+  !nameOfCustomerConfidential &&
+    nameOfCustomer &&
+    cy.get(winDetails.nameOfCustomer).find('input').type(nameOfCustomer)
 
   businessType &&
     cy.get(winDetails.businessType).find('input').type(businessType)
@@ -166,7 +169,7 @@ const getMonthAndYearFromDate = (date) => ({
 
 export const getDateWithinLastTwelveMonths = () =>
   getMonthAndYearFromDate(
-    getRandomDateInRange(getDateTwelveMonthsAgoWithFirstDay(), new Date())
+    getRandomDateInRange(getStartDateOfTwelveMonthsAgo(), new Date())
   )
 
 export const getDateThirteenMonthsAgo = () =>

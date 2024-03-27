@@ -272,13 +272,22 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
 /**
  * @param {{inputName: string, options: string[], legend?: string, selectIndex?: number}} options
  */
-const assertFieldRadiosStrict = ({ inputName, options, legend, selectIndex }) =>
+const assertFieldRadiosStrict = ({
+  inputName,
+  options,
+  legend,
+  hint,
+  selectIndex,
+}) =>
   cy
     .get(`[data-test="field-${inputName}"]`)
     .should('exist')
     .within(() => {
       if (legend) {
         cy.get('legend').should('have.text', legend)
+      }
+      if (hint) {
+        cy.get('[data-test="hint-text"]').should('have.text', hint)
       }
 
       cy.get('input[type="radio"]')

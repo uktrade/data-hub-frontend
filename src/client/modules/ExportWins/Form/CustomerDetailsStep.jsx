@@ -7,10 +7,10 @@ import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
 import {
-  UKRegionsResource,
   CompanyContactsResource,
   ExportExperienceResource,
   BusinessPotentialResource,
+  WinUKRegions,
 } from '../../../components/Resource'
 
 const CustomerDetailsStep = ({ companyId }) => {
@@ -39,13 +39,11 @@ const CustomerDetailsStep = ({ companyId }) => {
         To select a customer contact name, it must have already been added to
         Data Hub. If not listed, go to the company page to add them.
       </StyledHintParagraph>
-      <ResourceOptionsField
+      <WinUKRegions.FieldTypeahead
         name="customer_location"
         id="customer-location"
         label="HQ location"
         required="Select HQ location"
-        field={FieldTypeahead}
-        resource={UKRegionsResource}
         resultToOptions={(result) =>
           idNamesToValueLabels(result.filter(({ name }) => name !== 'All'))
         }

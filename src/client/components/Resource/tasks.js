@@ -92,6 +92,7 @@ import TaskCompaniesAndProjects from './TaskCompaniesAndProjects'
 import CompanyAuditHistory from './CompanyAuditHistory'
 import EvidenceTag from './EvidenceTag'
 import ProjectAuditHistory from './ProjectAuditHistory'
+import WinUKRegions from './WinUKRegions'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -179,6 +180,7 @@ export default {
   ...TaskOverdueSettings.tasks,
   ...UKRegions.tasks,
   ...WinType.tasks,
+  ...WinUKRegions.tasks,
   ...WithoutOurSupport.tasks,
   ...OrderQuote.tasks,
   ...TaskCompletedSettings.tasks,

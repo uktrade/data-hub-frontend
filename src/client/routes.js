@@ -24,6 +24,7 @@ import { CreateExportWin, EditExportWin } from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Status/Redirect'
 import ExportWinDetails from './modules/ExportWins/Details'
 import Success from './modules/ExportWins/Form/Success'
+import EditSuccess from './modules/ExportWins/Form/EditSuccess'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Community from './modules/Community'
@@ -749,10 +750,18 @@ function Routes() {
         ),
       },
       {
-        path: '/exportwins/:winId/edit',
+        path: '/companies/:companyId/exportwins/:winId/edit',
         element: (
           <ProtectedRoute module={'datahub:companies'}>
             <EditExportWin />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/companies/:companyId/exportwins/:winId/edit-success',
+        element: (
+          <ProtectedRoute module={'datahub:companies'}>
+            <EditSuccess />
           </ProtectedRoute>
         ),
       },

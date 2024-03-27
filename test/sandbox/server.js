@@ -251,6 +251,10 @@ import {
   getRating,
   getMarketingSource,
   getWithoutOurSupport,
+  getSupportType,
+  getHVC,
+  getAssociatedProgramme,
+  getHqTeamRegionOrPost,
 } from './routes/v4/metadata/index.js'
 import { searchCompanies as __companies } from './routes/v4/search/company.js'
 import { companiesAutocomplete } from './routes/v4/search/company/autocomplete.js'
@@ -449,6 +453,7 @@ app.get('/v4/metadata/evidence-tag', _evidenceTag)
 app.get('/v4/metadata/employee-range', _employeeRange)
 app.get('/v4/metadata/country', _country)
 app.get('/v4/metadata/uk-region', _ukRegion)
+app.get('/v4/metadata/winukregion', _ukRegion)
 app.get('/v4/metadata/administrative-area', getAdministrativeArea)
 app.get('/v4/metadata/referral-source-website', _referralSourceWebsite)
 app.get('/v4/metadata/referral-source-marketing', _referralSourceMarketing)
@@ -522,6 +527,11 @@ app.get('/v4/metadata/experience', getExperience)
 app.get('/v4/metadata/rating', getRating)
 app.get('/v4/metadata/marketing-source', getMarketingSource)
 app.get('/v4/metadata/without-our-support', getWithoutOurSupport)
+
+app.get('/v4/metadata/support-type', getSupportType)
+app.get('/v4/metadata/hvc', getHVC)
+app.get('/v4/metadata/associated-programme', getAssociatedProgramme)
+app.get('/v4/metadata/hq-team-region-or-post', getHqTeamRegionOrPost)
 
 // Ping
 app.get('/ping.xml', ping)
