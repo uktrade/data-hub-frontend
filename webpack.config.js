@@ -63,38 +63,28 @@ module.exports = (env) => ({
     new WebpackAssetsManifest({ output: 'assets-manifest.json' }),
     new ImageMinimizerPlugin({
       minimizer: {
-        implementation: ImageMinimizerPlugin.imageminMinify,
+        implementation: ImageMinimizerPlugin.sharpMinify,
         options: {
-          // Lossless optimization with custom option
-          // Feel free to experiment with options for better result for you
-          plugins: [
-            ['gifsicle', { interlaced: true }],
-            ['jpegtran', { progressive: true }],
-            ['optipng', { optimizationLevel: 5 }],
-            // Svgo configuration here https://github.com/svg/svgo#configuration
-            [
-              'svgo',
-              {
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: {
-                        removeViewBox: false,
-                        addAttributesToSVGElement: {
-                          params: {
-                            attributes: [
-                              { xmlns: 'http://www.w3.org/2000/svg' },
-                            ],
-                          },
-                        },
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
-          ],
+          encodeOptions: {
+            jpeg: {
+              // https://sharp.pixelplumbing.com/api-output#jpeg
+              quality: 100,
+            },
+            webp: {
+              // https://sharp.pixelplumbing.com/api-output#webp
+              lossless: true,
+            },
+            avif: {
+              // https://sharp.pixelplumbing.com/api-output#avif
+              lossless: true,
+            },
+            // png by default sets the quality to 100%, which is same as lossless
+            // https://sharp.pixelplumbing.com/api-output#png
+            png: {},
+            // gif does not support lossless compression at all
+            // https://sharp.pixelplumbing.com/api-output#gif
+            gif: {},
+          },
         },
       },
     }),

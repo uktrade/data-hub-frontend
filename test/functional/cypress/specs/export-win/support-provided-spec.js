@@ -11,18 +11,7 @@ import {
 describe('Support provided', () => {
   const { supportProvided } = formFields
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api-proxy/v4/metadata/associated-programme', [
-      { name: 'Afterburner' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/support-type', [
-      { name: 'Market entry advice and support – DIT/FCO in UK' },
-    ])
-    cy.intercept('GET', '/api-proxy/v4/metadata/hvc', [
-      { name: 'Australia Consumer Goods & Retail: E004' },
-    ])
-    cy.visit(supportProvidedStep)
-  })
+  beforeEach(() => cy.visit(supportProvidedStep))
 
   it('should render a step heading', () => {
     cy.get(supportProvided.heading).should('have.text', 'Support given')

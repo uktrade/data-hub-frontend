@@ -1,5 +1,5 @@
 import { clickContinueButton } from '../../support/actions'
-import { formFields, winDetailsStep } from './constants'
+import { formFields, winDetailsStep, company } from './constants'
 
 import {
   populateWinWithValues,
@@ -16,6 +16,7 @@ import {
   assertFieldTypeahead,
   assertFieldDateShort,
   assertFieldCheckboxes,
+  assertFieldRadiosStrict,
 } from '../../support/assertions'
 
 const { month, year } = getDateWithinLastTwelveMonths()
@@ -24,6 +25,7 @@ describe('Win details', () => {
   const { winDetails } = formFields
 
   beforeEach(() => {
+    cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company)
     cy.visit(winDetailsStep)
   })
 
@@ -69,26 +71,26 @@ describe('Win details', () => {
     })
   })
 
+  it('should render two confidential unselected radio buttons', () => {
+    assertFieldRadiosStrict({
+      inputName: 'name_of_customer_confidential',
+      legend: 'Overseas customer',
+      hint: "Is the customer's name confidential?",
+      options: ['Yes', 'No'],
+    })
+    cy.get(winDetails.nameOfCustomerConfidentialYes).should('not.be.checked')
+    cy.get(winDetails.nameOfCustomerConfidentialNo).should('not.be.checked')
+  })
+
   it('should renderer Overseas customer', () => {
+    cy.get(winDetails.nameOfCustomerConfidentialNo).click()
     cy.get(winDetails.nameOfCustomer).then((element) => {
       assertFieldInput({
         element,
-        label: 'Overseas customer',
+        label: "Customer's name",
+        hint: 'Enter the customer’s name, this will be displayed on Data Hub.',
         placeholder: 'Add name',
       })
-    })
-  })
-
-  it('should render a Confidential checkbox', () => {
-    assertFieldCheckboxes({
-      element: winDetails.confidential,
-      hint: 'Check this box if your customer has asked for this not to be public (optional).',
-      options: [
-        {
-          label: 'Confidential',
-          checked: false,
-        },
-      ],
     })
   })
 
@@ -238,7 +240,7 @@ describe('Win details', () => {
       'Choose a destination country',
       'Enter the win date',
       'Enter a summary',
-      'Enter the name of the overseas customer',
+      'Select Yes or No',
       'Enter the type of business deal',
       'Choose at least one type of win',
       'Select at least one option',
@@ -252,11 +254,12 @@ describe('Win details', () => {
     )
     assertFieldError(cy.get(winDetails.date), 'Enter the win date', true)
     assertFieldError(cy.get(winDetails.description), 'Enter a summary', true)
-    assertFieldError(
-      cy.get(winDetails.nameOfCustomer),
-      'Enter the name of the overseas customer',
-      false
+
+    cy.get(winDetails.nameOfCustomerConfidential).should(
+      'contain',
+      'Select Yes or No'
     )
+
     assertFieldError(
       cy.get(winDetails.businessType),
       'Enter the type of business deal',
@@ -278,6 +281,27 @@ describe('Win details', () => {
       true
     )
     assertFieldError(cy.get(winDetails.sector), 'Enter a sector', false)
+  })
+
+  it('should display validation error messages on mandatory fields that are revealed', () => {
+    // Reveal the overseas customer field by clicking no
+    cy.get(winDetails.nameOfCustomerConfidentialNo).click()
+    clickContinueButton()
+    assertErrorSummary([
+      'Choose a destination country',
+      'Enter the win date',
+      'Enter a summary',
+      'Enter the type of business deal',
+      'Choose at least one type of win',
+      'Select at least one option',
+      'Enter the name of goods or services',
+      'Enter a sector',
+      'Enter the name of the overseas customer',
+    ])
+    cy.get(winDetails.nameOfCustomerConfidential).should(
+      'contain',
+      'Enter the name of the overseas customer'
+    )
   })
 
   it('should display a validation error message when the win date is in the future', () => {

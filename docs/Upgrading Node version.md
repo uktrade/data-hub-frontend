@@ -2,15 +2,22 @@
 
 When NodeJs is updated it is worth noting it needs to be updated in a few places.
 
-## Cloud Foundry build pack
+## Selecting the new version
 
-Please update the build pack in `manifest.yml` to use the required [cloud foundry build pack release](https://github.com/cloudfoundry/nodejs-buildpack/releases).
-Once this is done you can then chose the Node version for the next steps.
+There are a couple of considerations to consider when selecting a Node version to upgrade to:
+- The version must be supported by the latest release of the [CloudFoundry Node buildpack](https://github.com/cloudfoundry/nodejs-buildpack/releases).
+- The version must have a Cypress docker image associated with it, and appear in the [list of Cypress image tags](https://hub.docker.com/r/cypress/base/tags).
+
+If both of these criteria are not met, it will not be possible to build the new dependency image locally and it will not be possible to proceed with the upgrade.
 
 # Steps to follow for an upgrade
 
-1. Update the `manifest.yml` to match the latest release number (See above)
-2. Update Node on your local env to match the versions in the buildpack
+1. Update `manifest.yml` to use the [latest buildpack release](https://github.com/cloudfoundry/nodejs-buildpack/releases)
+2. Install and set your local `nvm` to use the chosen Node version
+```bash
+nvm install VERSION
+nvm use VERSION
+```
 3. Update the engines in `package.json` and install the dependencies with `npm ci`.
 4. Update the version used in `Dockerfile.dependencies`, then create/upload a new version of the dependency image (use the instructions from the [Docker readme](./Docker.md)). Ensure that the `Dockerfile` is using the image you created or CircleCI will not be able to run most of the tests.
 5. Update the engines in `test/sandbox/package.json` and install the dependencies with `npm ci`.

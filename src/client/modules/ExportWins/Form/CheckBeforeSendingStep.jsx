@@ -41,18 +41,20 @@ const CheckBeforeSendingStep = ({ isEditing }) => {
   return (
     <Step
       name={steps.CHECK_BEFORE_SENDING}
-      submitButtonLabel="Confirm and send to customer"
+      submitButtonLabel={isEditing ? 'Save' : 'Confirm and send to customer'}
     >
-      <H3 data-test="step-heading">Check before sending</H3>
+      {!isEditing && <H3 data-test="step-heading">Check before sending</H3>}
       <OfficerDetailsTable {...props} />
       <CreditForThisWinTable {...props} />
       <CustomerDetailsTable {...props} />
       <WinDetailsTable {...props} />
       <SupportGivenTable {...props} />
-      <WarningText data-test="warning-text">
-        This information will be sent to {values.company_contacts?.email} so
-        they can confirm the export win.
-      </WarningText>
+      {!isEditing && (
+        <WarningText data-test="warning-text">
+          This information will be sent to {values.company_contacts?.email} so
+          they can confirm the export win.
+        </WarningText>
+      )}
       {/*
           TODO: We have to include this hidden field 
           otherwise we lose the previous step's state.
@@ -72,7 +74,7 @@ const OfficerDetailsTable = ({ values, goToStep }) => (
           goToStep(steps.OFFICER_DETAILS)
         }}
       >
-        Change
+        Edit
       </StyledButtonLink>
     }
   >
@@ -120,7 +122,7 @@ const CreditForThisWinTable = ({ values, goToStep }) => {
             goToStep(steps.CREDIT_FOR_THIS_WIN)
           }}
         >
-          Change
+          Edit
         </StyledButtonLink>
       }
     >
@@ -144,7 +146,7 @@ const CustomerDetailsTable = ({ values, goToStep }) => (
           goToStep(steps.CUSTOMER_DETAILS)
         }}
       >
-        Change
+        Edit
       </StyledButtonLink>
     }
   >
@@ -195,7 +197,7 @@ const WinDetailsTable = ({ values, goToStep }) => {
             goToStep(steps.WIN_DETAILS)
           }}
         >
-          Change
+          Edit
         </StyledButtonLink>
       }
     >
@@ -208,9 +210,11 @@ const WinDetailsTable = ({ values, goToStep }) => {
       <SummaryTable.Row heading="Summary of support given">
         {values.description}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="Overseas customer">
-        {values.name_of_customer}
-      </SummaryTable.Row>
+      {values.name_of_customer && (
+        <SummaryTable.Row heading="Overseas customer">
+          {values.name_of_customer}
+        </SummaryTable.Row>
+      )}
       <SummaryTable.Row heading="Confidential">
         {transformCustomerConfidential(values.name_of_customer_confidential)}
       </SummaryTable.Row>
@@ -258,7 +262,7 @@ const SupportGivenTable = ({ values, goToStep }) => (
           goToStep(steps.SUPPORT_PROVIDED)
         }}
       >
-        Change
+        Edit
       </StyledButtonLink>
     }
   >

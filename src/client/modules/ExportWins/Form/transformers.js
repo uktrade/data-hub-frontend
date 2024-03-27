@@ -1,9 +1,12 @@
 import { isEmpty } from 'lodash'
 
-import { convertDateToFieldDateObject } from '../../../../client/utils/date'
 import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
-import { sumWinTypeYearlyValues, isWithinLastTwelveMonths } from './utils'
 import { idNameToValueLabel } from '../../../../client/utils'
+import { sumWinTypeYearlyValues } from './utils'
+import {
+  convertDateToFieldDateObject,
+  isWithinLastTwelveMonths,
+} from '../../../utils/date'
 import {
   winTypeId,
   GOODS_ID,
@@ -12,6 +15,8 @@ import {
   winTypeIdToWinTypeMap,
   goodsServicesIdToLabelMap,
 } from './constants'
+
+const CONFIDENTIAL = 'confidential'
 
 const transformContributingOfficersToAdvisers = (values) =>
   Object.keys(values)
@@ -144,8 +149,9 @@ export const transformExportWinForForm = (exportWin) => ({
   date: convertDateToFieldDateObject(exportWin.date),
   description: exportWin.description,
   name_of_customer: exportWin.name_of_customer,
-  name_of_customer_confidential:
-    exportWin.name_of_customer_confidential === true ? OPTION_YES : OPTION_NO,
+  name_of_customer_confidential: exportWin.name_of_customer_confidential
+    ? OPTION_YES
+    : OPTION_NO,
   business_type: exportWin.business_type,
   ...transformBreakdownsToYearlyValues(exportWin.breakdowns),
   win_type: getWinTypesFromBreakdowns(exportWin.breakdowns),
@@ -156,7 +162,7 @@ export const transformExportWinForForm = (exportWin) => ({
   name_of_export: exportWin.name_of_export,
   sector: idNameToValueLabel(exportWin.sector),
   // Support given
-  hvc: idNameToValueLabel(exportWin.hvc),
+  hvc: exportWin.hvc && idNameToValueLabel(exportWin.hvc), // Optional field
   type_of_support: exportWin.type_of_support.map(idNameToValueLabel),
   associated_programme: exportWin.associated_programme.map(idNameToValueLabel),
   is_personally_confirmed: exportWin.is_personally_confirmed
@@ -186,9 +192,12 @@ export const transformFormValuesForAPI = (values) => ({
   country: values.country.value,
   date: `${values.date.year}-${values.date.month}-01`,
   description: values.description,
-  name_of_customer: values.name_of_customer,
+  name_of_customer:
+    values.name_of_customer_confidential === OPTION_YES
+      ? CONFIDENTIAL
+      : values.name_of_customer,
   name_of_customer_confidential:
-    values.name_of_customer_confidential[0] === OPTION_YES,
+    values.name_of_customer_confidential === OPTION_YES,
   business_type: values.business_type,
   breakdowns: [
     ...transformYearlyValuesToBreakdowns(
