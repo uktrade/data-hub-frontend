@@ -83,7 +83,7 @@ export const createProvider = ({ tasks, history, preloadedState }) => {
 
   return ({ children }) => (
     <Provider store={store}>
-      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+      <ConnectedReactRouter history={history}>{children}</ConnectedReactRouter>
     </Provider>
   )
 }
