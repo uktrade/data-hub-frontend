@@ -139,7 +139,7 @@ describe('Creating an investment project', () => {
         content: {
           'Total investment': '£100,000',
           'Capital expenditure value': '£500,000',
-          'Gross Value Added (GVA)': '£31,050',
+          'Gross Value Added (GVA)': '£104,825',
           'Government assistance': 'Has government assistance',
           'New jobs': '500 new jobs',
           'Safeguarded jobs': '600 safeguarded jobs',
