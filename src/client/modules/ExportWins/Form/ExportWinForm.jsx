@@ -33,6 +33,13 @@ const StyledStatusMessage = styled(StatusMessage)({
   marginBottom: 5,
 })
 
+export const ContactLink = ({ sections }) => (
+  <>
+    Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need to update
+    the {pluralize('section', sections.length)}: {sections.join(', ')}
+  </>
+)
+
 const ExportWinForm = ({
   heading,
   subheading,
@@ -73,9 +80,7 @@ const ExportWinForm = ({
             </StyledStatusMessage>
           ) : excludedStepFields ? (
             <StyledStatusMessage>
-              Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need
-              to update the {pluralize('section', excludedStepFields.length)}:{' '}
-              {excludedStepFields.join(', ')}
+              <ContactLink sections={excludedStepFields} />
             </StyledStatusMessage>
           ) : null
         ) : null

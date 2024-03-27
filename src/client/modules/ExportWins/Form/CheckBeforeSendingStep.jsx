@@ -1,5 +1,7 @@
 import React from 'react'
 import WarningText from '@govuk-react/warning-text'
+import InsetText from '@govuk-react/inset-text'
+import { FONT_SIZE } from '@govuk-react/constants'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
@@ -7,6 +9,7 @@ import pluralize from 'pluralize'
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
 import { useFormContext } from '../../../components/Form/hooks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
+import { ContactLink } from './ExportWinForm'
 import { steps } from './constants'
 import {
   transformTeamsAndAdvisers,
@@ -32,6 +35,17 @@ const StyledContributingTeamsAndAdvisers = styled('div')({
 
 const StyledOrderedList = styled('ol')({
   marginTop: 10,
+})
+
+const StyledSummaryTable = styled(SummaryTable)(({ isEditing }) => ({
+  marginBottom: isEditing ? 15 : 30,
+}))
+
+const StyledInsetText = styled(InsetText)({
+  marginTop: 0,
+  marginBottom: 30,
+  padding: '0 0 0 5px',
+  fontSize: FONT_SIZE.SIZE_14,
 })
 
 const CheckBeforeSendingStep = ({ isEditing }) => {
@@ -136,33 +150,41 @@ const CreditForThisWinTable = ({ values, goToStep }) => {
   )
 }
 
-const CustomerDetailsTable = ({ values, goToStep }) => (
-  <SummaryTable
-    caption="Customer details"
-    data-test="customer-details"
-    actions={
-      <StyledButtonLink
-        onClick={() => {
-          goToStep(steps.CUSTOMER_DETAILS)
-        }}
-      >
-        Edit
-      </StyledButtonLink>
-    }
-  >
-    <SummaryTable.Row heading="Contact name">
-      {values.company_contacts?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="HQ location">
-      {values.customer_location?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Export potential">
-      {values.business_potential?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Export experience">
-      {values.export_experience?.label}
-    </SummaryTable.Row>
-  </SummaryTable>
+const CustomerDetailsTable = ({ values, goToStep, isEditing }) => (
+  <>
+    <StyledSummaryTable
+      isEditing={isEditing}
+      caption="Customer details"
+      data-test="customer-details"
+      actions={
+        <StyledButtonLink
+          onClick={() => {
+            goToStep(steps.CUSTOMER_DETAILS)
+          }}
+        >
+          Edit
+        </StyledButtonLink>
+      }
+    >
+      <SummaryTable.Row heading="Contact name">
+        {values.company_contacts?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="HQ location">
+        {values.customer_location?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Export potential">
+        {values.business_potential?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Export experience">
+        {values.export_experience?.label}
+      </SummaryTable.Row>
+    </StyledSummaryTable>
+    {isEditing && (
+      <StyledInsetText>
+        <ContactLink sections={['Export experience']} />
+      </StyledInsetText>
+    )}
+  </>
 )
 
 const getWinTypeValue = (winType, values) => {
@@ -177,7 +199,7 @@ const getTotalWinTypeValue = (winTypes = [], values) => {
   return `${sum} over ${maxYear} ${pluralize('year', maxYear)}`
 }
 
-const WinDetailsTable = ({ values, goToStep }) => {
+const WinDetailsTable = ({ values, goToStep, isEditing }) => {
   const exportSum = sumWinTypeYearlyValues('export_win', values)
   const odiWinSum = sumWinTypeYearlyValues('odi_win', values)
   const busSuccSum = sumWinTypeYearlyValues('business_success_win', values)
@@ -188,67 +210,82 @@ const WinDetailsTable = ({ values, goToStep }) => {
   const showOdiWin = odiWinSum > 0 && hasMoreThanOneWinType
 
   return (
-    <SummaryTable
-      caption="Win details"
-      data-test="win-details"
-      actions={
-        <StyledButtonLink
-          onClick={() => {
-            goToStep(steps.WIN_DETAILS)
-          }}
-        >
-          Edit
-        </StyledButtonLink>
-      }
-    >
-      <SummaryTable.Row heading="Destination">
-        {values.country?.label}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Date won">
-        {`${values.date?.month}/${values.date?.year}`}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Summary of support given">
-        {values.description}
-      </SummaryTable.Row>
-      {values.name_of_customer && (
-        <SummaryTable.Row heading="Overseas customer">
-          {values.name_of_customer}
+    <>
+      <StyledSummaryTable
+        isEditing={isEditing}
+        caption="Win details"
+        data-test="win-details"
+        actions={
+          <StyledButtonLink
+            onClick={() => {
+              goToStep(steps.WIN_DETAILS)
+            }}
+          >
+            Edit
+          </StyledButtonLink>
+        }
+      >
+        <SummaryTable.Row heading="Destination">
+          {values.country?.label}
         </SummaryTable.Row>
-      )}
-      <SummaryTable.Row heading="Confidential">
-        {transformCustomerConfidential(values.name_of_customer_confidential)}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Type of win">
-        {values.business_type}
-      </SummaryTable.Row>
-      {showExportWin && (
-        <SummaryTable.Row heading="Export value">
-          {getWinTypeValue('export_win', values)}
+        <SummaryTable.Row heading="Date won">
+          {`${values.date?.month}/${values.date?.year}`}
         </SummaryTable.Row>
-      )}
-      {showBusinessSuccessWin && (
-        <SummaryTable.Row heading="Business success value">
-          {getWinTypeValue('business_success_win', values)}
+        <SummaryTable.Row heading="Summary of support given">
+          {values.description}
         </SummaryTable.Row>
-      )}
-      {showOdiWin && (
-        <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
-          {getWinTypeValue('odi_win', values)}
+        {values.name_of_customer && (
+          <SummaryTable.Row heading="Overseas customer">
+            {values.name_of_customer}
+          </SummaryTable.Row>
+        )}
+        <SummaryTable.Row heading="Confidential">
+          {transformCustomerConfidential(values.name_of_customer_confidential)}
         </SummaryTable.Row>
+        <SummaryTable.Row heading="Type of win">
+          {values.business_type}
+        </SummaryTable.Row>
+        {showExportWin && (
+          <SummaryTable.Row heading="Export value">
+            {getWinTypeValue('export_win', values)}
+          </SummaryTable.Row>
+        )}
+        {showBusinessSuccessWin && (
+          <SummaryTable.Row heading="Business success value">
+            {getWinTypeValue('business_success_win', values)}
+          </SummaryTable.Row>
+        )}
+        {showOdiWin && (
+          <SummaryTable.Row heading="Outward Direct Investment (ODI) value">
+            {getWinTypeValue('odi_win', values)}
+          </SummaryTable.Row>
+        )}
+        <SummaryTable.Row heading="Total value">
+          {getTotalWinTypeValue(values.win_type, values)}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="What does the value relate to?">
+          {transformGoodsAndServices(values.goods_vs_services)}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Type of goods or services">
+          {values.name_of_export}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Sector">
+          {values.sector?.label}
+        </SummaryTable.Row>
+      </StyledSummaryTable>
+      {isEditing && (
+        <StyledInsetText>
+          <ContactLink
+            sections={[
+              'Summary of the support you provided',
+              'Destination',
+              'Date won',
+              'Type of export win and Value',
+            ]}
+          />
+        </StyledInsetText>
       )}
-      <SummaryTable.Row heading="Total value">
-        {getTotalWinTypeValue(values.win_type, values)}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="What does the value relate to?">
-        {transformGoodsAndServices(values.goods_vs_services)}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Type of goods or services">
-        {values.name_of_export}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Sector">
-        {values.sector?.label}
-      </SummaryTable.Row>
-    </SummaryTable>
+    </>
   )
 }
 
