@@ -103,7 +103,6 @@ import OrderQuote from './modules/Omis/OrderQuote'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
 import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProjectDocument'
-import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import AddPropositionDocument from './modules/Investments/Projects/Propositions/AddPropositionDocument'
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
@@ -726,12 +725,50 @@ function Routes() {
           <CreateExportWin />
         </ProtectedRoute>
       ),
+      path: '/companies/:companyId/exportwins/create',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateExportWin />
+        </ProtectedRoute>
+      ),
     },
     {
-      path: '/exportwins/:winId/edit',
+      path: '/companies/:companyId/export/:exportId/exportwins/create',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateExportWin />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/exportwins/:winId/success',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Success />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/exportwins/:winId/edit',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <EditExportWin />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/exportwins/:winId/edit-success',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <EditSuccess />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/exportwins/:winId/customer-feedback',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CustomerFeedback />
         </ProtectedRoute>
       ),
     },
