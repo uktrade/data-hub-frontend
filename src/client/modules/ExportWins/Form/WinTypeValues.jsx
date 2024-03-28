@@ -68,7 +68,7 @@ export const WinTypeValues = ({ label, name, years = 5, values }) => {
               } else if (isPositiveInteger(value)) {
                 return null
               } else {
-                return 'The value must not contain letters, be negative or over 19 digits'
+                return 'The value must not contain letters, symbols, be negative or have over 19 digits'
               }
             }}
           />
