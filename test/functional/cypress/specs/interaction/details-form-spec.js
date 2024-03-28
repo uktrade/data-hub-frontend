@@ -1013,10 +1013,10 @@ describe('Adding an interaction from a referral', () => {
 
     cy.visit(urls.companies.referrals.details(referral.company.id, referral.id))
 
-    cy.contains('Accept referral').click()
-    cy.contains('Export').click()
-    cy.contains('A standard interaction').click()
-    cy.contains('Continue').click()
+    cy.contains(/^\s*Accept referral\s*$/).click()
+    cy.contains(/^\s*Export\s*$/).click()
+    cy.contains(/^\s*A standard interaction\s*$/).click()
+    cy.contains(/^\s*Continue\s*$/).click()
 
     submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
       service: 'DBT export service or funding',
@@ -1074,10 +1074,10 @@ describe('Adding an interaction from a contact', () => {
   it('should be able to create an interaction from a contact', () => {
     cy.visit(urls.contacts.details(contact.id))
 
-    cy.contains('Add interaction').click()
-    cy.contains('Export').click()
-    cy.contains('A standard interaction').click()
-    cy.contains('Continue').click()
+    cy.contains(/^\s*Add interaction\s*$/).click()
+    cy.contains(/^\s*Export\s*$/).click()
+    cy.contains(/^\s*A standard interaction\s*$/).click()
+    cy.contains(/^\s*Continue\s*$/).click()
 
     cy.contains('h1', 'Add interaction')
     cy.contains('button', 'Add interaction')
