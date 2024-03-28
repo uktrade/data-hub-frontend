@@ -4,6 +4,7 @@ import { H2, H4 } from 'govuk-react'
 import { Route, Switch } from 'react-router-dom'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
 import HR from '../../../components/HR'
 
@@ -354,43 +355,46 @@ const Step6 = () => (
   </Step>
 )
 
-const Review = ({ token }) => (
-  <Layout
-    title="Tell us what made a difference"
-    supertitle={<CurrentFormStepInfo />}
-  >
-    <ExportWinReview
-      id={token}
-      taskStatusProps={{
-        renderError: NotFound,
-      }}
+const Review = () => {
+  const { token } = useParams()
+  return (
+    <Layout
+      title="Tell us what made a difference"
+      supertitle={<CurrentFormStepInfo />}
     >
-      {(review) => (
-        <Form
-          id={FORM_ID}
-          analyticsFormName={FORM_ID}
-          submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
-          redirectMode="soft"
-          redirectTo={(_, { agree_with_win }) =>
-            `/exportwins/review-win/thankyou?agree=${agree_with_win}`
-          }
-          transformPayload={transformPayload(token)}
-        >
-          {(formData) => (
-            <>
-              <Step1 win={review.win} name={review?.companyContact?.name} />
-              <Step2 agree={formData.values.agree_with_win === 'yes'} />
-              <Step3 />
-              <Step4 />
-              <Step5 />
-              <Step6 />
-            </>
-          )}
-        </Form>
-      )}
-    </ExportWinReview>
-  </Layout>
-)
+      <ExportWinReview
+        id={token}
+        taskStatusProps={{
+          renderError: NotFound,
+        }}
+      >
+        {(review) => (
+          <Form
+            id={FORM_ID}
+            analyticsFormName={FORM_ID}
+            submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
+            redirectMode="soft"
+            redirectTo={(_, { agree_with_win }) =>
+              `/exportwins/review-win/thankyou?agree=${agree_with_win}`
+            }
+            transformPayload={transformPayload(token)}
+          >
+            {(formData) => (
+              <>
+                <Step1 win={review.win} name={review?.companyContact?.name} />
+                <Step2 agree={formData.values.agree_with_win === 'yes'} />
+                <Step3 />
+                <Step4 />
+                <Step5 />
+                <Step6 />
+              </>
+            )}
+          </Form>
+        )}
+      </ExportWinReview>
+    </Layout>
+  )
+}
 
 export default () => (
   <Switch>
