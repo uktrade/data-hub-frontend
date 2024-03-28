@@ -213,6 +213,7 @@ describe('Adding an export win', () => {
           heading: 'Customer details',
           showEditLink: true,
           content: {
+            'Company name': company.name.toUpperCase(),
             'Contact name': 'Joseph Barker',
             'HQ location': 'Scotland',
             'Export potential': 'The company is a Medium Sized Business',

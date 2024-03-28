@@ -4,12 +4,17 @@ import InsetText from '@govuk-react/inset-text'
 import { FONT_SIZE } from '@govuk-react/constants'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
+import { Link } from 'govuk-react'
 import pluralize from 'pluralize'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
 import { useFormContext } from '../../../components/Form/hooks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
+import { formatMediumDateTime } from '../../../utils/date'
+import { CompanyName } from '.'
+import { WIN_STATUS } from '../Status/constants'
 import { ContactLink } from './ExportWinForm'
+import urls from '../../../../lib/urls'
 import { steps } from './constants'
 import {
   transformTeamsAndAdvisers,
@@ -48,9 +53,9 @@ const StyledInsetText = styled(InsetText)({
   fontSize: FONT_SIZE.SIZE_14,
 })
 
-const CheckBeforeSendingStep = ({ isEditing }) => {
+const CheckBeforeSendingStep = ({ isEditing, companyId }) => {
   const { values, goToStep } = useFormContext()
-  const props = { values, goToStep, isEditing }
+  const props = { values, goToStep, isEditing, companyId }
 
   return (
     <Step
@@ -69,6 +74,8 @@ const CheckBeforeSendingStep = ({ isEditing }) => {
           they can confirm the export win.
         </WarningText>
       )}
+      {isEditing && <AdditionalInformation {...props} />}
+
       {/*
           TODO: We have to include this hidden field 
           otherwise we lose the previous step's state.
@@ -150,7 +157,7 @@ const CreditForThisWinTable = ({ values, goToStep }) => {
   )
 }
 
-const CustomerDetailsTable = ({ values, goToStep, isEditing }) => (
+const CustomerDetailsTable = ({ values, goToStep, isEditing, companyId }) => (
   <>
     <StyledSummaryTable
       isEditing={isEditing}
@@ -166,6 +173,18 @@ const CustomerDetailsTable = ({ values, goToStep, isEditing }) => (
         </StyledButtonLink>
       }
     >
+      <SummaryTable.Row heading="Company name">
+        {isEditing && (
+          <Link href={urls.companies.overview.index(values.company?.id)}>
+            {values.company?.name}
+          </Link>
+        )}
+        {!isEditing && (
+          <Link href={urls.companies.overview.index(companyId)}>
+            <CompanyName companyId={companyId} />
+          </Link>
+        )}
+      </SummaryTable.Row>
       <SummaryTable.Row heading="Contact name">
         {values.company_contacts?.label}
       </SummaryTable.Row>
@@ -316,5 +335,60 @@ const SupportGivenTable = ({ values, goToStep }) => (
     />
   </SummaryTable>
 )
+
+const AdditionalInformation = ({ values, isEditing }) => {
+  const winStatus = values.customer_response?.agree_with_win
+  return (
+    <>
+      <StyledSummaryTable
+        isEditing={isEditing}
+        caption="Additional Information"
+        data-test="additional-information"
+      >
+        {winStatus === WIN_STATUS.REJECTED && (
+          <>
+            <SummaryTable.Row heading="Comments">
+              {values.customer_response.comments}
+            </SummaryTable.Row>
+            <SummaryTable.Row heading="Export win confirmed">
+              No
+            </SummaryTable.Row>
+          </>
+        )}
+        {winStatus === WIN_STATUS.SENT && (
+          <>
+            <SummaryTable.Row heading="First sent">
+              {formatMediumDateTime(values.first_sent)}
+            </SummaryTable.Row>
+            <SummaryTable.Row heading="Last Sent">
+              {formatMediumDateTime(values.last_sent)}
+            </SummaryTable.Row>
+            <SummaryTable.Row heading="Export win confirmed">
+              Pending
+            </SummaryTable.Row>
+          </>
+        )}
+        {winStatus === WIN_STATUS.WON && (
+          <>
+            <SummaryTable.Row heading="Comments">
+              {values.customer_response.comments || 'Not set'}
+            </SummaryTable.Row>
+            <SummaryTable.Row heading="Export win confirmed">
+              Yes
+            </SummaryTable.Row>
+            <SummaryTable.Row heading="What value do you estimate you would have achieved without our support?">
+              {values.customer_response.expected_portion_without_help.name}
+            </SummaryTable.Row>
+          </>
+        )}
+      </StyledSummaryTable>
+      {winStatus !== WIN_STATUS.WON && (
+        <StyledInsetText>
+          <ContactLink data-test="" shouldPluralize={false} />
+        </StyledInsetText>
+      )}
+    </>
+  )
+}
 
 export default CheckBeforeSendingStep

@@ -171,6 +171,11 @@ export const transformExportWinForForm = (exportWin) => ({
   is_line_manager_confirmed: exportWin.is_line_manager_confirmed
     ? OPTION_YES
     : OPTION_NO,
+  // Summary page
+  company: exportWin.company,
+  customer_response: exportWin.customer_response,
+  first_sent: exportWin.first_sent,
+  last_sent: exportWin.last_sent,
 })
 
 export const transformFormValuesForAPI = (values) => ({

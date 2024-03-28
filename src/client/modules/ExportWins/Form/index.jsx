@@ -7,7 +7,7 @@ import { CompanyResource } from '../../../components/Resource'
 import { WIN_STATUS_MAP_TO_LABEL } from '../Status/constants'
 import urls from '../../../../lib/urls'
 
-const CompanyName = ({ companyId }) => (
+export const CompanyName = ({ companyId }) => (
   <CompanyResource.Inline id={companyId}>
     {(company) => company.name.toUpperCase()}
   </CompanyResource.Inline>
