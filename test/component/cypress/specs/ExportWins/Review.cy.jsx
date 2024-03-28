@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import {
   assertSummaryTableStrict,
@@ -79,13 +79,13 @@ describe('ExportWins/Review', () => {
             httpStatusCode: 404,
           }),
       })
+
       cy.mount(
         <Provider>
-          <Redirect to="/exportwins/review/123" />
+          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
-
       assertHeader()
 
       // TODO: Assert footer links
@@ -104,7 +104,7 @@ describe('ExportWins/Review', () => {
       })
       cy.mount(
         <Provider>
-          <Redirect to="/exportwins/review/123" />
+          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
@@ -167,7 +167,7 @@ describe('ExportWins/Review', () => {
 
       cy.mount(
         <Provider>
-          <Redirect to="/exportwins/review/123" />
+          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
@@ -397,8 +397,8 @@ describe('ExportWins/Review', () => {
       })
       cy.mount(
         <Provider>
-          <Redirect to="/exportwins/review/123" />
-          <Review token="whatever" />
+          <Navigate to="/exportwins/review/123" />
+          <Review />
         </Provider>
       )
 
