@@ -15,6 +15,10 @@ describe('Customer details', () => {
     cy.get(customerDetails.heading).should('have.text', 'Customer details')
   })
 
+  it('should not render an edit status message', () => {
+    cy.get('[data-test="status-message"]').should('not.exist')
+  })
+
   it('should render a contact hint', () => {
     cy.get(customerDetails.contactHint).should(
       'have.text',

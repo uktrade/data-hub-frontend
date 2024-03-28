@@ -33,6 +33,10 @@ describe('Win details', () => {
     cy.get(winDetails.heading).should('have.text', 'Win details')
   })
 
+  it('should not render an edit status message', () => {
+    cy.get('[data-test="status-message"]').should('not.exist')
+  })
+
   it('should render a hint', () => {
     cy.get(winDetails.hint).should(
       'have.text',

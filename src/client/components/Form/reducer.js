@@ -136,8 +136,8 @@ export default (
         : 0
       return {
         ...state,
-        currentStep: nextCurrentStep,
-
+        currentStep: nextCurrentStep, // TODO: rename this to currentStepIndex
+        currentStepName: action.stepName,
         previousValues: state.values,
       }
     case FORM__STEP_REGISTER:

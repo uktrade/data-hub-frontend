@@ -51,3 +51,15 @@ export const bothGoodsAndServices = {
   label: 'Both goods and services',
   value: GOODS_AND_SERVICES_ID,
 }
+
+export const STEP_TO_EXCLUDED_FIELDS_MAP = {
+  [steps.CUSTOMER_DETAILS]: ['Export experience'],
+  [steps.WIN_DETAILS]: [
+    'Summary of the support you provided',
+    'Destination',
+    'Date won',
+    'Type of export win and Value',
+  ],
+}
+
+export const EMAIL = 'exportwins@businessandtrade.gov.uk'

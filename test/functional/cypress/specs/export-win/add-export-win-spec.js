@@ -171,6 +171,15 @@ describe('Adding an export win', () => {
         )
       })
 
+      it('should not render an edit status message', () => {
+        cy.get('[data-test="localHeader"]').should(
+          'not.contain',
+          'To edit an export win' +
+            'Edit each section that needs changing then return to the summary page. ' +
+            'When you are happy with all the changes save the page.'
+        )
+      })
+
       it('should render an officer details table', () => {
         assertSummaryTable({
           dataTest: 'officer-details',
