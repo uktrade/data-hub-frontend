@@ -22,15 +22,15 @@ import {
   StatusMessage,
 } from '../../../components'
 
-const Spacer = styled('div')({
-  marginTop: 10,
-})
-
 const StyledStatusMessage = styled(StatusMessage)({
   fontSize: FONT_SIZE.SIZE_20,
   fontWeight: 700,
   marginTop: 25,
   marginBottom: 5,
+})
+
+const StyledParagraph = styled('p')({
+  fontWeight: 'bold',
 })
 
 export const ContactLink = ({ sections }) => (
@@ -72,11 +72,11 @@ const ExportWinForm = ({
         isEditing ? (
           currentStepName === steps.CHECK_BEFORE_SENDING ? (
             <StyledStatusMessage>
-              To edit an export win
-              <Spacer>
+              <StyledParagraph>To edit an export win</StyledParagraph>
+              <StyledParagraph>
                 Edit each section that needs changing then return to the summary
                 page. When you are happy with all the changes save the page.
-              </Spacer>
+              </StyledParagraph>
             </StyledStatusMessage>
           ) : excludedStepFields ? (
             <StyledStatusMessage>
