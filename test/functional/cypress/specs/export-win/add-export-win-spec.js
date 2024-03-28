@@ -216,7 +216,8 @@ describe('Adding an export win', () => {
             'Company name': company.name.toUpperCase(),
             'Contact name': 'Joseph Barker',
             'HQ location': 'Scotland',
-            'Export potential': 'The company is a Medium Sized Business',
+            'Medium-sized and high potential companies':
+              'The company is a Medium Sized Business',
             'Export experience': 'Never exported',
           },
         })

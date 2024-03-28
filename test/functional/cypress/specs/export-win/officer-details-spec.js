@@ -56,7 +56,8 @@ describe('Officer details', () => {
     })
     cy.get(officerDetails.teamMembersHintText).should(
       'have.text',
-      'You can add up to 5 team members. They will not be credited for the win but will be notified when this win is updated.'
+      'These are your secondary contacts, such as your manager or direct team, ' +
+        'they will not be credited for this win. You can add up to 5 team members.'
     )
   })
 

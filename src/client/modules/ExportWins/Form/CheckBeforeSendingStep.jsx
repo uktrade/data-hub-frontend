@@ -191,7 +191,7 @@ const CustomerDetailsTable = ({ values, goToStep, isEditing, companyId }) => (
       <SummaryTable.Row heading="HQ location">
         {values.customer_location?.label}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="Export potential">
+      <SummaryTable.Row heading="Medium-sized and high potential companies">
         {values.business_potential?.label}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Export experience">

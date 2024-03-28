@@ -45,16 +45,16 @@ describe('Customer details', () => {
     })
   })
 
-  it('should render Export potential label and a Typeahead', () => {
+  it('should render "Medium-sized and high potential companies" label and a Typeahead', () => {
     cy.get(customerDetails.potential).then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Export potential',
+        label: 'Medium-sized and high potential companies',
       })
     })
   })
 
-  it('should render Export potential label and a Typeahead', () => {
+  it('should render Export experience label and a Typeahead', () => {
     cy.get(customerDetails.experience).then((element) => {
       assertFieldTypeahead({
         element,
@@ -69,7 +69,7 @@ describe('Customer details', () => {
     assertErrorSummary([
       'Select a company contact',
       'Select HQ location',
-      'Select export potential',
+      'Select medium-sized and high potential companies',
       'Select export experience',
     ])
     assertFieldError(
@@ -84,7 +84,7 @@ describe('Customer details', () => {
     )
     assertFieldError(
       cy.get(customerDetails.potential),
-      'Select export potential',
+      'Select medium-sized and high potential companies',
       false
     )
     assertFieldError(
