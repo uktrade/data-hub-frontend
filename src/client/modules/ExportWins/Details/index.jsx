@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { useParams, Link as ReactRouterLink } from 'react-router-dom'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -123,9 +123,9 @@ export const Summary = ({ exportWin, children }) => {
   )
 }
 
-const Detail = (props) => {
-  const { winId } = props.match.params
-  const success = props[winId]?.success
+const Detail = () => {
+  const { winId } = useParams()
+  const success = winId?.success
   const flashMessage = success && { success: ['Successfully sent'] }
 
   return (

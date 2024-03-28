@@ -1,10 +1,10 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const StyledButtonLink = styled(ButtonLink)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -12,25 +12,27 @@ const StyledButtonLink = styled(ButtonLink)`
 
 import { ButtonLink } from '../../components'
 
-const FilterReset = ({ children, ...props }) => (
-  <Route>
-    {({ history, location: { pathname, search } }) => {
-      const { sortby, page, ...filters } = qs.parse(search.slice(1))
-      return (
-        !isEmpty(filters) && (
-          <StyledButtonLink
-            {...props}
-            onClick={() => {
-              history.push(`${pathname}?page=1`)
-            }}
-          >
-            {children}
-          </StyledButtonLink>
-        )
-      )
-    }}
-  </Route>
-)
+const FilterReset = ({ children, ...props }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const { sortby, page, ...filters } = qs.parse(location.search.slice(1))
+
+  return (
+    <>
+      {!isEmpty(filters) ? (
+        <StyledButtonLink
+          {...props}
+          onClick={() => {
+            navigate(`${location.pathname}?page=1`)
+          }}
+        >
+          {children}
+        </StyledButtonLink>
+      ) : null}
+    </>
+  )
+}
 
 FilterReset.propTypes = {
   children: PropTypes.node.isRequired,

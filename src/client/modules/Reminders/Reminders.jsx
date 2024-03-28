@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, Redirect } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
@@ -75,7 +75,7 @@ export const Reminders = ({ defaultUrl }) => {
   const { reminderType } = useParams()
 
   if (!reminderType) {
-    return <Redirect to={{ pathname: defaultUrl }} />
+    return <Navigate to={defaultUrl} />
   }
   const subject = reminderTypeToLabel[reminderType]
   return (

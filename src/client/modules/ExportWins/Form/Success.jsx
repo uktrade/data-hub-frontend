@@ -1,5 +1,6 @@
 import React from 'react'
 import { H4 } from '@govuk-react/heading'
+import { useParams } from 'react-router-dom'
 
 import ExportWin from '../../../components/Resource/ExportWin'
 import { ExportWinsLink, VerticalSpacer } from '../Details'
@@ -16,40 +17,43 @@ const ExportWinSuccess = ({ winId }) => (
   </ExportWin.Inline>
 )
 
-const Success = ({ match }) => (
-  <DefaultLayout
-    pageTitle="Success"
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.exportWins.index(),
-        text: 'Export wins',
-      },
-      {
-        text: 'Success',
-      },
-    ]}
-    flashMessages={{
-      success: [<ExportWinSuccess winId={match.params.winId} />],
-    }}
-  >
-    <H4 data-test="heading" as="h2">
-      What happens next?
-    </H4>
-    <p data-test="review">
-      The customer will review the export win and have the option to provide
-      feedback.
-    </p>
-    <p data-test="email">
-      You will be sent an email once the customer has responded.
-    </p>
-    <VerticalSpacer>
-      <ExportWinsLink />
-    </VerticalSpacer>
-  </DefaultLayout>
-)
+const Success = () => {
+  const { winId } = useParams()
+  return (
+    <DefaultLayout
+      pageTitle="Success"
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.exportWins.index(),
+          text: 'Export wins',
+        },
+        {
+          text: 'Success',
+        },
+      ]}
+      flashMessages={{
+        success: [<ExportWinSuccess winId={winId} />],
+      }}
+    >
+      <H4 data-test="heading" as="h2">
+        What happens next?
+      </H4>
+      <p data-test="review">
+        The customer will review the export win and have the option to provide
+        feedback.
+      </p>
+      <p data-test="email">
+        You will be sent an email once the customer has responded.
+      </p>
+      <VerticalSpacer>
+        <ExportWinsLink />
+      </VerticalSpacer>
+    </DefaultLayout>
+  )
+}
 
 export default Success

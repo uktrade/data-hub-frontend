@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
+import { LOCATION_CHANGE } from 'redux-first-history'
 
 import {
   REMINDERS__ESTIMATED_LAND_DATE_REMINDERS_LOADED,

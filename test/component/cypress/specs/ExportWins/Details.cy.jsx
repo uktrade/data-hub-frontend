@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 import {
   assertBreadcrumbs,
@@ -8,7 +9,7 @@ import {
 import { WIN_STATUS } from '../../../../../src/client/modules/ExportWins/Status/constants'
 import Details from '../../../../../src/client/modules/ExportWins/Details'
 import urls from '../../../../../src/lib/urls'
-import DataHubProvider from '../provider'
+import { MemoryProvider } from '../provider'
 
 const insertAfter = (o, n, oo) => {
   const entries = Object.entries(o)
@@ -66,16 +67,20 @@ const EXPECTED_ROWS = {
 describe('ExportWins/Details', () => {
   const title = `${EXPORT_WIN.name_of_export} to ${EXPORT_WIN.country.name}`
 
+  // ${EXPORT_WIN.id}
   const Component = ({ exportWinAPIResponse }) => (
-    <DataHubProvider
+    <MemoryProvider
+      initialEntries={[`/exportwins/${EXPORT_WIN.id}/details`]}
       resetTasks={true}
       tasks={{
         'Export Win': () => exportWinAPIResponse,
         TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
       }}
     >
-      <Details match={{ params: { winId: EXPORT_WIN.id } }} />
-    </DataHubProvider>
+      <Routes>
+        <Route path={'/exportwins/:winId/details'} element={<Details />} />
+      </Routes>
+    </MemoryProvider>
   )
 
   ;[

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams, withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
@@ -9,6 +9,7 @@ import ExportFormFields from './ExportFormFields'
 import { TASK_GET_EXPORT_DETAIL } from '../ExportDetails/state'
 import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
 import { EXPORT_LOADED } from '../../../actions'
+import withRouter from './withRouter'
 
 const DISPLAY_EDIT_EXPORT = 'Edit export'
 

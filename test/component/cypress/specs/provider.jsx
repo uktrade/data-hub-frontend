@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -39,6 +39,25 @@ export const dispatchResetAction = () => store.dispatch({ type: 'RESET' })
 
 const runMiddlewareOnce = _.once((tasks) => sagaMiddleware.run(rootSaga(tasks)))
 
+/*
+ * For component testing where a component relies on useLocation, useNavigation
+ * hooks or other similar router hooks. This is due to changes in react router v6.
+ */
+export const MemoryProvider = ({
+  children,
+  tasks = appTasks,
+  resetTasks = false,
+  initialEntries,
+}) => {
+  // We only ever want to start the sagas once
+  resetTasks ? sagaMiddleware.run(rootSaga(tasks)) : runMiddlewareOnce(tasks)
+
+  return (
+    <Provider store={store}>
+      <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+    </Provider>
+  )
+}
 // TODO: Get rid of this and use createTestProvider in each test
 export default ({ children, tasks = appTasks, resetTasks = false }) => {
   // We only ever want to start the sagas once

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import {} from 'react-router-dom'
 import { omit, isEmpty, curry } from 'lodash'
 import * as reactRedux from 'react-redux'
 import PropTypes from 'prop-types'
@@ -176,6 +176,7 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
  *     <Counter id="baz" />
  *   </div>
  */
+
 export default ({
   name,
   component,
@@ -200,5 +201,6 @@ export default ({
     [name]: reducerDecorator(reducer, actionPattern, idProp),
   }
   Connected.displayName = `multiInstance(${name})`
-  return withRouter(Connected)
+
+  return Connected
 }
