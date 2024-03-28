@@ -137,7 +137,26 @@ describe('Editing an export win', () => {
       cy.get('[data-test="status-message"]').should(
         'contain',
         'To edit an export win' +
-          'Edit each section that needs changing then return to the summary page. When you are happy with all the changes save the page.'
+          'Edit each section that needs changing then return to the summary page. ' +
+          'When you are happy with all the changes save the page.'
+      )
+    })
+    it('should render a customer details contact link', () => {
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="customer-details-contact"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the section: ' +
+          'Export experience'
+      )
+    })
+    it('should render a win details contact link', () => {
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="win-details-contact"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
+          'Summary of the support you provided, Destination, Date won, Type of export win and Value'
       )
     })
   })

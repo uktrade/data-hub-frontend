@@ -180,7 +180,7 @@ const CustomerDetailsTable = ({ values, goToStep, isEditing }) => (
       </SummaryTable.Row>
     </StyledSummaryTable>
     {isEditing && (
-      <StyledInsetText>
+      <StyledInsetText data-test="customer-details-contact">
         <ContactLink sections={['Export experience']} />
       </StyledInsetText>
     )}
@@ -274,7 +274,7 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
         </SummaryTable.Row>
       </StyledSummaryTable>
       {isEditing && (
-        <StyledInsetText>
+        <StyledInsetText data-test="win-details-contact">
           <ContactLink
             sections={[
               'Summary of the support you provided',
