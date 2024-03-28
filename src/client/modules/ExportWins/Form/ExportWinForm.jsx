@@ -33,12 +33,17 @@ const StyledParagraph = styled('p')({
   fontWeight: 'bold',
 })
 
-export const ContactLink = ({ sections }) => (
-  <>
-    Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need to update
-    the {pluralize('section', sections.length)}: {sections.join(', ')}
-  </>
-)
+export const ContactLink = ({ sections = [], shouldPluralize = true }) => {
+  const section = shouldPluralize
+    ? `${pluralize('section', sections.length)}:`
+    : 'section.'
+  return (
+    <>
+      Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need to
+      update the {section} {sections.join(', ')}
+    </>
+  )
+}
 
 const ExportWinForm = ({
   heading,
