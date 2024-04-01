@@ -43,13 +43,13 @@ describe('Export win user feature groups', () => {
     it('should show the "Export wins" link when the feature is active', () => {
       cy.setUserFeatureGroups(['export-wins'])
       cy.visit(urls.exportPipeline.index())
-      cy.get('[data-test="export-wins"]').should('exist')
+      cy.contains('View export wins')
     })
 
     it('should hide the "Export wins" link when the feature is inactive', () => {
       cy.setUserFeatureGroups([])
       cy.visit(urls.exportPipeline.index())
-      cy.get('[data-test="export-wins"]').should('not.exist')
+      cy.contains('View export wins').should('not.exist')
     })
   })
 
