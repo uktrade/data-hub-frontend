@@ -180,7 +180,7 @@ import getInteractionReducer from './modules/Interactions/InteractionDetails/red
 import { PREVIEW_QUOTE_ID } from './modules/Omis/state'
 import orderQuoteReducer from './modules/Omis/reducer'
 
-import { ResendExportWin } from './modules/ExportWins/Details/ResendExportWin'
+import { ResendExportWin } from './modules/ExportWins/Form/ResendExportWin'
 
 export const reducers = {
   tasks,

@@ -25,3 +25,6 @@ export const saveExportWin = ({ exportWinId, payload }) => {
 
   return request(endpoint, payload)
 }
+
+export const resendExportWin = (id) =>
+  apiProxyAxios.post(`/v4/export-win/${id}/resend-win`)
