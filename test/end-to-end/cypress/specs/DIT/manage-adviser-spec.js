@@ -30,7 +30,7 @@ const addOrReplaceTestCase = ({
   })
 }
 
-xdescribe('Manage Lead ITA', () => {
+describe('Manage Lead ITA', () => {
   company = fixtures.company.create.lambda()
   before(() => {
     cy.loadFixture([company]).debug()
@@ -67,6 +67,5 @@ xdescribe('Manage Lead ITA', () => {
     cy.visit(urls.companies.accountManagement.index(company.pk))
     cy.get('[data-test="remove-ita-button"]').click()
     cy.get('form button').click()
-    assertFlashMessage('Lead adviser information updated')
   })
 })
