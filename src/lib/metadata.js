@@ -24,7 +24,11 @@ function getMetadata(path, key) {
               resolve(responseData)
             })
             .catch((reponseError) => {
-              logger.error('Error fetching metadataRepository for url: %s', url)
+              logger.error(
+                'Error fetching metadataRepository for url: %s',
+                url,
+                { eventType: 'express.startup' }
+              )
               reject(reponseError)
               throw reponseError
             })
@@ -39,7 +43,9 @@ function getMetadata(path, key) {
       return responseData
     })
     .catch((err) => {
-      logger.error('Error fetching metadataRepository for url: %s', url)
+      logger.error('Error fetching metadataRepository for url: %s', url, {
+        eventType: 'express.startup',
+      })
       throw err
     })
 }
@@ -62,7 +68,9 @@ module.exports.fetchAll = (cb) => {
   function checkResults() {
     completeRequests += 1
     if (completeRequests === totalRequests) {
-      logger.info('All metadataRepository requests complete')
+      logger.info('All metadataRepository requests complete', {
+        eventType: 'express.startup',
+      })
       cb(caughtErrors)
     }
   }
