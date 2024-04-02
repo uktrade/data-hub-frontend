@@ -119,7 +119,7 @@ describe('Company Export tab - Edit exports', () => {
         cy.contains('"Find a supplier" profile').should(
           'have.attr',
           'href',
-          urls.external.greatProfile(dnbLimited.company_number)
+          urls.external.great.companyProfile(dnbLimited.company_number)
         )
       })
 
