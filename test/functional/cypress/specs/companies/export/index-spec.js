@@ -116,22 +116,14 @@ describe('Company Export tab', () => {
         cy.get('h3').eq(0).should('have.text', 'Export wins')
       })
 
-      it('should render the "Record your win on our Exports Wins site" paragraph', () => {
-        cy.get('h3')
-          .eq(0)
-          .siblings('p')
-          .should('have.text', 'Record your win on our Export Wins site')
-      })
-
-      it('should render the link to Export Wins', () => {
-        cy.contains('Record your win').should(
-          'have.attr',
-          'href',
-          urls.external.exportWins
-        )
-        cy.contains('Record your win')
-          .should('have.attr', 'target', '_blank')
-          .should('have.attr', 'aria-label', 'opens in a new tab')
+      it('should render the "Add export win" button', () => {
+        cy.get('[data-test="add-export-win"]')
+          .should('have.text', 'Add export win')
+          .should(
+            'have.attr',
+            'href',
+            urls.companies.exportWins.create(company.dnbCorp.id)
+          )
       })
 
       it('should render the "What is an Export Win" details', () => {
