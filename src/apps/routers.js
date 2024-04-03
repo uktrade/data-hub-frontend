@@ -31,6 +31,7 @@ const reactRoutes = [
   '/exportwins/won',
   '/exportwins/sent',
   '/exportwins/rejected',
+  // TODO: Remove
   '/exportwins/:winId/details',
   '/exportwins/:winId/success',
   '/companies/:companyId/exportwins/:winId/edit',

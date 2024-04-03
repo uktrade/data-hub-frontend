@@ -48,6 +48,7 @@ const EXPORT_WIN = {
   },
   is_personally_confirmed: false,
   description: 'Lorem ipsum dolor sit amet',
+  export_experience: 'My export experience',
   breakdowns: [
     {
       type: {
@@ -190,12 +191,15 @@ describe('ExportWins/Review', () => {
 
       assertSummaryTableStrict({
         rows: [
-          ['Goods or services', EXPORT_WIN.goods_vs_services.name],
           ['Destination country', EXPORT_WIN.country.name],
           ['Total value', '£123,456 over 1 year'],
           ['Date won', '26 Mar 2024'],
           ['Lead officer name', EXPORT_WIN.lead_officer.name],
           ['Summary of support received', EXPORT_WIN.description],
+          [
+            'Your export experience before this win can be described as',
+            EXPORT_WIN.export_experience,
+          ],
         ],
       })
 
@@ -402,12 +406,15 @@ describe('ExportWins/Review', () => {
 
       assertSummaryTableStrict({
         rows: [
-          ['Goods or services', EXPORT_WIN.goods_vs_services.name],
           ['Destination country', EXPORT_WIN.country.name],
           ['Total value', '£123,456 over 1 year'],
           ['Date won', '26 Mar 2024'],
           ['Lead officer name', EXPORT_WIN.lead_officer.name],
           ['Summary of support received', EXPORT_WIN.description],
+          [
+            'Your export experience before this win can be described as',
+            EXPORT_WIN.export_experience,
+          ],
         ],
       })
 

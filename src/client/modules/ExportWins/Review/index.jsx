@@ -2,6 +2,8 @@ import _ from 'lodash'
 import React from 'react'
 import { H2, H4 } from 'govuk-react'
 import { Route, Switch } from 'react-router-dom'
+import pluralize from 'pluralize'
+import styled from 'styled-components'
 
 import HR from '../../../components/HR'
 
@@ -17,16 +19,60 @@ import {
 } from '../../../components'
 import State from '../../../components/State'
 import ExportWinReview from '../../../components/Resource/ExportWinReview'
-import { Summary } from '../Details'
 import Rating from '../../../components/Resource/Rating'
 import Experience from '../../../components/Resource/Experience'
 import { WithoutOurSupport } from '../../../components/Resource'
 import MarketingSource from '../../../components/Resource/MarketingSource'
 import Err from '../../../components/Task/Error'
+import { currencyGBP } from '../../../utils/number-utils'
+import { formatMediumDate } from '../../../utils/date'
 
 import ThankYou from './ThankYou'
 
 const FORM_ID = 'export-wins-customer-feedback'
+
+const NormalFontWeightRow = styled(SummaryTable.Row)`
+  & th {
+    font-weight: normal;
+  }
+`
+
+const groupBreakdowns = (breakdowns) => {
+  const result =
+    breakdowns.reduce(
+      ({ groups: groups, totalAmount, yearRange }, breakdown) => {
+        const group = groups[breakdown.type.name]
+
+        return {
+          totalAmount: totalAmount + breakdown.value,
+          yearRange: {
+            min: Math.min(yearRange.min, breakdown.year),
+            max: Math.max(yearRange.max, breakdown.year),
+          },
+          groups: {
+            ...groups,
+            [breakdown.type.name]: {
+              yearRange: {
+                min: Math.min(group?.yearRange.min || Infinity, breakdown.year),
+                max: Math.max(group?.yearRange.min || 0, breakdown.year),
+              },
+              total: (group?.total || 0) + breakdown.value,
+            },
+          },
+        }
+      },
+      {
+        groups: {},
+        totalAmount: 0,
+        yearRange: { min: Infinity, max: 0 },
+      }
+    ) || {}
+
+  return {
+    ...result,
+    totalYears: result.yearRange.max - result.yearRange.min + 1,
+  }
+}
 
 const NotFound = (props) =>
   props.error?.httpStatusCode === 404 ? (
@@ -91,32 +137,62 @@ const CurrentFormStepInfo = () => (
   </State>
 )
 
-const Step1 = ({ win, name }) => (
-  <Step name="1">
-    <p>Hi {name},</p>
-    <p>
-      Thank you for taking the time to review our record of your recent export
-      success.
-    </p>
-    <HR />
-    <H2>Details of your recent success</H2>
-    <Summary exportWin={win}>
-      <SummaryTable.Row heading="Summary of support received">
-        {win?.description}
-      </SummaryTable.Row>
-    </Summary>
+const Step1 = ({ win, name }) => {
+  const { groups, totalAmount, totalYears } = win
+    ? groupBreakdowns(win.breakdowns)
+    : {}
 
-    {/* TODO: Create a FieldBoolean component */}
-    <FieldRadios
-      name="agree_with_win"
-      required="Select if the information is correct or needs revising"
-      options={[
-        { label: 'I confirm this information is correct', value: 'yes' },
-        { label: 'Some of this information needs revising', value: 'no' },
-      ]}
-    />
-  </Step>
-)
+  return (
+    <Step name="1">
+      <p>Hi {name},</p>
+      <p>
+        Thank you for taking the time to review our record of your recent export
+        success.
+      </p>
+      <HR />
+      <H2>Details of your recent success</H2>
+      <SummaryTable data-test="export-wins-details-table">
+        <SummaryTable.Row heading="Destination country">
+          {win.country.name}
+        </SummaryTable.Row>
+        {Object.keys(groups).length > 1 &&
+          Object.entries(groups).map(([k, { total, yearRange }]) => {
+            const years = yearRange.max - yearRange.min + 1
+            return (
+              <NormalFontWeightRow key={k} heading={k}>
+                {`${currencyGBP(total)} over ${years} ${pluralize('year', years)}`}
+              </NormalFontWeightRow>
+            )
+          })}
+        <SummaryTable.Row heading="Total value">
+          {`${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Date won">
+          {formatMediumDate(win.date)}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Lead officer name">
+          {win.leadOfficer.name}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Summary of support received">
+          {win.description}
+        </SummaryTable.Row>
+        <SummaryTable.Row heading="Your export experience before this win can be described as">
+          {win?.exportExperience}
+        </SummaryTable.Row>
+      </SummaryTable>
+
+      {/* TODO: Create a FieldBoolean component */}
+      <FieldRadios
+        name="agree_with_win"
+        required="Select if the information is correct or needs revising"
+        options={[
+          { label: 'I confirm this information is correct', value: 'yes' },
+          { label: 'Some of this information needs revising', value: 'no' },
+        ]}
+      />
+    </Step>
+  )
+}
 
 const Step2Agree = () => (
   <Step name="2-agree">

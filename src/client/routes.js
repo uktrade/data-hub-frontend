@@ -494,6 +494,7 @@ const routes = {
       module: 'datahub:companies',
       component: ExportWinsRedirect,
     },
+    // TODO: Remove with all related code
     {
       path: '/exportwins/:winId/details',
       module: 'datahub:companies',
