@@ -33,6 +33,10 @@ services:
       MAXEMAIL_USERNAME: dummyUser
       MAXEMAIL_PASSWORD: dummyPassword
       ELASTIC_APM_DISABLE_SEND: 1
+      DYNAMICS_INSTANCE_URI: https://localhost
+      DYNAMICS_TENANT_ID: xxx
+      DYNAMICS_APPLICATION_ID: xxx
+      DYNAMICS_CLIENT_SECRET: xxx
     ports:
       - 8001:8001
     depends_on:
@@ -46,5 +50,4 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: legal-basis
-    logging:
-      driver: none
+      POSTGRES_PASSWORD: password
