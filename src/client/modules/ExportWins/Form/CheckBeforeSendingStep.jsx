@@ -8,14 +8,14 @@ import { Link } from 'govuk-react'
 import pluralize from 'pluralize'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
-import { useFormContext } from '../../../components/Form/hooks'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
+import { useFormContext } from '../../../components/Form/hooks'
 import { formatMediumDateTime } from '../../../utils/date'
-import { CompanyName } from '.'
 import { WIN_STATUS } from '../Status/constants'
 import { ContactLink } from './ExportWinForm'
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
+import { CompanyName } from '.'
 import {
   transformTeamsAndAdvisers,
   transformGoodsAndServices,
@@ -75,7 +75,6 @@ const CheckBeforeSendingStep = ({ isEditing, companyId }) => {
         </WarningText>
       )}
       {isEditing && <AdditionalInformation {...props} />}
-
       {/*
           TODO: We have to include this hidden field 
           otherwise we lose the previous step's state.
@@ -382,11 +381,6 @@ const AdditionalInformation = ({ values, isEditing }) => {
           </>
         )}
       </StyledSummaryTable>
-      {winStatus !== WIN_STATUS.WON && (
-        <StyledInsetText>
-          <ContactLink data-test="" shouldPluralize={false} />
-        </StyledInsetText>
-      )}
     </>
   )
 }

@@ -439,8 +439,11 @@ import {
 import { saveTaskDetail } from './modules/Tasks/TaskForm/tasks'
 import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
 
-import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './modules/ExportWins/Form/state'
-import { saveExportWin } from './modules/ExportWins/Form/tasks'
+import {
+  TASK_RESEND_EXPORT_WIN,
+  TASK_GET_EXPORT_WINS_SAVE_FORM,
+} from './modules/ExportWins/Form/state'
+import { saveExportWin, resendExportWin } from './modules/ExportWins/Form/tasks'
 
 import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
 import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
@@ -453,9 +456,6 @@ import {
   getExportProject,
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
-
-import { resendExportWin } from '../client/modules/ExportWins/Details/tasks'
-import { TASK_RESEND_EXPORT_WIN } from './modules/ExportWins/Details/state'
 
 export const tasks = {
   'Create list': createList,

@@ -61,6 +61,7 @@ const WinDetailsStep = ({ isEditing }) => {
           label="Destination country"
           required="Choose a destination country"
           resource={CountriesResource}
+          payload={{ is_export_win: true }}
           field={FieldTypeahead}
         />
       )}

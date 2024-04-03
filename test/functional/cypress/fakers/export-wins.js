@@ -117,5 +117,8 @@ export const exportWinsFaker = () => ({
   customer_response: {
     agree_with_win: null, // Sent
     responded_on: faker.date.anytime().toISOString(),
+    expected_portion_without_help: {
+      name: '40%',
+    },
   },
 })
