@@ -193,11 +193,16 @@ const ExportList = ({
               </StyledResultCount>{' '}
               Exports
             </StyledHeader>
-            <LinkContainer>
-              <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
-                Remove all filters
-              </StyledButtonLink>
-            </LinkContainer>
+            {filters.areActive && (
+              <LinkContainer>
+                <StyledButtonLink
+                  onClick={onClearAll}
+                  data-test="clear-filters"
+                >
+                  Remove all filters
+                </StyledButtonLink>
+              </LinkContainer>
+            )}
           </HeaderContainer>
         </>
       )}
