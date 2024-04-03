@@ -396,7 +396,7 @@ describe('Company Export tab', () => {
       })
 
       it('the second page renders the collection list with 6 of the 15 results', () => {
-        cy.get('a').contains('2').click()
+        cy.get('[aria-label="Page 2"]').click()
 
         cy.get('[data-test="collection-item"]').as('collectionItems')
         cy.get('@collectionItems').should('have.length', 6)
@@ -411,12 +411,12 @@ describe('Company Export tab', () => {
       })
 
       it('should not display the next button', () => {
-        cy.get('a').contains('2').click()
+        cy.get('[aria-label="Page 2"]').click()
         cy.get('[data-test="next"]').should('not.exist')
       })
 
       it('should display the previous button', () => {
-        cy.get('a').contains('2').click()
+        cy.get('[aria-label="Page 2"]').click()
         cy.get('[data-test="prev"]').should('have.text', 'Previous')
       })
     })
