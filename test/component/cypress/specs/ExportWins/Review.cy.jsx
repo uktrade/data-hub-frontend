@@ -315,24 +315,6 @@ describe('ExportWins/Review', () => {
 
       cy.get('@continue').click()
 
-      // Assert errors
-      assertErrorSummary([
-        'Select at least 1 of the 3 options below',
-        'Select at least 1 of the 5 options below',
-      ])
-
-      cy.get('@continue').click()
-
-      cy.contains(
-        'Our support was a prerequisite to generate this value'
-      ).click()
-
-      cy.contains(
-        'It enabled you to maintain or expand in an existing market'
-      ).click()
-
-      cy.get('@continue').click()
-
       cy.contains(DBT_HEADING + 'Step 4 of 5' + HEADING)
       cy.contains('h2', 'Your export experience')
 

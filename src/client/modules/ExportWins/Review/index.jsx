@@ -198,7 +198,6 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes1"
       legend="Please tick all that apply to this win:"
-      required="Select at least 1 of the 3 options below"
       options={[
         {
           label:
@@ -218,7 +217,6 @@ const Step4 = () => (
     <FieldCheckboxes
       name="checkboxes2"
       legend="Tick any that apply to this win:"
-      required="Select at least 1 of the 5 options below"
       options={[
         {
           label: 'It enabled you to expand into a new market',
