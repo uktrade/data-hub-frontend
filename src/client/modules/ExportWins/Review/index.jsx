@@ -28,6 +28,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 
 import ThankYou from './ThankYou'
+import AccesibilityStatement from './AccesibilityStatement'
 
 const FORM_ID = 'export-wins-customer-feedback'
 
@@ -408,6 +409,11 @@ const Review = ({ token }) => (
 
 export default () => (
   <Switch>
+    <Route
+      exact={true}
+      path="/exportwins/review/accesibility-statement"
+      component={AccesibilityStatement}
+    />
     <Route exact={true} path="/exportwins/review/:token">
       {({ match }) => <Review token={match.params.token} />}
     </Route>
