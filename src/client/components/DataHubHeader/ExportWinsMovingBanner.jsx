@@ -24,7 +24,7 @@ const ExportWinsMovingBanner = () => (
       target="_blank"
       href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/export-wins-is-moving-to-data-hub/"
     >
-      Export Wins is moving to Data Hub on 3 April 2024
+      Export Wins is moving to Data Hub shortly
     </Link>
   </Root>
 )
