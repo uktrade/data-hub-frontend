@@ -141,6 +141,7 @@ describe('Editing an export win', () => {
           'When you are happy with all the changes save the page.'
       )
     })
+
     it('should render a customer details contact link', () => {
       cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
@@ -150,6 +151,7 @@ describe('Editing an export win', () => {
           'Export experience'
       )
     })
+
     it('should render a win details contact link', () => {
       cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
@@ -158,6 +160,68 @@ describe('Editing an export win', () => {
         'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
           'Summary of the support you provided, Destination, Date won, Type of export win and Value'
       )
+    })
+  })
+
+  context('Resend export win', () => {
+    const getCompany = ({ agree_with_win }) => ({
+      ...exportWinsFaker(),
+      customer_response: {
+        agree_with_win,
+        expected_portion_without_help: {
+          name: '40%',
+        },
+      },
+    })
+
+    it('should not render a "Resend export win" button when the win has been rejected', () => {
+      const company = getCompany({ agree_with_win: false }) // rejected
+      cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as(
+        'apiRejectedWin'
+      )
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait('@apiRejectedWin')
+      cy.get('[data-test="localHeader"]').should(
+        'not.contain',
+        'Resend export win'
+      )
+    })
+
+    it('should not render a "Resend export win" button when the win has been won', () => {
+      const company = getCompany({ agree_with_win: true }) // won
+      cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as('apiWonWin')
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait('@apiWonWin')
+      cy.get('[data-test="localHeader"]').should(
+        'not.contain',
+        'Resend export win'
+      )
+    })
+
+    it('should render a "Resend export win" button when the win has been sent', () => {
+      const company = getCompany({ agree_with_win: null }) // sent
+      cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as(
+        'apiSentWin'
+      )
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait('@apiSentWin')
+      cy.get('[data-test="resend-export-win"]').should(
+        'have.text',
+        'Resend export win'
+      )
+    })
+
+    it('should send an export win and render a success flash message', () => {
+      cy.intercept(
+        'POST',
+        `/api-proxy/v4/export-win/${exportWin.id}/resend-win`,
+        {}
+      ).as('apiResendExportWin')
+      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="resend-export-win"]').click()
+      cy.wait('@apiResendExportWin')
+      cy.get('[data-test="flash"]').should('have.text', 'Successfully sent')
     })
   })
 })
