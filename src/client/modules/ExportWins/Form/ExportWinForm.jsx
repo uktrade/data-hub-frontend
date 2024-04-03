@@ -17,6 +17,7 @@ import OfficerDetailsStep from './OfficerDetailsStep'
 import { ResendExportWin } from './ResendExportWin'
 import { WIN_STATUS } from '../Status/constants'
 import WinDetailsStep from './WinDetailsStep'
+import { ExportWinSuccess } from './Success'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 import {
@@ -96,7 +97,9 @@ const ExportWinForm = ({
                     <>
                       {showSuccessfullySent && (
                         <FlashMessages
-                          flashMessages={{ success: ['Successfully sent'] }}
+                          flashMessages={{
+                            success: [<ExportWinSuccess winId={exportWinId} />],
+                          }}
                         />
                       )}
                       <StyledStatusMessage>

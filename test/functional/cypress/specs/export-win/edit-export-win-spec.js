@@ -221,7 +221,10 @@ describe('Editing an export win', () => {
       cy.wait(['@apiGetExportWin'])
       cy.get('[data-test="resend-export-win"]').click()
       cy.wait('@apiResendExportWin')
-      cy.get('[data-test="flash"]').should('have.text', 'Successfully sent')
+      cy.get('[data-test="flash"]').should(
+        'have.text',
+        `The export win ${exportWin.name_of_export} to ${exportWin.country.name} has been sent to ${exportWin.company_contacts[0].email} for review and confirmation.`
+      )
     })
   })
 })

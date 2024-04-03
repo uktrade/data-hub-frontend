@@ -6,7 +6,7 @@ import { ExportWinsLink, VerticalSpacer } from '../Details'
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
 
-const ExportWinSuccess = ({ winId }) => (
+export const ExportWinSuccess = ({ winId }) => (
   <ExportWin.Inline id={winId}>
     {(exportWin) =>
       exportWin &&
