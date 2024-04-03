@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
-import { UnorderedList, ListItem, H2, Link } from 'govuk-react'
+import { UnorderedList, ListItem, H2, Button, Link } from 'govuk-react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -12,8 +12,8 @@ import { ButtonLink, Pagination } from '../../../components'
 import { MID_GREY } from '../../../utils/colours'
 import ListItemRenderer from './ItemRenderer'
 import Task from '../../../components/Task'
+import HR from '../../../components/HR'
 import ExportSelect from './ExportSelect'
-import urls from '../../../../lib/urls'
 import ExportDate from './ExportDate'
 import List from './List'
 
@@ -85,6 +85,19 @@ const StyledButtonLink = styled(ButtonLink)({
 
 const ListContainer = styled('div')({
   marginTop: 20,
+})
+
+const ExportWinsLink = () => (
+  // TODO: This should be a react-router link, but we can't use it yet because
+  // the Dashboard is mounted in Nunjucks which results in the Dashboard being also
+  // rendered on top of the content of the /exportwins route.
+  <Button as={Link} href="/exportwins">
+    View export wins
+  </Button>
+)
+
+const HRWithMargin = styled(HR)({
+  marginBottom: 20,
 })
 
 const ExportList = ({
@@ -180,27 +193,20 @@ const ExportList = ({
               </StyledResultCount>{' '}
               Exports
             </StyledHeader>
-            <LinkContainer>
-              {filters.areActive && (
+            {filters.areActive && (
+              <LinkContainer>
                 <StyledButtonLink
                   onClick={onClearAll}
                   data-test="clear-filters"
                 >
                   Remove all filters
                 </StyledButtonLink>
-              )}
-              {hasExportWinFeatureGroup && (
-                <Link
-                  href={urls.companies.exportWins.index()}
-                  data-test="export-wins"
-                >
-                  Export wins
-                </Link>
-              )}
-            </LinkContainer>
+              </LinkContainer>
+            )}
           </HeaderContainer>
         </>
       )}
+
       <Task.Status
         name={TASK_GET_EXPORT_PIPELINE_LIST}
         id={ID}
@@ -232,10 +238,17 @@ const ExportList = ({
                       </UnorderedList>
                     </div>
                   </StyledContent>
+                  {hasExportWinFeatureGroup && <ExportWinsLink />}
                 </ContentWithHeading>
               </div>
             ) : (
               <ListContainer>
+                {hasExportWinFeatureGroup && (
+                  <>
+                    <ExportWinsLink />
+                    <HRWithMargin />
+                  </>
+                )}
                 <List items={results} itemRenderer={ListItemRenderer} />
                 <Pagination
                   totalPages={totalPages}
