@@ -177,7 +177,7 @@ const Step1 = ({ win, name }) => {
           {win.description}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Your export experience before this win can be described as">
-          {win?.exportExperience}
+          {win?.exportExperience.name}
         </SummaryTable.Row>
       </SummaryTable>
 
