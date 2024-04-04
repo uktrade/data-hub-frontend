@@ -136,6 +136,8 @@ module.exports = {
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/reminders-and-email-notifications/',
     },
     euVIES: 'https://ec.europa.eu/taxation_customs/vies/',
+    cleanEnergyTransition:
+      'https://www.gov.uk/government/consultations/aligning-uk-international-support-for-the-clean-energy-transition',
   },
 
   dashboard: {

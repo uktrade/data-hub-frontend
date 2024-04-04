@@ -9,6 +9,7 @@ import {
 } from './utils'
 
 import {
+  assertDetails,
   assertFieldInput,
   assertFieldError,
   assertErrorSummary,
@@ -234,6 +235,17 @@ describe('Win details', () => {
       assertFieldTypeahead({
         element,
         label: 'Sector',
+      })
+    })
+  })
+
+  it('should render the details component', () => {
+    cy.get('[data-test="oil-and-gas"]').then((element) => {
+      assertDetails({
+        element,
+        summary: 'Oil and gas sector important information',
+        content:
+          "Since 2021 the UK does not provide financial or promotional support for the fossil fuel energy sector overseas, so only exempt projects can be added. See guidance in 'Aligning UK international support for the clean energy transition'.If it doesn't meet the criteria the win will not be approvedTo check if your project is exempt contact fossilfuelenquiries@trade.gov.uk.",
       })
     })
   })

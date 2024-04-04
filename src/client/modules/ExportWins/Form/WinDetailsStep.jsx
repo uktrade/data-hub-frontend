@@ -1,6 +1,7 @@
 import React from 'react'
 import { Details, ListItem, UnorderedList } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
+import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
@@ -13,6 +14,7 @@ import { SectorResource } from '../../../components/Resource'
 import { validateWinDate } from './validators'
 import { WinTypeValues } from './WinTypeValues'
 import { StyledHintParagraph } from './styled'
+import urls from '../../../../lib/urls'
 import {
   Step,
   FieldDate,
@@ -41,6 +43,8 @@ const StyledExportTotal = styled('p')({
   backgroundColor: BLACK,
 })
 
+const FOSSIL_FUEL_EMAIL = 'fossilfuelenquiries@trade.gov.uk'
+
 const WinDetailsStep = ({ isEditing }) => {
   const { values } = useFormContext()
   const twelveMonthsAgo = getStartDateOfTwelveMonthsAgo()
@@ -53,7 +57,6 @@ const WinDetailsStep = ({ isEditing }) => {
       <StyledHintParagraph data-test="hint">
         The customer will be asked to confirm this information.
       </StyledHintParagraph>
-
       {!isEditing && (
         <ResourceOptionsField
           name="country"
@@ -65,7 +68,6 @@ const WinDetailsStep = ({ isEditing }) => {
           field={FieldTypeahead}
         />
       )}
-
       {!isEditing && (
         <FieldDate
           name="date"
@@ -77,7 +79,6 @@ const WinDetailsStep = ({ isEditing }) => {
           validate={validateWinDate}
         />
       )}
-
       {!isEditing && (
         <FieldTextarea
           name="description"
@@ -88,7 +89,6 @@ const WinDetailsStep = ({ isEditing }) => {
           maxWords={MAX_WORDS}
         />
       )}
-
       <FieldRadios
         name="name_of_customer_confidential"
         label="Overseas customer"
@@ -115,7 +115,6 @@ const WinDetailsStep = ({ isEditing }) => {
           },
         ]}
       />
-
       <FieldInput
         type="text"
         name="business_type"
@@ -124,7 +123,6 @@ const WinDetailsStep = ({ isEditing }) => {
         hint="For example: export sales, contract, order, distributor, tender / competition win, joint venture, outward investment."
         placeholder="Enter a type of business deal"
       />
-
       {!isEditing && (
         <FieldCheckboxes
           name="win_type"
@@ -209,14 +207,12 @@ const WinDetailsStep = ({ isEditing }) => {
           }))}
         />
       )}
-
       {!isEditing && values?.win_type?.length > 1 && (
         <StyledExportTotal data-test="total-value">
           Total value:{' '}
           {formatValue(sumAllWinTypeYearlyValues(values?.win_type, values))}
         </StyledExportTotal>
       )}
-
       <FieldCheckboxes
         name="goods_vs_services"
         legend="What does the value relate to?"
@@ -224,7 +220,6 @@ const WinDetailsStep = ({ isEditing }) => {
         required="Select at least one option"
         options={goodsServicesOptions}
       />
-
       <FieldInput
         type="text"
         name="name_of_export"
@@ -234,14 +229,36 @@ const WinDetailsStep = ({ isEditing }) => {
         placeholder="Enter a name for goods or services"
       />
 
-      <ResourceOptionsField
+      <SectorResource.FieldTypeahead
         id="sector"
         name="sector"
         label="Sector"
         required="Enter a sector"
-        resource={SectorResource}
-        field={FieldTypeahead}
       />
+
+      <Details
+        summary="Oil and gas sector important information"
+        data-test="oil-and-gas"
+      >
+        <p>
+          Since 2021 the UK does not provide financial or promotional support
+          for the fossil fuel energy sector overseas, so only exempt projects
+          can be added. See guidance in{' '}
+          <Link
+            href={urls.external.cleanEnergyTransition}
+            target="_blank"
+            aria-label="opens in a new tab"
+          >
+            'Aligning UK international support for the clean energy transition'.
+          </Link>
+        </p>
+
+        <p>If it doesn't meet the criteria the win will not be approved</p>
+        <p>
+          To check if your project is exempt contact{' '}
+          <Link href={`mailto:${FOSSIL_FUEL_EMAIL}`}>{FOSSIL_FUEL_EMAIL}.</Link>
+        </p>
+      </Details>
     </Step>
   )
 }
