@@ -193,10 +193,10 @@ describe('Win details', () => {
       values: ['3000000', '3000000', '3000000', '3000000', '3000000'], // 15M
     })
 
-    // Assert the total export value
-    cy.get(winDetails.totalExportValue).should(
+    // Assert the total value
+    cy.get(winDetails.totalValue).should(
       'have.text',
-      'Total export value: £30,000,000' // 5M + 10M + 15M
+      'Total value: £30,000,000' // 5M + 10M + 15M
     )
   })
 
