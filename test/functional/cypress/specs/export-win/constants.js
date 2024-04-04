@@ -74,7 +74,7 @@ export const formFields = {
     winTypeValuesExport: '[data-test="win-type-values-export_win"]',
     winTypeValuesBusSupp: '[data-test="win-type-values-business_success_win"]',
     winTypeValuesODI: '[data-test="win-type-values-odi_win"]',
-    totalExportValue: '[data-test="total-export-value"]',
+    totalValue: '[data-test="total-value"]',
   },
   supportProvided: {
     heading: '[data-test="step-heading"]',
