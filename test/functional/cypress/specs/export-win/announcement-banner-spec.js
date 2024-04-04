@@ -16,7 +16,7 @@ describe('Announcement banner', () => {
 
           cy.contains(
             'CompaniesContactsEventsInteractionsInvestmentsOrdersSupport' +
-              'Important: Export Wins is moving to Data Hub on 3 April 2024'
+              'Important: Export Wins is moving to Data Hub shortly'
           )
         })
       })
