@@ -60,7 +60,10 @@ const fakeExportWin = () => ({
   },
   breakdowns: faker.helpers.multiple(fakeBreakdown),
   description: faker.lorem.lines(),
-  export_experience: faker.lorem.paragraph(),
+  export_experience: {
+    id: faker.string.uuid(),
+    name: faker.lorem.paragraph(),
+  },
   customer_response: {
     id: faker.string.uuid(),
     our_support: {

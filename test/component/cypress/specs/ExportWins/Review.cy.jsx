@@ -48,7 +48,9 @@ const EXPORT_WIN = {
   },
   is_personally_confirmed: false,
   description: 'Lorem ipsum dolor sit amet',
-  export_experience: 'My export experience',
+  export_experience: {
+    name: 'My export experience',
+  },
   breakdowns: [
     {
       type: {
@@ -198,7 +200,7 @@ describe('ExportWins/Review', () => {
           ['Summary of support received', EXPORT_WIN.description],
           [
             'Your export experience before this win can be described as',
-            EXPORT_WIN.export_experience,
+            EXPORT_WIN.export_experience.name,
           ],
         ],
       })
@@ -413,7 +415,7 @@ describe('ExportWins/Review', () => {
           ['Summary of support received', EXPORT_WIN.description],
           [
             'Your export experience before this win can be described as',
-            EXPORT_WIN.export_experience,
+            EXPORT_WIN.export_experience.name,
           ],
         ],
       })
