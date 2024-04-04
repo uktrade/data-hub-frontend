@@ -49,7 +49,8 @@ const Header = styled.header({
 
 const Main = styled.main({
   gridArea: 'main',
-  padding: SPACING.SCALE_5,
+  padding: SPACING.SCALE_3,
+  paddingBottom: SPACING.SCALE_6,
 })
 
 const GridCellFooter = styled(Footer)({
@@ -74,8 +75,9 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
     <Main>{children}</Main>
     <GridCellFooter
       links={{
-        'Privacy Policy': 'http://example.com/not-implemented-yet',
-        'Accessibility Statement': 'http://example.com/not-implemented-yet',
+        'Privacy Policy':
+          'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
+        'Accessibility Statement': 'accesibility-statement',
       }}
     />
   </Grid>
