@@ -45,6 +45,7 @@ const helpCentreApiProxy = require('./middleware/help-centre-api-proxy')
 const fixSlashes = require('./middleware/fix-slashes')
 
 const routers = require('./apps/routers')
+const exportWinsReview = require('./apps/__export-wins-review')
 
 const app = express()
 
@@ -114,7 +115,9 @@ app.use(
 
 app.use(locals)
 
-app.use(require('./apps/__export-wins-review'))
+metadataApiProxy(app)
+
+exportWinsReview(app)
 
 app.use(title())
 app.use(breadcrumbs.init())
@@ -140,7 +143,7 @@ app.use(userLocals)
 app.use(headers)
 app.use(store())
 apiProxy(app)
-metadataApiProxy(app)
+// metadataApiProxy(app)
 helpCentreApiProxy(app)
 // csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
 app.use(csrf())

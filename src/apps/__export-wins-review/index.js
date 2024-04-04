@@ -1,14 +1,28 @@
-/* eslint-disable prettier/prettier */
-const express = require('express')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const router = express.Router()
+const config = require('../../config')
 
-router.get(
-  [
-    '/exportwins/review/:id',
-    '/exportwins/review-win/thankyou',
-  ],
-  (req, res) => res.render('__export-wins-review/view')
-)
+module.exports = (app) => {
+  // We have to specially treat this endpoint as it doesn't require an access token nor
+  // any other authorization and we don't want any cookie to be set
+  app.use(
+    '/api-proxy/v4/export-win/review/',
+    createProxyMiddleware({
+      target: config.apiRoot,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api-proxy': '',
+      },
+    })
+  )
 
-module.exports = router
+  app.use((req, res, next) => {
+    if (/\/exportwins\/review/.test(req.url)) {
+      // This skips all subsequent middleware
+      res.render('__export-wins-review/view')
+    } else {
+      // Continue to the next middleware
+      next()
+    }
+  })
+}
