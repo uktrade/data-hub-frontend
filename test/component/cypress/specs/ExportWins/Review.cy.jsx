@@ -74,41 +74,41 @@ describe('ExportWins/Review', () => {
   // TODO: This should actually be applied globally
   afterEach(() => sessionStorage.clear())
 
-  // it('Footer links', () => {
-  //   const Provider = createTestProvider({
-  //     'Export Win Review': () => Promise.resolve(REVIEW),
-  //     WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
-  //     Rating: () => Promise.resolve(RATING),
-  //     Experience: () => Promise.resolve(EXPERIENCE),
-  //     MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
-  //     TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
-  //   })
-  //   cy.mount(
-  //     <Provider>
-  //       <Redirect to="/exportwins/review/123" />
-  //       <Review />
-  //     </Provider>
-  //   )
+  it('Footer links', () => {
+    const Provider = createTestProvider({
+      'Export Win Review': () => Promise.resolve(REVIEW),
+      WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
+      Rating: () => Promise.resolve(RATING),
+      Experience: () => Promise.resolve(EXPERIENCE),
+      MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
+      TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+    })
+    cy.mount(
+      <Provider>
+        <Redirect to="/exportwins/review/123" />
+        <Review />
+      </Provider>
+    )
 
-  //   cy.get('footer').within(() => {
-  //     // There should be 3 links including the Crown copyright
-  //     cy.get('a').should('have.length', 3)
+    cy.get('footer').within(() => {
+      // There should be 3 links including the Crown copyright
+      cy.get('a').should('have.length', 3)
 
-  //     // Links should be in a particular order
-  //     cy.contains('Privacy Policy' + 'Accessibility Statement')
+      // Links should be in a particular order
+      cy.contains('Privacy Policy' + 'Accessibility Statement')
 
-  //     cy.contains('a', 'Privacy Policy').should(
-  //       'have.attr',
-  //       'href',
-  //       'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/'
-  //     )
-  //     cy.contains('a', 'Accessibility Statement').should(
-  //       'have.attr',
-  //       'href',
-  //       'accesibility-statement'
-  //     )
-  //   })
-  // })
+      cy.contains('a', 'Privacy Policy').should(
+        'have.attr',
+        'href',
+        'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/'
+      )
+      cy.contains('a', 'Accessibility Statement').should(
+        'have.attr',
+        'href',
+        '/exportwins/review/accesibility-statement'
+      )
+    })
+  })
 
   context('If there is a problem loading the review', () => {
     it("should render not found view if token is expired or doesn't exist", () => {
