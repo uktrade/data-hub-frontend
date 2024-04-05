@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
+import { Button } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
+import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import ExportWins from './ExportWins'
@@ -152,19 +154,17 @@ const ExportsIndex = () => {
             <StyledLink href={urls.companies.exports.history.index(companyId)}>
               View full export countries history
             </StyledLink>
-
             <H3>Export wins</H3>
-            <p>
-              <Link
-                data-test-id="exportWinsLink"
-                href={urls.external.exportWins}
-                target="_blank"
-                aria-label="opens in a new tab"
-              >
-                Record your win
-              </Link>{' '}
-              on our Export Wins site
-            </p>
+            <Button
+              as={Link}
+              data-test="add-export-win"
+              aria-label="Add export win"
+              buttonColour={GREY_3}
+              buttonTextColour={TEXT_COLOUR}
+              href={urls.companies.exportWins.create(company.id)}
+            >
+              Add export win
+            </Button>
             <Details summary="What is an Export Win">
               <p>
                 Export wins capture the export deals that Department for

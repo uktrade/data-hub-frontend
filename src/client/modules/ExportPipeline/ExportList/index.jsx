@@ -107,7 +107,6 @@ const ExportList = ({
   maxItemsToPaginate,
   payload,
   filters,
-  hasExportWinFeatureGroup,
 }) => {
   const history = useHistory()
   const maxItems = Math.min(count, maxItemsToPaginate)
@@ -238,17 +237,13 @@ const ExportList = ({
                       </UnorderedList>
                     </div>
                   </StyledContent>
-                  {hasExportWinFeatureGroup && <ExportWinsLink />}
+                  <ExportWinsLink />
                 </ContentWithHeading>
               </div>
             ) : (
               <ListContainer>
-                {hasExportWinFeatureGroup && (
-                  <>
-                    <ExportWinsLink />
-                    <HRWithMargin />
-                  </>
-                )}
+                <ExportWinsLink />
+                <HRWithMargin />
                 <List items={results} itemRenderer={ListItemRenderer} />
                 <Pagination
                   totalPages={totalPages}
@@ -277,7 +272,6 @@ ExportList.propTypes = {
   results: PropTypes.array,
   itemsPerPage: PropTypes.number,
   maxItemsToPaginate: PropTypes.number,
-  hasExportWinFeatureGroup: PropTypes.bool,
 }
 
 export default connect(state2props)(ExportList)

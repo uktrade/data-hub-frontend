@@ -4,5 +4,4 @@ export const state2props = (state) => state[ID]
 
 export const companyState2Props = (state) => ({
   csrfToken: state.csrfToken,
-  hasExportWinFeatureGroup: state.activeFeatureGroups?.includes('export-wins'),
 })
