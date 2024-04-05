@@ -143,7 +143,6 @@ app.use(userLocals)
 app.use(headers)
 app.use(store())
 apiProxy(app)
-// metadataApiProxy(app)
 helpCentreApiProxy(app)
 // csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
 app.use(csrf())
