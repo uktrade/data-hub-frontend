@@ -22,7 +22,9 @@ Object.keys(filters).forEach((filterName) => {
 
 function render(template, options) {
   // Stub methods set in middleware locals
-  options.getAssetPath = () => {}
+  options.getAssetPath = () => {
+    throw Error('Do not use!!!')
+  }
   options.getPageTitle = () => {}
   options.getBreadcrumbs = () => {}
   options.getMessages = () => {}
