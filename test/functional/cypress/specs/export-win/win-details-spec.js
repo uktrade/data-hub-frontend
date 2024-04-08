@@ -131,40 +131,40 @@ describe('Win details', () => {
     })
   })
 
-  it('should render the WinTypeValues component for each win type', () => {
+  it('should render the Breakdowns component for each win type', () => {
     cy.get(winDetails.winType).as('winType')
 
     // Export win
     cy.get('@winType')
-      .find(winDetails.winTypeValuesExport)
+      .find(winDetails.breakdownsExport)
       .should('not.exist')
       .get('@winType')
       .find(winDetails.exportWinCheckbox)
       .check()
       .next()
-      .get(winDetails.winTypeValuesExport)
+      .get(winDetails.breakdownsExport)
       .should('exist')
 
     // Business type
     cy.get('@winType')
-      .find(winDetails.winTypeValuesBusSupp)
+      .find(winDetails.breakdownsBusSucc)
       .should('not.exist')
       .get('@winType')
       .find(winDetails.businessSuccessCheckbox)
       .check()
       .next()
-      .get(winDetails.winTypeValuesBusSupp)
+      .get(winDetails.breakdownsBusSucc)
       .should('exist')
 
     // ODI
     cy.get('@winType')
-      .find(winDetails.winTypeValuesODI)
+      .find(winDetails.breakdownsODI)
       .should('not.exist')
       .get('@winType')
       .find(winDetails.odiCheckbox)
       .check()
       .next()
-      .get(winDetails.winTypeValuesODI)
+      .get(winDetails.breakdownsODI)
       .should('exist')
   })
 

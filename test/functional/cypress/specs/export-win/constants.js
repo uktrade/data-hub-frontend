@@ -71,9 +71,9 @@ export const formFields = {
     exportWinCheckbox: '[data-test="checkbox-export_win"]',
     businessSuccessCheckbox: '[data-test="checkbox-business_success_win"]',
     odiCheckbox: '[data-test="checkbox-odi_win"]',
-    winTypeValuesExport: '[data-test="win-type-values-export_win"]',
-    winTypeValuesBusSupp: '[data-test="win-type-values-business_success_win"]',
-    winTypeValuesODI: '[data-test="win-type-values-odi_win"]',
+    breakdownsExport: '[data-test="breakdowns-export_win"]',
+    breakdownsBusSucc: '[data-test="breakdowns-business_success_win"]',
+    breakdownsODI: '[data-test="breakdowns-odi_win"]',
     totalValue: '[data-test="total-value"]',
   },
   supportProvided: {
