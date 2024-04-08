@@ -4,24 +4,24 @@ import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import Countries from '../../../components/Resource/Countries'
+import Sector from '../../../components/Resource/Sector'
+
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { getStartDateOfTwelveMonthsAgo } from '../../../utils/date'
-import CountriesResource from '../../../components/Resource/Countries'
 import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
-import { SectorResource } from '../../../components/Resource'
 import { validateWinDate } from './validators'
-import { Breakdowns } from './Breakdowns'
 import { StyledHintParagraph } from './styled'
+import { Breakdowns } from './Breakdowns'
 import urls from '../../../../lib/urls'
+
 import {
   Step,
   FieldDate,
   FieldInput,
   FieldRadios,
   FieldTextarea,
-  FieldTypeahead,
   FieldCheckboxes,
 } from '../../../components'
 import {
@@ -58,14 +58,12 @@ const WinDetailsStep = ({ isEditing }) => {
         The customer will be asked to confirm this information.
       </StyledHintParagraph>
       {!isEditing && (
-        <ResourceOptionsField
+        <Countries.FieldTypeahead
           name="country"
           id="country"
           label="Destination country"
           required="Choose a destination country"
-          resource={CountriesResource}
           payload={{ is_export_win: true }}
-          field={FieldTypeahead}
         />
       )}
       {!isEditing && (
@@ -229,7 +227,7 @@ const WinDetailsStep = ({ isEditing }) => {
         placeholder="Enter a name for goods or services"
       />
 
-      <SectorResource.FieldTypeahead
+      <Sector.FieldTypeahead
         id="sector"
         name="sector"
         label="Sector"

@@ -2,20 +2,17 @@ import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import HQTeamRegionOrPost from '../../../components/Resource/HQTeamRegionOrPost'
+import TeamType from '../../../components/Resource/TeamType'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { OPTION_YES, OPTIONS_YES_NO } from '../../../../common/constants'
 import { MID_GREY } from '../../../../client/utils/colours'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
-import {
-  TeamTypeResource,
-  HQTeamRegionOrPostsResource,
-} from '../../../components/Resource'
+
 import {
   Step,
   FieldRadios,
-  FieldTypeahead,
   FieldAddAnother,
   FieldAdvisersTypeahead,
 } from '../../../components'
@@ -71,11 +68,9 @@ const CreditForThisWinStep = () => {
                   label="Contributing officer"
                   required="Enter a contributing officer"
                 />
-                <ResourceOptionsField
+                <TeamType.FieldTypeahead
                   name={`team_type_${groupIndex}`}
                   id={`contributors-${groupIndex}`}
-                  resource={TeamTypeResource}
-                  field={FieldTypeahead}
                   fullWidth={true}
                   label="Team type"
                   required="Enter a team type"
@@ -87,12 +82,10 @@ const CreditForThisWinStep = () => {
                   // want the previous selection displayed after they've changed the team type.
                   // To ensure this happens we've added a key prop and set it to the team type
                   // id, when the id changes the component updates.
-                  <ResourceOptionsField
+                  <HQTeamRegionOrPost.FieldTypeahead
                     key={values[`team_type_${groupIndex}`].value}
                     name={`hq_team_${groupIndex}`}
                     id={`contributors-${groupIndex}`}
-                    resource={HQTeamRegionOrPostsResource}
-                    field={FieldTypeahead}
                     fullWidth={true}
                     label="HQ team, region or post"
                     required="Enter a HQ team, region or post"

@@ -1,21 +1,13 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import * as validators from './validators'
+import HQTeamRegionOrPost from '../../../components/Resource/HQTeamRegionOrPost'
+import TeamType from '../../../components/Resource/TeamType'
 import { useFormContext } from '../../../../client/components/Form/hooks'
-
+import { Step, FieldAdvisersTypeahead } from '../../../components'
+import * as validators from './validators'
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
-import {
-  TeamTypeResource,
-  HQTeamRegionOrPostsResource,
-} from '../../../components/Resource'
-import {
-  Step,
-  FieldAdvisersTypeahead,
-  FieldTypeahead,
-} from '../../../components'
 
 const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
   const { values } = useFormContext()
@@ -38,11 +30,9 @@ const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
         label="Lead officer name"
         required="Enter a lead officer"
       />
-      <ResourceOptionsField
+      <TeamType.FieldTypeahead
         name="team_type"
         id="team-type"
-        resource={TeamTypeResource}
-        field={FieldTypeahead}
         fullWidth={true}
         label="Team type"
         required="Select a team type"
@@ -54,12 +44,10 @@ const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
         // want the previous selection displayed after they've changed the team type.
         // To ensure this happens we've added a key prop and set it to the team type
         // id, when the id changes the component updates.
-        <ResourceOptionsField
+        <HQTeamRegionOrPost.FieldTypeahead
           key={values.team_type.value}
           name="hq_team"
           id={`officer-hq-team-region-or-post`}
-          resource={HQTeamRegionOrPostsResource}
-          field={FieldTypeahead}
           fullWidth={true}
           payload={{ team_type: values.team_type.value }}
           label="HQ team, region or post"
