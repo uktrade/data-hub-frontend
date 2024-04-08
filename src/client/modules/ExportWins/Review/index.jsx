@@ -124,14 +124,10 @@ const CurrentFormStepInfo = () => (
     {({ Form }) => {
       if (!Form?.[FORM_ID]) return null
       const { currentStep, steps } = Form[FORM_ID]
-      const isFirstStep = currentStep === 0
-      const informationNeedsRevising = steps.length === 2
-      // We only want to show the form step info when the user
-      // confirms that the presented information is correct
-      if (isFirstStep || informationNeedsRevising) return null
+
       return (
         <>
-          Step {currentStep} of {steps.length - 1}
+          Step {currentStep + 1} of {steps.length}
         </>
       )
     }}
@@ -195,8 +191,9 @@ const Step1 = ({ win, name }) => {
   )
 }
 
-const Step2Agree = () => (
-  <Step name="2-agree">
+const Step2 = ({ agree }) => (
+  <Step name="2">
+    <H2>The extent our support helped</H2>
     <WithoutOurSupport.FieldRadios
       name="expected_portion_without_help"
       legend="What value do you estimate you would have achieved without our support?"
@@ -204,19 +201,13 @@ const Step2Agree = () => (
     />
     <FieldTextarea
       name="comments"
-      label="Comments (optional)"
-      hint="Please provide feedback on the help we have provided. If any of the information is incorrect please provide details."
-    />
-  </Step>
-)
-
-const Step2Disagree = () => (
-  <Step name="2-disagree" submitButtonLabel="Confirm and send">
-    <FieldTextarea
-      name="comments"
-      label="Comments"
-      required="Please let us know what information was incorrect"
-      hint="Please let us know what information was incorrect"
+      label={`Comments${agree ? ' (optional)' : ''}`}
+      hint={
+        agree
+          ? 'Please provide feedback on the help we have provided. If any of the information is incorrect please provide details.'
+          : 'Please let us know what information was incorrect'
+      }
+      required={!agree && 'Please let us know what information was incorrect'}
     />
   </Step>
 )
@@ -388,17 +379,11 @@ const Review = ({ token }) => (
           {(formData) => (
             <>
               <Step1 win={review.win} name={review?.companyContact?.name} />
-              {formData.values.agree_with_win === 'yes' ? (
-                <>
-                  <Step2Agree />
-                  <Step3 />
-                  <Step4 />
-                  <Step5 />
-                  <Step6 />
-                </>
-              ) : (
-                <Step2Disagree />
-              )}
+              <Step2 agree={formData.values.agree_with_win === 'yes'} />
+              <Step3 />
+              <Step4 />
+              <Step5 />
+              <Step6 />
             </>
           )}
         </Form>
