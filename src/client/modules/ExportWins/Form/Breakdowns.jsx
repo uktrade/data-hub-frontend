@@ -4,7 +4,7 @@ import pluralize from 'pluralize'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
 
-import { LIGHT_GREY } from '../../../../client/utils/colours'
+import { LIGHT_GREY } from '../../../utils/colours'
 import { FieldCurrency } from '../../../components'
 import { StyledHintParagraph } from './styled'
 import { isPositiveInteger } from './validators'
@@ -42,10 +42,10 @@ const allWinTypeYearlyValuesAreEmpty = (field, values) => {
   return allEmptyFields.length === allFields.length
 }
 
-export const WinTypeValues = ({ label, name, years = 5, values }) => {
+export const Breakdowns = ({ label, name, years = 5, values }) => {
   const year = getYearFromWinType(name, values)
   return (
-    <WinTypeContainer data-test={`win-type-values-${name}`}>
+    <WinTypeContainer data-test={`breakdowns-${name}`}>
       <StyledLabel data-test="label">{label}</StyledLabel>
       <StyledHintParagraph data-test="hint">
         (round to nearest £)

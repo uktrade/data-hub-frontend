@@ -12,7 +12,7 @@ import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { SectorResource } from '../../../components/Resource'
 import { validateWinDate } from './validators'
-import { WinTypeValues } from './WinTypeValues'
+import { Breakdowns } from './Breakdowns'
 import { StyledHintParagraph } from './styled'
 import urls from '../../../../lib/urls'
 import {
@@ -132,7 +132,7 @@ const WinDetailsStep = ({ isEditing }) => {
             ...option,
             ...(option.value === winTypes.EXPORT && {
               children: (
-                <WinTypeValues
+                <Breakdowns
                   label="Export value over the next 5 years"
                   name="export_win"
                   values={values}
@@ -166,7 +166,7 @@ const WinDetailsStep = ({ isEditing }) => {
                 </StyledDetails>
               ),
               children: (
-                <WinTypeValues
+                <Breakdowns
                   label="Business success over the next 5 years"
                   name="business_success_win"
                   values={values}
@@ -197,7 +197,7 @@ const WinDetailsStep = ({ isEditing }) => {
                 </StyledDetails>
               ),
               children: (
-                <WinTypeValues
+                <Breakdowns
                   label="Outward Direct Investment over the next 5 years"
                   name="odi_win"
                   values={values}

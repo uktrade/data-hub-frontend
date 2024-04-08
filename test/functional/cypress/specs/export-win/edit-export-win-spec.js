@@ -113,10 +113,10 @@ describe('Editing an export win', () => {
       cy.get(winDetails.winType).should('not.exist')
     })
 
-    it('should not render any win type values', () => {
-      cy.get(winDetails.winTypeValuesExport).should('not.exist')
-      cy.get(winDetails.winTypeValuesBusSupp).should('not.exist')
-      cy.get(winDetails.winTypeValuesODI).should('not.exist')
+    it('should not render any breakdowns', () => {
+      cy.get(winDetails.breakdownsExport).should('not.exist')
+      cy.get(winDetails.breakdownsBusSucc).should('not.exist')
+      cy.get(winDetails.breakdownsODI).should('not.exist')
     })
   })
 

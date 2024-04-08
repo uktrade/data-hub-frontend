@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { WinTypeValues } from '../../../../../src/client/modules/ExportWins/Form/WinTypeValues'
+import { Breakdowns } from '../../../../../src/client/modules/ExportWins/Form/Breakdowns'
 import { Form } from '../../../../../src/client/components'
 import DataHubProvider from '../provider'
 
-describe('WinTypeValues', () => {
+describe('Breakdowns', () => {
   const Component = (props) => (
     <DataHubProvider>
       <Form id="exportwin-form" initialValues={{ ...props.values }}>
-        <WinTypeValues {...props} />
+        <Breakdowns {...props} />
       </Form>
     </DataHubProvider>
   )
