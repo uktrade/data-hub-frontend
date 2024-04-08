@@ -1,16 +1,14 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 
-import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
-import { Step, FieldTypeahead, FieldCheckboxes } from '../../../components'
+import { Step, FieldCheckboxes } from '../../../components'
 import { OPTION_YES } from '../../../../common/constants'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
-import {
-  HvcResource,
-  SupportTypeResource,
-  AssociatedProgrammeResource,
-} from '../../../components/Resource'
+
+import AssociatedProgramme from '../../../components/Resource/AssociatedProgramme'
+import SupportType from '../../../components/Resource/SupportType'
+import Hvc from '../../../components/Resource/Hvc'
 
 const SupportProvidedStep = () => (
   <Step name={steps.SUPPORT_PROVIDED}>
@@ -18,21 +16,17 @@ const SupportProvidedStep = () => (
     <StyledHintParagraph data-test="hint">
       Did any of these help the customer achieve this win?
     </StyledHintParagraph>
-    <ResourceOptionsField
+    <Hvc.FieldTypeahead
       id="hvc"
       name="hvc"
       label="High Value Campaign (HVC) code (optional)"
       hint="If the win was linked to a HVC, select the appropriate campaign."
-      resource={HvcResource}
-      field={FieldTypeahead}
     />
-    <ResourceOptionsField
+    <SupportType.FieldTypeahead
       name="type_of_support"
       id="type-of-support"
       label="What type of support was given?"
       hint="You can add up to 5 types of support."
-      field={FieldTypeahead}
-      resource={SupportTypeResource}
       fullWidth={true}
       isMulti={true}
       required="Select at least one type of support"
@@ -40,13 +34,11 @@ const SupportProvidedStep = () => (
         value?.length > 5 && 'Select a maximum of 5 types of support'
       }
     />
-    <ResourceOptionsField
+    <AssociatedProgramme.FieldTypeahead
       name="associated_programme"
       id="associated-programme"
       label="Was there a DBT campaign or event that contributed to this win?"
       hint="You can add up to 5 campaigns or events."
-      field={FieldTypeahead}
-      resource={AssociatedProgrammeResource}
       fullWidth={true}
       isMulti={true}
       required="Select at least one type of DBT campaign or event"

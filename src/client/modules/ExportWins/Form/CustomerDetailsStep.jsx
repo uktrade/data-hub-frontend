@@ -2,16 +2,15 @@ import React from 'react'
 import { H3 } from '@govuk-react/heading'
 
 import ResourceOptionsField from '../../../components/Form/elements/ResourceOptionsField'
+import ExportExperience from '../../../components/Resource/ExportExperience'
+import BusinessPotential from '../../../components/Resource/BusinessPotential'
+import CompanyContacts from '../../../components/Resource/CompanyContacts' // Refactor to CompanyContacts.FieldTypeahead
+import WinUKRegions from '../../../components/Resource/WinUKRegions'
+
 import { Step, FieldTypeahead } from '../../../components'
 import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
-import {
-  CompanyContactsResource,
-  ExportExperienceResource,
-  BusinessPotentialResource,
-  WinUKRegions,
-} from '../../../components/Resource'
 
 const CustomerDetailsStep = ({ companyId, isEditing }) => {
   return (
@@ -24,7 +23,7 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => {
         hint="This contact will be emailed to approve the win."
         required="Select a company contact"
         placeholder="Select contact"
-        resource={CompanyContactsResource}
+        resource={CompanyContacts}
         field={FieldTypeahead}
         autoScroll={true}
         resultToOptions={({ results }) =>
@@ -49,23 +48,19 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => {
         }
         fullWidth={true}
       />
-      <ResourceOptionsField
+      <BusinessPotential.FieldTypeahead
         name="business_potential"
         id="business-potential"
         label="Medium-sized and high potential companies"
         required="Select medium-sized and high potential companies"
-        field={FieldTypeahead}
-        resource={BusinessPotentialResource}
       />
       {!isEditing && (
-        <ResourceOptionsField
+        <ExportExperience.FieldTypeahead
           name="export_experience"
           id="export-experience"
           label="Export experience"
           required="Select export experience"
           hint="Your customer will be asked to confirm this information."
-          field={FieldTypeahead}
-          resource={ExportExperienceResource}
         />
       )}
     </Step>
