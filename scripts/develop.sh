@@ -1,5 +1,7 @@
 #!/bin/sh
 
+BACKEND_CMD="npx nodemon --inspect --ignore 'src/**/__test__/**/*'"
+
 # Create a temporary log file
 LOG_FILE=$(mktemp)
 # Delete the temporary file when the script is terminated
@@ -9,4 +11,4 @@ trap "rm -f ${LOG_FILE}" INT TERM HUP EXIT
 npm run develop --  --color | tee "${LOG_FILE}" &
 # Subscribe to changes of the log file and
 # start the backend when "asset-manifest" is logged.
-tail -f "${LOG_FILE}" | awk '/assets-manifest/ {system("npm start")}'
+tail -f "${LOG_FILE}" | awk "/assets-manifest/ {system(\"${BACKEND_CMD}\")}"
