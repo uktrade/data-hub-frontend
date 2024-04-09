@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BACKEND_CMD="npx nodemon --inspect --ignore 'src/**/__test__/**/*'"
+BACKEND_CMD="npx nodemon --inspect --ignore 'src/**/__test__/**/*' --ignore 'src/client/**'"
 
 # Create a temporary log file
 LOG_FILE=$(mktemp)
