@@ -44,10 +44,7 @@ function getMetadata(path, key) {
     })
 }
 
-const metadataItems = [
-  ['country', 'countryOptions'],
-  ['investment-project-stage', 'investmentProjectStage'],
-]
+const metadataItems = [['investment-project-stage', 'investmentProjectStage']]
 
 // TODO: Get rid of this
 module.exports.fetchAll = (cb) => {
