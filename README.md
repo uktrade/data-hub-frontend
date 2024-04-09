@@ -99,14 +99,30 @@ Use this method if you want to make backend changes or run against an API branch
 
     **In development mode:**
 
+    Just run:
+
+    ```bash
+    ./scripts/develop.sh
+    ```
+
+    The above script will first start the WebPack dev server in watch mode.
+
     ```bash
     npm run develop
     ```
 
-    The server will watch for changes and rebuild sass or compile js using webpack as
-    needed. Changes to server side code will result in the server autorestarting.
-    The server will run with the node debug flag so you can debug with Webstorm
-    or Visual Studio Code.
+    And once it detects that the static assets have been built,
+    it starts the node server. The server will watch for changes and
+    rebuild sass.
+
+    ```bash
+    npx nodemon --inspect --ignore 'src/**/__test__/**/*'
+    ```
+
+    Note that the application served by the node server will try to load static assets
+    from `./.build/*`, which is only generated when `npm run build` or `npm run develop`
+    is run at least once. Hence the convenience of `./script/develop.sh`.
+    The script is also used when running tests through _make_ and in CI.
 
 **Running with other APIs (e.g. staging)**
 
