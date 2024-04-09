@@ -24,13 +24,7 @@ services:
       # Required to test Data Hub roles in e2e tests, make sure this var
       # doesn't exists in your .env file as the override below won't work
       OAUTH2_DEV_TOKEN: ${OAUTH2_DEV_TOKEN:-ditStaffToken}
-    # command: >
-    #   sh -c "
-    #     npm run build
-    #     npm start
-    #   "
-    command: sh -c "npm start && wait-for-frontend & npm run develop"
-    # command: sh -c "echo aaaaaaaaaaaaaaaaaaaaas"
+    command: ./scripts/develop.sh
 
   redis:
     image: redis:6.2.6
