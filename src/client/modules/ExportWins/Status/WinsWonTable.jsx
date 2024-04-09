@@ -54,7 +54,7 @@ export const WinsWonTable = ({ exportWins }) => {
             <NoWrapCell>
               <Link
                 as={ReactRouterLink}
-                to={urls.companies.exportWins.edit(company.id, id)}
+                to={urls.companies.exportWins.editSummary(company.id, id)}
               >
                 View details
               </Link>

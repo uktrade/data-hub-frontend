@@ -53,13 +53,13 @@ const StyledInsetText = styled(InsetText)({
   fontSize: FONT_SIZE.SIZE_14,
 })
 
-const CheckBeforeSendingStep = ({ isEditing, companyId }) => {
+const SummaryStep = ({ isEditing, companyId }) => {
   const { values, goToStep } = useFormContext()
   const props = { values, goToStep, isEditing, companyId }
 
   return (
     <Step
-      name={steps.CHECK_BEFORE_SENDING}
+      name={steps.SUMMARY}
       submitButtonLabel={isEditing ? 'Save' : 'Confirm and send to customer'}
     >
       {!isEditing && <H3 data-test="step-heading">Check before sending</H3>}
@@ -385,4 +385,4 @@ const AdditionalInformation = ({ values, isEditing }) => {
   )
 }
 
-export default CheckBeforeSendingStep
+export default SummaryStep

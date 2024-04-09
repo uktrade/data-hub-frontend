@@ -77,7 +77,7 @@ const creditForThisWinStep = `${createFromExportUrl}?step=credit_for_this_win`
 const customerDetailsStep = `${createFromExportUrl}?step=customer_details`
 const winDetailsStep = `${createFromExportUrl}?step=win_details`
 const supportProvidedStep = `${createFromExportUrl}?step=support_provided`
-const checkBeforeSendingStep = `${createFromExportUrl}?step=check_before_sending`
+const summaryStep = `${createFromExportUrl}?step=summary`
 
 describe('Adding an export win from an export project', () => {
   const { officerDetails, customerDetails, winDetails } = formFields
@@ -275,10 +275,10 @@ describe('Adding an export win from an export project', () => {
             lineManagerConfirmed: true,
           })
 
-          clickContinueAndAssertUrl(checkBeforeSendingStep)
+          clickContinueAndAssertUrl(summaryStep)
         }
       )
-      it('should have the pre-populated values on the "Check before sending" step', () => {
+      it('should have the pre-populated values on the "Summary" step', () => {
         cy.get('[data-test="officer-details"]').should(
           'contain',
           exportProject.owner.name // lead officer

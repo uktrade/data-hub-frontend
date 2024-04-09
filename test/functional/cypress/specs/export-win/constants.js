@@ -15,7 +15,7 @@ export const creditForThisWinStep = `${create}?step=credit_for_this_win`
 export const customerDetailsStep = `${create}?step=customer_details`
 export const winDetailsStep = `${create}?step=win_details`
 export const supportProvidedStep = `${create}?step=support_provided`
-export const checkBeforeSendingStep = `${create}?step=check_before_sending`
+export const summaryStep = `${create}?step=summary`
 
 export const formFields = {
   officerDetails: {

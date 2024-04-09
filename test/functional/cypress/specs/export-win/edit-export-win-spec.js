@@ -130,9 +130,9 @@ describe('Editing an export win', () => {
     })
   })
 
-  context('Check before sending', () => {
+  context('Summary', () => {
     it('should render an edit status message', () => {
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
       cy.get('[data-test="status-message"]').should(
         'contain',
@@ -143,7 +143,7 @@ describe('Editing an export win', () => {
     })
 
     it('should render a customer details contact link', () => {
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
       cy.get('[data-test="customer-details-contact"]').should(
         'have.text',
@@ -153,7 +153,7 @@ describe('Editing an export win', () => {
     })
 
     it('should render a win details contact link', () => {
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
       cy.get('[data-test="win-details-contact"]').should(
         'have.text',
@@ -179,7 +179,7 @@ describe('Editing an export win', () => {
       cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as(
         'apiRejectedWin'
       )
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait('@apiRejectedWin')
       cy.get('[data-test="localHeader"]').should(
         'not.contain',
@@ -190,7 +190,7 @@ describe('Editing an export win', () => {
     it('should not render a "Resend export win" button when the win has been won', () => {
       const company = getCompany({ agree_with_win: true }) // won
       cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as('apiWonWin')
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait('@apiWonWin')
       cy.get('[data-test="localHeader"]').should(
         'not.contain',
@@ -203,7 +203,7 @@ describe('Editing an export win', () => {
       cy.intercept('GET', '/api-proxy/v4/export-win/*', company).as(
         'apiSentWin'
       )
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait('@apiSentWin')
       cy.get('[data-test="resend-export-win"]').should(
         'have.text',
@@ -217,7 +217,7 @@ describe('Editing an export win', () => {
         `/api-proxy/v4/export-win/${exportWin.id}/resend-win`,
         {}
       ).as('apiResendExportWin')
-      cy.visit(urls.companies.exportWins.edit(company.id, exportWin.id))
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
       cy.get('[data-test="resend-export-win"]').click()
       cy.wait('@apiResendExportWin')

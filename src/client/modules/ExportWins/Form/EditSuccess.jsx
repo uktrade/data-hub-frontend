@@ -27,7 +27,7 @@ const EditSuccess = ({ match }) => (
         text: 'Sent',
       },
       {
-        link: urls.companies.exportWins.edit(
+        link: urls.companies.exportWins.editSummary(
           match.params.companyId,
           match.params.winId
         ),
@@ -43,7 +43,7 @@ const EditSuccess = ({ match }) => (
     <VerticalSpacer>
       <Link
         as={ReactRouterLink}
-        to={urls.companies.exportWins.edit(
+        to={urls.companies.exportWins.editSummary(
           match.params.companyId,
           match.params.winId
         )}

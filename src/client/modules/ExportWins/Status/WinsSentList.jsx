@@ -22,7 +22,7 @@ export default () => (
           <li key={item.id}>
             <CollectionItem
               headingText={`${item.name_of_export} to ${item?.country?.name}`}
-              headingUrl={urls.companies.exportWins.edit(
+              headingUrl={urls.companies.exportWins.editSummary(
                 item.company.id,
                 item.id
               )}

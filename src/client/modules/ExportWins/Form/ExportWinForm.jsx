@@ -8,7 +8,7 @@ import { FONT_SIZE } from '@govuk-react/constants'
 import FlashMessages from '../../../components/LocalHeader/FlashMessages'
 import { steps, EMAIL, STEP_TO_EXCLUDED_FIELDS_MAP } from './constants'
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
-import CheckBeforeSendingStep from './CheckBeforeSendingStep'
+import SummaryStep from './SummaryStep'
 import { transformFormValuesForAPI } from './transformers'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import CustomerDetailsStep from './CustomerDetailsStep'
@@ -93,7 +93,7 @@ const ExportWinForm = ({
               breadcrumbs={breadcrumbs}
               localHeaderChildren={
                 isEditing ? (
-                  currentStepName === steps.CHECK_BEFORE_SENDING ? (
+                  currentStepName === steps.SUMMARY ? (
                     <>
                       {showSuccessfullySent && (
                         <FlashMessages
@@ -157,7 +157,7 @@ const ExportWinForm = ({
                     <CustomerDetailsStep {...stepProps} />
                     <WinDetailsStep {...stepProps} />
                     <SupportProvidedStep {...stepProps} />
-                    <CheckBeforeSendingStep {...stepProps} />
+                    <SummaryStep {...stepProps} />
                   </>
                 </Form>
               </FormLayout>

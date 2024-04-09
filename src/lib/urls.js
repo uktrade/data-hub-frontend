@@ -253,10 +253,9 @@ module.exports = {
         '/companies',
         '/:companyId/exportwins/:winId/edit?step=support_provided'
       ),
-      // TODO: rename this to editSummary and rename check_before_sending to summary
-      edit: url(
+      editSummary: url(
         '/companies',
-        '/:companyId/exportwins/:winId/edit?step=check_before_sending'
+        '/:companyId/exportwins/:winId/edit?step=summary'
       ),
       editSuccess: url(
         '/companies',

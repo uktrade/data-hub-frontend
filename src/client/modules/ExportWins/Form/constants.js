@@ -4,7 +4,7 @@ export const steps = {
   CUSTOMER_DETAILS: 'customer_details',
   WIN_DETAILS: 'win_details',
   SUPPORT_PROVIDED: 'support_provided',
-  CHECK_BEFORE_SENDING: 'check_before_sending',
+  SUMMARY: 'summary',
 }
 
 // Win Types
