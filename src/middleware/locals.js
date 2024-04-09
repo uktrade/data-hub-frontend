@@ -47,7 +47,6 @@ module.exports = function locals(req, res, next) {
       })
     },
 
-    // TODO: Remove! Only used once in src/templates/_macros/form/multi-step-form.njk
     getLocal(key) {
       return res.locals[key]
     },
