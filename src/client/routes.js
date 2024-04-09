@@ -19,7 +19,6 @@ import ExportDetails from './modules/ExportPipeline/ExportDetails'
 import ExportWinsTabNav from './modules/ExportWins/Status/ExportWinsTabNav'
 import { CreateExportWin, EditExportWin } from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Status/Redirect'
-import ExportWinDetails from './modules/ExportWins/Details'
 import Success from './modules/ExportWins/Form/Success'
 import EditSuccess from './modules/ExportWins/Form/EditSuccess'
 import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
@@ -493,12 +492,6 @@ const routes = {
       path: '/exportwins',
       module: 'datahub:companies',
       component: ExportWinsRedirect,
-    },
-    // TODO: Remove with all related code
-    {
-      path: '/exportwins/:winId/details',
-      module: 'datahub:companies',
-      component: ExportWinDetails,
     },
     {
       path: '/companies/:companyId/exportwins/create',

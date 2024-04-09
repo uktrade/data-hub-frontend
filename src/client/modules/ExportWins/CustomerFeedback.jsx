@@ -8,7 +8,7 @@ import urls from '../../../lib/urls'
 import SummaryTable from '../../components/SummaryTable'
 import ExportWin from '../../components/Resource/ExportWin'
 
-import { ExportWinTitle, ExportWinsLink, VerticalSpacer } from './Details'
+import { ExportWinTitle, ExportWinsLink, VerticalSpacer } from './Shared'
 
 const toYesNo = (val) => {
   if (val === undefined || val === null) return
@@ -40,7 +40,7 @@ const CustomerFeedback = ({
       },
       {
         text: <ExportWinTitle id={winId} />,
-        link: urls.companies.exportWins.details(winId),
+        link: '/', // TODO: Link to the summary page
       },
       { text: 'Customer feedback' },
     ]}
@@ -118,7 +118,8 @@ const CustomerFeedback = ({
     </ExportWin>
     <VerticalSpacer>
       <ExportWinsLink />
-      <Link as={ReactRouterLink} to={urls.companies.exportWins.details(winId)}>
+      {/* TODO: Link to the summary page */}
+      <Link as={ReactRouterLink} to={'/'}>
         Back
       </Link>
     </VerticalSpacer>

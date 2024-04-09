@@ -4,7 +4,7 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 
 import { ExportWinTitle, ExportWinSubTitle } from '.'
 
-import { ExportWinsLink, VerticalSpacer } from '../Details'
+import { ExportWinsLink, VerticalSpacer } from '../Shared'
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
 

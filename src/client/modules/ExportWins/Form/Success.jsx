@@ -2,7 +2,7 @@ import React from 'react'
 import { H4 } from '@govuk-react/heading'
 
 import ExportWin from '../../../components/Resource/ExportWin'
-import { ExportWinsLink, VerticalSpacer } from '../Details'
+import { ExportWinsLink, VerticalSpacer } from '../Shared'
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
 
