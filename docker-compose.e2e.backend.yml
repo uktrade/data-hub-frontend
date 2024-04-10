@@ -21,6 +21,8 @@ services:
       ACTIVITY_STREAM_OUTGOING_SECRET_ACCESS_KEY: incoming-some-secret-1
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+      ACTIVITY_STREAM_INCOMING_SECRET_ACCESS_KEY: some-secret
+      DATABASE_CREDENTIALS: '{"username": "postgres", "password": "datahub", "engine": "postgres", "port": 5432, "dbname": "datahub", "host": "postgres", "dbInstanceIdentifier": "db-instance"}'
     ports:
       - 8000:8000
     depends_on:
@@ -41,8 +43,8 @@ services:
       - redis
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: python short-running-worker.py long-running-worker.py
-    logging:
-      driver: none
+    environment:
+      DATABASE_CREDENTIALS: '{"username": "postgres", "password": "datahub", "engine": "postgres", "port": 5432, "dbname": "datahub", "host": "postgres", "dbInstanceIdentifier": "db-instance"}'
 
   postgres:
     image: postgres:16
@@ -52,8 +54,7 @@ services:
       POSTGRES_DB: datahub
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    logging:
-      driver: none
+      DATABASE_CREDENTIALS: '{"username": "postgres", "password": "datahub", "engine": "postgres", "port": 5432, "dbname": "datahub", "host": "postgres", "dbInstanceIdentifier": "db-instance"}'
 
   opensearch:
     image: opensearchproject/opensearch:2.11.0
