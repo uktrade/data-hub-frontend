@@ -177,3 +177,6 @@ export const getDateThirteenMonthsAgo = () =>
 
 export const getDateNextMonth = () =>
   getMonthAndYearFromDate(addMonths(new Date(), 1))
+
+export const getStringWithLength = (length) =>
+  Array.from({ length }, () => 'a').join('')

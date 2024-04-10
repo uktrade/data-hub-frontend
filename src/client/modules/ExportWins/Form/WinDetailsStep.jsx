@@ -11,7 +11,7 @@ import { useFormContext } from '../../../../client/components/Form/hooks'
 import { getStartDateOfTwelveMonthsAgo } from '../../../utils/date'
 import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
-import { validateWinDate } from './validators'
+import { validateWinDate, validateTextField } from './validators'
 import { StyledHintParagraph } from './styled'
 import { Breakdowns } from './Breakdowns'
 import urls from '../../../../lib/urls'
@@ -108,6 +108,7 @@ const WinDetailsStep = ({ isEditing }) => {
                 hint="Enter the customer’s name, this will be displayed on Data Hub."
                 required="Enter the name of the overseas customer"
                 placeholder="Add name"
+                validate={validateTextField("Customer's name")}
               />
             ),
           },
@@ -120,6 +121,7 @@ const WinDetailsStep = ({ isEditing }) => {
         required="Enter the type of business deal"
         hint="For example: export sales, contract, order, distributor, tender / competition win, joint venture, outward investment."
         placeholder="Enter a type of business deal"
+        validate={validateTextField('Type of business deal')}
       />
       {!isEditing && (
         <FieldCheckboxes
@@ -223,8 +225,9 @@ const WinDetailsStep = ({ isEditing }) => {
         name="name_of_export"
         label="Name of goods or services"
         required="Enter the name of goods or services"
-        hint="For instance 'shortbread biscuits'."
+        hint="For instance 'shortbread biscuits', must be 128 characters or less."
         placeholder="Enter a name for goods or services"
+        validate={validateTextField('Name of goods or services')}
       />
 
       <Sector.FieldTypeahead
