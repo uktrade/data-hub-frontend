@@ -1,3 +1,4 @@
+throw Error('Is this used?')
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 

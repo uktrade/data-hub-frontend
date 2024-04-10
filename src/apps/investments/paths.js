@@ -1,3 +1,4 @@
+throw Error('Is this used?')
 const root = '/investments'
 
 const paths = {

@@ -1,3 +1,4 @@
+throw Error('Is this used?')
 const router = require('express').Router()
 
 const urls = require('../../lib/urls')
@@ -19,6 +20,7 @@ const { setPropositionsReturnUrl } = require('./middleware/propositions')
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
 
+// FIXME: This doesn't seem to be used anywhere
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 
@@ -40,6 +42,7 @@ router.use(
   interactionsRouter
 )
 
-router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
+// FIXME: Is this used anywhere?
+router.use('/:investmentId', ()  => {},setPropositionsReturnUrl, propositionsRouter)
 
 module.exports = router

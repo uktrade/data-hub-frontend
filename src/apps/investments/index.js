@@ -1,3 +1,4 @@
+throw Error('Is this used?')
 const router = require('./router')
 const { root } = require('./paths')
 

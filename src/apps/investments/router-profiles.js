@@ -1,3 +1,4 @@
+throw Error('Is this used?')
 const router = require('express').Router()
 
 const {
