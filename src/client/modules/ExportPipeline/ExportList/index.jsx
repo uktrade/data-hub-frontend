@@ -142,7 +142,7 @@ const ExportList = ({
                   options={filters.status.options}
                 />
                 <ExportSelect
-                  label="Ex. Potential"
+                  label="Export Potential"
                   qsParam="export_potential"
                   options={filters.exportPotential.options}
                 />
