@@ -58,12 +58,7 @@ const loggerConfiguration = {
 }
 
 if (config.isProd) {
-  logger.exceptions.handle(
-    new transports.Console({
-      format: format.combine(format.timestamp(), format.json()),
-    })
-  )
-  // Only send asim formatted logs as other types will mess up processing.
+  // Only send asim formatted logs on production as other types will mess up processing.
   loggerConfiguration.transports = [
     new transports.Console({
       handleExceptions: true,
@@ -80,6 +75,14 @@ if (config.isProd) {
 }
 
 const logger = createLogger(loggerConfiguration)
+if (config.isProd) {
+  logger.exceptions.handle(
+    new transports.Console({
+      format: format.combine(format.timestamp(), format.json()),
+    })
+  )
+}
+
 // Add event types to logger so require calls remain the same until migration-deploy branch
 // and main branch are the same.
 logger.eventTypes = eventTypes
