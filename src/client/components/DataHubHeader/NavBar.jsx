@@ -13,7 +13,6 @@ import {
 import ProtectedLink from '../ProtectedLink'
 import { BLACK, GREY_3_LEGACY, DARK_BLUE_LEGACY } from '../../utils/colours'
 import links from './links'
-import ExportWinsMovingBanner from './ExportWinsMovingBanner'
 
 const StyledNavContainer = styled.div({
   position: 'relative',
@@ -149,7 +148,6 @@ const NavBar = ({ onShowVerticalNav, showVerticalNav, disableReactRouter }) => {
           </StyledListItem>
         </StyledList>
       </StyledNav>
-      <ExportWinsMovingBanner />
     </StyledNavContainer>
   )
 }
