@@ -32,7 +32,7 @@ import {
   customerDetailsStep,
   supportProvidedStep,
   creditForThisWinStep,
-  checkBeforeSendingStep,
+  summaryStep,
 } from './constants'
 
 const exportWin = {
@@ -161,7 +161,7 @@ describe('Adding an export win', () => {
           lineManagerConfirmed: true,
         })
 
-        clickContinueAndAssertUrl(checkBeforeSendingStep)
+        clickContinueAndAssertUrl(summaryStep)
       })
 
       it('should render a step heading', () => {

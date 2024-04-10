@@ -18,7 +18,7 @@ const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
         exportId
           ? urls.exportPipeline.details(exportId)
           : exportWinId
-            ? urls.companies.exportWins.edit(companyId, exportWinId)
+            ? urls.companies.exportWins.editSummary(companyId, exportWinId)
             : companyId
               ? urls.companies.overview.index(companyId)
               : null
