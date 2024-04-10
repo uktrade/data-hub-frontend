@@ -2,6 +2,7 @@ import { clickContinueButton } from '../../support/actions'
 import { formFields, winDetailsStep, company } from './constants'
 
 import {
+  getStringWithLength,
   populateWinWithValues,
   getDateNextMonth,
   getDateThirteenMonthsAgo,
@@ -224,7 +225,7 @@ describe('Win details', () => {
       assertFieldInput({
         element,
         label: 'Name of goods or services',
-        hint: "For instance 'shortbread biscuits'.",
+        hint: "For instance 'shortbread biscuits', must be 128 characters or less.",
         placeholder: 'Enter a name for goods or services',
       })
     })
@@ -340,6 +341,37 @@ describe('Win details', () => {
     assertFieldError(
       cy.get(winDetails.date),
       'Date must be in the last 12 months',
+      true
+    )
+  })
+
+  it("should display a validation error message when the customer's name is greater than 128 characters", () => {
+    cy.get(winDetails.nameOfCustomerConfidentialNo).click()
+    cy.get(`${winDetails.nameOfCustomer} input`).type(getStringWithLength(129))
+    clickContinueButton()
+    assertFieldError(
+      cy.get(winDetails.nameOfCustomer),
+      "Customer's name must be 128 characters or less",
+      true
+    )
+  })
+
+  it('should display a validation error message when the type of business deal is greater than 128 characters', () => {
+    cy.get(`${winDetails.businessType} input`).type(getStringWithLength(129))
+    clickContinueButton()
+    assertFieldError(
+      cy.get(winDetails.businessType),
+      'Type of business deal must be 128 characters or less',
+      true
+    )
+  })
+
+  it('should display a validation error message when goods and services is greater than 128 characters', () => {
+    cy.get(`${winDetails.nameOfExport} input`).type(getStringWithLength(129))
+    clickContinueButton()
+    assertFieldError(
+      cy.get(winDetails.nameOfExport),
+      'Name of goods or services must be 128 characters or less',
       true
     )
   })
