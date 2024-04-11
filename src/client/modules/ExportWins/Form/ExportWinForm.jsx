@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link } from 'govuk-react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -7,10 +8,10 @@ import { FONT_SIZE } from '@govuk-react/constants'
 
 import FlashMessages from '../../../components/LocalHeader/FlashMessages'
 import { steps, EMAIL, STEP_TO_EXCLUDED_FIELDS_MAP } from './constants'
-import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
-import SummaryStep from './SummaryStep'
+import { ExportWinsLink, VerticalSpacerWithMarginBottom } from '../Shared'
 import { transformFormValuesForAPI } from './transformers'
 import CreditForThisWinStep from './CreditForThisWinStep'
+import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
 import CustomerDetailsStep from './CustomerDetailsStep'
 import SupportProvidedStep from './SupportProvidedStep'
 import OfficerDetailsStep from './OfficerDetailsStep'
@@ -20,6 +21,7 @@ import WinDetailsStep from './WinDetailsStep'
 import { ExportWinSuccess } from './Success'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
+import SummaryStep from './SummaryStep'
 import {
   Form,
   FormLayout,
@@ -160,6 +162,22 @@ const ExportWinForm = ({
                     <SummaryStep {...stepProps} />
                   </>
                 </Form>
+                {currentStepName === steps.SUMMARY && (
+                  <VerticalSpacerWithMarginBottom>
+                    {winStatus !== WIN_STATUS.SENT && (
+                      <Link
+                        as={ReactRouterLink}
+                        to={urls.companies.exportWins.customerFeedback(
+                          companyId,
+                          exportWinId
+                        )}
+                      >
+                        Customer feedback
+                      </Link>
+                    )}
+                    <ExportWinsLink />
+                  </VerticalSpacerWithMarginBottom>
+                )}
               </FormLayout>
             </DefaultLayout>
           </>

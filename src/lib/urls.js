@@ -225,14 +225,16 @@ module.exports = {
       won: url('/exportwins/won'),
       sent: url('/exportwins/sent'),
       rejected: url('/exportwins/rejected'),
-      details: url('/exportwins', '/:winId/details'),
       create: url('/companies', '/:companyId/exportwins/create'),
       createFromExport: url(
         '/companies',
         '/:companyId/export/:exportId/exportwins/create'
       ),
       createSuccess: url('/exportwins', '/:winId/success'),
-      customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
+      customerFeedback: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/customer-feedback'
+      ),
       editOfficerDetails: url(
         '/companies',
         '/:companyId/exportwins/:winId/edit?step=officer_details'

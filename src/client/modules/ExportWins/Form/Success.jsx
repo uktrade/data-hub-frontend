@@ -2,7 +2,7 @@ import React from 'react'
 import { H4 } from '@govuk-react/heading'
 
 import ExportWin from '../../../components/Resource/ExportWin'
-import { ExportWinsLink, VerticalSpacer } from '../Details'
+import { ExportWinsLink, VerticalSpacerWithMarginBottom } from '../Shared'
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
 
@@ -46,9 +46,9 @@ const Success = ({ match }) => (
     <p data-test="email">
       You will be sent an email once the customer has responded.
     </p>
-    <VerticalSpacer>
+    <VerticalSpacerWithMarginBottom>
       <ExportWinsLink />
-    </VerticalSpacer>
+    </VerticalSpacerWithMarginBottom>
   </DefaultLayout>
 )
 
