@@ -162,20 +162,22 @@ const ExportWinForm = ({
                     <SummaryStep {...stepProps} />
                   </>
                 </Form>
-                <VerticalSpacer>
-                  {winStatus !== WIN_STATUS.SENT && (
-                    <Link
-                      as={ReactRouterLink}
-                      to={urls.companies.exportWins.customerFeedback(
-                        companyId,
-                        exportWinId
-                      )}
-                    >
-                      Customer feedback
-                    </Link>
-                  )}
-                  <ExportWinsLink />
-                </VerticalSpacer>
+                {currentStepName === steps.SUMMARY && (
+                  <VerticalSpacer>
+                    {winStatus !== WIN_STATUS.SENT && (
+                      <Link
+                        as={ReactRouterLink}
+                        to={urls.companies.exportWins.customerFeedback(
+                          companyId,
+                          exportWinId
+                        )}
+                      >
+                        Customer feedback
+                      </Link>
+                    )}
+                    <ExportWinsLink />
+                  </VerticalSpacer>
+                )}
               </FormLayout>
             </DefaultLayout>
           </>
