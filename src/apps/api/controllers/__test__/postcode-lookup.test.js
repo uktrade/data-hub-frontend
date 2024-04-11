@@ -15,14 +15,6 @@ describe('postcodeLookupHandler', () => {
       '../services': {
         lookupAddress: (postcode) => this.lookupAddressStub(postcode),
       },
-      '../../../lib/metadata': {
-        countryOptions: [
-          {
-            id: '1234',
-            name: 'United Kingdom',
-          },
-        ],
-      },
     })
   })
 

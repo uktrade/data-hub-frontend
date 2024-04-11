@@ -3,7 +3,6 @@ const proxyquire = require('proxyquire')
 
 const paths = require('../../paths')
 const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
-const investmentProjectStages = require('../../../../../test/unit/data/investment/investment-project-stages.json')
 
 const companyData = {
   id: '6c388e5b-a098-e211-a939-e4115bead28a',
@@ -66,12 +65,7 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
   })
 }
 
-const createMiddleware = (
-  investmentData,
-  adviserData,
-  companyData,
-  stages = investmentProjectStages
-) => {
+const createMiddleware = (investmentData, adviserData, companyData) => {
   return proxyquire('../shared', {
     '../repos': {
       getInvestment: sinon.stub().resolves(investmentData),
@@ -81,9 +75,6 @@ const createMiddleware = (
     },
     '../../companies/repos': {
       getDitCompany: sinon.stub().resolves(companyData),
-    },
-    '../../../lib/metadata': {
-      investmentProjectStage: stages,
     },
   })
 }
