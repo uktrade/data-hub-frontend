@@ -33,7 +33,7 @@ const getEventSeverity = (level) => {
   return {
     debug: 'Informational',
     info: 'Informational',
-    warning: 'Low',
+    warn: 'Low',
     error: 'Medium',
     critical: 'High',
   }[level]
