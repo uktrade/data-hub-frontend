@@ -41,21 +41,17 @@ const dummyExportWin = (prefix, booleans) => ({
   },
 })
 
-const dummyCompany = () => ({
-  id: '123',
-})
-
 describe('ExportWins/CustomerFeedback', () => {
   ;[
     {
       testTitle: 'All true',
       win: dummyExportWin('all-true', true),
-      company: dummyCompany(),
+      company: { id: '123' },
     },
     {
       testTitle: 'All false',
       win: dummyExportWin('all-false', false),
-      company: dummyCompany(),
+      company: { id: '123' },
     },
   ].forEach(({ testTitle, win, company }) => {
     it(testTitle, () => {

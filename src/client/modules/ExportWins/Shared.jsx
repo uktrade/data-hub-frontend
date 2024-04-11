@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Link } from 'govuk-react'
 
 import ExportWin from '../../components/Resource/ExportWin'
+import VerticalSpacer from '../../components/VerticalSpacer'
 import urls from '../../../lib/urls'
 
 export const ExportWinTitle = (props) => (
@@ -27,9 +28,6 @@ export const ExportWinsLink = () => (
   </Link>
 )
 
-export const VerticalSpacer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${SPACING.SCALE_1};
+export const VerticalSpacerWithMarginBottom = styled(VerticalSpacer)`
   margin-bottom: ${SPACING.SCALE_5};
 `

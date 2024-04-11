@@ -1,9 +1,14 @@
 import React from 'react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
-import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
 
-import { ExportWinTitle, ExportWinsLink, VerticalSpacer } from './Shared'
+import {
+  ExportWinTitle,
+  ExportWinsLink,
+  VerticalSpacerWithMarginBottom,
+} from './Shared'
+
 import ExportWin from '../../components/Resource/ExportWin'
 import SummaryTable from '../../components/SummaryTable'
 import { DefaultLayout } from '../../components'
@@ -115,7 +120,7 @@ const CustomerFeedback = ({
         )
       }}
     </ExportWin>
-    <VerticalSpacer>
+    <VerticalSpacerWithMarginBottom>
       <ExportWinsLink />
       <Link
         as={ReactRouterLink}
@@ -123,7 +128,7 @@ const CustomerFeedback = ({
       >
         Back
       </Link>
-    </VerticalSpacer>
+    </VerticalSpacerWithMarginBottom>
   </DefaultLayout>
 )
 

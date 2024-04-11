@@ -4,7 +4,7 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 
 import { ExportWinTitle, ExportWinSubTitle } from '.'
 
-import { ExportWinsLink, VerticalSpacer } from '../Shared'
+import { ExportWinsLink, VerticalSpacerWithMarginBottom } from '../Shared'
 import { DefaultLayout } from '../../../components'
 import urls from '../../../../lib/urls'
 
@@ -40,7 +40,7 @@ const EditSuccess = ({ match }) => (
     ]}
     flashMessages={{ success: ['The export win has been updated.'] }}
   >
-    <VerticalSpacer>
+    <VerticalSpacerWithMarginBottom>
       <Link
         as={ReactRouterLink}
         to={urls.companies.exportWins.editSummary(
@@ -51,7 +51,7 @@ const EditSuccess = ({ match }) => (
         Back
       </Link>
       <ExportWinsLink />
-    </VerticalSpacer>
+    </VerticalSpacerWithMarginBottom>
   </DefaultLayout>
 )
 

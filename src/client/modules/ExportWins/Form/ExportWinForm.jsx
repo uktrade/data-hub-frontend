@@ -8,7 +8,7 @@ import { FONT_SIZE } from '@govuk-react/constants'
 
 import FlashMessages from '../../../components/LocalHeader/FlashMessages'
 import { steps, EMAIL, STEP_TO_EXCLUDED_FIELDS_MAP } from './constants'
-import { ExportWinsLink, VerticalSpacer } from '../Shared'
+import { ExportWinsLink, VerticalSpacerWithMarginBottom } from '../Shared'
 import { transformFormValuesForAPI } from './transformers'
 import CreditForThisWinStep from './CreditForThisWinStep'
 import { TASK_GET_EXPORT_WINS_SAVE_FORM } from './state'
@@ -163,7 +163,7 @@ const ExportWinForm = ({
                   </>
                 </Form>
                 {currentStepName === steps.SUMMARY && (
-                  <VerticalSpacer>
+                  <VerticalSpacerWithMarginBottom>
                     {winStatus !== WIN_STATUS.SENT && (
                       <Link
                         as={ReactRouterLink}
@@ -176,7 +176,7 @@ const ExportWinForm = ({
                       </Link>
                     )}
                     <ExportWinsLink />
-                  </VerticalSpacer>
+                  </VerticalSpacerWithMarginBottom>
                 )}
               </FormLayout>
             </DefaultLayout>
