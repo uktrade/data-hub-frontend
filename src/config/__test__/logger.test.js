@@ -5,12 +5,12 @@ const config = require('../index')
 
 describe('Logger transport check', () => {
   let expectedInfo = {
-    EventMessage: 'Drum roll for warning',
+    EventMessage: 'Drum roll for info',
     EventCount: 1,
     EventType: 'express.startup',
     EventResult: 'NA',
-    EventSeverity: 'Low',
-    EventOriginalSeverity: 'warn',
+    EventSeverity: 'Informational',
+    EventOriginalSeverity: 'info',
     EventSchema: 'ProcessEvent',
     EventSchemaVersion: '0.1.4',
     ActingAppType: 'Express',
@@ -37,9 +37,9 @@ describe('Logger transport check', () => {
       this.logger = proxyquire('../logger', {})
     })
 
-    it('Logger return ASIMFormat for production environment warn', () => {
+    it('Logger return ASIMFormat for production environment info', () => {
       stdMocks.use()
-      this.logger.warn('Drum roll for warning', {
+      this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
       stdMocks.restore()
@@ -76,13 +76,14 @@ describe('Logger transport check', () => {
     })
     it('Logger return plain format for non production environment info', () => {
       stdMocks.use()
-      this.logger.warn('Drum roll for warning', {
+      this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
       stdMocks.restore()
       const output = stdMocks.flush()
+
       expect(output.stdout).to.containSubset([
-        '\x1B[33mwarn\x1B[39m: \x1B[33mDrum roll for warning\x1B[39m {"eventType":"express.startup"}\n',
+        '\x1B[32minfo\x1B[39m: \x1B[32mDrum roll for info\x1B[39m {"eventType":"express.startup"}\n',
       ])
       const transports = this.logger.transports
       expect(transports).is.an('array')
