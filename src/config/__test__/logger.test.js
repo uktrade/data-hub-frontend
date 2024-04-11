@@ -37,11 +37,23 @@ describe('Logger transport check', () => {
       this.logger = proxyquire('../logger', {})
     })
 
-    it('Logger return ASIMFormat for production environment', () => {
+    it('Logger return ASIMFormat for production environment info', () => {
       stdMocks.use()
       this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
+      stdMocks.restore()
+      const output = stdMocks.flush()
+      const entries = output.stdout.map((line) => JSON.parse(line))
+
+      expect(entries[0]).to.containSubset(expectedInfo)
+      const transports = this.logger.transports
+      expect(transports).is.an('array')
+      expect(transports).length(2)
+    })
+
+    it('Logger return ASIMFormat for production environment error', () => {
+      stdMocks.use()
       this.logger.error('Failed roll error', {
         eventType: this.logger.eventTypes.expressRequest,
       })
@@ -49,8 +61,7 @@ describe('Logger transport check', () => {
       const output = stdMocks.flush()
       const entries = output.stdout.map((line) => JSON.parse(line))
 
-      expect(entries[0]).to.containSubset(expectedInfo)
-      expect(entries[1]).to.containSubset(expectedError)
+      expect(entries[0]).to.containSubset(expectedError)
       const transports = this.logger.transports
       expect(transports).is.an('array')
       expect(transports).length(2)
@@ -63,11 +74,23 @@ describe('Logger transport check', () => {
       this.logger = proxyquire('../logger', {})
       this.logger.silent = false
     })
-    it('Logger return plain format for non production environment', () => {
+    it('Logger return plain format for non production environment info', () => {
       stdMocks.use()
       this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
+      stdMocks.restore()
+      const output = stdMocks.flush()
+
+      expect(output.stdout).to.containSubset([
+        '\x1B[32minfo\x1B[39m: \x1B[32mDrum roll for info\x1B[39m {"eventType":"express.startup"}\n',
+      ])
+      const transports = this.logger.transports
+      expect(transports).is.an('array')
+      expect(transports).length(1)
+    })
+    it('Logger return plain format for non production environment error', () => {
+      stdMocks.use()
       this.logger.error('Failed roll error', {
         eventType: this.logger.eventTypes.expressRequest,
       })
@@ -75,7 +98,6 @@ describe('Logger transport check', () => {
       const output = stdMocks.flush()
 
       expect(output.stdout).to.containSubset([
-        '\x1B[32minfo\x1B[39m: \x1B[32mDrum roll for info\x1B[39m {"eventType":"express.startup"}\n',
         '\x1B[31merror\x1B[39m: \x1B[31mFailed roll error\x1B[39m {"eventType":"express.request"}\n',
       ])
       const transports = this.logger.transports
