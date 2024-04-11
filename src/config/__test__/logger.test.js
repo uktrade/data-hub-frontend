@@ -63,7 +63,7 @@ describe('Logger transport check', () => {
       this.logger = proxyquire('../logger', {})
       this.logger.silent = false
     })
-    it('Single this.logger transport for non production environment', () => {
+    it('Logger return plain format for non production environment', () => {
       stdMocks.use()
       this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
