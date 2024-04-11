@@ -20,9 +20,7 @@ services:
       ACTIVITY_STREAM_OUTGOING_ACCESS_KEY_ID: incoming-some-id-1
       ACTIVITY_STREAM_OUTGOING_SECRET_ACCESS_KEY: incoming-some-secret-1
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
-      ACTIVITY_STREAM_INCOMING_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
-      ACTIVITY_STREAM_INCOMING_SECRET_ACCESS_KEY: some-secret
     ports:
       - 8000:8000
     depends_on:
