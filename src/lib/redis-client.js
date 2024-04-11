@@ -51,20 +51,27 @@ let client
 const getClient = () => {
   if (!client) {
     client = redis.createClient(getRedisConfig())
-    logger.info(message.CREATED)
+    logger.info(message.CREATED, {
+      eventType: logger.eventTypes.expressStartup,
+    })
     client.on('connect', () => {
-      logger.info(message.CONNECT)
+      logger.info(message.CONNECT, {
+        eventType: logger.eventTypes.expressStartup,
+      })
     })
     client.on('ready', () => {
-      logger.info(message.READY)
+      logger.info(message.READY, {
+        eventType: logger.eventTypes.expressStartup,
+      })
     })
     client.on('error', (e) => {
-      logger.error(message.ERROR, e)
-      logger.error(e)
+      logger.error(message.ERROR, e, {
+        eventType: logger.eventTypes.expressStartup,
+      })
       reporter.captureException(e)
     })
     client.on('end', () => {
-      logger.info(message.END)
+      logger.info(message.END, { eventType: logger.eventTypes.expressStartup })
     })
   }
   return client
