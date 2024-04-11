@@ -161,14 +161,18 @@ app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
   if (errors) {
-    logger.error('Unable to load all metadataRepository, cannot start app')
+    logger.error('Unable to load all metadataRepository, cannot start app', {
+      eventType: 'express.startup',
+    })
 
     for (const err of errors) {
       throw err
     }
   } else {
     app.listen(config.port, () => {
-      logger.info(`app listening on port ${config.port}`)
+      logger.info(`app listening on port ${config.port}`, {
+        eventType: 'express.startup',
+      })
     })
   }
 })
