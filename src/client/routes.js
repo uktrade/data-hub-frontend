@@ -519,7 +519,7 @@ const routes = {
       component: EditSuccess,
     },
     {
-      path: '/exportwins/:winId/customer-feedback',
+      path: '/companies/:companyId/exportwins/:winId/customer-feedback',
       module: 'datahub:companies',
       component: CustomerFeedback,
     },

@@ -3,12 +3,11 @@ import styled from 'styled-components'
 import { Link } from 'govuk-react'
 import { Link as ReactRouterLink } from 'react-router-dom/cjs/react-router-dom'
 
+import { ExportWinTitle, ExportWinsLink, VerticalSpacer } from './Shared'
+import ExportWin from '../../components/Resource/ExportWin'
+import SummaryTable from '../../components/SummaryTable'
 import { DefaultLayout } from '../../components'
 import urls from '../../../lib/urls'
-import SummaryTable from '../../components/SummaryTable'
-import ExportWin from '../../components/Resource/ExportWin'
-
-import { ExportWinTitle, ExportWinsLink, VerticalSpacer } from './Shared'
 
 const toYesNo = (val) => {
   if (val === undefined || val === null) return
@@ -23,7 +22,7 @@ const SummaryTable60PerCentHeader = styled(SummaryTable)({
 
 const CustomerFeedback = ({
   match: {
-    params: { winId },
+    params: { winId, companyId },
   },
 }) => (
   <DefaultLayout
@@ -40,7 +39,7 @@ const CustomerFeedback = ({
       },
       {
         text: <ExportWinTitle id={winId} />,
-        link: '/', // TODO: Link to the summary page
+        link: urls.companies.exportWins.editSummary(companyId, winId),
       },
       { text: 'Customer feedback' },
     ]}
@@ -118,8 +117,10 @@ const CustomerFeedback = ({
     </ExportWin>
     <VerticalSpacer>
       <ExportWinsLink />
-      {/* TODO: Link to the summary page */}
-      <Link as={ReactRouterLink} to={'/'}>
+      <Link
+        as={ReactRouterLink}
+        to={urls.companies.exportWins.editSummary(companyId, winId)}
+      >
         Back
       </Link>
     </VerticalSpacer>

@@ -151,7 +151,7 @@ export const urlTestExclusions = [
   { url: '/exportwins/rejected/' },
   { url: '/exportwins/:winId/edit' },
   { url: '/exportwins/:winId/success' },
-  { url: '/exportwins/:winId/customer-feedback' },
+  { url: '/companies/:companyId/exportwins/:winId/customer-feedback' },
   { url: '/companies/:companyId/export/:exportId/exportwins/create' },
 
   { url: '/companies/e59a2b0f-7d84-4de7-bc1e-f70339f4255f/overview' },

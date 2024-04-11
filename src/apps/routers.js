@@ -34,7 +34,7 @@ const reactRoutes = [
   '/exportwins/:winId/success',
   '/companies/:companyId/exportwins/:winId/edit',
   '/companies/:companyId/exportwins/:winId/edit-success',
-  '/exportwins/:winId/customer-feedback',
+  '/companies/:companyId/exportwins/:winId/customer-feedback',
   '/companies/:companyId/dnb-hierarchy',
   '/companies/:companyId/company-tree',
   '/companies/:companyId/account-management/strategy/create',

@@ -231,7 +231,10 @@ module.exports = {
         '/:companyId/export/:exportId/exportwins/create'
       ),
       createSuccess: url('/exportwins', '/:winId/success'),
-      customerFeedback: url('/exportwins', '/:winId/customer-feedback'),
+      customerFeedback: url(
+        '/companies',
+        '/:companyId/exportwins/:winId/customer-feedback'
+      ),
       editOfficerDetails: url(
         '/companies',
         '/:companyId/exportwins/:winId/edit?step=officer_details'

@@ -7,6 +7,7 @@ import {
 } from '../../../../functional/cypress/support/assertions'
 import CustomerFeedback from '../../../../../src/client/modules/ExportWins/CustomerFeedback'
 import { createTestProvider } from '../provider'
+import urls from '../../../../../src/lib/urls'
 
 const toYesNo = (x) => (x ? 'Yes' : 'No')
 
@@ -40,26 +41,42 @@ const dummyExportWin = (prefix, booleans) => ({
   },
 })
 
+const dummyCompany = () => ({
+  id: '123',
+})
+
 describe('ExportWins/CustomerFeedback', () => {
   ;[
-    { testTitle: 'All true', win: dummyExportWin('all-true', true) },
-    { testTitle: 'All false', win: dummyExportWin('all-false', false) },
-  ].forEach(({ testTitle, win }) => {
+    {
+      testTitle: 'All true',
+      win: dummyExportWin('all-true', true),
+      company: dummyCompany(),
+    },
+    {
+      testTitle: 'All false',
+      win: dummyExportWin('all-false', false),
+      company: dummyCompany(),
+    },
+  ].forEach(({ testTitle, win, company }) => {
     it(testTitle, () => {
       const Provider = createTestProvider({
         'Export Win': () => Promise.resolve(win),
+        Company: () => Promise.resolve(company),
         TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
       })
       cy.mount(
         <Provider>
-          <CustomerFeedback match={{ params: { winId: win.id } }} />
+          <CustomerFeedback
+            match={{ params: { companyId: company.id, winId: win.id } }}
+          />
         </Provider>
       )
 
       assertBreadcrumbs({
         Home: '/',
         'Export wins': '/exportwins',
-        [`${win.name_of_export} to ${win.country.name}`]: '/', // TODO: Link to the summary page
+        [`${win.name_of_export} to ${win.country.name}`]:
+          urls.companies.exportWins.editSummary(company.id, win.id),
         'Customer feedback': null,
       })
 
@@ -182,7 +199,11 @@ describe('ExportWins/CustomerFeedback', () => {
           'href',
           '/exportwins'
         )
-        cy.contains('a', 'Back').should('have.attr', 'href', '/') // TODO: Link to the summary page
+        cy.contains('a', 'Back').should(
+          'have.attr',
+          'href',
+          urls.companies.exportWins.editSummary(company.id, win.id)
+        )
       })
     })
   })
