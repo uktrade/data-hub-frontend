@@ -72,6 +72,11 @@ const FieldInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          onWheel={(event) => {
+            if (type === 'number') {
+              event.target.blur()
+            }
+          }}
           data-test={setDataTest(dataTest, name)}
           {...rest}
         />
