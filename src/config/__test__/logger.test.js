@@ -5,7 +5,7 @@ const config = require('../index')
 
 describe('Logger transport check', () => {
   let expectedInfo = {
-    EventMessage: 'Drum roll',
+    EventMessage: 'Drum roll for info',
     EventCount: 1,
     EventType: 'express.startup',
     EventResult: 'NA',
@@ -17,7 +17,7 @@ describe('Logger transport check', () => {
     AdditionalFields: { CustomASIMFormatter: true, TraceHeaders: {} },
   }
   let expectedError = {
-    EventMessage: 'Failed roll',
+    EventMessage: 'Failed roll error',
     EventCount: 1,
     EventType: 'express.request',
     EventResult: 'NA',
@@ -39,10 +39,10 @@ describe('Logger transport check', () => {
 
     it('Logger return ASIMFormat for production environment', () => {
       stdMocks.use()
-      this.logger.info('Drum roll', {
+      this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
-      this.logger.error('Failed roll', {
+      this.logger.error('Failed roll error', {
         eventType: this.logger.eventTypes.expressRequest,
       })
       stdMocks.restore()
@@ -65,18 +65,18 @@ describe('Logger transport check', () => {
     })
     it('Single this.logger transport for non production environment', () => {
       stdMocks.use()
-      this.logger.info('Drum roll info', {
+      this.logger.info('Drum roll for info', {
         eventType: this.logger.eventTypes.expressStartup,
       })
-      this.logger.error('Drum roll', {
+      this.logger.error('Failed roll error', {
         eventType: this.logger.eventTypes.expressRequest,
       })
       stdMocks.restore()
       const output = stdMocks.flush()
 
       expect(output.stdout).to.containSubset([
-        '\x1B[32minfo\x1B[39m: \x1B[32mDrum roll info\x1B[39m {"eventType":"express.startup"}\n',
-        '\x1B[31merror\x1B[39m: \x1B[31mDrum roll\x1B[39m {"eventType":"express.request"}\n',
+        '\x1B[32minfo\x1B[39m: \x1B[32mDrum roll for info\x1B[39m {"eventType":"express.startup"}\n',
+        '\x1B[31merror\x1B[39m: \x1B[31mFailed roll error\x1B[39m {"eventType":"express.request"}\n',
       ])
       const transports = this.logger.transports
       expect(transports).is.an('array')
