@@ -89,6 +89,7 @@ const PaginatedResource = multiInstance({
     onPageClick,
     currentPage,
     result,
+    shouldPluralize,
     noResults = "You don't have any results",
   }) => (
     <Route>
@@ -131,6 +132,7 @@ const PaginatedResource = multiInstance({
                       <CollectionHeader
                         totalItems={result.count}
                         collectionName={heading || name}
+                        shouldPluralize={shouldPluralize}
                       />
                       {totalPages > 0 && (
                         <StyledCollectionSort totalPages={totalPages} />

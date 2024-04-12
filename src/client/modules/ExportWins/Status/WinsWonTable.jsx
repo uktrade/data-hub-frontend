@@ -20,7 +20,7 @@ export const WinsWonTable = ({ exportWins }) => {
         <Table.Row>
           <Table.CellHeader>UK Company</Table.CellHeader>
           <Table.CellHeader>Destination</Table.CellHeader>
-          <Table.CellHeader>Export amount</Table.CellHeader>
+          <Table.CellHeader>Total value</Table.CellHeader>
           <Table.CellHeader>Date won</Table.CellHeader>
           <Table.CellHeader>Date responded</Table.CellHeader>
           <Table.CellHeader>Details</Table.CellHeader>
@@ -69,7 +69,8 @@ export const WinsWonTable = ({ exportWins }) => {
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-won"
-    heading="Export win"
+    heading="won"
+    shouldPluralize={false}
     noResults="You don't have any won export wins."
     payload={{ confirmed: WIN_STATUS.WON }}
   >
