@@ -126,7 +126,7 @@ const CollectionItem = ({
     )}
     {subheading ? (
       subheadingUrl ? (
-        <StyledSubheading fontSize={16}>
+        <StyledSubheading fontSize={19}>
           <Link href={subheadingUrl}>{subheading}</Link>
         </StyledSubheading>
       ) : (

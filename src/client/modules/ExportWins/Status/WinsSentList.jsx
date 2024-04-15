@@ -10,7 +10,8 @@ import urls from '../../../../lib/urls'
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-sent"
-    heading="Export win"
+    heading="sent"
+    shouldPluralize={false}
     noResults="You don't have any sent export wins."
     // We have to send null as a string otherwise
     // it's stripped out of the payload by Axois
@@ -29,7 +30,6 @@ export default () => (
               subheading={item.company.name}
               subheadingUrl={urls.companies.overview.index(item.company.id)}
               metadata={[
-                { label: 'Destination: ', value: item.country.name },
                 {
                   label: 'Contact name:',
                   // TODO: This needs to be a link, the MetadataItem
@@ -41,6 +41,10 @@ export default () => (
                   value: currencyGBP(item.total_expected_export_value),
                 },
                 { label: 'Date won: ', value: formatMediumDate(item.date) },
+                {
+                  label: 'Date modified: ',
+                  value: formatMediumDate(item.modified_on),
+                },
                 {
                   label: 'First sent: ',
                   value: formatMediumDateTime(item.first_sent),
