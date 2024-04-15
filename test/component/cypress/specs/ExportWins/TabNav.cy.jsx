@@ -23,6 +23,7 @@ describe('Export wins tab navigation', () => {
       cy.mount(<Component />)
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
+        'Export Wins': urls.companies.exportWins.index(),
         Rejected: null,
       })
     })
@@ -36,6 +37,7 @@ describe('Export wins tab navigation', () => {
       )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
+        'Export Wins': urls.companies.exportWins.index(),
         Sent: null,
       })
     })
@@ -49,6 +51,7 @@ describe('Export wins tab navigation', () => {
       )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
+        'Export Wins': urls.companies.exportWins.index(),
         Won: null,
       })
     })

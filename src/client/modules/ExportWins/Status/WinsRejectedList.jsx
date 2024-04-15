@@ -10,7 +10,8 @@ import urls from '../../../../lib/urls'
 export default () => (
   <ExportWinsResource.Paginated
     id="export-wins-rejected"
-    heading="Export win"
+    heading="rejected"
+    shouldPluralize={false}
     noResults="You don't have any rejected export wins."
     payload={{ confirmed: WIN_STATUS.REJECTED }}
   >
@@ -27,11 +28,10 @@ export default () => (
               subheading={item.company.name}
               subheadingUrl={urls.companies.overview.index(item.company.id)}
               metadata={[
-                { label: 'Destination:', value: item.country.name },
                 {
                   label: 'Contact name:',
                   // TODO: This needs to be a link, the MetadataItem
-                  // needs to take a JSX element as a paramter.
+                  // needs to take a JSX element as a parameter.
                   value: item.company_contacts[0].name,
                 },
                 {
