@@ -1,5 +1,4 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
 
 import {
   assertSummaryTableStrict,
@@ -108,7 +107,6 @@ const assertReviewForm = ({ agree }) => {
 
   cy.mount(
     <Provider>
-      <Redirect to="/exportwins/review/123" />
       <Review />
     </Provider>
   )
