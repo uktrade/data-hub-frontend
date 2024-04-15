@@ -3,9 +3,11 @@ import React from 'react'
 import { H2, H4 } from 'govuk-react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom'
+import { useParams, Routes, Route } from 'react-router-dom'
 
 import { GREY_2 } from '../../../utils/colours'
+
+import ThankYou from './ThankYou'
 
 import Layout from './Layout'
 import {
@@ -340,4 +342,9 @@ const Review = () => {
   )
 }
 
-export default Review
+export default () => (
+  <Routes>
+    <Route path="/exportwins/review/:token" element={<Review />} />
+    <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />
+  </Routes>
+)
