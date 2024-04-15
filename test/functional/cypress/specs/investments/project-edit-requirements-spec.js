@@ -11,6 +11,7 @@ const { investments } = require('../../../../../src/lib/urls')
 
 const projectNoExistingRequirements = require('../../fixtures/investment/investment-no-existing-requirements.json')
 const projectHasExistingRequirements = require('../../fixtures/investment/investment-has-existing-requirements.json')
+const ukRegions = require('../../../../sandbox/fixtures/metadata/uk-region.json')
 
 const navigateToForm = ({ project }, dataTest = 'edit') => {
   cy.visit(investments.projects.details(project.id))
@@ -105,6 +106,19 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
     })
   })
 
+  it('should only display active UK regions when the possible UK locations field is selected', () => {
+    const activeUkRegions = ukRegions.filter(
+      (region) => region.disabled_on === null
+    )
+    cy.get('[data-test="field-uk_region_locations"]').as('typeaheadField')
+    cy.get('@typeaheadField').find('input').first().click()
+    cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
+    cy.get('[data-test="typeahead-menu-option"]').should(
+      'have.length',
+      activeUkRegions.length
+    )
+  })
+
   it('should display the site decided field', () => {
     cy.get('[data-test="field-site_decided"]').then((element) => {
       assertFieldRadios({
@@ -159,20 +173,35 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
         cy.get('[data-test="field-address"]').should('not.exist')
       })
 
-  project.site_decided
-    ? it('should render the landed regions field', () => {
-        cy.get('[data-test="field-actual_uk_regions"]').then((element) => {
-          assertFieldTypeahead({
-            element,
-            label: 'UK regions landed',
-            placeholder: 'Select a UK region',
-            values: project.actual_uk_regions,
-          })
+  if (project.site_decided) {
+    it('should render the landed regions field', () => {
+      cy.get('[data-test="field-actual_uk_regions"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'UK regions landed',
+          placeholder: 'Select a UK region',
+          values: project.actual_uk_regions,
         })
       })
-    : it('should not display the landed regions field', () => {
-        cy.get('[data-test="field-actual_uk_regions"]').should('not.exist')
-      })
+    })
+
+    it('should only display active UK regions when the landed regions field is selected', () => {
+      const activeUkRegions = ukRegions.filter(
+        (region) => region.disabled_on === null
+      )
+      cy.get('[data-test="field-actual_uk_regions"]').as('typeaheadField')
+      cy.get('@typeaheadField').find('input').first().click()
+      cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
+      cy.get('[data-test="typeahead-menu-option"]').should(
+        'have.length',
+        activeUkRegions.length
+      )
+    })
+  } else {
+    it('should not display the landed regions field', () => {
+      cy.get('[data-test="field-actual_uk_regions"]').should('not.exist')
+    })
+  }
 
   it('should render the delivery partners field', () => {
     cy.get('[data-test="field-delivery_partners"]').then((element) => {
