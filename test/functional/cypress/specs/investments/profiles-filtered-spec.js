@@ -1,3 +1,6 @@
+import { testTypeaheadOptionsLength } from '../../support/tests'
+import { ukRegionListFaker } from '../../fakers/regions'
+
 const urls = require('../../../../../src/lib/urls')
 
 const expandToggleSections = () =>
@@ -341,5 +344,20 @@ describe('Investor profiles filters', () => {
         expectedNumberOfResults: 3,
       },
     ],
+  })
+
+  it('should display all UK regions (active & disabled) in the filter list', () => {
+    const element = '[data-test="uk-regions-of-interest"]'
+    const ukRegions = [
+      ...ukRegionListFaker(2),
+      ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
+    ]
+    cy.intercept('GET', urls.metadata.ukRegion(), ukRegions).as(
+      'ukRegionsApiRequest'
+    )
+    cy.visit(urls.investments.profiles.index())
+    cy.wait('@ukRegionsApiRequest')
+    cy.get('[data-test="toggle-section-button"]').contains('Location').click()
+    testTypeaheadOptionsLength({ element, length: ukRegions.length })
   })
 })

@@ -453,6 +453,26 @@ describe('Companies Collections Filter', () => {
       uk_region: [ukRegion.id],
     }
 
+    it('should display all UK regions (active & disabled) in the filter list', () => {
+      const ukRegionsIndependent = [
+        ...ukRegionListFaker(2),
+        ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
+      ]
+      const queryString = buildQueryString()
+      cy.intercept('GET', ukRegionsEndpoint, ukRegionsIndependent).as(
+        'ukRegionsIndependentApiRequest'
+      )
+      cy.visit(`/companies?${queryString}`)
+      cy.wait('@ukRegionsIndependentApiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Location details')
+        .click()
+      testTypeaheadOptionsLength({
+        element,
+        length: ukRegionsIndependent.length,
+      })
+    })
+
     it('should filter from the url', () => {
       const queryString = buildQueryString({
         uk_region: [ukRegion.id],

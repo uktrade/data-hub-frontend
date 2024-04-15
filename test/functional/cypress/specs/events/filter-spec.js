@@ -3,13 +3,29 @@ import qs from 'qs'
 import { randomChoice } from '../../fakers/utils'
 import { eventTypeFaker, eventTypeListFaker } from '../../fakers/event-types'
 import { events } from '../../../../../src/lib/urls'
-import { testTypeahead, testCheckBoxGroup } from '../../support/tests'
+import {
+  testTypeahead,
+  testTypeaheadOptionsLength,
+  testCheckBoxGroup,
+} from '../../support/tests'
+import { ukRegionListFaker } from '../../fakers/regions'
 
 const searchEndpoint = '/api-proxy/v3/search/event'
 const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
 const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
 const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
+
+const buildQueryString = (queryParams = {}) =>
+  qs.stringify({
+    // Default query params
+    archived: ['false'],
+    sortby: 'modified_on:desc',
+    page: 1,
+    ...queryParams,
+  })
+
 describe('events Collections Filter', () => {
   context('with the events activity stream feature flag enabled', () => {
     beforeEach(() => {
@@ -249,6 +265,23 @@ describe('events Collections Filter', () => {
         'uk_region%5B0%5D=1718e330-6095-e211-a939-e4115bead28a'
       const ukRegion = '1718e330-6095-e211-a939-e4115bead28a'
       const ukRegionLabel = 'All'
+
+      it('should display all UK regions (active & disabled) in the filter list', () => {
+        const ukRegions = [
+          ...ukRegionListFaker(2),
+          ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
+        ]
+        const queryString = buildQueryString()
+        cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+          'ukRegionsApiRequest'
+        )
+        cy.visit(`/events?${queryString}`)
+        cy.wait('@ukRegionsApiRequest')
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Location')
+          .click()
+        testTypeaheadOptionsLength({ element, length: ukRegions.length })
+      })
 
       beforeEach(() => {
         cy.intercept(
