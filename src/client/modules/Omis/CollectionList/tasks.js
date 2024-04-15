@@ -95,7 +95,7 @@ export const getOrdersMetadata = () =>
       },
     }),
     getMetadataOptions(metadata.omisMarket()),
-    getMetadataOptions(metadata.ukRegion()),
+    getMetadataOptions(metadata.ukRegion(), { filterDisabled: false }),
   ])
     .then(([sectorOptions, omisMarketOptions, ukRegionOptions]) => ({
       sectorOptions,
