@@ -126,8 +126,8 @@ describe('Company Export tab', () => {
           )
       })
 
-      it('should render the "What is an Export Win" details', () => {
-        cy.contains('What is an Export Win')
+      it('should render the "What is an export win" details', () => {
+        cy.contains('What is an export win')
         cy.contains(
           'Export wins capture the export deals that Department for Business and Trade (DBT)'
         )
