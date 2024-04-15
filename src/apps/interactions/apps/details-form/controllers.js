@@ -44,7 +44,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           href: urls.companies.detail(company.id),
         },
         {
-          text: `${interaction ? 'Edit' : 'Add'} interaction`,
+          text: `${interaction ? 'Edit' : 'Add*****'} interaction`,
         },
       ])
       .render('interactions/apps/details-form/views/interaction-details-form', {

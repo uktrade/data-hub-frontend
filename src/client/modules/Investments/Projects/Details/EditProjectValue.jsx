@@ -29,6 +29,7 @@ import { currencyGBP } from '../../../../utils/number-utils'
 import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
+import { isPositiveInteger } from './validators'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
@@ -137,6 +138,11 @@ const EditProjectValue = () => {
                 name="number_new_jobs"
                 type="number"
                 initialValue={project.numberNewJobs?.toString()}
+                validate={(value) => {
+                  if (!isPositiveInteger(value)) {
+                    return 'Number of new jobs must be a positive integer or 0'
+                  }
+                }}
               />
               <ResourceOptionsField
                 name="average_salary"
@@ -160,6 +166,11 @@ const EditProjectValue = () => {
                 name="number_safeguarded_jobs"
                 type="number"
                 initialValue={project.numberSafeguardedJobs?.toString()}
+                validate={(value) => {
+                  if (!isPositiveInteger(value)) {
+                    return 'Number of safeguarded jobs must be a positive integer or 0'
+                  }
+                }}
               />
               {showFDIValueField(project) &&
                 project.investmentType.name === 'FDI' && (
