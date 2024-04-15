@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 import { createReduxHistoryContext } from 'redux-first-history'
 import queryString from 'qs'
-import { MemoryRouter, Router } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
@@ -58,40 +58,8 @@ const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
 
 const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
   location,
-  action,
+  navigationType: action,
 }))(Router)
-
-export const createProvider = ({ tasks, history, preloadedState }) => {
-  const { createReduxHistory, routerMiddleware, routerReducer } =
-    createReduxHistoryContext({
-      history: history,
-    })
-  const sagaMiddleware = createSagaMiddleware()
-  const store = configureStore({
-    devTools: process.env.NODE_ENV === 'development',
-    middleware: () => [sagaMiddleware, routerMiddleware],
-    preloadedState,
-    reducer: {
-      // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
-      ..._.mapValues(
-        preloadedState,
-        () =>
-          (state = null) =>
-            state
-      ),
-      ...reducers,
-      router: routerReducer,
-    },
-  })
-
-  sagaMiddleware.run(rootSaga(tasks))
-  const hist = createReduxHistory(store)
-  return ({ children }) => (
-    <Provider store={store}>
-      <MemoryRouter history={hist}>{children}</MemoryRouter>
-    </Provider>
-  )
-}
 
 // TODO: Re-implement this in with createProvider
 /**

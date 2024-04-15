@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { BrowserRouter, MemoryRouter, useNavigate } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { combineReducers, applyMiddleware, legacy_createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
@@ -9,17 +9,44 @@ import { createMemoryHistory } from 'history'
 import rootSaga from '../../../../src/client/root-saga'
 import { reducers } from '../../../../src/client/reducers'
 import { tasks as appTasks } from '../../../../src/client/tasks'
-import { createProvider } from '../../../../src/client/provider'
+import { createProvider } from '../../../../src/client/createProvider'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const history = createMemoryHistory()
 
-export const createTestProvider = (tasks) =>
-  createProvider({
+/**
+ * Creates a DataHub context provider for testing purposes configured
+ * to use memory history.
+ * @param {Object} options
+ * @param {Record<string, Task>} options.tasks - Tasks required by the
+ * components wrapped with the provider
+ * @param {string} [options.initialPath] - If defined, the provider will
+ * navigate to the path specified when mounted.
+ * @returns {({children: JSX.Element}) => JSX.Element} - The context provider
+ * component.
+ */
+export const createTestProvider = ({ tasks, initialPath }) => {
+  const Provider = createProvider({
     tasks,
     history,
   })
+
+  const NavigateToInitialPath = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+      navigate(initialPath)
+    }, [])
+    return null
+  }
+
+  return ({ children }) => (
+    <Provider>
+      {initialPath && <NavigateToInitialPath />}
+      {children}
+    </Provider>
+  )
+}
 
 const reducer = (state, action) =>
   combineReducers({

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
 
 import {
   assertSummaryTableStrict,
@@ -74,15 +73,17 @@ describe('ExportWins/Review', () => {
   context('If there is a problem loading the review', () => {
     it("should render not found view if token is expired or doesn't exist", () => {
       const Provider = createTestProvider({
-        'Export Win Review': () =>
-          Promise.reject({
-            httpStatusCode: 404,
-          }),
+        initialPath: '/exportwins/review/123',
+        tasks: {
+          'Export Win Review': () =>
+            Promise.reject({
+              httpStatusCode: 404,
+            }),
+        },
       })
 
       cy.mount(
         <Provider>
-          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
@@ -100,11 +101,13 @@ describe('ExportWins/Review', () => {
 
     it("should render default error view if the review couldn't be loaded for", () => {
       const Provider = createTestProvider({
-        'Export Win Review': () => Promise.reject({}),
+        initialPath: '/exportwins/review/123',
+        tasks: {
+          'Export Win Review': () => Promise.reject({}),
+        },
       })
       cy.mount(
         <Provider>
-          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
@@ -157,17 +160,19 @@ describe('ExportWins/Review', () => {
       ]
 
       const Provider = createTestProvider({
-        'Export Win Review': () => Promise.resolve(REVIEW),
-        WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
-        Rating: () => Promise.resolve(RATING),
-        Experience: () => Promise.resolve(EXPERIENCE),
-        MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
-        TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+        initialPath: '/exportwins/review/123',
+        tasks: {
+          'Export Win Review': () => Promise.resolve(REVIEW),
+          WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
+          Rating: () => Promise.resolve(RATING),
+          Experience: () => Promise.resolve(EXPERIENCE),
+          MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
+          TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+        },
       })
 
       cy.mount(
         <Provider>
-          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
@@ -392,12 +397,14 @@ describe('ExportWins/Review', () => {
 
     it('User disagrees with win', () => {
       const Provider = createTestProvider({
-        'Export Win Review': () => Promise.resolve(REVIEW),
-        TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+        initialPath: '/exportwins/review/123',
+        tasks: {
+          'Export Win Review': () => Promise.resolve(REVIEW),
+          TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+        },
       })
       cy.mount(
         <Provider>
-          <Navigate to="/exportwins/review/123" />
           <Review />
         </Provider>
       )
