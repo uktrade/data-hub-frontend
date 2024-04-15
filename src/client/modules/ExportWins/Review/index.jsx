@@ -1,12 +1,14 @@
 import _ from 'lodash'
 import React from 'react'
 import { H2, H4 } from 'govuk-react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import { useParams, Routes, Route } from 'react-router-dom'
 
 import HR from '../../../components/HR'
+
+import ThankYou from './ThankYou'
 
 import Layout from './Layout'
 import {
@@ -397,19 +399,12 @@ const Review = () => {
 }
 
 export default () => (
-  <Switch>
+  <Routes>
     <Route
-      exact={true}
       path="/exportwins/review/accesibility-statement"
-      component={AccesibilityStatement}
+      element={<AccesibilityStatement />}
     />
-    <Route exact={true} path="/exportwins/review/:token">
-      {({ match }) => <Review token={match.params.token} />}
-    </Route>
-    <Route
-      exact={true}
-      path="/exportwins/review-win/thankyou"
-      component={ThankYou}
-    />
-  </Switch>
+    <Route path="/exportwins/review/:token" element={<Review />} />
+    <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />
+  </Routes>
 )
