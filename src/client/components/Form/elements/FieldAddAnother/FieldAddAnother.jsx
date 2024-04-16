@@ -21,12 +21,11 @@ const StyledChildren = styled('div')`
 `
 
 const StyledGroup = styled('div')`
-  padding-left: ${SPACING.SCALE_2};
   padding-bottom: ${SPACING.SCALE_3};
 `
 
-const StyledButton = styled('div')`
-  padding-left: ${SPACING.SCALE_2};
+const SecondaryButtonContainer = styled('div')`
+  margin-top: ${SPACING.SCALE_4};
 `
 
 const StyledLink = styled('div')`
@@ -89,7 +88,7 @@ const FieldAddAnother = ({
           </StyledGroup>
         ))}
         {fieldGroupIds.length < limitChildGroupCount && (
-          <StyledButton>
+          <SecondaryButtonContainer>
             <SecondaryButton
               data-test="add-another"
               onClick={addAnotherHandler}
@@ -100,7 +99,7 @@ const FieldAddAnother = ({
             >
               {buttonText ? buttonText : `Add another ${itemName}`}
             </SecondaryButton>
-          </StyledButton>
+          </SecondaryButtonContainer>
         )}
       </FieldWrapper>
     </>
