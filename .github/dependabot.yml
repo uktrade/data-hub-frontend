@@ -25,6 +25,9 @@ updates:
   - dependency-name: webpack-dev-server # Waiting for Cypress to add support
     versions:
       - "> 4.15.1"
+  - dependency-name: eslint # Waiting for related dependencies to add support
+    versions:
+      - "> 8.57.0"
 
   # These are part of dependency groups and should be updated via the relevant script.
   - dependency-name: "@storybook/addon-a11y"
