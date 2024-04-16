@@ -165,7 +165,7 @@ const ExportsIndex = () => {
             >
               Add export win
             </Button>
-            <Details summary="What is an Export Win">
+            <Details summary="What is an export win">
               <p>
                 Export wins capture the export deals that Department for
                 Business and Trade (DBT) support and quantify their expected
