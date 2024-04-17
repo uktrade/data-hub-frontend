@@ -21,6 +21,7 @@ const nunjucks = require('./config/nunjucks')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
 const userLocals = require('./middleware/user-locals')
+const metadata = require('./lib/metadata')
 const user = require('./middleware/user')
 const auth = require('./middleware/auth')
 const store = require('./middleware/store')
@@ -158,6 +159,16 @@ app.use(errors.notFound)
 app.use(errors.badRequest)
 app.use(errors.catchAll)
 
-app.listen(config.port, () => {
-  logger.info(`app listening on port ${config.port}`)
+metadata.fetchAll((errors) => {
+  if (errors) {
+    logger.error('Unable to load all metadataRepository, cannot start app')
+
+    for (const err of errors) {
+      throw err
+    }
+  } else {
+    app.listen(config.port, () => {
+      logger.info(`app listening on port ${config.port}`)
+    })
+  }
 })
