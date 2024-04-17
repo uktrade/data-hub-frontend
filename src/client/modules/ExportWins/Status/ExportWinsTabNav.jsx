@@ -17,7 +17,7 @@ const ExportWinsTabNav = ({ location }) => {
       heading="Export wins"
       pageTitle={`Export wins ${title}`}
       breadcrumbs={[
-        { link: urls.dashboard.index(), text: 'Homes' },
+        { link: urls.dashboard.index(), text: 'Home' },
         {
           link: urls.companies.exportWins.index(),
           text: 'Export Wins',
