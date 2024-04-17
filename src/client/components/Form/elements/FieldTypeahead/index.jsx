@@ -40,6 +40,7 @@ const FieldTypeahead = ({
   initialValue,
   options,
   autoScroll,
+  className,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -52,7 +53,9 @@ const FieldTypeahead = ({
   const { setFieldValue } = useFormContext()
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error, autoScroll }}>
+    <FieldWrapper
+      {...{ name, label, legend, hint, error, autoScroll, className }}
+    >
       <StyledWrapper error={error}>
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
