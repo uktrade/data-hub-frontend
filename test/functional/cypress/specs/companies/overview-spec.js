@@ -4,6 +4,7 @@ import {
   companyGlobalUltimateAllDetails,
   companyNoDetails,
 } from '../../fakers/companies'
+import { getCollectionList } from '../../support/collection-list-assertions'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
@@ -239,12 +240,14 @@ describe('Company overview page', () => {
       })
       it('Inactive projects should not include an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
         cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')
       })
       it('UK based Active projects should not have an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
-        cy.get('add-collection-item-button').should('not.exist')
+        getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
+        cy.get('[data-test="add-collection-item-button"]').should('not.exist')
         cy.go('back')
       })
     }
