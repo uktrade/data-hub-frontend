@@ -27,7 +27,11 @@ const StyledFieldRadios = styled(FieldRadios)({
   marginBottom: ({ marginBottom }) => marginBottom,
 })
 
-const Container = styled('div')({
+const FieldTypeaheadMarginTop = styled(HQTeamRegionOrPost.FieldTypeahead)({
+  marginTop: 25,
+})
+
+const GroupContainer = styled('div')({
   marginTop: 25,
 })
 
@@ -67,7 +71,7 @@ const CreditForThisWinStep = () => {
             initialChildGroupCount={officerCount || 1}
           >
             {({ groupIndex }) => (
-              <Container>
+              <GroupContainer>
                 <FieldAdvisersTypeahead
                   name={`contributing_officer_${groupIndex}`}
                   label="Contributing officer"
@@ -87,21 +91,19 @@ const CreditForThisWinStep = () => {
                   // want the previous selection displayed after they've changed the team type.
                   // To ensure this happens we've added a key prop and set it to the team type
                   // id, when the id changes the component updates.
-                  <Container>
-                    <HQTeamRegionOrPost.FieldTypeahead
-                      key={values[`team_type_${groupIndex}`].value}
-                      name={`hq_team_${groupIndex}`}
-                      id={`contributors-${groupIndex}`}
-                      fullWidth={true}
-                      label="HQ team, region or post"
-                      required="Enter a HQ team, region or post"
-                      payload={{
-                        team_type: values[`team_type_${groupIndex}`].value,
-                      }}
-                    />
-                  </Container>
+                  <FieldTypeaheadMarginTop
+                    key={values[`team_type_${groupIndex}`].value}
+                    name={`hq_team_${groupIndex}`}
+                    id={`contributors-${groupIndex}`}
+                    fullWidth={true}
+                    label="HQ team, region or post"
+                    required="Enter a HQ team, region or post"
+                    payload={{
+                      team_type: values[`team_type_${groupIndex}`].value,
+                    }}
+                  />
                 )}
-              </Container>
+              </GroupContainer>
             )}
           </FieldAddAnother>
         </FieldAddAnotherContainer>
