@@ -1,9 +1,8 @@
-const { merge, cloneDeep } = require('lodash')
+const { merge } = require('lodash')
 const proxyquire = require('proxyquire')
 
 const paths = require('../../paths')
 const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
-const investmentProjectStages = require('../../../../../test/unit/data/investment/investment-project-stages.json')
 
 const companyData = {
   id: '6c388e5b-a098-e211-a939-e4115bead28a',
@@ -66,12 +65,7 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
   })
 }
 
-const createMiddleware = (
-  investmentData,
-  adviserData,
-  companyData,
-  stages = investmentProjectStages
-) => {
+const createMiddleware = (investmentData, adviserData, companyData) => {
   return proxyquire('../shared', {
     '../repos': {
       getInvestment: sinon.stub().resolves(investmentData),
@@ -81,9 +75,6 @@ const createMiddleware = (
     },
     '../../companies/repos': {
       getDitCompany: sinon.stub().resolves(companyData),
-    },
-    '../../../lib/metadata': {
-      investmentProjectStage: stages,
     },
   })
 }
@@ -154,15 +145,6 @@ describe('Investment shared middleware', () => {
         expect(resMock.locals.equityCompany).to.deep.equal(
           expectedEquityCompany
         )
-      })
-      it('should set investment project stages on locals', () => {
-        expect(resMock.locals.investmentProjectStages).to.deep.equal([
-          'Prospect',
-          'Assign PM',
-          'Active',
-          'Verify win',
-          'Won',
-        ])
       })
       it('should set investment status on locals', () => {
         expect(resMock.locals.investmentStatus).to.deep.equal(investmentStatus)
@@ -308,42 +290,5 @@ describe('Investment shared middleware', () => {
         expect(nextSpy).to.have.been.called
       })
     })
-
-    context(
-      'when the streamlined-investment-flow feature flag is set to true',
-      () => {
-        before(async () => {
-          const stages = cloneDeep(investmentProjectStages)
-
-          // Exclude the Assign PM stage.
-          stages[1].exclude_from_investment_flow = true
-
-          resMock = {
-            breadcrumb: sinon.stub().returnsThis(),
-            locals: {
-              features: {
-                'streamlined-investment-flow': true,
-              },
-            },
-          }
-          const middleware = createMiddleware(
-            getInvestmentData(2, null),
-            adviserData,
-            companyData,
-            stages
-          )
-
-          await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
-        })
-        it('should remove the Assign PM stage from the investmentProjectStages array on locals', () => {
-          expect(resMock.locals.investmentProjectStages).to.deep.equal([
-            'Prospect',
-            'Active',
-            'Verify win',
-            'Won',
-          ])
-        })
-      }
-    )
   })
 })

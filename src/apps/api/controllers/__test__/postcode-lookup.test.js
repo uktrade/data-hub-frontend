@@ -15,23 +15,6 @@ describe('postcodeLookupHandler', () => {
       '../services': {
         lookupAddress: (postcode) => this.lookupAddressStub(postcode),
       },
-      '../../../lib/metadata': {
-        countryOptions: [
-          {
-            id: '1234',
-            name: 'United Kingdom',
-          },
-        ],
-      },
-    })
-  })
-
-  context('when the external api service returns successful response', () => {
-    beforeEach(async () => {
-      await this.controller.postcodeLookupHandler(this.req, this.resMock)
-    })
-    it('should return postcode response', () => {
-      expect(this.resMock.json).to.be.calledWith([{ country: '1234' }])
     })
   })
 
