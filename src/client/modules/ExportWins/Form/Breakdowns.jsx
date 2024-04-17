@@ -8,6 +8,7 @@ import { LIGHT_GREY } from '../../../utils/colours'
 import { FieldCurrency } from '../../../components'
 import { StyledHintParagraph } from './styled'
 import { isPositiveInteger } from './validators'
+import { winTypes } from './constants'
 import {
   formatValue,
   getYearFromWinType,
@@ -15,7 +16,10 @@ import {
 } from './utils'
 
 const WinTypeContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
   marginLeft: 56,
+  marginBottom: ({ name }) => (name === winTypes.ODI ? 0 : '40px'),
 })
 
 const FieldCurrencyContainer = styled('div')({
@@ -27,7 +31,7 @@ const StyledLabel = styled(Label)({
   fontWeight: 'bold',
 })
 
-const StyledParagraph = styled('p')({
+const StyledSpan = styled('span')({
   padding: 10,
   fontWeight: 'bold',
   backgroundColor: LIGHT_GREY,
@@ -45,7 +49,7 @@ const allWinTypeYearlyValuesAreEmpty = (field, values) => {
 export const Breakdowns = ({ label, name, years = 5, values }) => {
   const year = getYearFromWinType(name, values)
   return (
-    <WinTypeContainer data-test={`breakdowns-${name}`}>
+    <WinTypeContainer data-test={`breakdowns-${name}`} name={name}>
       <StyledLabel data-test="label">{label}</StyledLabel>
       <StyledHintParagraph data-test="hint">
         (round to nearest £)
@@ -74,10 +78,10 @@ export const Breakdowns = ({ label, name, years = 5, values }) => {
           />
         ))}
       </FieldCurrencyContainer>
-      <StyledParagraph data-test="total">
+      <StyledSpan data-test="total" name={name}>
         Totalling over {year} {pluralize('year', year)}:{' '}
         {formatValue(sumWinTypeYearlyValues(name, values))}
-      </StyledParagraph>
+      </StyledSpan>
     </WinTypeContainer>
   )
 }
