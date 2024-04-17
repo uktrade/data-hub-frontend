@@ -519,7 +519,8 @@ export const tasks = {
   [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
   [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]: getAdviserNames,
-  [TASK_GET_INVESTMENTS_PROJECTS_METADATA]: investmentProjectTasks.getMetadata,
+  [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
+    investmentProjectTasks.getProjectMetadata,
   [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
   [TASK_SAVE_CLIENT_RELATIONSHIP_MANAGER]:
     investmentProjectTasks.updateInvestmentProject,

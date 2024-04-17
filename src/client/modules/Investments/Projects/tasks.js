@@ -1,6 +1,7 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
 import { transformLandDateFilters } from './landDateTransformer'
+import { metadata } from '../../../../lib/urls'
 
 export const updateInvestmentProject = (values) =>
   apiProxyAxios.patch(`v3/investment/${values.id}`, values)
@@ -26,34 +27,37 @@ export const getProjects = ({ limit = 10, page, companyId, ...rest }) => {
     }))
 }
 
-/**
- * Get the options for each of the given metadata urls.
- *
- * Waits until all urls have been fetched before generating a result.
- *
- * @param {object} metadataUrls - a lookup of category names to the api url
- *
- * @returns {promise} - the promise containing a list of options for each category
- */
-export const getMetadata = (metadataUrls) => {
-  const optionCategories = Object.keys(metadataUrls)
-  return Promise.all(
-    optionCategories.map((name) =>
-      name == 'sectorOptions'
-        ? getMetadataOptions(metadataUrls[name], {
-            params: {
-              level__lte: '0',
-            },
-          })
-        : getMetadataOptions(metadataUrls[name])
-    ),
-    handleError
-  ).then((results) =>
-    Object.fromEntries(
-      results.map((options, index) => [optionCategories[index], options])
+export const getProjectMetadata = () =>
+  Promise.all([
+    getMetadataOptions(metadata.country()),
+    getMetadataOptions(metadata.investmentType()),
+    getMetadataOptions(metadata.likelihoodToLand()),
+    getMetadataOptions(metadata.investmentProjectStage()),
+    getMetadataOptions(metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
+    getMetadataOptions(metadata.ukRegion(), { filterDisabled: false }),
+  ])
+    .then(
+      ([
+        countryOptions,
+        investmentTypeOptions,
+        likelihoodToLandOptions,
+        projectStageOptions,
+        sectorOptions,
+        ukRegionOptions,
+      ]) => ({
+        countryOptions,
+        investmentTypeOptions,
+        likelihoodToLandOptions,
+        projectStageOptions,
+        sectorOptions,
+        ukRegionOptions,
+      })
     )
-  )
-}
+    .catch(handleError)
 
 export const getInvestmentProject = (id) =>
   apiProxyAxios.get(`v3/investment/${id}`).then(({ data }) => data)

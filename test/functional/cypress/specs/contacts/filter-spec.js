@@ -12,8 +12,10 @@ import {
 } from '../../support/assertions'
 
 import { contactsListFaker } from '../../fakers/contacts'
+import { ukRegionListFaker } from '../../fakers/regions'
 
 const searchEndpoint = '/api-proxy/v3/search/contact'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -307,6 +309,23 @@ describe('Contacts Collections Filter', () => {
       archived: false,
       sortby: 'modified_on:desc',
     }
+
+    it('should display all UK regions (active & disabled) in the filter list', () => {
+      const ukRegions = [
+        ...ukRegionListFaker(2),
+        ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
+      ]
+      const queryString = buildQueryString()
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
+      cy.visit(`/contacts?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
+      cy.get('[data-test="toggle-section-button"]')
+        .contains('Contact location details')
+        .click()
+      testTypeaheadOptionsLength({ element, length: ukRegions.length })
+    })
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
