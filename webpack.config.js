@@ -1,11 +1,35 @@
 const path = require('path')
+const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const config = require('./src/config')
 
-module.exports = () => ({
+/**
+ * A webpack plugin that starts a node.js server after the assets are compiled.
+ * This is a required step, because the node server is parsing manifest.json
+ * when booting up.
+ */
+const StartServerAfterBuild = () => {
+  let server = false
+  return {
+    apply: (compiler) => {
+      compiler.hooks.done.tap('StartServerAfterBuild', () => {
+        if (server) {
+          server.stdin.write('rs\n')
+        } else {
+          server = spawn(
+            "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
+            { stdio: ['pipe', 'inherit', 'inherit'], shell: true }
+          )
+        }
+      })
+    },
+  }
+}
+
+module.exports = (env) => ({
   devtool: config.isProd ? false : 'source-map',
   mode: config.isProd ? 'production' : 'development',
   entry: {
@@ -64,6 +88,7 @@ module.exports = () => ({
         },
       },
     }),
+    env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
   resolve: {
     modules: [
