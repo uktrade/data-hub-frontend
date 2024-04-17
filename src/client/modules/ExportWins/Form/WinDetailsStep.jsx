@@ -44,6 +44,11 @@ const StyledExportTotal = styled('p')({
   backgroundColor: BLACK,
 })
 
+const StyledSectorFieldTypeahead = styled(Sector.FieldTypeahead)({
+  marginBottom: 0,
+  paddingBottom: 0,
+})
+
 const FOSSIL_FUEL_EMAIL = 'fossilfuelenquiries@trade.gov.uk'
 
 const WinDetailsStep = ({ isEditing }) => {
@@ -231,7 +236,7 @@ const WinDetailsStep = ({ isEditing }) => {
         validate={validateTextField('Name of goods or services')}
       />
 
-      <Sector.FieldTypeahead
+      <StyledSectorFieldTypeahead
         id="sector"
         name="sector"
         label="Sector"
