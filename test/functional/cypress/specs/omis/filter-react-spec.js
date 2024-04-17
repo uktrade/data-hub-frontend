@@ -17,7 +17,8 @@ import {
   assertQueryParams,
   assertCheckboxGroupOption,
 } from '../../support/assertions'
-import { testTypeahead } from '../../support/tests'
+import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
+import { ukRegionListFaker } from '../../fakers/regions'
 import { randomChoice } from '../../fakers/utils'
 
 const buildQueryString = (queryParams = {}) =>
@@ -62,6 +63,7 @@ const statuses = [
 ]
 
 const searchEndpoint = '/api-proxy/v3/search/order'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
 
 describe('Orders Collections Filter', () => {
   context('Default Params', () => {
@@ -508,6 +510,20 @@ describe('Orders Collections Filter', () => {
       ...minimumPayload,
       uk_region: [londonId],
     }
+
+    it('should display all UK regions (active & disabled) in the filter list', () => {
+      const ukRegions = [
+        ...ukRegionListFaker(2),
+        ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
+      ]
+      const queryString = buildQueryString()
+      cy.intercept('GET', ukRegionsEndpoint, ukRegions).as(
+        'ukRegionsApiRequest'
+      )
+      cy.visit(`/omis?${queryString}`)
+      cy.wait('@ukRegionsApiRequest')
+      testTypeaheadOptionsLength({ element, length: ukRegions.length })
+    })
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
