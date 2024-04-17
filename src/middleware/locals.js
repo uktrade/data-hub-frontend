@@ -1,15 +1,6 @@
 const { map } = require('lodash')
 
-const logger = require('../config/logger')
 const config = require('../config')
-
-let webpackManifest = {}
-
-try {
-  webpackManifest = require(`${config.buildDir}/assets-manifest.json`)
-} catch (err) {
-  logger.error('Manifest file is not found. Ensure assets are built.')
-}
 
 module.exports = function locals(req, res, next) {
   const baseUrl = `${req.encrypted ? 'https' : req.protocol}://${req.get(
@@ -54,16 +45,6 @@ module.exports = function locals(req, res, next) {
           href: i === breadcrumbs.length - 1 ? null : href,
         }
       })
-    },
-
-    getAssetPath(asset) {
-      const webpackAssetPath = webpackManifest[asset]
-
-      if (webpackAssetPath) {
-        return `${baseUrl}/${webpackAssetPath}`
-      }
-
-      return `${baseUrl}/${asset}`
     },
 
     getLocal(key) {
