@@ -38,8 +38,9 @@ const StyledDetails = styled(Details)({
 })
 
 const StyledExportTotal = styled('p')({
-  padding: 10,
   color: WHITE,
+  padding: 10,
+  marginBottom: 30,
   backgroundColor: BLACK,
 })
 
