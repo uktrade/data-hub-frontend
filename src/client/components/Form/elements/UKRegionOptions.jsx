@@ -5,10 +5,8 @@ import FieldTypeahead from './FieldTypeahead'
 import ResourceOptionsField from './ResourceOptionsField'
 import { idNamesToValueLabels } from '../../../utils'
 
-const filterActiveRegions = (regions) => {
-  const activeRegions = regions.filter((region) => region.disabledOn === null)
-  return idNamesToValueLabels(activeRegions)
-}
+const filterActiveRegions = (regions) =>
+  idNamesToValueLabels(regions.filter((region) => !region.disabledOn))
 
 const UKRegionOptions = (props) => (
   <ResourceOptionsField

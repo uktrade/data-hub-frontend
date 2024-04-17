@@ -107,9 +107,7 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
   })
 
   it('should only display active UK regions when the possible UK locations field is selected', () => {
-    const activeUkRegions = ukRegions.filter(
-      (region) => region.disabled_on === null
-    )
+    const activeUkRegions = ukRegions.filter((region) => !region.disabled_on)
     cy.get('[data-test="field-uk_region_locations"]').as('typeaheadField')
     cy.get('@typeaheadField').find('input').first().click()
     cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
@@ -186,9 +184,7 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
     })
 
     it('should only display active UK regions when the landed regions field is selected', () => {
-      const activeUkRegions = ukRegions.filter(
-        (region) => region.disabled_on === null
-      )
+      const activeUkRegions = ukRegions.filter((region) => !region.disabled_on)
       cy.get('[data-test="field-actual_uk_regions"]').as('typeaheadField')
       cy.get('@typeaheadField').find('input').first().click()
       cy.get('[data-test="typeahead-menu-option"]').should('be.visible')
