@@ -4,6 +4,7 @@ import qs from 'qs'
 import PropTypes from 'prop-types'
 import { isArray } from 'lodash'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import DownloadDataHeader from '../DownloadDataHeader'
 
 const isBool = (value) => ['true', 'false'].includes(value)
@@ -30,7 +31,7 @@ const getQueryStringFromQueryParams = (params) => {
 }
 
 const getDownloadLinkFromLocation = (location, baseDownloadLink) => {
-  const { page, ...queryParams } = qs.parse(location.search.slice(1))
+  const { page, ...queryParams } = getQueryParamsFromLocation(location)
   const queryString = getQueryStringFromQueryParams(queryParams)
   return queryString ? `${baseDownloadLink}?${queryString}` : baseDownloadLink
 }

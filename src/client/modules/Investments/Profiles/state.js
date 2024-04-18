@@ -1,5 +1,6 @@
-import qs from 'qs'
 import { omit } from 'lodash'
+
+import { getQueryParamsFromLocation } from '../../../utils/url'
 
 export const TASK_GET_PROFILES_LIST = 'TASK_GET_PROFILES_LIST'
 
@@ -26,5 +27,5 @@ const collectionListPayload = ({
 
 export const state2props = ({ router, ...state }) => ({
   ...state[ID],
-  payload: collectionListPayload(qs.parse(router.location.search.slice(1))),
+  payload: collectionListPayload(getQueryParamsFromLocation(router.location)),
 })

@@ -5,6 +5,7 @@ import qs from 'qs'
 
 import styled from 'styled-components'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import multiInstance from '../../utils/multiinstance'
 import Task from '../Task'
 import LoadingBox from '../Task/LoadingBox'
@@ -94,7 +95,7 @@ const PaginatedResource = multiInstance({
   }) => (
     <Route>
       {({ location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
+        const qsParams = getQueryParamsFromLocation(location)
         const routePage = parseInt(qsParams.page, 10) || 1
         const totalPages = result ? Math.ceil(result.count / pageSize) : 0
         const hasZeroResults = result?.count === 0

@@ -6,6 +6,7 @@ import qs from 'qs'
 import { get } from 'lodash'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import { CollectionList } from '../../../components'
 import { PropositionCollectionResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
@@ -87,8 +88,7 @@ const ProjectPropositions = ({
   completeStatus,
 }) => {
   const history = useHistory()
-  const location = useLocation()
-  const parsedQueryString = qs.parse(location.search.slice(1))
+  const parsedQueryString = getQueryParamsFromLocation(useLocation)
   const activePage = parseInt(parsedQueryString.page, 10) || 1
 
   const { projectId } = useParams()

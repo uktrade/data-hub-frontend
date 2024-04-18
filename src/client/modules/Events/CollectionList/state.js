@@ -1,6 +1,6 @@
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
-import { parseQueryString } from '../../../utils'
+import { locationToQSParamsWithPage } from '../../../utils/url'
 
 export const TASK_GET_EVENTS_LIST = 'TASK_GET_EVENTS_LIST'
 export const TASK_GET_EVENTS_METADATA = 'TASK_GET_EVENTS_METADATA'
@@ -14,8 +14,7 @@ export const ID = 'eventsList'
  * Convert both location and redux state to props
  */
 export const state2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
 
   const { metadata, selectedOrganisers } = state[ID]
 

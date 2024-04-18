@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { FONT_WEIGHTS, LINE_HEIGHT } from '@govuk-react/constants'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 import Typeahead from '../Typeahead'
 
@@ -40,38 +41,35 @@ const RoutedTypeahead = ({
   ...props
 }) => (
   <Route>
-    {({ history, location }) => {
-      const qsParams = qs.parse(location.search.slice(1))
-      return (
-        <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
-          <Typeahead
-            name={name}
-            aria-label={label ? label : name}
-            placeholder={placeholder}
-            initialOptions={options}
-            closeMenuOnSelect={closeMenuOnSelect}
-            isMulti={isMulti}
-            value={selectedOptions.map(({ value, label }) => ({
-              value,
-              label,
-            }))}
-            loadOptions={loadOptions}
-            noOptionsMessage={noOptionsMessage}
-            onChange={(pickedOptions) => {
-              history.push({
-                search: qs.stringify({
-                  ...qsParams,
-                  ...(!labelAsQueryParam
-                    ? getParamIds(qsParam, pickedOptions)
-                    : getParamLabels(qsParam, pickedOptions)),
-                  page: 1,
-                }),
-              })
-            }}
-          />
-        </StyledFieldWrapper>
-      )
-    }}
+    {({ history, location }) => (
+      <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
+        <Typeahead
+          name={name}
+          aria-label={label ? label : name}
+          placeholder={placeholder}
+          initialOptions={options}
+          closeMenuOnSelect={closeMenuOnSelect}
+          isMulti={isMulti}
+          value={selectedOptions.map(({ value, label }) => ({
+            value,
+            label,
+          }))}
+          loadOptions={loadOptions}
+          noOptionsMessage={noOptionsMessage}
+          onChange={(pickedOptions) => {
+            history.push({
+              search: qs.stringify({
+                ...getQueryParamsFromLocation(location),
+                ...(!labelAsQueryParam
+                  ? getParamIds(qsParam, pickedOptions)
+                  : getParamLabels(qsParam, pickedOptions)),
+                page: 1,
+              }),
+            })
+          }}
+        />
+      </StyledFieldWrapper>
+    )}
   </Route>
 )
 

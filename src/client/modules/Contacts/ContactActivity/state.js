@@ -1,12 +1,12 @@
-import qs from 'qs'
+import { getQueryParamsFromLocation } from '../../../utils/url'
 
 export const TASK_GET_CONTACT_ACTIVITIES = 'TASK_GET_CONTACT_ACTIVITIES'
 
 export const ID = 'contactActivity'
 
 export const state2props = ({ ...state }) => {
-  const selectedSortBy = qs.parse(location.search.slice(1)).sortby || 'newest'
-  const page = qs.parse(location.search.slice(1)).page || '1'
+  const selectedSortBy = getQueryParamsFromLocation(location).sortby || 'newest'
+  const page = getQueryParamsFromLocation(location).page || '1'
 
   return {
     ...state[ID],

@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import { first, get } from 'lodash'
-import qs from 'qs'
 import { connect } from 'react-redux'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import { DefaultLayout, RemindersToggleSection } from '../../../components'
 import {
   RemindersSettingsTable,
@@ -270,8 +270,7 @@ export const RemindersSettings = ({
   hasInvestmentFeatureGroup,
   hasExportFeatureGroup,
 }) => {
-  const location = useLocation()
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(useLocation())
 
   const openSettingsSections = getOpenSettings(qsParams)
   const breadcrumbs = generateBreadcrumbs(openSettingsSections)

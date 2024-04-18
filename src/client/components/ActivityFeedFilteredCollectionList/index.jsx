@@ -8,6 +8,7 @@ import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import Task from '../Task'
 import CollectionSort from '../CollectionList/CollectionSort'
 
@@ -34,7 +35,7 @@ const ActivityFeedFilteredCollectionList = ({
   return (
     <Route>
       {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
+        const qsParams = getQueryParamsFromLocation(location)
         const initialPage = parseInt(qsParams.page, 10)
         if (defaultQueryParams && isEmpty(qsParams)) {
           history.push({

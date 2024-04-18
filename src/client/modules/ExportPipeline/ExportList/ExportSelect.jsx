@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { get, kebabCase } from 'lodash'
 import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
+
 const StyledSelect = styled(Select)({
   select: {
     width: '100%',
@@ -13,10 +15,8 @@ const StyledSelect = styled(Select)({
 
 const ExportSelect = ({ label, options = [], qsParam }) => {
   const history = useHistory()
-  const location = useLocation()
   const [value, setValue] = useState()
-
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(useLocation())
   const initialValue = get(qsParams, qsParam, '')
 
   useEffect(() => setValue(initialValue), [initialValue])

@@ -1,7 +1,7 @@
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from './constants'
 import { transformWasPolicyfeedBackProvidedToApi } from './transformers'
-import { parseQueryString } from '../../../utils'
+import { locationToQSParamsWithPage } from '../../../utils/url'
 
 export const TASK_GET_COMPANY_ACTIVITIES_LIST =
   'TASK_GET_COMPANY_ACTIVITIES_LIST'
@@ -26,8 +26,7 @@ export const TASK_GET_INTERACTIONS_COMPANY_NAME =
 export const ID = 'companyActivitiesList'
 
 export const state2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const { currentAdviserId } = state
   const { metadata, selectedAdvisers, selectedCompanies, createdByOthers } =
     state[ID]

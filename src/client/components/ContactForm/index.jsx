@@ -1,4 +1,3 @@
-import qs from 'qs'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
@@ -9,6 +8,7 @@ import Label from '@govuk-react/label'
 
 import multiInstance from '../../utils/multiinstance'
 import { CONTACT_FORM__SUBMIT } from '../../actions'
+import { getQueryParamsFromLocation } from '../../utils/url'
 
 import Form from '../Form'
 import {
@@ -153,9 +153,8 @@ const _ContactForm = ({
           <Main>
             <State>
               {({ referrerUrl, router }) => {
-                const { origin_url, origin_search } = qs.parse(
-                  router.location.search
-                )
+                const { origin_url, origin_search } =
+                  getQueryParamsFromLocation(router.location)
                 const redirectTo = ({ name, id }) => {
                   return origin_url
                     ? appendParamsToUrl(origin_url, origin_search, id, name)

@@ -1,5 +1,4 @@
-import qs from 'qs'
-
+import { getQueryParamsFromLocation } from '../../../../utils/url'
 import { sortOptions } from './metadata'
 
 export const TASK_GET_OPPORTUNITIES_LIST = 'TASK_GET_OPPORTUNITIES_LIST'
@@ -19,7 +18,7 @@ const collectionListPayload = (paramProps) => {
 
 export const state2props = ({ router, ...state }) => {
   const { metadata } = state.opportunitiesList
-  const queryProps = qs.parse(router.location.search.slice(1))
+  const queryProps = getQueryParamsFromLocation(router.location)
   const filteredQueryProps = collectionListPayload(queryProps)
 
   return {

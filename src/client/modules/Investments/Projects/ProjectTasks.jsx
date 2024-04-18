@@ -1,11 +1,11 @@
 import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { useSearchParam } from 'react-use'
 import { connect } from 'react-redux'
-import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import { CollectionList } from '../../../components'
 import { InvestmentProjectTasksResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
@@ -19,7 +19,7 @@ import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
 const ProjectTasks = () => {
   const { projectId } = useParams()
-  const parsedQueryString = qs.parse(location.search.slice(1))
+  const parsedQueryString = getQueryParamsFromLocation(useLocation())
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
   const setActivePage = (page) =>

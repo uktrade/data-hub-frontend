@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
-import qs from 'qs'
 import styled from 'styled-components'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import { DARK_GREY } from '../../utils/colours'
 import CollectionHeaderRow from './CollectionHeaderRow'
 import RoutedSelect from '../RoutedSelect'
@@ -33,8 +33,8 @@ const CollectionSort = ({ sortOptions, totalPages, ...props }) => {
   return (
     <CollectionHeaderRow {...props} actions={actions}>
       <Route>
-        {({ location: { search } }) => {
-          const searchParams = qs.parse(search.slice(1))
+        {({ location }) => {
+          const searchParams = getQueryParamsFromLocation(location)
           return (
             <StyledSpan data-test="pagination-summary">
               Page {searchParams.page || 1} of {totalPages}

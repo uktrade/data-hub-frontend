@@ -6,6 +6,8 @@ import { get, kebabCase } from 'lodash'
 import qs from 'qs'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
+
 const StyledSelect = styled(Select)({
   select: {
     width: '100%',
@@ -21,7 +23,7 @@ const TaskSelect = ({ label, options = [], qsParam }) => {
   const location = useLocation()
   const [value, setValue] = useState()
 
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(location)
   const initialValue = get(qsParams, qsParam, '')
 
   useEffect(() => setValue(initialValue), [initialValue])

@@ -3,12 +3,13 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 import { get } from 'lodash'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import Select from '../Select'
 
 const RoutedSelect = ({ qsParamName, ...props }) => (
   <Route>
     {({ location, history }) => {
-      const qsParams = qs.parse(location.search.slice(1))
+      const qsParams = getQueryParamsFromLocation(location)
       const initialValue = get(qsParams, qsParamName, '')
       const onChange = (e) => {
         history.push({
