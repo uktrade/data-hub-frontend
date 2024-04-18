@@ -155,7 +155,7 @@ describe('state2props', () => {
       expect(
         state2props(
           { [COMPANY_DETAILS_ID]: {}, [EXPORT_DETAILS_ID]: {} },
-          { location: {} }
+          { router: { location: {} } }
         )
       ).to.deep.equal({
         exportItem: null,
@@ -175,7 +175,7 @@ describe('state2props', () => {
             currentAdviserId: 2,
             currentAdviserName: 'b',
           },
-          { location: {} }
+          { router: { location: {} } }
         ).exportItem
       })
 
@@ -203,7 +203,7 @@ describe('state2props', () => {
               exportItem: { company: { id: 2, name: 'b' } },
             },
           },
-          { location: {} }
+          { router: { location: {} } }
         ).exportItem
       ).to.deep.include({
         company: { id: 2, name: 'b' },

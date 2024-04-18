@@ -45,7 +45,7 @@ const CompanyOverview = () => {
                   <ExportStatusCard company={company} />
                 </CardContainer>
                 <CardContainer>
-                  <InvestmentStatusCard companyId={company.id} />
+                  <InvestmentStatusCard companyId={companyId} />
                 </CardContainer>
               </GridCol>
               <GridCol columnOneHalf={true}>

@@ -82,9 +82,8 @@ const EventAventriRegistrationStatus = ({
     Math.min(totalAttendees, maxItemsToPaginate) / itemsPerPage
   )
 
-  const params = useParams()
-  const aventriEventId = params.aventriEventId
-  const registrationStatus = mapUrlSlugToRegistrationStatus(params.status)
+  const { status, aventriEventId } = useParams()
+  const registrationStatus = mapUrlSlugToRegistrationStatus(status)
 
   return (
     <DefaultLayout
