@@ -1,23 +1,24 @@
 import React from 'react'
 
-import DataHubProvider from '../provider'
 import { WinsWonTable } from '../../../../../src/client/modules/ExportWins/Status/WinsWonTable'
+import { sumExportValues } from '../../../../../src/client/modules/ExportWins/Status/utils'
+import { assertGovReactTable } from '../../../../functional/cypress/support/assertions'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import { formatMediumDate } from '../../../../../src/client/utils/date'
-import { assertGovReactTable } from '../../../../functional/cypress/support/assertions'
+import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
 const exportWinToRow = (exportWin) => [
   exportWin.company.name,
   exportWin.country.name,
-  currencyGBP(exportWin.total_expected_export_value),
+  currencyGBP(sumExportValues(exportWin)),
   formatMediumDate(exportWin.date),
   formatMediumDate(exportWin.customer_response.responded_on),
   'View details',
 ]
 
-describe('Export wins table', () => {
+describe('WinsWonTable', () => {
   it('should render Export wins table', () => {
     const EXPORT_WINS = [
       {
@@ -28,7 +29,9 @@ describe('Export wins table', () => {
         country: {
           name: 'Slovakia',
         },
-        total_expected_export_value: 1111111,
+        total_expected_export_value: 1000000,
+        total_expected_non_export_value: 2000000,
+        total_expected_odi_value: 3000000,
         date: '1111-11-11',
         customer_response: {
           responded_on: '1212-12-12',
@@ -42,7 +45,9 @@ describe('Export wins table', () => {
         country: {
           name: 'Czech Republic',
         },
-        total_expected_export_value: 222222,
+        total_expected_export_value: 4000000,
+        total_expected_non_export_value: 5000000,
+        total_expected_odi_value: 6000000,
         date: '0101-01-01',
         customer_response: {
           responded_on: '0202-02-02',
@@ -51,10 +56,16 @@ describe('Export wins table', () => {
       exportWinsFaker(),
     ]
 
+    const Provider = createTestProvider({
+      'Export Wins': () => Promise.resolve(wins),
+      Company: () => Promise.resolve({ id: 123 }),
+      TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+    })
+
     cy.mount(
-      <DataHubProvider>
+      <Provider>
         <WinsWonTable exportWins={EXPORT_WINS} />
-      </DataHubProvider>
+      </Provider>
     )
 
     assertGovReactTable({

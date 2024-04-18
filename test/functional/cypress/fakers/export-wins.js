@@ -113,6 +113,14 @@ export const exportWinsFaker = () => ({
     min: 10_000,
     max: 10_000_000,
   }),
+  total_expected_non_export_value: faker.number.int({
+    min: 10_000,
+    max: 10_000_000,
+  }),
+  total_expected_odi_value: faker.number.int({
+    min: 10_000,
+    max: 10_000_000,
+  }),
   date: faker.date.anytime().toISOString(),
   customer_response: {
     agree_with_win: null, // Sent
