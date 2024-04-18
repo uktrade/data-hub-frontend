@@ -21,13 +21,13 @@ const StyledTable = styled(Table)`
   }
   & > caption {
     ${typography.font({ size: 24, weight: 'bold' })};
-    margin-bottom: ${SPACING.SCALE_4};
+    margin-bottom: ${SPACING.SCALE_2};
   }
   & > tbody > tr:first-child {
     border-top: 1px solid ${GREY_2};
   }
   & > caption > * {
-    ${typography.font({ size: 19, weight: 'bold' })};
+    ${typography.font({ size: 19, weight: 'normal' })};
     float: right;
     margin-left: ${SPACING.SCALE_3};
   }
