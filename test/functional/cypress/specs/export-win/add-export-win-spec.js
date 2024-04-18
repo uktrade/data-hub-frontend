@@ -164,13 +164,6 @@ describe('Adding an export win', () => {
         clickContinueAndAssertUrl(summaryStep)
       })
 
-      it('should render a step heading', () => {
-        cy.get('[data-test="step-heading"]').should(
-          'have.text',
-          'Check before sending'
-        )
-      })
-
       it('should not render an edit status message', () => {
         cy.get('[data-test="localHeader"]').should(
           'not.contain',

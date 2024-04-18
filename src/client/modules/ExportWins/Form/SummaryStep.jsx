@@ -2,7 +2,6 @@ import React from 'react'
 import WarningText from '@govuk-react/warning-text'
 import InsetText from '@govuk-react/inset-text'
 import { FONT_SIZE } from '@govuk-react/constants'
-import { H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
 import pluralize from 'pluralize'
@@ -62,7 +61,6 @@ const SummaryStep = ({ isEditing, companyId }) => {
       name={steps.SUMMARY}
       submitButtonLabel={isEditing ? 'Save' : 'Confirm and send to customer'}
     >
-      {!isEditing && <H3 data-test="step-heading">Check before sending</H3>}
       <OfficerDetailsTable {...props} />
       <CreditForThisWinTable {...props} />
       <CustomerDetailsTable {...props} />
