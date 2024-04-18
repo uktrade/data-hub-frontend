@@ -15,6 +15,10 @@ const StyledOr = styled('div')({
   marginBottom: SPACING.SCALE_2,
 })
 
+const StyledLabel = styled('span')({
+  fontWeight: 'bold',
+})
+
 /**
  * Checkboxes for use in forms and filters.
  */
@@ -25,6 +29,7 @@ const FieldCheckboxes = ({
   label,
   legend,
   bigLegend,
+  boldLabel = false,
   hint,
   options = [],
   initialValue = [],
@@ -108,7 +113,11 @@ const FieldCheckboxes = ({
                 aria-label={optionLabel}
                 {...optionProps}
               >
-                {optionLabel}
+                {boldLabel ? (
+                  <StyledLabel>{optionLabel}</StyledLabel>
+                ) : (
+                  optionLabel
+                )}
               </Checkbox>
               {value.includes(optionValue) && !!children ? children : null}
             </Fragment>

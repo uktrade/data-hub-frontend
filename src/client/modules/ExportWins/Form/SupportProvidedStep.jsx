@@ -1,5 +1,6 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
+import styled from 'styled-components'
 
 import { Step, FieldCheckboxes } from '../../../components'
 import { OPTION_YES } from '../../../../common/constants'
@@ -9,6 +10,10 @@ import { steps } from './constants'
 import AssociatedProgramme from '../../../components/Resource/AssociatedProgramme'
 import SupportType from '../../../components/Resource/SupportType'
 import Hvc from '../../../components/Resource/Hvc'
+
+const StyledFieldCheckboxes = styled(FieldCheckboxes)({
+  marginBottom: 0,
+})
 
 const SupportProvidedStep = () => (
   <Step name={steps.SUPPORT_PROVIDED}>
@@ -46,9 +51,10 @@ const SupportProvidedStep = () => (
         value?.length > 5 && 'Select a maximum of 5 DBT campaigns or events'
       }
     />
-    <FieldCheckboxes
+    <StyledFieldCheckboxes
       name="is_personally_confirmed"
       required="Confirm that this information is complete and accurate"
+      boldLabel={true}
       options={[
         {
           value: OPTION_YES,
@@ -59,6 +65,7 @@ const SupportProvidedStep = () => (
     <FieldCheckboxes
       name="is_line_manager_confirmed"
       required="Confirm your line manager has agreed that this win should be recorded"
+      boldLabel={true}
       options={[
         {
           value: OPTION_YES,
