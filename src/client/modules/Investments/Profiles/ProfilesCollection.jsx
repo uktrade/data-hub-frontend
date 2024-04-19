@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import {
   CollectionFilters,
   FilteredCollectionList,
@@ -49,7 +49,7 @@ const LargeCapitalProfileCollection = ({
 }) => (
   <Route>
     {({ location }) => {
-      const qsParams = qs.parse(location.search.slice(1))
+      const qsParams = getQueryParamsFromLocation(location)
       const selectedCountries = resolveSelectedOptions(
         qsParams[QS_PARAMS.countryOfOrigin],
         filterOptions.countries

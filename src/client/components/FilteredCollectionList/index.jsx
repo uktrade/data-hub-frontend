@@ -8,6 +8,7 @@ import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import Task from '../Task'
 import Analytics from '../Analytics'
 
@@ -99,7 +100,7 @@ const FilteredCollectionList = ({
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(location)
 
   useEffect(() => {
     if (defaultQueryParams && isEmpty(qsParams)) {

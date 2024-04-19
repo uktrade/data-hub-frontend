@@ -1,8 +1,8 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
-import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import { DefaultLayout } from '../../../components'
 import Task from '../../../components/Task'
 import {
@@ -120,10 +120,8 @@ const TaskFormAdd = ({
   breadcrumbs,
   companyInvestmentProjects,
 }) => {
-  const { search } = useLocation()
-  const { investmentProjectId, interactionId, copyTaskId } = qs.parse(
-    search.slice(1)
-  )
+  const { investmentProjectId, interactionId, copyTaskId } =
+    getQueryParamsFromLocation(useLocation())
   const taskForm = (
     <TaskForm
       task={task}

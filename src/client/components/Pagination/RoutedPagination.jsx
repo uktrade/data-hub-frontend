@@ -6,6 +6,7 @@ import qs from 'qs'
 import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import { GREY_3, LINK_COLOUR, WHITE } from '../../../client/utils/colours'
 import { PAGINATION_PIECE_PREVIOUS, PAGINATION_PIECE_NEXT } from './constants'
 
@@ -183,13 +184,12 @@ const Pagination = ({
   return (
     <Route>
       {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
         const handleOnClick = (pageNumber, e) => {
           e.preventDefault()
           setPage(pageNumber)
           history.push({
             search: qs.stringify({
-              ...qsParams,
+              ...getQueryParamsFromLocation(location),
               page: pageNumber,
             }),
           })

@@ -5,7 +5,7 @@ import {
   STATUSES,
   RECONCILIATION_STATUSES,
 } from './constants'
-import { parseQueryString } from '../../../utils'
+import { locationToQSParamsWithPage } from '../../../utils/url'
 
 export const ORDERS_LIST_ID = 'ordersList'
 export const COMPANY_ORDERS_LIST_ID = 'companyOrdersList'
@@ -18,8 +18,7 @@ export const TASK_GET_ORDERS_RECONCILIATION_METADATA =
   'TASK_GET_ORDERS_RECONCILIATION_METADATA'
 
 export const ordersState2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const { metadata } = state[ORDERS_LIST_ID]
   const selectedFilters = buildSelectedFilters(queryParams, metadata)
   return {
@@ -35,8 +34,7 @@ export const ordersState2props = ({ router, ...state }) => {
 }
 
 export const companyOrdersState2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   return {
     ...state[COMPANY_ORDERS_LIST_ID],
     payload: { ...queryParams },
@@ -49,8 +47,7 @@ export const companyOrdersState2props = ({ router, ...state }) => {
 }
 
 export const reconciliationOrdersState2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const { metadata } = state[ORDERS_RECONCILIATION_LIST_ID]
   const selectedFilters = buildSelectedFilters(queryParams, metadata)
   return {

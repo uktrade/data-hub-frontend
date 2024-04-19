@@ -6,6 +6,7 @@ import qs from 'qs'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import multiInstance from '../../utils/multiinstance'
 import ErrorSummary from '../ErrorSummary'
 import Task from '../Task'
@@ -86,8 +87,7 @@ const _Form = ({
   ...props
 }) => {
   const history = useHistory()
-  const location = useLocation()
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(useLocation())
 
   useEffect(() => {
     onLoad(initialValues, initialStepIndex)

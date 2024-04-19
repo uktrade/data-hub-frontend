@@ -1,7 +1,15 @@
-import { omitBy, isEmpty } from 'lodash'
-import qs from 'qs'
+export const parseQueryString = (queryString) =>
+  Object.fromEntries(new URLSearchParams(queryString).entries())
 
-export const getQueryParamsFromLocation = (location) => {
-  const queryString = location.search.slice(1)
-  return omitBy({ ...qs.parse(queryString) }, isEmpty)
+// TODO: Rename to locationToQSParams
+export const getQueryParamsFromLocation = (location) =>
+  parseQueryString(location.search)
+
+export const locationToQSParamsWithPage = (location) => {
+  const queryParams = parseQueryString(location.search)
+
+  return {
+    ...queryParams,
+    page: parseInt(queryParams.page || 1, 10),
+  }
 }

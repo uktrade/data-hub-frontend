@@ -1,7 +1,6 @@
-import qs from 'qs'
-
 import { transformIdNameToValueLabel } from '../../../transformers'
 import { getTaskBreadcrumbs } from '../TaskForm/state'
+import { getQueryParamsFromLocation } from '../../../utils/url'
 
 export const ID = 'taskDetails'
 
@@ -25,6 +24,6 @@ export const state2props = (state) => {
 
 export const buttonState2props = ({ router }) => {
   const { location } = router
-  const { returnUrl } = qs.parse(location.search.slice(1))
+  const { returnUrl } = getQueryParamsFromLocation(location)
   return { returnUrl: returnUrl }
 }

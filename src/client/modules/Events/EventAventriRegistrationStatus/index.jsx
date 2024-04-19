@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { isEmpty } from 'lodash'
 import qs from 'qs'
 import { GridCol, GridRow } from 'govuk-react'
 
@@ -65,13 +64,9 @@ const EventAventriRegistrationStatus = ({
   return (
     <Route>
       {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-
-        if (isEmpty(qsParams)) {
+        if (!location.search) {
           history.push({
-            search: qs.stringify({
-              ...defaultQueryParams,
-            }),
+            search: qs.stringify(defaultQueryParams),
           })
         }
 

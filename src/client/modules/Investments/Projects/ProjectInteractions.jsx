@@ -4,6 +4,7 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 
+import { getQueryParamsFromLocation } from '../../../utils/url'
 import { CollectionList } from '../../../components'
 import { transformInteractionToListItem } from '../../../../apps/interactions/client/transformers'
 import { InteractionCollectionResource } from '../../../components/Resource'
@@ -13,8 +14,7 @@ import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
 const ProjectInteractions = () => {
   const history = useHistory()
-  const location = useLocation()
-  const parsedQueryString = qs.parse(location.search.slice(1))
+  const parsedQueryString = getQueryParamsFromLocation(useLocation())
   const activePage = parseInt(parsedQueryString.page, 10) || 1
 
   const { projectId } = useParams()

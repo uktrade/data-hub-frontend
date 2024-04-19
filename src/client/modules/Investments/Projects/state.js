@@ -2,7 +2,7 @@ import {
   getFinancialYearStart,
   generateFinancialYearLabel,
 } from '../../../utils/date'
-import { parseQueryString } from '../../../utils'
+import { locationToQSParamsWithPage } from '../../../utils/url'
 import { buildSelectedFilters } from './filters'
 import {
   SORT_OPTIONS,
@@ -31,9 +31,7 @@ export const ID = 'propositionComplete'
 export const TASK_PROPOSITION_COMPLETE = 'TASK_PROPOSITION_COMPLETE'
 
 export const state2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const { metadata, selectedAdvisers, results } = state[INVESTMENT_PROJECTS_ID]
   const financialYearStart = getFinancialYearStart(new Date())
   const financialYearOptions = [

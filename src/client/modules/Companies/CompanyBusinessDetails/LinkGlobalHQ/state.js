@@ -1,7 +1,7 @@
 import { transformPostcodeToApi } from '../../CollectionList/transformers'
 import { buildSelectedFilters } from './filters'
 import { SORT_OPTIONS } from '../../CollectionList/constants'
-import { parseQueryString } from '../../../../utils'
+import { locationToQSParamsWithPage } from '../../../../utils/url'
 
 export const ID = 'linkGlobalHQ'
 export const SET_GLOBAL_HQ_ID = 'setGlobalHQ'
@@ -12,8 +12,7 @@ export const TASK_SET_GLOBAL_HQ = 'TASK_SET_GLOBAL_HQ'
 export const TASK_REMOVE_GLOBAL_HQ = 'TASK_REMOVE_GLOBAL_HQ'
 
 export const state2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
 
   const { metadata } = state[ID]

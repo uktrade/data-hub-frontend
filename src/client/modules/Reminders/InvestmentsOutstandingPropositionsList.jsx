@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import { BLACK, GREY_1, GREY_2 } from '../../utils/colours'
 
 import { REMINDERS__OUTSTANDING_PROPOSITIONS_LOADED } from '../../actions'
@@ -32,8 +32,7 @@ const PaginationSummary = styled(Summary)({
 
 const InvestmentsOutstandingPropositionsList = ({ reminders }) => {
   const { results, count } = reminders
-  const location = useLocation()
-  const qsParams = qs.parse(location.search.slice(1))
+  const qsParams = getQueryParamsFromLocation(useLocation())
   const page = parseInt(qsParams.page, 10) || 1
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage

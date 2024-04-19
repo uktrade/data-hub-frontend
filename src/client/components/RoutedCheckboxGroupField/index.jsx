@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import qs from 'qs'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import CheckboxGroupField from '../CheckboxGroupField'
 
 const RoutedCheckboxGroupField = ({ qsParam, ...props }) => {
@@ -14,7 +15,7 @@ const RoutedCheckboxGroupField = ({ qsParam, ...props }) => {
   return (
     <Route>
       {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
+        const qsParams = getQueryParamsFromLocation(location)
         return (
           <CheckboxGroupField
             {...props}

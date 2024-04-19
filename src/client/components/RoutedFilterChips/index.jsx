@@ -4,6 +4,7 @@ import qs from 'qs'
 import { Route } from 'react-router-dom'
 import { omit } from 'lodash'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import { Chip } from '..'
 
 /**
@@ -33,7 +34,7 @@ const RoutedFilterChips = ({ qsParamName, selectedOptions = [], ...props }) => (
   <Route>
     {({ location, history }) => {
       const clearFilter = (value) => {
-        const qsParams = qs.parse(location.search.slice(1))
+        const qsParams = getQueryParamsFromLocation(location)
         const newQsParams = removeParamFromQs(qsParams, qsParamName, value)
         history.push({ search: qs.stringify(newQsParams) })
       }

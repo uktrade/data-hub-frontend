@@ -1,4 +1,4 @@
-import { parseQueryString } from '../../../../../utils'
+import { locationToQSParamsWithPage } from '../../../../../utils/url'
 import {
   generateFinancialYearLabel,
   getFinancialYearStart,
@@ -12,9 +12,7 @@ export const TASK_GET_NON_FDI_PROJECTS_LIST = 'TASK_GET_NON_FDI_PROJECTS_LIST'
 export const NON_FDI_LIST_ID = 'nonFdiProjectsList'
 
 export const state2props = ({ router, ...state }) => {
-  const queryString = router.location.search.slice(1)
-
-  const queryParams = parseQueryString(queryString)
+  const queryParams = locationToQSParamsWithPage(router.location)
   const { metadata } = state[NON_FDI_LIST_ID]
   const financialYearStart = getFinancialYearStart(new Date())
   const financialYearOptions = [

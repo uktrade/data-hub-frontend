@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import qs from 'qs'
 import { Route } from 'react-router-dom'
 
+import { getQueryParamsFromLocation } from '../../utils/url'
 import multiInstance from '../../utils/multiinstance'
 import { useTextCaretPosition } from './useTextCaretPosition'
 import {
@@ -40,7 +41,7 @@ const RoutedInput = ({
   return (
     <Route>
       {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
+        const qsParams = getQueryParamsFromLocation(location)
         const writeQs = () =>
           history.replace({
             search: qs.stringify({
@@ -99,7 +100,7 @@ export default multiInstance({
       }),
   }),
   componentStateToProps: (cs, { router }, { qsParam }) => {
-    const qsValue = qs.parse(router.location.search.slice(1))[qsParam]
+    const qsValue = getQueryParamsFromLocation(router.location)[qsParam]
     return { ...cs, qsValue }
   },
   reducer: (state, { type, value, selectedValue }) => {
