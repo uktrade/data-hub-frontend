@@ -14,7 +14,7 @@ const NoWrapCell = styled(Table.Cell)`
   white-space: nowrap;
 `
 
-export const WinsWonTable = ({ exportWins = [] }) => {
+export const WinsConfirmedTable = ({ exportWins = [] }) => {
   return exportWins.length === 0 ? null : (
     <Table
       head={
@@ -65,12 +65,12 @@ export const WinsWonTable = ({ exportWins = [] }) => {
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="export-wins-won"
-    heading="won"
+    id="export-wins-confirmed"
+    heading="confirmed"
     shouldPluralize={false}
-    noResults="You don't have any won export wins."
-    payload={{ confirmed: WIN_STATUS.WON }}
+    noResults="You don't have any confirmed export wins."
+    payload={{ confirmed: WIN_STATUS.CONFIRMED }}
   >
-    {(page) => <WinsWonTable exportWins={page} />}
+    {(page) => <WinsConfirmedTable exportWins={page} />}
   </ExportWinsResource.Paginated>
 )

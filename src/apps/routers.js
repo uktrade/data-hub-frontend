@@ -28,7 +28,7 @@ const reactRoutes = [
   '/exportwins',
   '/companies/:companyId/exportwins/create',
   '/companies/:companyId/export/:exportId/exportwins/create',
-  '/exportwins/won',
+  '/exportwins/confirmed',
   '/exportwins/pending',
   '/exportwins/rejected',
   '/exportwins/:winId/success',

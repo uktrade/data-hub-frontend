@@ -41,18 +41,18 @@ describe('Export wins tab navigation', () => {
         Pending: null,
       })
     })
-    it('should render both Home and Won', () => {
+    it('should render both Home and Confirmed', () => {
       cy.mount(
         <Component
           location={{
-            pathname: '/exportwins/won',
+            pathname: '/exportwins/confirmed',
           }}
         />
       )
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
         'Export Wins': urls.companies.exportWins.index(),
-        Won: null,
+        Confirmed: null,
       })
     })
   })
@@ -65,11 +65,11 @@ describe('Export wins tab navigation', () => {
   })
 
   context('When rendering the TabNav component', () => {
-    it('should render three tabs: Rejected, Pending and Won', () => {
+    it('should render three tabs: Rejected, Pending and Confirmed', () => {
       cy.mount(<Component />)
       cy.get('[data-test="tablist"]').should('exist')
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', ['Rejected', 'Pending', 'Won'])
+      assertLocalNav('@tabItems', ['Rejected', 'Pending', 'Confirmed'])
     })
   })
 })

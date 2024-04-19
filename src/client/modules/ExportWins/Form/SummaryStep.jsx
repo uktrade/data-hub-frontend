@@ -365,7 +365,7 @@ const AdditionalInformation = ({ values, isEditing }) => {
             </SummaryTable.Row>
           </>
         )}
-        {winStatus === WIN_STATUS.WON && (
+        {winStatus === WIN_STATUS.CONFIRMED && (
           <>
             <SummaryTable.Row heading="Comments">
               {values.customer_response.comments || 'Not set'}
