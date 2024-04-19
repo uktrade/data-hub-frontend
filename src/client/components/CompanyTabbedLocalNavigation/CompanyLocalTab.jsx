@@ -68,7 +68,6 @@ export const StyledAnchorTag = styled.a`
 `
 const CompanyLocalTab = (props) => {
   const { navItem, index, isActive } = props
-
   return (
     <StyledListItem key={`tab-${index}`}>
       <StyledAnchorTag
@@ -90,7 +89,6 @@ CompanyLocalTab.propTypes = {
     permissions: PropTypes.array,
     url: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
     ariaDescription: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,

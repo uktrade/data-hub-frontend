@@ -60,12 +60,13 @@ export default class InvestmentProject extends React.PureComponent {
       { label: 'Investment Type', value: investmentType },
       {
         label: 'Added by',
-        value: [adviser].map((adviser, index) =>
-          adviser ? (
-            <span key={adviser.id}>{AdviserItemRenderer(adviser, index)}</span>
-          ) : (
-            <></>
-          )
+        value: [adviser].map(
+          (adviser, index) =>
+            adviser && (
+              <span key={adviser.id}>
+                {AdviserItemRenderer(adviser, index)}
+              </span>
+            )
         ),
       },
       {
