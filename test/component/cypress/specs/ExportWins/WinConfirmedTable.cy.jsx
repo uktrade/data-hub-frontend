@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { WinsWonTable } from '../../../../../src/client/modules/ExportWins/Status/WinsWonTable'
+import { WinsConfirmedTable } from '../../../../../src/client/modules/ExportWins/Status/WinsConfirmedTable'
 import { sumExportValues } from '../../../../../src/client/modules/ExportWins/Status/utils'
 import { assertGovReactTable } from '../../../../functional/cypress/support/assertions'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
@@ -18,7 +18,7 @@ const exportWinToRow = (exportWin) => [
   'View details',
 ]
 
-describe('WinsWonTable', () => {
+describe('WinsConfirmedTable', () => {
   it('should render Export wins table', () => {
     const EXPORT_WINS = [
       {
@@ -64,7 +64,7 @@ describe('WinsWonTable', () => {
 
     cy.mount(
       <Provider>
-        <WinsWonTable exportWins={EXPORT_WINS} />
+        <WinsConfirmedTable exportWins={EXPORT_WINS} />
       </Provider>
     )
 

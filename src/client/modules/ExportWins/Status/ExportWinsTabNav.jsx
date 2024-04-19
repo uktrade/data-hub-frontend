@@ -5,7 +5,7 @@ import { DefaultLayout } from '../../../components'
 import TabNav from '../../../components/TabNav'
 import WinsRejectedList from './WinsRejectedList'
 import WinsPendingList from './WinsPendingList'
-import WinsWonTable from './WinsWonTable'
+import WinsConfirmedTable from './WinsConfirmedTable'
 import urls from '../../../../lib/urls'
 
 const TITLE = /([^\/]+$)/
@@ -38,9 +38,9 @@ const ExportWinsTabNav = ({ location }) => {
             label: 'Pending',
             content: <WinsPendingList />,
           },
-          [urls.companies.exportWins.won()]: {
-            label: 'Won',
-            content: <WinsWonTable />,
+          [urls.companies.exportWins.confirmed()]: {
+            label: 'Confirmed',
+            content: <WinsConfirmedTable />,
           },
         }}
       />

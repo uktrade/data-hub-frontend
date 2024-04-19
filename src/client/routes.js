@@ -484,7 +484,7 @@ const routes = {
       component: ExportWinsTabNav,
     },
     {
-      path: '/exportwins/won',
+      path: '/exportwins/confirmed',
       module: 'datahub:companies',
       component: ExportWinsTabNav,
     },

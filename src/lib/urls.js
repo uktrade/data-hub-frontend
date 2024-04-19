@@ -222,7 +222,7 @@ module.exports = {
     },
     exportWins: {
       index: url('/exportwins'),
-      won: url('/exportwins/won'),
+      confirmed: url('/exportwins/confirmed'),
       pending: url('/exportwins/pending'),
       rejected: url('/exportwins/rejected'),
       create: url('/companies', '/:companyId/exportwins/create'),
