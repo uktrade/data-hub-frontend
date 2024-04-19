@@ -23,8 +23,8 @@ const EditSuccess = ({ match }) => (
         text: 'Export wins',
       },
       {
-        link: urls.companies.exportWins.sent(),
-        text: 'Sent',
+        link: urls.companies.exportWins.pending(),
+        text: 'Pending',
       },
       {
         link: urls.companies.exportWins.editSummary(
@@ -34,7 +34,7 @@ const EditSuccess = ({ match }) => (
         text: <ExportWinSubTitle id={match.params.winId} />,
       },
       {
-        link: urls.companies.exportWins.sent(),
+        link: urls.companies.exportWins.pending(),
         text: 'Success',
       },
     ]}

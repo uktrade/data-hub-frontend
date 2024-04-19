@@ -223,7 +223,7 @@ module.exports = {
     exportWins: {
       index: url('/exportwins'),
       won: url('/exportwins/won'),
-      sent: url('/exportwins/sent'),
+      pending: url('/exportwins/pending'),
       rejected: url('/exportwins/rejected'),
       create: url('/companies', '/:companyId/exportwins/create'),
       createFromExport: url(

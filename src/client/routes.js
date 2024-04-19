@@ -479,7 +479,7 @@ const routes = {
       component: ExportWinsTabNav,
     },
     {
-      path: '/exportwins/sent',
+      path: '/exportwins/pending',
       module: 'datahub:companies',
       component: ExportWinsTabNav,
     },

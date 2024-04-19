@@ -8,7 +8,7 @@ import { sumExportValues } from './utils'
 import { WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
-export const WinsSentList = ({ exportWins = [] }) => {
+export const WinsPendingList = ({ exportWins = [] }) => {
   return exportWins.length === 0 ? null : (
     <ul>
       {exportWins.map((item) => (
@@ -55,14 +55,14 @@ export const WinsSentList = ({ exportWins = [] }) => {
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="export-wins-sent"
-    heading="sent"
+    id="export-wins-pending"
+    heading="pending"
     shouldPluralize={false}
-    noResults="You don't have any sent export wins."
+    noResults="You don't have any pending export wins."
     // We have to send null as a string otherwise
     // it's stripped out of the payload by Axois
-    payload={{ confirmed: String(WIN_STATUS.SENT) }}
+    payload={{ confirmed: String(WIN_STATUS.PENDING) }}
   >
-    {(page) => <WinsSentList exportWins={page} />}
+    {(page) => <WinsPendingList exportWins={page} />}
   </ExportWinsResource.Paginated>
 )

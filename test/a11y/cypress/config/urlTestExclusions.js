@@ -147,7 +147,7 @@ export const urlTestExclusions = [
   { url: '/oauth/' },
   { url: '/oauth/callback/' },
   { url: '/oauth/sign-out/' },
-  { url: '/exportwins/sent/' },
+  { url: '/exportwins/pending/' },
   { url: '/exportwins/rejected/' },
   { url: '/exportwins/:winId/edit' },
   { url: '/exportwins/:winId/success' },

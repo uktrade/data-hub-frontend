@@ -29,7 +29,7 @@ const reactRoutes = [
   '/companies/:companyId/exportwins/create',
   '/companies/:companyId/export/:exportId/exportwins/create',
   '/exportwins/won',
-  '/exportwins/sent',
+  '/exportwins/pending',
   '/exportwins/rejected',
   '/exportwins/:winId/success',
   '/companies/:companyId/exportwins/:winId/edit',

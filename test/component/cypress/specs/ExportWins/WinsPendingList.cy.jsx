@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { WinsSentList } from '../../../../../src/client/modules/ExportWins/Status/WinsSentList'
+import { WinsPendingList } from '../../../../../src/client/modules/ExportWins/Status/WinsPendingList'
 import { createTestProvider } from '../provider'
 
-describe('WinsSentList', () => {
+describe('WinsPendingList', () => {
   it('should render Export wins list', () => {
     const wins = [
       {
@@ -38,7 +38,7 @@ describe('WinsSentList', () => {
 
     cy.mount(
       <Provider>
-        <WinsSentList exportWins={wins} />
+        <WinsPendingList exportWins={wins} />
       </Provider>
     )
 

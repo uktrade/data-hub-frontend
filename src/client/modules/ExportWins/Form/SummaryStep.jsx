@@ -352,7 +352,7 @@ const AdditionalInformation = ({ values, isEditing }) => {
             </SummaryTable.Row>
           </>
         )}
-        {winStatus === WIN_STATUS.SENT && (
+        {winStatus === WIN_STATUS.PENDING && (
           <>
             <SummaryTable.Row heading="First sent">
               {formatMediumDateTime(values.first_sent)}
