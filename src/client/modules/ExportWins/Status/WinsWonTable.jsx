@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
+import { sumExportValues } from './utils'
 import { WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
@@ -13,7 +14,7 @@ const NoWrapCell = styled(Table.Cell)`
   white-space: nowrap;
 `
 
-export const WinsWonTable = ({ exportWins }) => {
+export const WinsWonTable = ({ exportWins = [] }) => {
   return exportWins.length === 0 ? null : (
     <Table
       head={
@@ -27,41 +28,37 @@ export const WinsWonTable = ({ exportWins }) => {
         </Table.Row>
       }
     >
-      {exportWins.map(
-        ({
-          id,
-          company,
-          country,
-          date,
-          total_expected_export_value,
-          customer_response,
-        }) => (
-          <Table.Row key={id}>
-            <Table.Cell>
-              <Link
-                as={ReactRouterLink}
-                to={urls.companies.overview.index(company.id)}
-              >
-                {company.name}
-              </Link>
-            </Table.Cell>
-            <Table.Cell>{country.name}</Table.Cell>
-            <Table.Cell>{currencyGBP(total_expected_export_value)}</Table.Cell>
-            <NoWrapCell>{formatMediumDate(date)}</NoWrapCell>
-            <NoWrapCell>
-              {formatMediumDate(customer_response.responded_on)}
-            </NoWrapCell>
-            <NoWrapCell>
-              <Link
-                as={ReactRouterLink}
-                to={urls.companies.exportWins.editSummary(company.id, id)}
-              >
-                View details
-              </Link>
-            </NoWrapCell>
-          </Table.Row>
-        )
-      )}
+      {exportWins.map((item) => (
+        <Table.Row key={item.id}>
+          <Table.Cell>
+            <Link
+              as={ReactRouterLink}
+              to={urls.companies.overview.index(item.company.id)}
+            >
+              {item.company.name}
+            </Link>
+          </Table.Cell>
+          <Table.Cell>{item.country.name}</Table.Cell>
+          <Table.Cell data-test="sum-total-value">
+            {currencyGBP(sumExportValues(item))}
+          </Table.Cell>
+          <NoWrapCell>{formatMediumDate(item.date)}</NoWrapCell>
+          <NoWrapCell>
+            {formatMediumDate(item.customer_response.responded_on)}
+          </NoWrapCell>
+          <NoWrapCell>
+            <Link
+              as={ReactRouterLink}
+              to={urls.companies.exportWins.editSummary(
+                item.company.id,
+                item.id
+              )}
+            >
+              View details
+            </Link>
+          </NoWrapCell>
+        </Table.Row>
+      ))}
     </Table>
   )
 }
