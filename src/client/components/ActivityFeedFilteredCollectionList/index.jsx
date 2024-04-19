@@ -30,7 +30,6 @@ const ActivityFeedFilteredCollectionList = ({
   const totalPages = Math.ceil(
     Math.min(total, maxItemsToPaginate) / itemsPerPage
   )
-
   return (
     <Route>
       {({ history, location }) => {

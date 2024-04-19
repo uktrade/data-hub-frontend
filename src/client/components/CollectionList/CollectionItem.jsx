@@ -79,72 +79,74 @@ const CollectionItem = ({
   buttons,
   footerRenderer,
   footerdata,
-}) => (
-  <ItemWrapper data-test="collection-item">
-    {/* tags take precidence over badges as they are the newer style, however not all components
+}) => {
+  return (
+    <ItemWrapper data-test="collection-item">
+      {/* tags take precidence over badges as they are the newer style, however not all components
      have been updated so the component needs to handle rendering both props */}
-    {tags && (
-      <StyledBadgesWrapper data-test="collection-item-tags">
-        {tags.map((tag, index) => (
-          <Tag
-            key={`tag_${index}`}
-            colour={tag.colour}
-            data-test="collection-item-tag"
-          >
-            {tag.text}
-          </Tag>
-        ))}
-      </StyledBadgesWrapper>
-    )}
+      {tags && (
+        <StyledBadgesWrapper data-test="collection-item-tags">
+          {tags.map((tag, index) => (
+            <Tag
+              key={`tag_${index}`}
+              colour={tag.colour}
+              data-test="collection-item-tag"
+            >
+              {tag.text}
+            </Tag>
+          ))}
+        </StyledBadgesWrapper>
+      )}
 
-    {!tags && badges && (
-      <StyledBadgesWrapper data-test="collection-item-badges">
-        {badges.map((badge) => (
-          <Badge key={badge.text} borderColour={badge.borderColour}>
-            {badge.text}
-          </Badge>
-        ))}
-      </StyledBadgesWrapper>
-    )}
+      {!tags && badges && (
+        <StyledBadgesWrapper data-test="collection-item-badges">
+          {badges.map((badge) => (
+            <Badge key={badge.text} borderColour={badge.borderColour}>
+              {badge.text}
+            </Badge>
+          ))}
+        </StyledBadgesWrapper>
+      )}
 
-    {titleRenderer ? (
-      titleRenderer(headingText, headingUrl)
-    ) : headingUrl ? (
-      <StyledLinkHeader>
-        {useReactRouter ? (
-          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        ) : (
-          <Link href={headingUrl} onClick={onClick}>
-            {headingText}
-          </Link>
-        )}
-      </StyledLinkHeader>
-    ) : (
-      <StyledHeader>{headingText}</StyledHeader>
-    )}
-    {subheading ? (
-      subheadingUrl ? (
-        <StyledSubheading fontSize={19}>
-          <Link href={subheadingUrl}>{subheading}</Link>
-        </StyledSubheading>
+      {titleRenderer ? (
+        titleRenderer(headingText, headingUrl)
+      ) : headingUrl ? (
+        <StyledLinkHeader>
+          {useReactRouter ? (
+            <Link as={RouterLink} to={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          ) : (
+            <Link href={headingUrl} onClick={onClick}>
+              {headingText}
+            </Link>
+          )}
+        </StyledLinkHeader>
       ) : (
-        <StyledSubheading>{subheading}</StyledSubheading>
-      )
-    ) : null}
+        <StyledHeader>{headingText}</StyledHeader>
+      )}
+      {subheading ? (
+        subheadingUrl ? (
+          <StyledSubheading fontSize={19}>
+            <Link href={subheadingUrl}>{subheading}</Link>
+          </StyledSubheading>
+        ) : (
+          <StyledSubheading>{subheading}</StyledSubheading>
+        )
+      ) : null}
 
-    {metadataRenderer ? (
-      metadataRenderer(metadata)
-    ) : (
-      <Metadata rows={metadata} />
-    )}
-    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-    {footerRenderer && (
-      <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
-    )}
-  </ItemWrapper>
-)
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
+      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+      {footerRenderer && (
+        <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
+      )}
+    </ItemWrapper>
+  )
+}
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,

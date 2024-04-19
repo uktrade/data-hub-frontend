@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 // this is because there isn't necessarily a unique id to use as the key
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Route, useHistory, useLocation } from 'react-router-dom'
 import { GridRow, GridCol } from 'govuk-react'
@@ -56,7 +56,7 @@ const collectionItemTemplateDefault = (
       key={item.id}
       titleRenderer={titleRenderer}
       useReactRouter={useReactRouter}
-      onClick={() => {
+      onClick={async () => {
         pushAnalytics({
           event: 'filterResultClick',
           extra: {
@@ -95,6 +95,8 @@ const FilteredCollectionList = ({
 }) => {
   const history = useHistory()
   const location = useLocation()
+  const scrollRef = useRef()
+  const [scrollPosition, setScrollPosition] = useState()
 
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -109,14 +111,35 @@ const FilteredCollectionList = ({
         }),
       })
     }
+
+    const scrollPos = localStorage.getItem('scrollPosition')
+    if (scrollPos) {
+      setTimeout(() => {
+        scrollRef.current.scrollTop = scrollPos
+      }, 10)
+    }
   }, [])
 
+  // const scrollPositionSet = (position) => {
+  //   console.log('position:', position)
+  //   localStorage.setItem('scrollPosition', position)
+  // }
+
+  const handleScroll = (event) => {
+    setScrollPosition(event.target.scrollTop)
+    localStorage.setItem('scrollPosition', scrollPosition)
+  }
   return (
     <Route>
       {() => {
         const initialPage = getPageNumber(qsParams)
         return (
-          <GridRow data-test="collection-list">
+          <GridRow
+            data-test="collection-list"
+            style={{ overflowY: 'scroll', height: '100vh' }}
+            ref={scrollRef}
+            onScroll={handleScroll}
+          >
             {children}
             <GridCol>
               <article>

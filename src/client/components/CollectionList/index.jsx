@@ -38,7 +38,6 @@ const CollectionList = ({
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
   )
-
   return (
     <GridRow>
       <GridCol setWidth="full">
