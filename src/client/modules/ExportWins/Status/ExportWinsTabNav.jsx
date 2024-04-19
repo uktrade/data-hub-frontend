@@ -30,10 +30,6 @@ const ExportWinsTabNav = ({ location }) => {
         label="Export wins tab nav"
         routed={true}
         tabs={{
-          [urls.companies.exportWins.rejected()]: {
-            label: 'Rejected',
-            content: <WinsRejectedList />,
-          },
           [urls.companies.exportWins.pending()]: {
             label: 'Pending',
             content: <WinsPendingList />,
@@ -41,6 +37,10 @@ const ExportWinsTabNav = ({ location }) => {
           [urls.companies.exportWins.confirmed()]: {
             label: 'Confirmed',
             content: <WinsConfirmedTable />,
+          },
+          [urls.companies.exportWins.rejected()]: {
+            label: 'Rejected',
+            content: <WinsRejectedList />,
           },
         }}
       />

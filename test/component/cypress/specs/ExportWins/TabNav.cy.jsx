@@ -65,11 +65,11 @@ describe('Export wins tab navigation', () => {
   })
 
   context('When rendering the TabNav component', () => {
-    it('should render three tabs: Rejected, Pending and Confirmed', () => {
+    it('should render three tabs: Pending, Confirmed and Rejected', () => {
       cy.mount(<Component />)
       cy.get('[data-test="tablist"]').should('exist')
       cy.get('[data-test="tab-item"]').as('tabItems')
-      assertLocalNav('@tabItems', ['Rejected', 'Pending', 'Confirmed'])
+      assertLocalNav('@tabItems', ['Pending', 'Confirmed', 'Rejected'])
     })
   })
 })
