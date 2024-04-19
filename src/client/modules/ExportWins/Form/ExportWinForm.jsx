@@ -112,7 +112,7 @@ const ExportWinForm = ({
                           changes save the page.
                         </StyledParagraph>
                       </StyledStatusMessage>
-                      {winStatus === WIN_STATUS.SENT && (
+                      {winStatus === WIN_STATUS.PENDING && (
                         <ResentExportWinContainer>
                           <ResendExportWin id={exportWinId} />
                         </ResentExportWinContainer>
@@ -130,7 +130,7 @@ const ExportWinForm = ({
                 <Form
                   id={FORM_ID}
                   showStepInUrl={true}
-                  cancelRedirectTo={() => urls.companies.exportWins.sent()}
+                  cancelRedirectTo={() => urls.companies.exportWins.pending()}
                   redirectTo={(result) =>
                     isEditing
                       ? urls.companies.exportWins.editSuccess(
@@ -164,7 +164,7 @@ const ExportWinForm = ({
                 </Form>
                 {currentStepName === steps.SUMMARY && (
                   <VerticalSpacerWithMarginBottom>
-                    {winStatus !== WIN_STATUS.SENT && (
+                    {winStatus !== WIN_STATUS.PENDING && (
                       <Link
                         as={ReactRouterLink}
                         to={urls.companies.exportWins.customerFeedback(

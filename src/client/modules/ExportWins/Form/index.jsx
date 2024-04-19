@@ -88,7 +88,7 @@ export const EditExportWin = ({ match }) => (
         text: 'Home',
       },
       {
-        link: urls.companies.exportWins.sent(),
+        link: urls.companies.exportWins.pending(),
         text: 'Export wins',
       },
       { text: <ExportWinStatus id={match.params.winId} /> },

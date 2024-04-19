@@ -4,7 +4,7 @@ import { capitalize } from 'lodash'
 import { DefaultLayout } from '../../../components'
 import TabNav from '../../../components/TabNav'
 import WinsRejectedList from './WinsRejectedList'
-import WinsSentList from './WinsSentList'
+import WinsPendingList from './WinsPendingList'
 import WinsWonTable from './WinsWonTable'
 import urls from '../../../../lib/urls'
 
@@ -34,9 +34,9 @@ const ExportWinsTabNav = ({ location }) => {
             label: 'Rejected',
             content: <WinsRejectedList />,
           },
-          [urls.companies.exportWins.sent()]: {
-            label: 'Sent',
-            content: <WinsSentList />,
+          [urls.companies.exportWins.pending()]: {
+            label: 'Pending',
+            content: <WinsPendingList />,
           },
           [urls.companies.exportWins.won()]: {
             label: 'Won',
