@@ -14,8 +14,12 @@
  * the log message.
  * @returns undefined
  */
-
+import React from 'react'
 import { mount } from 'cypress/react'
+
+import { createTestProvider } from '../../component/cypress/specs/provider'
+import { TASK_GET_REMINDER_SUMMARY } from '../../../src/client/components/NotificationAlert/state'
+import { INITIAL_STATE } from '../../../src/client/components/NotificationAlert/reducer'
 
 Cypress.Commands.add('mount', mount)
 
@@ -353,12 +357,32 @@ Cypress.Commands.add('isInViewport', (element) => {
 
 Cypress.Commands.add('isScrolledTo', (element) => {
   cy.get(element).should(($el) => {
-      const bottom = Cypress.$(cy.state("window")).height();
-      const rect = $el[0].getBoundingClientRect();
+    const bottom = Cypress.$(cy.state('window')).height()
+    const rect = $el[0].getBoundingClientRect()
 
-      expect(rect.top).not.to.be.greaterThan(bottom, `Expected element not to be below the visible scrolled area`);
-      expect(rect.top).to.be.greaterThan(0 - rect.height, `Expected element not to be above the visible scrolled area`)
-  });
-});
+    expect(rect.top).not.to.be.greaterThan(
+      bottom,
+      `Expected element not to be below the visible scrolled area`
+    )
+    expect(rect.top).to.be.greaterThan(
+      0 - rect.height,
+      `Expected element not to be above the visible scrolled area`
+    )
+  })
+})
 
 Cypress.Commands.add('dataTest', (value) => cy.get(`[data-test="${value}"]`))
+
+Cypress.Commands.add(
+  'mountWithProvider',
+  (children, { tasks, initialPath } = {}) => {
+    const Provider = createTestProvider({
+      tasks: {
+        [TASK_GET_REMINDER_SUMMARY]: () => Promise.resolve(INITIAL_STATE),
+        ...tasks,
+      },
+      initialPath,
+    })
+    return cy.mount(<Provider>{children}</Provider>)
+  }
+)
