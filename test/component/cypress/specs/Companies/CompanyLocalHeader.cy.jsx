@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { CompanyLocalHeader } from '../../../../../src/client/components'
-import DataHubProvider from '../provider'
 import { assertCompanyBreadcrumbs } from '../../../../functional/cypress/support/assertions'
 import urls from '../../../../../src/lib/urls'
 import { companyFaker } from '../../../../functional/cypress/fakers/companies'
@@ -174,21 +173,17 @@ const assertItemDoesNotExist = (item) => {
 }
 
 describe('CompanyLocalHeader', () => {
-  const Component = (props) => <CompanyLocalHeader {...props} />
-
   context('Local header for a DNB global ultimate company', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            breadcrumbs={[{ text: 'Test breadcrumb' }]}
-            flashMessages={null}
-            company={dnbGlobalUltimate}
-            dnbRelatedCompaniesCount={12345}
-            returnUrl={null}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <CompanyLocalHeader
+          breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
+          company={dnbGlobalUltimate}
+          dnbRelatedCompaniesCount={12345}
+          returnUrl={null}
+        />
       )
     })
 
@@ -230,16 +225,14 @@ describe('CompanyLocalHeader', () => {
   context('Local header for a company under DNB investigation', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            breadcrumbs={[{ text: 'Test breadcrumb' }]}
-            flashMessages={null}
-            company={dnbUnderInvestigation}
-            dnbRelatedCompaniesCount={null}
-            returnUrl={null}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <CompanyLocalHeader
+          breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
+          company={dnbUnderInvestigation}
+          dnbRelatedCompaniesCount={null}
+          returnUrl={null}
+        />
       )
     })
 
@@ -286,16 +279,14 @@ describe('CompanyLocalHeader', () => {
   context('Local header for an archived company', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            breadcrumbs={[{ text: 'Test breadcrumb' }]}
-            flashMessages={null}
-            company={archivedCompany}
-            dnbRelatedCompaniesCount={null}
-            returnUrl={null}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <CompanyLocalHeader
+          breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
+          company={archivedCompany}
+          dnbRelatedCompaniesCount={null}
+          returnUrl={null}
+        />
       )
     })
 
