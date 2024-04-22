@@ -17,6 +17,7 @@ import { format } from '../../../../utils/date'
 import { transformExportCountries } from '../../CompanyExports/transformers'
 import { companies } from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
+import { exportPotentialLabels } from '../../CompanyExports/labels'
 import {
   StyledLastTableCell,
   StyledSpan,
@@ -106,6 +107,13 @@ export const Countries = ({
   </StyledDiv>
 )
 
+const buildExportPotential = (company) => {
+  const exportPotentialValue = exportPotentialLabels[company.exportPotential]
+  return exportPotentialValue?.text
+    ? exportPotentialValue && exportPotentialValue.text
+    : 'No score given'
+}
+
 export const ExportStatusDetails = ({
   company,
   count,
@@ -120,7 +128,7 @@ export const ExportStatusDetails = ({
     data-test="export-status-container"
   >
     <SummaryTable.Row heading="Export potential">
-      <StyledSpan>Unavailable</StyledSpan>
+      <StyledSpan>{buildExportPotential(company)}</StyledSpan>
     </SummaryTable.Row>
     <SummaryTable.Row heading="Export sub-segment">
       {buildCellContents(
