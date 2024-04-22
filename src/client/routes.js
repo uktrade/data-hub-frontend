@@ -687,7 +687,7 @@ function Routes() {
       ),
     },
     {
-      path: '/exportwins/sent',
+      path: '/exportwins/pending',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <ExportWinsTabNav />
