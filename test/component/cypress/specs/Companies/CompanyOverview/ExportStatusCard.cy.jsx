@@ -66,7 +66,7 @@ describe('ExportStatusCard', () => {
       assertSummaryTable({
         dataTest: 'export-status-container',
         content: {
-          'Export potential': 'Unavailable',
+          'Export potential': 'No score given',
           'Export sub-segment': 'Not set',
           'Currently exporting to': 'Not set',
           'Future countries of interest': 'Not set',
@@ -110,7 +110,7 @@ describe('ExportStatusCard', () => {
         assertSummaryTable({
           dataTest: 'export-status-container',
           content: {
-            'Export potential': 'Unavailable',
+            'Export potential': 'No score given',
             'Export sub-segment':
               SUBSEGMENT[companyGlobalUltimateAllDetails.exportSubSegment] +
               SUBSEGMENT[companyGlobalUltimateAllDetails.exportSubSegment],
@@ -197,7 +197,7 @@ describe('ExportStatusCard', () => {
         assertSummaryTable({
           dataTest: 'export-status-container',
           content: {
-            'Export potential': 'Unavailable',
+            'Export potential': 'No score given',
             'Export sub-segment':
               SUBSEGMENT[companyNoGlobalUltimateAllDetails.exportSubSegment] +
               SUBSEGMENT[companyNoGlobalUltimateAllDetails.exportSubSegment],
