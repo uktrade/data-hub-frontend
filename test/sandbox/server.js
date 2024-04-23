@@ -120,6 +120,13 @@ import {
   investmentProjectEvidenceUploadCallback,
   deleteInvestmentProjectEvidence,
 } from './routes/v3/investment/investment-projects.js'
+import {
+  getProposition,
+  getPropositionEvidence,
+  propositionEvidenceUploadCallback,
+  deletePropositionEvidence,
+  propositionEvidenceUpload,
+} from './routes/v3/investment/proposition.js'
 import { getCompanies } from './routes/v3/search/company.js'
 import { contacts } from './routes/v3/search/contact.js'
 import { searchEvents } from './routes/v3/search/event.js'
@@ -598,6 +605,23 @@ app.get(
 app.post('/v3/investment', postInvestmentProject)
 app.post('/v3/investment/:id/update-stage', investmentProjectById)
 app.put('/v3/investment/:id/team-member', postInvestmentProjectEditTeams)
+app.get('/v3/investment/:id/proposition/:propositionId', getProposition)
+app.get(
+  '/v3/investment/:id/proposition/:propositionId/document',
+  getPropositionEvidence
+)
+app.post(
+  '/v3/investment/:id/proposition/:propositionId/document',
+  propositionEvidenceUpload
+)
+app.post(
+  '/v3/investment/:id/proposition/:propositionId/document/:documentId/upload-callback',
+  propositionEvidenceUploadCallback
+)
+app.delete(
+  '/v3/investment/:id/proposition/:propositionId/document/:documentId',
+  deletePropositionEvidence
+)
 
 // V3 Omis
 app.get('/v3/omis/order/:id', getOrderById)
@@ -848,6 +872,7 @@ app.post('/v4/search/large-capital-opportunity', getLargeCapitalOpportunityList)
 
 // V4 Proposition
 app.get('/v4/proposition', propositions)
+app.get('/v4/project')
 
 // V4 Reminder
 app.get('/v4/reminder/summary', getSummary)

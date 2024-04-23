@@ -1,0 +1,22 @@
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "id": "64f698b0-b536-48ae-9f97-9f69683303bb",
+        "av_clean": true,
+        "created_by": {
+            "name": "Michael Wining",
+            "first_name": "Michael",
+            "last_name": "Wining",
+            "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
+        },
+        "created_on": "2024-04-23T11:31:31.596827Z",
+        "uploaded_on": "2024-04-23T11:31:32.274775Z",
+        "original_filename": "Very Important Document.txt",
+        "url": "/v3/investment/340eea21-4b77-4410-9e5f-e714e4f4bac7/proposition/22272a8b-c3d7-4508-a321-15ff47b23e8b/document/64f698b0-b536-48ae-9f97-9f69683303bb/download",
+        "status": "virus_scanned"
+      }
+    ]
+  }
