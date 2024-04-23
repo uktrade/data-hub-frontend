@@ -16,9 +16,6 @@ describe('Interaction details middleware', () => {
         '../repos': {
           fetchInteraction: this.fetchInteractionStub.resolves(interactionData),
         },
-        '../../adviser/filters': {
-          filterActiveAdvisers: this.filterActiveAdvisersSpy,
-        },
         '../../contacts/repos': {
           getContact: this.getContactStub,
         },

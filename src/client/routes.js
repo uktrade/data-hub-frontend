@@ -101,6 +101,7 @@ import OrdersReconciliationCollection from './modules/Omis/CollectionList/Orders
 import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
 import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProjectDocument'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
+import AddPropositionDocument from './modules/Investments/Projects/Propositions/AddPropositionDocument'
 
 const routes = {
   companies: [
@@ -701,6 +702,11 @@ const routes = {
       path: '/investments/projects/:projectId/propositions/:propositionId/document/:documentId/delete',
       module: 'datahub:investments',
       component: DeletePropositionDocument,
+    },
+    {
+      path: '/investments/projects/:projectId/propositions/:propositionId/document',
+      module: 'datahub:investments',
+      component: AddPropositionDocument,
     },
   ],
   tasks: [

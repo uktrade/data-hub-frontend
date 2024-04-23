@@ -91,4 +91,7 @@ module.exports = {
   referrals: {
     referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),
   },
+  propositions: {
+    proposition: require('../../../sandbox/fixtures/v3/investment/proposition.json'),
+  },
 }

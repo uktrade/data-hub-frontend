@@ -301,11 +301,13 @@ import {
   TASK_CREATE_INVESTMENT_PROPOSITION,
   TASK_ABANDON_INVESTMENT_PROPOSITION,
   TASK_DELETE_PROPOSITION_DOCUMENT,
+  TASK_ADD_PROPOSITION_DOCUMENT,
 } from './modules/Investments/Projects/Propositions/state'
 import {
   createInvestmentProposition,
   abandonInvestmentProposition,
   deletePropositionDocument,
+  addPropositionDocument,
 } from './modules/Investments/Projects/Propositions/tasks'
 
 import { TASK_GET_DNB_FAMILY_TREE } from './modules/Companies/CompanyHierarchy/state'
@@ -714,4 +716,5 @@ export const tasks = {
   [TASK_CANCEL_QUOTE]: cancelQuote,
   [TASK_ADD_PROJECT_DOCUMENT]: addProjectDocument,
   [TASK_RESEND_EXPORT_WIN]: resendExportWin,
+  [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
 }

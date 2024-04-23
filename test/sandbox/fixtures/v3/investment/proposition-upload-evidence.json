@@ -1,0 +1,23 @@
+{
+  "id": "9cbe3d94-4d02-49fb-8ccb-9f70be849206",
+  "av_clean": null,
+  "created_by": {
+    "name": "Dean Cox",
+    "firstName": "Dean",
+    "lastName": "Cox",
+    "id": "681e4af7-707d-4913-aa44-3551dd83afad"
+  },
+  "created_on": "2024-04-23T15:47:59.374756Z",
+  "modified_by": null,
+  "modified_on": "2024-04-23T15:47:59.374782Z",
+  "uploaded_on": null,
+  "investmentProject": {
+    "name": "New Hotel (commitment to invest)",
+    "projectCode": "DHP-00000003",
+    "id": "fb5b5006-56af-40e0-8615-7aba53e0e4bf"
+  },
+  "originalFilename": "default.json",
+  "url": "/v3/investment/fb5b5006-56af-40e0-8615-7aba53e0e4bf/proposition/edc43e5d-5b04-4175-a058-495edf4a2070/document/7cbe3d94-4d02-49fb-8ccb-9f70be849206/download",
+  "status": "not_virus_scanned",
+  "signed_upload_url": "https://s3.amazon.com/documentId"
+}

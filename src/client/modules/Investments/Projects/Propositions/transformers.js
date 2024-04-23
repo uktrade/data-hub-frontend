@@ -106,3 +106,7 @@ export const transformDocumentStatus = (
       : VIRUS_SCAN_STATUSES[status]
   return documentStatus
 }
+
+export const transformPropositionEvidenceForApi = (values) => ({
+  file: values.document_upload[0],
+})

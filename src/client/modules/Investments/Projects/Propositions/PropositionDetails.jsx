@@ -30,7 +30,7 @@ const buildHeading = (index) => {
 const checkStatus = (status) => status === 'ongoing' || status === 'late'
 
 const getUploadText = (evidenceCount) =>
-  evidenceCount > 0 ? 'Upload more files' : 'Upload files'
+  evidenceCount > 0 ? 'Upload another file' : 'Upload files'
 
 const transformFilesResultsForTable = (evidence, propositionId, projectId) =>
   evidence.map(({ originalFilename, status, avClean, id }, index) => (
