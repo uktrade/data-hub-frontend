@@ -11,11 +11,6 @@ const completeProposition = {
   details: 'Proposition URL',
 }
 
-const uploadForm = {
-  filename: 'File name',
-}
-
 module.exports = {
   completeProposition,
-  uploadForm,
 }

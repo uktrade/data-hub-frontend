@@ -19,9 +19,6 @@ updates:
   - dependency-name: jsdom # TET-371
     versions:
       - "> 20.0.3"
-  - dependency-name: formidable # TET-382
-    versions:
-      - "> 2.1.2"
   - dependency-name: webpack-dev-server # Waiting for Cypress to add support
     versions:
       - "> 4.15.1"
