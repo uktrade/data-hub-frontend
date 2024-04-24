@@ -2,6 +2,7 @@ import React from 'react'
 
 import { WinsPendingList } from '../../../../../src/client/modules/ExportWins/Status/WinsPendingList'
 import { createTestProvider } from '../provider'
+import urls from '../../../../../src/lib/urls'
 
 describe('WinsPendingList', () => {
   it('should render Export wins list', () => {
@@ -16,6 +17,7 @@ describe('WinsPendingList', () => {
         company_contacts: [
           {
             name: 'David Test',
+            id: 123,
           },
         ],
         country: {
@@ -42,8 +44,18 @@ describe('WinsPendingList', () => {
       </Provider>
     )
 
-    cy.get('[data-test="metadata-item"]')
-      .eq(1)
-      .should('have.text', 'Total value: £6,000')
+    cy.get('[data-test="metadata-item"]').as('metadataItems')
+
+    cy.get('@metadataItems')
+      .eq(0)
+      .should('have.text', 'Contact name: David Test')
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        urls.contacts.details(wins[0].company_contacts[0].id)
+      )
+
+    cy.get('@metadataItems').eq(1).should('have.text', 'Total value: £6,000')
   })
 })
