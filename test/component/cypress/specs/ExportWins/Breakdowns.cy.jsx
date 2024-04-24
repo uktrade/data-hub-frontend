@@ -2,25 +2,18 @@ import React from 'react'
 
 import { Breakdowns } from '../../../../../src/client/modules/ExportWins/Form/Breakdowns'
 import { Form } from '../../../../../src/client/components'
-import DataHubProvider from '../provider'
 
 describe('Breakdowns', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <Form id="exportwin-form" initialValues={{ ...props.values }}>
-        <Breakdowns {...props} />
-      </Form>
-    </DataHubProvider>
-  )
-
   context('when rendering an export win - sequential years', () => {
     it('should render all elements of the component', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{}}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{}}
+          />
+        </Form>
       )
       cy.get('[data-test="label"]').should(
         'have.text',
@@ -37,18 +30,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 5 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '1000000',
-            export_win_2: '1000000',
-            export_win_3: '1000000',
-            export_win_4: '1000000',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '1000000',
+              export_win_2: '1000000',
+              export_win_3: '1000000',
+              export_win_4: '1000000',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -57,18 +52,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 4 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '1000000',
-            export_win_2: '1000000',
-            export_win_3: '1000000',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '1000000',
+              export_win_2: '1000000',
+              export_win_3: '1000000',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -77,18 +74,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 3 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '1000000',
-            export_win_2: '1000000',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '1000000',
+              export_win_2: '1000000',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -97,18 +96,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 2 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '1000000',
-            export_win_2: '',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '1000000',
+              export_win_2: '',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -117,18 +118,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 1 year', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '',
-            export_win_2: '',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '',
+              export_win_2: '',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -137,18 +140,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 0 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '',
-            export_win_1: '',
-            export_win_2: '',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '',
+              export_win_1: '',
+              export_win_2: '',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -159,18 +164,20 @@ describe('Breakdowns', () => {
 
   context('when rendering an export win - sporadic years', () => {
     it('should render an export win value over 5 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '',
-            export_win_2: '1000000',
-            export_win_3: '',
-            export_win_4: '1000000',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '',
+              export_win_2: '1000000',
+              export_win_3: '',
+              export_win_4: '1000000',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -179,18 +186,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 4 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '',
-            export_win_1: '1000000',
-            export_win_2: '',
-            export_win_3: '1000000',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '',
+              export_win_1: '1000000',
+              export_win_2: '',
+              export_win_3: '1000000',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -199,18 +208,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 3 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '1000000',
-            export_win_1: '',
-            export_win_2: '1000000',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '1000000',
+              export_win_1: '',
+              export_win_2: '1000000',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',
@@ -219,18 +230,20 @@ describe('Breakdowns', () => {
     })
 
     it('should render an export win value over 2 years', () => {
-      cy.mount(
-        <Component
-          label="Export value over the next 5 years"
-          name="export_win"
-          values={{
-            export_win_0: '',
-            export_win_1: '1000000',
-            export_win_2: '',
-            export_win_3: '',
-            export_win_4: '',
-          }}
-        />
+      cy.mountWithProvider(
+        <Form id="exportwin-form">
+          <Breakdowns
+            label="Export value over the next 5 years"
+            name="export_win"
+            values={{
+              export_win_0: '',
+              export_win_1: '1000000',
+              export_win_2: '',
+              export_win_3: '',
+              export_win_4: '',
+            }}
+          />
+        </Form>
       )
       cy.get('[data-test="total"]').should(
         'have.text',

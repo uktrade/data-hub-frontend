@@ -13,7 +13,7 @@ const TITLE = /([^\/]+$)/
 
 const ExportWinsTabNav = () => {
   const location = useLocation()
-  const title = TITLE.exec(location.pathname)[0]
+  const title = TITLE.exec(location.pathname)
   return (
     <DefaultLayout
       heading="Export wins"

@@ -26,7 +26,7 @@ const SummaryTable60PerCentHeader = styled(SummaryTable)({
 })
 
 const CustomerFeedback = () => {
-  const { winId, companyId } = useParams()
+  const { companyId, winId } = useParams()
   return (
     <DefaultLayout
       heading="Customer feedback"

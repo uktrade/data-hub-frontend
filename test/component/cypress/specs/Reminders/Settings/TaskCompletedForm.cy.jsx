@@ -1,18 +1,13 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { TaskCompletedFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskCompletedForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
 describe('TaskCompletedSettings', () => {
-  const Component = (props) => <TaskCompletedFormFields {...props} />
-
   context('Display the reminder settings form', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskCompletedFormFields settings={{ emailRemindersEnabled: true }} />
       )
     })
 
@@ -37,10 +32,8 @@ describe('TaskCompletedSettings', () => {
 
   context('When the email reminders enabled is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskCompletedFormFields settings={{ emailRemindersEnabled: true }} />
       )
     })
 
@@ -54,10 +47,8 @@ describe('TaskCompletedSettings', () => {
 
   context('When the email reminders enabled is false', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: false }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskCompletedFormFields settings={{ emailRemindersEnabled: false }} />
       )
     })
 

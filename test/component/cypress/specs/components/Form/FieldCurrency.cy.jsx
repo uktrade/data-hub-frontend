@@ -2,26 +2,25 @@ import React from 'react'
 
 import { Form } from '../../../../../../src/client/components'
 import FieldCurrency from '../../../../../../src/client/components/Form/elements/FieldCurrency'
-import DataHubProvider from '../../provider'
 import { decimal } from '../../../../../../src/client/utils/number-utils'
 
 describe('FieldCurrency', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <Form id="export-form">
-        <FieldCurrency name="currency-test" {...props} />
-      </Form>
-    </DataHubProvider>
-  )
-
   beforeEach(() => {
-    cy.mount(<Component />)
+    cy.mountWithProvider(
+      <Form id="export-form">
+        <FieldCurrency name="currency-test" />
+      </Form>
+    )
     cy.get('#currency-test').as('currencyInput')
   })
 
   context('when a default value is provided', () => {
     it('should set the value raw values to correct values', () => {
-      cy.mount(<Component initialValue={123456} />)
+      cy.mountWithProvider(
+        <Form id="export-form">
+          <FieldCurrency name="currency-test" initialValue={123456} />
+        </Form>
+      )
       cy.get('@currencyInput')
         .should('have.attr', 'value', decimal('123456'))
         .should('have.attr', 'data-raw-value', '123456')

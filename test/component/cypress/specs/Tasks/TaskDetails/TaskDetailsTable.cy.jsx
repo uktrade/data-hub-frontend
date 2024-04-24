@@ -12,24 +12,17 @@ import urls from '../../../../../../src/lib/urls'
 import { formatLongDate } from '../../../../../../src/client/utils/date'
 import { NOT_SET_TEXT } from '../../../../../../src/apps/companies/constants'
 import TaskDetailsTable from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
-import DataHubProvider from '../../provider'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
 
 describe('Task details table', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <TaskDetailsTable {...props} />
-    </DataHubProvider>
-  )
-
   context('When a task has all optional fields set', () => {
     const investmentProjectTask = taskWithInvestmentProjectFaker()
     const company = investmentProjectTask.company
     const project = investmentProjectTask.investmentProject
 
     it('the table should show all expected values', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <TaskDetailsTable
           task={investmentProjectTask}
           company={company}
           project={project}
@@ -75,8 +68,8 @@ describe('Task details table', () => {
     })
 
     it('the table should show all expected values', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <TaskDetailsTable
           task={taskWithNoInvestmentProject}
           company={company}
           project={project}
@@ -110,7 +103,9 @@ describe('Task details table', () => {
     const company = taskWithInteraction.company
 
     it('the table should show all expected values', () => {
-      cy.mount(<Component task={taskWithInteraction} company={company} />)
+      cy.mountWithProvider(
+        <TaskDetailsTable task={taskWithInteraction} company={company} />
+      )
 
       assertSummaryTable({
         dataTest: 'task-details-table',

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import DataHubProvider, { dispatchResetAction } from '../../provider'
-import { LocalHeader } from '../../../../../../src/client/components'
 import OMISLocalHeader from '../../../../../../src/client/modules/Omis/OMISLocalHeader'
 import { orderFaker } from '../../../../../functional/cypress/fakers/orders'
 import { STATUS } from '../../../../../../src/client/modules/Omis/constants'
@@ -142,21 +140,16 @@ const expiredQuote = {
 }
 
 describe('OMISLocalHeader', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <LocalHeader
-        heading="TMY947/21"
-        breadcrumbs={[{ link: '/', text: 'Home' }, { text: 'This is a test' }]}
-      >
-        <OMISLocalHeader incompleteFields={[]} {...props} />
-      </LocalHeader>
-    </DataHubProvider>
-  )
   context('When the order status is draft', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={draftOrder} quote={null} />)
+      cy.mountWithProvider(
+        <OMISLocalHeader
+          incompleteFields={[]}
+          order={draftOrder}
+          quote={null}
+        />
+      )
     })
 
     it('should render the order details', () => {
@@ -183,9 +176,8 @@ describe('OMISLocalHeader', () => {
   context('When the order status is draft and has incomplete fields', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <OMISLocalHeader
           order={draftOrder}
           quote={null}
           incompleteFields={['test']}
@@ -217,8 +209,9 @@ describe('OMISLocalHeader', () => {
   context('When the order status is quote awaiting acceptance', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={quoteAwaitingOrder} quote={quote} />)
+      cy.mountWithProvider(
+        <OMISLocalHeader order={quoteAwaitingOrder} quote={quote} />
+      )
     })
 
     it('should render the order details', () => {
@@ -244,8 +237,9 @@ describe('OMISLocalHeader', () => {
     () => {
       beforeEach(() => {
         cy.viewport(1024, 768)
-        dispatchResetAction()
-        cy.mount(<Component order={quoteAwaitingOrder} quote={expiredQuote} />)
+        cy.mountWithProvider(
+          <OMISLocalHeader order={quoteAwaitingOrder} quote={expiredQuote} />
+        )
       })
 
       it('should render the order details', () => {
@@ -270,8 +264,9 @@ describe('OMISLocalHeader', () => {
   context('When the order status is quote accepted', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={quoteAcceptedOrder} quote={null} />)
+      cy.mountWithProvider(
+        <OMISLocalHeader order={quoteAcceptedOrder} quote={null} />
+      )
     })
 
     it('should render the order details', () => {
@@ -290,8 +285,7 @@ describe('OMISLocalHeader', () => {
   context('When the order status is paid', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={paidOrder} quote={null} />)
+      cy.mountWithProvider(<OMISLocalHeader order={paidOrder} quote={null} />)
     })
 
     it('should render the order details', () => {
@@ -319,8 +313,9 @@ describe('OMISLocalHeader', () => {
   context('When the order status is complete', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={completeOrder} quote={null} />)
+      cy.mountWithProvider(
+        <OMISLocalHeader order={completeOrder} quote={null} />
+      )
     })
 
     it('should render the order details', () => {
@@ -343,8 +338,9 @@ describe('OMISLocalHeader', () => {
   context('When the order status is cancelled', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      dispatchResetAction()
-      cy.mount(<Component order={cancelledOrder} quote={null} />)
+      cy.mountWithProvider(
+        <OMISLocalHeader order={cancelledOrder} quote={null} />
+      )
     })
 
     it('should render the order details', () => {

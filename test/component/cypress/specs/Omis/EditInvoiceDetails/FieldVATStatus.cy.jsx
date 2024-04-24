@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider, { dispatchResetAction } from '../../provider'
 import { Form } from '../../../../../../src/client/components'
 import { FieldVATStatus } from '../../../../../../src/client/modules/Omis/EditInvoiceDetails'
 import {
@@ -11,18 +10,13 @@ import {
 import urls from '../../../../../../src/lib/urls'
 
 describe('FieldVATStatus', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <Form id="test-form">
-        <FieldVATStatus {...props} />
-      </Form>
-    </DataHubProvider>
-  )
-
   context('When viewing the field with no initial values', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(<Component order={{ vatVerified: null, vatStatus: null }} />)
+      cy.mountWithProvider(
+        <Form id="test-form">
+          <FieldVATStatus order={{ vatVerified: null, vatStatus: null }} />
+        </Form>
+      )
     })
 
     it('should render the main radio buttons', () => {
@@ -63,8 +57,11 @@ describe('FieldVATStatus', () => {
 
   context('When submitting values in the EU child fields', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(<Component order={{ vatVerified: null, vatStatus: 'eu' }} />)
+      cy.mountWithProvider(
+        <Form id="test-form">
+          <FieldVATStatus order={{ vatVerified: null, vatStatus: 'eu' }} />
+        </Form>
+      )
     })
 
     it('should not submit the form with the verification field empty', () => {
