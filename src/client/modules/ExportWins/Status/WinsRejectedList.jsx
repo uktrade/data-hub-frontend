@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from '@govuk-react/link'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
@@ -24,9 +25,13 @@ export const WinsRejectedList = ({ exportWins }) => {
             metadata={[
               {
                 label: 'Contact name:',
-                // TODO: This needs to be a link, the MetadataItem
-                // needs to take a JSX element as a parameter.
-                value: item.company_contacts[0].name,
+                value: (
+                  <Link
+                    href={urls.contacts.details(item.company_contacts[0].id)}
+                  >
+                    {item.company_contacts[0].name}
+                  </Link>
+                ),
               },
               {
                 label: 'Total value:',

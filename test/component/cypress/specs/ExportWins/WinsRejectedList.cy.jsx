@@ -2,6 +2,7 @@ import React from 'react'
 
 import { WinsRejectedList } from '../../../../../src/client/modules/ExportWins/Status/WinsRejectedList'
 import { createTestProvider } from '../provider'
+import urls from '../../../../../src/lib/urls'
 
 describe('WinsRejectedList', () => {
   it('should render Export wins list', () => {
@@ -15,7 +16,8 @@ describe('WinsRejectedList', () => {
         name_of_export: 'Rolls Reese',
         company_contacts: [
           {
-            name: 'David Test',
+            name: 'James Dean',
+            id: '345',
           },
         ],
         country: {
@@ -42,8 +44,18 @@ describe('WinsRejectedList', () => {
       </Provider>
     )
 
-    cy.get('[data-test="metadata-item"]')
-      .eq(1)
-      .should('have.text', 'Total value: £6,000')
+    cy.get('[data-test="metadata-item"]').as('metadataItems')
+
+    cy.get('@metadataItems')
+      .eq(0)
+      .should('have.text', 'Contact name: James Dean')
+      .find('a')
+      .should(
+        'have.attr',
+        'href',
+        urls.contacts.details(wins[0].company_contacts[0].id)
+      )
+
+    cy.get('@metadataItems').eq(1).should('have.text', 'Total value: £6,000')
   })
 })
