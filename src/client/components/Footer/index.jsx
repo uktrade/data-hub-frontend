@@ -109,11 +109,11 @@ const Container = styled(InnerContainer)`
 `
 
 export const LINKS = {
-  'Request Support': urls.support(),
-  'Help Centre': urls.external.helpCentre.dhHomepage,
-  'Privacy Notice': urls.external.helpCentre.privacyNotice,
+  'Request support': urls.support(),
+  'Help centre': urls.external.helpCentre.dhHomepage,
+  'Privacy notice': urls.external.helpCentre.privacyNotice,
   Cookies: urls.external.helpCentre.cookies,
-  'Accessibility Statement': urls.external.helpCentre.accessibilityStatement,
+  'Accessibility statement': urls.external.helpCentre.accessibilityStatement,
 }
 
 /**
