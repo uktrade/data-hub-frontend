@@ -28,7 +28,6 @@ import advisersListFaker, {
 import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
-import { investmentProjectFaker } from '../../../../../functional/cypress/fakers/investment-projects'
 
 describe('Task form', () => {
   context('When a task form renders without initial values', () => {
@@ -393,23 +392,25 @@ describe('Task form', () => {
         advisers: [currentAdviserId],
       })
 
-      it('should include adviser parameter for API call', () => {
+      it('should include adviser parameter for Task payload', () => {
+        const getProjectsTask = cy.stub()
         cy.intercept('GET', '/api-proxy/v4/company*', {
           count: 1,
           next: null,
           previous: null,
           results: [company],
         }).as('companySearch')
-        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
-          count: 1,
-          results: [investmentProjectFaker()],
-        }).as('investmentProjectSearch')
         cy.mountWithProvider(
           <TaskFormFields
             cancelRedirectUrl={urls.companies.index()}
             task={transformAPIValuesForForm(task, currentAdviserId)}
             currentAdviserId={currentAdviserId}
-          />
+          />,
+          {
+            tasks: {
+              TASK_GET_PROJECTS_LIST: getProjectsTask,
+            },
+          }
         )
         cy.get('[data-test="field-company"] input').type(
           task.investmentProject.investorCompany.name
@@ -422,12 +423,11 @@ describe('Task form', () => {
         cy.get('#field-company')
           .find('[data-test="typeahead-menu-option"]')
           .click()
-        cy.wait('@investmentProjectSearch').then((interception) => {
-          cy.wrap(interception.request.body.adviser[0]).should(
-            'eq',
-            currentAdviserId
-          )
-        })
+          .then(() => {
+            expect(getProjectsTask.args[0][0].adviser[0]).to.eq(
+              currentAdviserId
+            )
+          })
       })
     })
 
