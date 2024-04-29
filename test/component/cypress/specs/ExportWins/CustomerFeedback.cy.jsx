@@ -194,18 +194,18 @@ describe('ExportWins/CustomerFeedback', () => {
 
       // This little trick ensures that we are not accidentally
       // making assertions about the "Export wins" link in breadcrumbs
-      // cy.contains('Export winsBack').within(() => {
-      //   cy.contains('a', 'Export wins').should(
-      //     'have.attr',
-      //     'href',
-      //     '/exportwins'
-      //   )
-      //   cy.contains('a', 'Back').should(
-      //     'have.attr',
-      //     'href',
-      //     urls.companies.exportWins.editSummary(company.id, win.id)
-      //   )
-      // })
+      cy.contains('Export winsBack').within(() => {
+        cy.contains('a', 'Export wins').should(
+          'have.attr',
+          'href',
+          '/exportwins'
+        )
+        cy.contains('a', 'Back').should(
+          'have.attr',
+          'href',
+          urls.companies.exportWins.editSummary(company.id, win.id)
+        )
+      })
     })
   })
 })
