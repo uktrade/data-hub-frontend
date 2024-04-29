@@ -711,14 +711,6 @@ function Routes() {
       ),
     },
     {
-      path: '/exportwins/:winId/details',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <ExportWinDetails />
-        </ProtectedRoute>
-      ),
-    },
-    {
       path: '/exportwins/create',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
