@@ -717,6 +717,16 @@ function Routes() {
           <CreateExportWin />
         </ProtectedRoute>
       ),
+    },
+    {
+      path: '/exportwins/confirmed',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsTabNav />
+        </ProtectedRoute>
+      ),
+    },
+    {
       path: '/companies/:companyId/exportwins/create',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
