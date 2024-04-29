@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import React from 'react'
 import { H2, H4 } from 'govuk-react'
-import { Route, Routes } from 'react-router-dom'
+import { useParams, Routes, Route } from 'react-router-dom'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
-import { useParams, Routes, Route } from 'react-router-dom'
 
 import HR from '../../../components/HR'
 
@@ -30,7 +29,6 @@ import Err from '../../../components/Task/Error'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 
-import ThankYou from './ThankYou'
 import AccesibilityStatement from './AccesibilityStatement'
 
 const FORM_ID = 'export-wins-customer-feedback'
