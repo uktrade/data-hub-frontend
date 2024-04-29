@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ReactRouterLink, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
 
@@ -26,6 +26,9 @@ const SummaryTable60PerCentHeader = styled(SummaryTable)({
 })
 
 const CustomerFeedback = () => {
+  // TODO: Both companyId and winId should be passed as props. Using a hook
+  // here means we're tightly coupling the component to some route which has
+  // companyId and winId params in the route.
   const { companyId, winId } = useParams()
   return (
     <DefaultLayout
