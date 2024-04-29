@@ -44,8 +44,6 @@ const ExportWinStatus = (props) => (
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
 export const CreateExportWin = () => {
-  // const location = useLocation()
-  // const queryParams = getQueryParamsFromLocation(location)
   const { companyId, exportId } = useParams()
   return (
     <ExportWinForm
@@ -76,8 +74,6 @@ export const CreateExportWin = () => {
 
 // Here we're editing an existing win so we'll have the export win id.
 export const EditExportWin = () => {
-  // const location = useLocation()
-  // const queryParams = getQueryParamsFromLocation(location)
   const { winId, companyId } = useParams()
 
   return (
