@@ -1,6 +1,6 @@
 /* eslint-disable */
 import '@cypress/code-coverage/support'
-require('./commands')
+import './commands'
 
 Cypress.Keyboard.defaults({
   keystrokeDelay: 5,
