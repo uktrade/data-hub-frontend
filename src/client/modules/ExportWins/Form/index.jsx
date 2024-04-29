@@ -44,18 +44,17 @@ const ExportWinStatus = (props) => (
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
 export const CreateExportWin = () => {
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
+  // const location = useLocation()
+  // const queryParams = getQueryParamsFromLocation(location)
+  const { companyId, exportId } = useParams()
   return (
     <ExportWinForm
       heading="Add export win"
-      subheading={<CompanyName companyId={queryParams.companyId} />}
-      exportId={queryParams.exportId}
-      companyId={queryParams.companyId}
-      initialValuesTaskName={
-        queryParams.exportId ? TASK_GET_EXPORT_PROJECT : null
-      }
-      initialValuesPayload={{ id: queryParams.exportId }}
+      subheading={<CompanyName companyId={companyId} />}
+      exportId={exportId}
+      companyId={companyId}
+      initialValuesTaskName={exportId ? TASK_GET_EXPORT_PROJECT : null}
+      initialValuesPayload={{ id: exportId }}
       breadcrumbs={[
         {
           link: urls.dashboard.index(),
@@ -66,8 +65,8 @@ export const CreateExportWin = () => {
           text: 'Companies',
         },
         {
-          link: urls.companies.detail(queryParams.companyId),
-          text: <CompanyName companyId={queryParams.companyId} />,
+          link: urls.companies.detail(companyId),
+          text: <CompanyName companyId={companyId} />,
         },
         { text: 'Add export win' },
       ]}
@@ -77,18 +76,20 @@ export const CreateExportWin = () => {
 
 // Here we're editing an existing win so we'll have the export win id.
 export const EditExportWin = () => {
-  const location = useLocation()
-  const queryParams = getQueryParamsFromLocation(location)
+  // const location = useLocation()
+  // const queryParams = getQueryParamsFromLocation(location)
+  const { winId, companyId } = useParams()
+
   return (
     <ExportWinForm
-      heading={<ExportWinTitle id={queryParams.winId} />}
-      subheading={<ExportWinSubTitle id={queryParams.winId} />}
+      heading={<ExportWinTitle id={winId} />}
+      subheading={<ExportWinSubTitle id={winId} />}
       isEditing={true}
-      companyId={queryParams.companyId}
-      exportWinId={queryParams.winId}
+      companyId={companyId}
+      exportWinId={winId}
       initialValuesTaskName={TASK_GET_EXPORT_WIN}
       initialValuesPayload={{
-        id: queryParams.winId,
+        id: winId,
       }}
       breadcrumbs={[
         {
@@ -99,7 +100,7 @@ export const EditExportWin = () => {
           link: urls.companies.exportWins.pending(),
           text: 'Export wins',
         },
-        { text: <ExportWinStatus id={queryParams.winId} /> },
+        { text: <ExportWinStatus id={winId} /> },
       ]}
     />
   )
