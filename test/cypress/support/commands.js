@@ -17,7 +17,7 @@
 import React from 'react'
 import { mount } from 'cypress/react'
 
-import { createTestProvider } from '../../component/cypress/specs/provider'
+import { createTestProvider } from '../../../test/component/cypress/specs/provider'
 import { TASK_GET_REMINDER_SUMMARY } from '../../../src/client/components/NotificationAlert/state'
 import { INITIAL_STATE } from '../../../src/client/components/NotificationAlert/reducer'
 import { TASK_GET_TYPEAHEAD_OPTIONS } from  '../../../src/client/components/Typeahead/state'
