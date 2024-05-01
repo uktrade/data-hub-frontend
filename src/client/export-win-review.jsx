@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { createProvider } from './createProvider'
+import DataHubProvider from './provider'
 import WithoutOurSupport from './components/Resource/WithoutOurSupport'
 import ExportWinReview from './components/Resource/ExportWinReview'
 import Rating from './components/Resource/Rating'
@@ -12,22 +12,20 @@ import MarketingSource from './components/Resource/MarketingSource'
 import Review from './modules/ExportWins/Review'
 import { patchExportWinReview } from './modules/ExportWins/tasks'
 
-const Provider = createProvider({
-  tasks: {
-    ...ExportWinReview.tasks,
-    ...WithoutOurSupport.tasks,
-    ...Rating.tasks,
-    ...Experience.tasks,
-    ...MarketingSource.tasks,
-    TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
-  },
-})
-
 window.addEventListener('DOMContentLoaded', () =>
   ReactDOM.render(
-    <Provider>
+    <DataHubProvider
+      tasks={{
+        ...ExportWinReview.tasks,
+        ...WithoutOurSupport.tasks,
+        ...Rating.tasks,
+        ...Experience.tasks,
+        ...MarketingSource.tasks,
+        TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
+      }}
+    >
       <Review />
-    </Provider>,
+    </DataHubProvider>,
     document.getElementById('react-app')
   )
 )
