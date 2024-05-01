@@ -15,7 +15,7 @@ import { contactsListFaker } from '../../fakers/contacts'
 import { ukRegionListFaker } from '../../fakers/regions'
 
 const searchEndpoint = '/api-proxy/v3/search/contact'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
