@@ -64,7 +64,7 @@ const statuses = [
 ]
 
 const searchEndpoint = '/api-proxy/v3/search/order'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
 
 describe('Orders Collections Filter', () => {
   context('Default Params', () => {
