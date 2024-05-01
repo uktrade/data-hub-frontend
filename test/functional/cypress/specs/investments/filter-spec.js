@@ -52,7 +52,7 @@ const myAdviser = {
 const searchEndpoint = '/api-proxy/v3/search/investment_project'
 const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const adviserAutocompleteEndpoint = '/api-proxy/adviser/?autocomplete=*'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
 
 describe('Investments Collections Filter', () => {
   context('Toggle groups', () => {
