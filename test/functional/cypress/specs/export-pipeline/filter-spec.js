@@ -291,7 +291,7 @@ describe('Export filters', () => {
           ),
         },
       }).as('apiRequestCountry')
-      cy.intercept('GET', urls.metadata.country(), countries).as(
+      cy.intercept('GET', `${urls.metadata.country()}?_=0`, countries).as(
         'apiRequestMetadataCountry'
       )
     })
