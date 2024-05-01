@@ -13,8 +13,8 @@ import { ukRegionListFaker } from '../../fakers/regions'
 import { assertQueryParams } from '../../support/assertions'
 
 const searchEndpoint = '/api-proxy/v3/search/event'
-const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const eventTypeEndpoint = '/api-proxy/v4/metadata/event-type*'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
 
 const disabledEventType = eventTypeFaker({ disabled_on: '2020-01-01' })
 const eventTypes = [disabledEventType, ...eventTypeListFaker(2)]
