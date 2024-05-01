@@ -1,94 +1,94 @@
-import React from 'react'
-import _ from 'lodash'
-import { configureStore } from '@reduxjs/toolkit'
-import { Provider, connect } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
-import { createBrowserHistory } from 'history'
-import { createReduxHistoryContext } from 'redux-first-history'
-import queryString from 'qs'
-import { Router } from 'react-router-dom'
+// import React from 'react'
+// import _ from 'lodash'
+// import { configureStore } from '@reduxjs/toolkit'
+// import { Provider, connect } from 'react-redux'
+// import createSagaMiddleware from 'redux-saga'
+// import { createBrowserHistory } from 'history'
+// import { createReduxHistoryContext } from 'redux-first-history'
+// import queryString from 'qs'
+// import { Router } from 'react-router-dom'
 
-import rootSaga from './root-saga'
-import { reducers } from './reducers'
+// import rootSaga from './root-saga'
+// import { reducers } from './reducers'
 
-const preloadedState = {
-  // Extract data provided throught the nunjucks "react-slot" macro
-  ...JSON.parse(document.getElementById('react-app')?.dataset.props || '{}'),
-  referrerUrl: window.document.referrer,
-}
+// const preloadedState = {
+//   // Extract data provided throught the nunjucks "react-slot" macro
+//   ...JSON.parse(document.getElementById('react-app')?.dataset.props || '{}'),
+//   referrerUrl: window.document.referrer,
+// }
 
-const browserHistory = createBrowserHistory({
-  // The baseURI is set to the <base/> tag by the spaFallbackSpread
-  // middleware, which should be applied to each Express route where
-  // react-router is expected to be used.
-  basename: queryString.stringify(new URL(document.baseURI).pathname),
-})
+// const browserHistory = createBrowserHistory({
+//   // The baseURI is set to the <base/> tag by the spaFallbackSpread
+//   // middleware, which should be applied to each Express route where
+//   // react-router is expected to be used.
+//   basename: queryString.stringify(new URL(document.baseURI).pathname),
+// })
 
-const { createReduxHistory, routerMiddleware, routerReducer } =
-  createReduxHistoryContext({
-    history: browserHistory,
-  })
-
-// TODO: Remove once DataHubProvider is implemented with createProvider
-const sagaMiddleware = createSagaMiddleware()
+// const { createReduxHistory, routerMiddleware, routerReducer } =
+//   createReduxHistoryContext({
+//     history: browserHistory,
+//   })
 
 // TODO: Remove once DataHubProvider is implemented with createProvider
-const store = configureStore({
-  devTools: process.env.NODE_ENV === 'development',
-  middleware: () => [sagaMiddleware, routerMiddleware],
-  preloadedState,
-  reducer: {
-    // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
-    ..._.mapValues(
-      preloadedState,
-      () =>
-        (state = null) =>
-          state
-    ),
-    ...reducers,
-    router: routerReducer,
-  },
-})
-const history = createReduxHistory(store)
+// const sagaMiddleware = createSagaMiddleware()
 
 // TODO: Remove once DataHubProvider is implemented with createProvider
-const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
-  sagaMiddleware.run(rootSaga(tasks))
-)
+// const store = configureStore({
+//   devTools: process.env.NODE_ENV === 'development',
+//   middleware: () => [sagaMiddleware, routerMiddleware],
+//   preloadedState,
+//   reducer: {
+//     // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
+//     ..._.mapValues(
+//       preloadedState,
+//       () =>
+//         (state = null) =>
+//           state
+//     ),
+//     ...reducers,
+//     router: routerReducer,
+//   },
+// })
+// const history = createReduxHistory(store)
 
-export const createProvider = ({ tasks, history, preloadedState }) => {
-  const sagaMiddleware = createSagaMiddleware()
-  const store = configureStore({
-    devTools: process.env.NODE_ENV === 'development',
-    middleware: () => [sagaMiddleware, routerMiddleware(history)],
-    preloadedState,
-    reducer: {
-      // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
-      ..._.mapValues(
-        preloadedState,
-        () =>
-          (state = null) =>
-            state
-      ),
-      ...reducers,
-      router: connectRouter(history),
-    },
-  })
+// TODO: Remove once DataHubProvider is implemented with createProvider
+// const runMiddlewareOnce = _.once((tasks, sagaMiddleware) =>
+//   sagaMiddleware.run(rootSaga(tasks))
+// )
 
-  sagaMiddleware.run(rootSaga(tasks))
+// export const createProvider = ({ tasks, history, preloadedState }) => {
+//   const sagaMiddleware = createSagaMiddleware()
+//   const store = configureStore({
+//     devTools: process.env.NODE_ENV === 'development',
+//     middleware: () => [sagaMiddleware, routerMiddleware(history)],
+//     preloadedState,
+//     reducer: {
+//       // This is to prevent the silly "Unexpected key ..." error thrown by combineReducers
+//       ..._.mapValues(
+//         preloadedState,
+//         () =>
+//           (state = null) =>
+//             state
+//       ),
+//       ...reducers,
+//       router: routerReducer,
+//     },
+//   })
 
-  return ({ children }) => (
-    <Provider store={store}>
-      <ConnectedRouter history={history}>{children}</ConnectedRouter>
-    </Provider>
-  )
-}
+//   sagaMiddleware.run(rootSaga(tasks))
+
+//   return ({ children }) => (
+//     <Provider store={store}>
+//       <ConnectedRouter history={history}>{children}</ConnectedRouter>
+//     </Provider>
+//   )
+// }
 
 // TODO: Re-implement this in with createProvider
-const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
-  location,
-  navigationType: action,
-}))(Router)
+// const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
+//   location,
+//   navigationType: action,
+// }))(Router)
 
 // TODO: Re-implement this in with createProvider
 /**
@@ -108,16 +108,16 @@ const ConnectedReactRouter = connect(({ router: { location, action } }) => ({
  *    <ReferralList id="foo"/>
  * </DataHubProvider>
  */
-const DataHubProvider = ({ tasks, children }) => {
-  runMiddlewareOnce(tasks, sagaMiddleware)
+// const DataHubProvider = ({ tasks, children }) => {
+//   runMiddlewareOnce(tasks, sagaMiddleware)
 
-  return (
-    <Provider store={store}>
-      <ConnectedReactRouter navigator={history}>
-        {children}
-      </ConnectedReactRouter>
-    </Provider>
-  )
-}
+//   return (
+//     <Provider store={store}>
+//       <ConnectedReactRouter navigator={history}>
+//         {children}
+//       </ConnectedReactRouter>
+//     </Provider>
+//   )
+// }
 
-export default DataHubProvider
+// export default DataHubProvider

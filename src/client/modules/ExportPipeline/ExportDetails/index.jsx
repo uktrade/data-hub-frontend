@@ -70,7 +70,7 @@ const getBreadcrumbs = (exportItem) => {
   return defaultBreadcrumbs
 }
 
-const ExportDetailsForm = ({ exportItem, hasExportWinFeatureGroup }) => {
+const ExportDetailsForm = ({ exportItem }) => {
   const { exportId } = useParams()
 
   return (
