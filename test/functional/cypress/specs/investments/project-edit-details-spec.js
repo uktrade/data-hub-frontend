@@ -9,6 +9,7 @@ const {
   assertFieldDate,
   assertFieldDateShort,
   assertFieldRadios,
+  assertErrorSummary,
 } = require('../../support/assertions')
 
 const project = require('../../fixtures/investment/investment-no-existing-requirements.json')
@@ -280,5 +281,13 @@ describe('Editing the project summary', () => {
   it('should display the form submit and back buttons', () => {
     cy.get('[data-test="submit-button"]').should('be.visible')
     cy.get('[data-test="cancel-button"]').should('be.visible')
+  })
+
+  it('should not allow a future actual land date to be entered', () => {
+    cy.get('[data-test="actual_land_date-day"]').type('04')
+    cy.get('[data-test="actual_land_date-month"]').type('02')
+    cy.get('[data-test="actual_land_date-year"]').type('2350')
+    cy.get('[data-test="submit-button"]').click()
+    assertErrorSummary(['Actual land date cannot be in the future'])
   })
 })
