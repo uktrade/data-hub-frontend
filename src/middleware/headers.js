@@ -1,3 +1,5 @@
+const { v4: uuid } = require('uuid')
+
 const logger = require('../config/logger')
 
 const STS_MAX_AGE = 180 * 24 * 60 * 60
@@ -10,6 +12,18 @@ module.exports = function headers(req, res, next) {
   ) {
     logger.http('Headers middleware -> Adding response headers')
 
+    res.locals.cspNonce = uuid()
+    const selfAndNonce = `'self' 'nonce-${res.locals.cspNonce}'`
+    res.set(
+      'Content-Security-Policy',
+      [
+        `default-src ${selfAndNonce}`,
+        // Taken from https://developers.google.com/tag-platform/security/guides/csp#google_analytics_4_google_analytics
+        `script-src ${selfAndNonce} https://*.googletagmanager.com`,
+        `img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com`,
+        `connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com`,
+      ].join(';')
+    )
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate, private')
     res.set('Pragma', 'no-cache')
     res.set('X-Frame-Options', 'DENY')
