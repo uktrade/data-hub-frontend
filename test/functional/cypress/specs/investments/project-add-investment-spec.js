@@ -429,4 +429,12 @@ describe('Validation error messages', () => {
       validationErrorMessageOtherBusinessActivities
     )
   })
+
+  it('should display a validation error message if a future date is entered as the actual land date', () => {
+    cy.get('[data-test="actual_land_date-day"]').type('04')
+    cy.get('[data-test="actual_land_date-month"]').type('02')
+    cy.get('[data-test="actual_land_date-year"]').type('2350')
+    cy.get('[data-test="submit"]').click()
+    cy.contains('Actual land date cannot be in the future')
+  })
 })

@@ -36,6 +36,7 @@ import {
 import { GREY_2 } from '../../../utils/colours'
 import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
 import { idNamesToValueLabels } from '../../../utils'
+import { validateIfDateInPast } from '../../../components/Form/validators'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -278,6 +279,7 @@ export const FieldActualLandDate = ({ initialValue = null }) => (
     hint="The date investment project activities started"
     invalid="Enter a valid actual land date"
     initialValue={initialValue}
+    validate={validateIfDateInPast}
   />
 )
 
