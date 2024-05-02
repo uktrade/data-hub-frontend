@@ -7,7 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import { SearchLocalHeader } from './components'
 import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrapper'
-import Provider from './provider'
+import { createProvider } from './createProvider.jsx'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
@@ -85,13 +85,15 @@ if (globalProps.sentryDsn) {
   })
 }
 
+const Provider = createProvider({ tasks })
+
 function App() {
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onError={(error) => ReactSentry.captureException(error)}
     >
-      <Provider tasks={tasks}>
+      <Provider>
         <Mount selector="#data-hub-header">
           {(props) => <DataHubHeaderWrapper {...props} />}
         </Mount>

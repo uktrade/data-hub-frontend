@@ -5,6 +5,7 @@ import { Provider, connect } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { createReduxHistoryContext } from 'redux-first-history'
 import { Router } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
 import rootSaga from './root-saga'
 import { reducers } from './reducers'
@@ -27,12 +28,12 @@ const ConnectedReactRouter = connect(({ router: { location, action } }) => {
  * @param {Object} options
  * @param {Record<string, Task>} options.tasks - Tasks required by the
  * components wrapped with the provider
- * @param {import('histoyr').History} options.tasks - History backend
+ * @param {import('history').History} [options.history = import('history').BrowserHistory ] - History backend
  * passed to the router
  * @returns {({children: JSX.Element}) => JSX.Element} - The context provider
  * component.
  */
-export const createProvider = ({ tasks, history }) => {
+export const createProvider = ({ tasks, history = createBrowserHistory() }) => {
   const { createReduxHistory, routerMiddleware, routerReducer } =
     createReduxHistoryContext({
       history,
