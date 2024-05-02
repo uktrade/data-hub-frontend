@@ -85,7 +85,7 @@ if (globalProps.sentryDsn) {
   })
 }
 
-const Provider = createProvider({ tasks })
+const Provider = createProvider(tasks)
 
 function App() {
   return (

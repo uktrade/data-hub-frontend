@@ -18,10 +18,7 @@ const history = createMemoryHistory()
  * component.
  */
 export const createTestProvider = ({ tasks, initialPath } = {}) => {
-  const Provider = createProvider({
-    tasks,
-    history,
-  })
+  const Provider = createProvider(tasks, history)
 
   const NavigateToInitialPath = () => {
     const navigate = useNavigate()

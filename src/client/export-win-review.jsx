@@ -13,14 +13,12 @@ import Review from './modules/ExportWins/Review'
 import { patchExportWinReview } from './modules/ExportWins/tasks'
 
 const Provider = createProvider({
-  tasks: {
-    ...ExportWinReview.tasks,
-    ...WithoutOurSupport.tasks,
-    ...Rating.tasks,
-    ...Experience.tasks,
-    ...MarketingSource.tasks,
-    TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
-  },
+  ...ExportWinReview.tasks,
+  ...WithoutOurSupport.tasks,
+  ...Rating.tasks,
+  ...Experience.tasks,
+  ...MarketingSource.tasks,
+  TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
 })
 
 window.addEventListener('DOMContentLoaded', () =>

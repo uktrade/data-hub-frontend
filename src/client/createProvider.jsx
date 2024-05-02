@@ -25,15 +25,14 @@ const ConnectedReactRouter = connect(({ router: { location, action } }) => {
 
 /**
  * Creates a context provider for all Data Hub components
- * @param {Object} options
- * @param {Record<string, Task>} options.tasks - Tasks required by the
+ * @param {Record<string, Task>} tasks - Tasks required by the
  * components wrapped with the provider
- * @param {import('history').History} [options.history = import('history').BrowserHistory ] - History backend
+ * @param {import('history').History} [history = import('history').BrowserHistory ] - History backend
  * passed to the router
  * @returns {({children: JSX.Element}) => JSX.Element} - The context provider
  * component.
  */
-export const createProvider = ({ tasks, history = createBrowserHistory() }) => {
+export const createProvider = (tasks, history = createBrowserHistory()) => {
   const { createReduxHistory, routerMiddleware, routerReducer } =
     createReduxHistoryContext({
       history,
