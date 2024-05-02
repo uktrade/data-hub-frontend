@@ -19,9 +19,6 @@ updates:
   - dependency-name: jsdom # TET-371
     versions:
       - "> 20.0.3"
-  - dependency-name: webpack-dev-server # Waiting for Cypress to add support
-    versions:
-      - "> 4.15.1"
   - dependency-name: eslint # Waiting for related dependencies to add support
     versions:
       - "> 8.57.0"
