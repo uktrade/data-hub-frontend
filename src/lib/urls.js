@@ -627,6 +627,10 @@ module.exports = {
       '/api-proxy/v4/metadata/capital-investment',
       '/large-capital-investment'
     ),
+    capitalInvestmentLargeCapitalInvestmentType: url(
+      '/api-proxy/v4/metadata/capital-investment',
+      '/large-capital-investment-type'
+    ),
     capitalInvestmentReturnRate: url(
       '/api-proxy/v4/metadata/capital-investment',
       '/return-rate'

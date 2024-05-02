@@ -199,6 +199,9 @@ export const urlTestExclusions = [
   {
     url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment',
   },
+  {
+    url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment-type',
+  },
   { url: '/api-proxy/v4/metadata/capital-investment/return-rate' },
   { url: '/api-proxy/v4/metadata/capital-investment/time-horizon' },
   { url: '/api-proxy/v4/metadata/capital-investment/restriction' },
