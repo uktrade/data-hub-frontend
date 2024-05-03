@@ -1,18 +1,15 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { TaskAmendedByOthersFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskAmendedByOthersForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
 describe('TaskAmendedByOthersSettings', () => {
-  const Component = (props) => <TaskAmendedByOthersFormFields {...props} />
-
   context('Display the reminder settings form', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAmendedByOthersFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -37,10 +34,10 @@ describe('TaskAmendedByOthersSettings', () => {
 
   context('When the email reminders enabled is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAmendedByOthersFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -54,10 +51,10 @@ describe('TaskAmendedByOthersSettings', () => {
 
   context('When the email reminders enabled is false', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: false }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAmendedByOthersFormFields
+          settings={{ emailRemindersEnabled: false }}
+        />
       )
     })
 

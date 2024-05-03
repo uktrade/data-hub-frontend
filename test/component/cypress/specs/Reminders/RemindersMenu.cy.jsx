@@ -3,33 +3,26 @@ import React from 'react'
 import { RemindersMenu } from '../../../../../src/client/modules/Reminders/RemindersMenu.jsx'
 import urls from '../../../../../src/lib/urls'
 
-import DataHubProvider from '../provider'
-
 describe('RemindersMenu', () => {
-  const Component = (props) => (
-    <RemindersMenu
-      reminderSummary={{
-        count: 10,
-        investment: {
-          estimated_land_date: 1,
-          no_recent_interaction: 2,
-          outstanding_propositions: 3,
-        },
-        export: {
-          no_recent_interaction: 4,
-          new_interaction: 9,
-        },
-        my_tasks: {
-          due_date_approaching: 6,
-          task_assigned_to_me_from_others: 4,
-          task_amended_by_others: 5,
-          task_overdue: 7,
-          task_completed: 8,
-        },
-      }}
-      {...props}
-    />
-  )
+  const reminderSummary = {
+    count: 10,
+    investment: {
+      estimated_land_date: 1,
+      no_recent_interaction: 2,
+      outstanding_propositions: 3,
+    },
+    export: {
+      no_recent_interaction: 4,
+      new_interaction: 9,
+    },
+    my_tasks: {
+      due_date_approaching: 6,
+      task_assigned_to_me_from_others: 4,
+      task_amended_by_others: 5,
+      task_overdue: 7,
+      task_completed: 8,
+    },
+  }
   const investmentLinks = [
     {
       title: 'Approaching estimated land dates (1)',
@@ -81,13 +74,12 @@ describe('RemindersMenu', () => {
 
   context('When hasInvestmentFeatureGroup is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={true}
-            hasExportFeatureGroup={false}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <RemindersMenu
+          reminderSummary={reminderSummary}
+          hasInvestmentFeatureGroup={true}
+          hasExportFeatureGroup={false}
+        />
       )
 
       cy.get('[data-test="link-list-item"]').as('listItems')
@@ -108,14 +100,13 @@ describe('RemindersMenu', () => {
 
   context('When hasExportFeatureGroup is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={false}
-            hasExportFeatureGroup={true}
-            hasExportNewInteractionReminders={true}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <RemindersMenu
+          reminderSummary={reminderSummary}
+          hasInvestmentFeatureGroup={false}
+          hasExportFeatureGroup={true}
+          hasExportNewInteractionReminders={true}
+        />
       )
 
       cy.get('[data-test="link-list-item"]').as('listItems')
@@ -135,14 +126,13 @@ describe('RemindersMenu', () => {
 
     context('and hasExportNewInteractionReminders is false', () => {
       beforeEach(() => {
-        cy.mount(
-          <DataHubProvider>
-            <Component
-              hasInvestmentFeatureGroup={false}
-              hasExportFeatureGroup={true}
-              hasExportNewInteractionReminders={false}
-            />
-          </DataHubProvider>
+        cy.mountWithProvider(
+          <RemindersMenu
+            reminderSummary={reminderSummary}
+            hasInvestmentFeatureGroup={false}
+            hasExportFeatureGroup={true}
+            hasExportNewInteractionReminders={false}
+          />
         )
 
         cy.get('[data-test="link-list-item"]').as('listItems')
@@ -164,14 +154,13 @@ describe('RemindersMenu', () => {
     'When hasInvestmentFeatureGroup and hasExportFeatureGroup is true',
     () => {
       beforeEach(() => {
-        cy.mount(
-          <DataHubProvider>
-            <Component
-              hasInvestmentFeatureGroup={true}
-              hasExportFeatureGroup={true}
-              hasExportNewInteractionReminders={true}
-            />
-          </DataHubProvider>
+        cy.mountWithProvider(
+          <RemindersMenu
+            reminderSummary={reminderSummary}
+            hasInvestmentFeatureGroup={true}
+            hasExportFeatureGroup={true}
+            hasExportNewInteractionReminders={true}
+          />
         )
 
         cy.get('[data-test="link-list-item"]').as('listItems')
@@ -196,13 +185,12 @@ describe('RemindersMenu', () => {
 
   context('When only My Tasks is displayed', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={false}
-            hasExportFeatureGroup={false}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <RemindersMenu
+          reminderSummary={reminderSummary}
+          hasInvestmentFeatureGroup={false}
+          hasExportFeatureGroup={false}
+        />
       )
 
       cy.get('[data-test="link-list-item"]').as('listItems')

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import qs from 'qs'
 
 import { CollectionList } from '../../../components'
@@ -7,7 +7,7 @@ import { transformInteractionToListItem } from '../../../../apps/interactions/cl
 import { InteractionCollectionResource } from '../../../components/Resource'
 
 const OpportunityInteractions = ({ opportunityId }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(parsedQueryString.page, 10) || 1
@@ -40,7 +40,7 @@ const OpportunityInteractions = ({ opportunityId }) => {
             count={count}
             isComplete={true}
             onPageClick={(currentPage) =>
-              history.push({
+              navigate({
                 search: qs.stringify({
                   ...parsedQueryString,
                   page: currentPage,

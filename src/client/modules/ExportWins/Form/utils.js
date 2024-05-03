@@ -113,4 +113,10 @@ export const getYearFromWinType = (winType, values) =>
 export const getMaxYearFromWinTypes = (winTypes, values) =>
   Math.max(...winTypes.map((winType) => getYearFromWinType(winType, values)))
 
+/**
+ * Tests whether a given date is within the last twelve months and not in the future.
+ * @param {Date} date - The date to test.
+ * @returns {boolean} True if the date is within the last twelve months and not in the future, false otherwise.
+ */
+
 export const formatValue = (sum) => currencyGBP(sum)

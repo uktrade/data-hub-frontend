@@ -5,7 +5,6 @@ import {
   ExportReminderSettings,
   TasksAssignedToMeSettings,
 } from '../../../../../../src/client/modules/Reminders/Settings/RemindersSettings.jsx'
-import DataHubProvider from '../../provider'
 import {
   COMPANIES_NEW_INTERACTIONS,
   COMPANIES_NEW_INTERACTIONS_LABEL,
@@ -77,11 +76,11 @@ const assertToggleSection = (dataTest, label) => {
 }
 
 describe('InvestmentReminderSettings', () => {
-  const Component = (props) => <InvestmentReminderSettings {...props} />
-
   context('When feature flag is disabled', () => {
     beforeEach(() => {
-      cy.mount(<Component hasInvestmentFeatureGroup={false} />)
+      cy.mountWithProvider(
+        <InvestmentReminderSettings hasInvestmentFeatureGroup={false} />
+      )
     })
 
     it('should return an empty component', () => {
@@ -91,14 +90,12 @@ describe('InvestmentReminderSettings', () => {
 
   context('When feature flag is enabled', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={true}
-            estimatedLandDate={{}}
-            noRecentInteraction={{}}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <InvestmentReminderSettings
+          hasInvestmentFeatureGroup={true}
+          estimatedLandDate={{}}
+          noRecentInteraction={{}}
+        />
       )
     })
 
@@ -110,15 +107,13 @@ describe('InvestmentReminderSettings', () => {
 
   context('When estimated land dates setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={true}
-            openSettingsSections={[{ id: INVESTMENTS_ESTIMATED_LAND_DATES }]}
-            estimatedLandDate={setting}
-            noRecentInteraction={setting}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <InvestmentReminderSettings
+          hasInvestmentFeatureGroup={true}
+          openSettingsSections={[{ id: INVESTMENTS_ESTIMATED_LAND_DATES }]}
+          estimatedLandDate={setting}
+          noRecentInteraction={setting}
+        />
       )
     })
 
@@ -136,15 +131,13 @@ describe('InvestmentReminderSettings', () => {
 
   context('When no recent interactions setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasInvestmentFeatureGroup={true}
-            openSettingsSections={[{ id: INVESTMENTS_NO_RECENT_INTERACTIONS }]}
-            estimatedLandDate={setting}
-            noRecentInteraction={setting}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <InvestmentReminderSettings
+          hasInvestmentFeatureGroup={true}
+          openSettingsSections={[{ id: INVESTMENTS_NO_RECENT_INTERACTIONS }]}
+          estimatedLandDate={setting}
+          noRecentInteraction={setting}
+        />
       )
     })
 
@@ -162,11 +155,11 @@ describe('InvestmentReminderSettings', () => {
 })
 
 describe('ExportReminderSettings', () => {
-  const Component = (props) => <ExportReminderSettings {...props} />
-
   context('When feature flag is disabled', () => {
     beforeEach(() => {
-      cy.mount(<Component hasExportFeatureGroup={false} />)
+      cy.mountWithProvider(
+        <ExportReminderSettings hasExportFeatureGroup={false} />
+      )
     })
 
     it('should return an empty component', () => {
@@ -176,14 +169,12 @@ describe('ExportReminderSettings', () => {
 
   context('When feature flag is enabled', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasExportFeatureGroup={true}
-            exportNoRecentInteractions={{}}
-            exportNewInteractions={{}}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <ExportReminderSettings
+          hasExportFeatureGroup={true}
+          exportNoRecentInteractions={{}}
+          exportNewInteractions={{}}
+        />
       )
     })
 
@@ -195,15 +186,13 @@ describe('ExportReminderSettings', () => {
 
   context('When companies with no recent interactions setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasExportFeatureGroup={true}
-            openSettingsSections={[{ id: COMPANIES_NO_RECENT_INTERACTIONS }]}
-            exportNoRecentInteractions={setting}
-            exportNewInteractions={setting}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <ExportReminderSettings
+          hasExportFeatureGroup={true}
+          openSettingsSections={[{ id: COMPANIES_NO_RECENT_INTERACTIONS }]}
+          exportNoRecentInteractions={setting}
+          exportNewInteractions={setting}
+        />
       )
     })
 
@@ -221,15 +210,13 @@ describe('ExportReminderSettings', () => {
 
   context('When companies with new interactions setting is open', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            hasExportFeatureGroup={true}
-            openSettingsSections={[{ id: COMPANIES_NEW_INTERACTIONS }]}
-            exportNoRecentInteractions={setting}
-            exportNewInteractions={setting}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <ExportReminderSettings
+          hasExportFeatureGroup={true}
+          openSettingsSections={[{ id: COMPANIES_NEW_INTERACTIONS }]}
+          exportNoRecentInteractions={setting}
+          exportNewInteractions={setting}
+        />
       )
     })
 
@@ -247,20 +234,16 @@ describe('ExportReminderSettings', () => {
 })
 
 describe('TasksAssignedToMeSettings', () => {
-  const Component = (props) => <TasksAssignedToMeSettings {...props} />
-
   function mountComponent(id) {
-    cy.mount(
-      <DataHubProvider>
-        <Component
-          openSettingsSections={[{ id: id }]}
-          upcomingTaskReminder={setting}
-          taskAssignedToMeFromOthers={setting}
-          taskAmendedByOthers={setting}
-          taskOverdue={setting}
-          taskCompleted={setting}
-        />
-      </DataHubProvider>
+    cy.mountWithProvider(
+      <TasksAssignedToMeSettings
+        openSettingsSections={[{ id: id }]}
+        upcomingTaskReminder={setting}
+        taskAssignedToMeFromOthers={setting}
+        taskAmendedByOthers={setting}
+        taskOverdue={setting}
+        taskCompleted={setting}
+      />
     )
   }
 
@@ -273,16 +256,14 @@ describe('TasksAssignedToMeSettings', () => {
 
   context('When component loads', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component
-            upcomingTaskReminder={{}}
-            taskAssignedToMeFromOthers={{}}
-            taskAmendedByOthers={{}}
-            taskOverdue={{}}
-            taskCompleted={{}}
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TasksAssignedToMeSettings
+          upcomingTaskReminder={{}}
+          taskAssignedToMeFromOthers={{}}
+          taskAmendedByOthers={{}}
+          taskOverdue={{}}
+          taskCompleted={{}}
+        />
       )
     })
 

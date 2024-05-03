@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
 
 const {
@@ -11,12 +10,6 @@ const {
 } = require('../../../../../functional/cypress/fakers/companies')
 
 describe('Section sector', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <SectionSector {...props} />
-    </DataHubProvider>
-  )
-
   const companyWithSector = companyFaker({
     sector: {
       name: 'Retail',
@@ -28,7 +21,7 @@ describe('Section sector', () => {
 
   context('when viewing business details for a company with a sector', () => {
     it('should display the "DBT sector" details container', () => {
-      cy.mount(<Component company={companyWithSector} />)
+      cy.mountWithProvider(<SectionSector company={companyWithSector} />)
 
       assertSummaryTable({
         dataTest: 'sectorDetailsContainer',
@@ -41,7 +34,7 @@ describe('Section sector', () => {
 
   context('when viewing business details for a company with no sector', () => {
     it('should display the "DBT sector" details container', () => {
-      cy.mount(<Component company={companyWithoutSector} />)
+      cy.mountWithProvider(<SectionSector company={companyWithoutSector} />)
 
       assertSummaryTable({
         dataTest: 'sectorDetailsContainer',
@@ -56,7 +49,9 @@ describe('Section sector', () => {
     'when viewing business details for a company that is archived',
     () => {
       it('should not display edit link', () => {
-        cy.mount(<Component company={companyWithSector} isArchived={true} />)
+        cy.mountWithProvider(
+          <SectionSector company={companyWithSector} isArchived={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'sectorDetailsContainer',

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import FieldAddAnother from '../../../../../../src/client/components/Form/elements/FieldAddAnother'
-import DataHubProvider, { dispatchResetAction } from '../../provider'
 import { Form, Step, FieldInput } from '../../../../../../src/client/components'
 
 const testInMultiStepForm = ({ initial, toAdd, toRemove }) => {
@@ -23,37 +22,34 @@ const testInMultiStepForm = ({ initial, toAdd, toRemove }) => {
     `with initial=${initial}, toAdd=${toAdd} and toRemove=${toRemove}`,
     () =>
       it(`Preserves entries ${remainingEntries} when moving between form steps`, () => {
-        dispatchResetAction()
-        cy.mount(
-          <DataHubProvider>
-            <Form id="test-form">
-              <Step name="step-1">
-                Step 1
-                <FieldInput type="text" name="foo" label="Foo" />
-              </Step>
-              <Step name="step-2">
-                Step 2
-                <FieldInput type="text" name="bar" label="Bar" />
-                <FieldAddAnother
-                  itemName="thing"
-                  dataTestPrefix="group-"
-                  initialChildGroupCount={initial.length}
-                >
-                  {({ groupIndex }) => (
-                    <FieldInput
-                      type="text"
-                      name={`thing-${groupIndex}`}
-                      label={`Thing ${groupIndex}`}
-                    />
-                  )}
-                </FieldAddAnother>
-              </Step>
-              <Step name="step-3">
-                Step 3
-                <FieldInput type="text" name="baz" label="Baz" />
-              </Step>
-            </Form>
-          </DataHubProvider>
+        cy.mountWithProvider(
+          <Form id="test-form">
+            <Step name="step-1">
+              Step 1
+              <FieldInput type="text" name="foo" label="Foo" />
+            </Step>
+            <Step name="step-2">
+              Step 2
+              <FieldInput type="text" name="bar" label="Bar" />
+              <FieldAddAnother
+                itemName="thing"
+                dataTestPrefix="group-"
+                initialChildGroupCount={initial.length}
+              >
+                {({ groupIndex }) => (
+                  <FieldInput
+                    type="text"
+                    name={`thing-${groupIndex}`}
+                    label={`Thing ${groupIndex}`}
+                  />
+                )}
+              </FieldAddAnother>
+            </Step>
+            <Step name="step-3">
+              Step 3
+              <FieldInput type="text" name="baz" label="Baz" />
+            </Step>
+          </Form>
         )
 
         cy.contains('Step 1')
@@ -112,23 +108,20 @@ const testInMultiStepForm = ({ initial, toAdd, toRemove }) => {
 describe('FieldAddAnother', () => {
   context('standalone', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <DataHubProvider>
-          <FieldAddAnother
-            id="div-items"
-            name="div-items"
-            legend="Legend"
-            dataTestPrefix="test-field-"
-            itemName="item"
-            initialChildGroupCount={2}
-            limitChildGroupCount={4}
-          >
-            {({ groupIndex }) => (
-              <div id={`test_${groupIndex}`}>Item {groupIndex} rendered</div>
-            )}
-          </FieldAddAnother>
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <FieldAddAnother
+          id="div-items"
+          name="div-items"
+          legend="Legend"
+          dataTestPrefix="test-field-"
+          itemName="item"
+          initialChildGroupCount={2}
+          limitChildGroupCount={4}
+        >
+          {({ groupIndex }) => (
+            <div id={`test_${groupIndex}`}>Item {groupIndex} rendered</div>
+          )}
+        </FieldAddAnother>
       )
     })
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useLocation, withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { COMPANY_LOADED } from '../../../actions'
@@ -11,6 +11,7 @@ import {
 } from '../../Companies/CompanyDetails/state'
 import { state2props } from './state'
 import ExportFormFields from './ExportFormFields'
+import withRouter from './withRouter'
 
 const DISPLAY_ADD_EXPORT = 'Add export'
 

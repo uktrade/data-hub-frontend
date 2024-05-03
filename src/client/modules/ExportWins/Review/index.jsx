@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import React from 'react'
 import { H2, H4 } from 'govuk-react'
-import { Route, Switch } from 'react-router-dom'
+import { useParams, Routes, Route } from 'react-router-dom'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 
 import HR from '../../../components/HR'
+
+import ThankYou from './ThankYou'
 
 import Layout from './Layout'
 import {
@@ -27,7 +29,6 @@ import Err from '../../../components/Task/Error'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 
-import ThankYou from './ThankYou'
 import AccesibilityStatement from './AccesibilityStatement'
 
 const FORM_ID = 'export-wins-customer-feedback'
@@ -354,58 +355,54 @@ const Step6 = () => (
   </Step>
 )
 
-const Review = ({ token }) => (
-  <Layout
-    title="Tell us what made a difference"
-    supertitle={<CurrentFormStepInfo />}
-  >
-    <ExportWinReview
-      id={token}
-      taskStatusProps={{
-        renderError: NotFound,
-      }}
+const Review = () => {
+  const { token } = useParams()
+  return (
+    <Layout
+      title="Tell us what made a difference"
+      supertitle={<CurrentFormStepInfo />}
     >
-      {(review) => (
-        <Form
-          id={FORM_ID}
-          analyticsFormName={FORM_ID}
-          submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
-          redirectMode="soft"
-          redirectTo={(_, { agree_with_win }) =>
-            `/exportwins/review-win/thankyou?agree=${agree_with_win}`
-          }
-          transformPayload={transformPayload(token)}
-        >
-          {(formData) => (
-            <>
-              <Step1 win={review.win} name={review?.companyContact?.name} />
-              <Step2 agree={formData.values.agree_with_win === 'yes'} />
-              <Step3 />
-              <Step4 />
-              <Step5 />
-              <Step6 />
-            </>
-          )}
-        </Form>
-      )}
-    </ExportWinReview>
-  </Layout>
-)
+      <ExportWinReview
+        id={token}
+        taskStatusProps={{
+          renderError: NotFound,
+        }}
+      >
+        {(review) => (
+          <Form
+            id={FORM_ID}
+            analyticsFormName={FORM_ID}
+            submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
+            redirectMode="soft"
+            redirectTo={(_, { agree_with_win }) =>
+              `/exportwins/review-win/thankyou?agree=${agree_with_win}`
+            }
+            transformPayload={transformPayload(token)}
+          >
+            {(formData) => (
+              <>
+                <Step1 win={review.win} name={review?.companyContact?.name} />
+                <Step2 agree={formData.values.agree_with_win === 'yes'} />
+                <Step3 />
+                <Step4 />
+                <Step5 />
+                <Step6 />
+              </>
+            )}
+          </Form>
+        )}
+      </ExportWinReview>
+    </Layout>
+  )
+}
 
 export default () => (
-  <Switch>
+  <Routes>
     <Route
-      exact={true}
       path="/exportwins/review/accesibility-statement"
-      component={AccesibilityStatement}
+      element={<AccesibilityStatement />}
     />
-    <Route exact={true} path="/exportwins/review/:token">
-      {({ match }) => <Review token={match.params.token} />}
-    </Route>
-    <Route
-      exact={true}
-      path="/exportwins/review-win/thankyou"
-      component={ThankYou}
-    />
-  </Switch>
+    <Route path="/exportwins/review/:token" element={<Review />} />
+    <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />
+  </Routes>
 )

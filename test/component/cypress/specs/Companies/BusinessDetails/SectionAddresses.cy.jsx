@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
 
 const {
@@ -35,12 +34,6 @@ function assertAddress(address, type) {
 }
 
 describe('Section addresses', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <SectionAddresses {...props} />
-    </DataHubProvider>
-  )
-
   context(
     'when viewing business details for a Dun and Bradstreet company that has both addresses',
     () => {
@@ -62,7 +55,7 @@ describe('Section addresses', () => {
       })
 
       it('should display the address', () => {
-        cy.mount(<Component company={company} />)
+        cy.mountWithProvider(<SectionAddresses company={company} />)
 
         assertAddresses({
           address: ["12 St George's Road", 'Paris', '75001', 'France'],
@@ -76,7 +69,9 @@ describe('Section addresses', () => {
       })
 
       it('should display address container with no edit link', () => {
-        cy.mount(<Component company={company} isDnbCompany={true} />)
+        cy.mountWithProvider(
+          <SectionAddresses company={company} isDnbCompany={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'addressesDetailsContainer',
@@ -96,7 +91,7 @@ describe('Section addresses', () => {
       })
 
       it('should display the address', () => {
-        cy.mount(<Component company={company} />)
+        cy.mountWithProvider(<SectionAddresses company={company} />)
 
         assertAddresses({
           address: ['United Kingdom'],
@@ -124,7 +119,7 @@ describe('Section addresses', () => {
       })
 
       it('should label address as registered address', () => {
-        cy.mount(<Component company={company} />)
+        cy.mountWithProvider(<SectionAddresses company={company} />)
 
         cy.get(`[data-test="addressesRegistered"]`)
           .parent()
@@ -137,7 +132,9 @@ describe('Section addresses', () => {
 
   context('when viewing business details for a Data Hub company', () => {
     it('should display address container with edit link', () => {
-      cy.mount(<Component company={companyFaker()} isDnbCompany={false} />)
+      cy.mountWithProvider(
+        <SectionAddresses company={companyFaker()} isDnbCompany={false} />
+      )
 
       assertSummaryTable({
         dataTest: 'addressesDetailsContainer',
@@ -151,7 +148,9 @@ describe('Section addresses', () => {
     'when viewing business details for a Data Hub company that is archived',
     () => {
       it('should display address container with no edit link', () => {
-        cy.mount(<Component company={companyFaker()} isArchived={true} />)
+        cy.mountWithProvider(
+          <SectionAddresses company={companyFaker()} isArchived={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'addressesDetailsContainer',

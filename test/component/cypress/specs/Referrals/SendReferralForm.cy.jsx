@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../provider'
 import SendReferralForm from '../../../../../src/apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import { companyFaker } from '../../../../functional/cypress/fakers/companies'
 import { contactFaker } from '../../../../functional/cypress/fakers/contacts'
@@ -15,23 +14,16 @@ describe('SendReferralForm component', () => {
   const company = companyFaker()
   const companyContacts = [contactFaker()]
 
-  const Component = (props) => (
-    <DataHubProvider>
-      <SendReferralForm
-        {...props}
-        companyName={company.name}
-        companyId={company.id}
-        companyContacts={companyContacts}
-        cancelUrl=""
-      />
-    </DataHubProvider>
-  )
-
   describe('All but successful completion', () => {
     beforeEach(() => {
-      cy.mount(
+      cy.mountWithProvider(
         <div>
-          <Component />
+          <SendReferralForm
+            companyName={company.name}
+            companyId={company.id}
+            companyContacts={companyContacts}
+            cancelUrl=""
+          />
         </div>
       )
     })

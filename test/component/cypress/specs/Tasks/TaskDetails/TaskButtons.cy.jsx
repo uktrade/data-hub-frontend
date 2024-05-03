@@ -1,23 +1,16 @@
 import React from 'react'
 
 import { taskWithInvestmentProjectFaker } from '../../../../../functional/cypress/fakers/task'
-import DataHubProvider from '../../provider'
 import { TaskButtons } from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskButtons'
 import { assertLink } from '../../../../../functional/cypress/support/assertions'
 import urls from '../../../../../../src/lib/urls'
 
 describe('Task buttons', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <TaskButtons {...props} />
-    </DataHubProvider>
-  )
-
   context('When a task is not completed', () => {
     const task = taskWithInvestmentProjectFaker()
 
     beforeEach(() => {
-      cy.mount(<Component task={task} />)
+      cy.mountWithProvider(<TaskButtons task={task} />)
     })
 
     it('should show the Mark as complete button', () => {
@@ -47,7 +40,7 @@ describe('Task buttons', () => {
     const task = taskWithInvestmentProjectFaker({ status: 'complete' })
 
     beforeEach(() => {
-      cy.mount(<Component task={task} />)
+      cy.mountWithProvider(<TaskButtons task={task} />)
     })
 
     it('should not show the Mark as complete button', () => {
@@ -74,7 +67,7 @@ describe('Task buttons', () => {
     const task = taskWithInvestmentProjectFaker()
 
     beforeEach(() => {
-      cy.mount(<Component task={task} />)
+      cy.mountWithProvider(<TaskButtons task={task} />)
     })
 
     it('should show the Delete task button', () => {
@@ -104,7 +97,7 @@ describe('Task buttons', () => {
     const task = taskWithInvestmentProjectFaker({ archived: true })
 
     beforeEach(() => {
-      cy.mount(<Component task={task} />)
+      cy.mountWithProvider(<TaskButtons task={task} />)
     })
 
     it('should not show the Delete task nor Mark as complete buttons', () => {
@@ -128,7 +121,7 @@ describe('Task buttons', () => {
     const task = taskWithInvestmentProjectFaker()
 
     beforeEach(() => {
-      cy.mount(<Component task={task} returnUrl="a/b/c" />)
+      cy.mountWithProvider(<TaskButtons task={task} returnUrl="a/b/c" />)
     })
 
     it('should the back button with the returnUrl as the href', () => {

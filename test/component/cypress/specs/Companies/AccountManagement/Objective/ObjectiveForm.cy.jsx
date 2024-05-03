@@ -1,7 +1,6 @@
 import React from 'react'
 import { faker } from '@faker-js/faker'
 
-import DataHubProvider from '../../../provider'
 import ObjectiveForm from '../../../../../../../src/client/modules/Companies/AccountManagement/Objective/ObjectiveForm'
 import { companyFaker } from '../../../../../../functional/cypress/fakers/companies'
 import {
@@ -33,15 +32,9 @@ const assertObjectiveBreadcrumbs = (company, objective) => {
 }
 
 describe('Objective form', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <ObjectiveForm {...props} />
-    </DataHubProvider>
-  )
-
   context('Validation checks', () => {
     beforeEach(() => {
-      cy.mount(<Component company={companyFaker()} />)
+      cy.mountWithProvider(<ObjectiveForm company={companyFaker()} />)
     })
 
     context(
@@ -80,7 +73,7 @@ describe('Objective form', () => {
   context('When the objective form does not have an objective item', () => {
     const company = companyFaker()
     beforeEach(() => {
-      cy.mount(<Component company={company} />)
+      cy.mountWithProvider(<ObjectiveForm company={company} />)
     })
 
     assertObjectiveBreadcrumbs(company)
@@ -107,8 +100,8 @@ describe('Objective form', () => {
     )
 
     beforeEach(() => {
-      cy.mount(
-        <Component company={objective.company} objectiveItem={objective} />
+      cy.mountWithProvider(
+        <ObjectiveForm company={objective.company} objectiveItem={objective} />
       )
     })
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 
 import {
   assertSummaryTableStrict,
@@ -9,7 +8,6 @@ import {
   assertErrorSummary,
 } from '../../../../functional/cypress/support/assertions'
 import Review from '../../../../../src/client/modules/ExportWins/Review'
-import { createTestProvider } from '../provider'
 
 const assertNoErrorDialog = () =>
   cy.get('[data-test="error-dialog"').should('not.exist')
@@ -97,21 +95,17 @@ const assertReviewForm = ({ agree }) => {
     { id: 'marketing-source-c', name: 'marketing-source-C' },
   ]
 
-  const Provider = createTestProvider({
-    'Export Win Review': () => Promise.resolve(REVIEW),
-    WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
-    Rating: () => Promise.resolve(RATING),
-    Experience: () => Promise.resolve(EXPERIENCE),
-    MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
-    TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+  cy.mountWithProvider(<Review />, {
+    tasks: {
+      'Export Win Review': () => Promise.resolve(REVIEW),
+      WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
+      Rating: () => Promise.resolve(RATING),
+      Experience: () => Promise.resolve(EXPERIENCE),
+      MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
+      TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+    },
+    initialPath: '/exportwins/review/123',
   })
-
-  cy.mount(
-    <Provider>
-      <Redirect to="/exportwins/review/123" />
-      <Review />
-    </Provider>
-  )
 
   assertHeader()
   assertNoErrorDialog()
@@ -335,20 +329,17 @@ describe('ExportWins/Review', () => {
   afterEach(() => sessionStorage.clear())
 
   it('Footer links', () => {
-    const Provider = createTestProvider({
-      'Export Win Review': () => Promise.resolve(REVIEW),
-      WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
-      Rating: () => Promise.resolve(RATING),
-      Experience: () => Promise.resolve(EXPERIENCE),
-      MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
-      TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+    cy.mountWithProvider(<Review />, {
+      tasks: {
+        'Export Win Review': () => Promise.resolve(REVIEW),
+        WithoutOurSupport: () => Promise.resolve(WITHOUT_OUR_SUPPORT),
+        Rating: () => Promise.resolve(RATING),
+        Experience: () => Promise.resolve(EXPERIENCE),
+        MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
+        TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+      },
+      initialPath: '/exportwins/review/123',
     })
-    cy.mount(
-      <Provider>
-        <Redirect to="/exportwins/review/123" />
-        <Review />
-      </Provider>
-    )
 
     cy.get('footer').within(() => {
       // There should be 3 links including the Crown copyright
@@ -372,18 +363,15 @@ describe('ExportWins/Review', () => {
 
   context('If there is a problem loading the review', () => {
     it("should render not found view if token is expired or doesn't exist", () => {
-      const Provider = createTestProvider({
-        'Export Win Review': () =>
-          Promise.reject({
-            httpStatusCode: 404,
-          }),
+      cy.mountWithProvider(<Review />, {
+        tasks: {
+          'Export Win Review': () =>
+            Promise.reject({
+              httpStatusCode: 404,
+            }),
+          initialPath: '/exportwins/review/123',
+        },
       })
-      cy.mount(
-        <Provider>
-          <Redirect to="/exportwins/review/123" />
-          <Review />
-        </Provider>
-      )
 
       assertHeader()
 
@@ -397,15 +385,12 @@ describe('ExportWins/Review', () => {
     })
 
     it("should render default error view if the review couldn't be loaded for", () => {
-      const Provider = createTestProvider({
-        'Export Win Review': () => Promise.reject({}),
+      cy.mountWithProvider(<Review />, {
+        tasks: {
+          'Export Win Review': () => Promise.reject({}),
+        },
+        initialPath: '/exportwins/review/123',
       })
-      cy.mount(
-        <Provider>
-          <Redirect to="/exportwins/review/123" />
-          <Review />
-        </Provider>
-      )
 
       assertHeader()
 

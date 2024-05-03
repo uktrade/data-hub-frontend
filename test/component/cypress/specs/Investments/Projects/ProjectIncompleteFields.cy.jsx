@@ -4,7 +4,6 @@ import { kebabCase } from 'lodash'
 import ProjectIncompleteFields from '../../../../../../src/client/modules/Investments/Projects/ProjectIncompleteFields'
 import { contact } from '../../../../../functional/cypress/fixtures'
 import urls from '../../../../../../src/lib/urls'
-import DataHubProvider from '../../provider'
 import {
   STAGE_ACTIVE,
   STAGE_ASSIGN_PM,
@@ -73,13 +72,11 @@ const buildAndMountComponent = (
     projectAssuranceAdviser: contact.deanCox,
   }
 
-  return cy.mount(
-    <DataHubProvider>
-      <ProjectIncompleteFields
-        project={project}
-        currentAdviserId={currentAdviserId}
-      />
-    </DataHubProvider>
+  return cy.mountWithProvider(
+    <ProjectIncompleteFields
+      project={project}
+      currentAdviserId={currentAdviserId}
+    />
   )
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 
 import { TASK_GET_EXPORT_WIN, TASK_GET_EXPORT_PROJECT } from './state'
 import ExportWinForm from './ExportWinForm'
@@ -42,56 +43,61 @@ const ExportWinStatus = (props) => (
 // If we're converting an export project to an export win
 // then we'll have the export id, otherwise we're creating
 // the export win from scratch.
-export const CreateExportWin = ({ match }) => (
-  <ExportWinForm
-    heading="Add export win"
-    subheading={<CompanyName companyId={match.params.companyId} />}
-    exportId={match.params.exportId}
-    companyId={match.params.companyId}
-    initialValuesTaskName={
-      match.params.exportId ? TASK_GET_EXPORT_PROJECT : null
-    }
-    initialValuesPayload={{ id: match.params.exportId }}
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.index(),
-        text: 'Companies',
-      },
-      {
-        link: urls.companies.detail(match.params.companyId),
-        text: <CompanyName companyId={match.params.companyId} />,
-      },
-      { text: 'Add export win' },
-    ]}
-  />
-)
+export const CreateExportWin = () => {
+  const { companyId, exportId } = useParams()
+  return (
+    <ExportWinForm
+      heading="Add export win"
+      subheading={<CompanyName companyId={companyId} />}
+      exportId={exportId}
+      companyId={companyId}
+      initialValuesTaskName={exportId ? TASK_GET_EXPORT_PROJECT : null}
+      initialValuesPayload={{ id: exportId }}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.index(),
+          text: 'Companies',
+        },
+        {
+          link: urls.companies.detail(companyId),
+          text: <CompanyName companyId={companyId} />,
+        },
+        { text: 'Add export win' },
+      ]}
+    />
+  )
+}
 
 // Here we're editing an existing win so we'll have the export win id.
-export const EditExportWin = ({ match }) => (
-  <ExportWinForm
-    heading={<ExportWinTitle id={match.params.winId} />}
-    subheading={<ExportWinSubTitle id={match.params.winId} />}
-    isEditing={true}
-    companyId={match.params.companyId}
-    exportWinId={match.params.winId}
-    initialValuesTaskName={TASK_GET_EXPORT_WIN}
-    initialValuesPayload={{
-      id: match.params.winId,
-    }}
-    breadcrumbs={[
-      {
-        link: urls.dashboard.index(),
-        text: 'Home',
-      },
-      {
-        link: urls.companies.exportWins.pending(),
-        text: 'Export wins',
-      },
-      { text: <ExportWinStatus id={match.params.winId} /> },
-    ]}
-  />
-)
+export const EditExportWin = () => {
+  const { winId, companyId } = useParams()
+
+  return (
+    <ExportWinForm
+      heading={<ExportWinTitle id={winId} />}
+      subheading={<ExportWinSubTitle id={winId} />}
+      isEditing={true}
+      companyId={companyId}
+      exportWinId={winId}
+      initialValuesTaskName={TASK_GET_EXPORT_WIN}
+      initialValuesPayload={{
+        id: winId,
+      }}
+      breadcrumbs={[
+        {
+          link: urls.dashboard.index(),
+          text: 'Home',
+        },
+        {
+          link: urls.companies.exportWins.pending(),
+          text: 'Export wins',
+        },
+        { text: <ExportWinStatus id={winId} /> },
+      ]}
+    />
+  )
+}
