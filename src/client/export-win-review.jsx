@@ -1,6 +1,6 @@
 import './webpack-csp-nonce'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import { createProvider } from './createProvider'
 import WithoutOurSupport from './components/Resource/WithoutOurSupport'
@@ -21,11 +21,10 @@ const Provider = createProvider({
   TASK_PATCH_EXPORT_WIN_REVIEW: patchExportWinReview,
 })
 
-window.addEventListener('DOMContentLoaded', () =>
-  ReactDOM.render(
+window.addEventListener('DOMContentLoaded', () => {
+  createRoot(document.getElementById('react-app')).render(
     <Provider>
       <Review />
-    </Provider>,
-    document.getElementById('react-app')
+    </Provider>
   )
-)
+})
