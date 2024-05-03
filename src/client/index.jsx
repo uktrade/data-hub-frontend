@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Switch } from 'react-router-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
@@ -8,7 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import { SearchLocalHeader } from './components'
 import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrapper'
-import Provider from './provider'
+import { createProvider } from './createProvider.jsx'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
@@ -36,10 +35,10 @@ import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import Footer from '../client/components/Footer'
 
 import ContactForm from '../client/components/ContactForm'
-import { ProtectedRoute } from '../client/components'
+
 import AddRemoveFromListForm from '../client/components/CompanyLists/AddRemoveFromListForm'
 
-import routes from './routes'
+import Routes from './routes'
 
 import ErrorFallback from './components/ErrorFallback'
 
@@ -86,13 +85,15 @@ if (globalProps.sentryDsn) {
   })
 }
 
+const Provider = createProvider(tasks)
+
 function App() {
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onError={(error) => ReactSentry.captureException(error)}
     >
-      <Provider tasks={tasks}>
+      <Provider>
         <Mount selector="#data-hub-header">
           {(props) => <DataHubHeaderWrapper {...props} />}
         </Mount>
@@ -219,15 +220,7 @@ function App() {
         </Mount>
 
         <Mount selector="#react-app">
-          {() => (
-            <Switch>
-              {Object.keys(routes).map((module) =>
-                routes[module].map((route) => (
-                  <ProtectedRoute exact={route.exact || true} {...route} />
-                ))
-              )}
-            </Switch>
-          )}
+          <Routes />
         </Mount>
       </Provider>
     </ErrorBoundary>

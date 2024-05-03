@@ -2,7 +2,6 @@ import React from 'react'
 import { capitalize } from 'lodash'
 import { faker } from '@faker-js/faker'
 
-import DataHubProvider from '../../provider'
 import {
   assertFieldDate,
   assertFieldError,
@@ -29,18 +28,13 @@ import advisersListFaker, {
 import { OPTION_NO, OPTION_YES } from '../../../../../../src/common/constants'
 import { convertDateToFieldDateObject } from '../../../../../../src/client/utils/date'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
-import { investmentProjectFaker } from '../../../../../functional/cypress/fakers/investment-projects'
 
 describe('Task form', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <TaskFormFields {...props} />
-    </DataHubProvider>
-  )
-
   context('When a task form renders without initial values', () => {
     beforeEach(() => {
-      cy.mount(<Component cancelRedirectUrl={urls.companies.index()} />)
+      cy.mountWithProvider(
+        <TaskFormFields cancelRedirectUrl={urls.companies.index()} />
+      )
     })
 
     it('should display the task title field', () => {
@@ -108,7 +102,7 @@ describe('Task form', () => {
   describe('Task form validation', () => {
     context('When a task is missing all mandatory fields', () => {
       beforeEach(() => {
-        cy.mount(<Component />)
+        cy.mountWithProvider(<TaskFormFields />)
         clickButton('Save task')
       })
 
@@ -138,7 +132,7 @@ describe('Task form', () => {
 
     context('When creating a task assigned to someone else', () => {
       beforeEach(() => {
-        cy.mount(<Component />)
+        cy.mountWithProvider(<TaskFormFields />)
 
         cy.get('[data-test=assigned-to-someone-else]').click()
       })
@@ -155,7 +149,7 @@ describe('Task form', () => {
 
     context('When a task is created a task with a custom date', () => {
       beforeEach(() => {
-        cy.mount(<Component />)
+        cy.mountWithProvider(<TaskFormFields />)
         cy.get('[data-test=due-date-custom-date]').click()
       })
 
@@ -197,7 +191,7 @@ describe('Task form', () => {
 
     context('When creating a task with reminders', () => {
       beforeEach(() => {
-        cy.mount(<Component />)
+        cy.mountWithProvider(<TaskFormFields />)
 
         cy.get('[data-test=field-emailRemindersEnabled]').click()
       })
@@ -236,8 +230,8 @@ describe('Task form', () => {
   describe('Adding a task form', () => {
     context('When a task form renders with an interaction', () => {
       beforeEach(() => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <TaskFormFields
             cancelRedirectUrl={urls.companies.index()}
             task={{ interaction: { id: 1, subject: 'a', notes: 'b' } }}
           />
@@ -262,8 +256,8 @@ describe('Task form', () => {
       const task = taskFaker()
 
       beforeEach(() => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <TaskFormFields
             cancelRedirectUrl={urls.companies.index()}
             task={transformAPIValuesForForm(task)}
           />
@@ -333,8 +327,8 @@ describe('Task form', () => {
       const task = taskWithCompanyFaker()
 
       beforeEach(() => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <TaskFormFields
             cancelRedirectUrl={urls.companies.index()}
             task={transformAPIValuesForForm(task)}
           />
@@ -358,8 +352,8 @@ describe('Task form', () => {
       () => {
         const task = taskWithInvestmentProjectFaker()
         beforeEach(() => {
-          cy.mount(
-            <Component
+          cy.mountWithProvider(
+            <TaskFormFields
               cancelRedirectUrl={urls.companies.index()}
               task={transformAPIValuesForForm(task)}
               companyInvestmentProjects={{ results: [task.investmentProject] }}
@@ -398,23 +392,25 @@ describe('Task form', () => {
         advisers: [currentAdviserId],
       })
 
-      it('should include adviser parameter for API call', () => {
+      it('should include adviser parameter for Task payload', () => {
+        const getProjectsTask = cy.stub()
         cy.intercept('GET', '/api-proxy/v4/company*', {
           count: 1,
           next: null,
           previous: null,
           results: [company],
         }).as('companySearch')
-        cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
-          count: 1,
-          results: [investmentProjectFaker()],
-        }).as('investmentProjectSearch')
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <TaskFormFields
             cancelRedirectUrl={urls.companies.index()}
             task={transformAPIValuesForForm(task, currentAdviserId)}
             currentAdviserId={currentAdviserId}
-          />
+          />,
+          {
+            tasks: {
+              TASK_GET_PROJECTS_LIST: getProjectsTask,
+            },
+          }
         )
         cy.get('[data-test="field-company"] input').type(
           task.investmentProject.investorCompany.name
@@ -427,12 +423,11 @@ describe('Task form', () => {
         cy.get('#field-company')
           .find('[data-test="typeahead-menu-option"]')
           .click()
-        cy.wait('@investmentProjectSearch').then((interception) => {
-          cy.wrap(interception.request.body.adviser[0]).should(
-            'eq',
-            currentAdviserId
-          )
-        })
+          .then(() => {
+            expect(getProjectsTask.args[0][0].adviser[0]).to.eq(
+              currentAdviserId
+            )
+          })
       })
     })
 
@@ -445,8 +440,8 @@ describe('Task form', () => {
         })
 
         beforeEach(() => {
-          cy.mount(
-            <Component
+          cy.mountWithProvider(
+            <TaskFormFields
               cancelRedirectUrl={urls.companies.index()}
               task={transformAPIValuesForForm(task, currentAdviser.id)}
             />
@@ -476,8 +471,8 @@ describe('Task form', () => {
         })
 
         beforeEach(() => {
-          cy.mount(
-            <Component
+          cy.mountWithProvider(
+            <TaskFormFields
               cancelRedirectUrl={urls.companies.index()}
               task={transformAPIValuesForForm(task, currentAdviser.id)}
             />
@@ -515,8 +510,8 @@ describe('Task form', () => {
               advisers: run.advisers,
             })
 
-            cy.mount(
-              <Component
+            cy.mountWithProvider(
+              <TaskFormFields
                 cancelRedirectUrl={urls.companies.index()}
                 task={transformAPIValuesForForm(task)}
               />

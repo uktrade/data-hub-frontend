@@ -3,10 +3,10 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
 import { GridRow, GridCol } from 'govuk-react'
 import { isEmpty } from 'lodash'
 import qs from 'qs'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import Task from '../Task'
 import CollectionSort from '../CollectionList/CollectionSort'
@@ -27,61 +27,56 @@ const ActivityFeedFilteredCollectionList = ({
   allActivityFeedEvents,
   addItemURL,
 }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const totalPages = Math.ceil(
     Math.min(total, maxItemsToPaginate) / itemsPerPage
   )
+  const qsParams = qs.parse(location.search.slice(1))
+  const initialPage = parseInt(qsParams.page, 10)
+
+  if (defaultQueryParams && isEmpty(qsParams)) {
+    navigate({
+      search: qs.stringify({
+        ...defaultQueryParams,
+      }),
+    })
+  }
 
   return (
-    <Route>
-      {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        const initialPage = parseInt(qsParams.page, 10)
-        if (defaultQueryParams && isEmpty(qsParams)) {
-          history.push({
-            search: qs.stringify({
-              ...defaultQueryParams,
-            }),
-          })
-        }
-        return (
-          <GridRow data-test="activity-feed-collection-list">
-            {children}
-            <GridCol>
-              <article>
-                {
-                  <CollectionHeader
-                    totalItems={total}
-                    collectionName="event"
-                    data-test="activity-feed-collection-header"
-                    addItemUrl={addItemURL}
-                  />
-                }
-                {sortOptions && (
-                  <CollectionSort
-                    sortOptions={sortOptions}
-                    totalPages={totalPages}
-                  />
-                )}
-                <Task.Status {...taskProps}>
-                  {() => (
-                    <ActivityList>
-                      {allActivityFeedEvents?.map((event, index) => {
-                        return (
-                          <li key={`event-${index}`}>
-                            <Activity activity={event} />
-                          </li>
-                        )
-                      })}
-                    </ActivityList>
-                  )}
-                </Task.Status>
-                <RoutedPagination initialPage={initialPage} items={total} />
-              </article>
-            </GridCol>
-          </GridRow>
-        )
-      }}
-    </Route>
+    <GridRow data-test="activity-feed-collection-list">
+      {children}
+      <GridCol>
+        <article>
+          {
+            <CollectionHeader
+              totalItems={total}
+              collectionName="event"
+              data-test="activity-feed-collection-header"
+              addItemUrl={addItemURL}
+            />
+          }
+          {sortOptions && (
+            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
+          )}
+          <Task.Status {...taskProps}>
+            {() => (
+              <ActivityList>
+                {allActivityFeedEvents?.map((event, index) => {
+                  return (
+                    <li key={`event-${index}`}>
+                      <Activity activity={event} />
+                    </li>
+                  )
+                })}
+              </ActivityList>
+            )}
+          </Task.Status>
+          <RoutedPagination initialPage={initialPage} items={total} />
+        </article>
+      </GridCol>
+    </GridRow>
   )
 }
 

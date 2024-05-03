@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
 
 const {
@@ -11,12 +10,6 @@ const {
 } = require('../../../../../functional/cypress/fakers/companies')
 
 describe('Section region', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <SectionRegion {...props} />
-    </DataHubProvider>
-  )
-
   const companyWithRegion = companyFaker({
     ukRegion: {
       name: 'London',
@@ -29,7 +22,7 @@ describe('Section region', () => {
 
   context('when viewing business details for a company with a region', () => {
     it('should display the "DBT region" details container', () => {
-      cy.mount(<Component company={companyWithRegion} />)
+      cy.mountWithProvider(<SectionRegion company={companyWithRegion} />)
 
       assertSummaryTable({
         dataTest: 'regionDetailsContainer',
@@ -42,7 +35,7 @@ describe('Section region', () => {
 
   context('when viewing business details for a company with no region', () => {
     it('should not display the "DBT region" details container', () => {
-      cy.mount(<Component company={companyWithoutRegion} />)
+      cy.mountWithProvider(<SectionRegion company={companyWithoutRegion} />)
 
       cy.get('[data-test="region-details-container"]').should('not.exist')
     })
@@ -52,7 +45,9 @@ describe('Section region', () => {
     'when viewing business details for a company that is archived',
     () => {
       it('should not display edit link', () => {
-        cy.mount(<Component company={companyWithRegion} isArchived={true} />)
+        cy.mountWithProvider(
+          <SectionRegion company={companyWithRegion} isArchived={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'regionDetailsContainer',

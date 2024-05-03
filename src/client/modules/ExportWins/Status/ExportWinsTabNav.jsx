@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { capitalize } from 'lodash'
 
 import { DefaultLayout } from '../../../components'
@@ -10,8 +11,9 @@ import urls from '../../../../lib/urls'
 
 const TITLE = /([^\/]+$)/
 
-const ExportWinsTabNav = ({ location }) => {
-  const title = TITLE.exec(location.pathname)[0]
+const ExportWinsTabNav = () => {
+  const location = useLocation()
+  const title = TITLE.exec(location.pathname)
   return (
     <DefaultLayout
       heading="Export wins"

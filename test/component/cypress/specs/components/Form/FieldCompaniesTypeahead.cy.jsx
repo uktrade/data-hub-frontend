@@ -4,8 +4,7 @@ import {
   FieldCompaniesTypeahead,
   Form,
 } from '../../../../../../src/client/components'
-
-import DataHubProvider from '../../provider'
+import typeaheadTasks from '../../../../../../src/client/components/Typeahead/tasks'
 
 const options = [
   {
@@ -36,19 +35,19 @@ const mockLoadOptions = (query = '') =>
   )
 
 describe('FieldCompaniesTypeahead', () => {
-  const Component = (props) => (
-    <DataHubProvider>
+  beforeEach(() =>
+    cy.mountWithProvider(
       <Form id="export-form">
         <FieldCompaniesTypeahead
           name="companies"
           loadOptions={mockLoadOptions}
-          {...props}
         />
-      </Form>
-    </DataHubProvider>
+      </Form>,
+      {
+        tasks: typeaheadTasks,
+      }
+    )
   )
-
-  beforeEach(() => cy.mount(<Component />))
 
   const searchForCompany = (name) => {
     cy.get('[data-test="field-companies"]')

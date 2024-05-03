@@ -1,18 +1,13 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { TaskOverdueFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskOverdueForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
 describe('TaskOverdueSettings', () => {
-  const Component = (props) => <TaskOverdueFormFields {...props} />
-
   context('Display the reminder settings form', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskOverdueFormFields settings={{ emailRemindersEnabled: true }} />
       )
     })
 
@@ -37,10 +32,8 @@ describe('TaskOverdueSettings', () => {
 
   context('When the email reminders enabled is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskOverdueFormFields settings={{ emailRemindersEnabled: true }} />
       )
     })
 
@@ -54,10 +47,8 @@ describe('TaskOverdueSettings', () => {
 
   context('When the email reminders enabled is false', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: false }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskOverdueFormFields settings={{ emailRemindersEnabled: false }} />
       )
     })
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { CompleteAssigneesTable } from '../../../../../src/client/modules/Omis/CompleteOrder'
-import DataHubProvider, { dispatchResetAction } from '../provider'
 import {
   assertDetails,
   assertErrorSummary,
@@ -22,16 +21,11 @@ const assignees = [
 ]
 
 describe('CompleteOrder', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <CompleteAssigneesTable {...props} />
-    </DataHubProvider>
-  )
-
   beforeEach(() => {
     cy.viewport(1024, 768)
-    dispatchResetAction()
-    cy.mount(<Component order={order} assignees={assignees} />)
+    cy.mountWithProvider(
+      <CompleteAssigneesTable order={order} assignees={assignees} />
+    )
   })
 
   it('should render the message', () => {

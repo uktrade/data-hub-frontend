@@ -4,7 +4,6 @@ import {
   AssigneeTimeTable,
   NoAssigneesMessage,
 } from '../../../../../src/client/modules/Omis/AssigneeTime'
-import DataHubProvider, { dispatchResetAction } from '../provider'
 import urls from '../../../../../src/lib/urls'
 import {
   assertErrorSummary,
@@ -36,7 +35,7 @@ const assigneesNoTime = [
 describe('AssigneeTime', () => {
   context('NoAssigneesMessage', () => {
     beforeEach(() => {
-      cy.mount(<NoAssigneesMessage order={order} />)
+      cy.mountWithProvider(<NoAssigneesMessage order={order} />)
     })
 
     it('should render the message', () => {
@@ -58,17 +57,12 @@ describe('AssigneeTime', () => {
   })
 
   context('AssigneeTimeTable', () => {
-    const Component = (props) => (
-      <DataHubProvider>
-        <AssigneeTimeTable {...props} />
-      </DataHubProvider>
-    )
-
     context('When the assignees already have estimated hours', () => {
       beforeEach(() => {
         cy.viewport(1024, 768)
-        dispatchResetAction()
-        cy.mount(<Component order={order} assignees={assignees} />)
+        cy.mountWithProvider(
+          <AssigneeTimeTable order={order} assignees={assignees} />
+        )
       })
 
       it('should render the message', () => {
@@ -135,8 +129,9 @@ describe('AssigneeTime', () => {
     context('When the assignees do not have estimated hours', () => {
       beforeEach(() => {
         cy.viewport(1024, 768)
-        dispatchResetAction()
-        cy.mount(<Component order={order} assignees={assigneesNoTime} />)
+        cy.mountWithProvider(
+          <AssigneeTimeTable order={order} assignees={assigneesNoTime} />
+        )
       })
 
       it('should render the message', () => {

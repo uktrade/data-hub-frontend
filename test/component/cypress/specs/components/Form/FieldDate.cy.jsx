@@ -2,28 +2,23 @@ import React from 'react'
 
 import { Form } from '../../../../../../src/client/components'
 import FieldDate from '../../../../../../src/client/components/Form/elements/FieldDate'
-import DataHubProvider from '../../provider'
 import {
   assertFieldError,
   assertNotExists,
 } from '../../../../../functional/cypress/support/assertions'
 
 describe('FieldDate', () => {
-  const Component = (props) => (
-    <DataHubProvider>
+  beforeEach(() => {
+    cy.mountWithProvider(
       <Form
         id="export-form"
         analyticsFormName="export-form"
         cancelRedirectTo={() => '/'}
         submissionTaskName="EMPTY"
       >
-        <FieldDate name="test-date" {...props} />
+        <FieldDate name="test-date" />
       </Form>
-    </DataHubProvider>
-  )
-
-  beforeEach(() => {
-    cy.mount(<Component />)
+    )
   })
 
   context('when entering a 2 digit value for year', () => {

@@ -1,21 +1,15 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import EditCompanyForm from '../../../../../../src/apps/companies/apps/edit-company/client/EditCompanyForm'
 
 describe('EditCompanyForm', () => {
   const base_company = { duns_number: 1, address: {}, number_of_employees: 1 }
 
-  const Component = (props) => (
-    <DataHubProvider>
-      <EditCompanyForm formInitialValues={{}} {...props} />
-    </DataHubProvider>
-  )
-
   context('When turnover_gbp and turnover_range is null', () => {
     it('should render a "Not set" message', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditCompanyForm
+          formInitialValues={{}}
           company={{
             ...base_company,
             turnover_gbp: null,
@@ -29,8 +23,9 @@ describe('EditCompanyForm', () => {
 
   context('When turnover_gbp is populated and turnover_range is null', () => {
     it('should render the value as a currency', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditCompanyForm
+          formInitialValues={{}}
           company={{
             ...base_company,
             turnover_gbp: 50,
@@ -44,8 +39,9 @@ describe('EditCompanyForm', () => {
 
   context('When turnover_gbp is null and turnover_range is null', () => {
     it('should render the turnover range value', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditCompanyForm
+          formInitialValues={{}}
           company={{
             ...base_company,
             turnover_gbp: null,
@@ -58,8 +54,9 @@ describe('EditCompanyForm', () => {
   })
   context('When employee_range and number_of_employees is null', () => {
     it('should render a "Not set" message', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditCompanyForm
+          formInitialValues={{}}
           company={{
             ...base_company,
             employee_range: null,
@@ -74,8 +71,9 @@ describe('EditCompanyForm', () => {
     'When number of employee is populated and employee range is null',
     () => {
       it('should render the value as a 50', () => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <EditCompanyForm
+            formInitialValues={{}}
             company={{
               ...base_company,
               number_of_employees: 50,
@@ -89,8 +87,9 @@ describe('EditCompanyForm', () => {
   )
   context('When number of employee is null and employee_range is 10-49', () => {
     it('should render the turnover range value', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditCompanyForm
+          formInitialValues={{}}
           company={{
             ...base_company,
             number_of_employees: null,

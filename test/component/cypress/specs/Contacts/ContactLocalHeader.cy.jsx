@@ -1,7 +1,6 @@
 import React from 'react'
 
 import ContactLocalHeader from '../../../../../src/client/components/ContactLocalHeader'
-import DataHubProvider from '../provider'
 import urls from '../../../../../src/lib/urls'
 
 const primaryContact = require('../../../../sandbox/fixtures/v3/contact/contact-complete-details-uk.json')
@@ -16,15 +15,9 @@ const addInteractionUrl = urls.companies.interactions.create(
 )
 
 describe('ContactLocalHeader', () => {
-  const Component = (props) => <ContactLocalHeader {...props} />
-
   context('When a primary contact is passed in', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component contact={primaryContact} />
-        </DataHubProvider>
-      )
+      cy.mountWithProvider(<ContactLocalHeader contact={primaryContact} />)
     })
 
     it('should render the company link', () => {
@@ -52,11 +45,7 @@ describe('ContactLocalHeader', () => {
 
   context('When a contact that is not primary is passed in', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component contact={notPrimaryContact} />
-        </DataHubProvider>
-      )
+      cy.mountWithProvider(<ContactLocalHeader contact={notPrimaryContact} />)
     })
 
     it('should render the company link', () => {
@@ -84,11 +73,7 @@ describe('ContactLocalHeader', () => {
 
   context('When an archived contact is passed in', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component contact={archivedContact} />
-        </DataHubProvider>
-      )
+      cy.mountWithProvider(<ContactLocalHeader contact={archivedContact} />)
     })
 
     it('should render the company link', () => {

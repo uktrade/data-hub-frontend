@@ -1,5 +1,4 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
 
 import {
   assertGovReactTable,
@@ -12,17 +11,9 @@ import { MyTasksContent } from '../../../../../../src/client/components/Dashboar
 import urls from '../../../../../../src/lib/urls'
 
 import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
-import Provider from '../../provider'
 import { STATUS } from '../../../../../../src/client/modules/Tasks/TaskForm/constants'
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => (
-    <Provider>
-      <BrowserRouter>
-        <MyTasksContent {...props} />
-      </BrowserRouter>
-    </Provider>
-  )
   // Create 3 tasks of which one is Archived
   const myTasksList = taskWithInvestmentProjectListFaker()
   myTasksList[1].status = STATUS.COMPLETED
@@ -36,7 +27,7 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mountWithProvider(<MyTasksContent myTasks={myTasks} />)
     })
 
     it('should display the heading 3 tasks', () => {
@@ -99,13 +90,6 @@ describe('My Tasks on the Dashboard', () => {
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => (
-    <Provider>
-      <BrowserRouter>
-        <MyTasksContent {...props} />
-      </BrowserRouter>
-    </Provider>
-  )
   const myTasks = {
     count: 0,
     results: [],
@@ -114,7 +98,7 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has no tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mountWithProvider(<MyTasksContent myTasks={myTasks} />)
     })
     it('should display the heading 0 tasks', () => {
       cy.get('h3').should('contain', '0 tasks')
@@ -132,13 +116,6 @@ describe('My Tasks on the Dashboard', () => {
 })
 
 describe('My Tasks on the Dashboard', () => {
-  const Component = (props) => (
-    <Provider>
-      <BrowserRouter>
-        <MyTasksContent {...props} />
-      </BrowserRouter>
-    </Provider>
-  )
   const myTasksList = taskWithInvestmentProjectListFaker((length = 1))
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
@@ -149,7 +126,7 @@ describe('My Tasks on the Dashboard', () => {
   context('When the logged in adviser has three tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
-      cy.mount(<Component myTasks={myTasks} />)
+      cy.mountWithProvider(<MyTasksContent myTasks={myTasks} />)
     })
 
     it('should display the heading 1 task (singular) and not 1 tasks (plural)', () => {

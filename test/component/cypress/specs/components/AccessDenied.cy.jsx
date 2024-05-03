@@ -3,19 +3,12 @@ import React from 'react'
 import AccessDenied from '../../../../../src/client/components/AccessDenied'
 import urls from '../../../../../src/lib/urls'
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
-import DataHubProvider from '../provider'
 
 describe('AccessDenied', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <AccessDenied {...props} />
-    </DataHubProvider>
-  )
-
   context('When breadcrumbs are provided', () => {
     it('they are used instead of the default', () => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <AccessDenied
           breadcrumbs={[
             {
               link: urls.dashboard.index(),

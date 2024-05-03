@@ -1,6 +1,6 @@
 import { REMINDER_SUMMARY__LOADED } from '../../actions'
 
-const initialState = {
+export const INITIAL_STATE = {
   count: 0,
   investment: {
     estimated_land_date: 0,
@@ -20,7 +20,7 @@ const initialState = {
   },
 }
 
-export default (state = initialState, { type, result }) => {
+export default (state = INITIAL_STATE, { type, result }) => {
   switch (type) {
     case REMINDER_SUMMARY__LOADED:
       return {
