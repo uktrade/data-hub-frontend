@@ -233,7 +233,7 @@ commands:
     steps:
       - run:
           name: Copy config
-          command: cp sample.env .env
+          command: cp tests.env .env
       - run:
           name: << parameters.label >>
           command: make << parameters.target >> SPEC_FILES="<< parameters.spec_files >>"

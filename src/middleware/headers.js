@@ -1,6 +1,7 @@
 const { v4: uuid } = require('uuid')
 
 const logger = require('../config/logger')
+const config = require('../config')
 
 const STS_MAX_AGE = 180 * 24 * 60 * 60
 
@@ -15,7 +16,7 @@ module.exports = function headers(req, res, next, nonceGenerator = uuid) {
     [
       `default-src ${selfAndNonce}`,
       // Taken from https://developers.google.com/tag-platform/security/guides/csp#google_analytics_4_google_analytics
-      `script-src ${selfAndNonce} https://*.googletagmanager.com`,
+      `script-src ${selfAndNonce} https://*.googletagmanager.com ${config.env === 'test' ? `'unsafe-eval'` : ''}`,
       `img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com`,
       `connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com`,
     ].join(';')
