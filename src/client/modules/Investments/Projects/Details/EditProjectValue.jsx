@@ -141,6 +141,20 @@ const EditProjectValue = () => {
                 type="number"
                 initialValue={project.numberNewJobs?.toString()}
               />
+              {project.investmentType.name === 'FDI' &&
+                project.gvaMultiplier.sectorClassificationGvaMultiplier ===
+                  'labour' && (
+                  <FieldUneditable
+                    label="Gross value added (GVA)"
+                    name="gross_value_added"
+                  >
+                    <>
+                      {project.grossValueAdded
+                        ? currencyGBP(project.grossValueAdded)
+                        : setGVAMessage(project)}
+                    </>
+                  </FieldUneditable>
+                )}
               <ResourceOptionsField
                 name="average_salary"
                 label="Average salary of new jobs"
