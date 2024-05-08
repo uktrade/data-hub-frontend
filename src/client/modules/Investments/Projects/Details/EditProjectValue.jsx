@@ -115,18 +115,21 @@ const EditProjectValue = () => {
                           type="text"
                           required="Enter the capital expenditure"
                         />
-                        {project.investmentType.name === 'FDI' && (
-                          <FieldUneditable
-                            label="Gross value added (GVA)"
-                            name="gross_value_added"
-                          >
-                            <>
-                              {project.grossValueAdded
-                                ? currencyGBP(project.grossValueAdded)
-                                : setGVAMessage(project)}
-                            </>
-                          </FieldUneditable>
-                        )}
+                        {project.investmentType.name === 'FDI' &&
+                          project.gvaMultiplier
+                            .sectorClassificationGvaMultiplier ===
+                            'capital' && (
+                            <FieldUneditable
+                              label="Gross value added (GVA)"
+                              name="gross_value_added"
+                            >
+                              <>
+                                {project.grossValueAdded
+                                  ? currencyGBP(project.grossValueAdded)
+                                  : setGVAMessage(project)}
+                              </>
+                            </FieldUneditable>
+                          )}
                       </>
                     ),
                   }),
