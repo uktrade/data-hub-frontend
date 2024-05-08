@@ -12,7 +12,7 @@ const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
 `
 
-const Address = ({ address, isRegistered }) => {
+const Address = ({ address, isRegistered = false }) => {
   const renderAdministrativeArea = (address) => {
     if (address.area && address.area.name) {
       return <li>{address.area.name}</li>
@@ -38,10 +38,6 @@ const Address = ({ address, isRegistered }) => {
 Address.propTypes = {
   address: PropTypes.object.isRequired,
   isRegistered: PropTypes.bool,
-}
-
-Address.defaultProps = {
-  isRegistered: false,
 }
 
 const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {

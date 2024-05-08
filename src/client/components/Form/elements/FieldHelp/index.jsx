@@ -19,7 +19,7 @@ const FieldHelp = ({
   helpText,
   footerUrl,
   footerUrlDescription,
-  open,
+  open = false,
 }) => {
   return (
     <ItemWrapper>
@@ -45,10 +45,6 @@ FieldHelp.propTypes = {
   footerUrl: PropTypes.string,
   footerDescription: PropTypes.string,
   open: PropTypes.bool,
-}
-
-FieldHelp.defaultProps = {
-  open: false,
 }
 
 export default FieldHelp

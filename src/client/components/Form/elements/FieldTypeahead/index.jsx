@@ -37,9 +37,9 @@ const FieldTypeahead = ({
   label,
   legend,
   hint,
-  initialValue,
+  initialValue = null,
   options,
-  autoScroll,
+  autoScroll = false,
   className,
   ...props
 }) => {
@@ -115,16 +115,6 @@ FieldTypeahead.propTypes = {
    * Whether the window should auto scroll into view this component
    */
   autoScroll: PropTypes.bool,
-}
-
-FieldTypeahead.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: null,
-  autoScroll: false,
 }
 
 export default FieldTypeahead

@@ -8,7 +8,7 @@ const StyledTableRow = styled(Table.Cell)`
   ${({ addPadding }) => addPadding && `padding-top: ${SPACING_POINTS[6]}px;`}
 `
 
-const WideSummaryTableRow = ({ children, addPadding }) => (
+const WideSummaryTableRow = ({ children, addPadding = false }) => (
   <Table.Row>
     <StyledTableRow addPadding={addPadding} colSpan={2}>
       {children}
@@ -19,10 +19,6 @@ const WideSummaryTableRow = ({ children, addPadding }) => (
 WideSummaryTableRow.propTypes = {
   children: PropTypes.node.isRequired,
   addPadding: PropTypes.bool,
-}
-
-WideSummaryTableRow.defaultProps = {
-  addPadding: false,
 }
 
 export default WideSummaryTableRow

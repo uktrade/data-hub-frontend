@@ -24,7 +24,12 @@ const ThemeServiceContainer = styled('div')({
   ...flexMixin,
 })
 
-const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
+const ActivityCardLabels = ({
+  isExternalActivity = false,
+  theme,
+  service,
+  kind,
+}) => (
   <Container>
     {(kind || theme || service) && (
       <ThemeServiceContainer>
@@ -59,10 +64,6 @@ ActivityCardLabels.propTypes = {
   service: PropTypes.string,
   kind: PropTypes.string.isRequired,
   isExternalActivity: PropTypes.bool,
-}
-
-ActivityCardLabels.defaultProps = {
-  isExternalActivity: false,
 }
 
 export default ActivityCardLabels

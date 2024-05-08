@@ -30,9 +30,9 @@ const FieldRadios = ({
   legend,
   bigLegend,
   hint,
-  inline,
+  inline = false,
   initialValue,
-  options,
+  options = [],
   ...props
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -108,17 +108,6 @@ FieldRadios.propTypes = {
       children: PropTypes.node,
     })
   ),
-}
-
-FieldRadios.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  inline: false,
-  initialValue: '',
-  options: [],
 }
 
 export default FieldRadios

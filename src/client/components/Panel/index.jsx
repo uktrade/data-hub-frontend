@@ -56,8 +56,4 @@ Panel.propTypes = {
   children: PropTypes.element,
 }
 
-Panel.defaultProps = {
-  children: null,
-}
-
 export default Panel

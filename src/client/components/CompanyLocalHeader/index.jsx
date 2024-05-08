@@ -296,9 +296,4 @@ CompanyLocalHeader.propTypes = {
   dnbRelatedCompaniesCount: PropTypes.number,
 }
 
-CompanyLocalHeader.defaultProps = {
-  flashMessages: null,
-  dnbRelatedCompaniesCount: null,
-}
-
 export default connect(companyState2Props)(CompanyLocalHeader)

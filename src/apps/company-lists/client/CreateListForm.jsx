@@ -8,7 +8,7 @@ import { FORM_LAYOUT } from '../../../common/constants'
 const CreateListForm = ({
   id,
   name,
-  hint,
+  hint = '',
   label,
   cancelUrl,
   maxLength,
@@ -54,10 +54,6 @@ CreateListForm.propTypes = {
   cancelUrl: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   maxLength: PropTypes.number.isRequired,
-}
-
-CreateListForm.defaultProps = {
-  hint: '',
 }
 
 export default CreateListForm

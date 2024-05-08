@@ -29,7 +29,12 @@ const StyledActions = styled('div')`
   }
 `
 
-const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
+const CollectionHeaderRow = ({
+  primary = false,
+  actions,
+  children,
+  ...rest
+}) => {
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
@@ -43,11 +48,6 @@ CollectionHeaderRow.propTypes = {
   primary: PropTypes.bool,
   actions: PropTypes.node,
   children: PropTypes.node.isRequired,
-}
-
-CollectionHeaderRow.defaultProps = {
-  primary: false,
-  actions: null,
 }
 
 export default CollectionHeaderRow

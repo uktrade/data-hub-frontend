@@ -43,6 +43,9 @@ const validateMaxLength = (maxLength) => (value) =>
     ? `${pluralize('character', value.length - maxLength, true)} too long`
     : null
 
+const SEARCH_RESULTS_MESSAGE =
+  'The search results below are verified company records from an external and verified source of company information.'
+
 const FieldDnbCompany = ({
   name,
   label,
@@ -50,10 +53,10 @@ const FieldDnbCompany = ({
   hint,
   country,
   apiEndpoint,
-  queryParams,
+  queryParams = {},
   entityRenderer,
   onCannotFind,
-  searchResultsMessage,
+  searchResultsMessage = SEARCH_RESULTS_MESSAGE,
   features,
 }) => {
   const { values, goBack, validateForm, setIsLoading } = useFormContext()
@@ -188,18 +191,6 @@ FieldDnbCompany.propTypes = {
   entityRenderer: PropTypes.func,
   onCannotFind: PropTypes.func,
   searchResultsMessage: PropTypes.string,
-}
-
-FieldDnbCompany.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  country: null,
-  queryParams: {},
-  entityRenderer: undefined,
-  onCannotFind: null,
-  searchResultsMessage:
-    'The search results below are verified company records from an external and verified source of company information.',
 }
 
 export default FieldDnbCompany

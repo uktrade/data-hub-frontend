@@ -21,7 +21,7 @@ const EntityList = ({ entities, entityRenderer: EntityRenderer }) => (
         data-test="entity-list-item"
         key={`entity-list-item_${entity.id}`}
       >
-        <EntityRenderer {...entity} />
+        {(EntityRenderer || EntityListItem)({ ...entity })}
       </StyledEntityListItem>
     ))}
   </StyledEntityList>
@@ -37,10 +37,6 @@ EntityList.propTypes = {
     })
   ).isRequired,
   entityRenderer: PropTypes.func,
-}
-
-EntityList.defaultProps = {
-  entityRenderer: EntityListItem,
 }
 
 export default EntityList
