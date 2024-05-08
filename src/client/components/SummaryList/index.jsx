@@ -63,8 +63,4 @@ SummaryList.propTypes = {
   ),
 }
 
-SummaryList.defaultProps = {
-  rows: null,
-}
-
 export default SummaryList

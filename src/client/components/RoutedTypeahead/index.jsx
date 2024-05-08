@@ -36,7 +36,7 @@ const RoutedTypeahead = ({
   loadOptions,
   noOptionsMessage,
   options,
-  labelAsQueryParam,
+  labelAsQueryParam = false,
   ...props
 }) => {
   const location = useLocation()
@@ -81,7 +81,4 @@ RoutedTypeahead.propTypes = {
   labelAsQueryParam: PropTypes.bool,
 }
 
-RoutedTypeahead.defaultProps = {
-  labelAsQueryParam: false,
-}
 export default RoutedTypeahead

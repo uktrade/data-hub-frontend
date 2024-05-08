@@ -38,8 +38,5 @@ ActivityCardSubject.propTypes = {
     bottom: PropTypes.number.isRequired,
   }),
 }
-ActivityCardSubject.defaultProps = {
-  isOverview: false,
-}
 
 export default ActivityCardSubject

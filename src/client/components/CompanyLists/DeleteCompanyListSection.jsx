@@ -71,8 +71,4 @@ DeleteCompanyListSection.propTypes = {
   returnUrl: PropTypes.string.isRequired,
 }
 
-DeleteCompanyListSection.defaultProps = {
-  errorMessage: null,
-}
-
 export default DeleteCompanyListSection

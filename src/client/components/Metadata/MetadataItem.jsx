@@ -25,8 +25,4 @@ MetadataItem.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-MetadataItem.defaultProps = {
-  label: null,
-}
-
 export default MetadataItem

@@ -69,8 +69,4 @@ CollectionHeader.propTypes = {
   addItemUrl: PropTypes.string,
 }
 
-CollectionHeader.defaultProps = {
-  addItemUrl: null,
-}
-
 export default CollectionHeader

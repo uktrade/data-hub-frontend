@@ -105,10 +105,4 @@ Step.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 }
 
-Step.defaultProps = {
-  backButton: undefined,
-  forwardButton: undefined,
-  children: null,
-}
-
 export default Step

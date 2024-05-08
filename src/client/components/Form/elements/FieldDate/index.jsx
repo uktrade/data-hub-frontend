@@ -100,11 +100,15 @@ const FieldDate = ({
   hint,
   validate,
   initialValue,
-  labels,
+  labels = {
+    day: 'Day',
+    month: 'Month',
+    year: 'Year',
+  },
   required,
   invalid,
-  format,
-  reduced,
+  format = FORMAT_LONG,
+  reduced = false,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -248,23 +252,6 @@ FieldDate.propTypes = {
    * Toggles wether the element is a filter or not
    */
   reduced: PropTypes.bool,
-}
-
-FieldDate.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  required: null,
-  invalid: null,
-  format: FORMAT_LONG,
-  validate: null,
-  initialValue: null,
-  labels: {
-    day: 'Day',
-    month: 'Month',
-    year: 'Year',
-  },
-  reduced: false,
 }
 
 export default FieldDate

@@ -24,7 +24,7 @@ const StyledLabelText = styled(LabelText)(({ theme }) => ({
   },
 }))
 
-const InlineLabel = ({ text, children, justifyRight, name }) => (
+const InlineLabel = ({ text, children, justifyRight = false, name }) => (
   <StyledLabel justifyRight={justifyRight} htmlFor={name}>
     <StyledLabelText>{text}</StyledLabelText>
     {children}
@@ -35,10 +35,6 @@ InlineLabel.propTypes = {
   text: PropTypes.string.isRequired,
   children: PropTypes.node,
   justifyRight: PropTypes.bool,
-}
-
-InlineLabel.defaultProps = {
-  justifyRight: false,
 }
 
 export default InlineLabel

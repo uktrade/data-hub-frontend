@@ -53,8 +53,4 @@ EditCompanyList.propTypes = {
   csrfToken: PropTypes.string.isRequired,
 }
 
-EditCompanyList.defaultProps = {
-  hint: '',
-}
-
 export default EditCompanyList

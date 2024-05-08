@@ -46,8 +46,4 @@ Main.propTypes = {
   children: PropTypes.node,
 }
 
-Main.defaultProps = {
-  children: undefined,
-}
-
 export default Main
