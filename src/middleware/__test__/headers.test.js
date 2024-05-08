@@ -21,7 +21,10 @@ describe('headers middleware', () => {
       const resMock = { set: sinon.spy() }
       const nextMock = sinon.spy()
 
-      headers(reqMock, resMock, nextMock, nonceGenerator)
+      headers(reqMock, resMock, nextMock, {
+        nonceGenerator,
+        mode: 'production',
+      })
 
       expect(resMock.set.args).to.be.deep.equal([
         CSP_HEADER,
@@ -43,7 +46,10 @@ describe('headers middleware', () => {
       const resMock = { set: sinon.spy() }
       const nextMock = sinon.spy()
 
-      headers(reqMock, resMock, nextMock, nonceGenerator)
+      headers(reqMock, resMock, nextMock, {
+        nonceGenerator,
+        mode: 'production',
+      })
 
       expect(resMock.set.args).to.be.deep.equal([CSP_HEADER])
 
