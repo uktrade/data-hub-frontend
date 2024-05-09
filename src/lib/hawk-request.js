@@ -17,7 +17,7 @@ function getHawkHeader(credentials, requestOptions) {
   // Ensure backend is using same protocol for hash generation
   return Hawk.client.header(url, method, {
     credentials,
-    // payload: '',
+    payload: '',
     contentType: 'application/json',
   })
 }
