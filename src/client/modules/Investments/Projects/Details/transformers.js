@@ -179,17 +179,30 @@ export const transformProjectSummaryForApi = ({
 }
 
 export const setGVAMessage = (project) => {
-  const { foreignEquityInvestment, sector } = project
-  if (!foreignEquityInvestment && !sector) {
-    return 'Add capital expenditure value and primary sector (investment project summary) to calculate GVA'
-  }
+  const { foreignEquityInvestment, sector, numberNewJobs } = project
+  if (project.gvaMultiplier.sectorClassificationGvaMultiplier === 'capital') {
+    if (!foreignEquityInvestment && !sector) {
+      return 'Add capital expenditure value and primary sector (investment project summary) to calculate GVA'
+    }
+    if (!foreignEquityInvestment) {
+      return 'Add capital expenditure value and click "Save" to calculate GVA'
+    }
 
-  if (!foreignEquityInvestment) {
-    return 'Add capital expenditure value and click "Save" to calculate GVA'
+    if (!sector) {
+      return 'Add primary sector (investment project summary) to calculate GVA'
+    }
   }
+  if (project.gvaMultiplier.sectorClassificationGvaMultiplier === 'labour') {
+    if (!numberNewJobs && !sector) {
+      return 'Add number of new jobs and primary sector (investment project summary) to calculate GVA'
+    }
+    if (!numberNewJobs) {
+      return 'Add number of new jobs and click "Save" to calculate GVA'
+    }
 
-  if (!sector) {
-    return 'Add primary sector (investment project summary) to calculate GVA'
+    if (!sector) {
+      return 'Add primary sector (investment project summary) to calculate GVA'
+    }
   }
 }
 
