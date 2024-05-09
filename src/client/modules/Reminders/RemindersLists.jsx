@@ -67,13 +67,15 @@ const RemindersLists = ({
                 <>
                   <Effect
                     dependencyList={[nextPending]}
-                    effect={() =>
-                      nextPending &&
-                      getNextTask.start({
-                        payload: { page, sortby: qsParams.sortby },
-                        onSuccessDispatch: getNextReminderTaskOnSuccessDispatch,
-                      })
-                    }
+                    effect={() => {
+                      if (nextPending) {
+                        getNextTask.start({
+                          payload: { page, sortby: qsParams.sortby },
+                          onSuccessDispatch:
+                            getNextReminderTaskOnSuccessDispatch,
+                        })
+                      }
+                    }}
                   />
                   <CollectionList
                     results={results}

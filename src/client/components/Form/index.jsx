@@ -313,22 +313,23 @@ const _Form = ({
                             </HardRedirect>
                             <Effect
                               dependencyList={[initialValues]}
-                              effect={() =>
-                                initialValues &&
-                                onLoad(
-                                  transformInitialValues(initialValues),
-                                  initialStepIndex,
-                                  keepValuesOnDeregister
-                                )
-                              }
+                              effect={() => {
+                                if (initialValues) {
+                                  onLoad(
+                                    transformInitialValues(initialValues),
+                                    initialStepIndex
+                                  )
+                                }
+                              }}
                             />
                             <Effect
                               dependencyList={[submissionTask.hasError]}
                               effect={() => {
-                                submissionTask.hasError &&
+                                if (submissionTask.hasError) {
                                   analytics('Submission request error', {
                                     error: submissionTask.errorMessage,
                                   })
+                                }
                               }}
                             />
                             {redirectMode === 'hard' &&
