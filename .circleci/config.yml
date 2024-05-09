@@ -266,14 +266,13 @@ workflows:
           name: e2e_tests_<< matrix.staff >>
           matrix:
             parameters:
-              # staff: [da, lep]
-              staff: [da]
-      # - e2e_tests_dit:
-      #     <<: *ignore_ghpages
-      #     name: e2e_tests_dit
-      #     matrix:
-      #       parameters:
-      #         staff: [dit]
+              staff: [da, lep]
+      - e2e_tests_dit:
+          <<: *ignore_ghpages
+          name: e2e_tests_dit
+          matrix:
+            parameters:
+              staff: [dit]
       # - release-storybook:
       #     <<: *ignore_ghpages
       #     filters:
