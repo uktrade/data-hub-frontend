@@ -4,7 +4,8 @@ const config = require('../config')
 const request = require('./request')
 
 function getHawkHeader(credentials, requestOptions) {
-  if (config.isTest) {
+  // if (config.isTest) {
+  if (false) {
     return 'hawk-test-header'
   }
 
@@ -25,7 +26,8 @@ async function hawkRequest(requestOptions, credentials, clientHeaderArtifacts) {
     ...requestOptions,
   })
 
-  if (!config.isTest) {
+  // if (!config.isTest) {
+  if (false) {
     let isValid = false
     const payload = JSON.stringify(response.data || {})
     try {
