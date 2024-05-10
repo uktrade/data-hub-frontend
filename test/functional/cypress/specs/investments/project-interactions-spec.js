@@ -78,11 +78,35 @@ describe('Investment project interactions', () => {
           },
         }
       ).as('apiRequest')
+
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?investment_project_id=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=date`,
+        {
+          body: {
+            count: 11,
+            results: interactionsList,
+          },
+        }
+      ).as('apiRequestOldest')
+
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?investment_project_id=${fixtures.investment.investmentWithDetails.id}&limit=10&offset=0&sortby=-date`,
+        {
+          body: {
+            count: 11,
+            results: interactionsList,
+          },
+        }
+      ).as('apiRequestRecentlyCreated')
+
       cy.visit(
         urls.investments.projects.interactions.index(
           fixtures.investment.investmentWithDetails.id
         )
       )
+
       cy.wait('@apiRequest')
     })
 
@@ -103,8 +127,10 @@ describe('Investment project interactions', () => {
     })
 
     it('should allow sort by recently created interactions when changed back to default', () => {
-      cy.get('[data-test="sortby"] select').select('date')
-      cy.get('[data-test="sortby"] select').select('-date')
+      cy.get('[data-test="sortby"] select').select('date') // oldest
+      cy.wait('@apiRequestOldest')
+      cy.get('[data-test="sortby"] select').select('-date') // recently created
+      cy.wait('@apiRequestRecentlyCreated')
       assertQueryParams('sortby', '-date')
     })
 

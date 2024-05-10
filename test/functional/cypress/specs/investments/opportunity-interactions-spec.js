@@ -92,9 +92,33 @@ describe('The interactions tab on an opportunity page', () => {
           },
         }
       ).as('apiRequest')
+
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=0&sortby=date`,
+        {
+          body: {
+            count: 11,
+            results: interactionsList,
+          },
+        }
+      ).as('apiRequestOldest')
+
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?large_capital_opportunity_id=${completeOpportunity.id}&limit=10&offset=0&sortby=-date`,
+        {
+          body: {
+            count: 11,
+            results: interactionsList,
+          },
+        }
+      ).as('apiRequestRecentlyCreated')
+
       cy.visit(
         urls.investments.opportunities.interactions(completeOpportunity.id)
       )
+
       cy.wait('@apiRequest')
     })
 
@@ -115,8 +139,10 @@ describe('The interactions tab on an opportunity page', () => {
     })
 
     it('should allow sort by recently created interactions when changed back to default', () => {
-      cy.get('[data-test="sortby"] select').select('date')
-      cy.get('[data-test="sortby"] select').select('-date')
+      cy.get('[data-test="sortby"] select').select('date') // oldest
+      cy.wait('@apiRequestOldest')
+      cy.get('[data-test="sortby"] select').select('-date') // recently created
+      cy.wait('@apiRequestRecentlyCreated')
       assertQueryParams('sortby', '-date')
     })
 
