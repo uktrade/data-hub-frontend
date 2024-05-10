@@ -23,7 +23,7 @@ The `Task` is using a sort of lightweight _dependency injection_, i.e. you never
 call a _task_ function directly, but only refer to it by its _name_ and _id_
 and delegate the call to the `Task` component. To what _task_ function exactly
 the _name_ resolves depends on what you register under that name by the
-`DataHubProvider` component. This has a couple of advantages:
+`createProvider` component. This has a couple of advantages:
 
 - You can work without a running API instance by plugging in a dummy task which
   resolves with hardcoded or random data.
@@ -32,8 +32,10 @@ the _name_ resolves depends on what you register under that name by the
 - The DI could theoretically be used in functional tests instead of the sandbox
 
 ```js
-<DataHubProvider
-  tasks={{
+
+import { createProvider } from '/src/client/createProvider.jsx'
+
+const tasks = {
     // Satisfy the dependecies
     'do something': (payload) => Promise.resolve('result'),
     'do something else': (payload) => Promise.reject('Error message'),
@@ -42,8 +44,11 @@ the _name_ resolves depends on what you register under that name by the
       new Promise((resolve, reject) =>
         setTimeout(5000, resolve, { dummy: 'data' })
       ),
-  }}
->
+  }
+
+const Provider = createProvider(tasks)
+
+<Provider>
   {/* Here you can use the tasks registered above */}
   <Task>
     {(task) => (
@@ -60,7 +65,7 @@ the _name_ resolves depends on what you register under that name by the
       </button>
     )}
   </Task>
-</DataHubProvider>
+</Provider>
 ```
 
 ## Higher Level

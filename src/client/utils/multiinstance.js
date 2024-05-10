@@ -1,5 +1,4 @@
 import React from 'react'
-import {} from 'react-router-dom'
 import { omit, isEmpty, curry } from 'lodash'
 import * as reactRedux from 'react-redux'
 import PropTypes from 'prop-types'
