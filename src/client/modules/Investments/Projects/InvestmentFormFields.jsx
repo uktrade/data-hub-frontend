@@ -309,6 +309,8 @@ export const FieldSpecificProgramme = ({ initialValue = null }) => (
   <ResourceOptionsField
     name="specific_programme"
     label="Specific investment programme (optional)"
+    emptyOption="Choose a specific programme"
+    required="Choose a specific programme"
     resource={SpecificInvestmentProgrammesResource}
     field={FieldTypeahead}
     initialValue={initialValue}
