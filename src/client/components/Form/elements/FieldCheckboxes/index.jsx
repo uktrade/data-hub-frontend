@@ -120,9 +120,7 @@ const FieldCheckboxes = ({
                   <Fragment key={optionLabel}>
                     {optionLabel}
                     {optionLink && (
-                      <Fragment key={`option-link-for-${optionLabel}`}>
-                        {optionLink}
-                      </Fragment>
+                      <Fragment key={optionLink}>{optionLink}</Fragment>
                     )}
                   </Fragment>
                 )}

@@ -1,8 +1,14 @@
 import React from 'react'
 import { H1 } from '@govuk-react/heading'
+import { Details, ListItem, UnorderedList } from 'govuk-react'
+import styled from 'styled-components'
 
 import FieldCheckboxes from '../FieldCheckboxes'
 import Form from '../../../Form'
+
+const StyledDetails = styled(Details)({
+  margin: 0,
+})
 
 const options = [
   {
@@ -133,6 +139,26 @@ export const CheckboxesExclusive = () => (
             {
               label: 'No, I will not be travelling to any of these countries',
               value: 'no',
+            },
+            {
+              label: 'Yes, I will travelling to any of these countries',
+              value: 'yes',
+              link: (
+                <StyledDetails
+                  summary="Is included a territorial independent countries?"
+                  data-test="some-list-of-territorial-countries"
+                >
+                  <p>List of territorial countries:</p>
+                  <UnorderedList listStyleType="bullet">
+                    <ListItem>French Guiana</ListItem>
+                    <ListItem>Madeira and Azores</ListItem>
+                    <ListItem>
+                      Balearic Islands(Ibiza, Formentera, Mallorca and Canary
+                      Islands)
+                    </ListItem>
+                  </UnorderedList>
+                </StyledDetails>
+              ),
             },
           ]}
         />
