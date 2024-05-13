@@ -9,6 +9,7 @@ module.exports = function headers(
   req,
   res,
   next,
+  // We allow nonce generator and mode to be pluggable for easy testing
   { nonceGenerator = uuid, mode = config.env } = {}
 ) {
   res.locals ||= {}
