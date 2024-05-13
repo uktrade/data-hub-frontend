@@ -1,3 +1,6 @@
+import React from 'react'
+import { useRoutes } from 'react-router-dom'
+
 import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
@@ -100,639 +103,1003 @@ import OrderQuote from './modules/Omis/OrderQuote'
 import OrdersReconciliationCollection from './modules/Omis/CollectionList/OrdersReconciliationCollection'
 import CompanyEditHistory from './modules/Companies/CompanyBusinessDetails/CompanyEditHistory/CompanyEditHistory'
 import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProjectDocument'
-import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import AddPropositionDocument from './modules/Investments/Projects/Propositions/AddPropositionDocument'
+import ProtectedRoute from './components/ProtectedRoute/index'
+import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 
-const routes = {
-  companies: [
+function Routes() {
+  const routes = useRoutes([
     {
       path: '/companies',
-      module: 'datahub:companies',
-      component: CompaniesCollectionList,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompaniesCollectionList />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/overview',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyOverview />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/dnb-hierarchy',
-      module: 'datahub:companies',
-      component: CompanyHierarchy,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyHierarchy />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/company-tree',
-      module: 'datahub:companies',
-      component: CompanyTree,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyTree />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/strategy/create',
-      module: 'datahub:companies',
-      component: Strategy,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Strategy />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/strategy/edit',
-      module: 'datahub:companies',
-      component: Strategy,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Strategy />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/objective/create',
-      module: 'datahub:companies',
-      component: ObjectiveAdd,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ObjectiveAdd />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/objective/:objectiveId/edit',
-      module: 'datahub:companies',
-      component: ObjectiveEdit,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ObjectiveEdit />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/objective/archived',
-      module: 'datahub:companies',
-      component: ArchivedObjectives,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ArchivedObjectives />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/edit-one-list',
-      module: 'datahub:companies',
-      component: EditOneList,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <EditOneList />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management/objective/:objectiveId/archive',
-      module: 'datahub:companies',
-      component: ObjectiveArchive,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ObjectiveArchive />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/hierarchies/ghq/search',
-      module: 'datahub:companies',
-      component: LinkGlobalHQ,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <LinkGlobalHQ />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/subsidiaries/link',
-      module: 'datahub:companies',
-      component: LinkSubsidiary,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <LinkSubsidiary />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/hierarchies/subsidiaries/search',
-      module: 'datahub:companies',
-      component: LinkSubsidiary,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <LinkSubsidiary />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exports/edit-countries',
-      module: 'datahub:companies',
-      component: ExportCountriesEdit,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportCountriesEdit />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exports/edit',
-      module: 'datahub:companies',
-      component: ExportsEdit,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportsEdit />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/referrals/:referralId/help',
       module: 'datahub:companies',
-      component: ReferralHelp,
-    },
-    {
-      path: '/companies/:companyId/overview',
-      module: 'datahub:companies',
-      component: CompanyOverview,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ReferralHelp />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/business-details',
-      module: 'datahub:companies',
-      component: CompanyBusinessDetails,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyBusinessDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/hierarchies/ghq/:globalHqId/add',
-      module: 'datahub:companies',
-      component: SetGlobalHQ,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <SetGlobalHQ />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/hierarchies/ghq/remove',
-      module: 'datahub:companies',
-      component: RemoveGlobalHQ,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <RemoveGlobalHQ />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/activity',
-      module: 'datahub:companies',
-      component: CompanyActivityCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyActivityCollection />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/contacts',
-      module: 'datahub:companies',
-      component: CompanyContactsCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyContactsCollection />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/orders',
-      module: 'datahub:companies',
-      component: CompanyOrdersCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyOrdersCollection />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/account-management',
-      module: 'datahub:companies',
-      component: AccountManagement,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <AccountManagement />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/investments',
-      module: 'datahub:companies',
-      component: CompanyProjectsCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyProjectsCollection />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/investments/projects',
-      module: 'datahub:companies',
-      component: CompanyProjectsCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyProjectsCollection />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/investments/large-capital-profile',
-      module: 'datahub:companies',
-      component: LargeCapitalProfile,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <LargeCapitalProfile />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exports',
-      module: 'datahub:companies',
-      component: ExportsIndex,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportsIndex />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exports/history',
-      module: 'datahub:companies',
-      component: ExportsHistory,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportsHistory />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exports/history/:countryId',
-      module: 'datahub:companies',
-      component: ExportsHistory,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportsHistory />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/edit-history',
-      module: 'datahub:companies',
-      component: CompanyEditHistory,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyEditHistory />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  contacts: [
     {
       path: '/contacts',
-      module: 'datahub:contacts',
-      component: ContactsCollectionList,
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactsCollectionList />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  community: [
     {
       path: '/community',
-      module: 'datahub:companies',
-      component: Community,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Community />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  events: [
     {
       path: '/events',
-      module: 'datahub:events',
-      component: EventsCollectionList,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventsCollectionList />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/create',
-      module: 'datahub:events',
-      component: EventForm,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventForm />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/:id/edit',
-      module: 'datahub:events',
-      component: EventForm,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventForm />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/:id/details',
-      module: 'datahub:events',
-      component: EventDetails,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/aventri/:aventriEventId/details',
-      module: 'datahub:events',
-      component: EventAventriDetails,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventAventriDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/aventri/:aventriEventId/registration/:status',
-      module: 'datahub:events',
-      component: EventAventriRegistrationStatus,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <EventAventriRegistrationStatus />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/events/:eventId/attendees/find-new',
-      module: 'datahub:events',
-      component: AttendeeSearch,
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <AttendeeSearch />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  interactions: [
     {
       path: '/interactions',
-      module: 'datahub:interactions',
-      component: InteractionsCollectionList,
+      element: (
+        <ProtectedRoute module={'datahub:interactions'}>
+          <InteractionsCollectionList />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/interactions/ess/:essInteractionId/details',
-      module: 'datahub:interactions',
-      component: ESSInteractionDetails,
+      element: (
+        <ProtectedRoute module={'datahub:interactions'}>
+          <ESSInteractionDetails />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  orders: [
     {
       path: '/omis',
-      module: 'datahub:orders',
-      component: OmisCollectionList,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <OmisCollectionList />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/quote-details',
-      module: 'datahub:orders',
-      component: EditQuoteInformation,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditQuoteInformation />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/internal-details',
-      module: 'datahub:orders',
-      component: EditInternalInformation,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditInternalInformation />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/payment-reconciliation',
-      module: 'datahub:orders',
-      component: PaymentReconciliation,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <PaymentReconciliation />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/invoice-details',
-      module: 'datahub:orders',
-      component: EditInvoiceDetails,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditInvoiceDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/billing-address',
-      module: 'datahub:orders',
-      component: EditBillingAddress,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditBillingAddress />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/vat-status',
-      module: 'datahub:orders',
-      component: EditVATStatus,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditVATStatus />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/cancel-order',
-      module: 'datahub:orders',
-      component: CancelOrder,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <CancelOrder />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/assignee-time',
-      module: 'datahub:orders',
-      component: AssigneeTime,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <AssigneeTime />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/complete-order',
-      module: 'datahub:orders',
-      component: CompleteOrder,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <CompleteOrder />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/contact',
-      module: 'datahub:orders',
-      component: EditContact,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditContact />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/assignees',
-      module: 'datahub:orders',
-      component: EditAssignees,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditAssignees />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/subscribers',
-      module: 'datahub:orders',
-      component: EditSubscribers,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <EditSubscribers />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/work-order',
-      module: 'datahub:orders',
-      component: WorkOrder,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <WorkOrder />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/edit/lead-adviser/:adviserId',
-      module: 'datahub:orders',
-      component: SetLeadAdviser,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <SetLeadAdviser />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/create',
-      module: 'datahub:orders',
-      component: SelectOrderCompany,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <SelectOrderCompany />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/create/:companyId',
-      module: 'datahub:orders',
-      component: CreateOrder,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <CreateOrder />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/payment-receipt',
-      module: 'datahub:orders',
-      component: PaymentReceipt,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <PaymentReceipt />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/reconciliation/payment-receipt',
-      module: 'datahub:orders',
-      component: PaymentReceipt,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <PaymentReceipt />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/:orderId/quote',
-      module: 'datahub:orders',
-      component: OrderQuote,
+      element: (
+        <ProtectedRoute module={'datahub:orders'}>
+          <OrderQuote />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/omis/reconciliation',
-      module: 'datahub:orders',
-      component: OrdersReconciliationCollection,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <OrdersReconciliationCollection />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  reminders: [
     {
-      exact: true,
       path: '/reminders/settings',
-      module: 'datahub:companies',
-      component: RemindersSettings,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <RemindersSettings />
+        </ProtectedRoute>
+      ),
     },
     {
-      exact: false,
       path: '/reminders/settings/:reminderType',
-      module: 'datahub:companies',
-      component: RemindersForms,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <RemindersForms />
+        </ProtectedRoute>
+      ),
     },
     {
-      exact: false,
-      path: ['/reminders/:reminderType', '/reminders'],
-      module: 'datahub:companies',
-      component: Reminders,
+      path: '/reminders',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Reminders />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  exportPipeline: [
+    {
+      path: '/reminders/:reminderType',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Reminders />
+        </ProtectedRoute>
+      ),
+    },
     {
       path: '/export/create',
-      module: 'datahub:companies',
-      component: ExportFormAdd,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportFormAdd />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/export/:exportId/edit',
-      module: 'datahub:companies',
-      component: ExportFormEdit,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportFormEdit />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/export/:exportId/details',
-      module: 'datahub:companies',
-      component: ExportDetails,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/export/:exportId/delete',
-      module: 'datahub:companies',
-      component: ExportFormDelete,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportFormDelete />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  exportWins: [
     {
       path: '/exportwins/rejected',
-      module: 'datahub:companies',
-      component: ExportWinsTabNav,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsTabNav />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/exportwins/pending',
-      module: 'datahub:companies',
-      component: ExportWinsTabNav,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsTabNav />
+        </ProtectedRoute>
+      ),
     },
     {
-      path: '/exportwins/confirmed',
-      module: 'datahub:companies',
-      component: ExportWinsTabNav,
+      path: '/exportwins/won',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsTabNav />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/exportwins',
-      module: 'datahub:companies',
-      component: ExportWinsRedirect,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsRedirect />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/exportwins/create',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateExportWin />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/exportwins/confirmed',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ExportWinsTabNav />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exportwins/create',
-      module: 'datahub:companies',
-      component: CreateExportWin,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateExportWin />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/export/:exportId/exportwins/create',
-      module: 'datahub:companies',
-      component: CreateExportWin,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateExportWin />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/exportwins/:winId/success',
-      module: 'datahub:companies',
-      component: Success,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Success />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exportwins/:winId/edit',
-      module: 'datahub:companies',
-      component: EditExportWin,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <EditExportWin />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/companies/:companyId/exportwins/:winId/edit-success',
-      module: 'datahub:companies',
-      component: EditSuccess,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <EditSuccess />
+        </ProtectedRoute>
+      ),
     },
     {
-      path: '/companies/:companyId/exportwins/:winId/customer-feedback',
-      module: 'datahub:companies',
-      component: CustomerFeedback,
+      path: '/exportwins/:winId/customer-feedback',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CustomerFeedback />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  investments: [
     {
       path: '/investments/projects/:projectId/status',
-      module: 'datahub:investments',
-      component: EditProjectStatus,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditProjectStatus />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/find-associated',
-      module: 'datahub:investments',
-      component: FindAssociatedProject,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <FindAssociatedProject />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-associated/:associatedProjectId',
-      module: 'datahub:investments',
-      component: EditAssociatedProject,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditAssociatedProject />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/remove-associated',
-      module: 'datahub:investments',
-      component: EditAssociatedProject,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditAssociatedProject />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/find-ukcompany',
-      module: 'datahub:investments',
-      component: FindRecipientCompany,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <FindRecipientCompany />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-ukcompany/:companyId',
-      module: 'datahub:investments',
-      component: EditRecipientCompany,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditRecipientCompany />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/remove-ukcompany',
-      module: 'datahub:investments',
-      component: EditRecipientCompany,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditRecipientCompany />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/details',
-      module: 'datahub:investments',
-      component: ProjectDetails,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectDetails />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-details',
-      module: 'datahub:investments',
-      component: EditProjectSummary,
+
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditProjectSummary />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-requirements',
-      module: 'datahub:investments',
-      component: EditProjectRequirements,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditProjectRequirements />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-value',
-      module: 'datahub:investments',
-      component: EditProjectValue,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditProjectValue />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/team',
-      module: 'datahub:investments',
-      component: ProjectTeam,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectTeam />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/evaluation',
-      module: 'datahub:investments',
-      component: ProjectEvaluation,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectEvaluation />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/interactions',
-      module: 'datahub:investments',
-      component: ProjectInteractions,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectInteractions />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/propositions',
-      module: 'datahub:investments',
-      component: ProjectPropositions,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectPropositions />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-client-relationship-management',
-      module: 'datahub:investments',
-      component: EditClientRelationshipManagement,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditClientRelationshipManagement />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-project-management',
-      module: 'datahub:investments',
-      component: EditProjectManagement,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditProjectManagement />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-team-members',
-      module: 'datahub:investments',
-      component: EditTeamMembers,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EditTeamMembers />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/edit-history',
-      module: 'datahub:investments',
-      component: ProjectEditHistory,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectEditHistory />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/evidence',
-      module: 'datahub:investments',
-      component: ProjectEvidence,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectEvidence />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/evidence/add-new',
-      module: 'datahub:investments',
-      component: AddProjectDocument,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <AddProjectDocument />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/evidence/:documentId/delete',
-      module: 'datahub:investments',
-      component: DeleteProjectDocument,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <DeleteProjectDocument />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/admin',
-      module: 'datahub:investments',
-      component: InvestmentProjectAdmin,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentProjectAdmin />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects',
-      module: 'datahub:investments',
-      component: InvestmentCollections,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentCollections />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/profiles',
-      module: 'datahub:investments',
-      component: InvestmentCollections,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentCollections />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/opportunities',
-      module: 'datahub:investments',
-      component: InvestmentCollections,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentCollections />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments',
-      module: 'datahub:investments',
-      component: InvestmentsRedirect,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentsRedirect />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/tasks',
-      module: 'datahub:investments',
-      component: ProjectTasks,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <ProjectTasks />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/opportunities/create',
-      module: 'datahub:investments',
-      component: CreateUKInvestmentOpportunity,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <CreateUKInvestmentOpportunity />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/opportunities/:opportunityId/status',
-      module: 'datahub:investments',
-      component: OpportunityChangeStatusForm,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <OpportunityChangeStatusForm />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/opportunities/:opportunityId/details',
-      module: 'datahub:investments',
-      component: Opportunity,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <Opportunity />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/opportunities/:opportunityId/interactions',
-      module: 'datahub:investments',
-      component: Opportunity,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <Opportunity />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  propositions: [
     {
       path: '/investments/projects/:projectId/propositions/:propositionId/abandon',
-      module: 'datahub:investments',
-      component: AbandonProposition,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <AbandonProposition />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/propositions/create/proposition',
-      module: 'datahub:investments',
-      component: CreateProposition,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <CreateProposition />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/propositions/:propositionId/document/:documentId/delete',
-      module: 'datahub:investments',
-      component: DeletePropositionDocument,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <DeletePropositionDocument />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/investments/projects/:projectId/propositions/:propositionId/document',
-      module: 'datahub:investments',
-      component: AddPropositionDocument,
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <AddPropositionDocument />
+        </ProtectedRoute>
+      ),
     },
-  ],
-  tasks: [
+
     {
       path: '/tasks/:taskId/details',
-      module: 'datahub:companies',
-      component: TaskDetails,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <TaskDetails />
+        </ProtectedRoute>
+      ),
     },
 
     {
       path: '/tasks/:taskId/edit',
-      module: 'datahub:companies',
-      component: TaskFormEdit,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <TaskFormEdit />
+        </ProtectedRoute>
+      ),
     },
     {
       exact: true,
       path: '/tasks/create',
-      module: 'datahub:companies',
-      component: TaskFormAdd,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <TaskFormAdd />
+        </ProtectedRoute>
+      ),
     },
     {
       path: '/tasks/:taskId',
-      module: 'datahub:companies',
-      component: TaskDetails,
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <TaskDetails />
+        </ProtectedRoute>
+      ),
     },
-  ],
-}
+  ])
 
-export default routes
+  return routes
+}
+export default Routes

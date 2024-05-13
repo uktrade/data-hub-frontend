@@ -3,8 +3,6 @@ import React from 'react'
 import Typeahead from '../../../../../src/client/components/Typeahead/Typeahead'
 import typeaheadTasks from '../../../../../src/client/components/Typeahead/tasks'
 
-import DataHubProvider, { dispatchResetAction } from '../provider'
-
 const options = [
   { value: '0001', label: 'Apple' },
   { value: '0002', label: 'Banana' },
@@ -51,20 +49,20 @@ export const mockLoadOptions = (query = '') =>
 describe('Typeahead', () => {
   context('static single-select', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <DataHubProvider tasks={typeaheadTasks}>
-          <Typeahead
-            id="typeahead-single"
-            isMulti={false}
-            closeMenuOnSelect={true}
-            name="typeahead"
-            initialOptions={options}
-            placeholder="Search..."
-            label="Pick a fruit"
-            data-test="test-component"
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <Typeahead
+          id="typeahead-single"
+          isMulti={false}
+          closeMenuOnSelect={true}
+          name="typeahead"
+          initialOptions={options}
+          placeholder="Search..."
+          label="Pick a fruit"
+          data-test="test-component"
+        />,
+        {
+          tasks: typeaheadTasks,
+        }
       )
       cy.get('[data-test="test-component"]').as('component')
     })
@@ -142,20 +140,20 @@ describe('Typeahead', () => {
 
   context('static multi-select', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <DataHubProvider tasks={typeaheadTasks}>
-          <Typeahead
-            id="typeahead-multi"
-            isMulti={true}
-            closeMenuOnSelect={false}
-            name="typeahead-ms"
-            initialOptions={options}
-            placeholder="Search..."
-            label="Pick a fruit"
-            data-test="test-component-ms"
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <Typeahead
+          id="typeahead-multi"
+          isMulti={true}
+          closeMenuOnSelect={false}
+          name="typeahead-ms"
+          initialOptions={options}
+          placeholder="Search..."
+          label="Pick a fruit"
+          data-test="test-component-ms"
+        />,
+        {
+          tasks: typeaheadTasks,
+        }
       )
       cy.get('[data-test="test-component-ms"]').as('component')
     })
@@ -261,20 +259,20 @@ describe('Typeahead', () => {
 
   context('async single-select', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <DataHubProvider tasks={typeaheadTasks}>
-          <Typeahead
-            id="typeahead-async-single"
-            isMulti={false}
-            closeMenuOnSelect={true}
-            name="typeahead"
-            loadOptions={mockLoadOptions}
-            placeholder="Search..."
-            label="Pick an adviser"
-            data-test="test-component"
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <Typeahead
+          id="typeahead-async-single"
+          isMulti={false}
+          closeMenuOnSelect={true}
+          name="typeahead"
+          loadOptions={mockLoadOptions}
+          placeholder="Search..."
+          label="Pick an adviser"
+          data-test="test-component"
+        />,
+        {
+          tasks: typeaheadTasks,
+        }
       )
       cy.get('[data-test="test-component"]').as('component')
     })
@@ -353,20 +351,20 @@ describe('Typeahead', () => {
 
   context('async multi-select', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <DataHubProvider tasks={typeaheadTasks}>
-          <Typeahead
-            id="typeahead-async-multi-1"
-            isMulti={true}
-            closeMenuOnSelect={false}
-            name="typeahead-async-ms"
-            loadOptions={mockLoadOptions}
-            placeholder="Search..."
-            label="Pick an adviser"
-            data-test="test-component-async-ms"
-          />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <Typeahead
+          id="typeahead-async-multi-1"
+          isMulti={true}
+          closeMenuOnSelect={false}
+          name="typeahead-async-ms"
+          loadOptions={mockLoadOptions}
+          placeholder="Search..."
+          label="Pick an adviser"
+          data-test="test-component-async-ms"
+        />,
+        {
+          tasks: typeaheadTasks,
+        }
       )
       cy.get('[data-test="test-component-async-ms"]').as('component')
     })

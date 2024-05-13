@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
 
-import DataHubProvider from '../provider'
 import PaginatedResource from '../../../../../src/client/components/Resource/Paginated'
 import TabNav from '../../../../../src/client/components/TabNav'
 
@@ -12,20 +11,18 @@ const PAGES = _.chunk(DB, PAGE_SIZE)
 
 describe('Resource/Paginated', () => {
   it('Should inject only the current page of results to children', () => {
-    cy.mount(
-      <DataHubProvider
-        resetTasks={true}
-        tasks={{
+    cy.mountWithProvider(
+      <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
+        {(page) => <pre>{JSON.stringify(page)}</pre>}
+      </PaginatedResource>,
+      {
+        tasks: {
           foo: (payload) => ({
             count: COUNT,
             results: DB.slice(payload.offset, payload.offset + payload.limit),
           }),
-        }}
-      >
-        <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
-          {(page) => <pre>{JSON.stringify(page)}</pre>}
-        </PaginatedResource>
-      </DataHubProvider>
+        },
+      }
     )
 
     cy.get('[data-test="no-results"]').should('not.exist')
@@ -63,40 +60,34 @@ describe('Resource/Paginated', () => {
   })
 
   it('Should load when mounted, even if the resource already has data', () => {
-    cy.mount(
-      <DataHubProvider
-        resetTasks={true}
-        tasks={{
+    cy.mountWithProvider(
+      <TabNav
+        id="tab-nav"
+        selectedIndex="1"
+        label="Tab nav"
+        tabs={[
+          {
+            label: 'Foo tab',
+            content: 'Fooooo',
+          },
+          {
+            label: 'Bar tab',
+            content: (
+              <PaginatedResource name="bar" id="whatever" pageSize={PAGE_SIZE}>
+                {(page) => <pre>{JSON.stringify(page)}</pre>}
+              </PaginatedResource>
+            ),
+          },
+        ]}
+      />,
+      {
+        tasks: {
           bar: async (payload) => ({
             count: COUNT,
             results: DB.slice(payload.offset, payload.offset + payload.limit),
           }),
-        }}
-      >
-        <TabNav
-          id="tab-nav"
-          selectedIndex="1"
-          label="Tab nav"
-          tabs={[
-            {
-              label: 'Foo tab',
-              content: 'Fooooo',
-            },
-            {
-              label: 'Bar tab',
-              content: (
-                <PaginatedResource
-                  name="bar"
-                  id="whatever"
-                  pageSize={PAGE_SIZE}
-                >
-                  {(page) => <pre>{JSON.stringify(page)}</pre>}
-                </PaginatedResource>
-              ),
-            },
-          ]}
-        />
-      </DataHubProvider>
+        },
+      }
     )
 
     cy.contains('Loading')
@@ -112,20 +103,18 @@ describe('Resource/Paginated', () => {
   })
 
   it('Should render the default no results message', () => {
-    cy.mount(
-      <DataHubProvider
-        resetTasks={true}
-        tasks={{
+    cy.mountWithProvider(
+      <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
+        {(page) => <pre>{JSON.stringify(page)}</pre>}
+      </PaginatedResource>,
+      {
+        tasks: {
           foo: () => ({
             count: 0,
             results: [],
           }),
-        }}
-      >
-        <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
-          {(page) => <pre>{JSON.stringify(page)}</pre>}
-        </PaginatedResource>
-      </DataHubProvider>
+        },
+      }
     )
     cy.get('[data-test="pagination-summary"]').should('not.exist')
     cy.get('[data-test="pagination"]').should('not.exist')
@@ -136,25 +125,23 @@ describe('Resource/Paginated', () => {
   })
 
   it('Should override the default results message"', () => {
-    cy.mount(
-      <DataHubProvider
-        resetTasks={true}
-        tasks={{
+    cy.mountWithProvider(
+      <PaginatedResource
+        name="foo"
+        id="whatever"
+        pageSize={PAGE_SIZE}
+        noResults="You don't have any sent export wins."
+      >
+        {(page) => <pre>{JSON.stringify(page)}</pre>}
+      </PaginatedResource>,
+      {
+        tasks: {
           foo: () => ({
             count: 0,
             results: [],
           }),
-        }}
-      >
-        <PaginatedResource
-          name="foo"
-          id="whatever"
-          pageSize={PAGE_SIZE}
-          noResults="You don't have any sent export wins."
-        >
-          {(page) => <pre>{JSON.stringify(page)}</pre>}
-        </PaginatedResource>
-      </DataHubProvider>
+        },
+      }
     )
     cy.get('[data-test="no-results"]').should(
       'have.text',

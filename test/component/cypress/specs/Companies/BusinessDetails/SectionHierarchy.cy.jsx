@@ -3,7 +3,6 @@ import React from 'react'
 import SectionHierarchy from '../../../../../../src/client/modules/Companies/CompanyBusinessDetails/SectionHierarchy'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
 import urls from '../../../../../../src/lib/urls'
-import DataHubProvider from '../../provider'
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
 
 const HIERARCHY_STRINGS = {
@@ -15,20 +14,14 @@ const HIERARCHY_STRINGS = {
 }
 
 describe('Section hierarchy', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <SectionHierarchy {...props} />
-    </DataHubProvider>
-  )
-
   context(
     'When viewing business details for a Dun & Bradstreet company with a global ultimate',
     () => {
       const globalUltimateCompany = companyFaker()
 
       it('the table should show all expected values', () => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <SectionHierarchy
             company={globalUltimateCompany}
             isDnbCompany={true}
             dnbRelatedCompaniesCount={5}
@@ -54,7 +47,7 @@ describe('Section hierarchy', () => {
       })
 
       it('the table should show all expected values', () => {
-        cy.mount(<Component company={oneListCompany} />)
+        cy.mountWithProvider(<SectionHierarchy company={oneListCompany} />)
 
         assertSummaryTable({
           dataTest: 'businessHierarchyDetailsContainer',
@@ -72,7 +65,9 @@ describe('Section hierarchy', () => {
     'when viewing business details for a Dun & Bradstreet company not on the One List',
     () => {
       it('the table should show all expected values', () => {
-        cy.mount(<Component company={companyFaker()} isDnbCompany={true} />)
+        cy.mountWithProvider(
+          <SectionHierarchy company={companyFaker()} isDnbCompany={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'businessHierarchyDetailsContainer',
@@ -98,8 +93,8 @@ describe('Section hierarchy', () => {
       })
 
       it('the table should show all expected values', () => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <SectionHierarchy
             company={archivedCompany}
             dnbRelatedCompaniesCount={2}
             subsidiariesCount={2}
@@ -125,7 +120,7 @@ describe('Section hierarchy', () => {
     'when viewing business details for a company with minimal data',
     () => {
       it('the table should show all expected values', () => {
-        cy.mount(<Component company={companyFaker()} />)
+        cy.mountWithProvider(<SectionHierarchy company={companyFaker()} />)
 
         assertSummaryTable({
           dataTest: 'businessHierarchyDetailsContainer',
@@ -151,8 +146,8 @@ describe('Section hierarchy', () => {
       })
 
       it('the table should show all expected values', () => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <SectionHierarchy
             company={company}
             isDnbCompany={true}
             subsidiariesCount={2}

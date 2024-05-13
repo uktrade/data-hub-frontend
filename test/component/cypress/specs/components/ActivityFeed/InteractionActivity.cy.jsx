@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { TASK_GET_USER_FEATURE_FLAGS } from '../../../../../../src/client/components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from '../../../../../../src/client/components/CheckUserFeatureFlags/tasks'
 
@@ -167,12 +166,13 @@ const buildAndMountActivity = (
     type: 'Announce',
   }
 
-  return cy.mount(
-    <DataHubProvider
-      tasks={{ [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags }}
-    >
-      <Interaction activity={activity} showDetails={false} filter={[]} />
-    </DataHubProvider>
+  cy.mountWithProvider(
+    <Interaction activity={activity} showDetails={false} filter={[]} />,
+    {
+      tasks: {
+        [TASK_GET_USER_FEATURE_FLAGS]: getUserFeatureFlags,
+      },
+    }
   )
 }
 

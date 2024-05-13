@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../provider'
 import StepReferralDetails from '../../../../../src/apps/companies/apps/referrals/send-referral/client/StepReferralDetails'
 
 import { companyFaker } from '../../../../functional/cypress/fakers/companies'
@@ -29,25 +28,18 @@ describe('StepReferralDetails component', () => {
   const task = taskFaker()
   const cancelUrl = 'cancelUrl'
 
-  const Component = (props) => (
-    <DataHubProvider>
-      <Form id="export-form">
-        <StepReferralDetails
-          {...props}
-          companyId={company.id}
-          companyContacts={companyContacts}
-          cancelUrl={cancelUrl}
-          openContactFormTask={task}
-        />
-      </Form>
-    </DataHubProvider>
-  )
-
   describe('All but successful completion', () => {
     beforeEach(() => {
-      cy.mount(
+      cy.mountWithProvider(
         <div>
-          <Component />
+          <Form id="export-form">
+            <StepReferralDetails
+              companyId={company.id}
+              companyContacts={companyContacts}
+              cancelUrl={cancelUrl}
+              openContactFormTask={task}
+            />
+          </Form>
         </div>
       )
     })

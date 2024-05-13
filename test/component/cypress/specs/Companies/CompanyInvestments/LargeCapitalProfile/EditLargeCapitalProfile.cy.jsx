@@ -1,22 +1,14 @@
 import React from 'react'
 
-import DataHubProvider, { dispatchResetAction } from '../../../provider'
 import { assertKeyValueTable } from '../../../../../../functional/cypress/support/assertions'
 import EditLargeCapitalProfile from '../../../../../../../src/client/modules/Companies/CompanyInvestments/LargeCapitalProfile/EditLargeCapitalProfile'
 import { largeInvestorProfileFaker } from '../../../../../../functional/cypress/fakers/large-investor-profile'
 
 describe('Edit large capital profile', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <EditLargeCapitalProfile {...props} />
-    </DataHubProvider>
-  )
-
   context('When a company is missing all fields', () => {
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditLargeCapitalProfile
           profile={{
             results: [
               largeInvestorProfileFaker({
@@ -102,9 +94,8 @@ describe('Edit large capital profile', () => {
   context('When a company has all fields populated', () => {
     const investmentProfile = largeInvestorProfileFaker()
     beforeEach(() => {
-      dispatchResetAction()
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <EditLargeCapitalProfile
           profile={{
             results: [investmentProfile],
           }}

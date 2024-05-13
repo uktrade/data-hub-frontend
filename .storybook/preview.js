@@ -3,7 +3,7 @@ import { FONT_SIZE, FONT_STACK, MEDIA_QUERIES } from '@govuk-react/constants'
 import { createGlobalStyle } from 'styled-components'
 
 import '../src/client/components'
-import DataHubProvider from '../src/client/provider'
+import { createProvider } from '../src/client/createProvider.jsx'
 import taskStoriesTasks from '../src/client/components/Task/__stories__/tasks.js'
 import typeaheadTasks from '../src/client/components/Typeahead/tasks.js'
 import contactTasks from '../src/client/components/Resource/__stories__/tasks.js'
@@ -19,20 +19,20 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
+const Provider = createProvider({
+  ...taskStoriesTasks,
+  ...contactTasks,
+  ...typeaheadTasks,
+  ...formTasks,
+})
+
 export const decorators = [
   (Story) => (
     <>
       <GlobalStyle />
-      <DataHubProvider
-        tasks={{
-          ...taskStoriesTasks,
-          ...contactTasks,
-          ...typeaheadTasks,
-          ...formTasks,
-        }}
-      >
+      <Provider>
         <Story />
-      </DataHubProvider>
+      </Provider>
     </>
   ),
 ]

@@ -1,20 +1,15 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { TaskAssignedToMeFromOthersFormFields } from '../../../../../../src/client/modules/Reminders/Settings/TaskAssignedToMeFromOthersForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
 describe('TaskAssignedToMeFromOthersSettings', () => {
-  const Component = (props) => (
-    <TaskAssignedToMeFromOthersFormFields {...props} />
-  )
-
   context('Display the reminder settings form', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAssignedToMeFromOthersFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -39,10 +34,10 @@ describe('TaskAssignedToMeFromOthersSettings', () => {
 
   context('When the email reminders enabled is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAssignedToMeFromOthersFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -56,10 +51,10 @@ describe('TaskAssignedToMeFromOthersSettings', () => {
 
   context('When the email reminders enabled is false', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: false }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <TaskAssignedToMeFromOthersFormFields
+          settings={{ emailRemindersEnabled: false }}
+        />
       )
     })
 

@@ -1,18 +1,15 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { DueDateApproachingFormFields } from '../../../../../../src/client/modules/Reminders/Settings/DueDateApproachingForm'
 import { assertFieldRadiosWithLegend } from '../../../../../functional/cypress/support/assertions'
 
 describe('DueDateApproachingFormFields', () => {
-  const Component = (props) => <DueDateApproachingFormFields {...props} />
-
   context('Display the reminder settings form', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <DueDateApproachingFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -37,10 +34,10 @@ describe('DueDateApproachingFormFields', () => {
 
   context('When the email reminders enabled is true', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: true }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <DueDateApproachingFormFields
+          settings={{ emailRemindersEnabled: true }}
+        />
       )
     })
 
@@ -54,10 +51,10 @@ describe('DueDateApproachingFormFields', () => {
 
   context('When the email reminders enabled is false', () => {
     beforeEach(() => {
-      cy.mount(
-        <DataHubProvider>
-          <Component settings={{ emailRemindersEnabled: false }} />
-        </DataHubProvider>
+      cy.mountWithProvider(
+        <DueDateApproachingFormFields
+          settings={{ emailRemindersEnabled: false }}
+        />
       )
     })
 

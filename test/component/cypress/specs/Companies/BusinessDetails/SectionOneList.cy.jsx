@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DataHubProvider from '../../provider'
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
 
 const {
@@ -11,12 +10,6 @@ const {
 } = require('../../../../../functional/cypress/fakers/companies')
 
 describe('Section region', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <SectionOneList {...props} />
-    </DataHubProvider>
-  )
-
   const oneListCompany = companyFaker({
     oneListGroupGlobalAccountManager: {
       name: 'Travis Greene',
@@ -47,7 +40,7 @@ describe('Section region', () => {
 
   context('when viewing business details for a one list company', () => {
     it('should display the "Global Account Manager - One List" details container', () => {
-      cy.mount(<Component company={oneListCompany} />)
+      cy.mountWithProvider(<SectionOneList company={oneListCompany} />)
 
       assertSummaryTable({
         dataTest: 'oneListDetailsContainer',
@@ -66,7 +59,7 @@ describe('Section region', () => {
     'when viewing business details for a company that is not one list',
     () => {
       it('should not display the "Global Account Manager - One List" details container', () => {
-        cy.mount(<Component company={notOneListCompany} />)
+        cy.mountWithProvider(<SectionOneList company={notOneListCompany} />)
 
         cy.get('[data-test="one-list-details-container"]').should('not.exist')
       })
@@ -77,7 +70,9 @@ describe('Section region', () => {
     'when viewing business details for a one list company that is archived',
     () => {
       it('should not display edit link', () => {
-        cy.mount(<Component company={oneListCompany} isArchived={true} />)
+        cy.mountWithProvider(
+          <SectionOneList company={oneListCompany} isArchived={true} />
+        )
 
         assertSummaryTable({
           dataTest: 'oneListDetailsContainer',

@@ -2,7 +2,6 @@ import React from 'react'
 
 import { kebabCase } from 'lodash'
 
-import DataHubProvider from '../../provider'
 import { Hierarchy } from '../../../../../../src/client/modules/Companies/CompanyHierarchy/CompanyTree'
 import {
   companyTreeFaker,
@@ -118,16 +117,10 @@ const companyNoUkRegionCompanyName = kebabCase(
 )
 
 describe('D&B Company Tree Hierarchy component', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <Hierarchy {...props} />
-    </DataHubProvider>
-  )
-
   context('When a company has no related records', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyNoRelatedRecords}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -163,8 +156,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company has no subsidiaries', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyNoSubsidiaries}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -210,8 +203,8 @@ describe('D&B Company Tree Hierarchy component', () => {
     companyOnlyImmediateSubsidiaries.ultimate_global_company.is_out_of_business = true
 
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyOnlyImmediateSubsidiaries}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -311,8 +304,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company has no additional company information', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyNoAdditionalTagData}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -352,8 +345,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company has subsidiaries not on Data Hub', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyWithLinkedSubsidiaryNotInDataHub}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -375,8 +368,8 @@ describe('D&B Company Tree Hierarchy component', () => {
         treeDepth: 5,
       })
 
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyWith5LevelsOfSubsidiaries}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -422,8 +415,8 @@ describe('D&B Company Tree Hierarchy component', () => {
     )
 
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyWith10LevelsOfSubsidiaries}
           requestedCompanyId={middleCompany.id}
         />
@@ -459,8 +452,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company has manually linked subsidiary', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyManuallyLinkedSubsidiary}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -481,8 +474,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company is the requested company', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyNoSubsidiaries}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -510,8 +503,8 @@ describe('D&B Company Tree Hierarchy component', () => {
     )
 
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyManuallyLinkedSubsidiaries}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -563,8 +556,8 @@ describe('D&B Company Tree Hierarchy component', () => {
     'When a company has both verified and manually linked subsidiaries',
     () => {
       beforeEach(() => {
-        cy.mount(
-          <Component
+        cy.mountWithProvider(
+          <Hierarchy
             familyTree={companyManuallyLinkedSubsidiaries}
             requestedCompanyId={dnbGlobalUltimate.id}
           />
@@ -585,8 +578,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company has a reduced company tree', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={reducedTreeCompanyTree}
           requestedCompanyId={dnbGlobalUltimate.id}
         />
@@ -607,8 +600,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company only has UK region and a country set', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyOnlyImmediateSubsidiaries}
           requestedCompanyId={allOverviewDetails.id}
         />
@@ -630,8 +623,8 @@ describe('D&B Company Tree Hierarchy component', () => {
 
   context('When a company only has country and no Uk region set', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <Hierarchy
           familyTree={companyNoUkRegion}
           requestedCompanyId={dnbGlobalUltimate.id}
         />

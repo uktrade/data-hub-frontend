@@ -13,7 +13,7 @@ module.exports = defineConfig({
     },
   },
   component: {
-    supportFile: 'test/cypress/support/index.js',
+    supportFile: 'test/component/cypress/support/index.js',
     devServer: {
       framework: 'react',
       bundler: 'webpack',

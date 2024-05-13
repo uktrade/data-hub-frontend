@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 import {
   assertSummaryTableStrict,
   assertBreadcrumbs,
 } from '../../../../functional/cypress/support/assertions'
 import CustomerFeedback from '../../../../../src/client/modules/ExportWins/CustomerFeedback'
-import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
 const toYesNo = (x) => (x ? 'Yes' : 'No')
@@ -55,17 +55,22 @@ describe('ExportWins/CustomerFeedback', () => {
     },
   ].forEach(({ testTitle, win, company }) => {
     it(testTitle, () => {
-      const Provider = createTestProvider({
-        'Export Win': () => Promise.resolve(win),
-        Company: () => Promise.resolve(company),
-        TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
-      })
-      cy.mount(
-        <Provider>
-          <CustomerFeedback
-            match={{ params: { companyId: company.id, winId: win.id } }}
+      // TODO: The CustomerFeedback component uses the useParams hook, therefore, we need
+      // to wrap the component with a Route so the hook works.
+      cy.mountWithProvider(
+        <Routes>
+          <Route
+            path="/companies/:companyId/exportwins/:winId/customer-feedback"
+            element={<CustomerFeedback />}
           />
-        </Provider>
+        </Routes>,
+        {
+          tasks: {
+            'Export Win': () => Promise.resolve(win),
+            Company: () => Promise.resolve(company),
+          },
+          initialPath: `/companies/${company.id}/exportwins/${win.id}/customer-feedback`,
+        }
       )
 
       assertBreadcrumbs({

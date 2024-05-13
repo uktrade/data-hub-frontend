@@ -1,7 +1,6 @@
 import React from 'react'
 import { faker } from '@faker-js/faker'
 
-import DataHubProvider from '../../../provider'
 import { largeInvestorProfileFaker } from '../../../../../../functional/cypress/fakers/large-investor-profile'
 import { ProfileDetailsForm } from '../../../../../../../src/client/modules/Companies/CompanyInvestments/LargeCapitalProfile/EditProfileDetailsForm'
 import requiredChecksConductedListFaker from '../../../../../../functional/cypress/fakers/required-checks-conducted'
@@ -13,16 +12,10 @@ import {
 import { assertErrorSummary } from '../../../../../../functional/cypress/support/assertions'
 
 describe('Profile details form', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <ProfileDetailsForm {...props} />
-    </DataHubProvider>
-  )
-
   context('Validation checks', () => {
     beforeEach(() => {
-      cy.mount(
-        <Component
+      cy.mountWithProvider(
+        <ProfileDetailsForm
           profile={largeInvestorProfileFaker()}
           requiredCheckOptions={requiredChecksConductedListFaker()}
           investorTypeOptions={[]}

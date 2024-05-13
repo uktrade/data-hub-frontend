@@ -1,6 +1,6 @@
 # Data Fetching Building Blocks
 
-**TLDR** 
+**TLDR**
 
 Use the [`Resource`](#resource) component for calling the Data Hub API and using the data it returns.
 
@@ -23,40 +23,49 @@ The `Task` is using a sort of lightweight _dependency injection_, i.e. you never
 call a _task_ function directly, but only refer to it by its _name_ and _id_
 and delegate the call to the `Task` component. To what _task_ function exactly
 the _name_ resolves depends on what you register under that name by the
-`DataHubProvider` component. This has a couple of advantages:
+`createProvider` component. This has a couple of advantages:
 
-* You can work without a running API instance by plugging in a dummy task which
+- You can work without a running API instance by plugging in a dummy task which
   resolves with hardcoded or random data.
-* You can work on a feature for which an API endpoint is not implemented yet
-* You can easily make the tasks fail or delay their resolution
-* The DI could theoretically be used in functional tests instead of the sandbox
+- You can work on a feature for which an API endpoint is not implemented yet
+- You can easily make the tasks fail or delay their resolution
+- The DI could theoretically be used in functional tests instead of the sandbox
 
 ```js
-<DataHubProvider tasks={{
-  // Satisfy the dependecies
-  'do something': payload => Promise.resolve('result'),
-  'do something else': payload => Promise.reject('Error message'),
-  // 'talk to the API': () => apiProxyAxios.get('/some-endpoint'),
-  'talk to the API': () => new Promise((resolve, reject) =>
-    setTimeout(5000, resolve, {dummy: 'data'}),
-  ),
-}}>
-  {/* Here you can use the tasks registered above */} 
+
+import { createProvider } from '/src/client/createProvider.jsx'
+
+const tasks = {
+    // Satisfy the dependecies
+    'do something': (payload) => Promise.resolve('result'),
+    'do something else': (payload) => Promise.reject('Error message'),
+    // 'talk to the API': () => apiProxyAxios.get('/some-endpoint'),
+    'talk to the API': () =>
+      new Promise((resolve, reject) =>
+        setTimeout(5000, resolve, { dummy: 'data' })
+      ),
+  }
+
+const Provider = createProvider(tasks)
+
+<Provider>
+  {/* Here you can use the tasks registered above */}
   <Task>
-    {task =>
-      <button onClick={
-        // Tasks are only handled by proxy of their dependency name
-        task('do something', 'foo')
-          .start({
+    {(task) => (
+      <button
+        onClick={
+          // Tasks are only handled by proxy of their dependency name
+          task('do something', 'foo').start({
             onSuccessDispatch: 'TASK_RESOLVED',
             payload: 12345,
           })
-      }>
+        }
+      >
         start the task
       </button>
-    }
+    )}
   </Task>
-</DataHubProvider>
+</Provider>
 ```
 
 ## Higher Level
@@ -76,13 +85,12 @@ retry and cancell butons for free.
     payload: 12345,
   }}
 >
-  {() =>
+  {() => (
     <p>
-      I will only be rendered if the task with
-      name: "do something" and id: "foo"
-      is NOT in progress or error state
+      I will only be rendered if the task with name: "do something" and id:
+      "foo" is NOT in progress or error state
     </p>
-  }
+  )}
 </Task.Status>
 ```
 
@@ -93,9 +101,7 @@ progress or rejects the children will be wrapped in `LoadingBox`.
 
 ```js
 <TaskLoadingBox name="do something" id="foo">
-  <p>
-    I will be hidden behind a LoadinbBox
-  </p>
+  <p>I will be hidden behind a LoadinbBox</p>
 </TaskLoadingBox>
 ```
 
@@ -109,16 +115,11 @@ task resolves again.
 No reducer needed anymore for handling the `onSuccessDispatch` action.
 
 ```js
-<Resource
-  name="get something"
-  id="foo"
-  payload={12345}
->
-  {resolvedValue =>
+<Resource name="get something" id="foo" payload={12345}>
+  {(resolvedValue) => (
     // I will be rendered only when the "get something" task resolves
-    <pre>
-      {JSON.stringify(resolvedValue)}
-    </pre>}
+    <pre>{JSON.stringify(resolvedValue)}</pre>
+  )}
 </Resource>
 ```
 
@@ -142,9 +143,9 @@ const CompanyResource = props =>
 Better yet. Instead of using `Resource` directly, se one of the folowing
 factories for creating resources for talking to the API.
 
-* `createEntityResource`
-* `createCollectionResource`
-* `createMetadataResource`
+- `createEntityResource`
+- `createCollectionResource`
+- `createMetadataResource`
 
 This way you will not only get a specialized component, but also the task for
 free:
@@ -201,11 +202,11 @@ I have a working `TaskTypeahead` prototype which can uses a task instead.
   submissionTaskName="update something"
   initialValuesTaskName="load something"
   initialValuesPayload={12345}
-  transformInitialValues={initialValues => ({
+  transformInitialValues={(initialValues) => ({
     ...initialValues,
     extraStuf: 'blah',
   })}
-  transformPayload={payload => ({...payload, extraStuf: 'blah'})}
+  transformPayload={(payload) => ({ ...payload, extraStuf: 'blah' })}
   analyticsFormName="Update something"
   redirectTo={(submissionTaskResult, formValues) => '/success'}
   redirectMode="soft"
@@ -269,7 +270,7 @@ very easy to compose any _options_ field component with a specialized _resource_
 component:
 
 ```js
-const FieldCountrySelect = props =>
+const FieldCountrySelect = (props) => (
   <ResourceOptionsField
     {...props}
     resource={CountriesResource}
@@ -278,13 +279,14 @@ const FieldCountrySelect = props =>
       result.map(({ id, name }) => ({ value: id, label: name }))
     }
   />
+)
 ```
 
 Or in more general way with partial application:
 
 ```js
 // This will still require the `field` prop, which we will fill out later
-const FieldOptionsCountry = props =>
+const FieldOptionsCountry = (props) => (
   <ResourceOptionsField
     {...props}
     resource={CountriesResource}
@@ -292,16 +294,21 @@ const FieldOptionsCountry = props =>
       result.map(({ id, name }) => ({ value: id, label: name }))
     }
   />
+)
 
-const FieldCountrySelect = props =>
+const FieldCountrySelect = (props) => (
   <ResourceOptionsField {...props} field={FieldSelect} />
+)
 
-const FieldCountryRadios = props =>
+const FieldCountryRadios = (props) => (
   <ResourceOptionsField {...props} field={FieldRadios} />
+)
 
-const FieldCountryCheckboxes = props =>
+const FieldCountryCheckboxes = (props) => (
   <ResourceOptionsField {...props} field={FieldCheckboxes} />
+)
 
-const FieldCountryTypeahead = props =>
+const FieldCountryTypeahead = (props) => (
   <ResourceOptionsField {...props} field={FieldTypeahead} />
+)
 ```

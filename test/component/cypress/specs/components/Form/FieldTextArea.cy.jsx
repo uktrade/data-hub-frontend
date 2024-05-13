@@ -3,39 +3,52 @@ import React from 'react'
 import FieldTextarea from '../../../../../../src/client/components/Form/elements/FieldTextarea'
 import { ERROR_COLOUR, BLACK } from '../../../../../../src/client/utils/colours'
 import { Form } from '../../../../../../src/client/components'
-import DataHubProvider from '../../provider'
 
 describe('FieldTextArea', () => {
-  const Component = (props) => (
-    <DataHubProvider>
-      <Form
-        id="any-form"
-        analyticsFormName="any-form"
-        cancelRedirectTo={() => '/'}
-        submissionTaskName="TASK_SAVE"
-      >
-        <FieldTextarea name="notes" {...props} />
-      </Form>
-    </DataHubProvider>
-  )
-
   context('When providing default props', () => {
     it('should display a label', () => {
-      cy.mount(<Component label="Summary of the support given" />)
+      cy.mountWithProvider(
+        <Form
+          id="any-form"
+          analyticsFormName="any-form"
+          cancelRedirectTo={() => '/'}
+          submissionTaskName="TASK_SAVE"
+        >
+          <FieldTextarea name="notes" label="Summary of the support given" />
+        </Form>
+      )
       cy.get('[data-test=field-notes] label').should(
         'have.text',
         'Summary of the support given'
       )
     })
     it('should display a hint text', () => {
-      cy.mount(<Component hint="Outline something in 100 words" />)
+      cy.mountWithProvider(
+        <Form
+          id="any-form"
+          analyticsFormName="any-form"
+          cancelRedirectTo={() => '/'}
+          submissionTaskName="TASK_SAVE"
+        >
+          <FieldTextarea name="notes" hint="Outline something in 100 words" />
+        </Form>
+      )
       cy.get('[data-test=hint-text]').should(
         'have.text',
         'Outline something in 100 words'
       )
     })
     it('should display a textarea without a word count', () => {
-      cy.mount(<Component />)
+      cy.mountWithProvider(
+        <Form
+          id="any-form"
+          analyticsFormName="any-form"
+          cancelRedirectTo={() => '/'}
+          submissionTaskName="TASK_SAVE"
+        >
+          <FieldTextarea name="notes" />
+        </Form>
+      )
       cy.get('[data-test=textarea]').should('exist')
       cy.get('[data-test=textarea]').should('be.visible')
       cy.get('[data-test=word-count]').should('not.exist')
@@ -46,7 +59,16 @@ describe('FieldTextArea', () => {
   context('When setting the maxWords prop', () => {
     beforeEach(() => {
       const MAX_WORDS = 3
-      cy.mount(<Component maxWords={MAX_WORDS} />)
+      cy.mountWithProvider(
+        <Form
+          id="any-form"
+          analyticsFormName="any-form"
+          cancelRedirectTo={() => '/'}
+          submissionTaskName="TASK_SAVE"
+        >
+          <FieldTextarea name="notes" maxWords={MAX_WORDS} />
+        </Form>
+      )
     })
     it('should display a small paragraph of text', () => {
       cy.get('[data-test=word-count]').should('exist')
@@ -115,12 +137,20 @@ describe('FieldTextArea', () => {
   context('When setting the maxWords prop and error handling', () => {
     beforeEach(() => {
       const MAX_WORDS = 3
-      cy.mount(
-        <Component
-          maxWords={MAX_WORDS}
-          required="Enter a summary"
-          invalid={`Summary must be ${MAX_WORDS} words or less`}
-        />
+      cy.mountWithProvider(
+        <Form
+          id="any-form"
+          analyticsFormName="any-form"
+          cancelRedirectTo={() => '/'}
+          submissionTaskName="TASK_SAVE"
+        >
+          <FieldTextarea
+            name="notes"
+            maxWords={MAX_WORDS}
+            required="Enter a summary"
+            invalid={`Summary must be ${MAX_WORDS} words or less`}
+          />
+        </Form>
       )
     })
     it('should display an error when the user submits without entering a word', () => {
