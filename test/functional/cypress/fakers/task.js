@@ -19,7 +19,7 @@ const taskFaker = (overrides = {}) => ({
   id: faker.string.uuid(),
   title: faker.word.sample(),
   description: faker.word.words(),
-  dueDate: faker.date.future().toISOString(),
+  dueDate: faker.date.future().toISOString({ years: 3 }),
   reminderDays: faker.helpers.rangeToNumber({ min: 0, max: 365 }),
   emailRemindersEnabled: true,
   advisers: [...Array(3)].map(() => basicAdviserFaker()),
