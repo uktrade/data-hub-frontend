@@ -31,22 +31,12 @@ describe('DA add Investment Project interaction', () => {
     beforeEach(() => {
       cy.intercept('POST', '/api-proxy/v4/interaction').as('post')
 
-      const url = investments.projects.interactions.createType(
-        fixtures.investmentProject.newGolfCourse.id,
-        'investment',
-        'interaction'
-      )
-
-      console.log('BBBBBBBBBBBBBBBB', url)
-      cy.log('BBBBBBBBBBBBBBBBBBBB', url)
-
       cy.visit(
-        url
-        // investments.projects.interactions.createType(
-        //   fixtures.investmentProject.newGolfCourse.id,
-        //   'investment',
-        //   'interaction'
-        // )
+        investments.projects.interactions.createType(
+          fixtures.investmentProject.newGolfCourse.id,
+          'investment',
+          'interaction'
+        )
       )
     })
 

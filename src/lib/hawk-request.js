@@ -3,8 +3,6 @@ const Hawk = require('hawk')
 const config = require('../config')
 const request = require('./request')
 
-console.log('AAAAAAAAAA', config)
-
 function getHawkHeader(credentials, requestOptions) {
   // if (config.isTest) {
   if (false) {
@@ -29,7 +27,6 @@ async function hawkRequest(requestOptions, credentials, clientHeaderArtifacts) {
   })
 
   if (!config.isTest) {
-    console.log('CARAMBA')
     let isValid = false
     const payload = JSON.stringify(response.data || {})
     try {
