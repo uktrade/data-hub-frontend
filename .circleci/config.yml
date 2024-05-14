@@ -233,10 +233,12 @@ commands:
     steps:
       - run:
           name: Copy config
-          command: cp tests.env .env
+          command: cp sample.env .env
       - run:
           name: << parameters.label >>
           command: make << parameters.target >> SPEC_FILES="<< parameters.spec_files >>"
+          environment:
+            - NODE_ENV: test
   store_cypress_artifacts:
     description: Store Cypress artifacts like screenshots and videos
     steps:
