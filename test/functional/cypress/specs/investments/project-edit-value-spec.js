@@ -8,8 +8,11 @@ const {
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
-const projectWithValue = require('../../fixtures/investment/investment-has-existing-value.json')
-const projectNoValue = require('../../fixtures/investment/investment-no-value.json')
+const capitalIntensiveProjectWithValue = require('../../fixtures/investment/investment-has-existing-value.json')
+const capitalIntensiveProjectNoValue = require('../../fixtures/investment/investment-no-value.json')
+const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/investment/investment-no-sector.json')
+const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
+const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
 const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
 const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
 const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
@@ -17,8 +20,6 @@ const projectBothDatesBeforeApril = require('../../fixtures/investment/investmen
 const projectBothDatesAfterApril = require('../../fixtures/investment/investment-both-land-dates-after-April-2020.json')
 const projectOneLandDateEitherSideApril = require('../../fixtures/investment/investment-one-land-date-before-April-one-after.json')
 const projectNotFDI = require('../../fixtures/investment/investment-no-existing-requirements.json')
-const projectWithNoSectorOrCapital = require('../../fixtures/investment/investment-no-sector.json')
-const projectWithCapitalButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
 const projectCreatedBefore = require('../../fixtures/investment/investment-created-before.json')
 const projectCreatedSame = require('../../fixtures/investment/investment-created-same-date.json')
 const projectCreatedAfter = require('../../fixtures/investment/investment-created-after.json')
@@ -28,199 +29,217 @@ const convertBoolToInvertedYesNo = (valueToCheck) =>
   valueToCheck ? 'No' : 'Yes'
 
 describe('Edit the value details of a project', () => {
-  context('When viewing a project with no value fields set', () => {
-    beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectNoValue.id))
-    })
-
-    it('should render the header', () => {
-      assertLocalHeader(projectNoValue.name)
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Investments: investments.index(),
-        Projects: investments.projects.index(),
-        [projectNoValue.name]: investments.projects.details(projectNoValue.id),
-        'Edit value': null,
+  context(
+    'When viewing a capital intensive project with no value fields set',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          investments.projects.editValue(capitalIntensiveProjectNoValue.id)
+        )
       })
-    })
 
-    it('should display the cannot provide total field', () => {
-      cy.get('[data-test="field-client_cannot_provide_total_investment"]').then(
-        (element) => {
+      it('should render the header', () => {
+        assertLocalHeader(capitalIntensiveProjectNoValue.name)
+      })
+
+      it('should render breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: '/',
+          Investments: investments.index(),
+          Projects: investments.projects.index(),
+          [capitalIntensiveProjectNoValue.name]: investments.projects.details(
+            capitalIntensiveProjectNoValue.id
+          ),
+          'Edit value': null,
+        })
+      })
+
+      it('should display the cannot provide total field', () => {
+        cy.get(
+          '[data-test="field-client_cannot_provide_total_investment"]'
+        ).then((element) => {
           assertFieldRadios({
             element,
             label: 'Can client provide total investment value?',
             hint: 'Includes capital, operational and R&D expenditure',
             optionsCount: 2,
           })
-        }
-      )
-    })
-
-    it('should only display total investment if "Yes" is selected', () => {
-      cy.get('[data-test="total_investment]').should('not.exist')
-      cy.get('[data-test="client-cannot-provide-total-investment-no"]').click()
-      cy.get('[data-test="total_investment]').should('not.exist')
-      cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
-      cy.get('[data-test="field-total_investment"]').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Total investment',
-          hint: 'Enter the total number of GB pounds',
         })
       })
-    })
 
-    it('should display the cannot provide foreign investment field', () => {
-      cy.get(
-        '[data-test="field-client_cannot_provide_foreign_investment"]'
-      ).then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Can client provide capital expenditure value?',
-          hint: 'Foreign equity only, excluding operational and R&D expenditure',
-          optionsCount: 2,
-        })
-      })
-    })
-
-    it('should only display total investment if "Yes" is selected', () => {
-      cy.get('[data-test="foreign_equity_investment]').should('not.exist')
-      cy.get('[data-test="gross_value_added]').should('not.exist')
-      cy.get(
-        '[data-test="client-cannot-provide-foreign-investment-no"]'
-      ).click()
-      cy.get('[data-test="foreign_equity_investment]').should('not.exist')
-      cy.get('[data-test="gross_value_added]').should('not.exist')
-      cy.get(
-        '[data-test="client-cannot-provide-foreign-investment-yes"]'
-      ).click()
-      cy.get('[data-test="field-foreign_equity_investment"]').then(
-        (element) => {
+      it('should only display total investment if "Yes" is selected', () => {
+        cy.get('[data-test="total_investment]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-no"]'
+        ).click()
+        cy.get('[data-test="total_investment]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-yes"]'
+        ).click()
+        cy.get('[data-test="field-total_investment"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Capital expenditure value',
+            label: 'Total investment',
             hint: 'Enter the total number of GB pounds',
           })
-        }
-      )
-      cy.get('[data-test="field-gross_value_added"]').then((element) => {
-        assertFieldUneditable({
-          element,
-          label: 'Gross value added (GVA)',
-          value:
-            'Add capital expenditure value and click "Save" to calculate GVA',
         })
       })
-    })
 
-    it('should display the number of new jobs field', () => {
-      cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Number of new jobs',
+      it('should display the cannot provide foreign investment field', () => {
+        cy.get(
+          '[data-test="field-client_cannot_provide_foreign_investment"]'
+        ).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Can client provide capital expenditure value?',
+            hint: 'Foreign equity only, excluding operational and R&D expenditure',
+            optionsCount: 2,
+          })
         })
       })
-    })
 
-    it('should display the average salary field', () => {
-      cy.get('[data-test="field-average_salary"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Average salary of new jobs',
-          optionsCount: 3,
+      it('should only display total investment if "Yes" is selected', () => {
+        cy.get('[data-test="foreign_equity_investment]').should('not.exist')
+        cy.get('[data-test="gross_value_added]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-no"]'
+        ).click()
+        cy.get('[data-test="foreign_equity_investment]').should('not.exist')
+        cy.get('[data-test="gross_value_added]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-yes"]'
+        ).click()
+        cy.get('[data-test="field-foreign_equity_investment"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Capital expenditure value',
+              hint: 'Enter the total number of GB pounds',
+            })
+          }
+        )
+        cy.get('[data-test="field-gross_value_added"]').then((element) => {
+          assertFieldUneditable({
+            element,
+            label: 'Gross value added (GVA)',
+            value:
+              'Add capital expenditure value and click "Save" to calculate GVA',
+          })
         })
       })
-    })
 
-    it('should display the number of safeguarded jobs field', () => {
-      cy.get('[data-test="field-number_safeguarded_jobs"]').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Number of safeguarded jobs',
+      it('should display the number of new jobs field', () => {
+        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Number of new jobs',
+          })
         })
       })
-    })
 
-    it('should not display the project value field', () => {
-      cy.get('[data-test="field-fdi_value"]').should('not.exist')
-    })
-
-    it('should display the government assistance field', () => {
-      cy.get('[data-test="field-government_assistance"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Is this project receiving government financial assistance?',
-          optionsCount: 2,
+      it('should display the average salary field', () => {
+        cy.get('[data-test="field-average_salary"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Average salary of new jobs',
+            optionsCount: 3,
+          })
         })
       })
-    })
 
-    it('should display the R&D field', () => {
-      cy.get('[data-test="field-r_and_d_budget"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Does this project have budget for research and development?',
-          optionsCount: 2,
+      it('should display the number of safeguarded jobs field', () => {
+        cy.get('[data-test="field-number_safeguarded_jobs"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Number of safeguarded jobs',
+            })
+          }
+        )
+      })
+
+      it('should not display the project value field', () => {
+        cy.get('[data-test="field-fdi_value"]').should('not.exist')
+      })
+
+      it('should display the government assistance field', () => {
+        cy.get('[data-test="field-government_assistance"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Is this project receiving government financial assistance?',
+            optionsCount: 2,
+          })
         })
       })
-    })
 
-    it('should display the non-FDI R&D field', () => {
-      cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Is this project associated with a non-FDI R&D project?',
-          optionsCount: 2,
+      it('should display the R&D field', () => {
+        cy.get('[data-test="field-r_and_d_budget"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Does this project have budget for research and development?',
+            optionsCount: 2,
+          })
         })
       })
-    })
 
-    it('should display the new tech field', () => {
-      cy.get('[data-test="field-new_tech_to_uk"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label:
-            'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
-          optionsCount: 2,
+      it('should display the non-FDI R&D field', () => {
+        cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Is this project associated with a non-FDI R&D project?',
+            optionsCount: 2,
+          })
         })
       })
-    })
 
-    it('should display the export revenue field', () => {
-      cy.get('[data-test="field-export_revenue"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label:
-            'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
-          optionsCount: 2,
+      it('should display the new tech field', () => {
+        cy.get('[data-test="field-new_tech_to_uk"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+            optionsCount: 2,
+          })
         })
       })
-    })
 
-    it('should not submit the form if the investment inputs are empty', () => {
-      cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
-      cy.get(
-        '[data-test="client-cannot-provide-foreign-investment-yes"]'
-      ).click()
+      it('should display the export revenue field', () => {
+        cy.get('[data-test="field-export_revenue"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+            optionsCount: 2,
+          })
+        })
+      })
 
-      cy.get('[data-test="submit-button"]').click()
-      assertErrorSummary([
-        'Enter the total investment',
-        'Enter the capital expenditure',
-      ])
-    })
-  })
+      it('should not submit the form if the investment inputs are empty', () => {
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-yes"]'
+        ).click()
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-yes"]'
+        ).click()
+
+        cy.get('[data-test="submit-button"]').click()
+        assertErrorSummary([
+          'Enter the total investment',
+          'Enter the capital expenditure',
+        ])
+      })
+    }
+  )
   context('When viewing a project with all value fields set', () => {
     beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectWithValue.id))
+      cy.visit(
+        investments.projects.editValue(capitalIntensiveProjectWithValue.id)
+      )
     })
 
     it('should render the header', () => {
-      assertLocalHeader(projectWithValue.name)
+      assertLocalHeader(capitalIntensiveProjectWithValue.name)
     })
 
     it('should display the cannot provide total field', () => {
@@ -232,7 +251,7 @@ describe('Edit the value details of a project', () => {
             hint: 'Includes capital, operational and R&D expenditure',
             optionsCount: 3,
             value: convertBoolToInvertedYesNo(
-              projectWithValue.client_cannot_provide_total_investment
+              capitalIntensiveProjectWithValue.client_cannot_provide_total_investment
             ),
           })
         }
@@ -257,7 +276,7 @@ describe('Edit the value details of a project', () => {
           hint: 'Foreign equity only, excluding operational and R&D expenditure',
           optionsCount: 3,
           value: convertBoolToInvertedYesNo(
-            projectWithValue.client_cannot_provide_foreign_investment
+            capitalIntensiveProjectWithValue.client_cannot_provide_foreign_investment
           ),
         })
       })
@@ -287,7 +306,7 @@ describe('Edit the value details of a project', () => {
         assertFieldInput({
           element,
           label: 'Number of new jobs',
-          value: projectWithValue.number_new_jobs,
+          value: capitalIntensiveProjectWithValue.number_new_jobs,
         })
       })
     })
@@ -298,7 +317,7 @@ describe('Edit the value details of a project', () => {
           element,
           label: 'Average salary of new jobs',
           optionsCount: 3,
-          value: projectWithValue.average_salary.name,
+          value: capitalIntensiveProjectWithValue.average_salary.name,
         })
       })
     })
@@ -308,7 +327,7 @@ describe('Edit the value details of a project', () => {
         assertFieldInput({
           element,
           label: 'Number of safeguarded jobs',
-          value: projectWithValue.number_safeguarded_jobs,
+          value: capitalIntensiveProjectWithValue.number_safeguarded_jobs,
         })
       })
     })
@@ -323,7 +342,9 @@ describe('Edit the value details of a project', () => {
           element,
           label: 'Is this project receiving government financial assistance?',
           optionsCount: 2,
-          value: convertBoolToYesNo(projectWithValue.government_assistance),
+          value: convertBoolToYesNo(
+            capitalIntensiveProjectWithValue.government_assistance
+          ),
         })
       })
     })
@@ -334,7 +355,9 @@ describe('Edit the value details of a project', () => {
           element,
           label: 'Does this project have budget for research and development?',
           optionsCount: 2,
-          value: convertBoolToYesNo(projectWithValue.r_and_d_budget),
+          value: convertBoolToYesNo(
+            capitalIntensiveProjectWithValue.r_and_d_budget
+          ),
         })
       })
     })
@@ -345,7 +368,9 @@ describe('Edit the value details of a project', () => {
           element,
           label: 'Is this project associated with a non-FDI R&D project?',
           optionsCount: 2,
-          value: convertBoolToYesNo(projectWithValue.non_fdi_r_and_d_budget),
+          value: convertBoolToYesNo(
+            capitalIntensiveProjectWithValue.non_fdi_r_and_d_budget
+          ),
         })
       })
     })
@@ -357,7 +382,9 @@ describe('Edit the value details of a project', () => {
           label:
             'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
           optionsCount: 2,
-          value: convertBoolToYesNo(projectWithValue.new_tech_to_uk),
+          value: convertBoolToYesNo(
+            capitalIntensiveProjectWithValue.new_tech_to_uk
+          ),
         })
       })
     })
@@ -369,14 +396,20 @@ describe('Edit the value details of a project', () => {
           label:
             'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
           optionsCount: 2,
-          value: convertBoolToYesNo(projectWithValue.export_revenue),
+          value: convertBoolToYesNo(
+            capitalIntensiveProjectWithValue.export_revenue
+          ),
         })
       })
     })
   })
   context('When viewing a project with no sector and no capital value', () => {
     beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectWithNoSectorOrCapital.id))
+      cy.visit(
+        investments.projects.editValue(
+          capitalIntensiveProjectWithNoSectorOrCapitalExp.id
+        )
+      )
     })
     it('should display the correct message in the GVA field', () => {
       cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
@@ -392,7 +425,11 @@ describe('Edit the value details of a project', () => {
   })
   context('When viewing a project with capital value but no sector', () => {
     beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectWithCapitalButNoSector.id))
+      cy.visit(
+        investments.projects.editValue(
+          capitalIntensiveProjectWithCapitalExpButNoSector.id
+        )
+      )
     })
     it('should display the correct message in the GVA field', () => {
       cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
@@ -564,6 +601,209 @@ describe('Edit the value details of a project', () => {
             optionsCount: 3,
           })
         })
+      })
+    }
+  )
+
+  context(
+    'When viewing a labour intensive project with no value fields set',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          investments.projects.editValue(labourIntensiveProjectNoValue.id)
+        )
+      })
+
+      it('should render the header', () => {
+        assertLocalHeader(labourIntensiveProjectNoValue.name)
+      })
+
+      it('should render breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: '/',
+          Investments: investments.index(),
+          Projects: investments.projects.index(),
+          [labourIntensiveProjectNoValue.name]: investments.projects.details(
+            labourIntensiveProjectNoValue.id
+          ),
+          'Edit value': null,
+        })
+      })
+
+      it('should display the cannot provide total field', () => {
+        cy.get(
+          '[data-test="field-client_cannot_provide_total_investment"]'
+        ).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Can client provide total investment value?',
+            hint: 'Includes capital, operational and R&D expenditure',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should only display total investment if "Yes" is selected', () => {
+        cy.get('[data-test="total_investment]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-no"]'
+        ).click()
+        cy.get('[data-test="total_investment]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-yes"]'
+        ).click()
+        cy.get('[data-test="field-total_investment"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Total investment',
+            hint: 'Enter the total number of GB pounds',
+          })
+        })
+      })
+
+      it('should display the cannot provide foreign investment field', () => {
+        cy.get(
+          '[data-test="field-client_cannot_provide_foreign_investment"]'
+        ).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Can client provide capital expenditure value?',
+            hint: 'Foreign equity only, excluding operational and R&D expenditure',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should only display total investment if "Yes" is selected', () => {
+        cy.get('[data-test="foreign_equity_investment]').should('not.exist')
+        cy.get('[data-test="gross_value_added]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-no"]'
+        ).click()
+        cy.get('[data-test="foreign_equity_investment]').should('not.exist')
+        cy.get('[data-test="gross_value_added]').should('not.exist')
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-yes"]'
+        ).click()
+        cy.get('[data-test="field-foreign_equity_investment"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Capital expenditure value',
+              hint: 'Enter the total number of GB pounds',
+            })
+          }
+        )
+        cy.get('[data-test="field-gross_value_added"]').then((element) => {
+          assertFieldUneditable({
+            element,
+            label: 'Gross value added (GVA)',
+            value:
+              'Add capital expenditure value and click "Save" to calculate GVA',
+          })
+        })
+      })
+
+      it('should display the number of new jobs field', () => {
+        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Number of new jobs',
+          })
+        })
+      })
+
+      it('should display the average salary field', () => {
+        cy.get('[data-test="field-average_salary"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Average salary of new jobs',
+            optionsCount: 3,
+          })
+        })
+      })
+
+      it('should display the number of safeguarded jobs field', () => {
+        cy.get('[data-test="field-number_safeguarded_jobs"]').then(
+          (element) => {
+            assertFieldInput({
+              element,
+              label: 'Number of safeguarded jobs',
+            })
+          }
+        )
+      })
+
+      it('should not display the project value field', () => {
+        cy.get('[data-test="field-fdi_value"]').should('not.exist')
+      })
+
+      it('should display the government assistance field', () => {
+        cy.get('[data-test="field-government_assistance"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Is this project receiving government financial assistance?',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should display the R&D field', () => {
+        cy.get('[data-test="field-r_and_d_budget"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Does this project have budget for research and development?',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should display the non-FDI R&D field', () => {
+        cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Is this project associated with a non-FDI R&D project?',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should display the new tech field', () => {
+        cy.get('[data-test="field-new_tech_to_uk"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should display the export revenue field', () => {
+        cy.get('[data-test="field-export_revenue"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label:
+              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+            optionsCount: 2,
+          })
+        })
+      })
+
+      it('should not submit the form if the investment inputs are empty', () => {
+        cy.get(
+          '[data-test="client-cannot-provide-total-investment-yes"]'
+        ).click()
+        cy.get(
+          '[data-test="client-cannot-provide-foreign-investment-yes"]'
+        ).click()
+
+        cy.get('[data-test="submit-button"]').click()
+        assertErrorSummary([
+          'Enter the total investment',
+          'Enter the capital expenditure',
+        ])
       })
     }
   )
