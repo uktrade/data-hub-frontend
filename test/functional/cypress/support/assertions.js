@@ -368,10 +368,14 @@ const assertFieldCheckboxes = ({ element, legend, hint, options = [] }) => {
     .each((label, index) => {
       // Each label wraps an input
       cy.get(label)
-        .should('have.text', options[index].label)
+        .should('contain', options[index].label)
         .find('input[type="checkbox"]')
-        .should(options[index].checked ? 'be.checked' : 'not.be.checked')
         .should('have.attr', 'aria-label', options[index].label)
+        .should(options[index].checked ? 'be.checked' : 'not.be.checked')
+
+      const link = options[index].link
+      // Optional options field parameter
+      link && cy.get(label).find('summary').should('contain', link)
     })
 }
 

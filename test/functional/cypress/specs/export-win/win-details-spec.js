@@ -111,7 +111,7 @@ describe('Win details', () => {
     })
   })
 
-  it('should render Type of win ', () => {
+  it('should render Type of win checkbox options', () => {
     assertFieldCheckboxes({
       element: winDetails.winType,
       legend: 'Type of win',
@@ -127,6 +127,29 @@ describe('Win details', () => {
         {
           label: 'Outward Direct Investment (ODI)',
           checked: false,
+        },
+      ],
+    })
+  })
+
+  it('should render Type of win detailed summary name', () => {
+    assertFieldCheckboxes({
+      element: winDetails.winType,
+      legend: 'Type of win',
+      options: [
+        {
+          label: 'Export',
+          checked: false,
+        },
+        {
+          label: 'Business success',
+          checked: false,
+          link: 'What is business success?',
+        },
+        {
+          label: 'Outward Direct Investment (ODI)',
+          checked: false,
+          link: 'What is an ODI?',
         },
       ],
     })
