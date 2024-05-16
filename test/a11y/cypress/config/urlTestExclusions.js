@@ -209,6 +209,8 @@ export const urlTestExclusions = [
   { url: '/api-proxy/v4/metadata/capital-investment/equity-percentage' },
   { url: '/api-proxy/v4/metadata/capital-investment/desired-deal-role' },
   { url: '/api-proxy/v4/metadata/capital-investment/asset-class-interest' },
+  { url: '/api-proxy/v4/large-capital-opportunity/:opportunityId' },
+  { url: '/api-proxy/v4/large-capital-opportunity/opportunity-value-type' },
   { url: '/api-proxy/v4/metadata/one-list-tier' },
   { url: '/api-proxy/v4/metadata/trade-agreement' },
 ]
