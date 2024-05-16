@@ -97,6 +97,7 @@ const FieldCheckboxes = ({
               value: optionValue,
               label: optionLabel,
               children,
+              link: optionLink,
               ...optionProps
             },
             index
@@ -116,7 +117,12 @@ const FieldCheckboxes = ({
                 {boldLabel ? (
                   <StyledLabel>{optionLabel}</StyledLabel>
                 ) : (
-                  optionLabel
+                  <Fragment key={optionLabel}>
+                    {optionLabel}
+                    {optionLink && (
+                      <Fragment key={optionLink}>{optionLink}</Fragment>
+                    )}
+                  </Fragment>
                 )}
               </Checkbox>
               {value.includes(optionValue) && !!children ? children : null}
