@@ -1,30 +1,30 @@
+import urls from '../../../../lib/urls'
 import { idNamesToValueLabels } from '../../../utils'
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { transformValueForAPI } from '../../../utils/date'
+import { getMetadataOptions } from '../../../metadata'
 
 import { transformInvestmentOpportunityDetails } from './transformers'
 
 export const getOpportunityDetails = ({ opportunityId }) =>
-  apiProxyAxios
-    .get(`/v4/large-capital-opportunity/${opportunityId}`)
-    .then(({ data }) => transformInvestmentOpportunityDetails(data))
+  getMetadataOptions(
+    urls.metadata.largeCapitalOpportunityDetails(opportunityId)
+  ).then(({ data }) => transformInvestmentOpportunityDetails(data))
 
 export const getDetailsMetadata = () =>
   Promise.all([
-    apiProxyAxios.get(
-      '/v4/metadata/large-capital-opportunity/opportunity-value-type'
-    ),
+    getMetadataOptions(urls.metadata.largeCapitalOpportunityMetadata()),
   ]).then(([{ data: valueTypes }]) => ({
     valueTypes: idNamesToValueLabels(valueTypes),
   }))
 
 export const getRequirementsMetadata = () =>
   Promise.all([
-    apiProxyAxios.get(
-      'v4/metadata/capital-investment/large-capital-investment-type'
+    getMetadataOptions(
+      urls.metadata.capitalInvestmentLargeCapitalInvestmentType()
     ),
-    apiProxyAxios.get('/v4/metadata/capital-investment/return-rate'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/time-horizon'),
+    getMetadataOptions.get(urls.metadata.capitalInvestmentReturnRate()),
+    getMetadataOptions.get(urls.metadata.capitalInvestmentTimeHorizon()),
   ]).then(
     ([
       { data: investmentTypes },
