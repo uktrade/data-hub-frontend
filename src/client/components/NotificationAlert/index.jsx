@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { ID, TASK_GET_REMINDER_SUMMARY, state2props } from './state'
 import { REMINDER_SUMMARY__LOADED } from '../../actions'
-import BellSVG from './bell-icon.svg'
+import BellIcon from './BellIcon'
 import Task from '../Task'
 
 import { Size, Shape, Count } from '../NotificationBadge'
@@ -24,7 +24,7 @@ const StyledShape = styled(Shape)({
   left: -7,
 })
 
-const StyledImage = styled('img')({
+const StyledBellIcon = styled(BellIcon)({
   width: 22,
   height: 22,
   marginLeft: 20,
@@ -36,10 +36,7 @@ const NotificationAlert = ({ count, remindersURL }) => (
     href={remindersURL}
     id="notification-bell-count"
   >
-    <StyledImage
-      src={BellSVG}
-      alt="An image of a bell with the notification count overlaid"
-    />
+    <StyledBellIcon />
     <Task.Status
       name={TASK_GET_REMINDER_SUMMARY}
       id={ID}

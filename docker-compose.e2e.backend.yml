@@ -43,6 +43,8 @@ services:
       - redis
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: python short-running-worker.py long-running-worker.py
+    logging:
+      driver: none
 
   postgres:
     image: postgres:12
@@ -52,6 +54,8 @@ services:
       POSTGRES_DB: datahub
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    logging:
+      driver: none
 
   opensearch:
     image: opensearchproject/opensearch:1.2.4
@@ -65,6 +69,8 @@ services:
       - bootstrap.memory_lock=true
       - DISABLE_INSTALL_DEMO_CONFIG=true # Prevents execution of bundled demo script which installs demo certificates and security configurations to OpenSearch
       - DISABLE_SECURITY_PLUGIN=true # Disables security plugin
+    logging:
+      driver: none
 
   activity-feed-reverseproxy:
     build: ./test/end-to-end/proxy
@@ -72,6 +78,8 @@ services:
         - 8081:8081
     depends_on:
       - activity-feed
+    logging:
+      driver: none
 
   activity-feed:
     build: https://github.com/uktrade/activity-stream.git
@@ -98,3 +106,5 @@ services:
       - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__objects__1=__MATCH_ALL__
       - INCOMING_IP_WHITELIST__1=1.2.3.4
       - INCOMING_IP_WHITELIST__2=2.3.4.5
+    logging:
+      driver: none
