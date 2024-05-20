@@ -809,6 +809,7 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
   context('When viewing a labour project with all value fields set', () => {
     beforeEach(() => {
       cy.visit(
@@ -869,14 +870,10 @@ describe('Edit the value details of a project', () => {
           })
         }
       )
+    })
 
-      cy.get('[data-test="field-gross_value_added"]').then((element) => {
-        assertFieldUneditable({
-          element,
-          label: 'Gross value added (GVA)',
-          value: '£34,568',
-        })
-      })
+    it('should not display the GVA calculation under capital expenditure', () => {
+      cy.get('[data-test="field-gross_value_added"]').should('not.exist')
     })
 
     it('should display the number of new jobs field', () => {
@@ -885,6 +882,16 @@ describe('Edit the value details of a project', () => {
           element,
           label: 'Number of new jobs',
           value: labourIntensiveProjectWithValue.number_new_jobs,
+        })
+      })
+    })
+
+    it('should display the GVA calculation under number of new jobs', () => {
+      cy.get('[data-test="field-gross_value_added_labour"]').then((element) => {
+        assertFieldUneditable({
+          element,
+          label: 'Gross value added (GVA)',
+          value: '£56,789',
         })
       })
     })

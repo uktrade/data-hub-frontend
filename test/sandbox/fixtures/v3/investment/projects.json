@@ -7221,7 +7221,7 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": 34568,
+      "gross_value_added": 56789,
       "gva_multiplier": {
         "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
         "sector_classification_gva_multiplier": "labour"
