@@ -14,6 +14,8 @@ const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/
 const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
 const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
 const labourIntensiveProjectWithValue = require('../../fixtures/investment/labour-investment-has-existing-value.json')
+const labourIntensiveProjectWithNoSectorOrNoNewJobs = require('../../fixtures/investment/labour-investment-no-sector-no-jobs.json')
+const labourIntensiveProjectWithNewJobsButNoSector = require('../../fixtures/investment/labour-investment-has-new-jobs-but-no-sector.json')
 const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
 const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
 const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
@@ -995,4 +997,64 @@ describe('Edit the value details of a project', () => {
       })
     })
   })
+
+  context(
+    'When viewing a labour intensive project with no sector and no number of new jobs',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          investments.projects.editValue(
+            labourIntensiveProjectWithNoSectorOrNoNewJobs.id
+          )
+        )
+      })
+
+      it('should not display the GVA calculation under capital expenditure', () => {
+        cy.get('[data-test="field-gross_value_added"]').should('not.exist')
+      })
+
+      it('should display the correct message in the GVA field under number of new jobs', () => {
+        cy.get('[data-test="field-gross_value_added_labour"]').then(
+          (element) => {
+            assertFieldUneditable({
+              element,
+              label: 'Gross value added (GVA)',
+              value:
+                'Add number of new jobs and primary sector (investment project summary) to calculate GVA',
+            })
+          }
+        )
+      })
+    }
+  )
+
+  context(
+    'When viewing a labour intensive project with new jobs but no sector',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          investments.projects.editValue(
+            labourIntensiveProjectWithNewJobsButNoSector.id
+          )
+        )
+      })
+
+      it('should not display the GVA calculation under capital expenditure', () => {
+        cy.get('[data-test="field-gross_value_added"]').should('not.exist')
+      })
+
+      it('should display the correct message in the GVA field under number of new jobs', () => {
+        cy.get('[data-test="field-gross_value_added_labour"]').then(
+          (element) => {
+            assertFieldUneditable({
+              element,
+              label: 'Gross value added (GVA)',
+              value:
+                'Add primary sector (investment project summary) to calculate GVA',
+            })
+          }
+        )
+      })
+    }
+  )
 })
