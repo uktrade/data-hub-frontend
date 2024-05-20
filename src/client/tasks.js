@@ -41,7 +41,6 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
-  TASK_GET_ALL_ACTIVITY_FEED_EVENTS,
 } from '../client/modules/Events/CollectionList/state'
 
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
@@ -70,7 +69,6 @@ import { getESSInteractionDetails } from './modules/Interactions/ESSInteractionD
 
 import {
   getEvents,
-  getAllActivityFeedEvents,
   getEventsMetadata,
 } from './modules/Events/CollectionList/tasks'
 
@@ -548,7 +546,6 @@ export const tasks = {
   [TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME]: getTeamNames,
   [TASK_GET_EVENTS_LIST]: getEvents,
   [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
-  [TASK_GET_ALL_ACTIVITY_FEED_EVENTS]: getAllActivityFeedEvents,
   [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
   [TASK_GET_EVENT_DETAILS]: getEventDetails,
   [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
