@@ -5,8 +5,6 @@ import { parseQueryString } from '../../../utils'
 export const TASK_GET_EVENTS_LIST = 'TASK_GET_EVENTS_LIST'
 export const TASK_GET_EVENTS_METADATA = 'TASK_GET_EVENTS_METADATA'
 export const TASK_GET_EVENTS_ORGANISER_NAME = 'TASK_GET_EVENTS_ORGANISER_NAME'
-export const TASK_GET_ALL_ACTIVITY_FEED_EVENTS =
-  'TASK_GET_ALL_ACTIVITY_FEED_EVENTS'
 
 export const ID = 'eventsList'
 
