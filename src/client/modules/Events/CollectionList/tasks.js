@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import urls from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getMetadataOptions } from '../../../metadata'
@@ -60,36 +58,4 @@ const getEventsMetadata = () =>
     )
     .catch(handleError)
 
-const getAllActivityFeedEvents = ({
-  sortby,
-  name,
-  earliest_start_date,
-  latest_start_date,
-  aventri_id,
-  address_country,
-  uk_region,
-  organiser,
-  event_type,
-  page,
-  related_programmes,
-}) =>
-  axios
-    .get(urls.events.activity.data(), {
-      params: {
-        sortBy: sortby,
-        name: name,
-        earliestStartDate: earliest_start_date,
-        latestStartDate: latest_start_date,
-        aventriId: aventri_id,
-        ukRegion: uk_region,
-        organiser: organiser,
-        page: page,
-        addressCountry: address_country,
-        eventType: event_type,
-        relatedProgramme: related_programmes,
-      },
-    })
-    .then(({ data }) => data)
-    .catch(() => Promise.reject('Unable to load events.'))
-
-export { getEvents, getEventsMetadata, getAllActivityFeedEvents }
+export { getEvents, getEventsMetadata }
