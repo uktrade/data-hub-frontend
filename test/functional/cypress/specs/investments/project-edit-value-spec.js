@@ -13,6 +13,7 @@ const capitalIntensiveProjectNoValue = require('../../fixtures/investment/invest
 const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/investment/investment-no-sector.json')
 const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/investment-has-capital-expenditure-but-no-sector.json')
 const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
+const labourIntensiveProjectWithValue = require('../../fixtures/investment/labour-investment-has-existing-value.json')
 const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
 const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
 const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
@@ -808,4 +809,176 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+  context('When viewing a labour project with all value fields set', () => {
+    beforeEach(() => {
+      cy.visit(
+        investments.projects.editValue(labourIntensiveProjectWithValue.id)
+      )
+    })
+
+    it('should render the header', () => {
+      assertLocalHeader(labourIntensiveProjectWithValue.name)
+    })
+
+    it('should display the cannot provide total field', () => {
+      cy.get('[data-test="field-client_cannot_provide_total_investment"]').then(
+        (element) => {
+          assertFieldRadios({
+            element,
+            label: 'Can client provide total investment value?',
+            hint: 'Includes capital, operational and R&D expenditure',
+            optionsCount: 3,
+            value: convertBoolToInvertedYesNo(
+              labourIntensiveProjectWithValue.client_cannot_provide_total_investment
+            ),
+          })
+        }
+      )
+      cy.get('[data-test="field-total_investment"]').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Total investment',
+          hint: 'Enter the total number of GB pounds',
+          value: '1,000,000',
+        })
+      })
+    })
+
+    it('should display the cannot provide foreign investment field', () => {
+      cy.get(
+        '[data-test="field-client_cannot_provide_foreign_investment"]'
+      ).then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Can client provide capital expenditure value?',
+          hint: 'Foreign equity only, excluding operational and R&D expenditure',
+          optionsCount: 3,
+          value: convertBoolToInvertedYesNo(
+            labourIntensiveProjectWithValue.client_cannot_provide_foreign_investment
+          ),
+        })
+      })
+
+      cy.get('[data-test="field-foreign_equity_investment"]').then(
+        (element) => {
+          assertFieldInput({
+            element,
+            label: 'Capital expenditure value',
+            hint: 'Enter the total number of GB pounds',
+            value: '200,000',
+          })
+        }
+      )
+
+      cy.get('[data-test="field-gross_value_added"]').then((element) => {
+        assertFieldUneditable({
+          element,
+          label: 'Gross value added (GVA)',
+          value: '£34,568',
+        })
+      })
+    })
+
+    it('should display the number of new jobs field', () => {
+      cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Number of new jobs',
+          value: labourIntensiveProjectWithValue.number_new_jobs,
+        })
+      })
+    })
+
+    it('should display the average salary field', () => {
+      cy.get('[data-test="field-average_salary"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Average salary of new jobs',
+          optionsCount: 3,
+          value: labourIntensiveProjectWithValue.average_salary.name,
+        })
+      })
+    })
+
+    it('should display the number of safeguarded jobs field', () => {
+      cy.get('[data-test="field-number_safeguarded_jobs"]').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Number of safeguarded jobs',
+          value: labourIntensiveProjectWithValue.number_safeguarded_jobs,
+        })
+      })
+    })
+
+    it('should not display the project value field', () => {
+      cy.get('[data-test="field-fdi_value"]').should('not.exist')
+    })
+
+    it('should display the government assistance field', () => {
+      cy.get('[data-test="field-government_assistance"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Is this project receiving government financial assistance?',
+          optionsCount: 2,
+          value: convertBoolToYesNo(
+            labourIntensiveProjectWithValue.government_assistance
+          ),
+        })
+      })
+    })
+
+    it('should display the R&D field', () => {
+      cy.get('[data-test="field-r_and_d_budget"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Does this project have budget for research and development?',
+          optionsCount: 2,
+          value: convertBoolToYesNo(
+            labourIntensiveProjectWithValue.r_and_d_budget
+          ),
+        })
+      })
+    })
+
+    it('should display the non-FDI R&D field', () => {
+      cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Is this project associated with a non-FDI R&D project?',
+          optionsCount: 2,
+          value: convertBoolToYesNo(
+            labourIntensiveProjectWithValue.non_fdi_r_and_d_budget
+          ),
+        })
+      })
+    })
+
+    it('should display the new tech field', () => {
+      cy.get('[data-test="field-new_tech_to_uk"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label:
+            'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+          optionsCount: 2,
+          value: convertBoolToYesNo(
+            labourIntensiveProjectWithValue.new_tech_to_uk
+          ),
+        })
+      })
+    })
+
+    it('should display the export revenue field', () => {
+      cy.get('[data-test="field-export_revenue"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label:
+            'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+          optionsCount: 2,
+          value: convertBoolToYesNo(
+            labourIntensiveProjectWithValue.export_revenue
+          ),
+        })
+      })
+    })
+  })
 })
