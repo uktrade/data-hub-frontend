@@ -697,6 +697,10 @@ describe('Edit the value details of a project', () => {
         )
       })
 
+      it('should not display the GVA calculation under capital expenditure', () => {
+        cy.get('[data-test="field-gross_value_added"]').should('not.exist')
+      })
+
       it('should display the number of new jobs field', () => {
         cy.get('[data-test="field-number_new_jobs"]').then((element) => {
           assertFieldInput({
@@ -704,6 +708,9 @@ describe('Edit the value details of a project', () => {
             label: 'Number of new jobs',
           })
         })
+      })
+
+      it('should display message to add number of new jobs to calculate GVA', () => {
         cy.get('[data-test="field-gross_value_added_labour"]').then(
           (element) => {
             assertFieldUneditable({
