@@ -694,14 +694,6 @@ describe('Edit the value details of a project', () => {
             })
           }
         )
-        cy.get('[data-test="field-gross_value_added"]').then((element) => {
-          assertFieldUneditable({
-            element,
-            label: 'Gross value added (GVA)',
-            value:
-              'Add capital expenditure value and click "Save" to calculate GVA',
-          })
-        })
       })
 
       it('should display the number of new jobs field', () => {
@@ -711,6 +703,15 @@ describe('Edit the value details of a project', () => {
             label: 'Number of new jobs',
           })
         })
+        cy.get('[data-test="field-gross_value_added_labour"]').then(
+          (element) => {
+            assertFieldUneditable({
+              element,
+              label: 'Gross value added (GVA)',
+              value: 'Add number of new jobs and click "Save" to calculate GVA',
+            })
+          }
+        )
       })
 
       it('should display the average salary field', () => {
