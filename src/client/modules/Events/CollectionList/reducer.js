@@ -1,5 +1,4 @@
 import {
-  EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED,
   EVENTS__LOADED,
   EVENTS__METADATA_LOADED,
   EVENTS__SELECTED_ORGANISER,
@@ -29,11 +28,6 @@ export default (state = initialState, { type, result }) => {
       return {
         ...state,
         selectedOrganisers: result,
-      }
-    case EVENTS__ALL_ACTIVITY_FEED_EVENTS_LOADED:
-      return {
-        ...state,
-        ...result,
       }
     default:
       return state
