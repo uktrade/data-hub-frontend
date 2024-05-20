@@ -163,12 +163,13 @@ export const createEntityResource = (name, endpoint) => {
 
   Component.propTypes = _.omit(Component.propTypes, 'name')
   Component.tasks = {
-    [name]: (payload, id) =>
-      apiProxyAxios
+    [name]: (payload, id) => {
+      return apiProxyAxios
         .get(`/${endpoint(id)}`, { params: payload })
         .then(({ data }) => {
           return data
-        }),
+        })
+    },
   }
   Component.transformer = transformer
   Component.taskName = name
@@ -291,8 +292,16 @@ export const createMetadataResource = (name, endpoint) => {
     rawResult.length,
     rawResult,
   ]
+
+  // Default params added for metadata API calls due to issues when there
+  // are no params in the API call
   const Component = (props) => (
-    <EntityResource transformer={transformer} id="__METADATA__" {...props} />
+    <EntityResource
+      transformer={transformer}
+      id="__METADATA__"
+      payload={props.payload || { _: '0' }}
+      {...props}
+    />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')
