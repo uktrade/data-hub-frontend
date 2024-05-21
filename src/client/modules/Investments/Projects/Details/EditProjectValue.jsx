@@ -121,7 +121,7 @@ const EditProjectValue = () => {
                             'capital' && (
                             <FieldUneditable
                               label="Gross value added (GVA)"
-                              name="gross_value_added"
+                              name="gross_value_added_capital"
                             >
                               <>
                                 {project.grossValueAdded
