@@ -7,7 +7,7 @@ describe('Investment project add evidence', () => {
     const projectId = fixtures.investment.investmentWithLink.id
 
     beforeEach(() => {
-      cy.intercept('GET', '/api-proxy/v4/metadata/evidence-tag').as(
+      cy.intercept('GET', '/api-proxy/v4/metadata/evidence-tag*').as(
         'getEvidenceTagsApiRequest'
       )
       cy.visit(urls.investments.projects.evidence.add(projectId))
