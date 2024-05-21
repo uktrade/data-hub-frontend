@@ -51,7 +51,7 @@ const ResourceOptionsField = ({
   interceptOption = (x) => x,
   ...props
 }) => (
-  <Rsrc {...{ name: taskName, id, payload }} progressBox={true}>
+  <Rsrc {...{ name: taskName, id, ...(payload && payload) }} progressBox={true}>
     {(result) => (
       <Field
         {...props}
