@@ -103,7 +103,7 @@ describe('Investment Project', () => {
   })
 
   it('should display name of the person who made investment project record changes', () => {
-    cy.intercept('api-proxy/v4/metadata/investment-specific-programme').as(
+    cy.intercept('api-proxy/v4/metadata/investment-specific-programme*').as(
       'apiRequest'
     )
     cy.wait('@apiRequest')
