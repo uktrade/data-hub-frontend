@@ -83,7 +83,7 @@ describe('Creating an investment project', () => {
     const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
-    before(() => {
+    beforeEach(() => {
       cy.loadFixture([company])
       cy.loadFixture([contact])
       cy.visit(companies.investments.companyInvestment(company.pk))
@@ -149,6 +149,36 @@ describe('Creating an investment project', () => {
           'Export revenue': EXPORT_REVENUE_TRUE,
         },
       })
+    })
+
+    it('should create a capital only FDI project with job fields pre-populated', () => {
+      cy.contains('Add investment project').click()
+      cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
+      cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
+        'Capital only'
+      )
+      cy.get(selectors.companyInvestmentProjects.continue).click()
+      cy.intercept('POST', `/api-proxy/v3/investment`).as(
+        'createProjectRequest'
+      )
+      populateForm(data)
+      cy.wait('@createProjectRequest').its('request.body').should('include', {
+        number_new_jobs: 0,
+        number_safeguarded_jobs: 0,
+      })
+      cy.get('[data-test="status-message"]').should(
+        'contain',
+        'Investment project created'
+      )
+      assertSummaryTable({
+        dataTest: 'project-value-table',
+        content: {
+          'New jobs': '0 new jobs',
+          'Safeguarded jobs': '0 safeguarded jobs',
+          'Non-FDI R&D project': 'Not linked to a non-FDI R&D project',
+        },
+      })
+      cy.contains('Edit value')
     })
   })
 
