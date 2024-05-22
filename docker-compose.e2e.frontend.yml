@@ -27,6 +27,4 @@ services:
       MOCK_SSO_TOKEN: 123
       MOCK_SSO_EMAIL_USER_ID: test@gov.uk
       MOCK_SSO_USERNAME: test@gov.uk
-    logging:
-      driver: none
 

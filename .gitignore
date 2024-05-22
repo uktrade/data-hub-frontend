@@ -30,7 +30,6 @@ reports
 .idea/
 *.env
 !*.sample.env
-!tests.env
 npm*.log
 yarn-error.log
 yarn.lock
