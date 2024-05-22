@@ -2,7 +2,7 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
-import useSearchParam from 'react-use/lib/useSearchParam'
+import { useSearchParam } from 'react-use'
 import { connect } from 'react-redux'
 import qs from 'qs'
 

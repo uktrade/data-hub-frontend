@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import useSearchParam from 'react-use/lib/useSearchParam'
+import { useSearchParam } from 'react-use'
 import { Details, LoadingBox } from 'govuk-react'
 
 import { CollectionList } from '../../../../../client/components/'
