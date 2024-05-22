@@ -7,9 +7,13 @@ import { getMetadataOptions } from '../../../metadata'
 import { transformInvestmentOpportunityDetails } from './transformers'
 
 export const getOpportunityDetails = ({ opportunityId }) =>
-  getMetadataOptions(
-    urls.metadata.largeCapitalOpportunityDetails(opportunityId)
-  ).then(({ data }) => transformInvestmentOpportunityDetails(data))
+  apiProxyAxios
+    .get(
+      urls.investments.opportunities.largeCapitalOpportunityDetails(
+        opportunityId
+      )
+    )
+    .then(({ data }) => transformInvestmentOpportunityDetails(data))
 
 export const getDetailsMetadata = () =>
   Promise.all([
@@ -23,19 +27,13 @@ export const getRequirementsMetadata = () =>
     getMetadataOptions(
       urls.metadata.capitalInvestmentLargeCapitalInvestmentType()
     ),
-    getMetadataOptions.get(urls.metadata.capitalInvestmentReturnRate()),
-    getMetadataOptions.get(urls.metadata.capitalInvestmentTimeHorizon()),
-  ]).then(
-    ([
-      { data: investmentTypes },
-      { data: returnRates },
-      { data: timeScales },
-    ]) => ({
-      investmentTypes: idNamesToValueLabels(investmentTypes),
-      returnRates: idNamesToValueLabels(returnRates),
-      timeScales: idNamesToValueLabels(timeScales),
-    })
-  )
+    getMetadataOptions(urls.metadata.capitalInvestmentReturnRate()),
+    getMetadataOptions(urls.metadata.capitalInvestmentTimeHorizon()),
+  ]).then(([investmentTypes, returnRates, timeScales]) => ({
+    investmentTypes: investmentTypes,
+    returnRates: returnRates,
+    timeScales: timeScales,
+  }))
 
 export function saveOpportunityDetails({ values, opportunityId }) {
   return apiProxyAxios
