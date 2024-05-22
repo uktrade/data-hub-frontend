@@ -531,6 +531,10 @@ module.exports = {
         '/investments',
         '/opportunities/:opportunityId/interactions'
       ),
+      largeCapitalOpportunityDetails: url(
+        '/api-proxy/v4/large-capital-opportunity',
+        '/:opportunityId'
+      ),
       status: url('/investments', '/opportunities/:opportunityId/status'),
       create: url('/investments', '/opportunities/create'),
     },
@@ -659,12 +663,8 @@ module.exports = {
       '/api-proxy/v4/metadata/capital-investment',
       '/asset-class-interest'
     ),
-    largeCapitalOpportunityDetails: url(
-      '/v4/large-capital-opportunity',
-      '/:opportunityId'
-    ),
     largeCapitalOpportunityMetadata: url(
-      '/v4/large-capital-opportunity',
+      '/api-proxy/v4/metadata/large-capital-opportunity',
       '/opportunity-value-type'
     ),
     oneListTier: url('/api-proxy/v4/metadata', '/one-list-tier'),
