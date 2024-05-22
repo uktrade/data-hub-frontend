@@ -88,7 +88,8 @@ module.exports = (env) => ({
         },
       },
     }),
-    env && env.development ? StartServerAfterBuild() : null,
+    // env && env.development ? StartServerAfterBuild() : null,
+    StartServerAfterBuild(),
   ].filter(Boolean),
   resolve: {
     modules: [

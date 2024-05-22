@@ -8,7 +8,7 @@
   ],
   "ignore": ["*.test.js"],
   "env": {
-    "NODE_ENV": "development"
+    "NODE_ENV": "test"
   },
   "ext": "js json"
 }
