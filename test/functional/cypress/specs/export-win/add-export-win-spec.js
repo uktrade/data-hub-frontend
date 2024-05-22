@@ -52,19 +52,15 @@ const createBreakdown = ({ type, values }) =>
 describe('Adding an export win', () => {
   beforeEach(() => {
     cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company)
-    cy.intercept(
-      'GET',
-      `/api-proxy/v4/contact?company_id=${company.id}&archived=false`,
-      {
-        results: [
-          contactFaker({
-            name: 'Joseph Barker',
-            email: 'joseph.barker@test.com',
-            id: '000',
-          }),
-        ],
-      }
-    )
+    cy.intercept('GET', `/api-proxy/v4/contact?company_id=${company.id}*`, {
+      results: [
+        contactFaker({
+          name: 'Joseph Barker',
+          email: 'joseph.barker@test.com',
+          id: '000',
+        }),
+      ],
+    })
     cy.intercept('/api-proxy/adviser/?*', {
       results: [
         { id: '100', name: 'David Meyer' },
