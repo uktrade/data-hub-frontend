@@ -16,6 +16,8 @@ services:
       POSTCODE_KEY: ${POSTCODE_KEY}
       GOOGLE_TAG_MANAGER_KEY: GTM-MOCK
       ACCOUNT_PLAN_URLS: '{"000000001": "/some-test-account-plan-url", "123456789": "/some-other-test-account-plan-url"}'
+    logging:
+      driver: none
 
   mock-api:
     platform: linux/amd64
@@ -24,3 +26,5 @@ services:
       - ./test/sandbox:/usr/src/app
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
+    logging:
+      driver: none

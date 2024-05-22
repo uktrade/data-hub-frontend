@@ -33,6 +33,8 @@ services:
       - mock-sso
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://opensearch:9200 -wait tcp://redis:6379 -timeout 5m
     command: /app/setup-uat.sh || echo "all good"
+    logging:
+      driver: none
 
   rq:
     image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main

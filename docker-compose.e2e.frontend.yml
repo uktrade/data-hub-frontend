@@ -17,6 +17,8 @@ services:
       OAUTH2_BYPASS_SSO: 'False'
       OAUTH2_CLIENT_SECRET: youAintSeenMyRight
       OAUTH2_CLIENT_ID: randomClientId
+    logging:
+      driver: none
 
   mock-sso:
     image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
