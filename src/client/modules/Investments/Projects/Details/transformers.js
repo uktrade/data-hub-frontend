@@ -8,6 +8,8 @@ import { transformDateObjectToDateString } from '../../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
 
+const capitalOnlyLabel = 'Capital only'
+
 const setConditionalArrayValue = (radioValue, array) =>
   transformRadioOptionToBool(radioValue) ? array.map((x) => x.value) : []
 
@@ -149,7 +151,7 @@ export const transformProjectSummaryForApi = ({
     referral_source_activity_website,
   } = values
 
-  return {
+  const summaryPayload = {
     id: projectId,
     name,
     description,
@@ -176,6 +178,14 @@ export const transformProjectSummaryForApi = ({
     referral_source_activity_event: setReferralSourceEvent(values),
     referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
   }
+
+  if (fdi_type?.label == capitalOnlyLabel) {
+    summaryPayload.number_new_jobs = 0
+    summaryPayload.average_salary = null
+    summaryPayload.number_safeguarded_jobs = 0
+  }
+
+  return summaryPayload
 }
 
 export const setGVAMessage = ({
