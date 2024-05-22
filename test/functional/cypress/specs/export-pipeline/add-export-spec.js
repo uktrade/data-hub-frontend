@@ -305,8 +305,8 @@ describe('Export pipeline create', () => {
         const contacts = contactsListFaker((length = 3))
 
         beforeEach(() => {
-          cy.intercept('GET', `/api-proxy/v4/metadata/country`, countries)
-          cy.intercept('GET', `/api-proxy/v4/metadata/sector`, sectors)
+          cy.intercept('GET', `/api-proxy/v4/metadata/country*`, countries)
+          cy.intercept('GET', `/api-proxy/v4/metadata/sector*`, sectors)
           cy.intercept('POST', `/api-proxy/v4/export`, {
             id: newExport.id,
             title: newExport.title,
