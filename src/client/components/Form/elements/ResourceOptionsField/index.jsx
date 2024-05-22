@@ -44,14 +44,14 @@ const ResourceOptionsField = ({
   id = '__RESOURCE_OPTIONS__',
   field: Field,
   resource: Rsrc = Resource,
-  payload,
+  payload = { _: '0' },
   // Only required when Resource is not specified
   taskName,
   resultToOptions = idNamesToValueLabels,
   interceptOption = (x) => x,
   ...props
 }) => (
-  <Rsrc {...{ name: taskName, id, ...(payload && payload) }} progressBox={true}>
+  <Rsrc {...{ name: taskName, id, payload }} progressBox={true}>
     {(result) => (
       <Field
         {...props}
