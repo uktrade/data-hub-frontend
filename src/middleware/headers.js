@@ -7,14 +7,25 @@ const STS_MAX_AGE = 180 * 24 * 60 * 60
 const GOOGLE_TAG_MNGR = 'https://*.googletagmanager.com'
 const GOOGLE_ANALYTICS = 'https://*.google-analytics.com'
 
+const nonBlockingNonceGenerator = () => {
+  let nonce = uuid()
+  return () => {
+    setTimeout(() => {
+      nonce = uuid()
+    }, 0)
+    return nonce
+  }
+}
+
 module.exports = function headers(
   req,
   res,
   next,
   // We allow nonce generator and mode to be pluggable for easy testing
-  { nonceGenerator = uuid, mode = config.env } = {}
+  { nonceGenerator = nonBlockingNonceGenerator, mode = config.env } = {}
 ) {
-  _.set(res, ['locals', 'cspNonce'], nonceGenerator())
+  // _.set(res, ['locals', 'cspNonce'], nonceGenerator())
+  _.set(res, ['locals', 'cspNonce'], 'foooooooo')
 
   // We have to enable unsafe-eval in tests because code instrumented
   // for coverage by the Istanbul library ends up with lots of evals
