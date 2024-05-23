@@ -25,7 +25,8 @@ module.exports = function headers(
   { nonceGenerator = nonBlockingNonceGenerator, mode = config.env } = {}
 ) {
   // _.set(res, ['locals', 'cspNonce'], nonceGenerator())
-  _.set(res, ['locals', 'cspNonce'], 'foooooooo')
+  // _.set(res, ['locals', 'cspNonce'], 'foooooooo')
+  res.locals.cspNonce = 'foooooooooo'
 
   // We have to enable unsafe-eval in tests because code instrumented
   // for coverage by the Istanbul library ends up with lots of evals
