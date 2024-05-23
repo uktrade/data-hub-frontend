@@ -180,6 +180,9 @@ import getInteractionReducer from './modules/Interactions/InteractionDetails/red
 import { PREVIEW_QUOTE_ID } from './modules/Omis/state'
 import orderQuoteReducer from './modules/Omis/reducer'
 
+import { ID as COMPANY_ACTIVITY_NO_AS_ID } from './modules/Companies/CompanyActivity/state'
+import companyActivityReducerNoAs from './modules/Companies/CompanyActivity/reducer'
+
 import { ResendExportWin } from './modules/ExportWins/Form/ResendExportWin'
 
 export const reducers = {
@@ -252,4 +255,5 @@ export const reducers = {
   [INTERACTION_ID]: getInteractionReducer,
   [PROPOSITION_COMPLETE_ID]: investmentProjectsReducer,
   [PREVIEW_QUOTE_ID]: orderQuoteReducer,
+  [COMPANY_ACTIVITY_NO_AS_ID]: companyActivityReducerNoAs,
 }
