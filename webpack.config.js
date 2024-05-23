@@ -20,7 +20,8 @@ const StartServerAfterBuild = () => {
           server.stdin.write('rs\n')
         } else {
           server = spawn(
-            "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
+            // "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
+            "npm run start:coverage",
             { stdio: ['pipe', 'inherit', 'inherit'], shell: true }
           )
         }
