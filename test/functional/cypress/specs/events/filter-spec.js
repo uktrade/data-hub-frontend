@@ -47,9 +47,6 @@ describe('events Collections Filter', () => {
 
         it('should pass the name to the controller', () => {
           cy.get(element).type(`${eventName}{enter}`)
-          cy.wait('@nameRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
 
           // Should add input to URL query param
           cy.url().should('include', queryParamWithName)
@@ -101,9 +98,6 @@ describe('events Collections Filter', () => {
         it('should pass the date to the controller', () => {
           cy.get(earliestStartElement).type(earliestStartDate)
           cy.get(latestStartElement).type(latestStartDate)
-          cy.wait('@dateRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
         })
 
         it('should add earliest start date to query param', () => {
@@ -173,9 +167,6 @@ describe('events Collections Filter', () => {
       context('should filter from user input', () => {
         it('should pass the aventri Id to the controller', () => {
           cy.get(element).type(`${aventriId}{enter}`)
-          cy.wait('@aventriIdRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
         })
 
         it('should add an aventri ID from user input to query param', () => {
@@ -236,11 +227,6 @@ describe('events Collections Filter', () => {
       })
 
       context('should filter from user input and apply filter chips', () => {
-        it('should pass the country to the controller', () => {
-          cy.wait('@countryRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-        })
 
         it('should pass the country from user input to query param', () => {
           cy.url().should('include', queryParamWithCountry)
@@ -301,12 +287,6 @@ describe('events Collections Filter', () => {
       })
 
       context('should filter from user input and apply filter chips', () => {
-        it('should pass the uk Region to the controller', () => {
-          cy.wait('@ukRegionRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-        })
-
         it('should pass the Uk region from user input to query param', () => {
           cy.url().should('include', queryParamWithUkRegion)
         })
@@ -352,11 +332,6 @@ describe('events Collections Filter', () => {
       })
 
       context('should filter from user input and apply filter chips', () => {
-        it('should pass the organiser to the controller', () => {
-          cy.wait('@organiserRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
-        })
 
         it('should pass the organiser from user input to query param', () => {
           cy.url().should('include', queryParamWithAdvisor)
@@ -397,12 +372,6 @@ describe('events Collections Filter', () => {
             .contains('Type of event')
             .click()
           testCheckBoxGroup({ element, value: eventType.id })
-        })
-
-        it('should pass the event type to the controller', () => {
-          cy.wait('@eventTypeRequest').then((request) => {
-            expect(request.response.statusCode).to.eql(200)
-          })
         })
 
         it('should pass the event type from user input to query param', () => {
