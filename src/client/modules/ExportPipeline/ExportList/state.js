@@ -4,8 +4,6 @@ import { getQueryParamsFromLocation } from '../../../../client/utils/url'
 import { parsePage } from '../../../../client/utils/pagination'
 
 export const TASK_GET_EXPORT_PIPELINE_LIST = 'TASK_GET_EXPORT_PIPELINE_LIST'
-export const TASK_GET_EXPORT_PIPELINE_METADATA =
-  'TASK_GET_EXPORT_PIPELINE_METADATA'
 
 export const ID = 'exportPipelineList'
 
@@ -27,7 +25,6 @@ const areFiltersActive = (queryParams) => {
 
 export const state2props = ({ router, ...state }) => {
   const queryParams = getQueryParamsFromLocation(router.location)
-  const { sectorOptions, countryOptions, ownerOptions } = state[ID]
   return {
     ...state[ID],
     payload: {
@@ -41,15 +38,6 @@ export const state2props = ({ router, ...state }) => {
       },
       exportPotential: {
         options: EXPORT_POTENTIAL_LIST_OPTIONS,
-      },
-      sector: {
-        options: sectorOptions,
-      },
-      country: {
-        options: countryOptions,
-      },
-      owner: {
-        options: ownerOptions,
       },
       sortby: {
         options: SORT_OPTIONS,

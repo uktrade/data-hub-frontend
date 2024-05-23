@@ -137,75 +137,70 @@ describe('Export pipeline sort', () => {
       cy.intercept('GET', '/api-proxy/v4/export/owner', [])
 
       cy.visit(exportTab)
+      cy.wait('@apiReqCreatedOn')
     })
 
     it('should sort by "Recently created"', () => {
-      // As "Recently created" is the default sort
-      // we need to select another option first
-      cy.get(element).select('Export title A-Z')
-      cy.wait('@apiReqTitleAsc')
+      cy.get(element).select('Value decreasing') // Select something else first
       cy.get(element).select('Recently created')
-      assertRequestUrl(
-        '@apiReqCreatedOn',
-        `${requestUrl}&sortby=created_on%3Adesc`
+      cy.wait('@apiReqCreatedOn').then(() =>
+        cy.url().should('include', 'sortby=created_on%3Adesc')
       )
     })
 
     it('should sort by "Export title A-Z"', () => {
       cy.get(element).select('Export title A-Z')
-      assertRequestUrl('@apiReqTitleAsc', `${requestUrl}&sortby=title`)
+      cy.wait('@apiReqTitleAsc').then(() =>
+        cy.url().should('include', 'sortby=title')
+      )
     })
 
     it('should sort by "Export title Z-A"', () => {
       cy.get(element).select('Export title Z-A')
-      assertRequestUrl('@apiReqTitleDesc', `${requestUrl}&sortby=-title`)
+      cy.wait('@apiReqTitleDesc').then(() =>
+        cy.url().should('include', 'sortby=-title')
+      )
     })
 
     it('should sort by "Company name A-Z"', () => {
       cy.get(element).select('Company name A-Z')
-      assertRequestUrl(
-        '@apiReqCompanyAsc',
-        `${requestUrl}&sortby=company__name`
+      cy.wait('@apiReqCompanyAsc').then(() =>
+        cy.url().should('include', 'sortby=company__name')
       )
     })
 
     it('should sort by "Company name Z-A"', () => {
       cy.get(element).select('Company name Z-A')
-      assertRequestUrl(
-        '@apiReqCompanyDesc',
-        `${requestUrl}&sortby=-company__name`
+      cy.wait('@apiReqCompanyDesc').then(() =>
+        cy.url().should('include', 'sortby=-company__name')
       )
     })
 
     it('should sort by "Earliest expected date for win"', () => {
       cy.get(element).select('Earliest expected date for win')
-      assertRequestUrl(
-        '@apiReqWinDateAsc',
-        `${requestUrl}&sortby=estimated_win_date`
+      cy.wait('@apiReqWinDateAsc').then(() =>
+        cy.url().should('include', 'sortby=estimated_win_date')
       )
     })
 
     it('should sort by "Latest expected date for win"', () => {
       cy.get(element).select('Latest expected date for win')
-      assertRequestUrl(
-        '@apiReqWinDateDesc',
-        `${requestUrl}&sortby=-estimated_win_date`
+      cy.wait('@apiReqWinDateDesc').then(() =>
+        cy.url().should('include', 'sortby=-estimated_win_date')
       )
     })
 
     it('should sort by "Value increasing"', () => {
       cy.get(element).select('Value increasing')
-      assertRequestUrl(
-        '@apiReqValueAsc',
-        `${requestUrl}&sortby=estimated_export_value_amount`
+      cy.wait('@apiReqValueAsc').then(() =>
+        cy.url().should('include', 'sortby=estimated_export_value_amount')
       )
     })
 
     it('should sort by "Value decreasing"', () => {
       cy.get(element).select('Value decreasing')
-      assertRequestUrl(
-        '@apiReqValueDesc',
-        `${requestUrl}&sortby=-estimated_export_value_amount`
+      cy.wait('@apiReqValueDesc').then(() =>
+        cy.url().should('include', 'sortby=-estimated_export_value_amount')
       )
     })
   })

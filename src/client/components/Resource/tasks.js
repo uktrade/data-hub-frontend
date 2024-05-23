@@ -22,6 +22,7 @@ import Event from './Event'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
+import ExportOwner from './ExportOwner'
 import ExportWins from './ExportWins'
 import ExportWinReview from './ExportWinReview'
 import Sector from './Sector'
@@ -126,6 +127,7 @@ export default {
   ...Event.tasks,
   ...ExportYears.tasks,
   ...ExportWin.tasks,
+  ...ExportOwner.tasks,
   ...ExportWins.tasks,
   ...ExportWinReview.tasks,
   ...Sector.tasks,
