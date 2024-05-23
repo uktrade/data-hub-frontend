@@ -56,7 +56,7 @@ export const transformInteractionToListItem = ({
   contacts,
   kind,
   communication_channel,
-} = {}) => ({
+}) => ({
   id,
   metadata: [
     { label: 'Date', value: formatMediumDate(date) },
