@@ -24,6 +24,6 @@ services:
       # doesn't exists in your .env file as the override below won't work
       OAUTH2_DEV_TOKEN: ${OAUTH2_DEV_TOKEN:-ditStaffToken}
     # command: bash -c 'npm run build:for-test-coverage && npm run start:coverage'
-    command: bash -c 'npm run build:for-test-coverage && npm start'
+    command: npm run develop
   redis:
     image: redis:6.2.6
