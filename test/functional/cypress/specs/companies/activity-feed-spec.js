@@ -4,8 +4,13 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
 
+/*
+ * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
+ * We will be able to gradually unskip the individual contexts once we have the new integrations in place.
+ */
+
 describe('Company activity feed', () => {
-  context('Companies House Company', () => {
+  context.skip('Companies House Company', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -27,7 +32,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Export Support Service', () => {
+  context.skip('Export Support Service', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -75,7 +80,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Companies House Account', () => {
+  context.skip('Companies House Account', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -91,7 +96,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('HMRC Exporter', () => {
+  context.skip('HMRC Exporter', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -105,7 +110,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Orders (OMIS)', () => {
+  context.skip('Orders (OMIS)', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -153,7 +158,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Investment project', () => {
+  context.skip('Investment project', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -212,7 +217,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Referrals project', () => {
+  context.skip('Referrals project', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -243,7 +248,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context('Aventri', () => {
+  context.skip('Aventri', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -302,7 +307,7 @@ describe('Company activity feed', () => {
     )
   })
 
-  context('Email Campaign (Maxemail)', () => {
+  context.skip('Email Campaign (Maxemail)', () => {
     before(() => {
       const companyId = fixtures.company.externalActivitiesLtd.id
       const url = urls.companies.activity.index(companyId)
@@ -319,7 +324,7 @@ describe('Company activity feed', () => {
   })
 })
 
-context('Export Support Service No Title', () => {
+context.skip('Export Support Service No Title', () => {
   before(() => {
     cy.visit(urls.companies.activity.index(fixtures.company.essNoTitle.id))
   })
