@@ -47,16 +47,18 @@ module.exports = function headers(
   //   ].join(';')
   // )
 
-  // This is equivalent to `frame-ancestors 'none'` in the above CSP policy,
-  // but keeping it here for older browsers
-  res.set('X-Frame-Options', 'DENY')
-  // Prevent Content Sniffing
-  res.set('X-Content-Type-Options', 'nosniff')
-  // Tell the browser to always require HTTPS
-  res.set('Strict-Transport-Security', `max-age=${STS_MAX_AGE}`)
-  // No caching as suggested in pen test report
-  res.set('Cache-Control', 'no-cache, no-store')
-  res.set('Pragma', 'no-cache')
+  res.set({
+    // This is equivalent to `frame-ancestors 'none'` in the above CSP policy,
+    // but keeping it here for older browsers
+    'X-Frame-Options': 'DENY',
+    // Prevent Content Sniffing
+    'X-Content-Type-Options': 'nosniff',
+    // Tell the browser to always require HTTPS
+    'Strict-Transport-Security': `max-age=${STS_MAX_AGE}`,
+    // No caching as suggested in pen test report
+    'Cache-Control': 'no-cache, no-store',
+    Pragma: 'no-cache',
+  })
 
   next()
 }
