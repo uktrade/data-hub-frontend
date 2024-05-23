@@ -48,7 +48,7 @@ const exportWinsReview = require('./apps/__export-wins-review')
 
 const app = express()
 
-app.use(headers)
+// app.use(headers)
 
 if (global.__coverage__) {
   require('@cypress/code-coverage/middleware/express')(app)
