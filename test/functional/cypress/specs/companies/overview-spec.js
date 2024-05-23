@@ -1,5 +1,4 @@
 import { company } from '../../fixtures'
-import { exportFaker } from '../../fakers/export'
 import {
   companyGlobalUltimateAllDetails,
   companyNoDetails,
@@ -25,10 +24,6 @@ describe('Company overview page', () => {
   const allActivityUrlAllOverview = urls.companies.activity.index(
     fixtures.company.allOverviewDetails.id
   )
-  const noActiveInvestments = exportFaker({
-    count: 10,
-    results: [],
-  })
 
   context(
     'when viewing company overview the tab should display Overview',
@@ -784,7 +779,8 @@ describe('Company overview page', () => {
       beforeEach(() => {
         cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
           body: {
-            results: noActiveInvestments,
+            colunt: 0,
+            results: [],
           },
         }).as('apiRequest')
         cy.visit(
