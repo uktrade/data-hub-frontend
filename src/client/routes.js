@@ -90,7 +90,7 @@ import CompanyOverview from './modules/Companies/CompanyOverview/CompanyOverview
 import CompanyBusinessDetails from './modules/Companies/CompanyBusinessDetails/CompanyBusinessDetails'
 import SetGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/SetGlobalHQ'
 import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalHQ/RemoveGlobalHQ'
-import CompanyActivityCollection from './components/ActivityFeed/CollectionList/index'
+import CompanyActivityCollectionNoAs from './modules/Companies/CompanyActivity/index'
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
 import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
 import AccountManagement from './modules/Companies/AccountManagement'
@@ -274,7 +274,7 @@ function Routes() {
       path: '/companies/:companyId/activity',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
-          <CompanyActivityCollection />
+          <CompanyActivityCollectionNoAs />
         </ProtectedRoute>
       ),
     },
