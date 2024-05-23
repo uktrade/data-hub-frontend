@@ -1,4 +1,3 @@
-import './webpack-csp-nonce.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'

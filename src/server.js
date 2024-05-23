@@ -48,8 +48,6 @@ const exportWinsReview = require('./apps/__export-wins-review')
 
 const app = express()
 
-app.use(headers)
-
 if (global.__coverage__) {
   require('@cypress/code-coverage/middleware/express')(app)
 }
@@ -141,6 +139,7 @@ app.use(user)
 app.use(permissions)
 app.use(features)
 app.use(userLocals)
+app.use(headers)
 app.use(store())
 apiProxy(app)
 helpCentreApiProxy(app)

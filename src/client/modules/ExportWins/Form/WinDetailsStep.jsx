@@ -155,19 +155,19 @@ const WinDetailsStep = ({ isEditing }) => {
                   <UnorderedList listStyleType="bullet">
                     <ListItem>
                       the exchange of ownership of goods/services from a
-                      subsidiary of an eligible UK company to a non-UK resident.
+                      subsidiary of an eligible UK company to a non-UK resident
                     </ListItem>
                     <ListItem>
                       in financial services, the value of assets under
-                      management or the value of a listing.
+                      management or the value of a listing
                     </ListItem>
                     <ListItem>
-                      the collection of cash from an overdue invoice.
+                      the collection of cash from an overdue invoice
                     </ListItem>
                     <ListItem>
-                      reduced tax burden on a customer achieved by lobbying.
+                      reduced tax burden on a customer achieved by lobbying
                     </ListItem>
-                    <ListItem>repatriation of profits to the UK.</ListItem>
+                    <ListItem>repatriation of profits to the UK</ListItem>
                   </UnorderedList>
                 </StyledDetails>
               ),
@@ -196,9 +196,9 @@ const WinDetailsStep = ({ isEditing }) => {
                     machinery, buildings, and running costs to:
                   </p>
                   <UnorderedList listStyleType="bullet">
-                    <ListItem>set up an overseas subsidiary.</ListItem>
-                    <ListItem>enter into a joint venture.</ListItem>
-                    <ListItem>expand current overseas operations.</ListItem>
+                    <ListItem>set up an overseas subsidiary</ListItem>
+                    <ListItem>enter into a joint venture</ListItem>
+                    <ListItem>expand current overseas operations</ListItem>
                   </UnorderedList>
                 </StyledDetails>
               ),

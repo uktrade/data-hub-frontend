@@ -5,6 +5,9 @@ module.exports = {
     test: {
       plugins: ['istanbul'],
     },
+    development: {
+      plugins: ['istanbul'],
+    },
   },
   presets: [
     ['@babel/preset-react'],

@@ -9,8 +9,6 @@ services:
       - ./test/sandbox:/usr/src/app
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
-    logging:
-      driver: none
 
   lbweb:
     image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api:latest
@@ -41,8 +39,10 @@ services:
       - 8001:8001
     depends_on:
       - lbdb
-    command: >
-      bash -c "sleep 5 && python manage.py migrate && python manage.py collectstatic --noinput && python -Wd manage.py runserver 0.0.0.0:8001"
+    command:  >
+      bash -c "sleep 5 && python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python -Wd manage.py runserver 0.0.0.0:8001"
 
   lbdb:
     image: postgres:16
