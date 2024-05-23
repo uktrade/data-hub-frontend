@@ -44,7 +44,7 @@ const ResourceOptionsField = ({
   id,
   field: Field,
   resource: Rsrc = Resource,
-  payload,
+  payload = { _: '0' },
   // Only required when Resource is not specified
   taskName,
   resultToOptions = idNamesToValueLabels,
