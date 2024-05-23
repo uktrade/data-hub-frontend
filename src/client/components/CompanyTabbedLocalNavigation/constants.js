@@ -12,7 +12,7 @@ export const localNavItems = (companyId) => {
       path: 'activity',
       url: urls.companies.activity.index(companyId),
       label: 'Activity',
-      search: '?activityType%5B0%5D=dataHubActivity&page=1',
+      search: '',
       permissions: ['interaction.view_all_interaction'],
     },
     {

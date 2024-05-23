@@ -37,7 +37,7 @@ import {
 
 import { BLUE, GREY_2 } from '../../../utils/colours'
 
-const StyledCollectionItem = styled(CollectionItem)`
+export const StyledCollectionItem = styled(CollectionItem)`
   border-bottom: 1px solid ${GREY_2};
   padding: ${SPACING.SCALE_3} 0;
 `
@@ -57,7 +57,7 @@ const StyledLinkHeader = styled('h3')`
   }
 `
 
-const TitleRenderer = (title, url, margin = { bottom: 10 }) => (
+export const TitleRenderer = (title, url, margin = { bottom: 10 }) => (
   <StyledLinkHeader margin={margin}>
     <Link as={RouterLink} to={url}>
       {title}
