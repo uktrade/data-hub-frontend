@@ -29,6 +29,7 @@ import { currencyGBP } from '../../../../utils/number-utils'
 import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
+import { capitalExpenditureValidator } from './validators'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
@@ -115,6 +116,11 @@ const EditProjectValue = () => {
                           initialValue={project.foreignEquityInvestment}
                           type="text"
                           required="Enter the capital expenditure"
+                          validate={(value) => {
+                            return project.fdiType?.name === 'Capital only'
+                              ? capitalExpenditureValidator(value)
+                              : null
+                          }}
                         />
                         {project.investmentType.name === 'FDI' &&
                           project.gvaMultiplier

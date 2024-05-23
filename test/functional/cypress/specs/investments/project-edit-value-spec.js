@@ -7,6 +7,7 @@ const {
   assertFieldRadios,
   assertFieldUneditable,
   assertLocalHeader,
+  assertFieldError,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
@@ -504,8 +505,10 @@ describe('Edit the value details of a project', () => {
         name: 'Prospect',
         id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
       },
-      client_cannot_provide_total_investment: true,
-      client_cannot_provide_foreign_investment: true,
+      client_cannot_provide_total_investment: false,
+      client_cannot_provide_foreign_investment: false,
+      total_investment: 20000000,
+      foreign_equity_investment: 15000000,
     })
     beforeEach(() => {
       cy.intercept(
@@ -515,13 +518,45 @@ describe('Edit the value details of a project', () => {
           statusCode: 200,
           body: capitalOnlyFDIProject,
         }
-      ).as('getProjectDetails')
+      ).as('getProjectValue')
       cy.intercept(
         'PATCH',
         `/api-proxy/v3/investment/${capitalOnlyFDIProject.id}`
       ).as('editValueSubmissionRequest')
       cy.visit(investments.projects.editValue(capitalOnlyFDIProject.id))
-      cy.wait('@getProjectDetails')
+      cy.wait('@getProjectValue')
+    })
+
+    it('should raise an error when entered capital expenditure value is < £15m', () => {
+      const capitalExpenditureErrorMessage =
+        'Capital expenditure must be >= £15,000,000 for capital only project'
+      cy.get('[data-test="total-investment-input"]')
+        .clear()
+        .type(`${capitalOnlyFDIProject.total_investment}`)
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type('15000')
+      clickButton('Save')
+      assertErrorSummary([capitalExpenditureErrorMessage])
+      assertFieldError(
+        cy.get('[data-test="field-foreign_equity_investment"]'),
+        capitalExpenditureErrorMessage
+      )
+    })
+
+    it('should not raise en error when entered capital expenditure value is >= £15m', () => {
+      cy.get('[data-test="total-investment-input"]')
+        .clear()
+        .type(`${capitalOnlyFDIProject.total_investment}`)
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type(`${capitalOnlyFDIProject.foreign_equity_investment}`)
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          foreign_equity_investment: `${capitalOnlyFDIProject.foreign_equity_investment}`,
+        })
     })
 
     it('should not display the jobs fields', () => {
@@ -556,8 +591,10 @@ describe('Edit the value details of a project', () => {
         name: 'Prospect',
         id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
       },
-      client_cannot_provide_total_investment: true,
-      client_cannot_provide_foreign_investment: true,
+      client_cannot_provide_total_investment: false,
+      client_cannot_provide_foreign_investment: false,
+      total_investment: 20000000,
+      foreign_equity_investment: 15000000,
       number_new_jobs: 120,
       average_salary: {
         name: 'Below £25,000',
@@ -573,13 +610,29 @@ describe('Edit the value details of a project', () => {
           statusCode: 200,
           body: nonCapitalOnlyFDIProject,
         }
-      ).as('getProjectDetails')
+      ).as('getProjectValue')
       cy.intercept(
         'PATCH',
         `/api-proxy/v3/investment/${nonCapitalOnlyFDIProject.id}`
       ).as('editValueSubmissionRequest')
       cy.visit(investments.projects.editValue(nonCapitalOnlyFDIProject.id))
-      cy.wait('@getProjectDetails')
+      cy.wait('@getProjectValue')
+    })
+
+    it('should not raise an error when capital expenditure is < £15m', () => {
+      const newCapitalExpenditureValue = '2000000'
+      cy.get('[data-test="total-investment-input"]')
+        .clear()
+        .type(`${nonCapitalOnlyFDIProject.total_investment}`)
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type(newCapitalExpenditureValue)
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          foreign_equity_investment: newCapitalExpenditureValue,
+        })
     })
 
     it('should display the jobs fields', () => {
