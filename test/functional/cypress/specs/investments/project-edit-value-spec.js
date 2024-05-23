@@ -496,22 +496,22 @@ describe('Edit the value details of a project', () => {
     'When viewing a labour intensive project with no value fields set',
     () => {
       const labourIntensiveProjectNoValues = investmentProjectFaker({
+        created_on: '2020-06-07T10:00:00Z',
+        actual_land_date: null,
         investment_type: {
           name: 'FDI',
           id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-        },
-        fdi_type: {
-          name: 'Creation of new site or activity',
-          id: 'f8447013-cfdc-4f35-a146-6619665388b3',
-        },
-        sector: {
-          name: 'Renewable Energy : Wind : Onshore',
-          id: '034be3be-5329-e511-b6bc-e4115bead28a',
         },
         gva_multiplier: {
           sector_classification_gva_multiplier: 'labour',
           id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
         },
+        client_cannot_provide_total_investment: true,
+        client_cannot_provide_foreign_investment: true,
+        number_new_jobs: null,
+        number_safeguarded_jobs: null,
+        gross_value_added: null,
+        average_salary: null,
       })
       beforeEach(() => {
         cy.intercept(
