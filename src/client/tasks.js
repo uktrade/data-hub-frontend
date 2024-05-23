@@ -449,6 +449,9 @@ import {
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
 
+import { TASK_GET_COMPANY_ACTIVITIES_NO_AS } from './modules/Companies/CompanyActivity/state.js'
+import { getCompanyInteractions } from './modules/Companies/CompanyActivity/tasks.js'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -532,6 +535,7 @@ export const tasks = {
   [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
   [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
   [TASK_GET_COMPANY_ACTIVITIES_LIST]: getCompanyActivities,
+  [TASK_GET_COMPANY_ACTIVITIES_NO_AS]: getCompanyInteractions,
   [TASK_GET_COMPANY_ACTIVITIES_METADATA]: getCompanyActivitiesMetadata,
   [TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME]: getCompanyNames,
