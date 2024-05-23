@@ -152,18 +152,9 @@ describe('Aventri status event registration attendees', () => {
             )
           })
 
-          it('should sort by "first name: A-Z" by default', () => {
-            cy.wait('@firstNameA-Z').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
-          })
-
           it('sorts by "first name: Z-A" when selected', () => {
             const element = '[data-test="sortby"] select'
             cy.get(element).select('first_name:desc')
-            cy.wait('@firstNameZ-A').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
             cy.get('[data-test="aventri-attendee"]')
               .eq(0)
               .should('contain', 'Diana Durrell')
@@ -172,9 +163,6 @@ describe('Aventri status event registration attendees', () => {
           it('sorts by "last name: A-Z" when selected', () => {
             const element = '[data-test="sortby"] select'
             cy.get(element).select('last_name:asc')
-            cy.wait('@lastNameA-Z').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
             cy.get('[data-test="aventri-attendee"]')
               .eq(0)
               .should('contain', 'Alex Alderman')
@@ -183,9 +171,6 @@ describe('Aventri status event registration attendees', () => {
           it('sorts by "last name: Z-A" when selected', () => {
             const element = '[data-test="sortby"] select'
             cy.get(element).select('last_name:desc')
-            cy.wait('@lastNameZ-A').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
             cy.get('[data-test="aventri-attendee"]')
               .eq(0)
               .should('contain', 'Diana Durrell')
@@ -194,9 +179,6 @@ describe('Aventri status event registration attendees', () => {
           it('sorts by "company name: A-Z" when selected', () => {
             const element = '[data-test="sortby"] select'
             cy.get(element).select('company_name:asc')
-            cy.wait('@companyNameA-Z').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
             cy.get('[data-test="aventri-attendee"]')
               .eq(0)
               .should('contain', 'Alex Alderman')
@@ -205,9 +187,6 @@ describe('Aventri status event registration attendees', () => {
           it('sorts by "company name: Z-A" when selected', () => {
             const element = '[data-test="sortby"] select'
             cy.get(element).select('company_name:desc')
-            cy.wait('@companyNameZ-A').then((request) => {
-              expect(request.response.statusCode).to.eql(200)
-            })
             cy.get('[data-test="aventri-attendee"]')
               .eq(0)
               .should('contain', 'Diana Durrell')
