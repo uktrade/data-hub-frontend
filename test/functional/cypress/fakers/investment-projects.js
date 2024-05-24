@@ -78,6 +78,10 @@ const investmentProjectFaker = (overrides = {}) => ({
     name: faker.company.name(),
     id: faker.string.uuid(),
   },
+  gva_multiplier: {
+    sector_classification_gva_multiplier: 'labour',
+    id: faker.string.uuid(),
+  },
   ...overrides,
 })
 

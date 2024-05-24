@@ -7,12 +7,13 @@ const {
   assertLocalHeader,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
+const { investmentProjectFaker } = require('../../fakers/investment-projects')
 
 const capitalIntensiveProjectWithValue = require('../../fixtures/investment/capital-investment-has-existing-value.json')
 const capitalIntensiveProjectNoValue = require('../../fixtures/investment/capital-investment-no-value.json')
 const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/investment/capital-investment-no-sector.json')
 const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/capital-investment-has-capital-expenditure-but-no-sector.json')
-const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
+//const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
 const labourIntensiveProjectWithValue = require('../../fixtures/investment/labour-investment-has-existing-value.json')
 const labourIntensiveProjectWithNoSectorOrNoNewJobs = require('../../fixtures/investment/labour-investment-no-sector-no-jobs.json')
 const labourIntensiveProjectWithNewJobsButNoSector = require('../../fixtures/investment/labour-investment-has-new-jobs-but-no-sector.json')
@@ -494,14 +495,45 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with no value fields set',
     () => {
+      const labourIntensiveProjectNoValues = investmentProjectFaker({
+        created_on: '2020-06-07T10:00:00Z',
+        actual_land_date: null,
+        investment_type: {
+          name: 'FDI',
+          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+        },
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'labour',
+          id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+        },
+        client_cannot_provide_total_investment: true,
+        client_cannot_provide_foreign_investment: true,
+        number_new_jobs: null,
+        number_safeguarded_jobs: null,
+        gross_value_added: null,
+        average_salary: null,
+      })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${labourIntensiveProjectNoValues.id}`,
+          {
+            statusCode: 200,
+            body: labourIntensiveProjectNoValues,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${labourIntensiveProjectNoValues.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
-          investments.projects.editValue(labourIntensiveProjectNoValue.id)
+          investments.projects.editValue(labourIntensiveProjectNoValues.id)
         )
+        cy.wait('@getProjectDetails')
       })
 
       it('should render the header', () => {
-        assertLocalHeader(labourIntensiveProjectNoValue.name)
+        assertLocalHeader(labourIntensiveProjectNoValues.name)
       })
 
       it('should render breadcrumbs', () => {
@@ -509,8 +541,8 @@ describe('Edit the value details of a project', () => {
           Home: '/',
           Investments: investments.index(),
           Projects: investments.projects.index(),
-          [labourIntensiveProjectNoValue.name]: investments.projects.details(
-            labourIntensiveProjectNoValue.id
+          [labourIntensiveProjectNoValues.name]: investments.projects.details(
+            labourIntensiveProjectNoValues.id
           ),
           'Edit value': null,
         })
