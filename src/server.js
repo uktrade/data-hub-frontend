@@ -60,9 +60,6 @@ Joi.assert(process.env, envSchema, {
 
 app.disable('x-powered-by')
 
-// Sentry request handler must be the first middleware
-reporter.setup(app)
-
 if (!config.ci) {
   app.use(httpLogger)
 }
@@ -150,6 +147,8 @@ app.use(reactGlobalProps())
 // routing
 app.use(fixSlashes())
 app.use(routers)
+
+reporter.setup(app)
 
 app.use(errors.notFound)
 app.use(errors.badRequest)
