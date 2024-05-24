@@ -227,7 +227,6 @@ describe('events Collections Filter', () => {
       })
 
       context('should filter from user input and apply filter chips', () => {
-
         it('should pass the country from user input to query param', () => {
           cy.url().should('include', queryParamWithCountry)
         })
@@ -332,7 +331,6 @@ describe('events Collections Filter', () => {
       })
 
       context('should filter from user input and apply filter chips', () => {
-
         it('should pass the organiser from user input to query param', () => {
           cy.url().should('include', queryParamWithAdvisor)
         })
