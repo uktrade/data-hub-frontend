@@ -779,7 +779,7 @@ describe('Company overview page', () => {
       beforeEach(() => {
         cy.intercept('POST', '/api-proxy/v3/search/investment_project', {
           body: {
-            count: 10,
+            count: 0,
             results: [],
           },
         }).as('apiRequest')
