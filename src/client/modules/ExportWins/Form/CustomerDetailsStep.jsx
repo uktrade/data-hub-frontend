@@ -34,6 +34,7 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => (
       resource={CompanyContacts}
       field={FieldTypeaheadMarginBottom}
       autoScroll={true}
+      payload={{ archived: false }}
       resultToOptions={({ results }) =>
         results.map(({ id, name, email }) => ({
           value: id,
