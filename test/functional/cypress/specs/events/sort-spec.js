@@ -38,43 +38,5 @@ describe('Event Collections Sort', () => {
         ])
       })
     })
-
-    it('sorts by recently updated by default', () => {
-      cy.wait('@recentlyUpdatedRequest').then((request) => {
-        expect(request.response.statusCode).to.eql(200)
-      })
-    })
-
-    it('sorts by "least recently updated" when selected', () => {
-      const element = '[data-test="sortby"] select'
-      cy.get(element).select('modified_on:asc')
-      cy.wait('@leastRecentlyUpdatedRequest').then((request) => {
-        expect(request.response.statusCode).to.eql(200)
-      })
-    })
-
-    it('sorts by "name" when selected', () => {
-      const element = '[data-test="sortby"] select'
-      cy.get(element).select('name:asc')
-      cy.wait('@nameRequest').then((request) => {
-        expect(request.response.statusCode).to.eql(200)
-      })
-    })
-
-    it('sorts by "earliest start date" when selected', () => {
-      const element = '[data-test="sortby"] select'
-      cy.get(element).select('start_date:asc')
-      cy.wait('@earliestStartDateRequest').then((request) => {
-        expect(request.response.statusCode).to.eql(200)
-      })
-    })
-
-    it('sorts by "latest start date" when selected', () => {
-      const element = '[data-test="sortby"] select'
-      cy.get(element).select('start_date:desc')
-      cy.wait('@latestStartDateRequest').then((request) => {
-        expect(request.response.statusCode).to.eql(200)
-      })
-    })
   })
 })

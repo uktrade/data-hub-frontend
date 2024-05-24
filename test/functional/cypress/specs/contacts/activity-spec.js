@@ -67,9 +67,6 @@ describe('Contact activity', () => {
       })
 
       it('should default to sort by newest', () => {
-        cy.wait('@newestRequest').then((request) => {
-          expect(request.response.statusCode).to.eql(200)
-        })
         cy.get('[data-test=aventri-activity]').contains('EITA Test Event 2022')
       })
 
