@@ -48,7 +48,10 @@ const exportWinsReview = require('./apps/__export-wins-review')
 
 const app = express()
 
-app.use(headers)
+// Headers slow down functional tests tremendously and they make no difference in tests
+if (!config.isTest) {
+  app.use(headers)
+}
 
 if (global.__coverage__) {
   require('@cypress/code-coverage/middleware/express')(app)
