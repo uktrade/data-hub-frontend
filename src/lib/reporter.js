@@ -23,7 +23,13 @@ module.exports = {
 
   setup: function (app) {
     if (useSentry) {
-      Sentry.setupExpressErrorHandler(app)
+      app.use(Sentry.Handlers.requestHandler())
+    }
+  },
+
+  handleErrors: function (app) {
+    if (useSentry) {
+      app.use(Sentry.Handlers.errorHandler())
     }
   },
 
