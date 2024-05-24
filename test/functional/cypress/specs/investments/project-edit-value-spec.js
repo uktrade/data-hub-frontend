@@ -9,10 +9,6 @@ const {
 const { investments } = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
 
-const capitalIntensiveProjectWithValue = require('../../fixtures/investment/capital-investment-has-existing-value.json')
-const capitalIntensiveProjectNoValue = require('../../fixtures/investment/capital-investment-no-value.json')
-const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/investment/capital-investment-no-sector.json')
-const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/capital-investment-has-capital-expenditure-but-no-sector.json')
 const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
 const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
 const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
@@ -32,10 +28,42 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with no value fields set',
     () => {
+      const capitalIntensiveProjectNoValue = investmentProjectFaker({
+        created_on: '2020-06-07T10:00:00Z',
+        actual_land_date: null,
+        investment_type: {
+          name: 'FDI',
+          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+        },
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'capital',
+          id: '7d2d9757-3287-4501-82f0-37879b7d9081',
+        },
+        client_cannot_provide_total_investment: true,
+        client_cannot_provide_foreign_investment: true,
+        number_new_jobs: null,
+        number_safeguarded_jobs: null,
+        gross_value_added: null,
+        average_salary: null,
+        foreign_equity_investment: null,
+      })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectNoValue.id}`,
+          {
+            statusCode: 200,
+            body: capitalIntensiveProjectNoValue,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectNoValue.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(capitalIntensiveProjectNoValue.id)
         )
+        cy.wait('@getProjectDetails')
       })
 
       it('should render the header', () => {
@@ -240,10 +268,46 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with all value fields set',
     () => {
+      const capitalIntensiveProjectWithValue = investmentProjectFaker({
+        created_on: '2020-06-07T10:00:00Z',
+        actual_land_date: null,
+        investment_type: {
+          name: 'FDI',
+          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+        },
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'capital',
+          id: 'e2a570df-32cd-49a5-ba09-a21d4878c808',
+        },
+        client_cannot_provide_total_investment: false,
+        client_cannot_provide_foreign_investment: false,
+        number_new_jobs: 20,
+        number_safeguarded_jobs: null,
+        gross_value_added: 34568,
+        total_investment: 1000000,
+        foreign_equity_investment: 200000,
+        average_salary: {
+          name: 'Below £25,000',
+          id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+        },
+      })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithValue.id}`,
+          {
+            statusCode: 200,
+            body: capitalIntensiveProjectWithValue,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithValue.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(capitalIntensiveProjectWithValue.id)
         )
+        cy.wait('@getProjectDetails')
       })
 
       it('should render the header', () => {
@@ -426,13 +490,46 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with no sector and no capital value',
     () => {
+      const capitalIntensiveProjectWithNoSectorOrCapitalExp =
+        investmentProjectFaker({
+          created_on: '2020-06-07T10:00:00Z',
+          actual_land_date: null,
+          investment_type: {
+            name: 'FDI',
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+          },
+          client_cannot_provide_total_investment: false,
+          client_cannot_provide_foreign_investment: false,
+          gross_value_added: null,
+          sector: null,
+          gross_value_added: null,
+          gva_multiplier: {
+            id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+            sector_classification_gva_multiplier: 'capital',
+          },
+          foreign_equity_investment: null,
+        })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithNoSectorOrCapitalExp.id}`,
+          {
+            statusCode: 200,
+            body: capitalIntensiveProjectWithNoSectorOrCapitalExp,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithNoSectorOrCapitalExp.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(
             capitalIntensiveProjectWithNoSectorOrCapitalExp.id
           )
         )
+        cy.wait('@getProjectDetails')
       })
+
       it('should display the correct message in the GVA field', () => {
         cy.get(
           '[data-test="client-cannot-provide-total-investment-yes"]'
@@ -458,13 +555,46 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with capital value but no sector',
     () => {
+      const capitalIntensiveProjectWithCapitalExpButNoSector =
+        investmentProjectFaker({
+          created_on: '2020-06-07T10:00:00Z',
+          actual_land_date: null,
+          investment_type: {
+            name: 'FDI',
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+          },
+          client_cannot_provide_total_investment: false,
+          client_cannot_provide_foreign_investment: false,
+          gross_value_added: null,
+          sector: null,
+          gross_value_added: null,
+          gva_multiplier: {
+            id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+            sector_classification_gva_multiplier: 'capital',
+          },
+          foreign_equity_investment: 200000,
+        })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithCapitalExpButNoSector.id}`,
+          {
+            statusCode: 200,
+            body: capitalIntensiveProjectWithCapitalExpButNoSector,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${capitalIntensiveProjectWithCapitalExpButNoSector.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(
             capitalIntensiveProjectWithCapitalExpButNoSector.id
           )
         )
+        cy.wait('@getProjectDetails')
       })
+
       it('should display the correct message in the GVA field', () => {
         cy.get(
           '[data-test="client-cannot-provide-total-investment-yes"]'
@@ -500,7 +630,7 @@ describe('Edit the value details of a project', () => {
         },
         gva_multiplier: {
           sector_classification_gva_multiplier: 'labour',
-          id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+          id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
         },
         client_cannot_provide_total_investment: true,
         client_cannot_provide_foreign_investment: true,
@@ -740,7 +870,7 @@ describe('Edit the value details of a project', () => {
       },
       gva_multiplier: {
         sector_classification_gva_multiplier: 'labour',
-        id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+        id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
       },
       client_cannot_provide_total_investment: false,
       client_cannot_provide_foreign_investment: false,
@@ -962,6 +1092,10 @@ describe('Edit the value details of a project', () => {
           client_cannot_provide_foreign_investment: false,
           number_new_jobs: null,
           gross_value_added: null,
+          gva_multiplier: {
+            sector_classification_gva_multiplier: 'labour',
+            id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
+          },
           sector: null,
         })
       beforeEach(() => {
@@ -1021,6 +1155,10 @@ describe('Edit the value details of a project', () => {
           client_cannot_provide_foreign_investment: false,
           number_new_jobs: 20,
           gross_value_added: null,
+          gva_multiplier: {
+            sector_classification_gva_multiplier: 'labour',
+            id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
+          },
           sector: null,
         })
       beforeEach(() => {
