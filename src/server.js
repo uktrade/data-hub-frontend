@@ -151,9 +151,6 @@ app.use(reactGlobalProps())
 app.use(fixSlashes())
 app.use(routers)
 
-// Sentry error handler must come before other error middleware
-reporter.handleErrors(app)
-
 app.use(errors.notFound)
 app.use(errors.badRequest)
 app.use(errors.catchAll)
