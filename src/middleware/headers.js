@@ -22,11 +22,13 @@ module.exports = function headers(
   res,
   next,
   // We allow nonce generator and mode to be pluggable for easy testing
-  { nonceGenerator = nonBlockingNonceGenerator, mode = config.env } = {}
+  { nonceGenerator = nonBlockingNonceGenerator(), mode = config.env } = {}
 ) {
-  // _.set(res, ['locals', 'cspNonce'], nonceGenerator())
+  const nonce = nonceGenerator()
+  console.log('NONCEEEEEEEEEEEEE', nonce)
+  _.set(res, ['locals', 'cspNonce'], nonce)
   // _.set(res, ['locals', 'cspNonce'], 'foooooooo')
-  res.locals.cspNonce = 'foooooooooo'
+  // res.locals.cspNonce = 'foooooooooo'
 
   // We have to enable unsafe-eval in tests because code instrumented
   // for coverage by the Istanbul library ends up with lots of evals
