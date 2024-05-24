@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+import './webpack-csp-nonce'
 import React from 'react'
 import ReactDOM from 'react-dom'
 

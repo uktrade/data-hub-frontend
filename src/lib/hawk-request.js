@@ -3,13 +3,7 @@ const Hawk = require('hawk')
 const config = require('../config')
 const request = require('./request')
 
-function getHawkHeader(credentials, requestOptions) {
-  if (config.isTest) {
-    return 'hawk-test-header'
-  }
-
-  const { url, method } = requestOptions
-
+function getHawkHeader(credentials, { url, method }) {
   // Generate Authorization request header
   // Ensure backend is using same protocol for hash generation
   return Hawk.client.header(url, method, {
