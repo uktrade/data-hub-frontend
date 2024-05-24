@@ -190,7 +190,7 @@ export const setGVAMessage = ({
           stringValue: 'capital expenditure value',
           valueExists: !!foreignEquityInvestment,
         }
-      : { stringValue: 'number of new jobs', checkValue: !!numberNewJobs }
+      : { stringValue: 'number of new jobs', valueExists: !!numberNewJobs }
 
   if (!valueExists && !sector) {
     return `Add ${stringValue} and primary sector (investment project summary) to calculate GVA`

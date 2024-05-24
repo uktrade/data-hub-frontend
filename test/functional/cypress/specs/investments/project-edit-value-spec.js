@@ -13,10 +13,6 @@ const capitalIntensiveProjectWithValue = require('../../fixtures/investment/capi
 const capitalIntensiveProjectNoValue = require('../../fixtures/investment/capital-investment-no-value.json')
 const capitalIntensiveProjectWithNoSectorOrCapitalExp = require('../../fixtures/investment/capital-investment-no-sector.json')
 const capitalIntensiveProjectWithCapitalExpButNoSector = require('../../fixtures/investment/capital-investment-has-capital-expenditure-but-no-sector.json')
-//const labourIntensiveProjectNoValue = require('../../fixtures/investment/labour-investment-no-value.json')
-const labourIntensiveProjectWithValue = require('../../fixtures/investment/labour-investment-has-existing-value.json')
-const labourIntensiveProjectWithNoSectorOrNoNewJobs = require('../../fixtures/investment/labour-investment-no-sector-no-jobs.json')
-const labourIntensiveProjectWithNewJobsButNoSector = require('../../fixtures/investment/labour-investment-has-new-jobs-but-no-sector.json')
 const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
 const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
 const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
@@ -735,10 +731,46 @@ describe('Edit the value details of a project', () => {
   )
 
   context('When viewing a labour project with all value fields set', () => {
+    const labourIntensiveProjectWithValue = investmentProjectFaker({
+      created_on: '2020-06-07T10:00:00Z',
+      actual_land_date: null,
+      investment_type: {
+        name: 'FDI',
+        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+      },
+      gva_multiplier: {
+        sector_classification_gva_multiplier: 'labour',
+        id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
+      },
+      client_cannot_provide_total_investment: false,
+      client_cannot_provide_foreign_investment: false,
+      number_new_jobs: 20,
+      number_safeguarded_jobs: null,
+      gross_value_added: 56789,
+      total_investment: 1000000,
+      foreign_equity_investment: 200000,
+      average_salary: {
+        name: 'Below £25,000',
+        id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+      },
+    })
     beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v3/investment/${labourIntensiveProjectWithValue.id}`,
+        {
+          statusCode: 200,
+          body: labourIntensiveProjectWithValue,
+        }
+      ).as('getProjectDetails')
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v3/investment/${labourIntensiveProjectWithValue.id}`
+      ).as('editValueSubmissionRequest')
       cy.visit(
         investments.projects.editValue(labourIntensiveProjectWithValue.id)
       )
+      cy.wait('@getProjectDetails')
     })
 
     it('should render the header', () => {
@@ -918,12 +950,39 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with no sector and no number of new jobs',
     () => {
+      const labourIntensiveProjectWithNoSectorOrNoNewJobs =
+        investmentProjectFaker({
+          created_on: '2020-06-07T10:00:00Z',
+          actual_land_date: null,
+          investment_type: {
+            name: 'FDI',
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+          },
+          client_cannot_provide_total_investment: false,
+          client_cannot_provide_foreign_investment: false,
+          number_new_jobs: null,
+          gross_value_added: null,
+          sector: null,
+        })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${labourIntensiveProjectWithNoSectorOrNoNewJobs.id}`,
+          {
+            statusCode: 200,
+            body: labourIntensiveProjectWithNoSectorOrNoNewJobs,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${labourIntensiveProjectWithNoSectorOrNoNewJobs.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(
             labourIntensiveProjectWithNoSectorOrNoNewJobs.id
           )
         )
+        cy.wait('@getProjectDetails')
       })
 
       it('should not display the GVA calculation for capital expenditure', () => {
@@ -950,12 +1009,39 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with new jobs but no sector',
     () => {
+      const labourIntensiveProjectWithNewJobsButNoSector =
+        investmentProjectFaker({
+          created_on: '2020-06-07T10:00:00Z',
+          actual_land_date: null,
+          investment_type: {
+            name: 'FDI',
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+          },
+          client_cannot_provide_total_investment: false,
+          client_cannot_provide_foreign_investment: false,
+          number_new_jobs: 20,
+          gross_value_added: null,
+          sector: null,
+        })
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v3/investment/${labourIntensiveProjectWithNewJobsButNoSector.id}`,
+          {
+            statusCode: 200,
+            body: labourIntensiveProjectWithNewJobsButNoSector,
+          }
+        ).as('getProjectDetails')
+        cy.intercept(
+          'PATCH',
+          `/api-proxy/v3/investment/${labourIntensiveProjectWithNewJobsButNoSector.id}`
+        ).as('editValueSubmissionRequest')
         cy.visit(
           investments.projects.editValue(
             labourIntensiveProjectWithNewJobsButNoSector.id
           )
         )
+        cy.wait('@getProjectDetails')
       })
 
       it('should not display the GVA calculation for capital expenditure', () => {
