@@ -21,18 +21,6 @@ module.exports = {
     fatal: 'fatal',
   },
 
-  setup: function (app) {
-    if (useSentry) {
-      app.use(Sentry.Handlers.requestHandler())
-    }
-  },
-
-  handleErrors: function (app) {
-    if (useSentry) {
-      app.use(Sentry.Handlers.errorHandler())
-    }
-  },
-
   message: function (level, msg, extra) {
     if (useSentry) {
       Sentry.captureMessage(msg, {
