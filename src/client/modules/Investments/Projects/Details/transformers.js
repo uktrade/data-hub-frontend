@@ -178,31 +178,26 @@ export const transformProjectSummaryForApi = ({
   }
 }
 
-export const setGVAMessage = (project) => {
-  const { foreignEquityInvestment, sector, numberNewJobs } = project
-  if (project.gvaMultiplier.sectorClassificationGvaMultiplier === 'capital') {
-    if (!foreignEquityInvestment && !sector) {
-      return 'Add capital expenditure value and primary sector (investment project summary) to calculate GVA'
-    }
-    if (!foreignEquityInvestment) {
-      return 'Add capital expenditure value and click "Save" to calculate GVA'
-    }
+export const setGVAMessage = ({
+  foreignEquityInvestment,
+  sector,
+  numberNewJobs,
+  gvaMultiplier,
+}) => {
+  const { stringValue, valueExists } =
+    gvaMultiplier.sectorClassificationGvaMultiplier === 'capital'
+      ? {
+          stringValue: 'capital expenditure value',
+          valueExists: !!foreignEquityInvestment,
+        }
+      : { stringValue: 'number of new jobs', checkValue: !!numberNewJobs }
 
-    if (!sector) {
-      return 'Add primary sector (investment project summary) to calculate GVA'
-    }
-  }
-  if (project.gvaMultiplier.sectorClassificationGvaMultiplier === 'labour') {
-    if (!numberNewJobs && !sector) {
-      return 'Add number of new jobs and primary sector (investment project summary) to calculate GVA'
-    }
-    if (!numberNewJobs) {
-      return 'Add number of new jobs and click "Save" to calculate GVA'
-    }
-
-    if (!sector) {
-      return 'Add primary sector (investment project summary) to calculate GVA'
-    }
+  if (!valueExists && !sector) {
+    return `Add ${stringValue} and primary sector (investment project summary) to calculate GVA`
+  } else if (!valueExists) {
+    return `Add ${stringValue} and click "Save" to calculate GVA`
+  } else {
+    return 'Add primary sector (investment project summary) to calculate GVA'
   }
 }
 
