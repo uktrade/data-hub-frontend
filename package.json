@@ -166,7 +166,7 @@
     "@babel/plugin-transform-optional-chaining": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-react": "^7.23.3",
-    "@babel/preset-typescript": "^7.23.3",
+    "@babel/preset-typescript": "^7.24.6",
     "@babel/runtime": "^7.24.4",
     "@cypress/code-coverage": "^3.12.39",
     "@faker-js/faker": "^8.3.1",
