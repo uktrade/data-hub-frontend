@@ -50,7 +50,7 @@
     "adr-graph": "adr generate graph",
     "adr-toc": "adr generate toc",
     "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addons@latest @storybook/react@latest @storybook/react-webpack5@latest storybook@latest",
-    "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest @sentry/tracing@latest",
+    "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest",
     "dependabot:update-nivo": "npm install @nivo/core@latest @nivo/pie@latest @nivo/tooltip@latest"
   },
   "nyc": {
@@ -75,10 +75,9 @@
     "@nivo/tooltip": "^0.87.0",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.2.5",
-    "@sentry/browser": "^7.114.0",
-    "@sentry/node": "^7.114.0",
-    "@sentry/react": "^7.114.0",
-    "@sentry/tracing": "^7.114.0",
+    "@sentry/browser": "^8.3.0",
+    "@sentry/node": "^8.3.0",
+    "@sentry/react": "^8.3.0",
     "autoprefixer": "^10.4.18",
     "axios": "^1.7.0",
     "basic-auth": "^2.0.1",
