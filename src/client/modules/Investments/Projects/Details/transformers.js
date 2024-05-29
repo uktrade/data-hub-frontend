@@ -10,6 +10,9 @@ import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapit
 
 const capitalOnlyLabel = 'Capital only'
 
+const checkIfItemHasValueOrZero = (value) =>
+  value === 0 ? 0 : checkIfItemHasValue(value)
+
 const setConditionalArrayValue = (radioValue, array) =>
   transformRadioOptionToBool(radioValue) ? array.map((x) => x.value) : []
 
@@ -211,7 +214,11 @@ export const setGVAMessage = ({
   }
 }
 
-export const transformProjectValueForApi = ({ projectId, values }) => {
+export const transformProjectValueForApi = ({
+  projectId,
+  values,
+  fdiTypeName,
+}) => {
   const {
     average_salary,
     client_cannot_provide_foreign_investment,
@@ -229,7 +236,7 @@ export const transformProjectValueForApi = ({ projectId, values }) => {
     total_investment,
   } = values
 
-  return {
+  const valuePayload = {
     id: projectId,
     average_salary: checkIfItemHasValue(average_salary),
     client_cannot_provide_foreign_investment:
@@ -256,14 +263,22 @@ export const transformProjectValueForApi = ({ projectId, values }) => {
     non_fdi_r_and_d_budget: transformRadioOptionToBoolWithNullCheck(
       non_fdi_r_and_d_budget
     ),
-    number_new_jobs: checkIfItemHasValue(number_new_jobs),
-    number_safeguarded_jobs: checkIfItemHasValue(number_safeguarded_jobs),
+    number_new_jobs: checkIfItemHasValueOrZero(number_new_jobs),
+    number_safeguarded_jobs: checkIfItemHasValueOrZero(number_safeguarded_jobs),
     r_and_d_budget: transformRadioOptionToBoolWithNullCheck(r_and_d_budget),
     total_investment: setConditionalStringValue(
       client_cannot_provide_total_investment,
       total_investment
     ),
   }
+
+  if (fdiTypeName == capitalOnlyLabel) {
+    valuePayload.number_new_jobs = 0
+    valuePayload.average_salary = null
+    valuePayload.number_safeguarded_jobs = 0
+  }
+
+  return valuePayload
 }
 
 export const transformBusinessActivity = (

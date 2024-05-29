@@ -1,3 +1,5 @@
+import { clickButton } from '../../support/actions'
+
 const {
   assertBreadcrumbs,
   assertErrorSummary,
@@ -487,6 +489,117 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
+  context('When viewing a capital only FDI project', () => {
+    const capitalOnlyFDIProject = investmentProjectFaker({
+      investment_type: {
+        name: 'FDI',
+        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+      },
+      fdi_type: {
+        name: 'Capital only',
+        id: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
+      },
+      stage: {
+        name: 'Prospect',
+        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+      },
+      client_cannot_provide_total_investment: true,
+      client_cannot_provide_foreign_investment: true,
+    })
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v3/investment/${capitalOnlyFDIProject.id}`,
+        {
+          statusCode: 200,
+          body: capitalOnlyFDIProject,
+        }
+      ).as('getProjectDetails')
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v3/investment/${capitalOnlyFDIProject.id}`
+      ).as('editValueSubmissionRequest')
+      cy.visit(investments.projects.editValue(capitalOnlyFDIProject.id))
+      cy.wait('@getProjectDetails')
+    })
+
+    it('should not display the jobs fields', () => {
+      cy.get('[data-test="field-number_new_jobs"]').should('not.exist')
+      cy.get('[data-test="field-average_salary"]').should('not.exist')
+      cy.get('[data-test="field-number_safeguarded_jobs"]').should('not.exist')
+    })
+
+    it('should submit the request with zero new and safeguarded jobs, and null for average salary', () => {
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          number_new_jobs: 0,
+          average_salary: null,
+          number_safeguarded_jobs: 0,
+        })
+    })
+  })
+
+  context('When viewing a non capital only FDI project', () => {
+    const nonCapitalOnlyFDIProject = investmentProjectFaker({
+      investment_type: {
+        name: 'FDI',
+        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+      },
+      fdi_type: {
+        name: 'Creation of new site or activity',
+        id: 'f8447013-cfdc-4f35-a146-6619665388b3',
+      },
+      stage: {
+        name: 'Prospect',
+        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+      },
+      client_cannot_provide_total_investment: true,
+      client_cannot_provide_foreign_investment: true,
+      number_new_jobs: 120,
+      average_salary: {
+        name: 'Below £25,000',
+        id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+      },
+      number_safeguarded_jobs: 50,
+    })
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v3/investment/${nonCapitalOnlyFDIProject.id}`,
+        {
+          statusCode: 200,
+          body: nonCapitalOnlyFDIProject,
+        }
+      ).as('getProjectDetails')
+      cy.intercept(
+        'PATCH',
+        `/api-proxy/v3/investment/${nonCapitalOnlyFDIProject.id}`
+      ).as('editValueSubmissionRequest')
+      cy.visit(investments.projects.editValue(nonCapitalOnlyFDIProject.id))
+      cy.wait('@getProjectDetails')
+    })
+
+    it('should display the jobs fields', () => {
+      cy.get('[data-test="field-number_new_jobs"]').should('exist')
+      cy.get('[data-test="field-average_salary"]').should('exist')
+      cy.get('[data-test="field-number_safeguarded_jobs"]').should('exist')
+    })
+
+    it('should not overwrite the job fields to the request payload', () => {
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          number_new_jobs: `${nonCapitalOnlyFDIProject.number_new_jobs}`,
+          average_salary: `${nonCapitalOnlyFDIProject.average_salary.id}`,
+          number_safeguarded_jobs: `${nonCapitalOnlyFDIProject.number_safeguarded_jobs}`,
+        })
+    })
+  })
+
   context(
     'When viewing a capital intensive project with no sector and no capital value',
     () => {
