@@ -525,14 +525,17 @@ describe('Edit the value details of a project', () => {
       ).as('editValueSubmissionRequest')
       cy.visit(investments.projects.editValue(capitalOnlyFDIProject.id))
       cy.wait('@getProjectValue')
+      cy.get('[data-test="total-investment-input"]')
+        .clear()
+        .type(`${capitalOnlyFDIProject.total_investment}`)
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type(`${capitalOnlyFDIProject.foreign_equity_investment}`)
     })
 
     it('should raise an error when entered capital expenditure value is < £15m', () => {
       const capitalExpenditureErrorMessage =
         'Capital expenditure must be >= £15,000,000 for capital only project'
-      cy.get('[data-test="total-investment-input"]')
-        .clear()
-        .type(`${capitalOnlyFDIProject.total_investment}`)
       cy.get('[data-test="foreign-equity-investment-input"]')
         .clear()
         .type('15000')
@@ -545,12 +548,6 @@ describe('Edit the value details of a project', () => {
     })
 
     it('should not raise en error when entered capital expenditure value is >= £15m', () => {
-      cy.get('[data-test="total-investment-input"]')
-        .clear()
-        .type(`${capitalOnlyFDIProject.total_investment}`)
-      cy.get('[data-test="foreign-equity-investment-input"]')
-        .clear()
-        .type(`${capitalOnlyFDIProject.foreign_equity_investment}`)
       clickButton('Save')
       cy.wait('@editValueSubmissionRequest')
         .its('request.body')
@@ -617,13 +614,16 @@ describe('Edit the value details of a project', () => {
       ).as('editValueSubmissionRequest')
       cy.visit(investments.projects.editValue(nonCapitalOnlyFDIProject.id))
       cy.wait('@getProjectValue')
+      cy.get('[data-test="total-investment-input"]')
+        .clear()
+        .type(`${nonCapitalOnlyFDIProject.total_investment}`)
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type(`${nonCapitalOnlyFDIProject.foreign_equity_investment}`)
     })
 
     it('should not raise an error when capital expenditure is < £15m', () => {
       const newCapitalExpenditureValue = '2000000'
-      cy.get('[data-test="total-investment-input"]')
-        .clear()
-        .type(`${nonCapitalOnlyFDIProject.total_investment}`)
       cy.get('[data-test="foreign-equity-investment-input"]')
         .clear()
         .type(newCapitalExpenditureValue)
