@@ -1,3 +1,5 @@
+import { clickButton } from '../../support/actions'
+
 const urls = require('../../../../../src/lib/urls')
 
 const {
@@ -279,15 +281,106 @@ describe('Editing the project summary', () => {
   })
 
   it('should display the form submit and back buttons', () => {
-    cy.get('[data-test="submit-button"]').should('be.visible')
-    cy.get('[data-test="cancel-button"]').should('be.visible')
+    cy.get('[data-test="submit"]').should('be.visible')
+    cy.get('[data-test="cancel-link"]').should('be.visible')
   })
 
   it('should not allow a future actual land date to be entered', () => {
     cy.get('[data-test="actual_land_date-day"]').type('04')
     cy.get('[data-test="actual_land_date-month"]').type('02')
     cy.get('[data-test="actual_land_date-year"]').type('2350')
-    cy.get('[data-test="submit-button"]').click()
+    clickButton('Submit')
     assertErrorSummary(['Actual land date cannot be in the future'])
   })
+
+  context('When changing the project FDI type to Capital only', () => {
+    const capitalOnlyFDITypeLabel = 'Capital only'
+    beforeEach(() => {
+      cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
+        'editDetailsRequest'
+      )
+      cy.get('[data-test="submit"]').should('exist')
+      cy.get('[data-test="investment-type-fdi"]').click()
+      cy.get('[data-test="field-fdi_type"]').selectTypeaheadOption(
+        capitalOnlyFDITypeLabel
+      )
+      cy.get('[data-test="continue"]').should('exist')
+      clickButton('Continue')
+    })
+
+    it('should take the user to a confirmation step and display the warning', () => {
+      cy.get('form')
+        .should('exist')
+        .within(() => {
+          cy.get('[data-test="field-fdi_type"]').should('not.exist')
+          cy.get('[data-test="warning-title"]').should('exist')
+          cy.contains(
+            `Changing the FDI type to '${capitalOnlyFDITypeLabel}' will overwrite the values in the following fields`
+          )
+          cy.get('[data-test="warning-fields-to-change"]')
+            .should('exist')
+            .within(() => {
+              cy.get('[data-test="item-number-new-jobs"]')
+                .should('exist')
+                .contains(
+                  `currently: ${project.number_new_jobs}, will become: 0`
+                )
+              cy.get('[data-test="item-average-salary"]')
+                .should('exist')
+                .contains(
+                  `currently: ${project.average_salary}, will become: null`
+                )
+              cy.get('[data-test="item-number-safeguarded-jobs"]')
+                .should('exist')
+                .contains(
+                  `currently: ${project.number_safeguarded_jobs}, will become: 0`
+                )
+            })
+          cy.contains('Are you sure you want to proceed?')
+          cy.get('[data-test="submit"]').should('exist')
+        })
+    })
+
+    it('should submit the request with zero new and safeguarded jobs, and null for average salary', () => {
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest').its('request.body').should('include', {
+        number_new_jobs: 0,
+        average_salary: null,
+        number_safeguarded_jobs: 0,
+      })
+    })
+  })
+
+  context(
+    'When changing the project FDI type to anything other than Capital only',
+    () => {
+      beforeEach(() => {
+        cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
+          'editDetailsRequest'
+        )
+        cy.get('[data-test="submit"]').should('exist')
+        cy.get('[data-test="investment-type-fdi"]').click()
+        cy.get('[data-test="field-fdi_type"]').selectTypeaheadOption(
+          'Creation of new site or activity'
+        )
+      })
+
+      it('should not take the user to a confirmation step', () => {
+        cy.get('[data-test="continue"]').should('not.exist')
+        cy.get('[data-test="submit"]').should('exist')
+        clickButton('Submit')
+      })
+
+      it('should not append job fields to the request payload', () => {
+        clickButton('Submit')
+        cy.wait('@editDetailsRequest')
+          .its('request.body')
+          .should('not.include', {
+            number_new_jobs: 0,
+            average_salary: null,
+            number_safeguarded_jobs: 0,
+          })
+      })
+    }
+  )
 })
