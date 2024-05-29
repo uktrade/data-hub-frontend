@@ -73,7 +73,6 @@ const EditProjectValue = () => {
                 transformProjectValueForApi({
                   projectId,
                   values,
-                  fdiTypeName: project.fdiType?.name,
                 })
               }
             >
@@ -151,53 +150,65 @@ const EditProjectValue = () => {
                   }),
                 }))}
               />
-              {project.fdiType?.name === 'Capital only' ? null : (
-                <>
-                  <FieldInput
-                    label="Number of new jobs"
-                    name="number_new_jobs"
-                    type="number"
-                    initialValue={project.numberNewJobs?.toString()}
-                  />
-                  {project.investmentType.name === 'FDI' &&
-                    project.gvaMultiplier?.sectorClassificationGvaMultiplier ===
-                      'labour' && (
-                      <FieldUneditable
-                        label="Gross value added (GVA)"
-                        name="gross_value_added_labour"
-                      >
-                        <>
-                          {project.grossValueAdded
-                            ? currencyGBP(project.grossValueAdded)
-                            : setGVAMessage(project)}
-                        </>
-                      </FieldUneditable>
-                    )}
-                  <ResourceOptionsField
-                    name="average_salary"
-                    label="Average salary of new jobs"
-                    resource={SalaryRangeResource}
-                    field={FieldRadios}
-                    initialValue={project.averageSalary?.id}
-                    resultToOptions={(result) =>
-                      idNamesToValueLabels(
-                        result.filter((option) =>
-                          option.disabledOn
-                            ? new Date(option.disabledOn) >
-                              new Date(project.createdOn)
-                            : true
-                        )
-                      )
-                    }
-                  />
-                  <FieldInput
-                    label="Number of safeguarded jobs"
-                    name="number_safeguarded_jobs"
-                    type="number"
-                    initialValue={project.numberSafeguardedJobs?.toString()}
-                  />
-                </>
-              )}
+              <FieldInput
+                label="Number of new jobs"
+                name="number_new_jobs"
+                type="number"
+                required={
+                  project.fdiType?.name ===
+                    'Expansion of existing site or activity' &&
+                  'Value for number of new jobs is required'
+                }
+                hint={
+                  project.fdiType?.name ===
+                    'Expansion of existing site or activity' &&
+                  'An expansion project must always have at least 1 new job'
+                }
+                validate={(value) =>
+                  project.fdiType?.name ===
+                    'Expansion of existing site or activity' && value < 1
+                    ? 'Number of new jobs must be greater than 0'
+                    : null
+                }
+                initialValue={project.numberNewJobs?.toString()}
+              />
+              {project.investmentType.name === 'FDI' &&
+                project.gvaMultiplier?.sectorClassificationGvaMultiplier ===
+                  'labour' && (
+                  <FieldUneditable
+                    label="Gross value added (GVA)"
+                    name="gross_value_added_labour"
+                  >
+                    <>
+                      {project.grossValueAdded
+                        ? currencyGBP(project.grossValueAdded)
+                        : setGVAMessage(project)}
+                    </>
+                  </FieldUneditable>
+                )}
+              <ResourceOptionsField
+                name="average_salary"
+                label="Average salary of new jobs"
+                resource={SalaryRangeResource}
+                field={FieldRadios}
+                initialValue={project.averageSalary?.id}
+                resultToOptions={(result) =>
+                  idNamesToValueLabels(
+                    result.filter((option) =>
+                      option.disabledOn
+                        ? new Date(option.disabledOn) >
+                          new Date(project.createdOn)
+                        : true
+                    )
+                  )
+                }
+              />
+              <FieldInput
+                label="Number of safeguarded jobs"
+                name="number_safeguarded_jobs"
+                type="number"
+                initialValue={project.numberSafeguardedJobs?.toString()}
+              />
               {showFDIValueField(project) &&
                 project.investmentType.name === 'FDI' && (
                   <ResourceOptionsField

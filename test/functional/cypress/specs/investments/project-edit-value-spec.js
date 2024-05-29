@@ -8,6 +8,7 @@ const {
   assertFieldUneditable,
   assertLocalHeader,
   assertFieldError,
+  assertNotExists,
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
@@ -1576,4 +1577,117 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
+  context('Number of jobs error handling', () => {
+    context('When editing an expansion project', () => {
+      const expansionProject = investmentProjectFaker({
+        created_on: '2020-06-07T10:00:00Z',
+        actual_land_date: null,
+        investment_type: {
+          name: 'FDI',
+          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+        },
+        fdi_type: {
+          name: 'Expansion of existing site or activity',
+          id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
+        },
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'capital',
+          id: '7d2d9757-3287-4501-82f0-37879b7d9081',
+        },
+        client_cannot_provide_total_investment: true,
+        client_cannot_provide_foreign_investment: true,
+        number_new_jobs: null,
+        number_safeguarded_jobs: null,
+        gross_value_added: null,
+        average_salary: null,
+        foreign_equity_investment: null,
+      })
+      beforeEach(() => {
+        cy.intercept('GET', `/api-proxy/v3/investment/${expansionProject.id}`, {
+          statusCode: 200,
+          body: expansionProject,
+        }).as('getProjectDetails')
+        cy.visit(investments.projects.editValue(expansionProject.id))
+        cy.wait('@getProjectDetails')
+      })
+      it('should show an error if the number of new jobs is empty', () => {
+        cy.get('[data-test="submit-button"]').click()
+        assertErrorSummary(['Value for number of new jobs is required'])
+      })
+      it('should show an error if the number of new jobs is 0', () => {
+        cy.get('[data-test="number-new-jobs-input"]').type(0)
+        cy.get('[data-test="submit-button"]').click()
+        assertErrorSummary(['Number of new jobs must be greater than 0'])
+      })
+      it('should not show an error if the number of new jobs is 1', () => {
+        cy.get('[data-test="number-new-jobs-input"]').type(1)
+        cy.get('[data-test="submit-button"]').click()
+        assertNotExists('[data-test="summary-form-errors"]')
+      })
+    })
+
+    context('When editing an non expansion project', () => {
+      const projectFaker = (overrides) => {
+        return investmentProjectFaker({
+          created_on: '2020-06-07T10:00:00Z',
+          actual_land_date: null,
+          investment_type: {
+            name: 'non-FDI',
+            id: '3d2c94e4-7871-465c-a7f7-45651eeffc64',
+          },
+          fdi_type: null,
+          client_cannot_provide_total_investment: true,
+          client_cannot_provide_foreign_investment: true,
+          number_new_jobs: null,
+          number_safeguarded_jobs: null,
+          gross_value_added: null,
+          gva_multiplier: null,
+          average_salary: null,
+          foreign_equity_investment: null,
+          ...overrides,
+        })
+      }
+      const setup = (project) => {
+        cy.intercept('GET', `/api-proxy/v3/investment/${project.id}`, {
+          statusCode: 200,
+          body: project,
+        }).as('getProjectDetails')
+        cy.visit(investments.projects.editValue(project.id))
+        cy.wait('@getProjectDetails')
+      }
+      it('should not show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
+        const nonFdiProject = projectFaker()
+        setup(nonFdiProject)
+        // cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+        //   assertFieldInput({
+        //     element,
+        //     label: 'Number of new jobs',
+        //     hint: '',
+        //   })
+        // })
+        cy.get('[data-test="submit-button"]').click()
+        assertNotExists('[data-test="summary-form-errors"]')
+      })
+      it('should not show an error if number of new jobs is empty and it is not an expansion FDI project', () => {
+        const nonExpansionFdiProject = projectFaker({
+          investment_type: {
+            name: 'FDI',
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+          },
+          fdi_type: {
+            name: 'Acquisition',
+            id: '01c19118-325c-4854-8c67-2d6555ee0c1b',
+          },
+          gva_multiplier: {
+            sector_classification_gva_multiplier: 'capital',
+            id: '7d2d9757-3287-4501-82f0-37879b7d9081',
+          },
+        })
+        setup(nonExpansionFdiProject)
+        cy.get('[data-test="submit-button"]').click()
+        assertNotExists('[data-test="summary-form-errors"]')
+      })
+    })
+  })
 })
