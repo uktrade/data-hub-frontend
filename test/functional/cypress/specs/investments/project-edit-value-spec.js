@@ -13,61 +13,57 @@ const {
 const { investments } = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
 
-const projectLandingBeforeApril = require('../../fixtures/investment/investment-land-date-before-April-2020.json')
-const projectLandingAfterApril = require('../../fixtures/investment/investment-land-date-after-April-2020.json')
-const projectNoLandingDates = require('../../fixtures/investment/investment-no-landing-dates.json')
-const projectBothDatesBeforeApril = require('../../fixtures/investment/investment-both-land-dates-before-April-2020.json')
-const projectBothDatesAfterApril = require('../../fixtures/investment/investment-both-land-dates-after-April-2020.json')
-const projectOneLandDateEitherSideApril = require('../../fixtures/investment/investment-one-land-date-before-April-one-after.json')
-const projectNotFDI = require('../../fixtures/investment/investment-no-existing-requirements.json')
-const projectCreatedBefore = require('../../fixtures/investment/investment-created-before.json')
-const projectCreatedSame = require('../../fixtures/investment/investment-created-same-date.json')
-const projectCreatedAfter = require('../../fixtures/investment/investment-created-after.json')
-
 const convertBoolToYesNo = (valueToCheck) => (valueToCheck ? 'Yes' : 'No')
 const convertBoolToInvertedYesNo = (valueToCheck) =>
   valueToCheck ? 'No' : 'Yes'
+
+const setup = (project) => {
+  cy.intercept('GET', `/api-proxy/v3/investment/${project.id}`, {
+    statusCode: 200,
+    body: project,
+  }).as('getProjectDetails')
+  cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`).as(
+    'editValueSubmissionRequest'
+  )
+  cy.visit(investments.projects.editValue(project.id))
+  cy.wait('@getProjectDetails')
+}
+
+const setupProjectFaker = (overrides) => {
+  return investmentProjectFaker({
+    created_on: '2020-06-07T10:00:00Z',
+    actual_land_date: null,
+    estimated_land_date: null,
+    investment_type: {
+      name: 'FDI',
+      id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+    },
+    gva_multiplier: {
+      sector_classification_gva_multiplier: 'capital',
+      id: '7d2d9757-3287-4501-82f0-37879b7d9081',
+    },
+    fdi_type: {
+      name: 'Acquisition',
+      id: '01c19118-325c-4854-8c67-2d6555ee0c1b',
+    },
+    client_cannot_provide_total_investment: true,
+    client_cannot_provide_foreign_investment: true,
+    number_new_jobs: null,
+    number_safeguarded_jobs: null,
+    gross_value_added: null,
+    average_salary: null,
+    foreign_equity_investment: null,
+    ...overrides,
+  })
+}
 
 describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with no value fields set',
     () => {
-      const capitalIntensiveProjectNoValue = investmentProjectFaker({
-        created_on: '2020-06-07T10:00:00Z',
-        actual_land_date: null,
-        investment_type: {
-          name: 'FDI',
-          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-        },
-        gva_multiplier: {
-          sector_classification_gva_multiplier: 'capital',
-          id: '7d2d9757-3287-4501-82f0-37879b7d9081',
-        },
-        client_cannot_provide_total_investment: true,
-        client_cannot_provide_foreign_investment: true,
-        number_new_jobs: null,
-        number_safeguarded_jobs: null,
-        gross_value_added: null,
-        average_salary: null,
-        foreign_equity_investment: null,
-      })
+      const capitalIntensiveProjectNoValue = setupProjectFaker()
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectNoValue.id}`,
-          {
-            statusCode: 200,
-            body: capitalIntensiveProjectNoValue,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectNoValue.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(capitalIntensiveProjectNoValue.id)
-        )
-        cy.wait('@getProjectDetails')
+        setup(capitalIntensiveProjectNoValue)
       })
 
       it('should render the header', () => {
@@ -272,21 +268,10 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with all value fields set',
     () => {
-      const capitalIntensiveProjectWithValue = investmentProjectFaker({
-        created_on: '2020-06-07T10:00:00Z',
-        actual_land_date: null,
-        investment_type: {
-          name: 'FDI',
-          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-        },
-        gva_multiplier: {
-          sector_classification_gva_multiplier: 'capital',
-          id: 'e2a570df-32cd-49a5-ba09-a21d4878c808',
-        },
+      const capitalIntensiveProjectWithValue = setupProjectFaker({
         client_cannot_provide_total_investment: false,
         client_cannot_provide_foreign_investment: false,
         number_new_jobs: 20,
-        number_safeguarded_jobs: null,
         gross_value_added: 34568,
         total_investment: 1000000,
         foreign_equity_investment: 200000,
@@ -296,22 +281,7 @@ describe('Edit the value details of a project', () => {
         },
       })
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithValue.id}`,
-          {
-            statusCode: 200,
-            body: capitalIntensiveProjectWithValue,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithValue.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(capitalIntensiveProjectWithValue.id)
-        )
-        cy.wait('@getProjectDetails')
+        setup(capitalIntensiveProjectWithValue)
       })
 
       it('should render the header', () => {
@@ -701,44 +671,15 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a capital intensive project with no sector and no capital value',
     () => {
-      const capitalIntensiveProjectWithNoSectorOrCapitalExp =
-        investmentProjectFaker({
-          created_on: '2020-06-07T10:00:00Z',
-          actual_land_date: null,
-          investment_type: {
-            name: 'FDI',
-            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          },
+      const capitalIntensiveProjectWithNoSectorOrCapitalExp = setupProjectFaker(
+        {
           client_cannot_provide_total_investment: false,
           client_cannot_provide_foreign_investment: false,
-          gross_value_added: null,
           sector: null,
-          gross_value_added: null,
-          gva_multiplier: {
-            id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
-            sector_classification_gva_multiplier: 'capital',
-          },
-          foreign_equity_investment: null,
-        })
+        }
+      )
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithNoSectorOrCapitalExp.id}`,
-          {
-            statusCode: 200,
-            body: capitalIntensiveProjectWithNoSectorOrCapitalExp,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithNoSectorOrCapitalExp.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(
-            capitalIntensiveProjectWithNoSectorOrCapitalExp.id
-          )
-        )
-        cy.wait('@getProjectDetails')
+        setup(capitalIntensiveProjectWithNoSectorOrCapitalExp)
       })
 
       it('should display the correct message in the GVA field', () => {
@@ -767,43 +708,14 @@ describe('Edit the value details of a project', () => {
     'When viewing a capital intensive project with capital value but no sector',
     () => {
       const capitalIntensiveProjectWithCapitalExpButNoSector =
-        investmentProjectFaker({
-          created_on: '2020-06-07T10:00:00Z',
-          actual_land_date: null,
-          investment_type: {
-            name: 'FDI',
-            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          },
+        setupProjectFaker({
           client_cannot_provide_total_investment: false,
           client_cannot_provide_foreign_investment: false,
-          gross_value_added: null,
           sector: null,
-          gross_value_added: null,
-          gva_multiplier: {
-            id: 'ccac03e3-573d-4e2e-9972-ef0aebf7fa14',
-            sector_classification_gva_multiplier: 'capital',
-          },
           foreign_equity_investment: 200000,
         })
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithCapitalExpButNoSector.id}`,
-          {
-            statusCode: 200,
-            body: capitalIntensiveProjectWithCapitalExpButNoSector,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${capitalIntensiveProjectWithCapitalExpButNoSector.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(
-            capitalIntensiveProjectWithCapitalExpButNoSector.id
-          )
-        )
-        cy.wait('@getProjectDetails')
+        setup(capitalIntensiveProjectWithCapitalExpButNoSector)
       })
 
       it('should display the correct message in the GVA field', () => {
@@ -832,41 +744,16 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with no value fields set',
     () => {
-      const labourIntensiveProjectNoValues = investmentProjectFaker({
-        created_on: '2020-06-07T10:00:00Z',
-        actual_land_date: null,
-        investment_type: {
-          name: 'FDI',
-          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-        },
+      const labourIntensiveProjectNoValues = setupProjectFaker({
         gva_multiplier: {
           sector_classification_gva_multiplier: 'labour',
           id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
         },
         client_cannot_provide_total_investment: true,
         client_cannot_provide_foreign_investment: true,
-        number_new_jobs: null,
-        number_safeguarded_jobs: null,
-        gross_value_added: null,
-        average_salary: null,
       })
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${labourIntensiveProjectNoValues.id}`,
-          {
-            statusCode: 200,
-            body: labourIntensiveProjectNoValues,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${labourIntensiveProjectNoValues.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(labourIntensiveProjectNoValues.id)
-        )
-        cy.wait('@getProjectDetails')
+        setup(labourIntensiveProjectNoValues)
       })
 
       it('should render the header', () => {
@@ -1072,13 +959,7 @@ describe('Edit the value details of a project', () => {
   )
 
   context('When viewing a labour project with all value fields set', () => {
-    const labourIntensiveProjectWithValue = investmentProjectFaker({
-      created_on: '2020-06-07T10:00:00Z',
-      actual_land_date: null,
-      investment_type: {
-        name: 'FDI',
-        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-      },
+    const labourIntensiveProjectWithValue = setupProjectFaker({
       gva_multiplier: {
         sector_classification_gva_multiplier: 'labour',
         id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
@@ -1086,7 +967,6 @@ describe('Edit the value details of a project', () => {
       client_cannot_provide_total_investment: false,
       client_cannot_provide_foreign_investment: false,
       number_new_jobs: 20,
-      number_safeguarded_jobs: null,
       gross_value_added: 56789,
       total_investment: 1000000,
       foreign_equity_investment: 200000,
@@ -1096,22 +976,7 @@ describe('Edit the value details of a project', () => {
       },
     })
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${labourIntensiveProjectWithValue.id}`,
-        {
-          statusCode: 200,
-          body: labourIntensiveProjectWithValue,
-        }
-      ).as('getProjectDetails')
-      cy.intercept(
-        'PATCH',
-        `/api-proxy/v3/investment/${labourIntensiveProjectWithValue.id}`
-      ).as('editValueSubmissionRequest')
-      cy.visit(
-        investments.projects.editValue(labourIntensiveProjectWithValue.id)
-      )
-      cy.wait('@getProjectDetails')
+      setup(labourIntensiveProjectWithValue)
     })
 
     it('should render the header', () => {
@@ -1291,43 +1156,17 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with no sector and no number of new jobs',
     () => {
-      const labourIntensiveProjectWithNoSectorOrNoNewJobs =
-        investmentProjectFaker({
-          created_on: '2020-06-07T10:00:00Z',
-          actual_land_date: null,
-          investment_type: {
-            name: 'FDI',
-            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          },
-          client_cannot_provide_total_investment: false,
-          client_cannot_provide_foreign_investment: false,
-          number_new_jobs: null,
-          gross_value_added: null,
-          gva_multiplier: {
-            sector_classification_gva_multiplier: 'labour',
-            id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
-          },
-          sector: null,
-        })
+      const labourIntensiveProjectWithNoSectorOrNoNewJobs = setupProjectFaker({
+        client_cannot_provide_total_investment: false,
+        client_cannot_provide_foreign_investment: false,
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'labour',
+          id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
+        },
+        sector: null,
+      })
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${labourIntensiveProjectWithNoSectorOrNoNewJobs.id}`,
-          {
-            statusCode: 200,
-            body: labourIntensiveProjectWithNoSectorOrNoNewJobs,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${labourIntensiveProjectWithNoSectorOrNoNewJobs.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(
-            labourIntensiveProjectWithNoSectorOrNoNewJobs.id
-          )
-        )
-        cy.wait('@getProjectDetails')
+        setup(labourIntensiveProjectWithNoSectorOrNoNewJobs)
       })
 
       it('should not display the GVA calculation for capital expenditure', () => {
@@ -1354,43 +1193,18 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a labour intensive project with new jobs but no sector',
     () => {
-      const labourIntensiveProjectWithNewJobsButNoSector =
-        investmentProjectFaker({
-          created_on: '2020-06-07T10:00:00Z',
-          actual_land_date: null,
-          investment_type: {
-            name: 'FDI',
-            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          },
-          client_cannot_provide_total_investment: false,
-          client_cannot_provide_foreign_investment: false,
-          number_new_jobs: 20,
-          gross_value_added: null,
-          gva_multiplier: {
-            sector_classification_gva_multiplier: 'labour',
-            id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
-          },
-          sector: null,
-        })
+      const labourIntensiveProjectWithNewJobsButNoSector = setupProjectFaker({
+        client_cannot_provide_total_investment: false,
+        client_cannot_provide_foreign_investment: false,
+        number_new_jobs: 20,
+        gva_multiplier: {
+          sector_classification_gva_multiplier: 'labour',
+          id: 'ddac03e3-573d-4e2e-9972-ef0aebf7fa23',
+        },
+        sector: null,
+      })
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v3/investment/${labourIntensiveProjectWithNewJobsButNoSector.id}`,
-          {
-            statusCode: 200,
-            body: labourIntensiveProjectWithNewJobsButNoSector,
-          }
-        ).as('getProjectDetails')
-        cy.intercept(
-          'PATCH',
-          `/api-proxy/v3/investment/${labourIntensiveProjectWithNewJobsButNoSector.id}`
-        ).as('editValueSubmissionRequest')
-        cy.visit(
-          investments.projects.editValue(
-            labourIntensiveProjectWithNewJobsButNoSector.id
-          )
-        )
-        cy.wait('@getProjectDetails')
+        setup(labourIntensiveProjectWithNewJobsButNoSector)
       })
 
       it('should not display the GVA calculation for capital expenditure', () => {
@@ -1417,8 +1231,17 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a non-FDI project with a land date before April 2020',
     () => {
+      const nonFdiProject = setupProjectFaker({
+        actual_land_date: '2021-01-01T10:00:00Z',
+        fdiType: null,
+        investment_type: {
+          name: 'non-FDI',
+          id: '3d2c94e4-7871-465c-a7f7-45651eeffc64',
+        },
+        gva_multiplier: null,
+      })
       beforeEach(() => {
-        cy.visit(investments.projects.editValue(projectNotFDI.id))
+        setup(nonFdiProject)
       })
       it('should not display the Project Value field', () => {
         cy.get('[data-test="field-fdi_value"]').should('not.exist')
@@ -1431,19 +1254,108 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-gross_value_added_capital"]').should(
           'not.exist'
         )
+        cy.get('[data-test="field-gross_value_added_labour"]').should(
+          'not.exist'
+        )
+      })
+    }
+  )
+
+  context('When an FDI project has a missing land date value', () => {
+    it('should display the Project Value field when estimated land date is null and actual land date is before 01/04/2020', () => {
+      const project = setupProjectFaker({
+        actual_land_date: '2020-01-01',
+      })
+      setup(project)
+      cy.get('[data-test="field-fdi_value"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Project value',
+          optionsCount: 3,
+        })
+      })
+    })
+
+    it('should display the Project Value field when actual land date is null and estimated land date is before 01/04/2020', () => {
+      const project = setupProjectFaker({
+        estimated_land_date: '2020-01-01',
+      })
+      setup(project)
+      cy.get('[data-test="field-fdi_value"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Project value',
+          optionsCount: 3,
+        })
+      })
+    })
+
+    it('should not display the Project Value field when estimated land date is null and actual land date is after 01/04/2020', () => {
+      const project = setupProjectFaker({
+        actual_land_date: '2020-04-02',
+      })
+      setup(project)
+      cy.get('[data-test="field-fdi_value"]').should('not.exist')
+    })
+
+    it('should not display the Project Value field when actual land date is null and estimated land date is after 01/04/2020', () => {
+      const project = setupProjectFaker({
+        estimated_land_date: '2020-04-02',
+      })
+      setup(project)
+      cy.get('[data-test="field-fdi_value"]').should('not.exist')
+    })
+  })
+
+  context(
+    'When an FDI project has both land date values before 01/04/2020',
+    () => {
+      it('should display the Project Value field', () => {
+        const project = setupProjectFaker({
+          actual_land_date: '2020-01-01',
+          estimated_land_date: '2020-02-01',
+          fdi_value: {
+            id: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+            name: 'Higher',
+          },
+        })
+        setup(project)
+        cy.get('[data-test="field-fdi_value"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Project value',
+            optionsCount: 3,
+            value: project.fdi_value.name,
+          })
+        })
       })
     }
   )
 
   context(
-    'When one land date is null and one is beforeEach 01/04/2020 ',
+    'When an FDI project has a both land date values and one is after 01/04/2020',
     () => {
-      beforeEach(() => {
-        cy.visit(investments.projects.details(projectLandingBeforeApril.id))
-        cy.contains('Edit value').click()
+      it('should display the Project Value field when estimated land date is before 01/04/2020 and actual land date is after 01/04/2020', () => {
+        const project = setupProjectFaker({
+          estimated_land_date: '2020-01-01',
+          actual_land_date: '2020-04-02',
+        })
+        setup(project)
+        cy.get('[data-test="field-fdi_value"]').then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Project value',
+            optionsCount: 3,
+          })
+        })
       })
 
-      it('should display the Project Value field', () => {
+      it('should display the Project Value field when actual land date is before 01/04/2020 and estimated land date is after 01/04/2020', () => {
+        const project = setupProjectFaker({
+          estimated_land_date: '2020-04-02',
+          actual_land_date: '2020-01-01',
+        })
+        setup(project)
         cy.get('[data-test="field-fdi_value"]').then((element) => {
           assertFieldRadios({
             element,
@@ -1455,68 +1367,20 @@ describe('Edit the value details of a project', () => {
     }
   )
 
-  context('When both dates are before 01/04/2020', () => {
-    beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectBothDatesBeforeApril.id))
-    })
-
-    it('should display the Project Value field', () => {
-      cy.get('[data-test="field-fdi_value"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Project value',
-          optionsCount: 3,
-          value: projectBothDatesBeforeApril.fdi_value.name,
-        })
-      })
-    })
-  })
-
-  context('When one date is before 01/04/2020 and one is after', () => {
-    beforeEach(() => {
-      cy.visit(
-        investments.projects.editValue(projectOneLandDateEitherSideApril.id)
-      )
-      cy.contains('Edit value').click()
-    })
-
-    it('should display the Project Value field', () => {
-      cy.get('[data-test="field-fdi_value"]').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Project value',
-          optionsCount: 3,
-        })
-      })
-    })
-  })
-
-  context('When one date is null and one date is after 01/04/2020', () => {
-    beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectLandingAfterApril.id))
-    })
-
+  context('When an FDI project has both land dates after 01/04/2020', () => {
     it('should not display the Project Value field', () => {
+      const project = setupProjectFaker({
+        estimated_land_date: '2020-04-02',
+        actual_land_date: '2020-04-02',
+      })
+      setup(project)
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
 
-  context('When both dates are after 01/04/2020', () => {
-    beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectBothDatesAfterApril.id))
-    })
-
+  context('When an FDI project does not have either land date values', () => {
     it('should not display the Project Value field', () => {
-      cy.get('[data-test="field-fdi_value"]').should('not.exist')
-    })
-  })
-
-  context('When both land date fields are empty', () => {
-    beforeEach(() => {
-      cy.visit(investments.projects.editValue(projectNoLandingDates.id))
-    })
-
-    it('should not display the Project Value field', () => {
+      setup(setupProjectFaker())
       cy.get('[data-test="field-fdi_value"]').should('not.exist')
     })
   })
@@ -1524,11 +1388,9 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a project created before a salary range is disabled',
     () => {
-      beforeEach(() => {
-        cy.visit(investments.projects.editValue(projectCreatedBefore.id))
-      })
-
       it('should display the salary range for £25,000 - £29,000 when the project was created before the disable date', () => {
+        const project = setupProjectFaker({ created_on: '2016-02-05' })
+        setup(project)
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
@@ -1543,11 +1405,11 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a project created on the same day a salary range is disabled',
     () => {
-      beforeEach(() => {
-        cy.visit(investments.projects.editValue(projectCreatedSame.id))
-      })
-
       it('should not display the salary range for £25,000 – £29,000', () => {
+        const project = setupProjectFaker({
+          created_on: '2016-03-05T12:00:00Z',
+        })
+        setup(project)
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
@@ -1562,11 +1424,9 @@ describe('Edit the value details of a project', () => {
   context(
     'When viewing a project created after a salary range is disabled',
     () => {
-      beforeEach(() => {
-        cy.visit(investments.projects.editValue(projectCreatedAfter.id))
-      })
-
       it('should not display the salary range for £25,000 – £29,000', () => {
+        const project = setupProjectFaker({ created_on: '2016-04-02' })
+        setup(project)
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
@@ -1580,36 +1440,24 @@ describe('Edit the value details of a project', () => {
 
   context('Number of jobs error handling', () => {
     context('When editing an expansion project', () => {
-      const expansionProject = investmentProjectFaker({
-        created_on: '2020-06-07T10:00:00Z',
-        actual_land_date: null,
-        investment_type: {
-          name: 'FDI',
-          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-        },
+      const expansionProject = setupProjectFaker({
         fdi_type: {
           name: 'Expansion of existing site or activity',
           id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
         },
-        gva_multiplier: {
-          sector_classification_gva_multiplier: 'capital',
-          id: '7d2d9757-3287-4501-82f0-37879b7d9081',
-        },
-        client_cannot_provide_total_investment: true,
-        client_cannot_provide_foreign_investment: true,
-        number_new_jobs: null,
-        number_safeguarded_jobs: null,
-        gross_value_added: null,
-        average_salary: null,
-        foreign_equity_investment: null,
       })
       beforeEach(() => {
-        cy.intercept('GET', `/api-proxy/v3/investment/${expansionProject.id}`, {
-          statusCode: 200,
-          body: expansionProject,
-        }).as('getProjectDetails')
-        cy.visit(investments.projects.editValue(expansionProject.id))
-        cy.wait('@getProjectDetails')
+        setup(expansionProject)
+      })
+
+      it('should show the hint text for the number of new jobs input', () => {
+        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Number of new jobs',
+            hint: 'An expansion project must always have at least 1 new job',
+          })
+        })
       })
       it('should show an error if the number of new jobs is empty', () => {
         cy.get('[data-test="submit-button"]').click()
@@ -1628,63 +1476,30 @@ describe('Edit the value details of a project', () => {
     })
 
     context('When editing an non expansion project', () => {
-      const projectFaker = (overrides) => {
-        return investmentProjectFaker({
-          created_on: '2020-06-07T10:00:00Z',
-          actual_land_date: null,
+      it('should not show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
+        const nonFdiProject = setupProjectFaker({
           investment_type: {
             name: 'non-FDI',
             id: '3d2c94e4-7871-465c-a7f7-45651eeffc64',
           },
           fdi_type: null,
-          client_cannot_provide_total_investment: true,
-          client_cannot_provide_foreign_investment: true,
-          number_new_jobs: null,
-          number_safeguarded_jobs: null,
-          gross_value_added: null,
           gva_multiplier: null,
-          average_salary: null,
-          foreign_equity_investment: null,
-          ...overrides,
         })
-      }
-      const setup = (project) => {
-        cy.intercept('GET', `/api-proxy/v3/investment/${project.id}`, {
-          statusCode: 200,
-          body: project,
-        }).as('getProjectDetails')
-        cy.visit(investments.projects.editValue(project.id))
-        cy.wait('@getProjectDetails')
-      }
-      it('should not show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
-        const nonFdiProject = projectFaker()
         setup(nonFdiProject)
-        // cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-        //   assertFieldInput({
-        //     element,
-        //     label: 'Number of new jobs',
-        //     hint: '',
-        //   })
-        // })
+        cy.get('[data-test="field-number_new_jobs"]').should(
+          'not.contain',
+          '[data-test="hint-text"]'
+        )
         cy.get('[data-test="submit-button"]').click()
         assertNotExists('[data-test="summary-form-errors"]')
       })
-      it('should not show an error if number of new jobs is empty and it is not an expansion FDI project', () => {
-        const nonExpansionFdiProject = projectFaker({
-          investment_type: {
-            name: 'FDI',
-            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          },
-          fdi_type: {
-            name: 'Acquisition',
-            id: '01c19118-325c-4854-8c67-2d6555ee0c1b',
-          },
-          gva_multiplier: {
-            sector_classification_gva_multiplier: 'capital',
-            id: '7d2d9757-3287-4501-82f0-37879b7d9081',
-          },
-        })
+      it('should not show an error or hint text if number of new jobs is empty and it is not an expansion FDI project', () => {
+        const nonExpansionFdiProject = setupProjectFaker()
         setup(nonExpansionFdiProject)
+        cy.get('[data-test="field-number_new_jobs"]').should(
+          'not.contain',
+          '[data-test="hint-text"]'
+        )
         cy.get('[data-test="submit-button"]').click()
         assertNotExists('[data-test="summary-form-errors"]')
       })
