@@ -2,6 +2,7 @@ import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { flushSync } from 'react-dom'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'
@@ -188,7 +189,8 @@ const _Form = ({
                     // TODO: Is the isLoading actually needed in state?
                   }}
                   goBack={() => {
-                    props.goBack()
+                    // Opt out of React v18 batching.
+                    flushSync(() => props.goBack())
                     analytics('previous step', {
                       currentStep: props.currentStep,
                     })
