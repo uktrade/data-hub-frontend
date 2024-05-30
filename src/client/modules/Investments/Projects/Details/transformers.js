@@ -198,7 +198,7 @@ export const setGVAMessage = ({
   gvaMultiplier,
 }) => {
   const { stringValue, valueExists } =
-    gvaMultiplier.sectorClassificationGvaMultiplier === 'capital'
+    gvaMultiplier?.sectorClassificationGvaMultiplier === 'capital'
       ? {
           stringValue: 'capital expenditure value',
           valueExists: !!foreignEquityInvestment,
