@@ -124,7 +124,7 @@ const EditProjectValue = () => {
                         />
                         {project.investmentType.name === 'FDI' &&
                           project.gvaMultiplier
-                            .sectorClassificationGvaMultiplier ===
+                            ?.sectorClassificationGvaMultiplier ===
                             'capital' && (
                             <FieldUneditable
                               label="Gross value added (GVA)"
@@ -151,7 +151,7 @@ const EditProjectValue = () => {
                     initialValue={project.numberNewJobs?.toString()}
                   />
                   {project.investmentType.name === 'FDI' &&
-                    project.gvaMultiplier.sectorClassificationGvaMultiplier ===
+                    project.gvaMultiplier?.sectorClassificationGvaMultiplier ===
                       'labour' && (
                       <FieldUneditable
                         label="Gross value added (GVA)"
