@@ -29,7 +29,10 @@ import { currencyGBP } from '../../../../utils/number-utils'
 import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
-import { capitalExpenditureValidator } from './validators'
+import {
+  capitalExpenditureValidator,
+  totalInvestmentValidator,
+} from './validators'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
@@ -92,6 +95,12 @@ const EditProjectValue = () => {
                         initialValue={project.totalInvestment}
                         type="text"
                         required="Enter the total investment"
+                        validate={(fieldValue, fieldObject, stateObject) => {
+                          return totalInvestmentValidator(
+                            fieldValue,
+                            stateObject.values.foreign_equity_investment
+                          )
+                        }}
                       />
                     ),
                   }),

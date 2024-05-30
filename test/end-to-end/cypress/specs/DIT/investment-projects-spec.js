@@ -122,7 +122,7 @@ describe('Creating an investment project', () => {
 
       cy.contains('Add value').click()
       cy.get(selectors.investment.value.totalInvestmentRadioYes).click()
-      cy.get(selectors.investment.value.totalInvestment).type('100000')
+      cy.get(selectors.investment.value.totalInvestment).type('1000000')
       cy.get(selectors.investment.value.foreignEquityInvestmentRadioYes).click()
       cy.get(selectors.investment.value.foreignEquityInvestment).type('500000')
       cy.get(selectors.investment.value.newJobs).type('500')
@@ -137,7 +137,7 @@ describe('Creating an investment project', () => {
       assertSummaryTable({
         dataTest: 'project-value-table',
         content: {
-          'Total investment': '£100,000',
+          'Total investment': '£1,000,000',
           'Capital expenditure value': '£500,000',
           'Gross Value Added (GVA)': '£104,825',
           'Government assistance': 'Has government assistance',
