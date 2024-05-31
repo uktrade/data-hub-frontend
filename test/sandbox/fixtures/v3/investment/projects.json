@@ -192,7 +192,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977",
@@ -403,7 +407,11 @@
       ],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "e32b3c33-80ac-4589-a8c4-dda305d726ba",
@@ -1521,7 +1529,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "b30dee70-b2d6-48cf-9ce4-b9264854470c",
@@ -1686,7 +1698,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "3520b973-0e77-46cf-be75-3585f2f6691e",
@@ -2473,7 +2489,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "6e441b34-1fc8-4638-b4b1-a0922ecf403e",
@@ -2666,7 +2686,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "5e341b34-1fc8-4638-b4b1-a0922ecf403e",
@@ -4422,7 +4446,11 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": null
+      "gross_value_added": null,
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "7ee2c85b-8ad9-46cd-8c39-9c9bef74ced3",
@@ -4619,7 +4647,11 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": null
+      "gross_value_added": null,
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "7ee2c85b-8ad9-46cd-8c39-9c9bef74ced1",
@@ -4816,7 +4848,11 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": null
+      "gross_value_added": null,
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "7ee2c85b-8ad9-46cd-8c39-9c9bef74ced2",
@@ -5013,7 +5049,11 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": null
+      "gross_value_added": null,
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "4e1c1781-3759-4935-b9d1-81119e0fa3f8",
@@ -5213,7 +5253,11 @@
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
       "stage_log": [],
-      "gross_value_added": 34568
+      "gross_value_added": 34568,
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "7e8e1832-7d97-4c4c-a9ce-a31b21372b6b",
@@ -5409,7 +5453,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "6c2a8e97-d74c-4bc1-9ba8-88e69f64bd47",
@@ -5605,7 +5653,11 @@
       "team_members": [],
       "project_arrived_in_triage_on": null,
       "proposal_deadline": null,
-      "stage_log": []
+      "stage_log": [],
+      "gva_multiplier": {
+        "id": "ccac03e3-573d-4e2e-9972-ef0aebf7fa14",
+        "sector_classification_gva_multiplier": "capital"
+      }
     },
     {
       "id": "cae38628-6c18-4abf-a4da-68f96aacfb13",

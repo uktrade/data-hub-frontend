@@ -58,7 +58,7 @@ const StyledFieldInput = styled(FieldInput)({
   width: '100%',
 })
 
-export const FieldFDIType = ({ initialValue = null }) => (
+export const FieldFDIType = ({ initialValue = null, onChange = null }) => (
   <ResourceOptionsField
     name="fdi_type"
     label="Type of foreign direct investment (FDI)"
@@ -67,6 +67,7 @@ export const FieldFDIType = ({ initialValue = null }) => (
     initialValue={initialValue}
     placeholder="Select an FDI type"
     required="Select the FDI type"
+    onChange={onChange}
   />
 )
 

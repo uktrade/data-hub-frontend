@@ -6,37 +6,68 @@ const formatEstimatedLandDate = ({ year, month }) =>
 const formatActualLandDate = ({ year, month, day }) =>
   year && month && day ? `${year}-${month}-${day}` : null
 
-export const transformFormValuesToPayload = (values, csrfToken) => ({
-  _csrf: csrfToken,
-  investor_company: values.company.id,
-  investment_type: values.investment_type,
-  fdi_type: values.fdi_type?.value,
-  name: values.name,
-  description: values.description,
-  anonymous_description: values.anonymous_description
-    ? values.anonymous_description
-    : '',
-  sector: values.sector.value,
-  business_activities: values.business_activities.map(({ value }) => value),
-  client_contacts: values.client_contacts.map(({ value }) => value),
-  ...(values?.other_business_activity
-    ? { other_business_activity: values.other_business_activity }
-    : {}),
-  client_relationship_manager:
-    values.clientRelationshipManager === OPTION_NO
-      ? values.client_relationship_manager.value
-      : values.adviser.id,
-  referral_source_adviser:
-    values.referralSourceAdviser === OPTION_NO
-      ? values.referral_source_adviser.value
-      : values.adviser.id,
-  referral_source_activity: values.referral_source_activity,
-  referral_source_activity_event: values.referral_source_activity_event,
-  referral_source_activity_marketing: values.referral_source_activity_marketing,
-  referral_source_activity_website: values.referral_source_activity_website,
-  estimated_land_date: formatEstimatedLandDate(values.estimated_land_date),
-  actual_land_date: formatActualLandDate(values.actual_land_date),
-  investor_type: values.investor_type,
-  level_of_involvement: values.level_of_involvement?.value,
-  specific_programme: values.specific_programme?.value,
-})
+export const transformFormValuesToPayload = (values, csrfToken) => {
+  const {
+    company,
+    investment_type,
+    fdi_type,
+    name,
+    description,
+    anonymous_description,
+    sector,
+    business_activities,
+    client_contacts,
+    other_business_activity,
+    client_relationship_manager,
+    referral_source_adviser,
+    referral_source_activity,
+    referral_source_activity_event,
+    referral_source_activity_marketing,
+    referral_source_activity_website,
+    estimated_land_date,
+    actual_land_date,
+    investor_type,
+    level_of_involvement,
+    specific_programme,
+    adviser,
+  } = values
+
+  const payload = {
+    _csrf: csrfToken,
+    investor_company: company.id,
+    investment_type: investment_type,
+    fdi_type: fdi_type?.value,
+    name: name,
+    description: description,
+    anonymous_description: anonymous_description ? anonymous_description : '',
+    sector: sector.value,
+    business_activities: business_activities.map(({ value }) => value),
+    client_contacts: client_contacts.map(({ value }) => value),
+    ...(other_business_activity ? { other_business_activity } : {}),
+    client_relationship_manager:
+      values.clientRelationshipManager === OPTION_NO
+        ? client_relationship_manager.value
+        : adviser.id,
+    referral_source_adviser:
+      values.referralSourceAdviser === OPTION_NO
+        ? referral_source_adviser.value
+        : adviser.id,
+    referral_source_activity: referral_source_activity,
+    referral_source_activity_event: referral_source_activity_event,
+    referral_source_activity_marketing: referral_source_activity_marketing,
+    referral_source_activity_website: referral_source_activity_website,
+    estimated_land_date: formatEstimatedLandDate(estimated_land_date),
+    actual_land_date: formatActualLandDate(actual_land_date),
+    investor_type: investor_type,
+    level_of_involvement: level_of_involvement?.value,
+    specific_programme: specific_programme?.value,
+  }
+
+  if (fdi_type?.label == 'Capital only') {
+    payload.number_new_jobs = 0
+    payload.average_salary = null
+    payload.number_safeguarded_jobs = 0
+  }
+
+  return payload
+}
