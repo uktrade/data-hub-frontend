@@ -295,7 +295,7 @@ describe('Creating an investment project', () => {
       cy.get('[data-test="field-status"]').then((element) => {
         assertFieldRadiosWithoutLabel({
           element,
-          optionsCount: 5,
+          optionsCount: 6,
           value: 'Ongoing',
         })
       })

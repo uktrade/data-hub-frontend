@@ -7,16 +7,21 @@ import {
 } from '../../support/assertions'
 
 describe('EditProjectStatus', () => {
-  const project = investmentProjectFaker({ status: 'ongoing' })
+  const project = investmentProjectFaker({
+    status: 'ongoing',
+    stage: 'prospect',
+  })
 
   beforeEach(() => {
     cy.intercept('GET', `/api-proxy/v3/investment/${project.id}`, {
       statusCode: 200,
       body: project,
     }).as('getProjectDetails')
-    cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`).as(
-      'editStatusRequest'
-    )
+    cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, (req) => {
+      // manually add stage to request object to bypass validation that on sandbox
+      // endpoint that is not applicable for projects at a prospect stage
+      req.body.stage = project.stage
+    }).as('editStatusRequest')
     cy.visit(investments.projects.status(project.id))
     cy.wait('@getProjectDetails')
   })
