@@ -41,6 +41,7 @@ const FieldTypeahead = ({
   options,
   autoScroll,
   className,
+  onChange,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -51,6 +52,12 @@ const FieldTypeahead = ({
   })
 
   const { setFieldValue } = useFormContext()
+  const handleChange = (newValue) => {
+    setFieldValue(name, props.isMulti ? newValue : newValue[0])
+    if (onChange) {
+      onChange(newValue)
+    }
+  }
 
   return (
     <FieldWrapper
@@ -62,9 +69,7 @@ const FieldTypeahead = ({
           name={name}
           aria-label={label || legend}
           onBlur={onBlur}
-          onChange={(newValue) =>
-            setFieldValue(name, props.isMulti ? newValue : newValue[0])
-          }
+          onChange={handleChange}
           error={error}
           value={value}
           initialOptions={options}
@@ -115,6 +120,7 @@ FieldTypeahead.propTypes = {
    * Whether the window should auto scroll into view this component
    */
   autoScroll: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 FieldTypeahead.defaultProps = {
@@ -125,6 +131,7 @@ FieldTypeahead.defaultProps = {
   hint: null,
   initialValue: null,
   autoScroll: false,
+  onChange: null,
 }
 
 export default FieldTypeahead

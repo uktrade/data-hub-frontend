@@ -37,6 +37,7 @@ export default (
           ...state.values,
           ...action.initialValues,
         },
+        keepValuesOnDeregister: action.keepValuesOnDeregister ?? false,
         currentStep: action.initialStepIndex,
       }
     case FORM__FIELDS__RESET:
@@ -82,7 +83,9 @@ export default (
     case FORM__FIELD_DEREGISTER:
       return {
         ...state,
-        values: omit(state.values, action.fieldName),
+        values: state.keepValuesOnDeregister
+          ? state.values
+          : omit(state.values, action.fieldName),
         errors: omit(state.errors, action.fieldName),
         touched: omit(state.touched, action.fieldName),
         fields: omit(state.fields, action.fieldName),
