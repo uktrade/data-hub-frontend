@@ -57,6 +57,7 @@ const _Form = ({
   analyticsData,
   cancelButtonLabel = 'Cancel',
   cancelRedirectTo,
+  keepValuesOnDeregister,
   initialValuesTaskName,
   initialValuesPayload,
   redirectTo,
@@ -92,7 +93,7 @@ const _Form = ({
   const qsParams = qs.parse(location.search.slice(1))
 
   useEffect(() => {
-    onLoad(initialValues, initialStepIndex)
+    onLoad(initialValues, initialStepIndex, keepValuesOnDeregister)
   }, [])
   useEffect(() => {
     scrollToTopOnStep && window.scrollTo(0, 0)
@@ -316,7 +317,8 @@ const _Form = ({
                                 initialValues &&
                                 onLoad(
                                   transformInitialValues(initialValues),
-                                  initialStepIndex
+                                  initialStepIndex,
+                                  keepValuesOnDeregister
                                 )
                               }
                             />
@@ -393,11 +395,12 @@ const _Form = ({
 
 // TODO: Clean up this mess
 const dispatchToProps = (dispatch) => ({
-  onLoad: (initialValues, initialStepIndex) =>
+  onLoad: (initialValues, initialStepIndex, keepValuesOnDeregister) =>
     dispatch({
       type: 'FORM__LOADED',
       initialValues,
       initialStepIndex,
+      keepValuesOnDeregister,
     }),
   resetResolved: () =>
     dispatch({
@@ -590,6 +593,7 @@ Form.propTypes = {
   flashMessage: PropTypes.func,
   initialValuesTaskName: PropTypes.string,
   initialValues: PropTypes.object,
+  keepValuesOnDeregister: PropTypes.bool,
   transformInitialValues: PropTypes.func,
   transformPayload: PropTypes.func,
   initialStepIndex: PropTypes.number,

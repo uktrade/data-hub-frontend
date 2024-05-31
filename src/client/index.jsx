@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
-import { BrowserTracing } from '@sentry/tracing'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { SearchLocalHeader } from './components'
@@ -72,7 +71,7 @@ if (globalProps.sentryDsn) {
     environment: globalProps.sentryEnvironment,
     autoSessionTracking: false,
     integrations: [
-      new BrowserTracing({
+      Sentry.browserTracingIntegration({
         tracingOrigins: [
           'www.datahub.uktrade.io',
           'www.datahub.dev.uktrade.io',

@@ -146,7 +146,7 @@ InvestmentDetailsStep.propTypes = {
     investmentTypes: PropTypes.arrayOf(optionProp),
     investment_type: PropTypes.string,
     fdiTypes: PropTypes.arrayOf(optionProp),
-    fdi_type: PropTypes.string,
+    fdi_type: PropTypes.object,
   }),
 }
 
