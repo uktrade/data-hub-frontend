@@ -107,7 +107,7 @@ describe('Investment Project', () => {
       'apiRequest'
     )
     cy.wait('@apiRequest')
-    cy.get('[data-test="submit-button"]').click()
+    cy.get('[data-test="submit"]').click()
     assertFlashMessage('Investment details updated')
 
     cy.visit(urls.investments.editHistory.index(investmentProjectObj.pk))
