@@ -157,6 +157,22 @@ const EditProjectValue = () => {
                     label="Number of new jobs"
                     name="number_new_jobs"
                     type="number"
+                    required={
+                      project.fdiType?.name ===
+                        'Expansion of existing site or activity' &&
+                      'Value for number of new jobs is required'
+                    }
+                    hint={
+                      project.fdiType?.name ===
+                        'Expansion of existing site or activity' &&
+                      'An expansion project must always have at least 1 new job'
+                    }
+                    validate={(value) =>
+                      project.fdiType?.name ===
+                        'Expansion of existing site or activity' && value < 1
+                        ? 'Number of new jobs must be greater than 0'
+                        : null
+                    }
                     initialValue={project.numberNewJobs?.toString()}
                   />
                   {project.investmentType.name === 'FDI' &&
