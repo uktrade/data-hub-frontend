@@ -192,6 +192,11 @@ const envSchema = Joi.object({
   ELASTIC_APM_SECRET_TOKEN: Joi.string().required(),
   // Elastic APM server timeout used to timeout if no response is found after 20 secs
   ELASTIC_APM_SERVER_TIMEOUT: Joi.number().integer().default(20),
+
+  // The S3 bucket for investment evidence documents
+  INVESTMENT_DOCUMENT_BUCKET: Joi.string().required(),
+  // The S3 region for investment evidence documents
+  INVESTMENT_DOCUMENT_AWS_REGION: Joi.string().required(),
 })
 /* eslint-enable prettier/prettier */
 

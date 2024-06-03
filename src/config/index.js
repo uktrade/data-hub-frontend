@@ -138,6 +138,12 @@ const config = {
     },
   },
   greatProfileUrl: envVars.GREAT_PROFILE_URL,
+  s3Buckets: {
+    investmentDocuments: {
+      bucket: envVars.INVESTMENT_DOCUMENT_BUCKET,
+      region: envVars.INVESTMENT_DOCUMENT_AWS_REGION,
+    },
+  },
 }
 
 module.exports = config
