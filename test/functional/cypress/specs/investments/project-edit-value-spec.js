@@ -29,8 +29,8 @@ const setup = (project) => {
   cy.wait('@getProjectDetails')
 }
 
-const setupProjectFaker = (overrides) => {
-  return investmentProjectFaker({
+const setupProjectFaker = (overrides) =>
+  investmentProjectFaker({
     created_on: '2020-06-07T10:00:00Z',
     actual_land_date: null,
     estimated_land_date: null,
@@ -55,7 +55,6 @@ const setupProjectFaker = (overrides) => {
     foreign_equity_investment: null,
     ...overrides,
   })
-}
 
 describe('Edit the value details of a project', () => {
   context(
@@ -265,6 +264,7 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
   context(
     'When viewing a capital intensive project with all value fields set',
     () => {
@@ -463,18 +463,10 @@ describe('Edit the value details of a project', () => {
   )
 
   context('When viewing a capital only FDI project', () => {
-    const capitalOnlyFDIProject = investmentProjectFaker({
-      investment_type: {
-        name: 'FDI',
-        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-      },
+    const capitalOnlyFDIProject = setupProjectFaker({
       fdi_type: {
         name: 'Capital only',
         id: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
-      },
-      stage: {
-        name: 'Prospect',
-        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
       },
       client_cannot_provide_total_investment: false,
       client_cannot_provide_foreign_investment: false,
@@ -482,20 +474,7 @@ describe('Edit the value details of a project', () => {
       foreign_equity_investment: 15000000,
     })
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${capitalOnlyFDIProject.id}`,
-        {
-          statusCode: 200,
-          body: capitalOnlyFDIProject,
-        }
-      ).as('getProjectValue')
-      cy.intercept(
-        'PATCH',
-        `/api-proxy/v3/investment/${capitalOnlyFDIProject.id}`
-      ).as('editValueSubmissionRequest')
-      cy.visit(investments.projects.editValue(capitalOnlyFDIProject.id))
-      cy.wait('@getProjectValue')
+      setup(capitalOnlyFDIProject)
       cy.get('[data-test="total-investment-input"]')
         .clear()
         .type(`${capitalOnlyFDIProject.total_investment}`)
@@ -567,19 +546,7 @@ describe('Edit the value details of a project', () => {
   })
 
   context('When viewing a non capital only FDI project', () => {
-    const nonCapitalOnlyFDIProject = investmentProjectFaker({
-      investment_type: {
-        name: 'FDI',
-        id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-      },
-      fdi_type: {
-        name: 'Creation of new site or activity',
-        id: 'f8447013-cfdc-4f35-a146-6619665388b3',
-      },
-      stage: {
-        name: 'Prospect',
-        id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
-      },
+    const nonCapitalOnlyFDIProject = setupProjectFaker({
       client_cannot_provide_total_investment: false,
       client_cannot_provide_foreign_investment: false,
       total_investment: 20000000,
@@ -592,20 +559,7 @@ describe('Edit the value details of a project', () => {
       number_safeguarded_jobs: 50,
     })
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${nonCapitalOnlyFDIProject.id}`,
-        {
-          statusCode: 200,
-          body: nonCapitalOnlyFDIProject,
-        }
-      ).as('getProjectValue')
-      cy.intercept(
-        'PATCH',
-        `/api-proxy/v3/investment/${nonCapitalOnlyFDIProject.id}`
-      ).as('editValueSubmissionRequest')
-      cy.visit(investments.projects.editValue(nonCapitalOnlyFDIProject.id))
-      cy.wait('@getProjectValue')
+      setup(nonCapitalOnlyFDIProject)
       cy.get('[data-test="total-investment-input"]')
         .clear()
         .type(`${nonCapitalOnlyFDIProject.total_investment}`)
@@ -704,6 +658,7 @@ describe('Edit the value details of a project', () => {
       })
     }
   )
+
   context(
     'When viewing a capital intensive project with capital value but no sector',
     () => {
