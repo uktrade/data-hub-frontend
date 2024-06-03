@@ -5,7 +5,7 @@ import { DefaultLayout, FieldRadios, Form } from '../../../components'
 import { InvestmentResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
 import { TASK_EDIT_INVESTMENT_PROJECT_STATUS } from './state'
-import { investmentProjectStatuses } from './constants'
+import { PROJECT_STATUS_OPTIONS } from './constants'
 import { transformProjectStatusForApi } from './transformers'
 import { buildProjectBreadcrumbs } from '../utils'
 import InvestmentName from './InvestmentName'
@@ -53,7 +53,7 @@ const EditProjectStatus = () => {
             <FieldRadios
               name="status"
               initialValue={project.status}
-              options={investmentProjectStatuses.map((option) => ({
+              options={PROJECT_STATUS_OPTIONS.map((option) => ({
                 ...option,
               }))}
             />
