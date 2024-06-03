@@ -533,6 +533,27 @@ describe('Edit the value details of a project', () => {
         .type(`${capitalOnlyFDIProject.foreign_equity_investment}`)
     })
 
+    it('should raise an error if total investment is < capital expenditure', () => {
+      const totalInvestmentErrorMessage =
+        'Total investment must be >= to capital expenditure'
+      cy.get('[data-test="total-investment-input"]').clear().type('14000000')
+      clickButton('Save')
+      assertErrorSummary([totalInvestmentErrorMessage])
+      assertFieldError(
+        cy.get('[data-test="field-total_investment"]'),
+        totalInvestmentErrorMessage
+      )
+    })
+
+    it('should not raise an error if total investment is >= capital expenditure', () => {
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          total_investment: `${capitalOnlyFDIProject.total_investment}`,
+        })
+    })
+
     it('should raise an error when entered capital expenditure value is < £15m', () => {
       const capitalExpenditureErrorMessage =
         'Capital expenditure must be >= £15,000,000 for capital only project'
@@ -620,6 +641,29 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="foreign-equity-investment-input"]')
         .clear()
         .type(`${nonCapitalOnlyFDIProject.foreign_equity_investment}`)
+    })
+
+    it('should raise an error if total investment is < capital expenditure', () => {
+      const totalInvestmentErrorMessage =
+        'Total investment must be >= to capital expenditure'
+      cy.get('[data-test="foreign-equity-investment-input"]')
+        .clear()
+        .type('22000000')
+      clickButton('Save')
+      assertErrorSummary([totalInvestmentErrorMessage])
+      assertFieldError(
+        cy.get('[data-test="field-total_investment"]'),
+        totalInvestmentErrorMessage
+      )
+    })
+
+    it('should not raise an error if total investment is >= capital expenditure', () => {
+      clickButton('Save')
+      cy.wait('@editValueSubmissionRequest')
+        .its('request.body')
+        .should('include', {
+          total_investment: `${nonCapitalOnlyFDIProject.total_investment}`,
+        })
     })
 
     it('should not raise an error when capital expenditure is < £15m', () => {
