@@ -147,7 +147,7 @@ describe('Editing the project summary', () => {
         label: 'Referral source activity',
         placeholder: 'Choose a referral source activity',
         value: 'None',
-        optionsCount: 46,
+        optionsCount: 53,
       })
     })
     cy.get('[data-test="field-referral_source_activity_event"]').should(
