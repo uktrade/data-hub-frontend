@@ -325,7 +325,7 @@ describe('Investment Detail Step Form Content', () => {
         element,
         label: 'Referral source activity',
         placeholder: 'Choose a referral source activity',
-        optionsCount: 46,
+        optionsCount: 53,
       })
     })
   })
