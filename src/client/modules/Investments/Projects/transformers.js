@@ -68,7 +68,7 @@ export const transformProjectStatusForApi = ({ project, values }) => ({
 })
 
 export const mapFieldToUrl = (field, projectId) => {
-  const detailsFields = ['Actual land date', 'FDI type']
+  const detailsFields = ['Actual land date', 'FDI type', 'Investor type']
   const valueFields = [
     'Can client provide total investment value?',
     'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
