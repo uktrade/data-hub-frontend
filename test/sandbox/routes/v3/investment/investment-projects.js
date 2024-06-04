@@ -48,22 +48,29 @@ export const documentDownload = function (req, res) {
 }
 
 export const patchInvestmentProject = function (req, res) {
-  if (req.body) {
-    if (req.body.associated_non_fdi_r_and_d_project) {
-      res.sendStatus(200)
-    } else if (
-      req.body.client_requirements &&
-      req.body.client_requirements.length
-    ) {
-      res.sendStatus(200)
-    } else if (req.body.project_assurance_adviser || req.body.project_manager) {
-      res.sendStatus(200)
-    }
-  }
+  const project = allProjectsMap[req.params.id]
 
-  return res.status(400).json({
-    client_requirements: ['required'],
-  })
+  // if the project is at the prospect stage, there are no fields that are required
+  if (project?.stage.name === 'prospect' || req.body?.stage === 'prospect') {
+    return res.sendStatus(200)
+  } else {
+    if (req.body) {
+      if (req.body.associated_non_fdi_r_and_d_project) {
+        res.sendStatus(200)
+      } else if (req.body.client_requirements) {
+        res.sendStatus(200)
+      } else if (
+        req.body.project_assurance_adviser ||
+        req.body.project_manager
+      ) {
+        res.sendStatus(200)
+      }
+    }
+
+    return res.status(400).json({
+      client_requirements: ['required'],
+    })
+  }
 }
 
 export const postInvestmentProject = function (req, res) {

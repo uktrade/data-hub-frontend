@@ -3,6 +3,7 @@ import React from 'react'
 export const investmentProjectStatuses = [
   { label: 'Ongoing', value: 'ongoing' },
   { label: 'Delayed', value: 'delayed' },
+  { label: 'Referred', value: 'referred' },
   { label: 'Abandoned', value: 'abandoned' },
   { label: 'Lost', value: 'lost' },
   { label: 'Dormant', value: 'dormant' },
