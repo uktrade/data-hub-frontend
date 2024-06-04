@@ -159,6 +159,11 @@ const EditProjectSummaryInitialStep = ({
       />
       <FieldSpecificProgramme
         initialValue={transformObjectForTypeahead(project.specificProgramme)}
+        label={
+          project.stage.name === 'Active'
+            ? 'Specific investment programme'
+            : 'Specific investment programme (optional)'
+        }
       />
     </Step>
   )
