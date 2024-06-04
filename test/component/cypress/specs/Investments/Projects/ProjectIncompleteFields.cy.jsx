@@ -24,7 +24,6 @@ const evidenceLink = urls.investments.projects.evidence.index(projectId)
 
 const prospectIncompleteFields = [
   'client_cannot_provide_total_investment',
-  'number_new_jobs',
   'strategic_drivers',
   'client_requirements',
   'client_considering_other_countries',
@@ -41,6 +40,7 @@ const assignPmIncompleteFields = [
 const activeIncompleteFields = [
   'client_cannot_provide_foreign_investment',
   'government_assistance',
+  'number_new_jobs',
   'number_safeguarded_jobs',
   'r_and_d_budget',
   'non_fdi_r_and_d_budget',
@@ -143,7 +143,6 @@ describe('ProjectIncompleteFields', () => {
           'Possible UK locations for this investment',
           requirementsLink
         )
-        assertLink('Number of new jobs', valueLink)
         assertLink(
           'Is the client considering other countries?',
           requirementsLink
@@ -201,6 +200,7 @@ describe('ProjectIncompleteFields', () => {
           'Is this project receiving government financial assistance?',
           valueLink
         )
+        assertLink('Number of new jobs', valueLink)
         assertLink('Number of safeguarded jobs', valueLink)
         assertLink(
           'Does this project have budget for a research and development?',
