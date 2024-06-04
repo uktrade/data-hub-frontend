@@ -57,7 +57,11 @@ const activeIncompleteFields = [
   'foreign_equity_investment',
   'average_salary',
   'associated_non_fdi_r_and_d_project',
+<<<<<<< HEAD
   'uk_company',
+=======
+  'specific_programme',
+>>>>>>> 04c8c6c36 (Update test for mandatory specific programme field)
 ]
 
 const buildAndMountComponent = (
@@ -230,7 +234,11 @@ describe('ProjectIncompleteFields', () => {
         assertLink('Foreign equity investment', valueLink)
         assertLink('Average salary of new jobs', valueLink)
         assertLink('Non-FDI R&D project', associatedLink)
+<<<<<<< HEAD
         assertLink('UK recipient company', recipientCompanyLink)
+=======
+        assertLink('Specific investment programme', detailsLink)
+>>>>>>> 04c8c6c36 (Update test for mandatory specific programme field)
       })
     }
   )
