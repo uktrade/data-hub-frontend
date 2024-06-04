@@ -20,6 +20,8 @@ const projectManagementLink =
   urls.investments.projects.editProjectManagement(projectId)
 const associatedLink =
   urls.investments.projects.findAssociatedProject(projectId)
+const recipientCompanyLink =
+  urls.investments.projects.recipientCompany(projectId)
 const evidenceLink = urls.investments.projects.evidence.index(projectId)
 
 const prospectIncompleteFields = [
@@ -55,6 +57,7 @@ const activeIncompleteFields = [
   'foreign_equity_investment',
   'average_salary',
   'associated_non_fdi_r_and_d_project',
+  'uk_company',
 ]
 
 const buildAndMountComponent = (
@@ -227,6 +230,7 @@ describe('ProjectIncompleteFields', () => {
         assertLink('Foreign equity investment', valueLink)
         assertLink('Average salary of new jobs', valueLink)
         assertLink('Non-FDI R&D project', associatedLink)
+        assertLink('UK recipient company', recipientCompanyLink)
       })
     }
   )
