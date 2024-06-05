@@ -232,7 +232,7 @@ Updating the baseline consists in 2 steps:
 
 - 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
 
-- 2:. Run `$ npm run test:visual:update` to update the failed tests with updated images of how the page in test should look like.
+- 2:. Run `make visual-update` to update the failed tests with updated images of how the page in test should look like. This will run on docker to match the results for CircleCI
 
 ## Visual Component Tests
 
@@ -267,7 +267,7 @@ Updating the baseline consists in 2 steps:
 
 - 1:. Running the visual component tests locally and verifying the failures are valid
 
-- 2:. Running `$ npm run test:visual-component:update` which will copy all comparison images that have a failure associated to them into the baseline folder, replacing the old baseline images.
+- 2:. Running `make visual-component-update` which will copy all comparison images that have a failure associated to them into the baseline folder, replacing the old baseline images. This will run on docker to match the results for CircleCI
 
 There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
 
