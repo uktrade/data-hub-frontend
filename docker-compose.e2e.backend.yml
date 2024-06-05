@@ -49,7 +49,7 @@ services:
   postgres:
     image: postgres:16
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_DB: datahub
       POSTGRES_USER: user
@@ -91,7 +91,8 @@ services:
       - 8082:8082
     environment:
       - PORT=8082
-      - 'VCAP_SERVICES={"redis":[{"credentials":{"uri":"redis://redis:6379"}}],"opensearch":[{"credentials":{"uri":"http://some-id:some-secret@opensearch:9200"}, "plan": "123-123-123" } ] }'
+      - REDIS_URL=redis://redis:6379
+      - OPENSEARCH=http://some-id:some-secret@opensearch:9200
       - SENTRY_ENVIRONMENT=test
       - SENTRY_DSN=http://abc:cvb@localhost:9872/123
       - FEEDS__1__UNIQUE_ID=verification_feed_app

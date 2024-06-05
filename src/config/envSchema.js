@@ -168,9 +168,6 @@ const envSchema = Joi.object({
     .integer()
     .default(2 * 60 * 60 * 1000),
 
-  // Configuration object (JSON) of Cloud Foundry services
-  VCAP_SERVICES: ExtendedJoi.json().default({}),
-
   // Zendesk field ID used to capture user's browser
   ZEN_BROWSER: Joi.string(),
   // Zendesk username used for API queries
