@@ -122,10 +122,18 @@ visual-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
 	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
 
+visual-update:
+	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual:update'	
+
 visual-component-tests:
 	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
 	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component'
 
+visual-component-update:
+	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
+	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component:update'
+	
 e2e-tests-lep:
 	@echo "*** Requires the e2e stack with the LEP role, it can be started with 'make start-e2e-lep' ***"
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:lep $(cypress-args)'
