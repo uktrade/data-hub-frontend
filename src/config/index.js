@@ -18,18 +18,6 @@ const isTest = envVars.NODE_ENV === 'test'
 const root = path.normalize(`${__dirname}/../..`)
 
 const buildRedisConfig = () => {
-  const vcap = envVars.VCAP_SERVICES
-
-  if (vcap && vcap.hasOwnProperty('redis')) {
-    return {
-      metadataTtl: envVars.METADATA_TTL,
-      url: vcap.redis[0].credentials.uri,
-      port: vcap.redis[0].credentials.port,
-      host: vcap.redis[0].credentials.host,
-      useTLS: vcap.redis[0].credentials.tls_enabled,
-    }
-  }
-
   return {
     metadataTtl: envVars.METADATA_TTL,
     url: envVars.REDIS_URL || envVars.REDISTOGO_URL,
