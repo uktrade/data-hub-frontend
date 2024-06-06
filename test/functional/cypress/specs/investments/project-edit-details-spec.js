@@ -342,7 +342,11 @@ describe('Editing the project summary', () => {
 
   context('when an investment project is at the prospect stage', () => {
     beforeEach(() => {
-      setup(setupProjectFaker({ stage: INVESTMENT_PROJECT_STAGES.active }))
+      setup(
+        setupProjectFaker({
+          stage: INVESTMENT_PROJECT_STAGES.active,
+        })
+      )
     })
     it('should render the specific programme field label without the word optional', () => {
       cy.get('[data-test="field-specific_programme"]').then((element) => {
@@ -357,7 +361,9 @@ describe('Editing the project summary', () => {
 
   context('When changing the project FDI type to Capital only', () => {
     const capitalOnlyFDITypeLabel = 'Capital only'
+    const project = setupProjectFaker()
     beforeEach(() => {
+      setup(project)
       cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
         'editDetailsRequest'
       )
@@ -417,6 +423,7 @@ describe('Editing the project summary', () => {
     'When changing the project FDI type to anything other than Capital only',
     () => {
       beforeEach(() => {
+        setup(setupProjectFaker())
         cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
           'editDetailsRequest'
         )
