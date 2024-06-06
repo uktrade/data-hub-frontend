@@ -392,7 +392,7 @@ const assertFieldTypeahead = ({
       expect($typeahead.find('input')).to.have.attr('placeholder', placeholder)
 
     label
-      ? expect($typeahead.find('label')).to.contain(label)
+      ? expect($typeahead.find('label')).to.equal(label)
       : expect($typeahead.find('label')).to.not.exist
 
     isMulti
