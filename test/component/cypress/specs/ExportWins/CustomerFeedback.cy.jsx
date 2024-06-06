@@ -8,6 +8,7 @@ import {
 } from '../../../../functional/cypress/support/assertions'
 import CustomerFeedback from '../../../../../src/client/modules/ExportWins/CustomerFeedback'
 import urls from '../../../../../src/lib/urls'
+import { resolve } from '../../../../utils'
 
 const toYesNo = (x) => (x ? 'Yes' : 'No')
 
@@ -66,8 +67,8 @@ describe('ExportWins/CustomerFeedback', () => {
         </Routes>,
         {
           tasks: {
-            'Export Win': () => Promise.resolve(win),
-            Company: () => Promise.resolve(company),
+            'Export Win': () => resolve({ after: 1, with: win }),
+            Company: () => resolve({ after: 1, with: company }),
           },
           initialPath: `/companies/${company.id}/exportwins/${win.id}/customer-feedback`,
         }
