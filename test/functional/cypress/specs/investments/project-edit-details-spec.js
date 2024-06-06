@@ -391,17 +391,17 @@ describe('Editing the project summary', () => {
               cy.get('[data-test="item-number-new-jobs"]')
                 .should('exist')
                 .contains(
-                  `currently: ${project.number_new_jobs}, will become: 0`
+                  `currently: ${project.number_new_jobs}, will change to: 0`
                 )
               cy.get('[data-test="item-average-salary"]')
                 .should('exist')
                 .contains(
-                  `currently: ${project.average_salary}, will become: null`
+                  `currently: ${project.average_salary}, will change to: null`
                 )
               cy.get('[data-test="item-number-safeguarded-jobs"]')
                 .should('exist')
                 .contains(
-                  `currently: ${project.number_safeguarded_jobs}, will become: 0`
+                  `currently: ${project.number_safeguarded_jobs}, will change to: 0`
                 )
             })
           cy.contains('Are you sure you want to proceed?')
