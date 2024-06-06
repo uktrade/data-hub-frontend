@@ -1,14 +1,5 @@
 import React from 'react'
 
-export const investmentProjectStatuses = [
-  { label: 'Ongoing', value: 'ongoing' },
-  { label: 'Delayed', value: 'delayed' },
-  { label: 'Referred', value: 'referred' },
-  { label: 'Abandoned', value: 'abandoned' },
-  { label: 'Lost', value: 'lost' },
-  { label: 'Dormant', value: 'dormant' },
-]
-
 export const STAGE_PROSPECT = 'Prospect'
 export const STAGE_ASSIGN_PM = 'Assign PM'
 export const STAGE_ACTIVE = 'Active'
@@ -99,6 +90,7 @@ export const INVOLVEMENT_LEVEL_OPTIONS = [
 export const PROJECT_STATUS_OPTIONS = [
   { label: 'Ongoing', value: 'ongoing' },
   { label: 'Delayed', value: 'delayed' },
+  { label: 'Referred', value: 'referred' },
   { label: 'Abandoned', value: 'abandoned' },
   { label: 'Lost', value: 'lost' },
   { label: 'Dormant', value: 'dormant' },

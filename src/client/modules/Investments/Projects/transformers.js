@@ -103,6 +103,7 @@ export const mapFieldToUrl = (field, projectId) => {
     'Project Assurance Adviser',
     'Project Manager',
   ]
+  const recipientCompanyFields = ['UK recipient company']
 
   if (detailsFields.includes(field)) {
     return urls.investments.projects.editDetails(projectId)
@@ -118,6 +119,10 @@ export const mapFieldToUrl = (field, projectId) => {
 
   if (projectManagementFields.includes(field)) {
     return urls.investments.projects.editProjectManagement(projectId)
+  }
+
+  if (recipientCompanyFields.includes(field)) {
+    return urls.investments.projects.recipientCompany(projectId)
   }
 
   return urls.investments.projects.findAssociatedProject(projectId)
