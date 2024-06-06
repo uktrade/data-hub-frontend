@@ -1,4 +1,5 @@
 const headers = require('../headers')
+const config = require('../../config')
 
 const NONCE = 'DUMMY-NONCE'
 
@@ -7,6 +8,8 @@ describe('headers middleware', () => {
     const reqMock = { url: '/' }
     const resMock = { set: sinon.spy() }
     const nextMock = sinon.spy()
+
+    const INVESTMENT_DOCUMENT_BUCKET = `https://s3.${config.s3Buckets.investmentDocuments.region}.amazonaws.com/${config.s3Buckets.investmentDocuments.bucket}/evidencedocument/`
 
     headers(reqMock, resMock, nextMock, () => NONCE)
 
@@ -18,7 +21,7 @@ describe('headers middleware', () => {
             `frame-ancestors 'none'`,
             `script-src 'self' 'nonce-${NONCE}' https://*.googletagmanager.com`,
             `img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com`,
-            `connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://*.analytics.google.com`,
+            `connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://*.analytics.google.com ${INVESTMENT_DOCUMENT_BUCKET} https://raven.ci.uktrade.io`,
           ].join(';'),
           'Cache-Control': 'no-cache, no-store',
           Pragma: 'no-cache',
