@@ -308,7 +308,7 @@ export const FieldLevelOfInvolvement = ({ initialValue = null }) => (
 
 export const FieldSpecificProgramme = ({
   initialValue = null,
-  optionalText,
+  optionalText = true,
 }) => (
   <ResourceOptionsField
     name="specific_programme"
