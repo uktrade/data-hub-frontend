@@ -41,7 +41,7 @@ import Resource from '../../../Resource/Resource'
  *  />
  */
 const ResourceOptionsField = ({
-  id,
+  id = '__RESOURCE_OPTIONS__',
   field: Field,
   resource: Rsrc = Resource,
   payload,
