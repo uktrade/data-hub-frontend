@@ -32,12 +32,12 @@ const ConfirmFDITypeChangeStep = ({ project }) => {
               : project.numberNewJobs === 0
                 ? 0
                 : 'null'}
-            , will become: 0)
+            , will change to: 0)
           </ListItem>
           <ListItem data-test="item-average-salary">
             Average salary (currently:{' '}
             {project.averageSalary ? project.averageSalary.name : 'null'}, will
-            become: null)
+            change to: null)
           </ListItem>
           <ListItem data-test="item-number-safeguarded-jobs">
             Number of safeguarded jobs (currently:{' '}
@@ -46,7 +46,7 @@ const ConfirmFDITypeChangeStep = ({ project }) => {
               : project.numberSafeguardedJobs === 0
                 ? 0
                 : 'null'}
-            , will become: 0)
+            , will change to: 0)
           </ListItem>
         </UnorderedList>
       </InsetText>
