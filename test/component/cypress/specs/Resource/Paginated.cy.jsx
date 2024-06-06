@@ -4,6 +4,7 @@ import React from 'react'
 
 import PaginatedResource from '../../../../../src/client/components/Resource/Paginated'
 import TabNav from '../../../../../src/client/components/TabNav'
+import { resolve } from '../../../../utils'
 
 const PAGE_SIZE = 10
 const COUNT = 35
@@ -83,10 +84,17 @@ describe('Resource/Paginated', () => {
       />,
       {
         tasks: {
-          bar: async (payload) => ({
-            count: COUNT,
-            results: DB.slice(payload.offset, payload.offset + payload.limit),
-          }),
+          bar: (payload) =>
+            resolve({
+              after: 1,
+              with: {
+                count: COUNT,
+                results: DB.slice(
+                  payload.offset,
+                  payload.offset + payload.limit
+                ),
+              },
+            }),
         },
       }
     )
