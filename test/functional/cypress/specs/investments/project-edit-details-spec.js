@@ -340,7 +340,7 @@ describe('Editing the project summary', () => {
     })
   })
 
-  context('when an investment project is at the prospect stage', () => {
+  context('when an investment project is at the active stage', () => {
     beforeEach(() => {
       setup(
         setupProjectFaker({
