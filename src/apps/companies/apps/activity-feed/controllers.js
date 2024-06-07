@@ -121,6 +121,8 @@ async function getAventriEventsAttendedByCompanyContacts(req, next, contacts) {
 }
 
 async function fetchActivitiesForContact(req, res, next) {
+  // DEPRECATED activity stream function
+  // TODO: Delete once dataflow integration is complete
   try {
     const { contact } = res.locals
     const { selectedSortBy } = req.query
@@ -165,6 +167,12 @@ async function fetchActivitiesForContact(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+async function fetchActivitiesForContactEmpty(req, res) {
+  // Returning hardcoded empty result
+  // until contact activity data is provided by dataflow
+  res.json({ activities: [], total: 0 })
 }
 
 const getAventriEvents = async (activities, req) => {
@@ -642,6 +650,7 @@ async function fetchAllActivityFeedEvents(req, res, next) {
 module.exports = {
   fetchActivityFeedHandler,
   fetchActivitiesForContact,
+  fetchActivitiesForContactEmpty,
   fetchAventriEvent,
   fetchAllActivityFeedEvents,
   eventsColListQueryBuilder,

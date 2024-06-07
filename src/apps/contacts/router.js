@@ -23,7 +23,7 @@ const { renderContactActivityForEntity } = require('./controllers/activity')
 const { setInteractionsDetails } = require('./middleware/interactions')
 
 const {
-  fetchActivitiesForContact,
+  fetchActivitiesForContactEmpty,
 } = require('../companies/apps/activity-feed/controllers')
 
 router.get(['/create', '/:contactId/edit'], createAndEdit)
@@ -50,6 +50,6 @@ router.use(
   renderContactActivityForEntity
 )
 
-router.get(urls.contacts.activity.data.route, fetchActivitiesForContact)
+router.get(urls.contacts.activity.data.route, fetchActivitiesForContactEmpty)
 
 module.exports = router
