@@ -26,11 +26,13 @@ import Tag from '../../../components/Tag'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
-export const transformArrayForTypeahead = (advisers) =>
-  advisers.map((value) => ({
-    label: value.name,
-    value: value.id,
-  }))
+export const transformArrayForTypeahead = (array) =>
+  array
+    ? array.map((value) => ({
+        label: value.name,
+        value: value.id,
+      }))
+    : null
 
 export const transformAndFilterArrayForTypeahead = (array) => {
   const filteredArray = idNamesToValueLabels(

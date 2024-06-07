@@ -344,6 +344,7 @@ export const FieldSpecificProgramme = ({
     }
     resource={SpecificInvestmentProgrammesResource}
     field={FieldTypeahead}
+    isMulti={true}
     initialValue={initialValue}
     placeholder="Choose a specific programme"
     resultToOptions={(result) =>

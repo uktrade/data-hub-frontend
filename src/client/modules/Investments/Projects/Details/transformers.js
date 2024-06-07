@@ -169,7 +169,8 @@ export const transformProjectSummaryForApi = ({
         ? INVESTOR_TYPES.existing.value
         : checkIfItemHasValue(investor_type),
     level_of_involvement: checkIfItemHasValue(level_of_involvement?.value),
-    specific_programme: checkIfItemHasValue(specific_programme?.value),
+    specific_programme:
+      specific_programme && specific_programme.map((x) => x.value),
     other_business_activity,
     business_activities: business_activities.map((x) => x.value),
     client_contacts: client_contacts.map((x) => x.value),
