@@ -34,6 +34,7 @@ import {
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
+import { INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM } from '../constants'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -159,6 +160,9 @@ const EditProjectSummaryInitialStep = ({
       />
       <FieldSpecificProgramme
         initialValue={transformObjectForTypeahead(project.specificProgramme)}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
     </Step>
   )

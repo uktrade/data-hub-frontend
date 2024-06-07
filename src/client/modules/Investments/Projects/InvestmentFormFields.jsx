@@ -306,10 +306,15 @@ export const FieldLevelOfInvolvement = ({ initialValue = null }) => (
   />
 )
 
-export const FieldSpecificProgramme = ({ initialValue = null }) => (
+export const FieldSpecificProgramme = ({
+  initialValue = null,
+  optionalText = true,
+}) => (
   <ResourceOptionsField
     name="specific_programme"
-    label="Specific investment programme (optional)"
+    label={
+      'Specific investment programme' + (optionalText ? ' (optional)' : '')
+    }
     resource={SpecificInvestmentProgrammesResource}
     field={FieldTypeahead}
     initialValue={initialValue}

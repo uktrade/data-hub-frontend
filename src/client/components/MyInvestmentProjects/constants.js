@@ -103,8 +103,8 @@ export const INCOMPLETE_FIELDS = {
   foreign_equity_investment: 'Foreign equity investment',
   associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
   fdi_type: 'FDI type',
-  specific_programme: 'Specific investment programme',
   uk_company: 'UK recipient company',
+  specific_programme: 'Specific investment programme',
 }
 
 export const STAGE_TAG_COLOURS = {
