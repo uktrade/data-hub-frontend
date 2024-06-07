@@ -402,6 +402,29 @@ const assertFieldTypeahead = ({
     hint && expect($typeahead).to.contain(hint)
   })
 
+const assertFieldTypeaheadWithExactText = ({
+  element,
+  label,
+  value,
+  placeholder = '',
+  hint = '',
+  isMulti = true,
+}) =>
+  cy.wrap(element).should(($typeahead) => {
+    placeholder &&
+      expect($typeahead.find('input')).to.have.attr('placeholder', placeholder)
+
+    label
+      ? expect($typeahead.find('label').text()).to.equal(label)
+      : expect($typeahead.find('label')).to.not.exist
+
+    isMulti
+      ? value && expect($typeahead).to.equal(value)
+      : value && expect($typeahead.find('input')).to.have.attr('value', value)
+
+    hint && expect($typeahead).to.equal(hint)
+  })
+
 const assertFieldSingleTypeahead = (props) =>
   assertFieldTypeahead({ ...props, isMulti: false })
 
@@ -964,6 +987,7 @@ module.exports = {
   testBreadcrumbs,
   assertCompanyBreadcrumbs,
   assertFieldTypeahead,
+  assertFieldTypeaheadWithExactText,
   assertFieldSingleTypeahead,
   assertFieldInput,
   assertFieldInputWithLegend,
