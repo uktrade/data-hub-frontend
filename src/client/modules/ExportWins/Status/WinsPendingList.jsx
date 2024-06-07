@@ -6,7 +6,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { sumExportValues } from './utils'
-import { WIN_STATUS } from './constants'
+import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 export const WinsPendingList = ({ exportWins = [] }) => {
@@ -23,16 +23,22 @@ export const WinsPendingList = ({ exportWins = [] }) => {
             subheading={item.company.name}
             subheadingUrl={urls.companies.overview.index(item.company.id)}
             metadata={[
-              {
-                label: 'Contact name:',
-                value: (
-                  <Link
-                    href={urls.contacts.details(item.company_contacts[0].id)}
-                  >
-                    {item.company_contacts[0].name}
-                  </Link>
-                ),
-              },
+              ...(item.company_contacts[0]
+                ? [
+                    {
+                      label: 'Contact name:',
+                      value: (
+                        <Link
+                          href={urls.contacts.details(
+                            item.company_contacts[0].id
+                          )}
+                        >
+                          {item.company_contacts[0].name}
+                        </Link>
+                      ),
+                    },
+                  ]
+                : []),
               {
                 label: 'Total value:',
                 value: currencyGBP(sumExportValues(item)),
@@ -66,7 +72,10 @@ export default () => (
     noResults="You don't have any pending export wins."
     // We have to send null as a string otherwise
     // it's stripped out of the payload by Axois
-    payload={{ confirmed: String(WIN_STATUS.PENDING) }}
+    payload={{
+      confirmed: String(WIN_STATUS.PENDING),
+    }}
+    sortOptions={SORT_OPTIONS}
   >
     {(page) => <WinsPendingList exportWins={page} />}
   </ExportWinsResource.Paginated>

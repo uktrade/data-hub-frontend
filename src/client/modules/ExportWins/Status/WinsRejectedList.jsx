@@ -6,7 +6,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { sumExportValues } from './utils'
-import { WIN_STATUS } from './constants'
+import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 export const WinsRejectedList = ({ exportWins }) => {
@@ -57,6 +57,7 @@ export default () => (
     shouldPluralize={false}
     noResults="You don't have any rejected export wins."
     payload={{ confirmed: WIN_STATUS.REJECTED }}
+    sortOptions={SORT_OPTIONS}
   >
     {(page) => <WinsRejectedList exportWins={page} />}
   </ExportWinsResource.Paginated>
