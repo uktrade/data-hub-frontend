@@ -67,8 +67,8 @@ describe('ExportWins/CustomerFeedback', () => {
         </Routes>,
         {
           tasks: {
-            'Export Win': () => resolve({ after: 1, with: win }),
-            Company: () => resolve({ after: 1, with: company }),
+            'Export Win': () => resolve({ after: 50, with: win }),
+            Company: () => resolve({ after: 50, with: company }),
           },
           initialPath: `/companies/${company.id}/exportwins/${win.id}/customer-feedback`,
         }
