@@ -1,9 +1,12 @@
 const { v4: uuid } = require('uuid')
 const _ = require('lodash')
 
+const config = require('../config')
+
 const STS_MAX_AGE = 180 * 24 * 60 * 60
 const GOOGLE_TAG_MNGR = 'https://*.googletagmanager.com'
 const GOOGLE_ANALYTICS = 'https://*.google-analytics.com'
+const INVESTMENT_DOCUMENT_BUCKET = `https://s3.${config.s3Buckets.investmentDocuments.region}.amazonaws.com/${config.s3Buckets.investmentDocuments.bucket}/evidencedocument/`
 
 module.exports = function headers(
   req,
@@ -24,7 +27,7 @@ module.exports = function headers(
       // Taken from https://developers.google.com/tag-platform/security/guides/csp#google_analytics_4_google_analytics
       `script-src ${selfAndNonce} ${GOOGLE_TAG_MNGR}`,
       `img-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR}`,
-      `connect-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR} https://*.analytics.google.com`,
+      `connect-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR} https://*.analytics.google.com ${INVESTMENT_DOCUMENT_BUCKET} https://raven.ci.uktrade.io`,
     ].join(';'),
     // This is equivalent to `frame-ancestors 'none'` in the above CSP policy,
     // but keeping it here for older browsers
