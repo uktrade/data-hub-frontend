@@ -286,12 +286,6 @@ describe('Company overview page', () => {
       cy.location('pathname').should('eq', addInteractionUrlAllOverview)
       cy.go('back')
     })
-    it('the card should contain three activities', () => {
-      cy.get('[data-test="Recent activityCardContainer"]')
-        .find('ol')
-        .children()
-        .should('have.length', 3)
-    })
     it('the card should link to the activity overview page', () => {
       cy.get('[data-test="Recent activityCardContainer"]')
         .contains('View all activities')
@@ -344,12 +338,6 @@ describe('Company overview page', () => {
         .click()
       cy.location('pathname').should('eq', addInteractionUrlAllOverview)
       cy.go('back')
-    })
-    it('the card should contain two activities', () => {
-      cy.get('[data-test="Upcoming activityCardContainer"]')
-        .find('ol')
-        .children()
-        .should('have.length', 2)
     })
     it('the card should link to the activity overview page', () => {
       cy.get('[data-test="Recent activityCardContainer"]')

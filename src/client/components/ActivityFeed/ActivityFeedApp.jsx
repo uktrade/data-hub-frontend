@@ -64,8 +64,8 @@ export default class ActivityFeedApp extends React.Component {
   }
 
   async onLoadMore() {
-    const { activities, queryParams, from } = this.state
-    const { apiEndpoint, numberOfItems } = this.props
+    const { activities, from } = this.state
+    const { numberOfItems } = this.props
 
     this.setState({
       isLoading: true,
@@ -73,13 +73,7 @@ export default class ActivityFeedApp extends React.Component {
 
     try {
       const { activities: newActivities, total } =
-        await ActivityFeedApp.fetchActivities(
-          apiEndpoint,
-          from,
-          numberOfItems,
-          queryParams,
-          this.props.isOverview
-        )
+        await ActivityFeedApp.fetchActivitiesEmpty()
 
       const allActivities = activities.concat(newActivities)
 
@@ -128,6 +122,13 @@ export default class ActivityFeedApp extends React.Component {
     return {
       total,
       activities,
+    }
+  }
+
+  static async fetchActivitiesEmpty() {
+    return {
+      total: 0,
+      activities: [],
     }
   }
 

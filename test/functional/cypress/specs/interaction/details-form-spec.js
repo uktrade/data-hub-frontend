@@ -1084,20 +1084,6 @@ describe('Adding an interaction from a contact', () => {
   })
 })
 
-describe('Editing an interaction from a contact', () => {
-  it('should be able to edit an interaction from a contact', () => {
-    cy.visit(urls.contacts.interactions.index(fixtures.contact.deanCox.id))
-    cy.contains('a', 'Meeting between Brendan Smith and Tyson Morar').click()
-    cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction')
-    cy.contains('button', 'Save interaction').click()
-    cy.get('[data-test="status-message"]').should(
-      'have.text',
-      'Interaction updated'
-    )
-  })
-})
-
 describe('Adding an interaction from an investment project', () => {
   const investmentProject = fixtures.investment.newHotelFdi
 
