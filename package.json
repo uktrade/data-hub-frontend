@@ -159,7 +159,7 @@
     "@babel/eslint-parser": "^7.24.6",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-syntax-import-assertions": "^7.24.6",
-    "@babel/plugin-transform-class-properties": "^7.24.6",
+    "@babel/plugin-transform-class-properties": "^7.24.7",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.6",
     "@babel/plugin-transform-object-rest-spread": "^7.24.6",
     "@babel/plugin-transform-optional-chaining": "^7.24.6",
