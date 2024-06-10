@@ -58,6 +58,7 @@ const activeIncompleteFields = [
   'average_salary',
   'associated_non_fdi_r_and_d_project',
   'uk_company',
+  'investor_type',
   'specific_programme',
 ]
 
@@ -232,6 +233,7 @@ describe('ProjectIncompleteFields', () => {
         assertLink('Average salary of new jobs', valueLink)
         assertLink('Non-FDI R&D project', associatedLink)
         assertLink('UK recipient company', recipientCompanyLink)
+        assertLink('Investor type', detailsLink)
         assertLink('Specific investment programme', detailsLink)
       })
     }
