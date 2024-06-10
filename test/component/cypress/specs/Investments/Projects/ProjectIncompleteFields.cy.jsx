@@ -60,6 +60,7 @@ const activeIncompleteFields = [
   'uk_company',
   'investor_type',
   'specific_programme',
+  'level_of_involvement',
 ]
 
 const buildAndMountComponent = (
@@ -235,6 +236,7 @@ describe('ProjectIncompleteFields', () => {
         assertLink('UK recipient company', recipientCompanyLink)
         assertLink('Investor type', detailsLink)
         assertLink('Specific investment programme', detailsLink)
+        assertLink('Level of investor involvement', detailsLink)
       })
     }
   )
