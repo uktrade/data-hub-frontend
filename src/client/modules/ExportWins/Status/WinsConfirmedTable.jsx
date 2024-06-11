@@ -7,7 +7,7 @@ import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 import { sumExportValues } from './utils'
-import { WIN_STATUS } from './constants'
+import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import urls from '../../../../lib/urls'
 
 const NoWrapCell = styled(Table.Cell)`
@@ -70,6 +70,7 @@ export default () => (
     shouldPluralize={false}
     noResults="You don't have any confirmed export wins."
     payload={{ confirmed: WIN_STATUS.CONFIRMED }}
+    sortOptions={SORT_OPTIONS}
   >
     {(page) => <WinsConfirmedTable exportWins={page} />}
   </ExportWinsResource.Paginated>

@@ -46,6 +46,13 @@ const StyledCollectionSort = styled(CollectionSort)`
  * a function which recieves an array of the items for the current page as its only
  * parameter.
  * @param {number} [props.pageSize = 10] - The desired number of items per page.
+ * @param {{name: string, value: string | number}[]} [props.sortOptions = []] -
+ * The options for the sort by dropdown. Forwarded to {sortOptions} prop of {StyledCollectionSort}.
+ * @param {string} [props.sortByQsParamName = 'sortby'] - The name of the query string parameter
+ * under which the selected sort by option will be persisted.
+ * Forwarded to {qsParamName} prop of {StyledCollectionSort}.
+ * @param {number} [props.defaultSortOptionIndex = 0] - The index of the sort option
+ * that should be selected when there's nothing set in the query string.
  * @example
  * <PaginatedResource name="My task name" id="foo">
  *   {currentPage =>
@@ -85,13 +92,22 @@ const PaginatedResource = multiInstance({
     children,
     pageSize = 10,
     payload = {},
-    // State props
+    sortOptions = [],
+    defaultSortOptionIndex = 0,
+    sortByQsParamName = 'sortby',
     onPageClick,
     currentPage,
     result,
     shouldPluralize,
     noResults = "You don't have any results",
   }) => {
+    // We know better than ESLint that we are in deed in a React component
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const location = useLocation()
+    const qsParams = qs.parse(location.search.slice(1))
+    const sortby =
+      qsParams[sortByQsParamName] || sortOptions[defaultSortOptionIndex]?.value
+
     return (
       <Task>
         {(getTask) => {
@@ -102,6 +118,7 @@ const PaginatedResource = multiInstance({
           const hasZeroResults = result?.count === 0
 
           const task = getTask(name, id)
+
           return (
             <>
               <Task.StartOnRender
@@ -109,6 +126,7 @@ const PaginatedResource = multiInstance({
                 id={id}
                 payload={{
                   ...payload,
+                  sortby,
                   limit: pageSize,
                   offset: (routePage - 1) * pageSize,
                 }}
@@ -134,7 +152,11 @@ const PaginatedResource = multiInstance({
                     shouldPluralize={shouldPluralize}
                   />
                   {totalPages > 0 && (
-                    <StyledCollectionSort totalPages={totalPages} />
+                    <StyledCollectionSort
+                      totalPages={totalPages}
+                      sortOptions={sortOptions}
+                      qsParamName={sortByQsParamName}
+                    />
                   )}
                   {result ? children(result.results) : null}
                   <Pagination

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import _ from 'lodash'
 import React from 'react'
 
@@ -147,5 +148,61 @@ describe('Resource/Paginated', () => {
       'have.text',
       "You don't have any sent export wins."
     )
+  })
+
+  it('Should forward selected sortby option to the task payload', () => {
+    const SORT_OPTIONS = [
+      {name: 'Foo', value: 'foo'},
+      {name: 'Bar', value: 'bar'},
+      {name: 'Baz', value: 'baz'},
+    ]
+
+    const stub = cy.stub().returns({
+      count: 1,
+      results: ['blah'],
+    })
+
+    cy.mountWithProvider(
+      <PaginatedResource
+        name="foo"
+        id="whatever"
+        pageSize={PAGE_SIZE}
+        noResults="You don't have any sent export wins."
+        sortOptions={SORT_OPTIONS}
+      >
+        {(page) => <pre>{JSON.stringify(page)}</pre>}
+      </PaginatedResource>,
+      {
+        tasks: {
+          foo: stub,
+        },
+      }
+    )
+      .then(() => {
+        expect(stub).to.have.been.calledOnceWith({
+          limit: 10,
+          offset: 0,
+          sortby: 'foo',
+        }, 'whatever')
+      })
+
+    cy.get('select option')
+      .then($selection => {
+        expect($selection.toArray().map(({innerText, value}) => ({
+          name: innerText,
+          value,
+        }))).to.deep.eq(SORT_OPTIONS)
+      })
+
+    SORT_OPTIONS.forEach(({name, value}) => {
+      cy.get('select').select(name)
+        .then(() => {
+          expect(stub).to.have.been.calledWith({
+            limit: 10,
+            offset: 0,
+            sortby: value,
+          }, 'whatever')
+        })
+    })
   })
 })
