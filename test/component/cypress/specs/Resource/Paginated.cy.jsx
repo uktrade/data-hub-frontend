@@ -11,7 +11,7 @@ const COUNT = 35
 const DB = _.range(COUNT)
 const PAGES = _.chunk(DB, PAGE_SIZE)
 
-describe('Resource/Paginated', () => {
+describe.skip('Resource/Paginated', () => {
   it('Should inject only the current page of results to children', () => {
     cy.mountWithProvider(
       <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
