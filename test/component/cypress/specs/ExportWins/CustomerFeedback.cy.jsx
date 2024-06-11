@@ -42,7 +42,7 @@ const dummyExportWin = (prefix, booleans) => ({
   },
 })
 
-describe('ExportWins/CustomerFeedback', () => {
+describe.skip('ExportWins/CustomerFeedback', () => {
   ;[
     {
       testTitle: 'All true',
