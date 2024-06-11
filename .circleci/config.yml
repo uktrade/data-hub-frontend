@@ -255,34 +255,34 @@ workflows:
   version: 2
   datahub:
     jobs:
-      # - lint: *ignore_ghpages
-      # - unit_tests: *ignore_ghpages
-      # - unit_client_tests: *ignore_ghpages
-      # - functional_tests: *ignore_ghpages
-      # - a11y_tests: *ignore_ghpages
-      # - visual_tests: *ignore_ghpages
+      - lint: *ignore_ghpages
+      - unit_tests: *ignore_ghpages
+      - unit_client_tests: *ignore_ghpages
+      - functional_tests: *ignore_ghpages
+      - a11y_tests: *ignore_ghpages
+      - visual_tests: *ignore_ghpages
       - visual_component_tests: *ignore_ghpages
-      # - component_tests: *ignore_ghpages
-      # - e2e_tests:
-      #     <<: *ignore_ghpages
-      #     name: e2e_tests_<< matrix.staff >>
-      #     matrix:
-      #       parameters:
-      #         staff: [da, lep]
-      # - e2e_tests_dit:
-      #     <<: *ignore_ghpages
-      #     name: e2e_tests_dit
-      #     matrix:
-      #       parameters:
-      #         staff: [dit]
-      # - release-storybook:
-      #     <<: *ignore_ghpages
-      #     filters:
-      #       branches:
-      #         only:
-      #           - main
-      # - merge-and-publish-coverage:
-      #     <<: *ignore_ghpages
-      #     requires:
-      #       - functional_tests
-      #       - unit_tests
+      - component_tests: *ignore_ghpages
+      - e2e_tests:
+          <<: *ignore_ghpages
+          name: e2e_tests_<< matrix.staff >>
+          matrix:
+            parameters:
+              staff: [da, lep]
+      - e2e_tests_dit:
+          <<: *ignore_ghpages
+          name: e2e_tests_dit
+          matrix:
+            parameters:
+              staff: [dit]
+      - release-storybook:
+          <<: *ignore_ghpages
+          filters:
+            branches:
+              only:
+                - main
+      - merge-and-publish-coverage:
+          <<: *ignore_ghpages
+          requires:
+            - functional_tests
+            - unit_tests
