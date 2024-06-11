@@ -102,3 +102,25 @@ export const PROJECT_STATUS_OPTIONS = [
 ]
 
 export const ITEMS_PER_PAGE = 10
+
+export const FDI_TYPES = {
+  capitalOnly: {
+    value: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
+    label: 'Capital only',
+  },
+  expansionOfExistingSiteOrActivity: {
+    value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
+    label: 'Expansion of existing site or activity',
+  },
+}
+
+export const INVESTOR_TYPES = {
+  existing: {
+    value: '40e33f91-f565-4b89-8e18-cfefae192245',
+    label: 'Existing Investor',
+  },
+  new: {
+    value: 'e6a01052-8c36-4a32-b5b9-fc2be4b34408',
+    label: 'New Investor',
+  },
+}
