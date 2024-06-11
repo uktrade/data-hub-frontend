@@ -7,8 +7,7 @@ import {
 import { transformDateObjectToDateString } from '../../../../transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
-
-const capitalOnlyLabel = 'Capital only'
+import { FDI_TYPES, INVESTOR_TYPES } from '../constants'
 
 const checkIfItemHasValueOrZero = (value) =>
   value === 0 ? 0 : checkIfItemHasValue(value)
@@ -165,7 +164,10 @@ export const transformProjectSummaryForApi = ({
     actual_land_date: transformDateObjectToDateString(actual_land_date),
     sector: checkIfItemHasValue(sector?.value),
     likelihood_to_land: checkIfItemHasValue(likelihood_to_land?.value),
-    investor_type: checkIfItemHasValue(investor_type),
+    investor_type:
+      fdi_type?.label === FDI_TYPES.expansionOfExistingSiteOrActivity.label
+        ? INVESTOR_TYPES.existing.value
+        : checkIfItemHasValue(investor_type),
     level_of_involvement: checkIfItemHasValue(level_of_involvement?.value),
     specific_programme: checkIfItemHasValue(specific_programme?.value),
     other_business_activity,
@@ -182,7 +184,7 @@ export const transformProjectSummaryForApi = ({
     referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
   }
 
-  if (fdi_type?.label == capitalOnlyLabel) {
+  if (fdi_type?.label == FDI_TYPES.capitalOnly.label) {
     summaryPayload.number_new_jobs = 0
     summaryPayload.average_salary = null
     summaryPayload.number_safeguarded_jobs = 0
@@ -272,7 +274,7 @@ export const transformProjectValueForApi = ({
     ),
   }
 
-  if (fdiTypeName == capitalOnlyLabel) {
+  if (fdiTypeName == FDI_TYPES.capitalOnly.label) {
     valuePayload.number_new_jobs = 0
     valuePayload.average_salary = null
     valuePayload.number_safeguarded_jobs = 0

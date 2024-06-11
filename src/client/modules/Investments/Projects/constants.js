@@ -112,6 +112,10 @@ export const FDI_TYPES = {
     value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
     label: 'Expansion of existing site or activity',
   },
+  jointVenture: {
+    value: 'a7dbf6b3-9c04-43a7-9be9-d3072f138fab',
+    label: 'Joint venture',
+  },
 }
 
 export const INVESTOR_TYPES = {

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { isNull } from 'lodash'
 
 import {
   FieldInput,
@@ -34,7 +35,7 @@ import {
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
-import { INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM } from '../constants'
+import { FDI_TYPES, INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM } from '../constants'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -59,10 +60,44 @@ const EditProjectSummaryInitialStep = ({
   project,
   currentAdviserId,
   setSelectedFDIType,
+  selectedFDIType,
   autoScroll,
   backButton,
   cancelUrl,
 }) => {
+  const showInvestorTypeField = () => {
+    if (
+      project.fdiType?.name ===
+      FDI_TYPES.expansionOfExistingSiteOrActivity.label
+    ) {
+      if (
+        isNull(selectedFDIType) ||
+        selectedFDIType?.label ===
+          FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      ) {
+        // FDI type is remaining expansion
+        return false
+      } else if (
+        !(
+          selectedFDIType?.label ===
+          FDI_TYPES.expansionOfExistingSiteOrActivity.label
+        )
+      ) {
+        // FDI type is changing from expansion to other
+        project.investorType = null
+        return true
+      }
+    }
+    if (
+      selectedFDIType?.label ===
+      FDI_TYPES.expansionOfExistingSiteOrActivity.label
+    ) {
+      // FDI type is changing from other to expansion
+      return false
+    }
+    // FDI type is not expansion, nor changing to expansion
+    return true
+  }
   return (
     <Step name="initial-step" backButton={backButton} cancelUrl={cancelUrl}>
       <FieldProjectName initialValue={project.name} />
@@ -151,13 +186,15 @@ const EditProjectSummaryInitialStep = ({
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
       />
-      <FieldInvestmentInvestorType
-        label="New or existing investor"
-        initialValue={project.investorType?.id}
-        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
-          project.stage.name
-        )}
-      />
+      {showInvestorTypeField() ? (
+        <FieldInvestmentInvestorType
+          label="New or existing investor"
+          initialValue={project.investorType?.id}
+          optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+            project.stage.name
+          )}
+        />
+      ) : null}
       <FieldLevelOfInvolvement
         initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
       />
