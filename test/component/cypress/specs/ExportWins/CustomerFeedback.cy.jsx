@@ -55,7 +55,6 @@ describe('ExportWins/CustomerFeedback', () => {
         company: { id: '123' },
         },
         ].forEach(({ testTitle, win, company }) => {
-          //Cypress._.range(10).forEach(() => {
       // eslint-disable-next-line mocha/no-exclusive-tests
       it(testTitle, () => {
         // TODO: The CustomerFeedback component uses the useParams hook, therefore, we need
@@ -69,8 +68,8 @@ describe('ExportWins/CustomerFeedback', () => {
           </Routes>,
           {
             tasks: {
-              'Export Win': () => resolve({ after: 1000, with: win }),
-              Company: () => resolve({ after: 1000, with: company }),
+              'Export Win': () => resolve({ after: 1, with: win }),
+              Company: () => resolve({ after: 1, with: company }),
             },
             initialPath: `/companies/${company.id}/exportwins/${win.id}/customer-feedback`,
           }
@@ -216,6 +215,5 @@ describe('ExportWins/CustomerFeedback', () => {
           )
         })
       })
-    //})
   })
 })
