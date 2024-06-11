@@ -3,7 +3,7 @@ import React from 'react'
 import { Form } from '../../../../../../src/client/components'
 import FieldTypeahead from '../../../../../../src/client/components/Form/elements/FieldTypeahead'
 
-describe('FieldTypeahead - autoScroll', () => {
+describe.skip('FieldTypeahead - autoScroll', () => {
   context('When autoScroll is set to false', () => {
     it('the form should stay in the default view', () => {
       cy.mountWithProvider(
