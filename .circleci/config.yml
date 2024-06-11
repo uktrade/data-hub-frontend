@@ -261,8 +261,8 @@ workflows:
       # - functional_tests: *ignore_ghpages
       # - a11y_tests: *ignore_ghpages
       # - visual_tests: *ignore_ghpages
-      # - visual_component_tests: *ignore_ghpages
-      - component_tests: *ignore_ghpages
+      - visual_component_tests: *ignore_ghpages
+      # - component_tests: *ignore_ghpages
       # - e2e_tests:
       #     <<: *ignore_ghpages
       #     name: e2e_tests_<< matrix.staff >>
