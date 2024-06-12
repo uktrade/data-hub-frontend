@@ -284,14 +284,18 @@ export const FieldActualLandDate = ({ initialValue = null }) => (
   />
 )
 
-export const FieldInvestmentInvestorType = ({ label, initialValue = null }) => (
+export const FieldInvestmentInvestorType = ({
+  label,
+  initialValue = null,
+  optionalText = true,
+}) => (
   <ResourceOptionsField
     name="investor_type"
-    label={label}
+    label={label + (optionalText ? ' (optional)' : '')}
     resource={InvestmentInvestorTypesResource}
     field={FieldRadios}
     initialValue={initialValue}
-    placeholder="Choose an investor type'"
+    placeholder="Choose an investor type"
   />
 )
 

@@ -296,11 +296,11 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the new or existing investor field', () => {
+    it('should display the new or existing investor field with (optional) text', () => {
       cy.get('[data-test="field-investor_type"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'New or existing investor',
+          label: 'New or existing investor (optional)',
           optionsCount: 2,
         })
       })
@@ -348,6 +348,17 @@ describe('Editing the project summary', () => {
         })
       )
     })
+
+    it('should display the investor type field label without the (optional) text', () => {
+      cy.get('[data-test="field-investor_type"]').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'New or existing investor',
+          optionsCount: 2,
+        })
+      })
+    })
+
     it('should render the specific programme field label without the word optional', () => {
       cy.get('[data-test="field-specific_programme"]').then((element) => {
         assertFieldTypeaheadWithExactText({
