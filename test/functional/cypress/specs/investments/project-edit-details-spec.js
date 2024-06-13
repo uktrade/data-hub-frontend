@@ -1,3 +1,7 @@
+import {
+  FDI_TYPES,
+  INVESTOR_TYPES,
+} from '../../../../../src/client/modules/Investments/Projects/constants'
 import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { clickButton } from '../../support/actions'
@@ -371,7 +375,6 @@ describe('Editing the project summary', () => {
   })
 
   context('When changing the project FDI type to Capital only', () => {
-    const capitalOnlyFDITypeLabel = 'Capital only'
     const project = setupProjectFaker()
     beforeEach(() => {
       setup(project)
@@ -381,7 +384,7 @@ describe('Editing the project summary', () => {
       cy.get('[data-test="submit"]').should('exist')
       cy.get('[data-test="investment-type-fdi"]').click()
       cy.get('[data-test="field-fdi_type"]').selectTypeaheadOption(
-        capitalOnlyFDITypeLabel
+        FDI_TYPES.capitalOnly.label
       )
       cy.get('[data-test="continue"]').should('exist')
       clickButton('Continue')
@@ -394,7 +397,7 @@ describe('Editing the project summary', () => {
           cy.get('[data-test="field-fdi_type"]').should('not.exist')
           cy.get('[data-test="warning-title"]').should('exist')
           cy.contains(
-            `Changing the FDI type to '${capitalOnlyFDITypeLabel}' will overwrite the values in the following fields`
+            `Changing the FDI type to '${FDI_TYPES.capitalOnly.label}' will overwrite the values in the following fields`
           )
           cy.get('[data-test="warning-fields-to-change"]')
             .should('exist')
@@ -463,4 +466,101 @@ describe('Editing the project summary', () => {
       })
     }
   )
+
+  context('When changing the project FDI type from other to Expansion', () => {
+    beforeEach(() => {
+      const project = setupProjectFaker({
+        investor_type: {
+          name: INVESTOR_TYPES.new.label,
+          id: INVESTOR_TYPES.new.value,
+        },
+      })
+      setup(project)
+      cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
+        'editDetailsRequest'
+      )
+      cy.get('[data-test="field-investor_type"]').should('exist')
+      cy.get('[data-test="investor-type-new-investor"]').should('be.checked')
+      cy.get('[data-test="investment-type-fdi"]').click()
+      cy.get('[data-test="field-fdi_type"]').selectTypeaheadOption(
+        FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      )
+    })
+
+    it('should hide the investor type field', () => {
+      cy.get('[data-test="field-investor_type"]').should('not.exist')
+    })
+
+    it('should not take the user to a confirmation step', () => {
+      cy.get('[data-test="continue"]').should('not.exist')
+      cy.get('[data-test="submit"]').should('exist')
+      clickButton('Submit')
+    })
+
+    it('should submit the request with investor type set to existing', () => {
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest')
+        .its('request.body')
+        .should('deep.include', {
+          investor_type: INVESTOR_TYPES.existing.value,
+        })
+    })
+  })
+
+  context('When changing the project FDI type from Expansion to other', () => {
+    beforeEach(() => {
+      const project = setupProjectFaker({
+        fdi_type: {
+          name: FDI_TYPES.expansionOfExistingSiteOrActivity.label,
+          id: FDI_TYPES.expansionOfExistingSiteOrActivity.value,
+        },
+        investment_type: {
+          name: 'FDI',
+          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+        },
+        investor_type: {
+          name: INVESTOR_TYPES.existing.label,
+          id: INVESTOR_TYPES.existing.value,
+        },
+      })
+      setup(project)
+      cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
+        'editDetailsRequest'
+      )
+      cy.get('[data-test="field-investor_type"]').should('not.exist')
+      cy.get('[data-test="investment-type-fdi"]').click()
+      cy.get('[data-test="field-fdi_type"]').selectTypeaheadOption(
+        FDI_TYPES.jointVenture.label
+      )
+    })
+
+    it('should show the investor type field and set the field to null', () => {
+      cy.get('[data-test="field-investor_type"]').should('exist')
+      cy.get('[data-test="investor-type-existing-investor"]').should(
+        'not.be.checked'
+      )
+      cy.get('[data-test="investor-type-new-investor"]').should(
+        'not.be.checked'
+      )
+    })
+
+    it('should submit the request with investor type set to null if the user has not re-selected', () => {
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest')
+        .its('request.body')
+        .should('deep.include', {
+          investor_type: null,
+        })
+    })
+
+    it('should submit the request with investor type set to the user selection', () => {
+      cy.get('[data-test="investor-type-new-investor"]').click()
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest')
+        .its('request.body')
+        .should('deep.include', {
+          investor_type: INVESTOR_TYPES.new.value,
+        })
+    })
+  })
 })

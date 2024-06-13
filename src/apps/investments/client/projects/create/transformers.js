@@ -1,4 +1,8 @@
 import { OPTION_NO } from '../../../../../common/constants'
+import {
+  FDI_TYPES,
+  INVESTOR_TYPES,
+} from '../../../../../client/modules/Investments/Projects/constants'
 
 const formatEstimatedLandDate = ({ year, month }) =>
   year && month ? `${year}-${month}-01` : null
@@ -58,12 +62,15 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
     referral_source_activity_website: referral_source_activity_website,
     estimated_land_date: formatEstimatedLandDate(estimated_land_date),
     actual_land_date: formatActualLandDate(actual_land_date),
-    investor_type: investor_type,
+    investor_type:
+      fdi_type?.label === FDI_TYPES.expansionOfExistingSiteOrActivity.label
+        ? INVESTOR_TYPES.existing.value
+        : investor_type,
     level_of_involvement: level_of_involvement?.value,
     specific_programme: specific_programme?.value,
   }
 
-  if (fdi_type?.label == 'Capital only') {
+  if (fdi_type?.label === FDI_TYPES.capitalOnly.label) {
     payload.number_new_jobs = 0
     payload.average_salary = null
     payload.number_safeguarded_jobs = 0

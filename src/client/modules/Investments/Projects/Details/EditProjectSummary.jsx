@@ -14,6 +14,7 @@ import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
 import EditProjectSummaryInitialStep from './EditProjectSummaryInitialStep'
 import ConfirmFDITypeChangeStep from './EditProjectSummaryConfirmationStep'
+import { FDI_TYPES } from '../constants'
 
 const EditProjectSummary = ({ currentAdviserId, autoScroll }) => {
   const { projectId } = useParams()
@@ -56,11 +57,12 @@ const EditProjectSummary = ({ currentAdviserId, autoScroll }) => {
                 project={project}
                 currentAdviserId={currentAdviserId}
                 setSelectedFDIType={setSelectedFDIType}
+                selectedFDIType={selectedFDIType}
                 autoScroll={autoScroll}
                 backButton={cancelButtonLabel}
                 cancelUrl={cancelRedirectTo}
               />
-              {selectedFDIType?.label === 'Capital only' ? (
+              {selectedFDIType?.label === FDI_TYPES.capitalOnly.label ? (
                 <ConfirmFDITypeChangeStep project={project} />
               ) : null}
             </Form>

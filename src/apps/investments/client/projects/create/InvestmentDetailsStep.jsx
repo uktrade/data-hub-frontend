@@ -34,6 +34,7 @@ import {
   OPTIONS_YES_NO,
 } from '../../../../../common/constants'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../client/components/ContactForm/state'
+import { FDI_TYPES } from '../../../../../client/modules/Investments/Projects/constants'
 
 const findSelectedItem = (items, value) =>
   items ? items.find((type) => type.value === value) : null
@@ -43,7 +44,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
     values.investmentTypes,
     values.investment_type
   )
-  const fdiType = findSelectedItem(values.fdiTypes, values.fdi_type)
+  const fdiType = findSelectedItem(values.fdiTypes, values.fdi_type?.value)
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
       <Step name="details">
@@ -127,7 +128,10 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
         <FieldActualLandDate />
-        <FieldInvestmentInvestorType label="Is the investor new or existing?" />
+        {values.fdi_type?.label ===
+        FDI_TYPES.expansionOfExistingSiteOrActivity.label ? null : (
+          <FieldInvestmentInvestorType label="Is the investor new or existing?" />
+        )}
         <FieldLevelOfInvolvement />
         <FieldSpecificProgramme />
       </Step>

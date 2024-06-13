@@ -16,11 +16,13 @@ const {
   R_AND_D_TRUE,
   R_AND_D_FALSE,
   NOT_LINKED_TO_R_AND_D,
+  INVESTOR_TYPES,
+  FDI_TYPES,
 } = require('../../../../../src/client/modules/Investments/Projects/constants')
 
 const { companies, investments } = require('../../../../../src/lib/urls')
 
-const populateForm = (data) => {
+const populateForm = (data, expansionProject = false) => {
   cy.get(selectors.investment.form.name).type(data.name)
   cy.get(selectors.investment.form.description).type(data.description)
   cy.get(selectors.investment.form.anonymousDescription).type(
@@ -51,7 +53,9 @@ const populateForm = (data) => {
   cy.get(selectors.investment.form.actualLandDateYear).type(data.year)
   cy.get(selectors.investment.form.actualLandDateMonth).type(data.month)
   cy.get(selectors.investment.form.actualLandDateDay).type(data.day)
-  cy.get(selectors.investment.form.investorTypeNew).click()
+  if (!expansionProject) {
+    cy.get(selectors.investment.form.investorTypeNew).click()
+  }
   cy.get(selectors.investment.form.levelOfInvolvement).selectTypeaheadOption(
     data.investorLevel
   )
@@ -155,7 +159,7 @@ describe('Creating an investment project', () => {
       cy.contains('Add investment project').click()
       cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
       cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
-        'Capital only'
+        FDI_TYPES.capitalOnly.label
       )
       cy.get(selectors.companyInvestmentProjects.continue).click()
       cy.intercept('POST', `/api-proxy/v3/investment`).as(
@@ -179,6 +183,45 @@ describe('Creating an investment project', () => {
         },
       })
       cy.contains('Edit value')
+    })
+
+    it('should create an expansion FDI project with investor type field set to existing', () => {
+      cy.contains('Add investment project').click()
+      cy.get(selectors.companyInvestmentProjects.fdiInvestmentType).click()
+      cy.get(selectors.companyInvestmentProjects.fdiType).selectTypeaheadOption(
+        FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      )
+      cy.get(selectors.companyInvestmentProjects.continue).click()
+      cy.intercept('POST', `/api-proxy/v3/investment`).as(
+        'createProjectRequest'
+      )
+      populateForm(data, (expansionProject = true))
+      cy.wait('@createProjectRequest')
+        .its('request.body')
+        .should('deep.include', {
+          investor_type: INVESTOR_TYPES.existing.value,
+        })
+      cy.get('[data-test="status-message"]').should(
+        'contain',
+        'Investment project created'
+      )
+      assertSummaryTable({
+        dataTest: 'project-details-table',
+        content: {
+          Client: 'Lambda plc',
+          'Investment type': 'FDI, Expansion of existing site or activity',
+          'Primary sector': data.sector,
+          'Business activity': data.businessActivities,
+          'Client contacts': data.contact,
+          'Project description': data.description,
+          'Anonymised description': data.anonymousDescription,
+          'Estimated land date': 'October 2030',
+          'Actual land date': '5 May 2031',
+          'New or existing investor': INVESTOR_TYPES.existing.label,
+          'Level of involvement': data.investorLevel,
+          'Specific investment programme': data.specificInvestmentProgramme,
+        },
+      })
     })
   })
 
