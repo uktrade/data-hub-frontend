@@ -127,7 +127,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
         <FieldActualLandDate />
-        <FieldInvestmentInvestorType label="Is the investor new or existing? (optional)" />
+        <FieldInvestmentInvestorType label="Is the investor new or existing?" />
         <FieldLevelOfInvolvement />
         <FieldSpecificProgramme />
       </Step>

@@ -154,6 +154,9 @@ const EditProjectSummaryInitialStep = ({
       <FieldInvestmentInvestorType
         label="New or existing investor"
         initialValue={project.investorType?.id}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
       <FieldLevelOfInvolvement
         initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
