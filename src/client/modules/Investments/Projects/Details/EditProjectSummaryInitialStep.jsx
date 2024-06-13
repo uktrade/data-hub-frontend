@@ -66,32 +66,23 @@ const EditProjectSummaryInitialStep = ({
   cancelUrl,
 }) => {
   const showInvestorTypeField = () => {
-    if (
+    const isProjectFDITypeExpansion =
       project.fdiType?.name ===
       FDI_TYPES.expansionOfExistingSiteOrActivity.label
-    ) {
-      if (
-        isNull(selectedFDIType) ||
-        selectedFDIType?.label ===
-          FDI_TYPES.expansionOfExistingSiteOrActivity.label
-      ) {
+    const isChangingToFDITypeExpansion =
+      selectedFDIType?.label ===
+      FDI_TYPES.expansionOfExistingSiteOrActivity.label
+    if (isProjectFDITypeExpansion) {
+      if (isNull(selectedFDIType) || isChangingToFDITypeExpansion) {
         // FDI type is remaining expansion
         return false
-      } else if (
-        !(
-          selectedFDIType?.label ===
-          FDI_TYPES.expansionOfExistingSiteOrActivity.label
-        )
-      ) {
+      } else {
         // FDI type is changing from expansion to other
         project.investorType = null
         return true
       }
     }
-    if (
-      selectedFDIType?.label ===
-      FDI_TYPES.expansionOfExistingSiteOrActivity.label
-    ) {
+    if (isChangingToFDITypeExpansion) {
       // FDI type is changing from other to expansion
       return false
     }
