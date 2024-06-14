@@ -46,7 +46,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - "project/unit-coverage/*"
+            - 'project/unit-coverage/*'
 
   unit_client_tests:
     machine:
@@ -94,7 +94,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - "project/partial-coverage/*"
+            - 'project/partial-coverage/*'
 
   a11y_tests:
     machine:
@@ -189,7 +189,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0"
+            - '0b:88:e7:46:60:b5:25:b1:fb:10:49:1b:8d:7f:c7:b0'
       - run: npm install storybook
       - run:
           name: Release storybook
@@ -229,7 +229,7 @@ commands:
         type: string
       spec_files:
         type: string
-        default: ""
+        default: ''
     steps:
       - run:
           name: Copy config
@@ -286,4 +286,3 @@ workflows:
           requires:
             - functional_tests
             - unit_tests
-            
