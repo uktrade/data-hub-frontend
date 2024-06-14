@@ -57,6 +57,9 @@ updates:
   - dependency-name: "@nivo/tooltip"
     versions:
     - ">= 0"
+  - dependency-name: "cypress-image-diff-js"
+    versions:
+    - ">= 2.2.1"
   # ignore all GitHub linguist patch updates
   - dependency-name: "github-linguist"
     update-types: ["version-update:semver-patch"]
