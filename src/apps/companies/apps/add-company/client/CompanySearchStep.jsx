@@ -79,25 +79,18 @@ function CompanySearchStep({
         country={countryName}
         entityRenderer={DnbCompanyRenderer}
         onCannotFind={() => {
-          // React v18 batching is causing issues with the sequencing of form steps.
+          // The CompanyNotFoundStep where the user manually adds a company to Data Hub via
+          // a form was being skipped altogether throwing out the sequencing of form steps.
+          // This is due to React v18 batching state updates. Previosuly, for each individual
+          // state update React v17 would re-render, now in React v18 all state updates are
+          // batched followed by a single re-render, this new approach avoids unnecessary
+          // re-renders and leads to better performance.
           // https://github.com/reactwg/react-18/discussions/21
 
-          // The CompanyNotFoundStep, where the user manually adds a company to Data Hub via
-          // a form, is skipped altogether. If time permits, we should refactor the code to
-          // include batch updates, as this would avoid unnecessary re-renders. However, this
-          // task is beyond the scope of upgrading React to the latest version. We should
-          // revisit this when we move the entire app to src/client/modules, which is necessary.
-          // For now, opting out of batching allows our functional tests to pass.
-
-          // Opt out of React v18 batching.
-          flushSync(() => {
-            setFieldValue('cannotFind', true)
-          })
-
-          // Opt out of React v18 batching.
-          flushSync(() => {
-            goForward()
-          })
+          // Opt out of React v18 batching so the form functions as before.
+          flushSync(() => setFieldValue('cannotFind', true))
+          // Opt out of React v18 batching so the form functions as before.
+          flushSync(() => goForward())
         }}
         features={features}
       />
