@@ -50,7 +50,7 @@ const ContactActivity = ({ contactId, results, count, permissions }) => {
               >
                 {() =>
                   results && (
-                    <>
+                    <div data-test="collection-list">
                       <CollectionHeader
                         totalItems={count}
                         collectionName="activity"
@@ -74,7 +74,7 @@ const ContactActivity = ({ contactId, results, count, permissions }) => {
                         }
                       />
                       <RoutedPagination initialPage={page} items={count || 0} />
-                    </>
+                    </div>
                   )
                 }
               </Task.Status>
