@@ -6,20 +6,6 @@ ignore_ghpages: &ignore_ghpages
       ignore:
         - gh-pages
 
-jobs:
-  arch:
-    machine:
-      image: ubuntu-2004:2024.01.1
-      docker_layer_caching: false
-    steps:
-      - checkout
-      - run:
-          name: Check machine architecture
-          command: uname -m
-      - run:
-          name: Display detailed system information
-          command: uname -a
-
   lint:
     machine:
       image: ubuntu-2004:2024.01.1
