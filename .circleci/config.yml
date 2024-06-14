@@ -6,6 +6,7 @@ ignore_ghpages: &ignore_ghpages
       ignore:
         - gh-pages
 
+jobs:
   lint:
     machine:
       image: ubuntu-2004:2024.01.1
