@@ -1,11 +1,44 @@
-import axios from 'axios'
+import { apiProxyAxios } from '../../../components/Task/utils'
+import { getPageOffset } from '../../../utils/pagination'
 
-import urls from '../../../../lib/urls'
+import { transformResponseToCollection } from './transformers'
 
-export const getContactActivities = ({ contactId, page, selectedSortBy }) =>
-  axios
-    .get(urls.contacts.activity.data(contactId), {
-      params: { page, selectedSortBy },
+export const getContactActivities = ({
+  limit = 10,
+  page = 1,
+  subject,
+  kind,
+  dit_participants__adviser,
+  company,
+  service,
+  date_before,
+  date_after,
+  sortby = 'date:desc',
+  was_policy_feedback_provided,
+  policy_areas,
+  policy_issue_types,
+  company_one_list_group_tier,
+  dit_participants__team,
+  contact,
+}) => {
+  return apiProxyAxios
+    .post('/v3/search/interaction', {
+      limit,
+      offset: getPageOffset({ limit, page }),
+      subject,
+      kind,
+      dit_participants__adviser,
+      company,
+      sortby,
+      date_before,
+      date_after,
+      service,
+      was_policy_feedback_provided,
+      policy_areas,
+      policy_issue_types,
+      company_one_list_group_tier,
+      dit_participants__team,
+      contacts: contact,
     })
-    .then(({ data }) => data)
-    .catch(() => Promise.reject('Unable to load contact activity.'))
+    .then(({ data }) => transformResponseToCollection(data))
+}

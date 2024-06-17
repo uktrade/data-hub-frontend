@@ -1,10 +1,11 @@
 import { CONTACTS__ACTIVITIES_LOADED } from '../../../actions'
 
 const defaultState = {
-  activities: null,
   total: 0,
   page: 1,
   selectedSortBy: 'newest',
+  result: [],
+  isComplete: false,
 }
 
 export default (state = defaultState, { type, result }) => {
@@ -13,6 +14,7 @@ export default (state = defaultState, { type, result }) => {
       return {
         ...state,
         ...result,
+        isComplete: true,
       }
     default:
       return state
