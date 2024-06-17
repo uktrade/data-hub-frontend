@@ -1,32 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { GridRow, GridCol } from 'govuk-react'
+import { useNavigate } from 'react-router-dom'
+import qs from 'qs'
 
 import { TASK_GET_CONTACT_ACTIVITIES, ID, state2props } from './state'
 import { CONTACTS__ACTIVITIES_LOADED } from '../../../actions'
 import Task from '../../../components/Task'
-import Activity from '../../../components/ActivityFeed/Activity'
 import {
   CollectionHeader,
+  CollectionList,
   CollectionSort,
   RoutedPagination,
   SectionHeader,
 } from '../../../components'
-import { ACTIVITIES_PER_PAGE } from '../../../../apps/contacts/constants'
-import { CONTACT_ACTIVITY_SORT_SELECT_OPTIONS } from '../../../../apps/companies/apps/activity-feed/constants'
-import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 import ContactLayout from '../../../components/Layout/ContactLayout'
 import { ContactResource } from '../../../components/Resource'
+import { ItemTemplate } from '../../Companies/CompanyActivity'
 
-const ContactActivity = ({
-  contactId,
-  activities,
-  total,
-  page = 1,
-  selectedSortBy,
-  permissions,
-}) => {
-  const totalPages = Math.ceil(total / ACTIVITIES_PER_PAGE)
+const ContactActivity = ({ contactId, results, count, permissions }) => {
+  const totalPages = Math.ceil(count / 10)
+  const qsParams = qs.parse(location.search.slice(1))
+  const page = parseInt(qsParams.page, 10) || 1
+  const navigate = useNavigate()
 
   return (
     <ContactResource id={contactId}>
@@ -48,31 +44,37 @@ const ContactActivity = ({
                 id={ID}
                 progressMessage="Loading contact activities"
                 startOnRender={{
-                  payload: { contactId, page, selectedSortBy },
+                  payload: { page, contact: contact.id },
                   onSuccessDispatch: CONTACTS__ACTIVITIES_LOADED,
                 }}
               >
                 {() =>
-                  activities && (
-                    <>
+                  results && (
+                    <div data-test="collection-list">
                       <CollectionHeader
-                        totalItems={total}
+                        totalItems={count}
                         collectionName="activity"
                         data-test="collection-header"
                       />
                       <CollectionSort
-                        sortOptions={CONTACT_ACTIVITY_SORT_SELECT_OPTIONS}
                         totalPages={totalPages}
+                        shouldPluralize={false}
                       />
-                      <ActivityList>
-                        {activities.map((activity, index) => (
-                          <li key={`activity-${index}`}>
-                            <Activity activity={activity} />
-                          </li>
-                        ))}
-                      </ActivityList>
-                      <RoutedPagination initialPage={page} items={total} />
-                    </>
+                      <CollectionList
+                        items={results}
+                        collectionItemTemplate={ItemTemplate}
+                        showTagsInMetadata={true}
+                        onPageClick={(currentPage) =>
+                          navigate({
+                            search: qs.stringify({
+                              ...qsParams,
+                              page: currentPage,
+                            }),
+                          })
+                        }
+                      />
+                      <RoutedPagination initialPage={page} items={count || 0} />
+                    </div>
                   )
                 }
               </Task.Status>
