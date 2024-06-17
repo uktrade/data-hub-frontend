@@ -23,7 +23,7 @@ const AdviserRenderer = ({ adviser, team }) => {
   )
 }
 
-const formattedContacts = (contacts) =>
+export const formattedContacts = (contacts) =>
   !!contacts.length &&
   contacts.map((contact, index) => (
     <span key={contact.name}>
@@ -37,7 +37,7 @@ const formattedContacts = (contacts) =>
     </span>
   ))
 
-const formattedAdvisers = (advisers) =>
+export const formattedAdvisers = (advisers) =>
   !!advisers.length &&
   advisers.map((item) => (
     <span key={item.adviser.name}>
@@ -45,7 +45,8 @@ const formattedAdvisers = (advisers) =>
     </span>
   ))
 
-const verifyLabel = (array, label) => (array.length > 1 ? label + 's' : label)
+export const verifyLabel = (array, label) =>
+  array.length > 1 ? label + 's' : label
 
 export const transformInteractionToListItem = ({
   date,

@@ -53,7 +53,7 @@ const FiltersCheckboxGroupHiddenLegend = styled(Filters.CheckboxGroup)({
   legend: { display: 'none' },
 })*/
 
-const ItemTemplate = (item) => (
+export const ItemTemplate = (item) => (
   <StyledCollectionItem
     dataTest="interaction"
     headingText={item.headingText}
