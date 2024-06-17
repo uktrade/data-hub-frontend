@@ -107,6 +107,7 @@ export const FDI_TYPES = {
   capitalOnly: {
     value: '840f62c1-bbcb-44e4-b6d4-a258d2ffa07d',
     label: 'Capital only',
+    labelWithHintText: 'Capital only (minimum investment value is £15 million)',
   },
   expansionOfExistingSiteOrActivity: {
     value: 'd08a2f07-c366-4133-9a7e-35b6c88a3270',
