@@ -62,7 +62,7 @@ const EditProjectSummary = ({ currentAdviserId, autoScroll }) => {
                 backButton={cancelButtonLabel}
                 cancelUrl={cancelRedirectTo}
               />
-              {selectedFDIType?.label === FDI_TYPES.capitalOnly.label ? (
+              {selectedFDIType?.value === FDI_TYPES.capitalOnly.value ? (
                 <ConfirmFDITypeChangeStep project={project} />
               ) : null}
             </Form>

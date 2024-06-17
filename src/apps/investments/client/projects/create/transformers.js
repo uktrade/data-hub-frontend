@@ -63,14 +63,14 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
     estimated_land_date: formatEstimatedLandDate(estimated_land_date),
     actual_land_date: formatActualLandDate(actual_land_date),
     investor_type:
-      fdi_type?.label === FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      fdi_type?.value === FDI_TYPES.expansionOfExistingSiteOrActivity.value
         ? INVESTOR_TYPES.existing.value
         : investor_type,
     level_of_involvement: level_of_involvement?.value,
     specific_programme: specific_programme?.value,
   }
 
-  if (fdi_type?.label === FDI_TYPES.capitalOnly.label) {
+  if (fdi_type?.value === FDI_TYPES.capitalOnly.value) {
     payload.number_new_jobs = 0
     payload.average_salary = null
     payload.number_safeguarded_jobs = 0
