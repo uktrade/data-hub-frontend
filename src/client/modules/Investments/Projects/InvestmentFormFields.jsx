@@ -37,6 +37,7 @@ import { GREY_2 } from '../../../utils/colours'
 import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import { validateIfDateInPast } from '../../../components/Form/validators'
+import { FDI_TYPES } from './constants'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -58,18 +59,40 @@ const StyledFieldInput = styled(FieldInput)({
   width: '100%',
 })
 
-export const FieldFDIType = ({ initialValue = null, onChange = null }) => (
-  <ResourceOptionsField
-    name="fdi_type"
-    label="Type of foreign direct investment (FDI)"
-    resource={FDITypesResource}
-    field={FieldTypeahead}
-    initialValue={initialValue}
-    placeholder="Select an FDI type"
-    required="Select the FDI type"
-    onChange={onChange}
-  />
-)
+export const FieldFDIType = ({ initialValue = null, onChange = null }) => {
+  /*
+  The result of this modified transformer is:
+  only the field state will contain the additional text
+  i.e. selectedFDIType.label === FDI_TYPES.capitalOnly.labelWithHintText;
+  the project attribute and other data populated directly from the API will remain unchanged
+  i.e. project.fdiType.name === FDI_TYPES.capitalOnly.label.
+  In both cases, its recommended to compare the fdiType id/value attribute instead
+  */
+  const fdiTypeIdNamesToValueLabels = (result) => {
+    return result.map((option) => {
+      return {
+        value: option.id,
+        label:
+          option.id === FDI_TYPES.capitalOnly.value
+            ? FDI_TYPES.capitalOnly.labelWithHintText
+            : option.name,
+      }
+    })
+  }
+  return (
+    <ResourceOptionsField
+      name="fdi_type"
+      label="Type of foreign direct investment (FDI)"
+      resource={FDITypesResource}
+      resultToOptions={fdiTypeIdNamesToValueLabels}
+      field={FieldTypeahead}
+      initialValue={initialValue}
+      placeholder="Select an FDI type"
+      required="Select the FDI type"
+      onChange={onChange}
+    />
+  )
+}
 
 export const FieldProjectName = ({ initialValue = '', placeholder = null }) => (
   <FieldInput

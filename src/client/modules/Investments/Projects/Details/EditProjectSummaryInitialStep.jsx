@@ -67,11 +67,10 @@ const EditProjectSummaryInitialStep = ({
 }) => {
   const showInvestorTypeField = () => {
     const isProjectFDITypeExpansion =
-      project.fdiType?.name ===
-      FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      project.fdiType?.id === FDI_TYPES.expansionOfExistingSiteOrActivity.value
     const isChangingToFDITypeExpansion =
-      selectedFDIType?.label ===
-      FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      selectedFDIType?.value ===
+      FDI_TYPES.expansionOfExistingSiteOrActivity.value
     if (isProjectFDITypeExpansion) {
       if (isNull(selectedFDIType) || isChangingToFDITypeExpansion) {
         // FDI type is remaining expansion

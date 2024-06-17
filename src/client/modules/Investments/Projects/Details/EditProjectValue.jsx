@@ -73,7 +73,7 @@ const EditProjectValue = () => {
                 transformProjectValueForApi({
                   projectId,
                   values,
-                  fdiTypeName: project.fdiType?.name,
+                  fdiTypeId: project.fdiType?.id,
                 })
               }
             >

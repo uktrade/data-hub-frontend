@@ -165,7 +165,7 @@ export const transformProjectSummaryForApi = ({
     sector: checkIfItemHasValue(sector?.value),
     likelihood_to_land: checkIfItemHasValue(likelihood_to_land?.value),
     investor_type:
-      fdi_type?.label === FDI_TYPES.expansionOfExistingSiteOrActivity.label
+      fdi_type?.value === FDI_TYPES.expansionOfExistingSiteOrActivity.value
         ? INVESTOR_TYPES.existing.value
         : checkIfItemHasValue(investor_type),
     level_of_involvement: checkIfItemHasValue(level_of_involvement?.value),
@@ -184,7 +184,7 @@ export const transformProjectSummaryForApi = ({
     referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
   }
 
-  if (fdi_type?.label == FDI_TYPES.capitalOnly.label) {
+  if (fdi_type?.value == FDI_TYPES.capitalOnly.value) {
     summaryPayload.number_new_jobs = 0
     summaryPayload.average_salary = null
     summaryPayload.number_safeguarded_jobs = 0
@@ -219,7 +219,7 @@ export const setGVAMessage = ({
 export const transformProjectValueForApi = ({
   projectId,
   values,
-  fdiTypeName,
+  fdiTypeId,
 }) => {
   const {
     average_salary,
@@ -274,7 +274,7 @@ export const transformProjectValueForApi = ({
     ),
   }
 
-  if (fdiTypeName == FDI_TYPES.capitalOnly.label) {
+  if (fdiTypeId == FDI_TYPES.capitalOnly.value) {
     valuePayload.number_new_jobs = 0
     valuePayload.average_salary = null
     valuePayload.number_safeguarded_jobs = 0

@@ -128,8 +128,8 @@ const InvestmentDetailsStep = ({ values, company }) => {
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
         <FieldActualLandDate />
-        {values.fdi_type?.label ===
-        FDI_TYPES.expansionOfExistingSiteOrActivity.label ? null : (
+        {values.fdi_type?.value ===
+        FDI_TYPES.expansionOfExistingSiteOrActivity.value ? null : (
           <FieldInvestmentInvestorType label="Is the investor new or existing?" />
         )}
         <FieldLevelOfInvolvement />
