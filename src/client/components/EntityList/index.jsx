@@ -14,18 +14,21 @@ const StyledEntityListItem = styled('li')`
   list-style-type: none;
 `
 
-const EntityList = ({ entities, entityRenderer: EntityRenderer }) => (
-  <StyledEntityList aria-live="polite" data-test="entity-list">
-    {entities.map((entity) => (
-      <StyledEntityListItem
-        data-test="entity-list-item"
-        key={`entity-list-item_${entity.id}`}
-      >
-        {(EntityRenderer || EntityListItem)({ ...entity })}
-      </StyledEntityListItem>
-    ))}
-  </StyledEntityList>
-)
+const EntityList = ({ entities, entityRenderer: EntityRenderer }) => {
+  const Component = EntityRenderer || EntityListItem
+  return (
+    <StyledEntityList aria-live="polite" data-test="entity-list">
+      {entities.map((entity) => (
+        <StyledEntityListItem
+          data-test="entity-list-item"
+          key={`entity-list-item_${entity.id}`}
+        >
+          <Component {...entity} />
+        </StyledEntityListItem>
+      ))}
+    </StyledEntityList>
+  )
+}
 
 EntityList.propTypes = {
   entities: PropTypes.arrayOf(
