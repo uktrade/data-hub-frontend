@@ -128,9 +128,9 @@ const StyledHint = styled(HintText)`
 const FieldInner = ({
   legend,
   error,
-  showBorder = false,
+  showBorder,
   children,
-  bigLegend = false,
+  bigLegend,
   groupId,
 }) =>
   legend ? (

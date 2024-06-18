@@ -108,7 +108,7 @@ const FieldDate = ({
   required,
   invalid,
   format = FORMAT_LONG,
-  reduced = false,
+  reduced,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({

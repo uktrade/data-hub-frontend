@@ -19,7 +19,7 @@ const FieldHelp = ({
   helpText,
   footerUrl,
   footerUrlDescription,
-  open = false,
+  open,
 }) => {
   return (
     <ItemWrapper>

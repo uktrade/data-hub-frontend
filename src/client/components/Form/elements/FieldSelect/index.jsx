@@ -51,7 +51,7 @@ const FieldSelect = ({
   initialValue,
   options = [],
   emptyOption = 'Please select',
-  fullWidth = false,
+  fullWidth,
   boldLabel = true,
   ...rest
 }) => {

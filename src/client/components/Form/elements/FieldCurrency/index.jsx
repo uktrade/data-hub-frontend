@@ -86,7 +86,7 @@ const FieldCurrency = ({
   legend,
   hint,
   initialValue = '',
-  reduced = false,
+  reduced,
   boldLabel = true,
   currencySymbol = '£',
   ...rest

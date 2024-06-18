@@ -49,7 +49,7 @@ const FieldInput = ({
   legend,
   hint,
   initialValue,
-  reduced = false,
+  reduced,
   dataTest,
   ...rest
 }) => {

@@ -39,7 +39,7 @@ const FieldTypeahead = ({
   hint,
   initialValue = null,
   options,
-  autoScroll = false,
+  autoScroll,
   className,
   onChange,
   ...props

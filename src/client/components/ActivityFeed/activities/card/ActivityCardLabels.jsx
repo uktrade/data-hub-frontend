@@ -24,12 +24,7 @@ const ThemeServiceContainer = styled('div')({
   ...flexMixin,
 })
 
-const ActivityCardLabels = ({
-  isExternalActivity = false,
-  theme,
-  service,
-  kind,
-}) => (
+const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
   <Container>
     {(kind || theme || service) && (
       <ThemeServiceContainer>

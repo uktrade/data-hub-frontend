@@ -30,7 +30,7 @@ const FieldRadios = ({
   legend,
   bigLegend,
   hint,
-  inline = false,
+  inline,
   initialValue,
   options = [],
   ...props

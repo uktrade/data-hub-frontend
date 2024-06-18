@@ -12,7 +12,7 @@ const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
 `
 
-const Address = ({ address, isRegistered = false }) => {
+const Address = ({ address, isRegistered }) => {
   const renderAdministrativeArea = (address) => {
     if (address.area && address.area.name) {
       return <li>{address.area.name}</li>
