@@ -104,10 +104,10 @@ const InvestmentTypeStep = ({ investmentTypes = [] }) => (
         ...(option.label === COMMITMENT_TO_INVEST && {
           link: (
             <StyledDetails
-              summary="Is this a Commitment to Invest project?"
+              summary="Is this a 'Commitment to invest' project?"
               data-test="cti-info"
             >
-              Is this a Commitment to Invest – a project where a company is
+              Is this a 'Commitment to invest' — a project where a company is
               investing money into a large and multi-component investment
               project with a long period of preparation and implementation (e.g.
               infrastructure or regeneration)?

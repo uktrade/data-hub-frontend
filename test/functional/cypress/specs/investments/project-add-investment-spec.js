@@ -77,7 +77,7 @@ const investmentTypeTests = () => {
       .should('exist')
       .should(
         'have.text',
-        'Is this a Commitment to Invest project?Is this a Commitment to Invest – a project where a company is investing money into a large and multi-component investment project with a long period of preparation and implementation (e.g. infrastructure or regeneration)?'
+        "Is this a 'Commitment to invest' project?Is this a 'Commitment to invest' — a project where a company is investing money into a large and multi-component investment project with a long period of preparation and implementation (e.g. infrastructure or regeneration)?"
       )
   })
 
