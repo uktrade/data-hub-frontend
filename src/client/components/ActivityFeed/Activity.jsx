@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import activities from './activities'
 
-function Activity({ activity, showDetails = false, filter = [], isOverview }) {
+function Activity({ activity, showDetails, filter = [], isOverview }) {
   const ActivityToRender = find(activities, (a) => {
     if (a.canRender && typeof a.canRender == 'function') {
       return a.canRender(activity, filter)
