@@ -49,10 +49,10 @@ const FieldSelect = ({
   validate,
   required,
   initialValue,
-  options,
-  emptyOption,
+  options = [],
+  emptyOption = 'Please select',
   fullWidth,
-  boldLabel,
+  boldLabel = true,
   ...rest
 }) => {
   const { error, touched, value, onChange, onBlur } = useField({
@@ -145,19 +145,6 @@ FieldSelect.propTypes = {
    * Boolean for rendering the label in bold or not
    */
   boldLabel: PropTypes.bool,
-}
-
-FieldSelect.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: '',
-  options: [],
-  emptyOption: 'Please select',
-  fullWidth: false,
-  boldLabel: true,
 }
 
 export default FieldSelect

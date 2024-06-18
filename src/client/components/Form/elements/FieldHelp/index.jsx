@@ -47,8 +47,4 @@ FieldHelp.propTypes = {
   open: PropTypes.bool,
 }
 
-FieldHelp.defaultProps = {
-  open: false,
-}
-
 export default FieldHelp

@@ -46,10 +46,6 @@ InlineLabel.propTypes = {
   children: PropTypes.node,
 }
 
-InlineLabel.defaultProps = {
-  children: null,
-}
-
 function MyCompaniesFilters() {
   const { dispatch } = useMyCompaniesContext()
 

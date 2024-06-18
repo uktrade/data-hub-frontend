@@ -42,7 +42,7 @@ const HeaderActions = styled('div')`
   }
 `
 
-const ActivityFeedHeader = ({ totalActivities, actions }) => {
+const ActivityFeedHeader = ({ totalActivities = 0, actions }) => {
   const headerText = totalActivities
     ? pluralize('activity', totalActivities, true)
     : 'Activities'
@@ -60,11 +60,6 @@ const ActivityFeedHeader = ({ totalActivities, actions }) => {
 ActivityFeedHeader.propTypes = {
   totalActivities: PropTypes.number,
   actions: PropTypes.node,
-}
-
-ActivityFeedHeader.defaultProps = {
-  totalActivities: 0,
-  actions: null,
 }
 
 export default ActivityFeedHeader

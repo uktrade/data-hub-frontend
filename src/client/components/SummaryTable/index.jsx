@@ -109,7 +109,7 @@ SummaryTable.CurrencyRow = ({ heading, value }) => (
   </SummaryTable.Row>
 )
 
-SummaryTable.ListRow = ({ heading, value, emptyValue, ...rest }) => (
+SummaryTable.ListRow = ({ heading, value = [], emptyValue, ...rest }) => (
   <SummaryTable.Row heading={heading} {...rest}>
     {value && value.length ? (
       <ul>
@@ -131,20 +131,9 @@ SummaryTable.propTypes = {
   children: PropTypes.node,
 }
 
-SummaryTable.defaultProps = {
-  caption: null,
-  actions: null,
-  children: null,
-}
-
 SummaryTable.Row.propTypes = {
   heading: PropTypes.string,
   children: PropTypes.node,
-}
-
-SummaryTable.Row.defaultProps = {
-  heading: null,
-  children: null,
 }
 
 SummaryTable.TextRow.propTypes = {
@@ -156,19 +145,9 @@ SummaryTable.TextRow.propTypes = {
   ]),
 }
 
-SummaryTable.TextRow.defaultProps = {
-  heading: null,
-  value: null,
-}
-
 SummaryTable.CurrencyRow.propTypes = {
   heading: PropTypes.string,
   value: PropTypes.number,
-}
-
-SummaryTable.CurrencyRow.defaultProps = {
-  heading: null,
-  value: null,
 }
 
 SummaryTable.ListRow.propTypes = {
@@ -179,11 +158,6 @@ SummaryTable.ListRow.propTypes = {
       value: PropTypes.string,
     })
   ),
-}
-
-SummaryTable.ListRow.defaultProps = {
-  heading: null,
-  value: [],
 }
 
 export default SummaryTable

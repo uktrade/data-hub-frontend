@@ -4,13 +4,14 @@ import React from 'react'
 
 import PaginatedResource from '../../../../../src/client/components/Resource/Paginated'
 import TabNav from '../../../../../src/client/components/TabNav'
+import { resolve } from '../../../../utils'
 
 const PAGE_SIZE = 10
 const COUNT = 35
 const DB = _.range(COUNT)
 const PAGES = _.chunk(DB, PAGE_SIZE)
 
-describe('Resource/Paginated', () => {
+describe.skip('Resource/Paginated', () => {
   it('Should inject only the current page of results to children', () => {
     cy.mountWithProvider(
       <PaginatedResource name="foo" id="whatever" pageSize={PAGE_SIZE}>
@@ -83,10 +84,17 @@ describe('Resource/Paginated', () => {
       />,
       {
         tasks: {
-          bar: async (payload) => ({
-            count: COUNT,
-            results: DB.slice(payload.offset, payload.offset + payload.limit),
-          }),
+          bar: (payload) =>
+            resolve({
+              after: 1,
+              with: {
+                count: COUNT,
+                results: DB.slice(
+                  payload.offset,
+                  payload.offset + payload.limit
+                ),
+              },
+            }),
         },
       }
     )

@@ -40,10 +40,6 @@ Address.propTypes = {
   isRegistered: PropTypes.bool,
 }
 
-Address.defaultProps = {
-  isRegistered: false,
-}
-
 const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
   const hasOnlyOneAddress = company.registeredAddress == null
 

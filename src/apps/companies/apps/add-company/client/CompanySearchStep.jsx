@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
 import React from 'react'
+import { flushSync } from 'react-dom'
 import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
@@ -78,8 +79,18 @@ function CompanySearchStep({
         country={countryName}
         entityRenderer={DnbCompanyRenderer}
         onCannotFind={() => {
-          setFieldValue('cannotFind', true)
-          goForward()
+          // The CompanyNotFoundStep where the user manually adds a company to Data Hub via
+          // a form was being skipped altogether throwing out the sequencing of form steps.
+          // This is due to React v18 batching state updates. Previosuly, for each individual
+          // state update React v17 would re-render, now in React v18 all state updates are
+          // batched followed by a single re-render, this new approach avoids unnecessary
+          // re-renders and leads to better performance.
+          // https://github.com/reactwg/react-18/discussions/21
+
+          // Opt out of React v18 batching so the form functions as before.
+          flushSync(() => setFieldValue('cannotFind', true))
+          // Opt out of React v18 batching so the form functions as before.
+          flushSync(() => goForward())
         }}
         features={features}
       />

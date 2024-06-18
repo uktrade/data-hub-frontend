@@ -34,11 +34,4 @@ FieldUneditable.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-FieldUneditable.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  onChangeClick: null,
-}
-
 export default FieldUneditable

@@ -25,7 +25,7 @@ const StyledSummaryTable = styled(SummaryTable)({
 })
 
 const EventDetails = ({
-  name,
+  name = 'Event',
   eventType,
   startDate,
   endDate,
@@ -164,10 +164,6 @@ const EventDetails = ({
       </Task.Status>
     </DefaultLayout>
   )
-}
-
-EventDetails.defaultProps = {
-  name: 'Event',
 }
 
 export default connect(state2props)(EventDetails)

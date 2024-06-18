@@ -45,9 +45,4 @@ CollectionHeaderRow.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-CollectionHeaderRow.defaultProps = {
-  primary: false,
-  actions: null,
-}
-
 export default CollectionHeaderRow

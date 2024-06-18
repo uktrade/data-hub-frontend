@@ -8,7 +8,7 @@ import { apiProxyAxios } from '../../../Task/utils'
 
 const FieldAdvisersTypeahead = ({
   name,
-  label,
+  label = '',
   required,
   isMulti,
   onlyShowActiveAdvisers = true,
@@ -47,7 +47,5 @@ FieldAdvisersTypeahead.propTypes = {
   isMulti: PropTypes.bool,
   placeholder: PropTypes.string,
 }
-FieldAdvisersTypeahead.defaultProps = {
-  label: '',
-}
+
 export default FieldAdvisersTypeahead

@@ -9,7 +9,7 @@ import { useEffect } from 'react'
  * @param {Object} props
  * @param {any[]} props.dependencyList - The same as the second argument to the
  * {React.useEffect} hook, but with all values JSON stringified.
- * @param {() => void | (() => any)} props.effect - The same as the
+ * @param {() => undefined | (() => () => void)} props.effect - The same as the
  * first argument to the {React.useEffect} hook, but with all values JSON
  * stringified.
  * @returns null
@@ -23,7 +23,7 @@ import { useEffect } from 'react'
  * </Route>
  */
 const Effect = ({ dependencyList, effect }) => {
-  useEffect(() => effect(), dependencyList?.map(JSON.stringify))
+  useEffect(effect, dependencyList?.map(JSON.stringify))
   return null
 }
 

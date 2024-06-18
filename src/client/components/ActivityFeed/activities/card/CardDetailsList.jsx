@@ -33,8 +33,4 @@ CardDetailsList.propTypes = {
   itemPropName: PropTypes.string,
 }
 
-CardDetailsList.defaultProps = {
-  itemPropName: null,
-}
-
 export default CardDetailsList

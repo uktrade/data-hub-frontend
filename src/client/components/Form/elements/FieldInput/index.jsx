@@ -50,7 +50,7 @@ const FieldInput = ({
   hint,
   initialValue,
   reduced,
-  dataTest = null,
+  dataTest,
   ...rest
 }) => {
   const { value, error, touched, onChange, onBlur } = useField({
@@ -130,16 +130,6 @@ FieldInput.propTypes = {
    * Sets the data-test ID if the name isn't suitable
    */
   dataTest: PropTypes.string,
-}
-
-FieldInput.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: '',
-  reduced: false,
 }
 
 export default FieldInput

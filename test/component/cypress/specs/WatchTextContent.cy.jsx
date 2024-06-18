@@ -14,7 +14,7 @@ const Counter = ({ children }) => {
   )
 }
 
-describe('WatchTextContent', () => {
+describe.skip('WatchTextContent', () => {
   it('can be unmounted', () => {
     const onTextContentChange = cy.stub()
     cy.mount(

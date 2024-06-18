@@ -19,7 +19,7 @@ const StyledTag = styled(GovUkTag)`
  *
  * If no colour is specified the tag will default to a blue background and white text.
  */
-const Tag = ({ colour, children, ...props }) => (
+const Tag = ({ colour = 'default', children, ...props }) => (
   <StyledTag colour={colour} {...props}>
     {children}
   </StyledTag>
@@ -34,10 +34,6 @@ Tag.propTypes = {
    * Text of tag
    */
   children: PropTypes.node.isRequired,
-}
-
-Tag.defaultProps = {
-  colour: 'default',
 }
 
 export default Tag

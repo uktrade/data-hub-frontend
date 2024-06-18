@@ -35,8 +35,4 @@ Metadata.propTypes = {
   ),
 }
 
-Metadata.defaultProps = {
-  rows: null,
-}
-
 export default Metadata

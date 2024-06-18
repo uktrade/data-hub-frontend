@@ -79,15 +79,15 @@ const StyledCurrencyWrapper = styled('div')`
  */
 const FieldCurrency = ({
   name,
-  validate,
+  validate = (value) => number(value, 'Value must be a number'),
   required,
   label,
   text,
   legend,
   hint,
-  initialValue,
+  initialValue = '',
   reduced,
-  boldLabel,
+  boldLabel = true,
   currencySymbol = '£',
   ...rest
 }) => {
@@ -216,17 +216,6 @@ FieldCurrency.propTypes = {
    * Sets the value for the currency prefix
    */
   currencySymbol: PropTypes.string,
-}
-
-FieldCurrency.defaultProps = {
-  validate: (value) => number(value, 'Value must be a number'),
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: '',
-  reduced: false,
-  boldLabel: true,
 }
 
 export default FieldCurrency

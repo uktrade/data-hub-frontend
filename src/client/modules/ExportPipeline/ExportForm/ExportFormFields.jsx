@@ -47,7 +47,7 @@ const ExportFormFields = ({
   cancelRedirectUrl,
   redirectToUrl,
   exportItem,
-  formSubmitButtonLabel,
+  formSubmitButtonLabel = 'Save',
   taskProps = {},
 }) => (
   <Task.Status {...taskProps}>
@@ -227,13 +227,7 @@ ExportFormFields.propTypes = {
   cancelRedirectUrl: PropTypes.string.isRequired,
   redirectToUrl: PropTypes.string.isRequired,
   taskProps: PropTypes.object,
-  formDataLoaded: PropTypes.bool,
   formSubmitButtonLabel: PropTypes.string,
-}
-
-ExportFormFields.defaultProps = {
-  formDataLoaded: false,
-  formSubmitButtonLabel: 'Save',
 }
 
 export default ExportFormFields

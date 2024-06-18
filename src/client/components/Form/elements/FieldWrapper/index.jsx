@@ -163,12 +163,12 @@ const FieldWrapper = ({
   bigLegend,
   hint,
   error,
-  showBorder,
+  showBorder = false,
   children,
   reduced,
   groupId,
-  boldLabel,
-  autoScroll,
+  boldLabel = true,
+  autoScroll = false,
   ...rest
 }) => {
   const styledWrapperRef = React.useRef(null)
@@ -244,14 +244,6 @@ FieldInner.propTypes = {
   children: PropTypes.node,
 }
 
-FieldInner.defaultProps = {
-  legend: null,
-  error: null,
-  showBorder: false,
-  bigLegend: false,
-  children: null,
-}
-
 FieldWrapper.propTypes = {
   /**
    * Text for name attribute value
@@ -293,17 +285,6 @@ FieldWrapper.propTypes = {
    * Whether the window should auto scroll into view this component
    */
   autoScroll: PropTypes.bool,
-}
-
-FieldWrapper.defaultProps = {
-  label: null,
-  legend: null,
-  hint: null,
-  error: null,
-  showBorder: false,
-  children: null,
-  boldLabel: true,
-  autoScroll: false,
 }
 
 export default FieldWrapper

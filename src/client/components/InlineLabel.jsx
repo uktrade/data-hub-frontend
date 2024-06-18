@@ -37,8 +37,4 @@ InlineLabel.propTypes = {
   justifyRight: PropTypes.bool,
 }
 
-InlineLabel.defaultProps = {
-  justifyRight: false,
-}
-
 export default InlineLabel

@@ -21,8 +21,4 @@ WideSummaryTableRow.propTypes = {
   addPadding: PropTypes.bool,
 }
 
-WideSummaryTableRow.defaultProps = {
-  addPadding: false,
-}
-
 export default WideSummaryTableRow

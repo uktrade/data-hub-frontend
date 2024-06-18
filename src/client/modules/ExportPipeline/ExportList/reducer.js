@@ -1,7 +1,4 @@
-import {
-  EXPORT__PIPELINE_LIST_LOADED,
-  EXPORT__PIPELINE_METADATA_LOADED,
-} from '../../../../client/actions'
+import { EXPORT__PIPELINE_LIST_LOADED } from '../../../../client/actions'
 
 const initialState = {
   count: 0,
@@ -14,11 +11,6 @@ const initialState = {
 export default (state = initialState, { type, result }) => {
   switch (type) {
     case EXPORT__PIPELINE_LIST_LOADED:
-      return {
-        ...state,
-        ...result,
-      }
-    case EXPORT__PIPELINE_METADATA_LOADED:
       return {
         ...state,
         ...result,

@@ -61,8 +61,4 @@ ActivityCardLabels.propTypes = {
   isExternalActivity: PropTypes.bool,
 }
 
-ActivityCardLabels.defaultProps = {
-  isExternalActivity: false,
-}
-
 export default ActivityCardLabels

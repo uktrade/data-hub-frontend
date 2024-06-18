@@ -59,7 +59,14 @@ const StyledInsetText = styled(InsetText)`
   }
 `
 
-const EntityListItem = ({ id, onEntityClick, data, text, heading, meta }) => {
+const EntityListItem = ({
+  id,
+  onEntityClick,
+  data = {},
+  text,
+  heading,
+  meta = [],
+}) => {
   const isClickable = !!onEntityClick
   return (
     <StyledEntity
@@ -87,14 +94,6 @@ EntityListItem.propTypes = {
   text: PropTypes.node,
   heading: PropTypes.string,
   meta: PropTypes.array,
-}
-
-EntityListItem.defaultProps = {
-  text: null,
-  onEntityClick: null,
-  data: {},
-  heading: null,
-  meta: [],
 }
 
 export default EntityListItem

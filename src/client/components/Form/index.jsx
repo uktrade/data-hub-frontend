@@ -2,6 +2,7 @@ import _, { camelCase, isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { flushSync } from 'react-dom'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'
@@ -188,7 +189,8 @@ const _Form = ({
                     // TODO: Is the isLoading actually needed in state?
                   }}
                   goBack={() => {
-                    props.goBack()
+                    // Opt out of React v18 batching.
+                    flushSync(() => props.goBack())
                     analytics('previous step', {
                       currentStep: props.currentStep,
                     })
@@ -313,22 +315,23 @@ const _Form = ({
                             </HardRedirect>
                             <Effect
                               dependencyList={[initialValues]}
-                              effect={() =>
-                                initialValues &&
-                                onLoad(
-                                  transformInitialValues(initialValues),
-                                  initialStepIndex,
-                                  keepValuesOnDeregister
-                                )
-                              }
+                              effect={() => {
+                                if (initialValues) {
+                                  onLoad(
+                                    transformInitialValues(initialValues),
+                                    initialStepIndex
+                                  )
+                                }
+                              }}
                             />
                             <Effect
                               dependencyList={[submissionTask.hasError]}
                               effect={() => {
-                                submissionTask.hasError &&
+                                if (submissionTask.hasError) {
                                   analytics('Submission request error', {
                                     error: submissionTask.errorMessage,
                                   })
+                                }
                               }}
                             />
                             {redirectMode === 'hard' &&

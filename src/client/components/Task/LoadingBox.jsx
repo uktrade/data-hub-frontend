@@ -47,7 +47,11 @@ export default ({ name, id, when, children, startOnRender, ...props }) => (
         <LoadingBox loading={task.progress || when}>
           <Effect
             dependencyList={[name, id, startOnRender]}
-            effect={() => startOnRender && task.start(startOnRender)}
+            effect={() => {
+              if (startOnRender) {
+                task.start(startOnRender)
+              }
+            }}
           />
           <StyledContentWrapper>
             {task.hasError ? (

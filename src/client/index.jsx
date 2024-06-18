@@ -1,6 +1,8 @@
 import './webpack-csp-nonce.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
+
 import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -228,5 +230,5 @@ function App() {
 }
 
 window.addEventListener('DOMContentLoaded', () =>
-  ReactDOM.render(<App />, appWrapper)
+  createRoot(appWrapper).render(<App />)
 )

@@ -81,7 +81,4 @@ RoutedTypeahead.propTypes = {
   labelAsQueryParam: PropTypes.bool,
 }
 
-RoutedTypeahead.defaultProps = {
-  labelAsQueryParam: false,
-}
 export default RoutedTypeahead

@@ -10,7 +10,7 @@ const StyledCardNotes = styled('div')`
   margin-bottom: ${SPACING.SCALE_1};
 `
 
-const ActivityCardNotes = ({ notes, maxLength }) => (
+const ActivityCardNotes = ({ notes, maxLength = 255 }) => (
   <StyledCardNotes data-test="activity-card-notes">
     {notes.length < maxLength
       ? notes
@@ -22,10 +22,6 @@ const ActivityCardNotes = ({ notes, maxLength }) => (
 ActivityCardNotes.propTypes = {
   notes: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
-}
-
-ActivityCardNotes.defaultProps = {
-  maxLength: 255,
 }
 
 export default ActivityCardNotes

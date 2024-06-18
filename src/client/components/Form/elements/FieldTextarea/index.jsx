@@ -122,14 +122,4 @@ FieldTextarea.propTypes = {
   maxWords: PropTypes.number,
 }
 
-FieldTextarea.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: '',
-  maxWords: null,
-}
-
 export default FieldTextarea

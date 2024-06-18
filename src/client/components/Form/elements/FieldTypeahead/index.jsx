@@ -37,7 +37,7 @@ const FieldTypeahead = ({
   label,
   legend,
   hint,
-  initialValue,
+  initialValue = null,
   options,
   autoScroll,
   className,
@@ -121,17 +121,6 @@ FieldTypeahead.propTypes = {
    */
   autoScroll: PropTypes.bool,
   onChange: PropTypes.func,
-}
-
-FieldTypeahead.defaultProps = {
-  validate: null,
-  required: null,
-  label: null,
-  legend: null,
-  hint: null,
-  initialValue: null,
-  autoScroll: false,
-  onChange: null,
 }
 
 export default FieldTypeahead

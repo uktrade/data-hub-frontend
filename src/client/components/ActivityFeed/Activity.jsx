@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import activities from './activities'
 
-function Activity({ activity, showDetails, filter, isOverview }) {
+function Activity({ activity, showDetails, filter = [], isOverview }) {
   const ActivityToRender = find(activities, (a) => {
     if (a.canRender && typeof a.canRender == 'function') {
       return a.canRender(activity, filter)
@@ -30,11 +30,6 @@ Activity.propTypes = {
   activity: PropTypes.object.isRequired,
   showDetails: PropTypes.bool,
   filter: PropTypes.array,
-}
-
-Activity.defaultProps = {
-  showDetails: false,
-  filter: [],
 }
 
 export default Activity

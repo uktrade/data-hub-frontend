@@ -2,7 +2,12 @@ const {
   resolve
 } = require('../webpack.config')();
 module.exports = {
-  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],
+  addons: [
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
+    '@storybook/addon-webpack5-compiler-babel',
+    '@chromatic-com/storybook'
+  ],
   webpackFinal: async config => {
     return {
       ...config,
