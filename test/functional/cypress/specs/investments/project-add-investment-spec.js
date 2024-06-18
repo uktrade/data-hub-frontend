@@ -43,7 +43,7 @@ const investmentTypeTests = () => {
       .should('exist')
       .should(
         'have.text',
-        'Is this an FDI project?Is there a foreign direct investor involved in the Project and is the global HQ of the company based outside the UK?Is there a new (additional) financial investment being made in the UK as a result of the Project?Is there a UK Foreign Direct Enterprise established in the UK with at least 10% foreign ownership?Will the UK foreign direct enterprise be involved in a business (commercial) activity in the UK which is expected to last at least 3 years?Is there at least 1 new job created as a result of the Project (or safeguarded jobs for Retentions or M&As)?If a Retention or M&A project is being claimed, is there evidence that the UK jobs were at risk?'
+        'Is this a Foreign Direct Investment (FDI) project?Is there a foreign direct investor involved in the Project and is the global HQ of the company based outside the UK?Is there a new (additional) financial investment being made in the UK as a result of the Project?Is there a UK Foreign Direct Enterprise established in the UK with at least 10% foreign ownership?Will the UK foreign direct enterprise be involved in a business (commercial) activity in the UK which is expected to last at least 3 years?Is there at least 1 new job created as a result of the Project (or safeguarded jobs for Retentions or M&As)?If a Retention or M&A project is being claimed, is there evidence that the UK jobs were at risk?'
       )
   })
 
@@ -86,7 +86,7 @@ const investmentTypeTests = () => {
     cy.get('[data-test="field-fdi_type"]').then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Type of foreign direct investment (FDI)',
+        label: 'Type of Foreign Direct Investment (FDI)',
         placeholder: 'Select an FDI type',
       })
     })

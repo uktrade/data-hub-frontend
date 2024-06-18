@@ -26,7 +26,7 @@ const InvestmentTypeStep = ({ investmentTypes = [] }) => (
         ...(option.label === FDI && {
           link: (
             <StyledDetails
-              summary="Is this an FDI project?"
+              summary="Is this a Foreign Direct Investment (FDI) project?"
               data-test="fdi-info"
             >
               <UnorderedList listStyleType="bullet">
