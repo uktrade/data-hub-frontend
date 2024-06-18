@@ -43,7 +43,7 @@ const investmentTypeTests = () => {
       .should('exist')
       .should(
         'have.text',
-        'Is this an FDI project?Is there a foreign direct investor involved in the Project and is the global HQ of the company based outside the UK?Is there a new (additional) financial investment being made in the UK as a result of the Project?Is there a UK Foreign Direct Enterprise established in the UK with at least 10% foreign ownership?Will the UK foreign direct enterprise be involved in a business (commercial) activity in the UK which is expected to last at least 3 years?Is there at least 1 new job created as a result of the Project (or safeguarded jobs for Retentions or M&As)?If a Retention or M&A project is being claimed, is there evidence that the UK jobs were at risk?'
+        'Is this a Foreign Direct Investment (FDI) project?Is there a foreign direct investor involved in the Project and is the global HQ of the company based outside the UK?Is there a new (additional) financial investment being made in the UK as a result of the Project?Is there a UK Foreign Direct Enterprise established in the UK with at least 10% foreign ownership?Will the UK foreign direct enterprise be involved in a business (commercial) activity in the UK which is expected to last at least 3 years?Is there at least 1 new job created as a result of the Project (or safeguarded jobs for Retentions or M&As)?If a Retention or M&A project is being claimed, is there evidence that the UK jobs were at risk?'
       )
   })
 
@@ -60,7 +60,7 @@ const investmentTypeTests = () => {
       .should('exist')
       .should(
         'have.text',
-        'Is this an Non-FDI project?Is there a foreign investor/partner involved in the project?Is it clear who is the UK recipient organisation in the proposed collaboration and partnership project?Is the R&D Collaboration or partnership aimed at creating (or validating) new to the world technology, products or services that will lead to creation (or testing) new intellectual property (IP) in the UK?Will there be a new IP created (or validated) by the R&D collaboration or partnership be registered or used in the UK?Will the project create or maintain (directly or indirectly) at least 1 job in the UK partner organisation for a duration of at least 6 months?ORIs there additional financial support from the foreign partner which will ensure the continuation of the R&D Collaboration or partnership project in the UK site for a minimum of 6 months?'
+        'Is this a Non-FDI project?Is there a foreign investor/partner involved in the project?Is it clear who is the UK recipient organisation in the proposed collaboration and partnership project?Is the R&D Collaboration or partnership aimed at creating (or validating) new to the world technology, products or services that will lead to creation (or testing) new intellectual property (IP) in the UK?Will there be a new IP created (or validated) by the R&D collaboration or partnership be registered or used in the UK?Will the project create or maintain (directly or indirectly) at least 1 job in the UK partner organisation for a duration of at least 6 months?ORIs there additional financial support from the foreign partner which will ensure the continuation of the R&D Collaboration or partnership project in the UK site for a minimum of 6 months?'
       )
   })
 
@@ -77,7 +77,7 @@ const investmentTypeTests = () => {
       .should('exist')
       .should(
         'have.text',
-        'Is this a Commitment to Invest project?Is this a Commitment to Invest – a project where a company is investing money into a large and multi-component investment project with a long period of preparation and implementation (e.g. infrastructure or regeneration)?'
+        "Is this a 'Commitment to invest' project?Is this a 'Commitment to invest' — a project where a company is investing money into a large and multi-component investment project with a long period of preparation and implementation (e.g. infrastructure or regeneration)?"
       )
   })
 
@@ -86,7 +86,7 @@ const investmentTypeTests = () => {
     cy.get('[data-test="field-fdi_type"]').then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Type of foreign direct investment (FDI)',
+        label: 'Type of Foreign Direct Investment (FDI)',
         placeholder: 'Select an FDI type',
       })
     })

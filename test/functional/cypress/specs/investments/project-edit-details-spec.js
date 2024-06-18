@@ -117,7 +117,7 @@ describe('Editing the project summary', () => {
       cy.get('[data-test="field-fdi_type"]').then((element) => {
         assertFieldTypeahead({
           element,
-          label: 'Type of foreign direct investment (FDI)',
+          label: 'Type of Foreign Direct Investment (FDI)',
           placeholder: 'Select an FDI type',
         })
       })

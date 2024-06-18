@@ -82,7 +82,7 @@ export const FieldFDIType = ({ initialValue = null, onChange = null }) => {
   return (
     <ResourceOptionsField
       name="fdi_type"
-      label="Type of foreign direct investment (FDI)"
+      label="Type of Foreign Direct Investment (FDI)"
       resource={FDITypesResource}
       resultToOptions={fdiTypeIdNamesToValueLabels}
       field={FieldTypeahead}
