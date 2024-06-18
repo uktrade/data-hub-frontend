@@ -127,81 +127,79 @@ const ExportList = ({
 
   return (
     <>
-      <>
-        <FiltersContainer>
-          <ExportSelect
-            label="Status"
-            qsParam="status"
-            options={filters.status.options}
-          />
-          <ExportSelect
-            label="Export Potential"
-            qsParam="export_potential"
-            options={filters.exportPotential.options}
-          />
-          <ResourceOptionsField
-            id="sector"
-            qsParam="sector"
-            label="Sector"
-            payload={{ level__lte: '2' }}
-            resource={Sector}
-            field={ExportSelect}
-            resultToOptions={resultToOptions}
-          />
-          <ResourceOptionsField
-            id="country"
-            qsParam="destination_country"
-            label="Country"
-            resource={Countries}
-            field={ExportSelect}
-            resultToOptions={resultToOptions}
-          />
-          <ExportDate
-            type="month"
-            boldLabel={false}
-            label="Win from"
-            name="estimated_win_date_after"
-            qsParamName="estimated_win_date_after"
-            data-test="estimated-win-date-after"
-          />
-          <ExportDate
-            type="month"
-            boldLabel={false}
-            label="Win to"
-            name="estimated_win_date_before"
-            qsParamName="estimated_win_date_before"
-            data-test="estimated-win-date-before"
-          />
-          <ResourceOptionsField
-            id="owner"
-            qsParam="owner"
-            label="Owner"
-            resource={ExportOwner}
-            field={ExportSelect}
-            resultToOptions={resultToOptions}
-          />
-          <ExportSelect
-            qsParam="sortby"
-            label="Sort by"
-            options={filters.sortby.options}
-          />
-        </FiltersContainer>
-        <HeaderContainer role="status">
-          <StyledHeader>
-            <StyledResultCount data-test="collectionCount">
-              {count}
-            </StyledResultCount>{' '}
-            Exports
-          </StyledHeader>
-          {filters.areActive && (
-            <LinkContainer>
-              <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
-                Remove all filters
-              </StyledButtonLink>
-            </LinkContainer>
-          )}
-        </HeaderContainer>
-      </>
+      <FiltersContainer>
+        <ExportSelect
+          label="Status"
+          qsParam="status"
+          options={filters.status.options}
+        />
+        <ExportSelect
+          label="Export Potential"
+          qsParam="export_potential"
+          options={filters.exportPotential.options}
+        />
+        <ResourceOptionsField
+          id="sector"
+          qsParam="sector"
+          label="Sector"
+          payload={{ level__lte: '2' }}
+          resource={Sector}
+          field={ExportSelect}
+          resultToOptions={resultToOptions}
+        />
+        <ResourceOptionsField
+          id="country"
+          qsParam="destination_country"
+          label="Country"
+          resource={Countries}
+          field={ExportSelect}
+          resultToOptions={resultToOptions}
+        />
+        <ExportDate
+          type="month"
+          boldLabel={false}
+          label="Win from"
+          name="estimated_win_date_after"
+          qsParamName="estimated_win_date_after"
+          data-test="estimated-win-date-after"
+        />
+        <ExportDate
+          type="month"
+          boldLabel={false}
+          label="Win to"
+          name="estimated_win_date_before"
+          qsParamName="estimated_win_date_before"
+          data-test="estimated-win-date-before"
+        />
+        <ResourceOptionsField
+          id="owner"
+          qsParam="owner"
+          label="Owner"
+          resource={ExportOwner}
+          field={ExportSelect}
+          resultToOptions={resultToOptions}
+        />
+        <ExportSelect
+          qsParam="sortby"
+          label="Sort by"
+          options={filters.sortby.options}
+        />
+      </FiltersContainer>
+      <HeaderContainer role="status">
+        <StyledHeader>
+          <StyledResultCount data-test="collectionCount">
+            {count}
+          </StyledResultCount>{' '}
+          Exports
+        </StyledHeader>
+        {filters.areActive && (
+          <LinkContainer>
+            <StyledButtonLink onClick={onClearAll} data-test="clear-filters">
+              Remove all filters
+            </StyledButtonLink>
+          </LinkContainer>
+        )}
+      </HeaderContainer>
 
       <Task.Status
         name={TASK_GET_EXPORT_PIPELINE_LIST}
