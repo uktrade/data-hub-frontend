@@ -106,7 +106,7 @@ describe('Export filters', () => {
         results: exportList,
       },
     }).as('apiRequestList')
-    cy.intercept('GET', '/api-proxy/v4/export/owner', [
+    cy.intercept('GET', '/api-proxy/v4/export/owner?_=0', [
       { name: 'Warren Buffet', id: '1' },
       { name: 'Benjamin Graham', id: '2' },
     ]).as('apiRequestOwnersSelect')
