@@ -19,6 +19,7 @@ const eventTypes = [disabledEventType, eventType, ...eventTypeListFaker(2)]
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
     // Default query params
+    archived: ['false'],
     sortby: 'modified_on:desc',
     page: 1,
     ...queryParams,
@@ -328,87 +329,6 @@ describe('events Collections Filter', () => {
           cy.get('[data-test="typeahead-chip"] > button').click()
           cy.url().should('not.include', queryParamWithEventType)
         })
-      })
-    })
-  })
-
-  context('Organiser', () => {
-    const element = '[data-test="organiser-filter"]'
-    const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
-    const queryParamWithAdvisor = `organiser%5B0%5D=${adviserId}`
-    const adviserName = 'Puck Head'
-
-    beforeEach(() => {
-      cy.intercept('POST', searchEndpoint).as('apiRequest')
-      cy.intercept(
-        'GET',
-        `${events.activity.data()}?sortBy=modified_on:desc&organiser[]=${adviserId}&page=1`
-      ).as('organiserRequest')
-      cy.visit(events.index())
-      cy.get('[data-test="toggle-section-button"]')
-        .contains('Organiser')
-        .click()
-      testTypeahead({
-        element,
-        label: 'Organiser',
-        input: 'puc',
-        placeholder: '',
-        expectedOption: adviserName,
-      })
-    })
-
-    context('should filter from user input and apply filter chips', () => {
-      it('should pass the organiser from user input to query param', () => {
-        cy.url().should('include', queryParamWithAdvisor)
-      })
-
-      it('should show filter chips', () => {
-        cy.get('[data-test="typeahead-chip"]').should('contain', adviserName)
-      })
-    })
-
-    context('should remove organiser selection', () => {
-      it('should remove filter chips and remove the organiser from the url', () => {
-        cy.get('[data-test="typeahead-chip"] > button').click()
-        cy.url().should('not.include', queryParamWithAdvisor)
-      })
-    })
-  })
-
-  context('Event type', () => {
-    const element = '[data-test="event-type-filter"] fieldset'
-    const selectedCountElement = `${element} span`
-    const eventType = randomChoice(eventTypes)
-    const queryParamWithEventType = `event_type%5B0%5D=${eventType.id}`
-
-    context('should filter from user input and apply filter chips', () => {
-      beforeEach(() => {
-        cy.intercept('GET', eventTypeEndpoint, eventTypes).as(
-          'eventTypeApiRequest'
-        )
-        cy.intercept(
-          'GET',
-          `${events.activity.data()}?sortBy=modified_on:desc&page=1&eventType[]=${
-            eventType.id
-          }`
-        ).as('eventTypeRequest')
-        cy.visit(events.index())
-        cy.get('[data-test="toggle-section-button"]')
-          .contains('Type of event')
-          .click()
-        testCheckBoxGroup({ element, value: eventType.id })
-      })
-
-      it('should pass the event type from user input to query param', () => {
-        cy.url().should('include', queryParamWithEventType)
-      })
-
-      it('should show correct number of selected items', () => {
-        expect(cy.get(selectedCountElement).should('contain', '1'))
-      })
-
-      it('should remove the selected event type', () => {
-        testCheckBoxGroup({ element, value: eventType.id, checked: false })
       })
     })
   })
