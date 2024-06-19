@@ -1,7 +1,8 @@
 const {
   resolve
 } = require('../webpack.config')();
-module.exports = {
+
+export default {
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',

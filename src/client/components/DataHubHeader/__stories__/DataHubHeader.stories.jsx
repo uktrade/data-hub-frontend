@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import DataHubHeader from '../index'
 
@@ -19,25 +19,23 @@ const Support = () => <h5>Support</h5>
 export const DataHubHeaderStory = () => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
   return (
-    <Router>
+    <>
       <DataHubHeader
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      <Switch>
-        <Route exact={true} path="/" component={Dashboard} />
-        <Route path="/companies" component={Companies} />
-        <Route path="/contacts" component={Contacts} />
-        <Route path="/events" component={Events} />
-        <Route path="/interactions" component={Interactions} />
-        <Route path="/investments" component={Investments} />
-        <Route path="/omis" component={Orders} />
-        <Route path="/support" component={Support} />
-      </Switch>
-    </Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/companies" element={<Companies />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/interactions" element={<Interactions />} />
+        <Route path="/investments" element={<Investments />} />
+        <Route path="/omis" element={<Orders />} />
+        <Route path="/support" element={<Support />} />
+      </Routes>
+    </>
   )
 }
 
-DataHubHeaderStory.story = {
-  name: 'DataHubHeader',
-}
+DataHubHeaderStory.storyName = 'DataHubHeader'
