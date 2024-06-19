@@ -144,7 +144,7 @@ export const transformProjectSummaryForApi = ({
     likelihood_to_land,
     investor_type,
     level_of_involvement,
-    specific_programme,
+    specific_programmes,
     business_activities,
     other_business_activity,
     client_contacts,
@@ -169,8 +169,8 @@ export const transformProjectSummaryForApi = ({
         ? INVESTOR_TYPES.existing.value
         : checkIfItemHasValue(investor_type),
     level_of_involvement: checkIfItemHasValue(level_of_involvement?.value),
-    specific_programme:
-      specific_programme && specific_programme.map((x) => x.value),
+    specific_programmes:
+      specific_programmes && specific_programmes.map((x) => x.value),
     other_business_activity,
     business_activities: business_activities.map((x) => x.value),
     client_contacts: client_contacts.map((x) => x.value),
