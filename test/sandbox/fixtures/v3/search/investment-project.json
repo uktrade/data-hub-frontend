@@ -121,7 +121,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "945ea6d1-eee3-4f5b-9144-84a75b71b8e6",
         "name": "Won"
@@ -307,7 +307,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
         "name": "Prospect"
@@ -441,7 +441,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": {"name": "High"},
+      "likelihood_to_land": { "name": "High" },
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",
@@ -487,7 +487,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
         "name": "Active"
@@ -619,7 +619,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": {"name": "Medium"},
+      "likelihood_to_land": { "name": "Medium" },
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",
@@ -665,7 +665,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
         "name": "Active"
@@ -827,7 +827,7 @@
       },
       "investor_type": null,
       "level_of_involvement": null,
-      "likelihood_to_land": {"name": "Low"},
+      "likelihood_to_land": { "name": "Low" },
       "project_assurance_adviser": {
         "id": "5a644146-5298-4741-91f3-d5d7558adf47",
         "first_name": "Paula",
@@ -873,7 +873,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
         "name": "Active"
@@ -1050,7 +1050,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "c9864359-fb1a-4646-a4c1-97d10189fc03",
         "name": "Assign PM"
@@ -1235,7 +1235,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
         "name": "Active"
@@ -1405,7 +1405,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
         "name": "Prospect"
@@ -1472,9 +1472,7 @@
       "government_assistance": null
     },
     {
-      "incomplete_fields": [
-        "client_cannot_provide_total_investment"
-      ],
+      "incomplete_fields": ["client_cannot_provide_total_investment"],
       "actual_uk_regions": [
         {
           "id": "814cd12a-6095-e211-a939-e4115bead28a",
@@ -1593,7 +1591,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3",
         "name": "Verify win"
@@ -1769,7 +1767,7 @@
           }
         ]
       },
-      "specific_programme": null,
+      "specific_programmes": [],
       "stage": {
         "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
         "name": "Prospect"

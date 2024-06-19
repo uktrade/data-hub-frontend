@@ -1,8 +1,6 @@
 {
   "id": "cae38628-6c18-4abf-a4da-68f96aacfb13",
-  "incomplete_fields": [
-    "actual_land_date"
-  ],
+  "incomplete_fields": ["actual_land_date"],
   "name": "New fruit machine with alternate value",
   "project_code": "DHP-00000009",
   "description": "This is a dummy investment project for testing",
@@ -45,7 +43,7 @@
   },
   "intermediate_company": null,
   "level_of_involvement": null,
-  "specific_programme": null,
+  "specific_programmes": [],
   "client_contacts": [
     {
       "name": "Dean Cox",
@@ -115,7 +113,7 @@
     "name": "New fruit machine research project",
     "project_code": "DHP-00000204",
     "id": "8af67739-9367-4c0b-aca3-34c89b267399"
-},
+  },
   "new_tech_to_uk": true,
   "export_revenue": false,
   "value_complete": false,

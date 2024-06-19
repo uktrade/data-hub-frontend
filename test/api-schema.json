@@ -111,9 +111,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "adviser"
-        ]
+        "tags": ["adviser"]
       }
     },
     "/adviser/{id}/": {
@@ -188,9 +186,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "adviser"
-        ]
+        "tags": ["adviser"]
       }
     },
     "/v3/contact": {
@@ -271,9 +267,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createContact",
@@ -310,9 +304,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/contact/{id}": {
@@ -360,9 +352,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateContact",
@@ -427,9 +417,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/contact/{id}/audit": {
@@ -499,9 +487,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/event": {
@@ -564,9 +550,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createEvent",
@@ -603,9 +587,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/event/{id}": {
@@ -635,9 +617,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateEvent",
@@ -684,9 +664,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/feature-flag": {
@@ -709,9 +687,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/interaction": {
@@ -828,9 +804,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createInteraction",
@@ -867,9 +841,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/interaction/{id}": {
@@ -953,9 +925,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateInteraction",
@@ -1056,9 +1026,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment": {
@@ -1139,9 +1107,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createInvestmentProject",
@@ -1178,9 +1144,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{id}": {
@@ -1228,9 +1192,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateInvestmentProject",
@@ -1295,9 +1257,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/team-member/{adviser_pk}": {
@@ -1336,9 +1296,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateInvestmentProjectTeamMember",
@@ -1394,9 +1352,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "delete": {
         "operationId": "destroyInvestmentProjectTeamMember",
@@ -1426,9 +1382,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{id}/audit": {
@@ -1498,9 +1452,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition": {
@@ -1551,11 +1503,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "ongoing",
-                "abandoned",
-                "completed"
-              ]
+              "enum": ["ongoing", "abandoned", "completed"]
             }
           },
           {
@@ -1604,9 +1552,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createProposition",
@@ -1653,9 +1599,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}": {
@@ -1697,11 +1641,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "ongoing",
-                "abandoned",
-                "completed"
-              ]
+              "enum": ["ongoing", "abandoned", "completed"]
             }
           },
           {
@@ -1726,9 +1666,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}/document": {
@@ -1809,9 +1747,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createPropositionDocument",
@@ -1867,9 +1803,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}/document/{entity_document_pk}": {
@@ -1917,9 +1851,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "delete": {
         "operationId": "destroyPropositionDocument",
@@ -1958,9 +1890,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}/document/{entity_document_pk}/download": {
@@ -2066,9 +1996,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createEvidenceDocument",
@@ -2115,9 +2043,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/evidence-document/{entity_document_pk}": {
@@ -2156,9 +2082,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "delete": {
         "operationId": "destroyEvidenceDocument",
@@ -2188,9 +2112,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/evidence-document/{entity_document_pk}/download": {
@@ -2252,9 +2174,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{id}": {
@@ -2284,9 +2204,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateOrder",
@@ -2333,9 +2251,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/subscriber-list": {
@@ -2366,9 +2282,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "put": {
         "operationId": "updateOrderSubscriber",
@@ -2407,9 +2321,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/assignee": {
@@ -2440,9 +2352,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "patch": {
         "operationId": "partialUpdateOrderAssignee",
@@ -2481,9 +2391,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/quote": {
@@ -2513,9 +2421,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createQuote",
@@ -2562,9 +2468,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/invoice": {
@@ -2594,9 +2498,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/payment": {
@@ -2629,9 +2531,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "post": {
         "operationId": "createListPayment",
@@ -2678,9 +2578,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v4/company": {
@@ -2770,9 +2668,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createCompany",
@@ -2809,9 +2705,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company/{id}": {
@@ -2868,9 +2762,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdateCompany",
@@ -2944,9 +2836,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company/{id}/audit": {
@@ -3016,9 +2906,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company/{id}/one-list-group-core-team": {
@@ -3090,9 +2978,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company/{id}/export-win": {
@@ -3123,9 +3009,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company-referral": {
@@ -3188,9 +3072,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createCompanyReferral",
@@ -3227,9 +3109,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company-referral/{id}": {
@@ -3259,9 +3139,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/dnb/company-change-request": {
@@ -3282,9 +3160,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createDNBCompanyChangeRequest",
@@ -3313,9 +3189,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/large-investor-profile": {
@@ -3387,9 +3261,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createLargeCapitalInvestorProfile",
@@ -3426,9 +3298,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/large-investor-profile/{id}": {
@@ -3467,9 +3337,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdateLargeCapitalInvestorProfile",
@@ -3525,9 +3393,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/large-capital-opportunity": {
@@ -3599,9 +3465,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createLargeCapitalOpportunity",
@@ -3638,9 +3502,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/large-capital-opportunity/{id}": {
@@ -3679,9 +3541,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdateLargeCapitalOpportunity",
@@ -3737,9 +3597,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/large-capital-opportunity/{id}/audit": {
@@ -3809,9 +3667,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/activity-feed": {
@@ -3832,9 +3688,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company-list": {
@@ -3915,9 +3769,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createCompanyList",
@@ -3954,9 +3806,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company-list/{id}": {
@@ -4004,9 +3854,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdateCompanyList",
@@ -4071,9 +3919,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "delete": {
         "operationId": "destroyCompanyList",
@@ -4112,9 +3958,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company-list/{company_list_pk}/item": {
@@ -4195,9 +4039,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/pipeline-item": {
@@ -4230,11 +4072,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "leads",
-                "in_progress",
-                "win"
-              ]
+              "enum": ["leads", "in_progress", "win"]
             }
           },
           {
@@ -4301,9 +4139,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createPipelineItem",
@@ -4340,9 +4176,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/pipeline-item/{id}": {
@@ -4366,11 +4200,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "leads",
-                "in_progress",
-                "win"
-              ]
+              "enum": ["leads", "in_progress", "win"]
             }
           },
           {
@@ -4413,9 +4243,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdatePipelineItem",
@@ -4437,11 +4265,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "leads",
-                "in_progress",
-                "win"
-              ]
+              "enum": ["leads", "in_progress", "win"]
             }
           },
           {
@@ -4503,9 +4327,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "delete": {
         "operationId": "destroyPipelineItem",
@@ -4527,11 +4349,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "leads",
-                "in_progress",
-                "win"
-              ]
+              "enum": ["leads", "in_progress", "win"]
             }
           },
           {
@@ -4567,9 +4385,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/adviser/{adviser_pk}/investment-summary": {
@@ -4599,9 +4415,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/proposition": {
@@ -4643,11 +4457,7 @@
             "description": "status",
             "schema": {
               "type": "string",
-              "enum": [
-                "ongoing",
-                "abandoned",
-                "completed"
-              ]
+              "enum": ["ongoing", "abandoned", "completed"]
             }
           },
           {
@@ -4705,9 +4515,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/event": {
@@ -4770,9 +4578,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "post": {
         "operationId": "createEvent",
@@ -4809,9 +4615,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/event/{id}": {
@@ -4841,9 +4645,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "patch": {
         "operationId": "partialUpdateEvent",
@@ -4890,9 +4692,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/whoami/": {
@@ -4913,9 +4713,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "whoami"
-        ]
+        "tags": ["whoami"]
       }
     },
     "/v3/contact/{id}/archive": {
@@ -5044,9 +4842,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "put": {
         "operationId": "replaceAllInvestmentProjectTeamMember",
@@ -5093,9 +4889,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       },
       "delete": {
         "operationId": "destroyAllInvestmentProjectTeamMember",
@@ -5116,9 +4910,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{id}/unarchive": {
@@ -5208,9 +5000,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}/abandon": {
@@ -5268,9 +5058,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/investment/{project_pk}/proposition/{proposition_pk}/document/{entity_document_pk}/upload-callback": {
@@ -5366,9 +5154,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/contact/export": {
@@ -5405,9 +5191,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/event": {
@@ -5444,9 +5228,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/interaction": {
@@ -5483,9 +5265,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/interaction/export": {
@@ -5522,9 +5302,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/interaction/policy-feedback": {
@@ -5561,9 +5339,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/investment_project": {
@@ -5600,9 +5376,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/investment_project/export": {
@@ -5639,9 +5413,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/order": {
@@ -5678,9 +5450,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/search/order/export": {
@@ -5717,9 +5487,7 @@
             }
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order": {
@@ -5758,9 +5526,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{id}/complete": {
@@ -5841,9 +5607,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v3/omis/order/{order_pk}/quote/cancel": {
@@ -5892,9 +5656,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v3"
-        ]
+        "tags": ["v3"]
       }
     },
     "/v4/company/{id}/archive": {
@@ -6053,9 +5815,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/dnb/company-create": {
@@ -6086,9 +5846,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/dnb/company-link": {
@@ -6119,9 +5877,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/dnb/company-investigation": {
@@ -6152,9 +5908,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/search/company": {
@@ -6191,9 +5945,7 @@
             }
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/search/company/export": {
@@ -6230,9 +5982,7 @@
             }
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/search/export-country-history": {
@@ -6269,9 +6019,7 @@
             }
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/search/large-investor-profile": {
@@ -6308,9 +6056,7 @@
             }
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/search/large-investor-profile/export": {
@@ -6347,9 +6093,7 @@
             }
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/pipeline-item/{id}/archive": {
@@ -6431,9 +6175,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       },
       "delete": {
         "operationId": "destroyCompanyListItem",
@@ -6463,9 +6205,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     },
     "/v4/company/{id}/update-one-list-core-team": {
@@ -6530,9 +6270,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "v4"
-        ]
+        "tags": ["v4"]
       }
     }
   },
@@ -6596,9 +6334,7 @@
               "tags": {
                 "type": "array",
                 "items": {
-                  "enum": [
-                    "investment_services_team"
-                  ],
+                  "enum": ["investment_services_team"],
                   "type": "string"
                 }
               },
@@ -6618,10 +6354,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "name",
-          "email"
-        ]
+        "required": ["name", "email"]
       },
       "Contact": {
         "type": "object",
@@ -7030,10 +6763,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "code",
-          "is_active"
-        ]
+        "required": ["code", "is_active"]
       },
       "Interaction": {
         "type": "object",
@@ -7072,18 +6802,12 @@
             "nullable": true
           },
           "status": {
-            "enum": [
-              "draft",
-              "complete"
-            ],
+            "enum": ["draft", "complete"],
             "type": "string",
             "default": "complete"
           },
           "kind": {
-            "enum": [
-              "interaction",
-              "service_delivery"
-            ],
+            "enum": ["interaction", "service_delivery"],
             "type": "string"
           },
           "modified_by": {
@@ -7112,9 +6836,7 @@
                   "readOnly": true
                 }
               },
-              "required": [
-                "adviser"
-              ]
+              "required": ["adviser"]
             }
           },
           "communication_channel": {
@@ -7219,10 +6941,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "country",
-                "status"
-              ]
+              "required": ["country", "status"]
             }
           },
           "archived": {
@@ -7309,11 +7028,7 @@
             "nullable": true
           },
           "priority": {
-            "enum": [
-              "1_low",
-              "2_medium",
-              "3_high"
-            ],
+            "enum": ["1_low", "2_medium", "3_high"],
             "type": "string",
             "nullable": true
           },
@@ -7403,9 +7118,11 @@
             "type": "string",
             "nullable": true
           },
-          "specific_programme": {
-            "type": "string",
-            "nullable": true
+          "specific_programmes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "client_contacts": {
             "type": "array",
@@ -7712,10 +7429,7 @@
                   "maxLength": 255
                 }
               },
-              "required": [
-                "adviser",
-                "role"
-              ]
+              "required": ["adviser", "role"]
             },
             "readOnly": true
           },
@@ -7776,11 +7490,7 @@
             "maxLength": 255
           }
         },
-        "required": [
-          "investment_project",
-          "adviser",
-          "role"
-        ]
+        "required": ["investment_project", "adviser", "role"]
       },
       "Proposition": {
         "type": "object",
@@ -7802,11 +7512,7 @@
             "readOnly": true
           },
           "status": {
-            "enum": [
-              "ongoing",
-              "abandoned",
-              "completed"
-            ],
+            "enum": ["ongoing", "abandoned", "completed"],
             "type": "string",
             "readOnly": true
           },
@@ -7884,9 +7590,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "original_filename"
-        ]
+        "required": ["original_filename"]
       },
       "EvidenceDocument": {
         "type": "object",
@@ -7949,10 +7653,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "tags",
-          "original_filename"
-        ]
+        "required": ["tags", "original_filename"]
       },
       "Order": {
         "type": "object",
@@ -8066,11 +7767,7 @@
             "readOnly": true
           },
           "vat_status": {
-            "enum": [
-              "uk",
-              "eu",
-              "outside_eu"
-            ],
+            "enum": ["uk", "eu", "outside_eu"],
             "type": "string"
           },
           "vat_number": {
@@ -8178,11 +7875,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "company",
-          "contact",
-          "primary_market"
-        ]
+        "required": ["company", "contact", "primary_market"]
       },
       "Quote": {
         "type": "object",
@@ -8346,10 +8039,7 @@
             "description": "Subtotal + VAT cost in pence."
           }
         },
-        "required": [
-          "invoice_address_country",
-          "billing_address_country"
-        ]
+        "required": ["invoice_address_country", "billing_address_country"]
       },
       "Payment": {
         "type": "object",
@@ -8381,10 +8071,7 @@
             "minimum": 0
           },
           "method": {
-            "enum": [
-              "bacs",
-              "manual"
-            ],
+            "enum": ["bacs", "manual"],
             "type": "string",
             "default": "bacs"
           },
@@ -8393,10 +8080,7 @@
             "format": "date"
           }
         },
-        "required": [
-          "amount",
-          "received_on"
-        ]
+        "required": ["amount", "received_on"]
       },
       "Company": {
         "type": "object",
@@ -8487,9 +8171,7 @@
             "readOnly": true
           },
           "transfer_reason": {
-            "enum": [
-              "duplicate"
-            ],
+            "enum": ["duplicate"],
             "type": "string",
             "readOnly": true,
             "description": "The reason data for this company was transferred."
@@ -8794,23 +8476,13 @@
             "description": "Whether this company is to be investigated by DNB."
           },
           "export_potential": {
-            "enum": [
-              "very_high",
-              "high",
-              "medium",
-              "low",
-              "very_low"
-            ],
+            "enum": ["very_high", "high", "medium", "low", "very_low"],
             "type": "string",
             "readOnly": true,
             "description": "Score that signifies export potential, imported from Data Science"
           },
           "great_profile_status": {
-            "enum": [
-              null,
-              "published",
-              "unpublished"
-            ],
+            "enum": [null, "published", "unpublished"],
             "readOnly": true,
             "description": "Whether this company has a profile and agreed to be published or not"
           },
@@ -8846,19 +8518,12 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "country",
-                "status"
-              ]
+              "required": ["country", "status"]
             },
             "readOnly": true
           },
           "export_segment": {
-            "enum": [
-              null,
-              "hep",
-              "non-hep"
-            ],
+            "enum": [null, "hep", "non-hep"],
             "description": "Segmentation of export"
           },
           "export_sub_segment": {
@@ -8880,10 +8545,7 @@
             "description": "Sub-Segmentation of export"
           }
         },
-        "required": [
-          "name",
-          "address"
-        ]
+        "required": ["name", "address"]
       },
       "OneListCoreTeamMember": {
         "type": "object",
@@ -8895,10 +8557,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "adviser",
-          "is_global_account_manager"
-        ]
+        "required": ["adviser", "is_global_account_manager"]
       },
       "CompanyReferral": {
         "type": "object",
@@ -8945,11 +8604,7 @@
             "type": "string"
           },
           "status": {
-            "enum": [
-              "outstanding",
-              "closed",
-              "complete"
-            ],
+            "enum": ["outstanding", "closed", "complete"],
             "type": "string",
             "readOnly": true
           },
@@ -8958,12 +8613,7 @@
             "maxLength": 255
           }
         },
-        "required": [
-          "company",
-          "notes",
-          "recipient",
-          "subject"
-        ]
+        "required": ["company", "notes", "recipient", "subject"]
       },
       "LargeCapitalInvestorProfile": {
         "type": "object",
@@ -9099,9 +8749,7 @@
             }
           }
         },
-        "required": [
-          "investor_company"
-        ]
+        "required": ["investor_company"]
       },
       "LargeCapitalOpportunity": {
         "type": "object",
@@ -9252,9 +8900,7 @@
             }
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "CompanyList": {
         "type": "object",
@@ -9277,9 +8923,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "CompanyListItem": {
         "type": "object",
@@ -9297,9 +8941,7 @@
             "readOnly": true
           }
         },
-        "required": [
-          "company"
-        ]
+        "required": ["company"]
       },
       "PipelineItem": {
         "type": "object",
@@ -9318,11 +8960,7 @@
             "maxLength": 255
           },
           "status": {
-            "enum": [
-              "leads",
-              "in_progress",
-              "win"
-            ],
+            "enum": ["leads", "in_progress", "win"],
             "type": "string",
             "description": "Item status within the pipeline"
           },
@@ -9355,11 +8993,7 @@
             "description": "Potential value (\u00a3) of the proposal"
           },
           "likelihood_to_win": {
-            "enum": [
-              1,
-              2,
-              3
-            ],
+            "enum": [1, 2, 3],
             "type": "integer",
             "nullable": true,
             "description": "How likely the user thinks this proposal will result in success",
@@ -9385,10 +9019,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "company",
-          "status"
-        ]
+        "required": ["company", "status"]
       },
       "AdvisorIProjectSummary": {
         "type": "object",
@@ -9502,9 +9133,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "adviser_id"
-        ]
+        "required": ["adviser_id"]
       },
       "EventV4": {
         "type": "object",
@@ -9803,10 +9432,7 @@
           },
           "sortby": {
             "type": "string",
-            "default": [
-              "date",
-              "desc"
-            ]
+            "default": ["date", "desc"]
           },
           "original_query": {
             "type": "string",
@@ -10030,11 +9656,7 @@
           "level_of_involvement_simplified": {
             "type": "array",
             "items": {
-              "enum": [
-                "unspecified",
-                "not_involved",
-                "involved"
-              ],
+              "enum": ["unspecified", "not_involved", "involved"],
               "type": "string"
             }
           },
@@ -10064,10 +9686,7 @@
           },
           "sortby": {
             "type": "string",
-            "default": [
-              "created_on",
-              "desc"
-            ]
+            "default": ["created_on", "desc"]
           },
           "original_query": {
             "type": "string",
@@ -10282,10 +9901,7 @@
           },
           "sortby": {
             "type": "string",
-            "default": [
-              "date",
-              "desc"
-            ]
+            "default": ["date", "desc"]
           },
           "original_query": {
             "type": "string",
