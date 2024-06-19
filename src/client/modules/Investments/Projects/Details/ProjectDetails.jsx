@@ -184,10 +184,12 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   value={project.levelOfInvolvement?.name}
                 />
               ) : null}
-              {project.specificProgramme ? (
+              {project.specificProgrammes.length > 0 ? (
                 <SummaryTable.TextRow
-                  heading="Specific investment programme"
-                  value={project.specificProgramme?.name}
+                  heading="Specific investment programmes"
+                  value={project.specificProgrammes
+                    ?.map((programme) => programme.name)
+                    .join(', ')}
                 />
               ) : null}
             </SummaryTable>
