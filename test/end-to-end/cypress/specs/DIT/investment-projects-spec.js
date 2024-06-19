@@ -60,8 +60,8 @@ const populateForm = (data, expansionProject = false) => {
     data.investorLevel
   )
   cy.get(
-    selectors.investment.form.specificInvestmentProgramme
-  ).selectTypeaheadOption(data.specificInvestmentProgramme)
+    selectors.investment.form.specificInvestmentProgrammes
+  ).selectTypeaheadOption(data.specificInvestmentProgrammes)
   cy.get(selectors.investment.form.submitButton).click()
 }
 
@@ -80,7 +80,7 @@ describe('Creating an investment project', () => {
     month: '5',
     year: '2031',
     investorLevel: 'HQ and Post Only',
-    specificInvestmentProgramme: 'Space',
+    specificInvestmentProgrammes: 'Space',
   }
 
   describe('Creating an "FDI" project from Companies', () => {
@@ -120,7 +120,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
-          'Specific investment programme': data.specificInvestmentProgramme,
+          'Specific investment programmes': data.specificInvestmentProgrammes,
         },
       })
 
@@ -219,7 +219,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': INVESTOR_TYPES.existing.label,
           'Level of involvement': data.investorLevel,
-          'Specific investment programme': data.specificInvestmentProgramme,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
     })
