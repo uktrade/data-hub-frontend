@@ -16,7 +16,7 @@ const ItemWrapper = styled('li')`
   padding: ${SPACING.SCALE_3} 0;
 `
 
-const StyledBadgesWrapper = styled('div')`
+export const StyledBadgesWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_2};
 
   & > * {
@@ -72,7 +72,7 @@ const StyledFooterWrapper = styled('div')`
   text-align: right;
 `
 
-const renderTags = (tags) =>
+export const renderTags = (tags) =>
   tags.map((tag, index) => (
     <Tag
       key={`tag_${index}`}

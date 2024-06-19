@@ -4,6 +4,10 @@ import {
   companyNoDetails,
 } from '../../fakers/companies'
 import { getCollectionList } from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
+import interactionsListFaker, {
+  interactionFaker,
+} from '../../fakers/interactions'
 
 const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
@@ -268,15 +272,18 @@ describe('Company overview page', () => {
     }
   )
 
-  context('when viewing the Recent Activities Card for a business', () => {
+  context('when viewing the Recent Activity Card for a business', () => {
+    const interactionsList = interactionsListFaker(3)
     beforeEach(() => {
-      cy.visit(
+      collectionListRequest(
+        'v3/search/interaction',
+        interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
     })
 
     it('the card should contain the Recent activity heading and add interaction link', () => {
-      cy.get('[data-test="Recent activityCardContainer"]')
+      cy.get('[data-test="recent-activity-card-container"]')
         .children()
         .first()
         .contains('Recent activity')
@@ -284,58 +291,33 @@ describe('Company overview page', () => {
         .contains('Add interaction')
         .click()
       cy.location('pathname').should('eq', addInteractionUrlAllOverview)
-      cy.go('back')
     })
     it('the card should contain three activities', () => {
-      cy.get('[data-test="Recent activityCardContainer"]')
+      cy.get('[data-test="recent-activity-card-container"]')
         .find('ol')
         .children()
         .should('have.length', 3)
     })
     it('the card should link to the activity overview page', () => {
-      cy.get('[data-test="Recent activityCardContainer"]')
+      cy.get('[data-test="recent-activity-card-container"]')
         .contains('View all activities')
         .click()
       cy.location('pathname').should('eq', allActivityUrlAllOverview)
-      cy.go('back')
     })
   })
 
-  context(
-    'when viewing the Recent Activities Card for a business with no activities',
-    () => {
-      beforeEach(() => {
-        cy.visit(
-          urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
-        )
-      })
-
-      it('the card should contain the Recent activity heading and add interaction link', () => {
-        cy.get('[data-test="Recent activityCardContainer"]')
-          .children()
-          .first()
-          .contains('Recent activity')
-          .children()
-          .contains('Add interaction')
-          .click()
-        cy.location('pathname').should('eq', addInteractionUrlNoOverview)
-        cy.go('back')
-        cy.get('[data-test="noActivities"]').contains(
-          'There are no activities to show.'
-        )
-      })
-    }
-  )
-
-  context('when viewing the Upcoming Activities Card for a business', () => {
+  context('when viewing the Upcoming Activity Card for a business', () => {
+    const interactionsList = interactionsListFaker(2)
     beforeEach(() => {
-      cy.visit(
+      collectionListRequest(
+        'v3/search/interaction',
+        interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
     })
 
     it('the card should contain the Upcoming activity heading and add interaction link', () => {
-      cy.get('[data-test="Upcoming activityCardContainer"]')
+      cy.get('[data-test="upcoming-activity-card-container"]')
         .children()
         .first()
         .contains('Upcoming activity')
@@ -343,34 +325,51 @@ describe('Company overview page', () => {
         .contains('Add interaction')
         .click()
       cy.location('pathname').should('eq', addInteractionUrlAllOverview)
-      cy.go('back')
     })
     it('the card should contain two activities', () => {
-      cy.get('[data-test="Upcoming activityCardContainer"]')
+      cy.get('[data-test="upcoming-activity-card-container"]')
         .find('ol')
         .children()
         .should('have.length', 2)
     })
     it('the card should link to the activity overview page', () => {
-      cy.get('[data-test="Recent activityCardContainer"]')
+      cy.get('[data-test="upcoming-activity-card-container"]')
         .contains('View all activities')
         .click()
       cy.location('pathname').should('eq', allActivityUrlAllOverview)
-      cy.go('back')
     })
   })
 
   context(
-    'when viewing the Upcoming Activities Card for a business with no activities',
+    'when viewing the activity cards for a business with no activities',
     () => {
       beforeEach(() => {
-        cy.visit(
+        collectionListRequest(
+          'v3/search/interaction',
+          [],
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
       })
 
+      it('the card should contain the Recent activity heading and add interaction link', () => {
+        cy.get('[data-test="recent-activity-card-container"]').contains(
+          'There are no recent activities to show.'
+        )
+        cy.get('[data-test="recent-activity-card-container"]')
+          .children()
+          .first()
+          .contains('Recent activity')
+          .children()
+          .contains('Add interaction')
+          .click()
+        cy.location('pathname').should('eq', addInteractionUrlNoOverview)
+      })
+
       it('the card should contain the upcoming activity heading and add interaction link', () => {
-        cy.get('[data-test="Upcoming activityCardContainer"]')
+        cy.get('[data-test="upcoming-activity-card-container"]').contains(
+          'There are no upcoming activities to show.'
+        )
+        cy.get('[data-test="upcoming-activity-card-container"]')
           .children()
           .first()
           .contains('Upcoming activity')
@@ -378,20 +377,41 @@ describe('Company overview page', () => {
           .contains('Add interaction')
           .click()
         cy.location('pathname').should('eq', addInteractionUrlNoOverview)
-        cy.go('back')
-        cy.get('[data-test="noActivities"]').contains(
-          'There are no activities to show.'
-        )
       })
     }
   )
 
+  // TODO - Unskip relevant parts of this test when we have the associated DAGs in place
   context('when viewing all activity cards types', () => {
+    const interaction = interactionFaker({
+      kind: 'interaction',
+      subject: 'Meeting between Brendan Smith and Tyson Morar',
+      dit_participants: [
+        {
+          adviser: {
+            name: 'Puck Head',
+            email: 'Puck.Head@example.com',
+          },
+          team: { name: 'Digital Data Hub - Live Service' },
+        },
+      ],
+      contacts: [{ name: 'Tyson Morar' }],
+      date: '2019-06-10T00:00:00+00:00',
+      service: {
+        name: 'Export introductions : Someone else in DBT',
+      },
+      communication_channel: { name: 'Email/Website' },
+    })
+    const interactionsList = [interaction]
     beforeEach(() => {
-      cy.visit(urls.companies.overview.index(fixtures.company.venusLtd.id))
+      collectionListRequest(
+        'v3/search/interaction',
+        interactionsList,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
     })
 
-    it('should display aventri event activity,', () => {
+    it.skip('should display aventri event activity', () => {
       cy.get('[data-test="aventri-event-summary"]')
         .children()
         .first()
@@ -403,7 +423,7 @@ describe('Company overview page', () => {
         .children()
         .contains('a', 'EITA Test Event 2022')
     })
-    it('should display exporters record activity,', () => {
+    it.skip('should display HMRC exporters record activity', () => {
       cy.get('[data-test="hmrc-exporter-activity-summary"]')
         .children()
         .first()
@@ -416,7 +436,7 @@ describe('Company overview page', () => {
         .next()
         .contains('HMRC Update')
     })
-    it('should display company activity,', () => {
+    it.skip('should display Companies House activity', () => {
       cy.get('[data-test="companies-house-company-activity"]')
         .children()
         .first()
@@ -429,7 +449,7 @@ describe('Company overview page', () => {
         .next()
         .contains('Companies House Updated')
     })
-    it('should display accountss record activity,', () => {
+    it.skip('should display Companies House account activity', () => {
       cy.get('[data-test="companies-house-account-activity-summary"]')
         .children()
         .first()
@@ -442,7 +462,7 @@ describe('Company overview page', () => {
         .next()
         .contains('Companies House Updated')
     })
-    it('should display new order activity,', () => {
+    it.skip('should display OMIS activity', () => {
       cy.get('[data-test="omis-activity-summary"]')
         .children()
         .first()
@@ -457,7 +477,7 @@ describe('Company overview page', () => {
         .next()
         .contains('Export to United States added by Angelica Schuyler')
     })
-    it('should display outstanding referral,', () => {
+    it.skip('should display outstanding referral', () => {
       cy.get('[data-test="referral-summary"]')
         .children()
         .first()
@@ -474,7 +494,7 @@ describe('Company overview page', () => {
           'Completed sending adviser John Doe, Planet Consulate General receiving adviser John Taylorme, Planet Embassy'
         )
     })
-    it('should display interaction,', () => {
+    it.skip('should display ESS interaction', () => {
       cy.get('[data-test="export-support-service-summary"]')
         .children()
         .first()
@@ -482,14 +502,17 @@ describe('Company overview page', () => {
         .next()
         .children()
         .contains('Interaction')
-      cy.get('[data-test="activity-summary-subject"]')
-        .children()
-        .contains('a', 'Enquiring about Exporting some things')
-        .parent()
-        .next()
-        .contains('Enquirer')
     })
-    it('should display data hub event,', () => {
+    it('should display Data Hub interaction', () => {
+      cy.get('[data-test="activity-subject"]').contains(
+        'a',
+        interaction.subject
+      )
+      cy.get('[data-test="activity-summary"]').contains(
+        'Puck Head had email/website contact with Tyson Morar'
+      )
+    })
+    it.skip('should display Data Hub event', () => {
       cy.get('[data-test="data-hub-event-summary"]')
         .children()
         .first()
