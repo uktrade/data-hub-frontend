@@ -56,6 +56,13 @@ import investmentProjectReducer from './modules/Investments/Projects/investmentP
 import overviewInvestmentProjectReducer from './modules/Companies/CompanyOverview/TableCards/reducer.js'
 import overviewExportWinsReducer from './modules/Companies/CompanyOverview/TableCards/exportStatusReducer.js'
 
+import {
+  OVERVIEW_RECENT_ACTIVITY_ID,
+  OVERVIEW_UPCOMING_ACTIVITY_ID,
+} from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
+import overviewRecentActivityReducer from './modules/Companies/CompanyOverview/TableCards/ActivityCards/recentReducer'
+import overviewUpcomingActivityReducer from './modules/Companies/CompanyOverview/TableCards/ActivityCards/upcomingReducer'
+
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
 
@@ -256,4 +263,6 @@ export const reducers = {
   [PROPOSITION_COMPLETE_ID]: investmentProjectsReducer,
   [PREVIEW_QUOTE_ID]: orderQuoteReducer,
   [COMPANY_ACTIVITY_NO_AS_ID]: companyActivityReducerNoAs,
+  [OVERVIEW_RECENT_ACTIVITY_ID]: overviewRecentActivityReducer,
+  [OVERVIEW_UPCOMING_ACTIVITY_ID]: overviewUpcomingActivityReducer,
 }

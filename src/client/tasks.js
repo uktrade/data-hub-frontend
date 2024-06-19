@@ -100,8 +100,11 @@ import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
   TASK_GET_PROJECT_WON_COUNT,
-} from './modules/Companies/CompanyOverview/TableCards/state.js'
-import * as overviewInvestmentProjectTasks from './modules/Companies/CompanyOverview/TableCards/tasks.js'
+} from './modules/Companies/CompanyOverview/TableCards/state'
+import * as overviewCardTasks from './modules/Companies/CompanyOverview/TableCards/tasks'
+
+import { TASK_GET_COMPANY_OVERVIEW_ACTIVITY } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
+import { getCompanyOverviewActivities } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/tasks'
 
 import {
   TASK_SEARCH_COMPANY,
@@ -449,8 +452,8 @@ import {
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
 
-import { TASK_GET_COMPANY_ACTIVITIES_NO_AS } from './modules/Companies/CompanyActivity/state.js'
-import { getCompanyInteractions } from './modules/Companies/CompanyActivity/tasks.js'
+import { TASK_GET_COMPANY_ACTIVITIES_NO_AS } from './modules/Companies/CompanyActivity/state'
+import { getCompanyInteractions } from './modules/Companies/CompanyActivity/tasks'
 
 export const tasks = {
   'Create list': createList,
@@ -495,9 +498,8 @@ export const tasks = {
   [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
   [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
   [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
-  [TASK_GET_PROJECT_WON_COUNT]: overviewInvestmentProjectTasks.getProjectsWon,
-  [TASK_GET_LATEST_EXPORT_WINS]:
-    overviewInvestmentProjectTasks.getLatestExportWins,
+  [TASK_GET_PROJECT_WON_COUNT]: overviewCardTasks.getProjectsWon,
+  [TASK_GET_LATEST_EXPORT_WINS]: overviewCardTasks.getLatestExportWins,
   [TASK_CREATE_INVESTMENT_PROJECT]:
     createInvestmentProjectTasks.createInvestmentProject,
   [TASK_CREATE_LARGE_CAPITAL_PROFILE]:
@@ -709,4 +711,5 @@ export const tasks = {
   [TASK_ADD_PROJECT_DOCUMENT]: addProjectDocument,
   [TASK_RESEND_EXPORT_WIN]: resendExportWin,
   [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
+  [TASK_GET_COMPANY_OVERVIEW_ACTIVITY]: getCompanyOverviewActivities,
 }
