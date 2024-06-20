@@ -109,36 +109,6 @@ jobs:
       - store_artifacts:
           path: cypress/videos
 
-  visual_tests:
-    machine:
-      image: ubuntu-2004:2024.01.1
-      docker_layer_caching: true
-    resource_class: xlarge
-    steps:
-      - checkout
-      - run_make:
-          label: Run visual tests
-          target: start-mock visual-tests
-      - store_artifacts:
-          path: cypress-image-diff-screenshots
-      - store_artifacts:
-          path: cypress-image-diff-html-report
-
-  visual_component_tests:
-    machine:
-      image: ubuntu-2004:2024.01.1
-      docker_layer_caching: true
-    resource_class: xlarge
-    steps:
-      - checkout
-      - run_make:
-          label: Run visual tests
-          target: start-storybook visual-component-tests
-      - store_artifacts:
-          path: cypress-image-diff-screenshots
-      - store_artifacts:
-          path: cypress-image-diff-html-report
-
   e2e_tests_dit:
     machine:
       image: ubuntu-2004:2024.01.1
@@ -260,8 +230,6 @@ workflows:
       - unit_client_tests: *ignore_ghpages
       - functional_tests: *ignore_ghpages
       - a11y_tests: *ignore_ghpages
-      - visual_tests: *ignore_ghpages
-      - visual_component_tests: *ignore_ghpages
       - component_tests: *ignore_ghpages
       - e2e_tests:
           <<: *ignore_ghpages

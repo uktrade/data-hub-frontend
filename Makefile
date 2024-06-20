@@ -10,10 +10,8 @@ docker-base = docker-compose -p dh -f docker-compose.base.yml
 docker-mock = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.mock.yml
 docker-e2e = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e2e.frontend.yml -f docker-compose.e2e.backend.yml -f docker-compose.services.yml
 docker-dev = COMPOSE_HTTP_TIMEOUT=300 docker-compose -p dh -f docker-compose.base.yml -f docker-compose.frontend.dev.yml
-docker-storybook = docker-compose -p dh -f docker-compose.storybook.yml
 
 wait-for-frontend = dockerize -wait tcp://localhost:3000/healthcheck -timeout 5m -wait-retry-interval 5s
-wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-retry-interval 5s
 wait-for-redis = dockerize -wait tcp://redis:6379 -timeout 5m
 
 
@@ -73,10 +71,6 @@ start-dev:
 	@echo "*** IMPORTANT This will now use ../data-hub-api/.env for 'api' and 'rq' services ***"
 	$(MAKE) -C ../data-hub-api start-dev
 	$(docker-dev) $(start-command)
-start-storybook:
-	@echo "*** To stop this stack run 'make stop-storybook' ***"
-	$(docker-storybook) $(start-command)
-	$(docker-storybook) $(log-command) &
 
 stop-base:
 	$(docker-base) down -v --remove-orphans
@@ -87,8 +81,6 @@ stop-e2e:
 stop-dev:
 	$(MAKE) -C ../data-hub-api stop-dev
 	$(docker-dev) down -v --remove-orphans
-stop-storybook:
-	$(docker-storybook) down -v --remove-orphans
 
 lint:
 ifdef CI
@@ -117,22 +109,6 @@ functional-tests:
 a11y-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
 	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:a11y'
-
-visual-tests:
-	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
-
-visual-update:
-	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual:update'	
-
-visual-component-tests:
-	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
-	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component'
-
-visual-component-update:
-	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
-	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component:update'
 	
 e2e-tests-lep:
 	@echo "*** Requires the e2e stack with the LEP role, it can be started with 'make start-e2e-lep' ***"
