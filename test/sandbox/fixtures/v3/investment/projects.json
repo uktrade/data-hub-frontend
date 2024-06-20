@@ -5919,10 +5919,12 @@
         "name": "FDI Hub + HQ + LEP",
         "id": "22d6539d-5620-4686-ab66-7a02464708d1"
       },
-      "specific_programmes": {
-[]      "name": "Advanced Engineering Supply Chain",
-        "id": "6513f918-4263-4516-8abb-8e4a6a4de857"
-      },
+      "specific_programmes": [
+        {
+          "name": "Advanced Engineering Supply Chain",
+          "id": "6513f918-4263-4516-8abb-8e4a6a4de857"
+        }
+      ],
       "client_contacts": [
         {
           "name": "Dean Cox",

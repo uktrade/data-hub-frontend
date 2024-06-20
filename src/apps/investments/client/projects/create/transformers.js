@@ -67,7 +67,8 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
         ? INVESTOR_TYPES.existing.value
         : investor_type,
     level_of_involvement: level_of_involvement?.value,
-    specific_programmes: specific_programmes?.value,
+    specific_programmes:
+      specific_programmes && specific_programmes.map((x) => x.value),
   }
 
   if (fdi_type?.value === FDI_TYPES.capitalOnly.value) {
