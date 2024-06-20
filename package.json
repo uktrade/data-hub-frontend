@@ -177,7 +177,6 @@
     "chai-subset": "^1.6.0",
     "cypress": "^13.10.0",
     "cypress-axe": "^1.5.0",
-    "cypress-image-diff-js": "^2.2.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
