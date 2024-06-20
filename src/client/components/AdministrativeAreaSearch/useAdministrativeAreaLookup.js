@@ -4,7 +4,7 @@ import { metadata } from '../../../lib/urls'
 
 export default function useAdministrativeAreaLookup() {
   return async function findAreaByCountryId(countryId = undefined) {
-    const { data } = await axios(metadata.administrativeArea())
+    const { data } = await axios(`${metadata.administrativeArea()}?_=0`)
     return countryId ? filterAreaDataByCountry(data, countryId) : data
   }
 }
