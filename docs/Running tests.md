@@ -196,88 +196,13 @@ or
 
 `$ npm run test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
 
-## Visual Tests
-
-The aim of this suite is taking screenshots from pages and comparing to baselines to ensure consistency between builds.
-
-**NOTE**: Compression algorithm differences can cause test failures between operating systems, and underlying C-library differences. To run these tests **you must use Docker**, which is also what Circle CI uses. Similarly when updating the baseline files, they must be generated using Docker as well (otherwise Circle CI will fail).
-
-### Setup
-
-Please ensure you have the sandbox environment file enabled, and set the environment variable `REDIS_HOST=redis`.
-
-### Folder structure
-
-Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
-
-```
-- cypress-image-diff-screenshots
-  - baseline
-  - comparison
-  - diff
-```
-
-### Running the tests
-
-Execute the command below:
-
-```bash
-make start-mock
-make visual-tests
-```
-
-### Updating the baseline image
-
-Updating the baseline consists in 2 steps:
-
-- 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
-
-- 2:. Run `make visual-update` to update the failed tests with updated images of how the page in test should look like. This will run on docker to match the results for CircleCI
-
-## Visual Component Tests
-
-The aim of this suite is taking screenshots from storybook and comparing to baselines
-to ensure consistency between builds.
-
-### Setup
-
-Please ensure you have the sandbox environment file enabled, and set the environment variable `REDIS_HOST=redis`.
-
-### Folder structure
-
-```
-- cypress-image-diff-screenshots
-  - baseline
-  - comparison
-  - diff
-```
-
-### Running the tests
-
-Execute the command below:
-
-```bash
-make start-storybook
-make visual-component-tests
-```
-
-### Updating the baseline image
-
-Updating the baseline consists in 2 steps:
-
-- 1:. Running the visual component tests locally and verifying the failures are valid
-
-- 2:. Running `make visual-component-update` which will copy all comparison images that have a failure associated to them into the baseline folder, replacing the old baseline images. This will run on docker to match the results for CircleCI
-
-There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
-
 ## Accessibility tests
 
 The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
 
 Details for running and configuring these test can be found here - [Running accessibility tests](../test/a11y/cypress/config/readme.md)
 
-## Component unit tests
+## Component tests
 
 The aim of this suite is to run tests directly against our React components without having to start the frontend.
 
