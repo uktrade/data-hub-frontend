@@ -103,9 +103,9 @@ export const INCOMPLETE_FIELDS = {
   foreign_equity_investment: 'Foreign equity investment',
   associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
   fdi_type: 'FDI type',
+  specific_programmes: 'Specific investment programmes',
   uk_company: 'UK recipient company',
   investor_type: 'Investor type',
-  specific_programme: 'Specific investment programme',
   level_of_involvement: 'Level of investor involvement',
 }
 

@@ -59,7 +59,7 @@ const activeIncompleteFields = [
   'associated_non_fdi_r_and_d_project',
   'uk_company',
   'investor_type',
-  'specific_programme',
+  'specific_programmes',
   'level_of_involvement',
 ]
 
@@ -235,7 +235,7 @@ describe('ProjectIncompleteFields', () => {
         assertLink('Non-FDI R&D project', associatedLink)
         assertLink('UK recipient company', recipientCompanyLink)
         assertLink('Investor type', detailsLink)
-        assertLink('Specific investment programme', detailsLink)
+        assertLink('Specific investment programmes', detailsLink)
         assertLink('Level of investor involvement', detailsLink)
       })
     }

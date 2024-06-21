@@ -15,6 +15,6 @@ module.exports = {
   actualLandDateDay: '[data-test="actual_land_date-day"]',
   investorTypeNew: '[data-test="investor-type-new-investor"]',
   levelOfInvolvement: '[data-test="field-level_of_involvement"]',
-  specificInvestmentProgramme: '[data-test="field-specific_programme"]',
+  specificInvestmentProgrammes: '[data-test="field-specific_programmes"]',
   submitButton: '[data-test="submit"]',
 }

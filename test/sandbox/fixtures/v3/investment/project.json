@@ -1,13 +1,13 @@
 {
   "id": "fb5b5006-56af-40e0-8615-7aba53e0e4bf",
   "incomplete_fields": [
-      "client_cannot_provide_total_investment",
-      "number_new_jobs",
-      "strategic_drivers",
-      "client_requirements",
-      "client_considering_other_countries",
-      "total_investment",
-      "uk_region_locations"
+    "client_cannot_provide_total_investment",
+    "number_new_jobs",
+    "strategic_drivers",
+    "client_requirements",
+    "client_considering_other_countries",
+    "total_investment",
+    "uk_region_locations"
   ],
   "name": "New hotel (commitment to invest)",
   "project_code": "DHP-00000057",
@@ -26,12 +26,12 @@
   "approved_landed": null,
   "approved_non_fdi": null,
   "investment_type": {
-      "name": "Commitment to invest",
-      "id": "031269ab-b7ec-40e9-8a4e-7371404f0622"
+    "name": "Commitment to invest",
+    "id": "031269ab-b7ec-40e9-8a4e-7371404f0622"
   },
   "stage": {
-      "name": "Prospect",
-      "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
   },
   "status": "ongoing",
   "reason_delayed": null,
@@ -41,59 +41,59 @@
   "date_lost": null,
   "country_lost_to": null,
   "investor_company": {
-      "name": "Venus Ltd",
-      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
   },
   "investor_type": null,
   "investor_company_country": {
-      "name": "United Kingdom",
-      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
   },
   "intermediate_company": null,
   "level_of_involvement": null,
-  "specific_programme": null,
+  "specific_programmes": [],
   "client_contacts": [
-      {
-          "name": "Dean Cox",
-          "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
-      }
+    {
+      "name": "Dean Cox",
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+    }
   ],
   "client_relationship_manager": {
-      "name": "Puck Head",
-      "first_name": "Puck",
-      "last_name": "Head",
-      "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
   },
   "client_relationship_manager_team": {
-      "name": "CBBC North EAST",
-      "id": "602b971d-5df6-e511-888e-e4115bead28a"
+    "name": "CBBC North EAST",
+    "id": "602b971d-5df6-e511-888e-e4115bead28a"
   },
   "referral_source_adviser": {
-      "name": "Puck Head",
-      "first_name": "Puck",
-      "last_name": "Head",
-      "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
   },
   "referral_source_activity": {
-      "name": "None",
-      "id": "aba8f653-264f-48d8-950e-07f9c418c7b0"
+    "name": "None",
+    "id": "aba8f653-264f-48d8-950e-07f9c418c7b0"
   },
   "referral_source_activity_website": null,
   "referral_source_activity_marketing": null,
   "referral_source_activity_event": null,
   "fdi_type": {
-      "name": "Creation of new site or activity",
-      "id": "f8447013-cfdc-4f35-a146-6619665388b3"
+    "name": "Creation of new site or activity",
+    "id": "f8447013-cfdc-4f35-a146-6619665388b3"
   },
   "sector": {
-      "name": "Renewable Energy : Wind : Onshore",
-      "id": "034be3be-5329-e511-b6bc-e4115bead28a"
+    "name": "Renewable Energy : Wind : Onshore",
+    "id": "034be3be-5329-e511-b6bc-e4115bead28a"
   },
   "business_activities": [
-      {
-          "name": "Retail",
-          "id": "a2dbd807-ae52-421c-8d1d-88adfc7a506b"
-      }
+    {
+      "name": "Retail",
+      "id": "a2dbd807-ae52-421c-8d1d-88adfc7a506b"
+    }
   ],
   "other_business_activity": null,
   "archived": false,

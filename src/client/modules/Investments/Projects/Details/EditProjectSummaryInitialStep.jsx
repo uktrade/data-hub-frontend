@@ -189,7 +189,7 @@ const EditProjectSummaryInitialStep = ({
         initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
       />
       <FieldSpecificProgramme
-        initialValue={transformObjectForTypeahead(project.specificProgramme)}
+        initialValue={transformArrayForTypeahead(project.specificProgrammes)}
         optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
           project.stage.name
         )}
