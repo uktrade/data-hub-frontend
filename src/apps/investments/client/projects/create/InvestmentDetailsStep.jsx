@@ -117,13 +117,14 @@ const InvestmentDetailsStep = ({ values, company }) => {
                   name="client_relationship_manager"
                   required="Choose a client relationship manager"
                   aria-label="Choose a client relationship manager"
+                  label="Who is the referral source for this project?"
                 />
               ),
             }),
           }))}
         />
 
-        <FieldReferralSourceAdviser label="Are you the referral source for this project?" />
+        <FieldReferralSourceAdviser label="Who is the referral source for this project?" />
         <FieldReferralSourceHierarchy />
         <FieldEstimatedLandDate />
         <FieldLikelihoodOfLanding />
