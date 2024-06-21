@@ -24,14 +24,13 @@ Prerequisite:
 - [Start Dev](#start-dev)
 - [Start the Functional tests](#start-the-functional-tests)
 - [Start the E2E tests (DIT/LEP/DA)](#start-the-e2e-tests-ditlepda)
-- [Start the Visual tests](#start-the-visual-tests)
 - [Start the Unit tests](#start-the-unit-tests)
 
 ## Creating Docker container for CircleCI
 
 Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container.
 
-> If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Visual & Visual Component Tests section, before retrying the build command below.
+> If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
 ```bash
 export VERSION=4.3.1 # Increment this version each time when you edit Dockerfile.
@@ -93,12 +92,6 @@ Instead of running the tests inside the container you can also run them outside 
     make stop-e2e           // stop and remove the containers
 
 Note: Before running the tests (and the containers are up) in a browser go to: `http://localhost:3000` and you'll be redirected to mock-sso. For now (we're working on it) change the domain from `mock-sso` to `localhost` to view the application.
-
-## Start the Visual tests
-
-    make start-mock         // bring up the containers
-    make visual-tests       // runs the tests inside the container
-    make stop-mock          // stop and remove the containers
 
 ## Start the Accessibility tests
 

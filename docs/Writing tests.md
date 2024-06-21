@@ -14,7 +14,6 @@ The basic set to look at for TDD:
 
 Extra coverage, based on what's being tested or to be added after the work is complete:
 1. [e2e tests](#end-to-end-e2e-tests)
-1. [visual tests](#visual-tests)
 1. [a11y tests](#a11y-tests)
 
 ## Test Layers 
@@ -80,16 +79,6 @@ One approach to TDD is first writing a minimal happy path in your feature spec a
 **examples:** [DIT/contacts-spec.js](https://github.com/uktrade/data-hub-frontend/blob/main/test/end-to-end/cypress/specs/DIT/contacts-spec.js
 
 **how to run:** [e2e tests](https://github.com/uktrade/data-hub-frontend/blob/main/docs/Running%20tests.md#e2e-tests)
-
-### visual tests
-
-**framework:** Cypress
-
-**what:** We have both page and component visual tests that compare snapshots of the rendered code to ensure visual consistency. The component tests take snapshots from Storybook. It would be a good idea to create a component test for any component that has complex CSS or is using imported CSS. 
-
-**examples:** [contact-spec.js](https://github.com/uktrade/data-hub-frontend/blob/main/test/visual/cypress/specs/contact-spec.js)
-
-**how to run:** [visual tests](https://github.com/uktrade/data-hub-frontend/blob/main/docs/Running%20tests.md#visual-component-tests)
 
 ### a11y tests
 

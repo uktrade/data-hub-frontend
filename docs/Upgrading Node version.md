@@ -22,7 +22,6 @@ nvm use VERSION
 4. Update the version used in `Dockerfile.dependencies`, then create/upload a new version of the dependency image (use the instructions from the [Docker readme](./Docker.md)). Ensure that the `Dockerfile` is using the image you created or CircleCI will not be able to run most of the tests.
 5. Update the engines in `test/sandbox/package.json` and install the dependencies with `npm ci`.
 6. Update the node versions used in the below files:
-   - `test/visual/Dockerfile`
    - `test/sandbox/Dockerfile`
    - Step two of the native readme
 7. Run the unit tests to check the app `npm run test:unit`, and then start the app `npm run develop` and do some quick smoke tests to ensure the app works

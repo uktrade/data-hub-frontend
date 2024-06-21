@@ -235,82 +235,12 @@ at processTicksAndRejections (node: internal/process/task queues: 83:21) {"date"
 
 This section is for issues when running tests locally in accordance with the [running tests](./Running%20tests.md) documentation.
 
-### Visual & Visual Component Tests
+### Building dependency images
 
-Visual and visual-component tests should always be run within docker (using the `make` commands) to ensure the screenshot resolutions are consistent, otherwise you may find the tests fail with an error message similar to `Error: Image difference greater than threshold: 0`.
-
-However, when running the `make` commands on Macs with Apple chips, you may come across errors with Cypress or the test runners failing to start:
-
-```
-> test:visual-component
-> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual-component/cypress/specs/**/*.js"]}' --browser chrome
-
-qemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped
-qemu: uncaught target signal 5 (Trace/breakpoint trap) - core dumped
-qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-The Test Runner unexpectedly exited via a exit event with signal SIGSEGV
-
-Please search Cypress documentation for possible solutions:
-
-https://on.cypress.io
-
-Check if there is a GitHub issue describing this crash:
-
-https://github.com/cypress-io/cypress/issues
-
-Consider opening a new issue.
-
-----------
-
-Platform: linux-x64 (Debian - 10)
-Cypress Version: 12.17.4
-make: *** [visual-component-tests] Error 1
-```
+When building a new dependency image on Macs with Apple chips, you may come across errors with Cypress or the test runners failing to start:
 
 **Solution**: ensure you have checked the following and then re-build/re-run the containers/`make` commands.
 
 - Have Rosetta 2 installed on your Mac (see [Apple's support page](https://support.apple.com/en-gb/HT211861) for more information on this)
 - Have the latest version of Docker Desktop installed
 - Have enabled the `Use Rosetta for x86/amd64 emulation on Apple Silicon` setting under the general tab in Docker Desktop
-
-#### Visual & Visual Component Tests Hanging
-
-After following the above steps, you may find the visual tests eventually start, but get stuck (or hang) on the first. You might see console output similar to:
-
-```
-> test:visual
-> CYPRESS_coverage=false cypress run --config-file cypress.visual.config.js --config '{"specPattern":["test/visual/cypress/specs/**/*.js"]}' --browser chrome
-
-[1356:0126/105317.072419:ERROR:node_bindings.cc(279)] Most NODE_OPTIONs are not supported in packaged apps. See documentation for more details.
-
-DevTools listening on ws://127.0.0.1:35493/devtools/browser/c8f21391-8172-4dfa-bcf9-dd69079a53fe
-libva error: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
-[1566:0126/105318.610695:ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
-Couldn't find tsconfig.json. tsconfig-paths will be skipped
-
-====================================================================================================
-
-  (Run Starting)
-
-  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ Cypress:        12.17.4                                                                        │
-  │ Browser:        Chrome 106 (headless)                                                          │
-  │ Node Version:   v18.15.0 (/usr/local/bin/node)                                                 │
-  │ Specs:          7 found (community-spec.js, company-spec.js, contact-spec.js, event-spec.js, i │
-  │                 nteraction-spec.js, investment-spec.js, omis-spec.js)                          │
-  │ Searched:       test/visual/cypress/specs/**/*.js                                              │
-  └────────────────────────────────────────────────────────────────────────────────────────────────┘
-
-
-────────────────────────────────────────────────────────────────────────────────────────────────────
-
-  Running:  community-spec.js                                                               (1 of 7)
-
-
-  community page
-Hangs here...
-```
-
-Preliminary results point to this being an issue only for those on M1 and M2 machines when trying to run the tests locally, within Docker. We think this is due to an incompatibility between the docker images and the ARM architecture, however, we are still investigating this.
-
-Please note that CircleCI should continue to run the tests without problems.
