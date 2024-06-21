@@ -73,7 +73,7 @@ export const mapFieldToUrl = (field, projectId) => {
   const detailsFields = [
     'Actual land date',
     'FDI type',
-    'Specific investment programme',
+    'Specific investment programmes',
     'Investor type',
     'Level of investor involvement',
   ]
