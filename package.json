@@ -69,7 +69,7 @@
     "@nivo/tooltip": "^0.87.0",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.2.5",
-    "@sentry/browser": "^8.7.0",
+    "@sentry/browser": "^8.11.0",
     "@sentry/node": "^8.7.0",
     "@sentry/react": "^8.7.0",
     "autoprefixer": "^10.4.18",
