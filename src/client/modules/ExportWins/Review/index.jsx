@@ -142,7 +142,7 @@ const Step1 = ({ win, name }) => {
 
   return (
     <Step name="1">
-      <p>Hi {name},</p>
+      {name && <p>Hi {name},</p>}
       <p>
         Thank you for taking the time to review our record of your recent export
         success.
@@ -151,7 +151,7 @@ const Step1 = ({ win, name }) => {
       <H2>Details of your recent success</H2>
       <SummaryTable data-test="export-wins-details-table">
         <SummaryTable.Row heading="Destination country">
-          {win.country.name}
+          {win?.country?.name}
         </SummaryTable.Row>
         {Object.keys(groups).length > 1 &&
           Object.entries(groups).map(([k, { total, yearRange }]) => {
@@ -166,16 +166,16 @@ const Step1 = ({ win, name }) => {
           {`${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Date won">
-          {formatMediumDate(win.date)}
+          {formatMediumDate(win?.date)}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Lead officer name">
-          {win.leadOfficer.name}
+          {win?.leadOfficer?.name}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Summary of support received">
-          {win.description}
+          {win?.description}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Your export experience before this win can be described as">
-          {win?.exportExperience.name}
+          {win?.exportExperience?.name}
         </SummaryTable.Row>
       </SummaryTable>
 
