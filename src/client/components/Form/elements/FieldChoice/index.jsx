@@ -27,8 +27,9 @@ const getInitialValue = (initialValue, type) => {
 }
 
 const FieldChoice = ({
-  type,
   name,
+  type,
+  options = [],
   validate,
   required,
   label,
@@ -36,7 +37,6 @@ const FieldChoice = ({
   hint,
   inline,
   initialValue,
-  options = [],
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
@@ -99,8 +99,8 @@ FieldChoice.Radio = ({ type, ...rest }) => (
 )
 
 FieldChoice.propTypes = {
-  type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
