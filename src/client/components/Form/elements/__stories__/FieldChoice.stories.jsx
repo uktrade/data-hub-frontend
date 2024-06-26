@@ -37,9 +37,9 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `The FieldChoice component is designed to render a radio button or a checkbox by setting the prop type to either "radio" or "checkbox".
+        component: `The FieldChoice component is designed to render a group of radio buttons or checkboxes by setting the prop type to either "radio" or "checkbox".
         The component sets the entire selected option (Object) to the Form's state which is helpful on user journeys where the final page is a summary page and you
-        need pullout a name from a previous selection. At present, FieldRadio only writes the ID (String) to the form state.`,
+        need to pullout a name (or any other field) from a previous selection. At present, FieldRadio only writes the ID (String) to the form state.`,
       },
     },
   },
