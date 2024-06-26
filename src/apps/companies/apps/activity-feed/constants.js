@@ -4,11 +4,6 @@ const FILTER_FEED_TYPE = {
   UPCOMING: 'upcoming',
 }
 
-const CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS = {
-  newest: 'desc',
-  oldest: 'asc',
-}
-
 const CONTACT_ACTIVITY_SORT_SELECT_OPTIONS = [
   { name: 'Newest', value: 'date:desc' },
   { name: 'Oldest', value: 'date:asc' },
@@ -115,11 +110,6 @@ const EXTERNAL_ACTIVITY = [
   'dit:Export', // HMRC Exporter
 ]
 
-const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
-  ...DATA_HUB_ACTIVITY,
-  ...EXTERNAL_ACTIVITY,
-]
-
 module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
   EVENT_AVENTRI_ATTENDEES_STATUS,
@@ -127,10 +117,7 @@ module.exports = {
   FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
-  DATA_HUB_AND_EXTERNAL_ACTIVITY,
-  CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS,
   CONTACT_ACTIVITY_SORT_SELECT_OPTIONS,
-
   EVENT_ATTENDEES_STATUS,
   EVENT_ATTENDEES_MAPPING,
 }

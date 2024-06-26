@@ -356,9 +356,6 @@ module.exports = {
     rename: url('/company-lists', '/:listId/rename'),
   },
   contacts: {
-    activity: {
-      data: url('/contacts', '/:contactId/activity/data'),
-    },
     index: url('/contacts', PRIMARY_LINK_PARAMS.contacts),
     export: url('/contacts', '/export'),
     audit: url('/contacts', '/:contactId/audit'),
