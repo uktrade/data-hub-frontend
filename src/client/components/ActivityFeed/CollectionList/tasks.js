@@ -1,47 +1,6 @@
 import axios from 'axios'
 
-import urls from '../../../../lib/urls'
-import {
-  transformResponseToCollection,
-  filterServiceNames,
-} from './transformers'
-import { getMetadataOptions } from '../../../metadata'
-
-const handleError = (e) => Promise.reject(Error(e.response.data.detail))
-
-const sortServiceOptions = (options) =>
-  options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
-
-const getCompanyActivitiesMetadata = () =>
-  Promise.all([
-    getMetadataOptions(urls.metadata.service(), {
-      filterDisabled: false,
-    }),
-    getMetadataOptions(urls.metadata.sector(), {
-      params: {
-        level__lte: '0',
-      },
-    }),
-    getMetadataOptions(urls.metadata.policyArea()),
-    getMetadataOptions(urls.metadata.policyIssueType()),
-    getMetadataOptions(urls.metadata.oneListTier()),
-  ])
-    .then(
-      ([
-        serviceOptions,
-        sectorOptions,
-        policyAreaOptions,
-        policyIssueTypeOptions,
-        companyOneListTierOptions,
-      ]) => ({
-        serviceOptions: filterServiceNames(sortServiceOptions(serviceOptions)),
-        sectorOptions,
-        policyAreaOptions,
-        policyIssueTypeOptions,
-        companyOneListTierOptions,
-      })
-    )
-    .catch(handleError)
+import { transformResponseToCollection } from './transformers'
 
 const getCompanyActivities = ({
   size = 10,
@@ -91,4 +50,4 @@ const getCompanyActivities = ({
     })
     .then(({ data }) => transformResponseToCollection(data))
 
-export { getCompanyActivities, getCompanyActivitiesMetadata }
+export { getCompanyActivities }

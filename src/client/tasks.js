@@ -156,10 +156,7 @@ import {
   getInteractions,
   getInteractionsMetadata,
 } from './modules/Interactions/CollectionList/tasks'
-import {
-  getCompanyActivities,
-  getCompanyActivitiesMetadata,
-} from './components/ActivityFeed/CollectionList/tasks'
+import { getCompanyActivities } from './components/ActivityFeed/CollectionList/tasks'
 
 import {
   TASK_GET_ORDERS_LIST,
@@ -185,13 +182,7 @@ import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
 } from './modules/Contacts/CollectionList/state'
-import {
-  TASK_GET_COMPANY_ACTIVITIES_LIST,
-  TASK_GET_COMPANY_ACTIVITIES_METADATA,
-  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
-} from './components/ActivityFeed/CollectionList/state'
+import { TASK_GET_COMPANY_ACTIVITIES_LIST } from './components/ActivityFeed/CollectionList/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
@@ -454,8 +445,17 @@ import {
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
 
-import { TASK_GET_COMPANY_ACTIVITIES_NO_AS } from './modules/Companies/CompanyActivity/state'
-import { getCompanyInteractions } from './modules/Companies/CompanyActivity/tasks'
+import {
+  TASK_GET_COMPANY_ACTIVITIES_NO_AS,
+  TASK_GET_COMPANY_ACTIVITIES_METADATA,
+  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
+} from './modules/Companies/CompanyActivity/state'
+import {
+  getCompanyInteractions,
+  getCompanyActivitiesMetadata,
+} from './modules/Companies/CompanyActivity/tasks'
 
 export const tasks = {
   'Create list': createList,

@@ -1,10 +1,3 @@
-const FILTER_KEYS = {
-  dataHubAndExternalActivity: 'dataHubAndExternalActivity',
-  myActivity: 'myActivity',
-  externalActivity: 'externalActivity',
-  dataHubActivity: 'dataHubActivity',
-}
-
 const FILTER_FEED_TYPE = {
   ALL: 'all',
   RECENT: 'recent',
@@ -172,7 +165,6 @@ module.exports = {
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
   EVENT_ALL_ACTIVITY,
-  FILTER_KEYS,
   FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,
