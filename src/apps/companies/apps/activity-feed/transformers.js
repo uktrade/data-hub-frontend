@@ -11,14 +11,6 @@ const transformAventriEventStatusCountsToEventStatusCounts = (
       .reduce((sum, cur) => sum + cur.count, 0),
   }))
 
-const transformAventriEventStatusToEventStatus = (aventriStatus) => {
-  const matchingStatus = Object.entries(EVENT_ATTENDEES_MAPPING).find(
-    ([, value]) => value.statuses.includes(aventriStatus)
-  )
-  return matchingStatus ? matchingStatus[0] : undefined
-}
-
 module.exports = {
   transformAventriEventStatusCountsToEventStatusCounts,
-  transformAventriEventStatusToEventStatus,
 }

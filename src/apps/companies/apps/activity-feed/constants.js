@@ -100,45 +100,6 @@ const EVENT_ATTENDEES_MAPPING = [
   ]),
 ].reduce((a, v) => ({ ...a, ...v }), {})
 
-const EVENT_ACTIVITY_SORT_OPTIONS = {
-  'modified_on:asc': {
-    'object.updated': {
-      order: 'asc',
-      unmapped_type: 'date',
-    },
-  },
-  'modified_on:desc': {
-    'object.updated': {
-      order: 'desc',
-      unmapped_type: 'date',
-    },
-  },
-  'name:asc': {
-    'object.name.raw': {
-      order: 'asc',
-      unmapped_type: 'string',
-    },
-  },
-  'start_date:asc': {
-    'object.startTime': {
-      order: 'asc',
-      unmapped_type: 'date',
-    },
-  },
-  'start_date:desc': {
-    'object.startTime': {
-      order: 'desc',
-      unmapped_type: 'date',
-    },
-  },
-}
-
-const EVENT_ALL_ACTIVITY = {
-  terms: {
-    'object.type': ['dit:aventri:Event', 'dit:dataHub:Event'],
-  },
-}
-
 const DATA_HUB_ACTIVITY = [
   'dit:Interaction', // Interaction
   'dit:ServiceDelivery', // Interaction
@@ -161,10 +122,8 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 
 module.exports = {
   EVENT_ATTENDEES_SORT_OPTIONS,
-  EVENT_ACTIVITY_SORT_OPTIONS,
   EVENT_AVENTRI_ATTENDEES_STATUS,
   EVENT_AVENTRI_ATTENDEES_STATUSES,
-  EVENT_ALL_ACTIVITY,
   FILTER_FEED_TYPE,
   DATA_HUB_ACTIVITY,
   EXTERNAL_ACTIVITY,

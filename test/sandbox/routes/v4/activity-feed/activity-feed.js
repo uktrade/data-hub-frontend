@@ -6,8 +6,6 @@ import startsWith from 'lodash/startsWith.js'
 import externalActivities from '../../../fixtures/v4/activity-feed/external/external-activities.json' assert { type: 'json' }
 
 import maxemailCampaignActivities from '../../../fixtures/v4/activity-feed/external/maxemail-campaign-activities.json' assert { type: 'json' }
-import maxemailEmailSentQuery from '../../../fixtures/v4/activity-feed/external/maxemail-email-sent-query.json' assert { type: 'json' }
-import maxemailEmailSentActivities from '../../../fixtures/v4/activity-feed/external/maxemail-email-sent-activities.json' assert { type: 'json' }
 
 // Data Hub and external activities
 import dataHubAndExternalActivities from '../../../fixtures/v4/activity-feed/data-hub-and-external-activities.json' assert { type: 'json' }
@@ -39,9 +37,6 @@ import essInteractionDetail from '../../../fixtures/v4/activity-feed/ess-interac
 ////This order is correct when sorted by: First Name Z-A, Last name Z-A and Company name Z-A
 import aventriAttendeesZToAOrder from '../../../fixtures/v4/activity-feed/aventri-attendees-sort-z-a.json' assert { type: 'json' }
 
-//All Activitiy feed events
-import allActivityFeedEvents from '../../../fixtures/v4/activity-feed/all-activity-feed-events.json' assert { type: 'json' }
-
 import { generateAventriEventESResponse } from '../../../fixtures/v4/activity-feed/aventri-events.js'
 import { generateDataHubActivitiesESResponse } from '../../../fixtures/v4/activity-feed/data-hub-activities.js'
 import { generateAventriAttendeeESResponse } from '../../../fixtures/v4/activity-feed/aventri-attendees.js'
@@ -67,8 +62,6 @@ const DATA_HUB_AND_EXTERNAL_ACTIVITY = [
 ]
 
 const ALL_ACTIVITY_STREAM_EVENTS = ['dit:aventri:Event', 'dit:dataHub:Event']
-
-const ALL_ACTIVITIES_PER_PAGE = 10
 
 const VENUS_LTD = 'dit:DataHubCompany:0f5216e0-849f-11e6-ae22-56b6b6499611'
 const NO_COMPANY_DETAILS =
@@ -131,17 +124,7 @@ export const activityFeed = function (req, res) {
   )
 
   if (isAllActivityStreamEvents) {
-    const { sort, from } = req.body
-
-    //if page 2
-    if (from == ALL_ACTIVITIES_PER_PAGE) {
-      return res.json(allActivityFeedEvents)
-    }
-
-    // if the sort by is recently updated (modified_on:desc)
-    if (sort['object.updated']?.order === 'desc') {
-      return res.json(allActivityFeedEvents)
-    }
+    const { sort } = req.body
 
     //if the story by is LEAST recently updated (modified_on:asc)
     if (sort['object.updated']?.order === 'asc') {
@@ -364,11 +347,6 @@ export const activityFeed = function (req, res) {
     return res.json(essInteractionDetail)
   if (startsWith(essDetails, 'dit:directoryFormsApi:Submission:2222'))
     return res.json(essInteractionsNoTitle)
-
-  // Maxemail emails sent
-  if (isEqual(maxemailEmailSentQuery, req.body)) {
-    return res.json(maxemailEmailSentActivities)
-  }
 
   return res.json(noActivity)
 }
