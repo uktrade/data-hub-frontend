@@ -39,12 +39,11 @@ const FieldChoice = ({
   options = [],
   ...props
 }) => {
-  const initValue = getInitialValue(initialValue, type)
   const { value, error, touched, onBlur } = useField({
     name,
     validate,
     required,
-    initialValue: initValue,
+    initialValue: getInitialValue(initialValue, type),
   })
 
   const { setFieldValue } = useFormContext()
@@ -96,6 +95,20 @@ FieldChoice.Radio = (props) => <FieldChoice {...props} type="radio" />
 
 FieldChoice.propTypes = {
   type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
+  name: PropTypes.string.isRequired,
+  validate: PropTypes.func,
+  required: PropTypes.func,
+  label: PropTypes.string,
+  legend: PropTypes.node,
+  hint: PropTypes.string,
+  inline: PropTypes.bool,
+  initialValue: PropTypes.object,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ).isRequired,
 }
 
 export default FieldChoice
