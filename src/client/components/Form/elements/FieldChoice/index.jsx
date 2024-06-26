@@ -108,7 +108,7 @@ FieldChoice.propTypes = {
     })
   ).isRequired,
   validate: PropTypes.func,
-  required: PropTypes.func,
+  required: PropTypes.string,
   label: PropTypes.string,
   legend: PropTypes.node,
   hint: PropTypes.string,
