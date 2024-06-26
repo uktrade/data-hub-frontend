@@ -5,20 +5,11 @@ const activityFeedAventriAtendeeEsFixtures = require('../../../../../../test/uni
 const activityFeedMaxemailSentEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-maxemail-sent-from-es.json')
 const activityFeedDefaultQuery = require('../../../../../../test/unit/data/activity-feed/activity-feed-default-query.json')
 
-const allAttendees = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/aventri-attendees.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
-const aventriRegistrationStatusNoDetails = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-no-details.json')
-const aventriRegistrationStatusWithAggregations = require('../../../../../../test/unit/data/activity-feed/aventri-registration-status-with-aggregation-counts.json')
 const essDetails = require('../../../../../../test/sandbox/fixtures/v4/activity-feed/ess-interaction.json')
 
-const {
-  EVENT_AVENTRI_ATTENDEES_STATUS,
-  EVENT_ATTENDEES_SORT_OPTIONS,
-  EVENT_ATTENDEES_STATUS,
-  EVENT_ATTENDEES_MAPPING,
-  FILTER_FEED_TYPE,
-} = require('../constants')
+const { FILTER_FEED_TYPE } = require('../constants')
 const { sortCriteria } = require('../es-queries/sortCriteria')
 
 const realDate = Date
@@ -32,11 +23,9 @@ const freezeTime = (constantDate) => {
 }
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
-    fetchAllActivityFeedEventsStub,
     getRelatedCompaniesStub,
     controllers,
     middlewareParameters,
-    fetchMatchingDataHubContactStub,
     fetchESSDetailsStub
 
   describe('#fetchActivityFeedHandler', () => {
@@ -1062,219 +1051,6 @@ describe('Activity feed controllers', () => {
           expect(middlewareParameters.resMock.json).to.not.have.been.called
           expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
         })
-      })
-    })
-  })
-
-  describe('#fetchAventriEventRegistrationStatusAttendees', () => {
-    before(() => {
-      fetchAllActivityFeedEventsStub = sinon.stub().resolves(allAttendees)
-      fetchMatchingDataHubContactStub = sinon
-        .stub()
-        .resolves({ results: [{ id: 1 }] })
-
-      controllers = proxyquire(
-        '../../src/apps/companies/apps/activity-feed/controllers',
-        {
-          './repos': {
-            fetchActivityFeed: fetchAllActivityFeedEventsStub,
-            fetchMatchingDataHubContact: fetchMatchingDataHubContactStub,
-          },
-        }
-      )
-    })
-
-    context('when requesting without a status an error is thrown', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {},
-        })
-
-        await controllers.fetchAventriEventRegistrationStatusAttendees(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call next with an error', async () => {
-        const error = 'Error: Missing registration status'
-        expect(
-          middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
-        ).to.equal(error)
-      })
-    })
-
-    context('when requesting an invalid status an error is thrown', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            registrationStatus: 'FAKE',
-          },
-        })
-
-        await controllers.fetchAventriEventRegistrationStatusAttendees(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call next with an error', async () => {
-        const error = 'Error: Invalid status'
-        expect(
-          middlewareParameters.nextSpy.getCalls()[0].firstArg.toString()
-        ).to.equal(error)
-      })
-    })
-
-    context('when requesting attendees matching statuses', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            registrationStatus: EVENT_ATTENDEES_STATUS.registered,
-            page: 1,
-            size: 25,
-            sortBy: 'first_name:asc',
-          },
-          requestParams: { aventriEventId: 12 },
-        })
-
-        await controllers.fetchAventriEventRegistrationStatusAttendees(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with the correct params', async () => {
-        const expectedESQuery = {
-          from: 0,
-          size: 25,
-          query: {
-            bool: {
-              must: [
-                {
-                  term: {
-                    'object.type': 'dit:aventri:Attendee',
-                  },
-                },
-                {
-                  term: {
-                    'object.attributedTo.id': `dit:aventri:Event:${12}`,
-                  },
-                },
-                {
-                  terms: {
-                    'object.dit:registrationStatus':
-                      EVENT_ATTENDEES_MAPPING[EVENT_ATTENDEES_STATUS.registered]
-                        .statuses,
-                  },
-                },
-              ],
-            },
-          },
-          sort: EVENT_ATTENDEES_SORT_OPTIONS['first_name:asc'],
-        }
-
-        expect(fetchAllActivityFeedEventsStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedESQuery
-        )
-      })
-
-      it('should call fetchMatchingDataHubContacts with the correct ids', async () => {
-        const attendeeEmails = allAttendees.hits.hits
-          .map((hit) => hit._source.object['dit:aventri:email'])
-          .filter((f) => f)
-
-        attendeeEmails.forEach((email) =>
-          expect(fetchMatchingDataHubContactStub).to.be.calledWith(
-            middlewareParameters.reqMock,
-            email
-          )
-        )
-      })
-    })
-  })
-
-  describe('#getAventriRegistrationStatusCounts', () => {
-    let statusCounts
-    before(async () => {
-      const mockActivityFeedApiFunction = (req, body) => {
-        //is this a query for empty registation status data
-        if (
-          get(
-            body,
-            "query.bool.must[1].term['object.attributedTo.id']"
-          ).includes(1)
-        ) {
-          return aventriRegistrationStatusNoDetails
-        }
-
-        return aventriRegistrationStatusWithAggregations
-      }
-      fetchActivityFeedStub = sinon
-        .stub()
-        .callsFake(mockActivityFeedApiFunction)
-
-      controllers = proxyquire(
-        '../../src/apps/companies/apps/activity-feed/controllers',
-        {
-          './repos': {
-            fetchActivityFeed: fetchActivityFeedStub,
-          },
-        }
-      )
-    })
-
-    context('when requesting an event without any attendees', () => {
-      it('should return an empty array', async () => {
-        middlewareParameters = buildMiddlewareParameters()
-
-        statusCounts = await controllers.getAventriRegistrationStatusCounts(
-          middlewareParameters.reqMock,
-          1
-        )
-        expect(statusCounts).to.be.deep.equal([])
-      })
-    })
-
-    context('when requesting an event with attendees', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters()
-
-        statusCounts = await controllers.getAventriRegistrationStatusCounts(
-          middlewareParameters.reqMock,
-          2
-        )
-      })
-
-      it('should exclude any known status in the response with count of 0 from the aggregation result', () => {
-        expect(
-          statusCounts.find(
-            (x) => x.status == EVENT_AVENTRI_ATTENDEES_STATUS.confirmed
-          )
-        ).to.be.undefined
-      })
-
-      it('should exclude any status in the response that is unknown from the aggregation result', () => {
-        expect(statusCounts.find((x) => x.status == 'Incomplete')).to.be
-          .undefined
-      })
-
-      it('should include all known statuses in the response with count greater than 0 from the aggregation result', () => {
-        const statuses = [
-          EVENT_AVENTRI_ATTENDEES_STATUS.attended,
-          EVENT_AVENTRI_ATTENDEES_STATUS.activated,
-          EVENT_AVENTRI_ATTENDEES_STATUS.waitlist,
-          EVENT_AVENTRI_ATTENDEES_STATUS.noShow,
-          EVENT_AVENTRI_ATTENDEES_STATUS.cancelled,
-        ]
-        statuses.forEach(
-          (s) =>
-            expect(statusCounts.find((x) => x.status == s)).to.not.be.undefined
-        )
       })
     })
   })
