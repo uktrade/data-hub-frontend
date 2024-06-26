@@ -31,6 +31,7 @@ import {
   TASK_GET_COMPANIES_LIST,
   TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_METADATA,
+  TASK_GET_COMPANIES_ADVISER_NAME,
 } from './modules/Companies/CollectionList/state'
 import {
   getCompanies,
@@ -515,6 +516,7 @@ export const tasks = {
   [TASK_GET_COMPANIES_METADATA]: getCompaniesMetadata,
   [TASK_GET_INVESTMENTS_PROJECTS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME]: getAdviserNames,
+  [TASK_GET_COMPANIES_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
     investmentProjectTasks.getProjectMetadata,
   [TASK_EDIT_PROJECT_TEAM_MEMBERS]: updateTeamMembers,
