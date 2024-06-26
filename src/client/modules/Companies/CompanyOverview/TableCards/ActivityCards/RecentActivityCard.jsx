@@ -6,13 +6,12 @@ import { OVERVIEW_RECENT_ACTIVITY_ID, recentState2props } from './state'
 import { formatWithoutParsing, subtractMonths } from '../../../../../utils/date'
 import { DATE_LONG_FORMAT_3 } from '../../../../../../common/constants'
 import { COMPANIES__OVERVIEW_RECENT_ACTIVITY_LOADED } from '../../../../../actions'
-import { FILTER_FEED_TYPE } from '../../../../../../apps/companies/apps/activity-feed/constants'
 
 const RecentActivityCard = ({ company, results }) => (
   <ActivityCard
     company={company}
     numberOfItems={3}
-    feedType={FILTER_FEED_TYPE.RECENT}
+    feedType="recent"
     results={results}
     stateId={OVERVIEW_RECENT_ACTIVITY_ID}
     action={COMPANIES__OVERVIEW_RECENT_ACTIVITY_LOADED}

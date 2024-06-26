@@ -196,7 +196,6 @@ module.exports = {
     },
     activity: {
       index: url('/companies', '/:companyId/activity'),
-      data: url('/companies', '/:companyId/activity/data'),
     },
     editHistory: {
       index: url('/companies', '/:companyId/edit-history'),
