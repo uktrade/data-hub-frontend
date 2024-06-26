@@ -175,6 +175,9 @@ const EditProjectSummaryInitialStep = ({
       />
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
       {showInvestorTypeField() ? (
         <FieldInvestmentInvestorType
@@ -187,6 +190,9 @@ const EditProjectSummaryInitialStep = ({
       ) : null}
       <FieldLevelOfInvolvement
         initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
       <FieldSpecificProgramme
         initialValue={transformArrayForTypeahead(project.specificProgrammes)}

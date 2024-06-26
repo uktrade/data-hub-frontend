@@ -14,11 +14,11 @@ const {
   assertFieldRadiosWithLegend,
   assertFieldInput,
   assertFieldSelect,
-  assertFieldDate,
   assertFieldDateShort,
   assertFieldRadios,
   assertErrorSummary,
   assertFieldTypeaheadWithExactText,
+  assertFieldDateWithExactText,
 } = require('../../support/assertions')
 
 const setupProjectFaker = (overrides) =>
@@ -290,11 +290,11 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the Actual land date field', () => {
+    it('should display the Actual land date field with optional text in the label', () => {
       cy.get('[data-test="field-actual_land_date"]').then((element) => {
-        assertFieldDate({
+        assertFieldDateWithExactText({
           element,
-          label: 'Actual land date',
+          label: 'Actual land date (optional)',
           hint: 'When activities under the investment project fully commenced',
         })
       })
@@ -310,11 +310,11 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the level of investor involvement field', () => {
+    it('should display the level of investor involvement field with optional text in the label', () => {
       cy.get('[data-test="field-level_of_involvement"]').then((element) => {
-        assertFieldTypeahead({
+        assertFieldTypeaheadWithExactText({
           element,
-          label: 'Level of investor involvement',
+          label: 'Level of investor involvement (optional)',
           placeholder: 'Choose a level of involvement',
         })
       })
@@ -359,6 +359,26 @@ describe('Editing the project summary', () => {
           element,
           label: 'New or existing investor',
           optionsCount: 2,
+        })
+      })
+    })
+
+    it('should render the actual land date field label without the word optional', () => {
+      cy.get('[data-test="field-actual_land_date"]').then((element) => {
+        assertFieldDateWithExactText({
+          element,
+          label: 'Actual land date',
+          hint: 'When activities under the investment project fully commenced',
+        })
+      })
+    })
+
+    it('should render the level of investor involvement field label without the word optional', () => {
+      cy.get('[data-test="field-level_of_involvement"]').then((element) => {
+        assertFieldTypeaheadWithExactText({
+          element,
+          label: 'Level of investor involvement',
+          placeholder: 'Choose a level of involvement',
         })
       })
     })

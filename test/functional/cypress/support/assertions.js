@@ -617,6 +617,21 @@ const assertFieldDate = ({ element, label, value = {} }) => {
   value.year && expect(inputs[2]).to.have.value(value.year)
 }
 
+const assertFieldDateWithExactText = ({ element, label, value = {} }) => {
+  const inputs = element.find('input')
+  const labels = element.find('label')
+
+  label && expect(labels[0]).to.have.text(label)
+
+  expect(labels[1]).to.have.text('Day')
+  expect(labels[2]).to.have.text('Month')
+  expect(labels[3]).to.have.text('Year')
+
+  value.day && expect(inputs[0]).to.have.value(value.day)
+  value.month && expect(inputs[1]).to.have.value(value.month)
+  value.year && expect(inputs[2]).to.have.value(value.year)
+}
+
 const assertFieldDateShort = ({ element, label, value = {} }) => {
   const labels = element.find('label')
   const inputs = element.find('input')
@@ -1004,6 +1019,7 @@ module.exports = {
   assertFieldUneditable,
   assertFormActions,
   assertFieldDate,
+  assertFieldDateWithExactText,
   assertFieldDateShort,
   assertFieldHidden,
   assertFormFields,

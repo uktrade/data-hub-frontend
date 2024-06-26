@@ -296,10 +296,13 @@ export const FieldLikelihoodOfLanding = ({
   />
 )
 
-export const FieldActualLandDate = ({ initialValue = null }) => (
+export const FieldActualLandDate = ({
+  initialValue = null,
+  optionalText = true,
+}) => (
   <FieldDate
     name="actual_land_date"
-    label="Actual land date (optional)"
+    label={'Actual land date' + (optionalText ? ' (optional)' : '')}
     hint="The date investment project activities started"
     invalid="Enter a valid actual land date"
     initialValue={initialValue}
@@ -322,10 +325,15 @@ export const FieldInvestmentInvestorType = ({
   />
 )
 
-export const FieldLevelOfInvolvement = ({ initialValue = null }) => (
+export const FieldLevelOfInvolvement = ({
+  initialValue = null,
+  optionalText = true,
+}) => (
   <ResourceOptionsField
     name="level_of_involvement"
-    label="Level of investor involvement (optional)"
+    label={
+      'Level of investor involvement' + (optionalText ? ' (optional)' : '')
+    }
     resource={LevelOfInvolvementResource}
     field={FieldTypeahead}
     initialValue={initialValue}
