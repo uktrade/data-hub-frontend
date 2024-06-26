@@ -156,7 +156,6 @@ import {
   getInteractions,
   getInteractionsMetadata,
 } from './modules/Interactions/CollectionList/tasks'
-import { getCompanyActivities } from './components/ActivityFeed/CollectionList/tasks'
 
 import {
   TASK_GET_ORDERS_LIST,
@@ -182,7 +181,6 @@ import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
 } from './modules/Contacts/CollectionList/state'
-import { TASK_GET_COMPANY_ACTIVITIES_LIST } from './components/ActivityFeed/CollectionList/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
@@ -538,7 +536,6 @@ export const tasks = {
   [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
   [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
-  [TASK_GET_COMPANY_ACTIVITIES_LIST]: getCompanyActivities,
   [TASK_GET_COMPANY_ACTIVITIES_NO_AS]: getCompanyInteractions,
   [TASK_GET_COMPANY_ACTIVITIES_METADATA]: getCompanyActivitiesMetadata,
   [TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME]: getAdviserNames,
