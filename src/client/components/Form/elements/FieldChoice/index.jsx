@@ -90,25 +90,33 @@ const FieldChoice = ({
   )
 }
 
-FieldChoice.Checkbox = (props) => <FieldChoice {...props} type="checkbox" />
-FieldChoice.Radio = (props) => <FieldChoice {...props} type="radio" />
+FieldChoice.Checkbox = ({ type, ...rest }) => (
+  <FieldChoice {...rest} type="checkbox" />
+)
+
+FieldChoice.Radio = ({ type, ...rest }) => (
+  <FieldChoice {...rest} type="radio" />
+)
 
 FieldChoice.propTypes = {
   type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
   name: PropTypes.string.isRequired,
-  validate: PropTypes.func,
-  required: PropTypes.func,
-  label: PropTypes.string,
-  legend: PropTypes.node,
-  hint: PropTypes.string,
-  inline: PropTypes.bool,
-  initialValue: PropTypes.object,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.string,
     })
   ).isRequired,
+  validate: PropTypes.func,
+  required: PropTypes.func,
+  label: PropTypes.string,
+  legend: PropTypes.node,
+  hint: PropTypes.string,
+  inline: PropTypes.bool,
+  initialValue: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }),
 }
 
 export default FieldChoice
