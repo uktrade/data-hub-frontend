@@ -57,7 +57,7 @@ const contact1 = {
   id: 'dit:DataHubContact:115b4d96-d2ea-40ff-a01d-812507093a98',
   name: 'Alexander Hamilton',
   type: ['Person', 'dit:Contact'],
-  url: 'https://www.datahub.dev.uktrade.io/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
+  url: 'https://dev.datahub.uktrade.digital/contacts/115b4d96-d2ea-40ff-a01d-812507093a98',
 }
 
 const contact2 = {
@@ -66,7 +66,7 @@ const contact2 = {
   id: 'dit:DataHubContact:56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
   name: 'Oliver Twist',
   type: ['Person', 'dit:Contact'],
-  url: 'https://www.datahub.dev.uktrade.io/contacts/56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
+  url: 'https://dev.datahub.uktrade.digital/contacts/56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
 }
 
 const interactionThemes = ['export', 'investment', 'trade_agreement', 'other']
