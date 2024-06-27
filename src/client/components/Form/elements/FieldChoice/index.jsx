@@ -90,13 +90,8 @@ const FieldChoice = ({
   )
 }
 
-FieldChoice.Checkbox = ({ type, ...rest }) => (
-  <FieldChoice {...rest} type="checkbox" />
-)
-
-FieldChoice.Radio = ({ type, ...rest }) => (
-  <FieldChoice {...rest} type="radio" />
-)
+FieldChoice.Checkbox = (props) => <FieldChoice {...props} type="checkbox" />
+FieldChoice.Radio = (props) => <FieldChoice {...props} type="radio" />
 
 FieldChoice.propTypes = {
   name: PropTypes.string.isRequired,
