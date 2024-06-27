@@ -185,7 +185,7 @@ const InteractionDetails = ({ interactionId }) => {
           </SummaryTable>
           <ButtonBar>
             <Button
-              as={Link}
+              as={'a'}
               href={urls.tasks.createInteraction(interaction.id)}
               data-test="add-follow-up-task-button"
             >
@@ -194,7 +194,7 @@ const InteractionDetails = ({ interactionId }) => {
 
             {isEditable(interaction.status) && (
               <Button
-                as={Link}
+                as={'a'}
                 href={getEditLink(
                   interaction.id,
                   interaction.company,
