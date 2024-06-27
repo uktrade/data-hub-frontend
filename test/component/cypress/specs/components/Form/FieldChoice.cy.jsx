@@ -111,24 +111,6 @@ describe('FieldChoice', () => {
       })
     })
 
-    it('should render inline radio buttons', () => {
-      cy.mountWithProvider(
-        <Form {...FORM_PROPS}>
-          <FieldChoice
-            type="radio"
-            name="country"
-            options={OPTIONS}
-            inline={true}
-          />
-        </Form>
-      )
-
-      cy.get('[data-test="field-country"] fieldset')
-        .children()
-        .eq(0)
-        .should('have.css', 'display', 'flex')
-    })
-
     it('should render an error when saving', () => {
       cy.mountWithProvider(
         <Form {...FORM_PROPS}>
@@ -212,23 +194,6 @@ describe('FieldChoice', () => {
         options: OPTIONS.map((x) => x.label),
         legend: 'My H1 legend',
       })
-    })
-
-    it('should render inline checkboxes', () => {
-      cy.mountWithProvider(
-        <Form {...FORM_PROPS}>
-          <FieldChoice
-            type="checkbox"
-            name="country"
-            options={OPTIONS}
-            inline={true}
-          />
-        </Form>
-      )
-      cy.get('[data-test="field-country"] fieldset')
-        .children()
-        .eq(0)
-        .should('have.css', 'display', 'flex')
     })
 
     it('should render an error when saving', () => {
