@@ -1,7 +1,5 @@
 const router = require('express').Router()
 
-const urls = require('../../lib/urls')
-
 const { LOCAL_NAV, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
@@ -21,10 +19,6 @@ const { getAudit } = require('./controllers/audit')
 const { renderContactActivityForEntity } = require('./controllers/activity')
 
 const { setInteractionsDetails } = require('./middleware/interactions')
-
-const {
-  fetchActivitiesForContact,
-} = require('../companies/apps/activity-feed/controllers')
 
 router.get(['/create', '/:contactId/edit'], createAndEdit)
 
@@ -49,7 +43,5 @@ router.use(
   setInteractionsDetails,
   renderContactActivityForEntity
 )
-
-router.get(urls.contacts.activity.data.route, fetchActivitiesForContact)
 
 module.exports = router

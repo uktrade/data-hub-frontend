@@ -1,9 +1,17 @@
 import { buildSelectedFilters } from './filters'
 import { parseQueryString } from '../../../utils'
-import { SORT_OPTIONS } from '../../../components/ActivityFeed/CollectionList/constants'
+import { SORT_OPTIONS } from './constants'
 
 export const TASK_GET_COMPANY_ACTIVITIES_NO_AS =
   'TASK_GET_COMPANY_ACTIVITIES_NO_AS'
+export const TASK_GET_COMPANY_ACTIVITIES_METADATA =
+  'TASK_GET_COMPANY_ACTIVITIES_METADATA'
+export const TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME =
+  'TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME'
+export const TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME =
+  'TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME'
+export const TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME =
+  'TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME'
 
 export const ID = 'companyActivitiesListNoAS'
 

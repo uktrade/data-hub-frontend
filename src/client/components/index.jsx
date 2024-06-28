@@ -1,5 +1,3 @@
-export { default as ActivityFeedApp } from './ActivityFeed/ActivityFeedApp'
-export { default as ActivityFeedAction } from './ActivityFeed/ActivityFeedAction'
 export { default as AuditHistory } from './AuditHistory'
 export { default as Badge } from './Badge'
 export { default as ButtonLink } from './ButtonLink'

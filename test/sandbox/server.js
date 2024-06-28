@@ -139,7 +139,6 @@ import { order } from './routes/v3/search/order.js'
 import { searchInteraction } from './routes/v3/search/interaction.js'
 
 // V4
-import { activityFeed } from './routes/v4/activity-feed/activity-feed.js'
 import { company } from './routes/v4/ch-company/company.js'
 import {
   getReferralDetails,
@@ -655,9 +654,6 @@ app.get('/v4/contact', getContact)
 app.post('/v4/contact', contactCreate)
 app.get('/v4/contact/:contactId', getContactById)
 app.patch('/v4/contact/:contactId', updateContactById)
-
-// V4 activity feed
-app.get('/v4/activity-feed', activityFeed)
 
 // V4 CH Company
 app.get('/v4/ch-company/:companyId', company)

@@ -5,7 +5,8 @@ const {
   assertKeyValueTable,
 } = require('../../support/assertions')
 
-describe('Event Export Support Details', () => {
+//TODO - Reinstate this test once we have restored the ESS integration
+describe.skip('Event Export Support Details', () => {
   const essInteractionId = '1111'
   const essInteractionIdNoTitle = '2222'
   const notFoundEssId = '404'

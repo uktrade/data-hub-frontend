@@ -82,13 +82,6 @@ describe('urls', () => {
         '/:companyId/activity'
       )
 
-      expect(urls.companies.activity.data(companyId)).to.equal(
-        `/companies/${companyId}/activity/data`
-      )
-      expect(urls.companies.activity.data.route).to.equal(
-        '/:companyId/activity/data'
-      )
-
       expect(urls.companies.accountManagement.index(companyId)).to.equal(
         `/companies/${companyId}/account-management`
       )

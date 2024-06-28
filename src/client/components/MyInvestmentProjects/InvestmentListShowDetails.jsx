@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import { default as Checkbox } from '../ActivityFeed/ActivityFeedCheckbox.jsx'
+import InvestmentCheckbox from './InvestmentCheckbox'
 
 const CheckboxContainer = styled('div')`
   padding: ${SPACING.SCALE_2};
@@ -12,9 +12,9 @@ const CheckboxContainer = styled('div')`
 const InvestmentListShowDetails = ({ children, ...rest }) => {
   return (
     <CheckboxContainer>
-      <Checkbox name="investmentListShowDetails" {...rest}>
+      <InvestmentCheckbox name="investmentListShowDetails" {...rest}>
         {children}
-      </Checkbox>
+      </InvestmentCheckbox>
     </CheckboxContainer>
   )
 }

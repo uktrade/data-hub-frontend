@@ -1,7 +1,47 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
 import { getPageOffset } from '../../../utils/pagination'
+import { getMetadataOptions } from '../../../metadata'
+import {
+  filterServiceNames,
+  transformResponseToCollection,
+} from './transformers'
+import urls from '../../../../lib/urls'
 
-import { transformResponseToCollection } from './transformers'
+const handleError = (e) => Promise.reject(Error(e.response.data.detail))
+
+const sortServiceOptions = (options) =>
+  options.sort((a, b) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0))
+
+export const getCompanyActivitiesMetadata = () =>
+  Promise.all([
+    getMetadataOptions(urls.metadata.service(), {
+      filterDisabled: false,
+    }),
+    getMetadataOptions(urls.metadata.sector(), {
+      params: {
+        level__lte: '0',
+      },
+    }),
+    getMetadataOptions(urls.metadata.policyArea()),
+    getMetadataOptions(urls.metadata.policyIssueType()),
+    getMetadataOptions(urls.metadata.oneListTier()),
+  ])
+    .then(
+      ([
+        serviceOptions,
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      ]) => ({
+        serviceOptions: filterServiceNames(sortServiceOptions(serviceOptions)),
+        sectorOptions,
+        policyAreaOptions,
+        policyIssueTypeOptions,
+        companyOneListTierOptions,
+      })
+    )
+    .catch(handleError)
 
 export const getCompanyInteractions = ({
   limit = 10,
