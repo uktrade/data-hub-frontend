@@ -22,7 +22,7 @@ const transformMetadataOption = ({ id, name }) => ({
  */
 async function getMetadataOptions(
   url,
-  { filterDisabled = true, params = {} } = {}
+  { filterDisabled = true, params = { _: 0 } } = {}
 ) {
   const { data } = await axios.get(url, {
     params,
@@ -42,7 +42,7 @@ async function getMetadataOptions(
 async function getMetadataWithContextOptions(
   url,
   context,
-  { filterDisabled = true, params = {} } = {}
+  { filterDisabled = true, params = { _: 0 } } = {}
 ) {
   const { data } = await axios.get(url, {
     params,

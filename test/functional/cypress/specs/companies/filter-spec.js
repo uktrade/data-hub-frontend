@@ -44,7 +44,7 @@ const activeStatusFlag = 'false'
 const inactiveStatusFlag = 'true'
 const companySearchEndpoint = '/api-proxy/v4/search/company'
 const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
-const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
+const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
 const usaCountryId = '81756b9a-5d95-e211-a939-e4115bead28a'
 const canadaCountryId = '5daf72a6-5d95-e211-a939-e4115bead28a'
 const usStatesEndpoint = `/api-proxy/v4/metadata/administrative-area?country=${usaCountryId}`

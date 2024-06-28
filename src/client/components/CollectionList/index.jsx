@@ -34,6 +34,7 @@ const CollectionList = ({
   addItemUrl,
   metadataRenderer,
   footerRenderer,
+  collectionItemTemplate = null,
 }) => {
   const totalPages = Math.ceil(
     Math.min(count, maxItemsToPaginate) / itemsPerPage
@@ -66,30 +67,21 @@ const CollectionList = ({
             />
           )}
           <ol aria-live="polite">
-            {items.map(
-              (
-                {
-                  headingText,
-                  headingUrl,
-                  subheading,
-                  badges,
-                  metadata,
-                  buttons,
-                  footerdata,
-                },
-                index
-              ) => (
+            {items.map((item, index) =>
+              collectionItemTemplate ? (
+                collectionItemTemplate(item)
+              ) : (
                 <CollectionItem
                   key={[count, activePage, index].join('-')}
-                  headingUrl={headingUrl}
-                  headingText={headingText}
-                  subheading={subheading}
-                  badges={badges}
-                  metadata={metadata}
+                  headingUrl={item.headingUrl}
+                  headingText={item.headingText}
+                  subheading={item.subheading}
+                  badges={item.badges}
+                  metadata={item.metadata}
                   metadataRenderer={metadataRenderer}
-                  buttons={buttons}
+                  buttons={item.buttons}
                   footerRenderer={footerRenderer}
-                  footerdata={footerdata}
+                  footerdata={item.footerdata}
                 />
               )
             )}

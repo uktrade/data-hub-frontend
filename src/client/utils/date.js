@@ -30,6 +30,7 @@ const {
   differenceInCalendarMonths,
   isFuture,
   isEqual: areDatesEqual,
+  endOfTomorrow,
 } = require('date-fns')
 
 const {
@@ -92,6 +93,10 @@ function isDateInFuture(date) {
 
 function parseDateISO(date) {
   return parseISO(date)
+}
+
+function tomorrow() {
+  return endOfTomorrow()
 }
 
 /**
@@ -374,4 +379,5 @@ module.exports = {
   getStartOfMonth,
   subtractMonths,
   areDatesEqual,
+  tomorrow,
 }

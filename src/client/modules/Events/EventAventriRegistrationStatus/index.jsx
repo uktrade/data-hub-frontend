@@ -20,13 +20,12 @@ import {
   state2props,
   TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES,
 } from './state'
-import { EVENT_ATTENDEES_MAPPING } from '../../../../apps/companies/apps/activity-feed/constants'
 import { EVENTS__AVENTRI_REGISTRATION_STATUS_ATTENDEES_LOADED } from '../../../actions'
 import Activity from '../../../components/ActivityFeed/Activity'
 import ActivityList from '../../../components/ActivityFeed/activities/card/ActivityList'
 import AventriEventSyncWarning from '../../../components/ActivityFeed/activities/AventriEventSyncWarning'
 
-import { ATTENDEES_SORT_OPTIONS } from './constants'
+import { ATTENDEES_SORT_OPTIONS, EVENT_ATTENDEES_MAPPING } from './constants'
 
 const activityListSize = 20
 

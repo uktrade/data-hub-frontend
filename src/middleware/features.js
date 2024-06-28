@@ -19,7 +19,7 @@ function parseFeatureData(featureData = []) {
 module.exports = async function features(req, res, next) {
   try {
     const passThrough =
-      !req.session.token || /^\/(support|healthcheck|oauth)\b/.test(req.url)
+      !req.session.token || /^\/(support|pingdom|oauth)\b/.test(req.url)
 
     if (passThrough) {
       res.locals.features = {}

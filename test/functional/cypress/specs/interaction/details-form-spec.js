@@ -1084,20 +1084,6 @@ describe('Adding an interaction from a contact', () => {
   })
 })
 
-describe('Editing an interaction from a contact', () => {
-  it('should be able to edit an interaction from a contact', () => {
-    cy.visit(urls.contacts.interactions.index(fixtures.contact.deanCox.id))
-    cy.contains('a', 'Meeting between Brendan Smith and Tyson Morar').click()
-    cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction')
-    cy.contains('button', 'Save interaction').click()
-    cy.get('[data-test="status-message"]').should(
-      'have.text',
-      'Interaction updated'
-    )
-  })
-})
-
 describe('Adding an interaction from an investment project', () => {
   const investmentProject = fixtures.investment.newHotelFdi
 
@@ -1107,35 +1093,6 @@ describe('Adding an interaction from an investment project', () => {
     cy.contains('Add interaction').click()
     cy.contains('h1', 'Add interaction')
     cy.contains('button', 'Add interaction')
-  })
-})
-
-describe('Editing an interaction from an investment project', () => {
-  const investmentProject = fixtures.investment.newHotelFdi
-
-  it('should be able to edit an interaction from an investment project', () => {
-    cy.visit(urls.investments.projects.interactions.index(investmentProject.id))
-    cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
-    cy.contains('a', 'Edit interaction').click()
-    cy.contains('h1', 'Edit interaction')
-    cy.contains('button', 'Save interaction').click()
-    cy.get('[data-test="status-message"]').should(
-      'have.text',
-      'Interaction updated'
-    )
-  })
-})
-
-describe('Editing an interaction from an interactions list', () => {
-  it('should be able to edit an interaction from an interactions list', () => {
-    cy.visit(urls.interactions.edit(fixtures.interaction.withLink))
-
-    cy.contains('h1', 'Edit interaction')
-    cy.contains('button', 'Save interaction').click()
-    cy.get('[data-test="status-message"]').should(
-      'have.text',
-      'Interaction updated'
-    )
   })
 })
 

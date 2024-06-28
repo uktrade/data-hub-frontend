@@ -33,22 +33,21 @@ services:
       MAXEMAIL_USERNAME: dummyUser
       MAXEMAIL_PASSWORD: dummyPassword
       ELASTIC_APM_DISABLE_SEND: 1
+      DYNAMICS_INSTANCE_URI: https://localhost
+      DYNAMICS_TENANT_ID: xxx
+      DYNAMICS_APPLICATION_ID: xxx
+      DYNAMICS_CLIENT_SECRET: xxx
     ports:
       - 8001:8001
     depends_on:
       - lbdb
-    command:  >
-      bash -c "sleep 5 && python manage.py migrate &&
-      python manage.py collectstatic --noinput &&
-      python -Wd manage.py runserver 0.0.0.0:8001"
-    logging:
-      driver: none
+    command: >
+      bash -c "sleep 5 && python manage.py migrate && python manage.py collectstatic --noinput && python -Wd manage.py runserver 0.0.0.0:8001"
 
   lbdb:
-    image: postgres:9.6.9-alpine
+    image: postgres:16
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: legal-basis
-    logging:
-      driver: none
+      POSTGRES_PASSWORD: password

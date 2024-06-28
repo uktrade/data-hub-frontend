@@ -1,6 +1,6 @@
 import qs from 'qs'
 
-import { EVENT_ATTENDEES_MAPPING } from '../../../../apps/companies/apps/activity-feed/constants'
+import { EVENT_ATTENDEES_MAPPING } from './constants'
 import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES =

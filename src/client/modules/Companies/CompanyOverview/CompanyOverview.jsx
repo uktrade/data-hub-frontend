@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom'
 import {
   AccountManagementCard,
   ActiveInvestmentProjectsCard,
-  ActivityCard,
   BusinessDetailsCard,
   ExportStatusCard,
   InvestmentStatusCard,
+  RecentActivityCard,
+  UpcomingActivityCard,
 } from './TableCards'
-import { FILTER_FEED_TYPE } from '../../../../apps/companies/apps/activity-feed/constants'
 import { CompanyResource } from '../../../components/Resource/index'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
@@ -50,18 +50,10 @@ const CompanyOverview = () => {
               </GridCol>
               <GridCol columnOneHalf={true}>
                 <CardContainer>
-                  <ActivityCard
-                    company={company}
-                    numberOfItems={3}
-                    feedType={FILTER_FEED_TYPE.RECENT}
-                  />
+                  <RecentActivityCard company={company} />
                 </CardContainer>
                 <CardContainer>
-                  <ActivityCard
-                    company={company}
-                    numberOfItems={2}
-                    feedType={FILTER_FEED_TYPE.UPCOMING}
-                  />
+                  <UpcomingActivityCard company={company} />
                 </CardContainer>
                 <CardContainer>
                   <ActiveInvestmentProjectsCard companyId={companyId} />

@@ -8,7 +8,6 @@ import { selectFirstTypeaheadOption } from './actions'
 import {
   assertTypeaheadHints,
   assertTypeaheadOptionSelected,
-  assertCheckboxGroupOption,
 } from './assertions'
 
 /**
@@ -47,14 +46,4 @@ export const testRemoveChip = ({ element, placeholder = null }) => {
     .click({ multiple: true })
   cy.get('@filterChips').should('be.empty')
   placeholder && cy.get(element).should('contain', placeholder)
-}
-
-/**
- * Tests that finding the checkbox option matching the value and clicking it will mark that option as selected
- */
-export const testCheckBoxGroup = ({ element, value, checked = true }) => {
-  const checkbox = cy.get(element).find(`input[value="${value}"]`)
-  checkbox.first().click()
-
-  assertCheckboxGroupOption({ element, value, checked })
 }

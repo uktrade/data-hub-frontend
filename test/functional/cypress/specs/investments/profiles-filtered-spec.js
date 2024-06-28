@@ -352,7 +352,7 @@ describe('Investor profiles filters', () => {
       ...ukRegionListFaker(2),
       ...ukRegionListFaker(2, { disabled_on: '2018-01-01' }),
     ]
-    cy.intercept('GET', urls.metadata.ukRegion(), ukRegions).as(
+    cy.intercept('GET', `${urls.metadata.ukRegion()}*`, ukRegions).as(
       'ukRegionsApiRequest'
     )
     cy.visit(urls.investments.profiles.index())

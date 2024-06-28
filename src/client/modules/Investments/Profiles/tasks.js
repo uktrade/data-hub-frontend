@@ -1,4 +1,6 @@
+import urls from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
+import { getMetadataOptions } from '../../../metadata'
 
 import transformLargeCapitalProfiles from './transformers'
 
@@ -67,63 +69,53 @@ export function getLargeCapitalProfiles({
     }))
 }
 
-const idName2valueLabel = ({ id, name }) => ({ value: id, label: name })
-
-const mapOptionsWithCategory = (options, category) =>
-  options.map((option) =>
-    Object.assign(idName2valueLabel(option), { categoryLabel: category })
-  )
-
 export const loadFilterOptions = () =>
   Promise.all([
-    apiProxyAxios.get('/v4/metadata/country'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/asset-class-interest'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/investor-type'),
-    apiProxyAxios.get(
-      '/v4/metadata/capital-investment/required-checks-conducted'
+    getMetadataOptions(urls.metadata.country()),
+    getMetadataOptions(urls.metadata.capitalInvestmentAssetClassInterest()),
+    getMetadataOptions(urls.metadata.capitalInvestmentInvestorType()),
+    getMetadataOptions(
+      urls.metadata.capitalInvestmentRequiredChecksConducted()
     ),
-    apiProxyAxios.get('/v4/metadata/capital-investment/deal-ticket-size'),
-    apiProxyAxios.get(
-      'v4/metadata/capital-investment/large-capital-investment-type'
+    getMetadataOptions(urls.metadata.capitalInvestmentDealTicketSize()),
+    getMetadataOptions(
+      urls.metadata.capitalInvestmentLargeCapitalInvestmentType()
     ),
-    apiProxyAxios.get('/v4/metadata/capital-investment/return-rate'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/time-horizon'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/restriction'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/construction-risk'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/equity-percentage'),
-    apiProxyAxios.get('/v4/metadata/capital-investment/desired-deal-role'),
-    apiProxyAxios.get('/v4/metadata/uk-region'),
+    getMetadataOptions(urls.metadata.capitalInvestmentReturnRate()),
+    getMetadataOptions(urls.metadata.capitalInvestmentTimeHorizon()),
+    getMetadataOptions(urls.metadata.capitalInvestmentRestriction()),
+    getMetadataOptions(urls.metadata.capitalInvestmentConstructionRisk()),
+    getMetadataOptions(urls.metadata.capitalInvestmentEquityPercentage()),
+    getMetadataOptions(urls.metadata.capitalInvestmentDesiredDealRole()),
+    getMetadataOptions(urls.metadata.ukRegion(), { filterDisabled: false }),
   ]).then(
     ([
-      { data: countries },
-      { data: classes },
-      { data: investorTypes },
-      { data: requiredChecksConducted },
-      { data: ticketSizes },
-      { data: investmentTypes },
-      { data: returnRates },
-      { data: timeHorizons },
-      { data: restrictions },
-      { data: constructionRisks },
-      { data: equityPercentages },
-      { data: dealRoles },
-      { data: ukRegionsOfInterest },
+      countries,
+      assetClassesOfInterest,
+      investorTypes,
+      requiredChecksConducted,
+      dealTicketSize,
+      investmentTypes,
+      minimumReturnRate,
+      timeHorizon,
+      restrictions,
+      constructionRisk,
+      minimumEquityPercentage,
+      desiredDealRole,
+      ukRegionsOfInterest,
     ]) => ({
-      countries: countries.map(idName2valueLabel),
-      assetClassesOfInterest: classes.map(idName2valueLabel),
-      investorTypes: investorTypes.map(idName2valueLabel),
-      requiredChecksConducted: requiredChecksConducted.map(idName2valueLabel),
-      dealTicketSize: ticketSizes.map(idName2valueLabel),
-      investmentTypes: investmentTypes.map(idName2valueLabel),
-      minimumReturnRate: mapOptionsWithCategory(returnRates, 'Min Return Rate'),
-      timeHorizon: timeHorizons.map(idName2valueLabel),
-      restrictions: restrictions.map(idName2valueLabel),
-      constructionRisk: constructionRisks.map(idName2valueLabel),
-      minimumEquityPercentage: mapOptionsWithCategory(
-        equityPercentages,
-        'Min Equity %'
-      ),
-      desiredDealRole: dealRoles.map(idName2valueLabel),
-      ukRegionsOfInterest: ukRegionsOfInterest.map(idName2valueLabel),
+      countries,
+      assetClassesOfInterest,
+      investorTypes,
+      requiredChecksConducted,
+      dealTicketSize,
+      investmentTypes,
+      minimumReturnRate,
+      timeHorizon,
+      restrictions,
+      constructionRisk,
+      minimumEquityPercentage,
+      desiredDealRole,
+      ukRegionsOfInterest,
     })
   )

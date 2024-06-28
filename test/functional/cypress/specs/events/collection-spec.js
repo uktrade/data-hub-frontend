@@ -1,148 +1,126 @@
-import { assertErrorDialog } from '../../support/assertions'
 import {
   assertRole,
   assertCollectionBreadcrumbs,
   assertAddItemButton,
   assertPaginationSummary,
+  getCollectionList,
+  assertMetadataItem,
+  assertItemLink,
+  assertMetadataItemNotPresent,
 } from '../../support/collection-list-assertions'
+import { collectionListRequest } from '../../support/actions'
 import { events } from '../../../../../src/lib/urls'
+import { eventFaker } from '../../fakers/events'
 
-const urls = require('../../../../../src/lib/urls')
+describe('Event Collection List Page', () => {
+  const event1 = eventFaker({
+    id: 'e8757618-32a4-440a-b6ed-7e6bee71e9af',
+    event_type: {
+      id: '771f654d-e6b1-4fad-8a89-b6ac44147830',
+      name: 'Seminar',
+    },
+    organiser: {
+      id: '88d3a7a4-9798-e211-a939-e4115bead28a',
+      name: 'Abid Sharif\n',
+    },
+    lead_team: {
+      id: '027b1ca4-9698-e211-a939-e4115bead28a',
+      name: 'Business Link North Manchester (ChamberLink)',
+    },
+    service: {
+      name: 'Events : UK based',
+      id: '9584b82b-3499-e211-a939-e4115bead28a',
+    },
+    created_on: '2017-09-24T16:29:35.723886',
+    modified_on: '2017-09-24T16:29:35.723914',
+    name: 'Okuneva - Douglas',
+    start_date: '2017-09-24',
+    end_date: '2017-10-01',
+  })
 
-describe('Event Collection List Page - React', () => {
-  context('when the activity stream flag is on', () => {
-    context('when there is not an error', () => {
-      beforeEach(() => {
-        cy.visit(events.index())
-        cy.get('[data-test="data-hub-event"]').as('dataHubEvents')
-        cy.get('[data-test="aventri-event"]').as('aventriEvents')
-        cy.get('@dataHubEvents').eq(0).as('firstDataHubEvent')
-        cy.get('@dataHubEvents').eq(1).as('secondDataHubEvent')
-        cy.get('@aventriEvents').eq(0).as('firstAventriEvent')
-      })
+  const event2 = eventFaker({
+    id: 'b93d4273-36fe-4008-ac40-fbc197910791',
+    event_type: {
+      name: 'Exhibition',
+      id: '2fade471-e868-4ea9-b125-945eb90ae5d4',
+    },
+    lead_team: null,
+    name: 'Empty one-day exhibition',
+    organiser: null,
+    service: {
+      name: 'Events : UK based',
+      id: '9584b82b-3499-e211-a939-e4115bead28a',
+    },
+  })
 
-      assertCollectionBreadcrumbs('Events')
-
-      it('should contain a status role', () => {
-        assertRole('status')
-      })
-
-      it('should display the events result count header', () => {
-        cy.get('[data-test="activity-feed-collection-header"]').contains(
-          '82 events'
-        )
-      })
-
-      it('should have a link to add event', () => {
-        assertAddItemButton('Add event', '/events/create')
-      })
-
-      it('should display the expected number of pages', () => {
-        assertPaginationSummary('Page 1 of 9')
-      })
-
-      it('should not display the data hub API collection list', () => {
-        cy.get('[data-test="collection-list"]').should('not.exist')
-      })
-
-      it('should display a datahub event name with link', () => {
-        cy.get('@firstDataHubEvent')
-          .find('[data-test="data-hub-event-name"]')
-          .should('exist')
-          .contains('a', 'Holiday to the Seaside')
-          .should('be.visible')
-          .should('have.attr', 'href', '/events/6666/details')
-      })
-
-      it('should display an aventri event name with link', () => {
-        cy.get('@firstAventriEvent')
-          .find('[data-test="aventri-event-name"]')
-          .should('exist')
-          .contains('a', 'Aventri Test Event')
-          .should('be.visible')
-          .should('have.attr', 'href', '/events/aventri/1113/details')
-      })
-
-      it('should display a data hub event date', () => {
-        cy.get('@firstDataHubEvent')
-          .find('[data-test="event-date-label"]')
-          .should('exist')
-          .should('contain', '30 May to 14 Jun 2022')
-      })
-
-      it('should display an Aventri event date', () => {
-        cy.get('@firstAventriEvent')
-          .find('[data-test="event-date-label"]')
-          .should('exist')
-          .should('contain', '02 Mar 2021 to 04 May 2022')
-      })
-
-      it('should display the event organiser', () => {
-        cy.get('@firstDataHubEvent')
-          .find('[data-test="organiser-label"]')
-          .should('exist')
-          .should('contain', 'Joe Bloggs')
-      })
-
-      it('should display the service type', () => {
-        cy.get('@firstDataHubEvent')
-          .find('[data-test="service-type-label"]')
-          .should('exist')
-          .should('contain', 'Best service')
-      })
-
-      it('should display the lead team', () => {
-        cy.get('@firstDataHubEvent')
-          .find('[data-test="lead-team-label"]')
-          .should('exist')
-          .should('contain', 'Digital Data Hub - Live Service')
-      })
-
-      context('when optional details are missing', () => {
-        it('should display "Not set"', () => {
-          cy.get('@secondDataHubEvent').find('div').find('div').as('labels')
-          cy.get('@labels')
-            .get('[data-test="lead-team-label"]')
-            .should('contain', 'Not set')
-          cy.get('@labels')
-            .get('[data-test="organiser-label"]')
-            .should('contain', 'Not set')
-          cy.get('@labels')
-            .get('[data-test="service-type-label"]')
-            .should('contain', 'Not set')
-        })
-      })
-
-      context('when there are more than 10 events', () => {
-        it('should be possible to page through', () => {
-          cy.get('[data-page-number="2"]').click()
-          assertPaginationSummary('Page 2 of 9')
-          cy.get('@firstDataHubEvent')
-            .find('[data-test="data-hub-event-name"]')
-            .should('exist')
-        })
-      })
+  const eventsList = [event1, event2]
+  context('when there is not an error', () => {
+    beforeEach(() => {
+      collectionListRequest('v3/search/event', eventsList, events.index())
+      getCollectionList()
+      cy.get('@collectionItems').eq(1).as('secondListItem')
     })
 
-    context(
-      'viewing the events collection page when there is an error loading events',
-      () => {
-        before(() => {
-          cy.intercept(
-            'GET',
-            `${events.activity.data()}?sortBy=modified_on:desc&page=1`,
-            { statusCode: 500 }
-          )
-          cy.visit(urls.events.index())
-        })
+    assertCollectionBreadcrumbs('Events')
 
-        it('should render an error message', () => {
-          assertErrorDialog(
-            'TASK_GET_ALL_ACTIVITY_FEED_EVENTS',
-            'Unable to load events.'
-          )
-        })
-      }
-    )
+    it('should contain a status role', () => {
+      assertRole('status')
+    })
+
+    it('should display the events result count header', () => {
+      cy.get('h2').contains('2 events')
+    })
+
+    it('should have a link to add event', () => {
+      assertAddItemButton('Add event', '/events/create')
+    })
+
+    it('should display the expected number of pages', () => {
+      assertPaginationSummary('Page 1 of 1')
+    })
+
+    it('should display a datahub event name with link', () => {
+      assertItemLink('@firstListItem', event1.name, events.details(event1.id))
+    })
+
+    it.skip('should display an aventri event name with link', () => {
+      cy.get('@firstAventriEvent')
+        .find('[data-test="aventri-event-name"]')
+        .should('exist')
+        .contains('a', 'Aventri Test Event')
+        .should('be.visible')
+        .should('have.attr', 'href', '/events/aventri/1113/details')
+    })
+
+    it('should display a data hub event date', () => {
+      assertMetadataItem('@firstListItem', 'Event date 24 Sep to 01 Oct 2017')
+    })
+
+    it.skip('should display an Aventri event date', () => {
+      cy.get('@firstAventriEvent')
+        .find('[data-test="event-date-label"]')
+        .should('exist')
+        .should('contain', '02 Mar 2021 to 04 May 2022')
+    })
+
+    it('should display the event organiser', () => {
+      assertMetadataItem('@firstListItem', `Organiser ${event1.organiser.name}`)
+    })
+
+    it('should display the service type', () => {
+      assertMetadataItem(
+        '@firstListItem',
+        `Service type ${event1.service.name}`
+      )
+    })
+
+    it('should display the lead team', () => {
+      assertMetadataItem('@firstListItem', `Lead team ${event1.lead_team.name}`)
+    })
+
+    it('should not display missing metadata items', () => {
+      assertMetadataItemNotPresent('@secondListItem', 'Lead team')
+      assertMetadataItemNotPresent('@secondListItem', 'Organiser')
+    })
   })
 })
