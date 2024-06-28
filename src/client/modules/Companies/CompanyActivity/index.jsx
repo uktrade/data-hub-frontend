@@ -9,7 +9,7 @@ import {
   COMPANY_ACTIVITIES__METADATA_LOADED,
 } from '../../../actions'
 
-import { LABELS } from '../../../components/ActivityFeed/CollectionList/constants'
+import { LABELS } from './constants'
 
 import {
   CollectionFilters,
@@ -26,11 +26,12 @@ import {
 } from '../../../components/SkeletonPlaceholder'
 
 import {
+  state2props,
+  ID,
+  TASK_GET_COMPANY_ACTIVITIES_NO_AS,
   TASK_GET_COMPANY_ACTIVITIES_METADATA,
   TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
-} from '../../../components/ActivityFeed/CollectionList/state'
-
-import { state2props, ID, TASK_GET_COMPANY_ACTIVITIES_NO_AS } from './state'
+} from './state'
 
 import { sanitizeFilter } from '../../../../client/filters'
 

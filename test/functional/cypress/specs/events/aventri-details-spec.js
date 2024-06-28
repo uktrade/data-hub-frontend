@@ -5,7 +5,8 @@ const {
   assertKeyValueTable,
 } = require('../../support/assertions')
 
-describe('Event Aventri Details', () => {
+//TODO - Reinstate this test once we have restored the Aventri integration
+describe.skip('Event Aventri Details', () => {
   const eventInPastId = '1111'
   const notFoundEventId = '404'
   const errorEventId = '500'
