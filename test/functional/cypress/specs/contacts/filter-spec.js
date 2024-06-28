@@ -13,6 +13,7 @@ import {
 
 import { contactsListFaker } from '../../fakers/contacts'
 import { ukRegionListFaker } from '../../fakers/regions'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const searchEndpoint = '/api-proxy/v3/search/contact'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region'
@@ -301,9 +302,8 @@ describe('Contacts Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const londonId = '874cd12a-6095-e211-a939-e4115bead28a'
     const expectedPayload = {
-      company_uk_region: [londonId],
+      company_uk_region: [UK_REGIONS.LONDON],
       limit: 10,
       offset: 0,
       archived: false,
@@ -329,7 +329,7 @@ describe('Contacts Collections Filter', () => {
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        company_uk_region: [londonId],
+        company_uk_region: [UK_REGIONS.LONDON],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/contacts?${queryString}`)
@@ -362,11 +362,11 @@ describe('Contacts Collections Filter', () => {
         expect(request.body).to.deep.equal(expectedPayload)
       })
 
-      assertQueryParams('company_uk_region', [londonId])
+      assertQueryParams('company_uk_region', [UK_REGIONS.LONDON])
       assertChipExists({ label: 'London', position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
 
-      removeChip(londonId)
+      removeChip(UK_REGIONS.LONDON)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
       cy.wait('@apiRequest').then(({ request }) => {
@@ -427,7 +427,7 @@ describe('Contacts Collections Filter', () => {
         company_name: 'Tesco',
         company_sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
         address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        company_uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
+        company_uk_region: UK_REGIONS.LONDON,
         archived: ['false', 'true'],
       })
       cy.visit(`/contacts?${queryString}`)

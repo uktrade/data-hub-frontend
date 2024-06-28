@@ -2,6 +2,7 @@ import qs from 'qs'
 
 import { investments } from '../../../../../src/lib/urls'
 import { investmentProjectListFaker } from '../../fakers/investment-projects'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
@@ -107,7 +108,7 @@ describe('Download CSV', () => {
       sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
       country_investment_originates_from:
         '80756b9a-5d95-e211-a939-e4115bead28a',
-      uk_region_location: '844cd12a-6095-e211-a939-e4115bead28a',
+      uk_region_location: UK_REGIONS.EAST_MIDLANDS,
       status: ['ongoing', 'delayed'],
       investment_type: '031269ab-b7ec-40e9-8a4e-7371404f0622',
       land_date_financial_year_start: '2021',

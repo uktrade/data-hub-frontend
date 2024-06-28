@@ -28,6 +28,7 @@ import {
   clickAddEventButton,
 } from '../../../cypress/support/eventform-fillers'
 import { clickReturnWithoutSavingButton } from '../../../cypress/support/form-fillers'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const selectors = require('../../../../selectors/event/createOrEdit')
 
@@ -266,7 +267,7 @@ describe('Event create', () => {
           'af704a93-5404-4bc6-adda-381756993902',
           '50370070-71f9-4ada-ae2c-cd0a737ba5e2',
         ],
-        uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
+        uk_region: UK_REGIONS.LONDON,
         teams: [
           'bb65239e-9698-e211-a939-e4115bead28a',
           '06374ae0-9698-e211-a939-e4115bead28a',
