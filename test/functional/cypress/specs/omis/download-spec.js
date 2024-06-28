@@ -2,6 +2,7 @@ import qs from 'qs'
 
 import { ordersListFaker } from '../../fakers/orders'
 import { omis } from '../../../../../src/lib/urls'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const downloadHeader = '[data-test="download-data-header"]'
 const downloadButton = '[data-test="download-data-header"] a'
@@ -101,7 +102,7 @@ describe('Download CSV', () => {
       contact_name: 'Jon Thistle',
       sector_descends: '9538cecc-5f95-e211-a939-e4115bead28a', // Aerospace
       primary_market: ['b05f66a0-5d95-e211-a939-e4115bead28a'], // Brazil
-      uk_region: ['874cd12a-6095-e211-a939-e4115bead28a'], // London
+      uk_region: [UK_REGIONS.LONDON],
     })
     before(() => {
       cy.intercept('POST', apiEndpoint, {

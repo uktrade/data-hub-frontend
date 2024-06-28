@@ -1,5 +1,6 @@
 import countries from '../../../../../test/sandbox/fixtures/v4/metadata/country.json'
 import businessPotential from '../../../../../test/sandbox/fixtures/v4/metadata/business-potential.json'
+import { UK_REGIONS } from '../../../../common/constants'
 
 const CONTACT = {
   id: 'some-random-contact-id',
@@ -144,7 +145,7 @@ export default {
             isTurnoverEstimated: null,
             ukRegion: {
               name: 'London',
-              id: '874cd12a-6095-e211-a939-e4115bead28a',
+              id: UK_REGIONS.LONDON,
             },
             exportExperienceCategory: null,
             address: {

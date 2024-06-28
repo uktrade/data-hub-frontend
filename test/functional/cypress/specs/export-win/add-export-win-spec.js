@@ -34,6 +34,7 @@ import {
   creditForThisWinStep,
   summaryStep,
 } from './constants'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const exportWin = {
   ...exportWinsFaker(),
@@ -284,7 +285,7 @@ describe('Adding an export win', () => {
               },
             ],
             company_contacts: ['000'],
-            customer_location: '8c4cd12a-6095-e211-a939-e4115bead28a',
+            customer_location: UK_REGIONS.SCOTLAND,
             business_potential: 'e4d74957-60a4-4eab-a17b-d4c7b792ad25',
             export_experience: '051a0362-d1a9-41c0-8a58-3171e5f59a8e',
             country: '81756b9a-5d95-e211-a939-e4115bead28a',

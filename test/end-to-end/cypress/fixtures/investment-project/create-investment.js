@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 
+const { UK_REGIONS } = require('../../../../../src/common/constants')
+
 function newHotelFdi() {
   return {
     model: 'investment.investmentproject',
@@ -29,7 +31,7 @@ function newHotelFdi() {
       average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
       site_decided: 'False',
       client_considering_other_countries: 'False',
-      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      uk_region_locations: [UK_REGIONS.NORTH_EAST],
       client_requirements: 'Anywhere',
       strategic_drivers: ['382aa6d1-a362-4166-a09d-f579d9f3be75'],
       created_on: '2017-03-17T15:12:00Z',
@@ -64,7 +66,7 @@ function fancyDressManufacturing() {
       average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
       site_decided: false,
       client_considering_other_countries: false,
-      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      uk_region_locations: [UK_REGIONS.NORTH_EAST],
       client_requirements: 'Anywhere',
       strategic_drivers: ['382aa6d1-a362-4166-a09d-f579d9f3be75'],
       created_on: '2017-03-17T15:12:00Z',
@@ -126,7 +128,7 @@ function newGolfCourseDA() {
       average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
       site_decided: false,
       client_considering_other_countries: false,
-      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      uk_region_locations: [UK_REGIONS.NORTH_EAST],
       client_requirements: 'Anywhere',
       strategic_drivers: ['7cc42486-30bb-46d5-813d-6ad1c918ef08'],
       project_manager: 'd7493b4e-5d7b-4834-98d9-28b78a74052a',
@@ -167,7 +169,7 @@ function newZooLEP() {
       average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
       site_decided: false,
       client_considering_other_countries: false,
-      uk_region_locations: ['814cd12a-6095-e211-a939-e4115bead28a'],
+      uk_region_locations: [UK_REGIONS.NORTH_EAST],
       client_requirements: 'Anywhere',
       strategic_drivers: ['7cc42486-30bb-46d5-813d-6ad1c918ef08'],
       project_manager: 'd7493b4e-5d7b-4834-98d9-28b78a74052a',
