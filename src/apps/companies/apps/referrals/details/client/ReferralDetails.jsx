@@ -115,7 +115,7 @@ export default connect(({ referrerUrl, ...state }) => ({
                 </Details>
                 <FormActions>
                   <Button
-                    as={Link}
+                    as={'a'}
                     href={urls.companies.referrals.interactions.create(
                       company.id,
                       referralId
@@ -124,7 +124,7 @@ export default connect(({ referrerUrl, ...state }) => ({
                     Accept referral
                   </Button>
                   <SecondaryButton
-                    as={Link}
+                    as={'a'}
                     href={urls.companies.referrals.help(company.id, referralId)}
                   >
                     I cannot accept the referral

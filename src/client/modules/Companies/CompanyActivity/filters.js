@@ -1,15 +1,11 @@
 import {
-  ACTIVITY_TYPE_OPTIONS,
-  BUSINESS_INTELLIGENCE_OPTION,
-  LABELS,
-} from '../../../components/ActivityFeed/CollectionList/constants'
-
-import {
   buildOptionsFilter,
   buildDatesFilter,
   buildInputFieldFilter,
 } from '../../../filters'
 import { INCLUDE_RELATED_COMPANIES } from '../../../components/RoutedRelatedCompaniesCheckboxGroup/constants'
+import { ACTIVITY_TYPE_OPTIONS, LABELS } from './constants'
+import { BUSINESS_INTELLIGENCE_OPTION } from '../../Interactions/CollectionList/constants'
 
 export const buildSelectedFilters = (
   queryParams,

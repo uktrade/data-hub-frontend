@@ -4,7 +4,7 @@ import { SPACING, BORDER_WIDTH_MOBILE } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 import Checkbox from '@govuk-react/checkbox'
 
-import { WHITE } from '../../../client/utils/colours'
+import { WHITE } from '../../utils/colours'
 
 const StyledCheckbox = styled(Checkbox)`
   display: flex;
@@ -41,11 +41,11 @@ const StyledCheckbox = styled(Checkbox)`
   }
 `
 
-const ActivityFeedCheckbox = ({ children, ...rest }) => {
+const InvestmentCheckbox = ({ children, ...rest }) => {
   return <StyledCheckbox {...rest}>{children}</StyledCheckbox>
 }
 
-ActivityFeedCheckbox.propTypes = {
+InvestmentCheckbox.propTypes = {
   children: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   checked: PropTypes.bool,
@@ -53,4 +53,4 @@ ActivityFeedCheckbox.propTypes = {
   name: PropTypes.string,
 }
 
-export default ActivityFeedCheckbox
+export default InvestmentCheckbox

@@ -9,9 +9,6 @@ import contactWithCompanyAddress from '../../../fixtures/v3/contact/contact-with
 import contactWithUSAddress from '../../../fixtures/v3/contact/contact-with-us-address.json' assert { type: 'json' }
 import archivedContact from '../../../fixtures/v3/contact/contact-archived.json' assert { type: 'json' }
 import invalidEmailContact from '../../../fixtures/v3/contact/contact-invalid-email.json' assert { type: 'json' }
-import aventriContact from '../../../fixtures/v4/activity-feed/aventri-attendees.json' assert { type: 'json' }
-import ditContactforAventri from '../../../fixtures/v3/contact/contact-aventri.json' assert { type: 'json' }
-import noContact from '../../../fixtures/v3/contact/no-contact.json' assert { type: 'json' }
 import auditHistory from '../../../fixtures/v3/contact/contact-audit-history.json' assert { type: 'json' }
 import emptyAuditHistory from '../../../fixtures/v3/contact/contact-audit-history-empty.json' assert { type: 'json' }
 import lambdaPlc from '../../../fixtures/v4/company/company-lambda-plc.json' assert { type: 'json' }
@@ -26,16 +23,6 @@ const validateContactForm = function (formData) {
     .map((fieldName) => [fieldName, ['This field may not be null.']])
 }
 
-const AventriEmailWithDataHubMatches = aventriContact.hits?.hits
-  .filter((h) => h._source.datahubContactUrl)
-  .map((h) => h._source.object['dit:emailAddress'])
-
-const AventriEmailWithoutDataHubMatch =
-  aventriContact.hits?.hits[1]?._source.object['dit:emailAddress']
-
-const EmptyStringAventriEmail =
-  aventriContact.hits?.hits[2]?._source.object['dit:emailAddress']
-
 export const getContact = function (req, res) {
   // This is here to allow creation of new contacts. The email must contain "new"
   if (req.query.email?.includes('new')) {
@@ -47,15 +34,6 @@ export const getContact = function (req, res) {
       'BEWARE: Lambda PLC uses contacts-for-referral.json rather than contact.json'
     )
     return res.json(contactsForReferral)
-  }
-  if (AventriEmailWithDataHubMatches.includes(req.query.email)) {
-    return res.json(ditContactforAventri)
-  }
-  if (
-    req.query.email === AventriEmailWithoutDataHubMatch ||
-    req.query.email === EmptyStringAventriEmail
-  ) {
-    return res.json(noContact)
   } else {
     res.json(contact)
   }

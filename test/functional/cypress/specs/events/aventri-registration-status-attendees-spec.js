@@ -4,7 +4,8 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 
-describe('Aventri status event registration attendees', () => {
+//TODO - Reinstate this test once we have restored the Aventri integration
+describe.skip('Aventri status event registration attendees', () => {
   describe('Sorting', () => {
     beforeEach(() => {
       cy.intercept(

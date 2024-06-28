@@ -1,5 +1,3 @@
-import { FILTER_KEYS } from '../../../../apps/companies/apps/activity-feed/constants'
-
 export const LABELS = {
   activityType: 'Activity type',
   interaction: 'Interaction',
@@ -25,16 +23,16 @@ export const LABELS = {
   allExternalActivity: 'External activity',
 }
 
+const FILTER_KEYS = {
+  dataHubAndExternalActivity: 'dataHubAndExternalActivity',
+  myActivity: 'myActivity',
+  externalActivity: 'externalActivity',
+  dataHubActivity: 'dataHubActivity',
+}
+
 export const ACTIVITY_TYPE_OPTIONS = [
   { label: LABELS.allDataHubActivity, value: FILTER_KEYS.dataHubActivity },
   { label: LABELS.allExternalActivity, value: FILTER_KEYS.externalActivity },
-]
-
-export const BUSINESS_INTELLIGENCE_OPTION = [
-  {
-    label: 'Includes business intelligence',
-    value: 'true',
-  },
 ]
 
 export const SORT_OPTIONS = [
