@@ -17,8 +17,8 @@ const CONTACT_ACTIVITY_SORT_SEARCH_OPTIONS = {
 }
 
 const CONTACT_ACTIVITY_SORT_SELECT_OPTIONS = [
-  { name: 'Newest', value: 'newest' },
-  { name: 'Oldest', value: 'oldest' },
+  { name: 'Newest', value: 'date:desc' },
+  { name: 'Oldest', value: 'date:asc' },
 ]
 
 const EVENT_ATTENDEES_SORT_OPTIONS = {

@@ -26,4 +26,4 @@ services:
       NODE_ENV: test
     command: bash -c 'npm run build:for-test-coverage && npm run start:coverage'
   redis:
-    image: redis:6.2.6
+    image: redis:7.2.4

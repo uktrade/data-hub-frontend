@@ -1,6 +1,6 @@
 const router = require('./router')
 
 module.exports = {
-  mountpath: '/healthcheck',
+  mountpath: '/pingdom',
   router: router,
 }

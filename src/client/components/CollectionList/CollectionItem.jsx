@@ -16,7 +16,7 @@ const ItemWrapper = styled('li')`
   padding: ${SPACING.SCALE_3} 0;
 `
 
-const StyledBadgesWrapper = styled('div')`
+export const StyledBadgesWrapper = styled('div')`
   margin-bottom: ${SPACING.SCALE_2};
 
   & > * {
@@ -30,6 +30,13 @@ const StyledBadgesWrapper = styled('div')`
     float: right;
   }
 `
+
+const StyledInlineTagWrapper = styled('div')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: SPACING.SCALE_2,
+  paddingBottom: '10px',
+})
 
 const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
@@ -64,6 +71,18 @@ const StyledFooterWrapper = styled('div')`
   margin-right: 10px;
   text-align: right;
 `
+
+export const renderTags = (tags) =>
+  tags.map((tag, index) => (
+    <Tag
+      key={`tag_${index}`}
+      colour={tag.colour}
+      data-test={tag.dataTest ? tag.dataTest : 'collection-item-tag'}
+    >
+      {tag.text}
+    </Tag>
+  ))
+
 const CollectionItem = ({
   headingText,
   subheading,
@@ -79,21 +98,14 @@ const CollectionItem = ({
   buttons,
   footerRenderer,
   footerdata,
+  showTagsInMetadata = false,
 }) => (
   <ItemWrapper data-test="collection-item">
     {/* tags take precidence over badges as they are the newer style, however not all components
      have been updated so the component needs to handle rendering both props */}
-    {tags && (
+    {tags && !showTagsInMetadata && (
       <StyledBadgesWrapper data-test="collection-item-tags">
-        {tags.map((tag, index) => (
-          <Tag
-            key={`tag_${index}`}
-            colour={tag.colour}
-            data-test="collection-item-tag"
-          >
-            {tag.text}
-          </Tag>
-        ))}
+        {renderTags(tags)}
       </StyledBadgesWrapper>
     )}
 
@@ -134,6 +146,9 @@ const CollectionItem = ({
       )
     ) : null}
 
+    {showTagsInMetadata && (
+      <StyledInlineTagWrapper>{renderTags(tags)}</StyledInlineTagWrapper>
+    )}
     {metadataRenderer ? (
       metadataRenderer(metadata)
     ) : (

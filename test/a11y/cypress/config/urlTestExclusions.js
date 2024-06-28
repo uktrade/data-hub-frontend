@@ -199,6 +199,9 @@ export const urlTestExclusions = [
   {
     url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment',
   },
+  {
+    url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment-type',
+  },
   { url: '/api-proxy/v4/metadata/capital-investment/return-rate' },
   { url: '/api-proxy/v4/metadata/capital-investment/time-horizon' },
   { url: '/api-proxy/v4/metadata/capital-investment/restriction' },
@@ -206,6 +209,10 @@ export const urlTestExclusions = [
   { url: '/api-proxy/v4/metadata/capital-investment/equity-percentage' },
   { url: '/api-proxy/v4/metadata/capital-investment/desired-deal-role' },
   { url: '/api-proxy/v4/metadata/capital-investment/asset-class-interest' },
+  { url: '/api-proxy/v4/large-capital-opportunity/:opportunityId' },
+  {
+    url: '/api-proxy/v4/metadata/large-capital-opportunity/opportunity-value-type',
+  },
   { url: '/api-proxy/v4/metadata/one-list-tier' },
   { url: '/api-proxy/v4/metadata/trade-agreement' },
 ]

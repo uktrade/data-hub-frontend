@@ -62,7 +62,8 @@ describe('DBT Permission', () => {
         'Orders',
       ])
     })
-    it('when on the activity tab, internal activity should be selected', () => {
+    //TODO - Unskip when the internal activity filter has been restored
+    it.skip('when on the activity tab, internal activity should be selected', () => {
       cy.get('[data-test="tabbedLocalNavList"]').contains('Activity').click()
       assertActivitytab('#field-activityType-1')
     })

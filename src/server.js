@@ -159,5 +159,7 @@ app.use(errors.badRequest)
 app.use(errors.catchAll)
 
 app.listen(config.port, () => {
-  logger.info(`app listening on port ${config.port}`)
+  logger.info(`app listening on port ${config.port}`, {
+    eventType: logger.eventTypes.expressStartup,
+  })
 })

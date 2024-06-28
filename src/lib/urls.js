@@ -531,6 +531,10 @@ module.exports = {
         '/investments',
         '/opportunities/:opportunityId/interactions'
       ),
+      largeCapitalOpportunityDetails: url(
+        '/api-proxy/v4/large-capital-opportunity',
+        '/:opportunityId'
+      ),
       status: url('/investments', '/opportunities/:opportunityId/status'),
       create: url('/investments', '/opportunities/create'),
     },
@@ -627,6 +631,10 @@ module.exports = {
       '/api-proxy/v4/metadata/capital-investment',
       '/large-capital-investment'
     ),
+    capitalInvestmentLargeCapitalInvestmentType: url(
+      '/api-proxy/v4/metadata/capital-investment',
+      '/large-capital-investment-type'
+    ),
     capitalInvestmentReturnRate: url(
       '/api-proxy/v4/metadata/capital-investment',
       '/return-rate'
@@ -654,6 +662,10 @@ module.exports = {
     capitalInvestmentAssetClassInterest: url(
       '/api-proxy/v4/metadata/capital-investment',
       '/asset-class-interest'
+    ),
+    largeCapitalOpportunityMetadata: url(
+      '/api-proxy/v4/metadata/large-capital-opportunity',
+      '/opportunity-value-type'
     ),
     oneListTier: url('/api-proxy/v4/metadata', '/one-list-tier'),
     tradeAgreement: url('/api-proxy/v4/metadata', '/trade-agreement'),

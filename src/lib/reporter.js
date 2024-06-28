@@ -6,7 +6,9 @@ const logger = require('../config/logger')
 const useSentry = !!config.sentryDsn
 
 if (useSentry) {
-  logger.info('Sentry DSN detected. Sentry will be enabled.')
+  logger.info('Sentry DSN detected. Sentry will be enabled.', {
+    eventType: logger.eventTypes.expressStartup,
+  })
   Sentry.init({
     dsn: config.sentryDsn,
   })
