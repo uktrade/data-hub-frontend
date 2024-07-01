@@ -13,9 +13,6 @@ updates:
   - dependency-name: react-redux # TET-154
     versions:
     - "> 7.2.8"
-  - dependency-name: react-router-dom # TET-34
-    versions:
-    - "> 5.3.0"
   - dependency-name: jsdom # TET-371
     versions:
       - "> 20.0.3"
@@ -33,10 +30,10 @@ updates:
   - dependency-name: "@storybook/addon-essentials"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/react"
+  - dependency-name: "@storybook/react-webpack5"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/react-webpack5"
+  - dependency-name: "@storybook/addon-webpack5-compiler-babel"
     versions:
     - ">= 0"
   - dependency-name: "storybook"
