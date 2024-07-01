@@ -43,7 +43,7 @@
     "adr-list": "adr list",
     "adr-graph": "adr generate graph",
     "adr-toc": "adr generate toc",
-    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/manager-api@latest @storybook/react@latest @storybook/react-webpack5@latest storybook@latest",
+    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addon-webpack5-compiler-babel@latest @storybook/manager-api@latest @storybook/react@latest @storybook/react-webpack5@latest storybook@latest",
     "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest",
     "dependabot:update-nivo": "npm install @nivo/core@latest @nivo/pie@latest @nivo/tooltip@latest"
   },
