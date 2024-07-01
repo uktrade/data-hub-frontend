@@ -63,7 +63,6 @@ const config = {
     apiKey: envVars.POSTCODE_KEY,
     baseUrl: envVars.DATA_STORE_SERVICE_POSTCODE,
   },
-  regionLookupUrl: envVars.DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL,
   redis: buildRedisConfig(),
   proxy: envVars.PROXY,
   cacheDurationShort: envVars.CACHE_DURATION_SHORT,
@@ -105,11 +104,6 @@ const config = {
     dataHubBackend: {
       id: envVars.DATA_HUB_BACKEND_ACCESS_KEY_ID,
       key: envVars.DATA_HUB_BACKEND_SECRET_ACCESS_KEY,
-      algorithm: 'sha256',
-    },
-    dataStoreService: {
-      id: envVars.DATA_STORE_SERVICE_ACCESS_KEY_ID,
-      key: envVars.DATA_STORE_SERVICE_SECRET_ACCESS_KEY,
       algorithm: 'sha256',
     },
     helpCentre: {

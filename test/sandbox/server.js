@@ -72,7 +72,7 @@ import {
 } from './routes/metadata.js'
 import { getWhoami, setWhoami, resetWhoami } from './routes/whoami.js'
 import { tickets } from './routes/zendesk.js'
-import { toRegion, lookup } from './routes/postcode.js'
+import { lookup } from './routes/postcode.js'
 
 // V3
 import {
@@ -309,10 +309,6 @@ import {
   getExportWinReview,
   patchExportWinReview,
 } from './routes/v4/export-win/export-win.js'
-
-// Data store service (github.com/uktrade/data-store-service)
-app.get('/api/v1/get-postcode-data/', toRegion)
-app.get('/api/v1/get-postcode-data/:postCode', toRegion)
 
 // getaddress.io mock
 app.get('/sandbox/postcodelookup/', lookup)

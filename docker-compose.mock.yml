@@ -8,7 +8,6 @@ services:
     environment:
       API_ROOT: http://mock-api:8000
       DATA_STORE_SERVICE_POSTCODE: http://mock-api:8000/sandbox/postcodelookup/
-      DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://mock-api:8000/api/v1/get-postcode-data/
       HELP_CENTRE_API_FEED: http://mock-api:8000/help-centre/announcement
       ONE_LIST_EMAIL: onelist@example.com
       ZEN_TICKETS_URL: http://mock-api:8000/zendesk/tickets
