@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER } from '../../../actions'
+import {
+  COMPANIES__SELECTED_ADVISERS,
+  COMPANIES__SELECTED_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER,
+} from '../../../actions'
 
 import {
   CollectionFilters,
@@ -17,6 +20,7 @@ import {
   ID,
   TASK_GET_COMPANIES_LEAD_ITA_OR_GLOBAL_ACCOUNT_MANAGER_NAME,
   TASK_GET_COMPANIES_LIST,
+  TASK_GET_COMPANIES_ADVISER_NAME,
   state2props,
 } from './state'
 
@@ -46,6 +50,14 @@ const CompaniesCollection = ({
     },
   }
 
+  const adviserListTask = {
+    name: TASK_GET_COMPANIES_ADVISER_NAME,
+    id: ID,
+    startOnRender: {
+      payload: payload.adviser,
+      onSuccessDispatch: COMPANIES__SELECTED_ADVISERS,
+    },
+  }
   return (
     <DefaultLayout heading="Companies" pageTitle="Companies">
       <FilteredCollectionList
@@ -66,10 +78,12 @@ const CompaniesCollection = ({
           name,
           ukPostcode,
           leadItaOrGlobalAccountManagers,
+          advisers,
         }) => ({
           ...sanitizeFilter(name),
           ...sanitizeFilter(ukPostcode),
           ...sanitizeFilter(leadItaOrGlobalAccountManagers),
+          ...sanitizeFilter(advisers),
         })}
       >
         <CollectionFilters taskProps={companyCollectionListMetadataTask(ID)}>
@@ -135,6 +149,17 @@ const CompaniesCollection = ({
                 selectedFilters.leadItaOrGlobalAccountManagers.options
               }
               data-test="lead-ita-global-account-manager-filter"
+            />
+            <Filters.AdvisersTypeahead
+              isMulti={true}
+              taskProps={adviserListTask}
+              label={LABELS.adviser}
+              name="adviser"
+              qsParam="adviser"
+              placeholder="Search adviser"
+              noOptionsMessage="No advisers found"
+              selectedOptions={selectedFilters.advisers.options}
+              data-test="advisers-filter"
             />
           </FilterToggleSection>
 

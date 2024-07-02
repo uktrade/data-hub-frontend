@@ -17,6 +17,7 @@ export const LABELS = {
   lastInteractionAfter: 'Last interaction from',
   lastInteractionBefore: 'Last interaction to',
   leadItaOrGlobalAccountManager: 'Lead ITA or global account manager',
+  adviser: 'Adviser',
 }
 
 export const COMPANY_STATUS_OPTIONS = [
