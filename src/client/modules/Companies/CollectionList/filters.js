@@ -133,7 +133,7 @@ export const buildSelectedFilters = (
     })),
   },
   advisers: {
-    queryParam: 'advisers',
+    queryParam: 'adviser',
     options: advisers.map((adviser) => ({
       label: adviser.name,
       value: adviser.id,
