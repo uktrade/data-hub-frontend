@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 
+const { UK_REGIONS } = require('../../../../../src/common/constants')
+
 function defaultCompany(name = 'audit testing') {
   return {
     pk: uuidv4(),
@@ -168,7 +170,7 @@ function subsidiaryCorp(companyId) {
       registered_address_town: 'Hainault',
       registered_address_postcode: 'IG6 7SQ',
       registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-      uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
+      uk_region: UK_REGIONS.LONDON,
       description: 'dummy company for testing subsidiaries of One List GHQ',
       created_on: '2017-07-23T10:00:00Z',
       modified_on: '2017-04-07T10:00:00Z',

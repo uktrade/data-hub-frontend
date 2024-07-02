@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 
+const { UK_REGIONS } = require('../../../../src/common/constants')
+
 function defaultEvent() {
   return {
     model: 'event.event',
@@ -24,7 +26,7 @@ function defaultEvent() {
         '8880da16-d80e-e611-9bdc-e4115bead28a',
       ],
       related_programmes: ['1abe5563-6482-41d8-b566-6a9ee9e37c5f'],
-      uk_region: '864cd12a-6095-e211-a939-e4115bead28a',
+      uk_region: UK_REGIONS.EAST_OF_ENGLAND,
       service: '9584b82b-3499-e211-a939-e4115bead28a',
       created_on: '2017-01-05T00:00:00Z',
       modified_on: '2017-01-05T00:00:00Z',

@@ -11,6 +11,7 @@ import { collectionListRequest } from '../../support/actions'
 import { companies } from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 describe('Company Collections - React', () => {
   const company1 = companyFaker({
@@ -38,7 +39,7 @@ describe('Company Collections - React', () => {
     },
     is_global_headquarters: false,
     uk_region: {
-      id: '874cd12a-6095-e211-a939-e4115bead28a',
+      id: UK_REGIONS.LONDON,
       name: 'London',
     },
   })

@@ -1,7 +1,6 @@
 const { trim } = require('lodash')
 
 const request = require('../../lib/request')
-const hawkRequest = require('../../lib/hawk-request')
 const config = require('../../config')
 
 function lookupAddress(postcode) {
@@ -55,12 +54,6 @@ function parsePostcodeResult(data, postcode) {
   })
 }
 
-function getDITRegionFromUKPostcode(ukPostcode) {
-  const url = `${config.regionLookupUrl}?postcode=${ukPostcode}&orientation=records`
-  return hawkRequest(url, config.hawkCredentials.dataStoreService)
-}
-
 module.exports = {
   lookupAddress,
-  getDITRegionFromUKPostcode,
 }

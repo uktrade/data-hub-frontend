@@ -20,6 +20,7 @@ import {
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
 import { ukRegionListFaker } from '../../fakers/regions'
 import { randomChoice } from '../../fakers/utils'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const buildQueryString = (queryParams = {}) =>
   qs.stringify({
@@ -505,10 +506,9 @@ describe('Orders Collections Filter', () => {
 
   context('UK Region', () => {
     const element = '[data-test="uk-region-filter"]'
-    const londonId = '874cd12a-6095-e211-a939-e4115bead28a'
     const expectedPayload = {
       ...minimumPayload,
-      uk_region: [londonId],
+      uk_region: [UK_REGIONS.LONDON],
     }
 
     it('should display all UK regions (active & disabled) in the filter list', () => {
@@ -527,7 +527,7 @@ describe('Orders Collections Filter', () => {
 
     it('should filter from the url', () => {
       const queryString = buildQueryString({
-        uk_region: [londonId],
+        uk_region: [UK_REGIONS.LONDON],
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/omis?${queryString}`)
@@ -550,10 +550,10 @@ describe('Orders Collections Filter', () => {
         expectedOption: 'London',
       })
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('uk_region', [londonId])
+      assertQueryParams('uk_region', [UK_REGIONS.LONDON])
       assertChipExists({ label: 'London', position: 1 })
 
-      removeChip(londonId)
+      removeChip(UK_REGIONS.LONDON)
       assertPayload('@apiRequest', minimumPayload)
       assertChipsEmpty()
       assertFieldEmpty(element)
@@ -570,7 +570,7 @@ describe('Orders Collections Filter', () => {
         company_name: 'Tesco',
         sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
         primary_market: '80756b9a-5d95-e211-a939-e4115bead28a',
-        uk_region: '874cd12a-6095-e211-a939-e4115bead28a',
+        uk_region: UK_REGIONS.LONDON,
       })
       cy.intercept('POST', searchEndpoint).as('apiRequest')
       cy.visit(`/omis?${queryString}`)

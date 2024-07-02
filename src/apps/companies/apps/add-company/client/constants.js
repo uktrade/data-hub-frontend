@@ -19,3 +19,6 @@ export const NON_ASCII_REGEX = /[^$|\x00-\x7F]/
 // 2nd Case: if there is a comma with one of those symbols after it (see owasp suggestions)
 // https://owasp.org/www-community/attacks/CSV_Injection
 export const CSV_FORMULA_INJECTION_REGEX = /(^[=@+\t\r-])|([,;'"][\s\S]*[=@+-])/
+
+export const POSTCODE_REGEX =
+  /^(([A-Z]{1,2}[0-9][A-Z0-9]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?[0-9][A-Z]{2}|BFPO ?[0-9]{1,4}|(KY[0-9]|MSR|VG|AI)[ -]?[0-9]{4}|[A-Z]{2} ?[0-9]{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)/
