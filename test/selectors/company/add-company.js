@@ -28,16 +28,6 @@ module.exports = {
     whyAmISeeingThis: {
       summary: 'details summary span',
     },
-    organisationType: {
-      charity: 'label:contains("Charity") input[type="radio"]',
-      governmentDepartmentOrOtherPublicBody:
-        'label:contains("Government department or other public body") input[type="radio"]',
-      limitedCompany: 'label:contains("Limited company") input[type="radio"]',
-      limitedPartnership:
-        'label:contains("Limited partnership") input[type="radio"]',
-      partnership: 'label:contains("Partnership") input[type="radio"]',
-      soleTrader: 'label:contains("Sole Trader") input[type="radio"]',
-    },
     companyName: 'input[name="name"]',
     companyNameContainer: '#field-name',
     website: 'input[name="website"]',
