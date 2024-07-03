@@ -15,6 +15,7 @@ import FieldRadios from '../Form/elements/FieldRadios'
 import FieldCheckboxes from '../Form/elements/FieldCheckboxes'
 import FieldTypeahead from '../Form/elements/FieldTypeahead'
 import FieldSelect from '../Form/elements/FieldSelect'
+import FieldChoice from '../Form/elements/FieldChoice'
 
 /**
  * @function Resource
@@ -318,6 +319,18 @@ export const createMetadataResource = (name, endpoint) => {
 
   Component.FieldTypeahead = (props) => (
     <Component.FieldOptions {...props} field={FieldTypeahead} />
+  )
+
+  Component.FieldChoice = (props) => (
+    <Component.FieldOptions {...props} field={FieldChoice} />
+  )
+
+  Component.FieldChoice.Radio = (props) => (
+    <Component.FieldChoice {...props} type="radio" />
+  )
+
+  Component.FieldChoice.Checkbox = (props) => (
+    <Component.FieldChoice {...props} type="checkbox" />
   )
 
   return Component
