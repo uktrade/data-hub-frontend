@@ -98,6 +98,14 @@ export default (
           [action.fieldName]: action.fieldValue,
         },
       }
+    case 'FORM__FIELD_SET_VALUES':
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          ...action.values,
+        },
+      }
     case FORM__FIELD_TOUCHED:
       return {
         ...state,

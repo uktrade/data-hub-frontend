@@ -38,6 +38,7 @@ export type Props = {
   onSuccess?: (successActionResult: any, values: Values, actions: OnSuccessActions) => any,
   transformInitialValues?: (initialValuesTaskResult: any) => Values,
   transformPayload?: (values: Values) => any,
+  submissionTaskResultToValues?: (result: any) => Values,
   children?: Children,
   submitButtonLabel?: string,
   submitButtonColour?: string,

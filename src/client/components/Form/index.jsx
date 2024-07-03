@@ -71,6 +71,7 @@ const _Form = ({
   reactRouterRedirect,
   transformInitialValues = (x) => x,
   transformPayload = (x) => x,
+  submissionTaskResultToValues,
   onSuccess,
   onError,
   submitButtonLabel = 'Save',
@@ -324,6 +325,16 @@ const _Form = ({
                                 }
                               }}
                             />
+                            {submissionTaskResultToValues && result && (
+                              <Effect
+                                dependencyList={[result]}
+                                effect={() => {
+                                  props.setValues(
+                                    submissionTaskResultToValues?.(result)
+                                  )
+                                }}
+                              />
+                            )}
                             <Effect
                               dependencyList={[submissionTask.hasError]}
                               effect={() => {
@@ -429,6 +440,11 @@ const dispatchToProps = (dispatch) => ({
       type: 'FORM__FIELD_SET_VALUE',
       fieldName,
       fieldValue,
+    }),
+  setValues: (values) =>
+    dispatch({
+      type: 'FORM__FIELD_SET_VALUES',
+      values,
     }),
   setFieldTouched: (fieldName) =>
     dispatch({
@@ -574,6 +590,10 @@ const dispatchToProps = (dispatch) => ({
  * property in the form's state.
  * @param {Props['scrollToTopOnStep']} [props.scrollToTopOnStep] - Whether or not page
  * should scroll to the top when navigating between steps.
+ * @param {Props['submissionTaskResultToValues']} [props.submissionTaskResultToValues] -
+ * Use this to update form values with the submission task result.
+ * It will be called with the submission task result and should return an object
+ * mapping field names to their values. If not set, the task result will be ignored.
  * */
 const Form = multiInstance({
   name: 'Form',
