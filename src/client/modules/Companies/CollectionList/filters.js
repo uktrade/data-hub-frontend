@@ -13,7 +13,8 @@ import { LABELS, COMPANY_STATUS_OPTIONS } from './constants'
 export const buildSelectedFilters = (
   queryParams,
   metadata,
-  selectedLeadItaOrGlobalAccountManagers
+  selectedLeadItaOrGlobalAccountManagers,
+  advisers
 ) => ({
   headquarterTypes: {
     queryParam: 'headquarter_type',
@@ -129,6 +130,14 @@ export const buildSelectedFilters = (
       label: adviser.name,
       value: adviser.id,
       categoryLabel: LABELS.leadItaOrGlobalAccountManager,
+    })),
+  },
+  advisers: {
+    queryParam: 'adviser',
+    options: advisers.map((adviser) => ({
+      label: adviser.name,
+      value: adviser.id,
+      categoryLabel: LABELS.adviser,
     })),
   },
   exportSegment: {
