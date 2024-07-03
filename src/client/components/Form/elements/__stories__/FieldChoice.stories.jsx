@@ -44,8 +44,6 @@ const options = [
 const formatOption = (option) =>
   `{ value: '${option.value}', label: '${option.label}' }`
 
-const formatOptions = (options) => options.map(formatOption).join(', ')
-
 export default {
   title: 'Form/Form Elements/FieldChoice',
   component: FieldChoice,
@@ -73,6 +71,9 @@ const Template = ({ component: Component, ...args }, { story }) => (
     id={story}
     analyticsFormName="formRadio"
     submissionTaskName="SUBMISSION"
+    initialValues={{
+      country: [options[0]],
+    }}
   >
     {(state) => (
       <>
@@ -173,25 +174,6 @@ RadioLegend.parameters = {
   },
 }
 
-export const RadioInitialValue = Template.bind({})
-RadioInitialValue.args = {
-  ...Radio.args,
-  initialValue: options[0],
-}
-RadioInitialValue.parameters = {
-  docs: {
-    description: {
-      story: 'Radio button group initial value',
-    },
-    source: {
-      code: getForm(
-        'FieldChoice.Radio',
-        `initialValue={${formatOption(options[0])}}`
-      ),
-    },
-  },
-}
-
 export const RadioInline = Template.bind({})
 RadioInline.args = {
   ...Radio.args,
@@ -288,25 +270,6 @@ CheckboxLegend.parameters = {
     },
     source: {
       code: getForm('FieldChoice.Checkbox', 'legend={<H1>My H1 legend</H1>}'),
-    },
-  },
-}
-
-export const CheckboxInitialValue = Template.bind({})
-CheckboxInitialValue.args = {
-  ...Checkbox.args,
-  initialValue: [options[0], options[1]],
-}
-CheckboxInitialValue.parameters = {
-  docs: {
-    description: {
-      story: 'Checkbox group initial value',
-    },
-    source: {
-      code: getForm(
-        'FieldChoice.Checkbox',
-        `initialValue={${formatOptions([options[0], options[1]])}}`
-      ),
     },
   },
 }

@@ -56,13 +56,8 @@ describe('FieldChoice', () => {
 
     it('should preselect the second radio button (Wales)', () => {
       cy.mountWithProvider(
-        <Form {...FORM_PROPS}>
-          <FieldChoice
-            name="country"
-            type="radio"
-            options={OPTIONS}
-            initialValue={OPTIONS[1]} // Wales
-          />
+        <Form {...FORM_PROPS} initialValues={{ country: [OPTIONS[1]] }}>
+          <FieldChoice name="country" type="radio" options={OPTIONS} />
         </Form>
       )
       assertFieldRadiosStrict({
@@ -145,13 +140,11 @@ describe('FieldChoice', () => {
 
     it('should check the first and second checkboxes', () => {
       cy.mountWithProvider(
-        <Form {...FORM_PROPS}>
-          <FieldChoice
-            type="checkbox"
-            name="country"
-            options={OPTIONS}
-            initialValue={[OPTIONS[0], OPTIONS[1]]} // England and Wales
-          />
+        <Form
+          {...FORM_PROPS}
+          initialValues={{ country: [OPTIONS[0], OPTIONS[1]] }}
+        >
+          <FieldChoice type="checkbox" name="country" options={OPTIONS} />
         </Form>
       )
       assertFieldCheckboxesChecked({

@@ -3,18 +3,14 @@ import PropTypes from 'prop-types'
 import MultiChoice from '@govuk-react/multi-choice'
 import Checkbox from '@govuk-react/checkbox'
 import Radio from '@govuk-react/radio'
+import { isArray, isEqual } from 'lodash'
 
 import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
-const isRadio = (type) => type === 'radio'
+const RADIO = 'radio'
 
-const getInitialValue = (initialValue, type) => {
-  if (initialValue) {
-    return initialValue
-  }
-  return isRadio(type) ? '' : []
-}
+const isRadio = (type) => type === RADIO
 
 const FieldChoice = ({
   name,
@@ -25,34 +21,30 @@ const FieldChoice = ({
   label,
   legend,
   hint,
-  initialValue,
   ...props
 }) => {
   const { value, error, touched, onBlur } = useField({
     name,
     validate,
     required,
-    initialValue: getInitialValue(initialValue, type),
   })
 
   const { setFieldValue } = useFormContext()
 
-  const onChange = (option, type) => {
-    if (isRadio(type)) {
-      setFieldValue(name, option)
-    } else {
-      // Checkbox
-      setFieldValue(
-        name,
-        value.includes(option)
-          ? value.filter((v) => v !== option)
-          : [...value, option]
-      )
-    }
-  }
+  const onChange = (event, option) =>
+    setFieldValue(
+      name,
+      isRadio(type)
+        ? option
+        : event.target.checked
+          ? [...value, option]
+          : value.filter((v) => v.value !== event.target.value)
+    )
 
-  const checked = (option) =>
-    isRadio(type) ? value === option : value.includes(option)
+  const isChecked = (option) =>
+    isArray(value)
+      ? value.some((v) => v.value === option.value) // Checkbox
+      : isEqual(value, option) // Radio
 
   const Component = isRadio(type) ? Radio : Checkbox
 
@@ -64,10 +56,10 @@ const FieldChoice = ({
             <Component
               key={option.id}
               value={option.value}
-              checked={checked(option, type)}
-              onChange={() => onChange(option, type)}
+              checked={isChecked(option)}
+              onChange={(event) => onChange(event, option)}
               onBlur={onBlur}
-              name={name}
+              name={option.value}
               aria-label={option.label}
             >
               {option.label}
@@ -96,11 +88,6 @@ FieldChoice.propTypes = {
   label: PropTypes.string,
   legend: PropTypes.node,
   hint: PropTypes.string,
-  inline: PropTypes.bool,
-  initialValue: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
 }
 
 export default FieldChoice
