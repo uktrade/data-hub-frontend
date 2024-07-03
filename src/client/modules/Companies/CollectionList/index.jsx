@@ -159,7 +159,7 @@ const CompaniesCollection = ({
               placeholder="Search adviser"
               noOptionsMessage="No advisers found"
               selectedOptions={selectedFilters.advisers.options}
-              data-test="advisers-filter"
+              data-test="adviser-filter"
             />
           </FilterToggleSection>
 

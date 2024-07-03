@@ -960,12 +960,67 @@ describe('Companies Collections Filter', () => {
     })
   })
 
+  context('Advisers', () => {
+    const element = '[data-test="adviser-filter"]'
+    const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+    const adviserName = 'Puck Head'
+    const expectedPayload = {
+      offset: 0,
+      limit: 10,
+      archived: false,
+      sortby: 'modified_on:desc',
+      adviser: [adviserId],
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        adviser: [adviserId],
+      })
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [{ id: adviserId, name: adviserName }],
+      }).as('adviserSearchApiRequest')
+      cy.visit(`/companies?${queryString}`)
+      assertPayload('@apiRequest', expectedPayload)
+      cy.get(element).should('contain', adviserName)
+      assertChipExists({ label: adviserName, position: 2 })
+    })
+
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', companySearchEndpoint).as('apiRequest')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [{ id: adviserId, name: adviserName }],
+      }).as('adviserSearchApiRequest')
+      cy.visit(`/companies?${queryString}`)
+      cy.wait('@apiRequest')
+
+      selectFirstMockedTypeaheadOption({ element, input: adviserName })
+      assertPayload('@apiRequest', expectedPayload)
+      assertQueryParams('adviser', [adviserId])
+      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({
+        label: `Adviser: ${adviserName}`,
+        position: 2,
+      })
+      removeChip(adviserId)
+      cy.wait('@apiRequest')
+      removeChip(activeStatusFlag)
+      assertPayload('@apiRequest', minimumPayload)
+      assertChipsEmpty()
+      assertFieldEmpty(element)
+    })
+  })
+
   context('Remove all filters', () => {
     before(() => {
       const globalHqTypeId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
       const ukCountryId = '80756b9a-5d95-e211-a939-e4115bead28a'
-      const adviserId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
-      const adviserName = 'Puck Head'
+      const globalAccountManagerId = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+      const globalAccountManagerName = 'Puck Head'
+      const adviserId = '7b7ad5ba-9d98-e211-a939-e4115bead28a'
+      const adviserName = 'Bess Fowler'
+
       const advancedEngineeringSectorId = 'af959812-6095-e211-a939-e4115bead28a'
       const ukRegions = ukRegionListFaker(10)
       const usStates = administrativeAreaListFaker(20)
@@ -985,7 +1040,8 @@ describe('Companies Collections Filter', () => {
         future_interest_countries: [ukCountryId],
         latest_interaction_date_after: '2018-07-25',
         latest_interaction_date_before: '2020-01-01',
-        one_list_group_global_account_manager: [adviserId],
+        one_list_group_global_account_manager: [globalAccountManagerId],
+        adviser: [adviserId],
       })
       cy.intercept('GET', usStatesEndpoint, usStates).as('usStatesApiRequest')
       cy.intercept('GET', canadianProvincesEndpoint, canadianProvinces).as(
@@ -996,8 +1052,13 @@ describe('Companies Collections Filter', () => {
       )
       cy.intercept('POST', companySearchEndpoint).as('apiRequest')
       cy.intercept('POST', adviserSearchEndpoint, {
-        results: [{ id: adviserId, name: adviserName }],
-      }).as('adviserSearchApiRequest')
+        result: [{ id: adviserId, name: adviserName }],
+      }).as('adviserSearchApiRequest1')
+      cy.intercept('POST', adviserSearchEndpoint, {
+        results: [
+          { id: globalAccountManagerId, name: globalAccountManagerName },
+        ],
+      }).as('adviserSearchApiRequest2')
       cy.visit(`/companies?${queryString}`)
       cy.wait('@usStatesApiRequest')
       cy.wait('@canadianProvincesApiRequest')
@@ -1007,7 +1068,7 @@ describe('Companies Collections Filter', () => {
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=filter-chips]').children().as('filterChips')
-      cy.get('@filterChips').should('have.length', 14)
+      cy.get('@filterChips').should('have.length', 15)
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')
@@ -1046,6 +1107,9 @@ describe('Companies Collections Filter', () => {
         value: '',
       })
       cy.get('[data-test="lead-ita-global-account-manager-filter"]')
+        .find('[data-test="typeahead-chip"]')
+        .should('have.length', 0)
+      cy.get('[data-test="adviser-filter"]')
         .find('[data-test="typeahead-chip"]')
         .should('have.length', 0)
     })
