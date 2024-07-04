@@ -123,7 +123,7 @@ export const exportWinsFaker = () => ({
   }),
   date: faker.date.anytime().toISOString(),
   customer_response: {
-    agree_with_win: null, // Sent
+    agree_with_win: null, // Pending
     responded_on: faker.date.anytime().toISOString(),
     expected_portion_without_help: {
       name: '40%',

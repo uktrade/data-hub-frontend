@@ -167,6 +167,7 @@ const ExportWinForm = ({
                     {winStatus !== WIN_STATUS.PENDING && (
                       <Link
                         as={ReactRouterLink}
+                        data-test="customer-feedback"
                         to={urls.companies.exportWins.customerFeedback(
                           companyId,
                           exportWinId
