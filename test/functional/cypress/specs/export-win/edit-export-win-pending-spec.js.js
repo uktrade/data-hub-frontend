@@ -4,7 +4,7 @@ import { company, formFields } from './constants'
 
 const exportWin = exportWinsFaker()
 
-describe('Editing an export win', () => {
+describe('Editing a pending export win', () => {
   beforeEach(() => {
     cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
       'apiGetExportWin'
@@ -160,6 +160,12 @@ describe('Editing an export win', () => {
         'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
           'Summary of the support you provided, Destination, Date won, Type of export win and Value'
       )
+    })
+
+    it('should not render a customer feedback link when the win is pending', () => {
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="customer-feedback"]').should('not.exist')
     })
   })
 
