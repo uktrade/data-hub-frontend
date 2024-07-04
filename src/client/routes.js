@@ -767,7 +767,7 @@ function Routes() {
       ),
     },
     {
-      path: '/exportwins/:winId/customer-feedback',
+      path: '/companies/:companyId/exportwins/:winId/customer-feedback',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CustomerFeedback />
