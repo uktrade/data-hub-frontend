@@ -307,6 +307,24 @@ const assertFieldRadiosStrict = ({
         })
     })
 
+const assertFieldRadioSelected = ({ inputName, selectedIndex }) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      cy.get('input[type="radio"]').eq(selectedIndex).should('be.checked')
+    })
+
+const assertFieldRadiosNotSelected = ({ inputName }) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      cy.get('input[type="radio"]').each(($el) => {
+        cy.wrap($el).should('not.be.checked')
+      })
+    })
+
 // As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
 // Use this assertion for radios which have legends applied.
 const assertFieldRadiosWithLegend = ({
@@ -376,6 +394,44 @@ const assertFieldCheckboxes = ({ element, legend, hint, options = [] }) => {
       const link = options[index].link
       // Optional options field parameter
       link && cy.get(label).find('summary').should('contain', link)
+    })
+}
+
+const assertFieldCheckboxesStrict = ({ inputName, options, legend, hint }) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      if (legend) {
+        cy.get('legend').should('have.text', legend)
+      }
+      if (hint) {
+        cy.get('[data-test="hint-text"]').should('have.text', hint)
+      }
+
+      cy.get('input[type="checkbox"]')
+        .should('have.length', options.length)
+        .each(($el, i) => {
+          const label = options[i]
+          cy.wrap($el)
+            .should('have.attr', 'aria-label', label)
+            .parent()
+            .should('match', 'label')
+            .should('have.text', label)
+        })
+    })
+
+const assertFieldCheckboxesChecked = ({ inputName, selectedIndices }) => {
+  cy.get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      cy.get('input[type="checkbox"]').each(($el, index) => {
+        if (selectedIndices.includes(index)) {
+          cy.wrap($el).should('be.checked')
+        } else {
+          cy.wrap($el).should('not.be.checked')
+        }
+      })
     })
 }
 
@@ -960,6 +1016,14 @@ const assertFieldError = (element, errorMessage, hasHint = true) =>
     .eq(hasHint ? 1 : 0)
     .should('have.text', errorMessage)
 
+const assertFieldErrorStrict = ({ inputName, errorMessage }) =>
+  cy
+    .get(`[data-test="field-${inputName}"]`)
+    .should('exist')
+    .within(() => {
+      cy.get('span').eq(1).should('have.text', errorMessage)
+    })
+
 /**
  * Assert the typeahead element contains a chip for each of the values
  * @param {*} selector the selector for the typeahead component
@@ -1012,9 +1076,13 @@ module.exports = {
   assertSelectOptions,
   assertFieldRadios,
   assertFieldRadiosStrict,
+  assertFieldRadiosNotSelected,
+  assertFieldRadioSelected,
   assertFieldRadiosWithLegend,
   assertFieldRadiosWithoutLabel,
   assertFieldCheckboxes,
+  assertFieldCheckboxesStrict,
+  assertFieldCheckboxesChecked,
   assertFieldAddress,
   assertFieldUneditable,
   assertFormActions,
@@ -1057,6 +1125,7 @@ module.exports = {
   assertAPIRequest,
   assertExactUrl,
   assertFieldError,
+  assertFieldErrorStrict,
   assertTypeaheadValues,
   assertLink,
   assertLinkWithText,
