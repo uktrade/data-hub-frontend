@@ -44,6 +44,8 @@ const options = [
 const formatOption = (option) =>
   `{ value: '${option.value}', label: '${option.label}' }`
 
+const formatOptions = (options) => options.map(formatOption) //.join(', ')
+
 export default {
   title: 'Form/Form Elements/FieldChoice',
   component: FieldChoice,
@@ -54,6 +56,7 @@ export default {
   },
   argTypes: {
     type: 'string',
+    initialValues: { control: 'object' },
   },
   parameters: {
     docs: {
@@ -66,14 +69,15 @@ export default {
   },
 }
 
-const Template = ({ component: Component, ...args }, { story }) => (
+const Template = (
+  { component: Component, initialValues, ...args },
+  { id: storyId }
+) => (
   <Form
-    id={story}
+    id={storyId}
     analyticsFormName="formRadio"
     submissionTaskName="SUBMISSION"
-    initialValues={{
-      country: [options[0]],
-    }}
+    initialValues={initialValues}
   >
     {(state) => (
       <>
@@ -84,20 +88,23 @@ const Template = ({ component: Component, ...args }, { story }) => (
   </Form>
 )
 
-const getForm = (component, propAndValue) => {
-  const props = propAndValue
-    ? `name="country"
-      ${propAndValue}` // Ensure the prop and value are on a new line
-    : `name="country"`
+const defaultFormProps = `\n  id="form-id"\n  analyticsFormName="formRadio"\n  submissionTaskName="SUBMISSION"`
+const defaultComponentProps = `name="country"`
+
+const getForm = ({ component, formProp, componentProp }) => {
+  const formProps = formProp
+    ? `${defaultFormProps}\n  ${formProp}`
+    : ` ${defaultFormProps}`
+
+  const componentProps = componentProp
+    ? `${defaultComponentProps}
+      ${componentProp}`
+    : `${defaultComponentProps}`
   return `
-<Form
-  id="form-id"
-  analyticsFormName="formRadio"
-  submissionTaskName="SUBMISSION"
->
+<Form ${formProps}>
   {(state) => (
     <${component}
-      ${props}
+      ${componentProps}
       options={[
         ${formatOption(options[0])}
         ${formatOption(options[1])}
@@ -121,7 +128,7 @@ Radio.parameters = {
       story: 'A group of 4 radio buttons',
     },
     source: {
-      code: getForm('FieldChoice.Radio'),
+      code: getForm({ component: 'FieldChoice.Radio' }),
     },
   },
 }
@@ -137,7 +144,10 @@ RadioLabel.parameters = {
       story: 'Radio button group label',
     },
     source: {
-      code: getForm('FieldChoice.Radio', 'label="Countries"'),
+      code: getForm({
+        component: 'FieldChoice.Radio',
+        componentProp: 'label="Countries"',
+      }),
     },
   },
 }
@@ -153,7 +163,10 @@ RadioHint.parameters = {
       story: 'Radio button group hint text',
     },
     source: {
-      code: getForm('FieldChoice.Radio', 'hint="Country hint"'),
+      code: getForm({
+        component: 'FieldChoice.Radio',
+        componentProp: 'hint="Country hint"',
+      }),
     },
   },
 }
@@ -169,7 +182,10 @@ RadioLegend.parameters = {
       story: 'Radio button group legend',
     },
     source: {
-      code: getForm('FieldChoice.Radio', 'legend={<H1>My H1 legend</H1>}'),
+      code: getForm({
+        component: 'FieldChoice.Radio',
+        componentProp: 'legend={<H1>My H1 legend</H1>}',
+      }),
     },
   },
 }
@@ -185,7 +201,9 @@ RadioInline.parameters = {
       story: 'Radio button group inline',
     },
     source: {
-      code: getForm('FieldChoiceRadioInline'),
+      code: getForm({
+        component: 'FieldChoiceRadioInline',
+      }),
     },
   },
 }
@@ -202,10 +220,32 @@ RadioRequired.parameters = {
         'Radio button group where a selection is required. Click "Save" to view the form validation error message.',
     },
     source: {
-      code: getForm(
-        'FieldChoice.Radio',
-        'required="Select at least one country"'
-      ),
+      code: getForm({
+        component: 'FieldChoice.Radio',
+        componentProp: 'required="Select at least one country"',
+      }),
+    },
+  },
+}
+
+export const RadioSelected = Template.bind({})
+RadioSelected.args = {
+  ...Radio.args,
+  initialValues: {
+    // Radios require a single object
+    country: options[0],
+  },
+}
+RadioSelected.parameters = {
+  docs: {
+    description: {
+      story: 'Radio button group selected',
+    },
+    source: {
+      code: getForm({
+        component: 'FieldChoice.Radio',
+        formProp: `initialValue={{ country: ${formatOption(options[0])}}}`,
+      }),
     },
   },
 }
@@ -221,7 +261,9 @@ Checkbox.parameters = {
       story: 'A group of 4 checkboxes.',
     },
     source: {
-      code: getForm('FieldChoice.Checkbox'),
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+      }),
     },
   },
 }
@@ -237,7 +279,10 @@ CheckboxLabel.parameters = {
       story: 'Checkbox group label',
     },
     source: {
-      code: getForm('FieldChoice.Checkbox', 'label="Countries"'),
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+        componentProp: 'label="Countries"',
+      }),
     },
   },
 }
@@ -253,7 +298,10 @@ CheckboxHint.parameters = {
       story: 'Checkbox group hint text',
     },
     source: {
-      code: getForm('FieldChoice.Checkbox', 'hint="Country hint"'),
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+        componentProp: 'hint="Country hint"',
+      }),
     },
   },
 }
@@ -269,7 +317,10 @@ CheckboxLegend.parameters = {
       story: 'Checkbox group legend',
     },
     source: {
-      code: getForm('FieldChoice.Checkbox', 'legend={<H1>My H1 legend</H1>}'),
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+        componentProp: 'legend={<H1>My H1 legend</H1>}',
+      }),
     },
   },
 }
@@ -285,7 +336,9 @@ CheckboxInline.parameters = {
       story: 'Checkbox group inline',
     },
     source: {
-      code: getForm('FieldChoiceCheckboxInline'),
+      code: getForm({
+        component: 'FieldChoiceCheckboxInline',
+      }),
     },
   },
 }
@@ -302,10 +355,32 @@ CheckboxRequired.parameters = {
         'Checkbox group where a user must choose at least one country. Click "Save" to view the form validation error message.',
     },
     source: {
-      code: getForm(
-        'FieldChoice.Checkbox',
-        'required="Choose one or more countries"'
-      ),
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+        componentProp: 'required="Choose one or more countries"',
+      }),
+    },
+  },
+}
+
+export const CheckboxChecked = Template.bind({})
+CheckboxChecked.args = {
+  ...Checkbox.args,
+  initialValues: {
+    // Checkboxes require an array of objects
+    country: [options[0], options[1]],
+  },
+}
+CheckboxChecked.parameters = {
+  docs: {
+    description: {
+      story: 'Checkbox group checked',
+    },
+    source: {
+      code: getForm({
+        component: 'FieldChoice.Checkbox',
+        formProp: `initialValue={ country: [${formatOptions([options[0], options[1]])}]}`,
+      }),
     },
   },
 }
