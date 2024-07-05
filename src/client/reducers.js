@@ -26,7 +26,7 @@ import { ID as EXPORTS_WINS_ID } from './modules/Companies/CompanyExports/Export
 import exportWinsReducer from './modules/Companies/CompanyExports/ExportWins/reducer.js'
 
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
-import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
+import addCompanyReducer from '../apps/companies/apps/add-company/client/reducer'
 
 import { ID as INVESTMENT_OPPORTUNITIES_LIST_ID } from './modules/Investments/Opportunities/CollectionList/state'
 import investmentOpportunitiesListReducer from './modules/Investments/Opportunities/CollectionList/reducer'
@@ -199,7 +199,7 @@ export const reducers = {
   [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
   [REFERRALS_SEND_ID]: referralsSendReducer,
   [EXPORTS_WINS_ID]: exportWinsReducer,
-  [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
+  [addCompanyState.ID]: addCompanyReducer,
   ...TabNav.reducerSpread,
   ...ReferralList.reducerSpread,
   ...ToggleSection.reducerSpread,

@@ -7,10 +7,7 @@ import * as referralsSendTasks from '../apps/companies/apps/referrals/send-refer
 import * as exportWinsTasks from './modules/Companies/CompanyExports/ExportWins/tasks.js'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
-import addCompanyPostcodeToRegionTask, {
-  createCompany,
-} from '../apps/companies/apps/add-company/client/tasks'
-import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
+import { createCompany } from '../apps/companies/apps/add-company/client/tasks'
 import {
   TASK_GET_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
@@ -477,7 +474,6 @@ export const tasks = {
   [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
   [TASK_SAVE_ONE_LIST_DETAILS]: saveOneListDetails,
   [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
-  [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
   [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
   [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
   [TASK_GET_INTERACTION_INITIAL_VALUES]:

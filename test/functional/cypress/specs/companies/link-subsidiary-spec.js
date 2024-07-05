@@ -10,6 +10,7 @@ import urls from '../../../../../src/lib/urls'
 
 import { companyFaker, companyListFaker } from '../../fakers/companies'
 import { company } from '../../fixtures'
+import { UK_REGIONS } from '../../../../../src/common/constants'
 
 const testCompany = company.minimallyMinimalLtd
 
@@ -35,7 +36,7 @@ describe('Link Subsidiary', () => {
   const company2 = companyFaker({
     trading_names: ['Company Corp', 'Company Ltd'],
     uk_region: {
-      id: '874cd12a-6095-e211-a939-e4115bead28a',
+      id: UK_REGIONS.LONDON,
       name: 'London',
     },
   })
