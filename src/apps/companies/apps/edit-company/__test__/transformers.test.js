@@ -1,3 +1,4 @@
+const { UK_REGIONS } = require('../../../../../common/constants')
 const {
   transformFormToDnbChangeRequest,
   transformCompanyToForm,
@@ -54,7 +55,7 @@ describe('#transformCompanyToForm', () => {
         turnover_gbp: 987,
         uk_region: {
           name: 'North West',
-          id: '824cd12a-6095-e211-a939-e4115bead28a',
+          id: UK_REGIONS.NORTH_WEST,
         },
         address: {
           line_1: '82 Ramsgate Rd',
@@ -89,7 +90,7 @@ describe('#transformCompanyToForm', () => {
         county: '',
         postcode: 'NE28 5JB',
         headquarter_type: '',
-        uk_region: '824cd12a-6095-e211-a939-e4115bead28a',
+        uk_region: UK_REGIONS.NORTH_WEST,
         sector: '355f977b-8ac3-e211-a646-e4115bead28a',
         employee_range: '41afd8d0-5d95-e211-a939-e4115bead28a',
         turnover_range: '7a4cd12a-6095-e211-a939-e4115bead28a',
@@ -133,7 +134,7 @@ describe('#transformCompanyToForm', () => {
       turnover_gbp: 987,
       uk_region: {
         name: 'North West',
-        id: '824cd12a-6095-e211-a939-e4115bead28a',
+        id: UK_REGIONS.NORTH_WEST,
       },
       address: {
         line_1: '82 Ramsgate Rd',
@@ -177,7 +178,7 @@ describe('#transformCompanyToForm', () => {
       county: '',
       postcode: 'NE28 5JB',
       headquarter_type: '',
-      uk_region: '824cd12a-6095-e211-a939-e4115bead28a',
+      uk_region: UK_REGIONS.NORTH_WEST,
       sector: '355f977b-8ac3-e211-a646-e4115bead28a',
       employee_range: '41afd8d0-5d95-e211-a939-e4115bead28a',
       turnover_range: '7a4cd12a-6095-e211-a939-e4115bead28a',
@@ -218,7 +219,7 @@ describe('#transformCompanyToForm', () => {
       turnover_gbp: 987,
       uk_region: {
         name: 'North West',
-        id: '824cd12a-6095-e211-a939-e4115bead28a',
+        id: UK_REGIONS.NORTH_WEST,
       },
       address: {
         line_1: '82 Ramsgate Rd',
@@ -254,7 +255,7 @@ describe('#transformCompanyToForm', () => {
       headquarter_type: '',
       name: 'sample-company',
       number_of_employees: 321,
-      uk_region: '824cd12a-6095-e211-a939-e4115bead28a',
+      uk_region: UK_REGIONS.NORTH_WEST,
       sector: '355f977b-8ac3-e211-a646-e4115bead28a',
       employee_range: '41afd8d0-5d95-e211-a939-e4115bead28a',
       turnover_range: '7a4cd12a-6095-e211-a939-e4115bead28a',

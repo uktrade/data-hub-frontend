@@ -1,15 +1,3 @@
-import postcodeToRegion from '../fixtures/postcodeToRegion.json' assert { type: 'json' }
-
-export const toRegion = function (req, res) {
-  if (req.query.postcode === 'UNK N0WN') {
-    return res.json({
-      results: [],
-    })
-  }
-
-  res.json(postcodeToRegion)
-}
-
 export const lookup = function (req, res) {
   return res.json({
     Latitude: 51.4997693,

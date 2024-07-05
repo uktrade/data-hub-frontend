@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { assertSummaryTable } from '../../../../../functional/cypress/support/assertions'
+import { UK_REGIONS } from '../../../../../../src/common/constants'
 
 const {
   default: SectionOneList,
@@ -20,7 +21,7 @@ describe('Section region', () => {
         name: 'IST - Sector Advisory Services',
         ukRegion: {
           name: 'London',
-          id: '874cd12a-6095-e211-a939-e4115bead28a',
+          id: UK_REGIONS.LONDON,
         },
         country: {
           name: 'United Kingdom',
