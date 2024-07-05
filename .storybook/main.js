@@ -7,25 +7,28 @@ export default {
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-webpack5-compiler-babel',
-    '@chromatic-com/storybook'
+    '@chromatic-com/storybook',
   ],
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     return {
       ...config,
       resolve: {
-        ...resolve
-      }
+        ...resolve,
+      },
     }
   },
   core: {
-    disableTelemetry: true
+    disableTelemetry: true,
   },
   framework: {
     name: '@storybook/react-webpack5',
-    options: {}
+    options: {},
   },
   docs: {
-    autodocs: true
+    autodocs: true,
   },
-  stories: ['../src/client/components/*/__stories__/*.stories.jsx', '../src/client/components/*/*/__stories__/*.stories.jsx'],
+  stories: [
+    '../src/client/components/*/__stories__/*.stories.jsx',
+    '../src/client/components/*/*/__stories__/*.stories.jsx',
+  ],
 }
