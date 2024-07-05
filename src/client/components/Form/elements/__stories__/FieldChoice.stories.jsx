@@ -244,7 +244,7 @@ RadioSelected.parameters = {
     source: {
       code: getForm({
         component: 'FieldChoice.Radio',
-        formProp: `initialValue={{ country: ${formatOption(options[0])}}}`,
+        formProp: `initialValues={{country: ${formatOption(options[0])}}}`,
       }),
     },
   },
@@ -379,7 +379,7 @@ CheckboxChecked.parameters = {
     source: {
       code: getForm({
         component: 'FieldChoice.Checkbox',
-        formProp: `initialValue={ country: [${formatOptions([options[0], options[1]])}]}`,
+        formProp: `initialValues={{ country: [${formatOptions([options[0], options[1]])}]}}`,
       }),
     },
   },
