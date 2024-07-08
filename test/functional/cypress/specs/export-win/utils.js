@@ -46,7 +46,9 @@ export const fillCustomerDetails = ({
   contact && cy.get(customerDetails.contacts).selectTypeaheadOption(contact)
   location && cy.get(customerDetails.location).selectTypeaheadOption(location)
   potential &&
-    cy.get(customerDetails.potential).selectTypeaheadOption(potential)
+    cy
+      .get(customerDetails.potential)
+      .within(() => cy.get(`[aria-label="${potential}"]`).check())
   experience &&
     cy.get(customerDetails.experience).selectTypeaheadOption(experience)
 }
