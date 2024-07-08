@@ -4,6 +4,7 @@ import {
   assertFieldError,
   assertErrorSummary,
   assertFieldTypeahead,
+  assertFieldRadiosStrict,
 } from '../../support/assertions'
 
 describe('Customer details', () => {
@@ -45,12 +46,15 @@ describe('Customer details', () => {
     })
   })
 
-  it('should render "Medium-sized and high potential companies" label and a Typeahead', () => {
-    cy.get(customerDetails.potential).then((element) => {
-      assertFieldTypeahead({
-        element,
-        label: 'Medium-sized and high potential companies',
-      })
+  it('should render "Medium-sized and high potential companies" label and radio buttons', () => {
+    assertFieldRadiosStrict({
+      inputName: 'business_potential',
+      legend: 'Medium-sized and high potential companies',
+      options: [
+        'The company is an exporter with High Export Potential',
+        'The company is a Medium Sized Business',
+        'The company is not an exporter with High Export Potential or a Medium Sized Business',
+      ],
     })
   })
 
@@ -85,7 +89,7 @@ describe('Customer details', () => {
     assertFieldError(
       cy.get(customerDetails.potential),
       'Select medium-sized and high potential companies',
-      false
+      true
     )
     assertFieldError(
       cy.get(customerDetails.experience),

@@ -57,7 +57,7 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => (
       }
       fullWidth={true}
     />
-    <BusinessPotential.FieldTypeahead
+    <BusinessPotential.FieldChoice.Radio
       name="business_potential"
       id="business-potential"
       label="Medium-sized and high potential companies"
