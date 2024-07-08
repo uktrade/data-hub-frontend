@@ -196,6 +196,14 @@ or
 
 `$ npm run test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
 
+# Performance tests
+Should only run non-mutating, non-destructive tests.
+Spin up environment
+`npm run develop`
+
+`npx playwright test`
+`npx playwright test --ui`
+
 ## Accessibility tests
 
 The aim of this suite is to ensure our HTML pages are usable by as many people as possible.
