@@ -150,6 +150,8 @@ const FieldAddress = ({
     setFieldValue('address2', address.address2)
     setFieldValue('city', address.city)
     setFieldValue('county', address.county)
+    setFieldValue('country', isCountrySelectable ? address.country : country.id)
+    setFieldValue('country', country.id)
 
     if (onSelectUKAddress) {
       onSelectUKAddress(address)

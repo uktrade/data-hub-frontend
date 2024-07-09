@@ -1,5 +1,6 @@
 const { get, upperFirst } = require('lodash')
 
+const metadata = require('../../../lib/metadata')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
@@ -14,6 +15,15 @@ function getCompanyDetails(req, res, next) {
       return next()
     })
     .catch(next)
+}
+
+function getInvestmentProjectStages(features) {
+  if (features && features['streamlined-investment-flow']) {
+    return metadata.investmentProjectStage.filter(
+      (stage) => stage.exclude_from_investment_flow !== true
+    )
+  }
+  return metadata.investmentProjectStage
 }
 
 async function getInvestmentDetails(req, res, next) {
@@ -34,6 +44,9 @@ async function getInvestmentDetails(req, res, next) {
       'client_relationship_manager.id'
     )
     const stageName = investment.stage.name
+    const investmentProjectStages = getInvestmentProjectStages(
+      res.locals.features
+    )
 
     investment.investor_company = Object.assign(
       {},
@@ -60,6 +73,9 @@ async function getInvestmentDetails(req, res, next) {
 
     res.locals.investment = investment
     res.locals.equityCompany = investment.investor_company
+    res.locals.investmentProjectStages = investmentProjectStages.map(
+      (stage) => stage.name
+    )
 
     res.locals.investmentStatus = {
       id: investment.id,
