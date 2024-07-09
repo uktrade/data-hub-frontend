@@ -11,6 +11,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  // globalSetup: './tests/e2e/auth.setup',
   testDir: './tests/e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -37,20 +38,51 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    /**
+     * This "project" contains only a single test which doesn't test anything,
+     * but opens a browser where we can manually go through the SSO OAuth flow,
+     * at the end of which, the test preserves the session (cookies) in the
+     * ./.auth/user.json file
+     */
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'auth',
+      testMatch: 'auth.ts',
+      timeout: 1000 * 60 * 100,
+    },
+    {
+      name: 'foo',
+      testMatch: '**/*.spec.ts',
+      use: {
+        ...devices['Desktop Chrome'], 
+        storageState: './.auth/user.json',
+      },
+      /**
+       * We make the "auth" project a dependency of this project.
+       * The Playwright UI allows turning projects on and off.
+       * When we run this project for the first time,
+       * it will run "auth" first so we can manually go through the OAuth flow.
+       * After the OAuth flow succeeds, the tests in this project will be run with
+       * the authenticated context.
+       * If we run the tests again, we will have to go through the OAuth flow again,
+       * but we can toggle the "auth" project off in the UI and we can only run
+       * tests in this project still with the authenticated context.
+       * Should our session expire, we can just toggle "auth" back on and
+       * go through the OAuth flow again.
+       * Or alternatively, we can manually add a record for the "datahub.sid"
+       * session cookie to the ./.auth/user.json file? 
+       */
+      dependencies: ['auth'],
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
