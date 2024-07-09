@@ -118,7 +118,7 @@
     "postcss-loader": "^8.1.0",
     "prop-types": "^15.8.1",
     "pure-uuid": "^1.8.1",
-    "qs": "^6.12.1",
+    "qs": "^6.12.3",
     "react": "^18.3.1",
     "react-app-polyfill": "^3.0.0",
     "react-dom": "^18.3.1",
