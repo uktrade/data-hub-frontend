@@ -13,5 +13,5 @@ import { test, expect } from '@playwright/test';
   
     await expect(page).toHaveTitle(`${name} - Search - DBT Data Hub`)
     await expect(page.getByRole('heading', {name: 'results matching test'})).toBeVisible()
-    });
+  });
 });
