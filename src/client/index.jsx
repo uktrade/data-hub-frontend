@@ -83,7 +83,7 @@ if (globalProps.sentryDsn) {
         ],
       }),
     ],
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.01,
   })
 }
 
