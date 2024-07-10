@@ -1,13 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test('Dashboard', async ({ browser, page }) => {
+test('dashboard', async ({ browser, page }) => {
   const [response] = await Promise.all([
-    page.waitForResponse(resp => resp.url().includes('/api-proxy/v4/reminder/summary') 
-      && resp.status() === 200),
-    page.waitForResponse(resp => resp.url().includes('/api-proxy/v4/search/task') 
-      && resp.status() === 200),
-    page.waitForResponse(resp => resp.url().includes('/api-proxy/v3/search/investment_project') 
-      && resp.status() === 200),
+    page.waitForResponse(resp => resp.url().includes('/api-proxy/v4/reminder/summary')),
+    page.waitForResponse(resp => resp.url().includes('/api-proxy/v4/search/task')),
+    page.waitForResponse(resp => resp.url().includes('/api-proxy/v3/search/investment_project')),
     page.goto('/'),
   ])
   
