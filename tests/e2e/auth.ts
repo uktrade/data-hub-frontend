@@ -13,12 +13,9 @@ test('auth', async () => {
   const context = await browser.newContext()
   const page = await context.newPage()
 
-  // If authFile exists use details.
-  // If tests fail remove auth file and the script below will induce the SSO login screen 
-  // and generate a new one.
+  // If authFile exists use details. If tests fail remove auth file and the script below will 
+  // induce the SSO login screen and generate a new one.
   if (!fs.existsSync(authFile)) {
-    // (await page.context().storageState()).cookies
-
     // Induce the SSO screen
     // We are expecting to be redirected to SSO
     await page.goto('/')
