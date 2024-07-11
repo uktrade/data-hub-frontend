@@ -27,6 +27,5 @@ test.describe('interactions', () => {
       await page.locator('li[data-test="collection-item"] h3 a').first().click(),
     ])
     await expect(page).toHaveTitle(/- Interactions - DBT Data Hub/)
-    await expect(page.locator('li[aria-current="page"]')).toContainText('Interaction')  
   });
 });

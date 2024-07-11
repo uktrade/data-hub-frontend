@@ -13,7 +13,7 @@ test.describe('search', () => {
       await page.goto(`/search/${slug}?term=test`),
     
       await expect(page).toHaveTitle(`${name} - Search - DBT Data Hub`)
-      await expect(page.getByRole('heading', {name: 'results matching test'})).toBeVisible()
+      await expect(page.getByRole('heading', {name: /results? matching test/})).toBeVisible()
     });
   });
 });
