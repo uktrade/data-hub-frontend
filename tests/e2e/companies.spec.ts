@@ -26,16 +26,14 @@ test.describe('companies', () => {
 
     const companyInfo = `/api-proxy/v4/company/${companyId}`
     const companyList = `/api-proxy/v4/company-list?items__company_id=${companyId}`
-    // Export wins seems to be flakey at the moment.
-    // const exportWin = `/api-proxy/v4/company/${companyId}/export-win`
+    const exportWin = `/api-proxy/v4/company/${companyId}/export-win`
     const dnbCount = `/api-proxy/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`
     const interaction = `/api-proxy/v3/search/interaction`
-
 
     const [response] = await Promise.all([
       page.waitForResponse(resp => resp.url().includes(companyInfo)),
       page.waitForResponse(resp => resp.url().includes(companyList)),
-      // page.waitForResponse(resp => resp.url().includes(exportWin)),
+      page.waitForResponse(resp => resp.url().includes(exportWin)),
       page.waitForResponse(resp => resp.url().includes(dnbCount)),
       page.waitForResponse(resp => resp.url().includes(interaction)),
       page.goto(`/companies/${companyId}/overview`)
@@ -50,16 +48,12 @@ test.describe('companies', () => {
 
     const companyInfo = `/api-proxy/v4/company/${companyId}`
     const companyList = `/api-proxy/v4/company-list?items__company_id=${companyId}`
-    // Export wins seems to be flakey at the moment.
-    // const exportWin = `/api-proxy/v4/company/${companyId}/export-win`
     const dnbCount = `/api-proxy/v4/dnb/${companyId}/related-companies/count?include_manually_linked_companies=true`
     const contact = `/api-proxy/v3/search/contact`
-
 
     const [response] = await Promise.all([
       page.waitForResponse(resp => resp.url().includes(`/api-proxy/v4/reminder/summary`)),
       page.waitForResponse(resp => resp.url().includes(companyInfo)),
-      // page.waitForResponse(resp => resp.url().includes(exportWin)),
       page.waitForResponse(resp => resp.url().includes(dnbCount)),
       page.waitForResponse(resp => resp.url().includes(companyList)),
       page.waitForResponse(resp => resp.url().includes(contact)),
