@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { BASE_URLS } from './tests/e2e/utils';
 
 /**
  * Read environment variables from file.
@@ -26,9 +27,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-    // baseURL: 'https://dev.datahub.uktrade.digital/',
-    baseURL: 'https://datahub.prod.uktrade.digital',
+    baseURL: BASE_URLS.LOCALHOST,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
