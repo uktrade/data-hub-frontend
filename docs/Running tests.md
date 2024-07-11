@@ -196,6 +196,21 @@ or
 
 `$ npm run test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
 
+# Performance E2E tests
+The performance E2E tests use Playwright. Any current tests should only run non-mutating, non-destructive tests.
+
+In `playwright.config.ts` you can define which environment to run it against by settings the `baseURL`.
+
+To run against your local environment spin it assumes it is running already (`npm run develop`).
+
+If this is the first time running playwright you may need to run `npm install` to ensure you've got everything you need. 
+
+Run tests headless:
+`npx playwright test`
+
+Run tests in Playwright Test UI:
+`npx playwright test --ui`
+
 ## Accessibility tests
 
 The aim of this suite is to ensure our HTML pages are usable by as many people as possible.

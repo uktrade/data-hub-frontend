@@ -91,3 +91,10 @@ yalc.lock
 
 # Ignore gh pages for Storybook
 storybook-static/
+
+playwright/.auth
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.auth/
