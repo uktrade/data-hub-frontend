@@ -21,16 +21,24 @@ const FieldChoiceCheckboxInline = styled(FieldChoice.Checkbox)`
   ${inline}
 `
 
+const FieldChoiceBooleanInline = styled(FieldChoice.Boolean)`
+  ${inline}
+`
+
 const RADIO = 'FieldChoice.Radio'
 const RADIO_INLINE = 'FieldChoiceRadioInline'
 const CHECKBOX = 'FieldChoice.Checkbox'
 const CHECKBOX_INLINE = 'FieldChoiceCheckboxInline'
+const BOOLEAN = 'FieldChoice.Boolean'
+const BOOLEAN_INLINE = 'FieldChoiceBooleanInline'
 
 const COMPONENT_TYPE = {
   RADIO,
   RADIO_INLINE,
   CHECKBOX,
   CHECKBOX_INLINE,
+  BOOLEAN,
+  BOOLEAN_INLINE,
 }
 
 const getCode = ({ component, props }) => `
@@ -250,6 +258,134 @@ RadioSelected.parameters = getParameters({
   ]),
   component: COMPONENT_TYPE.RADIO,
   props: formatProps(['name="country"', `options=[${formattedOptions}]`]),
+})
+
+// Boolean
+const booleanComment =
+  "There's no need to set the options as the FieldChoice.Boolean component does this internally."
+
+export const Boolean = Template.bind({})
+Boolean.args = {
+  name: 'has_changed_name',
+  component: FieldChoice.Boolean,
+}
+Boolean.parameters = getParameters({
+  story: 'A boolean radio group',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps(['name="has_changed_name"']),
+})
+
+export const BooleanLabel = Template.bind({})
+BooleanLabel.args = {
+  ...Boolean.args,
+  label: 'Have you changed your name?',
+}
+BooleanLabel.parameters = getParameters({
+  story: 'A boolean radio group with label',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps([
+    'name="has_changed_name"',
+    'label=Have you changed your name?',
+  ]),
+})
+
+export const BooleanLabelAndHint = Template.bind({})
+BooleanLabelAndHint.args = {
+  ...Boolean.args,
+  label: 'Have you changed your name?',
+  hint: 'This includes changing your last name or spelling your name differently.',
+}
+BooleanLabelAndHint.parameters = getParameters({
+  story: 'A boolean radio group with label and hint',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps([
+    'name="has_changed_name"',
+    'label="Have you changed your name?"',
+    'hint="This includes changing your last name or spelling your name differently.',
+  ]),
+})
+
+export const BooleanCustomOptionLabels = Template.bind({})
+BooleanCustomOptionLabels.args = {
+  ...Boolean.args,
+  label: 'Have you changed your name?',
+  yesLabel: 'Agree',
+  noLabel: 'Disagree',
+}
+BooleanCustomOptionLabels.parameters = getParameters({
+  story: 'A boolean radio group with custom option labels',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps([
+    'name="has_changed_name"',
+    'label="Have you changed your name?"',
+    'yesLabel="Agree"',
+    'noLabel="Disagree"',
+  ]),
+})
+
+export const BooleanLegend = Template.bind({})
+BooleanLegend.args = {
+  ...Boolean.args,
+  legend: <h1>Have you changed your name?</h1>,
+}
+BooleanLegend.parameters = getParameters({
+  story: 'A boolean radio group with legend',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps([
+    'name="has_changed_name"',
+    'legend={<H1>Have you changed your name?</H1>}',
+  ]),
+})
+
+export const BooleanInline = Template.bind({})
+BooleanInline.args = {
+  ...Boolean.args,
+  component: FieldChoiceBooleanInline,
+}
+BooleanInline.parameters = getParameters({
+  story: 'An inline boolean radio group',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN_INLINE,
+  props: formatProps(['name="has_changed_name"']),
+})
+
+export const BooleanRequired = Template.bind({})
+BooleanRequired.args = {
+  ...Boolean.args,
+  required: 'Select Yes or No',
+}
+BooleanRequired.parameters = getParameters({
+  story:
+    'A boolean radio button group where a selection is required. Click "Save" to view an error.',
+  comment: formatCodeComments([booleanComment]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps([
+    'name="has_changed_name"',
+    'required="Select Yes or No"',
+  ]),
+})
+
+export const BooleanSelected = Template.bind({})
+const booleanOption = { value: true, label: 'Yes' }
+BooleanSelected.args = {
+  ...Boolean.args,
+  initialValues: {
+    has_changed_name: booleanOption,
+  },
+}
+BooleanSelected.parameters = getParameters({
+  story: 'A boolean radio button group selected',
+  comment: formatCodeComments([
+    ...initialValueComments,
+    `For example: { has_changed_name: [${formatOptionFlat(booleanOption)}] }`,
+  ]),
+  component: COMPONENT_TYPE.BOOLEAN,
+  props: formatProps(['name="has_changed_name"']),
 })
 
 // Checkbox
