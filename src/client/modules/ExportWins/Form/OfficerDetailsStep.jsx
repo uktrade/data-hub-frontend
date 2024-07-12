@@ -5,6 +5,7 @@ import HQTeamRegionOrPost from '../../../components/Resource/HQTeamRegionOrPost'
 import TeamType from '../../../components/Resource/TeamType'
 import { useFormContext } from '../../../../client/components/Form/hooks'
 import { Step, FieldAdvisersTypeahead } from '../../../components'
+import { idNamesToValueLabels } from '../../../utils'
 import * as validators from './validators'
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
@@ -50,6 +51,9 @@ const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
           id={`officer-hq-team-region-or-post`}
           fullWidth={true}
           payload={{ team_type: values.team_type.value }}
+          resultToOptions={(result) =>
+            idNamesToValueLabels(result.filter((team) => !team.disabledOn))
+          }
           label="HQ team, region or post"
           required="Select HQ team, region or post"
         />
