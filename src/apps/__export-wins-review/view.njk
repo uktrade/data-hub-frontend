@@ -4,16 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DBT Export Wins</title>
-    <style nonce="{{ cspNonce }}" >
-      html, body {
-        font-family: Arial,"Helvetica Neue",sans-serif;
-        font-size: 19px;
-        font-weight: 400;
-        -webkit-font-smoothing: antialiased;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <link href="{{ getAssetPath('shared.css') }}" media="screen, print" rel="stylesheet">
   </head>
   <body>
     {% include "_includes/csp-nonce.njk" %}
@@ -21,8 +12,8 @@
       <noscript>Please enable JavaScript in your browser to see the content.</noscript>
     </div>
 
-    <!--[if gt IE 8]><!-->
-    <script src="{{ getAssetPath('export-win-review.js') }}"></script>
-    <!--<![endif]-->
+    <script nonce="{{ cspNonce }}" src="{{ getAssetPath('runtime.js') }}"></script>
+    <script nonce="{{ cspNonce }}" src="{{ getAssetPath('shared.js') }}"></script>
+    <script nonce="{{ cspNonce }}" src="{{ getAssetPath('exportWinReview.js') }}"></script>
   </body>
 </html>

@@ -28,6 +28,7 @@ const buildRedisConfig = () => {
 }
 
 const config = {
+  assetPath: 'assets',
   root,
   buildDir: path.join(root, '.build'),
   env: envVars.NODE_ENV,
