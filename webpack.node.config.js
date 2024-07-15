@@ -1,8 +1,9 @@
-const baseConfig = require('./webpack.config.js')
 const nodeExternals = require('webpack-node-externals')
 
-module.exports = (env) => ({
-  ...baseConfig(env),
+const baseConfig = require('./webpack.config.js')
+
+module.exports = {
+  ...baseConfig,
   target: 'node',
   externals: [nodeExternals()],
-})
+}

@@ -1,3 +1,5 @@
+const path = require('path')
+
 const { map } = require('lodash')
 
 const logger = require('../config/logger')
@@ -60,12 +62,11 @@ module.exports = function locals(req, res, next) {
 
     getAssetPath(asset) {
       const webpackAssetPath = webpackManifest[asset]
-
-      if (webpackAssetPath) {
-        return `${baseUrl}/${webpackAssetPath}`
-      }
-
-      return `${baseUrl}/${asset}`
+      return path.join(
+        '/',
+        config.assetPath,
+        !config.isDev && webpackAssetPath ? webpackAssetPath : asset
+      )
     },
 
     getLocal(key) {
