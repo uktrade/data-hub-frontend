@@ -53,6 +53,10 @@ if (!config.isTest) {
   app.use(headers)
 }
 
+if (config.isDev) {
+  require('./middleware/hmr')(app)
+}
+
 if (global.__coverage__) {
   require('@cypress/code-coverage/middleware/express')(app)
 }
@@ -103,10 +107,7 @@ app.use(
 // Static files
 app.use(favicon(path.join(config.root, 'public/images', 'favicon.ico')))
 app.use(express.static(path.join(config.root, 'public')))
-app.use('/js', express.static(path.join(config.buildDir, 'js')))
-app.use('/css', express.static(path.join(config.buildDir, 'css')))
-app.use('/images', express.static(path.join(config.buildDir, 'images')))
-app.use('/fonts', express.static(path.join(config.buildDir, 'fonts')))
+app.use(path.join('/', config.assetPath), express.static(config.buildDir))
 app.use(
   '/assets',
   express.static(
