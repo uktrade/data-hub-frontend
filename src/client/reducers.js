@@ -56,6 +56,13 @@ import investmentProjectReducer from './modules/Investments/Projects/investmentP
 import overviewInvestmentProjectReducer from './modules/Companies/CompanyOverview/TableCards/reducer.js'
 import overviewExportWinsReducer from './modules/Companies/CompanyOverview/TableCards/exportStatusReducer.js'
 
+import {
+  OVERVIEW_RECENT_ACTIVITY_ID,
+  OVERVIEW_UPCOMING_ACTIVITY_ID,
+} from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
+import overviewRecentActivityReducer from './modules/Companies/CompanyOverview/TableCards/ActivityCards/recentReducer'
+import overviewUpcomingActivityReducer from './modules/Companies/CompanyOverview/TableCards/ActivityCards/upcomingReducer'
+
 import { ID as COMPANIES_ID } from './modules/Companies/CollectionList/state'
 import companiesReducer from './modules/Companies/CollectionList/reducer'
 
@@ -88,8 +95,6 @@ import contactsReducer from './modules/Contacts/CollectionList/reducer'
 import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
 import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 
-import { ID as COMPANY_ACTIVITIES_ID } from './components/ActivityFeed/CollectionList/state'
-import companyActivitiesReducer from './components/ActivityFeed/CollectionList/reducer'
 import { ID as EVENTS_DETAILS_ID } from './modules/Events/EventDetails/state'
 import eventDetailsReducer from './modules/Events/EventDetails/reducer'
 
@@ -180,6 +185,9 @@ import getInteractionReducer from './modules/Interactions/InteractionDetails/red
 import { PREVIEW_QUOTE_ID } from './modules/Omis/state'
 import orderQuoteReducer from './modules/Omis/reducer'
 
+import { ID as COMPANY_ACTIVITY_NO_AS_ID } from './modules/Companies/CompanyActivity/state'
+import companyActivityReducerNoAs from './modules/Companies/CompanyActivity/reducer'
+
 import { ResendExportWin } from './modules/ExportWins/Form/ResendExportWin'
 
 export const reducers = {
@@ -223,7 +231,6 @@ export const reducers = {
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
   [INTERACTIONS_ID]: interactionsReducer,
-  [COMPANY_ACTIVITIES_ID]: companyActivitiesReducer,
   [EVENTS_ID]: eventsReducer,
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
   [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
@@ -252,4 +259,7 @@ export const reducers = {
   [INTERACTION_ID]: getInteractionReducer,
   [PROPOSITION_COMPLETE_ID]: investmentProjectsReducer,
   [PREVIEW_QUOTE_ID]: orderQuoteReducer,
+  [COMPANY_ACTIVITY_NO_AS_ID]: companyActivityReducerNoAs,
+  [OVERVIEW_RECENT_ACTIVITY_ID]: overviewRecentActivityReducer,
+  [OVERVIEW_UPCOMING_ACTIVITY_ID]: overviewUpcomingActivityReducer,
 }

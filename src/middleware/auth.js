@@ -9,8 +9,7 @@ const PUBLICLY_ACCESSIBLE_API_ENDPOINTS = [
 const REGEX = new RegExp(PUBLICLY_ACCESSIBLE_API_ENDPOINTS.join('|'))
 
 module.exports = function auth(req, res, next) {
-  const passThrough =
-    req.session.token || /^\/(healthcheck|oauth)\b/.test(req.url)
+  const passThrough = req.session.token || /^\/(pingdom|oauth)\b/.test(req.url)
 
   if (passThrough) {
     return next()

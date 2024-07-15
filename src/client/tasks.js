@@ -39,7 +39,6 @@ import {
   TASK_GET_EVENTS_LIST,
   TASK_GET_EVENTS_ORGANISER_NAME,
   TASK_GET_EVENTS_METADATA,
-  TASK_GET_ALL_ACTIVITY_FEED_EVENTS,
 } from '../client/modules/Events/CollectionList/state'
 
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
@@ -68,7 +67,6 @@ import { getESSInteractionDetails } from './modules/Interactions/ESSInteractionD
 
 import {
   getEvents,
-  getAllActivityFeedEvents,
   getEventsMetadata,
 } from './modules/Events/CollectionList/tasks'
 
@@ -102,8 +100,11 @@ import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 import {
   TASK_GET_LATEST_EXPORT_WINS,
   TASK_GET_PROJECT_WON_COUNT,
-} from './modules/Companies/CompanyOverview/TableCards/state.js'
-import * as overviewInvestmentProjectTasks from './modules/Companies/CompanyOverview/TableCards/tasks.js'
+} from './modules/Companies/CompanyOverview/TableCards/state'
+import * as overviewCardTasks from './modules/Companies/CompanyOverview/TableCards/tasks'
+
+import { TASK_GET_COMPANY_OVERVIEW_ACTIVITY } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
+import { getCompanyOverviewActivities } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/tasks'
 
 import {
   TASK_SEARCH_COMPANY,
@@ -153,10 +154,6 @@ import {
   getInteractions,
   getInteractionsMetadata,
 } from './modules/Interactions/CollectionList/tasks'
-import {
-  getCompanyActivities,
-  getCompanyActivitiesMetadata,
-} from './components/ActivityFeed/CollectionList/tasks'
 
 import {
   TASK_GET_ORDERS_LIST,
@@ -182,13 +179,6 @@ import {
   TASK_GET_CONTACTS_LIST,
   TASK_GET_CONTACTS_METADATA,
 } from './modules/Contacts/CollectionList/state'
-import {
-  TASK_GET_COMPANY_ACTIVITIES_LIST,
-  TASK_GET_COMPANY_ACTIVITIES_METADATA,
-  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
-  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
-} from './components/ActivityFeed/CollectionList/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
@@ -451,6 +441,18 @@ import {
   getExportWin,
 } from '../client/modules/ExportWins/Form/tasks'
 
+import {
+  TASK_GET_COMPANY_ACTIVITIES_NO_AS,
+  TASK_GET_COMPANY_ACTIVITIES_METADATA,
+  TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME,
+  TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
+} from './modules/Companies/CompanyActivity/state'
+import {
+  getCompanyInteractions,
+  getCompanyActivitiesMetadata,
+} from './modules/Companies/CompanyActivity/tasks'
+
 export const tasks = {
   'Create list': createList,
   'Edit company': editCompany,
@@ -494,9 +496,8 @@ export const tasks = {
   [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
   [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
   [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
-  [TASK_GET_PROJECT_WON_COUNT]: overviewInvestmentProjectTasks.getProjectsWon,
-  [TASK_GET_LATEST_EXPORT_WINS]:
-    overviewInvestmentProjectTasks.getLatestExportWins,
+  [TASK_GET_PROJECT_WON_COUNT]: overviewCardTasks.getProjectsWon,
+  [TASK_GET_LATEST_EXPORT_WINS]: overviewCardTasks.getLatestExportWins,
   [TASK_CREATE_INVESTMENT_PROJECT]:
     createInvestmentProjectTasks.createInvestmentProject,
   [TASK_CREATE_LARGE_CAPITAL_PROFILE]:
@@ -533,14 +534,13 @@ export const tasks = {
   [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
   [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
-  [TASK_GET_COMPANY_ACTIVITIES_LIST]: getCompanyActivities,
+  [TASK_GET_COMPANY_ACTIVITIES_NO_AS]: getCompanyInteractions,
   [TASK_GET_COMPANY_ACTIVITIES_METADATA]: getCompanyActivitiesMetadata,
   [TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME]: getCompanyNames,
   [TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME]: getTeamNames,
   [TASK_GET_EVENTS_LIST]: getEvents,
   [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
-  [TASK_GET_ALL_ACTIVITY_FEED_EVENTS]: getAllActivityFeedEvents,
   [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
   [TASK_GET_EVENT_DETAILS]: getEventDetails,
   [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
@@ -708,4 +708,5 @@ export const tasks = {
   [TASK_ADD_PROJECT_DOCUMENT]: addProjectDocument,
   [TASK_RESEND_EXPORT_WIN]: resendExportWin,
   [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
+  [TASK_GET_COMPANY_OVERVIEW_ACTIVITY]: getCompanyOverviewActivities,
 }

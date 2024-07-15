@@ -1,9 +1,8 @@
-import { get, compact } from 'lodash'
+import { compact } from 'lodash'
 
 import urls from '../../../lib/urls'
 
 import {
-  format,
   formatMediumDateTime,
   getDifferenceInDays,
   formatLongDate,
@@ -11,57 +10,75 @@ import {
 } from '../../utils/date'
 
 import { transformIdNameToValueLabel } from '../../transformers'
+import {
+  getServiceText,
+  getServiceOtherText,
+} from '../../components/ActivityFeed/activities/InteractionUtils'
 
 const transformEventToListItem = ({
   id,
   name,
   event_type,
-  address_country,
   modified_on,
   start_date,
   end_date,
   organiser,
   lead_team,
-  uk_region,
-  disabled_on,
+  service,
 } = {}) => {
-  const metadata = [
-    {
-      label: 'Type',
-      value: get(event_type, 'name'),
-    },
-  ]
-  if (start_date) {
-    metadata.push({
-      label: 'Begins',
-      value: format(start_date),
-    })
-  }
-  if (start_date || end_date) {
-    metadata.push({
-      label: 'Ends',
-      value: format(end_date || start_date),
-    })
-  }
-  if (lead_team) {
-    metadata.push({
-      label: 'Lead team',
-      value: get(lead_team, 'name'),
-    })
-  }
-  if (organiser) {
-    metadata.push({
-      label: 'Organiser',
-      value: get(organiser, 'name'),
+  const [, service2] = service ? service.name.split(' : ') : ''
+  const tags = []
+  if (event_type) {
+    tags.push({
+      text: event_type.name,
+      colour: 'grey',
+      dataTest: 'event-kind-label',
     })
   }
 
-  const badges = [
-    { text: get(address_country, 'name') },
-    { text: get(uk_region, 'name') },
-  ]
-  if (disabled_on) {
-    badges.push({ text: 'Disabled' })
+  if (service) {
+    tags.push({
+      text: getServiceText(service.name),
+      colour: 'default',
+      dataTest: 'event-theme-label',
+    })
+  }
+
+  if (service && service2) {
+    tags.push({
+      text: getServiceOtherText(service2),
+      colour: 'blue',
+      dataTest: 'event-service-label',
+    })
+  }
+
+  const metadata = []
+  if (start_date || end_date) {
+    metadata.push({
+      label: 'Event date',
+      value: formatStartAndEndDate(start_date, end_date),
+    })
+  }
+
+  if (organiser) {
+    metadata.push({
+      label: 'Organiser',
+      value: organiser.name,
+    })
+  }
+
+  if (service) {
+    metadata.push({
+      label: 'Service type',
+      value: service.name,
+    })
+  }
+
+  if (lead_team) {
+    metadata.push({
+      label: 'Lead team',
+      value: lead_team.name,
+    })
   }
 
   return {
@@ -71,7 +88,7 @@ const transformEventToListItem = ({
     subheading: modified_on
       ? `Updated on ${formatMediumDateTime(modified_on)}`
       : undefined,
-    badges: badges.filter((item) => item.text),
+    tags: tags,
     metadata: metadata.filter((item) => item.value),
   }
 }

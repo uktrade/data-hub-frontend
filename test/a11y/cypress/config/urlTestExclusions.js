@@ -73,6 +73,7 @@ export const urlTestExclusions = [
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },
+  { url: '/companies/:companyId/unarchive' },
   { url: '/companies/:companyId/lists' },
   { url: '/companies/:companyId/manage-company-list' },
   { url: '/v4/dnb/:companyId/related-companies/count' },
@@ -153,8 +154,9 @@ export const urlTestExclusions = [
   { url: '/exportwins/:winId/success' },
   { url: '/companies/:companyId/exportwins/:winId/customer-feedback' },
   { url: '/companies/:companyId/export/:exportId/exportwins/create' },
-
   { url: '/companies/e59a2b0f-7d84-4de7-bc1e-f70339f4255f/overview' },
+  //TODO - Reinstate this link once the Aventri integration is back
+  { url: '/events/aventri/:aventriEventId/details' },
   // Exclude all metadata
   { url: '/api-proxy/v4/metadata/likelihood-to-land' },
   { url: '/api-proxy/v4/metadata/investment-investor-type' },
@@ -199,6 +201,9 @@ export const urlTestExclusions = [
   {
     url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment',
   },
+  {
+    url: '/api-proxy/v4/metadata/capital-investment/large-capital-investment-type',
+  },
   { url: '/api-proxy/v4/metadata/capital-investment/return-rate' },
   { url: '/api-proxy/v4/metadata/capital-investment/time-horizon' },
   { url: '/api-proxy/v4/metadata/capital-investment/restriction' },
@@ -206,6 +211,10 @@ export const urlTestExclusions = [
   { url: '/api-proxy/v4/metadata/capital-investment/equity-percentage' },
   { url: '/api-proxy/v4/metadata/capital-investment/desired-deal-role' },
   { url: '/api-proxy/v4/metadata/capital-investment/asset-class-interest' },
+  { url: '/api-proxy/v4/large-capital-opportunity/:opportunityId' },
+  {
+    url: '/api-proxy/v4/metadata/large-capital-opportunity/opportunity-value-type',
+  },
   { url: '/api-proxy/v4/metadata/one-list-tier' },
   { url: '/api-proxy/v4/metadata/trade-agreement' },
 ]

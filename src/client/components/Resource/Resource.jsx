@@ -293,7 +293,12 @@ export const createMetadataResource = (name, endpoint) => {
     rawResult,
   ]
   const Component = (props) => (
-    <EntityResource transformer={transformer} id="__METADATA__" {...props} />
+    <EntityResource
+      transformer={transformer}
+      id="__METADATA__"
+      payload={props.payload || { _: '0' }}
+      {...props}
+    />
   )
 
   Component.propTypes = _.omit(Component.propTypes, 'id')

@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Button from '@govuk-react/button'
-import GridCol from '@govuk-react/grid-col'
-import GridRow from '@govuk-react/grid-row'
-import Link from '@govuk-react/link'
+import { Button, GridCol, GridRow, Link } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 
@@ -92,8 +89,8 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
           {!contact.archived && (
             <GridCol setWidth="one-quarter">
               <Button
+                as={'a'}
                 data-test="add-interaction-button"
-                as={Link}
                 href={urls.companies.interactions.create(contact.company.id)}
               >
                 Add interaction

@@ -121,7 +121,7 @@ FieldInput.propTypes = {
   /**
    * Sets initial value of the input
    */
-  initialValue: PropTypes.string,
+  initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /**
    * Toggles wether the element is a filter or not
    */

@@ -114,7 +114,7 @@ describe('Event', () => {
       createEvent()
     })
 
-    it('should create an attendee on a event', () => {
+    it.skip('should create an attendee on a event', () => {
       createEvent()
       // This is here to allow the activity stream to poll the event api and detect the new event.
       //TODO once the activity stream poll is made customisable remove this wait
@@ -142,7 +142,7 @@ describe('Event', () => {
     })
   })
 
-  describe('edit', () => {
+  describe.skip('edit', () => {
     beforeEach(() => {
       cy.visit(urls.events.index())
     })

@@ -197,7 +197,7 @@ const CompanyBusinessDetails = ({
                 }
               </Task.Status>
               {canEditOneList(userPermissions) && (
-                <Button as={Link} href={urls.companies.editOneList(companyId)}>
+                <Button as={'a'} href={urls.companies.editOneList(companyId)}>
                   Edit One List Information
                 </Button>
               )}

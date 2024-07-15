@@ -9,7 +9,7 @@ describe('Editing a pending export win', () => {
     cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
       'apiGetExportWin'
     )
-    cy.intercept('GET', '/api-proxy/v4/metadata/team-type', [
+    cy.intercept('GET', '/api-proxy/v4/metadata/team-type*', [
       {
         id: '1',
         name: 'Trade (TD or ST)',

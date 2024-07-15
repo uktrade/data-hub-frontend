@@ -114,12 +114,17 @@ This method is recommended if you are only making frontend changes.
 
 5.  Go to the [Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#environments), find the environment you want to use in the Admin URLs section, and set this URL to the environment variable `API_ROOT`. You will need to remove `/admin` from the end of the API path.
 
-6.  Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
+6.  Go to the parameter store in AWS (https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table). Change the following environment variables in your `.env` file to the ones specified in the parameter store. Remember to select the correct envriorment (e.g dev, uat, staging) you are using.
 
-    ```
-    DATA_HUB_BACKEND_ACCESS_KEY_ID=frontend-key-id
-    DATA_HUB_BACKEND_SECRET_ACCESS_KEY=frontend-key
-    ```
+> **Warning**
+> Gov PaaS will be deprecated from July 2024 and keys will be moved from Vault to Parameter Store.
+>
+> Go to Vault, look in datahub-fe, and click on the environment you want to use. Change the following environment variables in your `.env` file to the ones specified in Vault:
+
+```
+DATA_HUB_BACKEND_ACCESS_KEY_ID=frontend-key-id
+DATA_HUB_BACKEND_SECRET_ACCESS_KEY=frontend-key
+```
 
 7.  The environment variables copied from `sample.env` are set up for running both the frontend and the API using the docker. To run the frontend natively, the following variables will need to be changed to:
 
@@ -190,7 +195,7 @@ These instructions work for both the dockerised environment and the native envir
 
 List of all environment variables can be found in the source code of [envSchema.js](./src/config/envSchema.js).
 
-Check Vault for environment variables that point to other environments, such as staging and dev.
+Check AWS parameter store for environment variables that point to other environments, such as staging and dev.
 
 ## Making changes
 
