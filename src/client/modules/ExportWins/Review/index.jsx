@@ -355,7 +355,7 @@ const Step6 = () => (
   </Step>
 )
 
-const Review = () => {
+const ReviewForm = () => {
   const { token } = useParams()
   return (
     <Layout
@@ -396,13 +396,13 @@ const Review = () => {
   )
 }
 
-export default () => (
+export const Review = () => (
   <Routes>
     <Route
       path="/exportwins/review/accesibility-statement"
       element={<AccesibilityStatement />}
     />
-    <Route path="/exportwins/review/:token" element={<Review />} />
+    <Route path="/exportwins/review/:token" element={<ReviewForm />} />
     <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />
   </Routes>
 )

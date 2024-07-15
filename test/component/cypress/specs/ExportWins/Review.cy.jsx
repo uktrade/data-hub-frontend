@@ -7,7 +7,7 @@ import {
   assertFieldTextarea,
   assertErrorSummary,
 } from '../../../../functional/cypress/support/assertions'
-import Review from '../../../../../src/client/modules/ExportWins/Review'
+import { Review } from '../../../../../src/client/modules/ExportWins/Review'
 
 const assertNoErrorDialog = () =>
   cy.get('[data-test="error-dialog"').should('not.exist')

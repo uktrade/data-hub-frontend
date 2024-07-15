@@ -47,9 +47,9 @@
   {% endif %}
 
   <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
-  <link rel="apple-touch-icon" href="{{ getAssetPath('images/apple-touch-icon.png') }}">
+  <link rel="apple-touch-icon" href="{{ getAssetPath('apple-touch-icon.png') }}">
   <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
-  <link rel="icon" href="{{ getAssetPath('images/favicon-192x192.png') }}" type="image/png">
+  <link rel="icon" href="{{ getAssetPath('favicon-192x192.png') }}" type="image/png">
 
   <!-- opengraph -->
   <meta property="og:url" content="{{ CANONICAL_URL }}">
@@ -60,12 +60,12 @@
   {% endif -%}
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_GB">
-  <meta property="og:image" content="{{ getAssetPath('images/opengraph-image.png') }}">
+  <meta property="og:image" content="{{ getAssetPath('opengraph-image.png') }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="1200">
 
   <!-- styles -->
-  <link href="{{ getAssetPath('styles.css') }}" media="screen, print" rel="stylesheet">
+  <link href="{{ getAssetPath('shared.css') }}" media="screen, print" rel="stylesheet">
 
   <!-- Google Tag Manager (GTM) -->
   {% include "_includes/google-tag-manager-snippet.njk" %}
@@ -119,8 +119,7 @@
     <noscript>Please enable JavaScript in your browser to see the content.</noscript>
   </div>
 
-  <!--[if gt IE 8]><!-->
-  <script nonce="{{ cspNonce }}" src="{{ getAssetPath('app.js') }}"></script>
-  <script nonce="{{ cspNonce }}" src="{{ getAssetPath('react-app.js') }}"></script>
-  <!--<![endif]-->
+  <script nonce="{{ cspNonce }}" src="{{ getAssetPath('runtime.js') }}"></script>
+  <script nonce="{{ cspNonce }}" src="{{ getAssetPath('shared.js') }}"></script>
+  <script nonce="{{ cspNonce }}" src="{{ getAssetPath('datahub.js') }}"></script>
 {% endblock %}
