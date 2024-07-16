@@ -41,17 +41,11 @@ const COMPONENT_TYPE = {
   BOOLEAN_INLINE,
 }
 
-const getCode = ({ component, props }) => `
-<Form>
-  <${component}
-   ${props}
-  />
-</Form>
-`
+const form = (component, props) =>
+  `<Form ... >\n  <${component}\n    ${props}\n  />\n</Form>`
 
-const getCodeWithComment = ({ component, props, comment }) => `
-${comment} ${getCode({ component, props })}
-`
+const getCode = (component, props, comment) =>
+  comment ? ` ${comment}\n${form(component, props)}` : form(component, props)
 
 const getParameters = ({ story, component, props, comment }) => ({
   docs: {
@@ -59,38 +53,33 @@ const getParameters = ({ story, component, props, comment }) => ({
       story,
     },
     source: {
-      code: comment
-        ? getCodeWithComment({
-            component,
-            props,
-            comment,
-          })
-        : getCode({
-            component,
-            props,
-          }),
+      code: getCode(component, props, comment),
     },
   },
 })
 
 const formatCodeComments = (comments) =>
-  comments.map((comment) => `// ${comment.replace(/,/g, '')}`).join('\n')
+  comments
+    .map(
+      (comment, index) =>
+        `// ${comment}${index !== comments.length - 1 ? '\n' : ''}`
+    )
+    .join('')
 
-const formatOptionFlat = (option) =>
-  `{ value: '${option.value}', label: '${option.label}' }`
+const formatOption = ({ option, flat = false }) =>
+  flat
+    ? `{ value: '${option.value}', label: '${option.label}' }`
+    : `
+     {
+       value: '${option.value}',
+       label: '${option.label}',
+     }`
 
-const formatOptionsFlat = (options) => options.map(formatOptionFlat)
-
-const formatOption = (option) => `
-    {
-      value: '${option.value}',
-      label: '${option.label}',
-    }`
-
-const formatOptions = (options) => options.map(formatOption)
+const formatOptions = ({ options, flat = false }) =>
+  options.map((option) => formatOption({ option, flat }))
 
 const formatProps = (props) =>
-  props.map((prop) => prop.replace(/,/g, '')).join('\n   ')
+  props.map((prop) => prop.replace(/,/g, '')).join('\n    ')
 
 const options = [
   {
@@ -111,7 +100,7 @@ const options = [
   },
 ]
 
-const formattedOptions = formatOptions(options)
+const formattedOptions = formatOptions({ options })
 
 const initialValueComments = [
   'The form will automatically set the initial values providing the name',
@@ -133,9 +122,10 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `The <b>FieldChoice</b> component renders a group of radio buttons or checkboxes by setting the prop type to either <b>"radio"</b> or <b>"checkbox"</b>.
+        component: `The <b>FieldChoice</b> component renders a group of radio buttons or checkboxes by setting the prop type to either "radio" or "checkbox".
         The component sets the entire selected option to the form's state which is helpful on user journeys where the final page is a summary page and you need to extract a label
-        (or any other field) from a previous selection to display to the user.`,
+        (or any other field) from a previous selection to display to the user. Instead of using FieldChoice directly favour <b>FieldChoice.Radio</b>, <b>FieldChoice.Checkbox</b> or
+        <b>FieldChoice.Boolean</b> where there's no need to set the type.`,
       },
     },
   },
@@ -250,11 +240,15 @@ RadioSelected.args = {
     country: options[0],
   },
 }
+const formattedRadioOption = formatOption({
+  option: options[0],
+  flat: true,
+})
 RadioSelected.parameters = getParameters({
   story: 'Radio button group selected',
   comment: formatCodeComments([
     ...initialValueComments,
-    `For example: { country: ${formatOptionFlat(options[0])} }`,
+    `For example: { country: ${formattedRadioOption}}`,
   ]),
   component: COMPONENT_TYPE.RADIO,
   props: formatProps(['name="country"', `options=[${formattedOptions}]`]),
@@ -378,11 +372,15 @@ BooleanSelected.args = {
     has_changed_name: booleanOption,
   },
 }
+const formattedBooleanOption = formatOption({
+  option: booleanOption,
+  flat: true,
+})
 BooleanSelected.parameters = getParameters({
   story: 'A boolean radio button group selected',
   comment: formatCodeComments([
     ...initialValueComments,
-    `For example: { has_changed_name: [${formatOptionFlat(booleanOption)}] }`,
+    `For example: { has_changed_name: [${formattedBooleanOption}] }`,
   ]),
   component: COMPONENT_TYPE.BOOLEAN,
   props: formatProps(['name="has_changed_name"']),
@@ -482,12 +480,16 @@ CheckboxChecked.args = {
     destination: [options[0], options[1]],
   },
 }
+const formattedCheckboxOptions = formatOptions({
+  options: [options[0], options[1]],
+  flat: true,
+})
 CheckboxChecked.parameters = getParameters({
   story: 'Checkbox group checked',
   component: COMPONENT_TYPE.CHECKBOX,
   props: formatProps(['name=destination', `options=[${formattedOptions}]`]),
   comment: formatCodeComments([
     ...initialValueComments,
-    `For example: { destination: [${formatOptionsFlat([options[0], options[1]])}] `,
+    `For example: { destination: [${formattedCheckboxOptions}] `,
   ]),
 })
