@@ -43,7 +43,7 @@ describe('Investment project details', () => {
           'Actual land date': '15 August 2023',
           'New or existing investor': 'Existing Investor',
           'Level of involvement': 'FDI Hub + HQ + LEP',
-          'Specific investment programmes': 'Advanced Engineering Supply Chain',
+          'Specific investment programme': 'Advanced Engineering Supply Chain',
         },
       })
     })

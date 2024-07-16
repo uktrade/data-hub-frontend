@@ -120,7 +120,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
-          'Specific investment programmes': data.specificInvestmentProgrammes,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
 
@@ -219,7 +219,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': INVESTOR_TYPES.existing.label,
           'Level of involvement': data.investorLevel,
-          'Specific investment programmes': data.specificInvestmentProgrammes,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
     })
@@ -260,7 +260,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
-          'Specific investment programmes': data.specificInvestmentProgrammes,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
 
@@ -329,7 +329,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
-          'Specific investment programmes': data.specificInvestmentProgrammes,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
 
@@ -397,7 +397,7 @@ describe('Creating an investment project', () => {
           'Actual land date': '5 May 2031',
           'New or existing investor': 'New Investor',
           'Level of involvement': data.investorLevel,
-          'Specific investment programmes': data.specificInvestmentProgrammes,
+          'Specific investment programme': data.specificInvestmentProgrammes,
         },
       })
     })
@@ -442,7 +442,7 @@ describe('Creating an investment project', () => {
             'Actual land date': '5 May 2031',
             'New or existing investor': 'New Investor',
             'Level of involvement': data.investorLevel,
-            'Specific investment programmes': data.specificInvestmentProgrammes,
+            'Specific investment programme': data.specificInvestmentProgrammes,
           },
         })
       })
@@ -489,7 +489,7 @@ describe('Creating an investment project', () => {
             'Actual land date': '5 May 2031',
             'New or existing investor': 'New Investor',
             'Level of involvement': data.investorLevel,
-            'Specific investment programmes': data.specificInvestmentProgrammes,
+            'Specific investment programme': data.specificInvestmentProgrammes,
           },
         })
       })

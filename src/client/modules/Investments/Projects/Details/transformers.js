@@ -169,8 +169,6 @@ export const transformProjectSummaryForApi = ({
         ? INVESTOR_TYPES.existing.value
         : checkIfItemHasValue(investor_type),
     level_of_involvement: checkIfItemHasValue(level_of_involvement?.value),
-    specific_programmes:
-      specific_programmes && specific_programmes.map((x) => x.value),
     other_business_activity,
     business_activities: business_activities.map((x) => x.value),
     client_contacts: client_contacts.map((x) => x.value),
@@ -183,6 +181,14 @@ export const transformProjectSummaryForApi = ({
     ),
     referral_source_activity_event: setReferralSourceEvent(values),
     referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
+  }
+
+  if (Array.isArray(specific_programmes)) {
+    summaryPayload.specific_programmes = specific_programmes.map((x) => x.value)
+  } else if (typeof specific_programmes === 'object') {
+    summaryPayload.specific_programmes = [specific_programmes.value]
+  } else {
+    summaryPayload.specific_programmes = []
   }
 
   if (fdi_type?.value == FDI_TYPES.capitalOnly.value) {

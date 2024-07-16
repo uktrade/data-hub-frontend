@@ -235,7 +235,7 @@ describe('ProjectIncompleteFields', () => {
         assertLink('Non-FDI R&D project', associatedLink)
         assertLink('UK recipient company', recipientCompanyLink)
         assertLink('Investor type', detailsLink)
-        assertLink('Specific investment programmes', detailsLink)
+        assertLink('Specific investment programme', detailsLink)
         assertLink('Level of investor involvement', detailsLink)
       })
     }

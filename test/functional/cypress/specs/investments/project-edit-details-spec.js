@@ -320,12 +320,12 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the specific investment programmes field with optional text in the label', () => {
+    it('should display the specific investment programme field with optional text in the label', () => {
       cy.get('[data-test="field-specific_programmes"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Specific investment programmes (optional)',
-          placeholder: 'Choose specific programmes',
+          label: 'Specific investment programme (optional)',
+          placeholder: 'Choose a specific programme',
         })
       })
     })
@@ -383,12 +383,12 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should render the specific programmes field label without the word optional', () => {
+    it('should render the specific programme field label without the word optional', () => {
       cy.get('[data-test="field-specific_programmes"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Specific investment programmes',
-          placeholder: 'Choose specific programmes',
+          label: 'Specific investment programme',
+          placeholder: 'Choose a specific programme',
         })
       })
     })
