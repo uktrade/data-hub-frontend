@@ -3,9 +3,9 @@ const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 
 function visitExportIndex(companyId) {
-  cy.intercept('GET', '**/export-win').as('exportWinResults')
+  //cy.intercept('GET', '**/export-win').as('exportWinResults')
   cy.visit(urls.companies.exports.index(companyId))
-  cy.wait('@exportWinResults')
+  //cy.wait('@exportWinResults')
 }
 
 describe('Company Export tab', () => {
@@ -133,7 +133,16 @@ describe('Company Export tab', () => {
         )
       })
 
-      it('should render the list of Export Wins without pagination', () => {
+      it('should render the message saying wins are not available', () => {
+        cy.get('[data-test="wins-unavailable"]')
+          .should('exist')
+          .should(
+            'contain',
+            'This service is currently unavailable due to maintenance. Email datahubsupport@uktrade.zendesk.com if you have any questions'
+          )
+      })
+
+      it.skip('should render the list of Export Wins without pagination', () => {
         const LIST_ALIAS = 'export-wins-collection-list'
 
         cy.contains('8 results').parent().parent().as(LIST_ALIAS)
@@ -303,7 +312,7 @@ describe('Company Export tab', () => {
     })
   })
 
-  describe('Export Wins', () => {
+  describe.skip('Export Wins', () => {
     function visitExports(companyId) {
       cy.intercept('**/export-win').as('exportWinsResults')
       cy.visit(urls.companies.exports.index(companyId))
