@@ -2,7 +2,7 @@
 
 Commits to `main` are automatically deployed to dev and staging environments.
 
-Deployments to production are done manually through Jenkins where a Git tag can be used.
+Deployments to UAT and production are done manually through Copilot/platform-helper where a Git tag must be used.
 
 ## Deploying to production
 
