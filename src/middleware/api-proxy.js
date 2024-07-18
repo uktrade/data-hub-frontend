@@ -105,8 +105,15 @@ module.exports = (app) => {
       onError: (err) => {
         console.log('API-PROXY-ERROR', err)
       },
+      onProxyRes: (proxyRes) => {
+        proxyRes.on('data', (data) => {
+          console.log('API-PROXY-RESPONSE body', data.toString('utf-8'))
+        })
+        console.log('API-PROXY-RESPONSE statusCode', proxyRes.statusCode)
+        console.log('API-PROXY-RESPONSE headers', proxyRes.headers)
+      },
       onProxyReq: (proxyReq, req) => {
-        console.log('API-PROXY-IN HEADERS', req.headers)
+        console.log('API-PROXY-IN HEADERS', JSON.stringify(req.headers))
         Object.entries(getZipkinHeaders(req)).forEach(
           ([header, headerValue]) => {
             proxyReq.setHeader(header, headerValue)
@@ -124,7 +131,10 @@ module.exports = (app) => {
           // stream the content
           proxyReq.write(bodyData)
         }
-        console.log('API-PROXY-OUT HEADERS', proxyReq.getHeaders())
+        console.log(
+          'API-PROXY-OUT HEADERS',
+          JSON.stringify(proxyReq.getHeaders())
+        )
       },
     })
   )
