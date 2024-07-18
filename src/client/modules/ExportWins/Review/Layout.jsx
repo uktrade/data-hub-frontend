@@ -1,17 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import { H1 } from 'govuk-react'
+import { Button, H1, H2, Link } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
+import { FormActions } from '../../../components'
 import Footer from '../../../components/Footer'
+import Task from '../../../components/Task'
+import Resource from '../../../components/Resource/Resource'
 import { BLACK, WHITE, LIGHT_GREY } from '../../../utils/colours'
+import RecentTaskResult from '../../../components/Task/RecentResult'
 
 const Grid = styled.div({
   minHeight: '100vh',
   display: 'grid',
-  gridTemplateRows: 'auto auto 1fr minmax(min-content, 30px)',
+  gridTemplateRows: 'auto auto auto 1fr minmax(min-content, 30px)',
   gridTemplateColumns: `1fr min(100vw, calc(960px + ${SPACING.SCALE_3} * 2)) 1fr`,
   gridTemplateAreas: `
+    ". cookie-banner ." 
     ". main-bar ."
     ". header ."
     ". main ."
@@ -62,8 +67,69 @@ const Title = styled(H1)({
   marginBottom: SPACING.SCALE_5,
 })
 
+const CookieBannerBackground = styled.div({
+  gridRow: 'cookie-banner',
+  gridColumn: '1 / -1',
+  background: '#f3f2f1',
+})
+
+const CookieBanner = styled.div({
+  gridArea: 'cookie-banner',
+  paddingTop: SPACING.SCALE_3,
+})
+
 const Layout = ({ children, title, supertitle, headingContent }) => (
   <Grid>
+    <CookieBannerBackground />
+    <Resource name="load cookie preference" id="cookieConsent">
+      {(persistedConsent) => (
+        <RecentTaskResult name="save cookie preference" id="cookieConsent">
+          {(updatedConsent) =>
+            !persistedConsent &&
+            !updatedConsent && (
+              <CookieBanner>
+                <H2>Cookies</H2>
+                <p>
+                  We’d like to use analytics cookies sfo we can understand how
+                  you use the Design System and make improvements.
+                </p>
+                <p>
+                  We also use essential cookies to remember if you’ve accepted
+                  analytics cookies.
+                </p>
+                <FormActions>
+                  <Task>
+                    {(getTask) => {
+                      const setPreference = (value) =>
+                        getTask(
+                          'save cookie preference',
+                          'cookieConsent'
+                        ).start({
+                          payload: value,
+                          onSuccessDispatch: 'FORM__RESOLVED',
+                        })
+                      return (
+                        <>
+                          <Button onClick={() => setPreference('granted')}>
+                            Accept analytics cookies
+                          </Button>
+                          <Button onClick={() => setPreference('denied')}>
+                            Reject analytics cookies
+                          </Button>
+                        </>
+                      )
+                    }}
+                  </Task>
+                  <Link href="/exportwins/review/cookie-page">
+                    View cookies
+                  </Link>
+                </FormActions>
+              </CookieBanner>
+            )
+          }
+        </RecentTaskResult>
+      )}
+    </Resource>
     <MainBarBackground />
     <MainBar>Department for Business & Trade</MainBar>
     <HeaderBackground />
@@ -78,6 +144,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
         'Privacy Policy':
           'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
         'Accessibility Statement': '/exportwins/review/accesibility-statement',
+        Cookies: '/exportwins/review/cookies',
       }}
     />
   </Grid>

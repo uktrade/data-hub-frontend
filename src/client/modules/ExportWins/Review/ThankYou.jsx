@@ -7,7 +7,7 @@ import { StatusMessage } from '../../../components'
 
 import Layout from './Layout'
 
-const StyledStatusMessage = styled(StatusMessage)({
+export const StyledStatusMessage = styled(StatusMessage)({
   background: WHITE,
   '& > *:first-child': {
     marginTop: 0,
