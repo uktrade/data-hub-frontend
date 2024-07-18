@@ -88,6 +88,11 @@ const ALLOWLIST = [
   '/v3/investment/:projectId/proposition/:propositionId/document/upload-callback',
 ]
 
+console.log(
+  'API-PROXY-ALLOWLIST',
+  ALLOWLIST.map((apiPath) => API_PROXY_PATH + apiPath)
+)
+
 module.exports = (app) => {
   app.use(
     ALLOWLIST.map((apiPath) => API_PROXY_PATH + apiPath),
@@ -98,6 +103,7 @@ module.exports = (app) => {
         ['^' + API_PROXY_PATH]: '',
       },
       onProxyReq: (proxyReq, req) => {
+        console.log('API-PROXY-IN HEADERS', req.headers)
         Object.entries(getZipkinHeaders(req)).forEach(
           ([header, headerValue]) => {
             proxyReq.setHeader(header, headerValue)
@@ -115,6 +121,7 @@ module.exports = (app) => {
           // stream the content
           proxyReq.write(bodyData)
         }
+        console.log('API-PROXY-OUT HEADERS', proxyReq.getHeaders())
       },
     })
   )
