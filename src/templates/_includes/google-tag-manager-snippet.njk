@@ -1,16 +1,29 @@
 {% if GOOGLE_TAG_MANAGER_KEY %}
 <script nonce='{{ cspNonce }}'>
+  {# window['ga-disable-G-2WBFY5B0YK'] = true #}
+
   window.dataLayer = window.dataLayer || []
-  window.dataLayer.push({
+  window.gtag = function() { dataLayer.push(arguments); }
+
+  gtag({
     userId: '{{user.id}}',
     userUserId: '{{user.sso_user_id}}',
   })
+
   if ('{{userFeatureGTMEvent}}') {
-    window.dataLayer.push({
+    gtag({
       name: '{{userFeatureGTMEvent.name}}',
       event: '{{userFeatureGTMEvent.event}}',
     })
   }
+
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
 </script>
 <!-- Google Tag Manager -->
 <script nonce='{{ cspNonce }}'>
