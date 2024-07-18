@@ -120,6 +120,7 @@ module.exports = (app) => {
           }
         )
 
+        proxyReq.setHeader('transfer-encoding', 'chunked')
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
         // this is required to be able to handle POST requests and avoid a conflict with bodyParser
         // issue here -> https://github.com/chimurai/http-proxy-middleware/issues/320
