@@ -31,6 +31,7 @@ const myTasksReminderListFaker = (length = 10, overrides = {}) => {
 }
 
 export const getSummary = function (req, res) {
+  console.log(req.headers)
   res.json(summary)
 }
 

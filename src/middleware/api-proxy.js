@@ -102,6 +102,9 @@ module.exports = (app) => {
       pathRewrite: {
         ['^' + API_PROXY_PATH]: '',
       },
+      onError: (err) => {
+        console.log('API-PROXY-ERROR', err)
+      },
       onProxyReq: (proxyReq, req) => {
         console.log('API-PROXY-IN HEADERS', req.headers)
         Object.entries(getZipkinHeaders(req)).forEach(
