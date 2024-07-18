@@ -2,7 +2,6 @@ import React from 'react'
 import { H1, H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
@@ -50,7 +49,7 @@ const NoTasks = () => (
       You can create your own tasks or collaborate with colleagues and assign
       tasks to other users.
     </StyledParagraph>
-    <Button as={Link} href={tasks.create()}>
+    <Button as={'a'} href={tasks.create()}>
       Add a task
     </Button>
     <StyledImage src={NoTaskImage} alt="An image of a list of tasks" />

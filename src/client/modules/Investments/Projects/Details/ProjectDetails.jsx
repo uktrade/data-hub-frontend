@@ -194,7 +194,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
               ) : null}
             </SummaryTable>
             <Button
-              as={Link}
+              as={'a'}
               href={urls.investments.projects.editDetails(project.id)}
               buttonColour={GREY_3}
               buttonTextColour={BLACK}
@@ -293,7 +293,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
             </SummaryTable>
             {checkIfRequirementsStarted(project) ? (
               <Button
-                as={Link}
+                as={'a'}
                 href={urls.investments.projects.editRequirements(project.id)}
                 buttonColour={GREY_3}
                 buttonTextColour={BLACK}
@@ -307,7 +307,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   Please complete this section to move to Assign PM stage
                 </InsetText>
                 <Button
-                  as={Link}
+                  as={'a'}
                   href={urls.investments.projects.editRequirements(project.id)}
                   data-test="add-requirements-button"
                 >
@@ -398,7 +398,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
             </SummaryTable>
             {checkIfValueStarted(project) ? (
               <Button
-                as={Link}
+                as={'a'}
                 href={urls.investments.projects.editValue(project.id)}
                 buttonColour={GREY_3}
                 buttonTextColour={BLACK}
@@ -413,7 +413,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   move to Assign PM stage
                 </InsetText>
                 <Button
-                  as={Link}
+                  as={'a'}
                   href={urls.investments.projects.editValue(project.id)}
                   data-test="add-value-button"
                 >

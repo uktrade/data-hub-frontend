@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Link } from 'govuk-react'
+import { Button } from 'govuk-react'
 
 import { GREEN, WHITE } from '../../../../client/utils/colours'
 
@@ -23,7 +23,7 @@ const CompleteInteraction = ({
   return (
     <>
       <Button
-        as={Link}
+        as={'a'}
         href={getEditLink(interactionId, companyObject, companyArray)}
         buttonColour={GREEN}
         buttonTextColour={WHITE}

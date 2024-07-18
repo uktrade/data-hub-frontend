@@ -118,7 +118,7 @@ const Subsidiaries = ({
           <li>
             <StyledLinkedSubsidiaryButton>
               <Button
-                as={Link}
+                as={'a'}
                 href={urls.companies.subsidiaries.link(requestedCompanyId)}
                 buttonColour={GREY_4}
                 buttonTextColour={BLACK}

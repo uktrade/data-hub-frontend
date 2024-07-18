@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, H2, InsetText, Link, Table } from 'govuk-react'
+import { Button, H2, InsetText, Table } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
@@ -84,7 +84,7 @@ const ProjectTeam = () => {
                       )}
                     </Table>
                     <Button
-                      as={Link}
+                      as={'a'}
                       href={urls.investments.projects.clientRelationshipManagement(
                         project.id
                       )}
@@ -97,7 +97,7 @@ const ProjectTeam = () => {
                   </>
                 ) : (
                   <Button
-                    as={Link}
+                    as={'a'}
                     href={urls.investments.projects.clientRelationshipManagement(
                       project.id
                     )}
@@ -146,7 +146,7 @@ const ProjectTeam = () => {
                       )}
                     </Table>
                     <Button
-                      as={Link}
+                      as={'a'}
                       href={urls.investments.projects.editProjectManagement(
                         project.id
                       )}
@@ -171,7 +171,7 @@ const ProjectTeam = () => {
                           the Active stage.
                         </InsetText>
                         <Button
-                          as={Link}
+                          as={'a'}
                           href={urls.investments.projects.editProjectManagement(
                             project.id
                           )}
@@ -206,7 +206,7 @@ const ProjectTeam = () => {
                       })}
                     </Table>
                     <Button
-                      as={Link}
+                      as={'a'}
                       href={urls.investments.projects.editTeamMembers(
                         project.id
                       )}
@@ -219,7 +219,7 @@ const ProjectTeam = () => {
                   </>
                 ) : (
                   <Button
-                    as={Link}
+                    as={'a'}
                     href={urls.investments.projects.editTeamMembers(project.id)}
                     data-test="add-team-button"
                   >

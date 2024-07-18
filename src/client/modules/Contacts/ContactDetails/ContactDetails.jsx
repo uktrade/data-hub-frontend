@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 
 import { BLACK, GREY_3 } from '../../../../client/utils/colours'
 import { ContactResource } from '../../../components/Resource'
@@ -94,7 +93,7 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
           </SummaryTable>
           {!contact.archived ? (
             <Button
-              as={Link}
+              as={'a'}
               href={urls.contacts.edit(contactId)}
               buttonColour={GREY_3}
               buttonTextColour={BLACK}

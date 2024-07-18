@@ -156,7 +156,7 @@ const ExportsIndex = () => {
             </StyledLink>
             <H3>Export wins</H3>
             <Button
-              as={Link}
+              as={'a'}
               data-test="add-export-win"
               aria-label="Add export win"
               buttonColour={GREY_3}

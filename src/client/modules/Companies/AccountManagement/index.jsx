@@ -135,7 +135,7 @@ const Strategy = ({ company }) => (
       {!company.strategy && (
         <Button
           data-test="add-strategy-button"
-          as={Link}
+          as={'a'}
           href={urls.companies.accountManagement.strategy.create(company.id)}
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
@@ -194,7 +194,7 @@ const Objectives = ({ company }) => (
             <AddObjectiveButton setWidth="one-quarter">
               <Button
                 data-test="add-objective-button"
-                as={Link}
+                as={'a'}
                 href={urls.companies.accountManagement.objectives.create(
                   company.id
                 )}
@@ -278,7 +278,7 @@ const AccountManagement = ({ permissions }) => {
                   <div>
                     <Button
                       data-test="edit-core-team-button"
-                      as={Link}
+                      as={'a'}
                       href={urls.companies.editVirtualTeam(companyId)}
                     >
                       Edit core team

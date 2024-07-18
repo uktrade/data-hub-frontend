@@ -1,6 +1,5 @@
 import React from 'react'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 
 import { GREY_3, TEXT_COLOUR } from '../../../client/utils/colours'
@@ -66,7 +65,7 @@ const AddRemoveFromListForm = ({
           </div>
 
           <Button
-            as={Link}
+            as={'a'}
             href={createNewListUrl}
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}

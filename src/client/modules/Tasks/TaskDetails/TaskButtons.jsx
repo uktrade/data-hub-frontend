@@ -56,7 +56,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
           <Button
             buttonColour={GREY_3}
             buttonTextColour={TEXT_COLOUR}
-            as={Link}
+            as={'a'}
             href={urls.tasks.edit(task.id)}
             data-test="edit-form-button"
           >
@@ -66,7 +66,7 @@ export const TaskButtons = ({ task, returnUrl }) => (
         <Button
           buttonColour={GREY_3}
           buttonTextColour={TEXT_COLOUR}
-          as={Link}
+          as={'a'}
           href={urls.tasks.createCopyTask(task.id)}
           data-test="create-similar-task-button"
         >
