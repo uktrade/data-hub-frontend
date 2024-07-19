@@ -105,7 +105,9 @@ module.exports = (app) => {
         )
 
         // This is required, otherwise the API hosted on AWS responds with 403
-        proxyReq.setHeader('transfer-encoding', 'chunked')
+        if (config.isProd) {
+          proxyReq.setHeader('transfer-encoding', 'chunked')
+        }
 
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
         // this is required to be able to handle POST requests and avoid a conflict with bodyParser
