@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom'
 import { Link } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
@@ -57,11 +56,11 @@ const StyledLinkHeader = styled('h3')`
   }
 `
 
+// FIXME: This should be a component
+// e.g. the positional arguments should be passed as an object
 export const TitleRenderer = (title, url, margin = { bottom: 10 }) => (
   <StyledLinkHeader margin={margin}>
-    <Link as={RouterLink} to={url}>
-      {title}
-    </Link>
+    <Link href={url}>{title}</Link>
   </StyledLinkHeader>
 )
 
