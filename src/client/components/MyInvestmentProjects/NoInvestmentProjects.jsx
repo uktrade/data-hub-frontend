@@ -3,7 +3,6 @@ import UnorderedList from '@govuk-react/unordered-list'
 import { H1, H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
@@ -80,7 +79,7 @@ const NoInvestmentProjects = () => (
         </StyledListItem>
       </StyledUnorderedList>
     </div>
-    <Button as={Link} href={investments.index()}>
+    <Button as={'a'} href={investments.index()}>
       Add project
     </Button>
   </StyledContainer>

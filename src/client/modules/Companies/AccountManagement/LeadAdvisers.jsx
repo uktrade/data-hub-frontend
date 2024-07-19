@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
@@ -52,11 +51,11 @@ const RenderHasAccountManager = ({
     </p>
     {hasPermissionToAddIta(permissions) && (
       <FormActions>
-        <ButtonSecondary as={Link} href={addUrl} data-test="replace-ita-button">
+        <ButtonSecondary as={'a'} href={addUrl} data-test="replace-ita-button">
           Replace Lead ITA
         </ButtonSecondary>
         <ButtonSecondary
-          as={Link}
+          as={'a'}
           href={urls.companies.accountManagement.advisers.remove(companyId)}
           data-test="remove-ita-button"
         >
@@ -91,7 +90,7 @@ export const LeadITA = ({ company, permissions }) => (
               users.
             </p>
             <Button
-              as={Link}
+              as={'a'}
               href={urls.companies.accountManagement.advisers.assign(
                 company.id
               )}

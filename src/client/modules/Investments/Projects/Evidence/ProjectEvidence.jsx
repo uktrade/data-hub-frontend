@@ -97,7 +97,7 @@ const ProjectEvidence = () => {
               </Table>
             ) : null}
             <Button
-              as={Link}
+              as={'a'}
               href={urls.investments.projects.evidence.add(projectId)}
               data-test="add-evidence-button"
             >

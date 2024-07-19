@@ -1,5 +1,4 @@
 import { H3 } from '@govuk-react/heading'
-import Link from '@govuk-react/link'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -26,10 +25,10 @@ const ListHeader = ({ id, name }) => (
   <StyledRoot>
     <StyledHeading>{name}</StyledHeading>
     <StyledFormActions>
-      <SecondaryButton as={Link} href={urls.companyLists.rename(id)}>
+      <SecondaryButton as={'a'} href={urls.companyLists.rename(id)}>
         Edit list name
       </SecondaryButton>
-      <SecondaryButton as={Link} href={urls.companyLists.delete(id)}>
+      <SecondaryButton as={'a'} href={urls.companyLists.delete(id)}>
         Delete list
       </SecondaryButton>
     </StyledFormActions>

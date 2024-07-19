@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
@@ -151,7 +151,7 @@ const EventDetails = ({
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>
-                      <Button as={Link} to={urls.events.edit(id)}>
+                      <Button as={'a'} to={urls.events.edit(id)}>
                         Edit event
                       </Button>
                     </FormActions>

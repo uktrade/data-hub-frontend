@@ -1,6 +1,6 @@
 import { connect, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
-import { H2, Button, Link } from 'govuk-react'
+import { H2, Button } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import qs from 'qs'
 import { get } from 'lodash'
@@ -29,7 +29,7 @@ const buttonRenderer =
         {taskCompleteStatus === 'completed' ? null : (
           <div>
             <Button
-              as={Link}
+              as={'a'}
               href={urls.investments.projects.proposition.abandon(
                 investment_project_id,
                 id

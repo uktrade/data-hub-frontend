@@ -62,7 +62,7 @@ export const OrderPaidMessage = ({ orderId }) => (
   <>
     <StatusMessage>This order has been paid in full.</StatusMessage>
     <Button
-      as={Link}
+      as={'a'}
       href={urls.omis.paymentReceipt(orderId)}
       data-test="view-receipt-button"
     >

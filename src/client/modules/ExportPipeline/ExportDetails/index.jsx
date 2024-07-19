@@ -181,7 +181,7 @@ const ExportDetailsForm = ({ exportItem }) => {
                 </StyledSummaryTable>
                 <Container>
                   <Button
-                    as={Link}
+                    as={'a'}
                     href={urls.exportPipeline.edit(exportId)}
                     buttonColour={GREY_3}
                     buttonTextColour={BLACK}
@@ -190,7 +190,7 @@ const ExportDetailsForm = ({ exportItem }) => {
                     Edit
                   </Button>
                   <Button
-                    as={Link}
+                    as={'a'}
                     href={urls.companies.exportWins.createFromExport(
                       exportItem.company.id,
                       exportId

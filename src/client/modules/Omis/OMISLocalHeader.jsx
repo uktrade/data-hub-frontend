@@ -113,7 +113,7 @@ const DraftActions = ({ orderId, incompleteFields }) => (
     <StyledButtonWrapper>
       {incompleteFields.length === 0 ? (
         <Button
-          as={Link}
+          as={'a'}
           href={urls.omis.quote(orderId)}
           data-test="preview-quote-button"
         >
@@ -153,7 +153,7 @@ const PaidActions = ({ orderId }) => (
   <StyledWrapper>
     <StyledButtonWrapper>
       <Button
-        as={Link}
+        as={'a'}
         href={urls.omis.complete(orderId)}
         data-test="complete-button"
       >

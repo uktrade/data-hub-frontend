@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
-import { UnorderedList, ListItem, H2, Button, Link } from 'govuk-react'
+import { UnorderedList, ListItem, H2, Button } from 'govuk-react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -87,7 +87,7 @@ const ExportWinsLink = () => (
   // TODO: This should be a react-router link, but we can't use it yet because
   // the Dashboard is mounted in Nunjucks which results in the Dashboard being also
   // rendered on top of the content of the /exportwins route.
-  <Button as={Link} href="/exportwins">
+  <Button as={'a'} href="/exportwins">
     View export wins
   </Button>
 )

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from 'govuk-react'
-import Link from '@govuk-react/link'
 
 import { TASK_SAVE_OBJECTIVE } from '../state'
 import {
@@ -143,7 +142,7 @@ const ObjectiveForm = ({ company, objectiveItem }) => {
         {objectiveItem && (
           <FormActions>
             <ButtonSecondary
-              as={Link}
+              as={'a'}
               href={urls.companies.accountManagement.objectives.archive(
                 company?.id,
                 objectiveItem?.id
