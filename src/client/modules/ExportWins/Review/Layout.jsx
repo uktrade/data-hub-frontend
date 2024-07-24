@@ -90,7 +90,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
               <CookieBanner>
                 <H2>Cookies</H2>
                 <p>
-                  We’d like to use analytics cookies sfo we can understand how
+                  We’d like to use analytics cookies so we can understand how
                   you use the Design System and make improvements.
                 </p>
                 <p>

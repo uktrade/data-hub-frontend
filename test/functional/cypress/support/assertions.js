@@ -278,6 +278,7 @@ const assertFieldRadiosStrict = ({
   legend,
   hint,
   selectIndex,
+  selectedIndex,
 }) =>
   cy
     .get(`[data-test="field-${inputName}"]`)
@@ -294,15 +295,23 @@ const assertFieldRadiosStrict = ({
         .should('have.length', options.length)
         .each(($el, i) => {
           const label = options[i]
-          const wrapped = cy
-            .wrap($el)
+          cy.wrap($el)
             .should('have.attr', 'aria-label', label)
+            .as('radio')
             .parent()
             .should('match', 'label')
             .should('have.text', label)
 
+          if (selectedIndex === 0 || selectedIndex) {
+            cy.get('@radio').should(
+              selectedIndex === i ? 'be.checked' : 'not.be.checked'
+            )
+          } else if (selectedIndex === null) {
+            cy.get('@radio').should('not.be.checked')
+          }
+
           if (i === selectIndex) {
-            wrapped.click()
+            cy.get('@radio').click()
           }
         })
     })

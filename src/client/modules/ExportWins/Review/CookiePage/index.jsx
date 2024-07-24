@@ -1,8 +1,4 @@
 import React from 'react'
-import { put, take } from 'redux-saga/effects'
-
-import { eventChannel } from 'redux-saga'
-
 import { H2 } from 'govuk-react'
 
 import { GREEN } from '../../../../utils/colours'
@@ -11,25 +7,6 @@ import RecentTaskResult from '../../../../components/Task/RecentResult'
 
 import Layout from '../Layout'
 import { StyledStatusMessage } from '../ThankYou'
-
-const storageChannel = eventChannel((emit) => {
-  window.addEventListener('storage', emit)
-  return () => window.removeEventListener(emit)
-})
-
-export function* cookiePreferenceChangeSaga() {
-  while (true) {
-    const { key, newValue } = yield take(storageChannel)
-    if (key === 'cookie-consent') {
-      yield put({
-        type: 'FORM__RESOLVED',
-        name: 'save cookie preference',
-        id: 'cookieConsent',
-        result: newValue,
-      })
-    }
-  }
-}
 
 const CookiePage = () => (
   <Layout

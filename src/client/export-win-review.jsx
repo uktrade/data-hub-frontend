@@ -2,7 +2,6 @@ import './webpack-csp-nonce'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Routes, Route } from 'react-router-dom'
-import Cookies from 'js-cookie'
 
 import { createProvider } from './createProvider'
 import WithoutOurSupport from './components/Resource/WithoutOurSupport'
@@ -13,31 +12,10 @@ import MarketingSource from './components/Resource/MarketingSource'
 
 import Review from './modules/ExportWins/Review'
 import { patchExportWinReview } from './modules/ExportWins/tasks'
-
-const COOKIE_CONSENT_COOKIE_NAME = 'cookie-consent'
-
-const loadCookiePreference = () =>
-  localStorage.getItem(COOKIE_CONSENT_COOKIE_NAME)
-
-const saveCookiePreference = (payload) => {
-  if (!['granted', 'denied'].includes(payload)) {
-    throw Error('Payload must be "granted" or "denied"')
-  }
-
-  localStorage.setItem(COOKIE_CONSENT_COOKIE_NAME, payload)
-
-  window.gtag('consent', 'update', {
-    analytics_storage: payload,
-  })
-
-  if (payload === 'denied') {
-    for (const cookieName in Cookies.get()) {
-      Cookies.remove(cookieName)
-    }
-  }
-
-  return payload
-}
+import {
+  loadCookiePreference,
+  saveCookiePreference,
+} from './modules/ExportWins/Review/CookiePage/tasks'
 
 const Provider = createProvider({
   ...ExportWinReview.tasks,
