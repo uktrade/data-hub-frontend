@@ -103,8 +103,9 @@ const assertReviewForm = ({ agree }) => {
       Experience: () => Promise.resolve(EXPERIENCE),
       MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
       TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+      'load cookie preference': () => 'granted',
     },
-    initialPath: '/exportwins/review/123',
+    initialPath: '/123',
   })
 
   assertHeader()
@@ -337,16 +338,17 @@ describe('ExportWins/Review', () => {
         Experience: () => Promise.resolve(EXPERIENCE),
         MarketingSource: () => Promise.resolve(MARKETING_SOURCE),
         TASK_PATCH_EXPORT_WIN_REVIEW: () => Promise.resolve({}),
+        'load cookie preference': () => 'granted',
       },
-      initialPath: '/exportwins/review/123',
+      initialPath: '/123',
     })
 
     cy.get('footer').within(() => {
       // There should be 3 links including the Crown copyright
-      cy.get('a').should('have.length', 3)
+      cy.get('a').should('have.length', 4)
 
       // Links should be in a particular order
-      cy.contains('Privacy Policy' + 'Accessibility Statement')
+      cy.contains('Privacy Policy' + 'Accessibility Statement' + 'Cookies')
 
       cy.contains('a', 'Privacy Policy').should(
         'have.attr',
@@ -357,6 +359,11 @@ describe('ExportWins/Review', () => {
         'have.attr',
         'href',
         '/exportwins/review/accesibility-statement'
+      )
+      cy.contains('a', 'Cookies').should(
+        'have.attr',
+        'href',
+        '/exportwins/review/cookies'
       )
     })
   })
@@ -369,8 +376,9 @@ describe('ExportWins/Review', () => {
             Promise.reject({
               httpStatusCode: 404,
             }),
-          initialPath: '/exportwins/review/123',
+          'load cookie preference': () => 'granted',
         },
+        initialPath: '/123',
       })
 
       assertHeader()
@@ -388,8 +396,9 @@ describe('ExportWins/Review', () => {
       cy.mountWithProvider(<Review />, {
         tasks: {
           'Export Win Review': () => Promise.reject({}),
+          'load cookie preference': () => 'granted',
         },
-        initialPath: '/exportwins/review/123',
+        initialPath: '/123',
       })
 
       assertHeader()
