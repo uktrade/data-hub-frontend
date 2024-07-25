@@ -4,15 +4,12 @@ import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { get } from 'lodash'
 
-import Tag from '../../../components/Tag'
-import { ToggleSection } from '../../../components/ToggleSection'
-import { DARK_GREY, MID_GREY, BLACK } from '../../../../client/utils/colours.js'
-import {
-  formatShortDate,
-  formatMediumDateTime,
-} from '../../../../client/utils/date.js'
-import { currencyGBP } from '../../../../client/utils/number-utils'
-import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
+import Tag from '../../../components/Tag/index.jsx'
+import { ToggleSection } from '../../../components/ToggleSection/index.jsx'
+import { DARK_GREY, MID_GREY, BLACK } from '../../../utils/colours.js'
+import { formatShortDate, formatMediumDateTime } from '../../../utils/date.js'
+import { currencyGBP } from '../../../utils/number-utils.js'
+import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection.jsx'
 
 const ListItem = styled('li')({
   paddingTop: SPACING.SCALE_4,
@@ -97,7 +94,7 @@ const EstimatedExport = ({
   return <span>Not set</span>
 }
 
-const ItemRenderer = (item) => {
+const ResultItem = (item) => {
   const [toggleLabel, setToggleLabel] = useState('Show')
   const status = item.status.toUpperCase()
   const exportPotential = item.export_potential.toUpperCase()
@@ -157,7 +154,7 @@ const shape = PropTypes.shape({
   id: PropTypes.string.isRequired,
 }).isRequired
 
-ItemRenderer.propTypes = {
+ResultItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     company: shape,
@@ -173,4 +170,4 @@ ItemRenderer.propTypes = {
   }),
 }
 
-export default ItemRenderer
+export default ResultItem
