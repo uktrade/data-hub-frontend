@@ -2,7 +2,7 @@
 
 Commits to `main` are automatically deployed to dev and staging environments.
 
-Deployments to production are done manually through Jenkins where a Git tag can be used.
+Deployments to UAT and production are done manually through Copilot/platform-helper where a Git tag must be used.
 
 ## Deploying to production
 
@@ -28,19 +28,13 @@ The release title should be `v<VERSION_NUMBER>` and release notes can be created
 
 Check that the release notes generated contain what you expect to be deployed to production.
 
-6. Go to Jenkins and click on `Build with Parameters`.
+6. Follow the [deployment instructions in the Playbook](https://readme.trade.gov.uk/docs/playbooks/datahub.html#deployment).
 
-7. Select `production` for the environment.
+7. After the DBT Platform deployment has finished, go to Data Hub production and check that everything is working correctly.
 
-8. Type the `v<VERSION_NUMBER>` created in step `2` into the `Git_Commit` text field.
+8. Change the GH pre-release to an actual release.
 
-9. Press the `Build` button.
-
-10. After the Jenkins build has finished, go to Data Hub production and check that everything is working correctly.
-
-11. Change the GH pre-release to an actual release.
-
-12. Post the following message on the #data-hub slack channel, making sure to put the actual version number and link the release notes:
+9. Post the following message on the #data-hub slack channel, making sure to put the actual version number and link the release notes:
 
 ```
 @here Data Hub Frontend v<VERSION_NUMBER> is now live!
