@@ -8,6 +8,18 @@ import {
 
 const getBannerButton = (action) => cy.contains(`${action} analytics cookies`)
 
+const assertFlashMessage = (verb) => {
+  if (verb === false) {
+    cy.contains(
+      'additional cookies. You can change your cookie settings at any time.'
+    ).should('not.exist')
+  } else {
+    cy.contains(
+      `Yo've ${verb} additional cookies. You can change your cookie settings at any time.`
+    )
+  }
+}
+
 const assertCookieBanner = (shouldExist) => {
   const asertion = shouldExist ? 'exist' : 'not.exist'
   cy.contains('h2', 'Cookies').should(asertion)
@@ -20,11 +32,6 @@ const assertCookieBanner = (shouldExist) => {
   getBannerButton('Accept').should(asertion)
   getBannerButton('Reject').should(asertion)
 }
-
-const assertFlashMessage = (verb) =>
-  cy.contains(
-    `Yo've ${verb} additional cookies. You can change your cookie settings at any time.`
-  )
 
 describe('Export wins review', () => {
   ;[
@@ -59,61 +66,46 @@ describe('Export wins review', () => {
           '/exportwins/review/cookies'
         )
       })
+
+      context('Cookie consent', () => {
+        context('No existing preference', () => {
+          it('Should display cookie banner', () => {
+            assertCookieBanner(true)
+            assertFlashMessage(false)
+          })
+          ;[true, false].forEach((accept) =>
+            it(`${accept ? 'Grant' : 'Deny'} through cookie banner`, () => {
+              getBannerButton(accept ? 'Accept' : 'Reject').click()
+              assertCookieBanner(false)
+              assertFlashMessage(accept ? 'accepted' : 'rejected')
+            })
+          )
+        })
+
+        context('Existing preference', () => {
+          ;[true, false].forEach((existingPreference) => {
+            context(existingPreference ? 'Yes' : 'No', () => {
+              it('Should not display cookie banner', () => {
+                cy.visit(url, {
+                  onBeforeLoad: (win) => {
+                    win.localStorage.setItem(
+                      COOKIE_CONSENT_COOKIE_NAME,
+                      existingPreference ? GRANTED : DENIED
+                    )
+                  },
+                })
+                assertCookieBanner(false)
+                assertFlashMessage(false)
+              })
+            })
+          })
+        })
+      })
     })
   })
 
   context('Cookie page', () => {
-    const test = ({ accept, how, action }) =>
-      it(`${accept ? 'Grant' : 'Deny'} through ${how}`, () => {
-        action()
-
-        assertCookieBanner(false)
-        assertFlashMessage(accept ? 'accepted' : 'rejected')
-        assertFieldRadiosStrict({
-          inputName: 'cookieConsent',
-          options: ['Yes', 'No'],
-          selectedIndex: accept ? 0 : 1,
-        })
-      })
-
-    ;[true, false].forEach((existingPreference) =>
-      it(`Should not show cookie banner if existing preference was "${existingPreference}"`, () => {
-        cy.visit('/exportwins/review/cookies', {
-          onBeforeLoad: (win) => {
-            win.localStorage.setItem(
-              COOKIE_CONSENT_COOKIE_NAME,
-              existingPreference ? GRANTED : DENIED
-            )
-          },
-        })
-        assertCookieBanner(false)
-        assertFieldRadiosStrict({
-          inputName: 'cookieConsent',
-          options: ['Yes', 'No'],
-          selectedIndex: existingPreference ? 0 : 1,
-        })
-      })
-    )
-    ;[
-      {
-        existingPreference: false,
-        accept: true,
-        how: 'form',
-        action: () => {
-          cy.contains('label', 'Yes').click()
-          cy.contains('button', 'Save cookie settings').click()
-        },
-      },
-      {
-        existingPreference: true,
-        accept: false,
-        how: 'form',
-        action: () => {
-          cy.contains('label', 'No').click()
-          cy.contains('button', 'Save cookie settings').click()
-        },
-      },
-    ].forEach(({ existingPreference, ...rest }) => {
+    ;[true, false].forEach((existingPreference) => {
       context(
         `Existing preference "${existingPreference ? 'Yes' : 'No'}"`,
         () => {
@@ -128,58 +120,53 @@ describe('Export wins review', () => {
             })
           )
 
-          it(`Should not show cookie banner if existing preference was "${existingPreference}"`, () => {
+          it(`The "${existingPreference ? 'Yes' : 'No'}" radio should be checked`, () => {
             assertCookieBanner(false)
+            assertFlashMessage(false)
             assertFieldRadiosStrict({
               inputName: 'cookieConsent',
               options: ['Yes', 'No'],
               selectedIndex: existingPreference ? 0 : 1,
             })
           })
-          test(rest)
+          ;[true, false].forEach((accept) => {
+            it(`${accept ? 'Grant' : 'Deny'} through form`, () => {
+              cy.contains('label', accept ? 'Yes' : 'No').click()
+              cy.contains('button', 'Save cookie settings').click()
+
+              assertCookieBanner(false)
+              assertFlashMessage(accept ? 'accepted' : 'rejected')
+
+              assertFieldRadiosStrict({
+                inputName: 'cookieConsent',
+                options: ['Yes', 'No'],
+                selectedIndex: accept ? 0 : 1,
+              })
+            })
+          })
         }
       )
-    })
 
-    context('No existing preference', () => {
-      beforeEach(() => cy.visit('/exportwins/review/cookies'))
+      context('No existing preferrence', () => {
+        beforeEach(() => cy.visit('/exportwins/review/cookies'))
+        ;[true, false].forEach((accept) => {
+          it(`${accept ? 'Grant' : 'Deny'} through cookie banner`, () => {
+            assertCookieBanner(true)
+            assertFlashMessage(false)
 
-      it('Displays banner and form with no selected prefference', () => {
-        assertCookieBanner(true)
-        assertFieldRadiosStrict({
-          inputName: 'cookieConsent',
-          options: ['Yes', 'No'],
-          selectedIndex: null,
+            getBannerButton(accept ? 'Accept' : 'Reject').click()
+
+            assertCookieBanner(false)
+            assertFlashMessage(accept ? 'accepted' : 'rejected')
+
+            assertFieldRadiosStrict({
+              inputName: 'cookieConsent',
+              options: ['Yes', 'No'],
+              selectedIndex: accept ? 0 : 1,
+            })
+          })
         })
       })
-      ;[
-        {
-          accept: true,
-          how: 'banner',
-          action: () => getBannerButton('Accept').click(),
-        },
-        {
-          accept: false,
-          how: 'banner',
-          action: () => getBannerButton('Reject').click(),
-        },
-        {
-          accept: true,
-          how: 'form',
-          action: () => {
-            cy.contains('label', 'Yes').click()
-            cy.contains('button', 'Save cookie settings').click()
-          },
-        },
-        {
-          accept: false,
-          how: 'form',
-          action: () => {
-            cy.contains('label', 'No').click()
-            cy.contains('button', 'Save cookie settings').click()
-          },
-        },
-      ].forEach(test)
     })
   })
 })

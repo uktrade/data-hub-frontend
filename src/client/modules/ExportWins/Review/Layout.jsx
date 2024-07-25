@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { Button, H1, H2, Link } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
+import RecentTaskResult from '../../../components/Task/RecentResult'
+import { StyledStatusMessage } from './ThankYou'
 import { FormActions } from '../../../components'
 import Footer from '../../../components/Footer'
 import Task from '../../../components/Task'
 import Resource from '../../../components/Resource/Resource'
-import { BLACK, WHITE, LIGHT_GREY } from '../../../utils/colours'
-import RecentTaskResult from '../../../components/Task/RecentResult'
+import { BLACK, WHITE, LIGHT_GREY, GREEN } from '../../../utils/colours'
 
 const Grid = styled.div({
   minHeight: '100vh',
@@ -78,6 +79,19 @@ const CookieBanner = styled.div({
   paddingTop: SPACING.SCALE_3,
 })
 
+const CookieConsentConfirmation = () => (
+  <RecentTaskResult name="save cookie preference" id="cookieConsent">
+    {(consent) =>
+      consent && (
+        <StyledStatusMessage colour={GREEN}>
+          Yo've {consent === 'granted' ? 'accepted' : 'rejected'} additional
+          cookies. You can change your cookie settings at any time.
+        </StyledStatusMessage>
+      )
+    }
+  </RecentTaskResult>
+)
+
 const Layout = ({ children, title, supertitle, headingContent }) => (
   <Grid>
     <CookieBannerBackground />
@@ -120,9 +134,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
                       )
                     }}
                   </Task>
-                  <Link href="/exportwins/review/cookie-page">
-                    View cookies
-                  </Link>
+                  <Link href="/exportwins/review/cookies">View cookies</Link>
                 </FormActions>
               </CookieBanner>
             )
@@ -136,6 +148,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
     <Header>
       <p>{supertitle}</p>
       <Title>{title}</Title>
+      <CookieConsentConfirmation />
       {headingContent}
     </Header>
     <Main>{children}</Main>

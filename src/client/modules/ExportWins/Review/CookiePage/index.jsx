@@ -1,29 +1,11 @@
 import React from 'react'
 import { H2 } from 'govuk-react'
 
-import { GREEN } from '../../../../utils/colours'
 import { FieldRadios, Form } from '../../../../components'
-import RecentTaskResult from '../../../../components/Task/RecentResult'
-
 import Layout from '../Layout'
-import { StyledStatusMessage } from '../ThankYou'
 
 const CookiePage = () => (
-  <Layout
-    title="Export Wins cookie policy"
-    headingContent={
-      <RecentTaskResult name="save cookie preference" id="cookieConsent">
-        {(consent) =>
-          consent && (
-            <StyledStatusMessage colour={GREEN}>
-              Yo've {consent === 'granted' ? 'accepted' : 'rejected'} additional
-              cookies. You can change your cookie settings at any time.
-            </StyledStatusMessage>
-          )
-        }
-      </RecentTaskResult>
-    }
-  >
+  <Layout title="Export Wins cookie policy">
     <H2>How cookies are used in Export Wins</H2>
     <p>Export wins puts small files (known as 'cookies') onto your computer.</p>
     <p>
