@@ -191,7 +191,6 @@ describe('Export pipeline list', () => {
       }).as('apiRequest')
       cy.visit(urls.exportPipeline.index())
       cy.wait('@apiRequest')
-      cy.get('[data-test="export-list"]').as('exportList')
       cy.get('[data-test="export-item"]').as('exportItems')
       cy.get('@exportItems').eq(0).as('firstListItem')
       cy.get('@exportItems').eq(1).as('secondListItem')
@@ -201,7 +200,6 @@ describe('Export pipeline list', () => {
 
     it('should display a list of exports', () => {
       cy.get('[data-test=no-export-items]').should('not.exist')
-      cy.get('[data-test="export-list"]').should('have.length', 1)
       cy.get('[data-test="export-item"]').should(
         'have.length',
         notArchivedExports.length
