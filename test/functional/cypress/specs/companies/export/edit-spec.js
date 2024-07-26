@@ -27,14 +27,6 @@ describe('Company Export tab - Edit exports', () => {
     )
   }
 
-  function selectOption(selector, index) {
-    cy.get(selector)
-      .find('option')
-      .then(($els) => $els.get(index).setAttribute('selected', 'selected'))
-      .parent()
-      .trigger('change')
-  }
-
   context(
     'Without an existing export win category, great profile or export potential',
     () => {
@@ -71,7 +63,7 @@ describe('Company Export tab - Edit exports', () => {
         assertButtons(minimallyMinimal.id)
 
         //selecting a real value should send the UUID
-        selectOption('#field-export_experience_category', 1)
+        cy.get('#export_experience_category').select('Export growth')
 
         cy.contains('Save and return').click()
 
@@ -126,8 +118,7 @@ describe('Company Export tab - Edit exports', () => {
       it('Should render the buttons and clicking Save should save the value', () => {
         assertButtons(dnbLimited.id)
 
-        //selecting the first value should set the category back to null
-        selectOption('#field-export_experience_category', 0)
+        cy.get('#export_experience_category').select('-- Select category --')
 
         cy.contains('Save and return').click()
 
