@@ -151,7 +151,7 @@ const EventDetails = ({
                   </StyledSummaryTable>
                   {!disabledOn && (
                     <FormActions>
-                      <Button as={'a'} to={urls.events.edit(id)}>
+                      <Button as={'a'} href={urls.events.edit(id)}>
                         Edit event
                       </Button>
                     </FormActions>
