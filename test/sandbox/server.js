@@ -885,6 +885,18 @@ app.post('/v4/task', createTask)
 app.patch('/v4/task/:taskId', updateTask)
 
 app.get('/v4/export', (req, res) => res.json({ count: 0, results: [] }))
+app.get('/v4/export/owner', (req, res) =>
+  res.json([
+    {
+      id: 'foobarbaz',
+      name: 'John Doe',
+    },
+    {
+      id: 'foobarbaz',
+      name: 'Jane Doe',
+    },
+  ])
+)
 
 // Whoami endpoint
 app.get('/whoami', getWhoami)
