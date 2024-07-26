@@ -38,7 +38,7 @@ const transformStatus = (order, quote) => {
     noUnderscores.charAt(0).toUpperCase() + noUnderscores.slice(1)
   return order.status === STATUS.QUOTE_AWAITING_ACCEPTANCE
     ? transformedStatus + getExpiryDate(quote.expiresOn)
-    : order.status === STATUS.COMPLETE
+    : order.status === STATUS.COMPLETE && order.completedOn
       ? transformedStatus + getCompletionDate(order.completedOn)
       : transformedStatus
 }
