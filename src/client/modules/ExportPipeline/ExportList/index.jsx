@@ -11,12 +11,11 @@ import ContentWithHeading from '../../../components/ContentWithHeading'
 import { ButtonLink, Pagination } from '../../../components'
 import { MID_GREY } from '../../../utils/colours'
 import { SHOW_ALL_OPTION } from '../constants.js'
-import ListItemRenderer from './ItemRenderer'
+import ResultItem from './ResultItem'
 import Task from '../../../components/Task'
 import HR from '../../../components/HR'
 import ExportSelect from './ExportSelect'
 import ExportDate from './ExportDate'
-import List from './List'
 
 import Countries from '../../../components/Resource/Countries'
 import Sector from '../../../components/Resource/Sector'
@@ -239,7 +238,11 @@ const ExportList = ({
               <ListContainer>
                 <ExportWinsLink />
                 <HRWithMargin />
-                <List items={results} itemRenderer={ListItemRenderer} />
+                <ul>
+                  {results.map((result) => (
+                    <ResultItem {...result} />
+                  ))}
+                </ul>
                 <Pagination
                   totalPages={totalPages}
                   activePage={payload.page}
