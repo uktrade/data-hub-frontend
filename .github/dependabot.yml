@@ -7,7 +7,7 @@ updates:
     day: "monday"
     time: "00:00"
     timezone: Europe/London
-  open-pull-requests-limit: 0
+  open-pull-requests-limit: 10
   ignore:
 # When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx backlog.
   - dependency-name: jsdom # TET-371
@@ -71,7 +71,7 @@ updates:
     day: "monday"
     time: "02:00"
     timezone: Europe/London
-  open-pull-requests-limit: 0
+  open-pull-requests-limit: 10
   ignore:
   - dependency-name: eslint # See above
     versions:
