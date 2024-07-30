@@ -1,6 +1,11 @@
+const config = require('./src/config')
+
 module.exports = {
   sourceType: 'unambiguous',
-  plugins: ['@babel/plugin-syntax-import-assertions'],
+  plugins: [
+    ...(config.isDev ? ['react-refresh/babel'] : []),
+    '@babel/plugin-syntax-import-assertions',
+  ],
   env: {
     test: {
       plugins: ['istanbul'],
