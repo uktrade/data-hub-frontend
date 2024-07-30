@@ -5,7 +5,7 @@ services:
       - api
 
   api:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:migration-deploy
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
     env_file: .env
     environment:
       DEBUG: 'False'
@@ -35,7 +35,7 @@ services:
     command: /app/setup-uat.sh || echo "all good"
 
   rq:
-    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:migration-deploy
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:main
     env_file: .env
     depends_on:
       - postgres
