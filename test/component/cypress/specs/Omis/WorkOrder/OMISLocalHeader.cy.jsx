@@ -120,6 +120,18 @@ const completeOrder = orderFaker({
   completedOn: '2023-11-06T14:18:28.328729',
 })
 
+const completeOrderNoDate = orderFaker({
+  id: 111,
+  primaryMarket: {
+    name: 'The Bahamas',
+  },
+  status: STATUS.COMPLETE,
+  createdOn: '2021-07-26T14:08:36.380979',
+  modifiedOn: '2022-08-16T14:18:28.328729',
+  ukRegion: { name: 'East of England' },
+  completedOn: null,
+})
+
 const cancelledOrder = orderFaker({
   id: 111,
   primaryMarket: {
@@ -333,6 +345,24 @@ describe('OMISLocalHeader', () => {
     assertCompanyLink(completeOrder.company.id)
     assertReceiptLink(completeOrder.id)
     assertViewQuoteLink(completeOrder.id)
+  })
+
+  context('When the order is a legacy order and the status is complete', () => {
+    beforeEach(() => {
+      cy.viewport(1024, 768)
+      cy.mountWithProvider(
+        <OMISLocalHeader order={completeOrderNoDate} quote={null} />
+      )
+    })
+
+    it('should render the order details', () => {
+      assertCompany(completeOrderNoDate.company.name)
+      assertMarket(completeOrderNoDate.primaryMarket.name)
+      assertUkRegion(completeOrderNoDate.ukRegion.name)
+      assertCreatedOn(3, completeOrderNoDate.createdOn)
+      assertUpdatedOn(4, completeOrderNoDate.modifiedOn)
+      assertStatus(5, 'Complete')
+    })
   })
 
   context('When the order status is cancelled', () => {
