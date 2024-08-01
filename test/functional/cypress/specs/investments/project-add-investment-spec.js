@@ -369,12 +369,12 @@ describe('Investment Detail Step Form Content', () => {
     })
   })
 
-  it('should display the specific investment programmes field', () => {
+  it('should display the specific investment programme field', () => {
     cy.get('[data-test="field-specific_programmes"]').then((element) => {
       assertFieldTypeahead({
         element,
-        label: 'Specific investment programmes (optional)',
-        placeholder: 'Choose specific programmes',
+        label: 'Specific investment programme (optional)',
+        placeholder: 'Choose a specific programme',
       })
     })
   })

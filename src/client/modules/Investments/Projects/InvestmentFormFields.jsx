@@ -348,13 +348,13 @@ export const FieldSpecificProgramme = ({
   <ResourceOptionsField
     name="specific_programmes"
     label={
-      'Specific investment programmes' + (optionalText ? ' (optional)' : '')
+      'Specific investment programme' + (optionalText ? ' (optional)' : '')
     }
     resource={SpecificInvestmentProgrammesResource}
     field={FieldTypeahead}
-    isMulti={true}
+    isMulti={false}
     initialValue={initialValue}
-    placeholder="Choose specific programmes"
+    placeholder="Choose a specific programme"
     resultToOptions={(result) =>
       idNamesToValueLabels(result.filter((option) => !option.disabledOn))
     }
