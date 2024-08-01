@@ -9,11 +9,13 @@ import WinsPendingList from './WinsPendingList'
 import WinsConfirmedTable from './WinsConfirmedTable'
 import urls from '../../../../lib/urls'
 
-const TITLE = /([^\/]+$)/
+const LAST_WORD = /([^\/]+)$/
 
 const ExportWinsTabNav = () => {
   const location = useLocation()
-  const title = TITLE.exec(location.pathname)
+  const match = LAST_WORD.exec(location.pathname)
+  const title = match?.[1] ?? ''
+
   return (
     <DefaultLayout
       heading="Export wins"
