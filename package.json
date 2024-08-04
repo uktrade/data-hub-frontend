@@ -190,7 +190,7 @@
     "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
     "http-server": "^14.1.1",
-    "image-minimizer-webpack-plugin": "^4.0.2",
+    "image-minimizer-webpack-plugin": "^4.1.0",
     "js-beautify": "^1.14.11",
     "jsdom": "^20.0.3",
     "jsdom-global": "^3.0.2",
