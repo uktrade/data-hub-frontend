@@ -30,6 +30,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 
 import AccesibilityStatement from './AccesibilityStatement'
+import PrivacyNotice from './PrivacyNotice'
 
 const FORM_ID = 'export-wins-customer-feedback'
 
@@ -401,6 +402,10 @@ export default () => (
     <Route
       path="/exportwins/review/accesibility-statement"
       element={<AccesibilityStatement />}
+    />
+    <Route
+      path="/exportwins/review/privacy-notice"
+      element={<PrivacyNotice />}
     />
     <Route path="/exportwins/review/:token" element={<Review />} />
     <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />

@@ -78,6 +78,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
         'Privacy Policy':
           'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
         'Accessibility Statement': '/exportwins/review/accesibility-statement',
+        'Privacy Notice': '/exportwins/review/privacy-notice',
       }}
     />
   </Grid>
