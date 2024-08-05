@@ -17,7 +17,7 @@ const Grid = styled.div({
   gridTemplateRows: 'auto auto auto 1fr minmax(min-content, 30px)',
   gridTemplateColumns: `1fr min(100vw, calc(960px + ${SPACING.SCALE_3} * 2)) 1fr`,
   gridTemplateAreas: `
-    ". cookie-banner ." 
+    ". cookie-banner ."
     ". main-bar ."
     ". header ."
     ". main ."
@@ -157,6 +157,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
         'Privacy Policy':
           'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
         'Accessibility Statement': '/exportwins/review/accesibility-statement',
+        'Privacy Notice': '/exportwins/review/privacy-notice',
         Cookies: '/exportwins/review/cookies',
       }}
     />
