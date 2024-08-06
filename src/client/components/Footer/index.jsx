@@ -40,6 +40,7 @@ const StyleList = styled.ul`
   display: flex;
   flex: 1;
   flex-direction: row;
+  list-style: none;
   li + li {
     margin-left: ${SPACING.SCALE_3};
   }
