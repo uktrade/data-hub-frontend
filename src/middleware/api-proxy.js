@@ -3,6 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 const config = require('../config')
 const getZipkinHeaders = require('../lib/get-zipkin-headers')
 
+const HTTP_GET = 'GET'
 const API_PROXY_PATH = '/api-proxy'
 const ALLOWLIST = [
   '/v3/interaction',
@@ -104,9 +105,13 @@ module.exports = (app) => {
           }
         )
 
-        // This is required, otherwise the API hosted on AWS responds with 403
-        if (config.isProd) {
-          proxyReq.setHeader('transfer-encoding', 'chunked')
+        // We have a problem in that Axios GET requests include an empty body that's sent to the server.
+        // The request body should not be included because GET requests do not have a body by HTTP specification.
+        // The AWS docs say that "if a viewer GET request includes a body, CloudFront returns an HTTP status code 403 (Forbidden) to the viewer".
+        // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorCustomOrigin.html#RequestCustom-get-body
+        if (req.method === HTTP_GET && req.body) {
+          // Prevent the 403
+          req.body = null
         }
 
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
