@@ -7,6 +7,7 @@ import {
   call,
   select,
   cancel,
+  delay,
 } from 'redux-saga/effects'
 
 import {
@@ -18,15 +19,22 @@ import {
   TASK__CANCEL,
 } from '../../actions'
 
+function* switchToProgressAfterDelay(action) {
+  yield delay(action.progressDelay || 0)
+  yield put({ ...action, type: TASK__PROGRESS })
+}
+
 /**
  * Starts a task and waits for its resolution or rejection
  * @param {Task} task - the task function
  * @param {TaskStartAction} action - the `TASK__START` action
  */
 function* startTask(task, action) {
-  yield put({ ...action, type: TASK__PROGRESS })
+  const progressDelayProcess = yield fork(switchToProgressAfterDelay, action)
+
   try {
     const result = yield call(task, action.payload, action.id)
+    yield cancel(progressDelayProcess)
     const { id, name, payload, onSuccessDispatch } = action
     if (onSuccessDispatch) {
       yield put({

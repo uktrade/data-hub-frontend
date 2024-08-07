@@ -15,6 +15,8 @@ import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
 import AccessDenied from '../AccessDenied'
 
+const DEFAULT_PROGRESS_DELAY = 100
+
 const StyledLoadingBox = styled(LoadingBox)({
   paddingBottom: 0,
 })
@@ -45,6 +47,10 @@ const startOnRenderPropTypes = {
  * result of a _tasks_ success. If set, a {SuccessAction} with this value
  * as its `type` will be dispatched when the _task_ succeeds, but before the
  * _task_ is _cleared_.
+ * @property {number} [progressDelay=100] - The duration in milliseconds
+ * for which switching a task to a progress state should be delayed.
+ * This is to avoid showing the progress indicator for tasks which resolve
+ * immediately.
  */
 
 /**
@@ -122,13 +128,18 @@ const startOnRenderPropTypes = {
 const Task = connect(
   (state) => state.tasks,
   (dispatch) => ({
-    start: (name, id, { payload, onSuccessDispatch }) =>
+    start: (
+      name,
+      id,
+      { payload, onSuccessDispatch, progressDelay = DEFAULT_PROGRESS_DELAY }
+    ) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
         onSuccessDispatch,
+        progressDelay,
       }),
     cancel: (name, id) =>
       dispatch({
@@ -174,11 +185,13 @@ Task.propTypes = {
  * @example
  * <Task.StartOnRender name="foo" id="a" payload={123} onSuccessDispatch="FOO"/>
  */
+// TODO: Re-implement with <Task/>
 Task.StartOnRender = connect(
   (state, { name, id }) => get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
     start: (options) =>
       dispatch({
+        progressDelay: DEFAULT_PROGRESS_DELAY,
         ...options,
         type: TASK__START,
         id,

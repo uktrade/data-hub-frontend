@@ -190,6 +190,8 @@ import companyActivityReducerNoAs from './modules/Companies/CompanyActivity/redu
 
 import { ResendExportWin } from './modules/ExportWins/Form/ResendExportWin'
 
+import RecentTaskResult from './components/Task/RecentResult'
+
 export const reducers = {
   tasks,
   [FLASH_MESSAGE_ID]: flashMessageReducer,
@@ -211,6 +213,7 @@ export const reducers = {
   ...Form.reducerSpread,
   ...FieldAddAnother.reducerSpread,
   ...ResendExportWin.reducerSpread,
+  ...RecentTaskResult.reducerSpread,
   [DNB_CHECK_ID]: dnbCheckReducer,
   [INVESTMENT_OPPORTUNITIES_LIST_ID]: investmentOpportunitiesListReducer,
   [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
