@@ -82,7 +82,11 @@ const FieldSelect = ({
           </option>
         )}
         {options.map(({ label: optionLabel, value: optionValue }) => (
-          <option key={optionValue} value={optionValue}>
+          <option
+            key={optionValue}
+            value={optionValue}
+            selected={value === optionValue}
+          >
             {optionLabel}
           </option>
         ))}
