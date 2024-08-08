@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 
-import RecentResult from "../../../../../src/client/components/Task/RecentResult"
-import Task from "../../../../../src/client/components/Task"
+import RecentResult from '../../../../../src/client/components/Task/RecentResult'
+import Task from '../../../../../src/client/components/Task'
 
 describe('Task/RecentResult', () => {
   it('Should provide most recent result of a given task', () => {
@@ -51,42 +50,47 @@ describe('Task/RecentResult', () => {
       },
     ]
 
-    const TASKS = TASK_CALLS.reduce((a, {name, id}) => ({
-      ...a,
-      [`${name}-${id}`]: {name, id},
-    }), {})
+    const TASKS = TASK_CALLS.reduce(
+      (a, { name, id }) => ({
+        ...a,
+        [`${name}-${id}`]: { name, id },
+      }),
+      {}
+    )
 
     cy.mountWithProvider(
       <>
         <Task>
-          {t =>
+          {(t) => (
             // A utility to start tasks
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              t(e.target.taskName.value, e.target.taskId.value).start({
-                payload: parseInt(e.target.payload.value, 10),
-                onSuccessDispatch: `ACTION_NAME-${Math.random()}`,
-              })
-            }}>
-              <input name="taskName" placeholder="name"/>
-              <input name="taskId" placeholder="id"/>
-              <input name="payload" placeholder="payload"/>
-              <button>
-                Start task
-              </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                t(e.target.taskName.value, e.target.taskId.value).start({
+                  payload: parseInt(e.target.payload.value, 10),
+                  onSuccessDispatch: `ACTION_NAME-${Math.random()}`,
+                })
+              }}
+            >
+              <input name="taskName" placeholder="name" />
+              <input name="taskId" placeholder="id" />
+              <input name="payload" placeholder="payload" />
+              <button>Start task</button>
             </form>
-          }
+          )}
         </Task>
         {/* Render most recent result of each task */}
         <ul>
-          {Object.entries(TASKS).map(([key, {name, id}]) =>
+          {Object.entries(TASKS).map(([key, { name, id }]) => (
             <li key={key}>
               {key}:{' '}
               <RecentResult name={name} id={id}>
-                {result => <span id={`result-${key}`}>{result || 'nothing'}</span>}
+                {(result) => (
+                  <span id={`result-${key}`}>{result || 'nothing'}</span>
+                )}
               </RecentResult>
             </li>
-          )}
+          ))}
         </ul>
       </>,
       {
@@ -97,7 +101,7 @@ describe('Task/RecentResult', () => {
       }
     )
 
-    TASK_CALLS.forEach(({name, id, payload, expectedResult}) => {
+    TASK_CALLS.forEach(({ name, id, payload, expectedResult }) => {
       cy.get('input[name="taskName"]').clear().type(name)
       cy.get('input[name="taskId"]').clear().type(id)
       cy.get('input[name="payload"]').clear().type(payload)
