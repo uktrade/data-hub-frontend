@@ -24,7 +24,7 @@ const assertCookieBanner = (shouldExist) => {
   const asertion = shouldExist ? 'exist' : 'not.exist'
   cy.contains('h2', 'Cookies').should(asertion)
   cy.contains(
-    'We’d like to use analytics cookies so we can understand how you use the Design System and make improvements.'
+    'We’d like to use analytics cookies so we can understand how you use Export Wins and make improvements.'
   ).should(asertion)
   cy.contains(
     'We also use essential cookies to remember if you’ve accepted analytics cookies.'
