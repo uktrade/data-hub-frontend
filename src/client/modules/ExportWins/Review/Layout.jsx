@@ -84,7 +84,7 @@ const CookieConsentConfirmation = () => (
     {(consent) =>
       consent && (
         <StyledStatusMessage colour={GREEN}>
-          Yo've {consent === 'granted' ? 'accepted' : 'rejected'} additional
+          You've {consent === 'granted' ? 'accepted' : 'rejected'} additional
           cookies. You can change your cookie settings at any time.
         </StyledStatusMessage>
       )

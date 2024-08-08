@@ -15,7 +15,7 @@ const assertFlashMessage = (verb) => {
     ).should('not.exist')
   } else {
     cy.contains(
-      `Yo've ${verb} additional cookies. You can change your cookie settings at any time.`
+      `You've ${verb} additional cookies. You can change your cookie settings at any time.`
     )
   }
 }
