@@ -7,7 +7,7 @@ const storageChannel = eventChannel((emit) => {
 })
 
 /**
- * This ensures that when the user sets their cookie prefference
+ * This ensures that when the user sets their cookie preference
  * in one browser tab, all the other tabs will pick up the change.
  */
 // TODO: Once Redux state is persisted in session storage, this should not be needed
