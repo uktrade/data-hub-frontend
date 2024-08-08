@@ -105,7 +105,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
                 <H2>Cookies</H2>
                 <p>
                   We’d like to use analytics cookies so we can understand how
-                  you use the Design System and make improvements.
+                  you use Export Wins and make improvements.
                 </p>
                 <p>
                   We also use essential cookies to remember if you’ve accepted
@@ -143,7 +143,7 @@ const Layout = ({ children, title, supertitle, headingContent }) => (
       )}
     </Resource>
     <MainBarBackground />
-    <MainBar>Department for Business & Trade</MainBar>
+    <MainBar>Department for Business and Trade</MainBar>
     <HeaderBackground />
     <Header>
       <p>{supertitle}</p>

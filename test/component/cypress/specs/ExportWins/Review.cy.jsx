@@ -12,7 +12,7 @@ import Review from '../../../../../src/client/modules/ExportWins/Review'
 const assertNoErrorDialog = () =>
   cy.get('[data-test="error-dialog"').should('not.exist')
 
-const DBT_HEADING = 'Department for Business & Trade'
+const DBT_HEADING = 'Department for Business and Trade'
 const HEADING = 'Tell us what made a difference'
 
 const assertHeader = () => {
