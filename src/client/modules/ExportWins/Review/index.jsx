@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import HR from '../../../components/HR'
 
 import ThankYou from './ThankYou'
+import CookiePage from './CookiePage'
 
 import Layout from './Layout'
 import {
@@ -375,7 +376,7 @@ const Review = () => {
             submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
             redirectMode="soft"
             redirectTo={(_, { agree_with_win }) =>
-              `/exportwins/review-win/thankyou?agree=${agree_with_win}`
+              `../thankyou?agree=${agree_with_win}`
             }
             transformPayload={transformPayload(token)}
           >
@@ -398,11 +399,9 @@ const Review = () => {
 
 export default () => (
   <Routes>
-    <Route
-      path="/exportwins/review/accesibility-statement"
-      element={<AccesibilityStatement />}
-    />
-    <Route path="/exportwins/review/:token" element={<Review />} />
-    <Route path="/exportwins/review-win/thankyou" element={<ThankYou />} />
+    <Route path="/accesibility-statement" element={<AccesibilityStatement />} />
+    <Route path="/thankyou" element={<ThankYou />} />
+    <Route path="/cookies" element={<CookiePage />} />
+    <Route path="/:token" element={<Review />} />
   </Routes>
 )

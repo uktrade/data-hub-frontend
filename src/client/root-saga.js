@@ -13,6 +13,7 @@ import {
   writeMyInvestmentsToSession,
   readMyInvestmentsFromSession,
 } from './components/MyInvestmentProjects/sagas'
+import { cookiePreferenceChangeSaga } from './modules/ExportWins/Review/CookiePage/saga'
 
 export default (tasks) => {
   return function* rootSaga() {
@@ -25,5 +26,6 @@ export default (tasks) => {
     yield fork(readAnnouncementLinkFromLocalStorage)
     yield fork(readMyInvestmentsFromSession)
     yield fork(writeMyInvestmentsToSession)
+    yield fork(cookiePreferenceChangeSaga)
   }
 }
