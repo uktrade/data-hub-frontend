@@ -8,9 +8,15 @@ import { isArray, isEqual } from 'lodash'
 import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
-const RADIO = 'radio'
+const TYPE = {
+  RADIO: 'radio',
+  CHECKBOX: 'checkbox',
+}
 
-const isRadio = (type) => type === RADIO
+const NO = 'No'
+const YES = 'Yes'
+
+const isRadio = (type) => type === TYPE.RADIO
 
 const FieldChoice = ({
   name,
@@ -71,12 +77,30 @@ const FieldChoice = ({
   )
 }
 
-FieldChoice.Checkbox = (props) => <FieldChoice {...props} type="checkbox" />
-FieldChoice.Radio = (props) => <FieldChoice {...props} type="radio" />
+FieldChoice.Checkbox = (props) => (
+  <FieldChoice {...props} type={TYPE.CHECKBOX} />
+)
+FieldChoice.Radio = (props) => <FieldChoice {...props} type={TYPE.RADIO} />
+FieldChoice.Boolean = ({ yesLabel = YES, noLabel = NO, ...props }) => (
+  <FieldChoice
+    {...props}
+    type={TYPE.RADIO}
+    options={[
+      {
+        value: true,
+        label: yesLabel,
+      },
+      {
+        value: false,
+        label: noLabel,
+      },
+    ]}
+  />
+)
 
 FieldChoice.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['radio', 'checkbox']).isRequired,
+  type: PropTypes.oneOf([TYPE.RADIO, TYPE.CHECKBOX]).isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -88,6 +112,11 @@ FieldChoice.propTypes = {
   label: PropTypes.string,
   legend: PropTypes.node,
   hint: PropTypes.string,
+}
+
+FieldChoice.Boolean.propTypes = {
+  yesLabel: PropTypes.string,
+  noLabel: PropTypes.string,
 }
 
 export default FieldChoice
