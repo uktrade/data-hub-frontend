@@ -8,6 +8,7 @@ import {
   UnorderedList,
   Table,
 } from 'govuk-react'
+import styled from 'styled-components'
 
 import Layout from './Layout'
 import { FORM_LAYOUT } from '../../../../common/constants'
@@ -29,6 +30,8 @@ const InformationCommissionerOffice = () => (
     Information Commissioner's Office (ICO)
   </Link>
 )
+
+const StyledAddressList = styled('ul')``
 
 const PrivacyNotice = () => (
   <Layout title="Privacy Notice">
@@ -254,16 +257,21 @@ const PrivacyNotice = () => (
       You can also submit a complaint to the Information Commissioner’s Office
       (ICO) at:
     </p>
-    <p>Information Commissioner's Office</p>
-    <p>Wycliffe House</p>
-    <p>Water Lane</p>
-    <p>Wilmslow</p>
-    <p>Cheshire</p>
-    <p>SK9 5AF</p>
-    <p>
-      Web: <InformationCommissionerOffice />
-    </p>
-    <p>Tel: 0303 123 1113</p>
+
+    <StyledAddressList>
+      <ul>Information Commissioner's Office</ul>
+      <ul>Wycliffe House</ul>
+      <ul>Water Lane</ul>
+      <ul>Wilmslow</ul>
+      <ul>Cheshire</ul>
+      <ul>SK9 5AF</ul>
+      <p></p>
+      <ul>
+        Web: <InformationCommissionerOffice />
+      </ul>
+      <ul>Tel: 0303 123 1113</ul>
+    </StyledAddressList>
+
     <p>
       You can find out more about your rights as a data subject, and details of
       how to contact our Data Protection Officer and the ICO in our{' '}

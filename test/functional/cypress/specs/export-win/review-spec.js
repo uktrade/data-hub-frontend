@@ -38,6 +38,7 @@ describe('Export wins review', () => {
     '/exportwins/review/dummy-token',
     '/exportwins/review/thankyou',
     '/exportwins/review/accesibility-statement',
+    '/exportwins/review/privacy-notice',
     '/exportwins/review/cookies',
   ].forEach((url) => {
     context(url, () => {
@@ -59,6 +60,11 @@ describe('Export wins review', () => {
           'have.attr',
           'href',
           '/exportwins/review/accesibility-statement'
+        )
+        cy.contains('a', 'Privacy Notice').should(
+          'have.attr',
+          'href',
+          '/exportwins/review/privacy-notice'
         )
         cy.contains('a', 'Cookies').should(
           'have.attr',
