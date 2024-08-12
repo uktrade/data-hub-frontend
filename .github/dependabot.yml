@@ -36,9 +36,9 @@ updates:
   - dependency-name: "@storybook/react-webpack5"
     versions:
     - ">= 0"
-  - dependency-name: "@storybook/addon-webpack5-compiler-babel"
+  - dependency-name: "@storybook/manager-api"
     versions:
-    - ">= 0"
+    - ">= 0"  
   - dependency-name: "storybook"
     versions:
     - ">= 0"
