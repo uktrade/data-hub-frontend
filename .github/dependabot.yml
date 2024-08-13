@@ -41,7 +41,7 @@ updates:
     - ">= 0"
   - dependency-name: "@storybook/manager-api"
     versions:
-    - ">= 0"  
+    - ">= 0"
   - dependency-name: "storybook"
     versions:
     - ">= 0"
