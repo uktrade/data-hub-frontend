@@ -196,7 +196,7 @@
     "jsdom": "^20.0.3",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.5",
-    "lint-staged": "^15.2.8",
+    "lint-staged": "^15.2.9",
     "mocha": "^10.7.3",
     "mocha-junit-reporter": "^2.2.1",
     "mochapack": "^2.1.4",
