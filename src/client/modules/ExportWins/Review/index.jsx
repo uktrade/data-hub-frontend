@@ -31,6 +31,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 
 import AccesibilityStatement from './AccesibilityStatement'
+import PrivacyNotice from './PrivacyNotice'
 
 const FORM_ID = 'export-wins-customer-feedback'
 
@@ -403,5 +404,6 @@ export default () => (
     <Route path="/thankyou" element={<ThankYou />} />
     <Route path="/cookies" element={<CookiePage />} />
     <Route path="/:token" element={<Review />} />
+    <Route path="/privacy-notice" element={<PrivacyNotice />} />
   </Routes>
 )

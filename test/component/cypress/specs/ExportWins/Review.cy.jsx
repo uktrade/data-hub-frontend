@@ -345,10 +345,15 @@ describe('ExportWins/Review', () => {
 
     cy.get('footer').within(() => {
       // There should be 3 links including the Crown copyright
-      cy.get('a').should('have.length', 4)
+      cy.get('a').should('have.length', 5)
 
       // Links should be in a particular order
-      cy.contains('Privacy Policy' + 'Accessibility Statement' + 'Cookies')
+      cy.contains(
+        'Privacy Policy' +
+          'Accessibility Statement' +
+          'Privacy Notice' +
+          'Cookies'
+      )
 
       cy.contains('a', 'Privacy Policy').should(
         'have.attr',
@@ -359,6 +364,11 @@ describe('ExportWins/Review', () => {
         'have.attr',
         'href',
         '/exportwins/review/accesibility-statement'
+      )
+      cy.contains('a', 'Privacy Notice').should(
+        'have.attr',
+        'href',
+        '/exportwins/review/privacy-notice'
       )
       cy.contains('a', 'Cookies').should(
         'have.attr',
