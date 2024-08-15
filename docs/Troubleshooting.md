@@ -203,6 +203,42 @@ at async/Users/christophersunkel/Documents/datahub/data-hub-frontend/src/middlew
 
 **Solution** Bring down your frontend and remove the current value for `OAUTH2_DEV_TOKEN`. Generate a new access token by navigating to the relevant `/add-access-token/` page (for convenience you can set this to last for up to 168 hours), then set the value of `OAUTH2_DEV_TOKEN` to the newly-generated token. The frontend should now work after running `npm run develop`.
 
+**Additional troubleshooting** You can verify that the environment variables are set correctly in your CLI using `printenv` or e.g. `echo $OAUTH2_AUTH_URL`.
+
+#### Metadata not loading
+
+Several pages on Data Hub use metadata loaded into e.g. filters on the /companies page, incorrect configuration can cause this to fail.
+
+![metadata-error](./Troubleshooting/native-live-metadata-error.png '
+error: GET /api-proxy/v4/metadata/sector?level__lte=0 500 (Internal Server Error) 263.396 ms - -
+Template render error: (/Users/marijnkampf/Projects/data-hub-frontend/src/templates/errors.njk)
+  TypeError: res.breadcrumb is not a function
+    at Object._prettifyError (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/lib.js:32:11)
+    at /Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:464:19
+    at eval (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:208:12)
+    at /Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:510:9
+    at eval (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:23:11)
+    at /Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:510:9
+    at eval (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:12:11)
+    at /Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:510:9
+    at Template.root [as rootRenderFunc] (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:200:3)
+    at Template.getExported (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:508:10)
+    at eval (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:11:5)
+    at createTemplate (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:254:9)
+    at handle (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:265:11)
+    at /Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:276:9
+    at next (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/lib.js:258:7)
+    at Object.asyncIter (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/lib.js:263:3)
+    at Environment.getTemplate (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:259:9)
+    at Template.root [as rootRenderFunc] (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:9:5)
+    at Template.getExported (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:508:10)
+    at eval (eval at _compile (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:527:18), <anonymous>:22:5)
+    at createTemplate (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:254:9)
+    at handle (/Users/marijnkampf/Projects/data-hub-frontend/node_modules/nunjucks/src/environment.js:265:11)
+')
+
+**Solution** Ensure there is **no** trailing slash on the `API_ROOT` e.g. `API_ROOT=http://localhost:8000`.
+
 #### 'System down' page appears
 
 This error occurs when your local redis server is brought down whilst the app is still running.
