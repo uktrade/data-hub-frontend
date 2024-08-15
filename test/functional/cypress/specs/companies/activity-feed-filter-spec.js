@@ -50,7 +50,7 @@ const minimumRequest = {
 }
 
 describe('Company Activity Feed Filter', () => {
-  const companyActivitiesEndPoint = '/api-proxy/v3/search/interaction'
+  const companyActivitiesEndPoint = '/api-proxy/v4/search/activity'
 
   context('Default Params', () => {
     it('should set the default params in the get request url', () => {
