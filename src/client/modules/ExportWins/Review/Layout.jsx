@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Button, H1, H2, Link } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import RecentTaskResult from '../../../components/Task/RecentResult'
-import { StyledStatusMessage } from './ThankYou'
 import { FormActions } from '../../../components'
+import DismissableStatusMessage from '../../../components/StatusMessage/Dismissable'
 import Footer from '../../../components/Footer'
 import Task from '../../../components/Task'
 import Resource from '../../../components/Resource/Resource'
@@ -79,89 +79,97 @@ const CookieBanner = styled.div({
   paddingTop: SPACING.SCALE_3,
 })
 
-const CookieConsentConfirmation = () => (
+const CookieConsentConfirmation = ({ dismiss, onDismiss }) => (
   <RecentTaskResult name="save cookie preference" id="cookieConsent">
     {(consent) =>
-      consent && (
-        <StyledStatusMessage colour={GREEN}>
+      consent &&
+      !dismiss && (
+        <DismissableStatusMessage colour={GREEN} onDismiss={onDismiss}>
           You've {consent === 'granted' ? 'accepted' : 'rejected'} additional
           cookies. You can change your cookie settings at any time.
-        </StyledStatusMessage>
+        </DismissableStatusMessage>
       )
     }
   </RecentTaskResult>
 )
 
-const Layout = ({ children, title, supertitle, headingContent }) => (
-  <Grid>
-    <CookieBannerBackground />
-    <Resource name="load cookie preference" id="cookieConsent">
-      {(persistedConsent) => (
-        <RecentTaskResult name="save cookie preference" id="cookieConsent">
-          {(updatedConsent) =>
-            !persistedConsent &&
-            !updatedConsent && (
-              <CookieBanner>
-                <H2>Cookies</H2>
-                <p>
-                  We’d like to use analytics cookies so we can understand how
-                  you use Export Wins and make improvements.
-                </p>
-                <p>
-                  We also use essential cookies to remember if you’ve accepted
-                  analytics cookies.
-                </p>
-                <FormActions>
-                  <Task>
-                    {(getTask) => {
-                      const setPreference = (value) =>
-                        getTask(
-                          'save cookie preference',
-                          'cookieConsent'
-                        ).start({
-                          payload: value,
-                          onSuccessDispatch: 'FORM__RESOLVED',
-                        })
-                      return (
-                        <>
-                          <Button onClick={() => setPreference('granted')}>
-                            Accept analytics cookies
-                          </Button>
-                          <Button onClick={() => setPreference('denied')}>
-                            Reject analytics cookies
-                          </Button>
-                        </>
-                      )
-                    }}
-                  </Task>
-                  <Link href="/exportwins/review/cookies">View cookies</Link>
-                </FormActions>
-              </CookieBanner>
-            )
-          }
-        </RecentTaskResult>
-      )}
-    </Resource>
-    <MainBarBackground />
-    <MainBar>Department for Business and Trade</MainBar>
-    <HeaderBackground />
-    <Header>
-      <p>{supertitle}</p>
-      <Title>{title}</Title>
-      <CookieConsentConfirmation />
-      {headingContent}
-    </Header>
-    <Main>{children}</Main>
-    <GridCellFooter
-      links={{
-        'Privacy Policy':
-          'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
-        'Accessibility Statement': '/exportwins/review/accesibility-statement',
-        'Privacy Notice': '/exportwins/review/privacy-notice',
-        Cookies: '/exportwins/review/cookies',
-      }}
-    />
-  </Grid>
-)
+const Layout = ({ children, title, supertitle, headingContent }) => {
+  const [dismiss, setDismiss] = useState(false)
+  return (
+    <Grid>
+      <CookieBannerBackground />
+      <Resource name="load cookie preference" id="cookieConsent">
+        {(persistedConsent) => (
+          <RecentTaskResult name="save cookie preference" id="cookieConsent">
+            {(updatedConsent) =>
+              !persistedConsent &&
+              !updatedConsent && (
+                <CookieBanner>
+                  <H2>Cookies</H2>
+                  <p>
+                    We’d like to use analytics cookies so we can understand how
+                    you use Export Wins and make improvements.
+                  </p>
+                  <p>
+                    We also use essential cookies to remember if you’ve accepted
+                    analytics cookies.
+                  </p>
+                  <FormActions>
+                    <Task>
+                      {(getTask) => {
+                        const setPreference = (value) =>
+                          getTask(
+                            'save cookie preference',
+                            'cookieConsent'
+                          ).start({
+                            payload: value,
+                            onSuccessDispatch: 'FORM__RESOLVED',
+                          })
+                        return (
+                          <>
+                            <Button onClick={() => setPreference('granted')}>
+                              Accept analytics cookies
+                            </Button>
+                            <Button onClick={() => setPreference('denied')}>
+                              Reject analytics cookies
+                            </Button>
+                          </>
+                        )
+                      }}
+                    </Task>
+                    <Link href="/exportwins/review/cookies">View cookies</Link>
+                  </FormActions>
+                </CookieBanner>
+              )
+            }
+          </RecentTaskResult>
+        )}
+      </Resource>
+      <MainBarBackground />
+      <MainBar>Department for Business and Trade</MainBar>
+      <HeaderBackground />
+      <Header>
+        <p>{supertitle}</p>
+        <Title>{title}</Title>
+        <CookieConsentConfirmation
+          dismiss={dismiss}
+          onDismiss={() => setDismiss(true)}
+        />
+        {headingContent}
+      </Header>
+      <Main>{children}</Main>
+      <GridCellFooter
+        links={{
+          'Privacy Policy':
+            'https://www.great.gov.uk/privacy-and-cookies/full-privacy-notice/',
+          'Accessibility Statement':
+            '/exportwins/review/accesibility-statement',
+          'Privacy Notice': '/exportwins/review/privacy-notice',
+          Cookies: '/exportwins/review/cookies',
+        }}
+      />
+    </Grid>
+  )
+}
 
 export default Layout

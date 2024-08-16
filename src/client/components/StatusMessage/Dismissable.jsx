@@ -4,11 +4,13 @@ import styled from 'styled-components'
 
 import StatusMessage from '.'
 import TextLikeButton from '../TextLikeButton'
+import { WHITE } from '../../utils/colours'
 
 const StyledStatusMessage = styled(StatusMessage)({
   display: 'flex',
   alignItems: 'baseline',
   justifyContent: 'space-between',
+  background: WHITE,
 })
 
 const DismissableStatusMessage = React.forwardRef(

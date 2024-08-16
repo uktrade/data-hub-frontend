@@ -20,6 +20,9 @@ const assertFlashMessage = (verb) => {
   }
 }
 
+const dismissFlashMessage = () =>
+  cy.get('[data-test="status-message"]').find('button').click()
+
 const assertCookieBanner = (shouldExist) => {
   const asertion = shouldExist ? 'exist' : 'not.exist'
   cy.contains('h2', 'Cookies').should(asertion)
@@ -84,6 +87,8 @@ describe('Export wins review', () => {
               getBannerButton(accept ? 'Accept' : 'Reject').click()
               assertCookieBanner(false)
               assertFlashMessage(accept ? 'accepted' : 'rejected')
+              dismissFlashMessage()
+              assertFlashMessage(false)
             })
           )
         })
