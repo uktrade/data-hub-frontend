@@ -139,6 +139,7 @@ import { order } from './routes/v3/search/order.js'
 import { searchInteraction } from './routes/v3/search/interaction.js'
 
 // V4
+import { searchActivities } from './routes/v4/search/activity.js'
 import { company } from './routes/v4/ch-company/company.js'
 import {
   getReferralDetails,
@@ -870,6 +871,7 @@ app.get('/v4/project')
 app.get('/v4/reminder/summary', getSummary)
 
 // V4 Search
+app.post('/v4/search/activity', searchActivities)
 app.post('/v4/search/company', __companies)
 app.post('/v4/search/large-investor-profile', _largeInvestorProfile)
 app.get('/v4/search/company/autocomplete', companiesAutocomplete)
