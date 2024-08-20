@@ -276,7 +276,7 @@ describe('Company overview page', () => {
     const interactionsList = interactionsListFaker(3)
     beforeEach(() => {
       collectionListRequest(
-        'v4/search/activity',
+        'v3/search/interaction',
         interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -310,7 +310,7 @@ describe('Company overview page', () => {
     const interactionsList = interactionsListFaker(2)
     beforeEach(() => {
       collectionListRequest(
-        'v4/search/activity',
+        'v3/search/interaction',
         interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -345,7 +345,7 @@ describe('Company overview page', () => {
     () => {
       beforeEach(() => {
         collectionListRequest(
-          'v4/search/activity',
+          'v3/search/interaction',
           [],
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
@@ -405,7 +405,7 @@ describe('Company overview page', () => {
     const interactionsList = [interaction]
     beforeEach(() => {
       collectionListRequest(
-        'v4/search/activity',
+        'v3/search/interaction',
         interactionsList,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )

@@ -61,7 +61,7 @@ export const getCompanyInteractions = ({
   dit_participants__team,
 }) =>
   apiProxyAxios
-    .post('/v4/search/activity', {
+    .post('/v3/search/interaction', {
       limit,
       offset: getPageOffset({ limit, page }),
       subject,
