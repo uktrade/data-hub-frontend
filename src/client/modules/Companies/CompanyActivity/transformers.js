@@ -70,7 +70,7 @@ export const transformInteractionToListItem = ({
       label: verifyLabel(dit_participants, 'Adviser'),
       value: formattedAdvisers(dit_participants),
     },
-    { label: 'Service', value: service.name },
+    { label: 'Service', value: service?.name },
   ].filter(({ value }) => Boolean(value)),
   tags: [
     {
@@ -82,7 +82,7 @@ export const transformInteractionToListItem = ({
       text:
         service && service.name.includes(' : ')
           ? service.name.split(' : ')[0]
-          : service.name,
+          : service?.name,
       colour: 'blue',
       dataTest: 'activity-service-label',
     },
