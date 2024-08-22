@@ -10,7 +10,7 @@ const company = fixtures.company.allActivitiesCompany
  */
 
 describe('Company activity feed', () => {
-  context.skip('Companies House Company', () => {
+  context('Companies House Company', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -21,13 +21,19 @@ describe('Company activity feed', () => {
       'Activity Feed'
     )
 
-    it('displays the correct activity type label', () => {
+    it.skip('displays the correct activity type label', () => {
       cy.get('[data-test="companies-house-company-activity"]').within(() =>
         cy
           .get('[data-test="activity-kind-label"]')
           .contains('Companies House Update', {
             matchCase: false,
           })
+      )
+    })
+
+    it('displays activities which do not have a service name', () => {
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('a').contains('Interaction with null service')
       )
     })
   })
