@@ -19,7 +19,7 @@ const ContactAuditHistory = ({ contactId, permissions }) => (
             <SectionHeader type="audit">Audit history</SectionHeader>
             <AuditHistory
               resource={ContactAuditHistoryResource}
-              id={`v3/contact/${contactId}/audit`}
+              id={contactId}
               valueTransformer={getValue}
               fieldMapper={mapFieldNameToLabel}
               excludedFields={EXCLUDED_FIELDS}
