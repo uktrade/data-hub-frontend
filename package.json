@@ -83,7 +83,7 @@
     "connect-redis": "7.1.1",
     "constate": "^3.3.0",
     "cookie-parser": "^1.4.6",
-    "core-js": "^3.38.0",
+    "core-js": "^3.38.1",
     "css-loader": "^7.1.1",
     "csurf": "^1.11.0",
     "date-fns": "^2.30.0",
