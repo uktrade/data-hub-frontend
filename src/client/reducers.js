@@ -22,9 +22,6 @@ import Typeahead from './components/Typeahead/Typeahead'
 
 import FieldAddAnother from './components/Form/elements/FieldAddAnother/FieldAddAnother'
 
-import { ID as EXPORTS_WINS_ID } from './modules/Companies/CompanyExports/ExportWins/state.js'
-import exportWinsReducer from './modules/Companies/CompanyExports/ExportWins/reducer.js'
-
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyReducer from '../apps/companies/apps/add-company/client/reducer'
 
@@ -200,7 +197,6 @@ export const reducers = {
   [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
   [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
   [REFERRALS_SEND_ID]: referralsSendReducer,
-  [EXPORTS_WINS_ID]: exportWinsReducer,
   [addCompanyState.ID]: addCompanyReducer,
   ...TabNav.reducerSpread,
   ...ReferralList.reducerSpread,
