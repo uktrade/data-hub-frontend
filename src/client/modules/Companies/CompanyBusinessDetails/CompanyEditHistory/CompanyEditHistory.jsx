@@ -46,7 +46,7 @@ const CompanyEditHistory = () => {
     >
       <AuditHistory
         resource={CompanyAuditHistoryResource}
-        id={`v4/company/${companyId}/audit`}
+        id={companyId}
         valueTransformer={getValue}
         fieldMapper={mapFieldNameToLabel}
         excludedFields={EXCLUDED_FIELDS}

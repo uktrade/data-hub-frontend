@@ -24,7 +24,7 @@ const ProjectEditHistory = () => {
     >
       <AuditHistory
         resource={ProjectAuditHistoryResource}
-        id={`v3/investment/${projectId}/audit`}
+        id={projectId}
         valueTransformer={getValue}
         fieldMapper={mapFieldNameToLabel}
         auditType="the project"

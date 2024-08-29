@@ -215,7 +215,7 @@ export const createEntityResource = (name, endpoint) => {
 export const createCollectionResource = (name, endpoint) => {
   const EntityResource =
     typeof endpoint === 'function'
-      ? createEntityResource(name, (endpoint) => endpoint)
+      ? createEntityResource(name, endpoint)
       : createEntityResource(name, () => endpoint)
   const transformer = (rawResult) => [
     deepKeysToCamelCase(rawResult.results),
