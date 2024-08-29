@@ -24,6 +24,7 @@ import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
 import ExportOwner from './ExportOwner'
 import ExportWins from './ExportWins'
+import CompanyExportWins from './CompanyExportWins'
 import ExportWinReview from './ExportWinReview'
 import Sector from './Sector'
 import Export from './Export'
@@ -129,6 +130,7 @@ export default {
   ...ExportWin.tasks,
   ...ExportOwner.tasks,
   ...ExportWins.tasks,
+  ...CompanyExportWins.tasks,
   ...ExportWinReview.tasks,
   ...Sector.tasks,
   ...Export.tasks,

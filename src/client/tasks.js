@@ -4,7 +4,6 @@ import * as exportsHistoryTasks from './modules/Companies/CompanyExports/ExportH
 import referralListTask from './components/ReferralList/tasks'
 import { TASK_SAVE_REFERRAL } from '../apps/companies/apps/referrals/send-referral/client/state'
 import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
-import * as exportWinsTasks from './modules/Companies/CompanyExports/ExportWins/tasks.js'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from './modules/Companies/CompanyExports/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from './modules/Companies/CompanyExports/ExportCountriesEdit/tasks'
 import { createCompany } from '../apps/companies/apps/add-company/client/tasks'
@@ -467,7 +466,6 @@ export const tasks = {
   'Exports history': exportsHistoryTasks.fetchExportsHistory,
   'Referral details': referralTasks.fetchReferralDetails,
   Referrals: referralListTask,
-  'Export wins': exportWinsTasks.fetchExportWins,
   'Update Lead ITA': manageAdviser.updateAdviser,
   'Get send referral initial values': referralsSendTasks.getInitialFormValues,
   'Save contact': saveContact,
