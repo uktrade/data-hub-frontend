@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
-import { Button, WarningText } from 'govuk-react'
+import { Button } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom'
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
-//import ExportWins from './ExportWins'
+import ExportWins from './ExportWins'
 import GreatProfile from './GreatProfile'
 import { CompanyResource } from '../../../components/Resource'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
@@ -178,14 +178,7 @@ const ExportsIndex = () => {
                 measures export activity.
               </p>
             </Details>
-            <WarningText data-test="wins-unavailable">
-              This service is currently unavailable due to maintenance. Email{' '}
-              <Link href={`mailto:datahubsupport@uktrade.zendesk.com`}>
-                datahubsupport@uktrade.zendesk.com
-              </Link>{' '}
-              if you have any questions
-            </WarningText>
-            {/*<ExportWins companyId={companyId} companyName={company.name} />*/}
+            <ExportWins companyId={companyId} companyName={company.name} />
           </CompanyLayout>
         )}
       </CompanyResource>

@@ -9,7 +9,6 @@ import interactionsListFaker, {
   interactionFaker,
 } from '../../fakers/interactions'
 
-const {} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
@@ -101,17 +100,21 @@ describe('Company overview page', () => {
         cy.get('@es-table').find('tbody').should('exist')
       })
 
-      it('the card should contain the export status table including the last export win and total exports won', () => {
-        cy.get('[data-test="export-status-container"]').children()
-        cy.get('th')
-          .contains('Last export win')
-          .siblings()
-          .contains('td', '04 Dec 2019, Burkina Faso')
-        cy.get('th')
-          .contains('Total exports won')
-          .siblings()
-          .contains('td', '8')
-      })
+      it('should display the correct export status information', () =>
+        cy.get('[data-test="export-status-container"]').within(() =>
+          Object.entries({
+            'Export potential': 'No score given',
+            'Export sub-segment': 'Not set',
+            'Currently exporting to': 'Not set',
+            'Future countries of interest': 'Not set',
+            'Last export win': '01 Jan 2024, Egypt',
+            'Total exports won': '11',
+          }).forEach(([label, expectedValue]) => {
+            cy.contains('th', label)
+              .next('td')
+              .should('have.text', expectedValue)
+          })
+        ))
     }
   )
   context(

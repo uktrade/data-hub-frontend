@@ -1,66 +1,85 @@
 import React from 'react'
 import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
-import { connect } from 'react-redux'
 
-import { CollectionList } from '../../../../components'
-import { state2props, NOT_IMPLEMENTED } from './state'
-import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
-import {
-  EXPORT_WINS__LOADED,
-  EXPORT_WINS__SELECT_PAGE,
-} from '../../../../actions'
+import CompanyExportWins from '../../../../components/Resource/CompanyExportWins'
+import { currencyGBP } from '../../../../utils/number-utils'
+import { formatShortDate } from '../../../../utils/date'
+import { CollectionItem } from '../../../../components'
+import urls from '../../../../../lib/urls'
+import { WIN_STATUS } from '../../../../modules/ExportWins/Status/constants'
 
-const Wrapper = styled('div')`
-  margin-top: ${SPACING.SCALE_3};
-`
+const Bold = styled('span')({
+  fontWeight: 'bold',
+})
 
-function ExportWins(state) {
-  if (state[NOT_IMPLEMENTED]) {
-    return null
-  }
+export const SORT_OPTIONS = [
+  { name: 'Newest', value: '-created_on' },
+  { name: 'Oldest', value: 'created_on' },
+]
 
-  const {
-    count,
-    results,
-    onPageClick,
-    activePage,
-    companyId,
-    companyName,
-    isComplete,
-  } = state
+export const ExportWinsList = ({ exportWins, companyId }) =>
+  exportWins.length === 0 ? null : (
+    <ul data-test="collectionItems">
+      {exportWins.map((item) => (
+        <CollectionItem
+          key={item.id}
+          headingText={`${item.name_of_export} to ${item?.country}`}
+          headingUrl={urls.companies.exportWins.editSummary(companyId, item.id)}
+          metadata={[
+            {
+              label: 'Lead officer name',
+              value: <Bold>{item.officer.name}</Bold>,
+            },
+            {
+              label: 'Company name',
+              value: <Bold>{item.customer || 'Not set'}</Bold>,
+            },
+            {
+              label: 'Contact name',
+              value: (
+                <Bold>{`${item.contact.name} (${item.contact.job_title} - ${item.contact.email})`}</Bold>
+              ),
+            },
+            {
+              label: 'Destination',
+              value: <Bold>{item.country}</Bold>,
+            },
+            {
+              label: 'Date won',
+              value: <Bold>{formatShortDate(item.date)}</Bold>,
+            },
+            {
+              label: 'Type of win',
+              value: <Bold>{item.business_type}</Bold>,
+            },
+            {
+              label: 'Total value',
+              value: <Bold>{currencyGBP(item.value.export.total)}</Bold>,
+            },
+            {
+              label: 'Type of goods or services',
+              value: <Bold>{item.name_of_export}</Bold>,
+            },
+            {
+              label: 'Sector',
+              value: <Bold>{item.sector}</Bold>,
+            },
+          ]}
+        />
+      ))}
+    </ul>
+  )
 
-  const collectionListTask = {
-    name: 'Export wins',
-    id: 'exportWins',
-    progressMessage: 'Loading Exports Wins...',
-    renderProgress: listSkeletonPlaceholder(),
-    startOnRender: {
-      payload: { companyId, companyName, activePage },
-      onSuccessDispatch: EXPORT_WINS__LOADED,
-    },
-  }
-
+export default ({ companyId }) => {
   return (
-    <Wrapper>
-      <CollectionList
-        taskProps={collectionListTask}
-        items={results}
-        count={count}
-        onPageClick={onPageClick}
-        activePage={activePage}
-        routedPagination={false}
-        isComplete={isComplete}
-      />
-    </Wrapper>
+    <CompanyExportWins.Paginated
+      id={companyId}
+      heading="Confirmed export win"
+      noResults="You don't have any confirmed export wins."
+      payload={{ confirmed: WIN_STATUS.CONFIRMED }}
+      sortOptions={SORT_OPTIONS}
+    >
+      {(page) => <ExportWinsList exportWins={page} companyId={companyId} />}
+    </CompanyExportWins.Paginated>
   )
 }
-
-export default connect(state2props, (dispatch) => ({
-  onPageClick: (page) => {
-    dispatch({
-      type: EXPORT_WINS__SELECT_PAGE,
-      page,
-    })
-  },
-}))(ExportWins)

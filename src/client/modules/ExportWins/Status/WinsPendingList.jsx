@@ -71,7 +71,7 @@ export default () => (
     shouldPluralize={false}
     noResults="You don't have any pending export wins."
     // We have to send null as a string otherwise
-    // it's stripped out of the payload by Axois
+    // it's stripped out of the payload by Axios
     payload={{
       confirmed: String(WIN_STATUS.PENDING),
     }}
