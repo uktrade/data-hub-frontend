@@ -152,7 +152,7 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@babel/helper-call-delegate": "^7.12.13",
-    "@babel/plugin-syntax-import-assertions": "^7.24.7",
+    "@babel/plugin-syntax-import-assertions": "^7.25.6",
     "@babel/plugin-transform-class-properties": "^7.25.4",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.7",
     "@babel/plugin-transform-object-rest-spread": "^7.24.7",
