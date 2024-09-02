@@ -61,9 +61,7 @@ export const getCompanyInteractions = ({
   dit_participants__team,
 }) =>
   apiProxyAxios
-    .post('/v3/search/interaction', {
-      limit,
-      offset: getPageOffset({ limit, page }),
+    .post(`/v4/company/${company}/activity`, {
       subject,
       kind,
       dit_participants__adviser,
@@ -77,5 +75,5 @@ export const getCompanyInteractions = ({
       policy_issue_types,
       company_one_list_group_tier,
       dit_participants__team,
-    })
+    }, { params: {'limit': limit, 'offset': getPageOffset({limit, page})}})
     .then(({ data }) => transformResponseToCollection(data))
