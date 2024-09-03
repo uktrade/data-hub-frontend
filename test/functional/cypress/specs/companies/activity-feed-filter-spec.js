@@ -43,23 +43,31 @@ const buildQueryString = (queryParams = {}) =>
   })
 
 const minimumRequest = {
-  limit: 10,
-  offset: 0,
   company: fixtures.company.allActivitiesCompany.id,
   sortby: 'date:desc',
 }
 
 describe('Company Activity Feed Filter', () => {
-  const companyActivitiesEndPoint = '/api-proxy/v3/search/interaction'
+  const companyActivitiesEndPoint = `/api-proxy/v4/company/${fixtures.company.allActivitiesCompany.id}/activity?limit=10&offset=0`
 
   context('Default Params', () => {
-    it('should set the default params in the get request url', () => {
+    beforeEach(() => {
       cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
-
+    })
+    it('should set the default params in the get request url', () => {
       assertPayload('@apiRequest', minimumRequest)
+    })
+
+    it('should pass the limit and offset to the query param', () => {
+      cy.wait('@apiRequest').then((interception) => {
+        expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
+        expect(interception.request.query.limit).to.eq('10')
+        expect(interception.request.query.hasOwnProperty('offset')).to.eq(true)
+        expect(interception.request.query.offset).to.eq('0')
+      })
     })
   })
 
@@ -173,7 +181,12 @@ describe('Company Activity Feed Filter', () => {
       const dateBeforeFilter = '[data-test="date-before-filter"]'
       const dateAfter = '2021-06-24'
       const dateBefore = '2023-06-24'
-
+      const request = {
+        company: fixtures.company.allActivitiesCompany.id,
+        date_after: dateAfter,
+        date_before: dateBefore,
+        sortby: 'date:desc',
+      }
       it('should filter from the url', () => {
         const queryString = buildQueryString({
           date_after: dateAfter,
@@ -198,6 +211,7 @@ describe('Company Activity Feed Filter', () => {
         })
         assertChipExists({ label: 'From: 24 June 2021', position: 1 })
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+        assertPayload('@apiRequest', request)
       })
 
       it('should filter from user input and remove chips', () => {
@@ -223,8 +237,15 @@ describe('Company Activity Feed Filter', () => {
         assertChipExists({ label: 'From: 24 June 2021', position: 1 })
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
         removeChip('2021-06-24')
+        const requestWithNoDateAfter = {
+          company: fixtures.company.allActivitiesCompany.id,
+          date_before: dateBefore,
+          sortby: 'date:desc',
+        }
         cy.wait('@apiRequest')
+        assertPayload('@apiRequest', requestWithNoDateAfter)
         removeChip('2023-06-24')
+        assertPayload('@apiRequest', minimumRequest)
         assertChipsEmpty()
         assertFieldEmpty(dateBeforeFilter)
         assertFieldEmpty(dateAfterFilter)
