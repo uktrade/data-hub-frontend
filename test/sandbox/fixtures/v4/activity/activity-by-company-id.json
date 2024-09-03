@@ -41,6 +41,38 @@
           "name": "Letter/Fax",
           "id": "74c226d7-5d95-e211-a939-e4115bead28a"
         }
+      },
+      {
+        "id": "af4aac84-4d6a-47df-a733-5a54e3008c32",
+        "date": "2018-02-13",
+        "subject": "Interaction with null service",
+        "contacts": [
+          {
+            "name": "Bob lawson",
+            "first_name": "Bob",
+            "last_name": "lawson",
+            "job_title": "Magician",
+            "id": "0e75d636-1d24-416a-aaf0-3fb220d594ce"
+          }
+        ],
+        "service": null,
+        "dit_participants": [
+          {
+            "team": {
+              "id": "a4f924aa-9698-e211-a939-e4115bead28a",
+              "name": "Isle of Wight Chamber of Commerce"
+            },
+            "adviser": {
+              "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
+              "name": "Barry Oling"
+            }
+          }
+        ],
+        "kind": "interaction",
+        "communication_channel": {
+          "name": "Letter/Fax",
+          "id": "74c226d7-5d95-e211-a939-e4115bead28a"
+        }
       }
     ]
   }
