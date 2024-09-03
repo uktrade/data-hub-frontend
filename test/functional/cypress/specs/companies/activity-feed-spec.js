@@ -30,6 +30,13 @@ describe('Company activity feed', () => {
         cy.get('a').contains(interaction_with_null_service.subject)
       )
     })
+
+    it('shows the activity count', () => {
+      const count = activities.count
+      cy.get('[data-test="collectionCount"]').each(() =>
+        cy.get('span').contains(count)
+      )
+    })
   })
 
   context('Companies House Company', () => {
