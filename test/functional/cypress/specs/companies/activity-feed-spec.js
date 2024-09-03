@@ -14,6 +14,7 @@ const activities = company_activities.activities
 describe('Company activity feed', () => {
   context('Company interactions', () => {
     beforeEach(() => {
+      cy.intercept('activity?limit=10&offset=0').as('requestWithQuery')
       cy.visit(urls.companies.activity.index(company.id))
     })
 
@@ -36,6 +37,15 @@ describe('Company activity feed', () => {
       cy.get('[data-test="collectionCount"]').each(() =>
         cy.get('span').contains(count)
       )
+    })
+
+    it('should pass the limit and offset to the query param', () => {
+      cy.wait('@requestWithQuery').then((interception) => {
+        expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
+        expect(interception.request.query.limit).to.eq('10')
+        expect(interception.request.query.hasOwnProperty('offset')).to.eq(true)
+        expect(interception.request.query.offset).to.eq('0')
+      })
     })
   })
 
