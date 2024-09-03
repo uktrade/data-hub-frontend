@@ -6,9 +6,10 @@ import { currencyGBP } from '../../../../utils/number-utils'
 import { formatShortDate } from '../../../../utils/date'
 import { CollectionItem } from '../../../../components'
 import { WIN_STATUS } from '../../../../modules/ExportWins/Status/constants'
+import { BLACK } from '../../../../utils/colours'
 
-const Bold = styled('span')({
-  fontWeight: 'bold',
+const Black = styled('span')({
+  color: BLACK,
 })
 
 export const SORT_OPTIONS = [
@@ -26,41 +27,37 @@ export const ExportWinsList = ({ exportWins }) =>
           metadata={[
             {
               label: 'Lead officer name',
-              value: <Bold>{item.officer.name}</Bold>,
-            },
-            {
-              label: 'Company name',
-              value: <Bold>{item.customer || 'Not set'}</Bold>,
+              value: <Black>{item.officer.name}</Black>,
             },
             {
               label: 'Contact name',
               value: (
-                <Bold>{`${item.contact.name} (${item.contact.job_title} - ${item.contact.email})`}</Bold>
+                <Black>{`${item.contact.name} (${item.contact.job_title} - ${item.contact.email})`}</Black>
               ),
             },
             {
               label: 'Destination',
-              value: <Bold>{item.country}</Bold>,
+              value: <Black>{item.country}</Black>,
             },
             {
               label: 'Date won',
-              value: <Bold>{formatShortDate(item.date)}</Bold>,
+              value: <Black>{formatShortDate(item.date)}</Black>,
             },
             {
               label: 'Type of win',
-              value: <Bold>{item.business_type}</Bold>,
+              value: <Black>{item.business_type}</Black>,
             },
             {
               label: 'Total value',
-              value: <Bold>{currencyGBP(item.value.export.total)}</Bold>,
+              value: <Black>{currencyGBP(item.value.export.total)}</Black>,
             },
             {
               label: 'Type of goods or services',
-              value: <Bold>{item.name_of_export}</Bold>,
+              value: <Black>{item.name_of_export}</Black>,
             },
             {
               label: 'Sector',
-              value: <Bold>{item.sector}</Bold>,
+              value: <Black>{item.sector}</Black>,
             },
           ]}
         />
@@ -73,7 +70,7 @@ export default ({ companyId }) => {
     <CompanyExportWins.Paginated
       id={companyId}
       heading="Confirmed export win"
-      noResults="You don't have any confirmed export wins."
+      noResults="There are no confirmed export wins."
       payload={{ confirmed: WIN_STATUS.CONFIRMED }}
       sortOptions={SORT_OPTIONS}
     >
