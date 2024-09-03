@@ -3,6 +3,8 @@ const urls = require('../../../../../src/lib/urls')
 const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
+const company_activities = fixtures.company.activities
+const activities = company_activities.activities
 
 /*
  * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
@@ -10,6 +12,26 @@ const company = fixtures.company.allActivitiesCompany
  */
 
 describe('Company activity feed', () => {
+  context('Company interactions', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
+    it('displays interaction activities', () => {
+      const interaction = activities.results[0]
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('a').contains(interaction.subject)
+      )
+    })
+
+    it('displays activities which do not have a service name', () => {
+      const interaction_with_null_service = activities.results[1]
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('a').contains(interaction_with_null_service.subject)
+      )
+    })
+  })
+
   context('Companies House Company', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
@@ -28,12 +50,6 @@ describe('Company activity feed', () => {
           .contains('Companies House Update', {
             matchCase: false,
           })
-      )
-    })
-
-    it('displays activities which do not have a service name', () => {
-      cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('a').contains('Interaction with null service')
       )
     })
   })
