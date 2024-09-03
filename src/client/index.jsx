@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { SearchLocalHeader } from './components'
+import { Search } from './components'
 import { default as DataHubHeaderWrapper } from './components/DataHubHeader/Wrapper'
 import { createProvider } from './createProvider.jsx'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
@@ -45,6 +45,8 @@ import Routes from './routes'
 import ErrorFallback from './components/ErrorFallback'
 
 import { tasks } from './tasks'
+
+import { BLUE } from './utils/colours'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -194,14 +196,6 @@ function App() {
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
         </Mount>
-        <Mount selector="#dashboard-local-header">
-          {(props) => (
-            <SearchLocalHeader
-              csrfToken={globalProps.csrfToken}
-              flashMessage={props.flashMessage}
-            />
-          )}
-        </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}
         </Mount>
@@ -219,6 +213,16 @@ function App() {
         </Mount>
         <Mount selector="#proposition-details">
           {(props) => <PropositionDetails {...props} />}
+        </Mount>
+        <Mount selector="#search-header">
+          {(props) => (
+            <Search
+              csrfToken={globalProps.csrfToken}
+              buttonColour={BLUE}
+              showBorder={true}
+              {...props}
+            />
+          )}
         </Mount>
 
         <Mount selector="#react-app">
