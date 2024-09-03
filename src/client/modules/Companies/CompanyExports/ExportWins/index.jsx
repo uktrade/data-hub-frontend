@@ -5,7 +5,6 @@ import CompanyExportWins from '../../../../components/Resource/CompanyExportWins
 import { currencyGBP } from '../../../../utils/number-utils'
 import { formatShortDate } from '../../../../utils/date'
 import { CollectionItem } from '../../../../components'
-import urls from '../../../../../lib/urls'
 import { WIN_STATUS } from '../../../../modules/ExportWins/Status/constants'
 
 const Bold = styled('span')({
@@ -17,14 +16,13 @@ export const SORT_OPTIONS = [
   { name: 'Oldest', value: 'created_on' },
 ]
 
-export const ExportWinsList = ({ exportWins, companyId }) =>
+export const ExportWinsList = ({ exportWins }) =>
   exportWins.length === 0 ? null : (
     <ul data-test="collectionItems">
       {exportWins.map((item) => (
         <CollectionItem
           key={item.id}
           headingText={`${item.name_of_export} to ${item?.country}`}
-          headingUrl={urls.companies.exportWins.editSummary(companyId, item.id)}
           metadata={[
             {
               label: 'Lead officer name',
