@@ -176,6 +176,23 @@ export const collectionListRequest = (endpoint, fakeList, link) => {
   cy.wait('@apiRequest')
 }
 
+/**
+ * Generic search request for a CollectionList
+ * @param {*} endpoint The search endpoint
+ * @param {*} fakeList The fake list of items to display
+ * @param {*} link The page to render
+ */
+export const companyActivityCollectionListRequest = (
+  endpoint,
+  fakeList,
+  link
+) => {
+  const fullEndpoint = '/api-proxy/' + endpoint
+  cy.intercept('POST', fullEndpoint, fakeList).as('apiRequest')
+  cy.visit(link)
+  cy.wait('@apiRequest')
+}
+
 export const omisCollectionListRequest = (
   endpoint,
   fakeList,
