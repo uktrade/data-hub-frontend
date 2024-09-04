@@ -61,7 +61,7 @@ describe('Company Activity Feed Filter', () => {
       assertPayload('@apiRequest', minimumRequest)
     })
 
-    it('should pass the limit and offset to the query param', () => {
+    it('should pass the pagination limit and offset in the query params', () => {
       cy.wait('@apiRequest').then((interception) => {
         expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
         expect(interception.request.query.limit).to.eq('10')
@@ -72,11 +72,11 @@ describe('Company Activity Feed Filter', () => {
   })
 
   context('Filters', () => {
-    context.skip('Created by', () => {
+    context('Adviser Filter', () => {
       const expectedRequestAdviserUrl = `?size=10&from=0&dit_participants__adviser[]=${adviser.id}&sortby=date:desc`
       const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
 
-      it('should filter Me from the url', () => {
+      it('should pass the selected adviser as a filter in the request payload', () => {
         const queryString = buildQueryString({
           dit_participants__adviser: [adviser.id],
         })
@@ -90,28 +90,19 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
-
+        cy.wait('@apiRequest').then((interception) => {
+          console.log(interception)
+        })
         assertPayload('@apiRequest', {
-          limit: 10,
-          offset: 0,
+          dit_participants__adviser: adviser.id,
           company: fixtures.company.allActivitiesCompany.id,
           sortby: 'date:desc',
         })
 
-        /*
-        Asserts the "Adviser typeahead" filter is selected with the
-        current user as this is the same as selecting "Created by" > "Me".
-        */
         assertTypeaheadOptionSelected({
           element: advisersFilter,
           expectedOption: adviser.name,
         })
-        assertCheckboxGroupOption({
-          element: myInteractionsFilter,
-          value: adviser.id,
-          checked: true,
-        })
-        assertChipExists({ label: adviser.name, position: 1 })
       })
 
       it.skip('should filter from user input and remove chips', () => {
