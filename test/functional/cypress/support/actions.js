@@ -177,7 +177,7 @@ export const collectionListRequest = (endpoint, fakeList, link) => {
 }
 
 /**
- * Generic search request for a CollectionList
+ * Company Activity request for a CollectionList
  * @param {*} endpoint The search endpoint
  * @param {*} fakeList The fake list of items to display
  * @param {*} link The page to render
