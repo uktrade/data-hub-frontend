@@ -198,7 +198,12 @@ const FieldWrapper = ({
           >
             {label && (
               <StyledLegendNoStyle>
-                <StyledLabel boldLabel={boldLabel} error={error} htmlFor={name}>
+                <StyledLabel
+                  data-test="field-label"
+                  boldLabel={boldLabel}
+                  error={error}
+                  htmlFor={name}
+                >
                   {label}
                 </StyledLabel>
               </StyledLegendNoStyle>
