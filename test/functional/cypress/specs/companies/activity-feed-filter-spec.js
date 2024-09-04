@@ -90,8 +90,9 @@ describe('Company Activity Feed Filter', () => {
           )}?${queryString}`
         )
         cy.wait('@adviserSearchApiRequest')
+
         assertPayload('@apiRequest', {
-          // dit_participants__adviser: adviser.id,
+          dit_participants__adviser: [adviser.id],
           company: fixtures.company.allActivitiesCompany.id,
           sortby: 'date:desc',
         })
