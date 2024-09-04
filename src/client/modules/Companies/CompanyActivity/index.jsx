@@ -120,20 +120,6 @@ const CompanyActivityCollectionNoAS = ({
     },
   }
 
-  const advisorSelected = selectedFilters.advisers.options
-    .map(({ value }) => value)
-    .includes(currentAdviserId)
-
-  /*const myInteractionsOption = {
-    label: LABELS.me,
-    value: currentAdviserId,
-  }
-
-const createdByOthersOption = {
-    label: LABELS.others,
-    value: currentAdviserId,
-  }*/
-
   return (
     <DefaultLayoutBase>
       <CompanyResource id={companyId}>
