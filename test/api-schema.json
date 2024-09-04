@@ -6765,6 +6765,95 @@
         },
         "required": ["code", "is_active"]
       },
+      "CompanyActivity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trading_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "next": {
+                  "type": "string"
+                },
+                "previous": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "contacts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "dit_participants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "adviser": {
+                              "type": "string"
+                            },
+                            "team": {
+                              "type": "string",
+                              "readOnly": true
+                            }
+                          },
+                          "required": ["adviser"]
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "service": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": ["interaction", "service_delivery"],
+                        "type": "string"
+                      },
+                      "communication_channel": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "Interaction": {
         "type": "object",
         "properties": {

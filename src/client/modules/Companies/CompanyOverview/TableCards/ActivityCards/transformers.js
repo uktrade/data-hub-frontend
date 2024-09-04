@@ -65,7 +65,7 @@ export const transformInteractionToListItem = ({
   ),
 })
 
-export const transformResponseToCollection = ({ count, results = [] }) => ({
-  count,
-  results: results.map(transformInteractionToListItem),
+export const transformResponseToCollection = ({ activities = {} }) => ({
+  count: activities.count,
+  results: activities.results.map(transformInteractionToListItem),
 })
