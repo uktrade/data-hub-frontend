@@ -1,22 +1,16 @@
 import qs from 'qs'
 
 import {
-  assertQueryParams,
   assertChipExists,
   assertChipsEmpty,
   assertFieldEmpty,
-  assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
   assertRequestUrl,
   assertDateInput,
   assertPayload,
 } from '../../support/assertions'
 
-import {
-  clickCheckboxGroupOption,
-  inputDateValue,
-  removeChip,
-} from '../../support/actions'
+import { inputDateValue, removeChip } from '../../support/actions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -25,8 +19,6 @@ const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 
 const advisersFilter = '[data-test="adviser-filter"]'
-const myInteractionsFilter = '[data-test="my-interactions-filter"]'
-const createdByOthersFilter = '[data-test="created-by-others-filter"]'
 const relatedCompaniesFilter =
   '[data-test="checkbox-include_related_companies"]'
 
@@ -73,9 +65,6 @@ describe('Company Activity Feed Filter', () => {
 
   context('Filters', () => {
     context('Adviser Filter', () => {
-      const expectedRequestAdviserUrl = `?size=10&from=0&dit_participants__adviser[]=${adviser.id}&sortby=date:desc`
-      const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
-
       it('should pass the selected adviser as a filter in the request payload', () => {
         const queryString = buildQueryString({
           dit_participants__adviser: [adviser.id],
@@ -101,67 +90,6 @@ describe('Company Activity Feed Filter', () => {
           element: advisersFilter,
           expectedOption: adviser.name,
         })
-      })
-
-      it.skip('should filter from user input and remove chips', () => {
-        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
-        cy.intercept('GET', adviserSearchEndpoint, {
-          results: [adviser],
-        }).as('adviserSearchApiRequest')
-        cy.visit(
-          urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )
-        )
-        cy.wait('@apiRequest')
-        clickCheckboxGroupOption({
-          element: myInteractionsFilter,
-          value: adviser.id,
-        })
-        cy.wait('@adviserSearchApiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
-
-        assertQueryParams('ditParticipantsAdviser', [adviser.id])
-        assertChipExists({ label: adviser.name, position: 1 })
-        removeChip(adviser.id)
-        assertRequestUrl('@apiRequest', minimumRequest)
-        assertChipsEmpty()
-        assertFieldEmpty(myInteractionsFilter)
-      })
-
-      it.skip('should filter Other from the url', () => {
-        const queryString = buildQueryString({
-          createdByOthers: [adviser.id],
-        })
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.visit(
-          `${urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )}?${queryString}`
-        )
-        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
-        assertCheckboxGroupOption({
-          element: createdByOthersFilter,
-          value: adviser.id,
-          checked: true,
-        })
-      })
-
-      it.skip('should filter from user input and remove chips', () => {
-        const queryString = buildQueryString()
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.visit(
-          `${urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )}?${queryString}`
-        )
-        cy.wait('@apiRequest')
-        clickCheckboxGroupOption({
-          element: createdByOthersFilter,
-          value: adviser.id,
-        })
-
-        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
       })
     })
 

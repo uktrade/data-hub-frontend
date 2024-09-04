@@ -43,7 +43,7 @@ export const getCompanyActivitiesMetadata = () =>
     )
     .catch(handleError)
 
-export const getCompanyInteractions = ({
+export const getCompanyActivities = ({
   limit = 10,
   page = 1,
   subject,

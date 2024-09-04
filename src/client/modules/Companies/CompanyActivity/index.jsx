@@ -85,7 +85,7 @@ const CompanyActivityCollectionNoAS = ({
     startOnRender: {
       payload: {
         ...payload,
-        company: company.id
+        company: company.id,
       },
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
@@ -119,20 +119,6 @@ const CompanyActivityCollectionNoAS = ({
       onSuccessDispatch: COMPANY_ACTIVITIES__METADATA_LOADED,
     },
   }
-
-  const advisorSelected = selectedFilters.advisers.options
-    .map(({ value }) => value)
-    .includes(currentAdviserId)
-
-  /*const myInteractionsOption = {
-    label: LABELS.me,
-    value: currentAdviserId,
-  }
-
-const createdByOthersOption = {
-    label: LABELS.others,
-    value: currentAdviserId,
-  }*/
 
   return (
     <DefaultLayoutBase>
