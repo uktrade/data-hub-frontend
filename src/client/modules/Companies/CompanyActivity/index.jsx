@@ -85,10 +85,7 @@ const CompanyActivityCollectionNoAS = ({
     startOnRender: {
       payload: {
         ...payload,
-        company: company.id,
-        dit_participants__adviser: createdByMeSelected
-          ? currentAdviserId
-          : undefined,
+        company: company.id
       },
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
@@ -123,7 +120,7 @@ const CompanyActivityCollectionNoAS = ({
     },
   }
 
-  const createdByMeSelected = selectedFilters.advisers.options
+  const advisorSelected = selectedFilters.advisers.options
     .map(({ value }) => value)
     .includes(currentAdviserId)
 
