@@ -36,12 +36,15 @@ describe('Editing a pending export win', () => {
   })
 
   context('Officer details', () => {
-    it('should not render an edit status message', () => {
+    it('should render an edit status message', () => {
       cy.visit(
         urls.companies.exportWins.editOfficerDetails(company.id, exportWin.id)
       )
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
-      cy.get('[data-test="status-message"]').should('not.exist')
+      cy.get('[data-test="status-message"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the section: Lead officer name'
+      )
     })
   })
 
@@ -139,6 +142,16 @@ describe('Editing a pending export win', () => {
         'To edit an export win' +
           'Edit each section that needs changing then return to the summary page. ' +
           'When you are happy with all the changes save the page.'
+      )
+    })
+
+    it('should render a lead officer name contact link', () => {
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="lead-officer"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the section: ' +
+          'Lead officer name'
       )
     })
 
