@@ -12,6 +12,7 @@ import { getStartDateOfTwelveMonthsAgo } from '../../../utils/date'
 import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { validateWinDate, validateTextField } from './validators'
+import { idNamesToValueLabels } from '../../../utils'
 import { StyledHintParagraph } from './styled'
 import { Breakdowns } from './Breakdowns'
 import urls from '../../../../lib/urls'
@@ -241,6 +242,11 @@ const WinDetailsStep = ({ isEditing }) => {
         name="sector"
         label="Sector"
         required="Enter a sector"
+        resultToOptions={(result) =>
+          idNamesToValueLabels(
+            result.filter(({ name }) => name !== 'More Sectors')
+          )
+        }
       />
 
       <Details
