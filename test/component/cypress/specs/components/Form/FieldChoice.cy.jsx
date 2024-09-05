@@ -125,6 +125,103 @@ describe('FieldChoice', () => {
     })
   })
 
+  context('Boolean radio buttons', () => {
+    it('should render 2 radio buttons "Yes" and "No"', () => {
+      cy.mountWithProvider(
+        <Form {...FORM_PROPS}>
+          <FieldChoice.Boolean name="has_changed_name" />
+        </Form>
+      )
+      assertFieldRadiosStrict({
+        inputName: 'has_changed_name',
+        options: ['Yes', 'No'],
+      })
+      assertFieldRadiosNotSelected({ inputName: 'has_changed_name' })
+    })
+
+    it('should render a label', () => {
+      const label = 'Have you changed your name?'
+      cy.mountWithProvider(
+        <Form {...FORM_PROPS}>
+          <FieldChoice.Boolean name="has_changed_name" label={label} />
+        </Form>
+      )
+      assertFieldRadiosStrict({
+        inputName: 'has_changed_name',
+        options: ['Yes', 'No'],
+        label,
+      })
+    })
+
+    it('should render a label and hint', () => {
+      const label = 'Have you changed your name?'
+      const hint =
+        'This includes changing your last name or spelling your name differently.'
+      cy.mountWithProvider(
+        <Form {...FORM_PROPS}>
+          <FieldChoice.Boolean
+            name="has_changed_name"
+            label={label}
+            hint={hint}
+          />
+        </Form>
+      )
+      assertFieldRadiosStrict({
+        inputName: 'has_changed_name',
+        options: ['Yes', 'No'],
+        label,
+        hint,
+      })
+    })
+
+    it('should render custom labels', () => {
+      cy.mountWithProvider(
+        <Form {...FORM_PROPS}>
+          <FieldChoice.Boolean
+            name="has_changed_name"
+            label="Have you changed your name?"
+            yesLabel="Agree"
+            noLabel="Disagree"
+          />
+        </Form>
+      )
+      assertFieldRadiosStrict({
+        inputName: 'has_changed_name',
+        options: ['Agree', 'Disagree'],
+      })
+    })
+
+    it('should render a legend', () => {
+      const legend = <H1>H1 legend</H1>
+      cy.mountWithProvider(
+        <Form {...FORM_PROPS}>
+          <FieldChoice.Boolean name="has_changed_name" legend={legend} />
+        </Form>
+      )
+      assertFieldRadiosStrict({
+        inputName: 'has_changed_name',
+        options: ['Yes', 'No'],
+        legend: 'H1 legend',
+      })
+    })
+
+    it('should preselect "Yes"', () => {
+      const selectedOption = { value: true, label: 'Yes' }
+      cy.mountWithProvider(
+        <Form
+          {...FORM_PROPS}
+          initialValues={{ has_changed_name: selectedOption }}
+        >
+          <FieldChoice.Boolean name="has_changed_name" />
+        </Form>
+      )
+      assertFieldRadioSelected({
+        inputName: 'has_changed_name',
+        selectedIndex: 0,
+      })
+    })
+  })
+
   context('Checkboxes', () => {
     it('should render checkboxes', () => {
       cy.mountWithProvider(

@@ -23,6 +23,10 @@ const FieldChoiceRadioInline = styled(FieldChoice.Radio)`
   ${inline}
 `
 
+const FieldChoiceBooleanInline = styled(FieldChoice.Boolean)`
+  ${inline}
+`
+
 const countryOptions = [
   {
     value: '0',
@@ -447,6 +451,167 @@ CheckboxPreselected.parameters = {
         ],
         props: {
           name: 'country',
+        },
+      }),
+    },
+  },
+}
+
+// Boolean
+const BOOLEAN_COMMENT =
+  "There's no need to set the options as the component does this internally."
+
+export const Boolean = Template.bind({})
+Boolean.storyName = 'Boolean radios'
+Boolean.args = {
+  name: 'has_changed_name',
+  component: FieldChoice.Boolean,
+}
+Boolean.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanLabel = Template.bind({})
+BooleanLabel.storyName = 'Boolean radios with label'
+BooleanLabel.args = {
+  ...Boolean.args,
+  label: 'Have you changed your name?',
+}
+BooleanLabel.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          label: 'Have you changed your name?',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanLabelAndHint = Template.bind({})
+BooleanLabelAndHint.storyName = 'Boolean radios with label and hint'
+const labelAndHint = {
+  label: 'Have you changed your name?',
+  hint: 'This includes changing your last name or spelling your name differently.',
+}
+BooleanLabelAndHint.args = {
+  ...Boolean.args,
+  ...labelAndHint,
+}
+BooleanLabelAndHint.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          ...labelAndHint,
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanCustomOptionLabels = Template.bind({})
+BooleanCustomOptionLabels.storyName = 'Boolean radios with custom labels'
+const customOptionLabels = {
+  label: 'Have you changed your name?',
+  yesLabel: 'Agree',
+  noLabel: 'Disagree',
+}
+BooleanCustomOptionLabels.args = {
+  ...Boolean.args,
+  ...customOptionLabels,
+}
+BooleanCustomOptionLabels.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          ...customOptionLabels,
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanRequired = Template.bind({})
+BooleanRequired.storyName = 'Boolean radios selection required'
+BooleanRequired.args = {
+  ...Boolean.args,
+  required: 'Select at least one option',
+}
+BooleanRequired.parameters = {
+  docs: {
+    description: {
+      story: `A boolean radio group where a selection is required. Click "Save" to view an error. ${GDS_DOCS_RADIOS_URL}`,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          required: 'Select at least one option',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanInline = Template.bind({})
+BooleanInline.storyName = 'Boolean radios inline'
+BooleanInline.args = {
+  ...Boolean.args,
+  component: FieldChoiceBooleanInline,
+}
+BooleanInline.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoiceBooleanInline',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          options: [],
         },
       }),
     },
