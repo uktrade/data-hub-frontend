@@ -113,6 +113,11 @@ const OfficerDetailsTable = ({ values, goToStep, isEditing }) => (
         emptyValue="Not set"
       />
     </StyledSummaryTable>
+    {isEditing && (
+      <StyledInsetText data-test="lead-officer">
+        <ContactLink sections={['Lead officer name']} />
+      </StyledInsetText>
+    )}
   </>
 )
 
