@@ -112,6 +112,10 @@ describe('Editing a pending export win', () => {
       cy.get(winDetails.date).should('not.exist')
     })
 
+    it('should not render the business type', () => {
+      cy.get(winDetails.businessType).should('not.exist')
+    })
+
     it('should not render the win type', () => {
       cy.get(winDetails.winType).should('not.exist')
     })

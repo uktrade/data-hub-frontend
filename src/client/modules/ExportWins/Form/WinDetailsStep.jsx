@@ -121,99 +121,104 @@ const WinDetailsStep = ({ isEditing }) => {
           },
         ]}
       />
-      <FieldInput
-        type="text"
-        name="business_type"
-        label="Type of business deal"
-        required="Enter the type of business deal"
-        hint="For example: export sales, contract, order, distributor, tender / competition win, joint venture, outward investment."
-        placeholder="Enter a type of business deal"
-        validate={validateTextField('Type of business deal')}
-      />
       {!isEditing && (
-        <FieldCheckboxes
-          name="win_type"
-          legend="Type of win"
-          required="Choose at least one type of win"
-          options={winTypeOptions.map((option) => ({
-            ...option,
-            ...(option.value === winTypes.EXPORT && {
-              children: (
-                <Breakdowns
-                  label="Export value over the next 5 years"
-                  name="export_win"
-                  values={values}
-                />
-              ),
-            }),
-            ...(option.value === winTypes.BUSINESS_SUCCESS && {
-              link: (
-                <StyledDetails
-                  summary="What is business success?"
-                  data-test="business-success-details"
-                >
-                  <p>Business success is defined as:</p>
-                  <UnorderedList listStyleType="bullet">
-                    <ListItem>
-                      the exchange of ownership of goods/services from a
-                      subsidiary of an eligible UK company to a non-UK resident
-                    </ListItem>
-                    <ListItem>
-                      in financial services, the value of assets under
-                      management or the value of a listing
-                    </ListItem>
-                    <ListItem>
-                      the collection of cash from an overdue invoice
-                    </ListItem>
-                    <ListItem>
-                      reduced tax burden on a customer achieved by lobbying
-                    </ListItem>
-                    <ListItem>repatriation of profits to the UK</ListItem>
-                  </UnorderedList>
-                </StyledDetails>
-              ),
-              children: (
-                <Breakdowns
-                  label="Business success over the next 5 years"
-                  name="business_success_win"
-                  values={values}
-                />
-              ),
-            }),
-            ...(option.value === winTypes.ODI && {
-              link: (
-                <StyledDetails
-                  summary="What is an ODI?"
-                  data-test="odi-details"
-                >
-                  <p>
-                    An ODI is a cross-border investment from the UK into another
-                    country, where the source of the money is the UK.
-                  </p>
-                  <p>
-                    The aim of the investment is to set up a lasting interest in
-                    a company, where the investor has a genuine influence in the
-                    management. This may involve providing capital for vehicles,
-                    machinery, buildings, and running costs to:
-                  </p>
-                  <UnorderedList listStyleType="bullet">
-                    <ListItem>set up an overseas subsidiary</ListItem>
-                    <ListItem>enter into a joint venture</ListItem>
-                    <ListItem>expand current overseas operations</ListItem>
-                  </UnorderedList>
-                </StyledDetails>
-              ),
-              children: (
-                <Breakdowns
-                  label="Outward Direct Investment over the next 5 years"
-                  name="odi_win"
-                  values={values}
-                />
-              ),
-            }),
-          }))}
-        />
+        <>
+          <FieldInput
+            type="text"
+            name="business_type"
+            label="Type of business deal"
+            required="Enter the type of business deal"
+            hint="For example: export sales, contract, order, distributor, tender / competition win, joint venture, outward investment."
+            placeholder="Enter a type of business deal"
+            validate={validateTextField('Type of business deal')}
+          />
+
+          <FieldCheckboxes
+            name="win_type"
+            legend="Type of win"
+            required="Choose at least one type of win"
+            options={winTypeOptions.map((option) => ({
+              ...option,
+              ...(option.value === winTypes.EXPORT && {
+                children: (
+                  <Breakdowns
+                    label="Export value over the next 5 years"
+                    name="export_win"
+                    values={values}
+                  />
+                ),
+              }),
+              ...(option.value === winTypes.BUSINESS_SUCCESS && {
+                link: (
+                  <StyledDetails
+                    summary="What is business success?"
+                    data-test="business-success-details"
+                  >
+                    <p>Business success is defined as:</p>
+                    <UnorderedList listStyleType="bullet">
+                      <ListItem>
+                        the exchange of ownership of goods/services from a
+                        subsidiary of an eligible UK company to a non-UK
+                        resident
+                      </ListItem>
+                      <ListItem>
+                        in financial services, the value of assets under
+                        management or the value of a listing
+                      </ListItem>
+                      <ListItem>
+                        the collection of cash from an overdue invoice
+                      </ListItem>
+                      <ListItem>
+                        reduced tax burden on a customer achieved by lobbying
+                      </ListItem>
+                      <ListItem>repatriation of profits to the UK</ListItem>
+                    </UnorderedList>
+                  </StyledDetails>
+                ),
+                children: (
+                  <Breakdowns
+                    label="Business success over the next 5 years"
+                    name="business_success_win"
+                    values={values}
+                  />
+                ),
+              }),
+              ...(option.value === winTypes.ODI && {
+                link: (
+                  <StyledDetails
+                    summary="What is an ODI?"
+                    data-test="odi-details"
+                  >
+                    <p>
+                      An ODI is a cross-border investment from the UK into
+                      another country, where the source of the money is the UK.
+                    </p>
+                    <p>
+                      The aim of the investment is to set up a lasting interest
+                      in a company, where the investor has a genuine influence
+                      in the management. This may involve providing capital for
+                      vehicles, machinery, buildings, and running costs to:
+                    </p>
+                    <UnorderedList listStyleType="bullet">
+                      <ListItem>set up an overseas subsidiary</ListItem>
+                      <ListItem>enter into a joint venture</ListItem>
+                      <ListItem>expand current overseas operations</ListItem>
+                    </UnorderedList>
+                  </StyledDetails>
+                ),
+                children: (
+                  <Breakdowns
+                    label="Outward Direct Investment over the next 5 years"
+                    name="odi_win"
+                    values={values}
+                  />
+                ),
+              }),
+            }))}
+          />
+        </>
       )}
+
       {!isEditing && values?.win_type?.length > 1 && (
         <StyledExportTotal data-test="total-value">
           Total value:{' '}
