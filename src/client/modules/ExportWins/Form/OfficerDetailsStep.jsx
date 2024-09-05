@@ -10,7 +10,12 @@ import * as validators from './validators'
 import urls from '../../../../lib/urls'
 import { steps } from './constants'
 
-const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
+const OfficerDetailsStep = ({
+  companyId,
+  exportId,
+  exportWinId,
+  isEditing,
+}) => {
   const { values } = useFormContext()
   return (
     <Step
@@ -26,11 +31,13 @@ const OfficerDetailsStep = ({ companyId, exportId, exportWinId }) => {
       }
     >
       <H3 data-test="step-heading">Officer details</H3>
-      <FieldAdvisersTypeahead
-        name="lead_officer"
-        label="Lead officer name"
-        required="Enter a lead officer"
-      />
+      {!isEditing && (
+        <FieldAdvisersTypeahead
+          name="lead_officer"
+          label="Lead officer name"
+          required="Enter a lead officer"
+        />
+      )}
       <TeamType.FieldTypeahead
         name="team_type"
         id="team-type"
