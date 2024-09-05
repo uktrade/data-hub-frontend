@@ -11,7 +11,7 @@
     "nodemon": "^3.1.4"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-import-assertions": "^7.24.7",
+    "@babel/plugin-syntax-import-assertions": "^7.25.6",
     "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.25.1",
     "@faker-js/faker": "^8.4.1",

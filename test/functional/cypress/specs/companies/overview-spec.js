@@ -4,10 +4,8 @@ import {
   companyNoDetails,
 } from '../../fakers/companies'
 import { getCollectionList } from '../../support/collection-list-assertions'
-import { collectionListRequest } from '../../support/actions'
-import interactionsListFaker, {
-  interactionFaker,
-} from '../../fakers/interactions'
+import { companyActivityCollectionListRequest } from '../../support/actions'
+import companyActivityListFaker from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -276,11 +274,11 @@ describe('Company overview page', () => {
   )
 
   context('when viewing the Recent Activity Card for a business', () => {
-    const interactionsList = interactionsListFaker(3)
+    const companyActivitiesList = companyActivityListFaker(3)
     beforeEach(() => {
-      collectionListRequest(
-        'v3/search/interaction',
-        interactionsList,
+      companyActivityCollectionListRequest(
+        `v4/company/${fixtures.company.allOverviewDetails.id}/activity**`,
+        companyActivitiesList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
     })
@@ -310,10 +308,10 @@ describe('Company overview page', () => {
   })
 
   context('when viewing the Upcoming Activity Card for a business', () => {
-    const interactionsList = interactionsListFaker(2)
+    const interactionsList = companyActivityListFaker(2)
     beforeEach(() => {
-      collectionListRequest(
-        'v3/search/interaction',
+      companyActivityCollectionListRequest(
+        `v4/company/${fixtures.company.allOverviewDetails.id}/activity**`,
         interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -346,10 +344,11 @@ describe('Company overview page', () => {
   context(
     'when viewing the activity cards for a business with no activities',
     () => {
+      const interactionsList = companyActivityListFaker(0)
       beforeEach(() => {
-        collectionListRequest(
-          'v3/search/interaction',
-          [],
+        companyActivityCollectionListRequest(
+          `v4/company/${fixtures.company.noOverviewDetails.id}/activity**`,
+          interactionsList,
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
       })
@@ -386,29 +385,10 @@ describe('Company overview page', () => {
 
   // TODO - Unskip relevant parts of this test when we have the associated DAGs in place
   context('when viewing all activity cards types', () => {
-    const interaction = interactionFaker({
-      kind: 'interaction',
-      subject: 'Meeting between Brendan Smith and Tyson Morar',
-      dit_participants: [
-        {
-          adviser: {
-            name: 'Puck Head',
-            email: 'Puck.Head@example.com',
-          },
-          team: { name: 'Digital Data Hub - Live Service' },
-        },
-      ],
-      contacts: [{ name: 'Tyson Morar' }],
-      date: '2019-06-10T00:00:00+00:00',
-      service: {
-        name: 'Export introductions : Someone else in DBT',
-      },
-      communication_channel: { name: 'Email/Website' },
-    })
-    const interactionsList = [interaction]
+    const interactionsList = companyActivityListFaker(1)
     beforeEach(() => {
-      collectionListRequest(
-        'v3/search/interaction',
+      companyActivityCollectionListRequest(
+        `v4/company/${fixtures.company.venusLtd.id}/activity**`,
         interactionsList,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
@@ -507,12 +487,10 @@ describe('Company overview page', () => {
         .contains('Interaction')
     })
     it('should display Data Hub interaction', () => {
-      cy.get('[data-test="activity-subject"]').contains(
-        'a',
-        interaction.subject
-      )
+      const activity = interactionsList.activities.results[0]
+      cy.get('[data-test="activity-subject"]').contains('a', activity.subject)
       cy.get('[data-test="activity-summary"]').contains(
-        'Puck Head had email/website contact with Tyson Morar'
+        `${activity.dit_participants[0].adviser.name} had ${activity.communication_channel.name} contact with ${activity.contacts[0].name}`
       )
     })
     it.skip('should display Data Hub event', () => {

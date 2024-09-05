@@ -1,9 +1,14 @@
 import React from 'react'
-import { H1 } from '@govuk-react/heading'
 import styled, { css } from 'styled-components'
 
 import FieldChoice from '../FieldChoice'
 import Form from '../..'
+
+const getGDSDocsUrl = (component) =>
+  `<a href="https://design-system.service.gov.uk/components/${component}" target="_blank" rel="noopener noreferrer">GOV.UK Design System docs - ${component}</a>`
+
+const GDS_DOCS_RADIOS_URL = getGDSDocsUrl('radios')
+const GDS_DOCS_CHECKBOXES_URL = getGDSDocsUrl('checkboxes')
 
 const inline = css`
   fieldset div {
@@ -18,11 +23,11 @@ const FieldChoiceRadioInline = styled(FieldChoice.Radio)`
   ${inline}
 `
 
-const FieldChoiceCheckboxInline = styled(FieldChoice.Checkbox)`
+const FieldChoiceBooleanInline = styled(FieldChoice.Boolean)`
   ${inline}
 `
 
-const options = [
+const countryOptions = [
   {
     value: '0',
     label: 'England',
@@ -41,16 +46,13 @@ const options = [
   },
 ]
 
-const formatOption = (option) =>
-  `{ value: '${option.value}', label: '${option.label}' }`
-
-const formatOptions = (options) => options.map(formatOption) //.join(', ')
+const countryOptionsSubset = countryOptions.slice(0, 2)
 
 export default {
   title: 'Form/Form Elements/FieldChoice',
   component: FieldChoice,
   args: {
-    options,
+    options: countryOptions,
     name: 'country',
     component: FieldChoice,
   },
@@ -61,20 +63,18 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `The <b>FieldChoice</b> component is designed to render a group of radio buttons or checkboxes by setting the prop type to either <b>"radio"</b> or <b>"checkbox"</b>.
-        The component sets the entire selected option (Object) to the Form's state which is helpful on user journeys where the final page is a summary page and you
-        need to pullout a name (or any other field) from a previous selection to display it to the user. At present, <b>FieldRadio</b> only writes the ID (String) to the form state.`,
+        component: `The <b>FieldChoice</b> component renders a group of radio buttons or checkboxes by setting the prop type to either "radio" or "checkbox".
+                    The component sets the entire selected option to the form's state which is helpful on user journeys where the final page is a summary page
+                    and you need to extract a label (or any other field) from a previous selection to display to the user. Instead of using FieldChoice directly,
+                    favour <b>FieldChoice.Radio</b>, <b>FieldChoice.Checkbox</b>, or <b>FieldChoice.Boolean</b> where the type is set for you.`,
       },
     },
   },
 }
 
-const Template = (
-  { component: Component, initialValues, ...args },
-  { id: storyId }
-) => (
+const Template = ({ component: Component, initialValues, ...args }, { id }) => (
   <Form
-    id={storyId}
+    id={id}
     analyticsFormName="formRadio"
     submissionTaskName="SUBMISSION"
     initialValues={initialValues}
@@ -88,298 +88,531 @@ const Template = (
   </Form>
 )
 
-const defaultFormProps = `\n  id="form-id"\n  analyticsFormName="formRadio"\n  submissionTaskName="SUBMISSION"`
-const defaultComponentProps = `name="country"`
+const generateFormCode = ({
+  comments = [],
+  componentName,
+  props: { options = countryOptions, ...restProps },
+}) => {
+  let formCode = ''
 
-const getForm = ({ component, formProp, componentProp }) => {
-  const formProps = formProp
-    ? `${defaultFormProps}\n  ${formProp}`
-    : ` ${defaultFormProps}`
+  comments.forEach((comment) => {
+    formCode += `// ${comment}\n`
+  })
 
-  const componentProps = componentProp
-    ? `${defaultComponentProps}
-      ${componentProp}`
-    : `${defaultComponentProps}`
-  return `
-<Form ${formProps}>
+  formCode += `
+<Form
+  id={id}
+  analyticsFormName="formRadio"
+  submissionTaskName="SUBMISSION"
+>
   {(state) => (
-    <${component}
-      ${componentProps}
-      options={[
-        ${formatOption(options[0])}
-        ${formatOption(options[1])}
-        ${formatOption(options[2])}
-        ${formatOption(options[3])}
-      ]}
-    />
+    <>
+      <${componentName}`
+
+  Object.keys(restProps).forEach((key) => {
+    const value = restProps[key]
+    if (value) {
+      formCode += `
+        ${key}="${value}"`
+    }
+  })
+
+  if (options.length) {
+    formCode += `
+        options: [`
+
+    options.forEach((option, index) => {
+      formCode += `
+          {
+            value: '${option.value}',
+            label: '${option.label}',
+          }${index < options.length - 1 ? ',' : ''}`
+    })
+
+    formCode += `
+        ]`
+  }
+
+  formCode += `
+      />
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+    </>
   )}
 </Form>
 `
+  return formCode
 }
 
-// Radio
-export const Radio = Template.bind({})
-Radio.args = {
-  type: 'radio',
-}
-Radio.parameters = {
-  docs: {
-    description: {
-      story: 'A group of 4 radio buttons',
-    },
-    source: {
-      code: getForm({ component: 'FieldChoice.Radio' }),
-    },
-  },
-}
+const formatCountry = (country) =>
+  `{ value: '${country.value}', label: '${country.label}' }`
 
-export const RadioLabel = Template.bind({})
-RadioLabel.args = {
-  ...Radio.args,
-  label: 'Countries',
-}
-RadioLabel.parameters = {
+// Radios
+export const Radios = Template.bind({})
+Radios.args = { type: 'radio' }
+Radios.parameters = {
   docs: {
     description: {
-      story: 'Radio button group label',
+      story: GDS_DOCS_RADIOS_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Radio',
-        componentProp: 'label="Countries"',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        props: {
+          name: 'country',
+        },
       }),
     },
   },
 }
 
-export const RadioHint = Template.bind({})
-RadioHint.args = {
-  ...Radio.args,
-  hint: 'Country hint',
+export const RadiosLabel = Template.bind({})
+RadiosLabel.storyName = 'Radios and label'
+RadiosLabel.args = {
+  ...Radios.args,
+  label: 'Where do you live',
 }
-RadioHint.parameters = {
+RadiosLabel.parameters = {
   docs: {
     description: {
-      story: 'Radio button group hint text',
+      story: GDS_DOCS_RADIOS_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Radio',
-        componentProp: 'hint="Country hint"',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        props: {
+          name: 'country',
+          label: 'Where do you live',
+        },
       }),
     },
   },
 }
 
-export const RadioLegend = Template.bind({})
-RadioLegend.args = {
-  ...Radio.args,
-  legend: <h1>My H1 legend</h1>,
+export const RadiosLabelAndHint = Template.bind({})
+RadiosLabelAndHint.storyName = 'Radios with label and hint'
+RadiosLabelAndHint.args = {
+  ...Radios.args,
+  label: 'Where do you live',
+  hint: 'Select one option',
 }
-RadioLegend.parameters = {
+RadiosLabelAndHint.parameters = {
   docs: {
     description: {
-      story: 'Radio button group legend',
+      story: GDS_DOCS_RADIOS_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Radio',
-        componentProp: 'legend={<H1>My H1 legend</H1>}',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        props: {
+          name: 'country',
+          label: 'Where do you live',
+          hint: 'Select one option',
+        },
       }),
     },
   },
 }
 
-export const RadioInline = Template.bind({})
-RadioInline.args = {
-  ...Radio.args,
+export const RadiosLegend = Template.bind({})
+RadiosLegend.storyName = 'Radios and legend'
+RadiosLegend.args = {
+  ...Radios.args,
+  legend: <h1>H1 legend</h1>,
+}
+RadiosLegend.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        props: {
+          name: 'country',
+          legend: '{<h1>H1 legend</h1>}',
+        },
+      }),
+    },
+  },
+}
+
+export const RadiosInline = Template.bind({})
+RadiosInline.storyName = 'Radios inline'
+RadiosInline.args = {
+  ...Radios.args,
   component: FieldChoiceRadioInline,
+  options: countryOptionsSubset,
 }
-RadioInline.parameters = {
+RadiosInline.parameters = {
   docs: {
     description: {
-      story: 'Radio button group inline',
+      story: GDS_DOCS_RADIOS_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoiceRadioInline',
+      code: generateFormCode({
+        componentName: 'FieldChoiceRadioInline',
+        props: {
+          name: 'country',
+          options: countryOptionsSubset,
+        },
       }),
     },
   },
 }
 
-export const RadioRequired = Template.bind({})
-RadioRequired.args = {
-  ...Radio.args,
+export const RadiosRequired = Template.bind({})
+RadiosRequired.storyName = 'Radios selection required'
+RadiosRequired.args = {
+  ...Radios.args,
   required: 'Select at least one country',
 }
-RadioRequired.parameters = {
+RadiosRequired.parameters = {
   docs: {
     description: {
-      story:
-        'Radio button group where a selection is required. Click "Save" to view the form validation error message.',
+      story: `Radio button group where a selection is required. Click "Save" to view an error. ${GDS_DOCS_RADIOS_URL}`,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Radio',
-        componentProp: 'required="Select at least one country"',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        props: {
+          name: 'country',
+          required: 'Select at least one country',
+        },
       }),
     },
   },
 }
 
-export const RadioSelected = Template.bind({})
-RadioSelected.args = {
-  ...Radio.args,
+export const RadiosPreselected = Template.bind({})
+RadiosPreselected.storyName = 'Radios preselected'
+const country = countryOptions[0]
+RadiosPreselected.args = {
+  ...Radios.args,
   initialValues: {
-    // Radios require a single object
-    country: options[0],
+    country,
   },
 }
-RadioSelected.parameters = {
+RadiosPreselected.parameters = {
   docs: {
     description: {
-      story: 'Radio button group selected',
+      story: GDS_DOCS_RADIOS_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Radio',
-        formProp: `initialValues={{country: ${formatOption(options[0])}}}`,
+      code: generateFormCode({
+        componentName: 'FieldChoice.Radio',
+        comments: [
+          'The form will automatically set the initial values providing the name',
+          "field is set within the object that's returned by a transformer.",
+          `For example: { country: ${formatCountry(country)} }`,
+        ],
+        props: {
+          name: 'country',
+        },
       }),
     },
   },
 }
 
 // Checkbox
-export const Checkbox = Template.bind({})
-Checkbox.args = {
-  type: 'checkbox',
-}
-Checkbox.parameters = {
+export const Checkboxes = Template.bind({})
+Checkboxes.args = { type: 'checkboxes' }
+Checkboxes.parameters = {
   docs: {
     description: {
-      story: 'A group of 4 checkboxes.',
+      story: GDS_DOCS_CHECKBOXES_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        props: {
+          name: 'country',
+        },
       }),
     },
   },
 }
 
-export const CheckboxLabel = Template.bind({})
-CheckboxLabel.args = {
-  ...Checkbox.args,
-  label: 'Countries',
+export const CheckboxesLabel = Template.bind({})
+CheckboxesLabel.storyName = 'Checkboxes and label'
+CheckboxesLabel.args = {
+  ...Checkboxes.args,
+  label: 'Where do you live',
 }
-CheckboxLabel.parameters = {
+CheckboxesLabel.parameters = {
   docs: {
     description: {
-      story: 'Checkbox group label',
+      story: GDS_DOCS_CHECKBOXES_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
-        componentProp: 'label="Countries"',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        props: {
+          name: 'country',
+          label: 'Where do you live',
+        },
       }),
     },
   },
 }
 
-export const CheckboxHint = Template.bind({})
-CheckboxHint.args = {
-  ...Checkbox.args,
-  hint: 'Country hint',
+export const CheckboxesLabelAndHint = Template.bind({})
+CheckboxesLabelAndHint.storyName = 'Checkboxes label and hint'
+const checkboxLabelAndHint = {
+  label: 'Where do you live',
+  hint: 'Select all that apply',
 }
-CheckboxHint.parameters = {
+CheckboxesLabelAndHint.args = {
+  ...Checkboxes.args,
+  ...checkboxLabelAndHint,
+}
+CheckboxesLabelAndHint.parameters = {
   docs: {
     description: {
-      story: 'Checkbox group hint text',
+      story: GDS_DOCS_CHECKBOXES_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
-        componentProp: 'hint="Country hint"',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        props: {
+          name: 'country',
+          ...checkboxLabelAndHint,
+        },
       }),
     },
   },
 }
 
-export const CheckboxLegend = Template.bind({})
-CheckboxLegend.args = {
-  ...Checkbox.args,
-  legend: <H1>My H1 legend</H1>,
+export const CheckboxesLegend = Template.bind({})
+CheckboxesLegend.storyName = 'Checkboxes and legend'
+CheckboxesLegend.args = {
+  ...Checkboxes.args,
+  legend: <h1>H1 legend</h1>,
 }
-CheckboxLegend.parameters = {
+CheckboxesLegend.parameters = {
   docs: {
     description: {
-      story: 'Checkbox group legend',
+      story: GDS_DOCS_CHECKBOXES_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
-        componentProp: 'legend={<H1>My H1 legend</H1>}',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        props: {
+          name: 'country',
+          legend: '{<h1>H1 legend</h1>}',
+        },
       }),
     },
   },
 }
 
-export const CheckboxInline = Template.bind({})
-CheckboxInline.args = {
-  ...Checkbox.args,
-  component: FieldChoiceCheckboxInline,
+export const CheckboxesRequired = Template.bind({})
+CheckboxesRequired.storyName = 'Checkboxes selection required'
+CheckboxesRequired.args = {
+  ...Checkboxes.args,
+  required: 'Select at least one country',
 }
-CheckboxInline.parameters = {
+CheckboxesRequired.parameters = {
   docs: {
     description: {
-      story: 'Checkbox group inline',
+      story: `Checkbox group where a selection is required. Click "Save" to view an error. ${GDS_DOCS_CHECKBOXES_URL}`,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoiceCheckboxInline',
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        props: {
+          name: 'country',
+          required: 'Select at least one country',
+        },
       }),
     },
   },
 }
 
-export const CheckboxRequired = Template.bind({})
-CheckboxRequired.args = {
-  ...Checkbox.args,
-  required: 'Choose one or more countries',
-}
-CheckboxRequired.parameters = {
-  docs: {
-    description: {
-      story:
-        'Checkbox group where a user must choose at least one country. Click "Save" to view the form validation error message.',
-    },
-    source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
-        componentProp: 'required="Choose one or more countries"',
-      }),
-    },
-  },
-}
-
-export const CheckboxChecked = Template.bind({})
-CheckboxChecked.args = {
-  ...Checkbox.args,
+export const CheckboxPreselected = Template.bind({})
+CheckboxPreselected.storyName = 'Checkboxes preselected'
+CheckboxPreselected.args = {
+  ...Checkboxes.args,
   initialValues: {
-    // Checkboxes require an array of objects
-    country: [options[0], options[1]],
+    country: [countryOptions[0], countryOptions[1]],
   },
 }
-CheckboxChecked.parameters = {
+CheckboxPreselected.parameters = {
   docs: {
     description: {
-      story: 'Checkbox group checked',
+      story: GDS_DOCS_CHECKBOXES_URL,
     },
     source: {
-      code: getForm({
-        component: 'FieldChoice.Checkbox',
-        formProp: `initialValues={{ country: [${formatOptions([options[0], options[1]])}]}}`,
+      code: generateFormCode({
+        componentName: 'FieldChoice.Checkbox',
+        comments: [
+          'The form will automatically set the initial values providing the name',
+          "field is set within the object that's returned by a transformer.",
+          `For example: { country: [${formatCountry(countryOptions[0])}, ${formatCountry(countryOptions[1])}] }`,
+        ],
+        props: {
+          name: 'country',
+        },
+      }),
+    },
+  },
+}
+
+// Boolean
+const BOOLEAN_COMMENT =
+  "There's no need to set the options as the component does this internally."
+
+export const Boolean = Template.bind({})
+Boolean.storyName = 'Boolean radios'
+Boolean.args = {
+  name: 'has_changed_name',
+  component: FieldChoice.Boolean,
+}
+Boolean.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanLabel = Template.bind({})
+BooleanLabel.storyName = 'Boolean radios with label'
+BooleanLabel.args = {
+  ...Boolean.args,
+  label: 'Have you changed your name?',
+}
+BooleanLabel.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          label: 'Have you changed your name?',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanLabelAndHint = Template.bind({})
+BooleanLabelAndHint.storyName = 'Boolean radios with label and hint'
+const labelAndHint = {
+  label: 'Have you changed your name?',
+  hint: 'This includes changing your last name or spelling your name differently.',
+}
+BooleanLabelAndHint.args = {
+  ...Boolean.args,
+  ...labelAndHint,
+}
+BooleanLabelAndHint.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          ...labelAndHint,
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanCustomOptionLabels = Template.bind({})
+BooleanCustomOptionLabels.storyName = 'Boolean radios with custom labels'
+const customOptionLabels = {
+  label: 'Have you changed your name?',
+  yesLabel: 'Agree',
+  noLabel: 'Disagree',
+}
+BooleanCustomOptionLabels.args = {
+  ...Boolean.args,
+  ...customOptionLabels,
+}
+BooleanCustomOptionLabels.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          ...customOptionLabels,
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanRequired = Template.bind({})
+BooleanRequired.storyName = 'Boolean radios selection required'
+BooleanRequired.args = {
+  ...Boolean.args,
+  required: 'Select at least one option',
+}
+BooleanRequired.parameters = {
+  docs: {
+    description: {
+      story: `A boolean radio group where a selection is required. Click "Save" to view an error. ${GDS_DOCS_RADIOS_URL}`,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoice.Boolean',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          required: 'Select at least one option',
+          options: [],
+        },
+      }),
+    },
+  },
+}
+
+export const BooleanInline = Template.bind({})
+BooleanInline.storyName = 'Boolean radios inline'
+BooleanInline.args = {
+  ...Boolean.args,
+  component: FieldChoiceBooleanInline,
+}
+BooleanInline.parameters = {
+  docs: {
+    description: {
+      story: GDS_DOCS_RADIOS_URL,
+    },
+    source: {
+      code: generateFormCode({
+        componentName: 'FieldChoiceBooleanInline',
+        comments: [BOOLEAN_COMMENT],
+        props: {
+          name: 'has_changed_name',
+          options: [],
+        },
       }),
     },
   },

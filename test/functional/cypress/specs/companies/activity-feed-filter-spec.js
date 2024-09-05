@@ -1,22 +1,16 @@
 import qs from 'qs'
 
 import {
-  assertQueryParams,
   assertChipExists,
   assertChipsEmpty,
   assertFieldEmpty,
-  assertCheckboxGroupOption,
   assertTypeaheadOptionSelected,
   assertRequestUrl,
   assertDateInput,
   assertPayload,
 } from '../../support/assertions'
 
-import {
-  clickCheckboxGroupOption,
-  inputDateValue,
-  removeChip,
-} from '../../support/actions'
+import { inputDateValue, removeChip } from '../../support/actions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -25,8 +19,6 @@ const myAdviserId = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 
 const advisersFilter = '[data-test="adviser-filter"]'
-const myInteractionsFilter = '[data-test="my-interactions-filter"]'
-const createdByOthersFilter = '[data-test="created-by-others-filter"]'
 const relatedCompaniesFilter =
   '[data-test="checkbox-include_related_companies"]'
 
@@ -43,32 +35,37 @@ const buildQueryString = (queryParams = {}) =>
   })
 
 const minimumRequest = {
-  limit: 10,
-  offset: 0,
   company: fixtures.company.allActivitiesCompany.id,
   sortby: 'date:desc',
 }
 
 describe('Company Activity Feed Filter', () => {
-  const companyActivitiesEndPoint = '/api-proxy/v3/search/interaction'
+  const companyActivitiesEndPoint = `/api-proxy/v4/company/${fixtures.company.allActivitiesCompany.id}/activity?limit=10&offset=0`
 
   context('Default Params', () => {
-    it('should set the default params in the get request url', () => {
+    beforeEach(() => {
       cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
       cy.visit(
         urls.companies.activity.index(fixtures.company.allActivitiesCompany.id)
       )
-
+    })
+    it('should set the default params in the get request url', () => {
       assertPayload('@apiRequest', minimumRequest)
+    })
+
+    it('should pass the pagination limit and offset in the query params', () => {
+      cy.wait('@apiRequest').then((interception) => {
+        expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
+        expect(interception.request.query.limit).to.eq('10')
+        expect(interception.request.query.hasOwnProperty('offset')).to.eq(true)
+        expect(interception.request.query.offset).to.eq('0')
+      })
     })
   })
 
   context('Filters', () => {
-    context.skip('Created by', () => {
-      const expectedRequestAdviserUrl = `?size=10&from=0&dit_participants__adviser[]=${adviser.id}&sortby=date:desc`
-      const expectedRequestOtherUrl = `?size=10&from=0&createdByOthers[]=${adviser.id}&sortby=date:desc`
-
-      it('should filter Me from the url', () => {
+    context('Adviser Filter', () => {
+      it('should pass the selected adviser as a filter in the request payload', () => {
         const queryString = buildQueryString({
           dit_participants__adviser: [adviser.id],
         })
@@ -84,87 +81,15 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@adviserSearchApiRequest')
 
         assertPayload('@apiRequest', {
-          limit: 10,
-          offset: 0,
+          dit_participants__adviser: [adviser.id],
           company: fixtures.company.allActivitiesCompany.id,
           sortby: 'date:desc',
         })
 
-        /*
-        Asserts the "Adviser typeahead" filter is selected with the
-        current user as this is the same as selecting "Created by" > "Me".
-        */
         assertTypeaheadOptionSelected({
           element: advisersFilter,
           expectedOption: adviser.name,
         })
-        assertCheckboxGroupOption({
-          element: myInteractionsFilter,
-          value: adviser.id,
-          checked: true,
-        })
-        assertChipExists({ label: adviser.name, position: 1 })
-      })
-
-      it.skip('should filter from user input and remove chips', () => {
-        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
-        cy.intercept('GET', adviserSearchEndpoint, {
-          results: [adviser],
-        }).as('adviserSearchApiRequest')
-        cy.visit(
-          urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )
-        )
-        cy.wait('@apiRequest')
-        clickCheckboxGroupOption({
-          element: myInteractionsFilter,
-          value: adviser.id,
-        })
-        cy.wait('@adviserSearchApiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestAdviserUrl)
-
-        assertQueryParams('ditParticipantsAdviser', [adviser.id])
-        assertChipExists({ label: adviser.name, position: 1 })
-        removeChip(adviser.id)
-        assertRequestUrl('@apiRequest', minimumRequest)
-        assertChipsEmpty()
-        assertFieldEmpty(myInteractionsFilter)
-      })
-
-      it.skip('should filter Other from the url', () => {
-        const queryString = buildQueryString({
-          createdByOthers: [adviser.id],
-        })
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.visit(
-          `${urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )}?${queryString}`
-        )
-        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
-        assertCheckboxGroupOption({
-          element: createdByOthersFilter,
-          value: adviser.id,
-          checked: true,
-        })
-      })
-
-      it.skip('should filter from user input and remove chips', () => {
-        const queryString = buildQueryString()
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
-        cy.visit(
-          `${urls.companies.activity.index(
-            fixtures.company.allActivitiesCompany.id
-          )}?${queryString}`
-        )
-        cy.wait('@apiRequest')
-        clickCheckboxGroupOption({
-          element: createdByOthersFilter,
-          value: adviser.id,
-        })
-
-        assertRequestUrl('@apiRequest', expectedRequestOtherUrl)
       })
     })
 
@@ -173,7 +98,12 @@ describe('Company Activity Feed Filter', () => {
       const dateBeforeFilter = '[data-test="date-before-filter"]'
       const dateAfter = '2021-06-24'
       const dateBefore = '2023-06-24'
-
+      const request = {
+        company: fixtures.company.allActivitiesCompany.id,
+        date_after: dateAfter,
+        date_before: dateBefore,
+        sortby: 'date:desc',
+      }
       it('should filter from the url', () => {
         const queryString = buildQueryString({
           date_after: dateAfter,
@@ -198,6 +128,7 @@ describe('Company Activity Feed Filter', () => {
         })
         assertChipExists({ label: 'From: 24 June 2021', position: 1 })
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
+        assertPayload('@apiRequest', request)
       })
 
       it('should filter from user input and remove chips', () => {
@@ -223,8 +154,15 @@ describe('Company Activity Feed Filter', () => {
         assertChipExists({ label: 'From: 24 June 2021', position: 1 })
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
         removeChip('2021-06-24')
+        const requestWithNoDateAfter = {
+          company: fixtures.company.allActivitiesCompany.id,
+          date_before: dateBefore,
+          sortby: 'date:desc',
+        }
         cy.wait('@apiRequest')
+        assertPayload('@apiRequest', requestWithNoDateAfter)
         removeChip('2023-06-24')
+        assertPayload('@apiRequest', minimumRequest)
         assertChipsEmpty()
         assertFieldEmpty(dateBeforeFilter)
         assertFieldEmpty(dateAfterFilter)

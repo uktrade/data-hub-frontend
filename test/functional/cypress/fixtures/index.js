@@ -5,6 +5,7 @@ module.exports = {
   company: {
     default: require('../../../../test/sandbox/fixtures/v4/company/company.json'),
     noOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-no-overview-details.json'),
+    activities: require('../../../../test/sandbox/fixtures/v4/activity/activity-by-company-id.json'),
     allOverviewDetails: require('../../../../test/sandbox/fixtures/v4/company/company-all-overview-details.json'),
     archivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived.json'),
     automaticallyArchivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived-automatically.json'),

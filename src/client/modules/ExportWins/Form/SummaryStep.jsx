@@ -82,35 +82,43 @@ const SummaryStep = ({ isEditing, companyId }) => {
   )
 }
 
-const OfficerDetailsTable = ({ values, goToStep }) => (
-  <SummaryTable
-    caption="Officer details"
-    data-test="officer-details"
-    actions={
-      <StyledButtonLink
-        onClick={() => {
-          goToStep(steps.OFFICER_DETAILS)
-        }}
-      >
-        Edit
-      </StyledButtonLink>
-    }
-  >
-    <SummaryTable.Row heading="Lead officer name">
-      {values.lead_officer?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="Team type">
-      {values.team_type?.label}
-    </SummaryTable.Row>
-    <SummaryTable.Row heading="HQ Team, region or post">
-      {values.hq_team?.label}
-    </SummaryTable.Row>
-    <SummaryTable.ListRow
-      heading="Team members (optional)"
-      value={values.team_members}
-      emptyValue="Not set"
-    />
-  </SummaryTable>
+const OfficerDetailsTable = ({ values, goToStep, isEditing }) => (
+  <>
+    <StyledSummaryTable
+      caption="Officer details"
+      data-test="officer-details"
+      isEditing={isEditing}
+      actions={
+        <StyledButtonLink
+          onClick={() => {
+            goToStep(steps.OFFICER_DETAILS)
+          }}
+        >
+          Edit
+        </StyledButtonLink>
+      }
+    >
+      <SummaryTable.Row heading="Lead officer name">
+        {values.lead_officer?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="Team type">
+        {values.team_type?.label}
+      </SummaryTable.Row>
+      <SummaryTable.Row heading="HQ Team, region or post">
+        {values.hq_team?.label}
+      </SummaryTable.Row>
+      <SummaryTable.ListRow
+        heading="Team members (optional)"
+        value={values.team_members}
+        emptyValue="Not set"
+      />
+    </StyledSummaryTable>
+    {isEditing && (
+      <StyledInsetText data-test="lead-officer">
+        <ContactLink sections={['Lead officer name']} />
+      </StyledInsetText>
+    )}
+  </>
 )
 
 const ContributingTeamsAndAdvisers = ({ teamsAndAdvisors }) => (

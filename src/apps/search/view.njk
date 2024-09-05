@@ -2,12 +2,15 @@
 
 {% block local_header %}
   {% call LocalHeader({ modifier: 'dark-banner' }) %}
+    {% component 'react-slot', {
+      id: 'search-header',
+      props: props
+    } %}
+
     {{ EntitySearchForm({
-      inputName: 'term',
       modifier: 'global',
       searchTerm: searchTerm,
       entityType: searchEntity,
-      inputLabel: 'Search for company, contact, event, investment project or OMIS order',
       aggregations: results.aggregations
     }) }}
   {% endcall %}

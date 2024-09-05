@@ -448,7 +448,7 @@ import {
   TASK_GET_COMPANY_ACTIVITIES_TEAM_NAME,
 } from './modules/Companies/CompanyActivity/state'
 import {
-  getCompanyInteractions,
+  getCompanyActivities,
   getCompanyActivitiesMetadata,
 } from './modules/Companies/CompanyActivity/tasks'
 
@@ -532,7 +532,7 @@ export const tasks = {
   [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_INTERACTIONS_COMPANY_NAME]: getCompanyNames,
   [TASK_GET_INTERACTIONS_METADATA]: getInteractionsMetadata,
-  [TASK_GET_COMPANY_ACTIVITIES_NO_AS]: getCompanyInteractions,
+  [TASK_GET_COMPANY_ACTIVITIES_NO_AS]: getCompanyActivities,
   [TASK_GET_COMPANY_ACTIVITIES_METADATA]: getCompanyActivitiesMetadata,
   [TASK_GET_COMPANY_ACTIVITIES_ADVISER_NAME]: getAdviserNames,
   [TASK_GET_COMPANY_ACTIVITIES_COMPANY_NAME]: getCompanyNames,

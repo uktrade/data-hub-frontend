@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 
-import { BLACK, WHITE } from '../../../client/utils/colours'
+import { WHITE } from '../../../client/utils/colours'
 
 const StyledButton = styled('button')`
   position: absolute;
@@ -21,11 +21,7 @@ const StyledButton = styled('button')`
   background-color: ${({ backgroundColour }) => backgroundColour};
 `
 
-const SearchButton = ({
-  size = 40,
-  colour = WHITE,
-  backgroundColour = BLACK,
-}) => (
+const SearchButton = ({ size = 40, colour = WHITE, backgroundColour }) => (
   <StyledButton type="submit" size={size} backgroundColour={backgroundColour}>
     <>
       <svg viewBox="0 0 18 18" focusable="false" aria-hidden="true">

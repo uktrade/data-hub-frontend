@@ -276,6 +276,7 @@ const assertFieldRadiosStrict = ({
   inputName,
   options,
   legend,
+  label,
   hint,
   selectIndex,
   selectedIndex,
@@ -286,6 +287,9 @@ const assertFieldRadiosStrict = ({
     .within(() => {
       if (legend) {
         cy.get('legend').should('have.text', legend)
+      }
+      if (label) {
+        cy.get('[data-test="field-label"]').should('have.text', label)
       }
       if (hint) {
         cy.get('[data-test="hint-text"]').should('have.text', hint)

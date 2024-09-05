@@ -59,16 +59,8 @@ describe('Company export wins', () => {
     cy.get('[data-test="collection-item"]').each((item, index) => {
       cy.wrap(item).within(() => {
         // Assert the title link text
-        cy.get('h3 a')
+        cy.get('h3')
           .should('exist')
-          .should(
-            'have.attr',
-            'href',
-            urls.companies.exportWins.editSummary(
-              company.id,
-              exportWinList[index].id
-            )
-          )
           .invoke('text')
           .then((text) => {
             expect(text).to.eq(
