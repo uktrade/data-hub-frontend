@@ -145,6 +145,16 @@ describe('Editing a pending export win', () => {
       )
     })
 
+    it('should render a lead officer name contact link', () => {
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="lead-officer"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the section: ' +
+          'Lead officer name'
+      )
+    })
+
     it('should render a customer details contact link', () => {
       cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin'])
