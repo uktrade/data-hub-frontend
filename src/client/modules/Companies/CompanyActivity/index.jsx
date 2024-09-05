@@ -86,9 +86,6 @@ const CompanyActivityCollectionNoAS = ({
       payload: {
         ...payload,
         company: company.id,
-        dit_participants__adviser: createdByMeSelected
-          ? currentAdviserId
-          : undefined,
       },
       onSuccessDispatch: COMPANY_ACTIVITIES__LOADED,
     },
@@ -122,20 +119,6 @@ const CompanyActivityCollectionNoAS = ({
       onSuccessDispatch: COMPANY_ACTIVITIES__METADATA_LOADED,
     },
   }
-
-  const createdByMeSelected = selectedFilters.advisers.options
-    .map(({ value }) => value)
-    .includes(currentAdviserId)
-
-  /*const myInteractionsOption = {
-    label: LABELS.me,
-    value: currentAdviserId,
-  }
-
-const createdByOthersOption = {
-    label: LABELS.others,
-    value: currentAdviserId,
-  }*/
 
   return (
     <DefaultLayoutBase>
