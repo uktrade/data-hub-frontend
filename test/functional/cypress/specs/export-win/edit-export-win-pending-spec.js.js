@@ -36,12 +36,15 @@ describe('Editing a pending export win', () => {
   })
 
   context('Officer details', () => {
-    it('should not render an edit status message', () => {
+    it('should render an edit status message', () => {
       cy.visit(
         urls.companies.exportWins.editOfficerDetails(company.id, exportWin.id)
       )
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
-      cy.get('[data-test="status-message"]').should('not.exist')
+      cy.get('[data-test="status-message"]').should(
+        'have.text',
+        'Contact exportwins@businessandtrade.gov.uk if you need to update the section: Lead officer name'
+      )
     })
   })
 
