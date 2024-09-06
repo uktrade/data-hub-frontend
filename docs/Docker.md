@@ -5,9 +5,11 @@ _Helpful Docker commands that allow you to bring up containers, run a bunch of t
 **Note for Mac Users:** By default, docker on Mac will restrict itself to using just 2GB of memory. This [should be increased](https://docs.docker.com/docker-for-mac/#resources) to at least 6GB to avoid running in to unexpected problems.
 
 **Note for Mac Users 2:** Should you ever come across this error:
+
 ```
 qemu: uncaught target signal 11 (Segmentation fault) - core dumped
 ```
+
 Go to _Docker Desktop -> Settings -> General_ and check the
 _Use Rosetta for x86/amd64 emulation on Apple Silicon_ checkbox.
 That should fix the issue.
@@ -33,7 +35,7 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 > If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
 ```bash
-export VERSION=4.3.3 # Increment this version each time when you edit Dockerfile.
+export VERSION=4.3.4 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
