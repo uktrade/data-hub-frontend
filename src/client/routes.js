@@ -1098,6 +1098,14 @@ function Routes() {
         </ProtectedRoute>
       ),
     },
+    {
+      path: '/investments/eyb-leads',
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <InvestmentCollections />
+        </ProtectedRoute>
+      ),
+    },
   ])
 
   return routes
