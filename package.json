@@ -96,7 +96,7 @@
     "express-minify-html-2": "^2.0.0",
     "express-session": "^1.17.3",
     "express-sslify": "^1.2.0",
-    "follow-redirects": ">=1.15.6",
+    "follow-redirects": ">=1.15.9",
     "get-form-data": "^3.0.0",
     "govuk_frontend_toolkit": "^9.0.1",
     "govuk-elements-sass": "^3.1.3",
