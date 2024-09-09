@@ -12,7 +12,7 @@ const PATH = /([^\/]+$)/
 
 const pathToPageTitleMap = {
   projects: 'Projects',
-  eybLeads: 'EYB Leads',
+  'eyb-leads': 'EYB Leads',
   profiles: 'Profiles',
   opportunities: 'UK opportunities',
 }
