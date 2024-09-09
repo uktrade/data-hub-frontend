@@ -43,7 +43,7 @@ const InvestmentCollections = ({ ...props }) => {
             content: <ProjectsCollection {...props} />,
           },
           [urls.investments.eybLeads.index()]: {
-            label: 'EYBLeads',
+            label: 'EYB Leads',
             content: <EYBLeadsCollection {...props} />,
           },
           [urls.investments.profiles.index()]: {
