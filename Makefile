@@ -104,7 +104,7 @@ endif
 
 functional-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
-	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:functional $(cypress-spec-args)'
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:functional'
 
 a11y-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"

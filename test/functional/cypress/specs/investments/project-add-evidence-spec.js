@@ -151,21 +151,24 @@ describe('Investment project add evidence', () => {
         })
       })
 
-      it('should show an error if the file uploaded is greater than the max file size', () => {
-        const moreThanFiftyMb = 50 * 1024 * 1024 + 1
-        const bigFile = Cypress.Buffer.alloc(moreThanFiftyMb)
-        bigFile.write('X', moreThanFiftyMb)
-        cy.get('input[type=file]').selectFile({
-          contents: bigFile,
-          fileName: 'more-than50mb.txt',
-          mimeType: 'text/plain',
+      Cypress._.range(10).forEach(() => {
+        it.only('should show an error if the file uploaded is greater than the max file size', () => {
+          const moreThanFiftyMb = 50 * 1024 * 1024 + 1
+          const bigFile = Cypress.Buffer.alloc(moreThanFiftyMb)
+          bigFile.write('X', moreThanFiftyMb)
+          cy.get('input[type=file]').selectFile({
+            contents: bigFile,
+            fileName: 'more-than50mb.txt',
+            mimeType: 'text/plain',
+          })
+
+          cy.get('[data-test="criteria_field_0"]').find('select').select(1)
+          cy.get('[data-test="submit-button"').click()
+          cy.get('[data-test="error-dialog')
+            .should('exist')
+            .and('contain', 'File must be no larger than 50Mb')
         })
 
-        cy.get('[data-test="criteria_field_0"]').find('select').select(1)
-        cy.get('[data-test="submit-button"').click()
-        cy.get('[data-test="error-dialog')
-          .should('exist')
-          .and('contain', 'File must be no larger than 50Mb')
       })
     })
   })

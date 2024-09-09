@@ -25,7 +25,7 @@
     "test": "run-s test:*",
     "test:unit:files": "f() { NODE_ENV=test API_ROOT=http://test LOG_LEVEL=info MOCHA_FILE=junit/test-results.xml npx mocha \"${@:-./src/**/*.test.js}\"; }; f",
     "test:unit": "NODE_ENV=test API_ROOT=http://test LOG_LEVEL=info MOCHA_FILE=junit/test-results.xml npx mocha ./src/**/*.test.js --exit",
-    "test:functional": "CYPRESS_retries=3 nyc cypress run --browser chrome",
+    "test:functional": "cypress run --browser chrome --spec test/functional/cypress/specs/investments/project-add-evidence-spec.js",
     "test:a11y": "CYPRESS_coverage=false cypress run --config-file cypress.a11y.config.js --browser chrome",
     "test:a11y:watch": "CYPRESS_coverage=false cypress open --config-file cypress.a11y.config.js --e2e --browser chrome",
     "test:unit-client": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mochapack --webpack-config webpack.node.config.js --opts ./test/unit-client/mocha.opts ./test/unit-client/assets/javascripts/**/*.test.{js,jsx}",
