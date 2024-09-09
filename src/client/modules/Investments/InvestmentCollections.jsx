@@ -12,7 +12,7 @@ const PATH = /([^\/]+$)/
 
 const pathToPageTitleMap = {
   projects: 'Projects',
-  'eyb-leads': 'EYB Leads',
+  'eyb-leads': 'EYB leads',
   profiles: 'Profiles',
   opportunities: 'UK opportunities',
 }
@@ -43,7 +43,7 @@ const InvestmentCollections = ({ ...props }) => {
             content: <ProjectsCollection {...props} />,
           },
           [urls.investments.eybLeads.index()]: {
-            label: 'EYB Leads',
+            label: 'EYB leads',
             content: <EYBLeadsCollection {...props} />,
           },
           [urls.investments.profiles.index()]: {
