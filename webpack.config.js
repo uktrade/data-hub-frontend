@@ -39,6 +39,9 @@ module.exports = {
     },
   },
   plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+    }),
     new MiniCssExtractPlugin({
       filename: config.isProd ? '[name].[contenthash:8].css' : '[name].css',
       chunkFilename: '[name].[id].css',
