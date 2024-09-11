@@ -4,7 +4,6 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
 const company_activities = fixtures.company.activities
-const activities = company_activities.activities
 
 /*
  * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
@@ -18,21 +17,22 @@ describe('Company activity feed', () => {
     })
 
     it('displays interaction activities', () => {
-      const interaction = activities.results[0]
+      const interaction = company_activities.results[0].interaction
       cy.get('[data-test="collection-item"]').each(() =>
         cy.get('a').contains(interaction.subject)
       )
     })
 
     it('displays activities which do not have a service name', () => {
-      const interaction_with_null_service = activities.results[1]
+      const interaction_with_null_service =
+        company_activities.results[1].interaction
       cy.get('[data-test="collection-item"]').each(() =>
         cy.get('a').contains(interaction_with_null_service.subject)
       )
     })
 
     it('shows the activity count', () => {
-      const count = activities.count
+      const count = company_activities.count
       cy.get('[data-test="collectionCount"]').each(() =>
         cy.get('span').contains(count)
       )
