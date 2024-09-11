@@ -9,14 +9,11 @@ export const getCompanyOverviewActivities = ({
   sortby = 'date:desc',
 }) =>
   apiProxyAxios
-    .post(
-      `/v4/company/${company}/activity`,
-      {
-        company,
-        sortby,
-        date_before,
-        date_after,
-      },
-      { params: { limit: limit } }
-    )
+    .post('/v4/search/company-activity', {
+      limit,
+      company,
+      sortby,
+      date_before,
+      date_after,
+    })
     .then(({ data }) => transformResponseToCollection(data))

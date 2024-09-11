@@ -61,7 +61,7 @@ export const getCompanyActivities = ({
   dit_participants__team,
 }) =>
   apiProxyAxios
-    .post(`/v4/search/company-activity`, {
+    .post('/v4/search/company-activity', {
       limit,
       offset: getPageOffset({ limit, page }),
       subject,

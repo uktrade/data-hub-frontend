@@ -139,7 +139,7 @@ import { order } from './routes/v3/search/order.js'
 import { searchInteraction } from './routes/v3/search/interaction.js'
 
 // V4
-import { searchCompanyActivities } from './routes/v4/company-activity/activity.js'
+import { searchCompanyActivities } from './routes/v4/search/company-activity/activity.js'
 import { company } from './routes/v4/ch-company/company.js'
 import {
   getReferralDetails,

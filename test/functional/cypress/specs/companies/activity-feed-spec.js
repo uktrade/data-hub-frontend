@@ -246,7 +246,7 @@ describe('Company activity feed', () => {
     })
   })
 
-  context.skip('Referrals project', () => {
+  context('Referrals project', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
