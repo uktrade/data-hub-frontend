@@ -5,7 +5,6 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   Filters,
-  FilterToggleSection,
 } from '../../../components'
 import {
   listSkeletonPlaceholder,
@@ -24,7 +23,12 @@ const QS_PARAMS = {
 //     .map((id) => options.filter(({ value }) => value === id)[0])
 //     .filter(Boolean)
 
-const EYBLeadCollection = ({ count, results, isComplete, filterOptions }) => {
+const EYBLeadCollection = ({
+  count,
+  results,
+  isComplete,
+  // filterOptions,
+}) => {
   const qsParams = qs.parse(location.search.slice(1))
   // const selectedAssetClassesOfInterest = resolveSelectedOptions(
   //   qsParams[QS_PARAMS.assetClassesOfInterest],
@@ -40,7 +44,7 @@ const EYBLeadCollection = ({ count, results, isComplete, filterOptions }) => {
       count={count}
       results={results}
       isComplete={isComplete}
-      collectionName="eybLeads"
+      collectionName="eybLead"
       sanitizeFiltersForAnalytics={({ eybLeadCompanyName }) => ({
         ...sanitizeFilter(eybLeadCompanyName, 'Company name'),
       })}
@@ -54,13 +58,12 @@ const EYBLeadCollection = ({ count, results, isComplete, filterOptions }) => {
         startOnRender: {
           payload: {
             page: parseInt(qsParams.page, 10),
-            assetClassesOfInterest: qsParams[QS_PARAMS.assetClassesOfInterest],
+            // assetClassesOfInterest: qsParams[QS_PARAMS.assetClassesOfInterest],
             eybLeadCompanyName: qsParams[QS_PARAMS.eybLeadCompanyName],
           },
           // onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
         },
       }}
-      // baseDownloadLink="/investments/profiles/export"
       entityName="eybLead"
       selectedFilters={{
         eybLeadCompanyName: {
@@ -88,11 +91,15 @@ const EYBLeadCollection = ({ count, results, isComplete, filterOptions }) => {
           },
         }}
       >
-        <FilterToggleSection
-          id="FilteredEYBLeadCollection.core-filters"
-          label="Core filters"
-        >
-          {/* <Filters.Typeahead
+        <br></br>
+        <Filters.Input
+          id="EYBLeadCollection.eyb-lead-company-name"
+          qsParam="eyb_lead_company_name"
+          name="eyb-lead-company-name"
+          label="Company name"
+          placeholder="Search company name"
+        />
+        {/* <Filters.Typeahead
             isMulti={true}
             label="Sector of interest"
             name="asset-class"
@@ -102,14 +109,6 @@ const EYBLeadCollection = ({ count, results, isComplete, filterOptions }) => {
             selectedOptions={selectedAssetClassesOfInterest}
             data-test="asset-class-filter"
           /> */}
-          <Filters.Input
-            id="EYBLeadCollection.eyb-lead-company-name"
-            qsParam="eyb_lead_company_name"
-            name="eyb-lead-company-name"
-            label="Company name"
-            placeholder="Search company name"
-          />
-        </FilterToggleSection>
       </CollectionFilters>
     </FilteredCollectionList>
   )
