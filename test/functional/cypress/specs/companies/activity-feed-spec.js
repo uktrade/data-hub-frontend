@@ -252,26 +252,21 @@ describe('Company activity feed', () => {
     })
 
     it('displays the correct referral type label', () => {
-      cy.get('[data-test="referral-activity"]').within(() =>
-        cy
-          .get('[data-test="activity-kind-label"]')
-          .contains('Outstanding Referral', {
-            matchCase: false,
-          })
-      )
+      cy.get('[data-test="referral-label"]').contains('Outstanding Referral', {
+        matchCase: false,
+      })
     })
 
     it('displays the referral name with link', () => {
-      cy.get('[data-test="referral-activity"]').within(() =>
+      const activity = company_activities.results[2]
+      cy.get('[data-test="collection-item"]').each(() =>
         cy
-          .get('[data-test="referral-activity-card-subject"]')
-          .should('exist')
-          .should('have.text', 'Support needs in the Planet')
           .get('a')
+          .contains(activity.referral.subject)
           .should(
             'have.attr',
             'href',
-            '/companies/01e3366a-aa2b-40c0-aaf9-9013f714a671/referrals/fd6a151f-90db-41e3-841f-1ca0dd63b674'
+            `/companies/${activity.company.id}/referrals/${activity.referral.id}`
           )
       )
     })
