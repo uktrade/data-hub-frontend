@@ -1,22 +1,25 @@
 {
-  "name": "Zboncak Group",
-  "id": "4cd4128b-1bad-4f1e-9146-5d4678c6a018",
-  "trading_name": [],
-  "activities": {
-    "count": 2,
-    "previous": null,
-    "next": null,
-    "results": [
-      {
+  "count": 2,
+  "results": [
+    {
+      "id": "e25696d1-a54b-4e2e-b0bf-9657e9c4c55b",
+      "date": "2024-09-11T00:00:00+00:00",
+      "referral": null,
+      "activity_source": "interaction",
+      "company": {
+        "name": "Zboncak Group",
+        "id": "4cd4128b-1bad-4f1e-9146-5d4678c6a018",
+        "trading_names": []
+      },
+      "interaction": {
         "id": "9eb0b11d-384a-4225-9ee1-1ea79efd695f",
-        "date": "2019-02-11",
+        "date": "2024-09-11T00:00:00+00:00",
         "subject": "Zboncak test interaction",
         "contacts": [
           {
             "name": "Bob lawson",
             "first_name": "Bob",
             "last_name": "lawson",
-            "job_title": "Magician",
             "id": "0e75d636-1d24-416a-aaf0-3fb220d594ce"
           }
         ],
@@ -32,26 +35,38 @@
             },
             "adviser": {
               "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
-              "name": "Barry Oling"
+              "name": "Barry Oling",
+              "first_name": "Barry",
+              "last_name": "Oling"
             }
           }
         ],
-        "kind": "interaction",
+        "kind": "service_delivery",
         "communication_channel": {
           "name": "Letter/Fax",
           "id": "74c226d7-5d95-e211-a939-e4115bead28a"
         }
+      }
+    },
+    {
+      "id": "e25696d1-a54b-4e2e-b0bf-9657e9c4c55b",
+      "date": "2024-09-11T00:00:00+00:00",
+      "referral": null,
+      "activity_source": "interaction",
+      "company": {
+        "name": "Zboncak Group",
+        "id": "4cd4128b-1bad-4f1e-9146-5d4678c6a018",
+        "trading_names": []
       },
-      {
+      "interaction": {
         "id": "af4aac84-4d6a-47df-a733-5a54e3008c32",
-        "date": "2018-02-13",
+        "date": "2018-02-13T00:00:00+00:00",
         "subject": "Interaction with null service",
         "contacts": [
           {
             "name": "Bob lawson",
             "first_name": "Bob",
             "last_name": "lawson",
-            "job_title": "Magician",
             "id": "0e75d636-1d24-416a-aaf0-3fb220d594ce"
           }
         ],
@@ -64,16 +79,18 @@
             },
             "adviser": {
               "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
-              "name": "Barry Oling"
+              "name": "Barry Oling",
+              "first_name": "Barry",
+              "last_name": "Oling"
             }
           }
         ],
-        "kind": "interaction",
+        "kind": "service_delivery",
         "communication_channel": {
           "name": "Letter/Fax",
           "id": "74c226d7-5d95-e211-a939-e4115bead28a"
         }
       }
-    ]
-  }
+    }
+  ]
 }

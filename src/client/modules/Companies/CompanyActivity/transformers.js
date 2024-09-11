@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
+import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
 import { formatMediumDate } from '../../../utils/date'
 import { AdviserResource } from '../../../components/Resource'
@@ -48,6 +49,19 @@ export const formattedAdvisers = (advisers) =>
 export const verifyLabel = (array, label) =>
   array.length > 1 ? label + 's' : label
 
+/*
+  From the activity_source field from the API, determine which transformer to
+  use to get the required data for the cards.
+*/
+export const transformActivity = (activity) => {
+  const activity_source = activity.activity_source
+
+  if (activity_source === 'interaction')
+    return transformInteractionToListItem(activity.interaction)
+  else if (activity_source === 'referral')
+    return transformReferralToListItem(activity)
+}
+
 export const transformInteractionToListItem = ({
   date,
   subject,
@@ -91,9 +105,49 @@ export const transformInteractionToListItem = ({
   headingText: subject,
 })
 
-export const transformResponseToCollection = ({ activities = {} }) => ({
+export const transformReferralToListItem = (activity) => {
+  const referral = activity.referral
+  return {
+    id: referral.id,
+    metadata: [
+      { label: 'Created Date', value: formatMediumDate(referral.created_on) },
+      {
+        label: 'Completed Date',
+        value: formatMediumDate(referral.completed_on),
+      },
+      {
+        label: 'Sending adviser',
+        value: AdviserRenderer({
+          adviser: referral.created_by,
+          team: referral.created_by.dit_team,
+        }),
+      },
+      {
+        label: 'Receiving adviser',
+        value: AdviserRenderer({
+          adviser: referral.recipient,
+          team: referral.recipient.dit_team,
+        }),
+      },
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: TAGS.REFERRAL[referral.status.toUpperCase()].text,
+        colour: TAGS.REFERRAL[referral.status.toUpperCase()].colour,
+        dataTest: 'referral-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.companies.referrals.details(
+      activity.company.id,
+      referral.id
+    ),
+    headingText: referral.subject,
+  }
+}
+
+export const transformResponseToCollection = (activities) => ({
   count: activities.count,
-  results: activities.results.map(transformInteractionToListItem),
+  results: activities.results.map(transformActivity),
 })
 
 export const filterServiceNames = (services) => {

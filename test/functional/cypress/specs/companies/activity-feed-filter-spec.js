@@ -40,7 +40,7 @@ const minimumRequest = {
 }
 
 describe('Company Activity Feed Filter', () => {
-  const companyActivitiesEndPoint = `/api-proxy/v4/company/${fixtures.company.allActivitiesCompany.id}/activity?limit=10&offset=0`
+  const companyActivitiesEndPoint = '/api-proxy/v4/search/company-activity'
 
   context('Default Params', () => {
     beforeEach(() => {
@@ -51,15 +51,6 @@ describe('Company Activity Feed Filter', () => {
     })
     it('should set the default params in the get request url', () => {
       assertPayload('@apiRequest', minimumRequest)
-    })
-
-    it('should pass the pagination limit and offset in the query params', () => {
-      cy.wait('@apiRequest').then((interception) => {
-        expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
-        expect(interception.request.query.limit).to.eq('10')
-        expect(interception.request.query.hasOwnProperty('offset')).to.eq(true)
-        expect(interception.request.query.offset).to.eq('0')
-      })
     })
   })
 

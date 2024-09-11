@@ -4,7 +4,7 @@ import {
   companyNoDetails,
 } from '../../fakers/companies'
 import { getCollectionList } from '../../support/collection-list-assertions'
-import { companyActivityCollectionListRequest } from '../../support/actions'
+import { collectionListRequest } from '../../support/actions'
 import companyActivityListFaker from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
@@ -276,8 +276,8 @@ describe('Company overview page', () => {
   context('when viewing the Recent Activity Card for a business', () => {
     const companyActivitiesList = companyActivityListFaker(3)
     beforeEach(() => {
-      companyActivityCollectionListRequest(
-        `v4/company/${fixtures.company.allOverviewDetails.id}/activity**`,
+      collectionListRequest(
+        'v4/search/company-activity',
         companyActivitiesList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -310,8 +310,8 @@ describe('Company overview page', () => {
   context('when viewing the Upcoming Activity Card for a business', () => {
     const interactionsList = companyActivityListFaker(2)
     beforeEach(() => {
-      companyActivityCollectionListRequest(
-        `v4/company/${fixtures.company.allOverviewDetails.id}/activity**`,
+      collectionListRequest(
+        'v4/search/company-activity',
         interactionsList,
         urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
       )
@@ -346,8 +346,8 @@ describe('Company overview page', () => {
     () => {
       const interactionsList = companyActivityListFaker(0)
       beforeEach(() => {
-        companyActivityCollectionListRequest(
-          `v4/company/${fixtures.company.noOverviewDetails.id}/activity**`,
+        collectionListRequest(
+          'v4/search/company-activity',
           interactionsList,
           urls.companies.overview.index(fixtures.company.noOverviewDetails.id)
         )
@@ -387,8 +387,8 @@ describe('Company overview page', () => {
   context('when viewing all activity cards types', () => {
     const interactionsList = companyActivityListFaker(1)
     beforeEach(() => {
-      companyActivityCollectionListRequest(
-        `v4/company/${fixtures.company.venusLtd.id}/activity**`,
+      collectionListRequest(
+        'v4/search/company-activity',
         interactionsList,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
