@@ -160,12 +160,10 @@ const CompanyLocalHeader = ({
             </LocalHeaderHeading>
             {company?.tradingNames?.length > 0 && (
               <LocalHeaderTradingNames data-test="trading-names">
-                {' '}
-                Trading as: {company.tradingNames.join(', ')}{' '}
+                Trading as: {company.tradingNames.join(', ')}
               </LocalHeaderTradingNames>
-            )}{' '}
+            )}
             <StyledAddress data-test="address">
-              {' '}
               {addressToStringResource(company.address)}
             </StyledAddress>
             {company.dunsNumber && (
