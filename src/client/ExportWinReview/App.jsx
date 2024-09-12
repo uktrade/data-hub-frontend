@@ -8,9 +8,9 @@ import Rating from '../components/Resource/Rating'
 import Experience from '../components/Resource/Experience'
 import MarketingSource from '../components/Resource/MarketingSource'
 
+import { patchExportWinReview } from '../modules/ExportWins/tasks'
 import { Review } from '../modules/ExportWins/Review'
 import {
-  patchExportWinReview,
   loadCookiePreference,
   saveCookiePreference,
 } from '../modules/ExportWins/Review/CookiePage/tasks'
