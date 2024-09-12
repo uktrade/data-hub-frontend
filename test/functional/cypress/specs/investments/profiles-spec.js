@@ -25,7 +25,9 @@ describe('Investor profiles', () => {
 
     it('should render the local navigation', () => {
       assertTabbedLocalNav('Projects')
+      assertTabbedLocalNav('EYB leads')
       assertTabbedLocalNav('Investor profiles')
+      assertTabbedLocalNav('UK opportunities')
     })
 
     it('should display download profile text', () => {
