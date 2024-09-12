@@ -487,10 +487,13 @@ describe('Company overview page', () => {
         .contains('Interaction')
     })
     it('should display Data Hub interaction', () => {
-      const activity = interactionsList.activities.results[0]
-      cy.get('[data-test="activity-subject"]').contains('a', activity.subject)
+      const activity = interactionsList[0]
+      cy.get('[data-test="activity-subject"]').contains(
+        'a',
+        activity.interaction.subject
+      )
       cy.get('[data-test="activity-summary"]').contains(
-        `${activity.dit_participants[0].adviser.name} had ${activity.communication_channel.name} contact with ${activity.contacts[0].name}`
+        `${activity.interaction.dit_participants[0].adviser.name} had ${activity.interaction.communication_channel.name} contact with ${activity.interaction.contacts[0].name}`
       )
     })
     it.skip('should display Data Hub event', () => {
