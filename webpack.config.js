@@ -1,64 +1,50 @@
 const path = require('path')
-const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const webpack = require('webpack')
 
 const config = require('./src/config')
 
-/**
- * A webpack plugin that starts a node.js server after the assets are compiled.
- * This is a required step, because the node server is parsing manifest.json
- * when booting up.
- */
-const StartServerAfterBuild = () => {
-  let server = false
-  return {
-    apply: (compiler) => {
-      compiler.hooks.done.tap('StartServerAfterBuild', () => {
-        if (server) {
-          server.stdin.write('rs\n')
-        } else {
-          server = spawn(
-            "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
-            { stdio: ['pipe', 'inherit', 'inherit'], shell: true }
-          )
-        }
-      })
-    },
-  }
-}
-
-module.exports = (env) => ({
+module.exports = {
+  devServer: {
+    hot: true,
+    static: './.build/',
+  },
   devtool: config.isProd ? false : 'source-map',
-  mode: config.isProd ? 'production' : 'development',
+  mode: config.isDev ? 'development' : 'production',
   entry: {
-    styles: './assets/stylesheets/application.scss',
-    app: [
+    shared: [
+      ...(config.isDev ? ['webpack-hot-middleware/client'] : []),
+      './assets/stylesheets/application.scss',
+    ],
+    datahub: [
       './assets/javascripts/govuk-frontend-all.js',
       './assets/javascripts/app.js',
+      './src/client/DataHub/index.jsx',
     ],
-    'react-app': [
-      'react-app-polyfill/stable',
-      'details-element-polyfill',
-      './src/client/index.jsx',
-    ],
-    'export-win-review': ['./src/client/export-win-review.jsx'],
+    exportWinReview: './src/client/ExportWinReview/index.jsx',
   },
   output: {
     path: config.buildDir,
-    publicPath: '/',
-    filename: config.isProd ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
-    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
+    publicPath: path.join('/', config.assetPath, '/'),
+    filename: config.isProd ? '[name].[chunkhash:8].js' : '[name].js',
   },
-  optimization: { sideEffects: false },
+  optimization: {
+    sideEffects: false,
+    runtimeChunk: {
+      // This is needed for HMR to work with multiple entry points
+      name: 'runtime',
+    },
+  },
   plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+    }),
     new MiniCssExtractPlugin({
-      filename: config.isProd
-        ? 'css/[name].[contenthash:8].css'
-        : 'css/[name].css',
-      chunkFilename: 'css/[name].[id].css',
+      filename: config.isProd ? '[name].[contenthash:8].css' : '[name].css',
+      chunkFilename: '[name].[id].css',
     }),
     new WebpackAssetsManifest({ output: 'assets-manifest.json' }),
     new ImageMinimizerPlugin({
@@ -88,7 +74,8 @@ module.exports = (env) => ({
         },
       },
     }),
-    env && env.development ? StartServerAfterBuild() : null,
+    new webpack.HotModuleReplacementPlugin({}),
+    new ReactRefreshPlugin(),
   ].filter(Boolean),
   resolve: {
     modules: [
@@ -138,14 +125,14 @@ module.exports = (env) => ({
         test: /\.(eot|ttf|woff|woff2)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name].[hash:8].[ext]',
+          filename: '[name].[hash:8].[ext]',
         },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         type: 'asset',
         generator: {
-          filename: 'images/[name].[hash:8][ext]',
+          filename: '[name].[hash:8][ext]',
         },
       },
       {
@@ -188,4 +175,4 @@ module.exports = (env) => ({
       },
     ],
   },
-})
+}
