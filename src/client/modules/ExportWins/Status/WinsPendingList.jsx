@@ -13,52 +13,51 @@ export const WinsPendingList = ({ exportWins = [] }) => {
   return exportWins.length === 0 ? null : (
     <ul>
       {exportWins.map((item) => (
-        <li key={item.id}>
-          <CollectionItem
-            headingText={`${item.name_of_export} to ${item?.country?.name}`}
-            headingUrl={urls.companies.exportWins.editSummary(
-              item.company.id,
-              item.id
-            )}
-            subheading={item.company.name}
-            subheadingUrl={urls.companies.overview.index(item.company.id)}
-            metadata={[
-              ...(item.company_contacts[0]
-                ? [
-                    {
-                      label: 'Contact name:',
-                      value: (
-                        <Link
-                          href={urls.contacts.details(
-                            item.company_contacts[0].id
-                          )}
-                        >
-                          {item.company_contacts[0].name}
-                        </Link>
-                      ),
-                    },
-                  ]
-                : []),
-              {
-                label: 'Total value:',
-                value: currencyGBP(sumExportValues(item)),
-              },
-              { label: 'Date won:', value: formatMediumDate(item.date) },
-              {
-                label: 'Date modified:',
-                value: formatMediumDate(item.modified_on),
-              },
-              {
-                label: 'First sent:',
-                value: formatMediumDateTime(item.first_sent),
-              },
-              {
-                label: 'Last sent:',
-                value: formatMediumDateTime(item.last_sent),
-              },
-            ]}
-          />
-        </li>
+        <CollectionItem
+          key={item.id}
+          headingText={`${item.name_of_export} to ${item?.country?.name}`}
+          headingUrl={urls.companies.exportWins.editSummary(
+            item.company.id,
+            item.id
+          )}
+          subheading={item.company.name}
+          subheadingUrl={urls.companies.overview.index(item.company.id)}
+          metadata={[
+            ...(item.company_contacts[0]
+              ? [
+                  {
+                    label: 'Contact name:',
+                    value: (
+                      <Link
+                        href={urls.contacts.details(
+                          item.company_contacts[0].id
+                        )}
+                      >
+                        {item.company_contacts[0].name}
+                      </Link>
+                    ),
+                  },
+                ]
+              : []),
+            {
+              label: 'Total value:',
+              value: currencyGBP(sumExportValues(item)),
+            },
+            { label: 'Date won:', value: formatMediumDate(item.date) },
+            {
+              label: 'Date modified:',
+              value: formatMediumDate(item.modified_on),
+            },
+            {
+              label: 'First sent:',
+              value: formatMediumDateTime(item.first_sent),
+            },
+            {
+              label: 'Last sent:',
+              value: formatMediumDateTime(item.last_sent),
+            },
+          ]}
+        />
       ))}
     </ul>
   )
