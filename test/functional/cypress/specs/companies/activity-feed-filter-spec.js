@@ -35,6 +35,8 @@ const buildQueryString = (queryParams = {}) =>
   })
 
 const minimumRequest = {
+  limit: 10,
+  offset: 0,
   company: fixtures.company.allActivitiesCompany.id,
   sortby: 'date:desc',
 }
@@ -72,6 +74,8 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@adviserSearchApiRequest')
 
         assertPayload('@apiRequest', {
+          limit: 10,
+          offset: 0,
           dit_participants__adviser: [adviser.id],
           company: fixtures.company.allActivitiesCompany.id,
           sortby: 'date:desc',
@@ -90,6 +94,8 @@ describe('Company Activity Feed Filter', () => {
       const dateAfter = '2021-06-24'
       const dateBefore = '2023-06-24'
       const request = {
+        limit: 10,
+        offset: 0,
         company: fixtures.company.allActivitiesCompany.id,
         date_after: dateAfter,
         date_before: dateBefore,
@@ -146,6 +152,8 @@ describe('Company Activity Feed Filter', () => {
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
         removeChip('2021-06-24')
         const requestWithNoDateAfter = {
+          limit: 10,
+          offset: 0,
           company: fixtures.company.allActivitiesCompany.id,
           date_before: dateBefore,
           sortby: 'date:desc',
