@@ -1,3 +1,5 @@
+throw Error('IM NOT USED')
+// FIXME: Is this module ever used, we don't use any axios-mock-adapter library 
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
 
