@@ -3,8 +3,16 @@
   "extends": [
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
+    "plugin:import/recommended",
     "prettier"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "env": {
     "browser": true,
     "es6": true,
@@ -76,7 +84,9 @@
         "newlines-between": "always-and-inside-groups"
       }
     ],
-    "no-duplicate-imports": "error"
+    "no-duplicate-imports": "error",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
   },
   "overrides": [
     {
