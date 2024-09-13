@@ -8,8 +8,10 @@ import { useParams } from 'react-router-dom'
 import InsetText from '@govuk-react/inset-text'
 
 import { COMPANY_LOADED, DNB_FAMILY_TREE_LOADED } from '../../../actions'
-import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
-import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
+import {
+  TASK_GET_COMPANY_DETAIL,
+  ID as COMPANY_DETAILS_ID,
+} from '../CompanyDetails/state'
 import { DefaultLayout } from '../../../components'
 import AccessDenied from '../../../components/AccessDenied'
 import Task from '../../../components/Task'

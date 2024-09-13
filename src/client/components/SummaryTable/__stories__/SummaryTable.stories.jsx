@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import SummaryTable from 'SummaryTable'
+import SummaryTable from '..'
 
 export default {
   title: 'SummaryTable',

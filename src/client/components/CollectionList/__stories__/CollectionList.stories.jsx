@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import CollectionList from 'CollectionList'
+import CollectionList from '..'
 
 import profilesFixture from '../__fixtures__/capitalProfiles.json'
 import { SORT_OPTIONS } from '../../../modules/Investments/Projects/constants'

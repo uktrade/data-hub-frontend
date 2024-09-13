@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import Task from '../../../components/Task'
-import { TASK_GET_COMPANY_DETAIL } from '../CompanyDetails/state'
-import { ID as COMPANY_DETAILS_ID } from '../../Companies/CompanyDetails/state'
+import {
+  TASK_GET_COMPANY_DETAIL,
+  ID as COMPANY_DETAILS_ID,
+} from '../CompanyDetails/state'
 import { COMPANY_LOADED } from '../../../actions'
 import { state2props } from './state'
 import urls from '../../../../lib/urls'

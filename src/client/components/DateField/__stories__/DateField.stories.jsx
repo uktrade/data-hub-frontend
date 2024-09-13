@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DateField from 'DateField'
+import DateField from '..'
 
 export default {
   title: 'DateField',

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Main from 'Main'
+import Main from '..'
 
 export default {
   title: 'Main',

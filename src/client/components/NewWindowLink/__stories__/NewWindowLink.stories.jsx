@@ -1,5 +1,6 @@
 import React from 'react'
-import NewWindowLink from 'NewWindowLink'
+
+import NewWindowLink from '..'
 
 export default {
   title: 'NewWindowLink',
