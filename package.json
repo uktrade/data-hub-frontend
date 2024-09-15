@@ -158,7 +158,7 @@
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
     "@babel/runtime": "^7.25.6",
-    "@chromatic-com/storybook": "^1.8.0",
+    "@chromatic-com/storybook": "^2.0.2",
     "@cypress/code-coverage": "^3.12.46",
     "@faker-js/faker": "^8.3.1",
     "@storybook/addon-a11y": "^8.2.9",
