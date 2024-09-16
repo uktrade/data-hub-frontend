@@ -182,7 +182,7 @@ describe('Adding an export win', () => {
           content: {
             'Lead officer name': 'David Meyer',
             'Team type': 'Investment (ITFG or IG)',
-            'HQ Team, region or post': 'ITFG - E-Business Projects Team',
+            'HQ team, region or post': 'ITFG - E-Business Projects Team',
             'Team members (optional)': 'Not set',
           },
         })

@@ -104,7 +104,7 @@ const OfficerDetailsTable = ({ values, goToStep, isEditing }) => (
       <SummaryTable.Row heading="Team type">
         {values.team_type?.label}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="HQ Team, region or post">
+      <SummaryTable.Row heading="HQ team, region or post">
         {values.hq_team?.label}
       </SummaryTable.Row>
       <SummaryTable.ListRow
