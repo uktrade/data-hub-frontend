@@ -57,7 +57,7 @@ export const STEP_TO_EXCLUDED_FIELDS_MAP = {
   [steps.CUSTOMER_DETAILS]: ['Export experience'],
   [steps.WIN_DETAILS]: [
     'Summary of the support you provided',
-    'Destination',
+    'Destination country',
     'Date won',
     'Type of win and Value',
   ],
