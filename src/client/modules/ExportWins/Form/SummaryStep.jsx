@@ -301,7 +301,7 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
         <StyledInsetText data-test="win-details-contact">
           <ContactLink
             sections={[
-              'Summary of the support you provided',
+              'Summary of the support given',
               'Destination',
               'Date won',
               'Type of win and Value',
