@@ -1,9 +1,0 @@
----
-applications:
-  - buildpacks:
-      - https://github.com/cloudfoundry/nodejs-buildpack.git#v1.8.23
-    health-check-type: http
-    health-check-http-endpoint: /pingdom
-    memory: 5G
-    disk_quota: 8G
-    stack: cflinuxfs4
