@@ -8,7 +8,7 @@ import styled, { ThemeProvider } from 'styled-components'
 import { connect } from 'react-redux'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { BLUE } from '../../../client/utils/colours'
+import { BLUE, MID_BLUE } from '../../../client/utils/colours'
 import {
   readFromLocalStorage,
   writeToLocalStorage,
@@ -44,6 +44,10 @@ import FlashMessages from '../LocalHeader/FlashMessages'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
+`
+
+const BannerBackground = styled('div')`
+  background-color: ${MID_BLUE};
 `
 
 const SearchContainer = styled(CustomContainer)`
@@ -90,7 +94,11 @@ const PersonalisedDashboard = ({
 
   return (
     <ThemeProvider theme={blueTheme}>
-      <Banner items={dataHubFeed} />
+      <BannerBackground>
+        <CustomContainer width="960">
+          <Banner items={dataHubFeed} />
+        </CustomContainer>
+      </BannerBackground>
       <SearchBackground data-test="search-data-hub">
         <SearchContainer width="960">
           <Search csrfToken={csrfToken} />
