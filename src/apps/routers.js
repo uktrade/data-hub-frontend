@@ -136,6 +136,7 @@ const reactRoutes = [
   '/companies/:companyId/edit-history',
   '/investments/projects/:projectId/propositions/:propositionId/document',
   '/investments/eyb-leads',
+  '/investments/eyb-leads/:eybLeadId/details',
 ]
 
 reactRoutes.forEach((path) => {

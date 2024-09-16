@@ -106,6 +106,7 @@ import AddProjectDocument from './modules/Investments/Projects/Evidence/AddProje
 import AddPropositionDocument from './modules/Investments/Projects/Propositions/AddPropositionDocument'
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
+import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
 
 function Routes() {
   const routes = useRoutes([
@@ -1103,6 +1104,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:investments'}>
           <InvestmentCollections />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/investments/eyb-leads/:eybLeadId/details',
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EYBLeadDetails />
         </ProtectedRoute>
       ),
     },
