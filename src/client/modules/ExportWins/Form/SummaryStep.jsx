@@ -327,7 +327,9 @@ const SupportGivenTable = ({ values, goToStep }) => (
       </StyledButtonLink>
     }
   >
-    <SummaryTable.Row heading="HVC code">{values?.hvc?.label}</SummaryTable.Row>
+    <SummaryTable.Row heading="High Value Campaign (HVC) code">
+      {values?.hvc?.label}
+    </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="What type of support was given?"
       value={values.type_of_support}
