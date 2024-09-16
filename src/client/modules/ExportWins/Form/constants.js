@@ -56,10 +56,10 @@ export const STEP_TO_EXCLUDED_FIELDS_MAP = {
   [steps.OFFICER_DETAILS]: ['Lead officer name'],
   [steps.CUSTOMER_DETAILS]: ['Export experience'],
   [steps.WIN_DETAILS]: [
-    'Summary of the support you provided',
-    'Destination',
+    'Summary of the support given',
+    'Destination country',
     'Date won',
-    'Type of export win and Value',
+    'Type of win and Value',
   ],
 }
 

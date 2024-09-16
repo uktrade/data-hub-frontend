@@ -182,7 +182,7 @@ describe('Adding an export win', () => {
           content: {
             'Lead officer name': 'David Meyer',
             'Team type': 'Investment (ITFG or IG)',
-            'HQ Team, region or post': 'ITFG - E-Business Projects Team',
+            'HQ team, region or post': 'ITFG - E-Business Projects Team',
             'Team members (optional)': 'Not set',
           },
         })
@@ -245,7 +245,8 @@ describe('Adding an export win', () => {
           heading: 'Support given',
           showEditLink: true,
           content: {
-            'HVC code': 'Australia Consumer Goods & Retail: E004',
+            'High Value Campaign (HVC) code':
+              'Australia Consumer Goods & Retail: E004',
             'What type of support was given?':
               'Market entry advice and support – DIT/FCO in UK',
             'Was there a DBT campaign or event that contributed to this win?':

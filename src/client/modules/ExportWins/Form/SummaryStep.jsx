@@ -104,7 +104,7 @@ const OfficerDetailsTable = ({ values, goToStep, isEditing }) => (
       <SummaryTable.Row heading="Team type">
         {values.team_type?.label}
       </SummaryTable.Row>
-      <SummaryTable.Row heading="HQ Team, region or post">
+      <SummaryTable.Row heading="HQ team, region or post">
         {values.hq_team?.label}
       </SummaryTable.Row>
       <SummaryTable.ListRow
@@ -301,10 +301,10 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
         <StyledInsetText data-test="win-details-contact">
           <ContactLink
             sections={[
-              'Summary of the support you provided',
+              'Summary of the support given',
               'Destination',
               'Date won',
-              'Type of export win and Value',
+              'Type of win and Value',
             ]}
           />
         </StyledInsetText>
@@ -327,7 +327,9 @@ const SupportGivenTable = ({ values, goToStep }) => (
       </StyledButtonLink>
     }
   >
-    <SummaryTable.Row heading="HVC code">{values?.hvc?.label}</SummaryTable.Row>
+    <SummaryTable.Row heading="High Value Campaign (HVC) code">
+      {values?.hvc?.label}
+    </SummaryTable.Row>
     <SummaryTable.ListRow
       heading="What type of support was given?"
       value={values.type_of_support}
