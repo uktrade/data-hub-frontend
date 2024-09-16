@@ -68,7 +68,7 @@
   <link href="{{ getAssetPath('shared.css') }}" media="screen, print" rel="stylesheet">
 
   <!-- Google Tag Manager (GTM) -->
-  {% include "_includes/google-tag-manager-snippet.njk" %}
+  {% include "_includes/google-tag-manager/consent-not-needed.njk" %}
 
   <script nonce="{{ cspNonce }}">
     (function (d) {d.className = d.className.replace (/\bno-js\b/, 'js-enabled')}) (document.documentElement)
@@ -78,7 +78,7 @@
 {% endblock %}
 
 {% block bodyStart %}
-  {% include "_includes/google-tag-manager-no-script.njk" %}
+  {% include "_includes/google-tag-manager/no-script.njk" %}
 
   <div class="notification-banner u-js-hidden u-print-hide" id="global-cookies-banner" role="alert">
     <p class="notification-banner__inner">
