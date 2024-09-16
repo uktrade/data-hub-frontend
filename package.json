@@ -90,7 +90,7 @@
     "dotenv": "^16.4.4",
     "elastic-apm-node": "^4.7.3",
     "element-closest": "^3.0.2",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "express-minify-html-2": "^2.0.0",
     "express-session": "^1.17.3",
     "express-sslify": "^1.2.0",
