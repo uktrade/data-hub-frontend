@@ -10,6 +10,7 @@ describe('EditProjectStatus', () => {
   const project = investmentProjectFaker({
     status: 'ongoing',
     stage: 'prospect',
+    specificProgrammes: [],
   })
 
   beforeEach(() => {
