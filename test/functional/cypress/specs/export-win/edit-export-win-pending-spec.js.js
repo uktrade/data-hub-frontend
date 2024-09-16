@@ -100,6 +100,10 @@ describe('Editing a pending export win', () => {
         )
     })
 
+    it('should not render a hint', () => {
+      cy.get(winDetails.hint).should('not.exist')
+    })
+
     it('should not render summary of the support given', () => {
       cy.get(winDetails.description).should('not.exist')
     })

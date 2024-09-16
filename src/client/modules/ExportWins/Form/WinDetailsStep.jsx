@@ -61,9 +61,11 @@ const WinDetailsStep = ({ isEditing }) => {
   return (
     <Step name={steps.WIN_DETAILS}>
       <H3 data-test="step-heading">Win details</H3>
-      <StyledHintParagraph data-test="hint">
-        The customer will be asked to confirm this information.
-      </StyledHintParagraph>
+      {!isEditing && (
+        <StyledHintParagraph data-test="hint">
+          The customer will be asked to confirm this information.
+        </StyledHintParagraph>
+      )}
       {!isEditing && (
         <Countries.FieldTypeahead
           name="country"
