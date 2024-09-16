@@ -96,7 +96,7 @@ describe('Editing a pending export win', () => {
         .should(
           'have.text',
           'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
-            'Summary of the support you provided, Destination, Date won, Type of export win and Value'
+            'Summary of the support you provided, Destination, Date won, Type of win and Value'
         )
     })
 
@@ -175,7 +175,7 @@ describe('Editing a pending export win', () => {
       cy.get('[data-test="win-details-contact"]').should(
         'have.text',
         'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
-          'Summary of the support you provided, Destination, Date won, Type of export win and Value'
+          'Summary of the support you provided, Destination, Date won, Type of win and Value'
       )
     })
 

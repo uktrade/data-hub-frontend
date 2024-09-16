@@ -304,7 +304,7 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
               'Summary of the support you provided',
               'Destination',
               'Date won',
-              'Type of export win and Value',
+              'Type of win and Value',
             ]}
           />
         </StyledInsetText>

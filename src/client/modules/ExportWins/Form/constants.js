@@ -59,7 +59,7 @@ export const STEP_TO_EXCLUDED_FIELDS_MAP = {
     'Summary of the support you provided',
     'Destination',
     'Date won',
-    'Type of export win and Value',
+    'Type of win and Value',
   ],
 }
 
