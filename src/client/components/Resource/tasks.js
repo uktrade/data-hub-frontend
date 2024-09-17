@@ -16,6 +16,7 @@ import OpportunityValueType from './OpportunityValueType'
 import OrderAssignees from './OrderAssignees'
 import OrderSubscribers from './OrderSubscribers'
 import Investment from './Investment'
+import EYBLead from './EYBLead'
 import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
 import Event from './Event'
@@ -116,6 +117,7 @@ export default {
   ...OrderAssignees.tasks,
   ...OrderSubscribers.tasks,
   ...Investment.tasks,
+  ...EYBLead.tasks,
   ...HQTeamRegionOrPost.tasks,
   ...HvoProgramme.tasks,
   ...Hvc.tasks,
