@@ -88,6 +88,7 @@ const ALLOWLIST = [
   '/v3/omis/order/:id/quote/cancel',
   '/v3/investment/:projectId/proposition/:propositionId/document',
   '/v3/investment/:projectId/proposition/:propositionId/document/upload-callback',
+  '/v4/investment-lead/eyb/:eybLeadId',
 ]
 
 module.exports = (app) => {

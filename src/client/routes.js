@@ -1001,6 +1001,14 @@ function Routes() {
       ),
     },
     {
+      path: '/investments/eyb-leads/:eybLeadId/details',
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EYBLeadDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
       path: '/investments/opportunities/create',
       element: (
         <ProtectedRoute module={'datahub:investments'}>
