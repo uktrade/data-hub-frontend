@@ -14,7 +14,7 @@ describe('StatusMessage', () => {
   })
 })
 
-function assertStatusMessage(colour) {
+export function assertStatusMessage(colour) {
   beforeEach(() => {
     cy.mount(<Component colour={colour}>Status Message</Component>)
   })

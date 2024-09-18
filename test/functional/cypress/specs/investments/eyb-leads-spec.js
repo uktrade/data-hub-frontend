@@ -29,5 +29,11 @@ describe('EYB leads', () => {
       assertTabbedLocalNav('Investor profiles')
       assertTabbedLocalNav('UK opportunities')
     })
+
+    it('should render the status message', () => {
+      cy.get('[data-test=status-message]')
+        .should('exist')
+        .should('contain', 'Work in progress')
+    })
   })
 })
