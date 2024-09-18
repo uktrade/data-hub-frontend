@@ -1,13 +1,23 @@
 import React from 'react'
 
-import { FilteredCollectionList } from '../../../components'
+import { FilteredCollectionList, StatusMessage } from '../../../components'
 
 const EYBLeadCollection = () => {
   return (
-    <FilteredCollectionList
-      collectionName="eybLead"
-      entityName="eybLead"
-    ></FilteredCollectionList>
+    <>
+      <StatusMessage>
+        <strong>Work in progress</strong>
+        <p>
+          {' '}
+          We are working to add Expand Your Business (EYB) data to Data Hub and
+          it will be available here soon.
+        </p>
+      </StatusMessage>
+      <FilteredCollectionList
+        collectionName="eybLead"
+        entityName="eybLead"
+      ></FilteredCollectionList>
+    </>
   )
 }
 
