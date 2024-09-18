@@ -9,8 +9,8 @@ const EYBLeadCollection = () => {
         <strong>Work in progress</strong>
         <p>
           {' '}
-          We are working to add Expand Your Business (EYB) data to Data Hub and
-          it will be available here soon.
+          We are working to add Expand Your Business (EYB) data to Data Hub. It
+          will be available here soon.
         </p>
       </StatusMessage>
       <FilteredCollectionList
