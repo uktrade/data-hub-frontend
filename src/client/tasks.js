@@ -493,6 +493,7 @@ export const tasks = {
   [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
     investmentOpportunitiesDetailsTasks.createOpportunity,
   [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
+  [TASK_GET_EYB_LEAD]: investmentEYBLeadTasks.getEYBLead,
   [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
   [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
   [TASK_GET_PROJECT_WON_COUNT]: overviewCardTasks.getProjectsWon,
