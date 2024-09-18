@@ -1,12 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Link } from 'govuk-react'
 
 import { state2props } from './state'
 import { format } from '../../../utils/date'
-
+import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
-import { DefaultLayout, SummaryTable } from '../../../components'
+import { DefaultLayout, NewWindowLink, SummaryTable } from '../../../components'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
@@ -21,9 +22,16 @@ const EYBLeadDetails = () => {
         {(eybLead) => {
           return (
             <SummaryTable data-test="eyb-lead-details-table">
-              <SummaryTable.Row
+              <SummaryTable.TextRow
                 heading="Company name"
-                children={eybLead.company.name}
+                value={
+                  <Link
+                    href={urls.companies.overview.index(eybLead.company?.id)}
+                    data-test="company-link"
+                  >
+                    {eybLead.company?.name}
+                  </Link>
+                }
               />
               <SummaryTable.Row
                 heading="Value"
@@ -41,10 +49,15 @@ const EYBLeadDetails = () => {
                 heading="Transferred from EYB"
                 children={format(eybLead.createdOn, 'dd MMM yyyy')}
               />
-              <SummaryTable.Row
-                heading="Company website address"
-                children={eybLead.companyWebsite + ' (opens in new tab)'}
-              />
+              <SummaryTable.Row heading="Company website address">
+                {eybLead.companyWebsite ? (
+                  <NewWindowLink href={eybLead.companyWebsite}>
+                    {eybLead.companyWebsite}
+                  </NewWindowLink>
+                ) : (
+                  'Not set'
+                )}
+              </SummaryTable.Row>
               <SummaryTable.Row
                 heading="Do you know where you want to set up in the UK?"
                 children={eybLead.location ? 'Yes' : 'No'}
@@ -54,7 +67,7 @@ const EYBLeadDetails = () => {
                 children={eybLead.locationCity}
               />
               <SummaryTable.Row
-                heading="How do you plan to expand your business in the UK in the first 3 years?"
+                heading="How do you plan to expand your business in the UK?"
                 children={eybLead.intent}
               />
               <SummaryTable.Row
