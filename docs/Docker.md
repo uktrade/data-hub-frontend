@@ -30,12 +30,12 @@ Prerequisite:
 
 ## Creating Docker container for CircleCI
 
-Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container.
+Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install-sdk) and you are logged in following their instructions (you will need to ask SRE for access). You will need to setup authentication using the [gcloud credential helper](https://cloud.google.com/container-registry/docs/advanced-authentication#gcloud-helper) before you can push the new container. The project to select is `sre-docker-registry`
 
 > If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
 ```bash
-export VERSION=4.3.4 # Increment this version each time when you edit Dockerfile.
+export VERSION=4.3.5 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
