@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ErrorSummary from 'ErrorSummary'
+import ErrorSummary from '..'
 
 export const errors = [
   {

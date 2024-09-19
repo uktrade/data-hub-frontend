@@ -1,6 +1,6 @@
 import React from 'react'
 
-import InvestmentProjectLocalHeader from 'InvestmentProjectLocalHeader'
+import InvestmentProjectLocalHeader from '..'
 
 import urls from '../../../../lib/urls'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Timeline from 'Timeline'
+import Timeline from '..'
 
 import {
   INVESTMENT_PROJECT_STAGES,

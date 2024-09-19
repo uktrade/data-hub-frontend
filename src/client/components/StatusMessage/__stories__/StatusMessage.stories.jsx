@@ -1,6 +1,6 @@
 import React from 'react'
 
-import StatusMessage from 'StatusMessage'
+import StatusMessage from '..'
 
 import { ERROR_COLOUR } from '../../../../client/utils/colours'
 

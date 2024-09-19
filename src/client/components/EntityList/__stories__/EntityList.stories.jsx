@@ -1,10 +1,10 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 
-import EntityList from 'EntityList'
+import EntityList from '..'
 
 import useDnbSearch from '../useDnbSearch'
-import companySearchFixture from '../__fixtures__/company-search'
+import companySearchFixture from '../__fixtures__/company-search.json'
 
 export default {
   title: 'EntitySearch',

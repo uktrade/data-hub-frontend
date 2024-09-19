@@ -4,8 +4,6 @@ import { createMemoryHistory } from 'history'
 
 import { createProvider } from '../../../../src/client/createProvider'
 
-const history = createMemoryHistory()
-
 /**
  * Creates a DataHub context provider for testing purposes configured
  * to use memory history.
@@ -18,7 +16,7 @@ const history = createMemoryHistory()
  * component.
  */
 export const createTestProvider = ({ tasks, initialPath } = {}) => {
-  const Provider = createProvider(tasks, history)
+  const Provider = createProvider(tasks, createMemoryHistory())
 
   const NavigateToInitialPath = () => {
     const navigate = useNavigate()

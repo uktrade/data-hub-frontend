@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import Metadata from 'Metadata'
+import Metadata from '..'
 
 const metadata = [
   { label: 'Updated on', value: '5 September 2019' },

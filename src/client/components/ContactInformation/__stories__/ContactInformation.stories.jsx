@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ContactInformation from 'ContactInformation'
+import ContactInformation from '..'
 
 export default {
   title: 'ContactInformation',

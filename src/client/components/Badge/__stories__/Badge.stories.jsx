@@ -2,7 +2,7 @@ import React from 'react'
 import Link from '@govuk-react/link'
 import { FONT_SIZE } from '@govuk-react/constants'
 
-import Badge from 'Badge'
+import Badge from '..'
 
 export default {
   title: 'Badge',

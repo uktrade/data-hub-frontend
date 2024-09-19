@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import Tag from 'Tag'
+import Tag from '..'
 
 const List = styled('div')`
   display: flex;

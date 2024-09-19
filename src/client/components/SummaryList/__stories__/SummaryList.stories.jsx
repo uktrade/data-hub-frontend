@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SummaryList from 'SummaryList'
+import SummaryList from '..'
 
 const rows = [
   { label: 'Registered company name', value: 'Example Ltd' },
