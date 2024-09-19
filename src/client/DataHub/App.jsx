@@ -5,7 +5,6 @@ import * as Sentry from '@sentry/browser'
 import * as ReactSentry from '@sentry/react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { SearchLocalHeader } from '../components/index.jsx'
 import { default as DataHubHeaderWrapper } from '../components/DataHubHeader/Wrapper.jsx'
 import { createProvider } from '../createProvider.jsx'
 import AddCompanyForm from '../../apps/companies/apps/add-company/client/AddCompanyForm.jsx'
@@ -191,14 +190,6 @@ export const App = () => {
         <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
-        </Mount>
-        <Mount selector="#dashboard-local-header">
-          {(props) => (
-            <SearchLocalHeader
-              csrfToken={globalProps.csrfToken}
-              flashMessage={props.flashMessage}
-            />
-          )}
         </Mount>
         <Mount selector="#contact-activity">
           {(props) => <ContactActivity {...props} />}
