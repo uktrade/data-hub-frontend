@@ -3,6 +3,7 @@ import React from 'react'
 import { DefaultLayout } from '../../components'
 import TabNav from '../../components/TabNav'
 import urls from '../../../lib/urls'
+import EYBLeadsCollection from './EYBLeads/EYBLeadsCollection'
 import ProjectsCollection from './Projects/ProjectsCollection'
 import ProfilesCollection from './Profiles/ProfilesCollection'
 import OpportunitiesCollection from './Opportunities/CollectionList/OpportunitiesCollection'
@@ -11,6 +12,7 @@ const PATH = /([^\/]+$)/
 
 const pathToPageTitleMap = {
   projects: 'Projects',
+  'eyb-leads': 'EYB leads',
   profiles: 'Profiles',
   opportunities: 'UK opportunities',
 }
@@ -39,6 +41,10 @@ const InvestmentCollections = ({ ...props }) => {
           [urls.investments.projects.index()]: {
             label: 'Projects',
             content: <ProjectsCollection {...props} />,
+          },
+          [urls.investments.eybLeads.index()]: {
+            label: 'EYB leads',
+            content: <EYBLeadsCollection {...props} />,
           },
           [urls.investments.profiles.index()]: {
             label: 'Investor profiles',

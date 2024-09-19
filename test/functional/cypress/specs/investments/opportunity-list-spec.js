@@ -34,6 +34,7 @@ describe('Investment opportunities', () => {
 
     it('should render the local navigation', () => {
       assertTabbedLocalNav('Projects')
+      assertTabbedLocalNav('EYB leads')
       assertTabbedLocalNav('Investor profiles')
       assertTabbedLocalNav('UK opportunities')
     })

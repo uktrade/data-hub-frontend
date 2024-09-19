@@ -538,6 +538,9 @@ module.exports = {
       index: url('/investments/projects', '/:investmentId/edit-history'),
       data: url('/investments/projects', '/:investmentId/edit-history/data'),
     },
+    eybLeads: {
+      index: url('/investments', '/eyb-leads'),
+    },
   },
   metadata: {
     likelihoodToLand: url('/api-proxy/v4/metadata', '/likelihood-to-land'),
