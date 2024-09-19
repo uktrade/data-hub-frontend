@@ -1,6 +1,6 @@
 const {
   resolve
-} = require('../webpack.config')();
+} = require('../webpack.config');
 
 export default {
   addons: [
@@ -12,9 +12,7 @@ export default {
   webpackFinal: async (config) => {
     return {
       ...config,
-      resolve: {
-        ...resolve,
-      },
+      resolve,
     }
   },
   core: {
