@@ -1,5 +1,6 @@
 import React from 'react'
-import ArchivePanel from 'ArchivePanel'
+
+import ArchivePanel from '..'
 
 const archivist = {
   first_name: 'Example',

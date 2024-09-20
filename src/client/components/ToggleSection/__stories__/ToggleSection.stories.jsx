@@ -1,12 +1,12 @@
 import React from 'react'
 
-import NotificationBadge from 'NotificationBadge'
+import NotificationBadge from '../../NotificationBadge'
 import {
   DashboardToggleSection,
   FilterToggleSection,
   NoHighlightToggleSection,
   ToggleSection,
-} from 'ToggleSection'
+} from '..'
 
 import usageReadme from './usage.md'
 import FieldInput from '../../Form/elements/FieldInput'

@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@govuk-react/button'
 
-import ButtonLink from 'ButtonLink'
+import ButtonLink from '..'
 
 export default {
   title: 'ButtonLink',

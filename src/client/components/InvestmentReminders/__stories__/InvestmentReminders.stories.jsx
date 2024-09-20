@@ -1,6 +1,6 @@
 import React from 'react'
 
-import InvestmentReminders from 'InvestmentReminders'
+import InvestmentReminders from '..'
 
 const adviser = {
   name: 'Paula Churing',

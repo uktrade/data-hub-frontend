@@ -6,8 +6,10 @@ import urls from '../../../../lib/urls'
 import { DefaultLayout } from '../../../components'
 import { state2props } from './state'
 import ExportFormFields from './ExportFormFields'
-import { TASK_GET_EXPORT_DETAIL } from '../ExportDetails/state'
-import { ID as EXPORT_DETAILS_ID } from '../../ExportPipeline/ExportDetails/state'
+import {
+  TASK_GET_EXPORT_DETAIL,
+  ID as EXPORT_DETAILS_ID,
+} from '../ExportDetails/state'
 import { EXPORT_LOADED } from '../../../actions'
 import withRouter from './withRouter'
 

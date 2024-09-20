@@ -93,6 +93,7 @@ import {
   TASK_UPDATE_INVESTMENT_PROJECT_STAGE,
   TASK_GET_INVESTMENT_PROJECT,
   TASK_UPDATE_STAGE,
+  TASK_PROPOSITION_COMPLETE,
 } from './modules/Investments/Projects/state'
 import * as investmentProjectTasks from './modules/Investments/Projects/tasks'
 
@@ -113,7 +114,6 @@ import {
 } from '../apps/investments/client/projects/create/state'
 import * as createInvestmentProjectTasks from '../apps/investments/client/projects/create/tasks'
 
-import { TASK_PROPOSITION_COMPLETE } from '../client/modules/Investments/Projects/state'
 import { completeInvestmentPropositions } from '../client/modules/Investments/Projects/tasks'
 
 import {
@@ -425,20 +425,18 @@ import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
 import {
   TASK_RESEND_EXPORT_WIN,
   TASK_GET_EXPORT_WINS_SAVE_FORM,
+  TASK_GET_EXPORT_PROJECT,
+  TASK_GET_EXPORT_WIN,
 } from './modules/ExportWins/Form/state'
-import { saveExportWin, resendExportWin } from './modules/ExportWins/Form/tasks'
+import {
+  saveExportWin,
+  resendExportWin,
+  getExportProject,
+  getExportWin,
+} from './modules/ExportWins/Form/tasks'
 
 import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
 import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
-
-import {
-  TASK_GET_EXPORT_PROJECT,
-  TASK_GET_EXPORT_WIN,
-} from '../client/modules/ExportWins/Form/state'
-import {
-  getExportProject,
-  getExportWin,
-} from '../client/modules/ExportWins/Form/tasks'
 
 import {
   TASK_GET_COMPANY_ACTIVITIES_NO_AS,

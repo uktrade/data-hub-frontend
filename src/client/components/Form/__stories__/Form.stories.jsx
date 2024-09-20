@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 
 import Form from '../index'
 import FieldInput from '../elements/FieldInput'
@@ -339,61 +339,69 @@ MultiStep.story = {
 }
 
 export const SoftReactRouterRedirect = () => (
-  <Switch>
-    <Route path="/iframe.html">
-      <Form
-        id="task-form-example-resolve-initial-values"
-        submissionTaskName="Submit Form example"
-        initialValuesTaskName="Load initial values"
-        initialValuesPayload="resolve"
-        redirectMode="soft"
-        transformInitialValues={(initialValues) => ({
-          ...initialValues,
-          reject: 'yes',
-        })}
-        analyticsFormName="formExample"
-        // eslint-disable-next-line no-unused-vars
-        redirectTo={(submissionTaskResult, formValues) => '/success'}
-        // eslint-disable-next-line no-unused-vars
-        flashMessage={(submissionTaskResult, formValues) =>
-          'Form was submitted successfully'
-        }
-      >
-        <FieldInput
-          name="foo"
-          type="text"
-          label="Foo"
-          hint='Initial value should be "Blah Blah"'
-          required="Foo is required"
-        />
-        <FieldSelect
-          name="bar"
-          label="Bar"
-          hint='Initial value should be "B".'
-          required="Bar is required"
-          options={[
-            { label: 'A', value: 'a' },
-            { label: 'B', value: 'b' },
-            { label: 'C', value: 'c' },
-          ]}
-        />
-        <FieldRadios
-          name="reject"
-          label="Reject"
-          hint="Should the submission task reject?"
-          options={[
-            { label: 'Yes', value: 'yes' },
-            { label: 'No', value: 'no' },
-          ]}
-        />
-      </Form>
-    </Route>
-    <Route path="/success">
-      The submission task resolved
-      <br />
-      <Link to="/iframe.html">Back to form</Link>
-    </Route>
-  </Switch>
+  <Routes>
+    <Route
+      path="/iframe.html"
+      element={
+        <Form
+          id="task-form-example-resolve-initial-values"
+          submissionTaskName="Submit Form example"
+          initialValuesTaskName="Load initial values"
+          initialValuesPayload="resolve"
+          redirectMode="soft"
+          transformInitialValues={(initialValues) => ({
+            ...initialValues,
+            reject: 'yes',
+          })}
+          analyticsFormName="formExample"
+          // eslint-disable-next-line no-unused-vars
+          redirectTo={(submissionTaskResult, formValues) => '/success'}
+          // eslint-disable-next-line no-unused-vars
+          flashMessage={(submissionTaskResult, formValues) =>
+            'Form was submitted successfully'
+          }
+        >
+          <FieldInput
+            name="foo"
+            type="text"
+            label="Foo"
+            hint='Initial value should be "Blah Blah"'
+            required="Foo is required"
+          />
+          <FieldSelect
+            name="bar"
+            label="Bar"
+            hint='Initial value should be "B".'
+            required="Bar is required"
+            options={[
+              { label: 'A', value: 'a' },
+              { label: 'B', value: 'b' },
+              { label: 'C', value: 'c' },
+            ]}
+          />
+          <FieldRadios
+            name="reject"
+            label="Reject"
+            hint="Should the submission task reject?"
+            options={[
+              { label: 'Yes', value: 'yes' },
+              { label: 'No', value: 'no' },
+            ]}
+          />
+        </Form>
+      }
+    />
+    <Route
+      path="/success"
+      element={
+        <>
+          The submission task resolved
+          <br />
+          <Link to="/iframe.html">Back to form</Link>
+        </>
+      }
+    />
+  </Routes>
 )
 
 SoftReactRouterRedirect.story = {

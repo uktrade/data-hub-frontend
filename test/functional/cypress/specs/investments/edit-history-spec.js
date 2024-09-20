@@ -5,7 +5,6 @@ import {
 } from '../../support/collection-list-assertions'
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { NOT_SET } from '../../../../../src/client/modules/Investments/Projects/EditHistory/constants'
 
 const assertChanges = (itemNo, field, oldVal, newVal) => {
   cy.get(`@listItem${itemNo}`)
@@ -85,7 +84,7 @@ describe('Edit History', () => {
     })
 
     it('should display the changes for a currency field', () => {
-      assertChanges(4, 'Total investment', NOT_SET, '£123,456,789')
+      assertChanges(4, 'Total investment', undefined, '£123,456,789')
     })
   })
 

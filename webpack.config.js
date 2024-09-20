@@ -74,8 +74,9 @@ module.exports = {
         },
       },
     }),
-    new webpack.HotModuleReplacementPlugin({}),
-    new ReactRefreshPlugin(),
+    ...(config.isDev
+      ? [new webpack.HotModuleReplacementPlugin({}), new ReactRefreshPlugin()]
+      : []),
   ].filter(Boolean),
   resolve: {
     modules: [

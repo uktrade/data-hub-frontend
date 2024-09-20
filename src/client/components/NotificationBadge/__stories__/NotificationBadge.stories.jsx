@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NotificationBadge from 'NotificationBadge'
+import NotificationBadge from '..'
 
 export default {
   title: 'NotificationBadge',
