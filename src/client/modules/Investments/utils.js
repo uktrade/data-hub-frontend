@@ -14,3 +14,18 @@ export const buildProjectBreadcrumbs = (pageBreadcrumbs) => {
   ]
   return initialBreadcrumbs.concat(pageBreadcrumbs)
 }
+
+export const buildEYBLeadBreadcrumbs = (pageBreadcrumbs) => {
+  const initialBreadcrumbs = [
+    { link: urls.dashboard.index(), text: 'Home' },
+    {
+      link: urls.investments.index(),
+      text: 'Investments',
+    },
+    {
+      link: urls.investments.projects.index(),
+      text: 'EYB Leads',
+    },
+  ]
+  return initialBreadcrumbs.concat(pageBreadcrumbs)
+}

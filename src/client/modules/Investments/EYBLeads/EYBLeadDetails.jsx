@@ -7,15 +7,17 @@ import { state2props } from './state'
 import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
-import { DefaultLayout, NewWindowLink, SummaryTable } from '../../../components'
+import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
   return (
-    <DefaultLayout
-      heading={'EYB lead'}
-      pageTitle={'EYB Lead'}
-      breadcrumbs={[]}
+    <EYBLeadLayout
+      eybLeadId={eybLeadId}
+      superheading={'EYB lead'}
+      heading={'Heading'}
+      pageTitle={'EYB lead details'}
+      // breadcrumbs={{ text: <EYBLeadResource id={eybLeadId} /> }}
       useReactRouter={false}
     >
       <EYBLeadResource id={eybLeadId}>
@@ -91,7 +93,7 @@ const EYBLeadDetails = () => {
           )
         }}
       </EYBLeadResource>
-    </DefaultLayout>
+    </EYBLeadLayout>
   )
 }
 
