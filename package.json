@@ -157,6 +157,7 @@
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@babel/register": "^7.24.6",
     "@babel/runtime": "^7.25.6",
     "@chromatic-com/storybook": "^1.8.0",
     "@cypress/code-coverage": "^3.12.47",
