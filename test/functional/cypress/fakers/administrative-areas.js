@@ -9,7 +9,7 @@ export const administrativeAreaFaker = () => ({
     name: faker.location.country(),
     id: faker.string.uuid(),
   },
-  area_code: faker.location.state({ abbreviated: true }),
+  area_code: faker.location.stateAbbr(),
   disabled_on: null,
 })
 
