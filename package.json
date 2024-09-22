@@ -85,7 +85,7 @@
     "core-js": "^3.38.1",
     "css-loader": "^7.1.1",
     "csurf": "^1.11.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^4.1.0",
     "del-cli": "^5.0.0",
     "dotenv": "^16.4.4",
     "elastic-apm-node": "^4.7.3",
