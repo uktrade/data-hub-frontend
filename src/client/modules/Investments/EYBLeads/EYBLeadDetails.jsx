@@ -12,14 +12,7 @@ import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
   return (
-    <EYBLeadLayout
-      eybLeadId={eybLeadId}
-      superheading={'EYB lead'}
-      heading={'Heading'}
-      pageTitle={'EYB lead details'}
-      // breadcrumbs={{ text: <EYBLeadResource id={eybLeadId} /> }}
-      useReactRouter={false}
-    >
+    <EYBLeadLayout id={eybLeadId}>
       <EYBLeadResource id={eybLeadId}>
         {(eybLead) => {
           return (
@@ -48,8 +41,8 @@ const EYBLeadDetails = () => {
                 children={eybLead.companyLocation.name}
               />
               <SummaryTable.Row
-                heading="Transferred from EYB"
-                children={format(eybLead.createdOn, 'dd MMM yyyy')}
+                heading="Submitted to EYB"
+                children={format(eybLead.triageCreated, 'dd MMM yyyy')}
               />
               <SummaryTable.Row heading="Company website address">
                 {eybLead.companyWebsite ? (

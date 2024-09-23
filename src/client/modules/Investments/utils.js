@@ -23,8 +23,8 @@ export const buildEYBLeadBreadcrumbs = (pageBreadcrumbs) => {
       text: 'Investments',
     },
     {
-      link: urls.investments.projects.index(),
-      text: 'EYB Leads',
+      link: urls.investments.eybLeads.index(),
+      text: 'EYB leads',
     },
   ]
   return initialBreadcrumbs.concat(pageBreadcrumbs)
