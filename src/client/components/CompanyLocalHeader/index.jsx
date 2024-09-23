@@ -119,9 +119,27 @@ const hasAllocatedLeadIta = (company) =>
 const hasManagedAccountDetails = (company) =>
   company.oneListGroupTier && hasAllocatedLeadIta(company)
 
+const DATA_HUB_HAS_MOVED_LINK =
+  'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/export-wins-has-moved-to-data-hub/'
+
+const DATA_HUB_HAS_MOVED_MESSAGE = (
+  <>
+    Historic export wins have now moved to Data Hub,{' '}
+    <Link
+      href={DATA_HUB_HAS_MOVED_LINK}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Find out more about historic wins moved to Data Hub"
+    >
+      find out more
+    </Link>
+    .
+  </>
+)
+
 const CompanyLocalHeader = ({
   breadcrumbs,
-  flashMessages,
+  flashMessages = [],
   company,
   csrfToken,
 }) =>
@@ -133,7 +151,7 @@ const CompanyLocalHeader = ({
           company.id,
           company.name
         )}
-        flashMessages={flashMessages}
+        flashMessages={[[DATA_HUB_HAS_MOVED_MESSAGE, ...flashMessages]]}
       >
         <GridRow>
           <GridCol setWidth="two-thirds">
@@ -145,7 +163,6 @@ const CompanyLocalHeader = ({
                 Trading as: {company.tradingNames.join(', ')}
               </LocalHeaderTradingNames>
             )}
-
             <StyledAddress data-test="address">
               {addressToStringResource(company.address)}
             </StyledAddress>
