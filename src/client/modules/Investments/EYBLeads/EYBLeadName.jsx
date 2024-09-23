@@ -4,7 +4,7 @@ import { EYBLeadResource } from '../../../components/Resource'
 
 const EYBLeadName = (props) => (
   <EYBLeadResource.Inline {...props}>
-    {(eybLead) => eybLead.company}
+    {(eybLead) => eybLead.company.name}
   </EYBLeadResource.Inline>
 )
 
