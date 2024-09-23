@@ -46,7 +46,7 @@ describe('Pagination', () => {
       cy.mount(<Component items={150} />)
     })
     it('should render a page link', () => {
-      assertVisiblePageLinks(['Next'])
+      assertVisiblePageLinks(['Next page'])
     })
   })
   context('when on MOBILE and you click next', () => {
@@ -56,7 +56,7 @@ describe('Pagination', () => {
       cy.get('[data-test="pagination"] ul li a').last().click()
     })
     it('should render two page links', () => {
-      assertVisiblePageLinks(['Previous', 'Next'])
+      assertVisiblePageLinks(['Previous page', 'Next page'])
     })
     it('should have an active page link', () => {
       assertActivePageLink('next')
@@ -77,7 +77,7 @@ describe('Pagination', () => {
       cy.get('[data-test="pagination"] ul li a').first().click()
     })
     it('should render two page links', () => {
-      assertVisiblePageLinks(['Previous', 'Next'])
+      assertVisiblePageLinks(['Previous page', 'Next page'])
     })
     it('should have an active page link', () => {
       assertActivePageLink('previous')
@@ -94,7 +94,7 @@ describe('Pagination', () => {
       cy.mount(<Component items={150} initialPage={15} />)
     })
     it('should render one page link', () => {
-      assertVisiblePageLinks(['Previous'])
+      assertVisiblePageLinks(['Previous page'])
     })
   })
   context('when on MOBILE and you only have one page', () => {
@@ -122,7 +122,7 @@ describe('Pagination', () => {
         '8',
         '9',
         '10',
-        'Next',
+        'Next page',
       ])
     })
     it('should have an active page link', () => {
@@ -135,7 +135,7 @@ describe('Pagination', () => {
       cy.mount(<Component items={15} />)
     })
     it('should render page links', () => {
-      assertPageLinks(['1', '2', 'Next'])
+      assertPageLinks(['1', '2', 'Next page'])
     })
     it('should have an active page link', () => {
       assertActivePageLink(1)
@@ -149,7 +149,7 @@ describe('Pagination', () => {
     })
     it('should render page links', () => {
       assertPageLinks([
-        'Previous',
+        'Previous page',
         '1',
         '2',
         '3',
@@ -160,7 +160,7 @@ describe('Pagination', () => {
         '8',
         '9',
         '10',
-        'Next',
+        'Next page',
       ])
     })
     it('should have an active page link', () => {
@@ -173,7 +173,7 @@ describe('Pagination', () => {
       cy.window().its('scrollY').should('equal', 0)
     })
   })
-  context('when you navigate to page 2 by clicking the Next link', () => {
+  context('when you navigate to page 2 by clicking the next page link', () => {
     beforeEach(() => {
       cy.viewport(1000, 1000)
       cy.mount(<Component items={1000} />)
@@ -181,7 +181,7 @@ describe('Pagination', () => {
     })
     it('should render page links', () => {
       assertPageLinks([
-        'Previous',
+        'Previous page',
         '1',
         '2',
         '3',
@@ -192,7 +192,7 @@ describe('Pagination', () => {
         '8',
         '9',
         '10',
-        'Next',
+        'Next page',
       ])
     })
     it('should have an active page link', () => {
@@ -226,7 +226,7 @@ describe('Pagination', () => {
           '8',
           '9',
           '10',
-          'Next',
+          'Next page',
         ])
       })
       it('should have an active page link', () => {
@@ -248,7 +248,7 @@ describe('Pagination', () => {
     })
     it('should display the next 10 page links', () => {
       assertPageLinks([
-        'Previous',
+        'Previous page',
         '2',
         '3',
         '4',
@@ -259,7 +259,7 @@ describe('Pagination', () => {
         '9',
         '10',
         '11',
-        'Next',
+        'Next page',
       ])
     })
   })
@@ -270,7 +270,7 @@ describe('Pagination', () => {
     })
     it('should render page links', () => {
       assertPageLinks([
-        'Previous',
+        'Previous page',
         '1',
         '2',
         '3',
@@ -281,7 +281,7 @@ describe('Pagination', () => {
         '8',
         '9',
         '10',
-        'Next',
+        'Next page',
       ])
     })
     it('should have an active page link', () => {
@@ -296,7 +296,7 @@ describe('Pagination', () => {
     })
     it('should render page links', () => {
       assertPageLinks([
-        'Previous',
+        'Previous page',
         '1',
         '2',
         '3',

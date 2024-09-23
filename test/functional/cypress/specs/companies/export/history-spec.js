@@ -123,8 +123,8 @@ describe('Company Export tab - Export countries history', () => {
         ])
       })
 
-      it('should display the next button', () => {
-        cy.get('[data-test="next"]').should('have.text', 'Next')
+      it('should display the next page button', () => {
+        cy.get('[data-test="next"]').should('have.text', 'Next page')
       })
 
       it('should not display the previous button', () => {
@@ -151,14 +151,14 @@ describe('Company Export tab - Export countries history', () => {
         ])
       })
 
-      it('should not display the next button', () => {
+      it('should not display the next page button', () => {
         cy.get('[aria-label="Page 2"]').click()
         cy.get('[data-test="next"]').should('not.exist')
       })
 
-      it('should display the previous button', () => {
+      it('should display the previous page button', () => {
         cy.get('[aria-label="Page 2"]').click()
-        cy.get('[data-test="prev"]').should('have.text', 'Previous')
+        cy.get('[data-test="prev"]').should('have.text', 'Previous page')
       })
     })
 

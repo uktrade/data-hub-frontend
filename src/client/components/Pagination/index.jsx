@@ -112,7 +112,7 @@ function Pagination({
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
-                    Previous
+                    Previous page
                   </StyledPaginationLink>
                 )}
 
@@ -141,7 +141,7 @@ function Pagination({
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
-                    Next
+                    Next page
                   </StyledPaginationLink>
                 )}
               </StyledPaginationPiece>

@@ -52,7 +52,7 @@ describe.skip('Resource/Paginated', () => {
       cy.get('@page').should('have.text', JSON.stringify(page))
     })
 
-    // Go through pages backwards by clicking Previous
+    // Go through pages backwards by clicking Previous page
     PAGES.slice(0, -1)
       .toReversed()
       .forEach((page) => {
