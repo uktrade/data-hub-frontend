@@ -1,0 +1,18 @@
+{#
+This is a set-up of Google Tag Manager for external users
+(currently anyone who accessess /exportwins/review/*),
+for whom we need to manage consent to use Google Analytics cookies.
+#}
+{% if GOOGLE_TAG_MANAGER_KEY %}
+{% include "_includes/google-tag-manager/gtag-definition.njk" %}
+<script nonce='{{ cspNonce }}'>
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: localStorage.getItem('cookie-consent') || 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+</script>
+{% include "_includes/google-tag-manager/snippet.njk" %}
+{% endif %}

@@ -1,0 +1,22 @@
+{#
+This is a set-up of Google Tag Manager for internal users,
+who are assumed that they have given consent for using
+Google Analytics cookies.
+#}
+{% if GOOGLE_TAG_MANAGER_KEY %}
+{% include "_includes/google-tag-manager/gtag-definition.njk" %}
+<script nonce='{{ cspNonce }}'>
+  window.gtag({
+    userId: '{{user.id}}',
+    userUserId: '{{user.sso_user_id}}',
+  })
+
+  if ('{{userFeatureGTMEvent}}') {
+    window.gtag({
+      name: '{{userFeatureGTMEvent.name}}',
+      event: '{{userFeatureGTMEvent.event}}',
+    })
+  }
+</script>
+{% include "_includes/google-tag-manager/snippet.njk" %}
+{% endif %}

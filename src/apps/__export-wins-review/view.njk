@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DBT Export Wins</title>
     <link href="{{ getAssetPath('shared.css') }}" media="screen, print" rel="stylesheet">
-    {% include "_includes/google-tag-manager-snippet.njk" %}
+    {% include "_includes/google-tag-manager/consent-needed.njk" %}
   </head>
   <body>
+    {% include "_includes/google-tag-manager/no-script.njk" %}
     {% include "_includes/csp-nonce.njk" %}
     <div id="react-app">
       <noscript>Please enable JavaScript in your browser to see the content.</noscript>
