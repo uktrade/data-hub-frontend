@@ -179,6 +179,7 @@ describe('CompanyLocalHeader', () => {
       cy.mountWithProvider(
         <CompanyLocalHeader
           breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
           company={dnbGlobalUltimate}
           dnbRelatedCompaniesCount={12345}
           returnUrl={null}
@@ -227,6 +228,7 @@ describe('CompanyLocalHeader', () => {
       cy.mountWithProvider(
         <CompanyLocalHeader
           breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
           company={dnbUnderInvestigation}
           dnbRelatedCompaniesCount={null}
           returnUrl={null}
@@ -280,6 +282,7 @@ describe('CompanyLocalHeader', () => {
       cy.mountWithProvider(
         <CompanyLocalHeader
           breadcrumbs={[{ text: 'Test breadcrumb' }]}
+          flashMessages={null}
           company={archivedCompany}
           dnbRelatedCompaniesCount={null}
           returnUrl={null}
