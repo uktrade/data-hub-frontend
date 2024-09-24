@@ -1,0 +1,69 @@
+{
+  "archived": false,
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": "2024-09-23T06:08:57.543201Z",
+  "modified_on": "2024-09-23T06:08:57.543207Z",
+  "id": "5ed8492a-eaef-413d-b552-8ee85551a91c",
+  "triage_hashed_uuid": "2de8e9c025389a483b295636adef2e9749023fc194de3e7fa817536e3739b335",
+  "triage_created": "2024-09-23T06:08:57.316130Z",
+  "triage_modified": "2024-09-23T06:08:57.316161Z",
+  "sector": {
+    "name": "Airports : Airport design, engineering, management and build",
+    "id": "3b18bba4-5165-49d8-85c7-65c9b846520c"
+  },
+  "sector_sub": "Airport design, engineering, management and build",
+  "intent": [
+    "Set up new premises",
+    "Research, develop and collaborate",
+    "Find people with specialist skills"
+  ],
+  "intent_other": "",
+  "location": {
+    "name": "Wales",
+    "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "location_city": "Cardiff",
+  "location_none": false,
+  "hiring": "No plans to hire",
+  "spend": "Less than £10,000",
+  "spend_other": "",
+  "is_high_value": true,
+  "user_hashed_uuid": "ee16960d4970dd8ef1eafba7998a30d864819fb7298db0b72da5531636cb3a00",
+  "user_created": "2024-09-23T06:08:57.353288Z",
+  "user_modified": "2024-09-23T06:08:57.353294Z",
+  "company_name": "James-Davis",
+  "company_location": {
+    "name": "Canada",
+    "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+  },
+  "full_name": "Denis Martin",
+  "role": "Comptroller",
+  "email": "sylviawood@example.org",
+  "telephone_number": "(0808)1570697",
+  "agree_terms": true,
+  "agree_info_email": true,
+  "landing_timeframe": "In the next 6 months",
+  "company_website": "http://www.grant.co.uk/",
+  "duns_number": "002129611",
+  "company": {
+    "name": "Shah, Parker and Rees",
+    "id": "ad13ccea-ee5f-4de0-8103-8601fd55f0ec"
+  },
+  "address": {
+    "line_1": "Studio 03F\nLynn wall",
+    "line_2": "Studio 7",
+    "town": "Erictown",
+    "county": "Hertfordshire",
+    "postcode": "W4A 8RY",
+    "area": {
+      "name": "Alberta",
+      "id": "75e337c3-23c9-4294-8085-6b1e8c43eb07"
+    },
+    "country": {
+      "name": "Canada",
+      "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+    }
+  }
+}
