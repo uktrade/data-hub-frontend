@@ -129,9 +129,9 @@ const DATA_HUB_HAS_MOVED_MESSAGE = (
       href={DATA_HUB_HAS_MOVED_LINK}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Find out more about historic wins moved to Data Hub"
+      aria-label="See the export wins announcement"
     >
-      find out more
+      see the export wins announcement
     </Link>
     .
   </>
@@ -151,7 +151,11 @@ const CompanyLocalHeader = ({
           company.id,
           company.name
         )}
-        flashMessages={[[DATA_HUB_HAS_MOVED_MESSAGE, ...flashMessages]]}
+        flashMessages={
+          breadcrumbs[0].text === 'Exports'
+            ? [[DATA_HUB_HAS_MOVED_MESSAGE, ...flashMessages]]
+            : flashMessages
+        }
       >
         <GridRow>
           <GridCol setWidth="two-thirds">
