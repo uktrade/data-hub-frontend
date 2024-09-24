@@ -27,7 +27,7 @@
       aria-label="pagination: total {{ pagination.totalPages }} pages"
     >
       {% if pagination.prev -%}
-        <a href="{{ pagination.prev }}" class="c-pagination__label c-pagination__label--prev">Previous</a>
+        <a href="{{ pagination.prev }}" class="c-pagination__label c-pagination__label--prev">Previous page</a>
       {%- endif %}
       {% if showPages -%}
         <ul class="c-pagination__list">
@@ -47,7 +47,7 @@
         </ul>
       {%- endif %}
       {% if pagination.next -%}
-        <a href="{{ pagination.next }}" class="c-pagination__label c-pagination__label--next">Next</a>
+        <a href="{{ pagination.next }}" class="c-pagination__label c-pagination__label--next">Next page</a>
       {%- endif %}
     </nav>
   {% endif %}

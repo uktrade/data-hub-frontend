@@ -197,7 +197,7 @@ describe('Outstanding Proposition Reminders', () => {
         .as('paginationItems')
       cy.get('@paginationItems').eq(0).should('have.text', '1')
       cy.get('@paginationItems').eq(1).should('have.text', '2')
-      cy.get('@paginationItems').eq(2).should('have.text', 'Next')
+      cy.get('@paginationItems').eq(2).should('have.text', 'Next page')
     })
 
     it('should navigate to another page when clicked', () => {
