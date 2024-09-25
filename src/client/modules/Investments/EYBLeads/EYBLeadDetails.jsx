@@ -30,7 +30,7 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Value"
-                children={eybLead.is_high_value ? 'High value' : 'Low value'}
+                children={eybLead.is_high_value ? 'Low value' : 'High value'}
               />
               <SummaryTable.Row
                 heading="Sector or industry"
@@ -54,8 +54,12 @@ const EYBLeadDetails = () => {
                 )}
               </SummaryTable.Row>
               <SummaryTable.Row
+                heading="When do you want to set up?"
+                children={eybLead.landingTimeframe}
+              />
+              <SummaryTable.Row
                 heading="Do you know where you want to set up in the UK?"
-                children={eybLead.location ? 'Yes' : 'No'}
+                children={eybLead.locationNone ? 'No' : 'Yes'}
               />
               <SummaryTable.Row
                 heading="Where do you want to set up in the UK?"
