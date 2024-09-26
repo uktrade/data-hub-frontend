@@ -34,6 +34,10 @@ export const TAGS = {
       colour: 'blue',
     },
   },
+  INVESTMENT: {
+    text: 'Investment',
+    color: 'green',
+  },
 }
 
 const FILTER_KEYS = {

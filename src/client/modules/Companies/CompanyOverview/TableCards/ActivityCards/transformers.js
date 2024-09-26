@@ -49,6 +49,8 @@ export const transformActivity = (activity) => {
     return transformInteractionToListItem(activity.interaction)
   else if (activity_source === 'referral')
     return transformReferralToListItem(activity)
+  else if (activity_source === 'investment')
+    return transformInvestmentToListItem(activity)
 }
 
 export const transformReferralToListItem = (activity) => {
@@ -75,6 +77,29 @@ export const transformReferralToListItem = (activity) => {
       referral.id
     ),
     headingText: referral.subject,
+    summary: summary,
+  }
+}
+
+export const transformInvestmentToListItem = (activity) => {
+  const investment = activity.investment
+  const summary = [
+    `${investment.investment_type.name} investment for ${investment.numberNewJobs} jobs added by `,
+    investment.created_by.name,
+  ]
+
+  return {
+    id: investment.id,
+    date: investment.date,
+    tags: [
+      {
+        text: TAGS.INVESTMENT.text,
+        colour: TAGS.INVESTMENT.color,
+        dataTest: 'investment-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.investments.projects.details(investment.id),
+    headingText: investment.name,
     summary: summary,
   }
 }

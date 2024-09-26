@@ -60,6 +60,8 @@ export const transformActivity = (activity) => {
     return transformInteractionToListItem(activity.interaction)
   else if (activity_source === 'referral')
     return transformReferralToListItem(activity)
+  else if (activity_source === 'investment')
+    return transformInvestmentToListItem(activity)
 }
 
 export const transformInteractionToListItem = ({
@@ -142,6 +144,58 @@ export const transformReferralToListItem = (activity) => {
       referral.id
     ),
     headingText: referral.subject,
+  }
+}
+
+export const transformInvestmentToListItem = (activity) => {
+  return {
+    id: activity.investment.id,
+    metadata: [
+      { label: 'Created Date', value: formatMediumDate(activity.date) },
+      {
+        label: 'Investment Type',
+        value: activity.investment.investment_type.name,
+      },
+      {
+        label: 'Added by',
+        value: activity.investment.created_by
+          ? AdviserRenderer({
+              adviser: activity.investment.created_by,
+              team: activity.investment.created_by.dit_team,
+            })
+          : '',
+      },
+      {
+        label: 'Estimated land date',
+        value: activity.investment.estimated_land_date,
+      },
+      {
+        label: 'Company Contact',
+        value: activity.investment.clinet_contacts,
+      },
+      {
+        label: 'Total investment',
+        value: activity.investment.total_investment,
+      },
+      {
+        label: 'Capital expenditure value',
+        value: activity.investment.foreign_equity_investment,
+      },
+      {
+        label: 'Gross value added (GVA)',
+        value: activity.investment.gross_value_added,
+      },
+      { label: 'Number of jobs', value: activity.investment.number_new_jobs },
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: 'Investment',
+        colour: 'grey',
+        dataTest: 'investment-kind-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.investments.projects.details(activity.investment.id),
+    headingText: activity.investment.name,
   }
 }
 
