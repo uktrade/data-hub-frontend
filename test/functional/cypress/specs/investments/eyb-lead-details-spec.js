@@ -2,6 +2,8 @@ import { assertSummaryTable } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 
+const urls = require('../../../../../src/lib/urls')
+
 const setup = (eybLead) => {
   cy.intercept('GET', `/api-proxy/v4/investment-lead/eyb/${eybLead.id}`, {
     statusCode: 200,
@@ -59,7 +61,7 @@ describe('EYB lead details', () => {
           'Do you know where you want to set up in the UK?': 'Yes',
           'Where do you want to set up in the UK?': 'Cardiff',
           'How do you plan to expand your business in the UK?':
-            eybLeadWithValues.intent,
+            eybLeadWithValues.intent.join(''),
           'How many people do you want to hire in the UK in the first 3 years?':
             eybLeadWithValues.hiring,
           'How much do you want to spend on setting up in the first 3 years?':
@@ -69,6 +71,17 @@ describe('EYB lead details', () => {
           'Phone number': eybLeadWithValues.telephone_number,
         },
       })
+    })
+
+    it('should render the company link within the table', () => {
+      cy.get('[data-test="company-link"]')
+        .should('exist')
+        .should('have.text', eybLeadWithValues.company.name)
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.overview.index('fc752802-e454-4c7c-bbfd-4bdd84759b84')
+        )
     })
   })
 })
