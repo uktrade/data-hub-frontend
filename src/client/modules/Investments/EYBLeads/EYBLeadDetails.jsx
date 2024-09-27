@@ -46,7 +46,10 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row heading="Company website address">
                 {eybLead.companyWebsite ? (
-                  <NewWindowLink href={eybLead.companyWebsite}>
+                  <NewWindowLink
+                    data-test="website-link"
+                    href={eybLead.companyWebsite}
+                  >
                     {eybLead.companyWebsite}
                   </NewWindowLink>
                 ) : (

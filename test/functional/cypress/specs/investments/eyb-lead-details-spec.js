@@ -74,7 +74,7 @@ describe('EYB lead details', () => {
       })
     })
 
-    it('should render the company link within the table', () => {
+    it('should render the company overview link within the table', () => {
       cy.get('[data-test="company-link"]')
         .should('exist')
         .should('have.text', eybLeadWithValues.company.name)
@@ -83,6 +83,16 @@ describe('EYB lead details', () => {
           'href',
           urls.companies.overview.index('fc752802-e454-4c7c-bbfd-4bdd84759b84')
         )
+    })
+
+    it('should render the company website link within the table', () => {
+      cy.get('[data-test="website-link"]')
+        .should('exist')
+        .should(
+          'have.text',
+          eybLeadWithValues.company_website + ' (opens in new tab)'
+        )
+        .should('have.attr', 'href', eybLeadWithValues.company_website)
     })
   })
 })
