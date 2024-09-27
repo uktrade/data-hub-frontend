@@ -49,9 +49,10 @@ describe('EYB lead details', () => {
     it('should render all the fields of the details table', () => {
       assertSummaryTable({
         dataTest: 'eyb-lead-details-table',
+        // prettier-ignore
         content: {
           'Company name': eybLeadWithValues.company.name,
-          Value: 'High value', // pretier-ignore
+          'Value': 'High value',
           'Sector or industry': eybLeadWithValues.sector.name,
           'Location of company headquarters': 'Canada',
           'Submitted to EYB': '07 Jun 2023',
