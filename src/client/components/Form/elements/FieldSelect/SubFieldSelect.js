@@ -14,7 +14,8 @@ export default styled(FieldSelect)({
   paddingLeft: SPACING.SCALE_3,
   '&::before': {
     content: '""',
-    width: SPACING.SCALE_4,
+    boxSizing: 'border-box',
+    width: SPACING.SCALE_5,
     alignSelf: 'stretch',
     borderLeft: `${PIPE_WIDTH}px solid ${GREY_1}`,
     borderBottom: `${PIPE_WIDTH}px solid ${GREY_1}`,
