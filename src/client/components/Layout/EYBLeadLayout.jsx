@@ -91,7 +91,9 @@ const EYBLeadLayout = ({ id, children }) => {
                       )
                     )}
                   </BreadcrumbsWrapper>
-                  <StyledSuperheading>EYB lead</StyledSuperheading>
+                  <StyledSuperheading data-test="superheading">
+                    EYB lead
+                  </StyledSuperheading>
                   <LocalHeaderHeading data-test="heading">
                     {eybLead.company.name}
                   </LocalHeaderHeading>

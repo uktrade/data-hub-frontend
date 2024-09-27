@@ -94,5 +94,17 @@ describe('EYB lead details', () => {
         )
         .should('have.attr', 'href', eybLeadWithValues.company_website)
     })
+
+    it('should render the superheading', () => {
+      cy.get('[data-test="superheading"]')
+        .should('exist')
+        .should('have.text', 'EYB lead')
+    })
+
+    it('should render the heading', () => {
+      cy.get('[data-test="heading"]')
+        .should('exist')
+        .should('have.text', eybLeadWithValues.company.name)
+    })
   })
 })
