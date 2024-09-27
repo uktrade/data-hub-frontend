@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react'
 import _, { get, isEmpty, pick, throttle } from 'lodash'
 import qs from 'qs'
@@ -211,7 +210,7 @@ const StepInteractionDetails = ({
         aria-label="service"
       />
 
-      {!!secondTierServices.length &&
+      {!!secondTierServices.length && (
         <SubFieldSelect
           name="service_2nd_level"
           emptyOption="-- Select service --"
@@ -219,7 +218,7 @@ const StepInteractionDetails = ({
           validate={validateSecondTierServices}
           aria-label="service second level"
         />
-      }
+      )}
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
