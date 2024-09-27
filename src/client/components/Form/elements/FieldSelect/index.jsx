@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Select, { SelectInput } from '@govuk-react/select'
+import LabelText from '@govuk-react/label-text'
 import styled from 'styled-components'
 import { BREAKPOINTS } from '@govuk-react/constants'
 
@@ -10,18 +11,17 @@ import { BLACK } from '../../../../utils/colours'
 
 const StyledSelect = styled(Select)`
   position: relative;
+  width: max-content;
   &::after {
     border-bottom: 2px solid ${BLACK};
     border-right: 2px solid ${BLACK};
-    content: '';
     display: block;
     height: 12px;
     pointer-events: none;
     position: absolute;
-    right: 16px;
-    ${({ fullWidth }) => (fullWidth ? `right: 2%;` : `right: 52%;`)}
-    ${({ meta }) => (meta.error ? 'top: 72%;' : 'top: 50%;')}
-
+    right: 0;
+    margin-right: 16px;
+    top: 50%;
     transform: translate(0, -65%) rotate(45deg);
     width: 12px;
     @media (max-width: ${BREAKPOINTS.TABLET}) {
@@ -29,12 +29,21 @@ const StyledSelect = styled(Select)`
     }
   }
   ${SelectInput} {
+    width: initial;
     height: 47px;
-    padding: 0px 32px 0px 12px;
+    padding: 0px 46px 0px 12px;
     ${({ fullWidth }) => fullWidth && `width: 100%;`}
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+  }
+  /*
+  We hide the label if it's empty,
+  because it still contributes to the element's height,
+  and we don't want that.
+   */
+  ${LabelText}:empty {
+    display: none;
   }
 `
 
@@ -53,6 +62,8 @@ const FieldSelect = ({
   emptyOption = 'Please select',
   fullWidth,
   boldLabel = true,
+  className,
+  style,
   ...rest
 }) => {
   const { error, touched, value, onChange, onBlur } = useField({
@@ -62,7 +73,9 @@ const FieldSelect = ({
     initialValue,
   })
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error, boldLabel }}>
+    <FieldWrapper
+      {...{ name, label, legend, hint, error, boldLabel, className, style }}
+    >
       <StyledSelect
         fullWidth={fullWidth}
         name={name}
@@ -73,6 +86,9 @@ const FieldSelect = ({
         input={{
           id: name,
           defaultValue: value,
+          // FIXME: We are passing style and className to the nested input here,
+          // but we want to pass them to the root.
+          // Will doin' it break something?
           ...rest,
         }}
       >
