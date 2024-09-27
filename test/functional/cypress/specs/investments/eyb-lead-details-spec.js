@@ -51,7 +51,7 @@ describe('EYB lead details', () => {
         dataTest: 'eyb-lead-details-table',
         content: {
           'Company name': eybLeadWithValues.company.name,
-          'Value': 'High value',
+          Value: 'High value', // pretier-ignore
           'Sector or industry': eybLeadWithValues.sector.name,
           'Location of company headquarters': 'Canada',
           'Submitted to EYB': '07 Jun 2023',
