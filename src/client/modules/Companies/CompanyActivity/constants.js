@@ -23,6 +23,19 @@ export const LABELS = {
   allExternalActivity: 'External activity',
 }
 
+export const TAGS = {
+  REFERRAL: {
+    COMPLETE: {
+      text: 'Completed referral',
+      colour: 'green',
+    },
+    OUTSTANDING: {
+      text: 'Outstanding referral',
+      colour: 'blue',
+    },
+  },
+}
+
 const FILTER_KEYS = {
   dataHubAndExternalActivity: 'dataHubAndExternalActivity',
   myActivity: 'myActivity',

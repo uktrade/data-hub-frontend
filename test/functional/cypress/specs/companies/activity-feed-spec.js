@@ -4,7 +4,6 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
 const company_activities = fixtures.company.activities
-const activities = company_activities.activities
 
 /*
  * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
@@ -18,21 +17,22 @@ describe('Company activity feed', () => {
     })
 
     it('displays interaction activities', () => {
-      const interaction = activities.results[0]
+      const interaction = company_activities.results[0].interaction
       cy.get('[data-test="collection-item"]').each(() =>
         cy.get('a').contains(interaction.subject)
       )
     })
 
     it('displays activities which do not have a service name', () => {
-      const interaction_with_null_service = activities.results[1]
+      const interaction_with_null_service =
+        company_activities.results[1].interaction
       cy.get('[data-test="collection-item"]').each(() =>
         cy.get('a').contains(interaction_with_null_service.subject)
       )
     })
 
     it('shows the activity count', () => {
-      const count = activities.count
+      const count = company_activities.count
       cy.get('[data-test="collectionCount"]').each(() =>
         cy.get('span').contains(count)
       )
@@ -246,32 +246,27 @@ describe('Company activity feed', () => {
     })
   })
 
-  context.skip('Referrals project', () => {
+  context('Referrals project', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
 
     it('displays the correct referral type label', () => {
-      cy.get('[data-test="referral-activity"]').within(() =>
-        cy
-          .get('[data-test="activity-kind-label"]')
-          .contains('Outstanding Referral', {
-            matchCase: false,
-          })
-      )
+      cy.get('[data-test="referral-label"]').contains('Outstanding Referral', {
+        matchCase: false,
+      })
     })
 
     it('displays the referral name with link', () => {
-      cy.get('[data-test="referral-activity"]').within(() =>
+      const activity = company_activities.results[2]
+      cy.get('[data-test="collection-item"]').each(() =>
         cy
-          .get('[data-test="referral-activity-card-subject"]')
-          .should('exist')
-          .should('have.text', 'Support needs in the Planet')
           .get('a')
+          .contains(activity.referral.subject)
           .should(
             'have.attr',
             'href',
-            '/companies/01e3366a-aa2b-40c0-aaf9-9013f714a671/referrals/fd6a151f-90db-41e3-841f-1ca0dd63b674'
+            `/companies/${activity.company.id}/referrals/${activity.referral.id}`
           )
       )
     })

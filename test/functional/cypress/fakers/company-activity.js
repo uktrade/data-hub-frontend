@@ -6,48 +6,40 @@ import { listFaker } from './utils'
 import { userFaker } from './users'
 import teamFaker from './team'
 
-const companyFaker = (overrides = {}) => ({
-  ...jsf.generate(apiSchema.components.schemas.CompanyActivity),
-  name: faker.company.name(),
-  id: faker.string.uuid(),
-  activities: {
-    count: faker.number.int({ min: 1, max: 50 }),
-    results: [],
-  },
-  ...overrides,
-})
-
 const companyActivityFaker = (overrides = {}) => ({
+  ...jsf.generate(apiSchema.components.schemas.Company),
   id: faker.string.uuid(),
-  contacts: [userFaker()],
-  dit_participants: [
-    {
-      adviser: userFaker(),
-      team: teamFaker(),
+  activity_source: 'interaction',
+  company: {
+    name: faker.word.adjective(),
+    id: faker.string.uuid(),
+    trading_name: faker.word.adjective(),
+  },
+  interaction: {
+    contacts: [userFaker()],
+    dit_participants: [
+      {
+        adviser: userFaker(),
+        team: teamFaker(),
+      },
+    ],
+    kind: faker.word.adjective(),
+    subject: faker.word.words(),
+    service: {
+      name: faker.lorem.words(),
+      id: faker.string.uuid(),
     },
-  ],
-  subject: faker.word.words(),
-  service: {
-    name: faker.lorem.words(),
-    id: faker.string.uuid(),
+    communication_channel: {
+      id: faker.string.uuid(),
+      name: 'email/website',
+    },
   },
-  communication_channel: {
-    id: faker.string.uuid(),
-    name: 'email/website',
-  },
+  referral: null,
   ...overrides,
 })
 
-const companyActivityListFaker = (length = 1, overrides) => {
-  const company = companyFaker()
-  company.activities.results = listFaker({
-    fakerFunction: companyActivityFaker,
-    length,
-    overrides,
-  })
-  company.activities.count = length
-  return company
-}
+const companyActivityListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: companyActivityFaker, length, overrides })
 
 export { companyActivityFaker, companyActivityListFaker }
 

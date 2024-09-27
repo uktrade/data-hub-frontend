@@ -35,12 +35,14 @@ const buildQueryString = (queryParams = {}) =>
   })
 
 const minimumRequest = {
+  limit: 10,
+  offset: 0,
   company: fixtures.company.allActivitiesCompany.id,
   sortby: 'date:desc',
 }
 
 describe('Company Activity Feed Filter', () => {
-  const companyActivitiesEndPoint = `/api-proxy/v4/company/${fixtures.company.allActivitiesCompany.id}/activity?limit=10&offset=0`
+  const companyActivitiesEndPoint = '/api-proxy/v4/search/company-activity'
 
   context('Default Params', () => {
     beforeEach(() => {
@@ -51,15 +53,6 @@ describe('Company Activity Feed Filter', () => {
     })
     it('should set the default params in the get request url', () => {
       assertPayload('@apiRequest', minimumRequest)
-    })
-
-    it('should pass the pagination limit and offset in the query params', () => {
-      cy.wait('@apiRequest').then((interception) => {
-        expect(interception.request.query.hasOwnProperty('limit')).to.eq(true)
-        expect(interception.request.query.limit).to.eq('10')
-        expect(interception.request.query.hasOwnProperty('offset')).to.eq(true)
-        expect(interception.request.query.offset).to.eq('0')
-      })
     })
   })
 
@@ -81,6 +74,8 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@adviserSearchApiRequest')
 
         assertPayload('@apiRequest', {
+          limit: 10,
+          offset: 0,
           dit_participants__adviser: [adviser.id],
           company: fixtures.company.allActivitiesCompany.id,
           sortby: 'date:desc',
@@ -99,6 +94,8 @@ describe('Company Activity Feed Filter', () => {
       const dateAfter = '2021-06-24'
       const dateBefore = '2023-06-24'
       const request = {
+        limit: 10,
+        offset: 0,
         company: fixtures.company.allActivitiesCompany.id,
         date_after: dateAfter,
         date_before: dateBefore,
@@ -155,6 +152,8 @@ describe('Company Activity Feed Filter', () => {
         assertChipExists({ label: 'To: 24 June 2023', position: 2 })
         removeChip('2021-06-24')
         const requestWithNoDateAfter = {
+          limit: 10,
+          offset: 0,
           company: fixtures.company.allActivitiesCompany.id,
           date_before: dateBefore,
           sortby: 'date:desc',

@@ -6772,6 +6772,90 @@
             "type": "string",
             "format": "uuid"
           },
+          "activity_source": {
+            "type": "string"
+          },
+          "company": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "uuid"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "referral": {
+            "type": "object",
+            "properties": {
+              "subject": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "interaction": {
+            "type": "object",
+            "properties": {
+              "notes": {
+                "type": "string"
+              },
+              "contacts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "dit_participants": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "adviser": {
+                      "type": "object",
+                      "properties": {
+                        "id": "string",
+                        "type": "uuid"
+                      }
+                    },
+                    "team": {
+                      "type": "string",
+                      "readOnly": true
+                    }
+                  }
+                }
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "service": {
+                "type": "string",
+                "nullable": true
+              },
+              "subject": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "interaction",
+                  "service_delivery"
+                ],
+                "type": "string"
+              },
+              "communication_channel": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
           "name": {
             "type": "string",
             "format": "uuid"
@@ -6780,76 +6864,6 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
-          },
-          "activities": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "number"
-                },
-                "next": {
-                  "type": "string"
-                },
-                "previous": {
-                  "type": "string"
-                },
-                "results": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "contacts": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "date": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "dit_participants": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "adviser": {
-                              "type": "string"
-                            },
-                            "team": {
-                              "type": "string",
-                              "readOnly": true
-                            }
-                          },
-                          "required": ["adviser"]
-                        }
-                      },
-                      "id": {
-                        "type": "string",
-                        "format": "uuid"
-                      },
-                      "service": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "subject": {
-                        "type": "string"
-                      },
-                      "kind": {
-                        "enum": ["interaction", "service_delivery"],
-                        "type": "string"
-                      },
-                      "communication_channel": {
-                        "type": "string",
-                        "nullable": true
-                      }
-                    }
-                  }
-                }
-              }
             }
           }
         }

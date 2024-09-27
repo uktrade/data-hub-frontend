@@ -1,3 +1,4 @@
+import { TAGS } from '../../../CompanyActivity/constants'
 import { formatMediumDate, isDateInFuture } from '../../../../../utils/date'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
@@ -37,6 +38,47 @@ const buildSummary = (advisers, communicationChannel, contacts, date) => {
   return `${transformedAdvisers} ${isFuture} ${transformCommunicationChannel(communicationChannel)} contact with ${transformedContacts}`
 }
 
+/*
+  From the activity_source field from the API, determine which transformer to
+  use to get the required data for the cards.
+*/
+export const transformActivity = (activity) => {
+  const activity_source = activity.activity_source
+
+  if (activity_source === 'interaction')
+    return transformInteractionToListItem(activity.interaction)
+  else if (activity_source === 'referral')
+    return transformReferralToListItem(activity)
+}
+
+export const transformReferralToListItem = (activity) => {
+  const referral = activity.referral
+  const summary = `
+    Completed sending adviser ${referral.created_by.name} \
+    receiving adviser ${referral.recipient.name}
+  `
+
+  const date = !referral.completedOn && formatMediumDate(referral.created_on)
+
+  return {
+    id: referral.id,
+    date: date,
+    tags: [
+      {
+        text: TAGS.REFERRAL[referral.status.toUpperCase()].text,
+        colour: TAGS.REFERRAL[referral.status.toUpperCase()].colour,
+        dataTest: 'referral-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.companies.referrals.details(
+      activity.company.id,
+      referral.id
+    ),
+    headingText: referral.subject,
+    summary: summary,
+  }
+}
+
 export const transformInteractionToListItem = ({
   date,
   subject,
@@ -65,7 +107,7 @@ export const transformInteractionToListItem = ({
   ),
 })
 
-export const transformResponseToCollection = ({ activities = {} }) => ({
+export const transformResponseToCollection = (activities) => ({
   count: activities.count,
-  results: activities.results.map(transformInteractionToListItem),
+  results: activities.results.map(transformActivity),
 })
