@@ -86,9 +86,6 @@ const FieldSelect = ({
         input={{
           id: name,
           defaultValue: value,
-          // FIXME: We are passing style and className to the nested input here,
-          // but we want to pass them to the root.
-          // Will doin' it break something?
           ...rest,
         }}
       >
