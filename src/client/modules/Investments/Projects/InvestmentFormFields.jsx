@@ -290,9 +290,11 @@ export const FieldLikelihoodOfLanding = ({
     label="Likelihood of landing"
     resource={LikelihoodToLandResource}
     field={FieldTypeahead}
+    required="Select a likelihood of landing value"
+    invalid="Enter the likelihood of landing"
+    placeholder="Select a likelihood of landing value"
     initialValue={initialValue}
     autoScroll={autoScroll}
-    placeholder="Select a likelihood of landing value"
   />
 )
 
