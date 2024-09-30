@@ -1,7 +1,4 @@
 import { faker } from '@faker-js/faker'
-// import { JSONSchemaFaker } from 'json-schema-faker'
-
-// import apiSchema from '../../../api-schema.json'
 
 import { randomChoice } from './utils'
 import { sectorFaker } from './sectors'
