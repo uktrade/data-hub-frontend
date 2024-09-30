@@ -170,6 +170,15 @@ const assertCompanyBreadcrumbs = (companyName, detailsUrl, lastCrumb) => {
   })
 }
 
+const assertLeadBreadcrumbs = (leadType, leadDetailsUrl, leadName) => {
+  testBreadcrumbs({
+    Home: urls.dashboard.index(),
+    Investments: urls.investments.index(),
+    [leadType]: leadDetailsUrl,
+    [leadName]: null,
+  })
+}
+
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
     .wrap(element)
@@ -1078,6 +1087,7 @@ module.exports = {
   assertBreadcrumbs,
   testBreadcrumbs,
   assertCompanyBreadcrumbs,
+  assertLeadBreadcrumbs,
   assertFieldTypeahead,
   assertFieldTypeaheadWithExactText,
   assertFieldSingleTypeahead,

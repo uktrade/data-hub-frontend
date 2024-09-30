@@ -1,4 +1,7 @@
-import { assertSummaryTable } from '../../support/assertions'
+import {
+  assertSummaryTable,
+  assertLeadBreadcrumbs,
+} from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 
@@ -105,6 +108,14 @@ describe('EYB lead details', () => {
       cy.get('[data-test="heading"]')
         .should('exist')
         .should('have.text', eybLeadWithValues.company.name)
+    })
+
+    it('should render the breadcrumbs', () => {
+      assertLeadBreadcrumbs({
+        leadType: 'EYB leads',
+        leadDetailsUrl: urls.investments.eybLeads.index(),
+        leadName: eybLeadWithValues.company.name,
+      })
     })
   })
 })
