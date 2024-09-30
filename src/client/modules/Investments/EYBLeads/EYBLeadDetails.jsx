@@ -1,9 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { Link } from 'govuk-react'
 
-import { state2props } from './state'
 import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
@@ -97,4 +95,4 @@ const EYBLeadDetails = () => {
   )
 }
 
-export default connect(state2props)(EYBLeadDetails)
+export default EYBLeadDetails
