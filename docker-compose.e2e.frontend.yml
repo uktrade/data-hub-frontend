@@ -3,7 +3,7 @@ services:
   frontend:
     depends_on:
       - mock-sso
-    entrypoint: dockerize -wait tcp://api:8000 -timeout 3m -wait-retry-interval 5s
+    entrypoint: dockerize -wait tcp://api:8000 -timeout 5m -wait-retry-interval 5s
     environment:
       POSTCODE_KEY: ${POSTCODE_KEY}
       OAUTH2_TOKEN_FETCH_URL: http://mock-sso:8080/o/token
@@ -28,4 +28,3 @@ services:
       MOCK_SSO_USERNAME: test@gov.uk
     logging:
       driver: none
-
