@@ -8,7 +8,7 @@ import Breadcrumbs from '@govuk-react/breadcrumbs'
 
 import { GREY_1, GREY_4 } from '../../../client/utils/colours'
 import Footer from '../Footer'
-import Main from '../Main'
+import Main, { InnerContainer } from '../Main'
 import DataHubHeader from '../DataHubHeader'
 import WatchTextContent from '../WatchTextContent'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
@@ -23,9 +23,14 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
-const StyledHeader = styled('div')`
-  padding-bottom: ${SPACING.SCALE_5};
+const LocalHeader = styled('div')`
   background-color: ${GREY_4};
+  paddingTop: SPACING.SCALE_5,
+  textAlign: 'center',
+`
+
+const StyledHeader = styled(InnerContainer)`
+  padding-bottom: ${SPACING.SCALE_5};
   padding-top: ${SPACING.SCALE_3};
 `
 
@@ -61,13 +66,13 @@ const EYBLeadLayout = ({ id, children }) => {
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      <StyledHeader
+      <LocalHeader
         aria-label="local header"
         data-auto-id="localHeader"
         data-test="localHeader"
         role="region"
       >
-        <StyledMain>
+        <StyledHeader>
           <EYBLeadResource id={id}>
             {(eybLead) => {
               const breadcrumbs = buildEYBLeadBreadcrumbs({
@@ -101,13 +106,13 @@ const EYBLeadLayout = ({ id, children }) => {
               )
             }}
           </EYBLeadResource>
-        </StyledMain>
-      </StyledHeader>
-      <Main>
+        </StyledHeader>
+      </LocalHeader>
+      <StyledMain>
         <GridRow>
           <GridCol>{children}</GridCol>
         </GridRow>
-      </Main>
+      </StyledMain>
       <Footer />
     </>
   )

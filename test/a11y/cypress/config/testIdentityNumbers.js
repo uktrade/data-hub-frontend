@@ -21,6 +21,7 @@ export const testIdentityNumbers = {
   ':contactId': '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
   ':countryId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',
   ':eventId': 'b93d4273-36fe-4008-ac40-fbc197910791',
+  ':eybLeadId': '45122997-f323-4161-9ea4-2babe305b598',
   ':globalHqId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',
   ':interactionId': 'd14abf23-7f07-4640-8908-cb6b40dc3ce3',
   ':investmentId': investment.id,

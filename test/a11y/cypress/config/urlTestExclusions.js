@@ -16,7 +16,6 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/hierarchies/ghq/search' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
-  { url: '/investments/eyb-leads/:eybLeadId/details' },
   { url: '/investments/projects/:investmentId/details' },
   { url: '/investments/projects/:investmentId/edit-details' },
   { url: '/investments/projects/:investmentId/edit-requirements' },
