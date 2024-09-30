@@ -287,7 +287,7 @@ export const FieldLikelihoodOfLanding = ({
 }) => (
   <ResourceOptionsField
     name="likelihood_to_land"
-    label="Likelihood of landing (optional)"
+    label="Likelihood of landing"
     resource={LikelihoodToLandResource}
     field={FieldTypeahead}
     initialValue={initialValue}
