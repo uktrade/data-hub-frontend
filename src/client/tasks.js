@@ -75,6 +75,9 @@ import * as investmentProfilesTasks from './modules/Investments/Profiles/tasks'
 import { TASK_GET_OPPORTUNITIES_LIST } from './modules/Investments/Opportunities/CollectionList/state'
 import * as investmentOpportunitiesListTasks from './modules/Investments/Opportunities/CollectionList/tasks'
 
+import { TASK_GET_EYB_LEAD } from './modules/Investments/EYBLeads/state'
+import * as investmentEYBLeadTasks from './modules/Investments/EYBLeads/tasks'
+
 import {
   TASK_CREATE_INVESTMENT_OPPORTUNITY,
   TASK_SAVE_OPPORTUNITY_STATUS,
@@ -490,6 +493,7 @@ export const tasks = {
   [TASK_CREATE_INVESTMENT_OPPORTUNITY]:
     investmentOpportunitiesDetailsTasks.createOpportunity,
   [DNB__CHECK_PENDING_REQUEST]: businessDetails.checkIfPendingRequest,
+  [TASK_GET_EYB_LEAD]: investmentEYBLeadTasks.getEYBLead,
   [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
   [TASK_GET_PROJECTS_LIST]: investmentProjectTasks.getProjects,
   [TASK_GET_PROJECT_WON_COUNT]: overviewCardTasks.getProjectsWon,
@@ -650,6 +654,7 @@ export const tasks = {
   [TASK_EDIT_OMIS_INTERNAL_INFORMATION]: updateOrder,
   [TASK_GET_TASK_DETAILS]: getTaskDetail,
   [TASK_GET_INVESTMENT_PROJECT]: investmentProjectTasks.getInvestmentProject,
+  [TASK_GET_EYB_LEAD]: investmentEYBLeadTasks.getEYBLead,
   [TASK_SAVE_STATUS_COMPLETE]: saveTaskStatusComplete,
   [TASK_SAVE_STATUS_ACTIVE]: saveTaskStatusActive,
   [TASK_DELETE]: deleteTask,
