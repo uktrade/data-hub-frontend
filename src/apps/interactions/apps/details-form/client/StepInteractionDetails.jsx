@@ -210,15 +210,20 @@ const StepInteractionDetails = ({
         aria-label="service"
       />
 
-      {!!secondTierServices.length && (
-        <SubFieldSelect
-          name="service_2nd_level"
-          emptyOption="-- Select service --"
-          options={secondTierServices}
-          validate={validateSecondTierServices}
-          aria-label="service second level"
-        />
-      )}
+      <SubFieldSelect
+        /*
+        We need to hide the component this way as mounting it conditionally
+        would make its error message in the error summary appear at the end
+        of the list and we want the errors in the summary to be in the same
+        order as the corresponding fields.
+        */
+        style={{ display: secondTierServices.length }}
+        name="service_2nd_level"
+        emptyOption="-- Select service --"
+        options={secondTierServices}
+        validate={validateSecondTierServices}
+        aria-label="service second level"
+      />
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
