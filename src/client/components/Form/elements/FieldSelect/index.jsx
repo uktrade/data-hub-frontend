@@ -20,13 +20,15 @@ const StyledSelect = styled(Select)`
     -moz-appearance: none;
 
     /*
-    We need the caret to be positioned relative to the <select> and not the label which is wrapping it,
-    otherwise, the caret will be misplaced when the label texts spans multiple lines.
-    We can't use an ::after pseudo element as it doesn't work with <select>,
-    and we also can't add a wrapper to the <select> as this is a @govuk-react component.
-    The solution is to draw the carret to the background of the <select>
-    with a combination of linear gradients.
-    The gradient can't be configured with the following parameters:
+    We need the caret to be positioned relative to the <select> and not the
+    label which is wrapping it, otherwise the caret will be misplaced when the
+    label texts spans multiple lines. We can't use an ::after pseudo element as
+    it doesn't work with <select> and we also can't add a wrapper to the
+    <select> as this is a @govuk-react component.
+
+    The solution is to draw the carret to the background of the <select> with a
+    combination of linear gradients. The gradient can be configured with the
+    following parameters:
     */
     --caret-height: 10px;
     --stroke-width: 2px;
@@ -90,9 +92,8 @@ const StyledSelect = styled(Select)`
     // Righ wing END
   }
   /*
-  We hide the label if it's empty,
-  because it still contributes to the element's height,
-  and we don't want that.
+  We hide the label if it's empty, because it still contributes to the element's
+  height.
    */
   ${LabelText}:empty {
     display: none;

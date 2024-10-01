@@ -24,9 +24,9 @@ export default styled(FieldSelect)({
   },
   /*
   We have to compensate for the combined bottom padding and margin (38px) of
-  @gouk-react Select, under which this component will appear.
-  It is a terrible solution, but the only other option is to remove the margin
-  and padding from FieldSelect, which would require re-styling most of the app.
+  @gvouk-react Select, under which this component will appear. It is a terrible
+  solution, but the only other option is to remove the margin and padding from
+  FieldSelect, which would require re-styling most of the app.
   */
   marginTop: -parseInt(SPACING.SCALE_3, 0),
 })
