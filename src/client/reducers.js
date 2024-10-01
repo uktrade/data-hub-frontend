@@ -43,6 +43,9 @@ import {
   ID as PROPOSITION_COMPLETE_ID,
 } from './modules/Investments/Projects/state'
 
+import { INVESTMENT_EYB_LEADS_ID } from './modules/Investments/EYBLeads/state'
+import investmentEYBLeadsReducer from './modules/Investments/EYBLeads/reducer'
+
 import {
   OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID,
   OVERVIEW_COMPANY_PROJECTS_LIST_ID,
@@ -215,6 +218,7 @@ export const reducers = {
   [INVESTMENT_OPPORTUNITIES_DETAILS_ID]: investmentOpportunitiesDetailsReducer,
   [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
   [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
+  [INVESTMENT_EYB_LEADS_ID]: investmentEYBLeadsReducer,
   [INVESTMENT_PROJECT_ID]: investmentProjectReducer,
   [OVERVIEW_COMPANY_EXPORT_WINS_LIST_ID]: overviewExportWinsReducer,
   [OVERVIEW_COMPANY_PROJECTS_LIST_ID]: overviewInvestmentProjectReducer,
