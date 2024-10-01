@@ -187,60 +187,34 @@ describe('Company activity feed', () => {
     })
   })
 
-  context.skip('Investment project', () => {
+  context('Investment project', () => {
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
 
     it('displays the correct activity type label', () => {
-      cy.get('[data-test="investment-activity"]').within(() =>
-        cy
-          .get('[data-test="activity-kind-label"]')
-          .contains('New Investment Project', {
-            matchCase: false,
-          })
+      cy.get('[data-test="investment-service-label"]').contains(
+        'New Investment Project',
+        {
+          matchCase: false,
+        }
       )
     })
 
     it('displays the correct topic label', () => {
-      cy.get('[data-test="investment-activity"]').within(() =>
-        cy.get('[data-test="activity-theme-label"]').contains('Investment', {
-          matchCase: false,
-        })
-      )
+      cy.get('[data-test="investment-theme-label"]').contains('Investment', {
+        matchCase: false,
+      })
     })
-
-    it('displays the correct sub-topic label', () => {
-      cy.get('[data-test="investment-activity"]').within(() =>
-        cy
-          .get('[data-test="activity-service-label"]')
-          .contains('Project - FDI', {
-            matchCase: false,
-          })
-      )
-    })
-
-    it('displays the correct sub-topic label', () => {
-      cy.get('[data-test="investment-activity"]').within(() =>
-        cy
-          .get('[data-test="activity-service-label"]')
-          .contains('Project - FDI', {
-            matchCase: false,
-          })
-      )
-    })
-
     it('displays the investment project name with link', () => {
-      cy.get('[data-test="investment-activity"]').within(() =>
+      cy.get('[data-test="collection-item"]').each(() =>
         cy
-          .get('[data-test="investment-activity-card-subject"]')
-          .should('exist')
-          .should('have.text', 'Marshmellow UK Takeover')
           .get('a')
+          .contains('Bo Oh O Wa er')
           .should(
             'have.attr',
             'href',
-            'https://www.datahub.trade.gov.uk/investments/projects/d9e25847-6199-e211-a939-e4115bead28a/details'
+            '/investments/projects/9a824ef8-207e-4f6b-9205-91a42c1c77ef/details'
           )
       )
     })

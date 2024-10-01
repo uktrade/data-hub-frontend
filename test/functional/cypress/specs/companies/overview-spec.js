@@ -5,7 +5,9 @@ import {
 } from '../../fakers/companies'
 import { getCollectionList } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
-import companyActivityListFaker from '../../fakers/company-activity'
+import companyActivityListFaker, {
+  companyActivityInvestmentListFaker,
+} from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -386,6 +388,7 @@ describe('Company overview page', () => {
   // TODO - Unskip relevant parts of this test when we have the associated DAGs in place
   context('when viewing all activity cards types', () => {
     const interactionsList = companyActivityListFaker(1)
+    const investmentsList = companyActivityInvestmentListFaker(1)
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -496,6 +499,21 @@ describe('Company overview page', () => {
         `${activity.interaction.dit_participants[0].adviser.name} had ${activity.interaction.communication_channel.name} contact with ${activity.interaction.contacts[0].name}`
       )
     })
+    it('should display Data Hub investment activity', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        investmentsList,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      const activity = investmentsList[0]
+      cy.get('[data-test="investment-service-label"]').contains(
+        'New Investment Project'
+      )
+      cy.get('[data-test="activity-summary"]').contains(
+        `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} jobs added by ${activity.investment.created_by.name}`
+      )
+    })
+
     it.skip('should display Data Hub event', () => {
       cy.get('[data-test="data-hub-event-summary"]')
         .children()
