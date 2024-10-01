@@ -2581,6 +2581,100 @@
         "tags": ["v3"]
       }
     },
+    "/v4/investment-lead/eyb": {
+      "get": {
+        "operationId": "listEYBLeads",
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["count", "results"],
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RetrieveEYBLead"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": ["v4"]
+      }
+    },
+    "/v4/investment-lead/eyb/{id}": {
+      "get": {
+        "operationId": "retrieveEYBLead",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A UUID string identifying this eyb lead.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrieveEYBLead"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": ["v4"]
+      }
+    },
     "/v4/company": {
       "get": {
         "operationId": "listCompanys",
@@ -6844,10 +6938,7 @@
                 "type": "string"
               },
               "kind": {
-                "enum": [
-                  "interaction",
-                  "service_delivery"
-                ],
+                "enum": ["interaction", "service_delivery"],
                 "type": "string"
               },
               "communication_channel": {
@@ -9349,6 +9440,255 @@
           "start_date",
           "teams",
           "service"
+        ]
+      },
+
+      "RetrieveEYBLead": {
+        "type": "object",
+        "properties": {
+          "archived": {
+            "type": "boolean"
+          },
+          "archived_on": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "archived_reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "archived_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_on": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "modified_on": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "triage_hashed_uuid": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "triage_created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "triage_modified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sector": {
+            "type": "string"
+          },
+          "sector_sub": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "intent": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "SET_UP_NEW_PREMISES",
+                "SET_UP_A_NEW_DISTRIBUTION_CENTRE",
+                "ONWARD_SALES_AND_EXPORTS_FROM_THE_UK",
+                "RESEARCH_DEVELOP_AND_COLLABORATE",
+                "FIND_PEOPLE_WITH_SPECIALIST_SKILLS",
+                "OTHER"
+              ],
+              "type": "string"
+            },
+            "maxItems": 6
+          },
+          "intent_other": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "location": {
+            "type": "string"
+          },
+          "location_city": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "location_none": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hiring": {
+            "enum": ["1-5", "6-50", "51-100", "101+", "NO_PLANS_TO_HIRE_YET"],
+            "type": "string"
+          },
+          "spend": {
+            "enum": [
+              "0-9999",
+              "10000-500000",
+              "500000-1000000",
+              "1000000-2000000",
+              "2000000-5000000",
+              "5000000-10000000",
+              "10000000+"
+            ],
+            "type": "string"
+          },
+          "spend_other": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "is_high_value": {
+            "type": "boolean"
+          },
+          "user_hashed_uuid": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "user_created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_modified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "company_location": {
+            "type": "string"
+          },
+          "full_name": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "telephone_number": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "agree_terms": {
+            "type": "boolean"
+          },
+          "agree_info_email": {
+            "type": "boolean"
+          },
+          "landing_timeframe": {
+            "enum": [
+              "UNDER_SIX_MONTHS",
+              "SIX_TO_TWELVE_MONTHS",
+              "ONE_TO_TWO_YEARS",
+              "OVER_TWO_YEARS"
+            ],
+            "type": "string"
+          },
+          "company_website": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "duns_number": {
+            "type": "string",
+            "nullable": true,
+            "description": "Dun & Bradstreet unique identifier. Nine-digit number with leading zeros.",
+            "pattern": "^-?\\d+\\z",
+            "maxLength": 9,
+            "minLength": 9
+          },
+          "company": {
+            "type": "string"
+          },
+          "utm_name": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "utm_source": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "utm_medium": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "utm_content": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "line_1": {
+                "type": "string",
+                "default": "",
+                "maxLength": 255
+              },
+              "line_2": {
+                "type": "string",
+                "default": "",
+                "maxLength": 255
+              },
+              "town": {
+                "type": "string",
+                "default": "",
+                "maxLength": 255
+              },
+              "county": {
+                "type": "string",
+                "default": "",
+                "maxLength": 255
+              },
+              "postcode": {
+                "type": "string",
+                "default": "",
+                "maxLength": 255
+              },
+              "area": {
+                "type": "string",
+                "nullable": true
+              },
+              "country": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "required": [
+          "triage_hashed_uuid",
+          "triage_created",
+          "triage_modified",
+          "sector",
+          "location",
+          "hiring",
+          "spend",
+          "user_hashed_uuid",
+          "user_created",
+          "user_modified",
+          "company_name",
+          "company_location",
+          "full_name",
+          "role",
+          "email",
+          "telephone_number",
+          "company",
+          "address"
         ]
       },
       "SearchContactQuery": {
