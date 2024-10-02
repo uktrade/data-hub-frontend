@@ -19,22 +19,12 @@ import {
   TASK_GET_EYB_LEADS_METADATA,
   state2props,
 } from './state.js'
+import { QS_PARAMS, VALUE_OPTIONS } from './constants.js'
 import {
   listSkeletonPlaceholder,
   CheckboxPlaceholder,
   InputPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
-
-const QS_PARAMS = {
-  companyName: 'company',
-  sectorId: 'sector',
-  valueOfLead: 'value',
-}
-
-const VALUE_OPTIONS = [
-  { value: 'high', label: 'High value' },
-  { value: 'low', label: 'Low value' },
-]
 
 const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
   const location = useLocation()
