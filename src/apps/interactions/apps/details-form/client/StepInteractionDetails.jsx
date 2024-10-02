@@ -217,7 +217,7 @@ const StepInteractionDetails = ({
         the list and we want the errors in the summary to be in the same order
         as the corresponding fields.
         */
-        style={{ display: secondTierServices.length }}
+        style={{ display: !secondTierServices.length && 'none' }}
         name="service_2nd_level"
         emptyOption="-- Select service --"
         options={secondTierServices}
