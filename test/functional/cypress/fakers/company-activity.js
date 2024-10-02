@@ -68,6 +68,22 @@ const companyActivityInvestmentFaker = (overrides = {}) => ({
   ...overrides,
 })
 
+const companyActivityInvestmenNoJobFaker = (overrides = {}) => ({
+  ...companyActivityFaker(),
+  activity_source: 'investment',
+  investment: {
+    investment_type: {
+      name: faker.company.name(),
+      id: faker.string.uuid(),
+    },
+    name: faker.word.words(),
+    id: faker.string.uuid(),
+    number_new_jobs: null,
+    created_by: userFaker(),
+  },
+  ...overrides,
+})
+
 const companyActivityInteractionListFaker = (length = 1, overrides) =>
   listFaker({
     fakerFunction: companyActivityInteractionFaker,
@@ -82,11 +98,19 @@ const companyActivityInvestmentListFaker = (length = 1, overrides) =>
     overrides,
   })
 
+const companyActivityInvestmenListNoJobFaker = (length = 1, overrides) =>
+  listFaker({
+    fakerFunction: companyActivityInvestmenNoJobFaker,
+    length,
+    overrides,
+  })
+
 export {
   companyActivityInteractionFaker,
   companyActivityInvestmentFaker,
   companyActivityInteractionListFaker,
   companyActivityInvestmentListFaker,
+  companyActivityInvestmenListNoJobFaker,
 }
 
 export default companyActivityInteractionListFaker
