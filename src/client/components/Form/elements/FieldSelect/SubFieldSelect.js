@@ -10,7 +10,6 @@ const PIPE_WIDTH = 3
 export default styled(FieldSelect)({
   display: 'flex',
   gap: SPACING.SCALE_3,
-  width: 'fit-content',
   paddingLeft: SPACING.SCALE_3,
   '&::before': {
     content: '""',

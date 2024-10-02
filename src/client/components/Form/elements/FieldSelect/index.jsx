@@ -11,9 +11,10 @@ import { BLACK, WHITE } from '../../../../utils/colours'
 const StyledSelect = styled(Select)`
   position: relative;
   ${SelectInput} {
-    width: initial;
     height: 47px;
     padding: 0px 46px 0px 12px;
+    width: 50%;
+    min-width: fit-content;
     ${({ fullWidth }) => fullWidth && `width: 100%;`}
     appearance: none;
     -webkit-appearance: none;
