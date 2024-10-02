@@ -37,6 +37,7 @@ const prospectIncompleteFields = [
 const assignPmIncompleteFields = [
   'project_manager',
   'project_assurance_adviser',
+  'likelihood_to_land',
 ]
 
 const activeIncompleteFields = [
@@ -179,6 +180,7 @@ describe('ProjectIncompleteFields', () => {
         assertToMoveText(STAGE_ACTIVE)
         assertLink('Project Manager', projectManagementLink)
         assertLink('Project Assurance Adviser', projectManagementLink)
+        assertLink('Likelihood of landing', projectManagementLink)
       })
     }
   )
