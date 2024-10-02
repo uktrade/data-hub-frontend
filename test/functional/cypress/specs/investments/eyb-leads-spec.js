@@ -14,11 +14,9 @@ import {
 } from '../../support/actions'
 import { investments } from '../../../../../src/lib/urls'
 import { format } from '../../../../../src/client/utils/date'
-import eybLeadListFixture from '../../../../sandbox/fixtures/v4/investment/eyb-lead-list.json'
+import { eybLeadFaker } from '../../fakers/eyb-leads'
 
 const EYB_RETRIEVE_API_ROUTE = '/api-proxy/v4/investment-lead/eyb'
-
-const NUMBER_OF_FIXTURE_LEADS = eybLeadListFixture.count
 
 const FILTER_ELEMENTS = {
   company: '[data-test="company-name-filter"]',
@@ -26,13 +24,28 @@ const FILTER_ELEMENTS = {
   value: '[data-test="lead-value-filter"]',
 }
 
-const COMPANY_NAME = 'Frost' // Used in fixture
-const SECTOR_NAME = 'Mining' // Used in fixture
-const SECTOR_ID = 'a622c9d2-5f95-e211-a939-e4115bead28a' // Used in fixture
+const DATE_TIME_STRING = '2024-09-25T08:30:00.000000Z'
+const COMPANY_NAME = 'Frost'
+const SECTOR_NAME = 'Mining'
+const SECTOR_ID = 'a622c9d2-5f95-e211-a939-e4115bead28a'
 const HIGH_VALUE = 'high'
 const HIGH_VALUE_LABEL = 'High value'
 const LOW_VALUE = 'low'
 const LOW_VALUE_LABEL = 'Low value'
+
+const EYB_LEAD_LIST = Array(
+  eybLeadFaker({
+    triage_created: DATE_TIME_STRING,
+    company: { name: `${COMPANY_NAME} and Co` },
+    is_high_value: true,
+  }),
+  eybLeadFaker({
+    triage_created: DATE_TIME_STRING,
+    sector: { name: SECTOR_NAME, id: SECTOR_ID },
+    is_high_value: false,
+  }),
+  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false })
+)
 
 const PAYLOADS = {
   minimum: { limit: '10', offset: '0' },
@@ -49,15 +62,11 @@ const buildQueryString = (queryParams = {}) =>
   }).toString()
 
 const getEYBLeadsByCompanyName = (companyName) => {
-  return eybLeadListFixture.results.filter((lead) =>
-    lead.company.name.includes(companyName)
-  )
+  return EYB_LEAD_LIST.filter((lead) => lead.company.name.includes(companyName))
 }
 
 const getEYBLeadsBySectorId = (sectorId) => {
-  return eybLeadListFixture.results.filter(
-    (lead) => lead.sector.id === sectorId
-  )
+  return EYB_LEAD_LIST.filter((lead) => lead.sector.id === sectorId)
 }
 
 const convertValueStringToBoolean = (value) => {
@@ -68,15 +77,27 @@ const convertValueStringToBoolean = (value) => {
 
 const getEYBLeadsByValue = (valueOfLead) => {
   const isHighValueBoolean = convertValueStringToBoolean(valueOfLead)
-  return eybLeadListFixture.results.filter(
+  return EYB_LEAD_LIST.filter(
     (lead) => lead.is_high_value === isHighValueBoolean
   )
 }
 
 describe('EYB leads collection page', () => {
   context('When visiting the EYB leads tab', () => {
+    const eybLead = EYB_LEAD_LIST[0]
+
     beforeEach(() => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
+        statusCode: 200,
+        body: {
+          count: EYB_LEAD_LIST.length,
+          next: null,
+          previous: null,
+          results: EYB_LEAD_LIST,
+        },
+      }).as('apiRequest')
       cy.visit(investments.eybLeads.index())
+      cy.wait('@apiRequest')
     })
 
     it('should render the header', () => {
@@ -113,12 +134,11 @@ describe('EYB leads collection page', () => {
     it('should display the leads correctly', () => {
       cy.get('[data-test="collection-item"]').should(
         'have.length',
-        NUMBER_OF_FIXTURE_LEADS
+        EYB_LEAD_LIST.length
       )
     })
 
     it('should display the metadata for each collection item correctly', () => {
-      const eybLead = eybLeadListFixture.results[0]
       cy.get('[data-test="collection-item"]')
         .eq(0)
         .should('contain', eybLead.company.name)
