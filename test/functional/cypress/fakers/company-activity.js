@@ -3,7 +3,7 @@ import jsf from 'json-schema-faker'
 
 import apiSchema from '../../../api-schema.json'
 import { relativeDateFaker } from './dates'
-import { listFaker } from './utils'
+import { listFaker, listFakerAdditionalOverrides } from './utils'
 import { userFaker } from './users'
 import teamFaker from './team'
 
@@ -47,26 +47,32 @@ const companyActivityInteractionFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-const companyActivityInvestmentFaker = (overrides = {}) => ({
-  ...companyActivityFaker(),
-  activity_source: 'investment',
-  investment: {
-    investment_type: {
-      name: faker.company.name(),
+const companyActivityInvestmentFaker = (
+  overrides = {},
+  investmentOverrides = {}
+) => {
+  return {
+    ...companyActivityFaker(),
+    activity_source: 'investment',
+    investment: {
+      investment_type: {
+        name: faker.company.name(),
+        id: faker.string.uuid(),
+      },
+      estimated_land_date: relativeDateFaker({ minDays: -100, maxDays: 365 }),
+      total_investment: faker.number.int(),
+      name: faker.word.words(),
+      client_contacts: [userFaker({ job_title: faker.person.jobTitle() })],
       id: faker.string.uuid(),
+      number_new_jobs: faker.number.int({ min: 0, max: 50 }),
+      created_by: userFaker(),
+      foreign_equity_investment: faker.number.int({ min: 50, max: 1000 }),
+      gross_value_added: faker.number.int({ min: 100, max: 2000 }),
+      ...investmentOverrides,
     },
-    estimated_land_date: relativeDateFaker({ minDays: -100, maxDays: 365 }),
-    total_investment: faker.number.int(),
-    name: faker.word.words(),
-    client_contacts: [userFaker({ job_title: faker.person.jobTitle() })],
-    id: faker.string.uuid(),
-    number_new_jobs: faker.number.int({ min: 0, max: 50 }),
-    created_by: userFaker(),
-    foreign_equity_investment: faker.number.int({ min: 50, max: 1000 }),
-    gross_value_added: faker.number.int({ min: 100, max: 2000 }),
-  },
-  ...overrides,
-})
+    ...overrides,
+  }
+}
 
 const companyActivityInteractionListFaker = (length = 1, overrides) =>
   listFaker({
@@ -75,12 +81,18 @@ const companyActivityInteractionListFaker = (length = 1, overrides) =>
     overrides,
   })
 
-const companyActivityInvestmentListFaker = (length = 1, overrides) =>
-  listFaker({
+const companyActivityInvestmentListFaker = (
+  length = 1,
+  overrides,
+  investmentOverrides
+) => {
+  return listFakerAdditionalOverrides({
     fakerFunction: companyActivityInvestmentFaker,
     length,
     overrides,
+    additionalOverrides: investmentOverrides,
   })
+}
 
 export {
   companyActivityInteractionFaker,

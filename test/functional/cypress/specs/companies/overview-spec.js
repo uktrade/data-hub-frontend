@@ -389,6 +389,11 @@ describe('Company overview page', () => {
   context('when viewing all activity cards types', () => {
     const interactionsList = companyActivityListFaker(1)
     const investmentsList = companyActivityInvestmentListFaker(1)
+    const investmentsListNullJobs = companyActivityInvestmentListFaker(
+      1,
+      {},
+      { number_new_jobs: null }
+    )
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -511,6 +516,21 @@ describe('Company overview page', () => {
       )
       cy.get('[data-test="activity-summary"]').contains(
         `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} jobs added by ${activity.investment.created_by.name}`
+      )
+    })
+
+    it('should display Data Hub investment activity with empty number of new jobs', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        investmentsListNullJobs,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      const activity = investmentsListNullJobs[0]
+      cy.get('[data-test="investment-service-label"]').contains(
+        'New Investment Project'
+      )
+      cy.get('[data-test="activity-summary"]').contains(
+        `${activity.investment.investment_type.name} investment added by ${activity.investment.created_by.name}`
       )
     })
 

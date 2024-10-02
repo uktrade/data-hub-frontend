@@ -111,14 +111,10 @@ export const transformInteractionToListItem = ({
 
 export const transformInvestmentToListItem = (activity) => {
   const investment = activity.investment
-  const summary = [
-    `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by `,
-    investment.created_by.name,
-  ]
 
   return {
     id: investment.id,
-    date: investment.date,
+    date: formatMediumDate(activity.date),
     tags: [
       {
         text: 'New Investment Project',
@@ -128,7 +124,16 @@ export const transformInvestmentToListItem = (activity) => {
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.projects.details(investment.id),
     headingText: investment.name,
-    summary: summary,
+    summary:
+      investment.number_new_jobs == null
+        ? [
+            `${investment.investment_type.name} investment added by `,
+            investment.created_by.name,
+          ]
+        : [
+            `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by `,
+            investment.created_by.name,
+          ],
   }
 }
 
