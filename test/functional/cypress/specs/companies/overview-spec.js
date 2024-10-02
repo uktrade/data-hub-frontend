@@ -7,7 +7,6 @@ import { getCollectionList } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import companyActivityListFaker, {
   companyActivityInvestmentListFaker,
-  companyActivityInvestmenListNoJobFaker,
 } from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
@@ -390,7 +389,11 @@ describe('Company overview page', () => {
   context('when viewing all activity cards types', () => {
     const interactionsList = companyActivityListFaker(1)
     const investmentsList = companyActivityInvestmentListFaker(1)
-    const investmentsNoJobList = companyActivityInvestmenListNoJobFaker(1)
+    const investmentsListNullJobs = companyActivityInvestmentListFaker(
+      1,
+      {},
+      { number_new_jobs: null }
+    )
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -519,10 +522,10 @@ describe('Company overview page', () => {
     it('should display Data Hub investment activity with empty number of new jobs', () => {
       collectionListRequest(
         'v4/search/company-activity',
-        investmentsNoJobList,
+        investmentsListNullJobs,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      const activity = investmentsNoJobList[0]
+      const activity = investmentsListNullJobs[0]
       cy.get('[data-test="investment-service-label"]').contains(
         'New Investment Project'
       )
