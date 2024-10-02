@@ -1,0 +1,229 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2024-09-25T08:12:16.866777Z",
+      "modified_on": "2024-09-25T08:12:16.866783Z",
+      "id": "45122997-f323-4161-9ea4-2babe305b598",
+      "triage_hashed_uuid": "9e62a955792f9ad67c00ce324ca6cdcb6795ec20e844f1ab205d098fcf0f5d92",
+      "triage_created": "2024-09-25T08:12:16.622599Z",
+      "triage_modified": "2024-09-25T08:12:16.622622Z",
+      "sector": {
+        "name": "Technology and smart cities : Communications : Wireless",
+        "id": "609c37e5-5f95-e211-a939-e4115bead28a"
+      },
+      "sector_sub": "Wireless",
+      "intent": [
+        "Find people with specialist skills",
+        "Set up a new distribution centre",
+        "Other",
+        "Onward sales and exports from the UK"
+      ],
+      "intent_other": "",
+      "location": {
+        "name": "Wales",
+        "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "location_city": "Cardiff",
+      "location_none": false,
+      "hiring": "51 to 100",
+      "spend": "Less than £10,000",
+      "spend_other": "",
+      "is_high_value": false,
+      "user_hashed_uuid": "49157a60e9b31b149f89c2081840fb9cd42b9981e41becddf4055aa7f58a3384",
+      "user_created": "2024-09-25T08:12:16.664704Z",
+      "user_modified": "2024-09-25T08:12:16.664710Z",
+      "company_name": "Clark PLC",
+      "company_location": {
+        "name": "Canada",
+        "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+      },
+      "full_name": "Iain Wood",
+      "role": "Information systems manager",
+      "email": "fstevenson@example.net",
+      "telephone_number": "+44117 4960642",
+      "agree_terms": false,
+      "agree_info_email": true,
+      "landing_timeframe": "In the next 6 months",
+      "company_website": "http://miller-cox.com/",
+      "duns_number": "006251696",
+      "company": {
+        "name": "Holmes, Morris and Hall",
+        "id": "66ed8d12-54c8-4979-90df-dd759c4d5d72"
+      },
+      "utm_name": "fSLpDIoCKyCNOHEjmMYG",
+      "utm_source": "TvIXjocLKACWgavfOueH",
+      "utm_medium": "hEBZlbmioWobXhARgyzS",
+      "utm_content": "IVLrsCYqpdFDzPPEyOsR",
+      "address": {
+        "line_1": "65 Dawson freeway",
+        "line_2": "Flat 98a",
+        "town": "New Abigailberg",
+        "county": "Clackmannanshire",
+        "postcode": "DT06 1LU",
+        "area": {
+          "name": "Alberta",
+          "id": "75e337c3-23c9-4294-8085-6b1e8c43eb07"
+        },
+        "country": {
+          "name": "Canada",
+          "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+        }
+      }
+    },
+    {
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2024-09-25T08:12:17.061314Z",
+      "modified_on": "2024-09-25T08:12:17.061320Z",
+      "id": "3e80ec82-bf10-4162-a5af-a2afe22735f3",
+      "triage_hashed_uuid": "b038d38ed149e74dfdf89b6ab9f14c954093ef748472c4fb7eab98f2b66d1038",
+      "triage_created": "2024-09-25T08:12:16.868582Z",
+      "triage_modified": "2024-09-25T08:12:16.868587Z",
+      "sector": {
+        "name": "Creative industries : Experience economy : Attractions",
+        "id": "0ec5ce9d-2ead-492c-a274-bdf5d88397ac"
+      },
+      "sector_sub": "Attractions",
+      "intent": [
+        "Find people with specialist skills",
+        "Onward sales and exports from the UK",
+        "Set up a new distribution centre",
+        "Research, develop and collaborate"
+      ],
+      "intent_other": "",
+      "location": {
+        "name": "Wales",
+        "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "location_city": "Cardiff",
+      "location_none": false,
+      "hiring": "1 to 5",
+      "spend": "More than £10 million",
+      "spend_other": "",
+      "is_high_value": true,
+      "user_hashed_uuid": "236b49a86b33bdc079bc6bbfa71505a290fe496ed9737a339df9ec40209a5a99",
+      "user_created": "2024-09-25T08:12:16.872718Z",
+      "user_modified": "2024-09-25T08:12:16.872722Z",
+      "company_name": "Kent, Powell and Kirk",
+      "company_location": {
+        "name": "Canada",
+        "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+      },
+      "full_name": "Clare Webster",
+      "role": "Network engineer",
+      "email": "anthony56@example.com",
+      "telephone_number": "+44(0)292018828",
+      "agree_terms": false,
+      "agree_info_email": true,
+      "landing_timeframe": "In more than 2 years' time",
+      "company_website": "https://www.hammond.org/",
+      "duns_number": "000550318",
+      "company": {
+        "name": "Frost-Wheeler",
+        "id": "56d2b2e0-8dca-4f53-a9fa-f50486ca0dc6"
+      },
+      "utm_name": "FWlppLKXAQJuocNhzQMz",
+      "utm_source": "zQWmsrtrYzDcvRXVcXxR",
+      "utm_medium": "kBVpPVRUSkHEQPtfRNOi",
+      "utm_content": "DXRoPnLLnXnIwXhrUxFb",
+      "address": {
+        "line_1": "Studio 9\nElliott estates",
+        "line_2": "Studio 73e",
+        "town": "Port Gordonport",
+        "county": "Nottinghamshire",
+        "postcode": "W7 1PW",
+        "area": {
+          "name": "Alberta",
+          "id": "75e337c3-23c9-4294-8085-6b1e8c43eb07"
+        },
+        "country": {
+          "name": "Canada",
+          "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+        }
+      }
+    },
+    {
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2024-09-25T08:12:17.281348Z",
+      "modified_on": "2024-09-25T08:12:17.281355Z",
+      "id": "df3a62e1-464d-4904-a847-04443c9eef0a",
+      "triage_hashed_uuid": "f597011ace86a9319678692d2f1824675e4602a3115858b4aa57052ddc72693e",
+      "triage_created": "2024-09-25T08:12:17.063294Z",
+      "triage_modified": "2024-09-25T08:12:17.063297Z",
+      "sector": {
+        "name": "Mining",
+        "id": "a622c9d2-5f95-e211-a939-e4115bead28a"
+      },
+      "sector_sub": "Mining",
+      "intent": [
+        "Other",
+        "Set up a new distribution centre",
+        "Set up new premises",
+        "Find people with specialist skills"
+      ],
+      "intent_other": "",
+      "location": {
+        "name": "Wales",
+        "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "location_city": "Cardiff",
+      "location_none": false,
+      "hiring": "1 to 5",
+      "spend": "£10,000 to £500,000",
+      "spend_other": "",
+      "is_high_value": false,
+      "user_hashed_uuid": "7b1ed9661bdca86e76cc0256150820b6a9e5b1c70cd56852272f5fe6fbd2fd4c",
+      "user_created": "2024-09-25T08:12:17.067611Z",
+      "user_modified": "2024-09-25T08:12:17.067614Z",
+      "company_name": "Wilson-Nolan",
+      "company_location": {
+        "name": "Canada",
+        "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+      },
+      "full_name": "Nicholas Smith-Cross",
+      "role": "Surveyor, mining",
+      "email": "alicemills@example.net",
+      "telephone_number": "+44161 4960224",
+      "agree_terms": false,
+      "agree_info_email": false,
+      "landing_timeframe": "1 to 2 years",
+      "company_website": "https://clark.com/",
+      "duns_number": "003890733",
+      "company": {
+        "name": "Newman, Thompson and Parker",
+        "id": "49f58207-467d-4566-8919-27b2e16e1fb7"
+      },
+      "utm_name": "LkCkOYGozIBbwpVCSVlN",
+      "utm_source": "AKKxbHUWvWZeeTtujLbY",
+      "utm_medium": "rjUSskgWBrNsSytCEDqd",
+      "utm_content": "OwINnVffBzubMgaxKkdU",
+      "address": {
+        "line_1": "Studio 35Z\nMary shore",
+        "line_2": "Flat 0",
+        "town": "Ahmedport",
+        "county": "Somerset",
+        "postcode": "IP04 8BZ",
+        "area": {
+          "name": "Alberta",
+          "id": "75e337c3-23c9-4294-8085-6b1e8c43eb07"
+        },
+        "country": {
+          "name": "Canada",
+          "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
+        }
+      }
+    }
+  ]
+}

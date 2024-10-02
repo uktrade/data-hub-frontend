@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
+import { JSONSchemaFaker } from 'json-schema-faker'
 
-import { randomChoice } from './utils'
+import apiSchema from '../../../api-schema.json'
+
+import { listFaker, randomChoice } from './utils'
 import { sectorFaker } from './sectors'
 import { CANADA_ID, UK_REGIONS } from '../../../../src/common/constants'
 
@@ -60,6 +63,7 @@ const LANDING_TIMEFRAME_CHOICES = [
  * merges in overrides.
  */
 const eybLeadFaker = (overrides = {}) => ({
+  ...JSONSchemaFaker.generate(apiSchema.components.schemas.RetrieveEYBLead),
   archived: false,
   archived_on: null,
   archived_reason: null,
@@ -114,4 +118,13 @@ const eybLeadFaker = (overrides = {}) => ({
   ...overrides,
 })
 
-export { eybLeadFaker }
+/**
+ * Generate fake data for a list of EYB leads.
+ *
+ * The number of items is determined by the length (default is 1).
+ * Overrides are applied to all items in the list (default is {}).
+ */
+const eybLeadListFaker = (length = 1, overrides) =>
+  listFaker({ fakerFunction: eybLeadFaker, length, overrides })
+
+export { eybLeadFaker, eybLeadListFaker }

@@ -6,6 +6,7 @@ import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
+import { HIGH_VALUE_LABEL, LOW_VALUE_LABEL } from './constants'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
@@ -28,7 +29,9 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Value"
-                children={eybLead.is_high_value ? 'Low value' : 'High value'}
+                children={
+                  eybLead.is_high_value ? LOW_VALUE_LABEL : HIGH_VALUE_LABEL
+                }
               />
               <SummaryTable.Row
                 heading="Sector or industry"

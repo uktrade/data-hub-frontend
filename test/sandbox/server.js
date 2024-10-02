@@ -190,6 +190,7 @@ import {
   saveOpportunityDetails,
   getLargeCapitalOpportunityList,
   getEYBLead,
+  getEYBLeadList,
 } from './routes/v4/investment/investment.js'
 import {
   getInteractions as _getInteractions,
@@ -864,6 +865,7 @@ app.patch(
 app.get('/v4/large-capital-opportunity', getLargeCapitalOpportunityList)
 app.post('/v4/search/large-capital-opportunity', getLargeCapitalOpportunityList)
 app.get('/v4/investment-lead/eyb/:eybLeadId', getEYBLead)
+app.get('/v4/investment-lead/eyb', getEYBLeadList)
 
 // V4 Proposition
 app.get('/v4/proposition', propositions)
