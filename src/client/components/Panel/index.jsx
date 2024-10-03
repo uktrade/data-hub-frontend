@@ -40,7 +40,7 @@ const StyledBody = styled('div')`
  */
 const Panel = ({ title, children, ...rest }) => (
   <StyledPanel {...rest}>
-    <StyledTitle>{title}</StyledTitle>
+    {title && <StyledTitle>{title}</StyledTitle>}
     {children && <StyledBody>{children}</StyledBody>}
   </StyledPanel>
 )
