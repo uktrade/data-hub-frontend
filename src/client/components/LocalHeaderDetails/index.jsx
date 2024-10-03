@@ -9,7 +9,9 @@ const StyledHeaderDetails = styled('div')`
   background-color: ${GREY_4};
 `
 
-const StyledHeaderList = styled('li')`
+const StyledHeaderList = styled('ul')({})
+
+const StyledHeaderListItem = styled('li')`
   display: inline-block;
   padding-right: ${SPACING.SCALE_5};
 `
@@ -27,12 +29,14 @@ const LocalHeaderDetails = ({ items }) => (
     data-test="localHeaderDetails"
     role="region"
   >
-    {items.map((item) => (
-      <StyledHeaderList key={item.label}>
-        <StyledHeaderListLabel>{item.label}</StyledHeaderListLabel>
-        <p>{item.value}</p>
-      </StyledHeaderList>
-    ))}
+    <StyledHeaderList>
+      {items.map((item) => (
+        <StyledHeaderListItem key={item.label}>
+          <StyledHeaderListLabel>{item.label}</StyledHeaderListLabel>
+          <p>{item.value}</p>
+        </StyledHeaderListItem>
+      ))}
+    </StyledHeaderList>
   </StyledHeaderDetails>
 )
 
