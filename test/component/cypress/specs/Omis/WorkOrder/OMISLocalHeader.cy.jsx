@@ -14,7 +14,7 @@ import {
 import urls from '../../../../../../src/lib/urls'
 
 const assertLocalHeaderDetails = (index, label, value) => {
-  cy.get('[data-test="localHeaderDetails"]>li')
+  cy.get('[data-test="localHeaderDetails"]>ul>li')
     .eq(index)
     .should('contain', label)
     .and('contain', value)
