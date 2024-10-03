@@ -11,7 +11,7 @@ import timelineTheme from './timeline-theme'
 import urls from '../../../lib/urls'
 import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/constants'
 import StatusMessage from '../StatusMessage'
-import { WHITE } from '../../utils/colours'
+import { DARK_GREY, WHITE } from '../../utils/colours'
 
 const MetaList = styled('ul')({})
 
@@ -31,7 +31,7 @@ const StyledListItem = styled('li')({
 })
 
 const StyledListItemText = styled('span')({
-  color: '#6f777b',
+  color: DARK_GREY,
   fontSize: FONT_SIZE.SIZE_16,
   fontWeight: 400,
   marginBottom: SPACING.SCALE_1,
