@@ -180,7 +180,7 @@ describe('ProjectIncompleteFields', () => {
         assertToMoveText(STAGE_ACTIVE)
         assertLink('Project Manager', projectManagementLink)
         assertLink('Project Assurance Adviser', projectManagementLink)
-        assertLink('Likelihood of landing', projectManagementLink)
+        assertLink('Likelihood of landing', detailsLink)
       })
     }
   )
