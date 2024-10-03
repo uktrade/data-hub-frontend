@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Link } from 'govuk-react'
+import Button from '@govuk-react/button'
 
 import { state2props } from './state'
 import { format } from '../../../utils/date'

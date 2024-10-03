@@ -5,6 +5,7 @@ import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import { SPACING } from '@govuk-react/constants'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
+import urls from '../../../lib/urls'
 
 import { GREY_1, GREY_4 } from '../../../client/utils/colours'
 import Footer from '../Footer'
@@ -12,6 +13,7 @@ import Main from '../Main'
 import DataHubHeader from '../DataHubHeader'
 import WatchTextContent from '../WatchTextContent'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
+import Button from '@govuk-react/button'
 
 import { EYBLeadResource } from '../../../client/components/Resource'
 import { buildEYBLeadBreadcrumbs } from '../../modules/Investments/utils'
@@ -26,6 +28,12 @@ const GlobalStyles = createGlobalStyle`
 const StyledHeader = styled('div')`
   padding-bottom: ${SPACING.SCALE_5};
   background-color: ${GREY_4};
+  padding-top: ${SPACING.SCALE_3};
+`
+const StyledButton = styled('div')`
+  padding-bottom: ${SPACING.SCALE_5};
+  padding-left: ${SPACING.SCALE_6};
+  // background-color: ${GREY_4};
   padding-top: ${SPACING.SCALE_3};
 `
 
@@ -95,6 +103,14 @@ const EYBLeadLayout = ({ id, children }) => {
                   <LocalHeaderHeading data-test="heading">
                     {eybLead.company.name}
                   </LocalHeaderHeading>
+                  <Button
+                  as={'a'}
+                  href={urls.investments.createInteractionsSubApp}
+                  data-test="add-investment-project"
+                  >
+                  Add investment project
+                  </Button>
+                  {console.log(eybLead)}
                 </>
               )
             }}
