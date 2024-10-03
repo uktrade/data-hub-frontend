@@ -30,6 +30,7 @@ const buildRows = (assignees) =>
             type="text"
             validate={validateNumber}
             required="Enter the number of actual hours worked"
+            aria-label={`Actual hours worked by ${adviser.name}`}
           />
         </FormLayout>
       </Table.Cell>
@@ -60,7 +61,7 @@ export const CompleteAssigneesTable = ({ order, assignees }) => (
       >
         <Table data-test="actual-hours-table">
           <Table.Row>
-            <Table.CellHeader setWidth="33%" />
+            <Table.Cell setWidth="33%" />
             <Table.CellHeader setWidth="33%">
               Original estimate
             </Table.CellHeader>

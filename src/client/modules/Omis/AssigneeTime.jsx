@@ -38,6 +38,7 @@ const buildRows = (assignees) =>
             type="text"
             initialValue={getEstimatedTime(estimatedTime)}
             validate={validateNumber}
+            aria-label={`Estimated hours for ${adviser.name}`}
           />
         </FormLayout>
       </Table.Cell>
@@ -70,7 +71,7 @@ export const AssigneeTimeTable = ({ order, assignees }) => (
     >
       <Table data-test="assignee-table">
         <Table.Row>
-          <Table.CellHeader setWidth="75%" />
+          <Table.Cell setWidth="75%" />
           <Table.CellHeader setWidth="25%">Estimated hours</Table.CellHeader>
         </Table.Row>
         {buildRows(assignees)}

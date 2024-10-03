@@ -124,7 +124,7 @@ export const OrderDetailsSection = ({ order }) => (
           <Table.CellHeader>Order number</Table.CellHeader>
           <Table.CellHeader>Service description</Table.CellHeader>
           <Table.CellHeader>Market (country)</Table.CellHeader>
-          <Table.CellHeader />
+          <Table.Cell />
           <Table.CellHeader>Net amount</Table.CellHeader>
         </Table.Row>
         <Table.Row>
