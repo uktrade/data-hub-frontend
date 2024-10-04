@@ -107,6 +107,7 @@ export const INCOMPLETE_FIELDS = {
   uk_company: 'UK recipient company',
   investor_type: 'Investor type',
   level_of_involvement: 'Level of investor involvement',
+  likelihood_to_land: 'Likelihood of landing',
 }
 
 export const STAGE_TAG_COLOURS = {

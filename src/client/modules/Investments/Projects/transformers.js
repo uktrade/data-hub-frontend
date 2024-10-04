@@ -76,6 +76,7 @@ export const mapFieldToUrl = (field, projectId) => {
     'Specific investment programme',
     'Investor type',
     'Level of investor involvement',
+    'Likelihood of landing',
   ]
   const valueFields = [
     'Can client provide total investment value?',

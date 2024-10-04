@@ -35,7 +35,11 @@ import {
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
-import { FDI_TYPES, INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM } from '../constants'
+import {
+  FDI_TYPES,
+  STAGE_PROSPECT,
+  INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM,
+} from '../constants'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -172,6 +176,7 @@ const EditProjectSummaryInitialStep = ({
       <FieldLikelihoodOfLanding
         autoScroll={!!autoScroll}
         initialValue={transformObjectForTypeahead(project.likelihoodToLand)}
+        optionalText={STAGE_PROSPECT.includes(project.stage.name)}
       />
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
