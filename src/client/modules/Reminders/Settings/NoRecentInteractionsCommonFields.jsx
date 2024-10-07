@@ -80,6 +80,9 @@ const NoRecentInteractionsCommonFields = ({
                           text={
                             remindersDaysLabelHint || 'days with no interaction'
                           }
+                          label={
+                            remindersDaysLabelHint || 'days with no interaction'
+                          }
                           name={`reminder_days_${groupIndex}`}
                           data-test={`reminder_days_${groupIndex}`}
                           validate={(value, field, state) => {

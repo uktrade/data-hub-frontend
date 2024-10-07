@@ -8,7 +8,7 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
-import { DARK_GREY, GREY_2 } from '../../../utils/colours'
+import { DARK_GREY, GREY_2, LINK_COLOUR } from '../../../utils/colours'
 
 export const DeleteButton = styled('button')({
   padding: 0,
@@ -53,6 +53,7 @@ export const ItemHeader = styled(H3)({
 })
 
 export const ItemHeaderLink = styled(Link)({
+  fontColor: LINK_COLOUR,
   fontWeight: FONT_WEIGHTS.regular,
 })
 
