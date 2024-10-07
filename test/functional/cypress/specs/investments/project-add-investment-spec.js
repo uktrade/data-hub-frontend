@@ -1,3 +1,5 @@
+import { eybLeadFaker } from '../../fakers/eyb-leads'
+
 const { expect } = require('chai')
 
 const urls = require('../../../../../src/lib/urls')
@@ -190,6 +192,26 @@ describe('Adding an investment via "Investments"', () => {
       },
     })
   })
+})
+
+describe('Adding an investment via a "EYB Lead" details page', () => {
+  const eybLead = eybLeadFaker()
+  beforeEach(() => {
+    cy.visit(urls.investments.eybLeads.details(eybLead.id))
+    cy.get('[data-test="button-add-investment-project"]').click()
+  })
+  it('should display the "Source of foreign equity investment" table', () => {
+    assertSummaryTable({
+      dataTest: 'clientCompanyTable',
+      heading: 'Source of foreign equity investment',
+      content: {
+        Company: 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
+        Country: 'United Kingdom',
+        'Company investments': '12 investment projects in the UK',
+      },
+    })
+  })
+  investmentTypeTests()
 })
 
 describe('Investment Detail Step Form Content', () => {
