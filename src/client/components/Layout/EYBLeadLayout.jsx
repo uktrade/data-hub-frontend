@@ -120,11 +120,11 @@ const EYBLeadLayout = ({ id, children }) => {
                       <StyledButtonContainer>
                         <Button
                           as={StyledButtonLink}
-                          data-test="header-add-interaction"
+                          data-test="header-add-investment-project"
                           href=""
-                          aria-label={`The new button`}
+                          aria-label={`Add Investment Project`}
                         >
-                          The new button
+                          Add Investment Project
                         </Button>
                       </StyledButtonContainer>
                     </GridCol>
