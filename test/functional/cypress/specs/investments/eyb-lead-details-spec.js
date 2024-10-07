@@ -118,10 +118,10 @@ describe('EYB lead details', () => {
       })
     })
 
-    it('should render the Add Investment Project button', () => {
+    it('should render the `Add investment project` button', () => {
       cy.get('[data-test="button-add-investment-project"]')
         .should('exist')
-        .should('have.text', 'Add Investment Project')
+        .should('have.text', 'Add investment project')
         .should(
           'have.attr',
           'href',

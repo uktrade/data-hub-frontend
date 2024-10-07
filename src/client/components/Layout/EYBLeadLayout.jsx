@@ -129,9 +129,9 @@ const EYBLeadLayout = ({ id, children }) => {
                                 ? null
                                 : `/investments/projects/create/${eybLead.company.id}`
                           }
-                          aria-label={`Add Investment Project`}
+                          aria-label={`Add investment project`}
                         >
-                          Add Investment Project
+                          Add investment project
                         </Button>
                       </StyledButtonContainer>
                     </GridCol>
