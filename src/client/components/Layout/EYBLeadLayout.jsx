@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import PropTypes from 'prop-types'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
+import Button from '@govuk-react/button'
 import { SPACING } from '@govuk-react/constants'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
 
@@ -48,6 +49,16 @@ const StyledSuperheading = styled('div')`
   lineheight: '32px';
   color: ${GREY_1};
 `
+
+const StyledButtonContainer = styled('div')`
+  width: 100%;
+  display: inline-block;
+`
+
+const StyledButtonLink = styled.a({
+  marginBottom: 10,
+  float: 'right',
+})
 
 const EYBLeadLayout = ({ id, children }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
@@ -96,12 +107,28 @@ const EYBLeadLayout = ({ id, children }) => {
                       )
                     )}
                   </BreadcrumbsWrapper>
-                  <StyledSuperheading data-test="superheading">
-                    EYB lead
-                  </StyledSuperheading>
-                  <LocalHeaderHeading data-test="heading">
-                    {eybLead.company.name}
-                  </LocalHeaderHeading>
+                  <GridRow>
+                    <GridCol setWidth="two-thirds">
+                      <StyledSuperheading data-test="superheading">
+                        EYB lead
+                      </StyledSuperheading>
+                      <LocalHeaderHeading data-test="heading">
+                        {eybLead.company.name}
+                      </LocalHeaderHeading>
+                    </GridCol>
+                    <GridCol setWith="one-third">
+                      <StyledButtonContainer>
+                        <Button
+                          as={StyledButtonLink}
+                          data-test="header-add-interaction"
+                          href=""
+                          aria-label={`The new button`}
+                        >
+                          The new button
+                        </Button>
+                      </StyledButtonContainer>
+                    </GridCol>
+                  </GridRow>
                 </>
               )
             }}
