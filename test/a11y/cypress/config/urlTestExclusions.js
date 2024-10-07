@@ -1,6 +1,5 @@
 export const urlTestExclusions = [
   // A11y errors
-  { url: '/investment-projects/' },
   { url: '/my-tasks/' },
   { url: '/community/' },
   { url: '/my-referrals/' },
