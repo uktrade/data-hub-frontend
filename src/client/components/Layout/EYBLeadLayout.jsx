@@ -121,7 +121,14 @@ const EYBLeadLayout = ({ id, children }) => {
                         <Button
                           as={StyledButtonLink}
                           data-test="header-add-investment-project"
-                          href=""
+                          href={
+                            !eybLead.company
+                              ? `/investments/projects/create`
+                              : eybLead.company.archived ||
+                                  eybLead.company.ukBased
+                                ? null
+                                : `/investments/projects/create/${eybLead.company.id}`
+                          }
                           aria-label={`Add Investment Project`}
                         >
                           Add Investment Project
