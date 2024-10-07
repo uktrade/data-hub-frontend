@@ -109,6 +109,7 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
         selectedFilters={selectedFilters}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
+          &nbsp;
           <Filters.CheckboxGroup
             legend="Value"
             name="lead-value"
