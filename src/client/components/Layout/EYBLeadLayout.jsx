@@ -120,7 +120,7 @@ const EYBLeadLayout = ({ id, children }) => {
                       <StyledButtonContainer>
                         <Button
                           as={StyledButtonLink}
-                          data-test="header-add-investment-project"
+                          data-test="button-add-investment-project"
                           href={
                             !eybLead.company
                               ? `/investments/projects/create`

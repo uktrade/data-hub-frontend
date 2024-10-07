@@ -117,5 +117,16 @@ describe('EYB lead details', () => {
         leadName: eybLeadWithValues.company.name,
       })
     })
+
+    it('should render the Add Investment Project button', () => {
+      cy.get('[data-test="button-add-investment-project"]')
+        .should('exist')
+        .should('have.text', 'Add Investment Project')
+        .should(
+          'have.attr',
+          'href',
+          `/investments/projects/create/${eybLeadWithValues.company.id}`
+        )
+    })
   })
 })
