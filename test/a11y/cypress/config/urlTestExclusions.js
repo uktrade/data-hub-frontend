@@ -1,8 +1,5 @@
 export const urlTestExclusions = [
   // A11y errors
-  { url: '/my-tasks/' },
-  { url: '/community/' },
-  { url: '/my-referrals/' },
   { url: '/companies/:companyId/edit-history' },
   { url: '/companies/:companyId/exports' },
   { url: '/exportwins/' },
@@ -36,7 +33,6 @@ export const urlTestExclusions = [
   { url: '/reminders/settings/my-tasks-task-amended-by-others/' },
   { url: '/reminders/settings/my-tasks-task-overdue/' },
   { url: '/reminders/settings/my-tasks-task-completed/' },
-  { url: '/export/' },
   { url: '/tasks/:taskId/edit' },
   { url: '/companies/:companyId/overview' },
   // 404 errors and or no sandbox data available

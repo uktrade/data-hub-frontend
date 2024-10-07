@@ -62,6 +62,7 @@ export default multiInstance({
                 filteredReferrals.length,
                 true
               )}
+              level="2"
               headingActions={
                 <StyledLabel htmlFor="view-referrals">
                   View

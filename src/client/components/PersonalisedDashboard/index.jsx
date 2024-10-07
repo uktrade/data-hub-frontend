@@ -144,7 +144,7 @@ const PersonalisedDashboard = ({
             </GridRow>
           )}
         </Task.Status>
-        <aside>
+        <aside aria-label="What's new">
           <Task.Status
             name={TASK_DATA_HUB_FEED}
             id={DATA_HUB_FEED_ID}

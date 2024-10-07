@@ -39,6 +39,7 @@ export const MyTasksContent = ({ myTasks }) => (
     <SpacedSectionBreak />
     <ContentWithHeading
       heading={`${myTasks?.count} ${myTasks?.count == 1 ? 'task' : 'tasks'}`}
+      level="2"
       headingActions={
         <Button
           buttonColour={BLUE}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { H4 } from '@govuk-react/heading'
+import { H2 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import Link from '@govuk-react/link'
@@ -14,7 +14,7 @@ import principlesImg from './img-principles.jpg'
 import trainingImg from './img-training.jpg'
 import researchImg from './img-research.jpg'
 
-const StyledHeading = styled(H4)`
+const StyledHeading = styled(H2)`
   font-size: 24px;
   font-style: normal;
   font-weight: 700;

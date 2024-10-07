@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { H3 } from 'govuk-react'
+import { H2, H3 } from 'govuk-react'
 import styled from 'styled-components'
 
 import SpacedSectionBreak from './SpacedSectionBreak'
 
-const StyledHeading = styled(H3)({
+const StyledH2Heading = styled(H2)({
+  flexGrow: 1,
+})
+
+const StyledH3Heading = styled(H3)({
   flexGrow: 1,
 })
 
@@ -14,16 +18,23 @@ const StyledHeader = styled.div({
   alignItems: 'baseline',
 })
 
-const ContentWithHeading = ({ heading, children, headingActions }) => (
-  <section>
-    <StyledHeader>
-      <StyledHeading size={24}>{heading}</StyledHeading>
-      {headingActions}
-    </StyledHeader>
-    <SpacedSectionBreak />
-    {children}
-  </section>
-)
+const ContentWithHeading = ({ heading, children, level = 3 }) => {
+  let StyledHeading
+
+  if (level == '2') {
+    StyledHeading = <StyledH2Heading size={24}>{heading}</StyledH2Heading>
+  } else {
+    StyledHeading = <StyledH3Heading size={24}>{heading}</StyledH3Heading>
+  }
+
+  return (
+    <section>
+      <StyledHeader>{StyledHeading}</StyledHeader>
+      <SpacedSectionBreak />
+      {children}
+    </section>
+  )
+}
 
 ContentWithHeading.propTypes = {
   heading: PropTypes.node,
