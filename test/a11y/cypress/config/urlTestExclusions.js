@@ -78,6 +78,7 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/hierarchies/ghq/remove' },
   { url: '/companies/:companyId' },
   // API calls with redirect
+  { url: '/company-lists/' }, // Redirects to homepage (which is tested)
   { url: '/tasks/:taskId/status-complete' },
   { url: '/tasks/:taskId/status-active' },
   { url: '/tasks/:taskId/archive' },
@@ -86,7 +87,6 @@ export const urlTestExclusions = [
   { url: '/investments/projects/:projectId/edit-ukcompany/:companyId' },
   // Excluded urls
   { url: '/testing/' },
-  { url: '//' },
   { url: '/oauth/' },
   { url: '/oauth/callback/' },
   { url: '/oauth/sign-out/' },
