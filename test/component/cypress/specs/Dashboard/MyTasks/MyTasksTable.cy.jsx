@@ -31,7 +31,7 @@ describe('My Tasks on the Dashboard', () => {
     })
 
     it('should display the heading 3 tasks', () => {
-      cy.get('h3').should('contain', '3 tasks')
+      cy.get('h2').should('contain', '3 tasks')
     })
 
     it('should render three table rows in due date in default ascending order', () => {
@@ -101,7 +101,7 @@ describe('My Tasks on the Dashboard', () => {
       cy.mountWithProvider(<MyTasksContent myTasks={myTasks} />)
     })
     it('should display the heading 0 tasks', () => {
-      cy.get('h3').should('contain', '0 tasks')
+      cy.get('h2').should('contain', '0 tasks')
     })
     it('should not render the table', () => {
       cy.get('[data-test="my-tasks-table"]').should('not.exist')
@@ -130,7 +130,7 @@ describe('My Tasks on the Dashboard', () => {
     })
 
     it('should display the heading 1 task (singular) and not 1 tasks (plural)', () => {
-      cy.get('h3').should('contain', '1 task').should('not.contain', '1 tasks')
+      cy.get('h2').should('contain', '1 task').should('not.contain', '1 tasks')
     })
 
     it('should contain a button to add task', () => {

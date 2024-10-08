@@ -18,7 +18,12 @@ const StyledHeader = styled.div({
   alignItems: 'baseline',
 })
 
-const ContentWithHeading = ({ heading, children, level = 3 }) => {
+const ContentWithHeading = ({
+  heading,
+  children,
+  headingActions,
+  level = 3,
+}) => {
   let StyledHeading
 
   if (level == '2') {
@@ -29,7 +34,10 @@ const ContentWithHeading = ({ heading, children, level = 3 }) => {
 
   return (
     <section>
-      <StyledHeader>{StyledHeading}</StyledHeader>
+      <StyledHeader>
+        {StyledHeading}
+        {headingActions}
+      </StyledHeader>
       <SpacedSectionBreak />
       {children}
     </section>
