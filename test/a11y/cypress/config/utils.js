@@ -20,7 +20,8 @@ export const createArrayOfUrls = (urls) => {
   return arrayOfUrls
 }
 
-const defaultExcludedUrlDataPoints = ['/data', '/export']
+const defaultExcludedUrlDataEndPoints = ['/data', '/export']
+const defaultExcludedUrlDataStartPoints = ['/api-proxy/v4/']
 
 export const cleanseArrayOfUrls = (arrayOfUrls, excludedUrls) => {
   const filteredArrayOfUrls = arrayOfUrls
@@ -29,8 +30,14 @@ export const cleanseArrayOfUrls = (arrayOfUrls, excludedUrls) => {
     )
     .filter(
       (path) =>
-        !defaultExcludedUrlDataPoints.some((suffix) =>
+        !defaultExcludedUrlDataEndPoints.some((suffix) =>
           path.url.endsWith(suffix)
+        )
+    )
+    .filter(
+      (path) =>
+        !defaultExcludedUrlDataStartPoints.some((suffix) =>
+          path.url.startsWith(suffix)
         )
     )
     .map((path) => {
