@@ -22,11 +22,21 @@ Prerequisite:
 
 # Table of Contents
 
-- [Creating Docker container for CircleCI](#creating-docker-container-for-circleci)
-- [Start Dev](#start-dev)
-- [Start the Functional tests](#start-the-functional-tests)
-- [Start the E2E tests (DIT/LEP/DA)](#start-the-e2e-tests-ditlepda)
-- [Start the Unit tests](#start-the-unit-tests)
+- [Docker](#docker)
+- [Table of Contents](#table-of-contents)
+  - [Creating Docker container for CircleCI](#creating-docker-container-for-circleci)
+  - [Start Dev](#start-dev)
+    - [Bring up the Dev environment](#bring-up-the-dev-environment)
+  - [Start the Functional tests](#start-the-functional-tests)
+    - [Bring up both the Frontend and the Mock API](#bring-up-both-the-frontend-and-the-mock-api)
+  - [Start the E2E tests (DIT/LEP/DA)](#start-the-e2e-tests-ditlepda)
+    - [Bring up both the Frontend and the API for a particular user](#bring-up-both-the-frontend-and-the-api-for-a-particular-user)
+      - [DIT user](#dit-user)
+      - [LEP user](#lep-user)
+      - [DA user](#da-user)
+  - [Start the Accessibility tests](#start-the-accessibility-tests)
+  - [Start the Unit tests](#start-the-unit-tests)
+    - [Build the Frontend and run the Unit tests](#build-the-frontend-and-run-the-unit-tests)
 
 ## Creating Docker container for CircleCI
 
@@ -35,7 +45,7 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 > If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
 ```bash
-export VERSION=4.3.5 # Increment this version each time when you edit Dockerfile.
+export VERSION=4.3.6 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
