@@ -40,7 +40,7 @@ describe('Referrals', () => {
       assertFlashMessage('Referral sent')
       cy.get('[data-test="flash"]').find('a').eq(0).click()
       cy.get('select').select('Sent referrals')
-      cy.contains('h3', '1 sent referral')
+      cy.contains('h2', '1 sent referral')
         .parent()
         .parent()
         .find('ol li')
@@ -56,7 +56,7 @@ describe('Referrals', () => {
     it('should create an interaction successfully and display the referral in the interaction', () => {
       cy.visit(urls.companies.referrals.list())
       cy.get('select').select('Sent referrals')
-      cy.contains('h3', '1 sent referral')
+      cy.contains('h2', '1 sent referral')
         .parent()
         .parent()
         .find('ol li')
