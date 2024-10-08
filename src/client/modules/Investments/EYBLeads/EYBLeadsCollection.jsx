@@ -109,13 +109,14 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
         selectedFilters={selectedFilters}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
-          <Filters.Input
-            id="EYBLeadsCollection.company-name"
-            label="Company name"
-            name="company-name"
-            placeholder="Search company"
-            qsParam={QS_PARAMS.companyName}
-            data-test="company-name-filter"
+          &nbsp;
+          <Filters.CheckboxGroup
+            legend="Value"
+            name="lead-value"
+            qsParam={QS_PARAMS.valueOfLead}
+            options={VALUE_OPTIONS}
+            selectedOptions={selectedFilters.valueOfLead.options}
+            data-test="lead-value-filter"
           />
           <Filters.Typeahead
             isMulti={true}
@@ -127,13 +128,13 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
             selectedOptions={selectedFilters.sectorId.options}
             data-test="sector-filter"
           />
-          <Filters.CheckboxGroup
-            legend="Value"
-            name="lead-value"
-            qsParam={QS_PARAMS.valueOfLead}
-            options={VALUE_OPTIONS}
-            selectedOptions={selectedFilters.valueOfLead.options}
-            data-test="lead-value-filter"
+          <Filters.Input
+            id="EYBLeadsCollection.company-name"
+            label="Company name"
+            name="company-name"
+            placeholder="Search company"
+            qsParam={QS_PARAMS.companyName}
+            data-test="company-name-filter"
           />
         </CollectionFilters>
       </FilteredCollectionList>
