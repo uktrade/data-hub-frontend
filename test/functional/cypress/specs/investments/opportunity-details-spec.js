@@ -11,7 +11,7 @@ const { investments } = require('../../../../../src/lib/urls')
 const interaction = interactionFaker()
 
 const assertLocalHeaderDetails = (index, label, value) => {
-  cy.get('[data-test="localHeaderDetails"]>li')
+  cy.get('[data-test="localHeaderDetails"]>ul>li')
     .eq(index)
     .should('contain', label)
     .and('contain', value)
@@ -53,7 +53,7 @@ describe('UK Opportunity with missing data', () => {
       assertLocalHeader(incompleteOpportunity.name)
     })
     it('should display opportunity details in the header', () => {
-      cy.get('[data-test="localHeaderDetails"]>li')
+      cy.get('[data-test="localHeaderDetails"]>ul>li')
         .should('have.length', '5')
         // Assert that there's the change status link in the first item
         .eq(0)
@@ -217,7 +217,10 @@ describe('UK Opportunity with complete data', () => {
       assertLocalHeader(completeOpportunity.name)
     })
     it('should display opportunity details in the header', () => {
-      cy.get('[data-test="localHeaderDetails"]>li').should('have.length', '5')
+      cy.get('[data-test="localHeaderDetails"]>ul>li').should(
+        'have.length',
+        '5'
+      )
       assertLocalHeaderDetails(0, 'Status', completeOpportunity.status.name)
       assertLocalHeaderDetails(1, 'Valuation', '£12,345,789')
       assertLocalHeaderDetails(

@@ -144,25 +144,27 @@ const PersonalisedDashboard = ({
             </GridRow>
           )}
         </Task.Status>
-        <Task.Status
-          name={TASK_DATA_HUB_FEED}
-          id={DATA_HUB_FEED_ID}
-          startOnRender={{
-            onSuccessDispatch: DATA_HUB_FEED__FETCHED,
-          }}
-        >
-          {() => (
-            <GridRow data-test="data-hub-feed">
-              <GridCol setWidth="full">
-                <DataHubFeed
-                  items={dataHubFeed}
-                  feedLimit={1}
-                  isPersonalisedDashboard={true}
-                />
-              </GridCol>
-            </GridRow>
-          )}
-        </Task.Status>
+        <aside aria-label="What's new">
+          <Task.Status
+            name={TASK_DATA_HUB_FEED}
+            id={DATA_HUB_FEED_ID}
+            startOnRender={{
+              onSuccessDispatch: DATA_HUB_FEED__FETCHED,
+            }}
+          >
+            {() => (
+              <GridRow data-test="data-hub-feed">
+                <GridCol setWidth="full">
+                  <DataHubFeed
+                    items={dataHubFeed}
+                    feedLimit={1}
+                    isPersonalisedDashboard={true}
+                  />
+                </GridCol>
+              </GridRow>
+            )}
+          </Task.Status>
+        </aside>
       </CustomContainer>
     </ThemeProvider>
   )

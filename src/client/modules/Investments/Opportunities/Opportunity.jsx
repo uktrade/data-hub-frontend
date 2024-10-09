@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { useParams, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { DefaultLayout, Main } from '../../../components'
+import { DefaultLayout } from '../../../components'
 import OpportunityDetails from './OpportunityDetails'
 import OpportunityDetailsHeader from './OpportunityDetailsHeader'
 import TabNav from '../../../components/TabNav'
@@ -14,7 +14,9 @@ import { TASK_GET_OPPORTUNITY_DETAILS, ID, state2props } from './state'
 import { INVESTMENT_OPPORTUNITY_DETAILS__LOADED } from '../../../actions'
 import OpportunityInteractions from './OpportunityInteractions'
 
-const StyledMain = styled(Main)`
+const StyledMain = styled('div')`
+  paddingTop: SPACING.SCALE_5,
+  textAlign: 'center',
   margin-top: -30px;
   padding-bottom: 40px;
 `

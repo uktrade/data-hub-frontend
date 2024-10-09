@@ -68,7 +68,7 @@ const CompanyList = connect((state) => {
 ))
 
 const EmptyState = () => (
-  <ContentWithHeading heading="My companies lists">
+  <ContentWithHeading heading="My companies lists" level="2">
     <HintText>
       You have not yet created any lists with companies.
       <br />

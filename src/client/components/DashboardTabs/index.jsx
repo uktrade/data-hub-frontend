@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { VisuallyHidden } from 'govuk-react'
 
 import NoInvestmentProjects from '../MyInvestmentProjects/NoInvestmentProjects'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import CompanyLists from '../CompanyLists'
+import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 import ExportList from '../../modules/ExportPipeline/ExportList'
 import MyTasks from '../Dashboard/my-tasks/MyTasks'
 import urls from '../../../lib/urls'
@@ -33,6 +35,9 @@ const DashboardTabs = ({
   hasTasks,
 }) => (
   <StyledDiv data-test="dashboard-tabs">
+    <VisuallyHidden>
+      <LocalHeaderHeading>Dashboard</LocalHeaderHeading>
+    </VisuallyHidden>
     <TabNav
       id={`${id}.TabNav`}
       label="Dashboard"

@@ -109,8 +109,8 @@ export const RemindersMenu = ({
           )}
         </Menu>
       )}
+      <H3 as="h2">My Tasks</H3>
       <Menu dataTest="my-tasks-menu-group">
-        <H3 as="h2">My Tasks</H3>
         <MenuItem
           to={urls.reminders.myTasks.dueDateApproaching()}
           pathname={location.pathname}

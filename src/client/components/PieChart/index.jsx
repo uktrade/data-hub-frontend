@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { ResponsivePie } from '@nivo/pie'
@@ -33,21 +33,45 @@ const centredText = (text, fontSize, x, y) => (
 )
 
 const PieChart = ({ data, unit = '', height }) => {
-  const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
-    const total = dataWithArc.reduce(
+  const pieWrapperRef = useRef(null)
+
+  // Nivo currently doesn't support aria labels as props
+  // https://github.com/plouc/nivo/issues/126
+  // This is our workaround until/if nivo updates its accessibility
+  useEffect(() => {
+    const pieWrapper = pieWrapperRef.current
+    const svgWrapper = pieWrapper.children[0].children[0]
+    const total = data.reduce(
       (accumulator, datum) => accumulator + datum.value,
       0
     )
+    if (svgWrapper) {
+      svgWrapper.children[0].setAttribute(
+        'aria-label',
+        `${total} ${pluralize(unit, total)}`
+      )
+    }
+  })
+  const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
+    const projectTotal = dataWithArc.reduce(
+      (accumulator, datum) => accumulator + datum.value,
+      0
+    )
+
     return (
       <>
-        {centredText(total, 60, centerX, centerY - 20)}
-        {centredText(pluralize(unit, total), 20, centerX, centerY + 30)}
+        {centredText(projectTotal, 60, centerX, centerY - 20)}
+        {centredText(pluralize(unit, projectTotal), 20, centerX, centerY + 30)}
       </>
     )
   }
   return (
     <StyledFigure>
-      <StyledPieContainer height={height} data-test="pie-chart">
+      <StyledPieContainer
+        ref={pieWrapperRef}
+        height={height}
+        data-test="pie-chart"
+      >
         <ResponsivePie
           theme={{
             fontSize: '16px',

@@ -33,7 +33,7 @@ const EditBillingAddress = () => {
               The billing country has been changed.
               <br />
               <br />
-              Confirm the VAT status for {order.billingAddressCountry.name}.
+              Confirm the VAT status for {order?.billingAddressCountry?.name}.
             </StatusMessage>
             <FieldVATStatus />
           </Form>

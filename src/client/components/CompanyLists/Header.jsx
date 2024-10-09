@@ -1,4 +1,4 @@
-import { H3 } from '@govuk-react/heading'
+import { H2 } from '@govuk-react/heading'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import React from 'react'
 import pluralize from 'pluralize'
@@ -16,8 +16,9 @@ const StyledRoot = styled.div({
   marginBottom: SPACING.SCALE_2,
 })
 
-const StyledHeading = styled(H3)({
+const StyledHeading = styled(H2)({
   flexGrow: 1,
+  fontSize: 24,
 })
 
 const StyledSelect = styled(Select)(({ theme }) => ({

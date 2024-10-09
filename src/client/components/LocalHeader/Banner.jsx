@@ -12,7 +12,7 @@ import {
 } from '../../actions'
 import { MID_BLUE, WHITE } from '../../utils/colours'
 
-const Container = styled('div')`
+const Container = styled('aside')`
   color: ${WHITE};
   background-color: ${MID_BLUE};
   padding: 10px 0 10px 0;
@@ -58,7 +58,7 @@ const Banner = ({
   }
 
   return announcementLink !== latestAnnouncement.link ? (
-    <Container data-testid="feed-banner">
+    <Container data-testid="feed-banner" aria-label="Update">
       Update:
       <StyledTextLink href={latestAnnouncement.link}>
         {latestAnnouncement.heading}

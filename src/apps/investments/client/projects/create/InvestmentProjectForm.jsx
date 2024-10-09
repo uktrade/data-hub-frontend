@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import { useLocation } from 'react-router-dom'
 
-import { Form, Main } from '../../../../../client/components'
+import { Form } from '../../../../../client/components'
 import CompanySummaryTable from './CompanySummaryTable'
 import InvestmentTypeStep from './InvestmentTypeStep'
 import CompanySearchStep from './CompanySearchStep'
@@ -28,43 +28,41 @@ const InvestmentProjectForm = ({ company, csrfToken }) => {
   const queryParams = getQueryParamsFromLocation(location)
   const contact = getContactFromQueryParams(queryParams)
   return (
-    <Main>
-      <Form
-        id="add-investment-project"
-        initialStepIndex={company && contact ? 1 : !company && contact ? 2 : 0}
-        initialValuesTaskName={TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES}
-        initialValuesPayload={{
-          fetchFromStorage: !!contact,
-          contact,
-          company,
-        }}
-        submissionTaskName={TASK_CREATE_INVESTMENT_PROJECT}
-        analyticsFormName="Create investment project"
-        redirectTo={({ data }) => urls.investments.projects.details(data.id)}
-        transformPayload={(values) =>
-          transformFormValuesToPayload(
-            {
-              ...values,
-              ...(company ? { company } : {}),
-            },
-            csrfToken
-          )
-        }
-        flashMessage={() => 'Investment project created'}
-      >
-        {({ values }) => {
-          const dhCompany = company || values.company
-          return (
-            <>
-              {dhCompany && <CompanySummaryTable company={dhCompany} />}
-              {!company && <CompanySearchStep />}
-              <InvestmentTypeStep investmentTypes={values.investmentTypes} />
-              <InvestmentDetailsStep company={dhCompany} values={values} />
-            </>
-          )
-        }}
-      </Form>
-    </Main>
+    <Form
+      id="add-investment-project"
+      initialStepIndex={company && contact ? 1 : !company && contact ? 2 : 0}
+      initialValuesTaskName={TASK_GET_INVESTMENT_PROJECT_INITIAL_VALUES}
+      initialValuesPayload={{
+        fetchFromStorage: !!contact,
+        contact,
+        company,
+      }}
+      submissionTaskName={TASK_CREATE_INVESTMENT_PROJECT}
+      analyticsFormName="Create investment project"
+      redirectTo={({ data }) => urls.investments.projects.details(data.id)}
+      transformPayload={(values) =>
+        transformFormValuesToPayload(
+          {
+            ...values,
+            ...(company ? { company } : {}),
+          },
+          csrfToken
+        )
+      }
+      flashMessage={() => 'Investment project created'}
+    >
+      {({ values }) => {
+        const dhCompany = company || values.company
+        return (
+          <>
+            {dhCompany && <CompanySummaryTable company={dhCompany} />}
+            {!company && <CompanySearchStep />}
+            <InvestmentTypeStep investmentTypes={values.investmentTypes} />
+            <InvestmentDetailsStep company={dhCompany} values={values} />
+          </>
+        )
+      }}
+    </Form>
   )
 }
 
