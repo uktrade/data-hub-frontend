@@ -8,6 +8,7 @@ const initialState = {
   results: [],
   isComplete: false,
   filterOptions: {
+    countries: [],
     sectors: [],
   },
 }

@@ -9,6 +9,7 @@ export const getEYBLeads = ({
   limit = 10,
   page = 1,
   company,
+  country,
   sector,
   value,
 }) => {
@@ -17,6 +18,8 @@ export const getEYBLeads = ({
     offset: limit * (parseInt(page, 10) - 1) || 0,
     ...(company ? { company } : null),
   })
+  if (country)
+    country.forEach((countryId) => params.append('country', countryId))
   if (sector) sector.forEach((sectorId) => params.append('sector', sectorId))
   if (value) value.forEach((valueOfLead) => params.append('value', valueOfLead))
   return apiProxyAxios
@@ -29,9 +32,10 @@ export const getEYBLeads = ({
 
 export const loadEYBLeadFilterOptions = () =>
   Promise.all([
+    getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.sector(), {
       params: {
         level__lte: '0',
       },
     }),
-  ]).then(([sectors]) => ({ sectors }))
+  ]).then(([countries, sectors]) => ({ countries, sectors }))
