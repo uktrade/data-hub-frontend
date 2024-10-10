@@ -376,6 +376,7 @@ const ReviewForm = () => {
             analyticsFormName={FORM_ID}
             submissionTaskName="TASK_PATCH_EXPORT_WIN_REVIEW"
             redirectMode="soft"
+            showStepInUrl={true}
             redirectTo={(_, { agree_with_win }) =>
               `../thankyou?agree=${agree_with_win}`
             }
