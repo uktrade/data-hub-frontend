@@ -23,10 +23,16 @@ const getContactFromQueryParams = (queryParams) => {
   return label && value ? { label, value } : null
 }
 
+const getEybLeadFromQueryParams = (queryParams) => {
+  const value = get(queryParams, 'eyb-lead-id')
+  return value ? value : null
+}
+
 const InvestmentProjectForm = ({ company, csrfToken }) => {
   const location = useLocation()
   const queryParams = getQueryParamsFromLocation(location)
   const contact = getContactFromQueryParams(queryParams)
+  const eybLeadId = getEybLeadFromQueryParams(queryParams)
   return (
     <Form
       id="add-investment-project"
@@ -36,6 +42,7 @@ const InvestmentProjectForm = ({ company, csrfToken }) => {
         fetchFromStorage: !!contact,
         contact,
         company,
+        eybLeadId,
       }}
       submissionTaskName={TASK_CREATE_INVESTMENT_PROJECT}
       analyticsFormName="Create investment project"
@@ -45,6 +52,7 @@ const InvestmentProjectForm = ({ company, csrfToken }) => {
           {
             ...values,
             ...(company ? { company } : {}),
+            ...(eybLeadId ? { eybLeadId } : {}),
           },
           csrfToken
         )
