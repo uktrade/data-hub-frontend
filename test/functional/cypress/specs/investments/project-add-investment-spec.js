@@ -1,5 +1,3 @@
-import { eybLeadFaker } from '../../fakers/eyb-leads'
-
 const { expect } = require('chai')
 
 const urls = require('../../../../../src/lib/urls')
@@ -194,26 +192,19 @@ describe('Adding an investment via "Investments"', () => {
   })
 })
 
-// WARNING: this test is skipped as it's currently subject to a bug
-// the sandbox currently always refers back to the same Company
-// due to the way the fixtures have been configured
-// This test can be fixed as part of the ticket below or in a separate PR
-// For now we can keep it here as skipped, rather than add it later on
-// https://uktrade.atlassian.net/browse/CLS2-979
 describe('Adding an investment via a "EYB Lead" details page', () => {
-  const eybLead = eybLeadFaker()
   beforeEach(() => {
-    cy.visit(urls.investments.eybLeads.details(eybLead.id))
+    cy.visit(urls.investments.eybLeads.details())
     cy.get('[data-test="button-add-investment-project"]').click()
   })
-  it.skip('should display the "Source of foreign equity investment" table', () => {
+  it('should display the "Source of foreign equity investment" table', () => {
     assertSummaryTable({
       dataTest: 'clientCompanyTable',
       heading: 'Source of foreign equity investment',
       content: {
-        Company: eybLead.company.name,
-        Country: eybLead.address.country,
-        //'Company investments': '12 investment projects in the UK',
+        Company: 'One List Corp',
+        Country: 'France',
+        'Company investments': '12 investment projects in the UK',
       },
     })
   })
