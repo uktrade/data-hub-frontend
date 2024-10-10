@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { GREY_1 } from '../../../../../client/utils/colours'
 import { idNamesToValueLabels } from '../../../../../client/utils'
 import {
   FieldAdvisersTypeahead,
@@ -23,6 +22,7 @@ import {
   ContactInformation,
 } from '../../../../../client/components'
 import Resource from '../../../../../client/components/Resource/Resource'
+import SubFieldSelect from '../../../../../client/components/Form/elements/FieldSelect/SubFieldSelect'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 
@@ -43,32 +43,6 @@ import {
 import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
 
 import urls from '../../../../../lib/urls'
-
-const StyledSubservicePrefix = styled.div`
-  background: ${GREY_1};
-  height: ${SPACING_POINTS[4]}px;
-  position: relative;
-  width: 3px;
-  margin-right: ${SPACING_POINTS[8]}px;
-  &:after {
-    background: ${GREY_1};
-    content: '';
-    height: 3px;
-    left: 0;
-    position: absolute;
-    top: ${SPACING_POINTS[4]}px;
-    width: ${SPACING_POINTS[6]}px;
-  }
-`
-
-const StyledSubserviceWrapper = styled('div')`
-  margin-top: -20px;
-  margin-left: 15px;
-  align-items: center;
-  div:nth-of-type(2) {
-    width: 100%;
-  }
-`
 
 const StyledRelatedTradeAgreementsWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -235,22 +209,21 @@ const StepInteractionDetails = ({
         required="Select a service"
         aria-label="service"
       />
-      <StyledSubserviceWrapper
-        style={{
-          display:
-            values.service && secondTierServices.length > 0 ? 'flex' : 'none',
-        }}
-      >
-        <StyledSubservicePrefix />
-        <FieldSelect
-          name="service_2nd_level"
-          emptyOption="-- Select service --"
-          options={secondTierServices}
-          validate={validateSecondTierServices}
-          aria-label="service second level"
-          fullWidth={true}
-        />
-      </StyledSubserviceWrapper>
+
+      <SubFieldSelect
+        /*
+        We need to hide the component this way as mounting it conditionally
+        would make its error message in the error summary appear at the end of
+        the list and we want the errors in the summary to be in the same order
+        as the corresponding fields.
+        */
+        style={{ display: !secondTierServices.length && 'none' }}
+        name="service_2nd_level"
+        emptyOption="-- Select service --"
+        options={secondTierServices}
+        validate={validateSecondTierServices}
+        aria-label="service second level"
+      />
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
