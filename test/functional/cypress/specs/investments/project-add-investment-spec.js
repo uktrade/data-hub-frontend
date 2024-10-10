@@ -212,17 +212,27 @@ describe('Adding an investment via a "EYB Lead" details page', () => {
   it('should include the eyb lead id on saving new investment project', () => {
     cy.get('[data-test="investment-type-non-fdi"]').click()
     cy.get('[data-test="continue"]').click()
-
     cy.get('input[data-test="name-input"]').type('project name')
     cy.get('textarea[name="description"]').type('project description')
-    // cy.get('#sector').selectTypeaheadOption('Aerospace')
-    // cy.get('#sector').selectTypeaheadOption('Advanced Engineering')
+    cy.get('#sector').parent().selectTypeaheadOption('Advanced Engineering')
+    cy.get('#business_activities').parent().selectTypeaheadOption('Assembly')
+    cy.get('#client_contacts').parent().selectTypeaheadOption('Joseph Woof')
+    cy.get('input[data-test="client-relationship-manager-yes"]').click()
+    cy.get('input[data-test="is-referral-source-yes"]').click()
+    cy.get('#referral_source_activity').select('LEP')
+    cy.get('input[data-test="estimated_land_date-month"').type(10)
+    cy.get('input[data-test="estimated_land_date-year"').type(2024)
 
-    // cy.get('[data-test="field-business_activities"]').selectTypeaheadOption(
-    //   'Other'
-    // )
+    cy.intercept('POST', '/api-proxy/v3/investment').as('createInvestment')
+
     cy.get('[data-test="submit"]').click()
-    // cy.get('form button').click()
+
+    cy.wait('@createInvestment').then(({ request }) =>
+      expect(request.body.eyb_lead_ids).to.have.property(
+        0,
+        '45122997-f323-4161-9ea4-2babe305b598'
+      )
+    )
   })
 })
 
