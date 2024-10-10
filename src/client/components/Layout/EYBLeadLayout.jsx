@@ -127,7 +127,7 @@ const EYBLeadLayout = ({ id, children }) => {
                               : eybLead.company.archived ||
                                   eybLead.company.ukBased
                                 ? null
-                                : `/investments/projects/create/${eybLead.company.id}`
+                                : `/investments/projects/create/${eybLead.company.id}?eyb-lead-id=${eybLead.id}`
                           }
                           aria-label={`Add investment project`}
                         >
