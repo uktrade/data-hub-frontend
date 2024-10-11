@@ -1,3 +1,5 @@
+import { ADVISER_ROLES } from './constants'
+
 export const sumExportValues = ({
   total_expected_export_value,
   total_expected_non_export_value,
@@ -28,13 +30,13 @@ export const createRoleTags = (item, currentAdviserId) => {
   isCurrentAdviserLeadOfficer(item, currentAdviserId) &&
     tags.push({
       ...tag,
-      text: 'Role: lead officer',
+      text: `Role: ${ADVISER_ROLES.LEAD_OFFICER}`,
     })
 
   teamMembersContainCurrentAdvisor(item.team_members, currentAdviserId) &&
     tags.push({
       ...tag,
-      text: 'Role: team member',
+      text: `Role: ${ADVISER_ROLES.TEAM_MEMBER}`,
     })
 
   contributingOfficersContainCurrentAdvisor(
@@ -43,7 +45,7 @@ export const createRoleTags = (item, currentAdviserId) => {
   ) &&
     tags.push({
       ...tag,
-      text: 'Role: contributing officer',
+      text: `Role: ${ADVISER_ROLES.CONTRIBUTING_OFFICER}`,
     })
 
   return tags

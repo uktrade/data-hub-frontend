@@ -16,3 +16,9 @@ export const SORT_OPTIONS = [
   { name: 'Company name A-Z', value: 'company__name' },
   { name: 'Company name Z-A', value: '-company__name' },
 ]
+
+export const ADVISER_ROLES = {
+  LEAD_OFFICER: 'lead officer',
+  TEAM_MEMBER: 'team member',
+  CONTRIBUTING_OFFICER: 'contributing officer',
+}
