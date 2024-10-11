@@ -5,6 +5,7 @@ import { WinsConfirmedList } from '../../../../../src/client/modules/ExportWins/
 import { sumExportValues } from '../../../../../src/client/modules/ExportWins/Status/utils'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
+import { exportWinsListData } from './export-wins-list-data'
 import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
@@ -94,5 +95,34 @@ describe('WinsConfirmedList', () => {
       cy.get(items).eq(2).should('have.text', 'Date won: 1 May 2023')
       cy.get(items).eq(3).should('have.text', 'Date responded: 18 Apr 2024')
     })
+  })
+
+  it('should conditionally render tags', () => {
+    const createProvider = (exportWinsList) =>
+      createTestProvider({
+        'Export Wins': () => Promise.resolve(exportWinsList),
+        Company: () => Promise.resolve({ id: 123 }),
+        TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+      })
+
+    exportWinsListData.forEach(
+      ({ exportWinsList, currentAdviserId, shouldRenderTag, role }) => {
+        const Provider = createProvider(exportWinsList)
+        cy.mount(
+          <Provider>
+            <WinsConfirmedList
+              exportWins={exportWinsList}
+              currentAdviserId={currentAdviserId}
+            />
+          </Provider>
+        )
+
+        const assertion = shouldRenderTag ? 'exist' : 'not.exist'
+        cy.get('[data-test="collection-item-tags"]').should(assertion)
+        if (assertion === 'exist') {
+          cy.get('[data-test="collection-item-tag"]').should('have.text', role)
+        }
+      }
+    )
   })
 })

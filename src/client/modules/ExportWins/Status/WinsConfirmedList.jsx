@@ -5,11 +5,12 @@ import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
-import { sumExportValues } from './utils'
+import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
+import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 
-export const WinsConfirmedList = ({ exportWins = [] }) => {
+export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
     <ul>
       {exportWins.map((item) => (
@@ -22,6 +23,7 @@ export const WinsConfirmedList = ({ exportWins = [] }) => {
           )}
           subheading={item.company.name}
           subheadingUrl={urls.companies.overview.index(item.company.id)}
+          tags={createRoleTags(item, currentAdviserId)}
           metadata={[
             {
               label: 'Contact name:',
@@ -59,6 +61,15 @@ export default () => (
     payload={{ confirmed: WIN_STATUS.CONFIRMED }}
     sortOptions={SORT_OPTIONS}
   >
-    {(page) => <WinsConfirmedList exportWins={page} />}
+    {(page) => (
+      <State>
+        {({ currentAdviserId }) => (
+          <WinsConfirmedList
+            exportWins={page}
+            currentAdviserId={currentAdviserId}
+          />
+        )}
+      </State>
+    )}
   </ExportWinsResource.Paginated>
 )
