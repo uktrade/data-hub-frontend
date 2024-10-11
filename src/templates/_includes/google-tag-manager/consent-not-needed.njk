@@ -6,13 +6,14 @@ Google Analytics cookies.
 {% if GOOGLE_TAG_MANAGER_KEY %}
 {% include "_includes/google-tag-manager/gtag-definition.njk" %}
 <script nonce='{{ cspNonce }}'>
-  window.gtag({
+  {# We can't use gtag for these, we must use dataLayer directly #}
+  dataLayer.push({
     userId: '{{user.id}}',
     userUserId: '{{user.sso_user_id}}',
   })
 
   if ('{{userFeatureGTMEvent}}') {
-    window.gtag({
+    dataLayer.push({
       name: '{{userFeatureGTMEvent.name}}',
       event: '{{userFeatureGTMEvent.event}}',
     })
