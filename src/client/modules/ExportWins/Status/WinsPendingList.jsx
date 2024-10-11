@@ -5,11 +5,12 @@ import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
-import { sumExportValues } from './utils'
+import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
+import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 
-export const WinsPendingList = ({ exportWins = [] }) => {
+export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
     <ul>
       {exportWins.map((item) => (
@@ -22,6 +23,7 @@ export const WinsPendingList = ({ exportWins = [] }) => {
           )}
           subheading={item.company.name}
           subheadingUrl={urls.companies.overview.index(item.company.id)}
+          tags={createRoleTags(item, currentAdviserId)}
           metadata={[
             ...(item.company_contacts[0]
               ? [
@@ -76,6 +78,15 @@ export default () => (
     }}
     sortOptions={SORT_OPTIONS}
   >
-    {(page) => <WinsPendingList exportWins={page} />}
+    {(page) => (
+      <State>
+        {({ currentAdviserId }) => (
+          <WinsPendingList
+            exportWins={page}
+            currentAdviserId={currentAdviserId}
+          />
+        )}
+      </State>
+    )}
   </ExportWinsResource.Paginated>
 )
