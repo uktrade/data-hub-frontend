@@ -228,7 +228,7 @@ describe('Adding an investment via a "EYB Lead" details page', () => {
     cy.get('[data-test="submit"]').click()
 
     cy.wait('@createInvestment').then(({ request }) =>
-      expect(request.body.eyb_lead_ids).to.have.property(
+      expect(request.body.eyb_leads).to.have.property(
         0,
         '45122997-f323-4161-9ea4-2babe305b598'
       )

@@ -68,7 +68,7 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
         ? INVESTOR_TYPES.existing.value
         : investor_type,
     level_of_involvement: level_of_involvement?.value,
-    eyb_lead_ids: eybLeadId ? [eybLeadId] : [],
+    eyb_leads: eybLeadId ? [eybLeadId] : [],
   }
 
   if (Array.isArray(specific_programmes)) {
