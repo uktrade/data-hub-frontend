@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { WinsPendingList } from '../../../../../src/client/modules/ExportWins/Status/WinsPendingList'
-import { exportWinsListData } from './export-wins-list-data'
+import { exportWinsData } from './export-wins-data'
 import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
@@ -61,20 +61,20 @@ describe('WinsPendingList', () => {
   })
 
   it('should conditionally render tags', () => {
-    const createProvider = (exportWinsList) =>
+    const createProvider = (exportWins) =>
       createTestProvider({
-        'Export Wins': () => Promise.resolve(exportWinsList),
+        'Export Wins': () => Promise.resolve(exportWins),
         Company: () => Promise.resolve({ id: 123 }),
         TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
       })
 
-    exportWinsListData.forEach(
-      ({ exportWinsList, currentAdviserId, shouldRenderTag, role }) => {
-        const Provider = createProvider(exportWinsList)
+    exportWinsData.forEach(
+      ({ exportWins, currentAdviserId, shouldRenderTag, role }) => {
+        const Provider = createProvider(exportWins)
         cy.mount(
           <Provider>
             <WinsPendingList
-              exportWins={exportWinsList}
+              exportWins={exportWins}
               currentAdviserId={currentAdviserId}
             />
           </Provider>
