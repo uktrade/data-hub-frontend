@@ -9519,11 +9519,11 @@
           "location": {
             "type": "string"
           },
-          "location_city": {
+          "proposed_investment_city": {
             "type": "string",
             "maxLength": 256
           },
-          "location_none": {
+          "proposed_investment_location_none": {
             "type": "boolean",
             "nullable": true
           },
@@ -9566,7 +9566,7 @@
             "type": "string",
             "maxLength": 256
           },
-          "company_location": {
+          "address_country": {
             "type": "string"
           },
           "full_name": {
@@ -9682,7 +9682,7 @@
           "user_created",
           "user_modified",
           "company_name",
-          "company_location",
+          "address_country",
           "full_name",
           "role",
           "email",
