@@ -30,7 +30,7 @@ export const CompanyExportWinsList = ({ exportWins, currentAdviserId }) =>
           metadata={[
             {
               label: 'Lead officer name',
-              value: <Black>{item.lead_officer.name}</Black>,
+              value: <Black>{item.lead_officer?.name}</Black>,
             },
             {
               label: 'Contact name',
