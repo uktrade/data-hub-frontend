@@ -39,7 +39,7 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Location of company headquarters"
-                children={eybLead.companyLocation.name}
+                children={eybLead.addressCountry.name}
               />
               <SummaryTable.Row
                 heading="Submitted to EYB"
@@ -63,11 +63,11 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Do you know where you want to set up in the UK?"
-                children={eybLead.locationNone ? 'No' : 'Yes'}
+                children={eybLead.proposedInvestmentLocationNone ? 'No' : 'Yes'}
               />
               <SummaryTable.Row
                 heading="Where do you want to set up in the UK?"
-                children={eybLead.locationCity}
+                children={eybLead.proposedInvestmentCity}
               />
               <SummaryTable.Row
                 heading="How do you plan to expand your business in the UK?"
