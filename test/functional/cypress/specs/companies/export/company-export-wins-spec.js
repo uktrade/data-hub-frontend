@@ -12,7 +12,7 @@ const exportWin3 = companyExportWinFaker()
 const exportWinList = [exportWin1, exportWin2, exportWin3]
 
 const getExpectedMetadata = (win) => ({
-  'Lead officer name': win.officer.name,
+  'Lead officer name': win.lead_officer.name,
   'Company name': 'Not set',
   'Contact name': `${win.contact.name} (${win.contact.job_title} - ${win.contact.email})`,
   Destination: win.country,
