@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { WinsRejectedList } from '../../../../../src/client/modules/ExportWins/Status/WinsRejectedList'
+import { exportWinsData } from './export-wins-data'
 import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
@@ -57,5 +58,33 @@ describe('WinsRejectedList', () => {
       )
 
     cy.get('@metadataItems').eq(1).should('have.text', 'Total value: £6,000')
+  })
+  it('should conditionally render tags', () => {
+    const createProvider = (exportWins) =>
+      createTestProvider({
+        'Export Wins': () => Promise.resolve(exportWins),
+        Company: () => Promise.resolve({ id: 123 }),
+        TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+      })
+
+    exportWinsData.forEach(
+      ({ exportWins, currentAdviserId, shouldRenderTag, role }) => {
+        const Provider = createProvider(exportWins)
+        cy.mount(
+          <Provider>
+            <WinsRejectedList
+              exportWins={exportWins}
+              currentAdviserId={currentAdviserId}
+            />
+          </Provider>
+        )
+
+        const assertion = shouldRenderTag ? 'exist' : 'not.exist'
+        cy.get('[data-test="collection-item-tags"]').should(assertion)
+        if (assertion === 'exist') {
+          cy.get('[data-test="collection-item-tag"]').should('have.text', role)
+        }
+      }
+    )
   })
 })

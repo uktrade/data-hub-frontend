@@ -9,6 +9,8 @@ const StyledTag = styled(GovUkTag)`
   background-color: ${(props) => TAG_COLOURS[props.colour].background};
   color: ${(props) => TAG_COLOURS[props.colour].colour};
   white-space: nowrap;
+  text-transform: ${(props) =>
+    props.textTransform ? props.textTransform : 'uppercase'};
 `
 
 /**

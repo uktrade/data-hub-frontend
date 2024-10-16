@@ -77,6 +77,7 @@ export const renderTags = (tags) =>
     <Tag
       key={`tag_${index}`}
       colour={tag.colour}
+      textTransform={tag.textTransform}
       data-test={tag.dataTest ? tag.dataTest : 'collection-item-tag'}
     >
       {tag.text}
@@ -103,7 +104,7 @@ const CollectionItem = ({
   <ItemWrapper data-test="collection-item">
     {/* tags take precidence over badges as they are the newer style, however not all components
      have been updated so the component needs to handle rendering both props */}
-    {tags && !showTagsInMetadata && (
+    {tags && tags.length > 0 && !showTagsInMetadata && (
       <StyledBadgesWrapper data-test="collection-item-tags">
         {renderTags(tags)}
       </StyledBadgesWrapper>
