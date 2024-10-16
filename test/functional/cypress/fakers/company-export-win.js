@@ -19,7 +19,8 @@ const companyExportWinFaker = () => ({
     'outward investment',
   ]),
   name_of_export: 'Rolls Royce',
-  officer: {
+  lead_officer: {
+    id: faker.string.uuid(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
     team: {
@@ -27,6 +28,41 @@ const companyExportWinFaker = () => ({
       sub_type: 'TD - Events - Financial & Professional Business Services',
     },
   },
+  team_members: [
+    {
+      id: faker.string.uuid(),
+      first_name: faker.person.firstName(),
+      last_name: faker.person.lastName(),
+      name: faker.person.fullName(),
+    },
+    {
+      id: faker.string.uuid(),
+      first_name: faker.person.firstName(),
+      last_name: faker.person.lastName(),
+      name: faker.person.fullName(),
+    },
+  ],
+  contributing_advisers: [
+    {
+      id: faker.string.uuid(),
+      adviser: {
+        id: faker.string.uuid(),
+        first_name: faker.person.firstName(),
+        last_name: faker.person.lastName(),
+        name: faker.person.fullName(),
+      },
+      name: faker.string.uuid(),
+      location: faker.location.country(),
+      team_type: {
+        id: faker.string.uuid(),
+        name: faker.person.jobDescriptor(),
+      },
+      hq_team: {
+        id: faker.string.uuid(),
+        name: faker.person.jobDescriptor(),
+      },
+    },
+  ],
   contact: {
     name: faker.person.fullName(),
     email: faker.internet.email(),
