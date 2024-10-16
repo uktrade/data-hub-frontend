@@ -30,8 +30,8 @@
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "location_city": "Cardiff",
-      "location_none": false,
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
       "hiring": "51 to 100",
       "spend": "Less than £10,000",
       "spend_other": "",
@@ -40,7 +40,7 @@
       "user_created": "2024-09-25T08:12:16.664704Z",
       "user_modified": "2024-09-25T08:12:16.664710Z",
       "company_name": "Clark PLC",
-      "company_location": {
+      "address_country": {
         "name": "Canada",
         "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
       },
@@ -104,8 +104,8 @@
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "location_city": "Cardiff",
-      "location_none": false,
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
       "hiring": "1 to 5",
       "spend": "More than £10 million",
       "spend_other": "",
@@ -114,7 +114,7 @@
       "user_created": "2024-09-25T08:12:16.872718Z",
       "user_modified": "2024-09-25T08:12:16.872722Z",
       "company_name": "Kent, Powell and Kirk",
-      "company_location": {
+      "address_country": {
         "name": "Canada",
         "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
       },
@@ -178,8 +178,8 @@
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "location_city": "Cardiff",
-      "location_none": false,
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
       "hiring": "1 to 5",
       "spend": "£10,000 to £500,000",
       "spend_other": "",
@@ -188,7 +188,7 @@
       "user_created": "2024-09-25T08:12:17.067611Z",
       "user_modified": "2024-09-25T08:12:17.067614Z",
       "company_name": "Wilson-Nolan",
-      "company_location": {
+      "address_country": {
         "name": "Canada",
         "id": "5daf72a6-5d95-e211-a939-e4115bead28a"
       },
