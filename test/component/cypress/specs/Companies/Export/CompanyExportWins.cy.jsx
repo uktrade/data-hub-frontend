@@ -18,7 +18,7 @@ describe('CompanyExportWins', () => {
     ;[
       // The lead_officer id doesn't match the currentAdviserId
       {
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             lead_officer: {
@@ -31,7 +31,7 @@ describe('CompanyExportWins', () => {
       },
       {
         // The lead_officer id matches the currentAdviserId
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             lead_officer: {
@@ -45,7 +45,7 @@ describe('CompanyExportWins', () => {
       },
       // The team_members array doesn't include the currentAdviserId
       {
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             team_members: [
@@ -66,7 +66,7 @@ describe('CompanyExportWins', () => {
       },
       {
         // The team_members array includes the currentAdviserId
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             team_members: [
@@ -88,7 +88,7 @@ describe('CompanyExportWins', () => {
       },
       // The contributing_advisers array doesn't include the currentAdviserId
       {
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             contributing_advisers: [
@@ -115,7 +115,7 @@ describe('CompanyExportWins', () => {
       },
       {
         // The contributing_advisers array includes the currentAdviserId
-        exportWinsList: [
+        exportWins: [
           {
             ...companyExportWin,
             contributing_advisers: [
@@ -141,12 +141,12 @@ describe('CompanyExportWins', () => {
         shouldRenderTag: true,
         role: 'Role: contributing officer',
       },
-    ].forEach(({ exportWinsList, currentAdviserId, shouldRenderTag, role }) => {
-      const Provider = createProvider(exportWinsList)
+    ].forEach(({ exportWins, currentAdviserId, shouldRenderTag, role }) => {
+      const Provider = createProvider(exportWins)
       cy.mount(
         <Provider>
           <CompanyExportWinsList
-            exportWins={exportWinsList}
+            exportWins={exportWins}
             currentAdviserId={currentAdviserId}
           />
         </Provider>
