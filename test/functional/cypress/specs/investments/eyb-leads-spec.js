@@ -149,7 +149,10 @@ describe('EYB leads collection page', () => {
         .should('contain', `Estimated spend ${eybLead.spend}`)
         .should('contain', `Sector ${eybLead.sector.name}`)
         .should('contain', `Estimated land date ${eybLead.landing_timeframe}`)
-        .should('contain', `Location ${eybLead.address.country.name}`)
+        .should(
+          'contain',
+          `Location ${eybLead.proposed_investment_region.name}`
+        )
         .should('contain', eybLead.is_high_value ? 'HIGH VALUE' : 'LOW VALUE')
     })
   })

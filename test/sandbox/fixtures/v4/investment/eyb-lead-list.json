@@ -26,12 +26,12 @@
         "Onward sales and exports from the UK"
       ],
       "intent_other": "",
-      "location": {
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
+      "proposed_investment_region": {
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "proposed_investment_city": "Cardiff",
-      "proposed_investment_location_none": false,
       "hiring": "51 to 100",
       "spend": "Less than £10,000",
       "spend_other": "",
@@ -100,12 +100,12 @@
         "Research, develop and collaborate"
       ],
       "intent_other": "",
-      "location": {
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
+      "proposed_investment_region": {
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "proposed_investment_city": "Cardiff",
-      "proposed_investment_location_none": false,
       "hiring": "1 to 5",
       "spend": "More than £10 million",
       "spend_other": "",
@@ -174,12 +174,12 @@
         "Find people with specialist skills"
       ],
       "intent_other": "",
-      "location": {
+      "proposed_investment_city": "Cardiff",
+      "proposed_investment_location_none": false,
+      "proposed_investment_region": {
         "name": "Wales",
         "id": "8d4cd12a-6095-e211-a939-e4115bead28a"
       },
-      "proposed_investment_city": "Cardiff",
-      "proposed_investment_location_none": false,
       "hiring": "1 to 5",
       "spend": "£10,000 to £500,000",
       "spend_other": "",

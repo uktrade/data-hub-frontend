@@ -164,7 +164,7 @@ const transformResponseToEventAventriDetails = ({
     fullAddress: compact([
       object['dit:aventri:location_address1'],
       object['dit:aventri:location_address2'],
-      object['dit:aventri:proposed_investment_city'],
+      object['dit:aventri:location_city'],
       object['dit:aventri:location_postcode'],
       object['dit:aventri:location_country'],
     ]),

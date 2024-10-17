@@ -81,9 +81,9 @@ const eybLeadFaker = (overrides = {}) => ({
     faker.number.int({ min: 1, max: 6 })
   ),
   intent_other: '',
-  location: WALES,
   proposed_investment_city: 'Cardiff',
   proposed_investment_location_none: false,
+  proposed_investment_region: WALES,
   hiring: randomChoice(HIRING_CHOICES),
   spend: randomChoice(SPEND_CHOICES),
   spend_other: '',
