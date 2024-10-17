@@ -16,17 +16,24 @@ const EYBLeadDetails = () => {
         {(eybLead) => {
           return (
             <SummaryTable data-test="eyb-lead-details-table">
-              <SummaryTable.TextRow
-                heading="Company name"
-                value={
-                  <Link
-                    href={urls.companies.overview.index(eybLead.company?.id)}
-                    data-test="company-link"
-                  >
-                    {eybLead.company?.name}
-                  </Link>
-                }
-              />
+              {eybLead.company ? (
+                <SummaryTable.TextRow
+                  heading="Company name"
+                  value={
+                    <Link
+                      href={urls.companies.overview.index(eybLead.company?.id)}
+                      data-test="company-link"
+                    >
+                      {eybLead.company.name}
+                    </Link>
+                  }
+                />
+              ) : (
+                <SummaryTable.TextRow
+                  heading="Company name"
+                  value={'Not set'}
+                />
+              )}
               <SummaryTable.Row
                 heading="Value"
                 children={

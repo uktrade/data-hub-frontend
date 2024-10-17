@@ -33,7 +33,7 @@ export const transformLeadToListItem = ({
   return {
     id,
     headingUrl: urls.investments.eybLeads.details(id),
-    headingText: company.name,
+    headingText: company ? company.name : 'Not set',
     tags,
     metadata,
   }

@@ -86,9 +86,13 @@ const EYBLeadLayout = ({ id, children }) => {
         <StyledHeader>
           <EYBLeadResource id={id}>
             {(eybLead) => {
-              const breadcrumbs = buildEYBLeadBreadcrumbs({
-                text: eybLead.company.name,
-              })
+              const breadcrumbs = buildEYBLeadBreadcrumbs(
+                eybLead.company
+                  ? {
+                      text: eybLead.company.name,
+                    }
+                  : {}
+              )
               return (
                 <>
                   <BreadcrumbsWrapper data-test="breadcrumbs">
@@ -113,26 +117,28 @@ const EYBLeadLayout = ({ id, children }) => {
                         EYB lead
                       </StyledSuperheading>
                       <LocalHeaderHeading data-test="heading">
-                        {eybLead.company.name}
+                        {eybLead.company ? eybLead.company.name : 'Not set'}
                       </LocalHeaderHeading>
                     </GridCol>
                     <GridCol setWith="one-third">
                       <StyledButtonContainer>
-                        <Button
-                          as={StyledButtonLink}
-                          data-test="button-add-investment-project"
-                          href={
-                            !eybLead.company
-                              ? `/investments/projects/create`
-                              : eybLead.company.archived ||
-                                  eybLead.company.ukBased
-                                ? null
-                                : `/investments/projects/create/${eybLead.company.id}`
-                          }
-                          aria-label={`Add investment project`}
-                        >
-                          Add investment project
-                        </Button>
+                        {eybLead.company && (
+                          <Button
+                            as={StyledButtonLink}
+                            data-test="button-add-investment-project"
+                            href={
+                              !eybLead.company
+                                ? `/investments/projects/create`
+                                : eybLead.company.archived ||
+                                    eybLead.company.ukBased
+                                  ? null
+                                  : `/investments/projects/create/${eybLead.company.id}`
+                            }
+                            aria-label={`Add investment project`}
+                          >
+                            Add investment project
+                          </Button>
+                        )}
                       </StyledButtonContainer>
                     </GridCol>
                   </GridRow>
