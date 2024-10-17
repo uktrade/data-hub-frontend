@@ -42,11 +42,15 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Sector or industry"
-                children={eybLead.sector.name}
+                children={eybLead.sector ? eybLead.sector.name : 'Not set'}
               />
               <SummaryTable.Row
                 heading="Location of company headquarters"
-                children={eybLead.companyLocation.name}
+                children={
+                  eybLead.companyLocation
+                    ? eybLead.companyLocation.name
+                    : 'Not set'
+                }
               />
               <SummaryTable.Row
                 heading="Submitted to EYB"
