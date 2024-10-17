@@ -9,7 +9,7 @@ export const transformLeadToListItem = ({
   spend,
   sector,
   landing_timeframe,
-  address_country,
+  proposed_investment_region,
   is_high_value,
 }) => {
   const tags = [
@@ -28,7 +28,10 @@ export const transformLeadToListItem = ({
     { label: 'Estimated spend', value: spend },
     { label: 'Sector', value: sector ? sector.name : '' },
     { label: 'Estimated land date', value: landing_timeframe },
-    { label: 'Location', value: address_country ? address_country.name : '' },
+    {
+      label: 'Location',
+      value: proposed_investment_region ? proposed_investment_region.name : '',
+    },
   ].filter((metadata) => metadata.value)
 
   return {
