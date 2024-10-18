@@ -9484,18 +9484,16 @@
           },
           "triage_created": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "triage_modified": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "sector": {
             "type": "string"
-          },
-          "sector_sub": {
-            "type": "string",
-            "maxLength": 256
           },
           "intent": {
             "type": "array",
@@ -9516,19 +9514,25 @@
             "type": "string",
             "maxLength": 256
           },
-          "location": {
+          "proposed_investment_region": {
             "type": "string"
           },
-          "location_city": {
+          "proposed_investment_city": {
             "type": "string",
             "maxLength": 256
           },
-          "location_none": {
+          "proposed_investment_location_none": {
             "type": "boolean",
             "nullable": true
           },
           "hiring": {
-            "enum": ["1-5", "6-50", "51-100", "101+", "NO_PLANS_TO_HIRE_YET"],
+            "enum": [
+              "1-5",
+              "6-50",
+              "51-100",
+              "101+",
+              "NO_PLANS_TO_HIRE_YET"
+            ],
             "type": "string"
           },
           "spend": {
@@ -9548,7 +9552,8 @@
             "maxLength": 256
           },
           "is_high_value": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "user_hashed_uuid": {
             "type": "string",
@@ -9556,17 +9561,31 @@
           },
           "user_created": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "user_modified": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "company_name": {
             "type": "string",
             "maxLength": 256
           },
-          "company_location": {
+          "duns_number": {
+            "type": "string",
+            "nullable": true,
+            "description": "Dun & Bradstreet unique identifier. Nine-digit number with leading zeros.",
+            "pattern": "^-?\\d+\\z",
+            "maxLength": 9,
+            "minLength": 9
+          },
+          "company_website": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "company": {
             "type": "string"
           },
           "full_name": {
@@ -9586,10 +9605,12 @@
             "maxLength": 256
           },
           "agree_terms": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "agree_info_email": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "landing_timeframe": {
             "enum": [
@@ -9598,21 +9619,6 @@
               "ONE_TO_TWO_YEARS",
               "OVER_TWO_YEARS"
             ],
-            "type": "string"
-          },
-          "company_website": {
-            "type": "string",
-            "maxLength": 256
-          },
-          "duns_number": {
-            "type": "string",
-            "nullable": true,
-            "description": "Dun & Bradstreet unique identifier. Nine-digit number with leading zeros.",
-            "pattern": "^-?\\d+\\z",
-            "maxLength": 9,
-            "minLength": 9
-          },
-          "company": {
             "type": "string"
           },
           "utm_name": {
@@ -9671,22 +9677,8 @@
           }
         },
         "required": [
-          "triage_hashed_uuid",
-          "triage_created",
-          "triage_modified",
           "sector",
-          "location",
-          "hiring",
-          "spend",
-          "user_hashed_uuid",
-          "user_created",
-          "user_modified",
-          "company_name",
-          "company_location",
-          "full_name",
-          "role",
-          "email",
-          "telephone_number",
+          "proposed_investment_region",
           "company",
           "address"
         ]
