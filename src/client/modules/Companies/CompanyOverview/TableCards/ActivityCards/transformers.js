@@ -51,6 +51,8 @@ export const transformActivity = (activity) => {
     return transformReferralToListItem(activity)
   else if (activity_source === 'investment')
     return transformInvestmentToListItem(activity)
+  else if (activity_source === 'order')
+    return transformOrderToListItem(activity)
 }
 
 export const transformReferralToListItem = (activity) => {
@@ -134,6 +136,25 @@ export const transformInvestmentToListItem = (activity) => {
             `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by `,
             investment.created_by.name,
           ],
+  }
+}
+
+export const transformOrderToListItem = (activity) => {
+  const order = activity.order
+
+  return {
+    id: order.id,
+    date: formatMediumDate(activity.date),
+    tags: [
+      {
+        text: 'New Order',
+        colour: 'grey',
+        dataTest: 'order-kind-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.omis.order(order.id),
+    headingText: order.reference,
+    summary: '',
   }
 }
 

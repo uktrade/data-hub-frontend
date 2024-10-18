@@ -62,6 +62,8 @@ export const transformActivity = (activity) => {
     return transformReferralToListItem(activity)
   else if (activity_source === 'investment')
     return transformInvestmentToListItem(activity)
+  else if (activity_source === 'order')
+    return transformOrderToListItem(activity)
 }
 
 export const transformInteractionToListItem = ({
@@ -201,6 +203,56 @@ export const transformInvestmentToListItem = (activity) => {
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.projects.details(activity.investment.id),
     headingText: activity.investment.name,
+  }
+}
+
+export const transformOrderToListItem = (activity) => {
+  return {
+    id: activity.order.id,
+    metadata: [
+      { label: 'Date', value: formatMediumDate(activity.date) },
+      {
+        label: 'Country',
+        value: activity.order.primary_market.name,
+      },
+      {
+        label: 'UK region',
+        value: activity.order.uk_region,
+      },
+      {
+        label: 'Added by',
+        value: activity.order.created_by
+          ? AdviserRenderer({
+              adviser: activity.order.created_by,
+              team: activity.order.created_by.dit_team,
+            })
+          : '',
+      },
+      {
+        label: 'Company Contact',
+        value:
+          activity.order.contact.name + ' ' + activity.order.contact.job_title,
+      },
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: 'Orders (OMIS)',
+        colour: 'default',
+        dataTest: 'order-theme-label',
+      },
+      {
+        text: 'Event',
+        colour: 'blue',
+        dataTest: 'order-service-label',
+      },
+      {
+        text: 'New Order',
+        colour: 'grey',
+        dataTest: 'order-kind-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.omis.order(activity.order.id),
+    headingText: activity.order.reference,
   }
 }
 
