@@ -15,7 +15,7 @@ export const getEYBLeads = ({
   let params = new URLSearchParams({
     limit,
     offset: limit * (parseInt(page, 10) - 1) || 0,
-    ...(company && { company }),
+    ...(company ? { company } : null),
   })
   if (sector) sector.forEach((sectorId) => params.append('sector', sectorId))
   if (value) value.forEach((valueOfLead) => params.append('value', valueOfLead))
