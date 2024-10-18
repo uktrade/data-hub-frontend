@@ -117,7 +117,9 @@ const EYBLeadLayout = ({ id, children }) => {
                         EYB lead
                       </StyledSuperheading>
                       <LocalHeaderHeading data-test="heading">
-                        {eybLead.company ? eybLead.company.name : 'Not set'}
+                        {eybLead.company
+                          ? eybLead.company.name
+                          : eybLead.companyName}
                       </LocalHeaderHeading>
                     </GridCol>
                     <GridCol setWith="one-third">

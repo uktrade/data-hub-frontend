@@ -31,7 +31,7 @@ const EYBLeadDetails = () => {
               ) : (
                 <SummaryTable.TextRow
                   heading="Company name"
-                  value={'Not set'}
+                  value={eybLead.companyName}
                 />
               )}
               <SummaryTable.Row
