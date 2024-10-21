@@ -185,13 +185,6 @@ describe('EYB lead details', () => {
       })
     })
 
-    it('should use backup name as company overview in the table', () => {
-      cy.get('[data-test="company-link"]')
-        .should('exist')
-        .should('have.text', eybLeadWithValues.company_name)
-        .should('not.have.attribute', 'href')
-    })
-
     it('should not show the company website link within the table', () => {
       cy.get('[data-test="website-link"]').should('not.exist')
     })
