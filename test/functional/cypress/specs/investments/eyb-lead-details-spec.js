@@ -133,10 +133,7 @@ describe('EYB lead details', () => {
     const eybLeadWithValues = eybLeadFaker({
       company: null,
       value: true,
-      sector: {
-        name: 'Mining',
-        id: 'a622c9d2-5f95-e211-a939-e4115bead28a',
-      },
+      sector: null,
       triage_created: '2023-06-07T10:00:00Z',
       intent: [
         'Find people with specialist skills',
@@ -168,7 +165,7 @@ describe('EYB lead details', () => {
         content: {
           'Company name': eybLeadWithValues.company_name,
           'Value': 'High value',
-          'Sector or industry': eybLeadWithValues.sector.name,
+          'Sector or industry': 'Not set',
           'Location of company headquarters': 'Canada',
           'Submitted to EYB': '07 Jun 2023',
           'Company website address': 'Not set',
@@ -192,6 +189,7 @@ describe('EYB lead details', () => {
       cy.get('[data-test="company-link"]')
         .should('exist')
         .should('have.text', eybLeadWithValues.company_name)
+        .shouldNot('have.attribute', 'href')
     })
 
     it('should show "Not set" instead of the company website link within the table', () => {
