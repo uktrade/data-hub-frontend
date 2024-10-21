@@ -69,11 +69,15 @@ const buildQueryString = (queryParams = {}) =>
   }).toString()
 
 const getEYBLeadsByCompanyName = (companyName) => {
-  return EYB_LEAD_LIST.filter((lead) => lead.company.name.includes(companyName))
+  return EYB_LEAD_LIST.filter(
+    (lead) => lead.company && lead.company.name.includes(companyName)
+  )
 }
 
 const getEYBLeadsBySectorId = (sectorId) => {
-  return EYB_LEAD_LIST.filter((lead) => lead.sector.id === sectorId)
+  return EYB_LEAD_LIST.filter(
+    (lead) => lead.sector && lead.sector.id === sectorId
+  )
 }
 
 const convertValueStringToBoolean = (value) => {
@@ -292,7 +296,7 @@ describe('EYB leads collection page', () => {
             ...PAYLOADS.lowValueFilter,
           },
           chipsLabel: LOW_VALUE_LABEL,
-          expectedNumberOfResults: 2,
+          expectedNumberOfResults: 3,
         },
       ]
 
