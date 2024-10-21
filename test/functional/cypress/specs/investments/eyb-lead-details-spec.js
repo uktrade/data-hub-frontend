@@ -189,13 +189,11 @@ describe('EYB lead details', () => {
       cy.get('[data-test="company-link"]')
         .should('exist')
         .should('have.text', eybLeadWithValues.company_name)
-        .shouldNot('have.attribute', 'href')
+        .should('not.have.attribute', 'href')
     })
 
-    it('should show "Not set" instead of the company website link within the table', () => {
-      cy.get('[data-test="website-link"]')
-        .should('exist')
-        .should('have.text', 'Not set')
+    it('should not show the company website link within the table', () => {
+      cy.get('[data-test="website-link"]').should('not.exist')
     })
 
     it('should use backup name om the heading', () => {
@@ -213,7 +211,7 @@ describe('EYB lead details', () => {
     })
 
     it('should not render the `Add investment project` button', () => {
-      cy.get('[data-test="button-add-investment-project"]').shouldNot('exist')
+      cy.get('[data-test="button-add-investment-project"]').should('not.exist')
     })
   })
 })
