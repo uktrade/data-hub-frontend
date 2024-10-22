@@ -7,6 +7,7 @@ import { getCollectionList } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import companyActivityListFaker, {
   companyActivityInvestmentListFaker,
+  companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
@@ -394,6 +395,7 @@ describe('Company overview page', () => {
       {},
       { number_new_jobs: null }
     )
+    const orderList = companyActivityOrderListFaker(1)
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -532,6 +534,15 @@ describe('Company overview page', () => {
       cy.get('[data-test="activity-summary"]').contains(
         `${activity.investment.investment_type.name} investment added by ${activity.investment.created_by.name}`
       )
+    })
+
+    it('should display Data Hub order activity', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        orderList,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="order-kind-label"]').contains('New Order')
     })
 
     it.skip('should display Data Hub event', () => {
