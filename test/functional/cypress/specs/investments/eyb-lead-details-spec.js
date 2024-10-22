@@ -190,7 +190,7 @@ describe('EYB lead details', () => {
       cy.get('[data-test="website-link"]').should('not.exist')
     })
 
-    it('should use backup name om the heading', () => {
+    it('should use backup name on the heading', () => {
       cy.get('[data-test="heading"]')
         .should('exist')
         .should('have.text', eybLeadWithoutCompany.company_name)
