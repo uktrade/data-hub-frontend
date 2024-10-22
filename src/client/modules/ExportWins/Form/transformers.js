@@ -18,7 +18,7 @@ import {
 
 const CONFIDENTIAL = 'confidential'
 
-const transformContributingOfficersToAdvisers = (values) =>
+const transformContributingOfficers = (values) =>
   Object.keys(values)
     .filter((key) => key.startsWith('contributing_officer'))
     .map((k, index) => ({
@@ -37,8 +37,8 @@ const transformYearlyValuesToBreakdowns = (key, id, values) =>
       value: values[k],
     }))
 
-const transformAdvisersToContributingOfficers = (advisers = []) =>
-  advisers.reduce(
+const transformContributingAdvisers = (contributing_advisers = []) =>
+  contributing_advisers.reduce(
     (acc, val, index) => ({
       ...acc,
       [`contributing_officer_${index}`]: {
@@ -137,8 +137,10 @@ export const transformExportWinForForm = (exportWin) => ({
   hq_team: idNameToValueLabel(exportWin.hq_team),
   team_members: exportWin.team_members.map(idNameToValueLabel),
   // Credit for this win
-  credit_for_win: exportWin.advisers.length ? OPTION_YES : OPTION_NO,
-  ...transformAdvisersToContributingOfficers(exportWin.advisers),
+  credit_for_win: exportWin.contributing_advisers.length
+    ? OPTION_YES
+    : OPTION_NO,
+  ...transformContributingAdvisers(exportWin.contributing_advisers),
   // Customer details
   company_contacts: transformCompanyContact(exportWin.company_contacts[0]),
   customer_location: idNameToValueLabel(exportWin.customer_location),
@@ -187,7 +189,7 @@ export const transformFormValuesForAPI = (values) => ({
     ? values.team_members.map((member) => member.value)
     : [],
   // Credit for this win
-  advisers: transformContributingOfficersToAdvisers(values),
+  contributing_advisers: transformContributingOfficers(values),
   // Customer details
   company_contacts: [values.company_contacts.value],
   customer_location: values.customer_location.value,
