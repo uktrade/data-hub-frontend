@@ -7,6 +7,7 @@ import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { HIGH_VALUE_LABEL, LOW_VALUE_LABEL } from './constants'
+import NOT_SET_TEXT from '../../../../apps/companies/constants'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
@@ -42,14 +43,14 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Sector or industry"
-                children={eybLead.sector ? eybLead.sector.name : 'Not set'}
+                children={eybLead.sector ? eybLead.sector.name : NOT_SET_TEXT}
               />
               <SummaryTable.Row
                 heading="Location of company headquarters"
                 children={
                   eybLead.companyLocation
                     ? eybLead.companyLocation.name
-                    : 'Not set'
+                    : NOT_SET_TEXT
                 }
               />
               <SummaryTable.Row
@@ -65,7 +66,7 @@ const EYBLeadDetails = () => {
                     {eybLead.companyWebsite}
                   </NewWindowLink>
                 ) : (
-                  'Not set'
+                  NOT_SET_TEXT
                 )}
               </SummaryTable.Row>
               <SummaryTable.Row

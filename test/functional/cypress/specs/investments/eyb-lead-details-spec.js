@@ -4,6 +4,7 @@ import {
 } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
+import NOT_SET_TEXT from '../../../../../src/apps/companies/constants'
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -130,7 +131,7 @@ describe('EYB lead details', () => {
     })
   })
   context('When viewing an EYB lead without a company associated to it', () => {
-    const eybLeadWithValues = eybLeadFaker({
+    const eybLeadWithoutCompany = eybLeadFaker({
       company: null,
       value: true,
       sector: null,
@@ -153,8 +154,8 @@ describe('EYB lead details', () => {
       company_name: 'Mars Temp',
     })
     beforeEach(() => {
-      setup(eybLeadWithValues)
-      cy.visit(investments.eybLeads.details(eybLeadWithValues.id))
+      setup(eybLeadWithoutCompany)
+      cy.visit(investments.eybLeads.details(eybLeadWithoutCompany.id))
       cy.wait('@getEYBLeadDetails')
     })
 
@@ -163,24 +164,24 @@ describe('EYB lead details', () => {
         dataTest: 'eyb-lead-details-table',
         // prettier-ignore
         content: {
-          'Company name': eybLeadWithValues.company_name,
+          'Company name': eybLeadWithoutCompany.company_name,
           'Value': 'High value',
-          'Sector or industry': 'Not set',
+          'Sector or industry': NOT_SET_TEXT,
           'Location of company headquarters': 'Canada',
           'Submitted to EYB': '07 Jun 2023',
-          'Company website address': 'Not set',
-          'When do you want to set up?': eybLeadWithValues.landing_timeframe,
+          'Company website address': NOT_SET_TEXT,
+          'When do you want to set up?': eybLeadWithoutCompany.landing_timeframe,
           'Do you know where you want to set up in the UK?': 'Yes',
           'Where do you want to set up in the UK?': 'Cardiff',
           'How do you plan to expand your business in the UK?':
-            eybLeadWithValues.intent.join(''),
+            eybLeadWithoutCompany.intent.join(''),
           'How many people do you want to hire in the UK in the first 3 years?':
-            eybLeadWithValues.hiring,
+            eybLeadWithoutCompany.hiring,
           'How much do you want to spend on setting up in the first 3 years?':
-            eybLeadWithValues.spend,
-          'Full name': eybLeadWithValues.full_name,
-          'Job title': eybLeadWithValues.role,
-          'Phone number': eybLeadWithValues.telephone_number,
+            eybLeadWithoutCompany.spend,
+          'Full name': eybLeadWithoutCompany.full_name,
+          'Job title': eybLeadWithoutCompany.role,
+          'Phone number': eybLeadWithoutCompany.telephone_number,
         },
       })
     })
@@ -192,14 +193,14 @@ describe('EYB lead details', () => {
     it('should use backup name om the heading', () => {
       cy.get('[data-test="heading"]')
         .should('exist')
-        .should('have.text', eybLeadWithValues.company_name)
+        .should('have.text', eybLeadWithoutCompany.company_name)
     })
 
     it('should render the breadcrumbs', () => {
       assertLeadBreadcrumbs({
         leadType: 'EYB leads',
         leadDetailsUrl: urls.investments.eybLeads.index(),
-        leadName: null,
+        leadName: eybLeadWithoutCompany.company_name,
       })
     })
 

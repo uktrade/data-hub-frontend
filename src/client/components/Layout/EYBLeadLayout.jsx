@@ -86,13 +86,11 @@ const EYBLeadLayout = ({ id, children }) => {
         <StyledHeader>
           <EYBLeadResource id={id}>
             {(eybLead) => {
-              const breadcrumbs = buildEYBLeadBreadcrumbs(
-                eybLead.company
-                  ? {
-                      text: eybLead.company.name,
-                    }
-                  : {}
-              )
+              const breadcrumbs = buildEYBLeadBreadcrumbs({
+                text: eybLead.company
+                  ? eybLead.company.name
+                  : eybLead.companyName,
+              })
               return (
                 <>
                   <BreadcrumbsWrapper data-test="breadcrumbs">
