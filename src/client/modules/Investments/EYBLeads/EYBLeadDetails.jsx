@@ -7,7 +7,7 @@ import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { HIGH_VALUE_LABEL, LOW_VALUE_LABEL } from './constants'
-import NOT_SET_TEXT from '../../../../apps/companies/constants'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { EYBLeadResource } from '../../../components/Resource'
-import NOT_SET_TEXT from '../../../../apps/companies/constants'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const EYBLeadName = (props) => (
   <EYBLeadResource.Inline {...props}>
