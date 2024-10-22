@@ -41,7 +41,7 @@ export const exportWinsFaker = () => ({
     id: faker.string.uuid(),
     name: faker.person.fullName(),
   },
-  advisers: [],
+  contributing_advisers: [],
   company: {
     id: faker.string.uuid(),
     name: faker.company.name(),
