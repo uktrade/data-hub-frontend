@@ -26,6 +26,7 @@ const FILTER_ELEMENTS = {
 
 const DATE_TIME_STRING = '2024-09-25T08:30:00.000000Z'
 const COMPANY_NAME = 'Frost'
+const COMPANY_NAME_DEFAULT = 'Mars'
 const SECTOR_NAME = 'Mining'
 const SECTOR_ID = 'a622c9d2-5f95-e211-a939-e4115bead28a'
 const HIGH_VALUE = 'high'
@@ -44,7 +45,13 @@ const EYB_LEAD_LIST = Array(
     sector: { name: SECTOR_NAME, id: SECTOR_ID },
     is_high_value: false,
   }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false })
+  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
+  eybLeadFaker({
+    triage_created: DATE_TIME_STRING,
+    is_high_value: false,
+    company: null,
+    company_name: COMPANY_NAME_DEFAULT,
+  })
 )
 
 const PAYLOADS = {
@@ -62,11 +69,15 @@ const buildQueryString = (queryParams = {}) =>
   }).toString()
 
 const getEYBLeadsByCompanyName = (companyName) => {
-  return EYB_LEAD_LIST.filter((lead) => lead.company.name.includes(companyName))
+  return EYB_LEAD_LIST.filter(
+    (lead) => lead.company && lead.company.name.includes(companyName)
+  )
 }
 
 const getEYBLeadsBySectorId = (sectorId) => {
-  return EYB_LEAD_LIST.filter((lead) => lead.sector.id === sectorId)
+  return EYB_LEAD_LIST.filter(
+    (lead) => lead.sector && lead.sector.id === sectorId
+  )
 }
 
 const convertValueStringToBoolean = (value) => {
@@ -151,6 +162,11 @@ describe('EYB leads collection page', () => {
         .should('contain', `Estimated land date ${eybLead.landing_timeframe}`)
         .should('contain', `Location ${eybLead.location.name}`)
         .should('contain', eybLead.is_high_value ? 'HIGH VALUE' : 'LOW VALUE')
+    })
+    it('should display the other name when company is null for a collection item', () => {
+      cy.get('[data-test="collection-item"]')
+        .eq(3)
+        .should('contain', COMPANY_NAME_DEFAULT)
     })
   })
 
@@ -280,7 +296,7 @@ describe('EYB leads collection page', () => {
             ...PAYLOADS.lowValueFilter,
           },
           chipsLabel: LOW_VALUE_LABEL,
-          expectedNumberOfResults: 2,
+          expectedNumberOfResults: 3,
         },
       ]
 
