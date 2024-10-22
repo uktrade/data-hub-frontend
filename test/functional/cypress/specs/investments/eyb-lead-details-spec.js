@@ -4,7 +4,7 @@ import {
 } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
-import NOT_SET_TEXT from '../../../../../src/apps/companies/constants'
+import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 
 const urls = require('../../../../../src/lib/urls')
 
