@@ -7,6 +7,7 @@ import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { HIGH_VALUE_LABEL, LOW_VALUE_LABEL } from './constants'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
@@ -16,17 +17,24 @@ const EYBLeadDetails = () => {
         {(eybLead) => {
           return (
             <SummaryTable data-test="eyb-lead-details-table">
-              <SummaryTable.TextRow
-                heading="Company name"
-                value={
-                  <Link
-                    href={urls.companies.overview.index(eybLead.company?.id)}
-                    data-test="company-link"
-                  >
-                    {eybLead.company?.name}
-                  </Link>
-                }
-              />
+              {eybLead.company ? (
+                <SummaryTable.TextRow
+                  heading="Company name"
+                  value={
+                    <Link
+                      href={urls.companies.overview.index(eybLead.company?.id)}
+                      data-test="company-link"
+                    >
+                      {eybLead.company.name}
+                    </Link>
+                  }
+                />
+              ) : (
+                <SummaryTable.TextRow
+                  heading="Company name"
+                  value={eybLead.companyName}
+                />
+              )}
               <SummaryTable.Row
                 heading="Value"
                 children={
@@ -35,11 +43,15 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Sector or industry"
-                children={eybLead.sector.name}
+                children={eybLead.sector ? eybLead.sector.name : NOT_SET_TEXT}
               />
               <SummaryTable.Row
                 heading="Location of company headquarters"
-                children={eybLead.companyLocation.name}
+                children={
+                  eybLead.companyLocation
+                    ? eybLead.companyLocation.name
+                    : NOT_SET_TEXT
+                }
               />
               <SummaryTable.Row
                 heading="Submitted to EYB"
@@ -54,7 +66,7 @@ const EYBLeadDetails = () => {
                     {eybLead.companyWebsite}
                   </NewWindowLink>
                 ) : (
-                  'Not set'
+                  NOT_SET_TEXT
                 )}
               </SummaryTable.Row>
               <SummaryTable.Row

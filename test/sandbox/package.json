@@ -5,15 +5,15 @@
   "dependencies": {
     "body-parser": "^1.20.3",
     "date-fns": "^4.1.0",
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "ini": "^5.0.0",
     "lodash": "^4.17.21",
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.25.7",
-    "@babel/core": "^7.25.7",
-    "@babel/eslint-parser": "^7.25.7",
+    "@babel/core": "^7.25.8",
+    "@babel/eslint-parser": "^7.25.8",
     "@faker-js/faker": "^9.0.3",
     "@babel/runtime": "^7.25.7",
     "eslint": "^8.57.0",

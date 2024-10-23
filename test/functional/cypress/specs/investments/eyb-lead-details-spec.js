@@ -4,6 +4,7 @@ import {
 } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
+import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -127,6 +128,84 @@ describe('EYB lead details', () => {
           'href',
           `/investments/projects/create/${eybLeadWithValues.company.id}?eyb-lead-id=${eybLeadWithValues.id}`
         )
+    })
+  })
+  context('When viewing an EYB lead without a company associated to it', () => {
+    const eybLeadWithoutCompany = eybLeadFaker({
+      company: null,
+      value: true,
+      sector: null,
+      triage_created: '2023-06-07T10:00:00Z',
+      intent: [
+        'Find people with specialist skills',
+        'Set up a new distribution centre',
+        'Other',
+        'Onward sales and exports from the UK',
+      ],
+      hiring: '6-50',
+      spend: '500000-1000000',
+      is_high_value: true,
+      full_name: 'Joe Bloggs',
+      role: 'CEO',
+      email: 'email@example.com',
+      telephone_number: '01234567890',
+      landing_timeframe: 'In the next 6 months',
+      company_website: null,
+      company_name: 'Mars Temp',
+    })
+    beforeEach(() => {
+      setup(eybLeadWithoutCompany)
+      cy.visit(investments.eybLeads.details(eybLeadWithoutCompany.id))
+      cy.wait('@getEYBLeadDetails')
+    })
+
+    it('should render all the fields of the details table', () => {
+      assertSummaryTable({
+        dataTest: 'eyb-lead-details-table',
+        // prettier-ignore
+        content: {
+          'Company name': eybLeadWithoutCompany.company_name,
+          'Value': 'High value',
+          'Sector or industry': NOT_SET_TEXT,
+          'Location of company headquarters': 'Canada',
+          'Submitted to EYB': '07 Jun 2023',
+          'Company website address': NOT_SET_TEXT,
+          'When do you want to set up?': eybLeadWithoutCompany.landing_timeframe,
+          'Do you know where you want to set up in the UK?': 'Yes',
+          'Where do you want to set up in the UK?': 'Cardiff',
+          'How do you plan to expand your business in the UK?':
+            eybLeadWithoutCompany.intent.join(''),
+          'How many people do you want to hire in the UK in the first 3 years?':
+            eybLeadWithoutCompany.hiring,
+          'How much do you want to spend on setting up in the first 3 years?':
+            eybLeadWithoutCompany.spend,
+          'Full name': eybLeadWithoutCompany.full_name,
+          'Job title': eybLeadWithoutCompany.role,
+          'Phone number': eybLeadWithoutCompany.telephone_number,
+        },
+      })
+    })
+
+    it('should not show the company website link within the table', () => {
+      cy.get('[data-test="website-link"]').should('not.exist')
+    })
+
+    it('should use backup name on the heading', () => {
+      cy.get('[data-test="heading"]')
+        .should('exist')
+        .should('have.text', eybLeadWithoutCompany.company_name)
+    })
+
+    it('should render the breadcrumbs', () => {
+      assertLeadBreadcrumbs({
+        leadType: 'EYB leads',
+        leadDetailsUrl: urls.investments.eybLeads.index(),
+        leadName: eybLeadWithoutCompany.company_name,
+      })
+    })
+
+    it('should not render the `Add investment project` button', () => {
+      cy.get('[data-test="button-add-investment-project"]').should('not.exist')
     })
   })
 })

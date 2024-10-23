@@ -1,40 +1,103 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Select, { SelectInput } from '@govuk-react/select'
+import LabelText from '@govuk-react/label-text'
 import styled from 'styled-components'
-import { BREAKPOINTS } from '@govuk-react/constants'
 
 import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
-import { BLACK } from '../../../../utils/colours'
+import { BLACK, WHITE } from '../../../../utils/colours'
 
 const StyledSelect = styled(Select)`
   position: relative;
-  &::after {
-    border-bottom: 2px solid ${BLACK};
-    border-right: 2px solid ${BLACK};
-    content: '';
-    display: block;
-    height: 12px;
-    pointer-events: none;
-    position: absolute;
-    right: 16px;
-    ${({ fullWidth }) => (fullWidth ? `right: 2%;` : `right: 52%;`)}
-    ${({ meta }) => (meta.error ? 'top: 72%;' : 'top: 50%;')}
-
-    transform: translate(0, -65%) rotate(45deg);
-    width: 12px;
-    @media (max-width: ${BREAKPOINTS.TABLET}) {
-      right: 4%;
-    }
-  }
   ${SelectInput} {
     height: 47px;
-    padding: 0px 32px 0px 12px;
+    padding: 0px 46px 0px 12px;
+    width: 50%;
+    min-width: fit-content;
     ${({ fullWidth }) => fullWidth && `width: 100%;`}
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+
+    /*
+    We need the caret to be positioned relative to the <select> and not the
+    label which is wrapping it, otherwise the caret will be misplaced when the
+    label texts spans multiple lines. We can't use an ::after pseudo element as
+    it doesn't work with <select> and we also can't add a wrapper to the
+    <select> as this is a @govuk-react component.
+
+    The solution is to draw the carret to the background of the <select> with a
+    combination of linear gradients. The gradient can be configured with the
+    following parameters:
+    */
+    --caret-height: 10px;
+    --stroke-width: 2px;
+    --stroke-colour: ${BLACK};
+    // Can't be transparent
+    --mask-colour: ${WHITE};
+
+    --_bg-pos-and-size: right calc(50% + var(--caret-height) / 2) /
+      calc(var(--caret-height) * 4) calc(var(--caret-height) * 4) no-repeat;
+
+    background:
+      // Left wing START
+      // Top mask (clips the caret wing)
+      linear-gradient(-45deg, transparent calc(75%), 0, var(--mask-colour))
+        var(--_bg-pos-and-size),
+      // Bottom mask (clips the bottom part of the stroke, just after the two strokes cross)
+      linear-gradient(
+          -45deg,
+          var(--mask-colour) calc(50% - var(--stroke-width) / 2),
+          0,
+          transparent calc(50% + var(--stroke-width) / 2),
+          0,
+          transparent
+        )
+        var(--_bg-pos-and-size),
+      // Stroke
+      linear-gradient(
+          45deg,
+          transparent calc(50% - var(--stroke-width) / 2),
+          0,
+          var(--stroke-colour) calc(50% + var(--stroke-width) / 2),
+          0,
+          transparent
+        )
+        var(--_bg-pos-and-size),
+      // Left wing END
+      // Righ wing START
+      // Top mask (clips the caret wing)
+      linear-gradient(45deg, transparent calc(75%), 0, var(--mask-colour))
+        var(--_bg-pos-and-size),
+      // Bottom mask (clips the bottom part of the stroke, just after the two strokes cross)
+      linear-gradient(
+          45deg,
+          var(--mask-colour) calc(50% - var(--stroke-width) / 2),
+          0,
+          transparent calc(50% + var(--stroke-width) / 2),
+          0,
+          transparent
+        )
+        var(--_bg-pos-and-size),
+      // Stroke
+      linear-gradient(
+          -45deg,
+          transparent calc(50% - var(--stroke-width) / 2),
+          0,
+          var(--stroke-colour) calc(50% + var(--stroke-width) / 2),
+          0,
+          transparent
+        )
+        var(--_bg-pos-and-size);
+    // Righ wing END
+  }
+  /*
+  We hide the label if it's empty, because it still contributes to the element's
+  height.
+   */
+  ${LabelText}:empty {
+    display: none;
   }
 `
 
@@ -53,6 +116,8 @@ const FieldSelect = ({
   emptyOption = 'Please select',
   fullWidth,
   boldLabel = true,
+  className,
+  style,
   ...rest
 }) => {
   const { error, touched, value, onChange, onBlur } = useField({
@@ -62,7 +127,9 @@ const FieldSelect = ({
     initialValue,
   })
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error, boldLabel }}>
+    <FieldWrapper
+      {...{ name, label, legend, hint, error, boldLabel, className, style }}
+    >
       <StyledSelect
         fullWidth={fullWidth}
         name={name}

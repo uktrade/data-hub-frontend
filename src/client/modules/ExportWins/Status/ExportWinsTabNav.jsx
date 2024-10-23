@@ -6,7 +6,7 @@ import { DefaultLayout } from '../../../components'
 import TabNav from '../../../components/TabNav'
 import WinsRejectedList from './WinsRejectedList'
 import WinsPendingList from './WinsPendingList'
-import WinsConfirmedTable from './WinsConfirmedTable'
+import WinsConfirmedList from './WinsConfirmedList'
 import urls from '../../../../lib/urls'
 
 const LAST_WORD = /([^\/]+)$/
@@ -40,7 +40,7 @@ const ExportWinsTabNav = () => {
           },
           [urls.companies.exportWins.confirmed()]: {
             label: 'Confirmed',
-            content: <WinsConfirmedTable />,
+            content: <WinsConfirmedList />,
           },
           [urls.companies.exportWins.rejected()]: {
             label: 'Rejected',

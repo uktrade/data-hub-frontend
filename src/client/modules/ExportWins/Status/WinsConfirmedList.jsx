@@ -10,7 +10,7 @@ import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 
-export const WinsRejectedList = ({ exportWins, currentAdviserId }) => {
+export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
     <ul>
       {exportWins.map((item) => (
@@ -37,10 +37,13 @@ export const WinsRejectedList = ({ exportWins, currentAdviserId }) => {
               label: 'Total value:',
               value: currencyGBP(sumExportValues(item)),
             },
-            { label: 'Date won:', value: formatMediumDate(item.date) },
             {
-              label: 'Date modified:',
-              value: formatMediumDate(item.modified_on),
+              label: 'Date won:',
+              value: formatMediumDate(item.date),
+            },
+            {
+              label: 'Date responded:',
+              value: formatMediumDate(item.customer_response.responded_on),
             },
           ]}
         />
@@ -51,17 +54,17 @@ export const WinsRejectedList = ({ exportWins, currentAdviserId }) => {
 
 export default () => (
   <ExportWinsResource.Paginated
-    id="export-wins-rejected"
-    heading="rejected"
+    id="export-wins-confirmed"
+    heading="confirmed"
     shouldPluralize={false}
-    noResults="You don't have any rejected export wins."
-    payload={{ confirmed: WIN_STATUS.REJECTED }}
+    noResults="You don't have any confirmed export wins."
+    payload={{ confirmed: WIN_STATUS.CONFIRMED }}
     sortOptions={SORT_OPTIONS}
   >
     {(page) => (
       <State>
         {({ currentAdviserId }) => (
-          <WinsRejectedList
+          <WinsConfirmedList
             exportWins={page}
             currentAdviserId={currentAdviserId}
           />
