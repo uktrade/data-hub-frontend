@@ -93,6 +93,7 @@ const PersonalisedDashboard = ({
   }
 
   return (
+    // TODO: Get rid of the ThemeProvider, it only tweaks the tabs//
     <ThemeProvider theme={blueTheme}>
       <BannerBackground>
         <CustomContainer width="960">

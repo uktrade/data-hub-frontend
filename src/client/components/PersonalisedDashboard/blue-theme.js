@@ -1,6 +1,7 @@
 import { BLUE, WHITE } from '../../../client/utils/colours'
 import { MEDIA_QUERIES } from '../../utils/responsive'
 
+// TODO: Get rid of this
 export default {
   tabNav: {
     button: {
