@@ -53,6 +53,9 @@ const StyledCollectionSort = styled(CollectionSort)`
  * Forwarded to {qsParamName} prop of {StyledCollectionSort}.
  * @param {number} [props.defaultSortOptionIndex = 0] - The index of the sort option
  * that should be selected when there's nothing set in the query string.
+ * @param {string} [props.addItemUrl =] - If set, an "Add <item-name>" button
+ * will be displayed on the top-right corner of the header behaving as a link
+ * to the value of this prop. This is just forwarded to CollectionHeader.
  * @example
  * <PaginatedResource name="My task name" id="foo">
  *   {currentPage =>
@@ -100,6 +103,7 @@ const PaginatedResource = multiInstance({
     result,
     shouldPluralize,
     noResults = "You don't have any results",
+    addItemUrl,
   }) => {
     // We know better than ESLint that we are in deed in a React component
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -150,6 +154,7 @@ const PaginatedResource = multiInstance({
                     totalItems={result.count}
                     collectionName={heading || name}
                     shouldPluralize={shouldPluralize}
+                    addItemUrl={addItemUrl}
                   />
                   {totalPages > 0 && (
                     <StyledCollectionSort
