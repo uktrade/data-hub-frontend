@@ -20,7 +20,7 @@ DocsPlaceholder.story = {
 
 export const Default = () => (
   <TabNav
-    id="example"
+    id="asdfasdfsadf"
     label="Example"
     selectedIndex="bar"
     tabs={{
@@ -30,8 +30,10 @@ export const Default = () => (
       },
       bar: {
         label: 'Bar',
+        content: <>Bar</>,
         content: (
           <TabNav
+            layout="vertical"
             id="nested"
             label="Nested"
             selectedIndex="bbb"
@@ -42,7 +44,18 @@ export const Default = () => (
               },
               bbb: {
                 label: 'B',
-                content: 'bbbbb',
+                content: (
+                  <TabNav
+                    id="deeper-nested"
+                    label="Deeper nested"
+                    selectedIndex="y"
+                    tabs={{
+                      x: { label: 'X', content: 'X' },
+                      y: { label: 'Y', content: 'Y' },
+                      z: { label: 'Z', content: 'Z' },
+                    }}
+                  />
+                ),
               },
               ccc: {
                 label: 'C',
