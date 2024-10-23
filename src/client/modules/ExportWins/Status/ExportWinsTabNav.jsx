@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { capitalize } from 'lodash'
+import { Link } from 'govuk-react'
 
 import { DefaultLayout } from '../../../components'
 import TabNav from '../../../components/TabNav'
@@ -8,8 +9,24 @@ import WinsRejectedList from './WinsRejectedList'
 import WinsPendingList from './WinsPendingList'
 import WinsConfirmedList from './WinsConfirmedList'
 import urls from '../../../../lib/urls'
+import { WINS_HISTORIC_ALERT_BANNER } from './constants'
 
 const LAST_WORD = /([^\/]+)$/
+
+export const HISTORY_ALERT_BANNER = (
+  <>
+    {WINS_HISTORIC_ALERT_BANNER.ELEMENT}&nbsp;
+    <Link
+      href={WINS_HISTORIC_ALERT_BANNER.LINK}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Find out more about historic wins moved to Data Hub"
+    >
+      {WINS_HISTORIC_ALERT_BANNER.LINKELEMENT}
+    </Link>
+    &#46;
+  </>
+)
 
 const ExportWinsTabNav = () => {
   const location = useLocation()
@@ -28,6 +45,7 @@ const ExportWinsTabNav = () => {
         },
         { text: capitalize(title) },
       ]}
+      flashMessages={[[HISTORY_ALERT_BANNER]]}
     >
       <TabNav
         id="exportwins-tab-nav"

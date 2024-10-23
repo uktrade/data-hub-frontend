@@ -22,3 +22,9 @@ export const ADVISER_ROLES = {
   TEAM_MEMBER: 'team member',
   CONTRIBUTING_OFFICER: 'contributing officer',
 }
+
+export const WINS_HISTORIC_ALERT_BANNER = {
+  ELEMENT: 'Historic export wins have now moved to Data Hub,',
+  LINKELEMENT: 'see the export wins announcement',
+  LINK: 'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/new-role-label-on-export-wins/',
+}
