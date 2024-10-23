@@ -1,6 +1,9 @@
 const { company } = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
+const {
+  assertHistoricExportWinsMessage,
+} = require('../../export-win/edit-export-win-pending-spec.js')
 
 describe('Company Export tab', () => {
   function assertTable({ rows, caption, action }) {
@@ -65,6 +68,10 @@ describe('Company Export tab', () => {
           [company.dnbCorp.name]: urls.companies.detail(company.dnbCorp.id),
           Exports: null,
         })
+      })
+
+      it('should render historic export win banner message', () => {
+        assertHistoricExportWinsMessage()
       })
 
       it('should render the "Exports" table', () => {
@@ -190,4 +197,28 @@ describe('Company Export tab', () => {
         .should('not.exist')
     })
   })
+})
+
+describe("Other Company tabs - should't be shown banner message in the other tabs", () => {
+  ;[
+    'overview',
+    'activity',
+    'business-details',
+    'contacts',
+    'account-management',
+    'investments/projects',
+    'orders',
+  ].forEach((slug) =>
+    it(slug, () => {
+      cy.visit(`/companies/${company.dnbCorp.id}/${slug}`)
+
+      // We need to wait for company name appear...
+      cy.contains(company.dnbCorp.name)
+
+      // ...so that this waits for whent the data has been loaded and rendered
+      cy.contains('Historic export wins have now moved to Data Hub').should(
+        'not.exist'
+      )
+    })
+  )
 })

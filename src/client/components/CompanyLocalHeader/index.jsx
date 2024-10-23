@@ -26,6 +26,7 @@ import {
 } from '../../modules/Companies/utils'
 import { RelatedCompaniesCountResource } from '../Resource'
 import { companyState2Props } from './state'
+import { WINS_HISTORIC_ALERT_BANNER } from '../../modules/ExportWins/Status/ExportWinsTabNav'
 
 const LocalHeaderTradingNames = styled(H4)`
   font-weight: normal;
@@ -121,7 +122,7 @@ const hasManagedAccountDetails = (company) =>
 
 const CompanyLocalHeader = ({
   breadcrumbs,
-  flashMessages,
+  flashMessages = [],
   company,
   csrfToken,
 }) =>
@@ -133,7 +134,11 @@ const CompanyLocalHeader = ({
           company.id,
           company.name
         )}
-        flashMessages={flashMessages}
+        flashMessages={
+          breadcrumbs[0]?.text === 'Exports'
+            ? [[WINS_HISTORIC_ALERT_BANNER, ...flashMessages]]
+            : flashMessages
+        }
       >
         <GridRow>
           <GridCol setWidth="two-thirds">
