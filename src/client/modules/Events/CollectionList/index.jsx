@@ -69,7 +69,7 @@ const EventTemplate = (item) => {
     <StyledCollectionItem
       dataTest="data-hub-event"
       headingText={item.headingText}
-      headingUrl={item.headingUrl}
+      headingUrl={`/events/${item.id}/details`}
       metadata={item.metadata}
       tags={item.tags}
       titleRenderer={TitleRenderer}

@@ -5,7 +5,6 @@ const { APP_PERMISSIONS, LOCAL_NAV } = require('./constants')
 const { handleRoutePermissions, setLocalNav } = require('../middleware')
 const { getEventDetails } = require('./middleware/details')
 const { renderEventsView } = require('./controllers/events')
-const attendeesRouter = require('./attendees/router')
 
 router.get('/create', renderEventsView)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -19,12 +18,8 @@ router.use(
   setLocalNav(LOCAL_NAV)
 )
 
-router.use('/:eventId/attendees', attendeesRouter)
+// TODO: Get rid of this and fetch the event on the client
 router.param('eventId', getEventDetails)
-// TODO: When everything in the events space is converted to react
-// router.get('/*', renderEventsView)
-router.get('/:eventId/edit', renderEventsView)
-router.get('/:eventId', renderEventsView)
-router.get('/:eventId/details', renderEventsView)
+router.get('/:eventId*', renderEventsView)
 
 module.exports = router
