@@ -1,3 +1,4 @@
+// TODO: Get rid of this whole module
 const { assign } = require('lodash')
 
 const { transformEventFormBodyToApiRequest } = require('../transformers')
@@ -27,6 +28,7 @@ async function postDetails(req, res, next) {
   }
 }
 
+// TODO: Get rid of this
 async function getEventDetails(req, res, next, eventId) {
   try {
     res.locals.event = await fetchEvent(req, eventId)
