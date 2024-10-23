@@ -12,8 +12,9 @@ import referralsSendReducer from '../apps/companies/apps/referrals/send-referral
 import { ID as EXPORTS_HISTORY_ID } from './modules/Companies/CompanyExports/ExportHistory/state.js'
 import exportsHistoryReducer from './modules/Companies/CompanyExports/ExportHistory/reducer.js'
 
-import TabNav from './components/TabNav'
+import { HeadlessTabNav } from './components/TabNav'
 
+// FIXME: Causes maximum call stack error with TS
 import ReferralList from './components/ReferralList'
 
 import ToggleSection from './components/ToggleSection/BaseToggleSection'
@@ -125,6 +126,7 @@ import RoutedInput from './components/RoutedInput'
 import Resource from './components/Resource/Resource'
 import PaginatedResource from './components/Resource/Paginated'
 
+// FIXME: Causes maximum call stack error with TS
 import { ContactForm } from './components/ContactForm'
 import Form from './components/Form'
 
@@ -201,7 +203,7 @@ export const reducers = {
   [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
   [REFERRALS_SEND_ID]: referralsSendReducer,
   [addCompanyState.ID]: addCompanyReducer,
-  ...TabNav.reducerSpread,
+  ...HeadlessTabNav.reducerSpread,
   ...ReferralList.reducerSpread,
   ...ToggleSection.reducerSpread,
   ...Typeahead.reducerSpread,
