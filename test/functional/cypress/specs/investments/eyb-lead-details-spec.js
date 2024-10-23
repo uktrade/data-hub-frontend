@@ -126,7 +126,7 @@ describe('EYB lead details', () => {
         .should(
           'have.attr',
           'href',
-          `/investments/projects/create/${eybLeadWithValues.company.id}`
+          `/investments/projects/create/${eybLeadWithValues.company.id}?eyb-lead-id=${eybLeadWithValues.id}`
         )
     })
   })
