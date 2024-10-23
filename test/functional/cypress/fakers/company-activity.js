@@ -75,15 +75,16 @@ const companyActivityInvestmentFaker = (
   }
 }
 
-const companyActivityOrderFaker = (overrides = {}) => ({
+const companyActivityOrderFaker = (overrides = {}, orderOverrides = {}) => ({
   ...companyActivityFaker(),
   activity_source: 'order',
   order: {
-    primary_market: faker.location.country(),
-    uk_region: faker.location.county(),
+    primary_market: { name: faker.location.country(), id: faker.string.uuid() },
+    uk_region: { id: faker.string.uuid(), name: faker.location.county() },
     created_by: userFaker(),
-    company_contact: userFaker({ job_title: faker.person.jobTitle() }),
+    contact: userFaker({ job_title: faker.person.jobTitle() }),
     reference: faker.company.buzzPhrase(),
+    ...orderOverrides,
   },
   ...overrides,
 })
@@ -95,12 +96,18 @@ const companyActivityInteractionListFaker = (length = 1, overrides) =>
     overrides,
   })
 
-const companyActivityOrderListFaker = (length = 1, overrides) =>
-  listFaker({
+const companyActivityOrderListFaker = (
+  length = 1,
+  overrides,
+  orderOverrides
+) => {
+  return listFakerAdditionalOverrides({
     fakerFunction: companyActivityOrderFaker,
     length,
     overrides,
+    additionalOverrides: orderOverrides,
   })
+}
 
 const companyActivityInvestmentListFaker = (
   length = 1,
