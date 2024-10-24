@@ -13,6 +13,56 @@ export const PROJECT_STATUS_OPTIONS = [
   { name: 'Dormant', id: 'dormant' },
 ]
 
+export const PROSPECT_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
+export const ASSIGN_PM_ID = 'c9864359-fb1a-4646-a4c1-97d10189fc03'
+export const ACTIVE_ID = '7606cc19-20da-4b74-aba1-2cec0d753ad8'
+export const VERIFY_WIN_ID = '49b8f6f3-0c50-4150-a965-2c974f3149e3'
+export const WON_ID = '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
+
+export const STAGE = {
+  PROSPECT_ID,
+  ASSIGN_PM_ID,
+  ACTIVE_ID,
+  VERIFY_WIN_ID,
+  WON_ID,
+}
+
+export const STAGE_ID_TO_INDEX_MAP = {
+  [STAGE.ACTIVE_ID]: 0,
+  [STAGE.ASSIGN_PM_ID]: 1,
+  [STAGE.ACTIVE_ID]: 2,
+  [STAGE.VERIFY_WIN_ID]: 3,
+  [STAGE.WON_ID]: 4,
+}
+
+export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
+  ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
+  ['strategic_drivers']: STAGE.ASSIGN_PM_ID,
+  ['client_requirements']: STAGE.ASSIGN_PM_ID,
+  ['client_considering_other_countries']: STAGE.ASSIGN_PM_ID,
+  ['project_manager']: STAGE.ACTIVE_ID,
+  ['project_assurance_adviser']: STAGE.ACTIVE_ID,
+  ['client_cannot_provide_foreign_investment']: STAGE.VERIFY_WIN_ID,
+  ['government_assistance']: STAGE.VERIFY_WIN_ID,
+  ['number_new_jobs']: STAGE.VERIFY_WIN_ID,
+  ['number_safeguarded_jobs']: STAGE.VERIFY_WIN_ID,
+  ['r_and_d_budget']: STAGE.VERIFY_WIN_ID,
+  ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
+  ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
+  ['export_revenue']: STAGE.VERIFY_WIN_ID,
+  ['address_1']: STAGE.VERIFY_WIN_ID,
+  ['address_town']: STAGE.VERIFY_WIN_ID,
+  ['address_postcode']: STAGE.VERIFY_WIN_ID,
+  ['actual_uk_regions']: STAGE.VERIFY_WIN_ID,
+  ['delivery_partners']: STAGE.VERIFY_WIN_ID,
+  ['actual_land_date']: STAGE.VERIFY_WIN_ID,
+  ['specific_programmes']: STAGE.VERIFY_WIN_ID,
+  ['uk_company']: STAGE.VERIFY_WIN_ID,
+  ['investor_type']: STAGE.VERIFY_WIN_ID,
+  ['level_of_involvement']: STAGE.VERIFY_WIN_ID,
+  ['likelihood_to_land']: STAGE.ACTIVE_ID,
+}
+
 export const STAGE_OPTIONS = [
   {
     name: 'Show all',
@@ -20,23 +70,23 @@ export const STAGE_OPTIONS = [
   },
   {
     name: 'Prospect',
-    id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+    id: STAGE.PROSPECT_ID,
   },
   {
     name: 'Assign PM',
-    id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+    id: STAGE.ASSIGN_PM_ID,
   },
   {
     name: 'Active',
-    id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+    id: STAGE.ACTIVE_ID,
   },
   {
     name: 'Verify win',
-    id: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+    id: STAGE.VERIFY_WIN_ID,
   },
   {
     name: 'Won',
-    id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
+    id: STAGE.WON_ID,
   },
 ]
 
