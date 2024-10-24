@@ -4,6 +4,7 @@ import { format } from '../../../utils/date'
 export const transformLeadToListItem = ({
   id,
   company,
+  company_name,
   triage_created,
   spend,
   sector,
@@ -33,7 +34,7 @@ export const transformLeadToListItem = ({
   return {
     id,
     headingUrl: urls.investments.eybLeads.details(id),
-    headingText: company.name,
+    headingText: company ? company.name : company_name,
     tags,
     metadata,
   }

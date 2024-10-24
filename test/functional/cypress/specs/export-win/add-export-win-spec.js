@@ -274,7 +274,7 @@ describe('Adding an export win', () => {
             team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add', // Investment (ITFG or IG)
             hq_team: '1e5aec69-c581-4356-b0ca-1f710d3d077d', // ITFG - E-Business Projects Team
             team_members: [],
-            advisers: [
+            contributing_advisers: [
               {
                 adviser: '101',
                 team_type: 'a4839e09-e30e-492c-93b5-8ab2ef90b891', // Trade (TD or ST)
