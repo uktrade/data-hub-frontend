@@ -135,7 +135,7 @@
     "remark-gfm": "^4.0.0",
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.79.5",
+    "sass": "^1.80.3",
     "sass-loader": "^16.0.2",
     "serve-favicon": "^2.5.0",
     "sniffr": "^1.3.1",
