@@ -28,6 +28,7 @@ import {
   DefaultLayout,
   StatusMessage,
 } from '../../../components'
+import { HISTORY_ALERT_BANNER } from '../Status/ExportWinsTabNav'
 
 const FORM_ID = 'export-win-form'
 
@@ -93,6 +94,29 @@ const ExportWinForm = ({
               heading={heading}
               subheading={subheading}
               breadcrumbs={breadcrumbs}
+              flashMessages={[
+                [
+                  isEditing ? (
+                    <>
+                      <StyledParagraph>{HISTORY_ALERT_BANNER}</StyledParagraph>
+                      {currentStepName === steps.SUMMARY ? (
+                        <>
+                          <StyledParagraph>
+                            To edit an export win
+                          </StyledParagraph>
+                          <StyledParagraph>
+                            Edit each section that needs changing then return to
+                            the summary page. When you are happy with all the
+                            changes save the page.
+                          </StyledParagraph>
+                        </>
+                      ) : excludedStepFields ? (
+                        <ContactLink sections={excludedStepFields} />
+                      ) : null}
+                    </>
+                  ) : null,
+                ],
+              ]}
               localHeaderChildren={
                 isEditing ? (
                   currentStepName === steps.SUMMARY ? (
