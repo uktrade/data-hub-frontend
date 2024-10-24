@@ -38,10 +38,7 @@ import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import { validateIfDateInPast } from '../../../components/Form/validators'
 import { FDI_TYPES } from './constants'
-import {
-  STAGE,
-  STAGE_ID_TO_INDEX_MAP,
-} from '../../../components/MyInvestmentProjects/constants'
+import { investmentProjectValidateFieldForStage } from './validators'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -300,11 +297,12 @@ export const FieldLikelihoodOfLanding = ({
     initialValue={initialValue}
     autoScroll={autoScroll}
     validate={(a, field, formFields) => {
-      return !formFields.values.likelihood_to_land &&
-        STAGE_ID_TO_INDEX_MAP[project.stage.id] <
-          STAGE_ID_TO_INDEX_MAP[STAGE.ACTIVE_ID]
-        ? 'We required likelihood of landing'
-        : null
+      return investmentProjectValidateFieldForStage(
+        field,
+        formFields,
+        project,
+        'Select a likelihood of landing value'
+      )
     }}
   />
 )
@@ -312,6 +310,7 @@ export const FieldLikelihoodOfLanding = ({
 export const FieldActualLandDate = ({
   initialValue = null,
   optionalText = true,
+  // project,
 }) => (
   <FieldDate
     name="actual_land_date"
@@ -320,7 +319,15 @@ export const FieldActualLandDate = ({
     invalid="Enter a valid actual land date"
     initialValue={initialValue}
     validate={validateIfDateInPast}
-    required="We need tis"
+    // TODO Combine validators.
+    // validate={(a, field, formFields) => {
+    //   return investmentProjectValidateFieldForStage(
+    //     field,
+    //     formFields,
+    //     project,
+    //     'Select a likelihood of landing value'
+    //   )
+    // }}
   />
 )
 
@@ -328,6 +335,7 @@ export const FieldInvestmentInvestorType = ({
   label,
   initialValue = null,
   optionalText = true,
+  project,
 }) => (
   <ResourceOptionsField
     name="investor_type"
@@ -337,6 +345,14 @@ export const FieldInvestmentInvestorType = ({
     initialValue={initialValue}
     placeholder="Choose an investor type"
     required="We need this"
+    validate={(a, field, formFields) => {
+      return investmentProjectValidateFieldForStage(
+        field,
+        formFields,
+        project,
+        'Select a likelihood of landing value'
+      )
+    }}
   />
 )
 
@@ -354,11 +370,10 @@ export const FieldLevelOfInvolvement = ({
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a level of involvement"
-    // resultToOptions={(result) => result}
     validate={(a, b, formFields) => {
       return !formFields.values.level_of_involvement &&
         project.stage.id == '49b8f6f3-0c50-4150-a965-2c974f3149e3'
-        ? 'We required level of involvment'
+        ? 'We required level of investor involvment'
         : null
     }}
   />
@@ -367,6 +382,7 @@ export const FieldLevelOfInvolvement = ({
 export const FieldSpecificProgramme = ({
   initialValue = [],
   optionalText = true,
+  project,
 }) => (
   <ResourceOptionsField
     name="specific_programmes"
@@ -381,6 +397,13 @@ export const FieldSpecificProgramme = ({
     resultToOptions={(result) =>
       idNamesToValueLabels(result.filter((option) => !option.disabledOn))
     }
-    required="We need specific programmes"
+    validate={(a, field, formFields) => {
+      return investmentProjectValidateFieldForStage(
+        field,
+        formFields,
+        project,
+        'Select a specific investment programme'
+      )
+    }}
   />
 )
