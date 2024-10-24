@@ -31,6 +31,7 @@ import {
   transformObjectForTypeahead,
   transformArrayForTypeahead,
   transformRadioOptionToBool,
+  transformObjectForTypeaheadInitialValue,
 } from '../transformers'
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
@@ -175,8 +176,11 @@ const EditProjectSummaryInitialStep = ({
       />
       <FieldLikelihoodOfLanding
         autoScroll={!!autoScroll}
-        initialValue={transformObjectForTypeahead(project.likelihoodToLand)}
+        initialValue={transformObjectForTypeaheadInitialValue(
+          project.likelihoodToLand
+        )}
         optionalText={STAGE_PROSPECT.includes(project.stage.name)}
+        project={project}
       />
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
@@ -194,10 +198,13 @@ const EditProjectSummaryInitialStep = ({
         />
       ) : null}
       <FieldLevelOfInvolvement
-        initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
+        initialValue={transformObjectForTypeaheadInitialValue(
+          project.levelOfInvolvement
+        )}
         optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
           project.stage.name
         )}
+        project={project}
       />
       <FieldSpecificProgramme
         initialValue={transformArrayForTypeahead(project.specificProgrammes)}
