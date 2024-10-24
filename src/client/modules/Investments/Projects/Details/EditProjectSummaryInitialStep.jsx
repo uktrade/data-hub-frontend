@@ -173,6 +173,7 @@ const EditProjectSummaryInitialStep = ({
         initialValue={transformDateStringToDateObject(
           project.estimatedLandDate
         )}
+        project={project}
       />
       <FieldLikelihoodOfLanding
         autoScroll={!!autoScroll}
@@ -187,6 +188,7 @@ const EditProjectSummaryInitialStep = ({
         optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
           project.stage.name
         )}
+        project={project}
       />
       {showInvestorTypeField() ? (
         <FieldInvestmentInvestorType
@@ -195,6 +197,7 @@ const EditProjectSummaryInitialStep = ({
           optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
             project.stage.name
           )}
+          project={project}
         />
       ) : null}
       <FieldLevelOfInvolvement
@@ -211,6 +214,7 @@ const EditProjectSummaryInitialStep = ({
         optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
           project.stage.name
         )}
+        project={project}
       />
     </Step>
   )
