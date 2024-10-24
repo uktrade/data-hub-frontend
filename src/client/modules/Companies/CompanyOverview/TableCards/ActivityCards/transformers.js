@@ -141,7 +141,12 @@ export const transformInvestmentToListItem = (activity) => {
 
 export const transformOrderToListItem = (activity) => {
   const order = activity.order
-
+  let summary = []
+  order.primary_market
+    ? summary.push(
+        `Export to ${order.primary_market.name} added by ${order.created_by.name}`
+      )
+    : summary.push('')
   return {
     id: order.id,
     date: formatMediumDate(activity.date),
@@ -154,7 +159,7 @@ export const transformOrderToListItem = (activity) => {
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.omis.order(order.id),
     headingText: order.reference,
-    summary: '',
+    summary: summary,
   }
 }
 

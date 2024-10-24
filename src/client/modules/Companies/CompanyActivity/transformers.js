@@ -215,10 +215,12 @@ export const transformOrderToListItem = (activity) => {
         label: 'Country',
         value: activity.order.primary_market.name,
       },
-      {
-        label: 'UK region',
-        value: activity.order.uk_region,
-      },
+      activity.order.uk_region
+        ? {
+            label: 'UK region',
+            value: activity.order.uk_region.name,
+          }
+        : '',
       {
         label: 'Added by',
         value: activity.order.created_by

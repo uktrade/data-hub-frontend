@@ -396,6 +396,11 @@ describe('Company overview page', () => {
       { number_new_jobs: null }
     )
     const orderList = companyActivityOrderListFaker(1)
+    const orderListNoPrimaryMarket = companyActivityOrderListFaker(
+      1,
+      {},
+      { primary_market: null }
+    )
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -542,7 +547,21 @@ describe('Company overview page', () => {
         orderList,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
+      const activity = orderList[0]
       cy.get('[data-test="order-kind-label"]').contains('New Order')
+      cy.get('[data-test="activity-summary"]').contains(
+        `Export to ${activity.order.primary_market.name} added by ${activity.order.created_by.name}`
+      )
+    })
+
+    it('should display Data Hub order with no summary', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        orderListNoPrimaryMarket,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="order-kind-label"]').contains('New Order')
+      cy.get('[data-test="activity-summary"]').should('have.value', '')
     })
 
     it.skip('should display Data Hub event', () => {

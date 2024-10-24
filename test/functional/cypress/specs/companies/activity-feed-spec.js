@@ -1,3 +1,6 @@
+import { collectionListRequest } from '../../support/actions'
+import { companyActivityOrderListFaker } from '../../fakers/company-activity'
+
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 const { assertCompanyBreadcrumbs } = require('../../support/assertions')
@@ -52,6 +55,11 @@ describe('Company activity feed', () => {
   })
 
   context('Orders (OMIS)', () => {
+    const orderListNoUkRegion = companyActivityOrderListFaker(
+      1,
+      {},
+      { uk_region: null }
+    )
     beforeEach(() => {
       cy.visit(urls.companies.activity.index(company.id))
     })
@@ -73,7 +81,6 @@ describe('Company activity feed', () => {
         matchCase: false,
       })
     })
-
     it('displays the order reference with link', () => {
       cy.get('[data-test="collection-item"]').each(() =>
         cy
@@ -84,6 +91,22 @@ describe('Company activity feed', () => {
             'href',
             '/omis/4dc401ad-cc6d-4464-8621-0719d403fa59'
           )
+      )
+    })
+    it('displays the order with a uk region', () => {
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('span').contains('UK region')
+      )
+    })
+
+    it('should display Data Hub order activity with no uk region', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        orderListNoUkRegion,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('span').contains('UK region').should('not.exist')
       )
     })
 
