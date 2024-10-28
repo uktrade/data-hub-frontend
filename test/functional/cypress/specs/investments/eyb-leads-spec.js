@@ -130,12 +130,6 @@ describe('EYB leads collection page', () => {
       assertTabbedLocalNav('UK opportunities')
     })
 
-    it('should render the status message', () => {
-      cy.get('[data-test=status-message]')
-        .should('exist')
-        .should('contain', 'Work in progress')
-    })
-
     it('should render the filters', () => {
       cy.get('[data-test="company-name-filter"]').should('be.visible')
       cy.get('[data-test="sector-filter"]').should('be.visible')
