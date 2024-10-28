@@ -36,11 +36,7 @@ import {
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
-import {
-  FDI_TYPES,
-  STAGE_PROSPECT,
-  INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM,
-} from '../constants'
+import { FDI_TYPES } from '../constants'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -180,23 +176,16 @@ const EditProjectSummaryInitialStep = ({
         initialValue={transformObjectForTypeaheadInitialValue(
           project.likelihoodToLand
         )}
-        optionalText={STAGE_PROSPECT.includes(project.stage.name)}
         project={project}
       />
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
-        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
-          project.stage.name
-        )}
         project={project}
       />
       {showInvestorTypeField() ? (
         <FieldInvestmentInvestorType
           label="New or existing investor"
           initialValue={project.investorType?.id}
-          optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
-            project.stage.name
-          )}
           project={project}
         />
       ) : null}
@@ -204,16 +193,10 @@ const EditProjectSummaryInitialStep = ({
         initialValue={transformObjectForTypeaheadInitialValue(
           project.levelOfInvolvement
         )}
-        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
-          project.stage.name
-        )}
         project={project}
       />
       <FieldSpecificProgramme
         initialValue={transformArrayForTypeahead(project.specificProgrammes)}
-        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
-          project.stage.name
-        )}
         project={project}
       />
     </Step>
