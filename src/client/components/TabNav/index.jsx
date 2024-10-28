@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { MEDIA_QUERIES } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import {
   BLACK,
@@ -288,6 +288,28 @@ export const VerticalTabNav = styled(SmallScreenTabNav)({
             background: DARK_BLUE_LEGACY,
             fontWeight: '600',
           },
+        },
+      },
+    },
+  },
+})
+
+export const DashboardTabNav = styled(HorizontalTabNav)({
+  '& > [role="tabpanel"]': {
+    border: `2px solid ${BLUE}`,
+    padding: SPACING.SCALE_3,
+    margin: 0,
+  },
+  '& > [role="tablist"]': {
+    border: 'none',
+    fontWeight: 'bold',
+    '& > [role="tab"]': {
+      [MEDIA_QUERIES.TABLET]: {
+        textDecoration: 'underline',
+        '&[aria-selected="true"]': {
+          background: BLUE,
+          borderColor: BLUE,
+          color: WHITE,
         },
       },
     },
