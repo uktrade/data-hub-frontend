@@ -129,7 +129,7 @@ const EYBLeadCollection = ({
             placeholder="Search country"
             options={filterOptions.countries}
             selectedOptions={selectedFilters.countryId.options}
-            data-test="eyb-country-filter"
+            data-test="lead-country-filter"
           />
           <Filters.Typeahead
             isMulti={true}

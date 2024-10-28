@@ -22,6 +22,7 @@ const FILTER_ELEMENTS = {
   company: '[data-test="company-name-filter"]',
   sector: '[data-test="sector-filter"]',
   value: '[data-test="lead-value-filter"]',
+  country: '[data-test="lead-country-filter"}',
 }
 
 const DATE_TIME_STRING = '2024-09-25T08:30:00.000000Z'
@@ -33,6 +34,8 @@ const HIGH_VALUE = 'high'
 const HIGH_VALUE_LABEL = 'High value'
 const LOW_VALUE = 'low'
 const LOW_VALUE_LABEL = 'Low value'
+const COUNTRY_NAME = 'Canada'
+const COUNTRY_ID = '5daf72a6-5d95-e211-a939-e4115bead28a'
 
 const EYB_LEAD_LIST = Array(
   eybLeadFaker({
@@ -60,6 +63,7 @@ const PAYLOADS = {
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
+  countryFilter: { country: COUNTRY_ID },
 }
 
 const buildQueryString = (queryParams = {}) =>
@@ -131,9 +135,10 @@ describe('EYB leads collection page', () => {
     })
 
     it('should render the filters', () => {
-      cy.get('[data-test="company-name-filter"]').should('be.visible')
-      cy.get('[data-test="sector-filter"]').should('be.visible')
+      cy.get('[data-test="lead-country-filter"]').should('be.visible')
       cy.get('[data-test="lead-value-filter"]').should('be.visible')
+      cy.get('[data-test="sector-filter"]').should('be.visible')
+      cy.get('[data-test="company-name-filter"]').should('be.visible')
     })
 
     it('should display the leads correctly', () => {
@@ -353,4 +358,23 @@ describe('EYB leads collection page', () => {
       })
     }
   )
+
+  context('When filtering the EYB leads collection by country', () => {
+    let expectedPayload = {
+      ...PAYLOADS.minimum,
+      ...PAYLOADS.country,
+    }
+
+    it('should filter from the url', () => {
+      let queryString = buildQueryString({ 'country[0]': COUNTRY_ID })
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+      cy.visit(`${investments.eybLeads.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', expectedPayload)
+    })
+    // TODO: test that it
+    // 'should filter from user input'
+    // 'should return and display the filtered collection'
+  })
 })
