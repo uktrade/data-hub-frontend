@@ -43,6 +43,18 @@ describe('CompanyExportWins', () => {
         shouldRenderTag: true,
         role: 'Role: lead officer',
       },
+      {
+        // The lead_officer field will be null if the export win has been migrated to
+        // Data Hub and doesn't match a Data Hub adviser.
+        exportWins: [
+          {
+            ...companyExportWin,
+            lead_officer: null,
+          },
+        ],
+        currentAdviserId: '1',
+        shouldRenderTag: false,
+      },
       // The team_members array doesn't include the currentAdviserId
       {
         exportWins: [
@@ -85,6 +97,18 @@ describe('CompanyExportWins', () => {
         currentAdviserId: '1',
         shouldRenderTag: true,
         role: 'Role: team member',
+      },
+      {
+        // The teamMembers array will always be empty for export wins that have been
+        // migrated to Data Hub.
+        exportWins: [
+          {
+            ...companyExportWin,
+            team_members: [],
+          },
+        ],
+        currentAdviserId: '4',
+        shouldRenderTag: false,
       },
       // The contributing_advisers array doesn't include the currentAdviserId
       {
@@ -140,6 +164,29 @@ describe('CompanyExportWins', () => {
         currentAdviserId: '1',
         shouldRenderTag: true,
         role: 'Role: contributing officer',
+      },
+      {
+        // The adviser field within a contributing adviser object will always
+        // be null if the export win has been migrated to Data Hub and doesn't
+        // match a Data Hub adviser.
+        exportWins: [
+          {
+            ...companyExportWin,
+            contributing_advisers: [
+              {
+                adviser: null,
+              },
+              {
+                adviser: null,
+              },
+              {
+                adviser: null,
+              },
+            ],
+          },
+        ],
+        currentAdviserId: '1',
+        shouldRenderTag: false,
       },
     ].forEach(({ exportWins, currentAdviserId, shouldRenderTag, role }) => {
       const Provider = createProvider(exportWins)
