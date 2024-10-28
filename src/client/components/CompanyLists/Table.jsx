@@ -1,6 +1,6 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
-import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -15,25 +15,23 @@ import {
   PAGE_COLOUR,
 } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
+import { MEDIA_QUERIES } from '../../utils/responsive'
 import SecondaryButton from '../SecondaryButton'
 
 const { format } = require('../../utils/date')
-
-const getMediaQuery = (theme) =>
-  theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET
 
 const StyledButtonLink = styled.a({
   marginBottom: 0,
   width: '100%',
 })
 
-const StyledTableRow = styled.tr(({ theme }) => ({
+const StyledTableRow = styled.tr({
   borderBottom: `1px solid ${BORDER_COLOUR}`,
 
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     borderBottom: 'none',
   },
-}))
+})
 
 const StyledCell = styled.td({
   padding: 0,
@@ -43,34 +41,34 @@ const StyledHeaderCell = styled.th({
   padding: 0,
   borderBottom: 'none',
 })
-const StyledTableCell = styled(StyledCell)(({ theme }) => ({
+const StyledTableCell = styled(StyledCell)({
   display: 'inline-block',
   width: '100%',
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     display: 'table-cell',
     width: 'auto',
     padding: `${SPACING.SCALE_2} ${SPACING.SCALE_4} ${SPACING.SCALE_2} 0`,
     borderBottom: `1px solid ${BORDER_COLOUR}`,
   },
-}))
+})
 
-const StyledTableHeaderCell = styled(StyledHeaderCell)(({ theme }) => ({
+const StyledTableHeaderCell = styled(StyledHeaderCell)({
   display: 'none',
   fontWeight: FONT_WEIGHTS.bold,
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     display: 'table-cell',
     borderBottom: `1px solid ${BORDER_COLOUR}`,
   },
-}))
+})
 
-const TitleCell = styled(StyledTableCell)(({ theme }) => ({
+const TitleCell = styled(StyledTableCell)({
   paddingTop: SPACING.SCALE_3,
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     paddingTop: SPACING.SCALE_2,
   },
-}))
+})
 
-const ColumnLabelCell = styled(StyledTableCell)(({ theme }) => ({
+const ColumnLabelCell = styled(StyledTableCell)({
   position: 'relative',
   marginTop: `${SPACING.SCALE_5}`,
   '::before': {
@@ -80,22 +78,22 @@ const ColumnLabelCell = styled(StyledTableCell)(({ theme }) => ({
     // the table element seems to have the font size hard coded to 19px, not a variable
     fontSize: 'smaller',
   },
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     marginTop: 0,
     '::before': {
       content: 'none',
     },
   },
-}))
+})
 
-const ActionCell = styled(StyledTableCell)(({ theme }) => ({
+const ActionCell = styled(StyledTableCell)({
   paddingTop: SPACING.SCALE_2,
   paddingBottom: SPACING.SCALE_4,
-  [getMediaQuery(theme)]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     paddingRight: 0,
     paddingBottom: SPACING.SCALE_2,
   },
-}))
+})
 
 const StyledLink = styled(Link)({
   ':focus': {

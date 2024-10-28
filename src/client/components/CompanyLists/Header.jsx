@@ -1,11 +1,13 @@
 import { H2 } from '@govuk-react/heading'
-import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { SPACING } from '@govuk-react/constants'
 import React from 'react'
 import pluralize from 'pluralize'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import Select from '../Select'
+import { MEDIA_QUERIES } from '../../utils/responsive'
+
 import { COMPANY_LISTS__SELECT } from '../../actions'
 import { state2props } from './state'
 
@@ -21,13 +23,13 @@ const StyledHeading = styled(H2)({
   fontSize: 24,
 })
 
-const StyledSelect = styled(Select)(({ theme }) => ({
+const StyledSelect = styled(Select)({
   width: '100%',
-  [theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     width: 'auto',
     marginLeft: SPACING.SCALE_2,
   },
-}))
+})
 
 export const Header = connect(state2props, (dispatch) => ({
   onChange: (id) =>
