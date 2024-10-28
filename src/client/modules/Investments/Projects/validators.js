@@ -6,7 +6,7 @@ import {
 export const isFieldRequiredForStage = (fieldName, project) => {
   return (
     STAGE_ID_TO_INDEX_MAP[GET_REQUIRED_FIELDS_AFTER_STAGE[fieldName]] <
-    STAGE_ID_TO_INDEX_MAP[project.stage.id]
+    STAGE_ID_TO_INDEX_MAP[project?.stage?.id]
   )
 }
 
