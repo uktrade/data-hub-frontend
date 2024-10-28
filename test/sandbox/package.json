@@ -14,7 +14,7 @@
     "@babel/plugin-syntax-import-assertions": "^7.25.7",
     "@babel/core": "^7.25.8",
     "@babel/eslint-parser": "^7.25.8",
-    "@faker-js/faker": "^9.0.3",
+    "@faker-js/faker": "^9.1.0",
     "@babel/runtime": "^7.25.7",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.0.0",
