@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import styled, { ThemeProvider } from 'styled-components'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
@@ -32,7 +32,6 @@ import {
 import Task from '../Task'
 
 import Main from './Main'
-import blueTheme from './blue-theme'
 
 import {
   Search,
@@ -93,7 +92,7 @@ const PersonalisedDashboard = ({
   }
 
   return (
-    <ThemeProvider theme={blueTheme}>
+    <>
       <BannerBackground>
         <CustomContainer width="960">
           <Banner items={dataHubFeed} />
@@ -166,7 +165,7 @@ const PersonalisedDashboard = ({
           </Task.Status>
         </aside>
       </CustomContainer>
-    </ThemeProvider>
+    </>
   )
 }
 
