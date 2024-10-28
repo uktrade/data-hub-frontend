@@ -28,7 +28,7 @@ export const STAGE = {
 }
 
 export const STAGE_ID_TO_INDEX_MAP = {
-  [STAGE.ACTIVE_ID]: 0,
+  [STAGE.PROSPECT_ID]: 0,
   [STAGE.ASSIGN_PM_ID]: 1,
   [STAGE.ACTIVE_ID]: 2,
   [STAGE.VERIFY_WIN_ID]: 3,
@@ -55,11 +55,11 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['address_postcode']: STAGE.VERIFY_WIN_ID,
   ['actual_uk_regions']: STAGE.VERIFY_WIN_ID,
   ['delivery_partners']: STAGE.VERIFY_WIN_ID,
-  ['actual_land_date']: STAGE.VERIFY_WIN_ID,
-  ['specific_programmes']: STAGE.VERIFY_WIN_ID,
+  ['actual_land_date']: STAGE.ASSIGN_PM_ID,
+  ['specific_programmes']: STAGE.ASSIGN_PM_ID,
   ['uk_company']: STAGE.VERIFY_WIN_ID,
-  ['investor_type']: STAGE.VERIFY_WIN_ID,
-  ['level_of_involvement']: STAGE.VERIFY_WIN_ID,
+  ['investor_type']: STAGE.ASSIGN_PM_ID,
+  ['level_of_involvement']: STAGE.ASSIGN_PM_ID,
   ['likelihood_to_land']: STAGE.ACTIVE_ID,
 }
 
