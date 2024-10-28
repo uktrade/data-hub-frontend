@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-assertions": "^7.26.0",
-    "@babel/core": "^7.25.8",
+    "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.25.8",
     "@faker-js/faker": "^9.0.3",
     "@babel/runtime": "^7.25.7",
