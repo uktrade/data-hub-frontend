@@ -86,7 +86,7 @@
     "css-loader": "^7.1.1",
     "csurf": "^1.11.0",
     "date-fns": "^2.30.0",
-    "del-cli": "^5.0.0",
+    "del-cli": "^6.0.0",
     "dotenv": "^16.4.4",
     "elastic-apm-node": "^4.7.3",
     "element-closest": "^3.0.2",
