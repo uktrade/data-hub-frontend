@@ -11,7 +11,6 @@ import {
   CollectionFilters,
   FilteredCollectionList,
   Filters,
-  StatusMessage,
 } from '../../../components'
 import {
   INVESTMENT_EYB_LEADS_ID,
@@ -90,14 +89,6 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
   }
   return (
     <>
-      <StatusMessage>
-        <strong>Work in progress</strong>
-        <p>
-          {' '}
-          We are working to add Expand Your Business (EYB) data to Data Hub. It
-          will be available here soon.
-        </p>
-      </StatusMessage>
       <FilteredCollectionList
         {...props}
         collectionName="EYB Lead"
