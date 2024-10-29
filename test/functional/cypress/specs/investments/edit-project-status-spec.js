@@ -46,7 +46,7 @@ describe('EditProjectStatus', () => {
         assertFieldRadiosWithoutLabel({
           element,
           value: 'Ongoing',
-          optionsCount: 6,
+          optionsCount: 5,
         })
       })
     })
@@ -64,10 +64,10 @@ describe('EditProjectStatus', () => {
 
   context('When selecting another radio button and pressing save', () => {
     it('should send the updated data and return to the details page with flash message', () => {
-      cy.get('[data-test="status-referred"]').click()
+      cy.get('[data-test="status-delayed"]').click()
       cy.get('[data-test="submit-button"]').click()
       cy.wait('@editStatusRequest').its('request.body').should('include', {
-        status: 'referred',
+        status: 'delayed',
       })
       cy.url().should('contain', investments.projects.details(project.id))
       cy.get('[data-test="status-message"]')
