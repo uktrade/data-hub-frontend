@@ -96,7 +96,7 @@ describe('EYB lead details', () => {
           'have.text',
           eybLeadWithValues.company_website + ' (opens in new tab)'
         )
-        .should('have.attr', 'href', eybLeadWithValues.company_website)
+        .should('have.attr', 'href', '//' + eybLeadWithValues.company_website)
     })
 
     it('should render the superheading', () => {
