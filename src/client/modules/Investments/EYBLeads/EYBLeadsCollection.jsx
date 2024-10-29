@@ -103,7 +103,7 @@ const EYBLeadCollection = ({
     <>
       <FilteredCollectionList
         {...props}
-        collectionName="EYB Lead"
+        collectionName="EYB lead"
         taskProps={collectionListTask}
         entityName="eybLead"
         defaultQueryParams={{
