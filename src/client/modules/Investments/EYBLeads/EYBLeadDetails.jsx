@@ -57,7 +57,7 @@ const EYBLeadDetails = () => {
                 {eybLead.companyWebsite ? (
                   <NewWindowLink
                     data-test="website-link"
-                    href={eybLead.companyWebsite}
+                    href={'//' + eybLead.companyWebsite}
                   >
                     {eybLead.companyWebsite}
                   </NewWindowLink>
