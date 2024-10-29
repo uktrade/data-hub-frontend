@@ -22,7 +22,7 @@ const FILTER_ELEMENTS = {
   company: '[data-test="company-name-filter"]',
   sector: '[data-test="sector-filter"]',
   value: '[data-test="lead-value-filter"]',
-  country: '[data-test="lead-country-filter"}',
+  country: '[data-test="lead-country-filter"]',
 }
 
 const DATE_TIME_STRING = '2024-09-25T08:30:00.000000Z'
@@ -373,8 +373,28 @@ describe('EYB leads collection page', () => {
         .its('request.query')
         .should('include', expectedPayload)
     })
-    // TODO: test that it
-    // 'should filter from user input'
-    // 'should return and display the filtered collection'
+    it('should filter from user input', () => {
+      cy.visit(`${investments.eybLeads.index()}`)
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+      assertTypeaheadHints({
+        element: FILTER_ELEMENTS.country,
+        label: 'Country',
+        placeholder: 'Search country',
+      })
+      selectFirstTypeaheadOption({
+        element: FILTER_ELEMENTS.country,
+        input: 'cana',
+      })
+      assertTypeaheadOptionSelected({
+        element: FILTER_ELEMENTS.country,
+        expectedOption: COUNTRY_NAME,
+      })
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', expectedPayload)
+      assertQueryParams('country', Array(COUNTRY_ID))
+      assertChipExists({ label: COUNTRY_NAME, position: 1 })
+    })
+    // TODO: test that it 'should return and display the filtered collection'
   })
 })
