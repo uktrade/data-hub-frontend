@@ -15,7 +15,8 @@ export const isFieldOptionalForStageLabel = (fieldName, project) => {
 }
 
 export const validateFieldForStage = (field, formFields, project, message) => {
-  return !formFields.values[field.name] &&
+  return (!formFields.values[field.name] ||
+    formFields.values[field.name].length == 0) &&
     isFieldRequiredForStage(field.name, project)
     ? message
     : null

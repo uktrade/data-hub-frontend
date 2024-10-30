@@ -13,6 +13,7 @@ export const PROJECT_STATUS_OPTIONS = [
   { name: 'Dormant', id: 'dormant' },
 ]
 
+export const INITIAL_ID = null
 export const PROSPECT_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
 export const ASSIGN_PM_ID = 'c9864359-fb1a-4646-a4c1-97d10189fc03'
 export const ACTIVE_ID = '7606cc19-20da-4b74-aba1-2cec0d753ad8'
@@ -28,17 +29,18 @@ export const STAGE = {
 }
 
 export const STAGE_ID_TO_INDEX_MAP = {
-  [STAGE.PROSPECT_ID]: 0,
-  [STAGE.ASSIGN_PM_ID]: 1,
-  [STAGE.ACTIVE_ID]: 2,
-  [STAGE.VERIFY_WIN_ID]: 3,
-  [STAGE.WON_ID]: 4,
+  [STAGE.INITIAL_ID]: 0,
+  [STAGE.PROSPECT_ID]: 1,
+  [STAGE.ASSIGN_PM_ID]: 2,
+  [STAGE.ACTIVE_ID]: 3,
+  [STAGE.VERIFY_WIN_ID]: 4,
+  [STAGE.WON_ID]: 5,
 }
 
 export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
-  ['strategic_drivers']: STAGE.ASSIGN_PM_ID,
-  ['client_requirements']: STAGE.ASSIGN_PM_ID,
+  ['strategic_drivers']: STAGE.PROSPECT_ID,
+  ['client_requirements']: STAGE.INITIAL_ID,
   ['client_considering_other_countries']: STAGE.ASSIGN_PM_ID,
   ['project_manager']: STAGE.ACTIVE_ID,
   ['project_assurance_adviser']: STAGE.ACTIVE_ID,
@@ -50,11 +52,12 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
   ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
   ['export_revenue']: STAGE.VERIFY_WIN_ID,
+  ['site_decided']: STAGE.ACTIVE_ID, // is required to be Yes from verify win.
   ['address_1']: STAGE.VERIFY_WIN_ID,
   ['address_town']: STAGE.VERIFY_WIN_ID,
   ['address_postcode']: STAGE.VERIFY_WIN_ID,
-  ['actual_uk_regions']: STAGE.VERIFY_WIN_ID,
-  ['delivery_partners']: STAGE.VERIFY_WIN_ID,
+  ['actual_uk_regions']: STAGE.ACTIVE_ID,
+  ['delivery_partners']: STAGE.ACTIVE_ID,
   ['actual_land_date']: STAGE.ASSIGN_PM_ID,
   ['specific_programmes']: STAGE.ASSIGN_PM_ID,
   ['uk_company']: STAGE.VERIFY_WIN_ID,
