@@ -1,13 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { HEADING_SIZES, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
+import { HEADING_SIZES, MEDIA_QUERIES } from '@govuk-react/constants'
 import { UnorderedList, ListItem, H2, Button } from 'govuk-react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import qs from 'qs'
 
-import ContentWithHeading from '../../../components/ContentWithHeading'
 import { ButtonLink, Pagination } from '../../../components'
 import { MID_GREY } from '../../../utils/colours'
 import { SHOW_ALL_OPTION } from '../constants.js'
@@ -37,10 +36,8 @@ const StyledResultCount = styled('span')({
   lineHeight: 1,
 })
 
-const StyledContent = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: FONT_SIZE.SIZE_20,
+const StyledParagraph = styled.p({
+  marginTop: 15,
 })
 
 const FiltersContainer = styled('div')({
@@ -213,26 +210,17 @@ const ExportList = ({
           <>
             {hasZeroExports ? (
               <div data-test="no-export-items">
-                <ContentWithHeading
-                  data-test="no-export-items"
-                  heading="You have no exports"
-                >
-                  <StyledContent>
-                    <div>
-                      Here you can create an export project to track a company's
-                      export progress. These will appear on your home page, so
-                      you keep track of your exports in one place.
-                    </div>
-                    <span>To add an export:</span>
-                    <div>
-                      <UnorderedList listStyleType="bullet">
-                        <ListItem>go to the company page</ListItem>
-                        <ListItem>select 'Add export project' button</ListItem>
-                      </UnorderedList>
-                    </div>
-                  </StyledContent>
-                  <ExportWinsLink />
-                </ContentWithHeading>
+                <StyledParagraph>
+                  Here you can create an export project to track a company's
+                  export progress. These will appear on your home page, so you
+                  keep track of your exports in one place.
+                </StyledParagraph>
+                <p>To add an export:</p>
+                <UnorderedList listStyleType="bullet">
+                  <ListItem>go to the company page</ListItem>
+                  <ListItem>select 'Add export project' button</ListItem>
+                </UnorderedList>
+                <ExportWinsLink />
               </div>
             ) : (
               <ListContainer>
