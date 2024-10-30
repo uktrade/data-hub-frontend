@@ -122,24 +122,24 @@ const EYBLeadLayout = ({ id, children }) => {
                     </GridCol>
                     <GridCol setWith="one-third">
                       <StyledButtonContainer>
-                        {eybLead.company && !eybLead.investment_projects.length && (
-                          
-                          <Button
-                            as={StyledButtonLink}
-                            data-test="button-add-investment-project"
-                            href={
-                              !eybLead.company
-                                ? `/investments/projects/create`
-                                : eybLead.company.archived ||
-                                    eybLead.company.ukBased
-                                  ? null
-                                  : `/investments/projects/create/${eybLead.company.id}?eyb-lead-id=${eybLead.id}`
-                            }
-                            aria-label={`Add investment project`}
-                          >
-                            Add investment project
-                          </Button>
-                        )}
+                        {eybLead.company &&
+                          !eybLead.investmentProjects.length && (
+                            <Button
+                              as={StyledButtonLink}
+                              data-test="button-add-investment-project"
+                              href={
+                                !eybLead.company
+                                  ? `/investments/projects/create`
+                                  : eybLead.company.archived ||
+                                      eybLead.company.ukBased
+                                    ? null
+                                    : `/investments/projects/create/${eybLead.company.id}?eyb-lead-id=${eybLead.id}`
+                              }
+                              aria-label={`Add investment project`}
+                            >
+                              Add investment project
+                            </Button>
+                          )}
                       </StyledButtonContainer>
                     </GridCol>
                   </GridRow>
