@@ -43,6 +43,7 @@ describe('EYB lead details', () => {
       telephone_number: '01234567890',
       landing_timeframe: 'In the next 6 months',
       company_website: 'fake.website.com',
+      investment_projects: [],
     })
     beforeEach(() => {
       setup(eybLeadWithValues)
