@@ -122,7 +122,8 @@ const EYBLeadLayout = ({ id, children }) => {
                     </GridCol>
                     <GridCol setWith="one-third">
                       <StyledButtonContainer>
-                        {eybLead.company && (
+                        {eybLead.company && !eybLead.investment_projects.length && (
+                          
                           <Button
                             as={StyledButtonLink}
                             data-test="button-add-investment-project"
