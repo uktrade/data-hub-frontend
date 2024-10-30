@@ -4,6 +4,7 @@ import jsf from 'json-schema-faker'
 import apiSchema from '../../../api-schema.json'
 
 import {
+  INVESTMENT_PROJECT_STAGES,
   INVESTMENT_PROJECT_STAGES_LIST,
   INVESTMENT_PROJECT_STATUSES_LIST,
 } from './constants'
@@ -86,6 +87,46 @@ const investmentProjectFaker = (overrides = {}) => ({
 })
 
 /**
+ * Generate "empty" single investment project without data.
+ *
+ * Starts by generating data based on the json schema, adds some defaults and
+ * merges in overrides.
+ */
+const investmentProjectEmptyFaker = (overrides = {}) =>
+  investmentProjectFaker({
+    stage: INVESTMENT_PROJECT_STAGES.prospect,
+    uk_region_locations: null,
+
+    client_cannot_provide_total_investment: null,
+    strategic_drivers: null,
+    client_requirements: null,
+    client_considering_other_countries: null,
+    project_manager: null,
+    project_assurance_adviser: null,
+    client_cannot_provide_foreign_investment: null,
+    government_assistance: null,
+    number_new_jobs: null,
+    number_safeguarded_jobs: null,
+    r_and_d_budget: null,
+    non_fdi_r_and_d_budget: null,
+    new_tech_to_uk: null,
+    export_revenue: null,
+    site_decided: null,
+    address_1: null,
+    address_town: null,
+    address_postcode: null,
+    actual_uk_regions: null,
+    delivery_partners: null,
+    actual_land_date: null,
+    specific_programmes: null,
+    uk_company: null,
+    investor_type: null,
+    level_of_involvement: null,
+    likelihood_to_land: null,
+    ...overrides,
+  })
+
+/**
  * Generate fake data for a list of investment projects.
  *
  * The number of items is determined by the length (default is 1).
@@ -96,6 +137,7 @@ const investmentProjectListFaker = (length = 1, overrides) =>
 
 export {
   investmentProjectFaker,
+  investmentProjectEmptyFaker,
   investmentProjectListFaker,
   investmentProjectCodeFaker,
   investmentProjectStageFaker,
