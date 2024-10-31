@@ -22,6 +22,7 @@ const FILTER_ELEMENTS = {
   company: '[data-test="company-name-filter"]',
   sector: '[data-test="sector-filter"]',
   value: '[data-test="lead-value-filter"]',
+  country: '[data-test="lead-country-filter"]',
 }
 
 const DATE_TIME_STRING = '2024-09-25T08:30:00.000000Z'
@@ -33,17 +34,23 @@ const HIGH_VALUE = 'high'
 const HIGH_VALUE_LABEL = 'High value'
 const LOW_VALUE = 'low'
 const LOW_VALUE_LABEL = 'Low value'
+const COUNTRY_NAME_1 = 'Canada'
+const COUNTRY_ID_1 = '5daf72a6-5d95-e211-a939-e4115bead28a'
+const COUNTRY_NAME_2 = 'Brazil'
+const COUNTRY_ID_2 = 'b05f66a0-5d95-e211-a939-e4115bead28a'
 
 const EYB_LEAD_LIST = Array(
   eybLeadFaker({
     triage_created: DATE_TIME_STRING,
     company: { name: `${COMPANY_NAME} and Co` },
     is_high_value: true,
+    country: { name: COUNTRY_NAME_1, id: COUNTRY_ID_1 },
   }),
   eybLeadFaker({
     triage_created: DATE_TIME_STRING,
     sector: { name: SECTOR_NAME, id: SECTOR_ID },
     is_high_value: false,
+    country: { name: COUNTRY_NAME_1, id: COUNTRY_ID_1 },
   }),
   eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
   eybLeadFaker({
@@ -51,6 +58,7 @@ const EYB_LEAD_LIST = Array(
     is_high_value: false,
     company: null,
     company_name: COMPANY_NAME_DEFAULT,
+    country: { name: COUNTRY_NAME_2, id: COUNTRY_ID_2 },
   })
 )
 
@@ -60,6 +68,7 @@ const PAYLOADS = {
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
+  countryFilter: { country: COUNTRY_ID_1 },
 }
 
 const buildQueryString = (queryParams = {}) =>
@@ -90,6 +99,12 @@ const getEYBLeadsByValue = (valueOfLead) => {
   const isHighValueBoolean = convertValueStringToBoolean(valueOfLead)
   return EYB_LEAD_LIST.filter(
     (lead) => lead.is_high_value === isHighValueBoolean
+  )
+}
+
+const getEYBLeadsByCountryId = (countryId) => {
+  return EYB_LEAD_LIST.filter(
+    (lead) => lead.country && lead.country.id === countryId
   )
 }
 
@@ -131,9 +146,10 @@ describe('EYB leads collection page', () => {
     })
 
     it('should render the filters', () => {
-      cy.get('[data-test="company-name-filter"]').should('be.visible')
-      cy.get('[data-test="sector-filter"]').should('be.visible')
+      cy.get('[data-test="lead-country-filter"]').should('be.visible')
       cy.get('[data-test="lead-value-filter"]').should('be.visible')
+      cy.get('[data-test="sector-filter"]').should('be.visible')
+      cy.get('[data-test="company-name-filter"]').should('be.visible')
     })
 
     it('should display the leads correctly', () => {
@@ -248,7 +264,7 @@ describe('EYB leads collection page', () => {
       cy.wait('@apiRequest')
         .its('request.query')
         .should('include', expectedPayload)
-      assertQueryParams('sector', Array(SECTOR_ID))
+      assertQueryParams('sector[0]', SECTOR_ID)
       assertChipExists({ label: SECTOR_NAME, position: 1 })
     })
 
@@ -326,7 +342,7 @@ describe('EYB leads collection page', () => {
           cy.wait('@apiRequest')
             .its('request.query')
             .should('include', testCase.expectedPayload)
-          assertQueryParams('value', Array(testCase.queryParamValue))
+          assertQueryParams('value[0]', testCase.queryParamValue)
           assertChipExists({ label: testCase.chipsLabel, position: 1 })
         })
 
@@ -353,4 +369,63 @@ describe('EYB leads collection page', () => {
       })
     }
   )
+
+  context('When filtering the EYB leads collection by country', () => {
+    let expectedPayload = {
+      ...PAYLOADS.minimum,
+      ...PAYLOADS.country,
+    }
+
+    it('should filter from the url', () => {
+      let queryString = buildQueryString({ 'country[0]': COUNTRY_ID_1 })
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+      cy.visit(`${investments.eybLeads.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', expectedPayload)
+    })
+
+    it('should filter from user input', () => {
+      cy.visit(`${investments.eybLeads.index()}`)
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+      assertTypeaheadHints({
+        element: FILTER_ELEMENTS.country,
+        label: 'Country',
+        placeholder: 'Search country',
+      })
+      selectFirstTypeaheadOption({
+        element: FILTER_ELEMENTS.country,
+        input: 'cana',
+      })
+      assertTypeaheadOptionSelected({
+        element: FILTER_ELEMENTS.country,
+        expectedOption: COUNTRY_NAME_1,
+      })
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', expectedPayload)
+      assertQueryParams('country[0]', COUNTRY_ID_1)
+      assertChipExists({ label: COUNTRY_NAME_1, position: 1 })
+    })
+
+    it('should return and display the filtered collection', () => {
+      let queryString = buildQueryString({ 'sector[0]': SECTOR_ID })
+      let expectedNumberOfResults = 2 // Number of leads with COUNTRY_ID_1 in the fixture data
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
+        statusCode: 200,
+        body: {
+          count: expectedNumberOfResults,
+          next: null,
+          previous: null,
+          results: getEYBLeadsByCountryId(COUNTRY_ID_1),
+        },
+      }).as('apiRequest')
+      cy.visit(`${investments.eybLeads.index()}?${queryString}`)
+      cy.wait('@apiRequest')
+      cy.get('[data-test="collection-item"]').should(
+        'have.length',
+        expectedNumberOfResults
+      )
+    })
+  })
 })

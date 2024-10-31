@@ -25,7 +25,12 @@ import {
   InputPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
-const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
+const EYBLeadCollection = ({
+  filterOptions,
+  payload,
+  optionMetadata,
+  ...props
+}) => {
   const location = useLocation()
   const qsParams = useMemo(
     () => qs.parse(location.search.slice(1)),
@@ -40,6 +45,13 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
     options.filter(({ value }) => values.includes(value))
 
   const setupSelectedFilters = (qsParams, filterOptions) => ({
+    countryId: {
+      queryParam: QS_PARAMS.countryId,
+      options: resolveSelectedOptions(
+        qsParams[QS_PARAMS.countryId],
+        filterOptions.countries
+      ),
+    },
     companyName: {
       queryParam: QS_PARAMS.companyName,
       options: resolveCompanyName(),
@@ -79,7 +91,7 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
     progressMessage: 'Loading filters',
     renderProgress: () => (
       <>
-        <InputPlaceholder count={2} />
+        <InputPlaceholder count={3} />
         <CheckboxPlaceholder count={2} />
       </>
     ),
@@ -91,7 +103,7 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
     <>
       <FilteredCollectionList
         {...props}
-        collectionName="EYB Lead"
+        collectionName="EYB lead"
         taskProps={collectionListTask}
         entityName="eybLead"
         defaultQueryParams={{
@@ -108,6 +120,16 @@ const EYBLeadCollection = ({ filterOptions, payload, ...props }) => {
             options={VALUE_OPTIONS}
             selectedOptions={selectedFilters.valueOfLead.options}
             data-test="lead-value-filter"
+          />
+          <Filters.Typeahead
+            isMulti={true}
+            label="Country"
+            name="country"
+            qsParam={QS_PARAMS.countryId}
+            placeholder="Search country"
+            options={filterOptions.countries}
+            selectedOptions={selectedFilters.countryId.options}
+            data-test="lead-country-filter"
           />
           <Filters.Typeahead
             isMulti={true}
