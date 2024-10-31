@@ -43,6 +43,7 @@ describe('EYB lead details', () => {
       telephone_number: '01234567890',
       landing_timeframe: 'In the next 6 months',
       company_website: 'fake.website.com',
+      investment_projects: [],
     })
     beforeEach(() => {
       setup(eybLeadWithValues)
@@ -208,4 +209,35 @@ describe('EYB lead details', () => {
       cy.get('[data-test="button-add-investment-project"]').should('not.exist')
     })
   })
+  context(
+    'When viewing an EYB lead with company and investment projects associated',
+    () => {
+      const eybLeadWithCompanyAndInvestmentProjects = eybLeadFaker({
+        company: {
+          name: 'Mars',
+          id: 'fc752802-e454-4c7c-bbfd-4bdd84759b84',
+        },
+        investment_projects: [
+          {
+            id: 'fc752802-e454-4c7c-bbfd-4bdd84759b84',
+          },
+        ],
+      })
+      beforeEach(() => {
+        setup(eybLeadWithCompanyAndInvestmentProjects)
+        cy.visit(
+          investments.eybLeads.details(
+            eybLeadWithCompanyAndInvestmentProjects.id
+          )
+        )
+        cy.wait('@getEYBLeadDetails')
+      })
+
+      it('should not render the `Add investment project` button', () => {
+        cy.get('[data-test="button-add-investment-project"]').should(
+          'not.exist'
+        )
+      })
+    }
+  )
 })

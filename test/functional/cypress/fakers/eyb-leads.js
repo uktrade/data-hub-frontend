@@ -115,6 +115,11 @@ const eybLeadFaker = (overrides = {}) => ({
     area: ALBERTA,
     country: CANADA,
   },
+  investment_projects: [
+    {
+      id: faker.string.uuid(),
+    },
+  ],
   ...overrides,
 })
 
