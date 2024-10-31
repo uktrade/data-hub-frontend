@@ -89,6 +89,49 @@ export const FIELDS = {
   ADDRESS1: { name: 'address1', message: 'Enter an address' },
   CITY: { name: 'city', message: 'Enter a town or city' },
   POSTCODE: { name: 'postcode', message: 'Enter a postcode' },
+
+  // Edit value
+  CLIENT_CANNOT_PROVIDE_FOREIGN_INVESTMENT: {
+    name: 'client_cannot_provide_foreign_investment',
+    message: 'Select whether client can provide capital expenditure value',
+  },
+  CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT: {
+    name: 'client_cannot_provide_total_investment',
+    message: 'Select whether client can provide total investment value',
+  },
+  EXPORT_REVENUE: {
+    name: 'export_revenue',
+    message: 'Select export revenue as a result of the FDI project',
+  },
+  GOVERNMENT_ASSISTANCE: {
+    name: 'government_assistance',
+    message: 'Select whether project receives government financial assitance',
+  },
+  NEW_TECH_TO_UK: {
+    name: 'new_tech_to_uk',
+    message: 'Select whether project brings new technology to the UK',
+  },
+  NON_FDI_R_AND_D_BUDGET: {
+    name: 'non_fdi_r_and_d_budget',
+    message:
+      'Select whether the project is associated with a non-FDI R&D project',
+  },
+  NUMBER_NEW_JOBS: {
+    name: 'number_new_jobs',
+    message: 'Value for number of new jobs is required',
+  },
+  NUMBER_SAFEGUARDED_JOBS: {
+    name: 'number_safeguarded_jobs',
+    message: 'Value for number of safeguarded jobs is required',
+  },
+  R_AND_D_BUDGET: {
+    name: 'r_and_d_budget',
+    message: 'Select whether project has budget for research and development',
+  },
+  TOTAL_INVESTMENT: {
+    name: 'total_investment',
+    message: '-total_investment',
+  },
 }
 
 function assertValidationMessage(elementName, message) {
@@ -311,6 +354,77 @@ describe('Field validation for each stage', () => {
             ])
           })
         }
+      })
+    })
+  })
+
+  describe('Edit value', () => {
+    const stageRequiredFields = [
+      [INVESTMENT_PROJECT_STAGES.prospect, []],
+      [
+        INVESTMENT_PROJECT_STAGES.assignPm,
+        [FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT],
+      ],
+      [
+        INVESTMENT_PROJECT_STAGES.active,
+        [FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT],
+      ],
+      [
+        INVESTMENT_PROJECT_STAGES.verifyWin,
+        [
+          FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT,
+          FIELDS.CLIENT_CANNOT_PROVIDE_FOREIGN_INVESTMENT,
+          FIELDS.EXPORT_REVENUE,
+          FIELDS.GOVERNMENT_ASSISTANCE,
+          FIELDS.NEW_TECH_TO_UK,
+          FIELDS.NON_FDI_R_AND_D_BUDGET,
+          FIELDS.NUMBER_NEW_JOBS,
+          FIELDS.NUMBER_SAFEGUARDED_JOBS,
+          FIELDS.R_AND_D_BUDGET,
+        ],
+      ],
+      [
+        INVESTMENT_PROJECT_STAGES.won,
+        [
+          FIELDS.CLIENT_CANNOT_PROVIDE_FOREIGN_INVESTMENT,
+          FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT,
+          FIELDS.EXPORT_REVENUE,
+          FIELDS.GOVERNMENT_ASSISTANCE,
+          FIELDS.NEW_TECH_TO_UK,
+          FIELDS.NON_FDI_R_AND_D_BUDGET,
+          FIELDS.NUMBER_NEW_JOBS,
+          FIELDS.NUMBER_SAFEGUARDED_JOBS,
+          FIELDS.R_AND_D_BUDGET,
+        ],
+      ],
+    ]
+    stageRequiredFields.forEach((stageRequiredField) => {
+      const [stage, requiredFields] = stageRequiredField
+
+      context(`In the ${stage.name} stage `, () => {
+        beforeEach(() => {
+          const projectEmptyFields = investmentProjectEmptyFaker({
+            stage: stage,
+          })
+          cy.intercept(
+            'GET',
+            `/api-proxy/v3/investment/${projectEmptyFields.id}`,
+            projectEmptyFields
+          ).as('apiCall')
+          cy.visit(urls.investments.projects.editValue(projectEmptyFields.id))
+          cy.wait('@apiCall')
+        })
+
+        it(`submitting an empty form should show validation errors`, () => {
+          cy.get('[data-test="submit-button"]').click()
+
+          assertValidationMessages(requiredFields)
+          // Ensure only the expected errors are shown.
+          cy.get('[data-test="summary-form-errors"] li').should(
+            'have.length',
+            requiredFields.length
+          )
+        })
       })
     })
   })
