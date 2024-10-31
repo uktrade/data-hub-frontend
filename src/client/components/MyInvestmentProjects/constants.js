@@ -42,7 +42,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['strategic_drivers']: STAGE.PROSPECT_ID,
   ['client_requirements']: STAGE.PROSPECT_ID,
   ['investment_type']: STAGE.INITIAL_ID,
-  ['client_considering_other_countries']: STAGE.ASSIGN_PM_ID,
+  ['client_considering_other_countries']: STAGE.PROSPECT_ID,
   ['project_manager']: STAGE.ACTIVE_ID,
   ['project_assurance_adviser']: STAGE.ACTIVE_ID,
   ['client_cannot_provide_foreign_investment']: STAGE.VERIFY_WIN_ID,

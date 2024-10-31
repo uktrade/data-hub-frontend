@@ -72,6 +72,10 @@ export const FIELDS = {
     name: 'client_requirements',
     message: 'Enter client requirements',
   },
+  CLIENT_CONSIDERING_OTHER_COUNTRIES: {
+    name: 'client_considering_other_countries',
+    message: 'Select other countries considered',
+  },
   SITE_DECIDED: { name: 'site_decided', message: 'Select a UK region' },
   DELIVERY_PARTNERS: {
     name: 'delivery_partners',
@@ -221,6 +225,7 @@ describe('Field validation for each stage', () => {
         [
           FIELDS.STRATEGIC_DRIVERS,
           FIELDS.CLIENT_REQUIREMENTS,
+          FIELDS.CLIENT_CONSIDERING_OTHER_COUNTRIES,
           FIELDS.UK_REGION_LOCATIONS,
         ],
         false,
@@ -234,6 +239,7 @@ describe('Field validation for each stage', () => {
             name: 'site_decided',
             message: 'Select a value for UK location decision',
           },
+          FIELDS.CLIENT_CONSIDERING_OTHER_COUNTRIES,
           FIELDS.UK_REGION_LOCATIONS,
         ],
         false,
@@ -245,6 +251,7 @@ describe('Field validation for each stage', () => {
           FIELDS.CLIENT_REQUIREMENTS,
           { name: 'site_decided', message: 'A UK region is required' },
           FIELDS.DELIVERY_PARTNERS,
+          FIELDS.CLIENT_CONSIDERING_OTHER_COUNTRIES,
           FIELDS.UK_REGION_LOCATIONS,
         ],
         true,
@@ -255,6 +262,7 @@ describe('Field validation for each stage', () => {
           FIELDS.STRATEGIC_DRIVERS,
           FIELDS.CLIENT_REQUIREMENTS,
           { name: 'site_decided', message: 'A UK region is required' },
+          FIELDS.CLIENT_CONSIDERING_OTHER_COUNTRIES,
           FIELDS.DELIVERY_PARTNERS,
         ],
         true,

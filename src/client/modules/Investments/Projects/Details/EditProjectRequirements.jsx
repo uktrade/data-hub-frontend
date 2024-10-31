@@ -125,7 +125,12 @@ const EditProjectRequirements = () => {
               />
               <FieldRadios
                 name="client_considering_other_countries"
-                label="Is the client considering other countries?"
+                label={
+                  'Is the client considering other countries?' +
+                  (isUkRegionLocationsRequiredForStage(project)
+                    ? ''
+                    : ' (optional)')
+                }
                 initialValue={transformBoolToRadioOptionWithNullCheck(
                   project.clientConsideringOtherCountries
                 )}
@@ -147,6 +152,14 @@ const EditProjectRequirements = () => {
                     ),
                   }),
                 }))}
+                validate={(values, field, formFields) => {
+                  return validateFieldForStage(
+                    field,
+                    formFields,
+                    project,
+                    'Select other countries considered'
+                  )
+                }}
               />
               <FieldUKRegionTypeahead
                 name="uk_region_locations"
