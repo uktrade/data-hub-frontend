@@ -264,7 +264,7 @@ describe('EYB leads collection page', () => {
       cy.wait('@apiRequest')
         .its('request.query')
         .should('include', expectedPayload)
-      assertQueryParams('sector', Array(SECTOR_ID))
+      assertQueryParams('sector[0]', SECTOR_ID)
       assertChipExists({ label: SECTOR_NAME, position: 1 })
     })
 
@@ -342,7 +342,7 @@ describe('EYB leads collection page', () => {
           cy.wait('@apiRequest')
             .its('request.query')
             .should('include', testCase.expectedPayload)
-          assertQueryParams('value', Array(testCase.queryParamValue))
+          assertQueryParams('value[0]', testCase.queryParamValue)
           assertChipExists({ label: testCase.chipsLabel, position: 1 })
         })
 
@@ -404,7 +404,7 @@ describe('EYB leads collection page', () => {
       cy.wait('@apiRequest')
         .its('request.query')
         .should('include', expectedPayload)
-      assertQueryParams('country', Array(COUNTRY_ID_1))
+      assertQueryParams('country[0]', COUNTRY_ID_1)
       assertChipExists({ label: COUNTRY_NAME_1, position: 1 })
     })
 
