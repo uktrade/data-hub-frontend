@@ -40,7 +40,7 @@ export const STAGE_ID_TO_INDEX_MAP = {
 export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
   ['strategic_drivers']: STAGE.PROSPECT_ID,
-  ['client_requirements']: STAGE.INITIAL_ID,
+  ['client_requirements']: STAGE.PROSPECT_ID,
   ['investment_type']: STAGE.INITIAL_ID,
   ['client_considering_other_countries']: STAGE.ASSIGN_PM_ID,
   ['project_manager']: STAGE.ACTIVE_ID,
