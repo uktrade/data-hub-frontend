@@ -1,53 +1,69 @@
 import React from 'react'
+import { isNil } from 'lodash'
 
-import Table from '@govuk-react/table'
+import { SectionHeader } from '../../../components'
+import { transformContactConsents } from './transformers'
 
-import { SummaryTable } from '../../../components'
-
-const getConsentRows = (consentData) => {
-  const domainGroupedConsent = Object.groupBy(
-    consentData,
-    ({ consentDomain }) => consentDomain
-  )
-  const domainRows = Object.entries(domainGroupedConsent).map((domain) => {
-    {
-      const domainTitle = domain[0]
-      const domainTopics = domain[1]
-      return domainTopics.map((topic, index) => (
-        <Table.Row key={`domain_${index}`} data-test={`domain_${domainTitle}`}>
-          {index == 0 && <td rowSpan={domainTopics.length}>{domainTitle}</td>}
-          <Table.Cell>{topic.topic}</Table.Cell>
-          <Table.Cell>
-            {topic.emailContactConsent || topic.telephoneContactConsent
-              ? 'Yes'
-              : 'No'}
-          </Table.Cell>
-        </Table.Row>
-      ))
+const ConsentText = ({ consent }) => {
+  const message = (domain, topicNames, consentGiven) => {
+    let consentedMessage = `This contact has ${consentGiven ? 'given' : 'not given'} consent to ${domain}`
+    if (!topicNames) {
+      return ''
+    } else if (topicNames.length == 1) {
+      consentedMessage += ` and topic ${topicNames[0]}`
+    } else if (topicNames.length > 1) {
+      consentedMessage += ` and topics: ${topicNames.join(', ')}`
     }
-  })
+    return consentedMessage + '.'
+  }
 
+  const topicsWithNames = (topics) =>
+    topics.length > 0
+      ? topics.filter((topic) => topic.name).map((topic) => topic.name)
+      : undefined
+
+  const consentedTopicNames = topicsWithNames(consent.consentedTopics)
+  const notConsentedTopicNames = topicsWithNames(consent.notConsentedTopics)
+
+  const consentedMessage = message(consent.domain, consentedTopicNames, true)
+  const notConsentedMessage = message(
+    consent.domain,
+    notConsentedTopicNames,
+    false
+  )
+
+  const finalMessage = []
+  if (consentedMessage) {
+    finalMessage.push(consentedMessage)
+  }
+  if (notConsentedMessage) {
+    if (consentedMessage) {
+      finalMessage.push(' ')
+    }
+    finalMessage.push(notConsentedMessage)
+  }
+
+  return <p>{finalMessage.join('')}</p>
+}
+
+const ConsentDetails = ({ contact }) => {
+  const consents = transformContactConsents(contact)
   return (
-    <>
-      <Table.Row>
-        <Table.CellHeader>Domain</Table.CellHeader>
-        <Table.CellHeader>Topic</Table.CellHeader>
-        <Table.CellHeader>Consent Given</Table.CellHeader>
-      </Table.Row>
-      {domainRows}
-    </>
+    <div>
+      <SectionHeader type="contact-consent">Contact consents</SectionHeader>
+      {isNil(consents) ? (
+        <p data-test="no-contact-consents">
+          There is no consent data available for this contact
+        </p>
+      ) : (
+        <>
+          {consents.map((consent) => {
+            return <ConsentText consent={consent} />
+          })}
+        </>
+      )}
+    </div>
   )
 }
 
-const ConsentDetails = ({ contact }) => (
-  <SummaryTable data-test="contact-consent-table" caption={'Contact consents'}>
-    {contact.consentData ? (
-      getConsentRows(contact.consentData)
-    ) : (
-      <Table.Row data-test="no-contact-consents">
-        <Table.Cell>No consent data is available for this contact</Table.Cell>
-      </Table.Row>
-    )}
-  </SummaryTable>
-)
 export default ConsentDetails
