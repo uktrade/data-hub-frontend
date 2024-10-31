@@ -41,6 +41,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
   ['strategic_drivers']: STAGE.PROSPECT_ID,
   ['client_requirements']: STAGE.INITIAL_ID,
+  ['investment_type']: STAGE.INITIAL_ID,
   ['client_considering_other_countries']: STAGE.ASSIGN_PM_ID,
   ['project_manager']: STAGE.ACTIVE_ID,
   ['project_assurance_adviser']: STAGE.ACTIVE_ID,
@@ -52,18 +53,18 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
   ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
   ['export_revenue']: STAGE.VERIFY_WIN_ID,
-  ['site_decided']: STAGE.ACTIVE_ID, // is required to be Yes from verify win.
+  ['site_decided']: STAGE.ACTIVE_ID,
   ['address_1']: STAGE.VERIFY_WIN_ID,
   ['address_town']: STAGE.VERIFY_WIN_ID,
   ['address_postcode']: STAGE.VERIFY_WIN_ID,
   ['actual_uk_regions']: STAGE.ACTIVE_ID,
   ['delivery_partners']: STAGE.ACTIVE_ID,
-  ['actual_land_date']: STAGE.ASSIGN_PM_ID,
+  ['actual_land_date']: STAGE.ACTIVE_ID,
   ['specific_programmes']: STAGE.ASSIGN_PM_ID,
   ['uk_company']: STAGE.VERIFY_WIN_ID,
   ['investor_type']: STAGE.ASSIGN_PM_ID,
   ['level_of_involvement']: STAGE.ASSIGN_PM_ID,
-  ['likelihood_to_land']: STAGE.ACTIVE_ID,
+  ['likelihood_to_land']: STAGE.ASSIGN_PM_ID,
 }
 
 export const STAGE_OPTIONS = [

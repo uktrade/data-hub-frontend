@@ -40,6 +40,7 @@ import { validateIfDateInPast } from '../../../components/Form/validators'
 import { FDI_TYPES } from './constants'
 import {
   isFieldOptionalForStageLabel,
+  isFieldRequiredForStage,
   validateFieldForStage,
 } from './validators'
 
@@ -325,12 +326,12 @@ export const FieldActualLandDate = ({ initialValue = null, project }) => (
     validate={(values, field, formFields) => {
       let result = validateIfDateInPast(values)
       if (!result) {
-        result = validateFieldForStage(
-          field,
-          formFields,
-          project,
-          'Select a likelihood of landing value'
-        )
+        return (!formFields.values[field.name].day ||
+          !formFields.values[field.name].month ||
+          !formFields.values[field.name].year) &&
+          isFieldRequiredForStage(field.name, project)
+          ? 'Enter an actual land date'
+          : null
       }
       return result
     }}
