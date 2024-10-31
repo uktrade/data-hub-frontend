@@ -215,7 +215,7 @@ describe('Field validation for each stage', () => {
 
   describe('Edit requirements and location', () => {
     const stageRequiredFields = [
-      [INVESTMENT_PROJECT_STAGES.prospect, [FIELDS.CLIENT_REQUIREMENTS], false],
+      [INVESTMENT_PROJECT_STAGES.prospect, [], false],
       [
         INVESTMENT_PROJECT_STAGES.assignPm,
         [
