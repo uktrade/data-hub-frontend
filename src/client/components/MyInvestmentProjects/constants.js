@@ -59,7 +59,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['address_postcode']: STAGE.VERIFY_WIN_ID,
   ['actual_uk_regions']: STAGE.ACTIVE_ID,
   ['delivery_partners']: STAGE.ACTIVE_ID,
-  ['actual_land_date']: STAGE.ACTIVE_ID,
+  ['actual_land_date']: STAGE.ASSIGN_PM_ID,
   ['specific_programmes']: STAGE.ASSIGN_PM_ID,
   ['uk_company']: STAGE.VERIFY_WIN_ID,
   ['investor_type']: STAGE.ASSIGN_PM_ID,

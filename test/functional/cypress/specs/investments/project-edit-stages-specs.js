@@ -144,6 +144,7 @@ describe('Field validation for each stage', () => {
           FIELDS.SPECIFIC_PROGRAMMES,
           FIELDS.REFERRAL_SOURCE_ACTIVITY,
           FIELDS.LIKELIHOOD_TO_LAND, // Required in API at active stage
+          FIELDS.ACTUAL_LAND_DATE,
         ],
       ],
       [
