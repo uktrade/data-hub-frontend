@@ -96,7 +96,16 @@ const investmentProjectEmptyFaker = (overrides = {}) =>
   investmentProjectFaker({
     stage: INVESTMENT_PROJECT_STAGES.prospect,
     uk_region_locations: null,
-
+    name: null,
+    description: null,
+    sector: null,
+    BUSINESS_ACTIVITIES: null,
+    client_contacts: null,
+    referral_source_adviser: null,
+    estimated_land_date: null,
+    referral_source_activity: null,
+    anonymous_description: null,
+    other_business_activity: null,
     client_cannot_provide_total_investment: null,
     strategic_drivers: null,
     client_requirements: null,
