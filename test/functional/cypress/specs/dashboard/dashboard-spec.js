@@ -26,7 +26,7 @@ describe('Dashboard', () => {
     })
 
     it('should display the correct heading', () => {
-      cy.get('@dataHubFeed').find('h3').should('have.text', '"What\'s new"')
+      cy.get('@dataHubFeed').find('h3').should('have.text', "What's new?")
     })
 
     it('should display the info feed list', () => {
