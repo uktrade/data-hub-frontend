@@ -27,7 +27,7 @@ import Tag from '../../../components/Tag'
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
 export const transformArrayForTypeahead = (array) =>
-  array
+  array && array.length
     ? array.map((value) => ({
         label: value.name,
         value: value.id,
@@ -44,16 +44,16 @@ export const transformAndFilterArrayForTypeahead = (array) => {
   }))
 }
 
-export const transformObjectForTypeahead = (object) =>
+export const transformObjectForTypeahead = (
+  object,
+  emptyValue = { label: '', value: '' }
+) =>
   object
     ? {
         label: object.name,
         value: object.id,
       }
-    : {
-        label: '',
-        value: '',
-      }
+    : emptyValue
 
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
