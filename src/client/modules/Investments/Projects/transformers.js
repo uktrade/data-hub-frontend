@@ -44,16 +44,16 @@ export const transformAndFilterArrayForTypeahead = (array) => {
   }))
 }
 
-export const transformObjectForTypeahead = (object) =>
+export const transformObjectForTypeahead = (
+  object,
+  emptyValue = { label: '', value: '' }
+) =>
   object
     ? {
         label: object.name,
         value: object.id,
       }
-    : {
-        label: '',
-        value: '',
-      }
+    : emptyValue
 
 export const transformObjectForTypeaheadInitialValue = (object) =>
   object

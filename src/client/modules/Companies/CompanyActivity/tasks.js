@@ -59,6 +59,8 @@ export const getCompanyActivities = ({
   policy_issue_types,
   company_one_list_group_tier,
   dit_participants__team,
+  include_parent_companies,
+  include_subsidiary_companies,
 }) =>
   apiProxyAxios
     .post('/v4/search/company-activity', {
@@ -77,5 +79,7 @@ export const getCompanyActivities = ({
       policy_issue_types,
       company_one_list_group_tier,
       dit_participants__team,
+      include_parent_companies,
+      include_subsidiary_companies,
     })
     .then(({ data }) => transformResponseToCollection(data))

@@ -5,6 +5,7 @@ import {
 import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { clickButton } from '../../support/actions'
+import { INVESTMENT_PROJECT_FORM_VALIDATION } from './constants'
 
 const urls = require('../../../../../src/lib/urls')
 
@@ -138,7 +139,7 @@ describe('Editing the project summary', () => {
         assertFieldTypeahead({
           element,
           label: 'Business activities',
-          placeholder: 'Choose a business activity',
+          placeholder: INVESTMENT_PROJECT_FORM_VALIDATION.BUSINESS_ACTIVITY,
         })
       })
     })
@@ -158,7 +159,7 @@ describe('Editing the project summary', () => {
         assertFieldTypeahead({
           element,
           label: 'Client contact details',
-          placeholder: 'Choose a client contact',
+          placeholder: INVESTMENT_PROJECT_FORM_VALIDATION.CLIENT_CONTACT,
           value: 'Dean Cox',
         })
       })
@@ -195,7 +196,8 @@ describe('Editing the project summary', () => {
         assertFieldSelect({
           element,
           label: 'Referral source activity',
-          placeholder: 'Choose a referral source activity',
+          placeholder:
+            INVESTMENT_PROJECT_FORM_VALIDATION.REFERRAL_SOURCE_ACTIVITY,
           value: 'None',
           optionsCount: 53,
         })

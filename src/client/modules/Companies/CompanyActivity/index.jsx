@@ -182,6 +182,12 @@ const CompanyActivityCollectionNoAS = ({
                     }
                   />
                 )}
+                <Filters.RelatedCompaniesCheckboxGroup
+                  company={company}
+                  selectedOptions={
+                    selectedFilters.includeRelatedCompanies.options
+                  }
+                />
                 <FilterToggleSection
                   id="CompanyActivityCollection.interaction-details-filters"
                   label="Interaction details"
