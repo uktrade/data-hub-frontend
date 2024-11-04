@@ -168,10 +168,11 @@ describe('Company Activity Feed Filter', () => {
       })
     })
 
-    context.skip('Include related companies filter', () => {
+    context('Include related companies filter', () => {
       const companyActivitiesEndPoint =
         urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
         '/data**'
+      const searchEndpoint = '/api-proxy/v4/search/company-activity'
       const urlQuery = `?size=10&from=0&sortby=date:desc&include_related_companies[0]=include_parent_companies&include_related_companies[1]=include_subsidiary_companies`
       const expectedRequestUrl = `?size=10&from=0&sortby=date:desc&include_parent_companies=true&include_subsidiary_companies=true`
 
@@ -251,6 +252,48 @@ describe('Company Activity Feed Filter', () => {
         cy.wait('@relatedCompaniesApiRequest')
         assertRequestUrl('@apiRequest', expectedRequestUrl)
         cy.get(relatedCompaniesFilter).should('be.checked')
+      })
+
+      it('should show expected options', () => {
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.dnbGlobalUltimate.id
+          )}${urlQuery}`
+        )
+        cy.get('[data-test="include-related-companies-filter"]').should(
+          'be.visible'
+        )
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Related companies')
+          .click()
+        cy.get('[data-test="include-related-companies-filter"]').should(
+          'not.be.visible'
+        )
+
+        it('should filter from the url', () => {
+          cy.intercept('POST', searchEndpoint).as('apiRequest')
+          cy.visit(
+            `${urls.companies.activity.index(
+              fixtures.company.dnbGlobalUltimate.id
+            )}${urlQuery}`
+          )
+          assertPayload('@apiRequest', {
+            limit: 10,
+            offset: 0,
+            company: fixtures.company.dnbGlobalUltimate.id,
+            sortby: 'date:desc',
+            include_parent_companies: true,
+            include_subsidiary_companies: true,
+          })
+          assertChipExists({
+            label: 'Parent companies',
+            position: 1,
+          })
+          assertChipExists({
+            label: 'Subsidiary companies',
+            position: 2,
+          })
+        })
       })
     })
   })
