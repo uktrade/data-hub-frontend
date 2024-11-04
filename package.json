@@ -92,7 +92,7 @@
     "element-closest": "^3.0.2",
     "express": "^4.21.0",
     "express-minify-html-2": "^2.0.0",
-    "express-session": "^1.17.3",
+    "express-session": "^1.18.1",
     "express-sslify": "^1.2.0",
     "follow-redirects": ">=1.15.9",
     "get-form-data": "^3.0.0",
