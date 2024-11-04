@@ -5,7 +5,6 @@ import {
   assertChipsEmpty,
   assertFieldEmpty,
   assertTypeaheadOptionSelected,
-  assertRequestUrl,
   assertDateInput,
   assertPayload,
 } from '../../support/assertions'
@@ -37,6 +36,8 @@ const buildQueryString = (queryParams = {}) =>
 const minimumRequest = {
   limit: 10,
   offset: 0,
+  include_parent_companies: false,
+  include_subsidiary_companies: false,
   company: fixtures.company.allActivitiesCompany.id,
   sortby: 'date:desc',
 }
@@ -78,6 +79,8 @@ describe('Company Activity Feed Filter', () => {
           offset: 0,
           dit_participants__adviser: [adviser.id],
           company: fixtures.company.allActivitiesCompany.id,
+          include_parent_companies: false,
+          include_subsidiary_companies: false,
           sortby: 'date:desc',
         })
 
@@ -99,6 +102,8 @@ describe('Company Activity Feed Filter', () => {
         company: fixtures.company.allActivitiesCompany.id,
         date_after: dateAfter,
         date_before: dateBefore,
+        include_parent_companies: false,
+        include_subsidiary_companies: false,
         sortby: 'date:desc',
       }
       it('should filter from the url', () => {
@@ -156,6 +161,8 @@ describe('Company Activity Feed Filter', () => {
           offset: 0,
           company: fixtures.company.allActivitiesCompany.id,
           date_before: dateBefore,
+          include_parent_companies: false,
+          include_subsidiary_companies: false,
           sortby: 'date:desc',
         }
         cy.wait('@apiRequest')
@@ -168,12 +175,8 @@ describe('Company Activity Feed Filter', () => {
       })
     })
 
-    context.skip('Include related companies filter', () => {
-      const companyActivitiesEndPoint =
-        urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id) +
-        '/data**'
+    context('Include related companies filter', () => {
       const urlQuery = `?size=10&from=0&sortby=date:desc&include_related_companies[0]=include_parent_companies&include_related_companies[1]=include_subsidiary_companies`
-      const expectedRequestUrl = `?size=10&from=0&sortby=date:desc&include_parent_companies=true&include_subsidiary_companies=true`
 
       it('Should render the subsidiary companies option disabled when related companies large', () => {
         cy.intercept(
@@ -183,11 +186,10 @@ describe('Company Activity Feed Filter', () => {
           )}?include_manually_linked_companies=true`,
           { reduced_tree: true, related_companies_count: 2000, total: 2000 }
         ).as('relatedCompaniesApiRequest')
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
           urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
         )
-        cy.wait('@apiRequest')
 
         cy.get(relatedCompaniesFilter).eq(0).should('not.be.disabled')
         cy.get(relatedCompaniesFilter).eq(1).should('be.disabled')
@@ -201,7 +203,7 @@ describe('Company Activity Feed Filter', () => {
           )}?include_manually_linked_companies=true`,
           { reduced_tree: false, related_companies_count: 1, total: 1 }
         ).as('relatedCompaniesApiRequest')
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
           urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
         )
@@ -220,37 +222,66 @@ describe('Company Activity Feed Filter', () => {
           )}?include_manually_linked_companies=true`,
           { reduced_tree: false, related_companies_count: 1, total: 1 }
         ).as('relatedCompaniesApiRequest')
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
         cy.visit(
           urls.companies.activity.index(fixtures.company.dnbGlobalUltimate.id)
         )
-
-        assertRequestUrl('@apiRequest', minimumRequest)
-
+        assertPayload('@apiRequest', {
+          ...minimumRequest,
+          company: fixtures.company.dnbGlobalUltimate.id,
+        })
         cy.get(relatedCompaniesFilter).click({
           multiple: true,
         })
         cy.wait('@apiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestUrl)
+        assertPayload('@apiRequest', {
+          ...minimumRequest,
+          company: fixtures.company.dnbGlobalUltimate.id,
+          include_parent_companies: true,
+          include_subsidiary_companies: true,
+        })
       })
 
-      it('should set filter from url', () => {
-        cy.intercept(
-          'GET',
-          `/api-proxy${urls.companies.dnbHierarchy.relatedCompaniesCount(
-            fixtures.company.dnbGlobalUltimate.id
-          )}?include_manually_linked_companies=true`,
-          { reduced_tree: false, related_companies_count: 1, total: 1 }
-        ).as('relatedCompaniesApiRequest')
-        cy.intercept('GET', companyActivitiesEndPoint).as('apiRequest')
+      it('should show expected options', () => {
         cy.visit(
           `${urls.companies.activity.index(
             fixtures.company.dnbGlobalUltimate.id
           )}${urlQuery}`
         )
-        cy.wait('@relatedCompaniesApiRequest')
-        assertRequestUrl('@apiRequest', expectedRequestUrl)
-        cy.get(relatedCompaniesFilter).should('be.checked')
+        cy.get('[data-test="include-related-companies-filter"]').should(
+          'be.visible'
+        )
+        cy.get('[data-test="toggle-section-button"]')
+          .contains('Related companies')
+          .click()
+        cy.get('[data-test="include-related-companies-filter"]').should(
+          'not.be.visible'
+        )
+
+        it('should filter from the url', () => {
+          cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
+          cy.visit(
+            `${urls.companies.activity.index(
+              fixtures.company.dnbGlobalUltimate.id
+            )}${urlQuery}`
+          )
+          assertPayload('@apiRequest', {
+            limit: 10,
+            offset: 0,
+            company: fixtures.company.dnbGlobalUltimate.id,
+            sortby: 'date:desc',
+            include_parent_companies: true,
+            include_subsidiary_companies: true,
+          })
+          assertChipExists({
+            label: 'Parent companies',
+            position: 1,
+          })
+          assertChipExists({
+            label: 'Subsidiary companies',
+            position: 2,
+          })
+        })
       })
     })
   })
