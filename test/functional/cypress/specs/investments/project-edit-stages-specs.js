@@ -1,4 +1,3 @@
-=======
 import { INVESTMENT_PROJECT_FORM_VALIDATION } from './constants'
 
 const urls = require('../../../../../src/lib/urls')
@@ -150,8 +149,6 @@ describe('Field validation for each stage', () => {
       [
         INVESTMENT_PROJECT_STAGES.prospect,
         [
-          FIELDS.NAME,
-          FIELDS.DESCRIPTION,
           // Sector and investment_type can't be null, but should always be set at this stage.
           // Cypress doesn't pick up null value for the above.
           FIELDS.NAME,
