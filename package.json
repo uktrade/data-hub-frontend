@@ -106,7 +106,7 @@
     "joi": "^17.13.1",
     "lodash": "^4.17.21",
     "markdown-it": "^14.0.0",
-    "mini-css-extract-plugin": "^2.9.1",
+    "mini-css-extract-plugin": "^2.9.2",
     "morgan": "^1.10.0",
     "numeral": "^2.0.6",
     "nunjucks": "^3.2.4",
