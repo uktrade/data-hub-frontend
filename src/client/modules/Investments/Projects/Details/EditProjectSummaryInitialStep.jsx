@@ -31,7 +31,6 @@ import {
   transformObjectForTypeahead,
   transformArrayForTypeahead,
   transformRadioOptionToBool,
-  transformObjectForTypeaheadInitialValue,
 } from '../transformers'
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'

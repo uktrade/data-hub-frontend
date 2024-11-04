@@ -55,14 +55,6 @@ export const transformObjectForTypeahead = (
       }
     : emptyValue
 
-export const transformObjectForTypeaheadInitialValue = (object) =>
-  object
-    ? {
-        label: object.name,
-        value: object.id,
-      }
-    : null
-
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
 
