@@ -14,18 +14,13 @@ export const PROJECT_STATUS_OPTIONS = [
 ]
 
 export const INITIAL_ID = null
-export const PROSPECT_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
-export const ASSIGN_PM_ID = 'c9864359-fb1a-4646-a4c1-97d10189fc03'
-export const ACTIVE_ID = '7606cc19-20da-4b74-aba1-2cec0d753ad8'
-export const VERIFY_WIN_ID = '49b8f6f3-0c50-4150-a965-2c974f3149e3'
-export const WON_ID = '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
 
 export const STAGE = {
-  PROSPECT_ID,
-  ASSIGN_PM_ID,
-  ACTIVE_ID,
-  VERIFY_WIN_ID,
-  WON_ID,
+  PROSPECT_ID: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+  ASSIGN_PM_ID: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+  ACTIVE_ID: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+  VERIFY_WIN_ID: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+  WON_ID: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
 }
 
 export const STAGE_ID_TO_INDEX_MAP = {
@@ -38,6 +33,7 @@ export const STAGE_ID_TO_INDEX_MAP = {
 }
 
 export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
+  // TODO verify that all fields below have validation implemented if not remove
   ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
   ['strategic_drivers']: STAGE.PROSPECT_ID,
   ['client_requirements']: STAGE.PROSPECT_ID,

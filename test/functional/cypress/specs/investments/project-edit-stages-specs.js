@@ -1,3 +1,5 @@
+import { INVESTMENT_PROJECT_FORM_VALIDATION } from './constants'
+
 const urls = require('../../../../../src/lib/urls')
 const {
   investmentProjectEmptyFaker,
@@ -8,39 +10,35 @@ export const FIELDS = {
   // Update investment project summary
   NAME: {
     name: 'name',
-    message: 'Enter a project name',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.PROJECT_NAME,
   },
   DESCRIPTION: {
     name: 'description',
-    message: 'Enter a project description',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.PROJECT_DESCRIPTION,
   },
   SECTOR: {
     name: 'sector',
-    message: 'Choose a primary sector',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.PRIMARY_SECTOR,
   },
   BUSINESS_ACTIVITIES: {
     name: 'business_activities',
-    message: 'Choose a business activity',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.BUSINESS_ACTIVITY,
   },
   CLIENT_CONTACTS: {
     name: 'client_contacts',
-    message: 'Choose a client contact',
-  },
-  REFERRAL_SOURCE_ADVISER: {
-    name: 'referral_source_adviser',
-    message: "Select yes if you're the referral source for this project",
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.CLIENT_CONTACT,
   },
   IS_REFERRAL_SOURCE: {
     name: 'is_referral_source',
-    message: "Select yes if you're the referral source for this project",
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.IS_REFERRAL_SOURCE,
   },
   ESTIMATED_LAND_DATE: {
     name: 'estimated_land_date',
-    message: 'Enter an estimated land date',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.ESTIMATED_LANDDATE,
   },
   REFERRAL_SOURCE_ACTIVITY: {
     name: 'referral_source_activity',
-    message: 'Choose a referral source activity',
+    message: INVESTMENT_PROJECT_FORM_VALIDATION.REFERRAL_SOURCE_ACTIVITY,
   },
   INVESTOR_TYPE: {
     name: 'investor_type',
@@ -108,18 +106,15 @@ describe('Field validation for each stage', () => {
       [
         INVESTMENT_PROJECT_STAGES.prospect,
         [
+          // Sector and investment_type can't be null, but should always be set at this stage.
+          // Cypress doesn't pick up null value for the above.
           FIELDS.NAME,
           FIELDS.DESCRIPTION,
-          // FIELDS.SECTOR, // Cypress doesn't pick up null value.
-          // FIELDS.REFERRAL_SOURCE_ACTIVITY,
           FIELDS.BUSINESS_ACTIVITIES,
           FIELDS.CLIENT_CONTACTS,
           FIELDS.IS_REFERRAL_SOURCE,
           FIELDS.ESTIMATED_LAND_DATE,
-
-          // FIELDS.REFERRAL_SOURCE_ADVISER, // required when IS_REFERRAL_SOURCE = No
           FIELDS.REFERRAL_SOURCE_ACTIVITY,
-          // investment_type can't be null, but should always be set at this stage.
         ],
       ],
       [

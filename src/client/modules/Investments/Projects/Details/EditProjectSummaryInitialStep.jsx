@@ -31,7 +31,6 @@ import {
   transformObjectForTypeahead,
   transformArrayForTypeahead,
   transformRadioOptionToBool,
-  transformObjectForTypeaheadInitialValue,
 } from '../transformers'
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
@@ -173,8 +172,9 @@ const EditProjectSummaryInitialStep = ({
       />
       <FieldLikelihoodOfLanding
         autoScroll={!!autoScroll}
-        initialValue={transformObjectForTypeaheadInitialValue(
-          project.likelihoodToLand
+        initialValue={transformObjectForTypeahead(
+          project.likelihoodToLand,
+          null
         )}
         project={project}
       />
@@ -190,8 +190,9 @@ const EditProjectSummaryInitialStep = ({
         />
       ) : null}
       <FieldLevelOfInvolvement
-        initialValue={transformObjectForTypeaheadInitialValue(
-          project.levelOfInvolvement
+        initialValue={transformObjectForTypeahead(
+          project.levelOfInvolvement,
+          null
         )}
         project={project}
       />

@@ -44,24 +44,16 @@ export const transformAndFilterArrayForTypeahead = (array) => {
   }))
 }
 
-export const transformObjectForTypeahead = (object) =>
+export const transformObjectForTypeahead = (
+  object,
+  emptyValue = { label: '', value: '' }
+) =>
   object
     ? {
         label: object.name,
         value: object.id,
       }
-    : {
-        label: '',
-        value: '',
-      }
-
-export const transformObjectForTypeaheadInitialValue = (object) =>
-  object
-    ? {
-        label: object.name,
-        value: object.id,
-      }
-    : null
+    : emptyValue
 
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
