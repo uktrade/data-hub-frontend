@@ -118,6 +118,10 @@ export const FIELDS = {
     name: 'number_new_jobs',
     message: 'Value for number of new jobs is required',
   },
+  AVERAGE_SALARY: {
+    name: 'average_salary',
+    message: 'Value for average salary of new jobs is required',
+  },
   NUMBER_SAFEGUARDED_JOBS: {
     name: 'number_safeguarded_jobs',
     message: 'Value for number of safeguarded jobs is required',
@@ -375,6 +379,7 @@ describe('Field validation for each stage', () => {
           FIELDS.NEW_TECH_TO_UK,
           FIELDS.NON_FDI_R_AND_D_BUDGET,
           FIELDS.NUMBER_NEW_JOBS,
+          FIELDS.AVERAGE_SALARY,
           FIELDS.NUMBER_SAFEGUARDED_JOBS,
           FIELDS.R_AND_D_BUDGET,
         ],
@@ -389,6 +394,7 @@ describe('Field validation for each stage', () => {
           FIELDS.NEW_TECH_TO_UK,
           FIELDS.NON_FDI_R_AND_D_BUDGET,
           FIELDS.NUMBER_NEW_JOBS,
+          FIELDS.AVERAGE_SALARY,
           FIELDS.NUMBER_SAFEGUARDED_JOBS,
           FIELDS.R_AND_D_BUDGET,
         ],

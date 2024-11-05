@@ -41,6 +41,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['client_cannot_provide_foreign_investment']: STAGE.ACTIVE_ID,
   ['government_assistance']: STAGE.ACTIVE_ID,
   ['number_new_jobs']: STAGE.ACTIVE_ID,
+  ['average_salary']: STAGE.ACTIVE_ID,
   ['number_safeguarded_jobs']: STAGE.ACTIVE_ID,
   ['r_and_d_budget']: STAGE.ACTIVE_ID,
   ['non_fdi_r_and_d_budget']: STAGE.ACTIVE_ID,

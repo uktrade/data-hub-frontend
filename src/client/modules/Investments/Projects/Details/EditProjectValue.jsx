@@ -243,7 +243,10 @@ const EditProjectValue = () => {
                     )}
                   <ResourceOptionsField
                     name="average_salary"
-                    label="Average salary of new jobs"
+                    label={
+                      'Average salary of new jobs' +
+                      isFieldOptionalForStageLabel('average_salary', project)
+                    }
                     resource={SalaryRangeResource}
                     field={FieldRadios}
                     initialValue={project.averageSalary?.id}
@@ -257,6 +260,14 @@ const EditProjectValue = () => {
                         )
                       )
                     }
+                    validate={(values, field, formFields) => {
+                      return validateFieldForStage(
+                        field,
+                        formFields,
+                        project,
+                        'Value for average salary of new jobs is required'
+                      )
+                    }}
                   />
                   <FieldInput
                     name="number_safeguarded_jobs"
