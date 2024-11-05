@@ -261,6 +261,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="submit-button"]').click()
         assertErrorSummary([
           'Value for number of new jobs is required',
+          'Value for average salary of new jobs is required',
           'Value for number of safeguarded jobs is required',
           'Enter the total investment',
           'Enter the capital expenditure',
@@ -911,6 +912,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="submit-button"]').click()
         assertErrorSummary([
           'Value for number of new jobs is required',
+          'Value for average salary of new jobs is required',
           'Value for number of safeguarded jobs is required',
           'Enter the total investment',
           'Enter the capital expenditure',
