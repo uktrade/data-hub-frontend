@@ -84,6 +84,9 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
+      {investment.eybLeads?.length && (
+        <MetaListItem text="Generated from">EYB lead</MetaListItem>
+      )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
       <Timeline
