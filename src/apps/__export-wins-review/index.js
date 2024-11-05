@@ -1,4 +1,4 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const { legacyCreateProxyMiddleware } = require('http-proxy-middleware')
 
 const config = require('../../config')
 
@@ -7,7 +7,7 @@ module.exports = (app) => {
   // any other authorization and we don't want any cookie to be set
   app.use(
     '/api-proxy/v4/export-win/review/',
-    createProxyMiddleware({
+    legacyCreateProxyMiddleware({
       target: config.apiRoot,
       changeOrigin: true,
       pathRewrite: {

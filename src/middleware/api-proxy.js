@@ -1,4 +1,4 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const { legacyCreateProxyMiddleware } = require('http-proxy-middleware')
 
 const config = require('../config')
 const getZipkinHeaders = require('../lib/get-zipkin-headers')
@@ -95,7 +95,7 @@ const ALLOWLIST = [
 module.exports = (app) => {
   app.use(
     ALLOWLIST.map((apiPath) => API_PROXY_PATH + apiPath),
-    createProxyMiddleware('/', {
+    legacyCreateProxyMiddleware('/', {
       changeOrigin: true,
       target: config.apiRoot,
       pathRewrite: {
