@@ -14,6 +14,8 @@ import DataHubHeader from '../DataHubHeader'
 import WatchTextContent from '../WatchTextContent'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 
+import { StatusMessageHeader } from '../StatusMessageHeader'
+
 import { EYBLeadResource } from '../../../client/components/Resource'
 import { buildEYBLeadBreadcrumbs } from '../../modules/Investments/utils'
 import EYBLeadName from '../../modules/Investments/EYBLeads/EYBLeadName'
@@ -109,6 +111,7 @@ const EYBLeadLayout = ({ id, children }) => {
                       )
                     )}
                   </BreadcrumbsWrapper>
+                  {eybLead.investmentProjects.length && <StatusMessageHeader />}
                   <GridRow>
                     <GridCol setWidth="two-thirds">
                       <StyledSuperheading data-test="superheading">
