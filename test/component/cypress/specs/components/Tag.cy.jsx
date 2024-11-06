@@ -1,8 +1,27 @@
 import React from 'react'
 
 import Tag from '../../../../../src/client/components/Tag'
+import { rgb } from '../../../../../src/client/utils/colours'
 
 const Component = (props) => <Tag {...props} data-test="tag" />
+
+const assertTagColours = ({ colourName, colour, backgroundColour }) => {
+  context(`When the colour is set to ${colourName}`, () => {
+    beforeEach(() => {
+      cy.mount(<Component colour={colourName}>Test</Component>)
+    })
+
+    it('should render the text', () => {
+      cy.get('[data-test=tag]').should('exist').should('have.text', 'Test')
+    })
+
+    it('should render with the correct colours', () => {
+      cy.get('[data-test=tag]')
+        .should('have.css', 'color', rgb(colour))
+        .should('have.css', 'background-color', rgb(backgroundColour))
+    })
+  })
+}
 
 describe('Tag', () => {
   context('When the colour prop is not set', () => {
@@ -14,44 +33,74 @@ describe('Tag', () => {
       cy.get('[data-test=tag]').should('exist').should('have.text', 'Test')
     })
 
-    it('should render with the default colours', () => {
+    it('should render with the blue default colours', () => {
       cy.get('[data-test=tag]')
-        .should('have.css', 'color', 'rgb(255, 255, 255)')
-        .should('have.css', 'background-color', 'rgb(29, 112, 184)')
+        .should('have.css', 'color', rgb('#0c2d4a'))
+        .should('have.css', 'background-color', rgb('#bbd4ea'))
     })
   })
 
   context('When the colour prop is set', () => {
-    assertTagColours('grey', 'rgb(69, 74, 77)', 'rgb(239, 240, 241)')
-    assertTagColours('green', 'rgb(0, 90, 48)', 'rgb(204, 226, 216)')
-    assertTagColours('turquoise', 'rgb(16, 64, 60)', 'rgb(191, 227, 224)')
-    assertTagColours('blue', 'rgb(20, 78, 129)', 'rgb(210, 226, 241)')
-    assertTagColours('purple', 'rgb(61, 35, 117)', 'rgb(219, 213, 233)')
-    assertTagColours('pink', 'rgb(128, 34, 77)', 'rgb(247, 215, 230)')
-    assertTagColours('red', 'rgb(148, 37, 20)', 'rgb(246, 215, 210)')
-    assertTagColours('orange', 'rgb(110, 54, 25)', 'rgb(252, 214, 195)')
-    assertTagColours('yellow', 'rgb(89, 77, 0)', 'rgb(255, 247, 191)')
+    assertTagColours({
+      colourName: 'grey',
+      colour: '#282d30',
+      backgroundColour: '#e5e6e7',
+    })
+
+    assertTagColours({
+      colourName: 'green',
+      colour: '#005a30',
+      backgroundColour: '#cce2d8',
+    })
+    assertTagColours({
+      colourName: 'turquoise',
+      colour: '#10403c',
+      backgroundColour: '#d4ecea',
+    })
+    assertTagColours({
+      colourName: 'blue',
+      colour: '#0c2d4a',
+      backgroundColour: '#bbd4ea',
+    })
+    assertTagColours({
+      colourName: 'lightBlue',
+      colour: '#0c2d4a',
+      backgroundColour: '#e8f1f8',
+    })
+    assertTagColours({
+      colourName: 'purple',
+      colour: '#491644',
+      backgroundColour: '#efdfed',
+    })
+    assertTagColours({
+      colourName: 'pink',
+      colour: '#6b1c40',
+      backgroundColour: '#f9e1ec',
+    })
+    assertTagColours({
+      colourName: 'red',
+      colour: '#2a0b06',
+      backgroundColour: '#f4cdc6',
+    })
+    assertTagColours({
+      colourName: 'orange',
+      colour: '#6e3619',
+      backgroundColour: '#fcd6c3',
+    })
+    assertTagColours({
+      colourName: 'yellow',
+      colour: '#594d00',
+      backgroundColour: '#fff7bf',
+    })
+    assertTagColours({
+      colourName: 'darkGreen',
+      colour: '#ffffff',
+      backgroundColour: '#10403c',
+    })
+    assertTagColours({
+      colourName: 'govBlue',
+      colour: '#ffffff',
+      backgroundColour: '#1d70b8',
+    })
   })
 })
-
-function assertTagColours(
-  colour,
-  expectedTextColour,
-  expectedBackgroundColour
-) {
-  context(`When the colour is set to ${colour}`, () => {
-    beforeEach(() => {
-      cy.mount(<Component colour={colour}>Test</Component>)
-    })
-
-    it('should render the text', () => {
-      cy.get('[data-test=tag]').should('exist').should('have.text', 'Test')
-    })
-
-    it('should render with the correct colours', () => {
-      cy.get('[data-test=tag]')
-        .should('have.css', 'color', expectedTextColour)
-        .should('have.css', 'background-color', expectedBackgroundColour)
-    })
-  })
-}
