@@ -1,3 +1,4 @@
+import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 import { clickButton } from '../../support/actions'
 
 const {
@@ -31,6 +32,7 @@ const setup = (project) => {
 
 const setupProjectFaker = (overrides) =>
   investmentProjectFaker({
+    stage: INVESTMENT_PROJECT_STAGES.verifyWin,
     created_on: '2020-06-07T10:00:00Z',
     actual_land_date: null,
     estimated_land_date: null,
@@ -258,6 +260,9 @@ describe('Edit the value details of a project', () => {
 
         cy.get('[data-test="submit-button"]').click()
         assertErrorSummary([
+          'Value for number of new jobs is required',
+          'Value for average salary of new jobs is required',
+          'Value for number of safeguarded jobs is required',
           'Enter the total investment',
           'Enter the capital expenditure',
         ])
@@ -906,6 +911,9 @@ describe('Edit the value details of a project', () => {
 
         cy.get('[data-test="submit-button"]').click()
         assertErrorSummary([
+          'Value for number of new jobs is required',
+          'Value for average salary of new jobs is required',
+          'Value for number of safeguarded jobs is required',
           'Enter the total investment',
           'Enter the capital expenditure',
         ])
@@ -1396,6 +1404,7 @@ describe('Edit the value details of a project', () => {
   context('Number of jobs error handling', () => {
     context('When editing an expansion project', () => {
       const expansionProject = setupProjectFaker({
+        stage: INVESTMENT_PROJECT_STAGES.active,
         fdi_type: {
           name: 'Expansion of existing site or activity',
           id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
@@ -1433,6 +1442,7 @@ describe('Edit the value details of a project', () => {
     context('When editing an non expansion project', () => {
       it('should not show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
         const nonFdiProject = setupProjectFaker({
+          stage: INVESTMENT_PROJECT_STAGES.active,
           investment_type: {
             name: 'non-FDI',
             id: '3d2c94e4-7871-465c-a7f7-45651eeffc64',
@@ -1449,7 +1459,9 @@ describe('Edit the value details of a project', () => {
         assertNotExists('[data-test="summary-form-errors"]')
       })
       it('should not show an error or hint text if number of new jobs is empty and it is not an expansion FDI project', () => {
-        const nonExpansionFdiProject = setupProjectFaker()
+        const nonExpansionFdiProject = setupProjectFaker({
+          stage: INVESTMENT_PROJECT_STAGES.active,
+        })
         setup(nonExpansionFdiProject)
         cy.get('[data-test="field-number_new_jobs"]').should(
           'not.contain',
