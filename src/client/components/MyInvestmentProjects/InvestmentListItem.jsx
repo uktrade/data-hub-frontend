@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
+import { capitalize } from 'lodash'
 import {
   MEDIA_QUERIES,
   SPACING,
@@ -19,7 +20,7 @@ import InvestmentTimeline from './InvestmentTimeline'
 import InvestmentDetails from './InvestmentDetails'
 import InvestmentNextSteps from './InvestmentNextSteps'
 import { NoHighlightToggleSection } from '../ToggleSection'
-import Tag from '../Tag'
+import Tag, { TAG_COLOURS } from '../Tag'
 
 const Row = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
@@ -172,11 +173,11 @@ const InvestmentListItem = ({
         </ListItemTagRow>
         <ListItemTagRow>
           <Tag
-            colour="grey"
+            colour={TAG_COLOURS.GREY}
             data-test="project-status-tag"
             aria-label="project status"
           >
-            {status}
+            {capitalize(status)}
           </Tag>
         </ListItemTagRow>
       </ListItemTags>
