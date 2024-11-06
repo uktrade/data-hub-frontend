@@ -1,23 +1,58 @@
 /**
- * Convert a color hex to an rgb value
+ * Converts a hex colour code to an RGB object.
  *
- * Note that this currently only works with 6 digit hexes.
+ * @param {string} hex - The hex colour code, with or without a leading '#'.
+ * @returns {Object} An object with the red, green, and blue colour values.
+ * @throws {Error} If the hex colour code is not valid (i.e., not 6 characters).
+ *
+ * @example
+ * hexToRgb('#3498db') // returns { r: 52, g: 152, b: 219 }
+ * hexToRgb('3498db')   // returns { r: 52, g: 152, b: 219 }
  */
-export const hexToRgb = (colorHex) => {
-  const colorValue = parseInt(colorHex.replace('#', ''), 16)
-  return [
-    (colorValue >> 16) & 255,
-    (colorValue >> 8) & 255,
-    colorValue & 255,
-  ].join()
+
+export const hexToRgb = (hex) => {
+  const cleanHex = hex.replace(/^#/, '')
+
+  if (cleanHex.length !== 6) {
+    throw new Error('Invalid hex colour')
+  }
+
+  const r = parseInt(cleanHex.slice(0, 2), 16)
+  const g = parseInt(cleanHex.slice(2, 4), 16)
+  const b = parseInt(cleanHex.slice(4, 6), 16)
+
+  return { r, g, b }
 }
 
 /**
- * Convert a color hex and alpha to an rgba value
+ * Converts a hex colour code to an RGB string format using hexToRgb.
  *
- * Note that this currently only works with 6 digit hexes.
+ * @param {string} colorHex - The hex colour code, with or without a leading '#'.
+ * @returns {string} The RGB colour in the format `rgb(r, g, b)`.
+ *
+ * @example
+ * formatRgb('#3498db') // returns "rgb(52, 152, 219)"
  */
-export const rgba = (colorHex, alpha) => `rgba(${hexToRgb(colorHex)},${alpha})`
+export const rgb = (colorHex) => {
+  const { r, g, b } = hexToRgb(colorHex)
+  return `rgb(${r}, ${g}, ${b})`
+}
+
+/**
+ * Converts a hex colour code to an RGBA string format with a specified alpha value.
+ *
+ * @param {string} colorHex - The hex colour code, with or without a leading '#'.
+ * @param {number} alpha - The alpha value for the colour's opacity, between 0 (transparent) and 1 (opaque).
+ * @returns {string} The RGBA colour in the format `rgba(r, g, b, alpha)`.
+ *
+ * @example
+ * rgba('#3498db', 0.5) // returns "rgba(52, 152, 219, 0.5)"
+ * rgba('3498db', 1)    // returns "rgba(52, 152, 219, 1)"
+ */
+export const rgba = (colorHex, alpha) => {
+  const { r, g, b } = hexToRgb(colorHex)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
 
 // We used to import colours from here: https://github.com/penx/govuk-colours/blob/master/src/index.js
 // GOV.UK Design System colours are here: https://github.com/alphagov/govuk-frontend/blob/main/src/govuk/settings/_colours-palette.scss
@@ -185,50 +220,3 @@ export const UK_TRADE_INVESTMENT = '#c80651'
 export const UK_TRADE_INVESTMENT_WEBSAFE = LINK_COLOUR
 export const WALES_OFFICE = '#a33038'
 export const WALES_OFFICE_WEBSAFE = '#7a242a'
-
-export const TAG_COLOURS = {
-  default: {
-    colour: WHITE,
-    background: BLUE,
-  },
-  grey: {
-    colour: '#454a4d',
-    background: '#eff0f1',
-  },
-  green: {
-    colour: '#005a30',
-    background: '#cce2d8',
-  },
-  darkGreen: {
-    colour: WHITE,
-    background: '#10403c',
-  },
-  turquoise: {
-    colour: '#10403c',
-    background: '#bfe3e0',
-  },
-  blue: {
-    colour: '#144e81',
-    background: '#d2e2f1',
-  },
-  purple: {
-    colour: '#3d2375',
-    background: '#dbd5e9',
-  },
-  pink: {
-    colour: '#80224d',
-    background: '#f7d7e6',
-  },
-  red: {
-    colour: '#942514',
-    background: '#f6d7d2',
-  },
-  orange: {
-    colour: '#6e3619',
-    background: '#fcd6c3',
-  },
-  yellow: {
-    colour: '#594d00',
-    background: '#fff7bf',
-  },
-}
