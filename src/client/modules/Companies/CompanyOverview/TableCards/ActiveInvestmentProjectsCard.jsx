@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { kebabCase } from 'lodash'
 
 import { companies, investments } from '../../../../../lib/urls'
-import { Tag } from '../../../../components'
+import Tag, { TAG_COLOURS } from '../../../../components/Tag'
 import { companyProjectsState2props } from './state'
 import { BLUE, GREY_2 } from '../../../../utils/colours'
 import { buildCellContents } from './transformers'
@@ -74,11 +74,17 @@ const EditLink = styled(Link)`
   float: right;
 `
 
+const LIKELIHOOD_TO_LAND_TO_COLOUR_MAP = {
+  High: TAG_COLOURS.GREEN,
+  Medium: TAG_COLOURS.ORANGE,
+  Low: TAG_COLOURS.RED,
+}
+
 const LikelihoodToLand = ({ likelihood, investmentId, investmentName }) => (
   <>
-    {likelihood === 'High' && <Tag colour="green">High</Tag>}
-    {likelihood === 'Medium' && <Tag colour="orange">Medium</Tag>}
-    {likelihood === 'Low' && <Tag colour="red">Low</Tag>}
+    <Tag colour={LIKELIHOOD_TO_LAND_TO_COLOUR_MAP[likelihood]}>
+      {likelihood}
+    </Tag>
     <EditLink
       href={`${investments.projects.editDetails(
         investmentId

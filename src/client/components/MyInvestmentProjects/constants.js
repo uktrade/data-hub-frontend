@@ -1,3 +1,5 @@
+import { TAG_COLOURS } from '../Tag'
+
 export const LAND_DATE_OPTIONS = [
   { name: 'Show all', id: 'all-land-dates' },
   { name: 'Current year', id: '1' },
@@ -161,9 +163,9 @@ export const INCOMPLETE_FIELDS = {
 }
 
 export const STAGE_TAG_COLOURS = {
-  Prospect: 'purple',
-  'Assign PM': 'red',
-  Active: 'blue',
-  'Verify win': 'yellow',
-  Won: 'green',
+  Prospect: TAG_COLOURS.PURPLE,
+  'Assign PM': TAG_COLOURS.RED,
+  Active: TAG_COLOURS.BLUE,
+  'Verify win': TAG_COLOURS.YELLOW,
+  Won: TAG_COLOURS.GREEN,
 }

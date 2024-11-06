@@ -62,18 +62,15 @@ const isCurrentAdviserLeadOfficer = ({ lead_officer }, currentAdviserId) =>
   lead_officer?.id === currentAdviserId
 
 export const createRoleTags = (exportWin, currentAdviserId) => {
-  const tag = { colour: 'blue', textTransform: 'none' }
   const tags = []
 
   isCurrentAdviserLeadOfficer(exportWin, currentAdviserId) &&
     tags.push({
-      ...tag,
       text: `Role: ${ADVISER_ROLES.LEAD_OFFICER}`,
     })
 
   teamMembersContainCurrentAdvisor(exportWin.team_members, currentAdviserId) &&
     tags.push({
-      ...tag,
       text: `Role: ${ADVISER_ROLES.TEAM_MEMBER}`,
     })
 
@@ -82,7 +79,6 @@ export const createRoleTags = (exportWin, currentAdviserId) => {
     currentAdviserId
   ) &&
     tags.push({
-      ...tag,
       text: `Role: ${ADVISER_ROLES.CONTRIBUTING_OFFICER}`,
     })
 
