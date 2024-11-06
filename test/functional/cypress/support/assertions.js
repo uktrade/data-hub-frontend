@@ -945,6 +945,15 @@ const assertErrorSummary = (errors) => {
 }
 
 /**
+ * Assert error summary passing in a list of errors as as an array
+ */
+const assertErrorSummaryContains = (errors) => {
+  cy.contains('h2', 'There is a problem')
+    .next()
+    .should('contains.text', errors.join(''))
+}
+
+/**
  * Assert by selector if it is visible
  */
 const assertVisible = (selector) => {
@@ -1136,6 +1145,7 @@ module.exports = {
   assertDateInput,
   assertDateInputWithHint,
   assertErrorSummary,
+  assertErrorSummaryContains,
   assertVisible,
   assertNotExists,
   assertTextVisible,

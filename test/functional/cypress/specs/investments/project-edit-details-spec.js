@@ -17,9 +17,9 @@ const {
   assertFieldSelect,
   assertFieldDateShort,
   assertFieldRadios,
-  assertErrorSummary,
   assertFieldTypeaheadWithExactText,
   assertFieldDateWithExactText,
+  assertErrorSummaryContains,
 } = require('../../support/assertions')
 
 const setupProjectFaker = (overrides) =>
@@ -29,6 +29,10 @@ const setupProjectFaker = (overrides) =>
     investment_type: {
       name: 'Commitment to invest',
       id: '031269ab-b7ec-40e9-8a4e-7371404f0622',
+    },
+    investor_type: {
+      name: 'Existing Investor',
+      id: '40e33f91-f565-4b89-8e18-cfefae192245',
     },
     anonymous_description: '',
     client_contacts: [
@@ -302,11 +306,11 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the new or existing investor field with (optional) text', () => {
+    it('should display the new or existing investor field without (optional) text', () => {
       cy.get('[data-test="field-investor_type"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'New or existing investor (optional)',
+          label: 'New or existing investor',
           optionsCount: 2,
         })
       })
@@ -342,7 +346,7 @@ describe('Editing the project summary', () => {
       cy.get('[data-test="actual_land_date-month"]').type('02')
       cy.get('[data-test="actual_land_date-year"]').type('2350')
       clickButton('Submit')
-      assertErrorSummary(['Actual land date cannot be in the future'])
+      assertErrorSummaryContains(['Actual land date cannot be in the future'])
     })
   })
 
@@ -369,7 +373,7 @@ describe('Editing the project summary', () => {
       cy.get('[data-test="field-actual_land_date"]').then((element) => {
         assertFieldDateWithExactText({
           element,
-          label: 'Actual land date',
+          label: 'Actual land date (optional)',
           hint: 'When activities under the investment project fully commenced',
         })
       })
