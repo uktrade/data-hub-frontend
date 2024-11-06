@@ -83,7 +83,7 @@ describe('One List core team', () => {
         .click()
         .should('exist')
         .contains(
-          'Need to find out more, or edit the One List tier information?For more information, or if you need to change the One List tier or account management team for this company, go to the Digital Workspace (opens in new tab) or email'
+          'Need to find out more, or edit the One List tier information?For more information, or if you need to change the One List tier or account management team for this company, go to the Intranet (opens in new tab) or email'
         )
     })
   })

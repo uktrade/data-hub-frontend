@@ -82,7 +82,7 @@ const StepReferralDetails = ({
               This can be an adviser at post, a sector specialist or an{' '}
               international trade advisor. If you're not sure, you can{' '}
               <NewWindowLink href="https://people.trade.gov.uk/teams/department-for-international-trade">
-                find the right team and person on Digital Workspace
+                find the right team and person on the Intranet
               </NewWindowLink>
               .
             </>

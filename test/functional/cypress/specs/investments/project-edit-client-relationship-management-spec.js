@@ -86,13 +86,13 @@ describe('Edit client relationship management page', () => {
     it('should render the hidden help text with visually hidden text for screen reader', () => {
       cy.get('[data-test="global-account-manager-links"]').click()
       cy.contains(
-        'If you need to change the Global Account Manager for this company, go to the Digital Workspace (opens in new tab) or opens email client for'
+        'If you need to change the Global Account Manager for this company, go to the Intranet (opens in new tab) or opens email client for'
       )
     })
 
-    it('should always have a Digital Workspace link', () => {
+    it('should always have an Intranet link', () => {
       cy.get('[data-test="newWindowLink"]')
-        .should('contain', 'Digital Workspace (opens in new tab)')
+        .should('contain', 'Intranet (opens in new tab)')
         .should(
           'have.attr',
           'href',

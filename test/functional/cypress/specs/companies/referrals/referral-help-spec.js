@@ -41,7 +41,7 @@ describe('Referral help', () => {
         .next()
         .should(
           'contain',
-          'Or find their contact details on Digital Workspace (opens in new tab)'
+          'Or find their contact details on the Intranet (opens in new tab)'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')
@@ -66,8 +66,8 @@ describe('Referral help', () => {
         .should('contain', 'Back to the referral')
     })
 
-    it("should link to digital workspace's people finder", () => {
-      cy.contains('Digital Workspace').should(
+    it('should link to people finder', () => {
+      cy.contains('Intranet').should(
         'have.attr',
         'href',
         urls.external.digitalWorkspace.teams

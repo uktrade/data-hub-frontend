@@ -32,7 +32,7 @@ const GlobalAccountManagerDetails = ({ oneListEmail, companyId }) => (
           <NewWindowLink
             href={urls.external.digitalWorkspace.accountManagement}
           >
-            Digital Workspace
+            Intranet
           </NewWindowLink>
           {' or '}
           {oneListEmail && (

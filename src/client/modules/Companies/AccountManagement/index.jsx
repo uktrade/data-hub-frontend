@@ -296,7 +296,7 @@ const AccountManagement = ({ permissions }) => {
               <NewWindowLink
                 href={urls.external.digitalWorkspace.accountManagement}
               >
-                Digital Workspace
+                Intranet
               </NewWindowLink>{' '}
               or email{' '}
               <Link href={`mailto:${ONE_LIST_EMAIL}`}>{ONE_LIST_EMAIL}</Link>
