@@ -74,7 +74,7 @@ export default connect(state2props)(({ company, sendingAdviser }) => {
             </p>
             <p>
               Or{' '}
-              <NewWindowLink href={urls.external.digitalWorkspace.teams}>
+              <NewWindowLink href={urls.external.intranet.teams}>
                 find their contact details on the Intranet
               </NewWindowLink>
             </p>

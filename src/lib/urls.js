@@ -100,7 +100,7 @@ module.exports = {
       privacyPolicy: 'https://www.great.gov.uk/uk/privacy-policy/',
     },
     govUkHomepage: 'https://www.gov.uk/',
-    digitalWorkspace: {
+    intranet: {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
       accountManagement:

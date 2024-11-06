@@ -293,9 +293,7 @@ const AccountManagement = ({ permissions }) => {
             >
               For more information, or if you need to change the One List tier
               or account management team for this company, go to the{' '}
-              <NewWindowLink
-                href={urls.external.digitalWorkspace.accountManagement}
-              >
+              <NewWindowLink href={urls.external.intranet.accountManagement}>
                 Intranet
               </NewWindowLink>{' '}
               or email{' '}

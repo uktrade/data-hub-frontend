@@ -70,7 +70,7 @@ describe('Referral help', () => {
       cy.contains('Intranet').should(
         'have.attr',
         'href',
-        urls.external.digitalWorkspace.teams
+        urls.external.intranet.teams
       )
     })
   })

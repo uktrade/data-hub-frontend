@@ -93,11 +93,7 @@ describe('Edit client relationship management page', () => {
     it('should always have an Intranet link', () => {
       cy.get('[data-test="newWindowLink"]')
         .should('contain', 'Intranet (opens in new tab)')
-        .should(
-          'have.attr',
-          'href',
-          urls.external.digitalWorkspace.accountManagement
-        )
+        .should('have.attr', 'href', urls.external.intranet.accountManagement)
     })
   })
 

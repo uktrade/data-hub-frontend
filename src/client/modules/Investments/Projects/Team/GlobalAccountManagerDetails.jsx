@@ -29,9 +29,7 @@ const GlobalAccountManagerDetails = ({ oneListEmail, companyId }) => (
         >
           If you need to change the Global Account Manager for this company, go
           to the{' '}
-          <NewWindowLink
-            href={urls.external.digitalWorkspace.accountManagement}
-          >
+          <NewWindowLink href={urls.external.intranet.accountManagement}>
             Intranet
           </NewWindowLink>
           {' or '}
