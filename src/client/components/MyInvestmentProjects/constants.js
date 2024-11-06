@@ -51,7 +51,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['delivery_partners']: STAGE.ACTIVE_ID,
   ['actual_land_date']: STAGE.ACTIVE_ID,
   ['specific_programmes']: STAGE.ASSIGN_PM_ID,
-  ['investor_type']: STAGE.INITIAL_ID,
+  ['investor_type']: STAGE.ASSIGN_PM_ID,
   ['level_of_involvement']: STAGE.ASSIGN_PM_ID,
   ['likelihood_to_land']: STAGE.ASSIGN_PM_ID,
 }

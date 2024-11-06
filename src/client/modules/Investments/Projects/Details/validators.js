@@ -29,5 +29,5 @@ export const siteDecidedValidator = (field, formFields, project) => {
 }
 
 export const isUkRegionLocationsRequiredForStage = (project) => {
-  return project?.stage?.id == STAGE.VERIFY_WIN_ID || STAGE.ACTIVE_ID
+  return project?.stage?.id == STAGE.VERIFY_WIN_ID
 }

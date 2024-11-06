@@ -306,11 +306,11 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should display the new or existing investor field without (optional) text', () => {
+    it('should display the new or existing investor field with (optional) text', () => {
       cy.get('[data-test="field-investor_type"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'New or existing investor',
+          label: 'New or existing investor (optional)',
           optionsCount: 2,
         })
       })
