@@ -363,7 +363,7 @@ describe('Editing the project summary', () => {
       cy.get('[data-test="field-investor_type"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'New or existing investor',
+          label: 'New or existing investor (optional)',
           optionsCount: 2,
         })
       })
@@ -379,21 +379,21 @@ describe('Editing the project summary', () => {
       })
     })
 
-    it('should render the level of investor involvement field label without the word optional', () => {
+    it('should render the level of investor involvement field label with the word optional', () => {
       cy.get('[data-test="field-level_of_involvement"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Level of investor involvement',
+          label: 'Level of investor involvement (optional)',
           placeholder: 'Choose a level of involvement',
         })
       })
     })
 
-    it('should render the specific programme field label without the word optional', () => {
+    it('should render the specific programme field label with the word optional', () => {
       cy.get('[data-test="field-specific_programmes"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Specific investment programme',
+          label: 'Specific investment programme (optional)',
           placeholder: 'Choose a specific programme',
         })
       })

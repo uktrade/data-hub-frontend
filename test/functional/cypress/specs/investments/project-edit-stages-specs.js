@@ -186,9 +186,6 @@ describe('Field validation for each stage', () => {
           FIELDS.CLIENT_CONTACTS,
           FIELDS.IS_REFERRAL_SOURCE,
           FIELDS.ESTIMATED_LAND_DATE,
-          FIELDS.INVESTOR_TYPE,
-          FIELDS.LEVEL_OF_INVOLVEMENT,
-          FIELDS.SPECIFIC_PROGRAMMES,
           FIELDS.REFERRAL_SOURCE_ACTIVITY,
           FIELDS.LIKELIHOOD_TO_LAND, // Required in API at active stage
         ],
