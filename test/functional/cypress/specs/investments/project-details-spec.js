@@ -3,6 +3,7 @@ const {
   assertBreadcrumbs,
   assertSummaryTable,
 } = require('../../support/assertions')
+const { assertMetaList } = require('../../support/collection-list-assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const {
@@ -371,6 +372,18 @@ describe('Investment project details', () => {
         Projects: urls.investments.projects.index(),
         [fixtures.investment.stageWon.name]: null,
       })
+    })
+
+    it('should render the meta list with the expected content', () => {
+      assertMetaList([
+        ('Status', fixtures.stageWon.status),
+        ('Project code', fixtures.stageWon.projectCode),
+        ('Valuation',
+        fixtures.stageWon.valueComplete ? 'Project valued' : 'Not yet valued'),
+        ('Created on', ''),
+        ('Created by', ''),
+        ('Created from', 'EYB lead'),
+      ])
     })
 
     it('should render a blue info banner', () => {
