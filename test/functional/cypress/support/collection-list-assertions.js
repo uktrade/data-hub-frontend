@@ -70,10 +70,9 @@ const assertTagShouldNotExist = (item) => {
 }
 
 const assertMetaList = (items) => {
-  items.forEach((itm) => {
-    cy.get('[data-test="meta-list"]')
-      .find(`[text="${itm[0]}"]`)
-      .should('contain', itm[1])
+  items.forEach((item) => {
+    var metaListItem = cy.get(`<span>${item[0]}</span>`)
+    metaListItem.next('span').should('contain', item[1])
   })
 }
 
