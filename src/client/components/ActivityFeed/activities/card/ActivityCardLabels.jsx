@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
-import Tag from '../../../Tag'
+import Tag, { TAG_COLOURS } from '../../../Tag'
 
 const flexMixin = {
   display: 'flex',
@@ -29,13 +29,15 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
     {(kind || theme || service) && (
       <ThemeServiceContainer>
         {kind && (
-          <Tag colour="grey" data-test="activity-kind-label">
+          <Tag colour={TAG_COLOURS.GREY} data-test="activity-kind-label">
             {kind}
           </Tag>
         )}
         {theme && (
           <Tag
-            colour={isExternalActivity ? 'darkGreen' : 'default'}
+            colour={
+              isExternalActivity ? TAG_COLOURS.DARK_GREEN : TAG_COLOURS.GOV_BLUE
+            }
             data-test="activity-theme-label"
           >
             {theme}
@@ -43,7 +45,9 @@ const ActivityCardLabels = ({ isExternalActivity, theme, service, kind }) => (
         )}
         {service && (
           <Tag
-            colour={isExternalActivity ? 'turquoise' : 'blue'}
+            colour={
+              isExternalActivity ? TAG_COLOURS.TURQUOISE : TAG_COLOURS.BLUE
+            }
             data-test="activity-service-label"
           >
             {service}

@@ -2,21 +2,23 @@ import React from 'react'
 
 import ActivityCardLabels from '../../../../../../../src/client/components/ActivityFeed/activities/card/ActivityCardLabels'
 
-// this is needed as cypress can only test colours with rgb not hex
+import { rgb } from '../../../../../../../src/client/utils/colours'
+
+// Cypress only deals with RGB values
 const colours = {
-  default: {
-    colour: 'rgb(255, 255, 255)',
-    backgroundColour: 'rgb(29, 112, 184)',
+  govBlue: {
+    colour: rgb('#ffffff'),
+    backgroundColour: rgb('#1d70b8'),
   },
-  grey: { colour: 'rgb(69, 74, 77)', backgroundColour: 'rgb(239, 240, 241)' },
-  blue: { colour: 'rgb(20, 78, 129)', backgroundColour: 'rgb(210, 226, 241)' },
+  grey: { colour: rgb('#282d30'), backgroundColour: rgb('#e5e6e7') },
+  blue: { colour: rgb('#0c2d4a'), backgroundColour: rgb('#bbd4ea') },
   darkGreen: {
-    colour: 'rgb(255, 255, 255)',
-    backgroundColour: 'rgb(16, 64, 60)',
+    colour: rgb('#ffffff'),
+    backgroundColour: rgb('#10403c'),
   },
   turquoise: {
-    colour: 'rgb(16, 64, 60)',
-    backgroundColour: 'rgb(191, 227, 224)',
+    colour: rgb('#10403c'),
+    backgroundColour: rgb('#d4ecea'),
   },
 }
 
@@ -63,13 +65,13 @@ describe('ActivityCardLabels', () => {
           .should('have.text', 'Topic Label')
       })
 
-      it('should have the default colour label', () => {
+      it('should have the gov blue colour label', () => {
         cy.get('[data-test="activity-theme-label"]')
-          .should('have.css', 'color', colours.default.colour)
+          .should('have.css', 'color', colours.govBlue.colour)
           .should(
             'have.css',
             'background-color',
-            colours.default.backgroundColour
+            colours.govBlue.backgroundColour
           )
       })
     })

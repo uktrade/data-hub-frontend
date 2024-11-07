@@ -77,7 +77,6 @@ export const renderTags = (tags) =>
     <Tag
       key={`tag_${index}`}
       colour={tag.colour}
-      textTransform={tag.textTransform}
       data-test={tag.dataTest ? tag.dataTest : 'collection-item-tag'}
     >
       {tag.text}

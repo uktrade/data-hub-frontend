@@ -8,7 +8,7 @@ import { GridCol, GridRow } from 'govuk-react'
 import FieldTypeahead from '../FieldTypeahead'
 import { apiProxyAxios } from '../../../Task/utils'
 import Highlighter from '../../../Typeahead/Highlighter'
-import Tag from '../../../Tag'
+import Tag, { TAG_COLOURS } from '../../../Tag'
 
 const getOptionLabel = (option) =>
   `${option.label}${option.isInList ? ' (in your company lists)' : ''}`
@@ -29,7 +29,7 @@ const CompanyResultWithTags = ({ option, searchString }) => (
     </StyledRow>
     <GridRow>
       <GridCol>
-        <Tag colour={'blue'} data-test="location-tag">
+        <Tag colour={TAG_COLOURS.BLUE} data-test="location-tag">
           {option.ukRegion
             ? `${get(option, 'ukRegion.name')}, UK`
             : get(option, 'address.country.name', 'unknown')}
