@@ -70,6 +70,9 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => (
         label="Export experience"
         required="Select export experience"
         hint="Your customer will be asked to confirm this information."
+        resultToOptions={(result) =>
+          idNamesToValueLabels(result.filter((option) => !option.disabledOn))
+        }
       />
     )}
   </Step>

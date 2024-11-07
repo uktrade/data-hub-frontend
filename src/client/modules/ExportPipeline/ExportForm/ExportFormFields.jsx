@@ -38,6 +38,7 @@ import { validateTeamMembers } from './validation'
 import { STATUS_OPTIONS, EXPORT_POTENTIAL_OPTIONS } from '../constants'
 import { ERROR_MESSAGES, POSITIVE_INT_REGEX } from './constants'
 import { FORM_LAYOUT } from '../../../../common/constants'
+import { idNamesToValueLabels } from '../../../utils'
 
 export const isPositiveInteger = (value) => POSITIVE_INT_REGEX.test(value)
 
@@ -205,6 +206,11 @@ const ExportFormFields = ({
                   field={FieldRadios}
                   name="exporter_experience"
                   label="Exporter experience (optional)"
+                  resultToOptions={(result) =>
+                    idNamesToValueLabels(
+                      result.filter((option) => !option.disabledOn)
+                    )
+                  }
                 />
                 <FieldTextarea
                   name="notes"
