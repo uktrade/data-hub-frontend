@@ -157,6 +157,7 @@ describe('EYB lead details', () => {
       landing_timeframe: 'In the next 6 months',
       company_website: null,
       company_name: 'Mars Temp',
+      investment_projects: [],
     })
     beforeEach(() => {
       setup(eybLeadWithoutCompany)
