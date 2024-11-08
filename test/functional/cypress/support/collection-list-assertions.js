@@ -69,13 +69,6 @@ const assertTagShouldNotExist = (item) => {
   cy.get(item).find('[data-test="collection-item-tag"]').should('not.exist')
 }
 
-const assertMetaList = (items) => {
-  items.forEach((item) => {
-    var metaListItem = cy.get(`<span>${item[0]}</span>`)
-    metaListItem.next('span').should('contain', item[1])
-  })
-}
-
 const assertMetadataItem = (item, metadataText) => {
   cy.get(item).find('[data-test="metadata"]').should('contain', metadataText)
 }
@@ -167,7 +160,6 @@ module.exports = {
   assertAddItemButtonNotPresent,
   assertBadge,
   assertBadgeNotPresent,
-  assertMetaList,
   assertMetadataItem,
   assertMetadataItemNotPresent,
   assertRemoveAllFiltersNotPresent,

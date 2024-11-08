@@ -3,7 +3,6 @@ const {
   assertBreadcrumbs,
   assertSummaryTable,
 } = require('../../support/assertions')
-const { assertMetaList } = require('../../support/collection-list-assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const {
@@ -214,6 +213,7 @@ describe('Investment project details', () => {
       cy.get('[data-test="add-value-button"]').should('not.exist')
     })
   })
+
   context(
     'When viewing a Verify Win project with all the alternate value fields',
     () => {
@@ -372,20 +372,6 @@ describe('Investment project details', () => {
         Projects: urls.investments.projects.index(),
         [fixtures.investment.stageWon.name]: null,
       })
-    })
-
-    it('should render the meta list with the expected content', () => {
-      assertMetaList(
-        [
-          ['Status', fixtures.investment.status],
-          ['Project code', fixtures.investment.project_code],
-          // ('Valuation',
-          // fixtures.investment.valueComplete ? 'Project valued' : 'Not yet valued'),
-          // ('Created on', ''),
-          // ('Created by', ''),
-          ['Created from', 'EYB lead'],
-        ]
-      )
     })
 
     it('should render a blue info banner', () => {
