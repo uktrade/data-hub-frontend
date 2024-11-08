@@ -1,5 +1,3 @@
-import { cy } from 'date-fns/locale'
-
 import {
   assertSummaryTable,
   assertLeadBreadcrumbs,
