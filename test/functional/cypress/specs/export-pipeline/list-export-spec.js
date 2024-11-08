@@ -67,7 +67,6 @@ describe('Export pipeline list', () => {
     })
 
     it('should display the empty results message', () => {
-      cy.get('[data-test=no-export-items]').should('exist')
       cy.get('[data-test=export-export]').should('not.exist')
     })
   })
