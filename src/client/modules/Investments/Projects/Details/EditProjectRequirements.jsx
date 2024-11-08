@@ -34,14 +34,6 @@ import {
 import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
-import {
-  isFieldOptionalForStageLabel,
-  validateFieldForStage,
-} from '../validators'
-import {
-  isUkRegionLocationsRequiredForStage,
-  siteDecidedValidator,
-} from './validators'
 
 const ukObject = {
   name: 'United Kingdom',
@@ -86,10 +78,7 @@ const EditProjectRequirements = () => {
             >
               <ResourceOptionsField
                 name="strategic_drivers"
-                label={
-                  'Strategic drivers behind this investment' +
-                  isFieldOptionalForStageLabel('strategic_drivers', project)
-                }
+                label="Strategic drivers behind this investment"
                 resource={StrategicDriversResource}
                 field={FieldTypeahead}
                 initialValue={transformArrayForTypeahead(
@@ -97,40 +86,16 @@ const EditProjectRequirements = () => {
                 )}
                 placeholder="Select a strategic driver"
                 isMulti={true}
-                validate={(values, field, formFields) => {
-                  return validateFieldForStage(
-                    field,
-                    formFields,
-                    project,
-                    'Select a strategic driver'
-                  )
-                }}
               />
               <FieldTextarea
                 type="text"
                 name="client_requirements"
-                label={
-                  'Client requirements' +
-                  isFieldOptionalForStageLabel('client_requirements', project)
-                }
+                label="Client requirements"
                 initialValue={project.clientRequirements || ''}
-                validate={(values, field, formFields) => {
-                  return validateFieldForStage(
-                    field,
-                    formFields,
-                    project,
-                    'Enter client requirements'
-                  )
-                }}
               />
               <FieldRadios
                 name="client_considering_other_countries"
-                label={
-                  'Is the client considering other countries?' +
-                  (isUkRegionLocationsRequiredForStage(project)
-                    ? ''
-                    : ' (optional)')
-                }
+                label="Is the client considering other countries?"
                 initialValue={transformBoolToRadioOptionWithNullCheck(
                   project.clientConsideringOtherCountries
                 )}
@@ -152,34 +117,15 @@ const EditProjectRequirements = () => {
                     ),
                   }),
                 }))}
-                validate={(values, field, formFields) => {
-                  return validateFieldForStage(
-                    field,
-                    formFields,
-                    project,
-                    'Select other countries considered'
-                  )
-                }}
               />
               <FieldUKRegionTypeahead
                 name="uk_region_locations"
-                label={
-                  'Possible UK locations for this investment' +
-                  (isUkRegionLocationsRequiredForStage(project)
-                    ? ''
-                    : ' (optional)')
-                }
+                label="Possible UK locations for this investment"
                 initialValue={transformArrayForTypeahead(
                   project.ukRegionLocations
                 )}
                 placeholder="Select a UK region"
                 isMulti={true}
-                validate={(values, field, formFields) => {
-                  return isUkRegionLocationsRequiredForStage(project) &&
-                    !formFields.values[field.name]
-                    ? 'Select a possible UK location'
-                    : null
-                }}
               />
               <FieldRadios
                 name="site_decided"
@@ -207,41 +153,21 @@ const EditProjectRequirements = () => {
                         />
                         <FieldUKRegionTypeahead
                           name="actual_uk_regions"
-                          label={
-                            'UK regions landed' +
-                            isFieldOptionalForStageLabel(
-                              'actual_uk_regions',
-                              project
-                            )
-                          }
+                          label="UK regions landed"
                           initialValue={transformArrayForTypeahead(
                             project.actualUkRegions
                           )}
                           placeholder="Select a UK region"
                           isMulti={true}
-                          validate={(values, field, formFields) => {
-                            return validateFieldForStage(
-                              field,
-                              formFields,
-                              project,
-                              'Select a UK region'
-                            )
-                          }}
                         />
                       </>
                     ),
                   }),
                 }))}
-                validate={(values, field, formFields) => {
-                  return siteDecidedValidator(field, formFields, project)
-                }}
               />
               <ResourceOptionsField
                 name="delivery_partners"
-                label={
-                  'Delivery partners' +
-                  isFieldOptionalForStageLabel('investor_type', project)
-                }
+                label="Delivery partners"
                 resource={DeliveryPartnersResource}
                 field={FieldTypeahead}
                 initialValue={transformArrayForTypeahead(
@@ -254,14 +180,6 @@ const EditProjectRequirements = () => {
                     result.filter((option) => !option.disabledOn)
                   )
                 }
-                validate={(values, field, formFields) => {
-                  return validateFieldForStage(
-                    field,
-                    formFields,
-                    project,
-                    'Select a delivery partner'
-                  )
-                }}
               />
             </Form>
           </>

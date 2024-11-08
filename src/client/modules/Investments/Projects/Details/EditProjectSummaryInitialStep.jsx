@@ -35,7 +35,11 @@ import {
 import { transformDateStringToDateObject } from '../../../../../apps/transformers'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
-import { FDI_TYPES } from '../constants'
+import {
+  FDI_TYPES,
+  STAGE_PROSPECT,
+  INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM,
+} from '../constants'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   border: 1px solid ${GREY_2};
@@ -168,37 +172,38 @@ const EditProjectSummaryInitialStep = ({
         initialValue={transformDateStringToDateObject(
           project.estimatedLandDate
         )}
-        project={project}
       />
       <FieldLikelihoodOfLanding
         autoScroll={!!autoScroll}
-        initialValue={transformObjectForTypeahead(
-          project.likelihoodToLand,
-          null
-        )}
-        project={project}
+        initialValue={transformObjectForTypeahead(project.likelihoodToLand)}
+        optionalText={STAGE_PROSPECT.includes(project.stage.name)}
       />
       <FieldActualLandDate
         initialValue={transformDateStringToDateObject(project.actualLandDate)}
-        project={project}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
       {showInvestorTypeField() ? (
         <FieldInvestmentInvestorType
           label="New or existing investor"
           initialValue={project.investorType?.id}
-          project={project}
+          optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+            project.stage.name
+          )}
         />
       ) : null}
       <FieldLevelOfInvolvement
-        initialValue={transformObjectForTypeahead(
-          project.levelOfInvolvement,
-          null
+        initialValue={transformObjectForTypeahead(project.levelOfInvolvement)}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
         )}
-        project={project}
       />
       <FieldSpecificProgramme
         initialValue={transformArrayForTypeahead(project.specificProgrammes)}
-        project={project}
+        optionalText={INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM.includes(
+          project.stage.name
+        )}
       />
     </Step>
   )
