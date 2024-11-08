@@ -1,3 +1,5 @@
+import { cy } from 'date-fns/locale'
+
 import {
   assertSummaryTable,
   assertLeadBreadcrumbs,
@@ -120,6 +122,10 @@ describe('EYB lead details', () => {
       })
     })
 
+    it('should not render the header notification banner', () => {
+      cy.get('[data-test="status-message-header"]')
+    })
+
     it('should render the `Add investment project` button', () => {
       cy.get('[data-test="button-add-investment-project"]')
         .should('exist')
@@ -231,6 +237,21 @@ describe('EYB lead details', () => {
           )
         )
         cy.wait('@getEYBLeadDetails')
+      })
+
+      it('should render the header notification banner', () => {
+        cy.get('[data-test="status-message-header"]')
+          .should('exist')
+          .should(
+            'have.text',
+            'This EYB lead has been added as an investment project. View the project'
+          )
+
+        cy.get('a:contains("View the project")').should(
+          'have.attr',
+          'href',
+          `/investments/projects/fc752802-e454-4c7c-bbfd-4bdd84759b84/details`
+        )
       })
 
       it('should not render the `Add investment project` button', () => {
