@@ -123,7 +123,7 @@ describe('EYB lead details', () => {
     })
 
     it('should not render the header notification banner', () => {
-      cy.get('[data-test="status-message-header"]')
+      cy.get('[data-test="status-message-header"]').should('not.exist')
     })
 
     it('should render the `Add investment project` button', () => {
@@ -209,6 +209,10 @@ describe('EYB lead details', () => {
         leadDetailsUrl: urls.investments.eybLeads.index(),
         leadName: eybLeadWithoutCompany.company_name,
       })
+    })
+
+    it('should not render the header notification banner', () => {
+      cy.get('[data-test="status-message-header"]').should('not.exist')
     })
 
     it('should not render the `Add investment project` button', () => {
