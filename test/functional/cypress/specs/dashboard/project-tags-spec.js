@@ -11,6 +11,7 @@ import {
   STAGE_VERIFY_WIN,
   STAGE_WON,
 } from '../../../../../src/client/modules/Investments/Projects/constants'
+import { rgb } from '../../../../../src/client/utils/colours'
 
 describe('Dashboard - Investment project tags', () => {
   const summary = investmentProjectSummaryFaker()
@@ -35,28 +36,28 @@ describe('Dashboard - Investment project tags', () => {
     const expected = [
       {
         label: STAGE_PROSPECT,
-        background: 'rgb(219, 213, 233)',
-        colour: 'rgb(61, 35, 117)',
+        colour: rgb('#491644'),
+        backgroundColour: rgb('#efdfed'),
       },
       {
         label: STAGE_ASSIGN_PM,
-        background: 'rgb(246, 215, 210)',
-        colour: 'rgb(148, 37, 20)',
+        colour: rgb('#2a0b06'),
+        backgroundColour: rgb('#f4cdc6'),
       },
       {
         label: STAGE_ACTIVE,
-        background: 'rgb(210, 226, 241)',
-        colour: 'rgb(20, 78, 129)',
+        colour: rgb('#0c2d4a'),
+        backgroundColour: rgb('#bbd4ea'),
       },
       {
         label: STAGE_VERIFY_WIN,
-        background: 'rgb(255, 247, 191)',
-        colour: 'rgb(89, 77, 0)',
+        colour: rgb('#594d00'),
+        backgroundColour: rgb('#fff7bf'),
       },
       {
         label: STAGE_WON,
-        background: 'rgb(204, 226, 216)',
-        colour: 'rgb(0, 90, 48)',
+        colour: rgb('#005a30'),
+        backgroundColour: rgb('#cce2d8'),
       },
     ]
 
@@ -64,8 +65,8 @@ describe('Dashboard - Investment project tags', () => {
       const el = cy.wrap($el)
       el.should('have.text', expected[i].label)
       el.should('have.attr', 'aria-label', 'project stage')
-      el.should('have.css', 'background-color', expected[i].background)
       el.should('have.css', 'color', expected[i].colour)
+      el.should('have.css', 'background-color', expected[i].backgroundColour)
     })
   })
 
@@ -82,7 +83,7 @@ describe('Dashboard - Investment project tags', () => {
     cy.visit('/')
     cy.wait('@apiRequest')
     cy.get('[data-test="tablist"] button').contains('Investment').click()
-    const expected = ['ongoing', 'delayed', 'abandoned', 'lost', 'dormant']
+    const expected = ['Ongoing', 'Delayed', 'Abandoned', 'Lost', 'Dormant']
 
     cy.get('[data-test="project-status-tag"]').each(($el, i) => {
       const el = cy.wrap($el)

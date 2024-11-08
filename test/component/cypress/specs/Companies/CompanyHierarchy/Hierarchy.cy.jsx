@@ -11,8 +11,8 @@ import {
 import urls from '../../../../../../src/lib/urls'
 import { hqLabels } from '../../../../../../src/apps/companies/labels'
 import {
+  rgb,
   DARK_BLUE_LEGACY,
-  hexToRgb,
 } from '../../../../../../src/client/utils/colours'
 import { format } from '../../../../../../src/client/utils/date'
 
@@ -485,14 +485,7 @@ describe('D&B Company Tree Hierarchy component', () => {
     it('should display with a different background colour to other items', () => {
       cy.get('[data-test="requested-company"]')
         .first()
-        .should(
-          'have.css',
-          'background-color',
-          `rgb(${hexToRgb(DARK_BLUE_LEGACY, { format: 'css' }).replaceAll(
-            ',',
-            ', '
-          )})`
-        )
+        .should('have.css', 'background-color', rgb(DARK_BLUE_LEGACY))
     })
   })
 

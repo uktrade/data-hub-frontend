@@ -8,7 +8,7 @@ import ReferralUtils from './ReferralUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
-import Tag from '../../Tag'
+import Tag, { TAG_COLOURS } from '../../Tag'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
@@ -92,7 +92,7 @@ export default class Referral extends React.PureComponent {
         <ActivityCardSubject dataTest="referral-activity-card-subject">
           {linkedSubject}
         </ActivityCardSubject>
-        <Tag colour="grey" data-test="activity-kind-label">
+        <Tag color={TAG_COLOURS.GREY} data-test="activity-kind-label">
           {badge.text}
         </Tag>
         <ActivityCardMetadata metadata={metadata} />

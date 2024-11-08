@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { get } from 'lodash'
+import { get, capitalize } from 'lodash'
 
-import Tag from '../../../components/Tag/index.jsx'
+import Tag, { TAG_COLOURS } from '../../../components/Tag'
 import { ToggleSection } from '../../../components/ToggleSection/index.jsx'
 import { DARK_GREY, MID_GREY, BLACK } from '../../../utils/colours.js'
 import { formatShortDate, formatMediumDateTime } from '../../../utils/date.js'
@@ -67,10 +67,10 @@ const DashboardToggleSection = styled(ToggleSection)({
   },
 })
 
-const statusToColourMap = {
-  WON: 'green',
-  ACTIVE: 'blue',
-  INACTIVE: 'orange',
+const STATUS_TO_COLOUR_MAP = {
+  WON: TAG_COLOURS.GREEN,
+  ACTIVE: TAG_COLOURS.BLUE,
+  INACTIVE: TAG_COLOURS.ORANGE,
 }
 
 const EstimatedExport = ({
@@ -97,12 +97,12 @@ const EstimatedExport = ({
 const ResultItem = (item) => {
   const [toggleLabel, setToggleLabel] = useState('Show')
   const status = item.status.toUpperCase()
-  const exportPotential = item.export_potential.toUpperCase()
+  const exportPotential = `${capitalize(item.export_potential)} potential`
   return (
     <ListItem key={item.id} data-test="export-item">
       <TagContainer>
-        <Tag colour="grey">{`${exportPotential} POTENTIAL`}</Tag>
-        <Tag colour={statusToColourMap[status]}>{status}</Tag>
+        <Tag colour={TAG_COLOURS.GREY}>{exportPotential}</Tag>
+        <Tag colour={STATUS_TO_COLOUR_MAP[status]}>{capitalize(status)}</Tag>
       </TagContainer>
       <LinkContainer>
         <StyledHeader>

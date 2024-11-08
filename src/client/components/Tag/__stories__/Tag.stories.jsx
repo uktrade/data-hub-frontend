@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
-import Tag from '..'
+import Tag, { TAG_COLOURS } from '..'
 
 const List = styled('div')`
   display: flex;
@@ -16,23 +16,23 @@ const List = styled('div')`
 
 export default {
   title: 'Tag',
-
-  parameters: {
-    component: Tag,
-  },
+  component: Tag,
+  tags: ['autodocs'],
 }
 
-export const Default = () => (
+export const TagVariants = () => (
   <List>
-    <Tag>BETA</Tag>
-    <Tag colour="grey">INACTIVE</Tag>
-    <Tag colour="green">NEW</Tag>
-    <Tag colour="turquoise">ACTIVE</Tag>
-    <Tag colour="blue">PENDING</Tag>
-    <Tag colour="purple">RECEIVED</Tag>
-    <Tag colour="pink">SENT</Tag>
-    <Tag colour="red">REJECTED</Tag>
-    <Tag colour="orange">DECLINED</Tag>
-    <Tag colour="yellow">DELAYED</Tag>
+    <Tag>Beta</Tag>
+    <Tag colour={TAG_COLOURS.GREY}>Inactive</Tag>
+    <Tag colour={TAG_COLOURS.GREEN}>New</Tag>
+    <Tag colour={TAG_COLOURS.TURQUOISE}>Active</Tag>
+    <Tag colour={TAG_COLOURS.BLUE}>Pending</Tag>
+    <Tag colour={TAG_COLOURS.LIGHT_BLUE}>In progress</Tag>
+    <Tag colour={TAG_COLOURS.PURPLE}>Received</Tag>
+    <Tag colour={TAG_COLOURS.PINK}>Sent</Tag>
+    <Tag colour={TAG_COLOURS.RED}>Rejected</Tag>
+    <Tag colour={TAG_COLOURS.ORANGE}>Declined</Tag>
+    <Tag colour={TAG_COLOURS.YELLOW}>Delayed</Tag>
+    <Tag colour={TAG_COLOURS.DARK_GREEN}>My colours</Tag>
   </List>
 )

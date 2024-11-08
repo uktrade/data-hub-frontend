@@ -1,3 +1,5 @@
+import { TAG_COLOURS } from '../Tag'
+
 export const LAND_DATE_OPTIONS = [
   { name: 'Show all', id: 'all-land-dates' },
   { name: 'Current year', id: '1' },
@@ -13,56 +15,6 @@ export const PROJECT_STATUS_OPTIONS = [
   { name: 'Dormant', id: 'dormant' },
 ]
 
-export const INITIAL_ID = null
-
-export const STAGE = {
-  PROSPECT_ID: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
-  ASSIGN_PM_ID: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
-  ACTIVE_ID: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
-  VERIFY_WIN_ID: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
-  WON_ID: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
-}
-
-export const STAGE_ID_TO_INDEX_MAP = {
-  [STAGE.INITIAL_ID]: 0,
-  [STAGE.PROSPECT_ID]: 1,
-  [STAGE.ASSIGN_PM_ID]: 2,
-  [STAGE.ACTIVE_ID]: 3,
-  [STAGE.VERIFY_WIN_ID]: 4,
-  [STAGE.WON_ID]: 5,
-}
-
-export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
-  // TODO verify that all fields below have validation implemented if not remove
-  ['client_cannot_provide_total_investment']: STAGE.ASSIGN_PM_ID,
-  ['strategic_drivers']: STAGE.PROSPECT_ID,
-  ['client_requirements']: STAGE.PROSPECT_ID,
-  ['investment_type']: STAGE.INITIAL_ID,
-  ['client_considering_other_countries']: STAGE.PROSPECT_ID,
-  ['project_manager']: STAGE.ACTIVE_ID,
-  ['project_assurance_adviser']: STAGE.ACTIVE_ID,
-  ['client_cannot_provide_foreign_investment']: STAGE.VERIFY_WIN_ID,
-  ['government_assistance']: STAGE.VERIFY_WIN_ID,
-  ['number_new_jobs']: STAGE.VERIFY_WIN_ID,
-  ['number_safeguarded_jobs']: STAGE.VERIFY_WIN_ID,
-  ['r_and_d_budget']: STAGE.VERIFY_WIN_ID,
-  ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
-  ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
-  ['export_revenue']: STAGE.VERIFY_WIN_ID,
-  ['site_decided']: STAGE.ACTIVE_ID,
-  ['address_1']: STAGE.VERIFY_WIN_ID,
-  ['address_town']: STAGE.VERIFY_WIN_ID,
-  ['address_postcode']: STAGE.VERIFY_WIN_ID,
-  ['actual_uk_regions']: STAGE.ACTIVE_ID,
-  ['delivery_partners']: STAGE.ACTIVE_ID,
-  ['actual_land_date']: STAGE.ASSIGN_PM_ID,
-  ['specific_programmes']: STAGE.ASSIGN_PM_ID,
-  ['uk_company']: STAGE.VERIFY_WIN_ID,
-  ['investor_type']: STAGE.ASSIGN_PM_ID,
-  ['level_of_involvement']: STAGE.ASSIGN_PM_ID,
-  ['likelihood_to_land']: STAGE.ASSIGN_PM_ID,
-}
-
 export const STAGE_OPTIONS = [
   {
     name: 'Show all',
@@ -70,23 +22,23 @@ export const STAGE_OPTIONS = [
   },
   {
     name: 'Prospect',
-    id: STAGE.PROSPECT_ID,
+    id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
   },
   {
     name: 'Assign PM',
-    id: STAGE.ASSIGN_PM_ID,
+    id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
   },
   {
     name: 'Active',
-    id: STAGE.ACTIVE_ID,
+    id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
   },
   {
     name: 'Verify win',
-    id: STAGE.VERIFY_WIN_ID,
+    id: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
   },
   {
     name: 'Won',
-    id: STAGE.WON_ID,
+    id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
   },
 ]
 
@@ -161,9 +113,9 @@ export const INCOMPLETE_FIELDS = {
 }
 
 export const STAGE_TAG_COLOURS = {
-  Prospect: 'purple',
-  'Assign PM': 'red',
-  Active: 'blue',
-  'Verify win': 'yellow',
-  Won: 'green',
+  Prospect: TAG_COLOURS.PURPLE,
+  'Assign PM': TAG_COLOURS.RED,
+  Active: TAG_COLOURS.BLUE,
+  'Verify win': TAG_COLOURS.YELLOW,
+  Won: TAG_COLOURS.GREEN,
 }

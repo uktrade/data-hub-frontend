@@ -26,6 +26,7 @@ const {
   assertTypeaheadValues,
   assertFieldDateShort,
   assertPayload,
+  assertFieldRadiosStrict,
   assertTypeaheadOptionSelected,
 } = require('../../support/assertions')
 const {
@@ -72,6 +73,11 @@ describe('Export pipeline edit', () => {
     const exportItem = exportFaker({
       sector: sectors[0],
       destination_country: countries[0],
+      exporter_experience: {
+        id: '8937c359-157e-41dd-8520-679383847ea0',
+        order: 20,
+        name: 'Exported in the last 12 months, but has not won an export order by having an export plan',
+      },
     })
     const editPageUrl = urls.exportPipeline.edit(exportItem.id)
 
@@ -200,13 +206,17 @@ describe('Export pipeline edit', () => {
           '[data-test="field-contacts"]',
           exportItem.contacts.map((t) => t.name)
         )
-        cy.get('[data-test="field-exporter_experience"]').then((element) => {
-          assertFieldRadios({
-            element,
-            label: 'Exporter experience (optional)',
-            optionsCount: 5,
-            value: exportItem.exporter_experience.name,
-          })
+        assertFieldRadiosStrict({
+          inputName: 'exporter_experience',
+          legend: 'Exporter experience (optional)',
+          options: [
+            'Never exported',
+            'Exported before, but no exports in the last 12 months',
+            'Exported in the last 12 months, but has not won an export order by having an export plan',
+            'An exporter with a new export win, but has not exported to this country within the last 3 years',
+            'An exporter that DBT are helping maintain and grow their exports',
+          ],
+          selectedIndex: 2,
         })
         cy.get('[data-test="field-notes"]').then((element) => {
           assertFieldTextarea({

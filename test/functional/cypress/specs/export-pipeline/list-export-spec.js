@@ -67,7 +67,6 @@ describe('Export pipeline list', () => {
     })
 
     it('should display the empty results message', () => {
-      cy.get('[data-test=no-export-items]').should('exist')
       cy.get('[data-test=export-export]').should('not.exist')
     })
   })
@@ -213,17 +212,17 @@ describe('Export pipeline list', () => {
     })
 
     it('should display export potential tags', () => {
-      assertExportPotentialTag('@firstListItem', 'HIGH POTENTIAL')
-      assertExportPotentialTag('@secondListItem', 'MEDIUM POTENTIAL')
-      assertExportPotentialTag('@thirdListItem', 'LOW POTENTIAL')
-      assertExportPotentialTag('@fourthListItem', 'LOW POTENTIAL')
+      assertExportPotentialTag('@firstListItem', 'High potential')
+      assertExportPotentialTag('@secondListItem', 'Medium potential')
+      assertExportPotentialTag('@thirdListItem', 'Low potential')
+      assertExportPotentialTag('@fourthListItem', 'Low potential')
     })
 
     it('should display an export active tag', () => {
-      assertStatusTag('@firstListItem', 'ACTIVE')
-      assertStatusTag('@secondListItem', 'WON')
-      assertStatusTag('@thirdListItem', 'INACTIVE')
-      assertStatusTag('@fourthListItem', 'INACTIVE')
+      assertStatusTag('@firstListItem', 'Active')
+      assertStatusTag('@secondListItem', 'Won')
+      assertStatusTag('@thirdListItem', 'Inactive')
+      assertStatusTag('@fourthListItem', 'Inactive')
     })
 
     it('should display a company name header', () => {

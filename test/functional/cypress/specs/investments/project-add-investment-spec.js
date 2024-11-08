@@ -14,7 +14,6 @@ const {
   assertFieldDateShort,
 } = require('../../support/assertions')
 const { clearTypeahead } = require('../../support/form-fillers')
-const { INVESTMENT_PROJECT_FORM_VALIDATION } = require('./constants')
 
 const { usCompany } = company
 
@@ -293,7 +292,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Business activities',
-        placeholder: INVESTMENT_PROJECT_FORM_VALIDATION.BUSINESS_ACTIVITY,
+        placeholder: 'Choose a business activity',
         hint: 'You can select more than one activity',
       })
     })
@@ -325,7 +324,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldTypeahead({
         element,
         label: 'Client contact details',
-        placeholder: INVESTMENT_PROJECT_FORM_VALIDATION.CLIENT_CONTACT,
+        placeholder: 'Choose a client contact',
       })
     })
   })
@@ -369,8 +368,7 @@ describe('Investment Detail Step Form Content', () => {
       assertFieldSelect({
         element,
         label: 'Referral source activity',
-        placeholder:
-          INVESTMENT_PROJECT_FORM_VALIDATION.REFERRAL_SOURCE_ACTIVITY,
+        placeholder: 'Choose a referral source activity',
         optionsCount: 53,
       })
     })
@@ -433,15 +431,15 @@ describe('Investment Detail Step Form Content', () => {
 
 describe('Validation error messages', () => {
   const validationErrorMessages = [
-    INVESTMENT_PROJECT_FORM_VALIDATION.PROJECT_NAME,
-    INVESTMENT_PROJECT_FORM_VALIDATION.PROJECT_DESCRIPTION,
-    INVESTMENT_PROJECT_FORM_VALIDATION.PRIMARY_SECTOR,
-    INVESTMENT_PROJECT_FORM_VALIDATION.BUSINESS_ACTIVITY,
-    INVESTMENT_PROJECT_FORM_VALIDATION.CLIENT_CONTACT,
-    INVESTMENT_PROJECT_FORM_VALIDATION.IS_RELATIONSHIP_MANAGER,
-    INVESTMENT_PROJECT_FORM_VALIDATION.IS_REFERRAL_SOURCE,
-    INVESTMENT_PROJECT_FORM_VALIDATION.ESTIMATED_LANDDATE,
-    INVESTMENT_PROJECT_FORM_VALIDATION.REFERRAL_SOURCE_ACTIVITY,
+    'Enter a project name',
+    'Enter a project description',
+    'Choose a primary sector',
+    'Choose a business activity',
+    'Choose a client contact',
+    "Select yes if you're the client relationship manager for this project",
+    "Select yes if you're the referral source for this project",
+    'Enter an estimated land date',
+    'Choose a referral source activity',
   ]
 
   const validationErrorMessageOtherBusinessActivities =

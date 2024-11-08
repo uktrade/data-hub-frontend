@@ -22,12 +22,12 @@ import { format } from '../../../utils/date'
 
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
-import Tag from '../../../components/Tag'
+import Tag, { TAG_COLOURS } from '../../../components/Tag'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
 export const transformArrayForTypeahead = (array) =>
-  array && array.length
+  array
     ? array.map((value) => ({
         label: value.name,
         value: value.id,
@@ -44,16 +44,16 @@ export const transformAndFilterArrayForTypeahead = (array) => {
   }))
 }
 
-export const transformObjectForTypeahead = (
-  object,
-  emptyValue = { label: '', value: '' }
-) =>
+export const transformObjectForTypeahead = (object) =>
   object
     ? {
         label: object.name,
         value: object.id,
       }
-    : emptyValue
+    : {
+        label: '',
+        value: '',
+      }
 
 export const transformBoolToRadioOption = (boolean) =>
   boolean ? OPTION_YES : OPTION_NO
@@ -284,7 +284,7 @@ export const transformInvestmentProjectToListItem = ({
 
 const getTaskSubheading = (archived) =>
   archived ? (
-    <Tag colour="green" data-test="activity-kind-label">
+    <Tag colour={TAG_COLOURS.GREEN} data-test="activity-kind-label">
       COMPLETED
     </Tag>
   ) : (
