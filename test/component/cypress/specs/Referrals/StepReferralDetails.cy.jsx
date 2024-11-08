@@ -67,7 +67,7 @@ describe('StepReferralDetails component', () => {
             element,
             label: 'Adviser',
             placeholder: 'Search for an adviser',
-            hint: "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in new tab).",
+            hint: "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on the Intranet (opens in new tab).",
           })
         })
 

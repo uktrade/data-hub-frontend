@@ -50,7 +50,7 @@ const getFlashMessage = (interactionId, wasPolicyFeedbackProvided) => {
       const body = [
         'Thanks for submitting business intelligence (BI), which feeds into the Business Intelligence Unit’s reports. If they need more information, they will contact you.',
         '',
-        'For more on the value of BI, <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/business-intelligence-reports/" rel="noopener noreferrer" target="_blank">See the Digital Workspace article (opens in new tab)</a>',
+        'For more on the value of BI, <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/business-intelligence-reports/" rel="noopener noreferrer" target="_blank">See the Intranet article (opens in new tab)</a>',
       ].join('<br />')
       return ['Interaction created', body]
     } else {
