@@ -6,15 +6,18 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import { SPACING } from '@govuk-react/constants'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
+import { Link } from 'govuk-react'
 
-import { GREY_1, GREY_4 } from '../../../client/utils/colours'
+import { investments } from '../../../lib/urls'
+
+import { BLUE, GREY_1, GREY_4 } from '../../../client/utils/colours'
 import Footer from '../Footer'
 import Main, { InnerContainer } from '../Main'
 import DataHubHeader from '../DataHubHeader'
 import WatchTextContent from '../WatchTextContent'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 
-import { StatusMessageHeader } from '../StatusMessageHeader'
+import StatusMessageHeader from '../StatusMessageHeader'
 
 import { EYBLeadResource } from '../../../client/components/Resource'
 import { buildEYBLeadBreadcrumbs } from '../../modules/Investments/utils'
@@ -61,6 +64,17 @@ const StyledButtonLink = styled.a({
   marginBottom: 10,
   float: 'right',
 })
+
+const StyledHeaderLink = styled(Link)`
+  color: ${BLUE};
+  text-decoration: underline;
+  &:hover {
+    color: ${BLUE};
+  }
+  &:visited {
+    color: ${BLUE};
+  }
+`
 
 const EYBLeadLayout = ({ id, children }) => {
   const [showVerticalNav, setShowVerticalNav] = useState(false)
@@ -111,7 +125,17 @@ const EYBLeadLayout = ({ id, children }) => {
                       )
                     )}
                   </BreadcrumbsWrapper>
-                  {eybLead.investmentProjects.length && <StatusMessageHeader />}
+                  {eybLead.investmentProjects.length > 0 && (
+                    <StatusMessageHeader>
+                      This EYB lead has been added as an investment project.{' '}
+                      <StyledHeaderLink
+                        key={`${investments.projects.details(eybLead.investmentProjects[0].id)}`}
+                        href={`${investments.projects.details(eybLead.investmentProjects[0].id)}`}
+                      >
+                        View the project
+                      </StyledHeaderLink>
+                    </StatusMessageHeader>
+                  )}
                   <GridRow>
                     <GridCol setWidth="two-thirds">
                       <StyledSuperheading data-test="superheading">

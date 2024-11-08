@@ -3,15 +3,16 @@ import styled from 'styled-components'
 import { spacing } from '@govuk-react/lib'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
 
-import { BLUE } from '../../utils/colours'
+import { BLACK, BLUE } from '../../utils/colours'
 
 const StatusMessageHeader = styled('div').attrs((props) => ({
-  colour: props.colour || BLUE,
+  borderColour: props.borderColour || BLUE,
+  textColour: props.textColour || BLACK,
   role: 'alert',
   'data-test': props['data-test'] || 'status-message-header',
 }))`
-  border: ${({ colour }) => `${SPACING.SCALE_1} solid ${colour}`};
-  color: ${({ colour }) => colour};
+  border: ${({ borderColour }) => `${SPACING.SCALE_1} solid ${borderColour}`};
+  color: ${({ textColour }) => textColour};
   font-weight: bold;
   line-height: 1.5;
   ${spacing.responsivePadding(4)};
@@ -20,7 +21,8 @@ const StatusMessageHeader = styled('div').attrs((props) => ({
 `
 
 StatusMessageHeader.propTypes = {
-  colour: PropTypes.string,
+  borderColour: PropTypes.string,
+  textColour: PropTypes.string,
   children: PropTypes.node.isRequired,
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 import StatusMessageHeader from '../'
 
-import { ERROR_COLOUR } from '../../../utils/colours'
+import { GREEN, RED } from '../../../utils/colours'
 
 export default {
   title: 'StatusMessageHeader',
@@ -14,8 +14,8 @@ export const Default = () => {
 
 export const CustomColour = () => {
   return (
-    <StatusMessageHeader colour={ERROR_COLOUR}>
-      An error message
+    <StatusMessageHeader borderColour={RED} textColour={GREEN}>
+      A status message in the header with a red border and green text
     </StatusMessageHeader>
   )
 }
