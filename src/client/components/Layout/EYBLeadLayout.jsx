@@ -125,7 +125,7 @@ const EYBLeadLayout = ({ id, children }) => {
                       )
                     )}
                   </BreadcrumbsWrapper>
-                  {eybLead.investmentProjects.length > 0 && (
+                  {eybLead.investmentProjects?.length > 0 && (
                     <StatusMessageHeader>
                       This EYB lead has been added as an investment project.{' '}
                       <StyledHeaderLink

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import { spacing } from '@govuk-react/lib'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
 
-import { BLACK, BLUE } from '../../utils/colours'
+import { BLUE } from '../../utils/colours'
 
 const StatusMessageHeader = styled('div').attrs((props) => ({
   borderColour: props.borderColour || BLUE,
-  textColour: props.textColour || BLACK,
+  textColour: props.textColour || BLUE,
   role: 'alert',
   'data-test': props['data-test'] || 'status-message-header',
 }))`
