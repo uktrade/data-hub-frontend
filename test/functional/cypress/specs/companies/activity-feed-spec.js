@@ -1,5 +1,8 @@
 import { collectionListRequest } from '../../support/actions'
-import { companyActivityOrderListFaker } from '../../fakers/company-activity'
+import {
+  companyActivityOrderListFaker,
+  companyActivityGreatListFaker,
+} from '../../fakers/company-activity'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -52,6 +55,43 @@ describe('Company activity feed', () => {
       urls.companies.detail(company.id),
       'Activity Feed'
     )
+  })
+  context('Great Export Enquiry activity feed', () => {
+    const greatData = companyActivityGreatListFaker(1)
+    beforeEach(() => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        greatData,
+        urls.companies.activity.index(company.id)
+      )
+    })
+
+    const activity = greatData[0]
+    it('displays the correct activity type label', () => {
+      cy.get('[data-test="great-kind-label"]').contains(
+        'great.gov.uk Enquiry',
+        {
+          matchCase: false,
+        }
+      )
+    })
+
+    it('displays the correct topic label', () => {
+      cy.get('[data-test="great-theme-label"]').contains('great.gov.uk', {
+        matchCase: false,
+      })
+    })
+
+    it('displays the correct sub-topic label', () => {
+      cy.get('[data-test="great-service-label"]').contains('service', {
+        matchCase: false,
+      })
+    })
+    it('displays the Great export enquiry subject', () => {
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy.get('h3').contains(`${activity.great.meta_subject}`)
+      )
+    })
   })
 
   context('Orders (OMIS)', () => {

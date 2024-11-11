@@ -7,6 +7,8 @@ import { formatMediumDate } from '../../../utils/date'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 
+const { isEmpty } = require('lodash')
+
 const AdviserEmail = (props) => (
   <AdviserResource.Inline {...props}>
     {(adviser) => adviser.email}
@@ -52,18 +54,29 @@ export const verifyLabel = (array, label) =>
 /*
   From the activity_source field from the API, determine which transformer to
   use to get the required data for the cards.
-*/
-export const transformActivity = (activity) => {
-  const activity_source = activity.activity_source
 
-  if (activity_source === 'interaction')
-    return transformInteractionToListItem(activity.interaction)
-  else if (activity_source === 'referral')
-    return transformReferralToListItem(activity)
-  else if (activity_source === 'investment')
-    return transformInvestmentToListItem(activity)
-  else if (activity_source === 'order')
-    return transformOrderToListItem(activity)
+  Removes any sources which does not have a transformer.
+*/
+export const transformActivities = (activities) => {
+  const transformedActivites = activities.results.map((activity) => {
+    const activity_source = activity.activity_source
+
+    if (activity_source === 'interaction')
+      return transformInteractionToListItem(activity.interaction)
+    else if (activity_source === 'referral')
+      return transformReferralToListItem(activity)
+    else if (activity_source === 'investment')
+      return transformInvestmentToListItem(activity)
+    else if (activity_source === 'order')
+      return transformOrderToListItem(activity)
+    else if (activity_source === 'great')
+      return transformGreatToListItem(activity)
+    else return
+  })
+
+  return transformedActivites.filter(
+    (transformedActivity) => !isEmpty(transformedActivity)
+  )
 }
 
 export const transformInteractionToListItem = ({
@@ -258,9 +271,41 @@ export const transformOrderToListItem = (activity) => {
   }
 }
 
+export const transformGreatToListItem = (activity) => {
+  const great = activity.great
+  return {
+    id: great.id,
+    metadata: [
+      { label: 'Date', value: formatMediumDate(great.created_on) },
+      {
+        label: 'Contact',
+        value: formattedContacts([great.contact]),
+      },
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: 'great.gov.uk Enquiry',
+        colour: TAGS.ACTIVITY_LABELS.KIND,
+        dataTest: 'great-kind-label',
+      },
+      {
+        text: 'service',
+        colour: TAGS.ACTIVITY_LABELS.SERVICE,
+        dataTest: 'great-service-label',
+      },
+      {
+        text: 'great.gov.uk',
+        colour: TAGS.ACTIVITY_LABELS.THEME,
+        dataTest: 'great-theme-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingText: `Enquiry ` + great.meta_subject,
+  }
+}
+
 export const transformResponseToCollection = (activities) => ({
   count: activities.count,
-  results: activities.results.map(transformActivity),
+  results: transformActivities(activities),
 })
 
 export const filterServiceNames = (services) => {
