@@ -359,41 +359,41 @@ describe('Editing the project summary', () => {
       )
     })
 
-    it('should display the investor type field label without the (optional) text', () => {
+    it('should display the investor type field label with the required for next stage text', () => {
       cy.get('[data-test="field-investor_type"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'New or existing investor (optional)',
+          label: 'New or existing investor (required for next stage)',
           optionsCount: 2,
         })
       })
     })
 
-    it('should render the actual land date field label without the word optional', () => {
+    it('should render the actual land date field label with the required for next stage text', () => {
       cy.get('[data-test="field-actual_land_date"]').then((element) => {
         assertFieldDateWithExactText({
           element,
-          label: 'Actual land date (optional)',
+          label: 'Actual land date (required for next stage)',
           hint: 'When activities under the investment project fully commenced',
         })
       })
     })
 
-    it('should render the level of investor involvement field label with the word optional', () => {
+    it('should render the level of investor involvement field label with the required for next stage text', () => {
       cy.get('[data-test="field-level_of_involvement"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Level of investor involvement (optional)',
+          label: 'Level of investor involvement (required for next stage)',
           placeholder: 'Choose a level of involvement',
         })
       })
     })
 
-    it('should render the specific programme field label with the word optional', () => {
+    it('should render the specific programme field label with the required for next stage text', () => {
       cy.get('[data-test="field-specific_programmes"]').then((element) => {
         assertFieldTypeaheadWithExactText({
           element,
-          label: 'Specific investment programme (optional)',
+          label: 'Specific investment programme (required for next stage)',
           placeholder: 'Choose a specific programme',
         })
       })

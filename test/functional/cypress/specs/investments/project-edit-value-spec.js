@@ -108,7 +108,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-total_investment"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Total investment',
+            label: 'Total investment (required)',
             hint: 'Enter the total number of GB pounds',
           })
         })
@@ -120,7 +120,7 @@ describe('Edit the value details of a project', () => {
         ).then((element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide capital expenditure value?',
+            label: 'Can client provide capital expenditure value? (required)',
             hint: 'Foreign equity only, excluding operational and R&D expenditure',
             optionsCount: 2,
           })
@@ -161,7 +161,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-number_new_jobs"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Number of new jobs',
+            label: 'Number of new jobs (required)',
           })
         })
       })
@@ -176,7 +176,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 3,
           })
         })
@@ -187,7 +187,7 @@ describe('Edit the value details of a project', () => {
           (element) => {
             assertFieldInput({
               element,
-              label: 'Number of safeguarded jobs',
+              label: 'Number of safeguarded jobs (required)',
             })
           }
         )
@@ -201,7 +201,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-government_assistance"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project receiving government financial assistance?',
+            label:
+              'Is this project receiving government financial assistance? (required)',
             optionsCount: 2,
           })
         })
@@ -212,7 +213,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does this project have budget for research and development?',
+              'Does this project have budget for research and development? (required)',
             optionsCount: 2,
           })
         })
@@ -222,7 +223,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project associated with a non-FDI R&D project?',
+            label:
+              'Is this project associated with a non-FDI R&D project? (required)',
             optionsCount: 2,
           })
         })
@@ -233,7 +235,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site? (required)',
             optionsCount: 2,
           })
         })
@@ -244,7 +246,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project? (required)',
             optionsCount: 2,
           })
         })
@@ -299,7 +301,7 @@ describe('Edit the value details of a project', () => {
         ).then((element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide total investment value?',
+            label: 'Can client provide total investment value? (required)',
             hint: 'Includes capital, operational and R&D expenditure',
             optionsCount: 3,
             value: convertBoolToInvertedYesNo(
@@ -310,7 +312,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-total_investment"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Total investment',
+            label: 'Total investment (required)',
             hint: 'Enter the total number of GB pounds',
             value: '1,000,000',
           })
@@ -323,7 +325,7 @@ describe('Edit the value details of a project', () => {
         ).then((element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide capital expenditure value?',
+            label: 'Can client provide capital expenditure value? (required)',
             hint: 'Foreign equity only, excluding operational and R&D expenditure',
             optionsCount: 3,
             value: convertBoolToInvertedYesNo(
@@ -358,7 +360,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-number_new_jobs"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Number of new jobs',
+            label: 'Number of new jobs (required)',
             value: capitalIntensiveProjectWithValue.number_new_jobs,
           })
         })
@@ -374,7 +376,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 3,
             value: capitalIntensiveProjectWithValue.average_salary.name,
           })
@@ -386,7 +388,7 @@ describe('Edit the value details of a project', () => {
           (element) => {
             assertFieldInput({
               element,
-              label: 'Number of safeguarded jobs',
+              label: 'Number of safeguarded jobs (required)',
               value: capitalIntensiveProjectWithValue.number_safeguarded_jobs,
             })
           }
@@ -401,7 +403,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-government_assistance"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project receiving government financial assistance?',
+            label:
+              'Is this project receiving government financial assistance? (required)',
             optionsCount: 2,
             value: convertBoolToYesNo(
               capitalIntensiveProjectWithValue.government_assistance
@@ -415,7 +418,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does this project have budget for research and development?',
+              'Does this project have budget for research and development? (required)',
             optionsCount: 2,
             value: convertBoolToYesNo(
               capitalIntensiveProjectWithValue.r_and_d_budget
@@ -428,7 +431,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project associated with a non-FDI R&D project?',
+            label:
+              'Is this project associated with a non-FDI R&D project? (required)',
             optionsCount: 2,
             value: convertBoolToYesNo(
               capitalIntensiveProjectWithValue.non_fdi_r_and_d_budget
@@ -442,7 +446,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site? (required)',
             optionsCount: 2,
             value: convertBoolToYesNo(
               capitalIntensiveProjectWithValue.new_tech_to_uk
@@ -456,7 +460,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project? (required)',
             optionsCount: 2,
             value: convertBoolToYesNo(
               capitalIntensiveProjectWithValue.export_revenue
@@ -738,7 +742,7 @@ describe('Edit the value details of a project', () => {
         ).then((element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide total investment value?',
+            label: 'Can client provide total investment value? (required)',
             hint: 'Includes capital, operational and R&D expenditure',
             optionsCount: 2,
           })
@@ -757,7 +761,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-total_investment"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Total investment',
+            label: 'Total investment (required)',
             hint: 'Enter the total number of GB pounds',
           })
         })
@@ -769,7 +773,7 @@ describe('Edit the value details of a project', () => {
         ).then((element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide capital expenditure value?',
+            label: 'Can client provide capital expenditure value? (required)',
             hint: 'Foreign equity only, excluding operational and R&D expenditure',
             optionsCount: 2,
           })
@@ -806,7 +810,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-number_new_jobs"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Number of new jobs',
+            label: 'Number of new jobs (required)',
           })
         })
       })
@@ -827,7 +831,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 3,
           })
         })
@@ -838,7 +842,7 @@ describe('Edit the value details of a project', () => {
           (element) => {
             assertFieldInput({
               element,
-              label: 'Number of safeguarded jobs',
+              label: 'Number of safeguarded jobs (required)',
             })
           }
         )
@@ -852,7 +856,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-government_assistance"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project receiving government financial assistance?',
+            label:
+              'Is this project receiving government financial assistance? (required)',
             optionsCount: 2,
           })
         })
@@ -863,7 +868,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does this project have budget for research and development?',
+              'Does this project have budget for research and development? (required)',
             optionsCount: 2,
           })
         })
@@ -873,7 +878,8 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Is this project associated with a non-FDI R&D project?',
+            label:
+              'Is this project associated with a non-FDI R&D project? (required)',
             optionsCount: 2,
           })
         })
@@ -884,7 +890,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+              'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site? (required)',
             optionsCount: 2,
           })
         })
@@ -895,7 +901,7 @@ describe('Edit the value details of a project', () => {
           assertFieldRadios({
             element,
             label:
-              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+              'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project? (required)',
             optionsCount: 2,
           })
         })
@@ -951,7 +957,7 @@ describe('Edit the value details of a project', () => {
         (element) => {
           assertFieldRadios({
             element,
-            label: 'Can client provide total investment value?',
+            label: 'Can client provide total investment value? (required)',
             hint: 'Includes capital, operational and R&D expenditure',
             optionsCount: 3,
             value: convertBoolToInvertedYesNo(
@@ -976,7 +982,7 @@ describe('Edit the value details of a project', () => {
       ).then((element) => {
         assertFieldRadios({
           element,
-          label: 'Can client provide capital expenditure value?',
+          label: 'Can client provide capital expenditure value? (required)',
           hint: 'Foreign equity only, excluding operational and R&D expenditure',
           optionsCount: 3,
           value: convertBoolToInvertedYesNo(
@@ -1007,7 +1013,7 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-number_new_jobs"]').then((element) => {
         assertFieldInput({
           element,
-          label: 'Number of new jobs',
+          label: 'Number of new jobs (required)',
           value: labourIntensiveProjectWithValue.number_new_jobs,
         })
       })
@@ -1027,7 +1033,7 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-average_salary"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'Average salary of new jobs',
+          label: 'Average salary of new jobs (required)',
           optionsCount: 3,
           value: labourIntensiveProjectWithValue.average_salary.name,
         })
@@ -1038,7 +1044,7 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-number_safeguarded_jobs"]').then((element) => {
         assertFieldInput({
           element,
-          label: 'Number of safeguarded jobs',
+          label: 'Number of safeguarded jobs (required)',
           value: labourIntensiveProjectWithValue.number_safeguarded_jobs,
         })
       })
@@ -1052,7 +1058,8 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-government_assistance"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'Is this project receiving government financial assistance?',
+          label:
+            'Is this project receiving government financial assistance? (required)',
           optionsCount: 2,
           value: convertBoolToYesNo(
             labourIntensiveProjectWithValue.government_assistance
@@ -1065,7 +1072,8 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-r_and_d_budget"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'Does this project have budget for research and development?',
+          label:
+            'Does this project have budget for research and development? (required)',
           optionsCount: 2,
           value: convertBoolToYesNo(
             labourIntensiveProjectWithValue.r_and_d_budget
@@ -1078,7 +1086,8 @@ describe('Edit the value details of a project', () => {
       cy.get('[data-test="field-non_fdi_r_and_d_budget"]').then((element) => {
         assertFieldRadios({
           element,
-          label: 'Is this project associated with a non-FDI R&D project?',
+          label:
+            'Is this project associated with a non-FDI R&D project? (required)',
           optionsCount: 2,
           value: convertBoolToYesNo(
             labourIntensiveProjectWithValue.non_fdi_r_and_d_budget
@@ -1092,7 +1101,7 @@ describe('Edit the value details of a project', () => {
         assertFieldRadios({
           element,
           label:
-            'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
+            'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site? (required)',
           optionsCount: 2,
           value: convertBoolToYesNo(
             labourIntensiveProjectWithValue.new_tech_to_uk
@@ -1106,7 +1115,7 @@ describe('Edit the value details of a project', () => {
         assertFieldRadios({
           element,
           label:
-            'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+            'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project? (required)',
           optionsCount: 2,
           value: convertBoolToYesNo(
             labourIntensiveProjectWithValue.export_revenue
@@ -1357,7 +1366,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 4,
           })
         })
@@ -1376,7 +1385,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 3,
           })
         })
@@ -1393,7 +1402,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-average_salary"]').then((element) => {
           assertFieldRadios({
             element,
-            label: 'Average salary of new jobs',
+            label: 'Average salary of new jobs (required)',
             optionsCount: 3,
           })
         })
@@ -1418,7 +1427,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="field-number_new_jobs"]').then((element) => {
           assertFieldInput({
             element,
-            label: 'Number of new jobs',
+            label: 'Number of new jobs (required for next stage)',
             hint: 'An expansion project must always have at least 1 new job',
           })
         })
