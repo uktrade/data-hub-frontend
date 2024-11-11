@@ -54,6 +54,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['investor_type']: STAGE.VERIFY_WIN_ID,
   ['level_of_involvement']: STAGE.VERIFY_WIN_ID,
   ['likelihood_to_land']: STAGE.ACTIVE_ID,
+  ['uk_region_locations']: STAGE.ASSIGN_PM_ID,
 }
 
 export const STAGE_OPTIONS = [

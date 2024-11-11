@@ -200,7 +200,10 @@ const EditProjectValue = () => {
               {project.fdiType?.name === 'Capital only' ? null : (
                 <>
                   <FieldInput
-                    label="Number of new jobs"
+                    label={
+                      'Number of new jobs' +
+                      isFieldOptionalForStageLabel('number_new_jobs', project)
+                    }
                     name="number_new_jobs"
                     type="number"
                     required={

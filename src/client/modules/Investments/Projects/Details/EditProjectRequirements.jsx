@@ -38,10 +38,7 @@ import {
   isFieldOptionalForStageLabel,
   validateFieldForStage,
 } from '../validators'
-import {
-  isUkRegionLocationsRequiredForStage,
-  siteDecidedValidator,
-} from './validators'
+import { siteDecidedValidator } from './validators'
 
 const ukObject = {
   name: 'United Kingdom',
@@ -127,9 +124,7 @@ const EditProjectRequirements = () => {
                 name="client_considering_other_countries"
                 label={
                   'Is the client considering other countries?' +
-                  (isUkRegionLocationsRequiredForStage(project)
-                    ? ''
-                    : ' (optional)')
+                  isFieldOptionalForStageLabel(project)
                 }
                 initialValue={transformBoolToRadioOptionWithNullCheck(
                   project.clientConsideringOtherCountries
@@ -165,9 +160,7 @@ const EditProjectRequirements = () => {
                 name="uk_region_locations"
                 label={
                   'Possible UK locations for this investment' +
-                  (isUkRegionLocationsRequiredForStage(project)
-                    ? ''
-                    : ' (optional)')
+                  isFieldOptionalForStageLabel('uk_region_locations', project)
                 }
                 initialValue={transformArrayForTypeahead(
                   project.ukRegionLocations
@@ -175,10 +168,12 @@ const EditProjectRequirements = () => {
                 placeholder="Select a UK region"
                 isMulti={true}
                 validate={(values, field, formFields) => {
-                  return isUkRegionLocationsRequiredForStage(project) &&
-                    !formFields.values[field.name]
-                    ? 'Select a possible UK location'
-                    : null
+                  return validateFieldForStage(
+                    field,
+                    formFields,
+                    project,
+                    'Select a possible UK location'
+                  )
                 }}
               />
               <FieldRadios
