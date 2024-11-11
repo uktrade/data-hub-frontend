@@ -118,10 +118,16 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
       client_considering_other_countries,
       competitor_countries
     ),
-    delivery_partners: delivery_partners.map((x) => x.value),
+    delivery_partners: delivery_partners
+      ? delivery_partners.map((x) => x.value)
+      : [],
     site_decided: transformRadioOptionToBoolWithNullCheck(site_decided),
-    strategic_drivers: strategic_drivers.map((x) => x.value),
-    uk_region_locations: uk_region_locations.map((x) => x.value),
+    strategic_drivers: strategic_drivers
+      ? strategic_drivers.map((x) => x.value)
+      : [],
+    uk_region_locations: uk_region_locations
+      ? uk_region_locations.map((x) => x.value)
+      : [],
   }
 
   return { ...siteDecidedObject, ...requirementsValues }

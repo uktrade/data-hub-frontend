@@ -68,7 +68,7 @@ const testProjectRequirementsForm = ({ project }, dataTest) => {
       (element) => {
         assertFieldRadios({
           element,
-          label: 'Is the client considering other countries?',
+          label: 'Is the client considering other countries? (required)',
           optionsCount: checkIfClientConsidering(
             project.client_considering_other_countries
           ),
