@@ -120,6 +120,10 @@ describe('EYB lead details', () => {
       })
     })
 
+    it('should not render the header notification banner', () => {
+      cy.get('[data-test="status-message-header"]').should('not.exist')
+    })
+
     it('should render the `Add investment project` button', () => {
       cy.get('[data-test="button-add-investment-project"]')
         .should('exist')
@@ -153,6 +157,7 @@ describe('EYB lead details', () => {
       landing_timeframe: 'In the next 6 months',
       company_website: null,
       company_name: 'Mars Temp',
+      investment_projects: [],
     })
     beforeEach(() => {
       setup(eybLeadWithoutCompany)
@@ -205,6 +210,10 @@ describe('EYB lead details', () => {
       })
     })
 
+    it('should not render the header notification banner', () => {
+      cy.get('[data-test="status-message-header"]').should('not.exist')
+    })
+
     it('should not render the `Add investment project` button', () => {
       cy.get('[data-test="button-add-investment-project"]').should('not.exist')
     })
@@ -231,6 +240,21 @@ describe('EYB lead details', () => {
           )
         )
         cy.wait('@getEYBLeadDetails')
+      })
+
+      it('should render the header notification banner', () => {
+        cy.get('[data-test="status-message-header"]')
+          .should('exist')
+          .should(
+            'have.text',
+            'This EYB lead has been added as an investment project. View the project'
+          )
+
+        cy.get('a:contains("View the project")').should(
+          'have.attr',
+          'href',
+          `/investments/projects/fc752802-e454-4c7c-bbfd-4bdd84759b84/details`
+        )
       })
 
       it('should not render the `Add investment project` button', () => {
