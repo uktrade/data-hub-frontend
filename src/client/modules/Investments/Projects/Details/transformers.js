@@ -185,7 +185,7 @@ export const transformProjectSummaryForApi = ({
 
   if (Array.isArray(specific_programmes)) {
     summaryPayload.specific_programmes = specific_programmes.map((x) => x.value)
-  } else if (typeof specific_programmes === 'object') {
+  } else if (typeof specific_programmes === 'object' && specific_programmes) {
     summaryPayload.specific_programmes = [specific_programmes?.value]
   } else {
     summaryPayload.specific_programmes = []
