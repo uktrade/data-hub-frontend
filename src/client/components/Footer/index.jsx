@@ -10,7 +10,7 @@ import {
   FOCUS_COLOUR,
   BLACK,
 } from '../../../client/utils/colours'
-import govukCrest from './govuk-crest-2x.png'
+import govukCrest from './govuk-crest.svg'
 
 import urls from '../../../lib/urls'
 import { InnerContainer } from '../Main'

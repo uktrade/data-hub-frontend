@@ -23,5 +23,17 @@
     "id": "02a063e3-dab8-40ca-92d3-8e9c2d9f812d",
     "order": 40,
     "name": "An exporter that DBT are helping maintain and grow their exports"
+  },
+  {
+    "id": "d23012c5-c1a6-459d-9e05-b3d1b8539025",
+    "order": 1040,
+    "disabled_on": "2018-06-20T10:19:43Z",
+    "name": "Is an exporter but exports currently account for less than 10% of its overall turnover"
+  },
+  {
+    "id": "9390cc45-6ebb-4005-866c-c87fd6d6dec0",
+    "order": 1080,
+    "disabled_on": "2018-06-20T10:19:43Z",
+    "name": "Is an exporter but has only won export orders in three countries or fewer"
   }
 ]

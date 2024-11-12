@@ -154,8 +154,7 @@ module.exports = {
                   const files = [
                     '/assets/images/icon-pointer.png',
                     '/assets/images/icon-pointer-2x.png',
-                    '/assets/images/govuk-crest.png',
-                    '/assets/images/govuk-crest-2x.png',
+                    '/assets/images/govuk-crest.svg',
                   ]
                   return !files.some((file) => url.includes(file))
                 },

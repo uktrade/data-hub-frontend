@@ -73,7 +73,7 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
 
   if (Array.isArray(specific_programmes)) {
     payload.specific_programmes = specific_programmes.map((x) => x.value)
-  } else if (typeof specific_programmes === 'object' && specific_programmes) {
+  } else if (typeof specific_programmes === 'object') {
     payload.specific_programmes = [specific_programmes.value]
   } else {
     payload.specific_programmes = []

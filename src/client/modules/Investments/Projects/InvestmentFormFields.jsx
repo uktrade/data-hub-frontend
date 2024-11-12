@@ -38,11 +38,6 @@ import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import { validateIfDateInPast } from '../../../components/Form/validators'
 import { FDI_TYPES } from './constants'
-import {
-  isFieldOptionalForStageLabel,
-  isFieldRequiredForStage,
-  validateFieldForStage,
-} from './validators'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -289,106 +284,72 @@ export const FieldEstimatedLandDate = ({ initialValue = null }) => (
 export const FieldLikelihoodOfLanding = ({
   initialValue = null,
   autoScroll,
-  project,
+  optionalText = true,
 }) => (
   <ResourceOptionsField
     name="likelihood_to_land"
-    label={
-      'Likelihood of landing' +
-      isFieldOptionalForStageLabel('likelihood_to_land', project)
-    }
+    label={'Likelihood of landing' + (optionalText ? ' (optional)' : '')}
     resource={LikelihoodToLandResource}
     field={FieldTypeahead}
     placeholder="Select a likelihood of landing value"
     initialValue={initialValue}
     autoScroll={autoScroll}
-    validate={(values, field, formFields) => {
-      return validateFieldForStage(
-        field,
-        formFields,
-        project,
-        'Select a likelihood of landing value'
-      )
-    }}
   />
 )
 
-export const FieldActualLandDate = ({ initialValue = null, project }) => (
+export const FieldActualLandDate = ({
+  initialValue = null,
+  optionalText = true,
+}) => (
   <FieldDate
     name="actual_land_date"
-    label={
-      'Actual land date' +
-      isFieldOptionalForStageLabel('actual_land_date', project)
-    }
+    label={'Actual land date' + (optionalText ? ' (optional)' : '')}
     hint="The date investment project activities started"
     invalid="Enter a valid actual land date"
     initialValue={initialValue}
-    validate={(values, field, formFields) => {
-      let result = validateIfDateInPast(values)
-      if (!result) {
-        return (!formFields.values[field.name].day ||
-          !formFields.values[field.name].month ||
-          !formFields.values[field.name].year) &&
-          isFieldRequiredForStage(field.name, project)
-          ? 'Enter an actual land date'
-          : null
-      }
-      return result
-    }}
+    validate={validateIfDateInPast}
   />
 )
 
 export const FieldInvestmentInvestorType = ({
   label,
   initialValue = null,
-  project,
+  optionalText = true,
 }) => (
   <ResourceOptionsField
     name="investor_type"
-    label={label + isFieldOptionalForStageLabel('investor_type', project)}
+    label={label + (optionalText ? ' (optional)' : '')}
     resource={InvestmentInvestorTypesResource}
     field={FieldRadios}
     initialValue={initialValue}
     placeholder="Choose an investor type"
-    validate={(values, field, formFields) => {
-      return validateFieldForStage(
-        field,
-        formFields,
-        project,
-        'Select an investor type'
-      )
-    }}
   />
 )
 
-export const FieldLevelOfInvolvement = ({ initialValue = null, project }) => (
+export const FieldLevelOfInvolvement = ({
+  initialValue = null,
+  optionalText = true,
+}) => (
   <ResourceOptionsField
     name="level_of_involvement"
     label={
-      'Level of investor involvement' +
-      isFieldOptionalForStageLabel('level_of_involvement', project)
+      'Level of investor involvement' + (optionalText ? ' (optional)' : '')
     }
     resource={LevelOfInvolvementResource}
     field={FieldTypeahead}
     initialValue={initialValue}
     placeholder="Choose a level of involvement"
-    validate={(values, field, formFields) => {
-      return validateFieldForStage(
-        field,
-        formFields,
-        project,
-        'Select a level of involvement'
-      )
-    }}
   />
 )
 
-export const FieldSpecificProgramme = ({ initialValue = null, project }) => (
+export const FieldSpecificProgramme = ({
+  initialValue = [],
+  optionalText = true,
+}) => (
   <ResourceOptionsField
     name="specific_programmes"
     label={
-      'Specific investment programme' +
-      isFieldOptionalForStageLabel('specific_programmes', project)
+      'Specific investment programme' + (optionalText ? ' (optional)' : '')
     }
     resource={SpecificInvestmentProgrammesResource}
     field={FieldTypeahead}
@@ -398,13 +359,5 @@ export const FieldSpecificProgramme = ({ initialValue = null, project }) => (
     resultToOptions={(result) =>
       idNamesToValueLabels(result.filter((option) => !option.disabledOn))
     }
-    validate={(values, field, formFields) => {
-      return validateFieldForStage(
-        field,
-        formFields,
-        project,
-        'Select a specific programme'
-      )
-    }}
   />
 )
