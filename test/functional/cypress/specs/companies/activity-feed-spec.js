@@ -92,6 +92,16 @@ describe('Company activity feed', () => {
         cy.get('h3').contains(`${activity.great_export_enquiry.meta_subject}`)
       )
     })
+    it('displays the Great export enquiry contact', () => {
+      cy.get('[data-test="metadata-item"]').contains(
+        `${activity.great_export_enquiry.contact.name}`
+      )
+    })
+    it('displays the Great export enquiry comment', () => {
+      cy.get('[data-test="metadata-item"]').contains(
+        `${activity.great_export_enquiry.data_enquiry}`
+      )
+    })
   })
 
   context('Orders (OMIS)', () => {

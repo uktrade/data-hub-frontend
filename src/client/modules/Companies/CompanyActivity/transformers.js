@@ -40,6 +40,11 @@ export const formattedContacts = (contacts) =>
     </span>
   ))
 
+export const truncateEnquiry = (enquiry, maxLength = 200) =>
+  enquiry.length < maxLength
+    ? enquiry
+    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
+
 export const formattedAdvisers = (advisers) =>
   !!advisers.length &&
   advisers.map((item) => (
@@ -280,6 +285,10 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
       {
         label: 'Contact',
         value: formattedContacts([great.contact]),
+      },
+      {
+        label: 'Comment',
+        value: truncateEnquiry(great.data_enquiry),
       },
     ].filter(({ value }) => Boolean(value)),
     tags: [
