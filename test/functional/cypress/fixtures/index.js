@@ -65,8 +65,6 @@ module.exports = {
     investmentWithAlternateEvaluation: require('./investment/investment-evaluation-complete-with-negative-values.json'),
     investmentWithoutValue: require('./investment/capital-investment-no-value.json'),
     projectDocumentDownlad: require('../../../sandbox/fixtures/v3/investment/project-document-download.json'),
-    investmentMetaListComplete: require('./investment/investment-meta-list-complete.json'),
-    investmentMetaListNotComplete: require('./investment/investment-meta-list-not-complete.json'),
   },
   event: {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
