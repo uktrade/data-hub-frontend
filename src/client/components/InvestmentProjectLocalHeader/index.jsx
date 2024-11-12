@@ -66,26 +66,34 @@ const MetaListItem = ({ text, children }) => (
 const InvestmentProjectLocalHeader = ({ investment }) => (
   <>
     <MetaList data-test="meta-list">
-      <MetaListItem text={'Status'}>
+      <MetaListItem text={'Status'} data-test="meta-list-item-status">
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>
       </MetaListItem>
-      <MetaListItem text={'Project code'}>
+      <MetaListItem
+        text={'Project code'}
+        data-test="meta-list-item-project-code"
+      >
         {investment.projectCode}
       </MetaListItem>
-      <MetaListItem text="Valuation">
+      <MetaListItem text="Valuation" data-test="meta-list-item-valuation">
         {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
-      <MetaListItem text="Created on">
+      <MetaListItem text="Created on" data-test="meta-list-item-created-on">
         {formatMediumDateTime(investment.createdOn)}
       </MetaListItem>
       {investment.createdBy?.ditTeam?.name && (
-        <MetaListItem text="Created by">
+        <MetaListItem text="Created by" data-test="meta-list-item-created-by">
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
       {investment.eybLeads?.length && (
-        <MetaListItem text="Generated from">EYB lead</MetaListItem>
+        <MetaListItem
+          text="Generated from"
+          data-test="meta-list-item-generated-from"
+        >
+          EYB lead
+        </MetaListItem>
       )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>

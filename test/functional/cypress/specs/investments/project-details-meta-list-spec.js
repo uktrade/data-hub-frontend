@@ -18,17 +18,17 @@ describe('Investment project details', () => {
     it('should render the meta list with all expected content', () => {
       const item = fixtures.investment.investmentMetaListComplete
       cy.get('[data-test="meta-list"]').should('exist')
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-status"]')
         .contains('Status')
         .next('span')
         .should('contain', upperFirst(item.status) + ' - change')
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-project-code"]')
         .contains('Project code')
         .next('span')
         .should('contain', item.project_code)
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-valuation"]')
         .contains('Valuation')
         .next('span')
         .should(
@@ -36,17 +36,17 @@ describe('Investment project details', () => {
           item.valueComplete ? 'Project valued' : 'Not yet valued'
         )
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-created-on"]')
         .contains('Created on')
         .next('span')
         .should('contain', formatMediumDateTime(item.created_on))
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-created-by"]')
         .contains('Created by')
         .next('span')
         .should('contain', item.created_by.dit_team.name)
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-generated-from"]')
         .contains('Generated from')
         .next('span')
         .should('contain', 'EYB lead')
@@ -65,17 +65,17 @@ describe('Investment project details', () => {
     it('should render the meta list with all expected content', () => {
       const item = fixtures.investment.investmentMetaListNotComplete
       cy.get('[data-test="meta-list"]').should('exist')
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-status"]')
         .contains('Status')
         .next('span')
         .should('contain', upperFirst(item.status) + ' - change')
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-project-code"]')
         .contains('Project code')
         .next('span')
         .should('contain', item.project_code)
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-valuation"]')
         .contains('Valuation')
         .next('span')
         .should(
@@ -83,13 +83,13 @@ describe('Investment project details', () => {
           item.valueComplete ? 'Project valued' : 'Not yet valued'
         )
 
-      cy.get('span')
+      cy.get('[data-test="meta-list-item-created-on"]')
         .contains('Created on')
         .next('span')
         .should('contain', formatMediumDateTime(item.created_on))
 
-      cy.get('span').contains('Created by').should('not.exist')
-      cy.get('span').contains('Generated from').should('not.exist')
+      cy.get('[data-test="meta-list-item-created-by"]').should('not.exist')
+      cy.get('[data-test="meta-list-item-generated-from"]').should('not.exist')
     })
   })
 })
