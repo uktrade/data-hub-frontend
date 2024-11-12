@@ -49,9 +49,9 @@ const StyledStatusMessage = styled(StatusMessage)({
   backgroundColor: WHITE,
 })
 
-const MetaListItem = ({ text, children }) => (
+const MetaListItem = ({ text, dataTest, children }) => (
   <StyledListItem>
-    <StyledListItemText>{text}</StyledListItemText>
+    <StyledListItemText data-test={dataTest}>{text}</StyledListItemText>
     <StyledChild>{children}</StyledChild>
   </StyledListItem>
 )
@@ -66,31 +66,31 @@ const MetaListItem = ({ text, children }) => (
 const InvestmentProjectLocalHeader = ({ investment }) => (
   <>
     <MetaList data-test="meta-list">
-      <MetaListItem text={'Status'} data-test="meta-list-item-status">
+      <MetaListItem text={'Status'} dataTest="meta-list-item-status">
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>
       </MetaListItem>
       <MetaListItem
         text={'Project code'}
-        data-test="meta-list-item-project-code"
+        dataTest="meta-list-item-project-code"
       >
         {investment.projectCode}
       </MetaListItem>
-      <MetaListItem text="Valuation" data-test="meta-list-item-valuation">
+      <MetaListItem text="Valuation" dataTest="meta-list-item-valuation">
         {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
-      <MetaListItem text="Created on" data-test="meta-list-item-created-on">
+      <MetaListItem text="Created on" dataTest="meta-list-item-created-on">
         {formatMediumDateTime(investment.createdOn)}
       </MetaListItem>
       {investment.createdBy?.ditTeam?.name && (
-        <MetaListItem text="Created by" data-test="meta-list-item-created-by">
+        <MetaListItem text="Created by" dataTest="meta-list-item-created-by">
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
       {investment.eybLeads?.length && (
         <MetaListItem
           text="Generated from"
-          data-test="meta-list-item-generated-from"
+          dataTest="meta-list-item-generated-from"
         >
           EYB lead
         </MetaListItem>
