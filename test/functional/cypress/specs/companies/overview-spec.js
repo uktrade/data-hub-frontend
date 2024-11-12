@@ -591,10 +591,10 @@ describe('Company overview page', () => {
       const activity = greatList[0]
       cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
       cy.get('[data-test="activity-subject"]').contains(
-        activity.great.meta_subject
+        activity.great_export_enquiry.meta_subject
       )
       cy.get('[data-test="activity-summary"]').contains(
-        `Enquirer ${activity.great.contact.first_name} ${activity.great.contact.last_name}`
+        `Enquirer ${activity.great_export_enquiry.contact.first_name} ${activity.great_export_enquiry.contact.last_name}`
       )
     })
   })

@@ -91,7 +91,7 @@ const companyActivityOrderFaker = (overrides = {}, orderOverrides = {}) => ({
 
 const companyActivityGreatFaker = (overrides = {}, orderOverrides = {}) => ({
   ...companyActivityFaker(),
-  activity_source: 'great',
+  activity_source: 'great_export_enquiry',
   great: {
     id: faker.string.uuid(),
     created_on: relativeDateFaker({ minDays: -100, maxDays: 365 }),

@@ -69,8 +69,8 @@ export const transformActivities = (activities) => {
       return transformInvestmentToListItem(activity)
     else if (activity_source === 'order')
       return transformOrderToListItem(activity)
-    else if (activity_source === 'great')
-      return transformGreatToListItem(activity)
+    else if (activity_source === 'great_export_enquiry')
+      return transformGreatExportEnquiryToListItem(activity)
     else return
   })
 
@@ -271,8 +271,8 @@ export const transformOrderToListItem = (activity) => {
   }
 }
 
-export const transformGreatToListItem = (activity) => {
-  const great = activity.great
+export const transformGreatExportEnquiryToListItem = (activity) => {
+  const great = activity.great_export_enquiry
   return {
     id: great.id,
     metadata: [
