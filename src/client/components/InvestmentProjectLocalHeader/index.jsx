@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled, { ThemeProvider } from 'styled-components'
-import { upperFirst } from 'lodash'
+import { kebabCase, upperFirst } from 'lodash'
 
 import Timeline from '../Timeline'
 
@@ -49,12 +49,18 @@ const StyledStatusMessage = styled(StatusMessage)({
   backgroundColor: WHITE,
 })
 
-const MetaListItem = ({ text, dataTest, children }) => (
-  <StyledListItem>
-    <StyledListItemText data-test={dataTest}>{text}</StyledListItemText>
-    <StyledChild>{children}</StyledChild>
-  </StyledListItem>
-)
+const MetaListItem = ({ text, children }) => {
+  return (
+    <StyledListItem>
+      <StyledListItemText
+        data-test={kebabCase(`meta-list-item-${text.toLowerCase()}`)}
+      >
+        {text}
+      </StyledListItemText>
+      <StyledChild>{children}</StyledChild>
+    </StyledListItem>
+  )
+}
 
 /**
  * The **InvestmentProjectLocalHeader** contains the following:
@@ -66,7 +72,7 @@ const MetaListItem = ({ text, dataTest, children }) => (
 const InvestmentProjectLocalHeader = ({ investment }) => (
   <>
     <MetaList data-test="meta-list">
-      <MetaListItem text={'Status'} dataTest="meta-list-item-status">
+      <MetaListItem text={'Status'}>
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>
       </MetaListItem>
@@ -76,14 +82,14 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
       >
         {investment.projectCode}
       </MetaListItem>
-      <MetaListItem text="Valuation" dataTest="meta-list-item-valuation">
+      <MetaListItem text="Valuation">
         {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
-      <MetaListItem text="Created on" dataTest="meta-list-item-created-on">
+      <MetaListItem text="Created on">
         {formatMediumDateTime(investment.createdOn)}
       </MetaListItem>
       {investment.createdBy?.ditTeam?.name && (
-        <MetaListItem text="Created by" dataTest="meta-list-item-created-by">
+        <MetaListItem text="Created by">
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
