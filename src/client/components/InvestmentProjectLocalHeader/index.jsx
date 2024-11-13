@@ -76,10 +76,7 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
         {upperFirst(investment.status)} -{' '}
         <a href={urls.investments.projects.status(investment.id)}>change</a>
       </MetaListItem>
-      <MetaListItem
-        text={'Project code'}
-        dataTest="meta-list-item-project-code"
-      >
+      <MetaListItem text={'Project code'}>
         {investment.projectCode}
       </MetaListItem>
       <MetaListItem text="Valuation">
@@ -94,12 +91,7 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
         </MetaListItem>
       )}
       {investment.eybLeads?.length && (
-        <MetaListItem
-          text="Generated from"
-          dataTest="meta-list-item-generated-from"
-        >
-          EYB lead
-        </MetaListItem>
+        <MetaListItem text="Generated from">EYB lead</MetaListItem>
       )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
