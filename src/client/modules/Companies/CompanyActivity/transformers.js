@@ -66,17 +66,20 @@ export const transformActivities = (activities) => {
   const transformedActivites = activities.results.map((activity) => {
     const activity_source = activity.activity_source
 
-    if (activity_source === 'interaction')
-      return transformInteractionToListItem(activity.interaction)
-    else if (activity_source === 'referral')
-      return transformReferralToListItem(activity)
-    else if (activity_source === 'investment')
-      return transformInvestmentToListItem(activity)
-    else if (activity_source === 'order')
-      return transformOrderToListItem(activity)
-    else if (activity_source === 'great_export_enquiry')
-      return transformGreatExportEnquiryToListItem(activity)
-    else return
+    switch (activity_source) {
+      case 'interaction':
+        return transformInteractionToListItem(activity.interaction)
+      case 'referral':
+        return transformReferralToListItem(activity)
+      case 'investment':
+        return transformInvestmentToListItem(activity)
+      case 'order':
+        return transformOrderToListItem(activity)
+      case 'great_export_enquiry':
+        return transformGreatExportEnquiryToListItem(activity)
+      default:
+        return {}
+    }
   })
 
   return transformedActivites.filter(
@@ -313,7 +316,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
 }
 
 export const transformResponseToCollection = (activities) => ({
-  count: activities.count,
+  count: transformActivities(activities).length,
   results: transformActivities(activities),
 })
 
