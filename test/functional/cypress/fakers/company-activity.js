@@ -89,6 +89,22 @@ const companyActivityOrderFaker = (overrides = {}, orderOverrides = {}) => ({
   ...overrides,
 })
 
+const companyActivityGreatFaker = (overrides = {}, orderOverrides = {}) => ({
+  ...companyActivityFaker(),
+  activity_source: 'great_export_enquiry',
+  great_export_enquiry: {
+    id: faker.string.uuid(),
+    created_on: relativeDateFaker({ minDays: -100, maxDays: 365 }),
+    meta_full_name: faker.person.fullName(),
+    meta_email_address: faker.internet.email(),
+    contact: userFaker({ job_title: faker.person.jobTitle() }),
+    meta_subject: faker.company.buzzPhrase(),
+    data_enquiry: faker.lorem.paragraph(),
+    ...orderOverrides,
+  },
+  ...overrides,
+})
+
 const companyActivityInteractionListFaker = (length = 1, overrides) =>
   listFaker({
     fakerFunction: companyActivityInteractionFaker,
@@ -103,6 +119,19 @@ const companyActivityOrderListFaker = (
 ) => {
   return listFakerAdditionalOverrides({
     fakerFunction: companyActivityOrderFaker,
+    length,
+    overrides,
+    additionalOverrides: orderOverrides,
+  })
+}
+
+const companyActivityGreatListFaker = (
+  length = 1,
+  overrides,
+  orderOverrides
+) => {
+  return listFakerAdditionalOverrides({
+    fakerFunction: companyActivityGreatFaker,
     length,
     overrides,
     additionalOverrides: orderOverrides,
@@ -128,6 +157,7 @@ export {
   companyActivityInteractionListFaker,
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
+  companyActivityGreatListFaker,
 }
 
 export default companyActivityInteractionListFaker
