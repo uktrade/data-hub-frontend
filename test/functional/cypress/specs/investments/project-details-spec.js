@@ -213,6 +213,7 @@ describe('Investment project details', () => {
       cy.get('[data-test="add-value-button"]').should('not.exist')
     })
   })
+
   context(
     'When viewing a Verify Win project with all the alternate value fields',
     () => {

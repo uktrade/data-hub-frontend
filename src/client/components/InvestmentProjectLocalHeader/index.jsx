@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 import styled, { ThemeProvider } from 'styled-components'
-import { upperFirst } from 'lodash'
+import { kebabCase, upperFirst } from 'lodash'
 
 import Timeline from '../Timeline'
 
@@ -49,12 +49,18 @@ const StyledStatusMessage = styled(StatusMessage)({
   backgroundColor: WHITE,
 })
 
-const MetaListItem = ({ text, children }) => (
-  <StyledListItem>
-    <StyledListItemText>{text}</StyledListItemText>
-    <StyledChild>{children}</StyledChild>
-  </StyledListItem>
-)
+const MetaListItem = ({ text, children }) => {
+  return (
+    <StyledListItem>
+      <StyledListItemText
+        data-test={kebabCase(`meta-list-item-${text.toLowerCase()}`)}
+      >
+        {text}
+      </StyledListItemText>
+      <StyledChild>{children}</StyledChild>
+    </StyledListItem>
+  )
+}
 
 /**
  * The **InvestmentProjectLocalHeader** contains the following:
@@ -83,6 +89,9 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
         <MetaListItem text="Created by">
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
+      )}
+      {investment.eybLeads?.length && (
+        <MetaListItem text="Generated from">EYB lead</MetaListItem>
       )}
     </MetaList>
     <ThemeProvider theme={timelineTheme}>
