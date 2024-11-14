@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, H3 } from 'govuk-react'
+import { Link } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
@@ -60,7 +60,7 @@ const StyledLinkHeader = styled('h3')`
 // e.g. the positional arguments should be passed as an object
 export const TitleRenderer = (title, url, margin = { bottom: 10 }) => (
   <StyledLinkHeader margin={margin}>
-    {url ? <Link href={url}>{title}</Link> : <H3>{title}</H3>}
+    <Link href={url}>{title}</Link>
   </StyledLinkHeader>
 )
 

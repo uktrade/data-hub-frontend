@@ -1,5 +1,3 @@
-import { TAG_COLOURS } from '../../../components/Tag/index'
-
 export const LABELS = {
   activityType: 'Activity type',
   interaction: 'Interaction',
@@ -35,11 +33,6 @@ export const TAGS = {
       text: 'Outstanding referral',
       colour: 'blue',
     },
-  },
-  ACTIVITY_LABELS: {
-    KIND: TAG_COLOURS.GREY,
-    THEME: TAG_COLOURS.GOV_BLUE,
-    SERVICE: TAG_COLOURS.BLUE,
   },
 }
 

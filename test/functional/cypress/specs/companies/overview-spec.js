@@ -6,7 +6,6 @@ import {
 import { getCollectionList } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import companyActivityListFaker, {
-  companyActivityGreatListFaker,
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
@@ -402,7 +401,6 @@ describe('Company overview page', () => {
       {},
       { primary_market: null }
     )
-    const greatList = companyActivityGreatListFaker(1)
     beforeEach(() => {
       collectionListRequest(
         'v4/search/company-activity',
@@ -580,22 +578,6 @@ describe('Company overview page', () => {
         .parent()
         .next()
         .contains('Joe Bloggs organised Best service')
-    })
-
-    it('should display Data Hub great activity', () => {
-      collectionListRequest(
-        'v4/search/company-activity',
-        greatList,
-        urls.companies.overview.index(fixtures.company.venusLtd.id)
-      )
-      const activity = greatList[0]
-      cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
-      cy.get('[data-test="activity-subject"]').contains(
-        activity.great_export_enquiry.meta_subject
-      )
-      cy.get('[data-test="activity-summary"]').contains(
-        `Enquirer ${activity.great_export_enquiry.contact.first_name} ${activity.great_export_enquiry.contact.last_name}`
-      )
     })
   })
 
