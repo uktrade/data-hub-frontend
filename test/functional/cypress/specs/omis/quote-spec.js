@@ -6,7 +6,7 @@ import {
   assertLocalHeader,
 } from '../../support/assertions'
 import {
-  formatMediumDate,
+  formatMediumDateParsed,
   formatMediumDateTime,
 } from '../../../../../src/client/utils/date'
 
@@ -86,7 +86,7 @@ describe('Order quote', () => {
         .should('have.text', 'Will expire on')
       cy.get('[data-test="expiry-date"]')
         .should('exist')
-        .should('have.text', formatMediumDate(quotePreview.expires_on))
+        .should('have.text', formatMediumDateParsed(quotePreview.expires_on))
     })
 
     it('should display the warning message', () => {
@@ -140,7 +140,10 @@ describe('Order quote', () => {
           .should('have.text', 'Expired on')
         cy.get('[data-test="expires-on-date"]')
           .should('exist')
-          .should('have.text', formatMediumDate(quoteNotAccepted.expires_on))
+          .should(
+            'have.text',
+            formatMediumDateParsed(quoteNotAccepted.expires_on)
+          )
       })
 
       assertSenderDetails(quoteNotAccepted)
