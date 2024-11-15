@@ -280,7 +280,7 @@ describe('Editing the project summary', () => {
         assertFieldDateShort({
           element,
           label: 'Estimated land date',
-          value: { day: '', month: '01', year: '2020' },
+          value: { day: '', month: '1', year: '2020' },
           hint: 'When activities planned under the investment project will have fully commenced',
         })
       })

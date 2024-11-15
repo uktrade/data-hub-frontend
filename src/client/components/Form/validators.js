@@ -1,4 +1,4 @@
-import { isDateInFuture } from '../../utils/date'
+import { isDateInFutureParsed } from '../../utils/date'
 import { transformDateObjectToDateString } from '../../transformers'
 
 const EMAIL_PATTERN =
@@ -14,7 +14,12 @@ export const email = (x) =>
 export const number = (x, errorMessage) =>
   !x || IS_NUMBER.test(x) ? null : errorMessage
 
-export const validateIfDateInPast = (values) =>
-  isDateInFuture(transformDateObjectToDateString(values))
-    ? 'Actual land date cannot be in the future'
+export const validateIfDateInPast = (date) => {
+  const transformedDate = transformDateObjectToDateString(date)
+
+  return transformedDate
+    ? isDateInFutureParsed(transformedDate)
+      ? 'Actual land date cannot be in the future'
+      : null
     : null
+}
