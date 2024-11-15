@@ -40,7 +40,7 @@ export const formattedContacts = (contacts) =>
     </span>
   ))
 
-export const truncateEnquiry = (enquiry, maxLength = 200) =>
+export const truncateData = (enquiry, maxLength = 200) =>
   enquiry.length < maxLength
     ? enquiry
     : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
@@ -291,7 +291,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
       },
       {
         label: 'Comment',
-        value: truncateEnquiry(great.data_enquiry),
+        value: truncateData(great.data_enquiry),
       },
     ].filter(({ value }) => Boolean(value)),
     tags: [
@@ -311,7 +311,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
         dataTest: 'great-theme-label',
       },
     ].filter(({ text }) => Boolean(text)),
-    headingText: `Enquiry ` + great.meta_subject,
+    headingText: `Enquiry ` + truncateData(great.meta_subject, 35),
   }
 }
 
