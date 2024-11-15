@@ -316,7 +316,11 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
 }
 
 export const transformResponseToCollection = (activities) => ({
-  count: transformActivities(activities).length,
+  // activities.count comes from the backend because the frontend
+  // only collects the paginated amount on each request. If a new data
+  // source is added to the backend and not the frontend this count
+  // will show more activities than are displayed until the frontend is updated.
+  count: activities.count,
   results: transformActivities(activities),
 })
 
