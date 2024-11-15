@@ -31,7 +31,7 @@ describe('DBT Permission', () => {
     })
 
     it('should display all five dashboard tabs', () => {
-      cy.get('[data-test="tab-item"]').as('tabItems')
+      cy.get('[role="tab"]').as('tabItems')
       assertLocalNav('@tabItems', [
         'Tasks',
         'Company lists',
