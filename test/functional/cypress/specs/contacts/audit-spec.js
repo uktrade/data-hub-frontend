@@ -61,7 +61,7 @@ describe('Contact audit history', () => {
       cy.get('@collectionItems').should('have.length', 10)
     })
 
-    context('when rendering an entry wehere no changes were made', () => {
+    context('when rendering an entry where no changes were made', () => {
       it('should only render the updated on and no changes text', () => {
         cy.get('@listItem1')
           .should('exist')
