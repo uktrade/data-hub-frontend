@@ -196,6 +196,6 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
 }
 
 export const transformResponseToCollection = (activities) => ({
-  count: transformActivity(activities).length,
+  count: activities.count,
   results: transformActivity(activities),
 })
