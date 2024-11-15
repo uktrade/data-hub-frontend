@@ -1,6 +1,9 @@
 import { isBoolean, isNumber } from 'lodash'
 
-import { formatMediumDateTime, isDateValid } from '../../../../utils/date'
+import {
+  formatMediumDateTimeWithoutParsing,
+  isUnparsedDateValid,
+} from '../../../../utils/date'
 import { COMPANY_FIELD_NAME_TO_LABEL_MAP, HEADQUARTER_TYPES } from './constants'
 import {
   ARCHIVED,
@@ -37,8 +40,8 @@ export const getValue = (value, field) =>
             maximumSignificantDigits: 2,
           })
         : value.toString()
-      : isDateValid(value)
-        ? formatMediumDateTime(value)
+      : isUnparsedDateValid(value)
+        ? formatMediumDateTimeWithoutParsing(value)
         : field === 'Headquarter type'
           ? HEADQUARTER_TYPES[value] || NOT_SET
           : value || NOT_SET

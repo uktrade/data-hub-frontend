@@ -111,7 +111,7 @@ describe('View large capital investor details page', () => {
         assertFieldDate({
           element,
           label: 'Date of most recent checks',
-          value: { day: '29', month: '04', year: '2019' },
+          value: { day: '29', month: '4', year: '2019' },
         })
       })
     })
