@@ -11,6 +11,11 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 const company = fixtures.company.allActivitiesCompany
 const company_activities = fixtures.company.activities
 
+const truncateData = (enquiry, maxLength = 200) =>
+  enquiry.length < maxLength
+    ? enquiry
+    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
+
 /*
  * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
  * We will be able to gradually unskip the individual contexts once we have the new integrations in place.
@@ -67,6 +72,13 @@ describe('Company activity feed', () => {
     })
 
     const activity = greatData[0]
+    const great_subject = truncateData(
+      activity.great_export_enquiry.meta_subject,
+      35
+    )
+    const great_comment = truncateData(
+      activity.great_export_enquiry.data_enquiry
+    )
     it('displays the correct activity type label', () => {
       cy.get('[data-test="great-kind-label"]').contains(
         'great.gov.uk Enquiry',
@@ -89,7 +101,7 @@ describe('Company activity feed', () => {
     })
     it('displays the Great export enquiry subject', () => {
       cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('h3').contains(`${activity.great_export_enquiry.meta_subject}`)
+        cy.get('h3').contains(`Enquiry ${great_subject}`)
       )
     })
     it('displays the Great export enquiry contact', () => {
@@ -98,9 +110,7 @@ describe('Company activity feed', () => {
       )
     })
     it('displays the Great export enquiry comment', () => {
-      cy.get('[data-test="metadata-item"]').contains(
-        `${activity.great_export_enquiry.data_enquiry}`
-      )
+      cy.get('[data-test="metadata-item"]').contains(`${great_comment}`)
     })
   })
 

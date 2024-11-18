@@ -128,13 +128,13 @@ const companyActivityOrderListFaker = (
 const companyActivityGreatListFaker = (
   length = 1,
   overrides,
-  orderOverrides
+  greatOverrides
 ) => {
   return listFakerAdditionalOverrides({
     fakerFunction: companyActivityGreatFaker,
     length,
     overrides,
-    additionalOverrides: orderOverrides,
+    additionalOverrides: greatOverrides,
   })
 }
 
