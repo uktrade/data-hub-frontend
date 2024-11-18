@@ -13,11 +13,6 @@ export const INVESTMENT_PROJECT_STAGES = [
   STAGE_WON,
 ]
 
-export const INVESTMENT_PROJECT_STAGES_TO_ASSIGN_PM = [
-  STAGE_PROSPECT,
-  STAGE_ASSIGN_PM,
-]
-
 export const EXPORT_REVENUE_TRUE = 'Yes, will create significant export revenue'
 export const EXPORT_REVENUE_FALSE =
   'No, will not create significant export revenue'

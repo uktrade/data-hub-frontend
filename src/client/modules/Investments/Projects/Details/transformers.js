@@ -118,10 +118,16 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
       client_considering_other_countries,
       competitor_countries
     ),
-    delivery_partners: delivery_partners.map((x) => x.value),
+    delivery_partners: delivery_partners
+      ? delivery_partners.map((x) => x.value)
+      : [],
     site_decided: transformRadioOptionToBoolWithNullCheck(site_decided),
-    strategic_drivers: strategic_drivers.map((x) => x.value),
-    uk_region_locations: uk_region_locations.map((x) => x.value),
+    strategic_drivers: strategic_drivers
+      ? strategic_drivers.map((x) => x.value)
+      : [],
+    uk_region_locations: uk_region_locations
+      ? uk_region_locations.map((x) => x.value)
+      : [],
   }
 
   return { ...siteDecidedObject, ...requirementsValues }
@@ -185,7 +191,7 @@ export const transformProjectSummaryForApi = ({
 
   if (Array.isArray(specific_programmes)) {
     summaryPayload.specific_programmes = specific_programmes.map((x) => x.value)
-  } else if (typeof specific_programmes === 'object') {
+  } else if (typeof specific_programmes === 'object' && specific_programmes) {
     summaryPayload.specific_programmes = [specific_programmes?.value]
   } else {
     summaryPayload.specific_programmes = []
