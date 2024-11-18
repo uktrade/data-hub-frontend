@@ -1,28 +1,30 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { SPACING } from '@govuk-react/constants'
 import Label from '@govuk-react/label'
 import LabelText from '@govuk-react/label-text'
 import styled from 'styled-components'
 
-const StyledLabel = styled(Label)(({ theme, justifyRight }) => ({
+import { MEDIA_QUERIES } from '../utils/responsive'
+
+const StyledLabel = styled(Label)(({ justifyRight }) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   flexWrap: 'wrap',
-  [theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     flexWrap: 'nowrap',
     justifyContent: justifyRight && 'flex-end',
   },
 }))
 
-const StyledLabelText = styled(LabelText)(({ theme }) => ({
+const StyledLabelText = styled(LabelText)({
   width: '100%',
-  [theme?.toHorizontalMediaQuery || MEDIA_QUERIES.TABLET]: {
+  [MEDIA_QUERIES.LARGE_DESKTOP]: {
     marginRight: SPACING.SCALE_2,
     width: 'auto',
   },
-}))
+})
 
 const InlineLabel = ({ text, children, justifyRight, name }) => (
   <StyledLabel justifyRight={justifyRight} htmlFor={name}>

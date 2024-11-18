@@ -11,7 +11,7 @@ import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
 import ExportList from '../../modules/ExportPipeline/ExportList'
 import MyTasks from '../Dashboard/my-tasks/MyTasks'
 import urls from '../../../lib/urls'
-import TabNav from '../TabNav'
+import { DashboardTabNav } from '../TabNav'
 import ReferralList from '../ReferralList'
 import { state2props } from './state'
 import NoTasks from '../Dashboard/my-tasks/NoTasks'
@@ -38,7 +38,7 @@ const DashboardTabs = ({
     <VisuallyHidden>
       <LocalHeaderHeading>Dashboard</LocalHeaderHeading>
     </VisuallyHidden>
-    <TabNav
+    <DashboardTabNav
       id={`${id}.TabNav`}
       label="Dashboard"
       routed={true}

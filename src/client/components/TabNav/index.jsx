@@ -2,14 +2,14 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { get } from 'lodash'
-import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import {
   BLACK,
   GREY_4,
   WHITE,
-  LINK_COLOUR,
+  BLUE,
+  DARK_BLUE_LEGACY,
   TEXT_COLOUR,
   BORDER_COLOUR,
   FOCUS_COLOUR,
@@ -22,6 +22,8 @@ import reducer from './reducer'
 const LEFT_ARROW_KEY = 37
 const RIGHT_ARROW_KEY = 39
 
+const BORDER = `1px solid ${BORDER_COLOUR}`
+
 const focusStyle = {
   '&:focus': {
     outline: `3px solid ${FOCUS_COLOUR}`,
@@ -31,102 +33,6 @@ const focusStyle = {
     },
   },
 }
-
-const StyledSpan = styled('span')({
-  display: 'block',
-  '::before': {
-    color: `${BLACK}`,
-    content: '"\u2014 "',
-    paddingRight: `${SPACING_POINTS[1]}px`,
-  },
-  [MEDIA_QUERIES.TABLET]: {
-    display: `inline-block`,
-    '::before': {
-      display: 'none',
-    },
-  },
-})
-
-const buttonStyle = {
-  padding: 0,
-  margin: `0 0 ${SPACING_POINTS[2]}px 0`,
-  color: LINK_COLOUR,
-  fontSize: 16,
-  fontFamily: 'Arial, sans-serif',
-  textDecoration: 'underline',
-  border: 'none',
-  background: 'transparent',
-}
-
-const StyledButton = styled('button')({
-  ...buttonStyle,
-  ...focusStyle,
-  [MEDIA_QUERIES.TABLET]: {
-    color: TEXT_COLOUR,
-    fontSize: 19,
-    textDecoration: ({ theme }) =>
-      get(theme, 'tabNav.button.textDecoration', 'none'),
-    padding: `${SPACING_POINTS[2]}px ${SPACING_POINTS[4]}px`,
-    margin: `${SPACING_POINTS[1]}px 0 ${SPACING_POINTS[1]}px`,
-    background: GREY_4,
-    border: 'none',
-    cursor: 'pointer',
-  },
-})
-
-const StyledSelectedButton = styled('button')({
-  ...buttonStyle,
-  '&:focus': {
-    outline: `3px solid ${FOCUS_COLOUR}`,
-    background: FOCUS_COLOUR,
-  },
-  [MEDIA_QUERIES.TABLET]: {
-    fontSize: 19,
-    textDecoration: 'none',
-    color: ({ theme }) =>
-      get(theme, 'tabNav.selectedButton.color', TEXT_COLOUR),
-    border: ({ theme }) =>
-      get(theme, 'tabNav.selectedButton.border', `1px solid ${BORDER_COLOUR}`),
-    borderBottom: 'none',
-    background: ({ theme }) =>
-      get(theme, 'tabNav.selectedButton.background', WHITE),
-    '&:focus': {
-      background: ({ theme }) =>
-        get(theme, 'tabNav.selectedButton.background', WHITE),
-    },
-    // The negative margin is here so that it overcasts tabpane's top border
-    marginBottom: -1,
-    // The 19px include compensation for the 1px negative margin above
-    padding: '14px 19px 16px',
-  },
-})
-
-const StyledTablist = styled.div({
-  borderBottom: 'none',
-  [MEDIA_QUERIES.TABLET]: {
-    borderBottom: ({ theme }) =>
-      get(theme, 'tabNav.tabList.borderBottom', `1px solid ${BORDER_COLOUR}`),
-    '& > *:not(:last-child)': {
-      marginRight: 5,
-    },
-  },
-})
-
-const StyledTabpanel = styled('div')`
-  ${({ theme }) =>
-    theme.tabNav
-      ? `
-        border: ${get(theme, 'tabNav.tabPanel.border')};
-        padding: ${get(theme, 'tabNav.tabPanel.padding')};
-        margin-bottom: ${get(theme, 'tabNav.tabPanel.marginBottom')};
-      `
-      : `
-        margin-top: 15px;
-        ${MEDIA_QUERIES.TABLET} {
-          margin-top: 30px;
-        }
-      `}
-`
 
 const createId = (id, key, routed) =>
   routed ? `${id}.tab.${key.replace('/', '_')}` : `tab.${key}`
@@ -154,6 +60,7 @@ const TabNav = ({
   id,
   routed,
   keepQueryParams = false,
+  ...props
 }) => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -168,8 +75,8 @@ const TabNav = ({
   }, [focusIndex, selectedIndex])
 
   return (
-    <>
-      <StyledTablist
+    <div {...props}>
+      <div
         tabIndex={-1}
         role="tablist"
         ref={tablistRef}
@@ -202,50 +109,47 @@ const TabNav = ({
             ? key === selectedIndex
             : key.length > 1 && selectedIndex.startsWith(key)
 
-          const Button = selected ? StyledSelectedButton : StyledButton
           const tabId = createId(id, key, routed)
           return (
-            <StyledSpan key={tabId} data-test="tab-item">
-              <Button
-                role="tab"
-                aria-selected={selected}
-                id={tabId}
-                tabIndex={
-                  // If no tab is selected...
-                  selectedIndex === undefined && !index
-                    ? // ...only the first tab participates in the tabindex
-                      0
-                    : // Otherwise, only the selected tab participates in tabindex
-                      selected
-                      ? 0
-                      : -1
+            <button
+              key={tabId}
+              role="tab"
+              aria-selected={selected}
+              id={tabId}
+              tabIndex={
+                // If no tab is selected...
+                selectedIndex === undefined && !index
+                  ? // ...only the first tab participates in the tabindex
+                    0
+                  : // Otherwise, only the selected tab participates in tabindex
+                    selected
+                    ? 0
+                    : -1
+              }
+              onClick={() => {
+                onChange(key, index)
+                onTabChange && onTabChange({ path: key })
+                if (routed && !selected) {
+                  const url = keepQueryParams ? `${key}${location.search}` : key
+
+                  navigate(url)
                 }
-                onClick={() => {
-                  onChange(key, index)
-                  onTabChange && onTabChange({ path: key })
-                  if (routed && !selected) {
-                    const url = keepQueryParams
-                      ? `${key}${location.search}`
-                      : key
-                    navigate(url)
-                  }
-                }}
-              >
-                {label}
-              </Button>
-            </StyledSpan>
+              }}
+            >
+              {label}
+            </button>
           )
         })}
-      </StyledTablist>
-      <StyledTabpanel
+      </div>
+      <div
         role="tabpanel"
         tabIndex={-1}
         aria-labelledby={createId(id, selectedIndex, true)}
         data-test="tabpanel"
       >
         {getContent(tabs, tabKeys, selectedIndex)}
-      </StyledTabpanel>
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -265,7 +169,7 @@ TabNav.propTypes = {
   ]).isRequired,
 }
 
-export default multiInstance({
+export const HeadlessTabNav = multiInstance({
   name: 'TabNav',
   actionPattern: 'TAB_NAV__',
   dispatchToProps: (dispatch) => ({
@@ -284,3 +188,139 @@ export default multiInstance({
   component: TabNav,
   reducer,
 })
+
+const SmallScreenTabNav = styled(HeadlessTabNav)({
+  // We must use direct child combinators everywhere, otherwise the styles
+  // would leak to nested tab navs
+  '& > [role="tablist"] > [role="tab"]': {
+    ...focusStyle,
+    padding: '0px',
+    margin: '0px 0px 10px',
+    color: BLUE,
+    fontSize: '16px',
+    fontFamily: 'Arial, sans-serif',
+    textDecoration: 'underline',
+    border: 'none',
+    background: 'transparent',
+    display: 'block',
+    '&::before': {
+      content: '"— "',
+      display: 'inline-block',
+      textDecoration: 'none',
+      color: BLACK,
+      marginRight: '1ex',
+    },
+  },
+})
+
+export const HorizontalTabNav = styled(SmallScreenTabNav)({
+  display: 'contents',
+  '& > [role="tabpanel"]': {
+    marginTop: 30,
+  },
+  '& > [role="tablist"]': {
+    [MEDIA_QUERIES.TABLET]: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: 5,
+      borderBottom: BORDER,
+    },
+    '& > [role="tab"]': {
+      [MEDIA_QUERIES.TABLET]: {
+        '&::before': {
+          display: 'none',
+        },
+        color: TEXT_COLOUR,
+        fontSize: '19px',
+        textDecoration: 'none',
+        padding: '10px 20px',
+        margin: '5px 0px',
+        background: GREY_4,
+        border: 'none',
+        cursor: 'pointer',
+
+        '&[aria-selected="true"]': {
+          fontSize: '19px',
+          textDecoration: 'none',
+          color: TEXT_COLOUR,
+          border: BORDER,
+          borderBottom: 'none',
+          background: WHITE,
+          marginBottom: '-1px',
+          padding: '14px 19px 16px',
+        },
+      },
+    },
+  },
+})
+
+export const VerticalTabNav = styled(SmallScreenTabNav)({
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'flex',
+    alignItems: 'start',
+    gap: 30,
+    '& > [role="tabpanel"]': {
+      [MEDIA_QUERIES.TABLET]: {
+        flexGrow: 1,
+      },
+    },
+  },
+  '& > [role="tablist"]': {
+    [MEDIA_QUERIES.TABLET]: {
+      display: 'flex',
+      flexDirection: 'column',
+      '& > [role="tab"]': {
+        [MEDIA_QUERIES.TABLET]: {
+          '&::before': {
+            display: 'none',
+          },
+          textDecoration: 'none',
+          border: 'none',
+          background: 'none',
+          cursor: 'pointer',
+
+          display: 'block',
+          fontSize: '20px',
+          padding: '11px 16px',
+          color: BLUE,
+          '&[aria-selected="true"]': {
+            color: WHITE,
+            background: DARK_BLUE_LEGACY,
+            fontWeight: '600',
+          },
+        },
+      },
+    },
+  },
+})
+
+export const DashboardTabNav = styled(HorizontalTabNav)({
+  '& > [role="tabpanel"]': {
+    border: `2px solid ${BLUE}`,
+    padding: SPACING.SCALE_3,
+    margin: 0,
+  },
+  '& > [role="tablist"]': {
+    border: 'none',
+    fontWeight: 'bold',
+    '& > [role="tab"]': {
+      [MEDIA_QUERIES.TABLET]: {
+        textDecoration: 'underline',
+        '&[aria-selected="true"]': {
+          background: BLUE,
+          borderColor: BLUE,
+          color: WHITE,
+        },
+      },
+    },
+  },
+})
+
+export default ({
+  layout = 'horizontal',
+  Component = {
+    horizontal: HorizontalTabNav,
+    vertical: VerticalTabNav,
+  }[layout],
+  ...props
+}) => <Component {...props} />

@@ -75,8 +75,8 @@ describe('UK Opportunity with missing data', () => {
   })
   context('The tab navigation', () => {
     it('should display two tabs with correct text', () => {
-      cy.get('[data-test="tab-item"]').eq(0).should('have.text', 'Details')
-      cy.get('[data-test="tab-item"]').eq(1).should('have.text', 'Interactions')
+      cy.get('[role="tab"]').eq(0).should('have.text', 'Details')
+      cy.get('[role="tab"]').eq(1).should('have.text', 'Interactions')
     })
     it('should show details when the details tab is selected', () => {
       cy.get('[data-test="tablist"] button').contains('Details').click()

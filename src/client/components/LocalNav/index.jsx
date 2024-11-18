@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 
+import deprecated from '../../utils/deprecated'
+
 import {
   DARK_BLUE_LEGACY,
   GREY_4,
@@ -38,7 +40,7 @@ const StyledInactiveLink = styled('a')({
   },
 })
 
-export const LocalNav = ({ children, dataTest = 'local-nav' }) => {
+const _LocalNav = ({ children, dataTest = 'local-nav' }) => {
   children = children.filter((child) => child !== false)
   return (
     <nav data-test={dataTest}>
@@ -51,12 +53,24 @@ export const LocalNav = ({ children, dataTest = 'local-nav' }) => {
   )
 }
 
-export const LocalNavLink = ({
+_LocalNav.propTypes = {
+  dataTest: PropTypes.string,
+  children: PropTypes.node,
+}
+
+export const LocalNav = deprecated(
+  'LocalNav',
+  '<TabNav layout="vertical/>',
+  _LocalNav
+)
+
+const _LocalNavLink = ({
   children,
   href,
   dataTest = 'local-nav-link',
   ...rest
 }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const location = useLocation()
 
   const NavLink = href?.includes(location.pathname)
@@ -70,13 +84,14 @@ export const LocalNavLink = ({
   )
 }
 
-LocalNav.propTypes = {
-  dataTest: PropTypes.string,
-  children: PropTypes.node,
-}
-
-LocalNavLink.propTypes = {
+_LocalNavLink.propTypes = {
   dataTest: PropTypes.string,
   href: PropTypes.string,
   children: PropTypes.node,
 }
+
+export const LocalNavLink = deprecated(
+  'LocalNavLink',
+  '<TabNav layout="vertical/>',
+  _LocalNavLink
+)
