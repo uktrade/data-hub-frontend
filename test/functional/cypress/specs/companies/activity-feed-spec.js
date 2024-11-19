@@ -61,6 +61,7 @@ describe('Company activity feed', () => {
       'Activity Feed'
     )
   })
+
   context('Great Export Enquiry activity feed', () => {
     const greatData = companyActivityGreatListFaker(1)
     beforeEach(() => {
@@ -169,67 +170,64 @@ describe('Company activity feed', () => {
         cy.get('span').contains('UK region').should('not.exist')
       )
     })
+  })
 
-    context('Investment project', () => {
-      beforeEach(() => {
-        cy.visit(urls.companies.activity.index(company.id))
-      })
+  context('Investment project', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
 
-      it('displays the correct activity type label', () => {
-        cy.get('[data-test="investment-service-label"]').contains(
-          'New Investment Project',
-          {
-            matchCase: false,
-          }
-        )
-      })
-
-      it('displays the correct topic label', () => {
-        cy.get('[data-test="investment-theme-label"]').contains('Investment', {
+    it('displays the correct activity type label', () => {
+      cy.get('[data-test="investment-service-label"]').contains(
+        'New Investment Project',
+        {
           matchCase: false,
-        })
+        }
+      )
+    })
+
+    it('displays the correct topic label', () => {
+      cy.get('[data-test="investment-theme-label"]').contains('Investment', {
+        matchCase: false,
       })
-      it('displays the investment project name with link', () => {
-        cy.get('[data-test="collection-item"]').each(() =>
-          cy
-            .get('a')
-            .contains('Bo Oh O Wa er')
-            .should(
-              'have.attr',
-              'href',
-              '/investments/projects/9a824ef8-207e-4f6b-9205-91a42c1c77ef/details'
-            )
-        )
+    })
+    it('displays the investment project name with link', () => {
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('Bo Oh O Wa er')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/projects/9a824ef8-207e-4f6b-9205-91a42c1c77ef/details'
+          )
+      )
+    })
+  })
+
+  context('Referrals project', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
+    it('displays the correct referral type label', () => {
+      cy.get('[data-test="referral-label"]').contains('Outstanding Referral', {
+        matchCase: false,
       })
     })
 
-    context('Referrals project', () => {
-      beforeEach(() => {
-        cy.visit(urls.companies.activity.index(company.id))
-      })
-
-      it('displays the correct referral type label', () => {
-        cy.get('[data-test="referral-label"]').contains(
-          'Outstanding Referral',
-          {
-            matchCase: false,
-          }
-        )
-      })
-
-      it('displays the referral name with link', () => {
-        const activity = company_activities.results[2]
-        cy.get('[data-test="collection-item"]').each(() =>
-          cy
-            .get('a')
-            .contains(activity.referral.subject)
-            .should(
-              'have.attr',
-              'href',
-              `/companies/${activity.company.id}/referrals/${activity.referral.id}`
-            )
-        )
-      })
+    it('displays the referral name with link', () => {
+      const activity = company_activities.results[2]
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains(activity.referral.subject)
+          .should(
+            'have.attr',
+            'href',
+            `/companies/${activity.company.id}/referrals/${activity.referral.id}`
+          )
+      )
     })
   })
 })
