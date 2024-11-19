@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 
 import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
-import { formatMediumDate } from '../../../utils/date'
+import { formatMediumDate, formatMediumDateParsed } from '../../../utils/date'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 
@@ -68,7 +68,7 @@ export const transformActivities = (activities) => {
 
     switch (activity_source) {
       case 'interaction':
-        return transformInteractionToListItem(activity.interaction)
+        return transformInteractionToListItem(activity)
       case 'referral':
         return transformReferralToListItem(activity)
       case 'investment':
@@ -87,58 +87,63 @@ export const transformActivities = (activities) => {
   )
 }
 
-export const transformInteractionToListItem = ({
-  date,
-  subject,
-  dit_participants,
-  service,
-  id,
-  contacts,
-  kind,
-  communication_channel,
-}) => ({
-  id,
-  metadata: [
-    { label: 'Date', value: formatMediumDate(date) },
-    {
-      label: verifyLabel(contacts, 'Contact'),
-      value: formattedContacts(contacts),
-    },
-    { label: 'Communication channel', value: communication_channel?.name },
-    {
-      label: verifyLabel(dit_participants, 'Adviser'),
-      value: formattedAdvisers(dit_participants),
-    },
-    { label: 'Service', value: service?.name },
-  ].filter(({ value }) => Boolean(value)),
-  tags: [
-    {
-      text: INTERACTION_NAMES[kind],
-      colour: 'grey',
-      dataTest: 'activity-kind-label',
-    },
-    {
-      text:
-        service && service.name.includes(' : ')
-          ? service.name.split(' : ')[0]
-          : service?.name,
-      colour: 'blue',
-      dataTest: 'activity-service-label',
-    },
-  ].filter(({ text }) => Boolean(text)),
-  headingUrl: urls.interactions.detail(id),
-  headingText: subject,
-})
+export const transformInteractionToListItem = (activity) => {
+  const interaction = activity.interaction
+  return {
+    id: interaction.id,
+    metadata: [
+      {
+        label: 'Date',
+        value: formatMediumDateParsed(interaction.date),
+      },
+      {
+        label: verifyLabel(interaction.contacts, 'Contact'),
+        value: formattedContacts(interaction.contacts),
+      },
+      {
+        label: 'Communication channel',
+        value: interaction.communication_channel?.name,
+      },
+      {
+        label: verifyLabel(interaction.dit_participants, 'Adviser'),
+        value: formattedAdvisers(interaction.dit_participants),
+      },
+      { label: 'Service', value: interaction.service?.name },
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: INTERACTION_NAMES[interaction.kind],
+        colour: 'grey',
+        dataTest: 'activity-kind-label',
+      },
+      {
+        text:
+          interaction.service && interaction.service.name.includes(' : ')
+            ? interaction.service.name.split(' : ')[0]
+            : interaction.service?.name,
+        colour: 'blue',
+        dataTest: 'activity-service-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.interactions.detail(interaction.id),
+    headingText: interaction.subject,
+  }
+}
 
 export const transformReferralToListItem = (activity) => {
   const referral = activity.referral
   return {
     id: referral.id,
     metadata: [
-      { label: 'Created Date', value: formatMediumDate(referral.created_on) },
+      {
+        label: 'Created Date',
+        value: formatMediumDateParsed(referral.created_on),
+      },
       {
         label: 'Completed Date',
-        value: formatMediumDate(referral.completed_on),
+        value: referral.completed_on
+          ? formatMediumDate(referral.completed_on)
+          : '',
       },
       {
         label: 'Sending adviser',
@@ -174,7 +179,7 @@ export const transformInvestmentToListItem = (activity) => {
   return {
     id: activity.investment.id,
     metadata: [
-      { label: 'Created Date', value: formatMediumDate(activity.date) },
+      { label: 'Created Date', value: formatMediumDateParsed(activity.date) },
       {
         label: 'Investment Type',
         value: activity.investment.investment_type.name,
@@ -231,7 +236,7 @@ export const transformOrderToListItem = (activity) => {
   return {
     id: activity.order.id,
     metadata: [
-      { label: 'Date', value: formatMediumDate(activity.date) },
+      { label: 'Date', value: formatMediumDateParsed(activity.date) },
       {
         label: 'Country',
         value: activity.order.primary_market.name,
@@ -284,7 +289,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   return {
     id: great.id,
     metadata: [
-      { label: 'Date', value: formatMediumDate(great.created_on) },
+      { label: 'Date', value: formatMediumDateParsed(great.created_on) },
       {
         label: 'Contact',
         value: formattedContacts([great.contact]),

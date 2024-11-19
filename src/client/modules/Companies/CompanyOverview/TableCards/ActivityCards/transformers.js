@@ -53,7 +53,7 @@ export const transformActivity = (activities) => {
 
     switch (activity_source) {
       case 'interaction':
-        return transformInteractionToListItem(activity.interaction)
+        return transformInteractionToListItem(activity)
       case 'referral':
         return transformReferralToListItem(activity)
       case 'investment':
@@ -101,31 +101,23 @@ export const transformReferralToListItem = (activity) => {
   }
 }
 
-export const transformInteractionToListItem = ({
-  date,
-  subject,
-  id,
-  kind,
-  communication_channel,
-  dit_participants,
-  contacts,
-}) => ({
-  id,
-  date: formatMediumDateParsed(date),
+export const transformInteractionToListItem = (activity) => ({
+  id: activity.id,
+  date: formatMediumDateParsed(activity.date),
   tags: [
     {
-      text: INTERACTION_NAMES[kind],
+      text: INTERACTION_NAMES[activity.interaction.kind],
       colour: 'grey',
       dataTest: 'activity-kind-label',
     },
   ],
-  headingUrl: urls.interactions.detail(id),
-  headingText: subject,
+  headingUrl: urls.interactions.detail(activity.id),
+  headingText: activity.interaction.subject,
   summary: buildSummary(
-    dit_participants,
-    communication_channel?.name,
-    contacts,
-    date
+    activity.interaction.dit_participants,
+    activity.interaction.communication_channel?.name,
+    activity.interaction.contacts,
+    activity.date
   ),
 })
 
