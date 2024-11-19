@@ -35,7 +35,9 @@ const rows = ({ results }) => {
       <Table.Cell setWidth="12%">
         {task.due_date
           ? formatMediumDateParsed(task.due_date)
-          : formatMediumDateParsed(task.dueDate)}
+          : task.dueDate
+            ? formatMediumDateParsed(task.dueDate)
+            : ''}
       </Table.Cell>
       <Table.Cell setWidth="23%">
         <Link
