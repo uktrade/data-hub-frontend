@@ -88,6 +88,10 @@ function subtractMonths(date, numberOfMonths) {
 }
 
 function isDateInFuture(date) {
+  return isFuture(date)
+}
+
+function isDateInFutureParsed(date) {
   return isFuture(parseISO(date))
 }
 
@@ -133,6 +137,10 @@ function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
 }
 
 function formatMediumDate(dateString) {
+  return formatWithoutParsing(dateString, DATE_MEDIUM_FORMAT)
+}
+
+function formatMediumDateParsed(dateString) {
   return format(dateString, DATE_MEDIUM_FORMAT)
 }
 
@@ -146,6 +154,10 @@ function formatShortDate(dateString) {
 
 function formatMediumDateTime(dateString) {
   return format(dateString, DATE_TIME_MEDIUM_FORMAT)
+}
+
+function formatMediumDateTimeWithoutParsing(dateString) {
+  return formatWithoutParsing(dateString, DATE_TIME_MEDIUM_FORMAT)
 }
 
 const formatMonthYearDate = (date) =>
@@ -222,7 +234,7 @@ function getInteractionTimestamp({ offset }) {
     subMonths(date, offset)
   }
 
-  return format(date, INTERACTION_TIMESTAMP_FORMAT)
+  return formatWithoutParsing(date, INTERACTION_TIMESTAMP_FORMAT)
 }
 
 function getDifferenceInWords(date, suffix = true) {
@@ -243,29 +255,32 @@ function createDateFromObject({ day, month, year }) {
 }
 
 function formatStartAndEndDate(startDate, endDate) {
-  const startDateParsed = parseISO(startDate)
-  const endDateParsed = parseISO(endDate)
-  const startDateFormatted = format(startDate)
-  const endDateFormatted = format(endDate)
+  if (startDate) {
+    const startDateParsed = startDate ? parseISO(startDate) : startDate
+    const endDateParsed = endDate ? parseISO(endDate) : endDate
+    const startDateFormatted = startDate ? format(startDate) : startDate
+    const endDateFormatted = endDate ? format(endDate) : endDate
 
-  //When end date is missing or before start date
-  if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
-    return startDateFormatted
+    //When end date is missing or before start date
+    if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+      return startDateFormatted
+    }
+    //When start and end date are on same day
+    if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
+      return startDateFormatted
+    }
+    // When start and end date are in the same month
+    if (differenceInCalendarMonths(endDateParsed, startDateParsed) == 0) {
+      return `${startDateParsed.getDate()} to ${endDateFormatted}`
+    }
+    // When start and end date are in the same year
+    if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
+      return `${format(startDate, DATE_DAY_MONTH)} to ${endDateFormatted}`
+    }
+    // When start and end date are in different years
+    return `${startDateFormatted} to ${endDateFormatted}`
   }
-  //When start and end date are on same day
-  if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
-    return startDateFormatted
-  }
-  // When start and end date are in the same month
-  if (differenceInCalendarMonths(endDateParsed, startDateParsed) == 0) {
-    return `${startDateParsed.getDate()} to ${endDateFormatted}`
-  }
-  // When start and end date are in the same year
-  if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
-    return `${format(startDate, DATE_DAY_MONTH)} to ${endDateFormatted}`
-  }
-  // When start and end date are in different years
-  return `${startDateFormatted} to ${endDateFormatted}`
+  return null
 }
 
 /**
@@ -279,17 +294,49 @@ function convertDateToFieldShortDateObject(date) {
 }
 
 /**
+ * Convert a date to a short object format required by the FieldDate component
+ * @param {*} date a string representing a date or a Date type
+ * @returns an object of the format {month:'', year:''}
+ */
+function convertUnparsedDateToFieldShortDateObject(date) {
+  const { month, year } = convertUnparsedDateToFieldDateObject(date)
+  return { month, year }
+}
+
+/**
  * Convert a date to an object format required by the FieldDate component
  * @param {*} date a string representing a date or a Date type
  * @returns an object of the format {day:'', month:'', year:''}
  */
 function convertDateToFieldDateObject(date) {
-  const parsedTime = parseISO(date)
-  if (isValid(parsedTime)) {
+  if (date && isValid(date)) {
     return {
-      day: parsedTime.getDate(),
-      month: parsedTime.getMonth() + 1, //getMonth is zero based
-      year: parsedTime.getFullYear(),
+      day: date.getDate(),
+      month: date.getMonth() + 1, //getMonth is zero based
+      year: date.getFullYear(),
+    }
+  } else {
+    const parsedTime = parseISO(date)
+    if (date && isValid(parsedTime)) {
+      return {
+        day: parsedTime.getDate(),
+        month: parsedTime.getMonth() + 1, //getMonth is zero based
+        year: parsedTime.getFullYear(),
+      }
+    }
+  }
+  return { day: '', month: '', year: '' }
+}
+
+/**
+ * Same as convertDateToFieldDateObject, but for dates that don't need parsing
+ */
+function convertUnparsedDateToFieldDateObject(date) {
+  if (isValid(date)) {
+    return {
+      day: date.getDate(),
+      month: date.getMonth() + 1, //getMonth is zero based
+      year: date.getFullYear(),
     }
   }
   return { day: '', month: '', year: '' }
@@ -380,4 +427,9 @@ module.exports = {
   subtractMonths,
   areDatesEqual,
   tomorrow,
+  formatMediumDateTimeWithoutParsing,
+  formatMediumDateParsed,
+  convertUnparsedDateToFieldDateObject,
+  convertUnparsedDateToFieldShortDateObject,
+  isDateInFutureParsed,
 }

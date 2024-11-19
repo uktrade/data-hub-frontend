@@ -3,7 +3,10 @@ import Link from '@govuk-react/link'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDate, formatMediumDateTime } from '../../../utils/date'
+import {
+  formatMediumDate,
+  formatMediumDateTimeWithoutParsing,
+} from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
@@ -52,11 +55,11 @@ export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
             },
             {
               label: 'First sent:',
-              value: formatMediumDateTime(item.first_sent),
+              value: formatMediumDateTimeWithoutParsing(item.first_sent),
             },
             {
               label: 'Last sent:',
-              value: formatMediumDateTime(item.last_sent),
+              value: formatMediumDateTimeWithoutParsing(item.last_sent),
             },
           ]}
         />

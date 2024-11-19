@@ -9,7 +9,7 @@ import pluralize from 'pluralize'
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 import { useFormContext } from '../../../components/Form/hooks'
-import { formatMediumDateTime } from '../../../utils/date'
+import { formatMediumDateTimeWithoutParsing } from '../../../utils/date'
 import { WIN_STATUS } from '../Status/constants'
 import { ContactLink } from './ExportWinForm'
 import urls from '../../../../lib/urls'
@@ -365,10 +365,10 @@ const AdditionalInformation = ({ values, isEditing }) => {
         {winStatus === WIN_STATUS.PENDING && (
           <>
             <SummaryTable.Row heading="First sent">
-              {formatMediumDateTime(values.first_sent)}
+              {formatMediumDateTimeWithoutParsing(values.first_sent)}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Last Sent">
-              {formatMediumDateTime(values.last_sent)}
+              {formatMediumDateTimeWithoutParsing(values.last_sent)}
             </SummaryTable.Row>
             <SummaryTable.Row heading="Export win confirmed">
               Pending

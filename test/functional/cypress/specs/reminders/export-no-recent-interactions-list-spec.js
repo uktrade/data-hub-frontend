@@ -6,7 +6,7 @@ import {
   nestedInteractionFaker,
   reminderListFaker,
 } from '../../fakers/reminders'
-import { formatMediumDate } from '../../../../../src/client/utils/date'
+import { formatMediumDateParsed } from '../../../../../src/client/utils/date'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/no-recent-export-interaction'
 
@@ -138,7 +138,7 @@ describe('Exports no recent Interaction Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `${formatMediumDate(reminders[0].last_interaction_date)}`
+          `${formatMediumDateParsed(reminders[0].last_interaction_date)}`
         )
     })
   })
@@ -343,7 +343,7 @@ describe('Exports no recent Interaction Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Received ${formatMediumDate(
+          `Received ${formatMediumDateParsed(
             deleted_reminder_date.toISOString()
           )} for ${reminders[4].company.name}`
         )

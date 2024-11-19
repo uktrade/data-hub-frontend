@@ -83,7 +83,7 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
         {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
       <MetaListItem text="Created on">
-        {formatMediumDateTime(investment.createdOn)}
+        {investment.createdOn ? formatMediumDateTime(investment.createdOn) : ''}
       </MetaListItem>
       {investment.createdBy?.ditTeam?.name && (
         <MetaListItem text="Created by">

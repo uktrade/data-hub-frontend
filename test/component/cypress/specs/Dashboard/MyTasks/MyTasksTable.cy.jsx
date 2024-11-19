@@ -6,7 +6,7 @@ import {
 } from '../../../../../functional/cypress/support/assertions'
 
 import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cypress/fakers/task'
-import { formatMediumDate } from '../../../../../../src/client/utils/date'
+import { formatMediumDateParsed } from '../../../../../../src/client/utils/date'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
 
@@ -39,7 +39,7 @@ describe('My Tasks on the Dashboard', () => {
         element: '[data-test="my-tasks-table"]',
         rows: [
           [
-            formatMediumDate(myTaskResults[0].due_date),
+            formatMediumDateParsed(myTaskResults[0].due_date),
             myTaskResults[0].title,
             myTaskResults[0].company.name,
             myTaskResults[0].investment_project.name,
@@ -49,7 +49,7 @@ describe('My Tasks on the Dashboard', () => {
             'Active',
           ],
           [
-            formatMediumDate(myTaskResults[1].due_date),
+            formatMediumDateParsed(myTaskResults[1].due_date),
             myTaskResults[1].title,
             myTaskResults[1].company.name,
             myTaskResults[1].investment_project.name,
@@ -59,7 +59,7 @@ describe('My Tasks on the Dashboard', () => {
             'Completed',
           ],
           [
-            formatMediumDate(myTaskResults[2].due_date),
+            formatMediumDateParsed(myTaskResults[2].due_date),
             myTaskResults[2].title,
             myTaskResults[2].company.name,
             myTaskResults[2].investment_project.name,

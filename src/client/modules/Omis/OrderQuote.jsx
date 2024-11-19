@@ -26,7 +26,7 @@ import OMISTermsAndConditions from './OMISTermsAndConditions'
 import urls from '../../../lib/urls'
 import { DARK_GREY, RED_2 } from '../../utils/colours'
 import {
-  formatMediumDate,
+  formatMediumDateParsed,
   formatMediumDateTime,
   isDateInFuture,
 } from '../../utils/date'
@@ -201,7 +201,7 @@ const OrderQuote = ({ quotePreview }) => {
                           Will expire on
                         </StyledHeading>
                         <p data-test="expiry-date">
-                          {formatMediumDate(quotePreview?.expires_on)}
+                          {formatMediumDateParsed(quotePreview?.expires_on)}
                         </p>
                         <RenderQuote
                           quote={quotePreview ? quotePreview?.content : ''}
@@ -250,7 +250,7 @@ const OrderQuote = ({ quotePreview }) => {
                       {setExpiryLabel(quote)}
                     </StyledHeading>
                     <StyledP data-test="expires-on-date">
-                      {formatMediumDate(quote.expiresOn)}
+                      {formatMediumDateParsed(quote.expiresOn)}
                     </StyledP>
 
                     <SentOn quote={quote} />

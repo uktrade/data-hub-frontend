@@ -168,8 +168,8 @@ describe('A capital opportunity with no existing details', () => {
       cy.get(
         `[value=${completeOpportunity.required_checks_conducted.id}]`
       ).should('be.checked')
-      cy.get('#requiredChecksConductedOn\\.day').should('have.value', '06')
-      cy.get('#requiredChecksConductedOn\\.month').should('have.value', '07')
+      cy.get('#requiredChecksConductedOn\\.day').should('have.value', '6')
+      cy.get('#requiredChecksConductedOn\\.month').should('have.value', '7')
       cy.get('#requiredChecksConductedOn\\.year').should('have.value', '2018')
       assertSingleTypeaheadOptionSelected({
         element: '#field-requiredChecksConductedBy',

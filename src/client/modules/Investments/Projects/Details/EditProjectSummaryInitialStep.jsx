@@ -32,7 +32,7 @@ import {
   transformArrayForTypeahead,
   transformRadioOptionToBool,
 } from '../transformers'
-import { transformDateStringToDateObject } from '../../../../../apps/transformers'
+import { convertDateToFieldDateObject } from '../../../../utils/date'
 import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import { GREY_2 } from '../../../../utils/colours'
 import { FDI_TYPES } from '../constants'
@@ -165,9 +165,11 @@ const EditProjectSummaryInitialStep = ({
         eventPlaceholder="e.g. conversation at conference"
       />
       <FieldEstimatedLandDate
-        initialValue={transformDateStringToDateObject(
+        initialValue={
           project.estimatedLandDate
-        )}
+            ? convertDateToFieldDateObject(project.estimatedLandDate)
+            : ''
+        }
         project={project}
       />
       <FieldLikelihoodOfLanding
@@ -179,7 +181,11 @@ const EditProjectSummaryInitialStep = ({
         project={project}
       />
       <FieldActualLandDate
-        initialValue={transformDateStringToDateObject(project.actualLandDate)}
+        initialValue={
+          project.actualLandDate
+            ? convertDateToFieldDateObject(project.actualLandDate)
+            : ''
+        }
         project={project}
       />
       {showInvestorTypeField() ? (

@@ -16,7 +16,9 @@ describe('Profile details form', () => {
     beforeEach(() => {
       cy.mountWithProvider(
         <ProfileDetailsForm
-          profile={largeInvestorProfileFaker()}
+          profile={largeInvestorProfileFaker({
+            requiredChecksConductedOn: null,
+          })}
           requiredCheckOptions={requiredChecksConductedListFaker()}
           investorTypeOptions={[]}
         />

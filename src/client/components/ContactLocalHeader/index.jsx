@@ -100,8 +100,8 @@ const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
         </GridRow>
         {contact.archived && (
           <ArchivePanel
-            archivedBy={contact.archivedBy}
-            archivedOn={contact.archivedOn}
+            archivedBy={contact.archivedBy ? contact.archivedBy : ''}
+            archivedOn={contact.archivedOn ? contact.archivedOn : ''}
             archiveReason={contact.archivedReason}
             unarchiveUrl={urls.contacts.unarchive(contact.id)}
             onClick={() => {

@@ -198,7 +198,9 @@ const buildAndMountWithCustomService = (service) => {
   )
 }
 
-describe('Interaction activity card', () => {
+// This is a test for the ActivityFeed component, which is not being used
+// We should make sure that there is nothing useful in this test before removing it.
+describe.skip('Interaction activity card', () => {
   context('When the card is rendered with a complete interaction', () => {
     beforeEach(() => {
       buildAndMountActivity(

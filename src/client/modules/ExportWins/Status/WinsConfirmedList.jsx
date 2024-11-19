@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDate } from '../../../utils/date'
+import { formatMediumDateParsed } from '../../../utils/date'
 import { CollectionItem } from '../../../components'
 import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
@@ -39,11 +39,13 @@ export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
             },
             {
               label: 'Date won:',
-              value: formatMediumDate(item.date),
+              value: formatMediumDateParsed(item.date),
             },
             {
               label: 'Date responded:',
-              value: formatMediumDate(item.customer_response.responded_on),
+              value: item.customer_response.responded_on
+                ? formatMediumDateParsed(item.customer_response?.responded_on)
+                : '',
             },
           ]}
         />

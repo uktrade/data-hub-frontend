@@ -29,9 +29,28 @@ export const INVESTMENT_PROJECT_STAGES = {
   },
 }
 
-export const INVESTMENT_PROJECT_STAGES_LIST = Object.values(
-  INVESTMENT_PROJECT_STAGES
-)
+export const INVESTMENT_PROJECT_STAGES_LIST = [
+  {
+    id: '8a320cc9-ae2e-443e-9d26-2f36452c2ced',
+    name: STAGE_PROSPECT,
+  },
+  {
+    id: 'c9864359-fb1a-4646-a4c1-97d10189fc03',
+    name: STAGE_ASSIGN_PM,
+  },
+  {
+    id: '7606cc19-20da-4b74-aba1-2cec0d753ad8',
+    name: STAGE_ACTIVE,
+  },
+  {
+    id: '49b8f6f3-0c50-4150-a965-2c974f3149e3',
+    name: STAGE_VERIFY_WIN,
+  },
+  {
+    id: '945ea6d1-eee3-4f5b-9144-84a75b71b8e6',
+    name: STAGE_WON,
+  },
+]
 
 export const INVESTMENT_PROJECT_STATUSES_LIST = [
   'ongoing',
