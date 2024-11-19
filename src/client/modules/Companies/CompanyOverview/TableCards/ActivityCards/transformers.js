@@ -1,5 +1,8 @@
 import { TAGS } from '../../../CompanyActivity/constants'
-import { formatMediumDate, isDateInFuture } from '../../../../../utils/date'
+import {
+  formatMediumDateParsed,
+  isDateInFuture,
+} from '../../../../../utils/date'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
 
@@ -76,7 +79,8 @@ export const transformReferralToListItem = (activity) => {
     receiving adviser ${referral.recipient.name}
   `
 
-  const date = !referral.completedOn && formatMediumDate(referral.created_on)
+  const date =
+    !referral.completedOn && formatMediumDateParsed(referral.created_on)
 
   return {
     id: referral.id,
@@ -107,7 +111,7 @@ export const transformInteractionToListItem = ({
   contacts,
 }) => ({
   id,
-  date: formatMediumDate(date),
+  date: formatMediumDateParsed(date),
   tags: [
     {
       text: INTERACTION_NAMES[kind],
@@ -130,7 +134,7 @@ export const transformInvestmentToListItem = (activity) => {
 
   return {
     id: investment.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
     tags: [
       {
         text: 'New Investment Project',
@@ -163,7 +167,7 @@ export const transformOrderToListItem = (activity) => {
     : summary.push('')
   return {
     id: order.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
     tags: [
       {
         text: 'New Order',
@@ -181,7 +185,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   const great = activity.great_export_enquiry
   return {
     id: great.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
 
     tags: [
       {
