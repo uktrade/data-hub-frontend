@@ -14,27 +14,28 @@ import { keysToSnakeCase } from '../../../../../functional/cypress/fakers/utils'
 import { STATUS } from '../../../../../../src/client/modules/Tasks/TaskForm/constants'
 
 describe('My Tasks on the Dashboard', () => {
-  // Create 3 tasks of which one is Archived
-  const myTasksList = taskWithInvestmentProjectListFaker()
+  // Create 4 tasks of which one is Archived and one has no due date
+  const myTasksList = taskWithInvestmentProjectListFaker((length = 4))
   myTasksList[1].status = STATUS.COMPLETED
+  myTasksList[3].dueDate = null
 
   const myTaskResults = myTasksList.map((task) => keysToSnakeCase(task))
   const myTasks = {
-    count: 3,
+    count: 4,
     results: myTaskResults,
   }
 
-  context('When the logged in adviser has three tasks', () => {
+  context('When the logged in adviser has four tasks', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)
       cy.mountWithProvider(<MyTasksContent myTasks={myTasks} />)
     })
 
-    it('should display the heading 3 tasks', () => {
-      cy.get('h2').should('contain', '3 tasks')
+    it('should display the heading 4 tasks', () => {
+      cy.get('h2').should('contain', '4 tasks')
     })
 
-    it('should render three table rows in due date in default ascending order', () => {
+    it('should render four table rows in due date in default ascending order', () => {
       assertGovReactTable({
         element: '[data-test="my-tasks-table"]',
         rows: [
@@ -66,6 +67,16 @@ describe('My Tasks on the Dashboard', () => {
             myTaskResults[2].advisers[0].name +
               myTaskResults[2].advisers[1].name +
               myTaskResults[2].advisers[2].name,
+            'Active',
+          ],
+          [
+            '',
+            myTaskResults[3].title,
+            myTaskResults[3].company.name,
+            myTaskResults[3].investment_project.name,
+            myTaskResults[3].advisers[0].name +
+              myTaskResults[3].advisers[1].name +
+              myTaskResults[3].advisers[2].name,
             'Active',
           ],
         ],

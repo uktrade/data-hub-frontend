@@ -1,5 +1,8 @@
 import { TAGS } from '../../../CompanyActivity/constants'
-import { formatMediumDate, isDateInFuture } from '../../../../../utils/date'
+import {
+  formatMediumDateParsed,
+  isDateInFuture,
+} from '../../../../../utils/date'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
 
@@ -50,7 +53,7 @@ export const transformActivity = (activities) => {
 
     switch (activity_source) {
       case 'interaction':
-        return transformInteractionToListItem(activity.interaction)
+        return transformInteractionToListItem(activity)
       case 'referral':
         return transformReferralToListItem(activity)
       case 'investment':
@@ -76,7 +79,8 @@ export const transformReferralToListItem = (activity) => {
     receiving adviser ${referral.recipient.name}
   `
 
-  const date = !referral.completedOn && formatMediumDate(referral.created_on)
+  const date =
+    !referral.completedOn && formatMediumDateParsed(referral.created_on)
 
   return {
     id: referral.id,
@@ -97,31 +101,23 @@ export const transformReferralToListItem = (activity) => {
   }
 }
 
-export const transformInteractionToListItem = ({
-  date,
-  subject,
-  id,
-  kind,
-  communication_channel,
-  dit_participants,
-  contacts,
-}) => ({
-  id,
-  date: formatMediumDate(date),
+export const transformInteractionToListItem = (activity) => ({
+  id: activity.id,
+  date: formatMediumDateParsed(activity.date),
   tags: [
     {
-      text: INTERACTION_NAMES[kind],
+      text: INTERACTION_NAMES[activity.interaction.kind],
       colour: 'grey',
       dataTest: 'activity-kind-label',
     },
   ],
-  headingUrl: urls.interactions.detail(id),
-  headingText: subject,
+  headingUrl: urls.interactions.detail(activity.id),
+  headingText: activity.interaction.subject,
   summary: buildSummary(
-    dit_participants,
-    communication_channel?.name,
-    contacts,
-    date
+    activity.interaction.dit_participants,
+    activity.interaction.communication_channel?.name,
+    activity.interaction.contacts,
+    activity.date
   ),
 })
 
@@ -130,7 +126,7 @@ export const transformInvestmentToListItem = (activity) => {
 
   return {
     id: investment.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
     tags: [
       {
         text: 'New Investment Project',
@@ -163,7 +159,7 @@ export const transformOrderToListItem = (activity) => {
     : summary.push('')
   return {
     id: order.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
     tags: [
       {
         text: 'New Order',
@@ -181,7 +177,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   const great = activity.great_export_enquiry
   return {
     id: great.id,
-    date: formatMediumDate(activity.date),
+    date: formatMediumDateParsed(activity.date),
 
     tags: [
       {

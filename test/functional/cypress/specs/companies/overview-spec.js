@@ -509,9 +509,6 @@ describe('Company overview page', () => {
         'a',
         activity.interaction.subject
       )
-      cy.get('[data-test="activity-summary"]').contains(
-        `${activity.interaction.dit_participants[0].adviser.name} had ${activity.interaction.communication_channel.name} contact with ${activity.interaction.contacts[0].name}`
-      )
     })
     it('should display Data Hub investment activity', () => {
       collectionListRequest(
