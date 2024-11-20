@@ -102,7 +102,7 @@ export const transformReferralToListItem = (activity) => {
 }
 
 export const transformInteractionToListItem = (activity) => ({
-  id: activity.id,
+  id: activity.interaction.id,
   date: formatMediumDateParsed(activity.date),
   tags: [
     {
@@ -111,7 +111,7 @@ export const transformInteractionToListItem = (activity) => ({
       dataTest: 'activity-kind-label',
     },
   ],
-  headingUrl: urls.interactions.detail(activity.id),
+  headingUrl: urls.interactions.detail(activity.interaction.id),
   headingText: activity.interaction.subject,
   summary: buildSummary(
     activity.interaction.dit_participants,
