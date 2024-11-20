@@ -13,7 +13,11 @@ import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/co
 import StatusMessage from '../StatusMessage'
 import { DARK_GREY, WHITE } from '../../utils/colours'
 
-const MetaList = styled('ul')({})
+const MetaList = styled('ul')({
+  display: 'flex',
+  flexWrap: 'wrap',
+  rowGap: SPACING.SCALE_5,
+})
 
 const StyledListItem = styled('li')({
   marginRight: SPACING.SCALE_5,
@@ -90,7 +94,7 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
           {investment.createdBy.ditTeam.name}
         </MetaListItem>
       )}
-      {investment.eybLeads?.length && (
+      {investment.eybLeads?.length > 0 && (
         <MetaListItem text="Generated from">EYB lead</MetaListItem>
       )}
     </MetaList>
