@@ -16,12 +16,6 @@ services:
       COLUMNS: 80
       DJANGO_SUPERUSER_SSO_EMAIL_USER_ID: test@gov.uk
       ALLOW_TEST_FIXTURE_SETUP: 'True'
-      ACTIVITY_STREAM_OUTGOING_URL: http://activity-feed-reverseproxy:8081/v2/activities
-      ACTIVITY_STREAM_OUTGOING_ACCESS_KEY_ID: incoming-some-id-1
-      ACTIVITY_STREAM_OUTGOING_SECRET_ACCESS_KEY: incoming-some-secret-1
-      ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
-      ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
-      ACTIVITY_STREAM_INCOMING_SECRET_ACCESS_KEY: some-secret
       DATABASE_CREDENTIALS: '{"username": "postgres", "password": "datahub", "engine": "postgres", "port": 5432, "dbname": "datahub", "host": "postgres", "dbInstanceIdentifier": "db-instance"}'
     ports:
       - 8000:8000
@@ -68,43 +62,5 @@ services:
       - bootstrap.memory_lock=true
       - DISABLE_INSTALL_DEMO_CONFIG=true # Prevents execution of bundled demo script which installs demo certificates and security configurations to OpenSearch
       - DISABLE_SECURITY_PLUGIN=true # Disables security plugin
-    logging:
-      driver: none
-
-  activity-feed-reverseproxy:
-    build: ./test/end-to-end/proxy
-    ports:
-      - 8081:8081
-    depends_on:
-      - activity-feed
-    logging:
-      driver: none
-
-  activity-feed:
-    build: https://github.com/uktrade/activity-stream.git
-    depends_on:
-      - postgres
-      - opensearch
-      - redis
-      - api
-    ports:
-      - 8082:8082
-    environment:
-      - PORT=8082
-      - REDIS_URL=redis://redis:6379
-      - OPENSEARCH=http://some-id:some-secret@opensearch:9200
-      - SENTRY_ENVIRONMENT=test
-      - SENTRY_DSN=http://abc:cvb@localhost:9872/123
-      - FEEDS__1__UNIQUE_ID=verification_feed_app
-      - FEEDS__1__SEED=http://api:8000/v3/activity-stream/event
-      - FEEDS__1__ACCESS_KEY_ID=some-id
-      - FEEDS__1__SECRET_ACCESS_KEY=some-secret
-      - FEEDS__1__TYPE=activity_stream
-      - INCOMING_ACCESS_KEY_PAIRS__1__KEY_ID=incoming-some-id-1
-      - INCOMING_ACCESS_KEY_PAIRS__1__SECRET_KEY=incoming-some-secret-1
-      - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__activities__1=__MATCH_ALL__
-      - INCOMING_ACCESS_KEY_PAIRS__1__PERMISSIONS__objects__1=__MATCH_ALL__
-      - INCOMING_IP_WHITELIST__1=1.2.3.4
-      - INCOMING_IP_WHITELIST__2=2.3.4.5
     logging:
       driver: none
