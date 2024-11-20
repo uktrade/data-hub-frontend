@@ -16,6 +16,11 @@ const urls = require('../../../../../src/lib/urls')
 
 const { usCompany } = company
 
+const truncateData = (enquiry, maxLength = 200) =>
+  enquiry.length < maxLength
+    ? enquiry
+    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
+
 describe('Company overview page', () => {
   const interactionUrlAllOverview = urls.companies.interactions.index(
     fixtures.company.allOverviewDetails.id
@@ -586,10 +591,12 @@ describe('Company overview page', () => {
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
       const activity = greatList[0]
-      cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
-      cy.get('[data-test="activity-subject"]').contains(
-        activity.great_export_enquiry.meta_subject
+      const subject = truncateData(
+        activity.great_export_enquiry.meta_subject,
+        35
       )
+      cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
+      cy.get('[data-test="activity-subject"]').contains(subject)
       cy.get('[data-test="activity-summary"]').contains(
         `Enquirer ${activity.great_export_enquiry.contact.first_name} ${activity.great_export_enquiry.contact.last_name}`
       )

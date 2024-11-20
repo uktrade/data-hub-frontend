@@ -102,7 +102,7 @@ describe('Company activity feed', () => {
     })
     it('displays the Great export enquiry subject', () => {
       cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('h3').contains(`Enquiry ${great_subject}`)
+        cy.get('h4').contains(`Enquiry ${great_subject}`)
       )
     })
     it('displays the Great export enquiry contact', () => {
