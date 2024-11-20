@@ -106,52 +106,6 @@ Ensure you have [node](https://nodejs.org/en/download/) v10 installed then insta
 
 1. Add `ALLOW_TEST_FIXTURE_SETUP=True` to `.env` in Data Hub API.
 
-### Activity feed
-
-Events displayed inside Datahub are provided via the [activity stream API](https://github.com/uktrade/activity-stream), which wraps an OpenSearch cluster. Events created as part of any test runs need to be visible to the activity stream so they can be viewed in the events page. The activity stream polls the Datahub API to ingest any new events created, so the `docker-compose.yml` file uses environment variables to setup the access keys to allow the communication between these 2 systems:
-
-#### The API environment variables that define the access keys that need to be used when activity stream call the events endpoint
-
-```
-ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
-ACTIVITY_STREAM_INCOMING_ACCESS_KEY_ID: some-id
-ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
-ACTIVITY_STREAM_INCOMING_SECRET_ACCESS_KEY: some-secret
-```
-
-#### The activity stream environment variables that set the API as a feed to call to ingest data from. The FEEDS**1**ACCESS_KEY_ID and FEEDS**1**SECRET_ACCESS_KEY values match the values defined in the API environment variables
-
-```
-FEEDS__1__UNIQUE_ID=verification_feed_app
-FEEDS__1__SEED=http://api:8000/v3/activity-stream/event
-FEEDS__1__ACCESS_KEY_ID=some-id
-FEEDS__1__SECRET_ACCESS_KEY=some-secret
-FEEDS__1__TYPE=activity_stream
-```
-
-The activity stream has a 2 way relationship with datahub - in addition to polling the Datahub API for any new events that can be ingested into the OpenSearch DB, it also provides an API that allows searching of the events it holds. Environment varaibles are again used to control access between these 2 systems
-
-#### The activity stream environment variables that define the access keys that need to be provided when any queries are made
-
-```
-INCOMING_ACCESS_KEY_PAIRS__1__KEY_ID=incoming-some-id-1
-INCOMING_ACCESS_KEY_PAIRS__1__SECRET_KEY=incoming-some-secret-1
-```
-
-#### The API environment variables that set the activity stream endpoint to use to get a list of events
-
-Please see for [here](#ngnix-reverse-proxy) more detail about the reason for a reverse proxy
-
-```
-ACTIVITY_STREAM_OUTGOING_URL: http://activity-feed-reverseproxy:8081/v2/activities
-ACTIVITY_STREAM_OUTGOING_ACCESS_KEY_ID: incoming-some-id-1
-ACTIVITY_STREAM_OUTGOING_SECRET_ACCESS_KEY: incoming-some-secret-1
-```
-
-#### Ngnix reverse proxy
-
-The E2E tests make use of an ngnix container to replicate the GOV PAAS functionality. The activity stream requires specific HTTP Headers to be included that are provided by GOV PAAS, nginx is used here to attach those headers to all requests to the activity stream without requiring any code changes
-
 ### Running the tests
 
 Notice that before running the tests the application should be up and running.
