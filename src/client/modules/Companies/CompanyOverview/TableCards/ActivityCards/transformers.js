@@ -3,7 +3,7 @@ import {
   formatMediumDateParsed,
   isDateInFuture,
 } from '../../../../../utils/date'
-import { truncateData } from '../../../utils'
+import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
 

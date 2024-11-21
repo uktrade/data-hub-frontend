@@ -10,16 +10,12 @@ import companyActivityListFaker, {
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
+import { truncateData } from '../../../../../src/client/utils/truncate'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
 const { usCompany } = company
-
-const truncateData = (enquiry, maxLength = 200) =>
-  enquiry.length < maxLength
-    ? enquiry
-    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
 
 describe('Company overview page', () => {
   const interactionUrlAllOverview = urls.companies.interactions.index(
