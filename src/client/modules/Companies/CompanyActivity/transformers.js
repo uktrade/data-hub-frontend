@@ -4,6 +4,7 @@ import Link from '@govuk-react/link'
 import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
 import { formatMediumDate, formatMediumDateParsed } from '../../../utils/date'
+import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 
@@ -39,11 +40,6 @@ export const formattedContacts = (contacts) =>
       </Link>
     </span>
   ))
-
-export const truncateData = (enquiry, maxLength = 200) =>
-  enquiry.length < maxLength
-    ? enquiry
-    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
 
 export const formattedAdvisers = (advisers) =>
   !!advisers.length &&

@@ -10,6 +10,7 @@ import companyActivityListFaker, {
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
+import { truncateData } from '../../../../../src/client/utils/truncate'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -586,10 +587,12 @@ describe('Company overview page', () => {
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
       const activity = greatList[0]
-      cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
-      cy.get('[data-test="activity-subject"]').contains(
-        activity.great_export_enquiry.meta_subject
+      const subject = truncateData(
+        activity.great_export_enquiry.meta_subject,
+        35
       )
+      cy.get('[data-test="great-kind-label"]').contains('great.gov.uk')
+      cy.get('[data-test="activity-subject"]').contains(subject)
       cy.get('[data-test="activity-summary"]').contains(
         `Enquirer ${activity.great_export_enquiry.contact.first_name} ${activity.great_export_enquiry.contact.last_name}`
       )

@@ -3,6 +3,7 @@ import {
   companyActivityOrderListFaker,
   companyActivityGreatListFaker,
 } from '../../fakers/company-activity'
+import { truncateData } from '../../../../../src/client/utils/truncate'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -10,11 +11,6 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 
 const company = fixtures.company.allActivitiesCompany
 const company_activities = fixtures.company.activities
-
-const truncateData = (enquiry, maxLength = 200) =>
-  enquiry.length < maxLength
-    ? enquiry
-    : enquiry.slice(0, maxLength).split(' ').slice(0, -1).join(' ') + ' ...'
 
 /*
  * Parts of this test are being skipped as we aren't pulling in this data from ActivityStream any more
@@ -102,7 +98,7 @@ describe('Company activity feed', () => {
     })
     it('displays the Great export enquiry subject', () => {
       cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('h3').contains(`Enquiry ${great_subject}`)
+        cy.get('h4').contains(`Enquiry ${great_subject}`)
       )
     })
     it('displays the Great export enquiry contact', () => {

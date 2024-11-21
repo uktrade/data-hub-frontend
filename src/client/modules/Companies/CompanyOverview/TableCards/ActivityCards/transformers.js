@@ -3,6 +3,7 @@ import {
   formatMediumDateParsed,
   isDateInFuture,
 } from '../../../../../utils/date'
+import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
 
@@ -186,7 +187,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
         dataTest: 'great-kind-label',
       },
     ].filter(({ text }) => Boolean(text)),
-    headingText: great.meta_subject,
+    headingText: truncateData(great.meta_subject, 35),
     summary: `Enquirer ${great.contact.first_name} ${great.contact.last_name}`,
   }
 }
