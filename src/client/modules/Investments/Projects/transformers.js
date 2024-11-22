@@ -26,13 +26,11 @@ import Tag, { TAG_COLOURS } from '../../../components/Tag'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
-export const transformArrayForTypeahead = (array) =>
-  array && array.length
-    ? array.map((value) => ({
-        label: value.name,
-        value: value.id,
-      }))
-    : null
+export const transformArrayForTypeahead = (x) =>
+  x?.map((value) => ({
+    label: value.name,
+    value: value.id,
+  })) || []
 
 export const transformAndFilterArrayForTypeahead = (array) => {
   const filteredArray = idNamesToValueLabels(
