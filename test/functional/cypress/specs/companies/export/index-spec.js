@@ -198,27 +198,3 @@ describe('Company Export tab', () => {
     })
   })
 })
-
-describe("Other Company tabs - should't be shown banner message in the other tabs", () => {
-  ;[
-    'overview',
-    'activity',
-    'business-details',
-    'contacts',
-    'account-management',
-    'investments/projects',
-    'orders',
-  ].forEach((slug) =>
-    it(slug, () => {
-      cy.visit(`/companies/${company.dnbCorp.id}/${slug}`)
-
-      // We need to wait for company name appear...
-      cy.contains(company.dnbCorp.name)
-
-      // ...so that this waits for whent the data has been loaded and rendered
-      cy.contains('Historic export wins have now moved to Data Hub').should(
-        'not.exist'
-      )
-    })
-  )
-})

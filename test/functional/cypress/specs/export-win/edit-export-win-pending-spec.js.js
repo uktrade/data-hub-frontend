@@ -1,16 +1,16 @@
 import { exportWinsFaker } from '../../fakers/export-wins'
 import urls from '../../../../../src/lib/urls'
 import { company, formFields } from './constants'
-import { HISTORIC_ALERT_MESSAGE } from '../../../../../src/client/modules/ExportWins/Status/constants'
+import { HISTORIC_WINS_ALERT_MESSAGE } from '../../../../../src/client/modules/ExportWins/Status/constants'
 
 const exportWin = exportWinsFaker()
 
 export const assertHistoricExportWinsMessage = () => {
   cy.get('[data-test="status-message"]')
-    .should('contain', HISTORIC_ALERT_MESSAGE.ELEMENT)
-    .should('contain.text', HISTORIC_ALERT_MESSAGE.URI_ELEMENT)
+    .should('contain', HISTORIC_WINS_ALERT_MESSAGE.ELEMENT)
+    .should('contain.text', HISTORIC_WINS_ALERT_MESSAGE.URI_ELEMENT)
     .find('a')
-    .should('have.attr', 'href', HISTORIC_ALERT_MESSAGE.URI_LINK)
+    .should('have.attr', 'href', HISTORIC_WINS_ALERT_MESSAGE.URI_LINK)
 }
 
 const assertCustomerDetailsMessage = () => {
