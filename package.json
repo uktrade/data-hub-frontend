@@ -184,7 +184,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^7.1.0",
-    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
