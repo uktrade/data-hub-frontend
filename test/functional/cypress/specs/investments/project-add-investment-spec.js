@@ -98,6 +98,18 @@ const investmentTypeTests = () => {
   })
 }
 
+it('Adding an investment related to company with no contacts should not fail', () => {
+  cy.intercept('GET', '/api-proxy/v4/contact*', {
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+  })
+  cy.visit('/investments/projects/create/foo')
+  cy.contains('label', 'Non-FDI').click()
+  cy.contains('Continue').click()
+})
+
 describe('Adding an investment via "Companies"', () => {
   beforeEach(() => {
     cy.visit(urls.companies.investments.companyInvestmentProjects(usCompany.id))
