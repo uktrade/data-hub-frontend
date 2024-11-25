@@ -22,7 +22,7 @@ import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 import SummaryStep from './SummaryStep'
 import { Form, FormLayout, DefaultLayout } from '../../../components'
-import { WINS_HISTORIC_ALERT_BANNER } from '../Status/ExportWinsTabNav'
+import { HistoricWinsAlertBanner } from '../Status/ExportWinsTabNav'
 
 const FORM_ID = 'export-win-form'
 
@@ -86,7 +86,7 @@ const ExportWinForm = ({
                   isEditing ? (
                     <>
                       <StyledParagraph>
-                        {WINS_HISTORIC_ALERT_BANNER}
+                        {HistoricWinsAlertBanner}
                       </StyledParagraph>
                       {currentStepName === steps.SUMMARY ? (
                         <>

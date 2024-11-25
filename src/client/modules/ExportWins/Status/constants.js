@@ -23,7 +23,7 @@ export const ADVISER_ROLES = {
   CONTRIBUTING_OFFICER: 'contributing officer',
 }
 
-export const HISTORIC_ALERT_MESSAGE = {
+export const HISTORIC_WINS_ALERT_MESSAGE = {
   ELEMENT: 'Historic export wins have now moved to Data Hub,',
   URI_ELEMENT: 'see the export wins announcement',
   URI_LINK:

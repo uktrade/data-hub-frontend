@@ -9,21 +9,21 @@ import WinsRejectedList from './WinsRejectedList'
 import WinsPendingList from './WinsPendingList'
 import WinsConfirmedList from './WinsConfirmedList'
 import urls from '../../../../lib/urls'
-import { HISTORIC_ALERT_MESSAGE } from './constants'
+import { HISTORIC_WINS_ALERT_MESSAGE } from './constants'
 
 const LAST_WORD = /([^\/]+)$/
 
-export const WINS_HISTORIC_ALERT_BANNER = (
+export const HistoricWinsAlertBanner = (
   <>
-    {[HISTORIC_ALERT_MESSAGE.ELEMENT].concat(' ')}
+    {[HISTORIC_WINS_ALERT_MESSAGE.ELEMENT].concat(' ')}
     {[
       <Link
-        href={HISTORIC_ALERT_MESSAGE.URI_LINK}
+        href={HISTORIC_WINS_ALERT_MESSAGE.URI_LINK}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Find out more about historic wins moved to Data Hub"
       >
-        {HISTORIC_ALERT_MESSAGE.URI_ELEMENT}
+        {HISTORIC_WINS_ALERT_MESSAGE.URI_ELEMENT}
       </Link>,
     ].concat('.')}
   </>
@@ -46,7 +46,7 @@ const ExportWinsTabNav = () => {
         },
         { text: capitalize(title) },
       ]}
-      flashMessages={[[WINS_HISTORIC_ALERT_BANNER]]}
+      flashMessages={[[HistoricWinsAlertBanner]]}
     >
       <TabNav
         id="exportwins-tab-nav"
