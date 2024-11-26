@@ -285,7 +285,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   return {
     id: great.id,
     metadata: [
-      { label: 'Date', value: formatMediumDateParsed(great.created_on) },
+      { label: 'Date', value: formatMediumDateParsed(activity.date) },
       {
         label: 'Contact',
         value: formattedContacts([great.contact]),
