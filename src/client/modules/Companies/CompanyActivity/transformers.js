@@ -7,6 +7,7 @@ import { formatMediumDate, formatMediumDateParsed } from '../../../utils/date'
 import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
+import { getServiceText } from '../../../components/ActivityFeed/activities/InteractionUtils'
 
 const { isEmpty } = require('lodash')
 
@@ -17,12 +18,13 @@ const AdviserEmail = (props) => (
 )
 
 const AdviserRenderer = ({ adviser, team }) => {
-  const email = <AdviserEmail id={adviser.id} />
+  const email = adviser.email ? adviser.email : <AdviserEmail id={adviser.id} />
   const emailLink = <Link href={`mailto:${email}`}> {email}</Link>
   const teamString = team ? `${team.name} ` : null
   return (
     <>
-      <span>{adviser.name}</span> {emailLink}, {teamString} <br />
+      <span>{adviser.name}</span> {emailLink}
+      {teamString ? `, ${teamString}` : ''} <br />
     </>
   )
 }
@@ -85,12 +87,13 @@ export const transformActivities = (activities) => {
 
 export const transformInteractionToListItem = (activity) => {
   const interaction = activity.interaction
+  const companyId = activity.company.id
   return {
     id: interaction.id,
     metadata: [
       {
         label: 'Date',
-        value: formatMediumDateParsed(interaction.date),
+        value: interaction.date ? formatMediumDateParsed(interaction.date) : '',
       },
       {
         label: verifyLabel(interaction.contacts, 'Contact'),
@@ -113,15 +116,14 @@ export const transformInteractionToListItem = (activity) => {
         dataTest: 'activity-kind-label',
       },
       {
-        text:
-          interaction.service && interaction.service.name.includes(' : ')
-            ? interaction.service.name.split(' : ')[0]
-            : interaction.service?.name,
+        text: interaction.service
+          ? getServiceText(interaction.service?.name)
+          : '',
         colour: 'blue',
         dataTest: 'activity-service-label',
       },
     ].filter(({ text }) => Boolean(text)),
-    headingUrl: urls.interactions.detail(interaction.id),
+    headingUrl: urls.companies.interactions.detail(companyId, interaction.id),
     headingText: interaction.subject,
   }
 }

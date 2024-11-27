@@ -54,10 +54,10 @@ const basePayload = (limit, companyId) => ({
   company: companyId,
 })
 
-const ItemTemplate = (item) => (
+export const ItemTemplate = (item) => (
   <StyledWrapper data-test="activity-card-wrapper">
     <Row>
-      <LeftCol>{item.date}</LeftCol>
+      <LeftCol data-test="activity-date">{item.date}</LeftCol>
       <RightCol>
         <StyledBadgesWrapper data-test="collection-item-tags">
           {renderTags(item.tags)}

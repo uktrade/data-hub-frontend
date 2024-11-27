@@ -15,7 +15,7 @@ const transformAdvisers = (advisers) => {
   const lastCommaIndex = stringAdvisers.lastIndexOf(', ')
   return (
     stringAdvisers.substring(0, lastCommaIndex) +
-    ' and ' +
+    ' and' +
     stringAdvisers.substring(lastCommaIndex + 1)
   )
 }
@@ -29,7 +29,7 @@ const transformContacts = (contacts) => {
   const lastCommaIndex = stringContacts.lastIndexOf(', ')
   return (
     stringContacts.substring(0, lastCommaIndex) +
-    ' and ' +
+    ' and' +
     stringContacts.substring(lastCommaIndex + 1)
   )
 }
@@ -102,25 +102,29 @@ export const transformReferralToListItem = (activity) => {
   }
 }
 
-export const transformInteractionToListItem = (activity) => ({
-  id: activity.interaction.id,
-  date: formatMediumDateParsed(activity.date),
-  tags: [
-    {
-      text: INTERACTION_NAMES[activity.interaction.kind],
-      colour: 'grey',
-      dataTest: 'activity-kind-label',
-    },
-  ],
-  headingUrl: urls.interactions.detail(activity.interaction.id),
-  headingText: activity.interaction.subject,
-  summary: buildSummary(
-    activity.interaction.dit_participants,
-    activity.interaction.communication_channel?.name,
-    activity.interaction.contacts,
-    activity.date
-  ),
-})
+export const transformInteractionToListItem = (activity) => {
+  const interaction = activity.interaction
+  const companyId = activity.company.id
+  return {
+    id: interaction.id,
+    date: interaction.date ? formatMediumDateParsed(interaction.date) : '',
+    tags: [
+      {
+        text: INTERACTION_NAMES[interaction.kind],
+        colour: 'grey',
+        dataTest: 'activity-kind-label',
+      },
+    ],
+    headingUrl: urls.companies.interactions.detail(companyId, interaction.id),
+    headingText: interaction.subject,
+    summary: buildSummary(
+      interaction.dit_participants,
+      interaction.communication_channel?.name,
+      interaction.contacts,
+      interaction.date
+    ),
+  }
+}
 
 export const transformInvestmentToListItem = (activity) => {
   const investment = activity.investment
