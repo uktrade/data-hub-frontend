@@ -72,7 +72,7 @@
     "@sentry/node": "^8.40.0",
     "@sentry/react": "^8.40.0",
     "autoprefixer": "^10.4.20",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "basic-auth": "^2.0.1",
     "body-parser": "^1.20.3",
     "case": "^1.6.3",
