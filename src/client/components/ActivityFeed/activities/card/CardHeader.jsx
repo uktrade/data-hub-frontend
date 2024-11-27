@@ -34,7 +34,8 @@ const StyledCardHeader = styled('div')`
 `
 
 const StyledCompanyName = styled('div')`
-  margin: -${SPACING.SCALE_3} -${SPACING.SCALE_3} ${SPACING.SCALE_4} -${SPACING.SCALE_3};
+  margin: -${SPACING.SCALE_3} -${SPACING.SCALE_3}
+    ${SPACING.SCALE_4} -${SPACING.SCALE_3};
   padding: ${SPACING.SCALE_2} ${SPACING.SCALE_3};
   background: ${GREY_4};
   font-size: initial;
