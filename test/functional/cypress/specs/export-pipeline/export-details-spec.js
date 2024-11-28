@@ -19,6 +19,7 @@ describe('Export Details summary ', () => {
         body: exportItem,
       }).as('getExportItemApiRequest')
       cy.visit(`/export/${exportItem.id}/details`)
+      cy.wait('@getExportItemApiRequest')
     })
 
     it('should render breadcrumbs', () => {
