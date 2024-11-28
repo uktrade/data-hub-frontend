@@ -274,6 +274,7 @@ export const VerticalTabNav = styled(SmallScreenTabNav)({
           '&::before': {
             display: 'none',
           },
+          textAlign: 'left',
           textDecoration: 'none',
           border: 'none',
           background: 'none',
