@@ -5,6 +5,7 @@ import {
   EDIT_REQUIREMENTS_BASE_FIELDS,
   UPDATE_SUMMARY_ADDITIONAL_FIELDS,
   UPDATE_SUMMARY_BASE_FIELDS,
+  EDIT_VALUE_BASE_FIELDS,
 } from './constants'
 
 const urls = require('../../../../../src/lib/urls')
@@ -84,14 +85,8 @@ describe('Field validation for each stage', () => {
         INVESTMENT_PROJECT_STAGES.active,
         [...UPDATE_SUMMARY_BASE_FIELDS, FIELDS.LIKELIHOOD_TO_LAND],
       ],
-      [
-        INVESTMENT_PROJECT_STAGES.verifyWin,
-        [...UPDATE_SUMMARY_BASE_FIELDS, ...UPDATE_SUMMARY_ADDITIONAL_FIELDS],
-      ],
-      [
-        INVESTMENT_PROJECT_STAGES.won,
-        [...UPDATE_SUMMARY_BASE_FIELDS, ...UPDATE_SUMMARY_ADDITIONAL_FIELDS],
-      ],
+      [INVESTMENT_PROJECT_STAGES.verifyWin, UPDATE_SUMMARY_ADDITIONAL_FIELDS],
+      [INVESTMENT_PROJECT_STAGES.won, UPDATE_SUMMARY_ADDITIONAL_FIELDS],
     ]
     assertRequiredFieldsForStages(
       stageRequiredFields,
@@ -139,14 +134,8 @@ describe('Field validation for each stage', () => {
   describe('Edit value', () => {
     const stageRequiredFields = [
       [INVESTMENT_PROJECT_STAGES.prospect, []],
-      [
-        INVESTMENT_PROJECT_STAGES.assignPm,
-        [FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT],
-      ],
-      [
-        INVESTMENT_PROJECT_STAGES.active,
-        [FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT],
-      ],
+      [INVESTMENT_PROJECT_STAGES.assignPm, EDIT_VALUE_BASE_FIELDS],
+      [INVESTMENT_PROJECT_STAGES.active, EDIT_VALUE_BASE_FIELDS],
       [INVESTMENT_PROJECT_STAGES.verifyWin, EDIT_VALUE_ADDITIONAL_FIELDS],
       [INVESTMENT_PROJECT_STAGES.won, EDIT_VALUE_ADDITIONAL_FIELDS],
     ]

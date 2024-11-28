@@ -136,15 +136,11 @@ export const FIELDS = {
     name: 'r_and_d_budget',
     message: 'Select whether project has budget for research and development',
   },
-  TOTAL_INVESTMENT: {
-    name: 'total_investment',
-    message: '-total_investment',
-  },
 }
 
 export const UPDATE_SUMMARY_BASE_FIELDS = [
-  // Sector and investment_type can't be null, but should always be set in all stages.
-  // Cypress doesn't pick up null value for the above.
+  // Sector and investment_type can't be null and are required in all stages. However the Cypress
+  // tests do not pick up when they are set to null so they are not included below.
   FIELDS.NAME,
   FIELDS.DESCRIPTION,
   FIELDS.BUSINESS_ACTIVITIES,
@@ -155,6 +151,7 @@ export const UPDATE_SUMMARY_BASE_FIELDS = [
 ]
 
 export const UPDATE_SUMMARY_ADDITIONAL_FIELDS = [
+  ...UPDATE_SUMMARY_BASE_FIELDS,
   FIELDS.INVESTOR_TYPE,
   FIELDS.LEVEL_OF_INVOLVEMENT,
   FIELDS.SPECIFIC_PROGRAMMES,
@@ -175,8 +172,12 @@ export const EDIT_REQUIREMENTS_ADDITIONAL_FIELDS = [
   { name: 'site_decided', message: 'A UK region is required' },
 ]
 
-export const EDIT_VALUE_ADDITIONAL_FIELDS = [
+export const EDIT_VALUE_BASE_FIELDS = [
   FIELDS.CLIENT_CANNOT_PROVIDE_TOTAL_INVESTMENT,
+]
+
+export const EDIT_VALUE_ADDITIONAL_FIELDS = [
+  ...EDIT_VALUE_BASE_FIELDS,
   FIELDS.CLIENT_CANNOT_PROVIDE_FOREIGN_INVESTMENT,
   FIELDS.EXPORT_REVENUE,
   FIELDS.GOVERNMENT_ASSISTANCE,
