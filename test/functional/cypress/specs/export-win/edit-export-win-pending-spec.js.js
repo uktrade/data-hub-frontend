@@ -20,6 +20,13 @@ const assertCustomerDetailsMessage = () => {
   )
 }
 
+const assertLeadOfficerDetailsMessage = () => {
+  cy.get('[data-test="status-message"]').should(
+    'contain.text',
+    'Contact exportwins@businessandtrade.gov.uk if you need to update the section: lead officer name.'
+  )
+}
+
 const assertWinDetailsMessage = () => {
   cy.get('[data-test="status-message"]').should(
     'contain.text',
@@ -74,6 +81,7 @@ describe('Editing a pending export win', () => {
       )
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
       assertHistoricExportWinsMessage()
+      assertLeadOfficerDetailsMessage()
     })
   })
 
