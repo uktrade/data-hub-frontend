@@ -9,7 +9,7 @@ import { BREAKPOINTS } from '@govuk-react/constants'
 
 import urls from '../../../../lib/urls'
 import { EXPORT_LOADED } from '../../../actions'
-import { DefaultLayout, SummaryTable } from '../../../components'
+import { SummaryTable } from '../../../components'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
 import {
@@ -26,6 +26,7 @@ const StyledSummaryTable = styled(SummaryTable)({
 
 const Container = styled('div')`
   display: flex;
+  gap: 20px;
   align-items: baseline;
   margin-bottom: 30px;
   ${Link} {
@@ -56,21 +57,6 @@ const EstimatedExport = ({
     return <>{estimated_export_value_years.name}</>
   }
   return <span>Not set</span>
-}
-
-const getBreadcrumbs = (exportItem) => {
-  const defaultBreadcrumbs = [
-    {
-      link: urls.exportPipeline.index(),
-      text: 'Home',
-    },
-  ]
-
-  if (exportItem) {
-    return [...defaultBreadcrumbs, { text: exportItem.title }]
-  }
-
-  return defaultBreadcrumbs
 }
 
 const ExportDetailsForm = ({ exportItem }) => {
