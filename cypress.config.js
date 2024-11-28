@@ -27,4 +27,8 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000',
     supportFile: 'test/cypress/support/index.js',
   },
+  retries: {
+    runMode: 2, // number of retries when running `cypress run`
+    openMode: 2, // number of retries when running `cypress open`
+  },
 })
