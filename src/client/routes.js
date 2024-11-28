@@ -713,7 +713,7 @@ function Routes() {
       path: '/export/:exportId/details',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
-          <Export />
+          <ExportProjectTabNav />
         </ProtectedRoute>
       ),
     },
@@ -721,7 +721,7 @@ function Routes() {
       path: '/export/:exportId/interactions',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
-          <Export />
+          <ExportProjectTabNav />
         </ProtectedRoute>
       ),
     },
