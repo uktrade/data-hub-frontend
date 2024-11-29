@@ -5,6 +5,14 @@ import urls from '../../../../../../../src/lib/urls'
 import { transformInteractionToListItem } from '../../../../../../../src/client/modules/Companies/CompanyOverview/TableCards/ActivityCards/transformers'
 import { ItemTemplate } from '../../../../../../../src/client/modules/Companies/CompanyOverview/TableCards/ActivityCards/ActivityCard'
 import { CollectionList } from '../../../../../../../src/client/components'
+import {
+  assertKindLabel,
+  assertActivitySubject,
+} from '../../../../support/activity-assertions'
+import {
+  buildPersonMetadata,
+  checkName,
+} from '../../../../support/activity-utils'
 
 const subject = 'An interaction with a company'
 const type = 'interaction'
@@ -31,27 +39,6 @@ const contact1 = {
 const contact2 = {
   name: 'Oliver Twist',
 }
-
-const buildPersonMetadata = (noOfPeople, p1, p2) => {
-  const noPeople = []
-
-  if (noOfPeople === 1) {
-    return noPeople.concat(p1)
-  }
-
-  if (noOfPeople === 2) {
-    return noPeople.concat(p1, p2)
-  }
-
-  return noPeople
-}
-
-const checkName = (item) =>
-  item
-    ? {
-        name: item,
-      }
-    : item
 
 const buildAndMountActivity = (
   communicationChannel,
@@ -98,7 +85,7 @@ describe('Interaction activity card', () => {
     })
 
     it('should render the interaction subject', () => {
-      assertInteractionSubject()
+      assertActivitySubject(subject, interactionUrl, 'activity-card-wrapper')
     })
 
     it('should render the date', () => {
@@ -151,20 +138,3 @@ describe('Interaction activity card', () => {
     })
   })
 })
-
-const assertText = (label, expectedText) => {
-  cy.get(label).should('exist').should('have.text', expectedText)
-}
-
-const assertKindLabel = (expectedText = 'Interaction') => {
-  assertText('[data-test="activity-kind-label"]', expectedText)
-}
-
-const assertInteractionSubject = () => {
-  cy.get('[data-test="activity-card-wrapper"]')
-    .find('h3')
-    .children()
-    .should('exist')
-    .should('have.text', subject)
-    .should('have.attr', 'href', interactionUrl)
-}

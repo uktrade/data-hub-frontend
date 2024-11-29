@@ -5,6 +5,11 @@ import urls from '../../../../../../src/lib/urls'
 import { ItemTemplate } from '../../../../../../src/client/modules/Companies/CompanyActivity'
 import { transformReferralToListItem } from '../../../../../../src/client/modules/Companies/CompanyActivity/transformers'
 import { CollectionList } from '../../../../../../src/client/components'
+import {
+  assertActivitySubject,
+  assertMetadataItem,
+  assertReferralLabel,
+} from '../../../support/activity-assertions'
 
 const subject = 'A referral'
 const referralUrl = urls.companies.referrals.details('1', '2')
@@ -63,41 +68,29 @@ describe('Referral activity card', () => {
     })
 
     it('should render the subject', () => {
-      assertSubject()
+      assertActivitySubject(subject, referralUrl)
     })
 
     it('should render the creation date', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(0)
-        .should('have.text', 'Created Date 25 Nov 2058')
+      assertMetadataItem(0, 'Created on 25 Nov 2058')
     })
 
     it('should render the completion date', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(1)
-        .should('have.text', 'Completed Date 25 Dec 2058')
+      assertMetadataItem(1, 'Completed on 25 Dec 2058')
     })
 
     it('should render the sending adviser', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(2)
-        .should(
-          'have.text',
-          'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
-        )
+      assertMetadataItem(
+        2,
+        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
+      )
     })
 
     it('should render the recipient', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should(
-          'have.text',
-          'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
-        )
+      assertMetadataItem(
+        3,
+        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
+      )
     })
   })
 
@@ -112,14 +105,11 @@ describe('Referral activity card', () => {
     })
 
     it('should render the subject', () => {
-      assertSubject()
+      assertActivitySubject(subject, referralUrl)
     })
 
     it('should render the creation date', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(0)
-        .should('have.text', 'Created Date 25 Nov 2058')
+      assertMetadataItem(0, 'Created on 25 Nov 2058')
     })
 
     it('should not render the completion label', () => {
@@ -129,40 +119,17 @@ describe('Referral activity card', () => {
     })
 
     it('should render the sending adviser', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(1)
-        .should(
-          'have.text',
-          'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
-        )
+      assertMetadataItem(
+        1,
+        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
+      )
     })
 
     it('should render the recipient', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(2)
-        .should(
-          'have.text',
-          'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
-        )
+      assertMetadataItem(
+        2,
+        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
+      )
     })
   })
 })
-
-const assertText = (label, expectedText) => {
-  cy.get(label).should('exist').should('have.text', expectedText)
-}
-
-const assertReferralLabel = (expectedText = 'Completed referral') => {
-  assertText('[data-test="referral-label"]', expectedText)
-}
-
-const assertSubject = () => {
-  cy.get('[data-test="collection-item"]')
-    .find('h3')
-    .children()
-    .should('exist')
-    .should('have.text', subject)
-    .should('have.attr', 'href', referralUrl)
-}

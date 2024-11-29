@@ -6,7 +6,7 @@ import { transformReferralToListItem } from '../../../../../../../src/client/mod
 import { ItemTemplate } from '../../../../../../../src/client/modules/Companies/CompanyOverview/TableCards/ActivityCards/ActivityCard'
 import { CollectionList } from '../../../../../../../src/client/components'
 import {
-  assertText,
+  assertReferralLabel,
   assertActivitySubject,
 } from '../../../../support/activity-assertions'
 
@@ -108,7 +108,3 @@ describe('Referral activity card', () => {
     })
   })
 })
-
-const assertReferralLabel = (expectedText = 'Completed referral') => {
-  assertText('[data-test="referral-label"]', expectedText)
-}

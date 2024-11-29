@@ -6,6 +6,13 @@ import { getServiceText } from '../../../../../../src/client/components/Activity
 import { ItemTemplate } from '../../../../../../src/client/modules/Companies/CompanyActivity'
 import { transformInteractionToListItem } from '../../../../../../src/client/modules/Companies/CompanyActivity/transformers'
 import { CollectionList } from '../../../../../../src/client/components'
+import {
+  assertActivitySubject,
+  assertKindLabel,
+  assertMetadataItem,
+  assertText,
+} from '../../../support/activity-assertions'
+import { buildPersonMetadata, checkName } from '../../../support/activity-utils'
 
 const subject = 'An interaction with a company'
 const type = 'interaction'
@@ -81,27 +88,6 @@ const buildServiceLabel = (service) => {
   return 'Service ' + service
 }
 
-const buildPersonMetadata = (noOfPeople, p1, p2) => {
-  const noPeople = []
-
-  if (noOfPeople === 1) {
-    return noPeople.concat(p1)
-  }
-
-  if (noOfPeople === 2) {
-    return noPeople.concat(p1, p2)
-  }
-
-  return noPeople
-}
-
-const checkName = (item) =>
-  item
-    ? {
-        name: item,
-      }
-    : item
-
 const buildAndMountActivity = (
   serviceName,
   communicationChannel,
@@ -157,21 +143,15 @@ describe('Interaction activity card', () => {
     })
 
     it('should render the interaction subject', () => {
-      assertInteractionSubject()
+      assertActivitySubject(subject, interactionUrl)
     })
 
     it('should render the date', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(0)
-        .should('have.text', 'Date 25 Nov 2058')
+      assertMetadataItem(0, 'Date 25 Nov 2058')
     })
 
     it('should render the contact', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(1)
-        .should('have.text', oneContactText)
+      assertMetadataItem(1, oneContactText)
 
       cy.get('[data-test=contact-link-0]').should(
         'have.attr',
@@ -181,18 +161,15 @@ describe('Interaction activity card', () => {
     })
 
     it('should render the communication channel', () => {
-      assertCommunicationChannelLabel()
+      assertMetadataItem(2, 'Communication channel Email/Fax')
     })
 
     it('should render the advisers label', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .eq(3)
-        .should('have.text', oneAdviserText)
+      assertMetadataItem(3, oneAdviserText)
     })
 
     it('should render the full service', () => {
-      assertBottomServiceLabel()
+      assertMetadataItem(4, buildServiceLabel(ditService))
     })
 
     context('When there are multiple contacts and advisers', () => {
@@ -201,17 +178,11 @@ describe('Interaction activity card', () => {
       })
 
       it('should render both contacts', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(1)
-          .should('have.text', twoContactsText)
+        assertMetadataItem(1, twoContactsText)
       })
 
       it('should render both advisers', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(3)
-          .should('have.text', twoAdvisersText)
+        assertMetadataItem(3, twoAdvisersText)
       })
     })
 
@@ -261,18 +232,15 @@ describe('Interaction activity card', () => {
       })
 
       it('should render the communication channel label', () => {
-        assertCommunicationChannelLabel(1)
+        assertMetadataItem(1, 'Communication channel Email/Fax')
       })
 
       it('should render the advisers label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(2)
-          .should('have.text', oneAdviserText)
+        assertMetadataItem(2, oneAdviserText)
       })
 
       it('should render the full service label', () => {
-        assertBottomServiceLabel(ditService, 3)
+        assertMetadataItem(3, buildServiceLabel(ditService))
       })
     })
 
@@ -283,14 +251,11 @@ describe('Interaction activity card', () => {
       })
 
       it('should render the date label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(0)
-          .should('have.text', 'Date 25 Nov 2058')
+        assertMetadataItem(0, 'Date 25 Nov 2058')
       })
 
       it('should render the communication channel label', () => {
-        assertCommunicationChannelLabel()
+        assertMetadataItem(2, 'Communication channel Email/Fax')
       })
 
       it('should not render the advisers label', () => {
@@ -300,7 +265,7 @@ describe('Interaction activity card', () => {
       })
 
       it('should render the full service label', () => {
-        assertBottomServiceLabel(ditService, 3)
+        assertMetadataItem(3, buildServiceLabel(ditService))
       })
     })
 
@@ -311,10 +276,7 @@ describe('Interaction activity card', () => {
       })
 
       it('should render the date label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(0)
-          .should('have.text', 'Date 25 Nov 2058')
+        assertMetadataItem(0, 'Date 25 Nov 2058')
       })
 
       it('should not render the communication channel label', () => {
@@ -324,14 +286,11 @@ describe('Interaction activity card', () => {
       })
 
       it('should render the advisers label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .eq(2)
-          .should('have.text', oneAdviserText)
+        assertMetadataItem(2, oneAdviserText)
       })
 
       it('should render the full service label', () => {
-        assertBottomServiceLabel(ditService, 3)
+        assertMetadataItem(3, buildServiceLabel(ditService))
       })
     })
   })
@@ -418,42 +377,11 @@ describe('Interaction activity card', () => {
   })
 })
 
-const assertText = (label, expectedText) => {
-  cy.get(label).should('exist').should('have.text', expectedText)
-}
-
-const assertKindLabel = (expectedText = 'Interaction') => {
-  assertText('[data-test="activity-kind-label"]', expectedText)
-}
-
 const assertServiceLabel = (service = ditService) => {
   assertText('[data-test="activity-service-label"]', getServiceText(service))
 }
 
-const assertCommunicationChannelLabel = (index = 2) => {
-  cy.get('[data-test="collection-item"]')
-    .find('[data-test="metadata-item"]')
-    .eq(index)
-    .should('have.text', 'Communication channel Email/Fax')
-}
-
-const assertBottomServiceLabel = (service = ditService, index = 4) => {
-  cy.get('[data-test="collection-item"]')
-    .find('[data-test="metadata-item"]')
-    .eq(index)
-    .should('have.text', buildServiceLabel(service))
-}
-
-const assertInteractionSubject = () => {
-  cy.get('[data-test="collection-item"]')
-    .find('h3')
-    .children()
-    .should('exist')
-    .should('have.text', subject)
-    .should('have.attr', 'href', interactionUrl)
-}
-
-function assertService(service) {
+function assertService(service = ditService, index = 4) {
   beforeEach(() => {
     buildAndMountWithCustomService(service)
     cy.get('[data-test="collection-item"]').should('exist')
@@ -464,6 +392,6 @@ function assertService(service) {
   })
 
   it('should render the full service label', () => {
-    assertBottomServiceLabel(service)
+    assertMetadataItem(index, buildServiceLabel(service))
   })
 }
