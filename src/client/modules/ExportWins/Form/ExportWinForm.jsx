@@ -4,7 +4,6 @@ import { Link } from 'govuk-react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
-import { FONT_SIZE } from '@govuk-react/constants'
 
 import FlashMessages from '../../../components/LocalHeader/FlashMessages'
 import { steps, EMAIL, STEP_TO_EXCLUDED_FIELDS_MAP } from './constants'
@@ -22,21 +21,10 @@ import { ExportWinSuccess } from './Success'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 import SummaryStep from './SummaryStep'
-import {
-  Form,
-  FormLayout,
-  DefaultLayout,
-  StatusMessage,
-} from '../../../components'
+import { Form, FormLayout, DefaultLayout } from '../../../components'
+import { HistoricWinsAlertBanner } from '../Status/ExportWinsTabNav'
 
 const FORM_ID = 'export-win-form'
-
-const StyledStatusMessage = styled(StatusMessage)({
-  fontSize: FONT_SIZE.SIZE_20,
-  fontWeight: 700,
-  marginTop: 25,
-  marginBottom: 5,
-})
 
 const StyledParagraph = styled('p')({
   fontWeight: 'bold',
@@ -93,6 +81,28 @@ const ExportWinForm = ({
               heading={heading}
               subheading={subheading}
               breadcrumbs={breadcrumbs}
+              flashMessages={[
+                [
+                  isEditing ? (
+                    <>
+                      <StyledParagraph>
+                        {HistoricWinsAlertBanner}
+                      </StyledParagraph>
+                      {currentStepName === steps.SUMMARY ? (
+                        <>
+                          <StyledParagraph>
+                            To edit an export win: edit each section that needs
+                            changing then return to the summary page. When you
+                            are happy with all the changes save the page.
+                          </StyledParagraph>
+                        </>
+                      ) : excludedStepFields ? (
+                        <ContactLink sections={excludedStepFields} />
+                      ) : null}
+                    </>
+                  ) : null,
+                ],
+              ]}
               localHeaderChildren={
                 isEditing ? (
                   currentStepName === steps.SUMMARY ? (
@@ -104,24 +114,12 @@ const ExportWinForm = ({
                           }}
                         />
                       )}
-                      <StyledStatusMessage>
-                        <StyledParagraph>To edit an export win</StyledParagraph>
-                        <StyledParagraph>
-                          Edit each section that needs changing then return to
-                          the summary page. When you are happy with all the
-                          changes save the page.
-                        </StyledParagraph>
-                      </StyledStatusMessage>
                       {winStatus === WIN_STATUS.PENDING && (
                         <ResentExportWinContainer>
                           <ResendExportWin id={exportWinId} />
                         </ResentExportWinContainer>
                       )}
                     </>
-                  ) : excludedStepFields ? (
-                    <StyledStatusMessage>
-                      <ContactLink sections={excludedStepFields} />
-                    </StyledStatusMessage>
                   ) : null
                 ) : null
               }

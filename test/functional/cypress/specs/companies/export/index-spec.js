@@ -1,6 +1,9 @@
 const { company } = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
+const {
+  assertHistoricExportWinsMessage,
+} = require('../../export-win/edit-export-win-pending-spec.js')
 
 describe('Company Export tab', () => {
   function assertTable({ rows, caption, action }) {
@@ -65,6 +68,10 @@ describe('Company Export tab', () => {
           [company.dnbCorp.name]: urls.companies.detail(company.dnbCorp.id),
           Exports: null,
         })
+      })
+
+      it('should render historic export win banner message', () => {
+        assertHistoricExportWinsMessage()
       })
 
       it('should render the "Exports" table', () => {
