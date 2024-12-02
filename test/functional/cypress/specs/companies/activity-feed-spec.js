@@ -98,16 +98,16 @@ describe('Company activity feed', () => {
     })
     it('displays the Great export enquiry subject', () => {
       cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('h4').contains(`Enquiry ${great_subject}`)
+        cy.get('h4').should('have.text', `Enquiry ${great_subject}`)
       )
     })
     it('displays the Great export enquiry contact', () => {
       cy.get('[data-test="metadata-item"]').contains(
-        `${activity.great_export_enquiry.contact.name}`
+        activity.great_export_enquiry.contact.name
       )
     })
     it('displays the Great export enquiry comment', () => {
-      cy.get('[data-test="metadata-item"]').contains(`${great_comment}`)
+      cy.get('[data-test="metadata-item"]').contains(great_comment)
     })
   })
 
