@@ -65,6 +65,7 @@ const investmentProjectCodeFaker = () => `DHP-${numberStringFaker(8)}`
 const investmentProjectFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.IProject),
   id: faker.string.uuid(),
+  name: 'Test Project',
   stage: investmentProjectStageFaker(),
   estimated_land_date: relativeDateFaker({ minDays: -100, maxDays: 365 }),
   investor_company: {
