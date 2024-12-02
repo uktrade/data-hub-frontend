@@ -75,6 +75,8 @@ export const transformActivities = (activities) => {
         return transformOrderToListItem(activity)
       case 'great_export_enquiry':
         return transformGreatExportEnquiryToListItem(activity)
+      case 'eyb_lead':
+        return transformEYBLeadToListItem(activity)
       default:
         return {}
     }
@@ -347,4 +349,32 @@ export const filterServiceNames = (services) => {
     .sort((a, b) => a.label.localeCompare(b.label))
 
   return filteredServiceNames
+}
+
+export const transformEYBLeadToListItem = (activity) => {
+  return {
+    id: activity.eyb_lead.id,
+    metadata: [
+      //TODO display triage_created date instead of created_on
+      {
+        label: 'Submitted to EYB date',
+        value: formatMediumDateParsed(activity.eyb_lead.created_on),
+      },
+      //TODO display'value'
+    ].filter(({ value }) => Boolean(value)),
+    tags: [
+      {
+        text: 'EYB',
+        colour: 'grey',
+        dataTest: 'eyb-service-label',
+      },
+      {
+        text: 'Investment',
+        colour: 'default',
+        dataTest: 'investment-theme-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
+    headingText: activity.eyb_lead.company_name,
+  }
 }
