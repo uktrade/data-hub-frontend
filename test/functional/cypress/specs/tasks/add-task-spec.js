@@ -155,11 +155,16 @@ describe('Add company task', () => {
     })
 
     it('add task button should send expected values with company to the api', () => {
-      company.name = 'a company name'
-      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+      const companyWithName = { ...companyFaker(), name: 'a company name' }
+      cy.intercept(`/api-proxy/v4/company?*`, { results: [companyWithName] })
       cy.get('[data-test=assigned-to-me]').click()
-      fillTypeahead('[data-test=field-company]', company.name)
-      assertTaskForm(null, [myAdviserId], company.id, dashboard.myTasks())
+      fillTypeahead('[data-test=field-company]', companyWithName.name)
+      assertTaskForm(
+        null,
+        [myAdviserId],
+        companyWithName.id,
+        dashboard.myTasks()
+      )
     })
 
     it('add task button should send expected values without company to the api', () => {
