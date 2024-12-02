@@ -66,6 +66,7 @@ const setup = (project) => {
   }).as('getProjectDetails')
   cy.visit(urls.investments.projects.editDetails(project.id))
   cy.wait('@getProjectDetails')
+  cy.get('[data-test="submit"]').should('be.visible')
 }
 
 describe('Editing the project summary', () => {
@@ -414,6 +415,7 @@ describe('Editing the project summary', () => {
       )
       cy.get('[data-test="continue"]').should('exist')
       clickButton('Continue')
+      cy.get('[data-test="submit"]').should('exist')
     })
 
     it('should take the user to a confirmation step and display the warning', () => {
@@ -580,7 +582,9 @@ describe('Editing the project summary', () => {
     })
 
     it('should submit the request with investor type set to the user selection', () => {
-      cy.get('[data-test="investor-type-new-investor"]').click()
+      cy.get('[data-test="investor-type-new-investor"]')
+        .click()
+        .should('be.checked')
       clickButton('Submit')
       cy.wait('@editDetailsRequest')
         .its('request.body')
