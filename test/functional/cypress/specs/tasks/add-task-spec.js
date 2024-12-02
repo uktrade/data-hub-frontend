@@ -154,11 +154,18 @@ describe('Add company task', () => {
       cy.get('h1').should('have.text', `Add task`)
     })
 
-    it('add task button should send expected values to the api', () => {
+    it('add task button should send expected values with company to the api', () => {
+      company.name = 'a company name'
       cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
       cy.get('[data-test=assigned-to-me]').click()
       fillTypeahead('[data-test=field-company]', company.name)
       assertTaskForm(null, [myAdviserId], company.id, dashboard.myTasks())
+    })
+
+    it('add task button should send expected values without company to the api', () => {
+      cy.intercept(`/api-proxy/v4/company?*`, { results: [company] })
+      cy.get('[data-test=assigned-to-me]').click()
+      assertTaskForm(null, [myAdviserId], null, dashboard.myTasks())
     })
   })
 })
