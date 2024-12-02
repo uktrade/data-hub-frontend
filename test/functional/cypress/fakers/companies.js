@@ -26,6 +26,7 @@ const companyFaker = (overrides = {}) => ({
     name: faker.word.adjective(),
   },
   uk_region: ukRegionFaker(),
+  archived: false,
   ...overrides,
 })
 
