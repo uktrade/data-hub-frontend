@@ -1,5 +1,6 @@
-import { faker } from '@faker-js/faker'
 import { pick } from 'lodash'
+
+import { faker } from '../../../utils'
 
 import { listFaker } from './utils'
 import { companyFaker } from './companies'

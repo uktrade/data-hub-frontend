@@ -1,6 +1,6 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../utils'
 
 import ukRegion from '../../../fixtures/v4/metadata/uk-region.json' assert { type: 'json' }
 import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' assert { type: 'json' }

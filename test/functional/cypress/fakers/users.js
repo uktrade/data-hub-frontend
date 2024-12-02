@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../utils'
 
 const userFaker = (overrides) => {
   const first_name = faker.person.firstName()

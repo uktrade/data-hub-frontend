@@ -1,5 +1,4 @@
-import { faker } from '@faker-js/faker'
-
+import { faker } from '../../../../utils'
 import { contactFaker, contactsListFaker } from '../../fakers/contacts'
 import { exportFaker } from '../../fakers/export'
 import { companyFaker } from '../../fakers/companies'

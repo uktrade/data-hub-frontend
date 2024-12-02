@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../utils'
 
 import { contactFaker } from './contacts'
 import { sectorFaker } from './sectors'

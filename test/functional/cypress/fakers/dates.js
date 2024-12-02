@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../utils'
 
 import { addDays } from '../../../../src/client/utils/date'
 

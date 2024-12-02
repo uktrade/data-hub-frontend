@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../../../test/utils'
 
 const randomLists = ({ length, max = 10 }) =>
   Array(length || faker.number.int(max))

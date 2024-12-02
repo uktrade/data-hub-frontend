@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker'
-import jsf from 'json-schema-faker'
 import { startCase } from 'lodash'
+
+import { faker, jsf } from '../../../utils'
 
 import apiSchema from '../../../api-schema.json'
 

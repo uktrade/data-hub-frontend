@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../utils'
 
 import summary from '../../../fixtures/v4/reminder/summary.json' assert { type: 'json' }
 

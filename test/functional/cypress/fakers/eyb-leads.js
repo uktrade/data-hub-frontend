@@ -1,5 +1,4 @@
-import { faker } from '@faker-js/faker'
-import { JSONSchemaFaker } from 'json-schema-faker'
+import { faker, jsf } from '../../../utils'
 
 import apiSchema from '../../../api-schema.json'
 
@@ -63,7 +62,7 @@ const LANDING_TIMEFRAME_CHOICES = [
  * merges in overrides.
  */
 const eybLeadFaker = (overrides = {}) => ({
-  ...JSONSchemaFaker.generate(apiSchema.components.schemas.RetrieveEYBLead),
+  ...jsf.generate(apiSchema.components.schemas.RetrieveEYBLead),
   archived: false,
   archived_on: null,
   archived_reason: null,

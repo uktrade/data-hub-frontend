@@ -1,5 +1,4 @@
-import jsf from 'json-schema-faker'
-
+import { jsf } from '../../../utils'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { ditTeamFaker } from './dit-team'

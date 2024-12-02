@@ -1,6 +1,6 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../utils'
 
 export const generateTask = (overrides = {}) => {
   return {
