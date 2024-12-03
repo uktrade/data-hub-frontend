@@ -76,7 +76,7 @@ describe('Interaction activity card', () => {
 
     it('should render the labels and metadata', () => {
       assertKindLabel()
-      assertActivitySubject(subject, INTERACTION_URL, 'activity-card-wrapper')
+      assertActivitySubject(SUBJECT, INTERACTION_URL, 'activity-card-wrapper')
       cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
