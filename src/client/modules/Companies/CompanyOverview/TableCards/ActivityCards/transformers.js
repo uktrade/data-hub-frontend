@@ -75,10 +75,7 @@ export const transformActivity = (activities) => {
 
 export const transformReferralToListItem = (activity) => {
   const referral = activity.referral
-  const summary = `
-    Completed sending adviser ${referral.created_by.name} \
-    receiving adviser ${referral.recipient.name}
-  `
+  const summary = `Company was referred to ${referral.recipient.name} by ${referral.created_by.name}`
 
   const date =
     !referral.completedOn && formatMediumDateParsed(referral.created_on)

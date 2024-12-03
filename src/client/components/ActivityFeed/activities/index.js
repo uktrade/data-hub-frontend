@@ -5,7 +5,6 @@ import MaxemailCampaign from './MaxemailCampaign'
 import HmrcExporter from './HmrcExporter'
 import InvestmentProject from './InvestmentProject'
 import Omis from './Omis'
-import Referral from './Referral'
 import AventriAttendee from './AventriAttendee'
 import DataHubEvent from './DataHubEvent'
 import AventriEvent from './AventriEvent'
@@ -22,6 +21,5 @@ export default [
   HmrcExporter,
   InvestmentProject,
   Omis,
-  Referral,
   AventriEventSyncWarning,
 ]

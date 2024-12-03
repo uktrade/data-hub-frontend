@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 
 import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
-import { formatMediumDate, formatMediumDateParsed } from '../../../utils/date'
+import { formatMediumDateParsed } from '../../../utils/date'
 import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
@@ -134,13 +134,13 @@ export const transformReferralToListItem = (activity) => {
     id: referral.id,
     metadata: [
       {
-        label: 'Created Date',
+        label: 'Created on',
         value: formatMediumDateParsed(referral.created_on),
       },
       {
-        label: 'Completed Date',
+        label: 'Completed on',
         value: referral.completed_on
-          ? formatMediumDate(referral.completed_on)
+          ? formatMediumDateParsed(referral.completed_on)
           : '',
       },
       {

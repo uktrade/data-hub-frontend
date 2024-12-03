@@ -2,7 +2,8 @@ import React from 'react'
 
 import AventriEventSyncWarning from '../../../../../../src/client/components/ActivityFeed/activities/AventriEventSyncWarning'
 
-describe('AventriEventSyncWarning', () => {
+// TODO - Repurpose this test when we have the Aventri integration back
+describe.skip('AventriEventSyncWarning', () => {
   const Component = (props) => <AventriEventSyncWarning {...props} />
   context('when there is an aventri event id', () => {
     beforeEach(() => {

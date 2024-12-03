@@ -3,7 +3,8 @@ import React from 'react'
 import AventriAttendee from '../../../../../../src/client/components/ActivityFeed/activities/AventriAttendee'
 import urls from '../../../../../../src/lib/urls'
 
-describe('AventriAttendee', () => {
+// TODO - Repurpose this test when we have the Aventri integration back
+describe.skip('AventriAttendee', () => {
   const Component = (props) => <AventriAttendee {...props} />
   const activity = {
     id: 'dit:aventri:Event:1111:Attendee:1111:Create',
