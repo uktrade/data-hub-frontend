@@ -216,6 +216,7 @@ export const transformEYBLeadToListItem = (activity) => {
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
     headingText: activity.eyb_lead.company_name,
+    //TODO update ternary to use eyb_lead.value to determine high or low-value once this is available from the api
     summary: `A ${true ? 'high' : 'low'}-value EYB lead associated with this company has been added to Data Hub`,
   }
 }
