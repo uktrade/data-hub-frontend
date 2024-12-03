@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { faker } from '../../../../../../utils'
+import { faker } from '../../../../../../sandbox/utils.mjs'
 
 import ObjectiveForm from '../../../../../../../src/client/modules/Companies/AccountManagement/Objective/ObjectiveForm'
 import { companyFaker } from '../../../../../../functional/cypress/fakers/companies'

@@ -1,4 +1,4 @@
-import { faker } from '../../../utils'
+import { faker } from '../../../sandbox/utils.mjs'
 
 import { addDays } from '../../../../src/client/utils/date'
 

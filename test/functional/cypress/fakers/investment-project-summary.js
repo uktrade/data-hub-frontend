@@ -1,6 +1,6 @@
 import { snakeCase } from 'lodash'
 
-import { faker } from '../../../utils'
+import { faker } from '../../../utils.mjs'
 
 import { INVESTMENT_PROJECT_STAGES_LIST } from './constants'
 

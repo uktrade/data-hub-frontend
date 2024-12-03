@@ -1,4 +1,4 @@
-import { faker } from '../../../utils'
+import { faker } from '../../../sandbox/utils.mjs'
 
 const userFaker = (overrides) => {
   const first_name = faker.person.firstName()

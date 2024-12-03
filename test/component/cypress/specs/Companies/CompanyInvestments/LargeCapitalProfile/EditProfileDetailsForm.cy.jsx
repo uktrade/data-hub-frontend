@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { faker } from '../../../../../../utils'
+import { faker } from '../../../../../../sandbox/utils.mjs'
 
 import { largeInvestorProfileFaker } from '../../../../../../functional/cypress/fakers/large-investor-profile'
 import { ProfileDetailsForm } from '../../../../../../../src/client/modules/Companies/CompanyInvestments/LargeCapitalProfile/EditProfileDetailsForm'

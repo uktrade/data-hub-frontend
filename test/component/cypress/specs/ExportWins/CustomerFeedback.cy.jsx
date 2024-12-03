@@ -8,7 +8,7 @@ import {
 } from '../../../../functional/cypress/support/assertions'
 import CustomerFeedback from '../../../../../src/client/modules/ExportWins/CustomerFeedback'
 import urls from '../../../../../src/lib/urls'
-import { resolve } from '../../../../utils'
+import { resolve } from '../../../../sandbox/utils.mjs'
 
 const toYesNo = (x) => (x ? 'Yes' : 'No')
 

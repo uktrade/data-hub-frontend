@@ -1,4 +1,4 @@
-import { faker, jsf } from '../../../utils'
+import { faker, jsf } from '../../../utils.mjs'
 
 import apiSchema from '../../../api-schema.json'
 

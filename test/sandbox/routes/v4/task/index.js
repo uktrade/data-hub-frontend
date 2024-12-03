@@ -1,10 +1,9 @@
-import { faker } from '../../../../utils'
-
 import {
   generateTask,
   generateTasks,
   generateCompaniesAndProjects,
 } from './tasks.js'
+import { faker } from '../../../utils.mjs'
 
 export const getTasks = function (req, res) {
   res.json(generateTasks())

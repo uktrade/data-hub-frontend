@@ -1,4 +1,4 @@
-import { faker } from '../../../utils'
+import { faker } from '../../../utils.mjs'
 
 /**
  * Pad a number with leading zeroes to ensure it has the given length

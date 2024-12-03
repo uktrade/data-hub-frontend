@@ -1,4 +1,4 @@
-import { faker } from '../../../utils'
+import { faker } from '../../../utils.mjs'
 
 import { contactFaker } from './contacts'
 import { sectorFaker } from './sectors'

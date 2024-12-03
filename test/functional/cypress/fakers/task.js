@@ -1,6 +1,6 @@
 import { pick } from 'lodash'
 
-import { faker } from '../../../utils'
+import { faker } from '../../../sandbox/utils.mjs'
 
 import { listFaker } from './utils'
 import { companyFaker } from './companies'

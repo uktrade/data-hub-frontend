@@ -1,7 +1,7 @@
 import React from 'react'
 import { capitalize } from 'lodash'
 
-import { faker } from '../../../../../utils'
+import { faker } from '../../../../../sandbox/utils.mjs'
 
 import {
   assertFieldDate,
