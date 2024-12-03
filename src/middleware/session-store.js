@@ -1,4 +1,4 @@
-const RedisStore = require('connect-redis').default
+const { RedisStore } = require('connect-redis')
 const session = require('express-session')
 
 const redisClient = require('../lib/redis-client')
