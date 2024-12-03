@@ -63,6 +63,8 @@ export const transformActivity = (activities) => {
         return transformOrderToListItem(activity)
       case 'great_export_enquiry':
         return transformGreatExportEnquiryToListItem(activity)
+      case 'eyb_lead':
+        return transformEYBLeadToListItem(activity)
       default:
         return {}
     }
@@ -200,3 +202,20 @@ export const transformResponseToCollection = (activities) => ({
   count: activities.count,
   results: transformActivity(activities),
 })
+
+export const transformEYBLeadToListItem = (activity) => {
+  return {
+    id: activity.eyb_lead.id,
+    date: formatMediumDateParsed(activity.eyb_lead.created_on),
+    tags: [
+      {
+        text: 'EYB',
+        colour: 'grey',
+        dataTest: 'eyb-service-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
+    headingText: activity.eyb_lead.company_name,
+    summary: `A ${true ? 'high' : 'low'}-value EYB lead associated with this company has been added to Data Hub`,
+  }
+}
