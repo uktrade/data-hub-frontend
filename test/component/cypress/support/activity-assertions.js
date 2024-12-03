@@ -22,14 +22,14 @@ export const assertActivitySubject = (
 
 /**
  * Asserts that a given metadata element in an activity item is correct
- * @param {*} index The row number of the item in the activity
- * @param {*} expectedText The expected text
  */
-export const assertMetadataItem = (index, expectedText) => {
-  cy.get('[data-test="collection-item"]')
-    .find('[data-test="metadata-item"]')
-    .eq(index)
-    .should('have.text', expectedText)
+export const assertMetadataItems = (expectedMetadata) => {
+  cy.get('[data-test="metadata-item"]').as('metadataItems')
+  cy.get('@metadataItems')
+    .should('have.length', expectedMetadata.length)
+    .each((x, i) => {
+      cy.get('@metadataItems').eq(i).should('have.text', expectedMetadata[i])
+    })
 }
 
 export const assertKindLabel = (expectedText = 'Interaction') => {

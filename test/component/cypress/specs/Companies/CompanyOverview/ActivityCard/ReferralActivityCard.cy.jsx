@@ -10,12 +10,12 @@ import {
   assertActivitySubject,
 } from '../../../../support/activity-assertions'
 
-const subject = 'A referral'
-const referralUrl = urls.companies.referrals.details('1', '2')
-const created_on = '2058-11-25T00:00:00Z'
-const completedDate = '2058-12-25T11:03:21.597375+00:00'
+const SUBJECT = 'A referral'
+const REFERRAL_URL = urls.companies.referrals.details('1', '2')
+const CREATED_ON = '2058-11-25T00:00:00Z'
+const COMPLETED_ON = '2058-12-25T11:03:21.597375+00:00'
 
-const created_by = {
+const CREATED_BY = {
   email: 'bernardharrispatel@test.com',
   name: 'Bernard Harris-Patel',
   dit_team: {
@@ -23,7 +23,7 @@ const created_by = {
   },
 }
 
-const recipient = {
+const RECIPIENT = {
   email: 'puckhead@test.com',
   name: 'Puck Head',
   dit_team: {
@@ -38,12 +38,12 @@ const buildAndMountActivity = (status, showCompletedDate = true) => {
     },
     referral: {
       id: '2',
-      created_on,
-      completed_on: showCompletedDate ? completedDate : null,
-      created_by,
-      recipient,
+      created_on: CREATED_ON,
+      completed_on: showCompletedDate ? COMPLETED_ON : null,
+      created_by: CREATED_BY,
+      recipient: RECIPIENT,
       status,
-      subject,
+      subject: SUBJECT,
     },
   }
 
@@ -62,19 +62,10 @@ describe('Referral activity card', () => {
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
-    it('should render the kind label', () => {
+    it('should render the labels and metadata', () => {
       assertReferralLabel()
-    })
-
-    it('should render the subject', () => {
-      assertActivitySubject(subject, referralUrl, 'activity-card-wrapper')
-    })
-
-    it('should render the date', () => {
+      assertActivitySubject(SUBJECT, REFERRAL_URL, 'activity-card-wrapper')
       cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
-    })
-
-    it('should render the summary', () => {
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         'Company was referred to Puck Head by Bernard Harris-Patel'
@@ -88,19 +79,10 @@ describe('Referral activity card', () => {
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
-    it('should render the kind label', () => {
+    it('should render the labels and metadata', () => {
       assertReferralLabel('Outstanding referral')
-    })
-
-    it('should render the subject', () => {
-      assertActivitySubject(subject, referralUrl, 'activity-card-wrapper')
-    })
-
-    it('should render the date', () => {
+      assertActivitySubject(SUBJECT, REFERRAL_URL, 'activity-card-wrapper')
       cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
-    })
-
-    it('should render the summary', () => {
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         'Company was referred to Puck Head by Bernard Harris-Patel'

@@ -9,47 +9,41 @@ import {
   assertKindLabel,
   assertActivitySubject,
 } from '../../../../support/activity-assertions'
-import {
-  buildPersonMetadata,
-  checkName,
-} from '../../../../support/activity-utils'
+import { checkName } from '../../../../support/activity-utils'
 
-const subject = 'An interaction with a company'
-const type = 'interaction'
-const typeServiceDelivery = 'service_delivery'
-const interactionUrl = urls.companies.interactions.detail('1', '2')
-const date = '2058-11-25T00:00:00Z'
+const SUBJECT = 'An interaction with a company'
+const TYPE = 'interaction'
+const SERVICE_DELIVERY = 'service_delivery'
+const INTERACTION_URL = urls.companies.interactions.detail('1', '2')
+const DATE = '2058-11-25T00:00:00Z'
 
-const adviser1 = {
+const ADVISER_1 = {
   adviser: {
     name: 'Bernard Harris-Patel',
   },
 }
 
-const adviser2 = {
+const ADVISER_2 = {
   adviser: {
     name: 'Puck Head',
   },
 }
 
-const contact1 = {
+const CONTACT_1 = {
   name: 'Alexander Hamilton',
 }
 
-const contact2 = {
+const CONTACT_2 = {
   name: 'Oliver Twist',
 }
 
 const buildAndMountActivity = (
   communicationChannel,
-  type,
+  type = TYPE,
   date,
-  numberOfAdvisers = 1,
-  numberOfContacts = 1
+  advisers = [ADVISER_1],
+  contacts = [CONTACT_1]
 ) => {
-  const advisers = buildPersonMetadata(numberOfAdvisers, adviser1, adviser2)
-  const contacts = buildPersonMetadata(numberOfContacts, contact1, contact2)
-
   const activity = {
     company: {
       id: '1',
@@ -61,7 +55,7 @@ const buildAndMountActivity = (
       communication_channel: checkName(communicationChannel),
       dit_participants: advisers,
       kind: type,
-      subject,
+      subject: SUBJECT,
     },
   }
 
@@ -76,45 +70,42 @@ const buildAndMountActivity = (
 describe('Interaction activity card', () => {
   context('When the card is rendered with a complete interaction', () => {
     beforeEach(() => {
-      buildAndMountActivity('Email/Fax', type, date)
+      buildAndMountActivity('Email/Fax', TYPE, DATE)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
-    it('should render the kind label', () => {
+    it('should render the labels and metadata', () => {
       assertKindLabel()
-    })
-
-    it('should render the interaction subject', () => {
-      assertActivitySubject(subject, interactionUrl, 'activity-card-wrapper')
-    })
-
-    it('should render the date', () => {
+      assertActivitySubject(subject, INTERACTION_URL, 'activity-card-wrapper')
       cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
-    })
-
-    it('should render the summary', () => {
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
-        `${adviser1.adviser.name} will have email/fax contact with ${contact1.name}`
+        `${ADVISER_1.adviser.name} will have email/fax contact with ${CONTACT_1.name}`
       )
     })
 
     context('When there are multiple contacts and advisers', () => {
       beforeEach(() => {
-        buildAndMountActivity('Email/Fax', type, date, 2, 2)
+        buildAndMountActivity(
+          'Email/Fax',
+          TYPE,
+          DATE,
+          [ADVISER_1, ADVISER_2],
+          [CONTACT_1, CONTACT_2]
+        )
       })
 
       it('should render all contacts/advisers in the summary', () => {
         cy.get('[data-test="activity-summary"]').should(
           'have.text',
-          `${adviser1.adviser.name} and ${adviser2.adviser.name} will have email/fax contact with ${contact1.name} and ${contact2.name}`
+          `${ADVISER_1.adviser.name} and ${ADVISER_2.adviser.name} will have email/fax contact with ${CONTACT_1.name} and ${CONTACT_2.name}`
         )
       })
     })
 
     context('When the kind is set to service delivery', () => {
       beforeEach(() => {
-        buildAndMountActivity('Email/Fax', typeServiceDelivery, date)
+        buildAndMountActivity('Email/Fax', SERVICE_DELIVERY, DATE)
         cy.get('[data-test="activity-card-wrapper"]').should('exist')
       })
 
@@ -126,14 +117,14 @@ describe('Interaction activity card', () => {
 
   context('When the date is in the past', () => {
     beforeEach(() => {
-      buildAndMountActivity('Email/Fax', type, '1988-11-25T00:00:00Z')
+      buildAndMountActivity('Email/Fax', TYPE, '1988-11-25T00:00:00Z')
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
     it('should render the summary in the past tense', () => {
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
-        `${adviser1.adviser.name} had email/fax contact with ${contact1.name}`
+        `${ADVISER_1.adviser.name} had email/fax contact with ${CONTACT_1.name}`
       )
     })
   })

@@ -9,24 +9,24 @@ import { CollectionList } from '../../../../../../src/client/components'
 import {
   assertActivitySubject,
   assertKindLabel,
-  assertMetadataItem,
+  assertMetadataItems,
   assertText,
 } from '../../../support/activity-assertions'
-import { buildPersonMetadata, checkName } from '../../../support/activity-utils'
+import { checkName } from '../../../support/activity-utils'
 
-const subject = 'An interaction with a company'
-const type = 'interaction'
-const typeServiceDelivery = 'service_delivery'
-const interactionUrl = urls.companies.interactions.detail('1', '2')
-const oneAdviserText =
+const SUBJECT = 'An interaction with a company'
+const TYPE = 'interaction'
+const SERVICE_DELIVERY = 'service_delivery'
+const INTERACTION_URL = urls.companies.interactions.detail('1', '2')
+const ONE_ADVISER_TEXT =
   'Adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
-const twoAdvisersText =
+const TWO_ADVISERS_TEXT =
   'Advisers Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  Puck Head  puckhead@test.com, Test Team 2  '
-const oneContactText = 'Contact Alexander Hamilton'
-const twoContactsText = 'Contacts Alexander Hamilton, Oliver Twist'
-const date = '2058-11-25T00:00:00Z'
+const ONE_CONTACT_TEXT = 'Contact Alexander Hamilton'
+const TWO_CONTACTS_TEXT = 'Contacts Alexander Hamilton, Oliver Twist'
+const DATE = '2058-11-25T00:00:00Z'
 
-const adviser1 = {
+const ADVISER_1 = {
   adviser: {
     email: 'bernardharrispatel@test.com',
     name: 'Bernard Harris-Patel',
@@ -36,7 +36,7 @@ const adviser1 = {
   },
 }
 
-const adviser2 = {
+const ADVISER_2 = {
   adviser: {
     email: 'puckhead@test.com',
     name: 'Puck Head',
@@ -46,17 +46,17 @@ const adviser2 = {
   },
 }
 
-const contact1 = {
+const CONTACT_1 = {
   id: '115b4d96-d2ea-40ff-a01d-812507093a98',
   name: 'Alexander Hamilton',
 }
 
-const contact2 = {
+const CONTACT_2 = {
   id: '56cd5cd0-bb6f-440c-adae-0253f6d48d3b',
   name: 'Oliver Twist',
 }
 
-const interactionServices = {
+const INTERACTION_SERVICES = {
   specificDITService:
     'DBT export service or funding : Enhanced International Support Services',
   specificService: 'Specific service : Digital Trade Advisers one-to-one',
@@ -82,7 +82,7 @@ const interactionServices = {
   investmentAI: 'Investment advice and information',
 }
 
-const ditService = interactionServices.specificDITService
+const DIT_SERVICE = INTERACTION_SERVICES.specificDITService
 
 const buildServiceLabel = (service) => {
   return 'Service ' + service
@@ -93,12 +93,9 @@ const buildAndMountActivity = (
   communicationChannel,
   type,
   date,
-  numberOfAdvisers = 1,
-  numberOfContacts = 1
+  advisers = [ADVISER_1],
+  contacts = [CONTACT_1]
 ) => {
-  const advisers = buildPersonMetadata(numberOfAdvisers, adviser1, adviser2)
-  const contacts = buildPersonMetadata(numberOfContacts, contact1, contact2)
-
   const activity = {
     company: {
       id: '1',
@@ -111,7 +108,7 @@ const buildAndMountActivity = (
       dit_participants: advisers,
       service: checkName(serviceName),
       kind: type,
-      subject,
+      subject: SUBJECT,
     },
   }
 
@@ -124,34 +121,27 @@ const buildAndMountActivity = (
 }
 
 const buildAndMountWithCustomService = (service) => {
-  buildAndMountActivity(service, 'Email/Fax', type, date)
+  buildAndMountActivity(service, 'Email/Fax', TYPE, DATE)
 }
 
 describe('Interaction activity card', () => {
   context('When the card is rendered with a complete interaction', () => {
     beforeEach(() => {
-      buildAndMountActivity(ditService, 'Email/Fax', type, date)
+      buildAndMountActivity(DIT_SERVICE, 'Email/Fax', TYPE, DATE)
       cy.get('[data-test=collection-item]').should('exist')
     })
 
     it('should render the service label', () => {
       assertServiceLabel()
-    })
-
-    it('should render the kind label', () => {
       assertKindLabel()
-    })
-
-    it('should render the interaction subject', () => {
-      assertActivitySubject(subject, interactionUrl)
-    })
-
-    it('should render the date', () => {
-      assertMetadataItem(0, 'Date 25 Nov 2058')
-    })
-
-    it('should render the contact', () => {
-      assertMetadataItem(1, oneContactText)
+      assertActivitySubject(SUBJECT, INTERACTION_URL)
+      assertMetadataItems([
+        'Date 25 Nov 2058',
+        ONE_CONTACT_TEXT,
+        'Communication channel Email/Fax',
+        ONE_ADVISER_TEXT,
+        buildServiceLabel(DIT_SERVICE),
+      ])
 
       cy.get('[data-test=contact-link-0]').should(
         'have.attr',
@@ -160,40 +150,32 @@ describe('Interaction activity card', () => {
       )
     })
 
-    it('should render the communication channel', () => {
-      assertMetadataItem(2, 'Communication channel Email/Fax')
-    })
-
-    it('should render the advisers label', () => {
-      assertMetadataItem(3, oneAdviserText)
-    })
-
-    it('should render the full service', () => {
-      assertMetadataItem(4, buildServiceLabel(ditService))
-    })
-
     context('When there are multiple contacts and advisers', () => {
       beforeEach(() => {
-        buildAndMountActivity(ditService, 'Email/Fax', type, date, 2, 2)
+        buildAndMountActivity(
+          DIT_SERVICE,
+          'Email/Fax',
+          TYPE,
+          DATE,
+          [ADVISER_1, ADVISER_2],
+          [CONTACT_1, CONTACT_2]
+        )
       })
 
-      it('should render both contacts', () => {
-        assertMetadataItem(1, twoContactsText)
-      })
-
-      it('should render both advisers', () => {
-        assertMetadataItem(3, twoAdvisersText)
+      it('should render multiple contacts and advisers', () => {
+        assertMetadataItems([
+          'Date 25 Nov 2058',
+          TWO_CONTACTS_TEXT,
+          'Communication channel Email/Fax',
+          TWO_ADVISERS_TEXT,
+          buildServiceLabel(DIT_SERVICE),
+        ])
       })
     })
 
     context('When the kind is set to service delivery', () => {
       beforeEach(() => {
-        buildAndMountActivity(
-          ditService,
-          'Email/Fax',
-          typeServiceDelivery,
-          date
-        )
+        buildAndMountActivity(DIT_SERVICE, 'Email/Fax', SERVICE_DELIVERY, DATE)
         cy.get('[data-test=collection-item]').should('exist')
       })
 
@@ -206,185 +188,155 @@ describe('Interaction activity card', () => {
   context('When the card is rendered with an incomplete interaction', () => {
     context('When the service is missing', () => {
       beforeEach(() => {
-        buildAndMountActivity(null, 'Email/Fax', type, date)
+        buildAndMountActivity(null, 'Email/Fax', TYPE, DATE)
         cy.get('[data-test=collection-item]').should('exist')
       })
 
       it('should not render the service label', () => {
         cy.get('[data-test="activity-service-label"]').should('not.exist')
       })
-
-      it('should render the kind label', () => {
-        assertKindLabel()
-      })
     })
 
     context('When the date is missing', () => {
       beforeEach(() => {
-        buildAndMountActivity(ditService, 'Email/Fax', type, null)
+        buildAndMountActivity(DIT_SERVICE, 'Email/Fax', TYPE, null)
         cy.get('[data-test=collection-item]').should('exist')
       })
 
       it('should not render the date label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .should('not.contain', 'Date')
-      })
-
-      it('should render the communication channel label', () => {
-        assertMetadataItem(1, 'Communication channel Email/Fax')
-      })
-
-      it('should render the advisers label', () => {
-        assertMetadataItem(2, oneAdviserText)
-      })
-
-      it('should render the full service label', () => {
-        assertMetadataItem(3, buildServiceLabel(ditService))
+        assertMetadataItems([
+          ONE_CONTACT_TEXT,
+          'Communication channel Email/Fax',
+          ONE_ADVISER_TEXT,
+          buildServiceLabel(DIT_SERVICE),
+        ])
       })
     })
 
     context('When the advisers are missing', () => {
       beforeEach(() => {
-        buildAndMountActivity(ditService, 'Email/Fax', type, date, 0)
+        buildAndMountActivity(DIT_SERVICE, 'Email/Fax', TYPE, DATE, 0)
         cy.get('[data-test=collection-item]').should('exist')
       })
 
-      it('should render the date label', () => {
-        assertMetadataItem(0, 'Date 25 Nov 2058')
-      })
-
-      it('should render the communication channel label', () => {
-        assertMetadataItem(2, 'Communication channel Email/Fax')
-      })
-
       it('should not render the advisers label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .should('not.contain', 'Adviser')
-      })
-
-      it('should render the full service label', () => {
-        assertMetadataItem(3, buildServiceLabel(ditService))
+        assertMetadataItems([
+          'Date 25 Nov 2058',
+          ONE_CONTACT_TEXT,
+          'Communication channel Email/Fax',
+          buildServiceLabel(DIT_SERVICE),
+        ])
       })
     })
 
     context('When the communication channel is missing', () => {
       beforeEach(() => {
-        buildAndMountActivity(ditService, null, type, date)
+        buildAndMountActivity(DIT_SERVICE, null, TYPE, DATE)
         cy.get('[data-test=collection-item]').should('exist')
       })
 
-      it('should render the date label', () => {
-        assertMetadataItem(0, 'Date 25 Nov 2058')
-      })
-
       it('should not render the communication channel label', () => {
-        cy.get('[data-test="collection-item"]')
-          .find('[data-test="metadata-item"]')
-          .should('not.contain', 'Communication channel')
-      })
-
-      it('should render the advisers label', () => {
-        assertMetadataItem(2, oneAdviserText)
-      })
-
-      it('should render the full service label', () => {
-        assertMetadataItem(3, buildServiceLabel(ditService))
+        assertMetadataItems([
+          'Date 25 Nov 2058',
+          ONE_CONTACT_TEXT,
+          ONE_ADVISER_TEXT,
+          buildServiceLabel(DIT_SERVICE),
+        ])
       })
     })
   })
 
   context('When the interaction has a different service', () => {
     context('When the service is Specific service', () => {
-      assertService(interactionServices.specificService)
+      assertService(INTERACTION_SERVICES.specificService)
     })
 
     context('When the service is Account management', () => {
-      assertService(interactionServices.accountManagement)
+      assertService(INTERACTION_SERVICES.accountManagement)
     })
 
     context('When the service is COP26', () => {
-      assertService(interactionServices.cop26)
+      assertService(INTERACTION_SERVICES.cop26)
     })
 
     context('When the service is a received enquiry', () => {
-      assertService(interactionServices.enquiry)
+      assertService(INTERACTION_SERVICES.enquiry)
     })
 
     context('When the service is an Enquiry/Referral', () => {
-      assertService(interactionServices.enquiryOrReferral)
+      assertService(INTERACTION_SERVICES.enquiryOrReferral)
     })
 
     context('When the service is an Event', () => {
-      assertService(interactionServices.event)
+      assertService(INTERACTION_SERVICES.event)
     })
 
     context('When the service is an Export win', () => {
-      assertService(interactionServices.exportWin)
+      assertService(INTERACTION_SERVICES.exportWin)
     })
 
     context('When the service is Global Investment Summit (2021)', () => {
-      assertService(interactionServices.gis2021)
+      assertService(INTERACTION_SERVICES.gis2021)
     })
 
     context('When the service is IST Aftercare', () => {
-      assertService(interactionServices.istAftercare)
+      assertService(INTERACTION_SERVICES.istAftercare)
     })
 
     context('When the service is an Investment Service', () => {
-      assertService(interactionServices.investmentServices)
+      assertService(INTERACTION_SERVICES.investmentServices)
     })
 
     context('When the service is an Investment Enquiry', () => {
-      assertService(interactionServices.investmentEnquiry)
+      assertService(INTERACTION_SERVICES.investmentEnquiry)
     })
 
     context('When the service is an IST service', () => {
-      assertService(interactionServices.istSpecificService)
+      assertService(INTERACTION_SERVICES.istSpecificService)
     })
 
     context('When the service is Proposition development', () => {
-      assertService(interactionServices.propDevelopment)
+      assertService(INTERACTION_SERVICES.propDevelopment)
     })
 
     context(
       'When the service is a Trade agreement implementation activity',
       () => {
-        assertService(interactionServices.tradeAgreementImplementation)
+        assertService(INTERACTION_SERVICES.tradeAgreementImplementation)
       }
     )
 
     context('When the service is Making Introductions', () => {
       context('When the service is Export introductions', () => {
-        assertService(interactionServices.exportIntros)
+        assertService(INTERACTION_SERVICES.exportIntros)
       })
 
       context('When the service is Investment introductions', () => {
-        assertService(interactionServices.investmentIntros)
+        assertService(INTERACTION_SERVICES.investmentIntros)
       })
     })
 
     context('When the service is Providing Information', () => {
       context('When the service is Providing Export Information', () => {
-        assertService(interactionServices.exportAI)
+        assertService(INTERACTION_SERVICES.exportAI)
       })
 
       context('When the service is Providing Investment Information', () => {
-        assertService(interactionServices.investmentAI)
+        assertService(INTERACTION_SERVICES.investmentAI)
       })
     })
   })
 })
 
-const assertServiceLabel = (service = ditService) => {
+const assertServiceLabel = (service = DIT_SERVICE) => {
   assertText('[data-test="activity-service-label"]', getServiceText(service))
 }
 
-function assertService(service = ditService, index = 4) {
+function assertService(service = DIT_SERVICE, index = 4) {
   beforeEach(() => {
     buildAndMountWithCustomService(service)
     cy.get('[data-test="collection-item"]').should('exist')
+    cy.get('[data-test="metadata-item"]').as('metadataItems')
   })
 
   it('should display the correct service', () => {
@@ -392,6 +344,8 @@ function assertService(service = ditService, index = 4) {
   })
 
   it('should render the full service label', () => {
-    assertMetadataItem(index, buildServiceLabel(service))
+    cy.get('@metadataItems')
+      .eq(index)
+      .should('have.text', buildServiceLabel(service))
   })
 }

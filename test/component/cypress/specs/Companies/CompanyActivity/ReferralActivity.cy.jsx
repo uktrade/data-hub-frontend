@@ -7,16 +7,16 @@ import { transformReferralToListItem } from '../../../../../../src/client/module
 import { CollectionList } from '../../../../../../src/client/components'
 import {
   assertActivitySubject,
-  assertMetadataItem,
+  assertMetadataItems,
   assertReferralLabel,
 } from '../../../support/activity-assertions'
 
-const subject = 'A referral'
-const referralUrl = urls.companies.referrals.details('1', '2')
-const created_on = '2058-11-25T00:00:00Z'
-const completedDate = '2058-12-25T11:03:21.597375+00:00'
+const SUBJECT = 'A referral'
+const REFERRAL_URL = urls.companies.referrals.details('1', '2')
+const CREATED_ON = '2058-11-25T00:00:00Z'
+const COMPLETED_ON = '2058-12-25T11:03:21.597375+00:00'
 
-const created_by = {
+const CREATED_BY = {
   email: 'bernardharrispatel@test.com',
   name: 'Bernard Harris-Patel',
   dit_team: {
@@ -24,7 +24,7 @@ const created_by = {
   },
 }
 
-const recipient = {
+const RECIPIENT = {
   email: 'puckhead@test.com',
   name: 'Puck Head',
   dit_team: {
@@ -39,12 +39,12 @@ const buildAndMountActivity = (status, showCompletedDate = true) => {
     },
     referral: {
       id: '2',
-      created_on,
-      completed_on: showCompletedDate ? completedDate : null,
-      created_by,
-      recipient,
+      created_on: CREATED_ON,
+      completed_on: showCompletedDate ? COMPLETED_ON : null,
+      created_by: CREATED_BY,
+      recipient: RECIPIENT,
       status,
-      subject,
+      subject: SUBJECT,
     },
   }
 
@@ -63,34 +63,15 @@ describe('Referral activity card', () => {
       cy.get('[data-test=collection-item]').should('exist')
     })
 
-    it('should render the referral label', () => {
+    it('should render the labels and metadata', () => {
       assertReferralLabel()
-    })
-
-    it('should render the subject', () => {
-      assertActivitySubject(subject, referralUrl)
-    })
-
-    it('should render the creation date', () => {
-      assertMetadataItem(0, 'Created on 25 Nov 2058')
-    })
-
-    it('should render the completion date', () => {
-      assertMetadataItem(1, 'Completed on 25 Dec 2058')
-    })
-
-    it('should render the sending adviser', () => {
-      assertMetadataItem(
-        2,
-        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
-      )
-    })
-
-    it('should render the recipient', () => {
-      assertMetadataItem(
-        3,
-        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
-      )
+      assertActivitySubject(SUBJECT, REFERRAL_URL)
+      assertMetadataItems([
+        'Created on 25 Nov 2058',
+        'Completed on 25 Dec 2058',
+        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  ',
+      ])
     })
   })
 
@@ -100,36 +81,14 @@ describe('Referral activity card', () => {
       cy.get('[data-test=collection-item]').should('exist')
     })
 
-    it('should render the referral label', () => {
+    it('should render the labels and metadata', () => {
       assertReferralLabel('Outstanding referral')
-    })
-
-    it('should render the subject', () => {
-      assertActivitySubject(subject, referralUrl)
-    })
-
-    it('should render the creation date', () => {
-      assertMetadataItem(0, 'Created on 25 Nov 2058')
-    })
-
-    it('should not render the completion label', () => {
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata-item"]')
-        .should('not.contain', 'Completed Date')
-    })
-
-    it('should render the sending adviser', () => {
-      assertMetadataItem(
-        1,
-        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
-      )
-    })
-
-    it('should render the recipient', () => {
-      assertMetadataItem(
-        2,
-        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  '
-      )
+      assertActivitySubject(SUBJECT, REFERRAL_URL)
+      assertMetadataItems([
+        'Created on 25 Nov 2058',
+        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  ',
+      ])
     })
   })
 })
