@@ -25,7 +25,7 @@ const getAddress = (contact, companyAddress) => {
         town: companyAddress.town,
         region: companyAddress.county || null,
         postcode: companyAddress.postcode,
-        country: companyAddress.country.name,
+        country: companyAddress.country?.name,
       }
     : {
         line1: contact.address1,

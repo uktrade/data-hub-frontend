@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
@@ -9,6 +8,7 @@ import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
+import Contact from './Contact'
 
 export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
@@ -27,11 +27,7 @@ export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
           metadata={[
             {
               label: 'Contact name:',
-              value: (
-                <Link href={urls.contacts.details(item.company_contacts[0].id)}>
-                  {item.company_contacts[0].name}
-                </Link>
-              ),
+              value: <Contact win={item} />,
             },
             {
               label: 'Total value:',
