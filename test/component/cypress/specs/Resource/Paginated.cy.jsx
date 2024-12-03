@@ -4,7 +4,7 @@ import React from 'react'
 
 import PaginatedResource from '../../../../../src/client/components/Resource/Paginated'
 import TabNav from '../../../../../src/client/components/TabNav'
-import { resolve } from '../../../../sandbox/utils.mjs'
+import { resolve } from '../../../../sandbox/utils.js'
 
 const PAGE_SIZE = 10
 const COUNT = 35

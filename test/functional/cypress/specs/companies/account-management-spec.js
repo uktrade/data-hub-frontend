@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 
-import { faker } from '../../../../utils'
+import { faker } from '../../../../sandbox/utils'
 
 import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'

@@ -1,4 +1,4 @@
-import { jsf } from '../../../sandbox/utils.mjs'
+import { jsf } from '../../../sandbox/utils'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { ditTeamFaker } from './dit-team'

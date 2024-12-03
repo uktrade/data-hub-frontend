@@ -1,4 +1,4 @@
-import { faker } from '../../../sandbox/utils.mjs'
+import { faker } from '../../../sandbox/utils'
 
 const investorTypes = [
   'Angel syndicate',

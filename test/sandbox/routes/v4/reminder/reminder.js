@@ -1,6 +1,6 @@
 import summary from '../../../fixtures/v4/reminder/summary.json' assert { type: 'json' }
 
-import { faker } from '../../../utils.mjs'
+import { faker } from '../../../utils.js'
 
 const myTasksReminderFaker = (overrides = {}) => ({
   id: faker.string.uuid(),

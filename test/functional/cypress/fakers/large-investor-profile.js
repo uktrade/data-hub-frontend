@@ -1,4 +1,4 @@
-import { faker } from '../../../sandbox/utils.mjs'
+import { faker } from '../../../sandbox/utils'
 
 import { listFaker } from './utils'
 import { investorTypeFaker } from './investor-type'

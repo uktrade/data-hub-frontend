@@ -1,4 +1,4 @@
-import { faker } from '../../../utils.mjs'
+import { faker } from '../../../sandbox/utils'
 
 import { relativeDateFaker } from './dates'
 import { investmentProjectCodeFaker } from './investment-projects'

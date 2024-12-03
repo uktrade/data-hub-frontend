@@ -1,4 +1,4 @@
-import { faker } from '../../../utils.mjs'
+import { faker } from '../../../sandbox/utils'
 
 import { listFaker } from './utils'
 import { addressFaker } from './addresses'

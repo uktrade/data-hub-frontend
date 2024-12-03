@@ -1,4 +1,4 @@
-import { faker } from '../../../../utils'
+import { faker } from '../../../../sandbox/utils'
 
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { investmentProjectFaker } from '../../fakers/investment-projects'

@@ -1,4 +1,4 @@
-import { faker, jsf } from '../../../sandbox/utils.mjs'
+import { faker, jsf } from '../../../sandbox/utils'
 
 import apiSchema from '../../../api-schema.json'
 import { relativeDateFaker } from './dates'
