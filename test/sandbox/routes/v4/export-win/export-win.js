@@ -1,4 +1,4 @@
-import { faker } from '../../../utils.js'
+import { faker } from '../../../utils/random.js'
 
 const fakeBreakdown = () => ({
   id: faker.string.uuid(),
