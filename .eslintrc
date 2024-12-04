@@ -93,11 +93,11 @@
       "error",
       {
         "name": "@faker-js/faker",
-        "message": "Use the pseudo-random `faker` from `test/utils.js`"
+        "message": "Use the pseudo-random `faker` from `test/sandbox/utils/random.js`"
       },
       {
         "name": "json-schema-faker",
-        "message": "Use the pseudo-random `jsf` from `test/utils.js`"
+        "message": "Use the pseudo-random `jsf` from `test/sandbox/utils/random.js`"
       }]
   },
   "overrides": [
