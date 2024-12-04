@@ -122,6 +122,9 @@ export const exportWinsFaker = () => ({
     max: 10_000_000,
   }),
   date: faker.date.anytime().toISOString(),
+  modified_on: faker.date.recent().toISOString(),
+  first_sent: faker.date.recent().toISOString(),
+  last_sent: faker.date.recent().toISOString(),
   customer_response: {
     agree_with_win: null, // Pending
     responded_on: faker.date.anytime().toISOString(),
