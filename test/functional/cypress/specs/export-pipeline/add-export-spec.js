@@ -1,4 +1,4 @@
-import { faker } from '../../../../sandbox/utils'
+import { faker } from '../../../../sandbox/utils/random'
 import { contactFaker, contactsListFaker } from '../../fakers/contacts'
 import { exportFaker } from '../../fakers/export'
 import { companyFaker } from '../../fakers/companies'

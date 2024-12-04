@@ -1,4 +1,4 @@
-import { faker } from '../../../sandbox/utils'
+import { faker } from '../../../sandbox/utils/random'
 
 /**
  * Pad a number with leading zeroes to ensure it has the given length

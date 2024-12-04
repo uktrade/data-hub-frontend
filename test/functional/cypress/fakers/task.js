@@ -1,6 +1,6 @@
 import { pick } from 'lodash'
 
-import { faker } from '../../../sandbox/utils'
+import { faker } from '../../../sandbox/utils/random'
 
 import { listFaker } from './utils'
 import { companyFaker } from './companies'

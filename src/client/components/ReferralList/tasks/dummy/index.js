@@ -1,4 +1,4 @@
-import { faker } from '../../../../../../test/sandbox/utils'
+import { faker } from '../../../../../../test/sandbox/utils/random'
 
 const randomAdviser = () => ({
   ...faker.helpers.createCard(),

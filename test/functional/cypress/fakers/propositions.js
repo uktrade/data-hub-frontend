@@ -1,6 +1,6 @@
 import { startCase } from 'lodash'
 
-import { faker, jsf } from '../../../sandbox/utils'
+import { faker, jsf } from '../../../sandbox/utils/random'
 
 import apiSchema from '../../../api-schema.json'
 
