@@ -25,6 +25,7 @@ describe('WinsRejectedList', () => {
           name: 'USA',
         },
         date: '2023-05-01',
+        modified_on: '2024-11-07T10:41:45.425717Z',
         customer_response: {
           responded_on: '2024-04-18T12:15:49.361611Z',
         },
@@ -58,6 +59,11 @@ describe('WinsRejectedList', () => {
       )
 
     cy.get('@metadataItems').eq(1).should('have.text', 'Total value: £6,000')
+
+    cy.get('@metadataItems').eq(2).should('have.text', 'Date won: May 2023')
+    cy.get('@metadataItems')
+      .eq(3)
+      .should('have.text', 'Date modified: 7 Nov 2024')
   })
   it('should conditionally render tags', () => {
     const createProvider = (exportWins) =>
