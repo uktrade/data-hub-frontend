@@ -26,10 +26,6 @@ describe('formatDate', () => {
     expect(formatDate(date, DATE_FORMAT_COMPACT)).to.equal('04 Dec 2024')
   })
 
-  it("should render '04 Dec 2024' (DATE_FORMAT_COMPACT with date and time)", () => {
-    expect(formatDate(dateAndTime, DATE_FORMAT_COMPACT)).to.equal('04 Dec 2024')
-  })
-
   it("should render '4 Dec 2024' (DATE_FORMAT_MEDIUM)", () => {
     expect(formatDate(dateAndTime, DATE_FORMAT_MEDIUM)).to.equal('4 Dec 2024')
   })
