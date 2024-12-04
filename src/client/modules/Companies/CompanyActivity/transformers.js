@@ -218,6 +218,11 @@ export const transformInvestmentToListItem = (activity) => {
       { label: 'Number of jobs', value: activity.investment.number_new_jobs },
     ].filter(({ value }) => Boolean(value)),
     tags: [
+      activity.investment.eyb_leads.length !== 0 && {
+        text: 'EYB',
+        colour: 'grey',
+        dataTest: 'eyb-service-label',
+      },
       {
         text: 'Investment',
         colour: 'default',
