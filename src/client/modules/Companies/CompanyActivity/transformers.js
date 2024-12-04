@@ -358,7 +358,7 @@ export const transformEYBLeadToListItem = (activity) => {
       //TODO display triage_created date instead of created_on
       {
         label: 'Submitted to EYB date',
-        value: formatMediumDateParsed(activity.eyb_lead.created_on),
+        value: formatMediumDateParsed(activity.eyb_lead.triage_created),
       },
       //TODO display'value'
     ].filter(({ value }) => Boolean(value)),
