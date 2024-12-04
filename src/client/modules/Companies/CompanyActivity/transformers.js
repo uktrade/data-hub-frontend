@@ -351,16 +351,31 @@ export const filterServiceNames = (services) => {
   return filteredServiceNames
 }
 
+export const getEYBValue = (activity) => {
+  const eybValue = activity.eyb_lead.is_high_value
+
+  switch (eybValue) {
+    case true:
+      return 'High'
+    case false:
+      return 'Low'
+    default:
+      return 'Unknown'
+  }
+}
+
 export const transformEYBLeadToListItem = (activity) => {
   return {
     id: activity.eyb_lead.id,
     metadata: [
-      //TODO display triage_created date instead of created_on
       {
         label: 'Submitted to EYB date',
         value: formatMediumDateParsed(activity.eyb_lead.triage_created),
       },
-      //TODO display'value'
+      {
+        label: 'Value',
+        value: getEYBValue(activity),
+      },
     ].filter(({ value }) => Boolean(value)),
     tags: [
       {
