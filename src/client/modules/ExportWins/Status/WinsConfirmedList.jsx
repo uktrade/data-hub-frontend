@@ -2,7 +2,11 @@ import React from 'react'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDateParsed } from '../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+  DATE_FORMAT_MONTH_ABBR_YEAR,
+} from '../../../utils/date-utils'
 import { CollectionItem } from '../../../components'
 import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
@@ -35,13 +39,14 @@ export const WinsConfirmedList = ({ exportWins = [], currentAdviserId }) => {
             },
             {
               label: 'Date won:',
-              value: formatMediumDateParsed(item.date),
+              value: formatDate(item.date, DATE_FORMAT_MONTH_ABBR_YEAR), // Dec 2024
             },
             {
               label: 'Date responded:',
-              value: item.customer_response.responded_on
-                ? formatMediumDateParsed(item.customer_response?.responded_on)
-                : '',
+              value: formatDate(
+                item.customer_response?.responded_on,
+                DATE_FORMAT_MEDIUM // 4 Dec 2024
+              ),
             },
           ]}
         />
