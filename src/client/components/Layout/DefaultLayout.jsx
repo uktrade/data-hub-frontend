@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const DefaultLayout = ({
-  preheading,
+  superheading,
   heading,
   headingLink,
   subheading,
@@ -45,22 +45,19 @@ const DefaultLayout = ({
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      {localHeader ? (
-        localHeader
-      ) : (
-        <LocalHeader
-          heading={heading}
-          headingLink={headingLink}
-          subheading={subheading}
-          flashMessages={flashMessages}
-          breadcrumbs={
-            breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
-          }
-          useReactRouter={useReactRouter}
-        >
-          {localHeaderChildren}
-        </LocalHeader>
-      )}
+      <LocalHeader
+        superheading={superheading}
+        heading={heading}
+        headingLink={headingLink}
+        subheading={subheading}
+        flashMessages={flashMessages}
+        breadcrumbs={
+          breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
+        }
+        useReactRouter={useReactRouter}
+      >
+        {localHeaderChildren}
+      </LocalHeader>
       <Main>
         <GridRow>
           <GridCol>{children}</GridCol>
@@ -72,7 +69,7 @@ const DefaultLayout = ({
 }
 
 DefaultLayout.propTypes = {
-  preheading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  superheading: PropTypes.node,
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   headingLink: PropTypes.shape({
     url: PropTypes.string.isRequired,
