@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { isEmpty, capitalize } from 'lodash'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { BREAKPOINTS } from '@govuk-react/constants'
+import { BREAKPOINTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../../lib/urls'
 import { EXPORT_LOADED } from '../../../actions'
@@ -26,11 +26,11 @@ const StyledSummaryTable = styled(SummaryTable)({
 
 const Container = styled('div')`
   display: flex;
-  gap: 20px;
+  gap: ${SPACING.SCALE_4};
   align-items: baseline;
-  margin-bottom: 30px;
+  margin-bottom: ${SPACING.SCALE_5};
   ${Link} {
-    margin-right: 20px;
+    margin-right: ${SPACING.SCALE_4};
   }
   @media (max-width: ${BREAKPOINTS.TABLET}) {
     flex-direction: column;
