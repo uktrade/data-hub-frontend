@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from '@govuk-react/link'
 
 import LocalHeader from '../LocalHeader'
 
@@ -35,8 +36,8 @@ WithLink.story = {
 export const WithSuperheading = () => (
   <LocalHeader
     breadcrumbs={breadcrumbs}
+    superheading={<Link href={`/companies`}>Company name</Link>}
     heading={exampleText}
-    superheading={exampleText}
   />
 )
 
