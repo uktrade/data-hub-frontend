@@ -48,7 +48,7 @@ const Export = () => {
 
   return (
     <DefaultLayout
-      preheading={<CompanyLink id={exportId} />}
+      superheading={<CompanyLink id={exportId} />}
       heading={<ExportProjectTitle id={exportId} />}
       pageTitle={`Export ${aspect}`}
       breadcrumbs={[
