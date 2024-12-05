@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import Link from '@govuk-react/link'
-import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import Label from '@govuk-react/label'
 
@@ -71,6 +71,11 @@ const StyledLabel = styled(Label)`
   font-weight: ${FONT_WEIGHTS.bold};
 `
 
+const StyledLink = styled(Link)({
+  fontSize: FONT_SIZE.SIZE_20,
+  lineHeight: '32px',
+})
+
 const _ContactForm = ({
   update,
   contactId,
@@ -131,7 +136,9 @@ const _ContactForm = ({
           <LocalHeader
             superheading={
               update && (
-                <Link href={`/companies/${company.id}`}>{company.name}</Link>
+                <StyledLink href={`/companies/${company.id}`}>
+                  {company.name}
+                </StyledLink>
               )
             }
             heading={`${update ? 'Edit' : 'Add'} contact`}
