@@ -68,6 +68,30 @@ const assertLocalNav = (selector, navList) => {
   })
 }
 
+function assertTabNav({ tabs, selectedIndex }) {
+  cy.viewport(1024, 768)
+  cy.get('[data-test="tablist"]')
+    .should('exist')
+    .and('have.attr', 'role', 'tablist')
+
+  cy.get('[data-test="tablist"] [role="tab"]').should(
+    'have.length',
+    tabs.length
+  )
+
+  tabs.forEach((tabText, index) => {
+    cy.get('[data-test="tablist"] [role="tab"]')
+      .eq(index)
+      .should('have.text', tabText)
+      .and(
+        'have.attr',
+        'aria-selected',
+        index === selectedIndex ? 'true' : 'false'
+      )
+      .and('have.attr', 'tabindex', index === selectedIndex ? '0' : '-1')
+  })
+}
+
 const assertActivitytab = (selector) => {
   const navElement = cy.get(selector)
   navElement.should('be.checked')
@@ -90,6 +114,7 @@ module.exports = {
   assertError,
   assertCollection,
   assertLocalNav,
+  assertTabNav,
   assertKeyValueTable,
   assertLocalReactNav,
   assertActivitytab,
