@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
 import ExportInteractionsList from './ExportInteractionsList'
-import Export from '../../components/Resource/Export'
+import ExportResource from '../../components/Resource/Export'
 import { DefaultLayout } from '../../components'
 import TabNav from '../../components/TabNav'
 import ExportDetails from './ExportDetails'
@@ -21,7 +21,7 @@ const StyledLink = styled('a')({
 })
 
 export const CompanyLink = (props) => (
-  <Export.Inline {...props}>
+  <ExportResource.Inline {...props}>
     {(exportProject) => (
       <StyledLink
         data-test="export-company-link"
@@ -30,13 +30,13 @@ export const CompanyLink = (props) => (
         {exportProject.company.name.toUpperCase()}
       </StyledLink>
     )}
-  </Export.Inline>
+  </ExportResource.Inline>
 )
 
 export const ExportProjectTitle = (props) => (
-  <Export.Inline {...props}>
+  <ExportResource.Inline {...props}>
     {(exportProject) => exportProject.title}
-  </Export.Inline>
+  </ExportResource.Inline>
 )
 
 const ExportTabNav = () => {
