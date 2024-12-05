@@ -5,6 +5,13 @@
  * @license  MIT
  */
 
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /**
