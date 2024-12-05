@@ -83,7 +83,7 @@ const LocalHeader = ({
       </BreadcrumbsWrapper>
       <FlashMessages flashMessages={flashMessages} />
       {preheading && preheading}
-      {superheading && <StyledSuperheading>{superheading}</StyledSuperheading>}
+      {superheading}
       {headingLink && (
         <StyledLink data-test="heading-link" href={headingLink.url}>
           {headingLink.text}
