@@ -39,7 +39,7 @@ export const ExportProjectTitle = (props) => (
   </ExportResource.Inline>
 )
 
-const ExportTabNav = () => {
+const Export = () => {
   const location = useLocation()
   const matchId = location.pathname.match(EXPORT_ID_REGEX)
   const exportId = matchId ? matchId[1] : null
@@ -76,4 +76,4 @@ const ExportTabNav = () => {
   )
 }
 
-export default ExportTabNav
+export default Export
