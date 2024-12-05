@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../sandbox/utils/random'
 
 import { investment, interaction } from '../../fixtures'
 import { investments, tasks, dashboard } from '../../../../../src/lib/urls'

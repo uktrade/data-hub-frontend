@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../sandbox/utils/random'
 
 import { relativeDateFaker } from './dates'
 import { investmentProjectCodeFaker } from './investment-projects'

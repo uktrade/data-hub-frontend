@@ -1,5 +1,4 @@
-import { faker } from '@faker-js/faker'
-import jsf from 'json-schema-faker'
+import { faker, jsf } from '../../../sandbox/utils/random'
 
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'

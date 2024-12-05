@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { faker } from '@faker-js/faker'
+
+import { faker } from '../../../../../test/sandbox/utils/random'
 
 const OPTIONS = Array(1000)
   .fill()

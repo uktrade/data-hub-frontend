@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../sandbox/utils/random'
 
 const addressFaker = (overrides = {}) => ({
   line_1: faker.location.streetAddress(),

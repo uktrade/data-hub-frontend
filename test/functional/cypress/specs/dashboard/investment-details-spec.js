@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '../../../../sandbox/utils/random'
 
 import { formatWithoutParsing } from '../../../../../src/client/utils/date'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
