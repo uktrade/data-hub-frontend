@@ -42,11 +42,10 @@ const StyledLink = styled('a')({
 const LocalHeader = ({
   breadcrumbs,
   flashMessages,
-  preheading,
-  heading,
-  subheading,
-  headingLink,
   superheading,
+  heading,
+  headingLink,
+  subheading,
   children,
   useReactRouter = false,
 }) => (
@@ -79,7 +78,6 @@ const LocalHeader = ({
         )}
       </BreadcrumbsWrapper>
       <FlashMessages flashMessages={flashMessages} />
-      {preheading && preheading}
       {superheading}
       {headingLink && (
         <StyledLink data-test="heading-link" href={headingLink.url}>
