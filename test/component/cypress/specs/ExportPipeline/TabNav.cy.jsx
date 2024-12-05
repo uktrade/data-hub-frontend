@@ -2,7 +2,7 @@ import React from 'react'
 
 import Export from '../../../../../src/client/modules/ExportPipeline/Export'
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
-import { assertLocalNav } from '../../../../end-to-end/cypress/support/assertions'
+import { assertTabNav } from '../../../../end-to-end/cypress/support/assertions'
 import urls from '../../../../../src/lib/urls'
 
 const exportProject = {
@@ -12,6 +12,19 @@ const exportProject = {
     id: '2',
     name: 'Rolls Royce',
   },
+  team_members: [
+    {
+      name: 'David Jones',
+      id: '1',
+    },
+  ],
+  contacts: [
+    {
+      name: 'Johan Person',
+      email: 'johan@nederlands.com',
+      id: '1',
+    },
+  ],
 }
 
 describe('Export project tab navigation', () => {
@@ -57,9 +70,16 @@ describe('Export project tab navigation', () => {
   })
 
   it('should render two tabs: Project details and Interactions', () => {
-    cy.mountWithProvider(<Export />)
-    cy.get('[role="tablist"]').should('exist')
-    cy.get('[role="tab"]').as('tabItems')
-    assertLocalNav('@tabItems', ['Project details', 'Interactions'])
+    cy.mountWithProvider(<Export />, {
+      initialPath: '/export/1/details',
+      tasks: {
+        Export: () => Promise.resolve(exportProject),
+        TASK_GET_EXPORT_DETAIL: () => Promise.resolve(exportProject),
+      },
+    })
+    assertTabNav({
+      tabs: ['Project details', 'Interactions'],
+      selectedIndex: 0,
+    })
   })
 })
