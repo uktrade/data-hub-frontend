@@ -218,7 +218,7 @@ export const transformInvestmentToListItem = (activity) => {
     tags: [
       {
         text: 'Investment',
-        colour: 'default',
+        colour: 'govBlue',
         dataTest: 'investment-theme-label',
       },
       {
@@ -263,7 +263,7 @@ export const transformOrderToListItem = (activity) => {
     tags: [
       {
         text: 'Orders (OMIS)',
-        colour: 'default',
+        colour: 'govBlue',
         dataTest: 'order-theme-label',
       },
       {
