@@ -69,8 +69,8 @@ const DATE_FORMAT_INTERACTION_TIMESTAMP = 'y-MM-d'
 /**
  * Formats a given date string into a specified format using `date-fns`.
  *
- * @param {string} date - The date string in ISO format (e.g., '2024-12-04').
- * @param {string} [dateFormat=DATE_FORMAT_COMPACT] - The format to use for formatting the date.
+ * @param {string} dateISO - The date string in ISO format (e.g., '2024-12-04').
+ * @param {string} [dateISOFormat=DATE_FORMAT_COMPACT] - The format to use for formatting the date.
  *    Available format constants include:
  *    - `DATE_FORMAT_FULL`: Full date with day and full month name (e.g., '4 December 2024').
  *    - `DATE_FORMAT_FULL_DAY`: Full date with weekday included (e.g., 'Wed, 04 Dec 2024').
@@ -100,8 +100,8 @@ const DATE_FORMAT_INTERACTION_TIMESTAMP = 'y-MM-d'
  * formatDate('2024-12-04', DATE_FORMAT_MONTH_ABBR_YEAR)
  * // Returns: 'Dec 2024'
  */
-function formatDate(date, dateFormat = DATE_FORMAT_COMPACT) {
-  return format(parseISO(date), dateFormat)
+function formatDate(dateISO, dateISOFormat = DATE_FORMAT_COMPACT) {
+  return format(parseISO(dateISO), dateISOFormat)
 }
 
 module.exports = {
