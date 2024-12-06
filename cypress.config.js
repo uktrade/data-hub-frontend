@@ -28,7 +28,6 @@ module.exports = defineConfig({
     supportFile: 'test/cypress/support/index.js',
   },
   retries: {
-    runMode: 2, // number of retries when running `cypress run`
-    openMode: 2, // number of retries when running `cypress open`
+    runMode: 2,
   },
 })

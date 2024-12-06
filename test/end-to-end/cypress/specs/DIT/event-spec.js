@@ -164,7 +164,7 @@ describe('Event', () => {
         .invoke('text')
         .should('contain', 'Account management')
       cy.contains(eventName).click()
-      cy.get(selectors.entityCollection.editEvent).click()
+      cy.contains('a', 'Edit event')
       fillEventType('Exhibition')
       clickSaveAndReturnButton()
 
