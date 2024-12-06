@@ -1,4 +1,4 @@
-const { format, parseISO, isValid } = require('date-fns')
+const { format, parseISO } = require('date-fns')
 
 /**
  * Full date format with day and full month name.
@@ -101,18 +101,7 @@ const DATE_FORMAT_INTERACTION_TIMESTAMP = 'y-MM-d'
  * // Returns: 'Dec 2024'
  */
 function formatDate(date, dateFormat = DATE_FORMAT_COMPACT) {
-  let parsedDate
-  try {
-    parsedDate = parseISO(date)
-  } catch (error) {
-    return `Error parsing date: ${date}`
-  }
-
-  if (!isValid(parsedDate)) {
-    return date === '' ? 'Invalid date: empty string' : `Invalid date: ${date}`
-  }
-
-  return format(parsedDate, dateFormat)
+  return format(parseISO(date), dateFormat)
 }
 
 module.exports = {
