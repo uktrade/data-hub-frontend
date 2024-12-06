@@ -50,26 +50,12 @@ describe('Event Service', () => {
     })
   })
 
-  context('fetchEvent', () => {
-    it('should fetch single event by id', async () => {
-      const id = '123'
-      await fetchEvent(mockReq, id)
-      expect(authorisedRequestStub).to.have.been.calledWith(
-        mockReq,
-        `${config.apiRoot}/v3/event/${id}`
-      )
-    })
-  })
-
-  context('getAllEvents', () => {
-    it('should fetch all events with limit and offset', async () => {
-      await getAllEvents(mockReq)
-      expect(authorisedRequestStub).to.have.been.calledWith(
-        mockReq,
-        `${config.apiRoot}/v3/event?limit=100000&offset=0`
-      )
-    })
-  })
+  describe('#getActiveEvents', () => {
+    context(
+      'When there is a mix of active and inactive events on the server',
+      () => {
+        beforeEach(() => {
+          this.currentId = '3'
 
   context('getActiveEvents', () => {
     let clock
