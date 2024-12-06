@@ -70,20 +70,49 @@ describe('formatDate', () => {
     )
   })
 
-  // Error passing dates
+  // Parsing errors
 
-  it('should render "Invalid date: "', () => {
+  it('should render "Error parsing date: undefined"', () => {
     expect(formatDate()).to.equal('Error parsing date: undefined')
   })
 
-  it('should render "Invalid date: null"', () => {
+  it('should render "Error parsing date: null"', () => {
     expect(formatDate(null)).to.equal('Error parsing date: null')
+  })
+
+  it('should render "Error parsing date: 0"', () => {
+    expect(formatDate(0)).to.equal('Error parsing date: 0')
+  })
+
+  it('should render "Error parsing date: 1"', () => {
+    expect(formatDate(1)).to.equal('Error parsing date: 1')
+  })
+
+  it('should render "Error parsing date: [object Object]"', () => {
+    expect(formatDate({})).to.equal('Error parsing date: [object Object]')
+  })
+
+  it('should render "Error parsing date"', () => {
+    const date = new Date()
+    expect(formatDate(date)).to.equal(`Error parsing date: ${date}`)
+  })
+
+  it('should render "Error parsing date: true"', () => {
+    expect(formatDate(true)).to.equal(`Error parsing date: ${true}`)
+  })
+
+  it('should render "Error parsing date: false"', () => {
+    expect(formatDate(false)).to.equal(`Error parsing date: ${false}`)
   })
 
   // Invalid dates
 
-  it('should render "Invalid date: "', () => {
-    expect(formatDate('')).to.equal('Invalid date: ')
+  it('should render "Invalid date: empty string"', () => {
+    expect(formatDate('')).to.equal('Invalid date: empty string')
+  })
+
+  it('should render "Invalid date: anything"', () => {
+    expect(formatDate('anything')).to.equal('Invalid date: anything')
   })
 
   it('should render "Invalid date: 2024-32-44"', () => {

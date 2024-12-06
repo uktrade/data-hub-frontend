@@ -1,4 +1,4 @@
-const { format, parseISO } = require('date-fns')
+const { format, parseISO, isValid } = require('date-fns')
 
 /**
  * Full date format with day and full month name.
@@ -108,8 +108,8 @@ function formatDate(date, dateFormat = DATE_FORMAT_COMPACT) {
     return `Error parsing date: ${date}`
   }
 
-  if (parsedDate.toString() === 'Invalid Date') {
-    return `Invalid date: ${date}`
+  if (!isValid(parsedDate)) {
+    return date === '' ? 'Invalid date: empty string' : `Invalid date: ${date}`
   }
 
   return format(parsedDate, dateFormat)
