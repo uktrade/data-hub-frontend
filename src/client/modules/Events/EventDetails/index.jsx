@@ -18,7 +18,7 @@ import State from '../../../components/State'
 
 import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
-import { formatMediumDate } from '../../../utils/date'
+import { formatLongDate } from '../../../utils/date'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -47,42 +47,40 @@ const Attendees = ({ eventId }) => (
     >
       {(page) => (
         <ul>
-          {page.map((interaction) => (
-            <CollectionItem
-              headingText={interaction.contact.name}
-              headingUrl={`/contacts/${interaction.contact.id}`}
-              metadata={[
-                {
-                  label: 'Company',
-                  value: (
-                    <Link href={`/companies/${interaction.companies[0].id}`}>
-                      {interaction.companies[0].name}
-                    </Link>
-                  ),
-                },
-                ...(interaction.contact.job_title
-                  ? [
-                      {
-                        label: 'Job title',
-                        value: interaction.contact.job_title,
-                      },
-                    ]
-                  : []),
-                {
-                  label: 'Date attended',
-                  value: formatMediumDate(interaction.date),
-                },
-                {
-                  label: 'Service delivery',
-                  value: (
-                    <Link href={`/companies/${interaction.service.id}`}>
-                      {interaction.service.name}
-                    </Link>
-                  ),
-                },
-              ]}
-            />
-          ))}
+          {page.map(
+            ({ contacts: [contact], companies: [company], date, service }) => (
+              <CollectionItem
+                headingText={contact?.name || 'Not available'}
+                headingUrl={contact && `/contacts/${contact?.id}`}
+                metadata={[
+                  {
+                    label: 'Company',
+                    value: (
+                      <Link href={`/companies/${company?.id}`}>
+                        {company?.name}
+                      </Link>
+                    ),
+                  },
+                  {
+                    label: 'Job title',
+                    value: contact?.job_title || 'Not available',
+                  },
+                  {
+                    label: 'Date attended',
+                    value: formatLongDate(date),
+                  },
+                  {
+                    label: 'Service delivery',
+                    value: (
+                      <Link href={`/companies/${service.id}`}>
+                        {service.name}
+                      </Link>
+                    ),
+                  },
+                ]}
+              />
+            )
+          )}
         </ul>
       )}
     </InteractionsV3.Paginated>
