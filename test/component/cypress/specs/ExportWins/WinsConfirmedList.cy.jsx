@@ -92,7 +92,7 @@ describe('WinsConfirmedList', () => {
             )
           )}`
         )
-      cy.get(items).eq(2).should('have.text', 'Date won: 1 May 2023')
+      cy.get(items).eq(2).should('have.text', 'Date won: May 2023')
       cy.get(items).eq(3).should('have.text', 'Date responded: 18 Apr 2024')
     })
   })
