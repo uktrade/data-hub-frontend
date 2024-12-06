@@ -75,16 +75,6 @@ describe('Event repos', () => {
     })
   })
 
-  describe('#fetchEvent', () => {
-    it('should call with event URL', () => {
-      this.repos.fetchEvent(stubRequest, '123')
-      expect(this.authorisedRequestStub).to.be.calledWith(
-        stubRequest,
-        `${config.apiRoot}/v3/event/123`
-      )
-    })
-  })
-
   describe('#getActiveEvents', () => {
     context(
       'When there is a mix of active and inactive events on the server',

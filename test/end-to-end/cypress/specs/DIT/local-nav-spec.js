@@ -108,17 +108,4 @@ describe('DBT Permission', () => {
       ])
     })
   })
-
-  describe('event', () => {
-    beforeEach(() => {
-      const event = fixtures.event.create.defaultEvent()
-      cy.loadFixture([event])
-      cy.visit(urls.events.details(event.pk))
-    })
-
-    it('should display DBT only side navs', () => {
-      const navSelector = '[data-test="event-details-nav-link"]'
-      assertLocalNav(navSelector, ['Details', 'Attendee'])
-    })
-  })
 })

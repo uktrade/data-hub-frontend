@@ -1,7 +1,5 @@
 import { compact } from 'lodash'
 
-import urls from '../../../lib/urls'
-
 import {
   formatMediumDateTime,
   getDifferenceInDays,
@@ -84,7 +82,6 @@ const transformEventToListItem = ({
   return {
     id,
     headingText: name,
-    headingUrl: urls.events.details(id),
     subheading: modified_on
       ? `Updated on ${formatMediumDateTime(modified_on)}`
       : undefined,
