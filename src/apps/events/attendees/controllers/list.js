@@ -48,6 +48,7 @@ async function renderAttendees(req, res, next) {
       children: [{ value: sortby }],
     })
 
+    // TODO: Can we remove this?
     res.breadcrumb(name).render('events/attendees/views/list', {
       incompleteEvent,
       attendees: attendeesCollection,
