@@ -94,7 +94,7 @@ describe('#transformEventToAttendeeListItem', () => {
       })
 
       it('should return a transformed attendee with the company name and link', () => {
-        expect(this.transformedAttendee.meta).to.include.deep({
+        expect(this.transformedAttendee.meta).to.deep.include({
           label: 'Company',
           value: 'Test company',
           url: `/companies/2222`,
@@ -102,7 +102,7 @@ describe('#transformEventToAttendeeListItem', () => {
       })
 
       it('should return a transformed attendee with the attendance date', () => {
-        expect(this.transformedAttendee.meta).to.include.deep({
+        expect(this.transformedAttendee.meta).to.deep.include({
           label: 'Date attended',
           value: '2017-05-31T00:00:00',
           type: 'date',
@@ -110,7 +110,7 @@ describe('#transformEventToAttendeeListItem', () => {
       })
 
       it('should return a transformed attendee with a link to the associated service delivery', () => {
-        expect(this.transformedAttendee.meta).to.include.deep({
+        expect(this.transformedAttendee.meta).to.deep.include({
           label: 'Service delivery',
           value: 'View or edit service delivery',
           url: '/interactions/1234',
@@ -134,7 +134,7 @@ describe('#transformEventToAttendeeListItem', () => {
       })
 
       it('should return a transformed attendee with their job title', () => {
-        expect(this.transformedAttendee.meta).to.include.deep({
+        expect(this.transformedAttendee.meta).to.deep.include({
           label: 'Job title',
           value: 'Director',
         })

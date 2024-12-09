@@ -1,5 +1,7 @@
 import proxyquire from 'proxyquire'
 
+import { expectThrowsAsync } from '../../../../../../../test/unit/helpers/promise-assertions'
+
 describe('updateAdviser', () => {
   const adviserData = {
     dit_participants: { value: '123' },
@@ -48,7 +50,8 @@ describe('updateAdviser', () => {
     })
 
     it('returns an error message', async () => {
-      await expect(tasks.updateAdviser(adviserData)).to.be.rejectedWith(
+      await expectThrowsAsync(
+        () => tasks.updateAdviser(adviserData),
         "No global Lead ITAs were found for this company. Please note: it is not possible to add Lead ITAs to a subsidiary that are not attached to the company's Global Headquarters"
       )
     })
