@@ -54,6 +54,9 @@ const fakeExportWin = () => ({
     max: 10_000_000,
   }),
   date: faker.date.anytime(),
+  modified_on: faker.date.past().toISOString(),
+  first_sent: faker.date.past().toISOString(),
+  last_sent: faker.date.past().toISOString(),
   goods_vs_services: {
     id: faker.string.uuid(),
     name: faker.helpers.arrayElement(['Goods', 'Services']),
@@ -118,16 +121,27 @@ const fakeExportWin = () => ({
       id: faker.string.uuid(),
     },
     other_marketing_source: '',
-    responded_on: null,
+    responded_on: faker.date.recent(),
   },
 })
 
-const WON_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
-const SENT_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
+export const WIN_STATUS = {
+  PENDING: 'null',
+  CONFIRMED: 'true',
+  REJECTED: 'false',
+}
+
+const PENDING_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
+const CONFIRMED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
+const REJECTED_EXPORT_WINS = Array(123).fill().map(fakeExportWin)
 
 export const getExportWinCollection = (req, res) => {
   const exportWins =
-    req.query.filter === 'sent' ? SENT_EXPORT_WINS : WON_EXPORT_WINS
+    req.query.confirmed === WIN_STATUS.CONFIRMED
+      ? CONFIRMED_EXPORT_WINS
+      : req.query.confirmed === WIN_STATUS.REJECTED
+        ? REJECTED_EXPORT_WINS
+        : PENDING_EXPORT_WINS
 
   const limit = parseInt(req.query.limit, 10)
   const offset = parseInt(req.query.offset, 10)

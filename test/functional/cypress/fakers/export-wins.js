@@ -121,10 +121,13 @@ export const exportWinsFaker = () => ({
     min: 10_000,
     max: 10_000_000,
   }),
-  date: faker.date.anytime().toISOString(),
+  date: '2023-05-01',
+  modified_on: faker.date.past().toISOString(),
+  first_sent: faker.date.past().toISOString(),
+  last_sent: faker.date.past().toISOString(),
   customer_response: {
     agree_with_win: null, // Pending
-    responded_on: faker.date.anytime().toISOString(),
+    responded_on: faker.date.past().toISOString(),
     expected_portion_without_help: {
       name: '40%',
     },
