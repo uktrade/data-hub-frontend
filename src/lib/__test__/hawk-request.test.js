@@ -5,6 +5,9 @@ const rewire = require('rewire')
 
 const config = require('../../config')
 const { StatusCodeError } = require('../errors')
+const {
+  expectThrowsAsync,
+} = require('../../../test/unit/helpers/promise-assertions')
 
 const modulePath = '../hawk-request'
 
@@ -93,7 +96,7 @@ describe('#hawkRequest: check sendHawkRequest', () => {
   })
 
   it('fails when no url provided', async () => {
-    await expect(this.hawkRequest()).to.be.rejectedWith(Error)
+    await expectThrowsAsync(() => this.hawkRequest())
   })
 
   it('calls hawkRequestPromise', async () => {
@@ -140,13 +143,13 @@ describe('#hawkRequest: check hawkRequestPromise', () => {
     )
     this.hawkRequestPromise = this.hawkRequest.__get__('hawkRequestPromise')
 
-    await expect(
+    await expectThrowsAsync(() =>
       this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
       )
-    ).to.be.rejectedWith(Error)
+    )
   })
 
   it('fails when response is not valid', async () => {
@@ -158,13 +161,13 @@ describe('#hawkRequest: check hawkRequestPromise', () => {
     const authenticateStub = sinon.stub().returns(true)
     this.hawkRequest.__set__('Hawk.client.authenticate', authenticateStub)
 
-    await expect(
+    await expectThrowsAsync(() =>
       this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
       )
-    ).to.be.rejectedWith(Error)
+    )
 
     expect(authenticateStub).to.be.calledOnceWith(
       { status: 401, data: {} },
@@ -181,13 +184,13 @@ describe('#hawkRequest: check hawkRequestPromise', () => {
     const authenticateStub = sinon.stub().throws(Error)
     this.hawkRequest.__set__('Hawk.client.authenticate', authenticateStub)
 
-    await expect(
+    await expectThrowsAsync(() =>
       this.hawkRequestPromise(
         testRequestOptions,
         testDataHubCredentials,
         testClientHeaderArtifacts
       )
-    ).to.be.rejectedWith(Error)
+    )
 
     expect(authenticateStub).to.be.calledOnceWith(
       { status: 200 },
