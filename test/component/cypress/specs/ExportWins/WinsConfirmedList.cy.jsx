@@ -5,37 +5,14 @@ import { WinsConfirmedList } from '../../../../../src/client/modules/ExportWins/
 import { sumExportValues } from '../../../../../src/client/modules/ExportWins/Status/utils'
 import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
+import { formatDate } from '../../../../../src/client/utils/date-utils'
 import { exportWinsData } from './export-wins-data'
 import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
 describe('WinsConfirmedList', () => {
-  const exportWin = {
-    id: '111',
-    company: {
-      id: '222',
-      name: 'Foo Ltd',
-    },
-    name_of_export: 'Rolls Reese',
-    company_contacts: [
-      {
-        name: 'David Test',
-        id: '333',
-      },
-    ],
-    country: {
-      name: 'USA',
-    },
-    date: '2023-05-01',
-    customer_response: {
-      responded_on: '2024-04-18T12:15:49.361611Z',
-    },
-    total_expected_export_value: 1000,
-    total_expected_non_export_value: 2000,
-    total_expected_odi_value: 3000,
-  }
-
   it('should render a list of confirmed export wins', () => {
+    const exportWin = exportWinsFaker()
     const exportWinsList = [exportWin, exportWinsFaker(), exportWinsFaker()]
 
     const Provider = createTestProvider({
@@ -57,7 +34,10 @@ describe('WinsConfirmedList', () => {
 
     cy.get('@firstItem').within(() => {
       cy.get('h3 a')
-        .should('have.text', 'Rolls Reese to USA')
+        .should(
+          'have.text',
+          `${exportWin.name_of_export} to ${exportWin.country.name}`
+        )
         .and(
           'have.attr',
           'href',
@@ -68,7 +48,7 @@ describe('WinsConfirmedList', () => {
         )
 
       cy.get('h4 a')
-        .should('have.text', 'Foo Ltd')
+        .should('have.text', exportWin.company.name)
         .and(
           'have.attr',
           'href',
@@ -77,7 +57,12 @@ describe('WinsConfirmedList', () => {
 
       const items = '[data-test="metadata-item"]'
       cy.get(items).should('have.length', 4)
-      cy.get(items).eq(0).should('have.text', 'Contact name: David Test')
+      cy.get(items)
+        .eq(0)
+        .should(
+          'have.text',
+          `Contact name: ${exportWin.company_contacts[0].name}`
+        )
       cy.get(items)
         .eq(1)
         .should(
@@ -92,8 +77,13 @@ describe('WinsConfirmedList', () => {
             )
           )}`
         )
-      cy.get(items).eq(2).should('have.text', 'Date won: 1 May 2023')
-      cy.get(items).eq(3).should('have.text', 'Date responded: 18 Apr 2024')
+      cy.get(items).eq(2).should('have.text', 'Date won: May 2023')
+      cy.get(items)
+        .eq(3)
+        .should(
+          'have.text',
+          `Date responded: ${formatDate(exportWin.customer_response.responded_on)}`
+        )
     })
   })
 

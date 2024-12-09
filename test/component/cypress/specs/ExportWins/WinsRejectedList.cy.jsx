@@ -1,63 +1,93 @@
 import React from 'react'
+import { pick } from 'lodash'
 
 import { WinsRejectedList } from '../../../../../src/client/modules/ExportWins/Status/WinsRejectedList'
+import { sumExportValues } from '../../../../../src/client/modules/ExportWins/Status/utils'
+import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wins'
+import { currencyGBP } from '../../../../../src/client/utils/number-utils'
+import { formatDate } from '../../../../../src/client/utils/date-utils'
 import { exportWinsData } from './export-wins-data'
 import { createTestProvider } from '../provider'
 import urls from '../../../../../src/lib/urls'
 
 describe('WinsRejectedList', () => {
   it('should render Export wins list', () => {
-    const wins = [
-      {
-        id: '123',
-        company: {
-          id: '456',
-          name: 'Foo Ltd',
-        },
-        name_of_export: 'Rolls Reese',
-        company_contacts: [
-          {
-            name: 'James Dean',
-            id: '345',
-          },
-        ],
-        country: {
-          name: 'USA',
-        },
-        date: '2023-05-01',
-        customer_response: {
-          responded_on: '2024-04-18T12:15:49.361611Z',
-        },
-        total_expected_export_value: 1000,
-        total_expected_non_export_value: 2000,
-        total_expected_odi_value: 3000,
-      },
-    ]
+    const exportWin = exportWinsFaker()
+    const exportWinsList = [exportWin, exportWinsFaker(), exportWinsFaker()]
     const Provider = createTestProvider({
-      'Export Wins': () => Promise.resolve(wins),
+      'Export Wins': () => Promise.resolve(exportWinsList),
       Company: () => Promise.resolve({ id: 123 }),
       TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
     })
 
     cy.mount(
       <Provider>
-        <WinsRejectedList exportWins={wins} />
+        <WinsRejectedList exportWins={exportWinsList} />
       </Provider>
     )
 
-    cy.get('[data-test="metadata-item"]').as('metadataItems')
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('firstItem')
 
-    cy.get('@metadataItems')
-      .eq(0)
-      .should('have.text', 'Contact name: James Dean')
-      .find('a')
-      .should(
-        'have.attr',
-        'href',
-        urls.contacts.details(wins[0].company_contacts[0].id)
-      )
+    cy.get('@collectionItems').should('have.length', 3)
 
-    cy.get('@metadataItems').eq(1).should('have.text', 'Total value: £6,000')
+    cy.get('@firstItem').within(() => {
+      cy.get('h3 a')
+        .should(
+          'have.text',
+          `${exportWin.name_of_export} to ${exportWin.country.name}`
+        )
+        .and(
+          'have.attr',
+          'href',
+          urls.companies.exportWins.editSummary(
+            exportWinsList[0].company.id,
+            exportWinsList[0].id
+          )
+        )
+
+      cy.get('h4 a')
+        .should('have.text', exportWin.company.name)
+        .and(
+          'have.attr',
+          'href',
+          urls.companies.overview.index(exportWinsList[0].company.id)
+        )
+
+      const items = '[data-test="metadata-item"]'
+      cy.get(items).should('have.length', 4)
+
+      cy.get(items)
+        .eq(0)
+        .should(
+          'have.text',
+          `Contact name: ${exportWin.company_contacts[0].name}`
+        )
+
+      cy.get(items)
+        .eq(1)
+        .should(
+          'have.text',
+          `Total value: ${currencyGBP(
+            sumExportValues(
+              pick(exportWin, [
+                'total_expected_export_value',
+                'total_expected_non_export_value',
+                'total_expected_odi_value',
+              ])
+            )
+          )}`
+        )
+
+      cy.get(items).eq(2).should('have.text', 'Date won: May 2023')
+
+      cy.get(items)
+        .eq(3)
+        .should(
+          'have.text',
+          `Date modified: ${formatDate(exportWin.modified_on)}`
+        )
+    })
   })
   it('should conditionally render tags', () => {
     const createProvider = (exportWins) =>
