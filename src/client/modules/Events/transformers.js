@@ -3,11 +3,15 @@ import { compact } from 'lodash'
 import urls from '../../../lib/urls'
 
 import {
-  formatMediumDateTime,
   getDifferenceInDays,
   formatLongDate,
   formatStartAndEndDate,
 } from '../../utils/date'
+
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../utils/date-utils'
 
 import { transformIdNameToValueLabel } from '../../transformers'
 import {
@@ -86,7 +90,7 @@ const transformEventToListItem = ({
     headingText: name,
     headingUrl: urls.events.details(id),
     subheading: modified_on
-      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       : undefined,
     tags: tags,
     metadata: metadata.filter((item) => item.value),

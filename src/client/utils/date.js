@@ -148,10 +148,6 @@ function formatShortDate(dateString) {
   return format(dateString, DATE_SHORT_FORMAT_2)
 }
 
-function formatMediumDateTime(dateString) {
-  return format(dateString, DATE_TIME_MEDIUM_FORMAT)
-}
-
 function formatMediumDateTimeWithoutParsing(dateString) {
   return formatWithoutParsing(dateString, DATE_TIME_MEDIUM_FORMAT)
 }
@@ -385,7 +381,6 @@ module.exports = {
   addYears,
   createAndFormatDateObject,
   format,
-  formatMediumDateTime,
   formatLongDate,
   formatShortDate,
   formatMonthYearDate,

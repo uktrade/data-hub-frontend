@@ -5,7 +5,11 @@ import urls from '../../../../../lib/urls'
 
 import { addressToString } from '../../../../utils/addresses'
 
-const { format, formatMediumDateTime } = require('../../../../utils/date')
+const { format } = require('../../../../utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../../utils/date-utils')
 
 const isGlobalHQ = (hqId) => hqId == '43281c5e-92a4-4794-867b-b4d5f801e6f3'
 
@@ -70,7 +74,7 @@ const transformSubsidiaryToListItem = (parentCompanyId) => (company) => {
   return {
     id,
     subheading: modified_on
-      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       : undefined,
     headingText: name,
     headingUrl: buildUrl(id, parentCompanyId, headquarter_type),

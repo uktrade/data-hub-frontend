@@ -3,10 +3,11 @@ import React from 'react'
 import OMISLocalHeader from '../../../../../../src/client/modules/Omis/OMISLocalHeader'
 import { orderFaker } from '../../../../../functional/cypress/fakers/orders'
 import { STATUS } from '../../../../../../src/client/modules/Omis/constants'
+import { getDifferenceInWords } from '../../../../../../src/client/utils/date'
 import {
-  formatMediumDateTime,
-  getDifferenceInWords,
-} from '../../../../../../src/client/utils/date'
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../../../src/client/utils/date-utils'
 import {
   assertLink,
   assertLinkWithText,
@@ -30,10 +31,18 @@ const assertUkRegion = (region) =>
   assertLocalHeaderDetails(2, 'UK region', region)
 
 const assertCreatedOn = (index, date) =>
-  assertLocalHeaderDetails(index, 'Created on', formatMediumDateTime(date))
+  assertLocalHeaderDetails(
+    index,
+    'Created on',
+    formatDate(date, DATE_FORMAT_MEDIUM_WITH_TIME)
+  )
 
 const assertUpdatedOn = (index, date) =>
-  assertLocalHeaderDetails(index, 'Updated on', formatMediumDateTime(date))
+  assertLocalHeaderDetails(
+    index,
+    'Updated on',
+    formatDate(date, DATE_FORMAT_MEDIUM_WITH_TIME)
+  )
 
 const assertStatus = (index, status) =>
   assertLocalHeaderDetails(index, 'Status', status)
