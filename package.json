@@ -87,7 +87,7 @@
     "csurf": "^1.11.0",
     "date-fns": "^4.1.0",
     "del-cli": "^6.0.0",
-    "dotenv": "^16.4.4",
+    "dotenv": "^16.4.7",
     "elastic-apm-node": "^4.8.1",
     "element-closest": "^3.0.2",
     "express": "^4.21.2",
