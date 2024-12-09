@@ -167,7 +167,7 @@
     "@storybook/addon-essentials": "^8.4.6",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
     "@storybook/manager-api": "^8.4.6",
-    "@storybook/react": "^8.4.6",
+    "@storybook/react": "^8.4.7",
     "@storybook/react-webpack5": "^8.4.6",
     "babel-loader": "^9.2.1",
     "babel-plugin-istanbul": "7.0.0",
