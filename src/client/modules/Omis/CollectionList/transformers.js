@@ -4,11 +4,8 @@ import { STATUSES } from './constants'
 import { omis } from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
 
-const {
-  format,
-  formatMediumDate,
-  formatMediumDateTime,
-} = require('../../../utils/date')
+const { format, formatMediumDateTime } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_MEDIUM } = require('../../../utils/date-utils')
 
 export const transformOrderCost = (cost) => (cost ? cost * 100 : undefined)
 
@@ -88,7 +85,9 @@ export const transformOrderToReconciliationListItem = ({
   const metadata = [
     {
       label: 'Payment due date',
-      value: payment_due_date ? formatMediumDate(payment_due_date) : null,
+      value: payment_due_date
+        ? formatDate(payment_due_date, DATE_FORMAT_MEDIUM)
+        : null,
     },
     {
       label: 'Company name',

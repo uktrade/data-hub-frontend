@@ -14,7 +14,7 @@ import Filters from './MyCompaniesFilters'
 import { GREY_1, GREY_3, TEXT_COLOUR } from '../../../../client/utils/colours'
 import urls from '../../../../lib/urls'
 
-const { formatMediumDate } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_MEDIUM } = require('../../../utils/date-utils')
 
 const StyledCellHeader = styled(Table.CellHeader)(
   typography.font({ size: 14, weight: 'bold' }),
@@ -100,7 +100,7 @@ function MyCompaniesTable() {
         </Table.Cell>
         <StyledDateCell setWidth="15%">
           {latestInteraction.date
-            ? formatMediumDate(latestInteraction.date)
+            ? formatDate(latestInteraction.date, DATE_FORMAT_MEDIUM)
             : '-'}
         </StyledDateCell>
         <Table.Cell setWidth="50%">
