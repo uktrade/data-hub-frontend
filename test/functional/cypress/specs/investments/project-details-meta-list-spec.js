@@ -1,6 +1,9 @@
 import { upperFirst } from 'lodash'
 
-import { formatMediumDateTime } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../../src/client/utils/date-utils'
 
 const urls = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
@@ -69,7 +72,10 @@ describe('Investment project details', () => {
         .next('span')
         .should(
           'contain',
-          formatMediumDateTime(investmentProjectWithAllDetails.created_on)
+          formatDate(
+            investmentProjectWithAllDetails.created_on,
+            DATE_FORMAT_MEDIUM_WITH_TIME
+          )
         )
 
       cy.get('[data-test="meta-list-item-created-by"]')
@@ -132,7 +138,10 @@ describe('Investment project details', () => {
         .next('span')
         .should(
           'contain',
-          formatMediumDateTime(investmentProjectWithoutAllDetails.created_on)
+          formatDate(
+            investmentProjectWithoutAllDetails.created_on,
+            DATE_FORMAT_MEDIUM_WITH_TIME
+          )
         )
 
       cy.get('[data-test="meta-list-item-created-by"]').should('not.exist')

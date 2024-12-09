@@ -4,11 +4,11 @@ import { Button, GridCol, GridRow, Link } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import LocalHeaderDetails from '../../components/LocalHeaderDetails'
+import { getDifferenceInWords, isDateInFuture } from '../../utils/date'
 import {
-  formatMediumDateTime,
-  getDifferenceInWords,
-  isDateInFuture,
-} from '../../utils/date'
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../utils/date-utils'
 import { STATUS } from './constants'
 import urls from '../../../lib/urls'
 
@@ -60,10 +60,13 @@ const setHeaderItems = (order, quote) => {
     { label: 'Country (market)', value: order.primaryMarket.name },
   ]
   const secondItems = [
-    { label: 'Created on', value: formatMediumDateTime(order.createdOn) },
+    {
+      label: 'Created on',
+      value: formatDate(order.createdOn, DATE_FORMAT_MEDIUM_WITH_TIME),
+    },
     {
       label: 'Updated on',
-      value: formatMediumDateTime(order.modifiedOn),
+      value: formatDate(order.modifiedOn, DATE_FORMAT_MEDIUM_WITH_TIME),
     },
     {
       label: 'Status',

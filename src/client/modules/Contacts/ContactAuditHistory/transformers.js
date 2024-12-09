@@ -2,7 +2,11 @@ import { isBoolean, isNumber } from 'lodash'
 
 import { transformFieldName } from '../../../components/AuditHistory/transformers'
 import { CONTACT_FIELD_NAME_TO_LABEL_MAP } from './constants'
-import { formatMediumDateTime, isUnparsedDateValid } from '../../../utils/date'
+import { isUnparsedDateValid } from '../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../utils/date-utils'
 import {
   ARCHIVED,
   NO,
@@ -26,5 +30,5 @@ export const getValue = (value, field) =>
       : isNumber(value)
         ? value.toString()
         : isUnparsedDateValid(value)
-          ? formatMediumDateTime(value)
+          ? formatDate(value, DATE_FORMAT_MEDIUM_WITH_TIME)
           : value || NOT_SET

@@ -5,7 +5,10 @@ const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
 const { companies, investments } = require('../../../lib/urls')
-const { formatMediumDateTime } = require('../../../client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../client/utils/date-utils')
 
 function getCompanyDetails(req, res, next) {
   getDitCompany(req, req.params.companyId)
@@ -82,7 +85,10 @@ async function getInvestmentDetails(req, res, next) {
         },
         {
           label: 'Created on',
-          value: formatMediumDateTime(investment.created_on),
+          value: formatDate(
+            investment.created_on,
+            DATE_FORMAT_MEDIUM_WITH_TIME
+          ),
         },
         ...(investment.created_by?.dit_team?.name
           ? [

@@ -1,4 +1,7 @@
-import { formatMediumDateTime } from '../../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../utils/date-utils'
 import { GREEN } from '../../../../utils/colours'
 import urls from '../../../../../lib/urls'
 import groupExportCountries from '../../../../../lib/group-export-countries'
@@ -48,7 +51,10 @@ function createHistory(item) {
         label: 'By',
         value: item.history_user?.name ?? 'unknown',
       },
-      { label: 'Date', value: formatMediumDateTime(item.date) },
+      {
+        label: 'Date',
+        value: formatDate(item.date, DATE_FORMAT_MEDIUM_WITH_TIME),
+      },
     ],
   }
 }
@@ -91,7 +97,7 @@ function createInteraction(item) {
   return {
     headingText: item.subject,
     headingUrl: urls.interactions.detail(item.id),
-    subheading: `Created ${formatMediumDateTime(item.date)}`,
+    subheading: `Created ${formatDate(item.date, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
     badges: [
       {
         text: 'Interaction',

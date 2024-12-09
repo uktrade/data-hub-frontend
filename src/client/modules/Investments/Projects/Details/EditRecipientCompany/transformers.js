@@ -3,7 +3,11 @@ import { get } from 'lodash'
 import urls from '../../../../../../lib/urls'
 import labels from '../../../../Companies/CollectionList/labels'
 import { addressToString } from '../../../../../utils/addresses'
-import { format, formatMediumDateTime } from '../../../../../utils/date'
+import { format } from '../../../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../../utils/date-utils'
 
 export const checkIfRecipientCompanyExists = (hasRecipientCompany) =>
   hasRecipientCompany ? 'Update recipient company' : 'Add recipient company'
@@ -67,7 +71,7 @@ const transformCompanyToListItem =
     return {
       id,
       subheading: modified_on
-        ? `Updated on ${formatMediumDateTime(modified_on)}`
+        ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
         : undefined,
       headingText: name,
       headingUrl: urls.investments.projects.editRecipientCompany(projectId, id),
