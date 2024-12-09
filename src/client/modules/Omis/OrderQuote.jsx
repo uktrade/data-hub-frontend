@@ -25,11 +25,11 @@ import { ORDERS__QUOTE_PREVIEW_LOADED } from '../../actions'
 import OMISTermsAndConditions from './OMISTermsAndConditions'
 import urls from '../../../lib/urls'
 import { DARK_GREY, RED_2 } from '../../utils/colours'
+import { formatMediumDateParsed, isDateInFuture } from '../../utils/date'
 import {
-  formatMediumDateParsed,
-  formatMediumDateTime,
-  isDateInFuture,
-} from '../../utils/date'
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../utils/date-utils'
 import { STATUS } from './constants'
 
 const StyledInsetText = styled(InsetText)`
@@ -111,7 +111,7 @@ const SentOn = ({ quote }) => (
   <>
     <StyledHeading data-test="sent-on-heading">Sent on</StyledHeading>
     <StyledP data-test="sent-on-date">
-      {formatMediumDateTime(quote.createdOn)}
+      {formatDate(quote.createdOn, DATE_FORMAT_MEDIUM_WITH_TIME)}
     </StyledP>
     <StyledHeading data-test="sent-by-heading">Sent by</StyledHeading>
     <StyledP data-test="sent-by-name">{quote.createdBy.name}</StyledP>
@@ -122,7 +122,7 @@ const AcceptedOn = ({ quote }) => (
   <>
     <StyledHeading data-test="accepted-on-heading">Accepted on</StyledHeading>
     <StyledP data-test="accepted-on-date">
-      {formatMediumDateTime(quote.acceptedOn)}
+      {formatDate(quote.acceptedOn, DATE_FORMAT_MEDIUM_WITH_TIME)}
     </StyledP>
     <StyledHeading data-test="accepted-by-heading">Accepted by</StyledHeading>
     <StyledP data-test="accepted-by-name">{quote.acceptedBy.name}</StyledP>
@@ -281,7 +281,10 @@ const OrderQuote = ({ quotePreview }) => {
                             Cancelled on
                           </StyledHeading>
                           <StyledP data-test="cancelled-on-date">
-                            {formatMediumDateTime(quote.cancelledOn)}
+                            {formatDate(
+                              quote.cancelledOn,
+                              DATE_FORMAT_MEDIUM_WITH_TIME
+                            )}
                           </StyledP>
                           <StyledHeading data-test="cancelled-by-heading">
                             Cancelled by

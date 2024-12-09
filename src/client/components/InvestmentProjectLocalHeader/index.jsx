@@ -6,7 +6,10 @@ import { kebabCase, upperFirst } from 'lodash'
 
 import Timeline from '../Timeline'
 
-import { formatMediumDateTime } from '../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../utils/date-utils'
 import timelineTheme from './timeline-theme'
 import urls from '../../../lib/urls'
 import { INVESTMENT_PROJECT_STAGES } from '../../modules/Investments/Projects/constants'
@@ -87,7 +90,9 @@ const InvestmentProjectLocalHeader = ({ investment }) => (
         {investment.valueComplete ? 'Project valued' : 'Not yet valued'}
       </MetaListItem>
       <MetaListItem text="Created on">
-        {investment.createdOn ? formatMediumDateTime(investment.createdOn) : ''}
+        {investment.createdOn
+          ? formatDate(investment.createdOn, DATE_FORMAT_MEDIUM_WITH_TIME)
+          : ''}
       </MetaListItem>
       {investment.createdBy?.ditTeam?.name && (
         <MetaListItem text="Created by">

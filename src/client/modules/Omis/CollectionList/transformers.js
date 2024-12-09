@@ -4,11 +4,12 @@ import { STATUSES } from './constants'
 import { omis } from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
 
+const { format } = require('../../../utils/date')
 const {
-  format,
-  formatMediumDate,
-  formatMediumDateTime,
-} = require('../../../utils/date')
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../utils/date-utils')
 
 export const transformOrderCost = (cost) => (cost ? cost * 100 : undefined)
 
@@ -34,7 +35,9 @@ export const transformOrderToListItem = ({
     },
     {
       label: 'Created',
-      value: created_on ? formatMediumDateTime(created_on) : null,
+      value: created_on
+        ? formatDate(created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+        : null,
     },
     {
       label: 'Contact',
@@ -66,7 +69,7 @@ export const transformOrderToListItem = ({
     headingText: reference,
     headingUrl: omis.workOrder(id),
     subheading: modified_on
-      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       : null,
   }
 
@@ -88,7 +91,9 @@ export const transformOrderToReconciliationListItem = ({
   const metadata = [
     {
       label: 'Payment due date',
-      value: payment_due_date ? formatMediumDate(payment_due_date) : null,
+      value: payment_due_date
+        ? formatDate(payment_due_date, DATE_FORMAT_MEDIUM)
+        : null,
     },
     {
       label: 'Company name',
@@ -113,7 +118,7 @@ export const transformOrderToReconciliationListItem = ({
     headingText: reference,
     headingUrl: omis.paymentReconciliation(id),
     subheading: modified_on
-      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       : null,
   }
 

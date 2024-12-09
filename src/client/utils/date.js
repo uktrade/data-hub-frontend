@@ -136,10 +136,6 @@ function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
   return isUnparsedDateValid(date) ? formatFns(date, dateFormat) : null
 }
 
-function formatMediumDate(dateString) {
-  return formatWithoutParsing(dateString, DATE_MEDIUM_FORMAT)
-}
-
 function formatMediumDateParsed(dateString) {
   return format(dateString, DATE_MEDIUM_FORMAT)
 }
@@ -150,10 +146,6 @@ function formatLongDate(dateString) {
 
 function formatShortDate(dateString) {
   return format(dateString, DATE_SHORT_FORMAT_2)
-}
-
-function formatMediumDateTime(dateString) {
-  return format(dateString, DATE_TIME_MEDIUM_FORMAT)
 }
 
 function formatMediumDateTimeWithoutParsing(dateString) {
@@ -389,8 +381,6 @@ module.exports = {
   addYears,
   createAndFormatDateObject,
   format,
-  formatMediumDate,
-  formatMediumDateTime,
   formatLongDate,
   formatShortDate,
   formatMonthYearDate,

@@ -1,4 +1,7 @@
-const { formatMediumDateTime } = require('../../../../client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../../client/utils/date-utils')
 
 const { addressToString } = require('../../../../client/utils/addresses')
 
@@ -9,7 +12,7 @@ const transformCompanyToListItem = (company) => ({
   meta: [
     {
       label: 'Updated on',
-      value: formatMediumDateTime(company.modified_on),
+      value: formatDate(company.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME),
     },
     {
       label: 'Company address',
