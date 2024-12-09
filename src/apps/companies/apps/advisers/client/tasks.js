@@ -14,7 +14,9 @@ export async function updateAdviser({ dit_participants, companyId }) {
     }
   } else {
     return Promise.reject(
-      "No global Lead ITAs were found for this company. Please note: it is not possible to add Lead ITAs to a subsidiary that are not attached to the company's Global Headquarters"
+      new Error(
+        "No global Lead ITAs were found for this company. Please note: it is not possible to add Lead ITAs to a subsidiary that are not attached to the company's Global Headquarters"
+      )
     )
   }
 }
