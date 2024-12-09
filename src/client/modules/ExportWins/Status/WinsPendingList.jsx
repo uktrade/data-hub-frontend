@@ -4,9 +4,12 @@ import Link from '@govuk-react/link'
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
 import {
-  formatMediumDate,
-  formatMediumDateTimeWithoutParsing,
-} from '../../../utils/date'
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+  DATE_FORMAT_MONTH_ABBR_YEAR,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../utils/date-utils'
+
 import { CollectionItem } from '../../../components'
 import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
@@ -48,18 +51,21 @@ export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
               label: 'Total value:',
               value: currencyGBP(sumExportValues(item)),
             },
-            { label: 'Date won:', value: formatMediumDate(item.date) },
+            {
+              label: 'Date won:',
+              value: formatDate(item.date, DATE_FORMAT_MONTH_ABBR_YEAR), // Dec 2024
+            },
             {
               label: 'Date modified:',
-              value: formatMediumDate(item.modified_on),
+              value: formatDate(item.modified_on, DATE_FORMAT_MEDIUM), // 4 Dec 2024
             },
             {
               label: 'First sent:',
-              value: formatMediumDateTimeWithoutParsing(item.first_sent),
+              value: formatDate(item.first_sent, DATE_FORMAT_MEDIUM_WITH_TIME), // 4 Dec 2024, 3:30PM
             },
             {
               label: 'Last sent:',
-              value: formatMediumDateTimeWithoutParsing(item.last_sent),
+              value: formatDate(item.last_sent, DATE_FORMAT_MEDIUM_WITH_TIME), // 4 Dec 2024, 3:30PM
             },
           ]}
         />
