@@ -4,7 +4,7 @@ import { Link, Table } from 'govuk-react'
 
 import styled from 'styled-components'
 
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 import { STATUS } from '../../../modules/Tasks/TaskForm/constants'
 
@@ -34,9 +34,9 @@ const rows = ({ results }) => {
     <Table.Row key={`task_row_${index}`} data-test="task-item">
       <Table.Cell setWidth="12%">
         {task.due_date
-          ? formatMediumDateParsed(task.due_date)
+          ? formatDate(task.due_date, DATE_FORMAT_MEDIUM)
           : task.dueDate
-            ? formatMediumDateParsed(task.dueDate)
+            ? formatDate(task.dueDate, DATE_FORMAT_MEDIUM)
             : ''}
       </Table.Cell>
       <Table.Cell setWidth="23%">

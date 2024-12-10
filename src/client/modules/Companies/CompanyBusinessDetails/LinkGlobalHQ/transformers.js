@@ -5,7 +5,11 @@ import urls from '../../../../../lib/urls'
 
 import { addressToString } from '../../../../utils/addresses'
 
-const { format, formatMediumDateTime } = require('../../../../utils/date')
+const { format } = require('../../../../utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../../utils/date-utils')
 
 const transformGlobalHQToListItem = (childCompanyId) => (company) => {
   const {
@@ -54,7 +58,7 @@ const transformGlobalHQToListItem = (childCompanyId) => (company) => {
   return {
     id,
     subheading: modified_on
-      ? `Updated on ${formatMediumDateTime(modified_on)}`
+      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       : undefined,
     headingText: name,
     headingUrl: urls.companies.hierarchies.ghq.add(childCompanyId, id),

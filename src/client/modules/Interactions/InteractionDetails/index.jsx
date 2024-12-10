@@ -12,7 +12,7 @@ import ArchivePanel from '../../../components/ArchivePanel'
 import CompleteInteraction from './CompleteInteraction'
 
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatLongDate } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 import {
   getEditLink,
@@ -88,7 +88,7 @@ const InteractionDetails = ({ interactionId }) => {
             ) : null}
             <SummaryTable.Row
               heading={`Date of ${transformKind(interaction.kind)}`}
-              children={formatLongDate(interaction.date)}
+              children={formatDate(interaction.date, DATE_FORMAT_FULL)}
             />
             {interaction.ditParticipants ? (
               <SummaryTable.Row

@@ -5,7 +5,10 @@ import CompanyExportWins from '../../../../components/Resource/CompanyExportWins
 import { WIN_STATUS } from '../../../../modules/ExportWins/Status/constants'
 import { createRoleTags } from '../../../ExportWins/Status/utils'
 import { currencyGBP } from '../../../../utils/number-utils'
-import { formatShortDate } from '../../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../utils/date-utils'
 import { CollectionItem } from '../../../../components'
 import { BLACK } from '../../../../utils/colours'
 import State from '../../../../components/State'
@@ -44,7 +47,9 @@ export const CompanyExportWinsList = ({ exportWins, currentAdviserId }) =>
             },
             {
               label: 'Date won',
-              value: <Black>{formatShortDate(item.date)}</Black>,
+              value: (
+                <Black>{formatDate(item.date, DATE_FORMAT_MONTH_YEAR)}</Black>
+              ),
             },
             {
               label: 'Type of win',

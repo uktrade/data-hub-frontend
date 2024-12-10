@@ -1,7 +1,13 @@
-const { formatLongDate, formatShortDate } = require('./utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_FULL,
+  DATE_FORMAT_MONTH_YEAR,
+} = require('./utils/date-utils')
 
-const getDateLabel = (value) => (value ? formatLongDate(value) : '')
-const getShortDateLabel = (value) => (value ? formatShortDate(value) : '')
+const getDateLabel = (value) =>
+  value ? formatDate(value, DATE_FORMAT_FULL) : ''
+const getShortDateLabel = (value) =>
+  value ? formatDate(value, DATE_FORMAT_MONTH_YEAR) : ''
 
 export const buildOptionsFilter = ({
   options = [],

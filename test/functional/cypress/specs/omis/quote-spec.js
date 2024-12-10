@@ -6,9 +6,10 @@ import {
   assertLocalHeader,
 } from '../../support/assertions'
 import {
-  formatMediumDateParsed,
-  formatMediumDateTime,
-} from '../../../../../src/client/utils/date'
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../../src/client/utils/date-utils'
 
 const {
   cancelledOrder,
@@ -28,7 +29,10 @@ const assertSenderDetails = (quote) =>
       .should('have.text', 'Sent on')
     cy.get('[data-test="sent-on-date"]')
       .should('exist')
-      .should('have.text', formatMediumDateTime(quote.created_on))
+      .should(
+        'have.text',
+        formatDate(quote.created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+      )
     cy.get('[data-test="sent-by-heading"]')
       .should('exist')
       .should('have.text', 'Sent by')
@@ -44,7 +48,10 @@ const assertAcceptanceDetails = (quote) =>
       .should('have.text', 'Accepted on')
     cy.get('[data-test="accepted-on-date"]')
       .should('exist')
-      .should('have.text', formatMediumDateTime(quote.accepted_on))
+      .should(
+        'have.text',
+        formatDate(quote.accepted_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+      )
     cy.get('[data-test="accepted-by-heading"]')
       .should('exist')
       .should('have.text', 'Accepted by')
@@ -86,7 +93,10 @@ describe('Order quote', () => {
         .should('have.text', 'Will expire on')
       cy.get('[data-test="expiry-date"]')
         .should('exist')
-        .should('have.text', formatMediumDateParsed(quotePreview.expires_on))
+        .should(
+          'have.text',
+          formatDate(quotePreview.expires_on, DATE_FORMAT_MEDIUM)
+        )
     })
 
     it('should display the warning message', () => {
@@ -142,7 +152,7 @@ describe('Order quote', () => {
           .should('exist')
           .should(
             'have.text',
-            formatMediumDateParsed(quoteNotAccepted.expires_on)
+            formatDate(quoteNotAccepted.expires_on, DATE_FORMAT_MEDIUM)
           )
       })
 
@@ -224,7 +234,10 @@ describe('Order quote', () => {
         .should('have.text', 'Cancelled on')
       cy.get('[data-test="cancelled-on-date"]')
         .should('exist')
-        .should('have.text', formatMediumDateTime(quoteCancelled.cancelled_on))
+        .should(
+          'have.text',
+          formatDate(quoteCancelled.cancelled_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+        )
       cy.get('[data-test="cancelled-by-heading"]')
         .should('exist')
         .should('have.text', 'Cancelled by')

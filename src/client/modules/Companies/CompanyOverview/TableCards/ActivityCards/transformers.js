@@ -1,8 +1,6 @@
 import { TAGS } from '../../../CompanyActivity/constants'
-import {
-  formatMediumDateParsed,
-  isDateInFuture,
-} from '../../../../../utils/date'
+import { isDateInFuture } from '../../../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
 import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
@@ -78,7 +76,7 @@ export const transformReferralToListItem = (activity) => {
   const summary = `Company was referred to ${referral.recipient.name} by ${referral.created_by.name}`
 
   const date =
-    !referral.completedOn && formatMediumDateParsed(referral.created_on)
+    !referral.completedOn && formatDate(referral.created_on, DATE_FORMAT_MEDIUM)
 
   return {
     id: referral.id,
@@ -104,7 +102,9 @@ export const transformInteractionToListItem = (activity) => {
   const companyId = activity.company.id
   return {
     id: interaction.id,
-    date: interaction.date ? formatMediumDateParsed(interaction.date) : '',
+    date: interaction.date
+      ? formatDate(interaction.date, DATE_FORMAT_MEDIUM)
+      : '',
     tags: [
       {
         text: INTERACTION_NAMES[interaction.kind],
@@ -128,7 +128,7 @@ export const transformInvestmentToListItem = (activity) => {
 
   return {
     id: investment.id,
-    date: formatMediumDateParsed(activity.date),
+    date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
     tags: [
       {
         text: 'New Investment Project',
@@ -161,7 +161,7 @@ export const transformOrderToListItem = (activity) => {
     : summary.push('')
   return {
     id: order.id,
-    date: formatMediumDateParsed(activity.date),
+    date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
     tags: [
       {
         text: 'New Order',
@@ -179,7 +179,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   const great = activity.great_export_enquiry
   return {
     id: great.id,
-    date: formatMediumDateParsed(activity.date),
+    date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
 
     tags: [
       {
