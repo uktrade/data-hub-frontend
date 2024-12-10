@@ -7,7 +7,10 @@ import {
 } from '../../../../../functional/cypress/support/assertions'
 import { STATUS } from '../../../../../../src/client/modules/Omis/constants'
 import urls from '../../../../../../src/lib/urls'
-import { formatDate } from '../../../../../../src/client/utils/date-utils'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+} from '../../../../../../src/client/utils/date-utils'
 
 const order = {
   id: '123',
