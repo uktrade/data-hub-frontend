@@ -45,11 +45,15 @@ const XHR = {
         history.replace(url, { data: res.data })
       } catch (err) {
         // state was too large for browser to handle. Do full page load.
-        window.location.assign(url)
+        this.assignLocation(url)
       }
     }
 
     return res
+  },
+
+  assignLocation(url) {
+    window.location.assign(url)
   },
 
   request(url, params = {}, cancelToken = null) {
