@@ -28,7 +28,7 @@ import { WithoutOurSupport } from '../../../components/Resource'
 import MarketingSource from '../../../components/Resource/MarketingSource'
 import Err from '../../../components/Task/Error'
 import { currencyGBP } from '../../../utils/number-utils'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 
 import AccesibilityStatement from './AccesibilityStatement'
 import PrivacyNotice from './PrivacyNotice'
@@ -168,7 +168,7 @@ const Step1 = ({ win, name }) => {
           {`${currencyGBP(totalAmount)} over ${totalYears} ${pluralize('year', totalYears)}`}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Date won">
-          {formatMediumDateParsed(win?.date)}
+          {formatDate(win?.date, DATE_FORMAT_MEDIUM)}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Lead officer name">
           {win?.leadOfficer?.name}

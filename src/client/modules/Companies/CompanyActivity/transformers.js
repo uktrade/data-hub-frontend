@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 
 import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
@@ -93,7 +93,9 @@ export const transformInteractionToListItem = (activity) => {
     metadata: [
       {
         label: 'Date',
-        value: interaction.date ? formatMediumDateParsed(interaction.date) : '',
+        value: interaction.date
+          ? formatDate(interaction.date, DATE_FORMAT_MEDIUM)
+          : '',
       },
       {
         label: verifyLabel(interaction.contacts, 'Contact'),
@@ -135,12 +137,12 @@ export const transformReferralToListItem = (activity) => {
     metadata: [
       {
         label: 'Created on',
-        value: formatMediumDateParsed(referral.created_on),
+        value: formatDate(referral.created_on, DATE_FORMAT_MEDIUM),
       },
       {
         label: 'Completed on',
         value: referral.completed_on
-          ? formatMediumDateParsed(referral.completed_on)
+          ? formatDate(referral.completed_on, DATE_FORMAT_MEDIUM)
           : '',
       },
       {
@@ -177,7 +179,10 @@ export const transformInvestmentToListItem = (activity) => {
   return {
     id: activity.investment.id,
     metadata: [
-      { label: 'Created Date', value: formatMediumDateParsed(activity.date) },
+      {
+        label: 'Created Date',
+        value: formatDate(activity.date, DATE_FORMAT_MEDIUM),
+      },
       {
         label: 'Investment Type',
         value: activity.investment.investment_type.name,
@@ -234,7 +239,7 @@ export const transformOrderToListItem = (activity) => {
   return {
     id: activity.order.id,
     metadata: [
-      { label: 'Date', value: formatMediumDateParsed(activity.date) },
+      { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Country',
         value: activity.order.primary_market.name,
@@ -287,7 +292,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   return {
     id: great.id,
     metadata: [
-      { label: 'Date', value: formatMediumDateParsed(activity.date) },
+      { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Contact',
         value: formattedContacts([great.contact]),

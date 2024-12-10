@@ -5,9 +5,9 @@ import {
   assertFlashMessage,
   assertLocalHeader,
 } from '../../support/assertions'
-import { formatMediumDateParsed } from '../../../../../src/client/utils/date'
 import {
   formatDate,
+  DATE_FORMAT_MEDIUM,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../../../src/client/utils/date-utils'
 
@@ -93,7 +93,10 @@ describe('Order quote', () => {
         .should('have.text', 'Will expire on')
       cy.get('[data-test="expiry-date"]')
         .should('exist')
-        .should('have.text', formatMediumDateParsed(quotePreview.expires_on))
+        .should(
+          'have.text',
+          formatDate(quotePreview.expires_on, DATE_FORMAT_MEDIUM)
+        )
     })
 
     it('should display the warning message', () => {
@@ -149,7 +152,7 @@ describe('Order quote', () => {
           .should('exist')
           .should(
             'have.text',
-            formatMediumDateParsed(quoteNotAccepted.expires_on)
+            formatDate(quoteNotAccepted.expires_on, DATE_FORMAT_MEDIUM)
           )
       })
 

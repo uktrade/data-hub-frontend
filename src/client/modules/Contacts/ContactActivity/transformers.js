@@ -1,5 +1,5 @@
 import urls from '../../../../lib/urls'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import {
   verifyLabel,
   formattedAdvisers,
@@ -19,7 +19,7 @@ export const transformContactActivityToListItem = ({
 }) => ({
   id,
   metadata: [
-    { label: 'Date', value: formatMediumDateParsed(date) },
+    { label: 'Date', value: formatDate(date, DATE_FORMAT_MEDIUM) },
     {
       label: verifyLabel(contacts, 'Contact'),
       value: formattedContacts(contacts),

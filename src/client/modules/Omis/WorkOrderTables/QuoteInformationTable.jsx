@@ -3,7 +3,7 @@ import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import { canEditOrder } from '../transformers'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 
 const QuoteInformationTable = ({ order }) => (
@@ -25,7 +25,7 @@ const QuoteInformationTable = ({ order }) => (
   >
     <SummaryTable.Row heading="Delivery date">
       {order.deliveryDate
-        ? formatMediumDateParsed(order.deliveryDate)
+        ? formatDate(order.deliveryDate, DATE_FORMAT_MEDIUM)
         : 'Not set'}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Description of the activity">
