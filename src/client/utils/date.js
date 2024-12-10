@@ -34,7 +34,6 @@ const {
 } = require('date-fns')
 
 const {
-  DATE_LONG_FORMAT_1,
   DATE_LONG_FORMAT_2,
   DATE_LONG_FORMAT_3,
   DATE_MEDIUM_FORMAT,
@@ -138,10 +137,6 @@ function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
 
 function formatMediumDateParsed(dateString) {
   return format(dateString, DATE_MEDIUM_FORMAT)
-}
-
-function formatLongDate(dateString) {
-  return format(dateString, DATE_LONG_FORMAT_1)
 }
 
 function formatShortDate(dateString) {
@@ -381,7 +376,6 @@ module.exports = {
   addYears,
   createAndFormatDateObject,
   format,
-  formatLongDate,
   formatShortDate,
   formatMonthYearDate,
   formatWithoutParsing,

@@ -16,7 +16,7 @@ import {
   transformDocumentStatus,
 } from './transformers'
 import urls from '../../../../../lib/urls'
-import { formatLongDate } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_FULL } from '../../../../utils/date-utils'
 import { buildProjectBreadcrumbs } from '../../utils'
 import { ID, TASK_PROPOSITION_COMPLETE, propositionState2props } from '../state'
 import { PROPOSITION_COMPLETE } from '../../../../../client/actions'
@@ -95,15 +95,24 @@ const PropositionDetails = ({
                       />
                       <SummaryTable.TextRow
                         heading="Date created"
-                        value={formatLongDate(proposition.createdOn)}
+                        value={formatDate(
+                          proposition.createdOn,
+                          DATE_FORMAT_FULL
+                        )}
                       />
                       <SummaryTable.TextRow
                         heading="Modified on"
-                        value={formatLongDate(proposition.modifiedOn)}
+                        value={formatDate(
+                          proposition.modifiedOn,
+                          DATE_FORMAT_FULL
+                        )}
                       />
                       <SummaryTable.TextRow
                         heading="Deadline"
-                        value={formatLongDate(proposition.deadline)}
+                        value={formatDate(
+                          proposition.deadline,
+                          DATE_FORMAT_FULL
+                        )}
                       />
                       <SummaryTable.TextRow
                         heading="Assigned to"
