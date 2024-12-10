@@ -1,4 +1,4 @@
-const { format, parseISO } = require('date-fns')
+const { format, parseISO, isValid } = require('date-fns')
 
 /**
  * Full date format with day and full month name.
@@ -102,6 +102,43 @@ function formatDate(date, dateISOFormat = DATE_FORMAT_COMPACT) {
   return format(typeof date === 'string' ? parseISO(date) : date, dateISOFormat)
 }
 
+/**
+ * Normalises an input value to a valid Date object.
+ *
+ * This function accepts either an ISO 8601 string or a Date object as input.
+ * - If the input is a valid ISO string, it is parsed into a Date object.
+ * - If the input is a valid Date object, it is returned as-is.
+ * - If the input is invalid or not a recognised type, it returns `null`.
+ *
+ * @param {string|Date} value - The value to be normalised. Can be an ISO 8601 string or a Date object.
+ * @returns {Date|null} A valid Date object if the input is valid; otherwise, `null`.
+ *
+ * @example
+ * // Valid ISO string input
+ * normalizeToDate('2024-12-10T14:30:00Z') // Returns a Date object
+ *
+ * @example
+ * // Valid Date object input
+ * normalizeToDate(new Date('2024-12-10T14:30:00Z')) // Returns the same Date object
+ *
+ * @example
+ * // Invalid string input
+ * normalizeToDate('invalid-date') // Returns null
+ *
+ * @example
+ * // Non-date input
+ * normalizeToDate(12345) // Returns null
+ */
+function normaliseToDate(value) {
+  if (typeof value === 'string') {
+    const date = parseISO(value)
+    return isValid(date) ? date : null
+  } else if (value instanceof Date) {
+    return isValid(value) ? value : null
+  }
+  return null
+}
+
 module.exports = {
   DATE_FORMAT_FULL,
   DATE_FORMAT_FULL_DAY,
@@ -115,4 +152,5 @@ module.exports = {
   DATE_FORMAT_DAY_MONTH,
   DATE_FORMAT_INTERACTION_TIMESTAMP,
   formatDate,
+  normaliseToDate,
 }
