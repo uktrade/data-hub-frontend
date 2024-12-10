@@ -1,4 +1,7 @@
-import { formatDate } from '../../../../../../src/client/utils/date-utils'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../../../src/client/utils/date-utils'
 import { companyExportWinFaker } from '../../../fakers/company-export-win'
 import { companyFaker } from '../../../fakers/companies'
 import urls from '../../../../../../src/lib/urls'

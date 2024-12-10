@@ -6,7 +6,10 @@ import {
 } from '../../../../../functional/cypress/support/assertions'
 
 import { taskWithInvestmentProjectListFaker } from '../../../../../functional/cypress/fakers/task'
-import { formatDate } from '../../../../../../src/client/utils/date-utils'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+} from '../../../../../../src/client/utils/date-utils'
 import { MyTasksContent } from '../../../../../../src/client/components/Dashboard/my-tasks/MyTasks'
 import urls from '../../../../../../src/lib/urls'
 
