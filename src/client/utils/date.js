@@ -38,7 +38,6 @@ const {
   DATE_LONG_FORMAT_3,
   DATE_TIME_MEDIUM_FORMAT,
   DATE_SHORT_FORMAT,
-  DATE_SHORT_FORMAT_2,
   INTERACTION_TIMESTAMP_FORMAT,
   DATE_DAY_MONTH,
 } = require('../../common/constants')
@@ -132,10 +131,6 @@ function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
 
 function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
   return isUnparsedDateValid(date) ? formatFns(date, dateFormat) : null
-}
-
-function formatShortDate(dateString) {
-  return format(dateString, DATE_SHORT_FORMAT_2)
 }
 
 function formatMediumDateTimeWithoutParsing(dateString) {
@@ -371,7 +366,6 @@ module.exports = {
   addYears,
   createAndFormatDateObject,
   format,
-  formatShortDate,
   formatMonthYearDate,
   formatWithoutParsing,
   generateFinancialYearLabel,
