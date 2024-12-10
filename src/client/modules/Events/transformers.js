@@ -2,14 +2,11 @@ import { compact } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-import {
-  getDifferenceInDays,
-  formatLongDate,
-  formatStartAndEndDate,
-} from '../../utils/date'
+import { getDifferenceInDays, formatStartAndEndDate } from '../../utils/date'
 
 import {
   formatDate,
+  DATE_FORMAT_FULL,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../utils/date-utils'
 
@@ -89,9 +86,9 @@ const transformEventToListItem = ({
     id,
     headingText: name,
     headingUrl: urls.events.details(id),
-    subheading: modified_on
-      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
-      : undefined,
+    subheading:
+      modified_on &&
+      `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
     tags: tags,
     metadata: metadata.filter((item) => item.value),
   }
@@ -126,8 +123,8 @@ const transformResponseToEventDetails = ({
 }) => ({
   name,
   eventType: event_type.name,
-  startDate: formatLongDate(start_date),
-  endDate: formatLongDate(end_date),
+  startDate: formatDate(start_date, DATE_FORMAT_FULL),
+  endDate: formatDate(end_date, DATE_FORMAT_FULL),
   eventDays:
     getDifferenceInDays(end_date) - getDifferenceInDays(start_date) + 1,
   locationType: location_type?.name,

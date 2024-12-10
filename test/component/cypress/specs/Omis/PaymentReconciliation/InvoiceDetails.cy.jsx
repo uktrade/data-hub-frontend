@@ -2,10 +2,11 @@ import React from 'react'
 
 import { InvoiceDetails } from '../../../../../../src/client/modules/Omis/PaymentReconciliation'
 import { assertGovReactTable } from '../../../../../functional/cypress/support/assertions'
+import { getDifferenceInWords } from '../../../../../../src/client/utils/date'
 import {
-  formatLongDate,
-  getDifferenceInWords,
-} from '../../../../../../src/client/utils/date'
+  formatDate,
+  DATE_FORMAT_FULL,
+} from '../../../../../../src/client/utils/date-utils'
 
 const invoice = {
   paymentDueDate: '2017-09-27T08:59:20.381047',
@@ -27,7 +28,7 @@ describe('PaymentReconciliation invoice details', () => {
 
     it('should render the invoice details', () => {
       const paymentDueDate =
-        formatLongDate(invoice.paymentDueDate) +
+        formatDate(invoice.paymentDueDate, DATE_FORMAT_FULL) +
         ' (' +
         getDifferenceInWords(invoice.paymentDueDate) +
         ')'
