@@ -19,18 +19,24 @@ import State from '../../../components/State'
 import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { formatLongDate } from '../../../utils/date'
+import StatusMessage from '../../../components/StatusMessage'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
 })
 
-const Attendees = ({ eventId }) => (
+const Attendees = ({ eventId, isDisabled }) => (
   <div>
     <H3 as="h2">Event Attendees</H3>
+    {isDisabled && (
+      <StatusMessage>
+        You cannot add an event attendee because the event has been disabled.
+      </StatusMessage>
+    )}
     <InteractionsV3.Paginated
       id="???"
       heading="attendee"
-      addItemUrl={`/events/${eventId}/attendees/find-new`}
+      addItemUrl={!isDisabled && `/events/${eventId}/attendees/find-new`}
       sortOptions={[
         { name: 'Last name: A-Z', value: 'last_name_of_first_contact' },
         { name: 'Last name: Z-A', value: '-last_name_of_first_contact' },
@@ -170,7 +176,17 @@ const EventDetails = ({ name, ...props }) => {
         <DefaultLayout
           heading={name}
           pageTitle="Events"
-          flashMessages={flashMessages}
+          flashMessages={{
+            ...flashMessages,
+            info: [
+              ...(flashMessages.info || []),
+              ...(props.disabledOn
+                ? [
+                    `This event was disabled on ${formatLongDate(props.disabledOn)} and can no longer be edited.`,
+                  ]
+                : []),
+            ],
+          }}
           breadcrumbs={[
             {
               link: urls.dashboard.index(),
@@ -211,7 +227,9 @@ const EventDetails = ({ name, ...props }) => {
                   },
                   [`/events/${id}/attendees`]: {
                     label: 'Attendes',
-                    content: <Attendees eventId={id} />,
+                    content: (
+                      <Attendees eventId={id} isDisabled={props.disabledOn} />
+                    ),
                   },
                 }}
               />
@@ -223,4 +241,5 @@ const EventDetails = ({ name, ...props }) => {
   )
 }
 
+// TODO: Get rid of this
 export default connect(state2props)(EventDetails)
