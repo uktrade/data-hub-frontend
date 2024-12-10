@@ -128,22 +128,15 @@ describe('Event', () => {
       cy.visit(urls.events.index())
       cy.contains(eventName).click()
       cy.contains('Attendees').click()
-      cy.get(selectors.entityCollection.addAttendee).click()
+      cy.contains('Add attendee').click()
 
-      cy.get('[data-test="contact-name-filter"]')
-        .type('dean cox')
-        .type('{enter}')
+      cy.get('input[name="name"]').type('dean cox').type('{enter}')
       cy.contains('Dean Cox').click()
 
-      cy.get(selectors.message.flashMessages)
-        .should(
-          'contain',
-          'Event attendee added - This has created a service delivery record.'
-        )
-        .and(
-          'contain',
+      cy.contains(
+        'Event attendee added - This has created a service delivery record. ' +
           'If required, you can view or edit the service delivery directly from the attendee record.'
-        )
+      )
     })
   })
 
@@ -187,9 +180,7 @@ describe('Event', () => {
       cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-      cy.get('[data-test="contact-name-filter"]')
-        .type('Attendee')
-        .type('{enter}')
+      cy.get('input[name="name"]').type('Attendee').type('{enter}')
       cy.contains('Joe Attendee').click()
       cy.contains('Event attendee added')
     })
@@ -198,17 +189,12 @@ describe('Event', () => {
       cy.visit(urls.events.details(event.pk))
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-      cy.get('[data-test="contact-name-filter"]')
-        .type('Attendee')
-        .type('{enter}')
+      cy.get('input[name="name"]').type('Attendee').type('{enter}')
       cy.contains('Joe Attendee').click()
       cy.contains('Add attendee').click()
-      cy.get('[data-test="contact-name-filter"]')
-        .type('Attendee')
-        .type('{enter}')
+      cy.get('input[name="name"]').type('Attendee').type('{enter}')
       cy.contains('Joe Attendee').click()
-      cy.get(selectors.message.flashMessages).should(
-        'contain',
+      cy.contains(
         'Event attendee not added - This contact has already been added as an event attendee'
       )
     })

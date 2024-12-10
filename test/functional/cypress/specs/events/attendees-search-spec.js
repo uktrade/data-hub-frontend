@@ -174,12 +174,9 @@ describe('Event attendee search', () => {
     it('should add an attendee to the event', () => {
       cy.contains('Hanna Reinger').click()
 
-      cy.get('.c-message')
-        .should('exist')
-        .should(
-          'have.text',
-          'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.Dismiss'
-        )
+      cy.contains(
+        'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.'
+      )
     })
   })
 })
