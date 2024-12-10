@@ -1,9 +1,10 @@
 import { isBoolean, isNumber } from 'lodash'
 
 import {
-  formatMediumDateTimeWithoutParsing,
-  isUnparsedDateValid,
-} from '../../../../utils/date'
+  formatDate,
+  normaliseToDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../utils/date-utils'
 import { COMPANY_FIELD_NAME_TO_LABEL_MAP, HEADQUARTER_TYPES } from './constants'
 import {
   ARCHIVED,
@@ -31,17 +32,27 @@ const getValueFromBoolean = (value, field) => {
   }
 }
 
-export const getValue = (value, field) =>
-  isBoolean(value)
-    ? getValueFromBoolean(value, field)
-    : isNumber(value)
-      ? field === 'Turnover'
-        ? currencyGBP(value, {
-            maximumSignificantDigits: 2,
-          })
-        : value.toString()
-      : isUnparsedDateValid(value)
-        ? formatMediumDateTimeWithoutParsing(value)
-        : field === 'Headquarter type'
-          ? HEADQUARTER_TYPES[value] || NOT_SET
-          : value || NOT_SET
+export const getValue = (value, field) => {
+  const date = normaliseToDate(value)
+
+  if (isBoolean(value)) {
+    return getValueFromBoolean(value, field)
+  }
+
+  if (isNumber(value)) {
+    if (field === 'Turnover') {
+      return currencyGBP(value, { maximumSignificantDigits: 2 })
+    }
+    return value.toString()
+  }
+
+  if (date) {
+    return formatDate(date, DATE_FORMAT_MEDIUM_WITH_TIME)
+  }
+
+  if (field === 'Headquarter type') {
+    return HEADQUARTER_TYPES[value] || NOT_SET
+  }
+
+  return value || NOT_SET
+}

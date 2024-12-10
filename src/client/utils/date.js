@@ -36,7 +36,6 @@ const {
 const {
   DATE_LONG_FORMAT_2,
   DATE_LONG_FORMAT_3,
-  DATE_TIME_MEDIUM_FORMAT,
   DATE_SHORT_FORMAT,
   INTERACTION_TIMESTAMP_FORMAT,
   DATE_DAY_MONTH,
@@ -131,10 +130,6 @@ function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
 
 function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
   return isUnparsedDateValid(date) ? formatFns(date, dateFormat) : null
-}
-
-function formatMediumDateTimeWithoutParsing(dateString) {
-  return formatWithoutParsing(dateString, DATE_TIME_MEDIUM_FORMAT)
 }
 
 const formatMonthYearDate = (date) =>
@@ -377,6 +372,7 @@ module.exports = {
   getYesterday,
   isDateAfter,
   isDateValid,
+  isValid,
   isNormalisedDateValid,
   isShortDateValid,
   isUnparsedDateValid,
@@ -400,7 +396,6 @@ module.exports = {
   subtractMonths,
   areDatesEqual,
   tomorrow,
-  formatMediumDateTimeWithoutParsing,
   convertUnparsedDateToFieldDateObject,
   convertUnparsedDateToFieldShortDateObject,
   isDateInFutureParsed,
