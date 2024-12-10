@@ -36,7 +36,7 @@ export const transformContactToListItem = (companyId) => (contact) => {
     headingUrl: urls.contacts.details(contact.id),
     tags: tags.filter((item) => item.text),
     headingText: `${contact.first_name} ${contact.last_name}`.trim(),
-    subheading: `Updated on ${(formatDate(contact.modified_on), DATE_FORMAT_MEDIUM_WITH_TIME)}`,
+    subheading: `Updated on ${formatDate(contact.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
   }
 }
 
