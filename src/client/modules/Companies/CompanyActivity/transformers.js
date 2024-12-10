@@ -8,6 +8,7 @@ import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 import { getServiceText } from '../../../components/ActivityFeed/activities/InteractionUtils'
+import { currencyGBP } from '../../../utils/number-utils'
 
 const { isEmpty } = require('lodash')
 
@@ -173,16 +174,17 @@ export const transformReferralToListItem = (activity) => {
 }
 
 export const transformInvestmentToListItem = (activity) => {
+  const project = activity.investment
   return {
-    id: activity.investment.id,
+    id: project.id,
     metadata: [
       {
-        label: 'Created Date',
+        label: 'Created on',
         value: formatDate(activity.date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: 'Investment Type',
-        value: activity.investment.investment_type.name,
+        label: 'Investment type',
+        value: project.investment_type.name,
       },
       {
         label: 'Added by',
@@ -195,25 +197,28 @@ export const transformInvestmentToListItem = (activity) => {
       },
       {
         label: 'Estimated land date',
-        value: activity.investment.estimated_land_date,
+        value: formatDate(project.estimated_land_date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: 'Company Contact',
-        value: activity.investment.clinet_contacts,
+        label: verifyLabel(project.client_contacts, 'Company contact'),
+        value:
+          project.client_contacts.length > 0
+            ? project.client_contacts.map((contact) => contact.name).join(', ')
+            : '',
       },
       {
         label: 'Total investment',
-        value: activity.investment.total_investment,
+        value: currencyGBP(project.total_investment),
       },
       {
         label: 'Capital expenditure value',
-        value: activity.investment.foreign_equity_investment,
+        value: currencyGBP(project.foreign_equity_investment),
       },
       {
         label: 'Gross value added (GVA)',
-        value: activity.investment.gross_value_added,
+        value: currencyGBP(project.gross_value_added),
       },
-      { label: 'Number of jobs', value: activity.investment.number_new_jobs },
+      { label: 'Number of jobs', value: project.number_new_jobs },
     ].filter(({ value }) => Boolean(value)),
     tags: [
       {
@@ -222,13 +227,18 @@ export const transformInvestmentToListItem = (activity) => {
         dataTest: 'investment-theme-label',
       },
       {
+        text: `Project - ${project.investment_type.name}`,
+        colour: 'blue',
+        dataTest: 'investment-type-label',
+      },
+      {
         text: 'New Investment Project',
         colour: 'grey',
-        dataTest: 'investment-service-label',
+        dataTest: 'investment-kind-label',
       },
     ].filter(({ text }) => Boolean(text)),
-    headingUrl: urls.investments.projects.details(activity.investment.id),
-    headingText: activity.investment.name,
+    headingUrl: urls.investments.projects.details(project.id),
+    headingText: project.name,
   }
 }
 
