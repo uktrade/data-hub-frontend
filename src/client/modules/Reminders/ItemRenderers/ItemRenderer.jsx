@@ -11,7 +11,7 @@ import {
   ItemHeaderLink,
   ItemFooter,
 } from './styled'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { BLACK, DARK_GREY } from '../../../utils/colours'
 
 export const ItemRenderer = ({
@@ -39,7 +39,9 @@ export const ItemRenderer = ({
             <GridCol>
               <ItemHeader data-test="item-header">
                 <ul>
-                  <li>Received {formatMediumDateParsed(item.created_on)}</li>
+                  <li>
+                    Received {formatDate(item.created_on, DATE_FORMAT_MEDIUM)}
+                  </li>
                   {headerLinkHref && (
                     <li>
                       <ItemHeaderLink href={headerLinkHref}>
