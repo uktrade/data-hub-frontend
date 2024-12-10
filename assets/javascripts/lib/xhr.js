@@ -36,7 +36,7 @@ const XHR = {
     }
   },
 
-  updateOutlet(res, params) {
+  updateOutlet(res, params, win = window) {
     this.injectResponseInHtml(res.data)
 
     if (params) {
@@ -45,15 +45,11 @@ const XHR = {
         history.replace(url, { data: res.data })
       } catch (err) {
         // state was too large for browser to handle. Do full page load.
-        this.assignLocation(url)
+        win.location.assign(url)
       }
     }
 
     return res
-  },
-
-  assignLocation(url) {
-    window.location.assign(url)
   },
 
   request(url, params = {}, cancelToken = null) {

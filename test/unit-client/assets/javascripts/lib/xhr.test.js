@@ -15,7 +15,7 @@ describe('XHR', () => {
   beforeEach(() => {
     history = createMemoryHistory()
     history.location = {}
-    global.window = new JSDOM(HTML).window
+    global.window = new JSDOM(HTML, { url: 'http://localhost/' }).window
     global.document = global.window.document
     global.document.createRange = () => {
       return {
@@ -44,11 +44,14 @@ describe('XHR', () => {
     })
     it('should perform page load if unable to pushState', () => {
       sinon.stub(history, 'replace').throws('error')
-      const assignStub = sinon.stub(XHR, 'assignLocation')
+      const testWindow = {
+        ...window,
+        location: { ...window.location, assign: sinon.spy() },
+      }
       const res = { data: {} }
       const params = { a: 1, b: 2 }
-      XHR.updateOutlet(res, params)
-      expect(assignStub).to.be.calledWith('?a=1&b=2')
+      XHR.updateOutlet(res, params, testWindow)
+      expect(testWindow.location.assign).to.be.calledWith('?a=1&b=2')
     })
   })
 
