@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 
 import { TAGS } from './constants'
 import urls from '../../../../lib/urls'
-import { formatMediumDateParsed } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
@@ -93,7 +93,8 @@ export const transformInteractionToListItem = (activity) => {
     metadata: [
       {
         label: 'Date',
-        value: interaction.date ? formatMediumDateParsed(interaction.date) : '',
+        value:
+          interaction.date && formatDate(interaction.date, DATE_FORMAT_MEDIUM),
       },
       {
         label: verifyLabel(interaction.contacts, 'Contact'),
@@ -116,9 +117,7 @@ export const transformInteractionToListItem = (activity) => {
         dataTest: 'activity-kind-label',
       },
       {
-        text: interaction.service
-          ? getServiceText(interaction.service?.name)
-          : '',
+        text: interaction.service && getServiceText(interaction.service?.name),
         colour: 'blue',
         dataTest: 'activity-service-label',
       },
@@ -135,13 +134,13 @@ export const transformReferralToListItem = (activity) => {
     metadata: [
       {
         label: 'Created on',
-        value: formatMediumDateParsed(referral.created_on),
+        value: formatDate(referral.created_on, DATE_FORMAT_MEDIUM),
       },
       {
         label: 'Completed on',
-        value: referral.completed_on
-          ? formatMediumDateParsed(referral.completed_on)
-          : '',
+        value:
+          referral.completed_on &&
+          formatDate(referral.completed_on, DATE_FORMAT_MEDIUM),
       },
       {
         label: 'Sending adviser',
@@ -177,19 +176,22 @@ export const transformInvestmentToListItem = (activity) => {
   return {
     id: activity.investment.id,
     metadata: [
-      { label: 'Created Date', value: formatMediumDateParsed(activity.date) },
+      {
+        label: 'Created Date',
+        value: formatDate(activity.date, DATE_FORMAT_MEDIUM),
+      },
       {
         label: 'Investment Type',
         value: activity.investment.investment_type.name,
       },
       {
         label: 'Added by',
-        value: activity.investment.created_by
-          ? AdviserRenderer({
-              adviser: activity.investment.created_by,
-              team: activity.investment.created_by.dit_team,
-            })
-          : '',
+        value:
+          activity.investment.created_by &&
+          AdviserRenderer({
+            adviser: activity.investment.created_by,
+            team: activity.investment.created_by.dit_team,
+          }),
       },
       {
         label: 'Estimated land date',
@@ -234,32 +236,30 @@ export const transformOrderToListItem = (activity) => {
   return {
     id: activity.order.id,
     metadata: [
-      { label: 'Date', value: formatMediumDateParsed(activity.date) },
+      { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Country',
         value: activity.order.primary_market.name,
       },
-      activity.order.uk_region
-        ? {
-            label: 'UK region',
-            value: activity.order.uk_region.name,
-          }
-        : '',
+      activity.order.uk_region && {
+        label: 'UK region',
+        value: activity.order.uk_region.name,
+      },
       {
         label: 'Added by',
-        value: activity.order.created_by
-          ? AdviserRenderer({
-              adviser: activity.order.created_by,
-              team: activity.order.created_by.dit_team,
-            })
-          : '',
+        value:
+          activity.order.created_by &&
+          AdviserRenderer({
+            adviser: activity.order.created_by,
+            team: activity.order.created_by.dit_team,
+          }),
       },
       {
         label: 'Company Contact',
         value:
           activity.order.contact.name + ' ' + activity.order.contact.job_title,
       },
-    ].filter(({ value }) => Boolean(value)),
+    ].filter((entry) => entry && Boolean(entry.value)),
     tags: [
       {
         text: 'Orders (OMIS)',
@@ -287,7 +287,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   return {
     id: great.id,
     metadata: [
-      { label: 'Date', value: formatMediumDateParsed(activity.date) },
+      { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Contact',
         value: formattedContacts([great.contact]),

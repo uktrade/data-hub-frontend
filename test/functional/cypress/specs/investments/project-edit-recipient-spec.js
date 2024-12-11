@@ -3,7 +3,10 @@ import fixture from '../../fixtures/investment/investment-needing-external-fundi
 import { collectionListRequest } from '../../support/actions'
 import { getCollectionList } from '../../support/collection-list-assertions'
 import { companyFaker } from '../../fakers/companies'
-import { formatMediumDateTime } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../../../src/client/utils/date-utils'
 
 describe('Edit the recipient company', () => {
   context('When searching for a recipient company', () => {
@@ -34,7 +37,7 @@ describe('Edit the recipient company', () => {
         )
       cy.get('h4').should(
         'contain',
-        `Updated on ${formatMediumDateTime(company.modified_on)}`
+        `Updated on ${formatDate(company.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       )
       cy.get('@metadataItems')
         .eq(0)

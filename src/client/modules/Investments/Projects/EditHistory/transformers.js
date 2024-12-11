@@ -1,7 +1,8 @@
 import { isBoolean, isNumber } from 'lodash'
 
 import { PROJECT_FIELD_NAME_TO_LABEL_MAP } from './constants'
-import { formatMediumDate, isUnparsedDateValid } from '../../../../utils/date'
+import { isUnparsedDateValid } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../utils/date-utils'
 import { currencyGBP } from '../../../../utils/number-utils'
 import { NOT_SET, NO, YES } from '../../../../components/AuditHistory/constants'
 import { transformFieldName } from '../../../../components/AuditHistory/transformers'
@@ -36,5 +37,5 @@ export const getValue = (value, field) =>
           : Array.isArray(value)
             ? value.join(', ')
             : isUnparsedDateValid(value)
-              ? formatMediumDate(value)
+              ? formatDate(value, DATE_FORMAT_MEDIUM)
               : value || NOT_SET

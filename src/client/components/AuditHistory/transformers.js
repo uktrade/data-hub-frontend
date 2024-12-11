@@ -1,7 +1,10 @@
 import React from 'react'
 import { capitalize, isEmpty, lowerCase } from 'lodash'
 
-import { formatMediumDateTime } from '../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../utils/date-utils'
 import { AUTOMATIC_UPDATE } from './constants'
 
 export const transformFieldName = (fieldName) =>
@@ -24,7 +27,7 @@ const transformChanges = (changes, fieldMapper, excludedFields) =>
     }))
 
 const getUpdatedBy = (timestamp, user) => {
-  const formattedTime = formatMediumDateTime(timestamp)
+  const formattedTime = formatDate(timestamp, DATE_FORMAT_MEDIUM_WITH_TIME)
   const changedBy = user
     ? isEmpty(user?.name)
       ? user?.email

@@ -7,7 +7,11 @@ import { get, capitalize } from 'lodash'
 import Tag, { TAG_COLOURS } from '../../../components/Tag'
 import { ToggleSection } from '../../../components/ToggleSection/index.jsx'
 import { DARK_GREY, MID_GREY, BLACK } from '../../../utils/colours.js'
-import { formatShortDate, formatMediumDateTime } from '../../../utils/date.js'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../utils/date-utils.js'
 import { currencyGBP } from '../../../utils/number-utils.js'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection.jsx'
 
@@ -134,7 +138,7 @@ const ResultItem = (item) => {
           <StyledDT>Estimated date for win:</StyledDT>
           <StyledDD>
             {item.estimated_win_date
-              ? formatShortDate(item.estimated_win_date)
+              ? formatDate(item.estimated_win_date, DATE_FORMAT_MONTH_YEAR)
               : 'Not set'}
           </StyledDD>
           <StyledDT>Main sector:</StyledDT>
@@ -142,7 +146,9 @@ const ResultItem = (item) => {
           <StyledDT>Owner:</StyledDT>
           <StyledDD>{item.owner.name}</StyledDD>
           <StyledDT>Created on:</StyledDT>
-          <StyledDD>{formatMediumDateTime(item.created_on)}</StyledDD>
+          <StyledDD>
+            {formatDate(item.created_on, DATE_FORMAT_MEDIUM_WITH_TIME)}
+          </StyledDD>
         </StyledDL>
       </DashboardToggleSection>
     </ListItem>

@@ -9,7 +9,10 @@ import {
   taskWithInteractionFaker,
 } from '../../../../../functional/cypress/fakers/task'
 import urls from '../../../../../../src/lib/urls'
-import { formatLongDate } from '../../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_FULL,
+} from '../../../../../../src/client/utils/date-utils'
 import { NOT_SET_TEXT } from '../../../../../../src/apps/companies/constants'
 import TaskDetailsTable from '../../../../../../src/client/modules/Tasks/TaskDetails/TaskDetailsTable'
 import { companyFaker } from '../../../../../functional/cypress/fakers/companies'
@@ -42,13 +45,19 @@ describe('Task details table', () => {
             href: urls.investments.projects.details(project.id),
             name: project.name,
           },
-          ['Date due']: formatLongDate(investmentProjectTask.dueDate),
+          ['Date due']: formatDate(
+            investmentProjectTask.dueDate,
+            DATE_FORMAT_FULL
+          ),
           'Assigned to': investmentProjectTask.advisers
             .map((adviser) => adviser.name)
             .join(''),
           'Task description': investmentProjectTask.description,
           'Reminders set': `${investmentProjectTask.reminderDays} days before due date`,
-          'Date created': formatLongDate(investmentProjectTask.createdOn),
+          'Date created': formatDate(
+            investmentProjectTask.createdOn,
+            DATE_FORMAT_FULL
+          ),
           'Created by': investmentProjectTask.createdBy.name,
         },
       })
@@ -91,7 +100,10 @@ describe('Task details table', () => {
             .join(''),
           'Task description': NOT_SET_TEXT,
           'Reminders set': NOT_SET_TEXT,
-          'Date created': formatLongDate(taskWithNoInvestmentProject.createdOn),
+          'Date created': formatDate(
+            taskWithNoInvestmentProject.createdOn,
+            DATE_FORMAT_FULL
+          ),
           'Created by': taskWithNoInvestmentProject.createdBy.name,
         },
       })
@@ -120,13 +132,19 @@ describe('Task details table', () => {
             href: urls.interactions.detail(taskWithInteraction.interaction.id),
             name: taskWithInteraction.interaction.subject,
           },
-          ['Date due']: formatLongDate(taskWithInteraction.dueDate),
+          ['Date due']: formatDate(
+            taskWithInteraction.dueDate,
+            DATE_FORMAT_FULL
+          ),
           'Assigned to': taskWithInteraction.advisers
             .map((adviser) => adviser.name)
             .join(''),
           'Task description': taskWithInteraction.description,
           'Reminders set': `${taskWithInteraction.reminderDays} days before due date`,
-          'Date created': formatLongDate(taskWithInteraction.createdOn),
+          'Date created': formatDate(
+            taskWithInteraction.createdOn,
+            DATE_FORMAT_FULL
+          ),
           'Created by': taskWithInteraction.createdBy.name,
         },
       })

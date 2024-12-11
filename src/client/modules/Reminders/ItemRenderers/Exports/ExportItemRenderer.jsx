@@ -5,7 +5,7 @@ import { GREY_1 } from '../../../../utils/colours'
 
 import ItemRenderer from '../ItemRenderer'
 import { INTERACTION_NAMES } from '../../constants'
-import { formatMediumDateParsed } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../utils/date-utils'
 import urls from '../../../../../lib/urls'
 
 const ItemHint = styled('span')({
@@ -16,7 +16,7 @@ const ItemContent = ({ item, hintLabel }) => (
   <ul>
     <li>
       <ItemHint>{`${hintLabel}: `}</ItemHint>
-      {formatMediumDateParsed(item.last_interaction_date)}
+      {formatDate(item.last_interaction_date, DATE_FORMAT_MEDIUM)}
     </li>
     {item.interaction ? (
       <>
@@ -66,7 +66,7 @@ const ExportItemRenderer = ({
     item={item}
     onDeleteReminder={onDeleteReminder}
     disableDelete={disableDelete}
-    deletedText={`Received ${formatMediumDateParsed(item.created_on)} for ${
+    deletedText={`Received ${formatDate(item.created_on, DATE_FORMAT_MEDIUM)} for ${
       item.company.name
     }`}
     headerLinkTitle={headerLinkTitle}

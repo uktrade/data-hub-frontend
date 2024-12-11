@@ -1,7 +1,10 @@
 import { get } from 'lodash'
 
 import urls from '../../../../lib/urls'
-import { formatMediumDateTime } from '../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} from '../../../utils/date-utils'
 
 export const transformContactToListItem = (companyId, eventId) => (contact) => {
   const metadata = [
@@ -22,7 +25,7 @@ export const transformContactToListItem = (companyId, eventId) => (contact) => {
     headingUrl: urls.events.addAttendee(eventId, contact.id),
     badges: badges.filter((item) => item.text),
     headingText: `${contact.first_name} ${contact.last_name}`.trim(),
-    subheading: `Updated on ${formatMediumDateTime(contact.modified_on)}`,
+    subheading: `Updated on ${formatDate(contact.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
   }
 }
 

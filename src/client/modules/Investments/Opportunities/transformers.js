@@ -1,4 +1,7 @@
-const { formatMediumDateTime } = require('../../../utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../../utils/date-utils')
 
 const getNameAndId = (data) =>
   data ? { value: data.id, label: data.name } : {}
@@ -37,7 +40,7 @@ export const transformInvestmentOpportunityDetails = ({
   status: idNameToValueLabel(status),
   id,
   detailsFields: {
-    createdOn: formatMediumDateTime(created_on),
+    createdOn: formatDate(created_on, DATE_FORMAT_MEDIUM_WITH_TIME),
     name,
     description,
     ukRegions: uk_region_locations.map(idNameToValueLabel),

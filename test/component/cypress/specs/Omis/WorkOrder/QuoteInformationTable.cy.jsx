@@ -7,7 +7,10 @@ import {
 } from '../../../../../functional/cypress/support/assertions'
 import { STATUS } from '../../../../../../src/client/modules/Omis/constants'
 import urls from '../../../../../../src/lib/urls'
-import { formatMediumDateParsed } from '../../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MEDIUM,
+} from '../../../../../../src/client/utils/date-utils'
 
 const order = {
   id: '123',
@@ -59,8 +62,9 @@ describe('QuoteInformationTable', () => {
         heading: 'Information for the quote',
         showEditLink: true,
         content: {
-          'Delivery date': formatMediumDateParsed(
-            orderWithAllFields.deliveryDate
+          'Delivery date': formatDate(
+            orderWithAllFields.deliveryDate,
+            DATE_FORMAT_MEDIUM
           ),
           'Description of the activity': orderWithAllFields.description,
         },

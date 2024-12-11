@@ -1,4 +1,7 @@
-import { formatShortDate } from '../../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../../../src/client/utils/date-utils'
 import { companyExportWinFaker } from '../../../fakers/company-export-win'
 import { companyFaker } from '../../../fakers/companies'
 import urls from '../../../../../../src/lib/urls'
@@ -16,7 +19,7 @@ const getExpectedMetadata = (win) => ({
   'Company name': 'Not set',
   'Contact name': `${win.contact.name} (${win.contact.job_title} - ${win.contact.email})`,
   Destination: win.country,
-  'Date won': formatShortDate(win.date),
+  'Date won': formatDate(win.date, DATE_FORMAT_MONTH_YEAR),
   'Type of win': win.business_type,
   'Total value': `£${win.value.export.total}`,
   'Type of goods or services': win.name_of_export,

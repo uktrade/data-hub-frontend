@@ -3,7 +3,7 @@ import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 
-import { formatLongDate } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import { transformAdvisers } from './transformers'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import urls from '../../../../lib/urls'
@@ -44,7 +44,11 @@ const TaskDetailsTable = ({ task, company, project }) => (
       )}
       <SummaryTable.Row
         heading="Date due"
-        children={task.dueDate ? formatLongDate(task.dueDate) : NOT_SET_TEXT}
+        children={
+          task.dueDate
+            ? formatDate(task.dueDate, DATE_FORMAT_FULL)
+            : NOT_SET_TEXT
+        }
       />
       <SummaryTable.Row
         heading="Assigned to"
@@ -64,7 +68,7 @@ const TaskDetailsTable = ({ task, company, project }) => (
       />
       <SummaryTable.Row
         heading="Date created"
-        children={formatLongDate(task.createdOn)}
+        children={formatDate(task.createdOn, DATE_FORMAT_FULL)}
       />
       <SummaryTable.Row heading="Created by" children={task.createdBy.name} />
     </SummaryTable>
