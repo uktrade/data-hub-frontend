@@ -11,20 +11,16 @@ import {
   assertProjectKindLabel,
   assertText,
 } from '../../../support/activity-assertions'
-import { CONTACT_1, CONTACT_2 } from '../../../support/activity-constants'
+import {
+  CONTACT_1,
+  CONTACT_2,
+  CREATED_BY,
+  CREATED_ON,
+} from '../../../support/activity-constants'
 
 const NAME = 'An investment project'
 const PROJECT_URL = urls.investments.projects.details('2')
-const CREATED_ON = '2058-11-25T00:00:00Z'
 const EL_DATE = '2023-12-01'
-
-const CREATED_BY = {
-  email: 'bernardharrispatel@test.com',
-  name: 'Bernard Harris-Patel',
-  dit_team: {
-    name: 'Test Team 1',
-  },
-}
 
 const buildAndMountActivity = (
   showOptionalFields,
