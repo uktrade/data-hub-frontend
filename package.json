@@ -191,7 +191,7 @@
     "image-minimizer-webpack-plugin": "^4.1.1",
     "js-beautify": "^1.14.11",
     "js-cookie": "^3.0.5",
-    "jsdom": "^20.0.3",
+    "jsdom": "^25.0.1",
     "jsdom-global": "^3.0.2",
     "json-schema-faker": "^0.5.8",
     "lint-staged": "^15.2.10",
