@@ -1,8 +1,4 @@
 import { contacts } from '../../../../../src/lib/urls'
-import {
-  EMAIL_CONSENT_NO,
-  EMAIL_CONSENT_YES,
-} from '../../../../../src/apps/contacts/constants'
 
 const completeUKContact = require('../../../../sandbox/fixtures/v3/contact/contact-complete-details-uk.json')
 const incompleteUKContact = require('../../../../sandbox/fixtures/v3/contact/contact-incomplete-details-uk.json')
@@ -49,7 +45,6 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: completeUKContact.email,
         'More details': completeUKContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
     })
 
@@ -126,7 +121,6 @@ describe('View contact details', () => {
           'Job title': incompleteUKContact.job_title,
           Address: '123 Test Street, Sandbox Town, AB1 2CD, United Kingdom',
           Email: incompleteUKContact.email,
-          'Email marketing': EMAIL_CONSENT_YES,
         })
       })
     })
@@ -204,7 +198,6 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: archiveContact.email,
         'More details': archiveContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
     })
 
@@ -257,7 +250,6 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: invalidEmailContact.email,
         'More details': invalidEmailContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
     })
   })

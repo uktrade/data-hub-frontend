@@ -7,8 +7,6 @@ import { ContactResource } from '../../../components/Resource'
 import { SummaryTable, ErrorSummary } from '../../../components'
 import urls from '../../../../lib/urls'
 import {
-  EMAIL_CONSENT_NO,
-  EMAIL_CONSENT_YES,
   LEFT_COMPANY_OPTION,
   NO_CONTACT_OPTION,
   ROLE_CHANGE_OPTION,
@@ -83,14 +81,6 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
                 children={contact.notes}
               />
             ) : null}
-            <SummaryTable.Row
-              heading="Email marketing"
-              children={
-                contact.acceptsDitEmailMarketing
-                  ? EMAIL_CONSENT_YES
-                  : EMAIL_CONSENT_NO
-              }
-            />
           </SummaryTable>
           {!contact.archived ? (
             <Button
