@@ -34,6 +34,8 @@ const HIGH_VALUE = 'high'
 const HIGH_VALUE_LABEL = 'High value'
 const LOW_VALUE = 'low'
 const LOW_VALUE_LABEL = 'Low value'
+const UNKNOWN_VALUE = 'unknown'
+const UNKNOWN_VALUE_LABEL = 'Unknown value'
 const COUNTRY_NAME_1 = 'Canada'
 const COUNTRY_ID_1 = '5daf72a6-5d95-e211-a939-e4115bead28a'
 const COUNTRY_NAME_2 = 'Brazil'
@@ -309,6 +311,15 @@ describe('EYB leads collection page', () => {
             ...PAYLOADS.lowValueFilter,
           },
           chipsLabel: LOW_VALUE_LABEL,
+          expectedNumberOfResults: 3,
+        },
+        {
+          queryParamValue: UNKNOWN_VALUE,
+          expectedPayload: {
+            ...PAYLOADS.minimum,
+            ...PAYLOADS.lowValueFilter,
+          },
+          chipsLabel: UNKNOWN_VALUE_LABEL,
           expectedNumberOfResults: 3,
         },
       ]
