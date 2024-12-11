@@ -1,172 +1,127 @@
+const { expect } = require('chai')
+const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
+const authorisedRequestStub = sinon.stub()
+const searchStub = sinon.stub()
+
+const { saveEvent, fetchEvent, getAllEvents, getActiveEvents } = proxyquire(
+  '../repos',
+  {
+    '../../lib/authorised-request': {
+      authorisedRequest: authorisedRequestStub,
+    },
+    '../../modules/search/services': { search: searchStub },
+  }
+)
+
 const config = require('../../../config')
-const { search } = require('../../../modules/search/services')
 
-const stubRequest = { session: { token: 'abcd' } }
+describe('Event Service', () => {
+  const mockReq = { session: { token: 'test-token' } }
 
-describe('Event repos', () => {
   beforeEach(() => {
-    this.authorisedRequestStub = sinon.stub().resolves()
-    this.searchSpy = sinon.spy(search)
-    this.repos = proxyquire('../repos', {
-      '../../lib/authorised-request': {
-        authorisedRequest: this.authorisedRequestStub,
-      },
-      '../../modules/search/services': {
-        search: this.searchSpy,
-      },
-    })
+    sinon.reset()
   })
 
-  describe('#saveEvent', () => {
-    context('when POST request', () => {
-      const eventMock = { name: 'Convention' }
+  afterEach(() => {
+    sinon.restore()
+  })
 
-      it('should call with POST method', () => {
-        this.repos.saveEvent(stubRequest, eventMock)
-
-        expect(this.authorisedRequestStub).to.be.calledWith(
-          stubRequest,
-          sinon.match({ method: 'POST' })
-        )
-      })
-
-      it('should contain event form body', () => {
-        this.repos.saveEvent(stubRequest, eventMock)
-
-        expect(this.authorisedRequestStub).to.be.calledWith(
-          stubRequest,
-          sinon.match({ body: eventMock })
-        )
+  context('saveEvent', () => {
+    it('should POST new event', async () => {
+      const event = { name: 'Test Event' }
+      await saveEvent(mockReq, event)
+      expect(authorisedRequestStub).to.have.been.calledWith(mockReq, {
+        url: `${config.apiRoot}/v4/event`,
+        method: 'POST',
+        body: event,
       })
     })
 
-    context('when PATCH request', () => {
-      const eventMock = { id: '123', name: 'Convention' }
-
-      it('should call with POST method', () => {
-        this.repos.saveEvent(stubRequest, eventMock)
-
-        expect(this.authorisedRequestStub).to.be.calledWith(
-          stubRequest,
-          sinon.match({ method: 'PATCH' })
-        )
-      })
-
-      it('should set request URL to event URL', () => {
-        this.repos.saveEvent(stubRequest, eventMock)
-
-        expect(this.authorisedRequestStub).to.be.calledWith(
-          stubRequest,
-          sinon.match({ url: `${config.apiRoot}/v4/event/${eventMock.id}` })
-        )
-      })
-
-      it('should contain event form body', () => {
-        const event = { name: 'Convention' }
-        this.repos.saveEvent(stubRequest, eventMock)
-
-        expect(this.authorisedRequestStub).to.be.calledWith(
-          stubRequest,
-          sinon.match({ body: event })
-        )
+    it('should PATCH existing event', async () => {
+      const event = { id: 123, name: 'Test Event' }
+      await saveEvent(mockReq, event)
+      expect(authorisedRequestStub).to.have.been.calledWith(mockReq, {
+        url: `${config.apiRoot}/v4/event/${event.id}`,
+        method: 'PATCH',
+        body: event,
       })
     })
   })
 
-  describe('#fetchEvent', () => {
-    it('should call with event URL', () => {
-      this.repos.fetchEvent(stubRequest, '123')
-      expect(this.authorisedRequestStub).to.be.calledWith(
-        stubRequest,
-        `${config.apiRoot}/v3/event/123`
+  context('fetchEvent', () => {
+    it('should fetch single event by id', async () => {
+      const id = '123'
+      await fetchEvent(mockReq, id)
+      expect(authorisedRequestStub).to.have.been.calledWith(
+        mockReq,
+        `${config.apiRoot}/v3/event/${id}`
       )
     })
   })
 
-  describe('#getActiveEvents', () => {
-    context(
-      'When there is a mix of active and inactive events on the server',
-      () => {
-        beforeEach(() => {
-          this.currentId = '3'
+  context('getAllEvents', () => {
+    it('should fetch all events with limit and offset', async () => {
+      await getAllEvents(mockReq)
+      expect(authorisedRequestStub).to.have.been.calledWith(
+        mockReq,
+        `${config.apiRoot}/v3/event?limit=100000&offset=0`
+      )
+    })
+  })
 
-          this.eventCollection = {
-            results: [
-              {
-                id: '2',
-                disabled_on: null,
-              },
-            ],
-          }
+  context('getActiveEvents', () => {
+    let clock
 
-          nock(config.apiRoot)
-            .post('/v3/search/event')
-            .reply(200, this.eventCollection)
-        })
+    after(() => {
+      clock.restore()
+    })
 
-        context('and when asked for all active events', () => {
-          beforeEach(async () => {
-            const now = new Date()
-            this.clock = sinon.useFakeTimers(now.getTime())
+    it('should fetch active events at the current point in time when no date supplied', async () => {
+      const now = new Date()
+      clock = sinon.useFakeTimers({
+        now: now,
+        shouldAdvanceTime: false,
+      })
+      const mockedResults = [{ id: '1', name: 'Active Event' }]
+      searchStub.resolves({ results: mockedResults })
+      const result = await getActiveEvents(mockReq)
+      expect(searchStub).to.have.been.calledWith({
+        req: mockReq,
+        searchEntity: 'event',
+        requestBody: {
+          sortby: 'name:asc',
+          disabled_on: {
+            after: now.toISOString(),
+            exists: false,
+          },
+        },
+        limit: 100000,
+        isAggregation: false,
+      })
+      expect(result).to.deep.equal(mockedResults)
+    })
 
-            this.currentFormattedTime = now.toISOString()
-
-            this.events = await this.repos.getActiveEvents(stubRequest)
-          })
-
-          afterEach(() => {
-            this.clock.restore()
-          })
-
-          it('should call search to get all active events today', () => {
-            expect(this.searchSpy).to.be.calledWith({
-              req: stubRequest,
-              searchEntity: 'event',
-              requestBody: {
-                sortby: 'name:asc',
-                disabled_on: {
-                  exists: false,
-                  after: this.currentFormattedTime,
-                },
-              },
-              limit: 100000,
-              isAggregation: false,
-            })
-          })
-        })
-
-        context(
-          'and when asked for all active events at a point in time',
-          () => {
-            beforeEach(async () => {
-              const now = new Date()
-              this.createdOn = now.toISOString()
-              this.events = await this.repos.getActiveEvents(
-                stubRequest,
-                this.createdOn
-              )
-            })
-
-            it('should call search to get all active events on the specified date', () => {
-              expect(this.searchSpy).to.be.calledWith({
-                req: stubRequest,
-                searchEntity: 'event',
-                requestBody: {
-                  sortby: 'name:asc',
-                  disabled_on: {
-                    exists: false,
-                    after: this.createdOn,
-                  },
-                },
-                limit: 100000,
-                isAggregation: false,
-              })
-            })
-          }
-        )
-      }
-    )
+    it('should fetch active events at the specified point in time', async () => {
+      const specificDate = new Date('2024-12-10T12:00:00Z').toISOString()
+      const mockedResults = [{ id: '1', name: 'Active Event' }]
+      searchStub.resolves({ results: mockedResults })
+      const result = await getActiveEvents(mockReq, specificDate)
+      expect(searchStub).to.have.been.calledWith({
+        req: mockReq,
+        searchEntity: 'event',
+        requestBody: {
+          sortby: 'name:asc',
+          disabled_on: {
+            after: specificDate,
+            exists: false,
+          },
+        },
+        limit: 100000,
+        isAggregation: false,
+      })
+      expect(result).to.deep.equal(mockedResults)
+    })
   })
 })
