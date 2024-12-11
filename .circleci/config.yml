@@ -153,6 +153,15 @@ jobs:
           label: Run component tests
           target: component-tests
       - store_cypress_artifacts
+      - run:
+          name: Prepare coverage report
+          command: |
+            mkdir -p component-coverage
+            cp coverage/coverage-final.json component-coverage/component-coverage.json
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - "project/component-coverage/*"
 
   release-storybook:
     docker:
@@ -176,6 +185,7 @@ jobs:
           at: ~/
       - run: npm i -g add nyc
       - run: cp unit-coverage/unit-coverage.json partial-coverage
+      - run: cp component-coverage/component-coverage.json partial-coverage
       - run: nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
