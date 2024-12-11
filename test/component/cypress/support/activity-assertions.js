@@ -39,3 +39,7 @@ export const assertKindLabel = (expectedText = 'Interaction') => {
 export const assertReferralLabel = (expectedText = 'Completed referral') => {
   assertText('[data-test="referral-label"]', expectedText)
 }
+
+export const assertProjectKindLabel = () => {
+  assertText('[data-test="investment-kind-label"]', 'New Investment Project')
+}

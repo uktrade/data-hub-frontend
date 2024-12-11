@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import { TAGS } from './constants'
+import { TAGS, NEW_PROJECT_TAG } from './constants'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
@@ -234,11 +234,7 @@ export const transformInvestmentToListItem = (activity) => {
         colour: 'blue',
         dataTest: 'investment-type-label',
       },
-      {
-        text: 'New Investment Project',
-        colour: 'grey',
-        dataTest: 'investment-kind-label',
-      },
+      NEW_PROJECT_TAG,
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.projects.details(project.id),
     headingText: project.name,
