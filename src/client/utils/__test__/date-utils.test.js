@@ -18,7 +18,7 @@ describe('date-utils', () => {
   const time = 'T10:41:45.425717Z'
   const dateAndTime = `${date}${time}`
 
-  context('formatDate() - formnatting ISO date strings', () => {
+  context('formatDate() - formatting ISO date strings', () => {
     it("should render '04 Dec 2024' (default format)", () => {
       expect(formatDate(date)).to.equal('04 Dec 2024') // the default
     })
