@@ -8,7 +8,7 @@ const ConsentDetails = ({ contact }) => {
   const consentGiven = transformContactConsents(contact)
   return (
     <div>
-      <SectionHeader type="contact-consent">Contact consents</SectionHeader>
+      <SectionHeader type="contact-consent">Contact consent</SectionHeader>
       {isNil(contact.consentData) ? (
         <p data-test="no-contact-consents">
           There is no consent data available for this contact
