@@ -259,7 +259,7 @@ export const transformOrderToListItem = (activity) => {
         value:
           activity.order.contact.name + ' ' + activity.order.contact.job_title,
       },
-    ].filter(({ value }) => Boolean(value)),
+    ].filter((entry) => entry && Boolean(entry.value)),
     tags: [
       {
         text: 'Orders (OMIS)',
