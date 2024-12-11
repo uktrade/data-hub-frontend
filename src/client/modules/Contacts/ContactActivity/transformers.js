@@ -1,7 +1,7 @@
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import {
-  verifyLabel,
+  pluraliseLabel,
   formattedAdvisers,
   formattedContacts,
 } from '../../Companies/CompanyActivity/transformers'
@@ -21,12 +21,12 @@ export const transformContactActivityToListItem = ({
   metadata: [
     { label: 'Date', value: formatDate(date, DATE_FORMAT_MEDIUM) },
     {
-      label: verifyLabel(contacts, 'Contact'),
+      label: pluraliseLabel(contacts.length, 'Contact'),
       value: formattedContacts(contacts),
     },
     { label: 'Communication channel', value: communication_channel?.name },
     {
-      label: verifyLabel(dit_participants, 'Adviser'),
+      label: pluraliseLabel(dit_participants.length, 'Adviser'),
       value: formattedAdvisers(dit_participants),
     },
     { label: 'Service', value: service?.name },

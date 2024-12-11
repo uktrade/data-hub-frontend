@@ -52,8 +52,8 @@ export const formattedAdvisers = (advisers) =>
     </span>
   ))
 
-export const verifyLabel = (array, label) =>
-  array.length > 1 ? label + 's' : label
+export const pluraliseLabel = (number, label) =>
+  number != 1 ? label + 's' : label
 
 /*
   From the activity_source field from the API, determine which transformer to
@@ -98,7 +98,7 @@ export const transformInteractionToListItem = (activity) => {
           interaction.date && formatDate(interaction.date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: verifyLabel(interaction.contacts, 'Contact'),
+        label: pluraliseLabel(interaction.contacts?.length, 'Contact'),
         value: formattedContacts(interaction.contacts),
       },
       {
@@ -106,7 +106,7 @@ export const transformInteractionToListItem = (activity) => {
         value: interaction.communication_channel?.name,
       },
       {
-        label: verifyLabel(interaction.dit_participants, 'Adviser'),
+        label: pluraliseLabel(interaction.dit_participants?.length, 'Adviser'),
         value: formattedAdvisers(interaction.dit_participants),
       },
       { label: 'Service', value: interaction.service?.name },
@@ -200,7 +200,10 @@ export const transformInvestmentToListItem = (activity) => {
         value: formatDate(project.estimated_land_date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: verifyLabel(project.client_contacts, 'Company contact'),
+        label: pluraliseLabel(
+          project.client_contacts?.length,
+          'Company contact'
+        ),
         value:
           project.client_contacts.length > 0
             ? project.client_contacts.map((contact) => contact.name).join(', ')
