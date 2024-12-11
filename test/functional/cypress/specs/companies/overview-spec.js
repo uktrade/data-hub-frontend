@@ -518,11 +518,11 @@ describe('Company overview page', () => {
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
       const activity = investmentsList[0]
-      cy.get('[data-test="investment-service-label"]').contains(
+      cy.get('[data-test="investment-kind-label"]').contains(
         'New Investment Project'
       )
       cy.get('[data-test="activity-summary"]').contains(
-        `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} jobs added by ${activity.investment.created_by.name}`
+        `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} new jobs added by ${activity.investment.created_by.name}`
       )
     })
 
@@ -533,7 +533,7 @@ describe('Company overview page', () => {
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
       const activity = investmentsListNullJobs[0]
-      cy.get('[data-test="investment-service-label"]').contains(
+      cy.get('[data-test="investment-kind-label"]').contains(
         'New Investment Project'
       )
       cy.get('[data-test="activity-summary"]').contains(

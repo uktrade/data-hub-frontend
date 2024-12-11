@@ -174,7 +174,7 @@ describe('Company activity feed', () => {
     })
 
     it('displays the correct activity type label', () => {
-      cy.get('[data-test="investment-service-label"]').contains(
+      cy.get('[data-test="investment-kind-label"]').contains(
         'New Investment Project',
         {
           matchCase: false,
