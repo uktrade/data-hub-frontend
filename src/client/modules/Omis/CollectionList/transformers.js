@@ -35,9 +35,7 @@ export const transformOrderToListItem = ({
     },
     {
       label: 'Created',
-      value: created_on
-        ? formatDate(created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
-        : null,
+      value: created_on && formatDate(created_on, DATE_FORMAT_MEDIUM_WITH_TIME),
     },
     {
       label: 'Contact',
@@ -68,9 +66,9 @@ export const transformOrderToListItem = ({
     metadata,
     headingText: reference,
     headingUrl: omis.workOrder(id),
-    subheading: modified_on
-      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
-      : null,
+    subheading:
+      modified_on &&
+      `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
   }
 
   return retVal
@@ -91,9 +89,8 @@ export const transformOrderToReconciliationListItem = ({
   const metadata = [
     {
       label: 'Payment due date',
-      value: payment_due_date
-        ? formatDate(payment_due_date, DATE_FORMAT_MEDIUM)
-        : null,
+      value:
+        payment_due_date && formatDate(payment_due_date, DATE_FORMAT_MEDIUM),
     },
     {
       label: 'Company name',
@@ -117,30 +114,25 @@ export const transformOrderToReconciliationListItem = ({
     metadata,
     headingText: reference,
     headingUrl: omis.paymentReconciliation(id),
-    subheading: modified_on
-      ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
-      : null,
+    subheading:
+      modified_on &&
+      `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
   }
 
   return retVal
 }
 
-export const transformResponseToCollection = ({
-  count,
-  results = [],
-  summary,
-}) => ({
-  count,
-  summary,
-  results: results.map(transformOrderToListItem),
-})
+const transformResponse =
+  (transformItem) =>
+  ({ count, results = [], summary }) => ({
+    count,
+    summary,
+    results: results.map(transformItem),
+  })
 
-export const transformResponseToReconciliationCollection = ({
-  count,
-  results = [],
-  summary,
-}) => ({
-  count,
-  summary,
-  results: results.map(transformOrderToReconciliationListItem),
-})
+export const transformResponseToCollection = transformResponse(
+  transformOrderToListItem
+)
+export const transformResponseToReconciliationCollection = transformResponse(
+  transformOrderToReconciliationListItem
+)
