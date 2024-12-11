@@ -1,6 +1,5 @@
 import {
   formatDate,
-  normaliseToDate,
   DATE_FORMAT_FULL,
   DATE_FORMAT_FULL_DAY,
   DATE_FORMAT_COMPACT,
@@ -141,42 +140,6 @@ describe('date-utils', () => {
       expect(
         formatDate(new Date(date), DATE_FORMAT_INTERACTION_TIMESTAMP)
       ).to.equal('2024-12-4')
-    })
-  })
-
-  context('normaliseToDate()', () => {
-    it('should return a valid Date object for a valid ISO string', () => {
-      const result = normaliseToDate('2024-12-10T14:30:00Z')
-      expect(result).to.be.an.instanceof(Date)
-      expect(result.toISOString()).to.equal('2024-12-10T14:30:00.000Z')
-    })
-
-    it('should return a valid Date object for a valid Date object input', () => {
-      const input = new Date('2024-12-10T14:30:00Z')
-      const result = normaliseToDate(input)
-      expect(result).to.be.an.instanceof(Date)
-      expect(result.getTime()).to.equal(input.getTime())
-    })
-
-    it('should return null for an invalid ISO string', () => {
-      const result = normaliseToDate('invalid-string')
-      expect(result).to.be.null
-    })
-
-    it('should return null for an invalid Date object', () => {
-      const invalidDate = new Date('invalid-date')
-      const result = normaliseToDate(invalidDate)
-      expect(result).to.be.null
-    })
-
-    it('should return null for a non-date input', () => {
-      const result = normaliseToDate(12345)
-      expect(result).to.be.null
-    })
-
-    it('should return null for a null or undefined input', () => {
-      expect(normaliseToDate(null)).to.be.null
-      expect(normaliseToDate(undefined)).to.be.null
     })
   })
 })

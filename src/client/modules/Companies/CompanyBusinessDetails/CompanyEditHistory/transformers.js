@@ -1,10 +1,5 @@
 import { isBoolean, isNumber } from 'lodash'
 
-import {
-  formatDate,
-  normaliseToDate,
-  DATE_FORMAT_MEDIUM_WITH_TIME,
-} from '../../../../utils/date-utils'
 import { COMPANY_FIELD_NAME_TO_LABEL_MAP, HEADQUARTER_TYPES } from './constants'
 import {
   ARCHIVED,
@@ -33,8 +28,6 @@ const getValueFromBoolean = (value, field) => {
 }
 
 export const getValue = (value, field) => {
-  const date = normaliseToDate(value)
-
   if (isBoolean(value)) {
     return getValueFromBoolean(value, field)
   }
@@ -44,10 +37,6 @@ export const getValue = (value, field) => {
       return currencyGBP(value, { maximumSignificantDigits: 2 })
     }
     return value.toString()
-  }
-
-  if (date) {
-    return formatDate(date, DATE_FORMAT_MEDIUM_WITH_TIME)
   }
 
   if (field === 'Headquarter type') {
