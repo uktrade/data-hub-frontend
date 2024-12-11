@@ -136,7 +136,6 @@ describe('View contact details', () => {
           Address:
             '3 Priory Court, Kingshill Road, Dursley, Gloucestershire, GL11 4DH, United Kingdom',
           Email: companyAddresscontact.email,
-          'Email marketing': EMAIL_CONSENT_NO,
         })
       })
     })
@@ -153,7 +152,6 @@ describe('View contact details', () => {
             '123 Test Boulevard, Basney, US State, 9416875, United States',
           Email: usContact.email,
           'More details': usContact.notes,
-          'Email marketing': EMAIL_CONSENT_NO,
         })
       })
     })

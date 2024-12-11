@@ -54,7 +54,6 @@ describe('Contacts', () => {
       'Phone number': '44 0778877778800',
       Address: '100 Path, A town, 12345, United States',
       Email: 'company.contact@dit.com',
-      'Email marketing': 'Cannot be marketed to',
     })
   })
 
