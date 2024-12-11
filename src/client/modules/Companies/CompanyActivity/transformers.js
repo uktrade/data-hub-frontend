@@ -93,9 +93,8 @@ export const transformInteractionToListItem = (activity) => {
     metadata: [
       {
         label: 'Date',
-        value: interaction.date
-          ? formatDate(interaction.date, DATE_FORMAT_MEDIUM)
-          : '',
+        value:
+          interaction.date && formatDate(interaction.date, DATE_FORMAT_MEDIUM),
       },
       {
         label: verifyLabel(interaction.contacts, 'Contact'),
@@ -118,9 +117,7 @@ export const transformInteractionToListItem = (activity) => {
         dataTest: 'activity-kind-label',
       },
       {
-        text: interaction.service
-          ? getServiceText(interaction.service?.name)
-          : '',
+        text: interaction.service && getServiceText(interaction.service?.name),
         colour: 'blue',
         dataTest: 'activity-service-label',
       },
@@ -141,9 +138,9 @@ export const transformReferralToListItem = (activity) => {
       },
       {
         label: 'Completed on',
-        value: referral.completed_on
-          ? formatDate(referral.completed_on, DATE_FORMAT_MEDIUM)
-          : '',
+        value:
+          referral.completed_on &&
+          formatDate(referral.completed_on, DATE_FORMAT_MEDIUM),
       },
       {
         label: 'Sending adviser',
@@ -189,12 +186,12 @@ export const transformInvestmentToListItem = (activity) => {
       },
       {
         label: 'Added by',
-        value: activity.investment.created_by
-          ? AdviserRenderer({
-              adviser: activity.investment.created_by,
-              team: activity.investment.created_by.dit_team,
-            })
-          : '',
+        value:
+          activity.investment.created_by &&
+          AdviserRenderer({
+            adviser: activity.investment.created_by,
+            team: activity.investment.created_by.dit_team,
+          }),
       },
       {
         label: 'Estimated land date',
@@ -244,20 +241,18 @@ export const transformOrderToListItem = (activity) => {
         label: 'Country',
         value: activity.order.primary_market.name,
       },
-      activity.order.uk_region
-        ? {
-            label: 'UK region',
-            value: activity.order.uk_region.name,
-          }
-        : '',
+      activity.order.uk_region && {
+        label: 'UK region',
+        value: activity.order.uk_region.name,
+      },
       {
         label: 'Added by',
-        value: activity.order.created_by
-          ? AdviserRenderer({
-              adviser: activity.order.created_by,
-              team: activity.order.created_by.dit_team,
-            })
-          : '',
+        value:
+          activity.order.created_by &&
+          AdviserRenderer({
+            adviser: activity.order.created_by,
+            team: activity.order.created_by.dit_team,
+          }),
       },
       {
         label: 'Company Contact',
