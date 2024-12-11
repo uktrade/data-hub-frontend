@@ -147,31 +147,25 @@ jobs:
     machine:
       image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
-    parallelism: 3
-    resource_class: xlarge
     steps:
       - checkout
-      - run:
-          name: Determine specs to run
-          command: ./test-parallel.sh test/component/cypress/specs
       - run_make:
           label: Run component tests
-          target: start-mock component-tests
-          spec_files: $SPECS_TO_RUN
+          target: component-tests
       - store_cypress_artifacts
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
       - run:
           name: Prepare coverage report
           command: |
-            mkdir -p partial-component-coverage
-            touch partial-component-coverage/.placeholder
-            if [ -f cypress-coverage/coverage-final.json ]; then
-              cp cypress-coverage/coverage-final.json partial-component-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json
-            fi
-
+            mkdir -p component-coverage
+            cp coverage/coverage-final.json component-coverage/component-coverage.json
       - persist_to_workspace:
           root: ~/
           paths:
-            - "project/partial-component-coverage/*"
+            - "project/component-coverage/*"
 
   release-storybook:
     docker:
@@ -195,7 +189,7 @@ jobs:
           at: ~/
       - run: npm i -g add nyc
       - run: cp unit-coverage/unit-coverage.json partial-coverage
-      - run: cp partial-component-coverage/* partial-coverage
+      - run: cp component-coverage/component-coverage.json partial-coverage
       - run: nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
@@ -275,5 +269,5 @@ workflows:
       #    <<: *ignore_ghpages
       #    requires:
       #      - component_tests
-            #- functional_tests
-            #- unit_tests
+      #      - functional_tests
+      #      - unit_tests
