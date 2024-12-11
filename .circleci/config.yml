@@ -264,5 +264,6 @@ workflows:
       - merge-and-publish-coverage:
           <<: *ignore_ghpages
           requires:
+            - component_tests
             - functional_tests
             - unit_tests
