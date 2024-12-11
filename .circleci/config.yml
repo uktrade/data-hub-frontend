@@ -271,9 +271,9 @@ workflows:
       #      branches:
       #        only:
       #          - main
-      - merge-and-publish-coverage:
-          <<: *ignore_ghpages
-          requires:
-            - component_tests
+      #- merge-and-publish-coverage:
+      #    <<: *ignore_ghpages
+      #    requires:
+      #      - component_tests
             #- functional_tests
             #- unit_tests
