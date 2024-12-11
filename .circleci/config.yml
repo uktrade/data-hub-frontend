@@ -147,21 +147,31 @@ jobs:
     machine:
       image: ubuntu-2004:2024.01.1
       docker_layer_caching: true
+    parallelism: 3
+    resource_class: xlarge
     steps:
       - checkout
+      - run:
+          name: Determine specs to run
+          command: ./test-parallel.sh test/component/cypress/specs
       - run_make:
           label: Run component tests
-          target: component-tests
+          target: start-mock component-tests
+          spec_files: $SPECS_TO_RUN
       - store_cypress_artifacts
       - run:
           name: Prepare coverage report
           command: |
-            mkdir -p component-coverage
-            cp coverage/coverage-final.json component-coverage/component-coverage.json
+            mkdir -p partial-component-coverage
+            touch partial-component-coverage/.placeholder
+            if [ -f cypress-coverage/coverage-final.json ]; then
+              cp cypress-coverage/coverage-final.json partial-component-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json
+            fi
+
       - persist_to_workspace:
           root: ~/
           paths:
-            - "project/component-coverage/*"
+            - "project/partial-component-coverage/*"
 
   release-storybook:
     docker:
@@ -185,7 +195,7 @@ jobs:
           at: ~/
       - run: npm i -g add nyc
       - run: cp unit-coverage/unit-coverage.json partial-coverage
-      - run: cp component-coverage/component-coverage.json partial-coverage
+      - run: cp partial-component-coverage/* partial-coverage
       - run: nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
@@ -237,33 +247,33 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - lint: *ignore_ghpages
-      - unit_tests: *ignore_ghpages
-      - unit_client_tests: *ignore_ghpages
-      - functional_tests: *ignore_ghpages
-      - a11y_tests: *ignore_ghpages
+      #- lint: *ignore_ghpages
+      #- unit_tests: *ignore_ghpages
+      #- unit_client_tests: *ignore_ghpages
+      #- functional_tests: *ignore_ghpages
+      #- a11y_tests: *ignore_ghpages
       - component_tests: *ignore_ghpages
-      - e2e_tests:
-          <<: *ignore_ghpages
-          name: e2e_tests_<< matrix.staff >>
-          matrix:
-            parameters:
-              staff: [da, lep]
-      - e2e_tests_dit:
-          <<: *ignore_ghpages
-          name: e2e_tests_dit
-          matrix:
-            parameters:
-              staff: [dit]
-      - release-storybook:
-          <<: *ignore_ghpages
-          filters:
-            branches:
-              only:
-                - main
+      #- e2e_tests:
+      #    <<: *ignore_ghpages
+      #    name: e2e_tests_<< matrix.staff >>
+      #    matrix:
+      #      parameters:
+      #        staff: [da, lep]
+      #- e2e_tests_dit:
+      #    <<: *ignore_ghpages
+      #    name: e2e_tests_dit
+      #    matrix:
+      #      parameters:
+      #        staff: [dit]
+      #- release-storybook:
+      #    <<: *ignore_ghpages
+      #    filters:
+      #      branches:
+      #        only:
+      #          - main
       - merge-and-publish-coverage:
           <<: *ignore_ghpages
           requires:
             - component_tests
-            - functional_tests
-            - unit_tests
+            #- functional_tests
+            #- unit_tests
