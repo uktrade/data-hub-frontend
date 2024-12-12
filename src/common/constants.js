@@ -28,8 +28,8 @@ const PRIMARY_LINK_PARAMS = {
 }
 const INVESTMENT_LINK_PARAM = '?sortby=-created_on&page=1'
 const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
-const OPTION_YES = 'yes'
-const OPTION_NO = 'no'
+const OPTION_YES = 'Yes'
+const OPTION_NO = 'No'
 const OPTIONS_YES_NO = [
   { label: 'Yes', value: OPTION_YES },
   { label: 'No', value: OPTION_NO },
