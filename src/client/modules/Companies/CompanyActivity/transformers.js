@@ -375,7 +375,7 @@ export const transformEYBLeadToListItem = (activity) => {
     metadata: [
       {
         label: 'Submitted to EYB date',
-        value: formatMediumDateParsed(activity.eyb_lead.triage_created),
+        value: formatDate(activity.eyb_lead.triage_created),
       },
       {
         label: 'Value',

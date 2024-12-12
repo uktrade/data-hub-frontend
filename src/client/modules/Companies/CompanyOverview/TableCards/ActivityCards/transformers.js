@@ -216,7 +216,7 @@ export const getEYBValue = (activity) => {
 export const transformEYBLeadToListItem = (activity) => {
   return {
     id: activity.eyb_lead.id,
-    date: formatMediumDateParsed(activity.eyb_lead.created_on),
+    date: formatDate(activity.eyb_lead.created_on),
     tags: [
       {
         text: 'EYB',
