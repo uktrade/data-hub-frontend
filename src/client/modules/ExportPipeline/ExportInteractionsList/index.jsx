@@ -9,14 +9,17 @@ import { CollectionItem } from '../../../components'
 import urls from '../../../../lib/urls'
 import { SORT_OPTIONS_EXPORT_INTERACTION } from '../constants'
 
-const ExportInteractionsList = ({ interactions = [] }) =>
+const ExportInteractionsList = ({ interactions = [], exportId }) =>
   interactions.length === 0 ? null : (
     <ul data-test="export-interactions-list">
       {interactions.map((item) => (
         <CollectionItem
           key={item.id}
           headingText={item.subject}
-          headingUrl={urls.exportPipeline.interactions.details(item.id)}
+          headingUrl={urls.exportPipeline.interactions.details(
+            exportId,
+            item.id
+          )}
           metadata={[
             {
               label: 'Date:',
@@ -57,7 +60,9 @@ export default ({ exportId }) => (
       payload={{ company_export_id: exportId }}
       sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
     >
-      {(page) => <ExportInteractionsList interactions={page} />}
+      {(page) => (
+        <ExportInteractionsList interactions={page} exportId={exportId} />
+      )}
     </Interactions.Paginated>
   </>
 )
