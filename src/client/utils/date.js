@@ -127,9 +127,6 @@ function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
   return isDateValid(dateStr) ? formatFns(parseISO(dateStr), dateFormat) : null
 }
 
-const formatMonthYearDate = (date) =>
-  formatFns(parse(date, DATE_SHORT_FORMAT, new Date()), DATE_LONG_FORMAT_3)
-
 const padZero = (value) => {
   const parsedValue = parseInt(value, 10)
   if (Number.isNaN(parsedValue)) {
@@ -346,7 +343,6 @@ module.exports = {
   addYears,
   createAndFormatDateObject,
   format,
-  formatMonthYearDate,
   generateFinancialYearLabel,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
