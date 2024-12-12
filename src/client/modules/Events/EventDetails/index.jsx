@@ -18,7 +18,7 @@ import State from '../../../components/State'
 
 import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
-import { formatLongDate } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import StatusMessage from '../../../components/StatusMessage'
 
 const StyledSummaryTable = styled(SummaryTable)({
@@ -73,7 +73,7 @@ const Attendees = ({ eventId, isDisabled }) => (
                   },
                   {
                     label: 'Date attended',
-                    value: formatLongDate(date),
+                    value: formatDate(date, DATE_FORMAT_FULL),
                   },
                   {
                     label: 'Service delivery',
@@ -182,7 +182,7 @@ const EventDetails = ({ name, ...props }) => {
               ...(flashMessages.info || []),
               ...(props.disabledOn
                 ? [
-                    `This event was disabled on ${formatLongDate(props.disabledOn)} and can no longer be edited.`,
+                    `This event was disabled on ${formatDate(props.disabledOn, DATE_FORMAT_FULL)} and can no longer be edited.`,
                   ]
                 : []),
             ],
