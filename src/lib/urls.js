@@ -763,7 +763,7 @@ module.exports = {
     details: url('/export', '/:exportId/details'),
     interactions: {
       index: url('/export', '/:exportId/interactions'),
-      details: url('/export', '/:exportId/interactions/details'),
+      details: url('/export', '/:exportId/interactions/:interactionId/details'),
     },
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
