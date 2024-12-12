@@ -6,8 +6,8 @@ import { format } from '../../../utils/date'
 import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
-import { HIGH_VALUE_LABEL, LOW_VALUE_LABEL } from './constants'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import { VALUES_VALUE_TO_LABEL_MAP } from './constants'
 
 const EYBLeadDetails = () => {
   const { eybLeadId } = useParams()
@@ -37,9 +37,7 @@ const EYBLeadDetails = () => {
               )}
               <SummaryTable.Row
                 heading="Value"
-                children={
-                  eybLead.is_high_value ? LOW_VALUE_LABEL : HIGH_VALUE_LABEL
-                }
+                children={VALUES_VALUE_TO_LABEL_MAP[eybLead.isHighValue]}
               />
               <SummaryTable.Row
                 heading="Sector or industry"

@@ -1,5 +1,7 @@
 import urls from '../../../../lib/urls'
+import { TAG_COLOURS } from '../../../components/Tag'
 import { format } from '../../../utils/date'
+import { VALUES_VALUE_TO_LABEL_MAP } from './constants'
 
 export const transformLeadToListItem = ({
   id,
@@ -14,8 +16,12 @@ export const transformLeadToListItem = ({
 }) => {
   const tags = [
     {
-      text: is_high_value ? 'HIGH VALUE' : 'LOW VALUE',
-      colour: is_high_value ? 'green' : 'orange',
+      text: VALUES_VALUE_TO_LABEL_MAP[is_high_value].toUpperCase(),
+      colour: is_high_value
+        ? TAG_COLOURS.GREEN
+        : is_high_value === false
+          ? TAG_COLOURS.ORANGE
+          : TAG_COLOURS.GREY,
       dataTest: 'value-label',
     },
   ]
