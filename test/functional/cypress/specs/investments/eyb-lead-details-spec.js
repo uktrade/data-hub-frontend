@@ -5,7 +5,9 @@ import {
 import { investments } from '../../../../../src/lib/urls'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
+import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
 
+const selectors = require('../../../../selectors/index')
 const urls = require('../../../../../src/lib/urls')
 
 const setup = (eybLead) => {
@@ -264,4 +266,21 @@ describe('EYB lead details', () => {
       })
     }
   )
+  context('When viewing an EYB lead with high, low, and unknown values', () => {
+    const testCases = [true, false, null]
+    testCases.forEach((value) => {
+      const eybLead = eybLeadFaker({ is_high_value: value })
+      it('should render the value field with the correct label', () => {
+        setup(eybLead)
+        cy.visit(investments.eybLeads.details(eybLead.id))
+        cy.wait('@getEYBLeadDetails')
+        cy.get(
+          selectors.keyValueTable('eyb-lead-details-table').keyCell(2)
+        ).should('have.text', 'Value')
+        cy.get(
+          selectors.keyValueTable('eyb-lead-details-table').valueCell(2)
+        ).should('have.text', VALUES_VALUE_TO_LABEL_MAP[eybLead.is_high_value])
+      })
+    })
+  })
 })
