@@ -81,6 +81,8 @@ export const transformActivity = (activities) => {
         return transformOrderToListItem(activity)
       case 'great_export_enquiry':
         return transformGreatExportEnquiryToListItem(activity)
+      case 'eyb_lead':
+        return transformEYBLeadToListItem(activity)
       default:
         return {}
     }
@@ -145,6 +147,8 @@ export const transformInteractionToListItem = (activity) => {
 
 export const transformInvestmentToListItem = (activity) => {
   const investment = activity.investment
+  const from_eyb =
+    activity.investment.eyb_leads.length !== 0 ? 'from EYB lead' : ''
 
   return {
     id: investment.id,
@@ -154,8 +158,8 @@ export const transformInvestmentToListItem = (activity) => {
     headingText: investment.name,
     summary:
       investment.number_new_jobs == null
-        ? `${investment.investment_type.name} investment added by ${investment.created_by.name}`
-        : `${investment.investment_type.name} investment for ${checkNewJobs(investment.number_new_jobs)} ${pluraliseLabel(investment.number_new_jobs, 'new job')} added by ${investment.created_by.name}`,
+        ? `${investment.investment_type.name} investment added by ${investment.created_by.name} ${from_eyb}`
+        : `${investment.investment_type.name} investment for ${checkNewJobs(investment.number_new_jobs)} ${pluraliseLabel(investment.number_new_jobs, 'new job')} added by ${investment.created_by.name} ${from_eyb}`,
   }
 }
 
@@ -189,3 +193,33 @@ export const transformResponseToCollection = (activities) => ({
   count: activities.count,
   results: transformActivity(activities),
 })
+
+export const getEYBValue = (activity) => {
+  const eybValue = activity.eyb_lead.is_high_value
+
+  switch (eybValue) {
+    case true:
+      return 'A high'
+    case false:
+      return 'A low'
+    default:
+      return 'An unknown'
+  }
+}
+
+export const transformEYBLeadToListItem = (activity) => {
+  return {
+    id: activity.eyb_lead.id,
+    date: formatDate(activity.eyb_lead.created_on),
+    tags: [
+      {
+        text: 'EYB',
+        colour: 'grey',
+        dataTest: 'eyb-service-label',
+      },
+    ].filter(({ text }) => Boolean(text)),
+    headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
+    headingText: activity.eyb_lead.company_name,
+    summary: `${getEYBValue(activity)}-value EYB lead associated with this company has been added to Data Hub`,
+  }
+}
