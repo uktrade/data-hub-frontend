@@ -1,5 +1,5 @@
 const { QUERY_FIELDS_MAP } = require('../constants')
-const { getInteractionTimestamp } = require('../../../client/utils/date')
+const { getInteractionTimestamp } = require('./utils')
 
 const QUERY_PARAM = QUERY_FIELDS_MAP.lastInteractionDate
 const START_DATE_PARAM = 'latest_interaction_date_before'

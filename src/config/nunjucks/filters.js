@@ -34,16 +34,12 @@ const {
 const { newlineToBr } = require('../../lib/text-formatting')
 const { joinPaths } = require('../../lib/path')
 const {
-  formatWithoutParsing,
-  isUnparsedDateValid,
-  isDateValid,
-  format,
-} = require('../../client/utils/date')
+  formatDate: dateFormatter,
+  DATE_FORMAT_FULL,
+  DATE_FORMAT_MEDIUM_WITH_TIME,
+} = require('../../client/utils/date-utils')
+
 require('numeral/locales/en-gb')
-const {
-  DATE_LONG_FORMAT_1,
-  DATE_TIME_MEDIUM_FORMAT,
-} = require('../../common/constants')
 
 numeral.locale('en-gb')
 
@@ -158,29 +154,11 @@ const filters = {
     return number.toLocaleString(locales)
   },
 
-  formatDate: (value, format = DATE_LONG_FORMAT_1) => {
-    if (!value) {
-      return value
-    }
+  formatDate: (value, format = DATE_FORMAT_FULL) =>
+    dateFormatter(new Date(value), format),
 
-    if (!isUnparsedDateValid(new Date(value))) {
-      return value
-    }
-
-    return formatWithoutParsing(new Date(value), format)
-  },
-
-  formatDateTime: (value, dateFormat = DATE_TIME_MEDIUM_FORMAT) => {
-    if (!value) {
-      return value
-    }
-
-    if (!isDateValid(value)) {
-      return value
-    }
-
-    return format(value, dateFormat).replace('AM', 'am').replace('PM', 'pm')
-  },
+  formatDateTime: (value, dateFormat = DATE_FORMAT_MEDIUM_WITH_TIME) =>
+    dateFormatter(value, dateFormat),
 
   formatAddress: (address, join = ', ', featureFlag = false) => {
     if (!address) {

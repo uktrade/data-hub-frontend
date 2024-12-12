@@ -29,7 +29,12 @@ import {
   transformExportCountriesToGroupStatus,
 } from '../../../../transformers'
 
-import { formatWithoutParsing } from '../../../../../client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_DAY,
+  DATE_FORMAT_MONTH,
+  DATE_FORMAT_YEAR,
+} from '../../../../../client/utils/date-utils'
 
 const { transformValueForAPI } = require('../../../../../client/utils/date')
 
@@ -139,9 +144,9 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
       transformObjectToOption(adviser)
     ),
     date: {
-      day: formatWithoutParsing(date, 'dd'),
-      month: formatWithoutParsing(date, 'MM'),
-      year: formatWithoutParsing(date, 'yyyy'),
+      day: formatDate(date, DATE_FORMAT_DAY),
+      month: formatDate(date, DATE_FORMAT_MONTH),
+      year: formatDate(date, DATE_FORMAT_YEAR),
     },
     companies: [companyId],
     investment_project: investmentId,
@@ -237,9 +242,9 @@ export async function getInitialFormValues({
       companies: [companyId],
       investment_project: investmentId,
       date: {
-        day: formatWithoutParsing(date, 'dd'),
-        month: formatWithoutParsing(date, 'MM'),
-        year: formatWithoutParsing(date, 'yyyy'),
+        day: formatDate(date, DATE_FORMAT_DAY),
+        month: formatDate(date, DATE_FORMAT_MONTH),
+        year: formatDate(date, DATE_FORMAT_YEAR),
       },
       contacts:
         referral && referral.contact

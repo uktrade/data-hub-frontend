@@ -1,8 +1,10 @@
+import { myTasksReminderFaker, reminderListFaker } from '../../fakers/reminders'
+import {
+  formatDate,
+  DATE_FORMAT_FULL,
+} from '../../../../../src/client/utils/date-utils'
 import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
-import { myTasksReminderFaker, reminderListFaker } from '../../fakers/reminders'
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/my-tasks-task-completed'
 
@@ -128,9 +130,9 @@ describe('My Tasks Task Completed Reminders', () => {
         )
         .should(
           'contain',
-          `Date due: ${formatWithoutParsing(
+          `Date due: ${formatDate(
             reminders[0].task.due_date,
-            DATE_LONG_FORMAT_1
+            DATE_FORMAT_FULL
           )}`
         )
     })
@@ -275,9 +277,9 @@ describe('My Tasks Task Completed Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Date due: ${formatWithoutParsing(
+          `Date due: ${formatDate(
             nextReminder.task.due_date,
-            DATE_LONG_FORMAT_1
+            DATE_FORMAT_FULL
           )}`
         )
         .should('contain', `Company: ${nextReminder.task.company.name}`)

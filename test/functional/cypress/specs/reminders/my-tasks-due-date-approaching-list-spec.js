@@ -1,8 +1,10 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 import urls from '../../../../../src/lib/urls'
 import { myTasksReminderFaker, reminderListFaker } from '../../fakers/reminders'
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../../../src/common/constants'
+import {
+  formatDate,
+  DATE_FORMAT_FULL,
+} from '../../../../../src/client/utils/date-utils'
 
 const remindersEndpoint = '/api-proxy/v4/reminder/my-tasks-due-date-approaching'
 
@@ -131,9 +133,9 @@ describe('My Tasks Due Date Approaching Reminders', () => {
         )
         .should(
           'contain',
-          `Date due: ${formatWithoutParsing(
+          `Date due: ${formatDate(
             reminders[0].task.due_date,
-            DATE_LONG_FORMAT_1
+            DATE_FORMAT_FULL
           )}`
         )
     })
@@ -278,9 +280,9 @@ describe('My Tasks Due Date Approaching Reminders', () => {
         .find('[data-test="item-content"]')
         .should(
           'contain',
-          `Date due: ${formatWithoutParsing(
+          `Date due: ${formatDate(
             nextReminder.task.due_date,
-            DATE_LONG_FORMAT_1
+            DATE_FORMAT_FULL
           )}`
         )
         .should('contain', `Company: ${nextReminder.task.company.name}`)

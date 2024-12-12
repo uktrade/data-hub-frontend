@@ -1,6 +1,24 @@
 const { format, parseISO } = require('date-fns')
 
 /**
+ * Two-digit day format.
+ * Example: 04
+ */
+const DATE_FORMAT_DAY = 'dd'
+
+/**
+ * Two-digit month format.
+ * Example: 12
+ */
+const DATE_FORMAT_MONTH = 'MM'
+
+/**
+ * Four-digit year format.
+ * Example: 2024
+ */
+const DATE_FORMAT_YEAR = 'yyyy'
+
+/**
  * Full date format with day and full month name.
  * Example: 4 December 2024
  */
@@ -19,6 +37,12 @@ const DATE_FORMAT_FULL_DAY = 'E, dd MMM yyyy'
 const DATE_FORMAT_COMPACT = 'dd MMM yyyy'
 
 /**
+ * Full date format with two-digit day and full month name.
+ * Example: 04 December 2024
+ */
+const DATE_FORMAT_DAY_MONTH_YEAR = 'dd MMMM yyyy'
+
+/**
  * ISO standard date format.
  * Example: 2024-12-04
  */
@@ -35,6 +59,12 @@ const DATE_FORMAT_MEDIUM = 'd MMM yyyy'
  * Example: 4 Dec 2024, 3:30PM
  */
 const DATE_FORMAT_MEDIUM_WITH_TIME = 'd MMM yyyy, h:mmaaa'
+
+/**
+ * ISO 8601 date format with full time precision.
+ * Example: 2024-12-04T15:30:45
+ */
+const DATE_FORMAT_ISO_WITH_TIME_FULL = "yyyy-MM-dd'T'HH:mm:ss"
 
 /**
  * Year and month format for compact representations.
@@ -103,16 +133,21 @@ function formatDate(date, dateISOFormat = DATE_FORMAT_COMPACT) {
 }
 
 module.exports = {
+  DATE_FORMAT_DAY,
+  DATE_FORMAT_MONTH,
+  DATE_FORMAT_YEAR,
   DATE_FORMAT_FULL,
   DATE_FORMAT_FULL_DAY,
   DATE_FORMAT_COMPACT,
   DATE_FORMAT_ISO,
   DATE_FORMAT_MEDIUM,
   DATE_FORMAT_MEDIUM_WITH_TIME,
+  DATE_FORMAT_ISO_WITH_TIME_FULL,
   DATE_FORMAT_YEAR_MONTH,
   DATE_FORMAT_MONTH_YEAR,
   DATE_FORMAT_MONTH_ABBR_YEAR,
   DATE_FORMAT_DAY_MONTH,
+  DATE_FORMAT_DAY_MONTH_YEAR,
   DATE_FORMAT_INTERACTION_TIMESTAMP,
   formatDate,
 }

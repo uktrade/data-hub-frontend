@@ -37,7 +37,6 @@ const {
   DATE_LONG_FORMAT_2,
   DATE_LONG_FORMAT_3,
   DATE_SHORT_FORMAT,
-  INTERACTION_TIMESTAMP_FORMAT,
   DATE_DAY_MONTH,
 } = require('../../common/constants')
 
@@ -128,10 +127,6 @@ function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
   return isDateValid(dateStr) ? formatFns(parseISO(dateStr), dateFormat) : null
 }
 
-function formatWithoutParsing(date, dateFormat = DATE_LONG_FORMAT_2) {
-  return isUnparsedDateValid(date) ? formatFns(date, dateFormat) : null
-}
-
 const formatMonthYearDate = (date) =>
   formatFns(parse(date, DATE_SHORT_FORMAT, new Date()), DATE_LONG_FORMAT_3)
 
@@ -197,16 +192,6 @@ function getFinancialYearStart(date) {
 
 function generateFinancialYearLabel(yearStart) {
   return `${yearStart}-${(yearStart + 1).toString().slice(-2)}`
-}
-
-function getInteractionTimestamp({ offset }) {
-  const date = new Date()
-
-  if (offset > 0) {
-    subMonths(date, offset)
-  }
-
-  return formatWithoutParsing(date, INTERACTION_TIMESTAMP_FORMAT)
 }
 
 function getDifferenceInWords(date, suffix = true) {
@@ -362,12 +347,10 @@ module.exports = {
   createAndFormatDateObject,
   format,
   formatMonthYearDate,
-  formatWithoutParsing,
   generateFinancialYearLabel,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
   getDifferenceInWords,
-  getInteractionTimestamp,
   getFinancialYearStart,
   getYesterday,
   isDateAfter,

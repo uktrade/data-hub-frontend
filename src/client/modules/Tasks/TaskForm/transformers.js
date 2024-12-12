@@ -1,20 +1,17 @@
+import { addDays, addMonths } from 'date-fns'
+
 import { transformOptionToValue } from '../../../../apps/transformers'
-import {
-  OPTION_YES,
-  DATE_LONG_FORMAT_3,
-  OPTION_NO,
-} from '../../../../common/constants'
+import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
 import {
   transformArrayIdNameToValueLabel,
   transformIdNameToValueLabel,
 } from '../../../transformers'
 import {
-  formatWithoutParsing,
   transformValueForAPI,
-  addMonths,
-  addDays,
   convertDateToFieldDateObject,
 } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_ISO } from '../../../utils/date-utils'
+
 import { OPTIONS } from './constants'
 
 export const transformTaskFormValuesForAPI = (
@@ -65,9 +62,9 @@ const getDueDate = (dueDate, customDate) => {
     case 'custom':
       return transformValueForAPI(customDate)
     case 'month':
-      return formatWithoutParsing(addMonths(new Date(), 1), DATE_LONG_FORMAT_3)
+      return formatDate(addMonths(new Date(), 1), DATE_FORMAT_ISO)
     case 'week':
-      return formatWithoutParsing(addDays(new Date(), 7), DATE_LONG_FORMAT_3)
+      return formatDate(addDays(new Date(), 7), DATE_FORMAT_ISO)
     default:
       null
   }

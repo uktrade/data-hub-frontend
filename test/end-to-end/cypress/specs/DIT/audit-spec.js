@@ -1,8 +1,10 @@
 const { company, contact, investmentProject } = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
-const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
+const {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} = require('../../../../../src/client/utils/date-utils')
 const {
   assertFlashMessage,
 } = require('../../../../functional/cypress/support/assertions')
@@ -14,7 +16,7 @@ const {
   assertBadgeNotPresent,
 } = require('../../../../functional/cypress/support/collection-list-assertions')
 
-const todaysDate = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
+const todaysDate = formatDate(new Date(), DATE_FORMAT_COMPACT)
 let companyObj
 let contactObj
 let investmentProjectObj

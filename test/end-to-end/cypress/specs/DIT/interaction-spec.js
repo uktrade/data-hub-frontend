@@ -1,13 +1,15 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_FULL,
+} = require('../../../../../src/client/utils/date-utils')
 const { companies, interactions } = require('../../../../../src/lib/urls')
-const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
 const {
   assertSummaryTable,
 } = require('../../../../functional/cypress/support/assertions')
 
-const today = formatWithoutParsing(new Date(), DATE_LONG_FORMAT_1)
+const today = formatDate(new Date(), DATE_FORMAT_FULL)
 
 const selectInteractionType = (theme, kind) => {
   cy.contains('label', theme).click()

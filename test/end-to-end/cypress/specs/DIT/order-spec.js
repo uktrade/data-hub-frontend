@@ -1,12 +1,14 @@
 const fixtures = require('../../fixtures')
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+const {
+  formatDate,
+  DATE_MEDIUM_FORMAT,
+} = require('../../../../../src/client/utils/date-utils')
 const { omis } = require('../../../../../src/lib/urls')
-const { DATE_MEDIUM_FORMAT } = require('../../../../../src/common/constants')
 const {
   assertSummaryTable,
 } = require('../../../../functional/cypress/support/assertions')
 
-const today = formatWithoutParsing(new Date(), DATE_MEDIUM_FORMAT)
+const today = formatDate(new Date(), DATE_MEDIUM_FORMAT)
 
 describe('Order', () => {
   const company = fixtures.company.create.defaultCompany('order testing')

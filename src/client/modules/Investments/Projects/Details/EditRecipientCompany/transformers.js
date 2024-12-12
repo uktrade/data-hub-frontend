@@ -70,9 +70,9 @@ const transformCompanyToListItem =
 
     return {
       id,
-      subheading: modified_on
-        ? `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
-        : undefined,
+      subheading:
+        modified_on &&
+        `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
       headingText: name,
       headingUrl: urls.investments.projects.editRecipientCompany(projectId, id),
       badges,

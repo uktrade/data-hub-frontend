@@ -3,7 +3,10 @@ import fixture from '../../fixtures/investment/investment-needing-external-fundi
 import { collectionListRequest } from '../../support/actions'
 import { getCollectionList } from '../../support/collection-list-assertions'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../../src/client/utils/date-utils'
 
 describe('Edit the associated FDI R&D project', () => {
   context('When adding a new linked project', () => {
@@ -41,9 +44,9 @@ describe('Edit the associated FDI R&D project', () => {
         .eq(2)
         .should(
           'contain',
-          `Estimated land date ${formatWithoutParsing(
+          `Estimated land date ${formatDate(
             project.estimated_land_date,
-            'MMMM yyyy'
+            DATE_FORMAT_MONTH_YEAR
           )}`
         )
     })

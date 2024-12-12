@@ -1,6 +1,6 @@
-const { getInteractionTimestamp } = require('../../../../client/utils/date')
-const middleware = require('../last-interaction-date')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const { getInteractionTimestamp } = require('../utils')
+const middleware = require('../last-interaction-date')
 
 const QUERY_PARAM = 'interaction_between'
 const START_DATE_PARAM = 'latest_interaction_date_before'

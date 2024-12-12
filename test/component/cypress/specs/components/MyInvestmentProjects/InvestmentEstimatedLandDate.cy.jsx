@@ -1,7 +1,7 @@
 import React from 'react'
+import { addDays, subDays } from 'date-fns'
 
 import InvestmentEstimatedLandDate from '../../../../../../src/client/components/MyInvestmentProjects/InvestmentEstimatedLandDate'
-import { DATE_DAY_LONG_FORMAT } from '../../../../../../src/common/constants'
 import {
   BUTTON_COLOUR,
   GREY_2,
@@ -11,17 +11,16 @@ import {
 } from '../../../../../../src/client/utils/colours'
 
 const {
-  addDays,
-  formatWithoutParsing,
-  subtractDays,
-} = require('../../../../../../src/client/utils/date')
+  formatDate,
+  DATE_FORMAT_FULL_DAY,
+} = require('../../../../../../src/client/utils/date-utils')
 
 const today = new Date()
 const futureDate = addDays(today, 100)
 const tomorrow = addDays(today, 1)
 const twoMonthsAhead = addDays(today, 60)
-const pastDate = subtractDays(today, 10)
-const yesterday = subtractDays(today, 1)
+const pastDate = subDays(today, 10)
+const yesterday = subDays(today, 1)
 
 describe('InvestmentEstimatedLandDate', () => {
   const Component = (props) => <InvestmentEstimatedLandDate {...props} />
@@ -42,7 +41,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(futureDate, DATE_DAY_LONG_FORMAT)
+        formatDate(futureDate, DATE_FORMAT_FULL_DAY)
       )
     })
 
@@ -70,7 +69,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(today, DATE_DAY_LONG_FORMAT)
+        formatDate(today, DATE_FORMAT_FULL_DAY)
       )
     })
 
@@ -98,7 +97,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(tomorrow, DATE_DAY_LONG_FORMAT)
+        formatDate(tomorrow, DATE_FORMAT_FULL_DAY)
       )
     })
 
@@ -126,7 +125,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(twoMonthsAhead, DATE_DAY_LONG_FORMAT)
+        formatDate(twoMonthsAhead, DATE_FORMAT_FULL_DAY)
       )
     })
 
@@ -154,7 +153,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(pastDate, DATE_DAY_LONG_FORMAT)
+        formatDate(pastDate, DATE_FORMAT_FULL_DAY)
       )
     })
 
@@ -182,7 +181,7 @@ describe('InvestmentEstimatedLandDate', () => {
       )
       cy.get('[data-test="estimated-land-date-date"]').should(
         'have.text',
-        formatWithoutParsing(yesterday, DATE_DAY_LONG_FORMAT)
+        formatDate(yesterday, DATE_FORMAT_FULL_DAY)
       )
     })
 

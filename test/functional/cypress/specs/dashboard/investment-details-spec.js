@@ -1,10 +1,12 @@
-import { faker } from '../../../../sandbox/utils/random'
-
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
-import { investmentProjectFaker } from '../../fakers/investment-projects'
 import { companies, dashboard, interactions } from '../../../../../src/lib/urls'
+import { investmentProjectFaker } from '../../fakers/investment-projects'
+import { faker } from '../../../../sandbox/utils/random'
+import {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} from '../../../../../src/client/utils/date-utils'
 
-const todayFormatted = formatWithoutParsing(new Date())
+const todayFormatted = formatDate(new Date(), DATE_FORMAT_COMPACT)
 
 describe('Dashboard - Investment details', () => {
   const investmentProject = investmentProjectFaker({

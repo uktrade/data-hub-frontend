@@ -292,10 +292,11 @@ describe('nunjucks filters', () => {
 
   describe('#formatDate', () => {
     context('when given an invalid date', () => {
-      it('should return input value', () => {
-        const formattedDate = filters.formatDate('not-a-date')
-
-        expect(formattedDate).to.equal('not-a-date')
+      it('should throw an error', () => {
+        expect(() => filters.formatDate('not-a-date')).to.throw(
+          Error,
+          'Invalid time value'
+        )
       })
     })
 
@@ -320,10 +321,11 @@ describe('nunjucks filters', () => {
 
   describe('#formatDateTime', () => {
     context('when given an invalid datetime', () => {
-      it('should return input value', () => {
-        const formattedDate = filters.formatDateTime('not-a-date')
-
-        expect(formattedDate).to.equal('not-a-date')
+      it('should throw an error', () => {
+        expect(() => filters.formatDate('not-a-date')).to.throw(
+          Error,
+          'Invalid time value'
+        )
       })
     })
 
