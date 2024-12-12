@@ -1,13 +1,14 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import { TAGS } from './constants'
+import { TAGS, NEW_PROJECT_TAG } from './constants'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
 import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 import { getServiceText } from '../../../components/ActivityFeed/activities/InteractionUtils'
+import { currencyGBP } from '../../../utils/number-utils'
 
 const { isEmpty } = require('lodash')
 
@@ -51,8 +52,8 @@ export const formattedAdvisers = (advisers) =>
     </span>
   ))
 
-export const verifyLabel = (array, label) =>
-  array.length > 1 ? label + 's' : label
+export const pluraliseLabel = (number, label) =>
+  number != 1 ? label + 's' : label
 
 /*
   From the activity_source field from the API, determine which transformer to
@@ -97,7 +98,7 @@ export const transformInteractionToListItem = (activity) => {
           interaction.date && formatDate(interaction.date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: verifyLabel(interaction.contacts, 'Contact'),
+        label: pluraliseLabel(interaction.contacts?.length, 'Contact'),
         value: formattedContacts(interaction.contacts),
       },
       {
@@ -105,7 +106,7 @@ export const transformInteractionToListItem = (activity) => {
         value: interaction.communication_channel?.name,
       },
       {
-        label: verifyLabel(interaction.dit_participants, 'Adviser'),
+        label: pluraliseLabel(interaction.dit_participants?.length, 'Adviser'),
         value: formattedAdvisers(interaction.dit_participants),
       },
       { label: 'Service', value: interaction.service?.name },
@@ -173,16 +174,17 @@ export const transformReferralToListItem = (activity) => {
 }
 
 export const transformInvestmentToListItem = (activity) => {
+  const project = activity.investment
   return {
-    id: activity.investment.id,
+    id: project.id,
     metadata: [
       {
-        label: 'Created Date',
+        label: 'Created on',
         value: formatDate(activity.date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: 'Investment Type',
-        value: activity.investment.investment_type.name,
+        label: 'Investment type',
+        value: project.investment_type.name,
       },
       {
         label: 'Added by',
@@ -195,40 +197,47 @@ export const transformInvestmentToListItem = (activity) => {
       },
       {
         label: 'Estimated land date',
-        value: activity.investment.estimated_land_date,
+        value: formatDate(project.estimated_land_date, DATE_FORMAT_MEDIUM),
       },
       {
-        label: 'Company Contact',
-        value: activity.investment.clinet_contacts,
+        label: pluraliseLabel(
+          project.client_contacts?.length,
+          'Company contact'
+        ),
+        value:
+          project.client_contacts.length > 0
+            ? project.client_contacts.map((contact) => contact.name).join(', ')
+            : '',
       },
       {
         label: 'Total investment',
-        value: activity.investment.total_investment,
+        value: currencyGBP(project.total_investment),
       },
       {
         label: 'Capital expenditure value',
-        value: activity.investment.foreign_equity_investment,
+        value: currencyGBP(project.foreign_equity_investment),
       },
       {
         label: 'Gross value added (GVA)',
-        value: activity.investment.gross_value_added,
+        value: currencyGBP(project.gross_value_added),
       },
-      { label: 'Number of jobs', value: activity.investment.number_new_jobs },
+      { label: 'Number of jobs', value: project.number_new_jobs },
     ].filter(({ value }) => Boolean(value)),
     tags: [
       {
         text: 'Investment',
-        colour: 'default',
+        colour: 'govBlue',
         dataTest: 'investment-theme-label',
       },
       {
-        text: 'New Investment Project',
-        colour: 'grey',
-        dataTest: 'investment-service-label',
+        text: `Project - ${project.investment_type.name}`,
+        colour: 'blue',
+        dataTest: 'investment-type-label',
       },
+      NEW_PROJECT_TAG,
     ].filter(({ text }) => Boolean(text)),
-    headingUrl: urls.investments.projects.details(activity.investment.id),
-    headingText: activity.investment.name,
+    headingUrl: urls.investments.projects.details(project.id),
+    headingText: project.name,
   }
 }
 
@@ -263,7 +272,7 @@ export const transformOrderToListItem = (activity) => {
     tags: [
       {
         text: 'Orders (OMIS)',
-        colour: 'default',
+        colour: 'govBlue',
         dataTest: 'order-theme-label',
       },
       {

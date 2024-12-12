@@ -10,32 +10,18 @@ import {
   assertActivitySubject,
 } from '../../../../support/activity-assertions'
 import { checkName } from '../../../../support/activity-utils'
+import {
+  ADVISER_1,
+  ADVISER_2,
+  CONTACT_1,
+  CONTACT_2,
+  CREATED_ON as DATE,
+} from '../../../../support/activity-constants'
 
 const SUBJECT = 'An interaction with a company'
 const TYPE = 'interaction'
 const SERVICE_DELIVERY = 'service_delivery'
 const INTERACTION_URL = urls.companies.interactions.detail('1', '2')
-const DATE = '2058-11-25T00:00:00Z'
-
-const ADVISER_1 = {
-  adviser: {
-    name: 'Bernard Harris-Patel',
-  },
-}
-
-const ADVISER_2 = {
-  adviser: {
-    name: 'Puck Head',
-  },
-}
-
-const CONTACT_1 = {
-  name: 'Alexander Hamilton',
-}
-
-const CONTACT_2 = {
-  name: 'Oliver Twist',
-}
 
 const buildAndMountActivity = (
   communicationChannel,

@@ -1,9 +1,10 @@
-import { TAGS } from '../../../CompanyActivity/constants'
+import { TAGS, NEW_PROJECT_TAG } from '../../../CompanyActivity/constants'
 import { isDateInFuture } from '../../../../../utils/date'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
 import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
+import { pluraliseLabel } from '../../../CompanyActivity/transformers'
 
 const { isEmpty } = require('lodash')
 
@@ -41,6 +42,8 @@ const buildSummary = (advisers, communicationChannel, contacts, date) => {
 
   return `${transformedAdvisers} ${isFuture} ${transformCommunicationChannel(communicationChannel)} contact with ${transformedContacts}`
 }
+
+const checkNewJobs = (jobs) => (jobs > 0 ? jobs : 'no')
 
 /*
   From the activity_source field from the API, determine which transformer to
@@ -129,25 +132,13 @@ export const transformInvestmentToListItem = (activity) => {
   return {
     id: investment.id,
     date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
-    tags: [
-      {
-        text: 'New Investment Project',
-        colour: 'grey',
-        dataTest: 'investment-service-label',
-      },
-    ].filter(({ text }) => Boolean(text)),
+    tags: [NEW_PROJECT_TAG].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.projects.details(investment.id),
     headingText: investment.name,
     summary:
       investment.number_new_jobs == null
-        ? [
-            `${investment.investment_type.name} investment added by `,
-            investment.created_by.name,
-          ]
-        : [
-            `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by `,
-            investment.created_by.name,
-          ],
+        ? `${investment.investment_type.name} investment added by ${investment.created_by.name}`
+        : `${investment.investment_type.name} investment for ${checkNewJobs(investment.number_new_jobs)} ${pluraliseLabel(investment.number_new_jobs, 'new job')} added by ${investment.created_by.name}`,
   }
 }
 
