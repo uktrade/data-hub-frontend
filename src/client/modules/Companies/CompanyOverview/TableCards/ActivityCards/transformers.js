@@ -145,21 +145,31 @@ export const transformInteractionToListItem = (activity) => {
   }
 }
 
+function getInvestmentSummary(activity) {
+  let investment = activity.investment
+  let summary = `${investment.investment_type.name} investment`
+  if (investment.number_new_jobs === null) {
+    summary = summary + ` added by ${investment.created_by.name}`
+  } else {
+    summary =
+      summary +
+      ` for ${checkNewJobs(investment.number_new_jobs)} ${pluraliseLabel(investment.number_new_jobs, 'new job')} added by ${investment.created_by.name}`
+  }
+  if (activity.investment.eyb_leads.length !== 0) {
+    summary = summary + ' from EYB lead'
+  }
+  return summary
+}
+
 export const transformInvestmentToListItem = (activity) => {
   const investment = activity.investment
-  const from_eyb =
-    activity.investment.eyb_leads.length !== 0 ? 'from EYB lead' : ''
-
   return {
     id: investment.id,
     date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
     tags: [NEW_PROJECT_TAG].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.projects.details(investment.id),
     headingText: investment.name,
-    summary:
-      investment.number_new_jobs == null
-        ? `${investment.investment_type.name} investment added by ${investment.created_by.name} ${from_eyb}`
-        : `${investment.investment_type.name} investment for ${checkNewJobs(investment.number_new_jobs)} ${pluraliseLabel(investment.number_new_jobs, 'new job')} added by ${investment.created_by.name} ${from_eyb}`,
+    summary: getInvestmentSummary(activity),
   }
 }
 

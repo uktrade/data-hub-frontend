@@ -14,7 +14,7 @@ import { CREATED_BY, CREATED_ON } from '../../../../support/activity-constants'
 const NAME = 'An investment project'
 const PROJECT_URL = urls.investments.projects.details('2')
 
-const buildAndMountActivity = (newJobs) => {
+const buildAndMountActivity = (newJobs, eybLeads = []) => {
   const activity = {
     date: CREATED_ON,
     investment: {
@@ -24,6 +24,7 @@ const buildAndMountActivity = (newJobs) => {
       investment_type: {
         name: 'FDI',
       },
+      eyb_leads: eybLeads,
       number_new_jobs: newJobs,
     },
   }
@@ -54,7 +55,7 @@ describe('Investment activity card', () => {
     })
   })
 
-  context('When the project has one new job', () => {
+  context('When the project has one new job and no linked EYB leads', () => {
     beforeEach(() => {
       buildAndMountActivity(1)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
@@ -71,7 +72,24 @@ describe('Investment activity card', () => {
     })
   })
 
-  context('When the project has no new jobs', () => {
+  context('When the project has one new job and one linked EYB lead', () => {
+    beforeEach(() => {
+      buildAndMountActivity(1, ['leadId1'])
+      cy.get('[data-test="activity-card-wrapper"]').should('exist')
+    })
+
+    it('should render the labels and metadata', () => {
+      assertProjectKindLabel()
+      assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+      cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+      cy.get('[data-test="activity-summary"]').should(
+        'have.text',
+        `FDI investment for 1 new job added by ${CREATED_BY.name} from EYB lead`
+      )
+    })
+  })
+
+  context('When the project has no new jobs and no linked EYB leads', () => {
     beforeEach(() => {
       buildAndMountActivity(0)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
@@ -84,6 +102,23 @@ describe('Investment activity card', () => {
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         `FDI investment for no new jobs added by ${CREATED_BY.name}`
+      )
+    })
+  })
+
+  context('When the project has no new jobs and one linked EYB leads', () => {
+    beforeEach(() => {
+      buildAndMountActivity(0, ['leadId1'])
+      cy.get('[data-test="activity-card-wrapper"]').should('exist')
+    })
+
+    it('should render the labels and metadata', () => {
+      assertProjectKindLabel()
+      assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+      cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+      cy.get('[data-test="activity-summary"]').should(
+        'have.text',
+        `FDI investment for no new jobs added by ${CREATED_BY.name} from EYB lead`
       )
     })
   })
