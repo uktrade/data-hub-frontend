@@ -5,6 +5,7 @@ import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import { CollectionItem } from '../../../components'
 import { ExportProjectTitle } from '../Export'
 import urls from '../../../../lib/urls'
+import { SORT_OPTIONS_EXPORT_INTERACTION } from '../constants'
 
 const ExportInteractionsList = ({ interactions = [], exportId }) =>
   interactions.length === 0 ? null : (
@@ -46,12 +47,7 @@ export default ({ exportId }) => (
     shouldPluralize={true}
     noResults="You don't have any export interactions."
     payload={{ company_export_id: exportId }}
-    sortOptions={[
-      // These values are assumed as the BE work hasn't been implemented yet
-      { value: 'created_on:desc', name: 'Recently created' },
-      { value: 'company.name:asc', name: 'Company A-Z' },
-      { value: 'subject:asc', name: 'Subject A-Z' },
-    ]}
+    sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
   >
     {(page) => (
       <ExportInteractionsList interactions={page} exportId={exportId} />
