@@ -226,7 +226,7 @@ const EventDetails = ({ name, ...props }) => {
                     content: <Details {...props} />,
                   },
                   [`/events/${id}/attendees`]: {
-                    label: 'Attendes',
+                    label: 'Attendees',
                     content: (
                       <Attendees eventId={id} isDisabled={props.disabledOn} />
                     ),
