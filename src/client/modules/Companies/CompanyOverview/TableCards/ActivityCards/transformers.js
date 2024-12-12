@@ -127,6 +127,7 @@ export const transformInteractionToListItem = (activity) => {
 
 export const transformInvestmentToListItem = (activity) => {
   const investment = activity.investment
+  const from_eyb = activity.investment.eyb_leads.length !== 0 ? 'from EYB' : ''
 
   return {
     id: investment.id,
@@ -143,12 +144,10 @@ export const transformInvestmentToListItem = (activity) => {
     summary:
       investment.number_new_jobs == null
         ? [
-            `${investment.investment_type.name} investment added by `,
-            investment.created_by.name,
+            `${investment.investment_type.name} investment added by ${investment.created_by.name} ${from_eyb}`,
           ]
         : [
-            `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by `,
-            investment.created_by.name,
+            `${investment.investment_type.name} investment for ${investment.number_new_jobs} jobs added by ${investment.created_by.name} ${from_eyb}`,
           ],
   }
 }
