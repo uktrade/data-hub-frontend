@@ -5,10 +5,20 @@ export const QS_PARAMS = {
   valueOfLead: 'value',
 }
 
-export const HIGH_VALUE_LABEL = 'High value'
-export const LOW_VALUE_LABEL = 'Low value'
+export const VALUES = {
+  HIGH_VALUE: 'High value',
+  LOW_VALUE: 'Low value',
+  UNKNOWN: 'Unknown value',
+}
+
+export const VALUES_VALUE_TO_LABEL_MAP = {
+  [true]: VALUES.HIGH_VALUE,
+  [false]: VALUES.LOW_VALUE,
+  [null]: VALUES.UNKNOWN,
+}
 
 export const VALUE_OPTIONS = [
-  { value: 'high', label: HIGH_VALUE_LABEL },
-  { value: 'low', label: LOW_VALUE_LABEL },
+  { value: 'high', label: VALUES.HIGH_VALUE },
+  { value: 'low', label: VALUES.LOW_VALUE },
+  { value: 'unknown', label: VALUES.UNKNOWN },
 ]

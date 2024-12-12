@@ -15,6 +15,7 @@ import {
 import { investments } from '../../../../../src/lib/urls'
 import { format } from '../../../../../src/client/utils/date'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
+import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
 
 const EYB_RETRIEVE_API_ROUTE = '/api-proxy/v4/investment-lead/eyb'
 
@@ -34,6 +35,8 @@ const HIGH_VALUE = 'high'
 const HIGH_VALUE_LABEL = 'High value'
 const LOW_VALUE = 'low'
 const LOW_VALUE_LABEL = 'Low value'
+const UNKNOWN_VALUE = 'unknown'
+const UNKNOWN_VALUE_LABEL = 'Unknown value'
 const COUNTRY_NAME_1 = 'Canada'
 const COUNTRY_ID_1 = '5daf72a6-5d95-e211-a939-e4115bead28a'
 const COUNTRY_NAME_2 = 'Brazil'
@@ -52,6 +55,7 @@ const EYB_LEAD_LIST = Array(
     is_high_value: false,
     country: { name: COUNTRY_NAME_1, id: COUNTRY_ID_1 },
   }),
+  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: null }),
   eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
   eybLeadFaker({
     triage_created: DATE_TIME_STRING,
@@ -68,6 +72,7 @@ const PAYLOADS = {
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
+  unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
 }
 
@@ -92,7 +97,8 @@ const getEYBLeadsBySectorId = (sectorId) => {
 const convertValueStringToBoolean = (value) => {
   if (value === 'high') return true
   if (value === 'low') return false
-  throw new Error('Invalid value: must be either "high" or "low"')
+  if (value === 'unknown') return null
+  throw new Error('Invalid value: must be either "high", "low", or "unknown"')
 }
 
 const getEYBLeadsByValue = (valueOfLead) => {
@@ -174,11 +180,14 @@ describe('EYB leads collection page', () => {
           'contain',
           `Location ${eybLead.proposed_investment_region.name}`
         )
-        .should('contain', eybLead.is_high_value ? 'HIGH VALUE' : 'LOW VALUE')
+        .should(
+          'contain',
+          VALUES_VALUE_TO_LABEL_MAP[eybLead.is_high_value].toUpperCase()
+        )
     })
     it('should display the other name when company is null for a collection item', () => {
       cy.get('[data-test="collection-item"]')
-        .eq(3)
+        .eq(4)
         .should('contain', COMPANY_NAME_DEFAULT)
     })
   })
@@ -290,7 +299,7 @@ describe('EYB leads collection page', () => {
   })
 
   context(
-    'When filtering the EYB leads collection by value of leads (repeats test case for "high" and "low")',
+    'When filtering the EYB leads collection by value of leads (repeats test case for "high", "low", and "unknown")',
     () => {
       const testCases = [
         {
@@ -310,6 +319,15 @@ describe('EYB leads collection page', () => {
           },
           chipsLabel: LOW_VALUE_LABEL,
           expectedNumberOfResults: 3,
+        },
+        {
+          queryParamValue: UNKNOWN_VALUE,
+          expectedPayload: {
+            ...PAYLOADS.minimum,
+            ...PAYLOADS.unknownValueFilter,
+          },
+          chipsLabel: UNKNOWN_VALUE_LABEL,
+          expectedNumberOfResults: 1,
         },
       ]
 
