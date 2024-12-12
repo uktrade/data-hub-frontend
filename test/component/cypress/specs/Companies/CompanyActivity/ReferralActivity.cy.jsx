@@ -10,27 +10,15 @@ import {
   assertMetadataItems,
   assertReferralLabel,
 } from '../../../support/activity-assertions'
+import {
+  CREATED_BY,
+  CREATED_ON,
+  RECIPIENT,
+} from '../../../support/activity-constants'
 
 const SUBJECT = 'A referral'
 const REFERRAL_URL = urls.companies.referrals.details('1', '2')
-const CREATED_ON = '2058-11-25T00:00:00Z'
 const COMPLETED_ON = '2058-12-25T11:03:21.597375+00:00'
-
-const CREATED_BY = {
-  email: 'bernardharrispatel@test.com',
-  name: 'Bernard Harris-Patel',
-  dit_team: {
-    name: 'Test Team 1',
-  },
-}
-
-const RECIPIENT = {
-  email: 'puckhead@test.com',
-  name: 'Puck Head',
-  dit_team: {
-    name: 'Test Team 2',
-  },
-}
 
 const buildAndMountActivity = (status, showCompletedDate = true) => {
   const activity = {

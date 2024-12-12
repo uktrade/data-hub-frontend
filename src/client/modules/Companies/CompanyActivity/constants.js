@@ -59,3 +59,9 @@ export const SORT_OPTIONS = [
   { value: 'date:desc', name: 'Recently created' },
   { value: 'date:asc', name: 'Oldest first' },
 ]
+
+export const NEW_PROJECT_TAG = {
+  text: 'New Investment Project',
+  colour: 'grey',
+  dataTest: 'investment-kind-label',
+}
