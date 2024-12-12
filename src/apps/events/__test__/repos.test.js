@@ -5,15 +5,12 @@ const proxyquire = require('proxyquire')
 const authorisedRequestStub = sinon.stub()
 const searchStub = sinon.stub()
 
-const { saveEvent, fetchEvent, getAllEvents, getActiveEvents } = proxyquire(
-  '../repos',
-  {
-    '../../lib/authorised-request': {
-      authorisedRequest: authorisedRequestStub,
-    },
-    '../../modules/search/services': { search: searchStub },
-  }
-)
+const { saveEvent, getActiveEvents } = proxyquire('../repos', {
+  '../../lib/authorised-request': {
+    authorisedRequest: authorisedRequestStub,
+  },
+  '../../modules/search/services': { search: searchStub },
+})
 
 const config = require('../../../config')
 
@@ -49,13 +46,6 @@ describe('Event Service', () => {
       })
     })
   })
-
-  describe('#getActiveEvents', () => {
-    context(
-      'When there is a mix of active and inactive events on the server',
-      () => {
-        beforeEach(() => {
-          this.currentId = '3'
 
   context('getActiveEvents', () => {
     let clock
