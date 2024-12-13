@@ -3,7 +3,6 @@ import CompaniesHouseCompany from './CompaniesHouseCompany'
 import DirectoryFormsApi from './DirectoryFormsApi'
 import MaxemailCampaign from './MaxemailCampaign'
 import HmrcExporter from './HmrcExporter'
-import Omis from './Omis'
 import AventriAttendee from './AventriAttendee'
 import DataHubEvent from './DataHubEvent'
 import AventriEvent from './AventriEvent'
@@ -18,6 +17,5 @@ export default [
   DirectoryFormsApi,
   MaxemailCampaign,
   HmrcExporter,
-  Omis,
   AventriEventSyncWarning,
 ]
