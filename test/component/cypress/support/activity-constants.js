@@ -3,6 +3,7 @@ export const CREATED_ON = '2058-11-25T00:00:00Z'
 export const CONTACT_1 = {
   id: '115b4d96-d2ea-40ff-a01d-812507093a98',
   name: 'Alexander Hamilton',
+  job_title: 'Test Job',
 }
 
 export const CONTACT_2 = {
