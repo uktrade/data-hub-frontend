@@ -68,6 +68,7 @@ const companyActivityInvestmentFaker = (
       created_by: userFaker(),
       foreign_equity_investment: faker.number.int({ min: 50, max: 1000 }),
       gross_value_added: faker.number.int({ min: 100, max: 2000 }),
+      eyb_leads: [],
       ...investmentOverrides,
     },
     ...overrides,
