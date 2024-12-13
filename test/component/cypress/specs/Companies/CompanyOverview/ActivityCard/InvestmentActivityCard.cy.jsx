@@ -13,6 +13,7 @@ import { CREATED_BY, CREATED_ON } from '../../../../support/activity-constants'
 
 const NAME = 'An investment project'
 const PROJECT_URL = urls.investments.projects.details('2')
+const EYB_LEAD = [{ id: '1' }]
 
 const buildAndMountActivity = (newJobs, eybLeads = []) => {
   const activity = {
@@ -74,7 +75,7 @@ describe('Investment activity card', () => {
 
   context('When the project has one new job and one linked EYB lead', () => {
     beforeEach(() => {
-      buildAndMountActivity(1, ['leadId1'])
+      buildAndMountActivity(1, EYB_LEAD)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
@@ -108,7 +109,7 @@ describe('Investment activity card', () => {
 
   context('When the project has no new jobs and one linked EYB leads', () => {
     beforeEach(() => {
-      buildAndMountActivity(0, ['leadId1'])
+      buildAndMountActivity(0, EYB_LEAD)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
     })
 
