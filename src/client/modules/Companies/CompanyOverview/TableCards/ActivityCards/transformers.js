@@ -225,7 +225,7 @@ export const transformEYBLeadToListItem = (activity) => {
       {
         text: 'EYB',
         colour: 'grey',
-        dataTest: 'eyb-service-label',
+        dataTest: 'eyb-label',
       },
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
