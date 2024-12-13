@@ -57,17 +57,16 @@ const getUniquePKValue = (formValues) => {
   return { investment_project: null, company: null, interaction: null }
 }
 
-const getDueDate = (dueDate, customDate) => {
-  switch (dueDate) {
-    case 'custom':
-      return transformValueForAPI(customDate)
-    case 'month':
-      return formatDate(addMonths(new Date(), 1), DATE_FORMAT_ISO)
-    case 'week':
-      return formatDate(addDays(new Date(), 7), DATE_FORMAT_ISO)
-    default:
-      null
+export const getDueDate = (dueDate, customDate) => {
+  const today = new Date()
+
+  const handlers = {
+    custom: () => transformValueForAPI(customDate),
+    month: () => formatDate(addMonths(today, 1), DATE_FORMAT_ISO),
+    week: () => formatDate(addDays(today, 7), DATE_FORMAT_ISO),
   }
+
+  return handlers[dueDate]?.() || null
 }
 
 const transformAdvisor = (advisers, currentAdviserId) =>
