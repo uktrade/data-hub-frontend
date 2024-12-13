@@ -71,7 +71,7 @@ export const ItemTemplate = (item) => (
   </StyledWrapper>
 )
 
-const capitaliseFirstLetter = (string) =>
+export const capitaliseFirstLetter = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1)
 
 const ActivityCard = ({

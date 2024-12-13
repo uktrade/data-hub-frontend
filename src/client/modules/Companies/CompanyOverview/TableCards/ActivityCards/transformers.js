@@ -1,10 +1,15 @@
-import { TAGS, NEW_PROJECT_TAG } from '../../../CompanyActivity/constants'
+import {
+  TAGS,
+  NEW_PROJECT_TAG,
+  NEW_ORDER_TAG,
+} from '../../../CompanyActivity/constants'
 import { isDateInFuture } from '../../../../../utils/date'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
 import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
 import urls from '../../../../../../lib/urls'
 import { pluraliseLabel } from '../../../CompanyActivity/transformers'
+import { capitaliseFirstLetter } from './ActivityCard'
 
 const { isEmpty } = require('lodash')
 
@@ -44,6 +49,17 @@ const buildSummary = (advisers, communicationChannel, contacts, date) => {
 }
 
 const checkNewJobs = (jobs) => (jobs > 0 ? jobs : 'no')
+
+const buildOrderSummary = (order) => {
+  const summaryFirstPart = order.primary_market
+    ? `Export to ${order.primary_market?.name} `
+    : ''
+  const summary = order.created_by
+    ? `${summaryFirstPart}added by ${order.created_by.name}`
+    : summaryFirstPart
+
+  return capitaliseFirstLetter(summary)
+}
 
 /*
   From the activity_source field from the API, determine which transformer to
@@ -144,25 +160,13 @@ export const transformInvestmentToListItem = (activity) => {
 
 export const transformOrderToListItem = (activity) => {
   const order = activity.order
-  let summary = []
-  order.primary_market
-    ? summary.push(
-        `Export to ${order.primary_market.name} added by ${order.created_by.name}`
-      )
-    : summary.push('')
   return {
     id: order.id,
     date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
-    tags: [
-      {
-        text: 'New Order',
-        colour: 'grey',
-        dataTest: 'order-kind-label',
-      },
-    ].filter(({ text }) => Boolean(text)),
+    tags: [NEW_ORDER_TAG].filter(({ text }) => Boolean(text)),
     headingUrl: urls.omis.order(order.id),
     headingText: order.reference,
-    summary: summary,
+    summary: buildOrderSummary(order),
   }
 }
 

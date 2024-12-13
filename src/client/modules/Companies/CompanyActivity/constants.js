@@ -65,3 +65,9 @@ export const NEW_PROJECT_TAG = {
   colour: 'grey',
   dataTest: 'investment-kind-label',
 }
+
+export const NEW_ORDER_TAG = {
+  text: 'New Order',
+  colour: 'grey',
+  dataTest: 'order-kind-label',
+}
