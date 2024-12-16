@@ -64,7 +64,7 @@ const companyActivityInvestmentFaker = (
       name: faker.word.words(),
       client_contacts: [userFaker({ job_title: faker.person.jobTitle() })],
       id: faker.string.uuid(),
-      number_new_jobs: faker.number.int({ min: 0, max: 50 }),
+      number_new_jobs: faker.number.int({ min: 1, max: 50 }),
       created_by: userFaker(),
       foreign_equity_investment: faker.number.int({ min: 50, max: 1000 }),
       gross_value_added: faker.number.int({ min: 100, max: 2000 }),

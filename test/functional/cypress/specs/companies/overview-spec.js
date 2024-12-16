@@ -391,12 +391,21 @@ describe('Company overview page', () => {
   // TODO - Unskip relevant parts of this test when we have the associated DAGs in place
   context('when viewing all activity cards types', () => {
     const interactionsList = companyActivityListFaker(1)
-    const investmentsList = companyActivityInvestmentListFaker(1)
-    const investmentsListNullJobs = companyActivityInvestmentListFaker(
+    const investmentsListWithJobsNoEYBLead =
+      companyActivityInvestmentListFaker(1)
+    const investmentsListNullJobsNoEYBLead = companyActivityInvestmentListFaker(
       1,
       {},
       { number_new_jobs: null }
     )
+    const investmentsListWithJobsHasEYBLead =
+      companyActivityInvestmentListFaker(1, {}, { eyb_leads: [{ id: '1' }] })
+    const investmentsListNullJobsHasEYBLead =
+      companyActivityInvestmentListFaker(
+        1,
+        {},
+        { number_new_jobs: null, eyb_leads: [{ id: '1' }] }
+      )
     const orderList = companyActivityOrderListFaker(1)
     const orderListNoPrimaryMarket = companyActivityOrderListFaker(
       1,
@@ -511,33 +520,71 @@ describe('Company overview page', () => {
         activity.interaction.subject
       )
     })
-    it('should display Data Hub investment activity', () => {
+    it('should display Data Hub investment activity with jobs and no link to EYB leads', () => {
       collectionListRequest(
         'v4/search/company-activity',
-        investmentsList,
+        investmentsListWithJobsNoEYBLead,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      const activity = investmentsList[0]
+      const activity = investmentsListWithJobsNoEYBLead[0]
       cy.get('[data-test="investment-kind-label"]').contains(
         'New Investment Project'
       )
       cy.get('[data-test="activity-summary"]').contains(
         `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} new jobs added by ${activity.investment.created_by.name}`
       )
+      cy.get('[data-test="activity-summary"]').should(
+        'not.include.text',
+        'from EYB lead'
+      )
     })
 
-    it('should display Data Hub investment activity with empty number of new jobs', () => {
+    it('should display Data Hub investment activity with empty number of new jobs and no link to an EYB lead', () => {
       collectionListRequest(
         'v4/search/company-activity',
-        investmentsListNullJobs,
+        investmentsListNullJobsNoEYBLead,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      const activity = investmentsListNullJobs[0]
+      const activity = investmentsListNullJobsNoEYBLead[0]
       cy.get('[data-test="investment-kind-label"]').contains(
         'New Investment Project'
       )
       cy.get('[data-test="activity-summary"]').contains(
         `${activity.investment.investment_type.name} investment added by ${activity.investment.created_by.name}`
+      )
+      cy.get('[data-test="activity-summary"]').should(
+        'not.include.text',
+        'from EYB lead'
+      )
+    })
+
+    it('should display Data Hub investment activity with jobs and link to an EYB lead', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        investmentsListWithJobsHasEYBLead,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      const activity = investmentsListWithJobsHasEYBLead[0]
+      cy.get('[data-test="investment-kind-label"]').contains(
+        'New Investment Project'
+      )
+      cy.get('[data-test="activity-summary"]').contains(
+        `${activity.investment.investment_type.name} investment for ${activity.investment.number_new_jobs} new jobs added by ${activity.investment.created_by.name} from EYB lead`
+      )
+    })
+
+    it('should display Data Hub investment activity with empty number of new jobs and link to an EYB lead', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        investmentsListNullJobsHasEYBLead,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      const activity = investmentsListNullJobsHasEYBLead[0]
+      cy.get('[data-test="investment-kind-label"]').contains(
+        'New Investment Project'
+      )
+      cy.get('[data-test="activity-summary"]').contains(
+        `${activity.investment.investment_type.name} investment added by ${activity.investment.created_by.name} from EYB lead`
       )
     })
 
