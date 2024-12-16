@@ -46,3 +46,9 @@ export const ADVISER_2 = {
     name: 'Test Team 2',
   },
 }
+
+export const EMPTY_CONTACT = {
+  id: '',
+  name: '',
+  job_title: '',
+}

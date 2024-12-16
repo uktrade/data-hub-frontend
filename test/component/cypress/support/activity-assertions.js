@@ -47,3 +47,7 @@ export const assertProjectKindLabel = () => {
 export const assertOrderKindLabel = () => {
   assertText('[data-test="order-kind-label"]', 'New Order')
 }
+
+export const assertGreatKindLabel = () => {
+  assertText('[data-test="great-kind-label"]', 'great.gov.uk')
+}
