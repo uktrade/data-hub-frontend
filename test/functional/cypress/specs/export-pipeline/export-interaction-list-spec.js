@@ -4,6 +4,7 @@ const urls = require('../../../../../src/lib/urls')
 
 const endpoint = 'TBC'
 const queryParams = 'TBC'
+const exportOwnEndpoint = '/api-proxy/v4/export/owner'
 const requestUrl = `${endpoint}?${queryParams}`
 const exportInteractions = urls.exportPipeline.interactions
 
@@ -19,13 +20,13 @@ describe('Export project interaction sort', () => {
     const exportInteractionsFaker = interactionListFaker(3)
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}&sortby=created_on%Adesc`, {
+      cy.intercept('GET', `${requestUrl}&sortby=created_on%3Adesc`, {
         body: {
           count: exportInteractionsFaker.length,
           results: exportInteractionsFaker,
         },
       }).as('apiReqInteractionList')
-      cy.intercept('GET', `${endpoint}`, [])
+      cy.intercept('GET', `${exportOwnEndpoint}`, [])
       cy.visit(exportInteractions)
     })
 
@@ -49,9 +50,46 @@ describe('Export project interaction sort', () => {
     })
   })
 
-  // TODO: Data result assertion
   context('User sort options', () => {
-    it('should sort by "Recently created"', () => {})
+    const element = '[data-test="sortby-select"] select'
+    const exportInteractionsFaker = interactionListFaker(3)
+
+    beforeEach(() => {
+      // Sort by created_on
+      cy.intercept('GET', `${requestUrl}&sortby=created_on%3Adesc`, {
+        body: {
+          count: exportInteractionsFaker.length,
+          results: exportInteractionsFaker,
+        },
+      }).as('apiReqCreatedOn')
+
+      // Sort by company__name
+      cy.intercept('GET', `${requestUrl}&sortby=company__name`).as(
+        'apiReqCompanyAsc'
+      )
+
+      // Sort by subject
+      cy.intercept('GET', `${requestUrl}&sortby=subject`, {
+        body: {
+          count: exportInteractionsFaker.length,
+          results: exportInteractionsFaker,
+        },
+      }).as('apiReqSubjectAsc')
+
+      // Get owners created export
+      cy.intercept('GET', `${exportOwnEndpoint}`, [])
+      cy.visit(exportInteractions)
+      cy.wait('@apiReqCreatedOn')
+    })
+
+    it('should sort by "Recently created"', () => {
+      cy.get(element).select('Company name A-Z') // Select other option first
+      cy.get(element).select('Recently created')
+      cy.wait('@apiReqCreatedOn').then(() =>
+        cy.url().should('include', 'sortby=created_on%3Adesc')
+      )
+    })
+    // TODO: Data result assertion
     it('should sort by "Company name A-Z"', () => {})
     it('should sort by "Subject A-Z"', () => {})
   })
