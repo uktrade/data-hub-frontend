@@ -1,6 +1,5 @@
-import { formatDate, addMonths, addDays } from 'date-fns'
+import { format, addMonths, addDays } from 'date-fns'
 
-import { DATE_FORMAT_ISO } from '../../../../../client/utils/date-utils'
 import { getDueDate } from '../transformers'
 
 describe('getDueDate', () => {
@@ -15,7 +14,7 @@ describe('getDueDate', () => {
   it('should return the correct due date for the next month', () => {
     const today = new Date()
     const nextMonthDate = addMonths(today, 1)
-    const formattedDate = formatDate(nextMonthDate, DATE_FORMAT_ISO)
+    const formattedDate = format(nextMonthDate, 'yyyy-MM-dd')
 
     const result = getDueDate('month')
     expect(result).to.equal(formattedDate)
@@ -24,14 +23,9 @@ describe('getDueDate', () => {
   it('should return the correct due date for the next week', () => {
     const today = new Date()
     const nextWeekDate = addDays(today, 7)
-    const formattedDate = formatDate(nextWeekDate, DATE_FORMAT_ISO)
+    const formattedDate = format(nextWeekDate, 'yyyy-MM-dd')
 
     const result = getDueDate('week')
     expect(result).to.equal(formattedDate)
-  })
-
-  it('should return null for an unknown due date type', () => {
-    const result = getDueDate('unknown')
-    expect(result).to.be.null
   })
 })

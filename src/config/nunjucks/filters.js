@@ -34,7 +34,7 @@ const {
 const { newlineToBr } = require('../../lib/text-formatting')
 const { joinPaths } = require('../../lib/path')
 const {
-  formatDate: dateFormatter,
+  formatDate,
   DATE_FORMAT_FULL,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } = require('../../client/utils/date-utils')
@@ -155,10 +155,10 @@ const filters = {
   },
 
   formatDate: (value, format = DATE_FORMAT_FULL) =>
-    dateFormatter(new Date(value), format),
+    formatDate(new Date(value), format),
 
   formatDateTime: (value, dateFormat = DATE_FORMAT_MEDIUM_WITH_TIME) =>
-    dateFormatter(value, dateFormat),
+    formatDate(value, dateFormat),
 
   formatAddress: (address, join = ', ', featureFlag = false) => {
     if (!address) {

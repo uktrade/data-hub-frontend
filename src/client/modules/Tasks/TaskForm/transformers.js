@@ -66,7 +66,7 @@ export const getDueDate = (dueDate, customDate) => {
     week: () => formatDate(addDays(today, 7), DATE_FORMAT_ISO),
   }
 
-  return handlers[dueDate]?.() || null
+  return handlers[dueDate]?.()
 }
 
 const transformAdvisor = (advisers, currentAdviserId) =>

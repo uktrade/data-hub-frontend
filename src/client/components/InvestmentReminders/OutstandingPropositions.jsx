@@ -87,7 +87,7 @@ const OutstandingPropositions = ({ results, count }) => (
                   {investment_project.project_code}
                 </StyledProjectCode>
                 <StyledDueDate data-test="outstanding-proposition-deadline">
-                  Due {formatDate(new Date(deadline), DATE_FORMAT_FULL_DAY)}
+                  Due {formatDate(deadline, DATE_FORMAT_FULL_DAY)}
                 </StyledDueDate>
               </StyledDetails>
               <StyledDueCountdown data-test="outstanding-proposition-countdown">

@@ -72,7 +72,7 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate, ...props }) => {
         {getDifferenceInDaysLabel(estimatedLandDate)}
       </StyledTitle>
       <StyledBody data-test="estimated-land-date-date">
-        {formatDate(new Date(estimatedLandDate), DATE_FORMAT_FULL_DAY)}
+        {formatDate(estimatedLandDate, DATE_FORMAT_FULL_DAY)}
       </StyledBody>
     </Panel>
   )
