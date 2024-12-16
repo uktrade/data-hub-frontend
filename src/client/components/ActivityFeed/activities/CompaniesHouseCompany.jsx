@@ -11,7 +11,7 @@ import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 export default class CompaniesHouseCompany extends React.PureComponent {
   static propTypes = {
@@ -35,21 +35,27 @@ export default class CompaniesHouseCompany extends React.PureComponent {
     const subject = get(activity, 'summary')
     const address = get(activity, 'object.location:dit:address')
     const postcode = get(activity, 'object.location:dit:postcode')
-    const confStmtLastMadeUpDate = format(
+    const confStmtLastMadeUpDate = formatDate(
       get(activity, 'object.dit:confStmtLastMadeUpDate')
     )
-    const confStmtNextDueDate = format(
-      get(activity, 'object.dit:confStmtNextDueDate')
+    const confStmtNextDueDate = formatDate(
+      get(activity, 'object.dit:confStmtNextDueDate'),
+      DATE_FORMAT_COMPACT
     )
-    const incorporationDate = format(
+    const incorporationDate = formatDate(
       get(activity, 'object.dit:incorporationDate')
     )
-    const nextDueDate = format(get(activity, 'object.dit:nextDueDate'))
-    const returnsLastMadeUpDate = format(
-      get(activity, 'object.dit:returnsLastMadeUpDate')
+    const nextDueDate = formatDate(
+      get(activity, 'object.dit:nextDueDate'),
+      DATE_FORMAT_COMPACT
     )
-    const returnsNextDueDate = format(
-      get(activity, 'object.dit:returnsNextDueDate')
+    const returnsLastMadeUpDate = formatDate(
+      get(activity, 'object.dit:returnsLastMadeUpDate'),
+      DATE_FORMAT_COMPACT
+    )
+    const returnsNextDueDate = formatDate(
+      get(activity, 'object.dit:returnsNextDueDate'),
+      DATE_FORMAT_COMPACT
     )
     const sicCodes = get(activity, 'object.dit:sicCodes')
 
@@ -60,7 +66,7 @@ export default class CompaniesHouseCompany extends React.PureComponent {
       </span>
     ))
 
-    const date = format(startTime)
+    const date = formatDate(startTime, DATE_FORMAT_COMPACT)
 
     const metadata = [
       { label: 'Date', value: date },

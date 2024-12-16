@@ -18,8 +18,9 @@ import {
 } from '../../components/Resource'
 import urls from '../../../lib/urls'
 import { currencyGBP } from '../../utils/number-utils'
-import { format, getDifferenceInWords } from '../../utils/date'
-import { DATE_LONG_FORMAT_1, FORM_LAYOUT } from '../../../common/constants'
+import { getDifferenceInWords } from '../../utils/date'
+import { formatDate, DATE_FORMAT_FULL } from '../../utils/date-utils'
+import { FORM_LAYOUT } from '../../../common/constants'
 import { validateAmountRecieved, validateIfDateInPast } from './validators'
 import { TASK_RECONCILE_OMIS_PAYMENT } from './state'
 import {
@@ -106,7 +107,7 @@ export const InvoiceDetails = ({ invoice, reference }) => (
       <Table.Row>
         <Table.CellHeader>Payment due date</Table.CellHeader>
         <Table.Cell>
-          {format(invoice.paymentDueDate, DATE_LONG_FORMAT_1) +
+          {formatDate(invoice.paymentDueDate, DATE_FORMAT_FULL) +
             ' (' +
             getDifferenceInWords(invoice.paymentDueDate) +
             ')'}

@@ -1,14 +1,14 @@
 const fixtures = require('../../fixtures')
 const {
   formatDate,
-  DATE_MEDIUM_FORMAT,
+  DATE_FORMAT_MEDIUM,
 } = require('../../../../../src/client/utils/date-utils')
 const { omis } = require('../../../../../src/lib/urls')
 const {
   assertSummaryTable,
 } = require('../../../../functional/cypress/support/assertions')
 
-const today = formatDate(new Date(), DATE_MEDIUM_FORMAT)
+const today = formatDate(new Date(), DATE_FORMAT_MEDIUM)
 
 describe('Order', () => {
   const company = fixtures.company.create.defaultCompany('order testing')

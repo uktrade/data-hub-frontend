@@ -13,7 +13,7 @@ import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 export default class CompaniesHouseAccount extends React.PureComponent {
   static propTypes = {
@@ -32,8 +32,9 @@ export default class CompaniesHouseAccount extends React.PureComponent {
     const { activity, isOverview } = this.props
     const startTime = get(activity, 'object.startTime')
     const summary = get(activity, 'summary')
-    const balanceSheetDate = format(
-      get(activity, 'object.dit:balanceSheetDate')
+    const balanceSheetDate = formatDate(
+      get(activity, 'object.dit:balanceSheetDate'),
+      DATE_FORMAT_COMPACT
     )
     const netAssetsLiabilities = currencyGBP(
       get(
@@ -41,12 +42,18 @@ export default class CompaniesHouseAccount extends React.PureComponent {
         'object.dit:netAssetsLiabilitiesIncludingPensionAssetLiability'
       )
     )
-    const periodEnd = format(get(activity, 'object.dit:periodEnd'))
-    const periodStart = format(get(activity, 'object.dit:periodStart'))
+    const periodEnd = formatDate(
+      get(activity, 'object.dit:periodEnd'),
+      DATE_FORMAT_COMPACT
+    )
+    const periodStart = formatDate(
+      get(activity, 'object.dit:periodStart'),
+      DATE_FORMAT_COMPACT
+    )
     const shareholderFunds = currencyGBP(
       get(activity, 'object.dit:shareholderFunds')
     )
-    const date = format(startTime)
+    const date = formatDate(startTime, DATE_FORMAT_COMPACT)
     const metadata = [
       { label: 'Date', value: date },
       { label: 'Balance sheet date', value: balanceSheetDate },

@@ -11,7 +11,7 @@ import {
 } from '../../../components/Resource'
 import { buildCompanyBreadcrumbs } from '../utils'
 import { DARK_GREY, GREY_2 } from '../../../utils/colours'
-import { format } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 
 const BorderContainer = styled('div')`
@@ -42,7 +42,7 @@ const objectiveMetadata = (objective) => {
     },
     {
       label: 'Due date',
-      value: format(objective.targetDate),
+      value: formatDate(objective.targetDate, DATE_FORMAT_COMPACT),
     },
     {
       label: 'Progress',
@@ -102,13 +102,13 @@ const ArchivedObjectives = () => {
                               <LastUpdatedHeading data-test="last-updated-details">
                                 <span>{`Objective complete. Updated by ${
                                   objective?.modifiedBy?.name
-                                }: ${format(objective.modifiedOn)}`}</span>
+                                }: ${formatDate(objective.modifiedOn, DATE_FORMAT_COMPACT)}`}</span>
                               </LastUpdatedHeading>
                             ) : (
                               <LastUpdatedHeading data-test="last-updated-details">
                                 <span>{`Objective incomplete. Archived by ${
                                   objective?.modifiedBy?.name
-                                }: ${format(objective.modifiedOn)}`}</span>
+                                }: ${formatDate(objective.modifiedOn, DATE_FORMAT_COMPACT)}`}</span>
                               </LastUpdatedHeading>
                             )}
                           </GridCol>

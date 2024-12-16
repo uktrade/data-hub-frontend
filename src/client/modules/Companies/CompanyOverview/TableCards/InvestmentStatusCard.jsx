@@ -19,7 +19,10 @@ import {
   StyledTableRow,
 } from './components'
 
-const { format } = require('../../../../utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} = require('../../../../utils/date-utils')
 
 const buildProjectStatusUrl = (companyId, param) =>
   urls.companies.investments.companyInvestmentProjects(companyId) + param
@@ -74,7 +77,7 @@ const InvestmentStatusCard = ({
                 )}
                 data-test="latest-won-project-link"
               >
-                {`${format(summary.won.last_won_project.last_changed)} - ${
+                {`${formatDate(summary.won.last_won_project.last_changed, DATE_FORMAT_COMPACT)} - ${
                   summary.won.last_won_project.name
                 }`}
               </Link>

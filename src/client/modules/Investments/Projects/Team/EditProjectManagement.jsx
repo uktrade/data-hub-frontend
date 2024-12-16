@@ -21,7 +21,10 @@ import {
   InvestmentResource,
 } from '../../../../components/Resource'
 import ProjectLayout from '../../../../components/Layout/ProjectLayout'
-import { format } from '../../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../utils/date-utils'
 import { currencyGBP } from '../../../../utils/number-utils'
 
 const EditProjectManagement = () => {
@@ -125,7 +128,10 @@ const EditProjectManagement = () => {
                   />
                   <SummaryTable.Row
                     heading="Estimated land date"
-                    children={format(project.estimatedLandDate, 'MMMM yyyy')}
+                    children={formatDate(
+                      project.estimatedLandDate,
+                      DATE_FORMAT_MONTH_YEAR
+                    )}
                   />
                   <SummaryTable.Row
                     heading="Total investment"

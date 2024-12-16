@@ -13,8 +13,10 @@ import {
   taskWithCompanyFaker,
   taskWithInvestmentProjectFaker,
 } from '../../fakers/task'
-import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
-import { format } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_ISO,
+} from '../../../../../src/client/utils/date-utils'
 import { companyFaker } from '../../fakers/companies'
 import { investmentProjectFaker } from '../../fakers/investment-projects'
 
@@ -45,7 +47,7 @@ describe('Edit generic task', () => {
       assertPayload('@apiRequest', {
         title: 'new task',
         description: 'new description',
-        due_date: format(task.dueDate, DATE_LONG_FORMAT_3),
+        due_date: formatDate(task.dueDate, DATE_FORMAT_ISO),
         email_reminders_enabled: task.emailRemindersEnabled,
         investment_project: null,
         company: null,
@@ -110,7 +112,7 @@ describe('Edit investment project task', () => {
       assertPayload('@apiRequest', {
         title: 'new task',
         description: 'new description',
-        due_date: format(investmentProjectTask.dueDate, DATE_LONG_FORMAT_3),
+        due_date: formatDate(investmentProjectTask.dueDate, DATE_FORMAT_ISO),
         email_reminders_enabled: investmentProjectTask.emailRemindersEnabled,
         company: null,
         investment_project: investmentProjectTask.investmentProject.id,
@@ -252,7 +254,7 @@ describe('Edit company task', () => {
       assertPayload('@apiRequest', {
         title: 'new task',
         description: 'new description',
-        due_date: format(companyTask.dueDate, DATE_LONG_FORMAT_3),
+        due_date: formatDate(companyTask.dueDate, DATE_FORMAT_ISO),
         email_reminders_enabled: companyTask.emailRemindersEnabled,
         investment_project: null,
         company: companyTask.company.id,

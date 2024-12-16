@@ -11,7 +11,7 @@ import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
-import { format } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
 export default class DirectoryFormsApi extends React.PureComponent {
@@ -67,7 +67,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
           )
         )
       const metadata = [
-        { label: 'Date', value: format(sentDate) },
+        { label: 'Date', value: formatDate(sentDate, DATE_FORMAT_COMPACT) },
         {
           label: 'Contact(s)',
           value: formattedContacts(),
@@ -83,7 +83,7 @@ export default class DirectoryFormsApi extends React.PureComponent {
         <OverviewActivityCardWrapper dataTest="export-support-service-summary">
           <ActivityOverviewSummary
             activity={activity}
-            date={format(sentDate)}
+            date={formatDate(sentDate, DATE_FORMAT_COMPACT)}
             kind={kind}
             url={url}
             subject={subject}

@@ -4,10 +4,10 @@ import { STATUSES } from './constants'
 import { omis } from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
 
-const { format } = require('../../../utils/date')
 const {
   formatDate,
   DATE_FORMAT_MEDIUM,
+  DATE_FORMAT_COMPACT,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } = require('../../../utils/date-utils')
 
@@ -51,7 +51,9 @@ export const transformOrderToListItem = ({
     },
     {
       label: 'Delivery date',
-      value: delivery_date ? format(delivery_date) : null,
+      value: delivery_date
+        ? formatDate(delivery_date, DATE_FORMAT_COMPACT)
+        : null,
     },
   ].filter((item) => item.value)
 

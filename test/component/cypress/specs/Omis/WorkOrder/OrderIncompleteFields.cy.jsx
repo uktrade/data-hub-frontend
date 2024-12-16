@@ -7,7 +7,10 @@ import {
   VAT_STATUS,
 } from '../../../../../../src/client/modules/Omis/constants'
 import urls from '../../../../../../src/lib/urls'
-import { format } from '../../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} from '../../../../../../src/client/utils/date-utils'
 
 const quoteAwaitingOrder = {
   id: '123',
@@ -83,8 +86,9 @@ describe('OrderIncompleteFields', () => {
         .should('exist')
         .should(
           'have.text',
-          `This order was cancelled on ${format(
-            cancelledOrder.cancelledOn
+          `This order was cancelled on ${formatDate(
+            cancelledOrder.cancelledOn,
+            DATE_FORMAT_COMPACT
           )} by ${cancelledOrder.cancelledBy.name}.`
         )
       cy.get('[data-test="archive-reason"]')

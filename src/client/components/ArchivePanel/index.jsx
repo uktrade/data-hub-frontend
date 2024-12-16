@@ -6,7 +6,7 @@ import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 
 import StatusMessage from '../../../client/components/StatusMessage'
-import { format } from '../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../utils/date-utils'
 
 const negativeSpacing = '-' + SPACING.SCALE_4
 
@@ -48,10 +48,11 @@ const ArchivePanel = ({
     <StatusMessage>
       <StyledMessage data-test="archive-message">
         {archivedBy
-          ? `This ${type} was ${archiveMessage} on ${format(
-              archivedOn
+          ? `This ${type} was ${archiveMessage} on ${formatDate(
+              archivedOn,
+              DATE_FORMAT_COMPACT
             )} by ${checkArchiverFormat(archivedBy)}.`
-          : `This ${type} was automatically archived on ${format(archivedOn)}.`}
+          : `This ${type} was automatically archived on ${formatDate(archivedOn, DATE_FORMAT_COMPACT)}.`}
       </StyledMessage>
       <StyledReason data-test="archive-reason">{`Reason: ${archiveReason}`}</StyledReason>
       {unarchiveUrl && (

@@ -2,7 +2,10 @@ import { capitalize } from 'lodash'
 
 import urls from '../../../../../src/lib/urls'
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
-import { format } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../../src/client/utils/date-utils'
 import { exportFaker } from '../../fakers/export'
 
 const {
@@ -33,9 +36,9 @@ describe('Export Details summary ', () => {
         exportItem.estimated_export_value_years?.name
       } / ${currencyGBP(exportItem.estimated_export_value_amount)}`
 
-      const estimatedWinDate = format(
-        exportItem.estimated_win_date.toISOString(),
-        'MMMM yyyy'
+      const estimatedWinDate = formatDate(
+        exportItem.estimated_win_date,
+        DATE_FORMAT_MONTH_YEAR
       )
       assertKeyValueTable('bodyMainContent', {
         'Export title': exportItem.title,

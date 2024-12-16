@@ -23,8 +23,11 @@ import { transformBusinessActivity } from './transformers'
 import urls from '../../../../../lib/urls'
 import { state2props } from './state'
 import { transformArray } from '../../../Companies/CompanyInvestments/LargeCapitalProfile/transformers'
-import { format } from '../../../../utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../../../common/constants'
+import {
+  formatDate,
+  DATE_FORMAT_FULL,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../utils/date-utils'
 import { GREY_3, BLACK } from '../../../../utils/colours'
 import { currencyGBP } from '../../../../utils/number-utils'
 import InvestmentName from '../InvestmentName'
@@ -157,7 +160,10 @@ const ProjectDetails = ({ currentAdviserId }) => {
               {project.estimatedLandDate ? (
                 <SummaryTable.TextRow
                   heading="Estimated land date"
-                  value={format(project.estimatedLandDate, 'MMMM yyyy')}
+                  value={formatDate(
+                    project.estimatedLandDate,
+                    DATE_FORMAT_MONTH_YEAR
+                  )}
                 />
               ) : null}
               {project.likelihoodToLand ? (
@@ -169,7 +175,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
               {project.actualLandDate ? (
                 <SummaryTable.TextRow
                   heading="Actual land date"
-                  value={format(project.actualLandDate, DATE_LONG_FORMAT_1)}
+                  value={formatDate(project.actualLandDate, DATE_FORMAT_FULL)}
                 />
               ) : null}
               {project.investorType ? (

@@ -39,7 +39,7 @@ import {
 } from './styled'
 import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
-import { format } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import { hqLabels } from '../../../../apps/companies/labels'
 
 const ToggleSubsidiariesButton = ({
@@ -405,7 +405,10 @@ const HierarchyItem = ({
               <dt>Last interaction date</dt>
               <dd>
                 {company.latest_interaction_date
-                  ? format(company.latest_interaction_date)
+                  ? formatDate(
+                      company.latest_interaction_date,
+                      DATE_FORMAT_COMPACT
+                    )
                   : 'Not set'}
               </dd>
             </InlineDescriptionList>

@@ -17,8 +17,7 @@ import {
   transformFdiType,
 } from './transformers'
 import urls from '../../../../lib/urls'
-import { format } from '../../../utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../../common/constants'
+import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from './InvestmentName'
 
@@ -92,7 +91,9 @@ const landingTable = (ukCompany = null, actualLandDate) => (
     <SummaryTable.TextRow
       heading="Actual land date"
       value={
-        actualLandDate ? format(actualLandDate, DATE_LONG_FORMAT_1) : NOT_KNOWN
+        actualLandDate
+          ? formatDate(actualLandDate, DATE_FORMAT_FULL)
+          : NOT_KNOWN
       }
     />
   </SummaryTable>

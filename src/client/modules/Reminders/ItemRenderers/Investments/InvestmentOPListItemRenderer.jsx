@@ -6,8 +6,7 @@ import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { ListItem, ItemHeader, ItemFooter } from '../styled'
-import { DATE_DAY_LONG_FORMAT } from '../../../../../common/constants'
-import { format } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_FULL_DAY } from '../../../../utils/date-utils'
 import urls from '../../../../../lib/urls'
 
 const ItemContent = styled('div')({
@@ -20,7 +19,7 @@ const InvestmentOPListItemRenderer = (item) => (
     <GridRow>
       <GridCol>
         <ItemHeader data-test="item-header">
-          Due {format(item.deadline, DATE_DAY_LONG_FORMAT)}
+          Due {formatDate(item.deadline, DATE_FORMAT_FULL_DAY)}
         </ItemHeader>
         <ItemContent data-test="item-content">
           <Link

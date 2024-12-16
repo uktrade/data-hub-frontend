@@ -11,7 +11,7 @@ import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 import OverviewActivityCardWrapper from './card/OverviewActivityCardWrapper'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 export default class HmrcExporter extends React.PureComponent {
   static propTypes = {
@@ -40,7 +40,7 @@ export default class HmrcExporter extends React.PureComponent {
         </span>
       )
     )
-    const date = format(startTime)
+    const date = formatDate(startTime, DATE_FORMAT_COMPACT)
     const metadata = [
       { label: 'Date', value: date },
       { label: 'Export item code(s)', value: exportItemCodesList },

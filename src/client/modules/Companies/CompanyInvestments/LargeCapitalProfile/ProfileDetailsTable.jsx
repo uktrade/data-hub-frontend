@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SummaryTable } from '../../../../components'
 import { requiredCheckTypes } from './constants'
-import { format } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../../utils/date-utils'
 
 const buildRequiredCheckField = (
   requiredChecks,
@@ -16,9 +16,9 @@ const buildRequiredCheckField = (
     return (
       requiredChecks.name +
       `\n` +
-      `Date of most recent background checks: ${format(
+      `Date of most recent background checks: ${formatDate(
         requiredChecksConductedOn,
-        'dd MM yyyy'
+        DATE_FORMAT_COMPACT
       )}` +
       `\n` +
       `Person responsible for most recent background checks: ${requiredChecksConductedBy?.name}`

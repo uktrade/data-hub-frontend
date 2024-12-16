@@ -1,5 +1,7 @@
-import { format } from '../../../../../src/client/utils/date'
-import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
+import {
+  formatDate,
+  DATE_FORMAT_ISO,
+} from '../../../../../src/client/utils/date-utils'
 import { companyFaker } from '../../fakers/companies'
 import { objectiveFaker } from '../../fakers/objective'
 import { clickButton } from '../../support/actions'
@@ -120,9 +122,9 @@ describe('Company account management', () => {
         has_blocker: withBlockersObjective.has_blocker,
         progress: withBlockersObjective.progress,
         subject: withBlockersObjective.subject,
-        target_date: format(
+        target_date: formatDate(
           withBlockersObjective.target_date,
-          DATE_LONG_FORMAT_3
+          DATE_FORMAT_ISO
         ),
       })
     })

@@ -5,9 +5,9 @@ import urls from '../../../../../lib/urls'
 
 import { addressToString } from '../../../../utils/addresses'
 
-const { format } = require('../../../../utils/date')
 const {
   formatDate,
+  DATE_FORMAT_COMPACT,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } = require('../../../../utils/date-utils')
 
@@ -46,7 +46,7 @@ const transformGlobalHQToListItem = (childCompanyId) => (company) => {
   if (latest_interaction_date) {
     metadata.push({
       label: 'Last interaction date',
-      value: format(latest_interaction_date),
+      value: formatDate(latest_interaction_date, DATE_FORMAT_COMPACT),
     })
   }
 

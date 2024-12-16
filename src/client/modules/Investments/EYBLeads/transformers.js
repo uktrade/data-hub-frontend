@@ -1,7 +1,7 @@
 import urls from '../../../../lib/urls'
 import { TAG_COLOURS } from '../../../components/Tag'
-import { format } from '../../../utils/date'
 import { VALUES_VALUE_TO_LABEL_MAP } from './constants'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 
 export const transformLeadToListItem = ({
   id,
@@ -29,7 +29,7 @@ export const transformLeadToListItem = ({
   const metadata = [
     {
       label: 'Submitted to EYB',
-      value: format(triage_created, 'dd MMM yyyy'),
+      value: formatDate(triage_created, DATE_FORMAT_COMPACT),
     },
     { label: 'Estimated spend', value: spend },
     { label: 'Sector', value: sector ? sector.name : '' },

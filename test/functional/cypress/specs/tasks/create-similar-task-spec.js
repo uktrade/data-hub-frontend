@@ -10,8 +10,10 @@ import {
   assertPayload,
   assertFlashMessage,
 } from '../../../cypress/support/assertions'
-import { DATE_LONG_FORMAT_3 } from '../../../../../src/common/constants'
-import { format } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_ISO,
+} from '../../../../../src/client/utils/date-utils'
 
 describe('Copy task from generic task task', () => {
   const genericTask = taskFaker()
@@ -89,7 +91,7 @@ function assertTaskForm(
     interaction: interactionId,
     title: 'test copy task',
     description: 'test copy description',
-    due_date: format(task.dueDate, DATE_LONG_FORMAT_3),
+    due_date: formatDate(task.dueDate, DATE_FORMAT_ISO),
     email_reminders_enabled: task.emailRemindersEnabled,
     reminder_days: task.reminderDays,
     advisers: task.advisers.map((adviser) => adviser.id),

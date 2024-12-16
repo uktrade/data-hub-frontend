@@ -13,7 +13,10 @@ import {
   selectFirstTypeaheadOption,
 } from '../../support/actions'
 import { investments } from '../../../../../src/lib/urls'
-import { format } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} from '../../../../../src/client/utils/date-utils'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
 
@@ -171,7 +174,7 @@ describe('EYB leads collection page', () => {
         .should('contain', eybLead.company.name)
         .should(
           'contain',
-          `Submitted to EYB ${format(eybLead.triage_created, 'dd MMM yyyy')}`
+          `Submitted to EYB ${formatDate(eybLead.triage_created, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Estimated spend ${eybLead.spend}`)
         .should('contain', `Sector ${eybLead.sector.name}`)

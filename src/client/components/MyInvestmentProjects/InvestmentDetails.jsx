@@ -6,7 +6,7 @@ import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { companies, interactions } from '../../../lib/urls'
 import { GREY_3, DARK_GREY } from '../../utils/colours'
 
-const { format } = require('../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../utils/date-utils')
 
 const StyledDiv = styled('div')({
   height: '100%',
@@ -75,7 +75,9 @@ const InvestmentDetails = ({
       {latestInteraction && (
         <>
           <StyledDT>Last interaction:</StyledDT>
-          <StyledDD>{format(latestInteraction.date)}</StyledDD>
+          <StyledDD>
+            {formatDate(latestInteraction.date, DATE_FORMAT_COMPACT)}
+          </StyledDD>
           <StyledDT>Interaction subject:</StyledDT>
           <StyledDD>
             <Link href={interactions.detail(latestInteraction.id)}>
