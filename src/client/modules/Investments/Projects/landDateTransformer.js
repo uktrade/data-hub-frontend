@@ -4,7 +4,7 @@
  * put this back into the main transformers file.
  */
 
-const { formatMonthYearDate } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_ISO } = require('../../../utils/date-utils')
 
 const MONTH_DATE_FIELD_LIST = [
   'estimated_land_date_before',
@@ -17,7 +17,7 @@ const transformLandDateFilters = (params) => {
   // The API only accepts yyyy-MM-dd format, so month-year filters have to be updated
   MONTH_DATE_FIELD_LIST.forEach((field) => {
     if (field in params) {
-      params[field] = formatMonthYearDate(params[field])
+      params[field] = formatDate(params[field], DATE_FORMAT_ISO)
     }
   })
   return params

@@ -1,18 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
 import { H3 } from '@govuk-react/heading'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
-import urls from '../../../lib/urls'
 import { DARK_GREY, LINK_COLOUR, RED, TEXT_COLOUR } from '../../utils/colours'
-
-const {
-  formatWithoutParsing,
-  getDifferenceInDaysLabel,
-} = require('../../utils/date')
+import { formatDate, DATE_FORMAT_FULL_DAY } from '../../utils/date-utils'
+import { getDifferenceInDaysLabel } from '../../utils/date'
+import urls from '../../../lib/urls'
 
 const StyledSubHeading = styled(H3)`
   color: ${RED};
@@ -92,11 +87,7 @@ const OutstandingPropositions = ({ results, count }) => (
                   {investment_project.project_code}
                 </StyledProjectCode>
                 <StyledDueDate data-test="outstanding-proposition-deadline">
-                  Due{' '}
-                  {formatWithoutParsing(
-                    new Date(deadline),
-                    DATE_DAY_LONG_FORMAT
-                  )}
+                  Due {formatDate(deadline, DATE_FORMAT_FULL_DAY)}
                 </StyledDueDate>
               </StyledDetails>
               <StyledDueCountdown data-test="outstanding-proposition-countdown">

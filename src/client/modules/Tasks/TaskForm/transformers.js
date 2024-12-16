@@ -1,20 +1,17 @@
+import { addDays, addMonths } from 'date-fns'
+
 import { transformOptionToValue } from '../../../../apps/transformers'
-import {
-  OPTION_YES,
-  DATE_LONG_FORMAT_3,
-  OPTION_NO,
-} from '../../../../common/constants'
+import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
 import {
   transformArrayIdNameToValueLabel,
   transformIdNameToValueLabel,
 } from '../../../transformers'
 import {
-  formatWithoutParsing,
   transformValueForAPI,
-  addMonths,
-  addDays,
   convertDateToFieldDateObject,
 } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_ISO } from '../../../utils/date-utils'
+
 import { OPTIONS } from './constants'
 
 export const transformTaskFormValuesForAPI = (
@@ -60,17 +57,16 @@ const getUniquePKValue = (formValues) => {
   return { investment_project: null, company: null, interaction: null }
 }
 
-const getDueDate = (dueDate, customDate) => {
-  switch (dueDate) {
-    case 'custom':
-      return transformValueForAPI(customDate)
-    case 'month':
-      return formatWithoutParsing(addMonths(new Date(), 1), DATE_LONG_FORMAT_3)
-    case 'week':
-      return formatWithoutParsing(addDays(new Date(), 7), DATE_LONG_FORMAT_3)
-    default:
-      null
+export const getDueDate = (dueDate, customDate) => {
+  const today = new Date()
+
+  const handlers = {
+    custom: () => transformValueForAPI(customDate),
+    month: () => formatDate(addMonths(today, 1), DATE_FORMAT_ISO),
+    week: () => formatDate(addDays(today, 7), DATE_FORMAT_ISO),
   }
+
+  return handlers[dueDate]?.()
 }
 
 const transformAdvisor = (advisers, currentAdviserId) =>

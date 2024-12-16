@@ -2,7 +2,12 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const { assertKeyValueTable } = require('../../support/assertions')
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_DAY,
+  DATE_FORMAT_MONTH,
+  DATE_FORMAT_YEAR,
+} = require('../../../../../src/client/utils/date-utils')
 const {
   clickSaveAndReturnButton,
 } = require('../../../../functional/cypress/support/form-fillers')
@@ -23,9 +28,9 @@ const createEvent = () => {
     town: 'Campinas',
     country: 'Brazil',
     endDate: {
-      year: formatWithoutParsing(today, 'yyyy'),
-      month: formatWithoutParsing(today, 'MM'),
-      day: formatWithoutParsing(today, 'dd'),
+      year: formatDate(today, DATE_FORMAT_YEAR),
+      month: formatDate(today, DATE_FORMAT_MONTH),
+      day: formatDate(today, DATE_FORMAT_DAY),
     },
     eventType: 'Account management',
     leadTeam: 'Advanced Manufacturing Sector',
@@ -40,9 +45,9 @@ const createEvent = () => {
     ],
     relatedProgrammes: ['CEN Energy', 'CEN Services'],
     startDate: {
-      year: formatWithoutParsing(today, 'yyyy'),
-      month: formatWithoutParsing(today, 'MM'),
-      day: formatWithoutParsing(today, 'dd'),
+      year: formatDate(today, DATE_FORMAT_YEAR),
+      month: formatDate(today, DATE_FORMAT_MONTH),
+      day: formatDate(today, DATE_FORMAT_DAY),
     },
     eventShared: true,
     teams: ['Biopartner'],

@@ -74,7 +74,7 @@ function transformCompanyToDnbHierarchyList({
   return {
     headingText: name,
     headingUrl: urls.companies.detail(id),
-    subheading: `Updated on ${formatDateTime(modified_on)}`,
+    subheading: modified_on && `Updated on ${formatDateTime(modified_on)}`,
     metadata,
     badges,
   }

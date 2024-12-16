@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { endOfTomorrow } from 'date-fns'
 
-import ActivityCard from './ActivityCard'
-import { OVERVIEW_UPCOMING_ACTIVITY_ID, upcomingState2props } from './state'
-import { formatWithoutParsing, tomorrow } from '../../../../../utils/date'
-import { DATE_LONG_FORMAT_3 } from '../../../../../../common/constants'
 import { COMPANIES__OVERVIEW_UPCOMING_ACTIVITY_LOADED } from '../../../../../actions'
+import { formatDate, DATE_FORMAT_ISO } from '../../../../../utils/date-utils'
+import { OVERVIEW_UPCOMING_ACTIVITY_ID, upcomingState2props } from './state'
+import ActivityCard from './ActivityCard'
 
 const UpcomingActivityCard = ({ company, results }) => (
   <ActivityCard
@@ -16,7 +16,7 @@ const UpcomingActivityCard = ({ company, results }) => (
     stateId={OVERVIEW_UPCOMING_ACTIVITY_ID}
     action={COMPANIES__OVERVIEW_UPCOMING_ACTIVITY_LOADED}
     additionalPayload={{
-      date_after: formatWithoutParsing(tomorrow(), DATE_LONG_FORMAT_3),
+      date_after: formatDate(endOfTomorrow(), DATE_FORMAT_ISO),
       sortby: 'date:asc',
     }}
   />

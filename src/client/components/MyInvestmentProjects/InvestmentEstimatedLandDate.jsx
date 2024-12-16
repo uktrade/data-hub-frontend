@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import { DATE_DAY_LONG_FORMAT } from '../../../common/constants'
 import {
   BLACK,
   BUTTON_COLOUR,
@@ -14,10 +13,11 @@ import {
 } from '../../../client/utils/colours'
 
 const {
-  formatWithoutParsing,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
 } = require('../../utils/date')
+
+const { formatDate, DATE_FORMAT_FULL_DAY } = require('../../utils/date-utils')
 
 const StyledPanel = styled('div')`
   padding: ${SPACING.SCALE_2};
@@ -72,10 +72,7 @@ const InvestmentEstimatedLandDate = ({ estimatedLandDate, ...props }) => {
         {getDifferenceInDaysLabel(estimatedLandDate)}
       </StyledTitle>
       <StyledBody data-test="estimated-land-date-date">
-        {formatWithoutParsing(
-          new Date(estimatedLandDate),
-          DATE_DAY_LONG_FORMAT
-        )}
+        {formatDate(estimatedLandDate, DATE_FORMAT_FULL_DAY)}
       </StyledBody>
     </Panel>
   )

@@ -75,7 +75,7 @@ describe('Edit company form transformers', () => {
         expect(actual).to.deep.equal({
           headingText: undefined,
           headingUrl: urls.companies.detail('123'),
-          subheading: 'Updated on undefined',
+          subheading: undefined,
           metadata: [],
           badges: [],
         })

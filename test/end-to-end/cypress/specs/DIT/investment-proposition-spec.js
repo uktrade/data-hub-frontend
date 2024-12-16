@@ -1,8 +1,14 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { investments } = require('../../../../../src/lib/urls')
-const { formatWithoutParsing } = require('../../../../../src/client/utils/date')
-const { DATE_LONG_FORMAT_1 } = require('../../../../../src/common/constants')
+const {
+  formatDate,
+  DATE_FORMAT_FULL,
+  DATE_FORMAT_DAY,
+  DATE_FORMAT_MONTH,
+  DATE_FORMAT_YEAR,
+} = require('../../../../../src/client/utils/date-utils')
+
 const {
   selectFirstMockedTypeaheadOption,
 } = require('../../../../functional/cypress/support/actions')
@@ -12,17 +18,17 @@ const {
 } = require('../../../../functional/cypress/support/assertions')
 
 const today = new Date()
-const todayFormatted = formatWithoutParsing(today, DATE_LONG_FORMAT_1)
+const todayFormatted = formatDate(today, DATE_FORMAT_FULL)
 
 const createProposition = (data) => {
   cy.get(selectors.entityCollection.addProposition).click()
   cy.get('[data-test=proposition-name-input]').type(data.name)
   cy.get('[data-test=proposition-scope-input]').type(data.scope)
   cy.get('[data-test=proposition_deadline-day]').type(
-    formatWithoutParsing(data.date, 'dd')
+    formatDate(data.date, DATE_FORMAT_DAY)
   )
   cy.get('[data-test=proposition_deadline-month]').type(
-    formatWithoutParsing(data.date, 'MM')
+    formatDate(data.date, DATE_FORMAT_MONTH)
   )
   selectFirstMockedTypeaheadOption({
     element: '[data-test="field-proposition_assignee"]',
@@ -30,7 +36,7 @@ const createProposition = (data) => {
     mockAdviserResponse: false,
   })
   cy.get('[data-test=proposition_deadline-year]').type(
-    formatWithoutParsing(data.date, 'yyyy')
+    formatDate(data.date, DATE_FORMAT_YEAR)
   )
   cy.get('[data-test=submit-button]').click()
 }

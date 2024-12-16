@@ -1,6 +1,9 @@
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
-import { formatWithoutParsing } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} from '../../../../../src/client/utils/date-utils'
 
 describe('Investment project propositions', () => {
   context('When the project has one proposition linked', () => {
@@ -44,7 +47,7 @@ describe('Investment project propositions', () => {
         .find('[data-test="metadata"]')
         .should(
           'contain',
-          'Deadline ' + formatWithoutParsing(new Date(), 'dd MMMM yyyy')
+          'Deadline ' + formatDate(new Date(), DATE_FORMAT_DAY_MONTH_YEAR)
         )
         .and('contain', 'Created on 15 June 2017')
         .and('contain', 'Adviser Paula Churing')
