@@ -9,7 +9,10 @@ const {
   assertBreadcrumbs,
   assertQueryParams,
 } = require('../../support/assertions')
-const { formatDate } = require('../../../../../src/client/utils/date-utils')
+const {
+  formatDate,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} = require('../../../../../src/client/utils/date-utils')
 
 const interaction = interactionFaker()
 const interactionsList = interactionsListFaker(10)

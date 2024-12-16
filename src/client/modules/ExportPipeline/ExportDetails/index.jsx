@@ -14,7 +14,7 @@ import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
 import {
   formatDate,
-  DATE_FORMAT_DAY_MONTH_YEAR,
+  DATE_FORMAT_MONTH_YEAR,
 } from '../../../../client/utils/date-utils'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { BLACK, GREY_3 } from '../../../utils/colours'
@@ -141,7 +141,7 @@ const ExportDetailsForm = ({ exportItem }) => {
                       ? 'Not set'
                       : formatDate(
                           exportItem.estimated_win_date,
-                          DATE_FORMAT_DAY_MONTH_YEAR
+                          DATE_FORMAT_MONTH_YEAR
                         )}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Status" hideWhenEmpty={false}>

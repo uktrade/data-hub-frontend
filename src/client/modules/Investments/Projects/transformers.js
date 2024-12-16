@@ -20,6 +20,7 @@ import {
 } from './constants'
 import {
   formatDate,
+  DATE_FORMAT_MONTH_YEAR,
   DATE_FORMAT_DAY_MONTH_YEAR,
 } from '../../../utils/date-utils'
 
@@ -277,7 +278,7 @@ export const transformInvestmentProjectToListItem = ({
       label: 'Estimated land date',
       value:
         estimated_land_date &&
-        formatDate(estimated_land_date, DATE_FORMAT_DAY_MONTH_YEAR),
+        formatDate(estimated_land_date, DATE_FORMAT_MONTH_YEAR),
     },
   ].filter((metadata) => metadata.value)
 
