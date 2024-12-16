@@ -8,7 +8,6 @@ import CardUtils from './card/CardUtils'
 import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
-import ActivityCardNotes from './card/ActivityCardNotes'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityOverviewSummary from './card/item-renderers/ActivityOverviewSummary'
 
@@ -101,38 +100,6 @@ export default class DirectoryFormsApi extends React.PureComponent {
             service="Export Support Service"
             kind={kind}
           />
-          <ActivityCardMetadata metadata={metadata} />
-        </ActivityCardWrapper>
-      )
-    } else {
-      kind = 'great.gov.uk Enquiry'
-      const metadata = [
-        { label: 'Date', value: format(sentDate) },
-        {
-          label: 'Name',
-          value: `${formData.first_name} ${formData.last_name}`,
-        },
-        { label: 'Job title', value: formData.position },
-        { label: 'Email', value: formData.email },
-      ]
-      return isOverview ? (
-        <ActivityOverviewSummary
-          dataTest="export-support-service-great-summary"
-          activity={activity}
-          date={format(sentDate)}
-          kind={kind}
-          subject="Enquiry"
-          summary={`Enquirer ${formData.first_name} ${formData.last_name}`}
-        ></ActivityOverviewSummary>
-      ) : (
-        <ActivityCardWrapper>
-          <ActivityCardSubject>Enquiry</ActivityCardSubject>
-          <ActivityCardLabels
-            theme="great.gov.uk"
-            service="export"
-            kind={kind}
-          />
-          <ActivityCardNotes notes={formData.comment} />
           <ActivityCardMetadata metadata={metadata} />
         </ActivityCardWrapper>
       )
