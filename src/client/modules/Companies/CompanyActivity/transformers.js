@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import { TAGS, NEW_PROJECT_TAG } from './constants'
+import { TAGS, NEW_PROJECT_TAG, NEW_ORDER_TAG } from './constants'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
@@ -54,6 +54,9 @@ export const formattedAdvisers = (advisers) =>
 
 export const pluraliseLabel = (number, label) =>
   number != 1 ? label + 's' : label
+
+const formatContactName = (contact) =>
+  contact.job_title ? contact.name + ', ' + contact.job_title : contact.name
 
 /*
   From the activity_source field from the API, determine which transformer to
@@ -242,31 +245,31 @@ export const transformInvestmentToListItem = (activity) => {
 }
 
 export const transformOrderToListItem = (activity) => {
+  const order = activity.order
   return {
-    id: activity.order.id,
+    id: order.id,
     metadata: [
       { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Country',
-        value: activity.order.primary_market.name,
+        value: order.primary_market.name,
       },
-      activity.order.uk_region && {
+      order.uk_region && {
         label: 'UK region',
-        value: activity.order.uk_region.name,
+        value: order.uk_region.name,
       },
       {
         label: 'Added by',
         value:
-          activity.order.created_by &&
+          order.created_by &&
           AdviserRenderer({
-            adviser: activity.order.created_by,
-            team: activity.order.created_by.dit_team,
+            adviser: order.created_by,
+            team: order.created_by.dit_team,
           }),
       },
       {
-        label: 'Company Contact',
-        value:
-          activity.order.contact.name + ' ' + activity.order.contact.job_title,
+        label: 'Company contact',
+        value: formatContactName(order.contact),
       },
     ].filter((entry) => entry && Boolean(entry.value)),
     tags: [
@@ -280,14 +283,10 @@ export const transformOrderToListItem = (activity) => {
         colour: 'blue',
         dataTest: 'order-service-label',
       },
-      {
-        text: 'New Order',
-        colour: 'grey',
-        dataTest: 'order-kind-label',
-      },
+      NEW_ORDER_TAG,
     ].filter(({ text }) => Boolean(text)),
-    headingUrl: urls.omis.order(activity.order.id),
-    headingText: activity.order.reference,
+    headingUrl: urls.omis.order(order.id),
+    headingText: order.reference,
   }
 }
 
