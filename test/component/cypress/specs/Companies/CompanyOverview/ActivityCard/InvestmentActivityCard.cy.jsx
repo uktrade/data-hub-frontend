@@ -14,6 +14,7 @@ import { CREATED_BY, CREATED_ON } from '../../../../support/activity-constants'
 const NAME = 'An investment project'
 const PROJECT_URL = urls.investments.projects.details('2')
 const EYB_LEAD = [{ id: '1' }]
+const EYB_LEADS = [{ id: '2' }, { id: '3' }, { id: '4' }]
 
 const buildAndMountActivity = (newJobs, eybLeads = []) => {
   const activity = {
@@ -90,6 +91,26 @@ describe('Investment activity card', () => {
     })
   })
 
+  context(
+    'When the project has one new job and multiple linked EYB lead',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(1, EYB_LEADS)
+        cy.get('[data-test="activity-card-wrapper"]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertProjectKindLabel()
+        assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+        cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+        cy.get('[data-test="activity-summary"]').should(
+          'have.text',
+          `FDI investment for 1 new job added by ${CREATED_BY.name} from EYB lead`
+        )
+      })
+    }
+  )
+
   context('When the project has no new jobs and no linked EYB leads', () => {
     beforeEach(() => {
       buildAndMountActivity(0)
@@ -123,4 +144,24 @@ describe('Investment activity card', () => {
       )
     })
   })
+
+  context(
+    'When the project has no new jobs and mutiple linked EYB leads',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(0, EYB_LEADS)
+        cy.get('[data-test="activity-card-wrapper"]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertProjectKindLabel()
+        assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+        cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+        cy.get('[data-test="activity-summary"]').should(
+          'have.text',
+          `FDI investment for no new jobs added by ${CREATED_BY.name} from EYB lead`
+        )
+      })
+    }
+  )
 })
