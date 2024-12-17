@@ -43,6 +43,7 @@ describe('EYB lead activity card', () => {
     it('should render the labels and metadata', () => {
       assertEYBLabel()
       assertActivitySubject(COMPANY_NAME, PROJECT_URL, 'activity-card-wrapper')
+      cy.get('[data-test="activity-date"]').should('have.text', '02 Dec 2024')
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         `An unknown-value EYB lead associated with this company has been added to Data Hub`
@@ -59,6 +60,7 @@ describe('EYB lead activity card', () => {
     it('should render the labels and metadata', () => {
       assertEYBLabel()
       assertActivitySubject(COMPANY_NAME, PROJECT_URL, 'activity-card-wrapper')
+      cy.get('[data-test="activity-date"]').should('have.text', '02 Dec 2024')
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         `A high-value EYB lead associated with this company has been added to Data Hub`
@@ -75,6 +77,7 @@ describe('EYB lead activity card', () => {
     it('should render the labels and metadata', () => {
       assertEYBLabel()
       assertActivitySubject(COMPANY_NAME, PROJECT_URL, 'activity-card-wrapper')
+      cy.get('[data-test="activity-date"]').should('have.text', '02 Dec 2024')
       cy.get('[data-test="activity-summary"]').should(
         'have.text',
         `A low-value EYB lead associated with this company has been added to Data Hub`
