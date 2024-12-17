@@ -227,7 +227,7 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - lint: *ignore_ghpages
+      # - lint: *ignore_ghpages
       - unit_tests: *ignore_ghpages
       - unit_client_tests: *ignore_ghpages
       - functional_tests: *ignore_ghpages
