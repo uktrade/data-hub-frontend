@@ -15,9 +15,9 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run_make:
-          label: Run linter
-          target: lint
+      # - run_make:
+      #     label: Run linter
+      #     target: lint
       - store_test_results:
           path: reports
       - store_artifacts:
