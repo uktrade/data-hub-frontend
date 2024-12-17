@@ -229,7 +229,9 @@ export const transformEYBLeadToListItem = (activity) => {
       },
     ].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
-    headingText: activity.eyb_lead.company_name,
+    headingText: activity.company.name
+      ? activity.company.name
+      : activity.eyb_lead.company_name,
     summary: `${getEYBValue(activity)}-value EYB lead associated with this company has been added to Data Hub`,
   }
 }
