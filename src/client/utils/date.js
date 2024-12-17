@@ -120,12 +120,17 @@ function isShortDateValid(year, month) {
 }
 
 /**
- * Date formatting and parsing functions
+ * @deprecated This function is deprecated. Use `formatDate` instead.
+ *
+ * This function will be removed in the near future.
  */
-
 function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
   return isDateValid(dateStr) ? formatFns(parseISO(dateStr), dateFormat) : null
 }
+
+/**
+ * Parsing functions
+ */
 
 const padZero = (value) => {
   const parsedValue = parseInt(value, 10)
