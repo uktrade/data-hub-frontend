@@ -37,10 +37,16 @@ describe('XHR', () => {
       expect(history.location.search).to.equal('?a=1&b=2')
     })
     it('should not call history.push if params are not provided', () => {
+      const history = createMemoryHistory();
       const res = { data: {} }
       const params = {}
+
+      console.log('Initial history.location.search:', history.location.search);
+      
       XHR.updateOutlet(res, params)
       expect(history.location.search).to.equal('')
+      console.log('Params provided to XHR.updateOutlet:', params);
+      console.log('History location after updateOutlet:', history.location);
     })
     it('should perform page load if unable to pushState', () => {
       sinon.stub(history, 'replace').throws('error')
