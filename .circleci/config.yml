@@ -7,21 +7,21 @@ ignore_ghpages: &ignore_ghpages
         - gh-pages
 
 jobs:
-  lint:
-    machine:
-      image: ubuntu-2004:2024.01.1
-      docker_layer_caching: false
-    parallelism: 1
-    resource_class: large
-    steps:
-      - checkout
-      # - run_make:
-      #     label: Run linter
-      #     target: lint
-      - store_test_results:
-          path: reports
-      - store_artifacts:
-          path: reports
+  # lint:
+  #   machine:
+  #     image: ubuntu-2004:2024.01.1
+  #     docker_layer_caching: false
+  #   parallelism: 1
+  #   resource_class: large
+  #   steps:
+  #     - checkout
+  #     # - run_make:
+  #     #     label: Run linter
+  #     #     target: lint
+  #     - store_test_results:
+  #         path: reports
+  #     - store_artifacts:
+  #         path: reports
 
   unit_tests:
     machine:
