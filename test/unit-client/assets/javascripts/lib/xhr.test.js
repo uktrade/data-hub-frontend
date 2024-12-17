@@ -41,8 +41,8 @@ describe('XHR', () => {
       const params = {}
       XHR.updateOutlet(res, params)
       if (Object.keys(params).length > 0) {
-        const query = new URLSearchParams(params).toString();
-        history.push({ search: query });
+        const query = new URLSearchParams(params).toString()
+        history.push({ search: query })
       }
       expect(history.location.search).to.equal('')
     })
