@@ -41,6 +41,7 @@ describe('XHR', () => {
       const params = {}
       XHR.updateOutlet(res, params)
       expect(history.location.search).to.equal('')
+    })
     it('should perform page load if unable to pushState', () => {
       sinon.stub(history, 'replace').throws('error')
       const testWindow = {
