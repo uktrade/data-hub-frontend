@@ -37,32 +37,10 @@ describe('XHR', () => {
       expect(history.location.search).to.equal('?a=1&b=2')
     })
     it('should not call history.push if params are not provided', () => {
-      const history = createMemoryHistory();
       const res = { data: {} }
       const params = {}
-
-      console.log('Initial history.location.search:', history.location.search);
-      const historyPushSpy = sinon.spy(history, 'push');
-
       XHR.updateOutlet(res, params)
-
-      console.log('Params provided to XHR.updateOutlet:', params);
-      console.log('History location after updateOutlet:', history.location);
-
-      // if (historyPushSpy.called) {
-      //   console.log('history.push was called with:', historyPushSpy.args);
-      // } else {
-      //   console.log('history.push was NOT called');
-      // }
-
-      console.log('Final history.location.search:', history.location.search);
-
-      // expect(historyPushSpy).not.to.have.been.called; 
       expect(history.location.search).to.equal('')
-      // console.log('Final history.location.search:', history.location.search);
-      
-      // historyPushSpy.restore();
-    })
     it('should perform page load if unable to pushState', () => {
       sinon.stub(history, 'replace').throws('error')
       const testWindow = {
