@@ -38,6 +38,12 @@ export const SORT_OPTIONS = [
   },
 ]
 
+export const SORT_OPTIONS_EXPORT_INTERACTION = [
+  { label: 'Recently created', value: 'created_on:desc' },
+  { label: 'Company name A-Z', value: 'company__name' },
+  { label: 'Subject A-Z', value: 'subject' },
+]
+
 export const EXPORT_POTENTIAL_OPTIONS = [
   { label: 'High', value: 'high' },
   { label: 'Medium', value: 'medium' },

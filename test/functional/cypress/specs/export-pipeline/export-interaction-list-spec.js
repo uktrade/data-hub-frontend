@@ -89,8 +89,19 @@ describe('Export project interaction sort', () => {
         cy.url().should('include', 'sortby=created_on%3Adesc')
       )
     })
-    // TODO: Data result assertion
-    it('should sort by "Company name A-Z"', () => {})
-    it('should sort by "Subject A-Z"', () => {})
+
+    it('should sort by "Company name A-Z"', () => {
+      cy.get(element).select('Company name A-Z')
+      cy.wait('@apiReqCompanyAsc').then(() => {
+        cy.url().should('include', 'sortby=company__name')
+      })
+    })
+
+    it('should sort by "Subject A-Z"', () => {
+      cy.get(element).select('Subject A-Z')
+      cy.wait('@apiReqSubjectAsc').then(() => {
+        cy.url().should('include', 'sortby=subject')
+      })
+    })
   })
 })
