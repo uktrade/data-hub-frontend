@@ -77,24 +77,21 @@ describe('Company activity feed', () => {
       activity.great_export_enquiry.data_enquiry
     )
     it('displays the correct activity type label', () => {
-      cy.get('[data-test="great-kind-label"]').contains(
-        'great.gov.uk Enquiry',
-        {
-          matchCase: false,
-        }
+      cy.get('[data-test="great-kind-label"]').should(
+        'have.text',
+        'great.gov.uk'
       )
     })
 
     it('displays the correct topic label', () => {
-      cy.get('[data-test="great-theme-label"]').contains('great.gov.uk', {
-        matchCase: false,
-      })
+      cy.get('[data-test="great-theme-label"]').should(
+        'have.text',
+        'great.gov.uk Enquiry'
+      )
     })
 
     it('displays the correct sub-topic label', () => {
-      cy.get('[data-test="great-service-label"]').contains('service', {
-        matchCase: false,
-      })
+      cy.get('[data-test="great-service-label"]').should('have.text', 'Export')
     })
     it('displays the Great export enquiry subject', () => {
       cy.get('[data-test="collection-item"]').each(() =>

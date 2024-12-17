@@ -1,7 +1,12 @@
 import React from 'react'
 import Link from '@govuk-react/link'
 
-import { TAGS, NEW_PROJECT_TAG, NEW_ORDER_TAG } from './constants'
+import {
+  TAGS,
+  NEW_PROJECT_TAG,
+  NEW_ORDER_TAG,
+  GREAT_EXPORT_TAG,
+} from './constants'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import { truncateData } from '../utils'
@@ -291,38 +296,37 @@ export const transformOrderToListItem = (activity) => {
 }
 
 export const transformGreatExportEnquiryToListItem = (activity) => {
-  const great = activity.great_export_enquiry
+  const greatExportEnquiry = activity.great_export_enquiry
+  const contact = greatExportEnquiry.contact
   return {
-    id: great.id,
+    id: greatExportEnquiry.id,
     metadata: [
+      {
+        label: '',
+        value: truncateData(greatExportEnquiry.data_enquiry),
+      },
       { label: 'Date', value: formatDate(activity.date, DATE_FORMAT_MEDIUM) },
       {
         label: 'Contact',
-        value: formattedContacts([great.contact]),
+        value: contact.name.length && contact.name,
       },
-      {
-        label: 'Comment',
-        value: truncateData(great.data_enquiry),
-      },
+      { label: 'Job title', value: contact?.job_title },
+      { label: 'Email', value: greatExportEnquiry.meta_email_address },
     ].filter(({ value }) => Boolean(value)),
     tags: [
       {
         text: 'great.gov.uk Enquiry',
-        colour: TAGS.ACTIVITY_LABELS.KIND,
-        dataTest: 'great-kind-label',
-      },
-      {
-        text: 'service',
-        colour: TAGS.ACTIVITY_LABELS.SERVICE,
-        dataTest: 'great-service-label',
-      },
-      {
-        text: 'great.gov.uk',
         colour: TAGS.ACTIVITY_LABELS.THEME,
         dataTest: 'great-theme-label',
       },
+      {
+        text: 'Export',
+        colour: TAGS.ACTIVITY_LABELS.SERVICE,
+        dataTest: 'great-service-label',
+      },
+      GREAT_EXPORT_TAG,
     ].filter(({ text }) => Boolean(text)),
-    headingText: `Enquiry ` + truncateData(great.meta_subject, 35),
+    headingText: `Enquiry ` + truncateData(greatExportEnquiry.meta_subject, 35),
   }
 }
 

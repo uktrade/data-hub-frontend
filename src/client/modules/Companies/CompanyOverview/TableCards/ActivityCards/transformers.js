@@ -2,6 +2,7 @@ import {
   TAGS,
   NEW_PROJECT_TAG,
   NEW_ORDER_TAG,
+  GREAT_EXPORT_TAG,
 } from '../../../CompanyActivity/constants'
 import { isDateInFuture } from '../../../../../utils/date'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
@@ -171,20 +172,16 @@ export const transformOrderToListItem = (activity) => {
 }
 
 export const transformGreatExportEnquiryToListItem = (activity) => {
-  const great = activity.great_export_enquiry
+  const greatExportEnquiry = activity.great_export_enquiry
   return {
-    id: great.id,
+    id: greatExportEnquiry.id,
     date: formatDate(activity.date, DATE_FORMAT_MEDIUM),
-
-    tags: [
-      {
-        text: 'great.gov.uk Enquiry',
-        colour: TAGS.ACTIVITY_LABELS.KIND,
-        dataTest: 'great-kind-label',
-      },
-    ].filter(({ text }) => Boolean(text)),
-    headingText: truncateData(great.meta_subject, 35),
-    summary: `Enquirer ${great.contact.first_name} ${great.contact.last_name}`,
+    tags: [GREAT_EXPORT_TAG].filter(({ text }) => Boolean(text)),
+    headingText: truncateData(greatExportEnquiry.meta_subject, 35),
+    summary:
+      greatExportEnquiry.contact.name.length > 0
+        ? `Enquirer ${greatExportEnquiry.contact?.name}`
+        : 'Unknown enquirer',
   }
 }
 

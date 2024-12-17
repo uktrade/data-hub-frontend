@@ -71,3 +71,9 @@ export const NEW_ORDER_TAG = {
   colour: 'grey',
   dataTest: 'order-kind-label',
 }
+
+export const GREAT_EXPORT_TAG = {
+  text: 'great.gov.uk',
+  colour: TAGS.ACTIVITY_LABELS.KIND,
+  dataTest: 'great-kind-label',
+}
