@@ -105,6 +105,28 @@ const companyActivityGreatFaker = (overrides = {}, orderOverrides = {}) => ({
   ...overrides,
 })
 
+const companyActivityEYBFaker = (overrides = {}, eybOverrides = {}) => {
+  return {
+    ...companyActivityFaker(),
+    activity_source: 'eyb_lead',
+    id: faker.string.uuid(),
+    company: {
+      name: faker.company.name,
+      id: '1c5f7b5f-acd0-4a17-ac9d-8600bb5ded86',
+    },
+    eyb_lead: {
+      is_high_value: faker.datatype.boolean(),
+      created_on: '2024-12-02T09:59:03.911296+00:00',
+      company_name: faker.company.name,
+      triage_created: '2024-12-01T09:59:03+00:00',
+      id: faker.string.uuid(),
+      duns_number: faker.number.int({ min: 1000000, max: 9999999 }).toString(),
+      ...eybOverrides,
+    },
+    ...overrides,
+  }
+}
+
 const companyActivityInteractionListFaker = (length = 1, overrides) =>
   listFaker({
     fakerFunction: companyActivityInteractionFaker,
@@ -151,6 +173,15 @@ const companyActivityInvestmentListFaker = (
   })
 }
 
+const companyActivityEYBListFaker = (length = 1, overrides, EYBOverrides) => {
+  return listFakerAdditionalOverrides({
+    fakerFunction: companyActivityEYBFaker,
+    length,
+    overrides,
+    additionalOverrides: EYBOverrides,
+  })
+}
+
 export {
   companyActivityInteractionFaker,
   companyActivityInvestmentFaker,
@@ -158,6 +189,7 @@ export {
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
   companyActivityGreatListFaker,
+  companyActivityEYBListFaker,
 }
 
 export default companyActivityInteractionListFaker

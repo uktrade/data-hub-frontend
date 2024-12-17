@@ -6,6 +6,7 @@ import {
 import { getCollectionList } from '../../support/collection-list-assertions'
 import { collectionListRequest } from '../../support/actions'
 import companyActivityListFaker, {
+  companyActivityEYBListFaker,
   companyActivityGreatListFaker,
   companyActivityInvestmentListFaker,
   companyActivityOrderListFaker,
@@ -420,6 +421,21 @@ describe('Company overview page', () => {
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
     })
+    const EYBListHighValue = companyActivityEYBListFaker(
+      1,
+      {},
+      { is_high_value: true }
+    )
+    const EYBListLowValue = companyActivityEYBListFaker(
+      1,
+      {},
+      { is_high_value: false }
+    )
+    const EYBListUnknownValue = companyActivityEYBListFaker(
+      1,
+      {},
+      { is_high_value: null }
+    )
 
     it.skip('should display aventri event activity', () => {
       cy.get('[data-test="aventri-event-summary"]')
@@ -642,6 +658,42 @@ describe('Company overview page', () => {
       cy.get('[data-test="activity-subject"]').contains(subject)
       cy.get('[data-test="activity-summary"]').contains(
         `Enquirer ${activity.great_export_enquiry.contact.first_name} ${activity.great_export_enquiry.contact.last_name}`
+      )
+    })
+
+    it('should display Data Hub EYB lead activity with high value', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListHighValue,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="activity-summary"]').contains(
+        'A high-value EYB lead associated with this company has been added to Data Hub'
+      )
+    })
+
+    it('should display Data Hub EYB lead activity with low value', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListLowValue,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="activity-summary"]').contains(
+        'A low-value EYB lead associated with this company has been added to Data Hub'
+      )
+    })
+
+    it('should display Data Hub EYB lead activity with unknown value', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListUnknownValue,
+        urls.companies.overview.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="activity-summary"]').contains(
+        'An unknown-value EYB lead associated with this company has been added to Data Hub'
       )
     })
   })
