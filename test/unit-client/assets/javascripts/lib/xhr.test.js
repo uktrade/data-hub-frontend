@@ -59,6 +59,7 @@ describe('XHR', () => {
 
       expect(historyPushSpy).not.to.have.been.called; 
       expect(history.location.search).to.equal('')
+      console.log('Final history.location.search:', history.location.search);
       
       historyPushSpy.restore();
     })
