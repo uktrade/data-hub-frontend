@@ -9,7 +9,7 @@ export const getEYBLeads = ({
   limit = 10,
   page = 1,
   company,
-  overseasRegion,
+  overseas_region,
   country,
   sector,
   value,
@@ -19,9 +19,9 @@ export const getEYBLeads = ({
     offset: limit * (parseInt(page, 10) - 1) || 0,
     ...(company ? { company } : null),
   })
-  if (overseasRegion)
-    overseasRegion.forEach((overseasRegionId) =>
-      params.append('overseasRegion', overseasRegionId)
+  if (overseas_region)
+    overseas_region.forEach((overseasRegionId) =>
+      params.append('overseas_region', overseasRegionId)
     )
   if (country)
     country.forEach((countryId) => params.append('country', countryId))
