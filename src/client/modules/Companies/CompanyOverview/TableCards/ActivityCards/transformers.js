@@ -3,6 +3,7 @@ import {
   NEW_PROJECT_TAG,
   NEW_ORDER_TAG,
   GREAT_EXPORT_TAG,
+  EYB_TAG,
 } from '../../../CompanyActivity/constants'
 import { isDateInFuture } from '../../../../../utils/date'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
@@ -221,13 +222,7 @@ export const transformEYBLeadToListItem = (activity) => {
   return {
     id: activity.eyb_lead.id,
     date: formatDate(activity.eyb_lead.created_on),
-    tags: [
-      {
-        text: 'EYB',
-        colour: 'grey',
-        dataTest: 'eyb-label',
-      },
-    ].filter(({ text }) => Boolean(text)),
+    tags: [EYB_TAG].filter(({ text }) => Boolean(text)),
     headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
     headingText: activity.company.name
       ? activity.company.name

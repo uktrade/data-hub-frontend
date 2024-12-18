@@ -45,7 +45,7 @@ export const assertProjectKindLabel = () => {
 }
 
 export const assertEYBLabel = () => {
-  assertText('[data-test="eyb-label"]', 'EYB')
+  assertText('[data-test="eyb-kind-label"]', 'EYB')
 }
 
 export const assertOrderKindLabel = () => {
@@ -54,4 +54,8 @@ export const assertOrderKindLabel = () => {
 
 export const assertGreatKindLabel = () => {
   assertText('[data-test="great-kind-label"]', 'great.gov.uk')
+}
+
+export const assertInvestmentThemeLabel = () => {
+  assertText('[data-test="investment-theme-label"]', 'Investment')
 }
