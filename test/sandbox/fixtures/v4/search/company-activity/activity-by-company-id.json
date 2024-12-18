@@ -163,7 +163,8 @@
           "first_name": ""
         },
         "foreign_equity_investment": 234432,
-        "gross_value_added": "2000"
+        "gross_value_added": "2000",
+        "eyb_leads": []
       }
     },
     {
@@ -181,7 +182,7 @@
       "order": {
         "reference": "HAM/100",
         "uk_region": {
-          "name": "England", 
+          "name": "England",
           "id": "a80ff5fd-8904-4940-gd91-fe8047e34be5"
         },
         "created_on": "2024-10-16T13:21:06.209056+00:00",

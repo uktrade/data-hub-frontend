@@ -44,6 +44,10 @@ export const assertProjectKindLabel = () => {
   assertText('[data-test="investment-kind-label"]', 'New Investment Project')
 }
 
+export const assertEYBLabel = () => {
+  assertText('[data-test="eyb-label"]', 'EYB')
+}
+
 export const assertOrderKindLabel = () => {
   assertText('[data-test="order-kind-label"]', 'New Order')
 }
