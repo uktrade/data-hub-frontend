@@ -40,6 +40,8 @@ describe('XHR', () => {
       const res = { data: {} }
       const params = {}
       XHR.updateOutlet(res, params)
+      if (Object.keys(params).length > 1) {
+      }
       expect(history.location.search).to.equal('')
     })
     it('should perform page load if unable to pushState', () => {
