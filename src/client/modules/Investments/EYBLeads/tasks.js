@@ -9,6 +9,7 @@ export const getEYBLeads = ({
   limit = 10,
   page = 1,
   company,
+  overseasRegion,
   country,
   sector,
   value,
@@ -18,6 +19,10 @@ export const getEYBLeads = ({
     offset: limit * (parseInt(page, 10) - 1) || 0,
     ...(company ? { company } : null),
   })
+  if (overseasRegion)
+    overseasRegion.forEach((overseasRegionId) =>
+      params.append('overseasRegion', overseasRegionId)
+    )
   if (country)
     country.forEach((countryId) => params.append('country', countryId))
   if (sector) sector.forEach((sectorId) => params.append('sector', sectorId))
@@ -32,10 +37,15 @@ export const getEYBLeads = ({
 
 export const loadEYBLeadFilterOptions = () =>
   Promise.all([
+    getMetadataOptions(urls.metadata.overseasRegion()),
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.sector(), {
       params: {
         level__lte: '0',
       },
     }),
-  ]).then(([countries, sectors]) => ({ countries, sectors }))
+  ]).then(([overseasRegions, countries, sectors]) => ({
+    overseasRegions,
+    countries,
+    sectors,
+  }))
