@@ -77,3 +77,15 @@ export const GREAT_EXPORT_TAG = {
   colour: TAGS.ACTIVITY_LABELS.KIND,
   dataTest: 'great-kind-label',
 }
+
+export const INVESTMENT_TAG = {
+  text: 'Investment',
+  colour: TAGS.ACTIVITY_LABELS.THEME,
+  dataTest: 'investment-theme-label',
+}
+
+export const EYB_TAG = {
+  text: 'EYB',
+  colour: TAGS.ACTIVITY_LABELS.KIND,
+  dataTest: 'eyb-kind-label',
+}
