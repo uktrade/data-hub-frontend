@@ -1,4 +1,5 @@
 export const QS_PARAMS = {
+  overseasRegionId: 'overseas_region',
   countryId: 'country',
   companyName: 'company',
   sectorId: 'sector',
