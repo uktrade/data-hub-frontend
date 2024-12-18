@@ -27,7 +27,15 @@ function convertValueToJson(value) {
   }
 }
 
-module.exports = (req, res, next) => {
+const parseFlashMessages = (rawFlashMessages) =>
+  Object.fromEntries(
+    Object.entries(rawFlashMessages).map(([k, v]) => [
+      k,
+      k.endsWith(':with-body') ? v.map(convertValueToJson) : v,
+    ])
+  )
+
+const userLocals = (req, res, next) => {
   const userPermissions = get(res, 'locals.user.permissions')
   const userProfile = config.oauth.bypassSSO
     ? null
@@ -37,28 +45,22 @@ module.exports = (req, res, next) => {
     filterNonPermittedItem(userPermissions)
   )
 
-  Object.assign(res.locals, {
-    PERMITTED_APPLICATIONS: config.oauth.bypassSSO
-      ? [{ key: 'datahub-crm' }]
-      : permittedApplications,
-    ALLOWED_APPS: permittedNavItems.reduce((apps, { headerKey }) => {
-      headerKey && apps.push(headerKey)
-      return apps
-    }, []),
-    ACTIVE_KEY: getActiveHeaderKey(req.path, permittedNavItems),
+  res.locals.PERMITTED_APPLICATIONS = config.oauth.bypassSSO
+    ? [{ key: 'datahub-crm' }]
+    : permittedApplications
 
-    getMessages() {
-      const items = req.flash()
+  res.locals.ALLOWED_APPS = permittedNavItems.reduce((apps, { headerKey }) => {
+    headerKey && apps.push(headerKey)
+    return apps
+  }, [])
 
-      for (const [key, values] of Object.entries(items)) {
-        if (key.endsWith(':with-body')) {
-          items[key] = values.map(convertValueToJson)
-        }
-      }
-
-      return items
-    },
-  })
+  res.locals.ACTIVE_KEY = getActiveHeaderKey(req.path, permittedNavItems)
+  res.locals.flashMessages = parseFlashMessages(req.flash())
 
   next()
+}
+
+module.exports = {
+  parseFlashMessages,
+  userLocals,
 }
