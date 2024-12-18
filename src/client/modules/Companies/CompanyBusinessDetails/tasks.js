@@ -1,9 +1,8 @@
 import axios from 'axios'
+import { subDays, isAfter } from 'date-fns'
 
 import urls from '../../../../lib/urls'
 import { apiProxyAxios } from '../../../components/Task/utils'
-
-const { isDateAfter, subtractDays, today } = require('../../../utils/date')
 
 export function checkIfPendingRequest(duns_number) {
   if (duns_number) {
@@ -17,9 +16,9 @@ export function checkIfPendingRequest(duns_number) {
 }
 
 const isDNBDateValid = (date) => {
-  const todaysDate = today()
-  const timeInterval = subtractDays(todaysDate, 20)
-  return isDateAfter(date, timeInterval)
+  const todaysDate = new Date()
+  const timeInterval = subDays(todaysDate, 20)
+  return isAfter(date, timeInterval)
 }
 
 const checkIfRequestIsValid = ({ count, results }) => {

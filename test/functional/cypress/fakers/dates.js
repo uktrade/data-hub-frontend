@@ -1,6 +1,6 @@
-import { faker } from '../../../sandbox/utils/random'
+import { addDays } from 'date-fns'
 
-import { addDays } from '../../../../src/client/utils/date'
+import { faker } from '../../../sandbox/utils/random'
 
 const relativeDateFaker = ({ minDays, maxDays }) =>
   faker.date.between({

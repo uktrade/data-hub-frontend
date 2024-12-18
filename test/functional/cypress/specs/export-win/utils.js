@@ -1,6 +1,6 @@
+import { addMonths, subMonths } from 'date-fns'
+
 import {
-  subtractMonths,
-  addMonths,
   getRandomDateInRange,
   getStartDateOfTwelveMonthsAgo,
 } from '../../../../../src/client/utils/date'
@@ -175,7 +175,7 @@ export const getDateWithinLastTwelveMonths = () =>
   )
 
 export const getDateThirteenMonthsAgo = () =>
-  getMonthAndYearFromDate(subtractMonths(new Date(), 13))
+  getMonthAndYearFromDate(subMonths(new Date(), 13))
 
 export const getDateNextMonth = () =>
   getMonthAndYearFromDate(addMonths(new Date(), 1))

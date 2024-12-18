@@ -7,30 +7,22 @@
  */
 
 const {
-  addDays: addDaysFns,
-  addMonths: addMonthsFns,
-  addYears: addYearsFns,
+  addDays,
   differenceInDays,
   differenceInCalendarDays,
   isSameDay,
   endOfToday,
   startOfMonth: getStartOfMonth,
   isWithinInterval,
-  endOfYesterday,
   format: formatFns,
   formatDistanceToNowStrict,
   isAfter,
   isValid,
   parse,
   parseISO,
-  subDays,
   subMonths,
-  subYears,
-  subWeeks,
   differenceInCalendarMonths,
-  isFuture,
   isEqual: areDatesEqual,
-  endOfTomorrow,
 } = require('date-fns')
 
 const {
@@ -39,64 +31,6 @@ const {
   DATE_SHORT_FORMAT,
   DATE_DAY_MONTH,
 } = require('../../common/constants')
-
-/**
- * Simple wrappers around date-fns and native Date functions
- */
-function addYears(date, yearsToAdd) {
-  return addYearsFns(date, yearsToAdd)
-}
-
-function subtractYears(date, yearsToSubtract) {
-  return subYears(date, yearsToSubtract)
-}
-
-function addDays(date, daysToAdd) {
-  return addDaysFns(date, daysToAdd)
-}
-
-function subtractDays(date, daysToSubtract) {
-  return subDays(date, daysToSubtract)
-}
-
-function isDateAfter(date1, date2) {
-  return isAfter(date1, date2)
-}
-
-function today() {
-  return format(new Date())
-}
-
-function addMonths(date, numberOfMonths) {
-  return addMonthsFns(date, numberOfMonths)
-}
-function subtractWeeks(date, numberOfweeks) {
-  return subWeeks(date, numberOfweeks)
-}
-
-function getYesterday() {
-  return endOfYesterday()
-}
-
-function subtractMonths(date, numberOfMonths) {
-  return subMonths(date, numberOfMonths)
-}
-
-function isDateInFuture(date) {
-  return isFuture(date)
-}
-
-function isDateInFutureParsed(date) {
-  return isFuture(parseISO(date))
-}
-
-function parseDateISO(date) {
-  return parseISO(date)
-}
-
-function tomorrow() {
-  return endOfTomorrow()
-}
 
 /**
  * Date validation functions
@@ -204,7 +138,7 @@ function formatStartAndEndDate(startDate, endDate) {
     const endDateFormatted = endDate ? format(endDate) : endDate
 
     //When end date is missing or before start date
-    if (!endDate || !isDateAfter(endDateParsed, startDateParsed)) {
+    if (!endDate || !isAfter(endDateParsed, startDateParsed)) {
       return startDateFormatted
     }
     //When start and end date are on same day
@@ -326,42 +260,27 @@ function isWithinLastTwelveMonths(date) {
 }
 
 module.exports = {
-  addDays,
-  addMonths,
-  addYears,
   format,
   generateFinancialYearLabel,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
   getDifferenceInWords,
   getFinancialYearStart,
-  getYesterday,
-  isDateAfter,
   isDateValid,
   isValid,
   isNormalisedDateValid,
   isShortDateValid,
   isUnparsedDateValid,
-  subtractDays,
-  subtractMonths,
-  subtractYears,
-  subtractWeeks,
-  today,
   transformValueForAPI,
   createDateFromObject,
   formatStartAndEndDate,
   convertDateToFieldShortDateObject,
-  isDateInFuture,
-  parseDateISO,
   convertDateToFieldDateObject,
   getRandomDateInRange,
   isWithinLastTwelveMonths,
   getStartDateOfTwelveMonthsAgo,
   getStartOfMonth,
-  subtractMonths,
   areDatesEqual,
-  tomorrow,
   convertUnparsedDateToFieldDateObject,
   convertUnparsedDateToFieldShortDateObject,
-  isDateInFutureParsed,
 }

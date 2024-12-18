@@ -1,8 +1,7 @@
+import { subMonths, subYears, addDays } from 'date-fns'
+
 import {
-  addDays,
   areDatesEqual,
-  subtractYears,
-  subtractMonths,
   getStartOfMonth,
   getRandomDateInRange,
   isWithinLastTwelveMonths,
@@ -63,7 +62,7 @@ describe('getStartDateOfTwelveMonthsAgo', () => {
       'date and includes the 1st of the month',
     () => {
       const today = new Date()
-      const expectedDate = subtractMonths(getStartOfMonth(today), 12)
+      const expectedDate = subMonths(getStartOfMonth(today), 12)
       const actualDate = getStartDateOfTwelveMonthsAgo()
       expect(actualDate).to.be.instanceOf(Date)
       expect(areDatesEqual(actualDate, expectedDate)).to.equal(true)
@@ -74,10 +73,10 @@ describe('getStartDateOfTwelveMonthsAgo', () => {
 describe('isWithinLastTwelveMonths', () => {
   const twelveMonthsAgo = getStartDateOfTwelveMonthsAgo()
   const twelveMonthsAgoAddOneDay = addDays(twelveMonthsAgo, 1)
-  const twelveMonthsAgoSubOneDay = subtractYears(twelveMonthsAgo, 1)
+  const twelveMonthsAgoSubOneDay = subYears(twelveMonthsAgo, 1)
   const today = new Date()
   const tomorrow = addDays(today, 1)
-  const yesterday = subtractYears(today, 1)
+  const yesterday = subYears(today, 1)
 
   it('should be valid for the 1st of the month twelve months ago', () => {
     expect(isWithinLastTwelveMonths(twelveMonthsAgo)).to.equal(true)

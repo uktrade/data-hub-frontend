@@ -1,4 +1,5 @@
-import { isDateInFutureParsed } from '../../utils/date'
+import { isFuture, parseISO } from 'date-fns'
+
 import { transformDateObjectToDateString } from '../../transformers'
 
 const EMAIL_PATTERN =
@@ -18,7 +19,7 @@ export const validateIfDateInPast = (date) => {
   const transformedDate = transformDateObjectToDateString(date)
 
   return transformedDate
-    ? isDateInFutureParsed(transformedDate)
+    ? isFuture(parseISO(transformedDate))
       ? 'Actual land date cannot be in the future'
       : null
     : null

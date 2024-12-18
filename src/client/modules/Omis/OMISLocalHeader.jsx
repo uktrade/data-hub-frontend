@@ -1,10 +1,11 @@
 import React from 'react'
+import { isFuture } from 'date-fns'
 import styled from 'styled-components'
 import { Button, GridCol, GridRow, Link } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import LocalHeaderDetails from '../../components/LocalHeaderDetails'
-import { getDifferenceInWords, isDateInFuture } from '../../utils/date'
+import { getDifferenceInWords } from '../../utils/date'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
@@ -25,7 +26,7 @@ const StyledLink = styled(Link)`
 `
 
 const getExpiryDate = (expiresOn) =>
-  isDateInFuture(expiresOn)
+  isFuture(expiresOn)
     ? ` (expires ${getDifferenceInWords(expiresOn)})`
     : ` (expired ${getDifferenceInWords(expiresOn)})`
 
