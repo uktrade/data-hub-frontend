@@ -667,7 +667,7 @@ describe('Company overview page', () => {
         EYBListHighValue,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="eyb-kind-label"]').contains('EYB')
       cy.get('[data-test="activity-summary"]').contains(
         'A high-value EYB lead associated with this company has been added to Data Hub'
       )
@@ -679,7 +679,7 @@ describe('Company overview page', () => {
         EYBListLowValue,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="eyb-kind-label"]').contains('EYB')
       cy.get('[data-test="activity-summary"]').contains(
         'A low-value EYB lead associated with this company has been added to Data Hub'
       )
@@ -691,7 +691,7 @@ describe('Company overview page', () => {
         EYBListUnknownValue,
         urls.companies.overview.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="eyb-label"]').contains('EYB')
+      cy.get('[data-test="eyb-kind-label"]').contains('EYB')
       cy.get('[data-test="activity-summary"]').contains(
         'An unknown-value EYB lead associated with this company has been added to Data Hub'
       )
