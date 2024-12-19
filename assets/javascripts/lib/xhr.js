@@ -39,7 +39,7 @@ const XHR = {
   updateOutlet(res, params, win = window) {
     this.injectResponseInHtml(res.data)
 
-    if (params && Object.keys(params).length > 1) {
+    if (params && Object.keys(params).length > 0) {
       const url = `?${queryString.stringify(params)}`
       try {
         history.replace(url, { data: res.data })
