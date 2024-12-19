@@ -45,13 +45,20 @@ export const assertProjectKindLabel = () => {
 }
 
 export const assertEYBLabel = () => {
-  assertText('[data-test="eyb-label"]', 'EYB')
+  assertText('[data-test="eyb-kind-label"]', 'EYB')
 }
 
+export const assertNotEYBLabel = () => {
+  cy.get('[data-test="eyb-kind-label"]').should('not.exist')
+}
 export const assertOrderKindLabel = () => {
   assertText('[data-test="order-kind-label"]', 'New Order')
 }
 
 export const assertGreatKindLabel = () => {
   assertText('[data-test="great-kind-label"]', 'great.gov.uk')
+}
+
+export const assertInvestmentThemeLabel = () => {
+  assertText('[data-test="investment-theme-label"]', 'Investment')
 }
