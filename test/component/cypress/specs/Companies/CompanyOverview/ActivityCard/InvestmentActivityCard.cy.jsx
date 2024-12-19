@@ -40,22 +40,45 @@ const buildAndMountActivity = (newJobs, eybLeads = []) => {
 }
 
 describe('Investment activity card', () => {
-  context('When the card is rendered with a complete project', () => {
-    beforeEach(() => {
-      buildAndMountActivity(2)
-      cy.get('[data-test="activity-card-wrapper"]').should('exist')
-    })
+  context(
+    'When the card is rendered with a complete project and no linked EYB lead',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(2)
+        cy.get('[data-test="activity-card-wrapper"]').should('exist')
+      })
 
-    it('should render the labels and metadata', () => {
-      assertProjectKindLabel()
-      assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
-      cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
-      cy.get('[data-test="activity-summary"]').should(
-        'have.text',
-        `FDI investment for 2 new jobs added by ${CREATED_BY.name}`
-      )
-    })
-  })
+      it('should render the labels and metadata', () => {
+        assertProjectKindLabel()
+        assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+        cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+        cy.get('[data-test="activity-summary"]').should(
+          'have.text',
+          `FDI investment for 2 new jobs added by ${CREATED_BY.name}`
+        )
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a complete project and one linked EYB lead',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(2)
+        cy.get('[data-test="activity-card-wrapper"]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertProjectKindLabel()
+        assertActivitySubject(NAME, PROJECT_URL, 'activity-card-wrapper')
+        cy.get('[data-test="activity-date"]').should('have.text', '25 Nov 2058')
+        cy.get('[data-test="activity-summary"]').should(
+          'have.text',
+          `FDI investment for 2 new jobs added by ${CREATED_BY.name}`
+        )
+      })
+    }
+  )
 
   context('When the project has one new job and no linked EYB leads', () => {
     beforeEach(() => {
@@ -92,7 +115,7 @@ describe('Investment activity card', () => {
   })
 
   context(
-    'When the project has one new job and multiple linked EYB lead',
+    'When the project has one new job and multiple linked EYB leads',
     () => {
       beforeEach(() => {
         buildAndMountActivity(1, EYB_LEADS)
@@ -128,7 +151,7 @@ describe('Investment activity card', () => {
     })
   })
 
-  context('When the project has no new jobs and one linked EYB leads', () => {
+  context('When the project has no new jobs and one linked EYB lead', () => {
     beforeEach(() => {
       buildAndMountActivity(0, EYB_LEAD)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
