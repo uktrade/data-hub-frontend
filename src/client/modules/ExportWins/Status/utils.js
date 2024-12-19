@@ -84,3 +84,51 @@ export const createRoleTags = (exportWin, currentAdviserId) => {
 
   return tags
 }
+
+export const extractWinContact = ({
+  company_contacts: [contact] = [],
+  customer_name,
+  customer_email_address,
+  customer_job_title,
+}) =>
+  contact
+    ? contact
+    : customer_name || customer_email_address || customer_job_title
+      ? [
+          {
+            name: customer_name,
+            email: customer_email_address,
+            job_title: customer_job_title,
+          },
+        ]
+      : 'Not set'
+
+export const extractWinCompany = ({ company, company_name }) =>
+  company ? company : company_name ? { name: company_name } : 'Not set'
+
+export const extractWinLeadOfficer = ({
+  lead_officer,
+  lead_officer_name,
+  lead_officer_email_address,
+}) =>
+  lead_officer
+    ? lead_officer
+    : lead_officer_name || lead_officer_email_address
+      ? { name: lead_officer_name, email: lead_officer_email_address }
+      : 'Not set'
+
+export const extractWinContributingAdvisers = ({
+  contributing_advisers: [adviserArrayObj] = [],
+}) =>
+  adviserArrayObj.adviser
+    ? adviserArrayObj
+    : adviserArrayObj.name
+      ? [
+          {
+            name: adviserArrayObj.name,
+            team_type: adviserArrayObj.team_type,
+            hq_type: adviserArrayObj.hq_team,
+            location: adviserArrayObj.location,
+          },
+        ]
+      : 'Not set'
