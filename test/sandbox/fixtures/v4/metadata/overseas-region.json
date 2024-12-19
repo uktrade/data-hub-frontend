@@ -1,0 +1,47 @@
+[
+    {
+        "id": "8d4c4f31-06ce-4320-8e2f-1c13559e125f",
+        "name": "Africa",
+        "disabled_on": null
+    },
+    {
+        "id": "04a7cff0-03dd-4677-aa3c-12dd8426f0d7",
+        "name": "Asia Pacific",
+        "disabled_on": null
+    },
+    {
+        "id": "b97749fb-2273-4447-a239-62dd8fb29e01",
+        "name": "China and Hong Kong",
+        "disabled_on": null
+    },
+    {
+        "id": "cb2864aa-d19f-44b6-946c-d850a3fd7e3a",
+        "name": "Eastern Europe and Central Asia",
+        "disabled_on": null
+    },
+    {
+        "id": "3e6809d6-89f6-4590-8458-1d0dab73ad1a",
+        "name": "Europe",
+        "disabled_on": null
+    },
+    {
+        "id": "5616ccf5-ab4a-4c2c-9624-13c69be3c46b",
+        "name": "Latin America",
+        "disabled_on": null
+    },
+    {
+        "id": "c4679b44-079e-4394-8bf7-bb0881a5031d",
+        "name": "Middle East, Afghanistan and Pakistan",
+        "disabled_on": null
+    },
+    {
+        "id": "fdfbbc8d-0e8a-479a-b10f-4979d582ff87",
+        "name": "North America",
+        "disabled_on": null
+    },
+    {
+        "id": "12ed13cf-4b2c-4a46-b2f9-068e397d8c84",
+        "name": "South Asia",
+        "disabled_on": null
+    }
+]
