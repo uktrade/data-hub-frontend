@@ -2,6 +2,75 @@ import { faker } from '../../../sandbox/utils/random'
 
 import { contactFaker } from './contacts'
 import { sectorFaker } from './sectors'
+import { adviserFaker } from './advisers'
+import { teamTypeFaker } from './team-type'
+import { hqTeamFaker } from './hq-team'
+/**
+ * Overriding fake object data for legacy export win.
+ */
+const emptyCompanyContactObj = {
+  company_contacts: [],
+}
+
+const legacyCustomerContactObj = {
+  customer_name: faker.person.fullName(),
+  customer_email_address: faker.internet.email(),
+  customer_job_title: faker.person.jobTitle(),
+}
+
+const emptyLegacyCustomerContactObj = {
+  customer_name: '',
+  customer_email_address: '',
+  customer_job_title: '',
+}
+
+const emptyCompanyObj = {
+  company: {},
+}
+
+const legacyCompanyNameObj = {
+  company_name: faker.company.name(),
+}
+
+const emptyLegacyCompanyNameObj = {
+  company_name: '',
+}
+
+const emptyLeadOfficerObj = {
+  lead_officer: {},
+}
+
+const legacyLeadOfficerNameObj = {
+  lead_officer_name: faker.person.fullName(),
+  lead_officer_email_address: faker.internet.email(),
+}
+
+const emptyLegacyLeadOfficerNameObj = {
+  lead_officer_name: '',
+  lead_officer_email_address: '',
+}
+
+const contributingAdvisersObj = {
+  adviser: adviserFaker(),
+}
+
+const emptyContributingAdviserObj = {
+  adviser: {},
+}
+
+const legacyContributingAdviserNameObj = {
+  name: faker.person.fullName(),
+  team_type: teamTypeFaker(),
+  hq_team: hqTeamFaker(),
+  location: faker.person.jobArea,
+}
+
+const emptyLegacyContributingAdviserNameObj = {
+  name: '',
+  team_type: teamTypeFaker(),
+  hq_team: hqTeamFaker(),
+  location: faker.person.jobArea,
+}
 
 /**
  * Generate fake data for a single export win.
@@ -132,4 +201,73 @@ export const exportWinsFaker = () => ({
       name: '40%',
     },
   },
+})
+
+/**
+ * Generate fake data for legacy export win.
+ */
+export const exportWinsFakerEmptyCompanyContact = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyContactObj,
+  ...legacyCustomerContactObj,
+})
+
+export const exportWinsFakerEmptyCompanyContactAndCustomerContact = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyContactObj,
+  ...emptyLegacyCustomerContactObj,
+})
+
+export const exportWinsFakerEmptyCompany = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyObj,
+  ...legacyCompanyNameObj,
+})
+
+export const exportWinsFakerEmptyCompanyAndCompanyName = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyObj,
+  ...emptyLegacyCompanyNameObj,
+})
+
+export const exportWinsFakerEmptyLeadOfficer = () => ({
+  ...exportWinsFaker,
+  ...emptyLeadOfficerObj,
+  ...legacyLeadOfficerNameObj,
+})
+
+export const exportWinsFakerEmptyLeadOfficerAndLeadOfficerName = () => ({
+  ...exportWinsFaker,
+  ...emptyLeadOfficerObj,
+  ...emptyLegacyLeadOfficerNameObj,
+})
+
+export const exportWinsFakerWithContributingAdvisers = () => ({
+  ...exportWinsFaker,
+  contributing_advisers: [
+    {
+      ...contributingAdvisersObj,
+      ...emptyLegacyContributingAdviserNameObj,
+    },
+  ],
+})
+
+export const exportWinsFakerEmptyContributingAdvisers = () => ({
+  ...exportWinsFaker,
+  contributing_advisers: [
+    {
+      ...emptyContributingAdviserObj,
+      ...legacyContributingAdviserNameObj,
+    },
+  ],
+})
+
+export const exportWinsFakerEmptyContributingAdvisersAndName = () => ({
+  ...exportWinsFaker,
+  contributing_advisers: [
+    {
+      ...emptyContributingAdviserObj,
+      ...emptyLegacyContributingAdviserNameObj,
+    },
+  ],
 })
