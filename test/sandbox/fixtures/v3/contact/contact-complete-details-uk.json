@@ -1,44 +1,51 @@
 {
-    "id":"2676ea91-9dd7-4cf3-a4a3-67b06f841b54",
-    "title":null,
-    "first_name":"Joseph",
-    "last_name":"Woof",
-    "name":"Joseph Woof",
-    "job_title":"Dog master",
-    "company":{
-       "name":"Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
-       "id":"4cd4128b-1bad-4f1e-9146-5d4678c6a018"
-    },
-    "adviser":{
-       "name":"DBT Staff",
-       "first_name":"DBT",
-       "last_name":"Staff",
-       "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
-    },
-    "primary":true,
-    "telephone_countrycode":"",
-    "telephone_number":"",
-    "full_telephone_number":"222 3453454",
-    "email":"contact@bob.com",
-    "address_same_as_company":false,
-    "address_1":"123 Test Street",
-    "address_2":"Address Line 2",
-    "address_town":"Sandbox Town",
-    "address_county":"Test County",
-    "address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
-      },
-    "address_postcode":"AB1 2CD",
-    "telephone_alternative":null,
-    "email_alternative":null,
-    "notes":"An example of a contact for testing purposes",
-    "accepts_dit_email_marketing":true,
-    "archived":false,
-    "archived_documents_url_path":"/document/123",
-    "archived_on":null,
-    "archived_reason":null,
-    "archived_by":null,
-    "created_on":"2019-02-04T15:59:14.267412Z",
-    "modified_on":"2019-02-05T13:17:23.112153Z"
-  }
+  "id": "2676ea91-9dd7-4cf3-a4a3-67b06f841b54",
+  "title": null,
+  "first_name": "Joseph",
+  "last_name": "Woof",
+  "name": "Joseph Woof",
+  "job_title": "Dog master",
+  "company": {
+    "name": "Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+    "id": "4cd4128b-1bad-4f1e-9146-5d4678c6a018"
+  },
+  "adviser": {
+    "name": "DBT Staff",
+    "first_name": "DBT",
+    "last_name": "Staff",
+    "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+  },
+  "primary": true,
+  "telephone_countrycode": "",
+  "telephone_number": "",
+  "full_telephone_number": "222 3453454",
+  "email": "contact@bob.com",
+  "address_same_as_company": false,
+  "address_1": "123 Test Street",
+  "address_2": "Address Line 2",
+  "address_town": "Sandbox Town",
+  "address_county": "Test County",
+  "address_country": {
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United Kingdom"
+  },
+  "address_postcode": "AB1 2CD",
+  "telephone_alternative": null,
+  "email_alternative": null,
+  "notes": "An example of a contact for testing purposes",
+  "accepts_dit_email_marketing": true,
+  "archived": false,
+  "archived_documents_url_path": "/document/123",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": "2019-02-04T15:59:14.267412Z",
+  "modified_on": "2019-02-05T13:17:23.112153Z",
+  "consent_data": [
+    {
+      "source_system": "System B",
+      "consent_domain": "International",
+      "consent": true
+    }
+  ]
+}
