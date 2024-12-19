@@ -8,6 +8,7 @@ import { CollectionList } from '../../../../../../src/client/components'
 import {
   assertActivitySubject,
   assertMetadataItems,
+  assertNotEYBLabel,
   assertProjectKindLabel,
   assertText,
 } from '../../../support/activity-assertions'
@@ -25,7 +26,8 @@ const EL_DATE = '2023-12-01'
 const buildAndMountActivity = (
   showOptionalFields,
   clientContacts = [],
-  type = 'FDI'
+  type = 'FDI',
+  eybLeads = []
 ) => {
   const activity = {
     date: CREATED_ON,
@@ -42,6 +44,7 @@ const buildAndMountActivity = (
       },
       number_new_jobs: showOptionalFields ? 1 : '',
       total_investment: showOptionalFields ? 1234567890 : '',
+      eyb_leads: eybLeads,
     },
   }
 
@@ -54,30 +57,34 @@ const buildAndMountActivity = (
 }
 
 describe('Investment project activity card', () => {
-  context('When the card is rendered with a complete FDI project', () => {
-    beforeEach(() => {
-      buildAndMountActivity(true, [CONTACT_1])
-      cy.get('[data-test=collection-item]').should('exist')
-    })
-
-    it('should render the labels and metadata', () => {
-      assertInvestmentLabels()
-      assertActivitySubject(NAME, PROJECT_URL)
-      assertMetadataItems([
-        'Created on 25 Nov 2058',
-        'Investment type FDI',
-        'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Estimated land date 1 Dec 2023',
-        'Company contact Alexander Hamilton',
-        'Total investment £1,234,567,890',
-        'Capital expenditure value £123,456,789',
-        'Gross value added (GVA) £12,345',
-        'Number of jobs 1',
-      ])
-    })
-  })
   context(
-    'When the card is rendered with a complete project with multiple client contacts',
+    'When the card is rendered with a complete FDI project and no link to EYB leads',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(true, [CONTACT_1])
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertInvestmentLabels()
+        assertNotEYBLabel()
+        assertActivitySubject(NAME, PROJECT_URL)
+        assertMetadataItems([
+          'Created on 25 Nov 2058',
+          'Investment type FDI',
+          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          'Estimated land date 1 Dec 2023',
+          'Company contact Alexander Hamilton',
+          'Total investment £1,234,567,890',
+          'Capital expenditure value £123,456,789',
+          'Gross value added (GVA) £12,345',
+          'Number of jobs 1',
+        ])
+      })
+    }
+  )
+  context(
+    'When the card is rendered with a complete project with multiple client contacts and no link to EYB leads',
     () => {
       beforeEach(() => {
         buildAndMountActivity(true, [CONTACT_1, CONTACT_2])
@@ -86,6 +93,7 @@ describe('Investment project activity card', () => {
 
       it('should render the labels and metadata', () => {
         assertInvestmentLabels()
+        assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
           'Created on 25 Nov 2058',
@@ -101,44 +109,52 @@ describe('Investment project activity card', () => {
       })
     }
   )
-  context('When the card is rendered with an incomplete project', () => {
-    beforeEach(() => {
-      buildAndMountActivity(false)
-      cy.get('[data-test=collection-item]').should('exist')
-    })
+  context(
+    'When the card is rendered with an incomplete project and no link to EYB leads',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(false)
+        cy.get('[data-test=collection-item]').should('exist')
+      })
 
-    it('should only render the mandatory fields', () => {
-      assertInvestmentLabels()
-      assertActivitySubject(NAME, PROJECT_URL)
-      assertMetadataItems([
-        'Created on 25 Nov 2058',
-        'Investment type FDI',
-        'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Estimated land date 1 Dec 2023',
-      ])
-    })
-  })
-
-  context('When the card is rendered with a Non-FDI project', () => {
-    beforeEach(() => {
-      buildAndMountActivity(false, [], 'Non-FDI')
-      cy.get('[data-test=collection-item]').should('exist')
-    })
-
-    it('should only render the mandatory fields', () => {
-      assertInvestmentLabels('Non-FDI')
-      assertActivitySubject(NAME, PROJECT_URL)
-      assertMetadataItems([
-        'Created on 25 Nov 2058',
-        'Investment type Non-FDI',
-        'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Estimated land date 1 Dec 2023',
-      ])
-    })
-  })
+      it('should only render the mandatory fields', () => {
+        assertInvestmentLabels()
+        assertNotEYBLabel()
+        assertActivitySubject(NAME, PROJECT_URL)
+        assertMetadataItems([
+          'Created on 25 Nov 2058',
+          'Investment type FDI',
+          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          'Estimated land date 1 Dec 2023',
+        ])
+      })
+    }
+  )
 
   context(
-    'When the card is rendered with a Commitment to Invest project',
+    'When the card is rendered with a Non-FDI project and no link to EYB leads',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(false, [], 'Non-FDI')
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should only render the mandatory fields', () => {
+        assertInvestmentLabels('Non-FDI')
+        assertNotEYBLabel()
+        assertActivitySubject(NAME, PROJECT_URL)
+        assertMetadataItems([
+          'Created on 25 Nov 2058',
+          'Investment type Non-FDI',
+          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          'Estimated land date 1 Dec 2023',
+        ])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a Commitment to Invest project and no link to EYB leads',
     () => {
       beforeEach(() => {
         buildAndMountActivity(false, [], 'Commitment to invest')
@@ -147,6 +163,7 @@ describe('Investment project activity card', () => {
 
       it('should only render the mandatory fields', () => {
         assertInvestmentLabels('Commitment to invest')
+        assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
           'Created on 25 Nov 2058',

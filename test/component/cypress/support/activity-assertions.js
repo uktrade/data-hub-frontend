@@ -48,6 +48,9 @@ export const assertEYBLabel = () => {
   assertText('[data-test="eyb-kind-label"]', 'EYB')
 }
 
+export const assertNotEYBLabel = () => {
+  cy.get('[data-test="eyb-kind-label"]').should('not.exist')
+}
 export const assertOrderKindLabel = () => {
   assertText('[data-test="order-kind-label"]', 'New Order')
 }
