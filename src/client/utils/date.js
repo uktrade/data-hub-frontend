@@ -150,19 +150,6 @@ function transformValueForAPI({ year, month, day = 1 }) {
   return null
 }
 
-function parseDateString(dateString) {
-  if (dateString.indexOf('/') !== -1) {
-    const parts = dateString.split('/')
-    return new Date(parts[2], parts[1] - 1, parts[0])
-  } else {
-    const date = new Date(dateString)
-    if (date.toString() !== 'Invalid Date') {
-      return date
-    }
-  }
-  return null
-}
-
 function createAndFormatDateObject(date, dateFormat = DATE_LONG_FORMAT_3) {
   return parse(date, dateFormat, new Date())
 }
@@ -355,7 +342,6 @@ module.exports = {
   isNormalisedDateValid,
   isShortDateValid,
   isUnparsedDateValid,
-  parseDateString,
   subtractDays,
   subtractMonths,
   subtractYears,
