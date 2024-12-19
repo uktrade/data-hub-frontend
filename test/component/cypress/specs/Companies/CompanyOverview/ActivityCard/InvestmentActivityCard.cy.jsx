@@ -92,7 +92,7 @@ describe('Investment activity card', () => {
   })
 
   context(
-    'When the project has one new job and multiple linked EYB lead',
+    'When the project has one new job and multiple linked EYB leads',
     () => {
       beforeEach(() => {
         buildAndMountActivity(1, EYB_LEADS)
@@ -128,7 +128,7 @@ describe('Investment activity card', () => {
     })
   })
 
-  context('When the project has no new jobs and one linked EYB leads', () => {
+  context('When the project has no new jobs and one linked EYB lead', () => {
     beforeEach(() => {
       buildAndMountActivity(0, EYB_LEAD)
       cy.get('[data-test="activity-card-wrapper"]').should('exist')
