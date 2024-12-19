@@ -1,4 +1,5 @@
 import React from 'react'
+import { isFuture } from 'date-fns'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -25,7 +26,6 @@ import { ORDERS__QUOTE_PREVIEW_LOADED } from '../../actions'
 import OMISTermsAndConditions from './OMISTermsAndConditions'
 import urls from '../../../lib/urls'
 import { DARK_GREY, RED_2 } from '../../utils/colours'
-import { isDateInFuture } from '../../utils/date'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM,
@@ -106,7 +106,7 @@ export const RenderQuote = ({ quote, reference }) => (
 )
 
 const setExpiryLabel = (quote) =>
-  isDateInFuture(quote.expiresOn) ? 'Expires on' : 'Expired on'
+  isFuture(quote.expiresOn) ? 'Expires on' : 'Expired on'
 
 const SentOn = ({ quote }) => (
   <>

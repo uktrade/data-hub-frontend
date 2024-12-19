@@ -1,4 +1,5 @@
 import { filter } from 'lodash'
+import { addDays, isAfter, parseISO } from 'date-fns'
 
 import { transformDateObjectToDateString } from '../../transformers'
 import {
@@ -6,7 +7,6 @@ import {
   transformRadioOptionToBool,
 } from '../Investments/Projects/transformers'
 import { INCOMPLETE_FIELD_MESSAGES, STATUS, VAT_STATUS } from './constants'
-import { addDays, isDateAfter, parseDateISO } from '../../utils/date'
 import { omis } from '../../../lib/urls'
 
 export const transformQuoteInformationForApi = ({
@@ -216,7 +216,7 @@ export const getIncompleteFields = (order, assignees) => {
 
   if (
     !order.deliveryDate ||
-    !isDateAfter(parseDateISO(order.deliveryDate), addDays(new Date(), 20))
+    !isAfter(parseISO(order.deliveryDate), addDays(new Date(), 20))
   ) {
     incompleteFields.push(INCOMPLETE_FIELD_MESSAGES.DELIVERY_DATE)
   }

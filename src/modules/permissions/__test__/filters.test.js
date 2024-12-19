@@ -1,9 +1,9 @@
-const { addMonths, subtractMonths } = require('../../../client/utils/date')
+const { addMonths, subMonths } = require('date-fns')
 
 const { filterDisabledOption, filterNonPermittedItem } = require('../filters')
 
 const today = new Date()
-const lastMonth = subtractMonths(today, 1)
+const lastMonth = subMonths(today, 1)
 const nextMonth = addMonths(today, 1)
 
 describe('filters', () => {

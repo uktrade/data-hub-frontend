@@ -1,18 +1,14 @@
-import {
-  addDays,
-  isDateAfter,
-  isDateInFuture,
-  parseDateISO,
-} from '../../utils/date'
+import { addDays, isAfter, isFuture, parseISO } from 'date-fns'
+
 import { transformDateObjectToDateString } from '../../transformers'
 import { EU_VAT_NUMBER_REGEX } from './constants'
 
 export const validateIfDateInFuture = (values) => {
   if (values?.year) {
-    const deliveryDate = parseDateISO(transformDateObjectToDateString(values))
+    const deliveryDate = parseISO(transformDateObjectToDateString(values))
     const twentyDaysLater = addDays(new Date(), 20)
 
-    return isDateAfter(deliveryDate, twentyDaysLater)
+    return isAfter(deliveryDate, twentyDaysLater)
       ? null
       : 'Delivery date must be at least 21 days in the future'
   }
@@ -20,7 +16,7 @@ export const validateIfDateInFuture = (values) => {
 }
 
 export const validateIfDateInPast = (values) =>
-  isDateInFuture(transformDateObjectToDateString(values))
+  isFuture(transformDateObjectToDateString(values))
     ? 'Payment received date must be in the past'
     : null
 

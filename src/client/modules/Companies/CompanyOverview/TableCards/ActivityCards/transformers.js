@@ -1,10 +1,11 @@
+import { isFuture } from 'date-fns'
+
 import {
   TAGS,
   NEW_PROJECT_TAG,
   NEW_ORDER_TAG,
   GREAT_EXPORT_TAG,
 } from '../../../CompanyActivity/constants'
-import { isDateInFuture } from '../../../../../utils/date'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../../../utils/date-utils'
 import { truncateData } from '../../../../../utils/truncate'
 import { INTERACTION_NAMES } from '../../../../../../apps/interactions/constants'
@@ -44,9 +45,9 @@ const buildSummary = (advisers, communicationChannel, contacts, date) => {
     advisers.length > 1 ? transformAdvisers(advisers) : advisers[0].adviser.name
   const transformedContacts =
     contacts.length > 1 ? transformContacts(contacts) : contacts[0].name
-  const isFuture = isDateInFuture(date) ? 'will have' : 'had'
+  const isFutureDate = isFuture(date) ? 'will have' : 'had'
 
-  return `${transformedAdvisers} ${isFuture} ${transformCommunicationChannel(communicationChannel)} contact with ${transformedContacts}`
+  return `${transformedAdvisers} ${isFutureDate} ${transformCommunicationChannel(communicationChannel)} contact with ${transformedContacts}`
 }
 
 const checkNewJobs = (jobs) => (jobs > 0 ? jobs : 'no')
