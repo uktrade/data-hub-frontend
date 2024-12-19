@@ -331,7 +331,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
   }
 }
 
-export const getEYBValue = (activity) => {
+const getEYBValue = (activity) => {
   const eybValue = activity.eyb_lead.is_high_value
 
   switch (eybValue) {
