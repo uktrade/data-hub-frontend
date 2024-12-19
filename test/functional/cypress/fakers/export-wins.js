@@ -4,6 +4,51 @@ import { contactFaker } from './contacts'
 import { sectorFaker } from './sectors'
 
 /**
+ * Overriding fake object data
+ */
+const emptyCompanyContactObj = {
+  company_contacts: [],
+}
+
+const legacyCustomerContactObj = {
+  customer_name: faker.person.fullName(),
+  customer_email_address: faker.person.email(),
+  customer_job_title: faker.person.jobTitle(),
+}
+
+const emptyLegacyCustomerContactObj = {
+  customer_name: '',
+  customer_email_address: '',
+  customer_job_title: '',
+}
+
+const emptyCompanyObj = {
+  company: {},
+}
+
+const legacyCompanyNameObj = {
+  company_name: faker.company.name(),
+}
+
+const emptyLegacyCompanyNameObj = {
+  company_name: '',
+}
+
+const emptyLeadOfficerObj = {
+  lead_officer: {},
+}
+
+const legacyLeadOfficerNameObj = {
+  lead_officer_name: faker.person.name(),
+  lead_officer_email_address: faker.person.email(),
+}
+
+const emptyLegacyLeadOfficerNameObj = {
+  lead_officer_name: '',
+  lead_officer_email_address: '',
+}
+
+/**
  * Generate fake data for a single export win.
  */
 export const exportWinsFaker = () => ({
@@ -132,4 +177,43 @@ export const exportWinsFaker = () => ({
       name: '40%',
     },
   },
+})
+
+/**
+ * Generate fake data that override some objects
+ */
+export const exportWinsFakerEmptyCompanyContact = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyContactObj,
+  ...legacyCustomerContactObj,
+})
+
+export const exportWinsFakerEmptyCompanyContactAndCustomerContact = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyContactObj,
+  ...emptyLegacyCustomerContactObj,
+})
+
+export const exportWinsFakerEmptyCompany = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyObj,
+  ...legacyCompanyNameObj,
+})
+
+export const exportWinsFakerEmptyCompanyAndCompanyName = () => ({
+  ...exportWinsFaker,
+  ...emptyCompanyObj,
+  ...emptyLegacyCompanyNameObj,
+})
+
+export const exportWinsFakerEmptyLeadOfficer = () => ({
+  ...exportWinsFaker,
+  ...emptyLeadOfficerObj,
+  ...legacyLeadOfficerNameObj,
+})
+
+export const exportWinsFakerEmptyLeadOfficerAndLeadOfficerName = () => ({
+  ...exportWinsFaker,
+  ...emptyLeadOfficerObj,
+  ...emptyLegacyLeadOfficerNameObj,
 })
