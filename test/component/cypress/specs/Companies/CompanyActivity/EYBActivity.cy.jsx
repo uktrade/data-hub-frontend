@@ -41,7 +41,7 @@ const buildAndMountActivity = (value = null, linked_company_name = null) => {
 
 describe('EYB lead activity card', () => {
   context(
-    'When the card is rendered with a lead of unknown value and linked company',
+    'When the card is rendered with a lead of unknown value and linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(null, LINKED_COMPANY_NAME)
@@ -56,6 +56,94 @@ describe('EYB lead activity card', () => {
           `Submitted to EYB date 01 Dec 2024`,
           'Value Unknown',
         ])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a lead of high value and linked company name',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(true, LINKED_COMPANY_NAME)
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertEYBLabel()
+        assertInvestmentThemeLabel()
+        assertActivitySubject(LINKED_COMPANY_NAME, PROJECT_URL)
+        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value High'])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a lead of low value and linked company name',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(false, LINKED_COMPANY_NAME)
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertEYBLabel()
+        assertInvestmentThemeLabel()
+        assertActivitySubject(LINKED_COMPANY_NAME, PROJECT_URL)
+        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value Low'])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a lead of unknown value and no linked company name',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity()
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertEYBLabel()
+        assertInvestmentThemeLabel()
+        assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
+        assertMetadataItems([
+          `Submitted to EYB date 01 Dec 2024`,
+          'Value Unknown',
+        ])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a lead of high value and no linked company name',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(true)
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertEYBLabel()
+        assertInvestmentThemeLabel()
+        assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
+        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value High'])
+      })
+    }
+  )
+
+  context(
+    'When the card is rendered with a lead of low value and no linked company name',
+    () => {
+      beforeEach(() => {
+        buildAndMountActivity(false)
+        cy.get('[data-test=collection-item]').should('exist')
+      })
+
+      it('should render the labels and metadata', () => {
+        assertEYBLabel()
+        assertInvestmentThemeLabel()
+        assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
+        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value Low'])
       })
     }
   )
