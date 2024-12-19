@@ -13,7 +13,7 @@ import {
   exportWinsState2props,
 } from './state'
 import { OVERVIEW__EXPORT_WINS_SUMMARY } from '../../../../actions'
-import { format } from '../../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../../utils/date-utils'
 import { transformExportCountries } from '../../CompanyExports/transformers'
 import { companies } from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
@@ -185,7 +185,7 @@ export const ExportStatusDetails = ({
         latestExportWin.error ? (
           <StyledSpan>{latestExportWin.error}</StyledSpan>
         ) : (
-          `${format(latestExportWin.date)}, ${latestExportWin.country}`
+          `${formatDate(latestExportWin.date, DATE_FORMAT_COMPACT)}, ${latestExportWin.country}`
         )
       ) : (
         'No export wins recorded'

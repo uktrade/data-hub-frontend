@@ -92,7 +92,7 @@ describe('Company Investments and Large capital profile', () => {
             'Investable capital': 30000,
             'Investor description': 'incomplete',
             'Has this investor cleared the required checks within the last 12 months?':
-              'Cleared\nDate of most recent background checks: 29 04 2019\nPerson responsible for most recent background checks: Aaron Chan',
+              'Cleared\nDate of most recent background checks: 29 April 2019\nPerson responsible for most recent background checks: Aaron Chan',
           },
         })
       })

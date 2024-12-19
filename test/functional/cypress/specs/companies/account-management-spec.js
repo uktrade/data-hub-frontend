@@ -1,11 +1,12 @@
-import { format } from 'date-fns'
-
 import { faker } from '../../../../sandbox/utils/random'
-
 import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'
+import {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} from '../../../../../src/client/utils/date-utils'
 import {
   assertCompanyBreadcrumbs,
   assertGovReactTable,
@@ -88,9 +89,9 @@ describe('Company account management', () => {
       cy.get('[data-test="last-updated-strategy-details"] > span')
         .eq(0)
         .contains(
-          `Last updated by ${companyWithStrategy.modifiedBy.name}: ${format(
+          `Last updated by ${companyWithStrategy.modifiedBy.name}: ${formatDate(
             companyWithStrategy.modifiedOn,
-            'dd MMM yyyy'
+            DATE_FORMAT_COMPACT
           )}. `
         )
     })

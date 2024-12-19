@@ -11,7 +11,7 @@ import ActivityCardLabels from './card/ActivityCardLabels'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 export default class MaxemailCampaign extends React.PureComponent {
   static propTypes = {
@@ -39,7 +39,7 @@ export default class MaxemailCampaign extends React.PureComponent {
     ))
 
     const metadata = [
-      { label: 'Date', value: format(published) },
+      { label: 'Date', value: formatDate(published, DATE_FORMAT_COMPACT) },
       { label: 'Senders name', value: name },
       { label: 'Senders email', value: from },
       { label: 'Content', value: content },

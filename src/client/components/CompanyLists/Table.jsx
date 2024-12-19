@@ -18,7 +18,7 @@ import urls from '../../../lib/urls'
 import { MEDIA_QUERIES } from '../../utils/responsive'
 import SecondaryButton from '../SecondaryButton'
 
-const { format } = require('../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../utils/date-utils')
 
 const StyledButtonLink = styled.a({
   marginBottom: 0,
@@ -159,7 +159,9 @@ const CompaniesTable = ({ companies }) => (
               />
             </StyledLink>
           </TitleCell>
-          <ColumnLabelCell>{date ? format(date) : '-'}</ColumnLabelCell>
+          <ColumnLabelCell>
+            {date ? formatDate(date, DATE_FORMAT_COMPACT) : '-'}
+          </ColumnLabelCell>
           <StyledTableCell>
             {interactionId ? (
               <StyledLink href={urls.interactions.detail(interactionId)}>

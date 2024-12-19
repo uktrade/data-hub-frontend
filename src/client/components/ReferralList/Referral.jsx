@@ -9,7 +9,7 @@ import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/c
 import { Card, CardHeader } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
 import urls from '../../../lib/urls'
-import { format } from '../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../utils/date-utils'
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
@@ -75,7 +75,7 @@ const Referral = ({
             ? [
                 {
                   label: 'Accepted on',
-                  value: format(dateAccepted),
+                  value: formatDate(dateAccepted, DATE_FORMAT_COMPACT),
                 },
               ]
             : []),

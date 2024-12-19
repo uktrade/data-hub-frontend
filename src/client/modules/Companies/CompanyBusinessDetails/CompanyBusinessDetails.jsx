@@ -23,7 +23,7 @@ import {
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import Task from '../../../components/Task'
 import urls from '../../../../lib/urls'
-import { format } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 
 import {
   ID,
@@ -90,7 +90,10 @@ const CompanyBusinessDetails = ({
                 .
               </div>
               {lastUpdated(company) && (
-                <div>Last updated on: {format(lastUpdated(company))}</div>
+                <div>
+                  Last updated on:{' '}
+                  {formatDate(lastUpdated(company), DATE_FORMAT_COMPACT)}
+                </div>
               )}
               <Task.Status
                 name={DNB__CHECK_PENDING_REQUEST}

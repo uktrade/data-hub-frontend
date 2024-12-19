@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 const StyledSummaryTable = styled(SummaryTable)({
   'margin-top': SPACING_POINTS[8],
@@ -24,7 +24,7 @@ const InteractionReferralDetails = ({ referral, companyId }) => {
         </Link>
       </SummaryTable.Row>
       <SummaryTable.Row heading="Sent on">
-        {format(referral.createdOn)}
+        {formatDate(referral.createdOn, DATE_FORMAT_COMPACT)}
       </SummaryTable.Row>
       <SummaryTable.Row heading="By">
         {referral.createdBy.name}

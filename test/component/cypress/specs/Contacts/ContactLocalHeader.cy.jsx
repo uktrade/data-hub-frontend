@@ -3,9 +3,27 @@ import React from 'react'
 import ContactLocalHeader from '../../../../../src/client/components/ContactLocalHeader'
 import urls from '../../../../../src/lib/urls'
 
-const primaryContact = require('../../../../sandbox/fixtures/v3/contact/contact-complete-details-uk.json')
-const archivedContact = require('../../../../sandbox/fixtures/v3/contact/contact-archived.json')
 const notPrimaryContact = require('../../../../sandbox/fixtures/v3/contact/contact-incomplete-details-uk.json')
+const primaryContact = require('../../../../sandbox/fixtures/v3/contact/contact-complete-details-uk.json')
+
+const archivedContact = {
+  name: 'Joseph Woof',
+  company: {
+    name: 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
+    id: '4cd4128b-1bad-4f1e-9146-5d4678c6a018',
+  },
+  primary: true,
+  archived: true,
+
+  archivedOn: '2019-07-04T15:59:14.267412Z',
+  archivedReason: 'Left the company',
+  archivedBy: {
+    name: 'Bernard Harris-Patel',
+    first_name: 'Bernard',
+    last_name: 'Harris-Patel',
+    id: '7d19d407-9aec-4d06-b190-d3f404627f21',
+  },
+}
 
 const companyName = primaryContact.company.name
 const companyLink = urls.companies.overview.index(primaryContact.company.id)
@@ -93,6 +111,20 @@ describe('ContactLocalHeader', () => {
 
     it('should render the archive panel', () => {
       cy.get('[data-test=archive-panel]').should('exist')
+    })
+
+    it('should render an archived message', () => {
+      cy.get('[data-test="archive-message"]').should(
+        'have.text',
+        'This contact was archived on 04 Jul 2019 by Bernard Harris-Patel.'
+      )
+    })
+
+    it('should render an archived reason', () => {
+      cy.get('[data-test="archive-reason"]').should(
+        'have.text',
+        'Reason: Left the company'
+      )
     })
   })
 })

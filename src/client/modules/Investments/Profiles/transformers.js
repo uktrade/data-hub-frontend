@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { companies } from '../../../../lib/urls'
 
-const { format } = require('../../../utils/date')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 const transformLargeCapitalProfiles = ({ investor_company, created_on }) => ({
   headingText: investor_company.name,
@@ -10,7 +10,7 @@ const transformLargeCapitalProfiles = ({ investor_company, created_on }) => ({
   metadata: [
     {
       label: 'Updated on',
-      value: format(created_on),
+      value: formatDate(created_on, DATE_FORMAT_COMPACT),
     },
   ],
 })

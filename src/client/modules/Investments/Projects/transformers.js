@@ -18,7 +18,11 @@ import {
   STAGE_VERIFY_WIN,
   STAGE_WON,
 } from './constants'
-import { format } from '../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} from '../../../utils/date-utils'
 
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
@@ -220,8 +224,14 @@ export const transformPropositionToListItem = ({
 }) => ({
   id,
   metadata: [
-    { label: 'Deadline', value: format(deadline, 'dd MMMM yyyy') },
-    { label: 'Created on', value: format(created_on, 'dd MMMM yyyy') },
+    {
+      label: 'Deadline',
+      value: formatDate(deadline, DATE_FORMAT_DAY_MONTH_YEAR),
+    },
+    {
+      label: 'Created on',
+      value: formatDate(created_on, DATE_FORMAT_DAY_MONTH_YEAR),
+    },
     {
       label: 'Adviser',
       value: adviser.name,
@@ -266,7 +276,9 @@ export const transformInvestmentProjectToListItem = ({
     { label: 'Sector', value: sector ? sector.name : '' },
     {
       label: 'Estimated land date',
-      value: estimated_land_date && format(estimated_land_date, 'MMMM yyyy'),
+      value:
+        estimated_land_date &&
+        formatDate(estimated_land_date, DATE_FORMAT_MONTH_YEAR),
     },
   ].filter((metadata) => metadata.value)
 
@@ -303,10 +315,15 @@ export const transformTaskToListItem = ({
   headingText: title,
   subheading: getTaskSubheading(archived),
   metadata: [
-    { label: 'Date created', value: format(createdOn, 'dd MMMM yyyy') },
+    {
+      label: 'Date created',
+      value: formatDate(createdOn, DATE_FORMAT_DAY_MONTH_YEAR),
+    },
     {
       label: 'Due date',
-      value: dueDate ? format(dueDate, 'dd MMMM yyyy') : NOT_SET_TEXT,
+      value: dueDate
+        ? formatDate(dueDate, DATE_FORMAT_DAY_MONTH_YEAR)
+        : NOT_SET_TEXT,
     },
     { label: 'Assigned to', value: advisers.map((a) => a.name).join(', ') },
   ],

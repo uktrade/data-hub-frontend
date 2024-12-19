@@ -12,7 +12,10 @@ import { EXPORT_LOADED } from '../../../actions'
 import { DefaultLayout, SummaryTable } from '../../../components'
 import Task from '../../../components/Task'
 import { ID, state2props, TASK_GET_EXPORT_DETAIL } from './state'
-import { format } from '../../../../client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../client/utils/date-utils'
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { transformIdNameToValueLabel } from '../../../transformers'
@@ -136,7 +139,10 @@ const ExportDetailsForm = ({ exportItem }) => {
                   >
                     {isEmpty(exportItem.estimated_win_date)
                       ? 'Not set'
-                      : format(exportItem.estimated_win_date, 'MMMM yyyy')}
+                      : formatDate(
+                          exportItem.estimated_win_date,
+                          DATE_FORMAT_MONTH_YEAR
+                        )}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="Status" hideWhenEmpty={false}>
                     {isEmpty(exportItem.status)

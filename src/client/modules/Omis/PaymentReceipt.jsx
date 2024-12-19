@@ -12,8 +12,7 @@ import {
 } from '../../components/Resource'
 import OMISLayout from './OMISLayout'
 import { DARK_GREY } from '../../utils/colours'
-import { format } from '../../utils/date'
-import { DATE_LONG_FORMAT_1 } from '../../../common/constants'
+import { formatDate, DATE_FORMAT_FULL } from '../../utils/date-utils'
 import { currencyGBP } from '../../utils/number-utils'
 import { ButtonLink } from '../../components'
 import urls from '../../../lib/urls'
@@ -78,7 +77,7 @@ export const AddressSection = ({ invoice, paymentDate }) => (
           Receipt date
         </StyledSectionHeading>
         <p data-test="receipt-date">
-          {format(paymentDate, DATE_LONG_FORMAT_1)}
+          {formatDate(paymentDate, DATE_FORMAT_FULL)}
         </p>
       </>
     </StyledGridColLeft>
@@ -169,7 +168,7 @@ export const PaymentSection = ({
       <StyledSectionHeading>Amount received</StyledSectionHeading>
       <p>{currencyGBP(payment[0].amount / 100)}</p>
       <StyledSectionHeading>Received on</StyledSectionHeading>
-      <p>{format(payment[0].receivedOn, DATE_LONG_FORMAT_1)}</p>
+      <p>{formatDate(payment[0].receivedOn, DATE_FORMAT_FULL)}</p>
       {payment[0].transactionReference && (
         <>
           <StyledSectionHeading>Transaction reference</StyledSectionHeading>

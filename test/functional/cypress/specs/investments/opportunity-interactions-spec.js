@@ -9,7 +9,10 @@ const {
   assertBreadcrumbs,
   assertQueryParams,
 } = require('../../support/assertions')
-const { format } = require('../../../../../src/client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} = require('../../../../../src/client/utils/date-utils')
 
 const interaction = interactionFaker()
 const interactionsList = interactionsListFaker(10)
@@ -65,7 +68,10 @@ describe('The interactions tab on an opportunity page', () => {
 
       cy.get('[data-test="collection-item"]')
         .find('[data-test="metadata"]')
-        .should('contain', `Date ${format(interaction.date, 'dd MMMM yyyy')}`)
+        .should(
+          'contain',
+          `Date ${formatDate(interaction.date, DATE_FORMAT_DAY_MONTH_YEAR)}`
+        )
         .and('contain', `Contact(s) ${interaction.contacts[0].name}`)
         .and('contain', `Company ${interaction.companies[0].name}`)
         .and(

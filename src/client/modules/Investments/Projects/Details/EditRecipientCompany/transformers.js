@@ -3,9 +3,9 @@ import { get } from 'lodash'
 import urls from '../../../../../../lib/urls'
 import labels from '../../../../Companies/CollectionList/labels'
 import { addressToString } from '../../../../../utils/addresses'
-import { format } from '../../../../../utils/date'
 import {
   formatDate,
+  DATE_FORMAT_COMPACT,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../../../utils/date-utils'
 
@@ -51,7 +51,7 @@ const transformCompanyToListItem =
     if (latest_interaction_date) {
       metadata.push({
         label: 'Last interaction date',
-        value: format(latest_interaction_date),
+        value: formatDate(latest_interaction_date, DATE_FORMAT_COMPACT),
       })
     }
 

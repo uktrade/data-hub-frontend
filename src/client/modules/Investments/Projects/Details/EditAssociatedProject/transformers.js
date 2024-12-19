@@ -1,5 +1,8 @@
 import urls from '../../../../../../lib/urls'
-import { format } from '../../../../../utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_MONTH_YEAR,
+} from '../../../../../utils/date-utils'
 
 export const checkIfAssociatedProjectExists = (hasAssociatedProject) =>
   hasAssociatedProject ? 'Update associated project' : 'Add associated project'
@@ -28,7 +31,9 @@ const transformNonFdiProjectToListItem = (projectId) => (project) => {
     { label: 'Sector', value: sector ? sector.name : '' },
     {
       label: 'Estimated land date',
-      value: estimated_land_date && format(estimated_land_date, 'MMMM yyyy'),
+      value:
+        estimated_land_date &&
+        formatDate(estimated_land_date, DATE_FORMAT_MONTH_YEAR),
     },
   ].filter((metadata) => metadata.value)
 

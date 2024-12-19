@@ -16,7 +16,10 @@ import { BLUE, GREY_1, GREY_4 } from '../../../../utils/colours'
 import Badge from '../../../Badge'
 import { SOURCE_TYPES } from '../../constants'
 
-const { format } = require('../../../../utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} = require('../../../../utils/date-utils')
 
 const StyledBlockText = styled(H3)`
   display: inline-block;
@@ -118,7 +121,9 @@ const CardHeader = ({
       </StyledHeadingWrapper>
 
       <StyledMetaItems>
-        {startTime && <ListItem>{format(startTime)}</ListItem>}
+        {startTime && (
+          <ListItem>{formatDate(startTime, DATE_FORMAT_COMPACT)}</ListItem>
+        )}
 
         {badge && (
           <ListItem>

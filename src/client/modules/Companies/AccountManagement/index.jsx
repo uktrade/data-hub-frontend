@@ -15,7 +15,10 @@ import {
   CompanyResource,
 } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import { format } from '../../../../client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} from '../../../../client/utils/date-utils'
 import { DARK_GREY, GREY_2, GREY_3, TEXT_COLOUR } from '../../../utils/colours'
 import { LeadITA } from './LeadAdvisers'
 import { CoreTeamAdvisers } from '../CoreTeam/CoreTeam'
@@ -113,8 +116,9 @@ const Strategy = ({ company }) => (
           <GridRow>
             <GridCol>
               <LastUpdatedHeading data-test="last-updated-strategy-details">
-                <span>{`Last updated by ${company?.modifiedBy?.name}: ${format(
-                  company.modifiedOn
+                <span>{`Last updated by ${company?.modifiedBy?.name}: ${formatDate(
+                  company.modifiedOn,
+                  DATE_FORMAT_COMPACT
                 )}. `}</span>
                 <span>
                   View changes in{' '}
@@ -181,7 +185,7 @@ const Objectives = ({ company }) => (
                   <LastUpdatedHeading data-test="last-updated-details">
                     <span>{`Last updated by ${
                       objective?.modifiedBy?.name
-                    }: ${format(objective.modifiedOn)}`}</span>
+                    }: ${formatDate(objective.modifiedOn, DATE_FORMAT_COMPACT)}`}</span>
                   </LastUpdatedHeading>
                 </GridCol>
               </GridRow>
@@ -234,7 +238,7 @@ const objectiveMetadata = (objective) => {
     },
     {
       label: 'Due date',
-      value: format(objective.targetDate),
+      value: formatDate(objective.targetDate, DATE_FORMAT_COMPACT),
     },
     {
       label: 'Progress',

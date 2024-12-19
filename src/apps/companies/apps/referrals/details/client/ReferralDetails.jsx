@@ -15,7 +15,10 @@ import Task from '../../../../../../client/components/Task'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
-const { format } = require('../../../../../../client/utils/date')
+const {
+  formatDate,
+  DATE_FORMAT_COMPACT,
+} = require('../../../../../../client/utils/date-utils')
 
 export const AdviserDetails = ({ name, email, team }) => (
   <>
@@ -87,14 +90,14 @@ export default connect(({ referrerUrl, ...state }) => ({
                 {receivingAdviser && <AdviserDetails {...receivingAdviser} />}
               </SummaryTable.Row>
               <SummaryTable.Row heading="Date of referral">
-                {format(date)}
+                {formatDate(date, DATE_FORMAT_COMPACT)}
               </SummaryTable.Row>
               <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
             </SummaryTable>
             {completed ? (
               <SummaryTable caption="Referral accepted">
                 <SummaryTable.Row heading="Date">
-                  {format(completed.on)}
+                  {formatDate(completed.on, DATE_FORMAT_COMPACT)}
                 </SummaryTable.Row>
                 <SummaryTable.Row heading="By">
                   <AdviserDetails {...completed.by} />

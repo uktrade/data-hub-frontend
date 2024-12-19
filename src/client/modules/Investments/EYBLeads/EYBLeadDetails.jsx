@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'govuk-react'
 
-import { format } from '../../../utils/date'
+import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
@@ -49,7 +49,10 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Submitted to EYB"
-                children={format(eybLead.triageCreated, 'dd MMM yyyy')}
+                children={formatDate(
+                  eybLead.triageCreated,
+                  DATE_FORMAT_COMPACT
+                )}
               />
               <SummaryTable.Row heading="Company website address">
                 {eybLead.companyWebsite ? (

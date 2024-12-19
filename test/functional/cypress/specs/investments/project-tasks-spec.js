@@ -1,7 +1,10 @@
 import fixtures from '../../fixtures'
 import urls from '../../../../../src/lib/urls'
 import { taskWithInvestmentProjectFaker } from '../../fakers/task'
-import { format } from '../../../../../src/client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} from '../../../../../src/client/utils/date-utils'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 import { assertQueryParams } from '../../support/assertions'
 
@@ -49,13 +52,13 @@ const assertTaskItem = (index, investmentTask) => {
     .find('[data-test="metadata"]')
     .should(
       'contain',
-      `Date created ${format(investmentTask.createdOn, 'dd MMMM yyyy')}`
+      `Date created ${formatDate(investmentTask.createdOn, DATE_FORMAT_DAY_MONTH_YEAR)}`
     )
     .and(
       'contain',
       `Due date ${
         investmentTask.dueDate
-          ? format(investmentTask.dueDate, 'dd MMMM yyyy')
+          ? formatDate(investmentTask.dueDate, DATE_FORMAT_DAY_MONTH_YEAR)
           : NOT_SET_TEXT
       }`
     )

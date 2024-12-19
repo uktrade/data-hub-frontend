@@ -1,6 +1,9 @@
 import { get } from 'lodash'
 
-import { format } from '../../../client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_DAY_MONTH_YEAR,
+} from '../../../client/utils/date-utils'
 import urls from '../../../lib/urls'
 import { LABELS } from './constants'
 
@@ -52,7 +55,7 @@ export const transformInteractionToListItem = ({
 } = {}) => ({
   id,
   metadata: [
-    { label: 'Date', value: format(date, 'dd MMMM yyyy') },
+    { label: 'Date', value: formatDate(date, DATE_FORMAT_DAY_MONTH_YEAR) },
     {
       label: 'Contact(s)',
       value: contacts && formatContacts(contacts),
