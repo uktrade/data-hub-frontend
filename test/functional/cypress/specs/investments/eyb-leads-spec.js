@@ -461,8 +461,8 @@ describe('EYB leads collection page', () => {
     })
 
     it('should return and display the filtered collection', () => {
-      let queryString = buildQueryString({ 'country[0]': COUNTRY_ID_1 })
-      let expectedNumberOfResults = 2 // Number of leads with COUNTRY_ID_1 in the fixture data
+      const queryString = buildQueryString({ 'country[0]': COUNTRY_ID_1 })
+      const expectedNumberOfResults = 2 // Number of leads with COUNTRY_ID_1 in the fixture data
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
         statusCode: 200,
         body: {
@@ -484,13 +484,13 @@ describe('EYB leads collection page', () => {
   context(
     'When filtering the EYB leads collection by HMTC (overseas) region',
     () => {
-      let expectedPayload = {
+      const expectedPayload = {
         ...PAYLOADS.minimum,
         ...PAYLOADS.country,
       }
 
       it('should filter from the url', () => {
-        let queryString = buildQueryString({
+        const queryString = buildQueryString({
           'overseas_region[0]': OVERSEAS_REGION_ID_1,
         })
         cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
@@ -524,10 +524,10 @@ describe('EYB leads collection page', () => {
       })
 
       it('should return and display the filtered collection', () => {
-        let queryString = buildQueryString({
+        const queryString = buildQueryString({
           'overseas_region[0]': OVERSEAS_REGION_ID_1,
         })
-        let expectedNumberOfResults = 2 // Number of leads with OVERSEAS_REGION_ID_1 in the fixture data
+        const expectedNumberOfResults = 2 // Number of leads with OVERSEAS_REGION_ID_1 in the fixture data
         cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
           statusCode: 200,
           body: {
