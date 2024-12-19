@@ -1,4 +1,4 @@
-const { format, parseISO } = require('date-fns')
+const { format } = require('date-fns')
 
 /**
  * Two-digit day format.
@@ -97,39 +97,38 @@ const DATE_FORMAT_DAY_MONTH = 'dd MMM'
 const DATE_FORMAT_INTERACTION_TIMESTAMP = 'y-MM-d'
 
 /**
- * Formats a date into the specified string format using predefined constants.
+ * Formats a given date into a string using a specified format.
  *
- * @param {Date|string} date - The date to format. Can be a Date object or an ISO date string (e.g., '2024-12-04').
- * @param {string} [dateISOFormat=DATE_FORMAT_COMPACT] - The desired format string. Defaults to the compact date format (`DATE_FORMAT_COMPACT`).
- *   Available formats include:
- *     - `DATE_FORMAT_FULL`: Full date with day and full month name (e.g., '4 December 2024').
- *     - `DATE_FORMAT_FULL_DAY`: Full date including the weekday (e.g., 'Wed, 04 Dec 2024').
- *     - `DATE_FORMAT_COMPACT`: Compact date format with abbreviated month (e.g., '04 Dec 2024').
- *     - `DATE_FORMAT_ISO`: ISO standard date format (e.g., '2024-12-04').
- *     - `DATE_FORMAT_MEDIUM`: Medium date with abbreviated month (e.g., '4 Dec 2024').
- *     - `DATE_FORMAT_MEDIUM_WITH_TIME`: Medium date with time in 12-hour format (e.g., '4 Dec 2024, 3:30PM').
- *     - `DATE_FORMAT_YEAR_MONTH`: Year and month in compact form (e.g., '2024-12').
- *     - `DATE_FORMAT_MONTH_YEAR`: Full month name and year (e.g., 'December 2024').
- *     - `DATE_FORMAT_MONTH_ABBR_YEAR`: Abbreviated month name and year (e.g., 'Dec 2024').
- *     - `DATE_FORMAT_DAY_MONTH`: Day and abbreviated month (e.g., '04 Dec').
- *     - `DATE_FORMAT_INTERACTION_TIMESTAMP`: Timestamp-like format (e.g., '2024-12-4').
+ * @param {Date | number | string} date - The date to format.
+ *   Can be a Date object, a timestamp (number), or a valid date string.
+ * @param {string} [dateISOFormat=DATE_FORMAT_COMPACT] - The format string used to format the date.
+ *   Commonly used predefined constants:
+ *   - `DATE_FORMAT_DAY`: Two-digit day (e.g., "04").
+ *   - `DATE_FORMAT_MONTH`: Two-digit month (e.g., "12").
+ *   - `DATE_FORMAT_YEAR`: Four-digit year (e.g., "2024").
+ *   - `DATE_FORMAT_FULL`: Day, full month name, and year (e.g., "18 December 2024").
+ *   - `DATE_FORMAT_FULL_DAY`: Weekday, day, abbreviated month, and year (e.g., "Wed, 18 Dec 2024").
+ *   - `DATE_FORMAT_COMPACT`: Two-digit day, abbreviated month, and year (e.g., "18 Dec 2024").
+ *   - `DATE_FORMAT_DAY_MONTH_YEAR`: Two-digit day, full month name, and year (e.g., "18 December 2024").
+ *   - `DATE_FORMAT_ISO`: ISO date format (e.g., "2024-12-18").
+ *   - `DATE_FORMAT_MEDIUM`: Single-digit day, abbreviated month, and year (e.g., "18 Dec 2024").
+ *   - `DATE_FORMAT_MEDIUM_WITH_TIME`: Medium date with time in 12-hour format (e.g., "18 Dec 2024, 3:30PM").
+ *   - `DATE_FORMAT_ISO_WITH_TIME_FULL`: ISO 8601 date with time (e.g., "2024-12-18T15:30:45").
+ *   - `DATE_FORMAT_YEAR_MONTH`: Year and two-digit month (e.g., "2024-12").
+ *   - `DATE_FORMAT_MONTH_YEAR`: Full month name and year (e.g., "December 2024").
+ *   - `DATE_FORMAT_MONTH_ABBR_YEAR`: Abbreviated month and year (e.g., "Dec 2024").
+ *   - `DATE_FORMAT_DAY_MONTH`: Two-digit day and abbreviated month (e.g., "18 Dec").
+ *   - `DATE_FORMAT_INTERACTION_TIMESTAMP`: Interaction timestamp (e.g., "2024-12-18").
  *
- * @returns {string} The formatted date string based on the specified format.
- *
- * @example
- * // Formatting with default format (DATE_FORMAT_COMPACT)
- * formatDate(new Date('2024-12-04')) // '04 Dec 2024'
- *
- * @example
- * // Formatting with a different predefined format
- * formatDate('2024-12-04', DATE_FORMAT_FULL) // '4 December 2024'
+ * @returns {string} The formatted date string.
  *
  * @example
- * // Formatting with a timestamp-like format
- * formatDate(new Date(), DATE_FORMAT_INTERACTION_TIMESTAMP) // '2024-12-9'
+ * formatDate(new Date(), DATE_FORMAT_FULL) // "18 December 2024"
+ * formatDate(1700000000000, DATE_FORMAT_ISO) // "2024-12-18"
+ * formatDate("2024-12-18T15:30:45", DATE_FORMAT_COMPACT) // "18 Dec 2024"
  */
 function formatDate(date, dateISOFormat = DATE_FORMAT_COMPACT) {
-  return format(typeof date === 'string' ? parseISO(date) : date, dateISOFormat)
+  return format(date, dateISOFormat)
 }
 
 module.exports = {
