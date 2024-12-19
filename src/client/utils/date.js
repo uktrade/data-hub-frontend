@@ -150,10 +150,6 @@ function transformValueForAPI({ year, month, day = 1 }) {
   return null
 }
 
-function createAndFormatDateObject(date, dateFormat = DATE_LONG_FORMAT_3) {
-  return parse(date, dateFormat, new Date())
-}
-
 /**
  * Get the number of days to a given date as an integer.
  */
@@ -328,7 +324,6 @@ module.exports = {
   addDays,
   addMonths,
   addYears,
-  createAndFormatDateObject,
   format,
   generateFinancialYearLabel,
   getDifferenceInDays,
