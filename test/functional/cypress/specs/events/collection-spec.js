@@ -53,12 +53,28 @@ describe('Event Collection List Page', () => {
     },
   })
 
-  const eventsList = [event1, event2]
+  const stovaEvent = eventFaker({
+    id: 'd848746d-e7dd-4bf2-98ce-05f9833be662',
+    event_type: {
+      name: 'Exhibition',
+      id: '2fade471-e868-4ea9-b125-945eb90ae5d4',
+    },
+    lead_team: null,
+    name: 'Empty one-day exhibition',
+    organiser: null,
+    service: {
+      name: 'Stova Event Service',
+      id: '8053f984-fac6-4d35-b3df-4ac0eeb3b542',
+    },
+  })
+
+  const eventsList = [event1, event2, stovaEvent]
   context('when there is not an error', () => {
     beforeEach(() => {
       collectionListRequest('v3/search/event', eventsList, events.index())
       getCollectionList()
       cy.get('@collectionItems').eq(1).as('secondListItem')
+      cy.get('@collectionItems').eq(2).as('thirdListItem')
     })
 
     assertCollectionBreadcrumbs('Events')
@@ -68,7 +84,7 @@ describe('Event Collection List Page', () => {
     })
 
     it('should display the events result count header', () => {
-      cy.get('h2').contains('2 events')
+      cy.get('h2').contains('3 events')
     })
 
     it('should have a link to add event', () => {
@@ -121,6 +137,10 @@ describe('Event Collection List Page', () => {
     it('should not display missing metadata items', () => {
       assertMetadataItemNotPresent('@secondListItem', 'Lead team')
       assertMetadataItemNotPresent('@secondListItem', 'Organiser')
+    })
+
+    it('should display the stova event service type', () => {
+      assertMetadataItem('@thirdListItem', 'Stova Event')
     })
   })
 })

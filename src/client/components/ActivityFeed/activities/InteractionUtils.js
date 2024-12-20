@@ -50,7 +50,9 @@ export const getServiceText = (service) => {
         : service.includes('Investment Enquiry') ||
             service.includes('Investment enquiry')
           ? 'Enquiry'
-          : INTERACTION_SERVICES[serviceType]
+          : service.includes('Stova Event Service')
+            ? 'Stova Event'
+            : INTERACTION_SERVICES[serviceType]
   return serviceText
 }
 
