@@ -128,7 +128,9 @@ const AcceptedOn = ({ quote }) => (
       {formatDate(quote.acceptedOn, DATE_FORMAT_MEDIUM_WITH_TIME)}
     </StyledP>
     <StyledHeading data-test="accepted-by-heading">Accepted by</StyledHeading>
-    <StyledP data-test="accepted-by-name">{quote.acceptedBy.name}</StyledP>
+    {quote.acceptedBy && (
+      <StyledP data-test="accepted-by-name">{quote.acceptedBy.name}</StyledP>
+    )}
   </>
 )
 

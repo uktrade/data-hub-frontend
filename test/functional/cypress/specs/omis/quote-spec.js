@@ -214,6 +214,13 @@ describe('Order quote', () => {
     })
   })
 
+  context('When the quote has been accepted, but accepted_by is null', () => {
+    it('should not render accepted-by-name', () => {
+      cy.visit(urls.omis.quote(quoteAccepted.id))
+      cy.get('[data-test="accepted-by-name"]').should('not.exist')
+    })
+  })
+
   context('When the order has been cancelled', () => {
     beforeEach(() => {
       cy.visit(urls.omis.quote(cancelledOrder.id))
