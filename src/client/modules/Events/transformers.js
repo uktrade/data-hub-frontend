@@ -40,7 +40,7 @@ const transformEventToListItem = ({
   if (service) {
     tags.push({
       text: getServiceText(service.name),
-      colour: 'default',
+      colour: 'govBlue',
       dataTest: 'event-theme-label',
     })
   }
