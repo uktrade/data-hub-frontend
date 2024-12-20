@@ -45,6 +45,13 @@ const EYBLeadCollection = ({
     options.filter(({ value }) => values.includes(value))
 
   const setupSelectedFilters = (qsParams, filterOptions) => ({
+    overseasRegionId: {
+      queryParam: QS_PARAMS.overseasRegionId,
+      options: resolveSelectedOptions(
+        qsParams[QS_PARAMS.overseasRegionId],
+        filterOptions.overseasRegions
+      ),
+    },
     countryId: {
       queryParam: QS_PARAMS.countryId,
       options: resolveSelectedOptions(
@@ -120,6 +127,16 @@ const EYBLeadCollection = ({
             options={VALUE_OPTIONS}
             selectedOptions={selectedFilters.valueOfLead.options}
             data-test="lead-value-filter"
+          />
+          <Filters.Typeahead
+            isMulti={true}
+            label="HMTC region"
+            name="overseas-region"
+            qsParam={QS_PARAMS.overseasRegionId}
+            placeholder="Search HMTC region"
+            options={filterOptions.overseasRegions}
+            selectedOptions={selectedFilters.overseasRegionId.options}
+            data-test="overseas-region-filter"
           />
           <Filters.Typeahead
             isMulti={true}

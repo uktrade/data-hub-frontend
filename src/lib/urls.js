@@ -669,6 +669,7 @@ module.exports = {
     ),
     oneListTier: url('/api-proxy/v4/metadata', '/one-list-tier'),
     tradeAgreement: url('/api-proxy/v4/metadata', '/trade-agreement'),
+    overseasRegion: url('/api-proxy/v4/metadata', '/overseas-region'),
   },
   omis: {
     index: url('/omis', PRIMARY_LINK_PARAMS.omis),

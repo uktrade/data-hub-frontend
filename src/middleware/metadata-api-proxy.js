@@ -77,6 +77,7 @@ const ALLOWLIST = [
   '/v4/metadata/hvo-programmes',
   '/v4/metadata/associated-programme',
   '/v4/metadata/hvc',
+  '/v4/metadata/overseas-region',
 ]
 
 module.exports = (app) => {
