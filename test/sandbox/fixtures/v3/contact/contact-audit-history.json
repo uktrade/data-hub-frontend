@@ -14,24 +14,7 @@
       },
       "timestamp": "2022-05-19T12:56:40.204557Z",
       "comment": "",
-      "changes": {
-        "consent_data": [
-          [
-            {
-              "source_system": "System A",
-              "consent_domain": "Domestic",
-              "email_contact_consent": false
-            }
-          ],
-          [
-            {
-              "source_system": "System A",
-              "consent_domain": "Domestic",
-              "email_contact_consent": true
-            }
-          ]
-        ]
-      }
+      "changes": {}
     },
     {
       "id": 5191,
@@ -62,7 +45,23 @@
         "address_county": [null, "Test county"],
         "address_country": [null, "Baker Island"],
         "address_postcode": [null, "TE5 5ST"],
-        "notes": [null, "Notes about the contact"]
+        "notes": [null, "Notes about the contact"],
+        "consent_data": [
+          [
+            {
+              "source_system": "System A",
+              "consent_domain": "Domestic",
+              "email_contact_consent": false
+            }
+          ],
+          [
+            {
+              "source_system": "System A",
+              "consent_domain": "Domestic",
+              "email_contact_consent": true
+            }
+          ]
+        ]
       }
     },
     {
