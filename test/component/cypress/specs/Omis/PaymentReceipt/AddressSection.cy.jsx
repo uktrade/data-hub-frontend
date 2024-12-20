@@ -130,6 +130,19 @@ describe('AddressSection', () => {
     })
   })
 
+  context('When the invoice has all the fields but no payment date', () => {
+    beforeEach(() => {
+      cy.viewport(1024, 768)
+      cy.mount(
+        <AddressSection invoice={invoiceIncomplete} paymentDate={null} />
+      )
+    })
+
+    it('should not render the receipt date', () => {
+      cy.get('[data-test="receipt-date"]').should('not.exist')
+    })
+  })
+
   context('When the invoice does not have all the fields', () => {
     beforeEach(() => {
       cy.viewport(1024, 768)

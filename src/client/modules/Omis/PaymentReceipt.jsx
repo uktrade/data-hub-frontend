@@ -76,9 +76,11 @@ export const AddressSection = ({ invoice, paymentDate }) => (
         <StyledSectionHeading data-test="receipt-date-heading">
           Receipt date
         </StyledSectionHeading>
-        <p data-test="receipt-date">
-          {formatDate(paymentDate, DATE_FORMAT_FULL)}
-        </p>
+        {paymentDate && (
+          <p data-test="receipt-date">
+            {formatDate(paymentDate, DATE_FORMAT_FULL)}
+          </p>
+        )}
       </>
     </StyledGridColLeft>
     <StyledGridColRight setWidth="one-half">
