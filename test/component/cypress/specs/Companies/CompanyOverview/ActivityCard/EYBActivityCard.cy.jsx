@@ -39,7 +39,7 @@ const buildAndMountActivity = (value = null, linked_company_name = null) => {
 
 describe('EYB lead activity card', () => {
   context(
-    'When the card is rendered with a lead of unknown value and linked company',
+    'When the card is rendered with a lead of unknown value and linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(null, LINKED_COMPANY_NAME)
@@ -63,7 +63,7 @@ describe('EYB lead activity card', () => {
   )
 
   context(
-    'When the card is rendered with a lead of high value and linked company',
+    'When the card is rendered with a lead of high value and linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(true, LINKED_COMPANY_NAME)
@@ -87,7 +87,7 @@ describe('EYB lead activity card', () => {
   )
 
   context(
-    'When the card is rendered with a lead of low value and linked company',
+    'When the card is rendered with a lead of low value and linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(false, LINKED_COMPANY_NAME)
@@ -111,7 +111,7 @@ describe('EYB lead activity card', () => {
   )
 
   context(
-    'When the card is rendered with a lead of unknown value and no linked company',
+    'When the card is rendered with a lead of unknown value and no linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity()
@@ -135,7 +135,7 @@ describe('EYB lead activity card', () => {
   )
 
   context(
-    'When the card is rendered with a lead of high value and no linked company',
+    'When the card is rendered with a lead of high value and no linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(true)
@@ -159,7 +159,7 @@ describe('EYB lead activity card', () => {
   )
 
   context(
-    'When the card is rendered with a lead of low value and no linked company',
+    'When the card is rendered with a lead of low value and no linked company name',
     () => {
       beforeEach(() => {
         buildAndMountActivity(false)
