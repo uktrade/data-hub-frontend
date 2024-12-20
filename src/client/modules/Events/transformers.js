@@ -4,6 +4,7 @@ import urls from '../../../lib/urls'
 
 import { getDifferenceInDays, formatStartAndEndDate } from '../../utils/date'
 
+import { TAG_COLOURS } from '../../components/Tag'
 import {
   formatDate,
   DATE_FORMAT_FULL,
@@ -32,7 +33,7 @@ const transformEventToListItem = ({
   if (event_type) {
     tags.push({
       text: event_type.name,
-      colour: 'grey',
+      colour: TAG_COLOURS.GREY,
       dataTest: 'event-kind-label',
     })
   }
@@ -40,7 +41,7 @@ const transformEventToListItem = ({
   if (service) {
     tags.push({
       text: getServiceText(service.name),
-      colour: 'govBlue',
+      colour: TAG_COLOURS.GOV_BLUE,
       dataTest: 'event-theme-label',
     })
   }
@@ -48,7 +49,7 @@ const transformEventToListItem = ({
   if (service && service2) {
     tags.push({
       text: getServiceOtherText(service2),
-      colour: 'blue',
+      colour: TAG_COLOURS.BLUE,
       dataTest: 'event-service-label',
     })
   }
