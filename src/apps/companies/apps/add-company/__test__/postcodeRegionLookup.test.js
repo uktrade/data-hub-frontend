@@ -17,11 +17,13 @@ describe('Postcode to region mapping', () => {
       const invalidPostcode3 = 'A12'
       const invalidPostcode4 = undefined
       const invalidPostcode5 = null
+      const invalidPostcode6 = 'SW11'
       expect(mapPostcodeToRegion(invalidPostcode1)).to.equal('')
       expect(mapPostcodeToRegion(invalidPostcode2)).to.equal('')
       expect(mapPostcodeToRegion(invalidPostcode3)).to.equal('')
       expect(mapPostcodeToRegion(invalidPostcode4)).to.equal('')
       expect(mapPostcodeToRegion(invalidPostcode5)).to.equal('')
+      expect(mapPostcodeToRegion(invalidPostcode6)).to.equal('')
     })
   })
 

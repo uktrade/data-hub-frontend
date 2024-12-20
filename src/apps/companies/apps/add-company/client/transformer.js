@@ -146,7 +146,11 @@ export const mapPostcodeToRegion = (postcode) => {
     ) {
       return postcode
     }
-    const area = outcode.split(outcode.match(/\d+/)[0])[0]
+    const numericMatch = outcode.match(/\d+/)
+    if (!numericMatch) {
+      return ''
+    }
+    const area = outcode.split(numericMatch[0])[0]
     return POSTCODE_AREA_TO_REGION[area]
   }
 }
