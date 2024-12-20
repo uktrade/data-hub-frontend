@@ -207,6 +207,13 @@ describe('Order quote', () => {
     })
   })
 
+  context('When the quote has been accepted, but created_by is null', () => {
+    it('should not render sent-by-name', () => {
+      cy.visit(urls.omis.quote(quoteAccepted.id))
+      cy.get('[data-test="sent-by-name"]').should('not.exist')
+    })
+  })
+
   context('When the order has been cancelled', () => {
     beforeEach(() => {
       cy.visit(urls.omis.quote(cancelledOrder.id))

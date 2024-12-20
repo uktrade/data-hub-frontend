@@ -115,7 +115,9 @@ const SentOn = ({ quote }) => (
       {formatDate(quote.createdOn, DATE_FORMAT_MEDIUM_WITH_TIME)}
     </StyledP>
     <StyledHeading data-test="sent-by-heading">Sent by</StyledHeading>
-    <StyledP data-test="sent-by-name">{quote.createdBy.name}</StyledP>
+    {quote.createdBy && (
+      <StyledP data-test="sent-by-name">{quote.createdBy.name}</StyledP>
+    )}
   </>
 )
 
