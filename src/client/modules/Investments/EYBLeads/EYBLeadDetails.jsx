@@ -99,6 +99,10 @@ const EYBLeadDetails = () => {
                 heading="Phone number"
                 children={eybLead.telephoneNumber}
               />
+              <SummaryTable.Row
+                heading="Email"
+                children={eybLead.email ? eybLead.email : NOT_SET_TEXT}
+              />
             </SummaryTable>
           )
         }}
