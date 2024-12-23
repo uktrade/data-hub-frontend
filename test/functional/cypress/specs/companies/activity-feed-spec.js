@@ -1,7 +1,7 @@
 import { collectionListRequest } from '../../support/actions'
 import {
-  companyActivityOrderListFaker,
   companyActivityGreatListFaker,
+  companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
 import { truncateData } from '../../../../../src/client/utils/truncate'
 
@@ -219,6 +219,29 @@ describe('Company activity feed', () => {
             'have.attr',
             'href',
             `/companies/${activity.company.id}/referrals/${activity.referral.id}`
+          )
+      )
+    })
+  })
+
+  context('EYB leads', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.activity.index(company.id))
+    })
+
+    it('displays the correct kind label', () => {
+      cy.get('[data-test="eyb-kind-label"]').contains('EYB')
+    })
+
+    it('displays the EYB Lead company name with link', () => {
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('Booth Sykes (Linked Company Name)')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/e686c9d9-d7ba-444d-a85b-a64c477fc1ba/details'
           )
       )
     })
