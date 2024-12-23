@@ -49,11 +49,12 @@ describe('Contacts', () => {
 
     cy.contains('You have successfully added a new contact Company Contact')
 
-    assertKeyValueTable('contact-details-table', {
+    assertKeyValueTable('bodyMainContent', {
       'Job title': 'Coffee machine operator',
       'Phone number': '44 0778877778800',
       Address: '100 Path, A town, 12345, United States',
       Email: 'company.contact@dit.com',
+      'Email marketing': 'Cannot be marketed to',
     })
   })
 

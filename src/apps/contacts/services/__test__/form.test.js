@@ -32,6 +32,7 @@ describe('contact form service', () => {
       primary: true,
       full_telephone_number: '+1 652423467167',
       email: 'zboasdaan@opasdasdov.com',
+      accepts_dit_email_marketing: true,
       address_same_as_company: false,
       notes: 'Some notes',
       archived_by: null,
@@ -59,6 +60,7 @@ describe('contact form service', () => {
         primary: 'yes',
         full_telephone_number: '+1 652423467167',
         email: 'zboasdaan@opasdasdov.com',
+        accepts_dit_email_marketing: true,
         address_same_as_company: 'no',
         address_1: '99 N Shore Road',
         address_2: 'Suite 20',
@@ -105,6 +107,7 @@ describe('contact form service', () => {
         address_postcode: null,
         address_country: null,
         notes: 'Some notes',
+        accepts_dit_email_marketing: true,
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -114,6 +117,16 @@ describe('contact form service', () => {
 
     it('should handle a null contact', () => {
       expect(contactFormService.getContactAsFormData(null)).to.be.null
+    })
+
+    context('when the contact accepts DBT email marketing', () => {
+      it('should set the marketing preferences to accepts_dit_email_marketing', () => {
+        const contact = assign({}, contactData, {
+          accepts_dit_email_marketing: true,
+        })
+        const actual = contactFormService.getContactAsFormData(contact)
+        expect(actual.accepts_dit_email_marketing).to.be.true
+      })
     })
   })
 })
