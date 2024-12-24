@@ -77,6 +77,7 @@ describe('EYB lead details', () => {
           'Full name': eybLeadWithValues.full_name,
           'Job title': eybLeadWithValues.role,
           'Phone number': eybLeadWithValues.telephone_number,
+          'Email': eybLeadWithValues.email,
         },
       })
     })
@@ -137,6 +138,7 @@ describe('EYB lead details', () => {
         )
     })
   })
+
   context('When viewing an EYB lead without a company associated to it', () => {
     const eybLeadWithoutCompany = eybLeadFaker({
       company: null,
@@ -190,6 +192,7 @@ describe('EYB lead details', () => {
           'Full name': eybLeadWithoutCompany.full_name,
           'Job title': eybLeadWithoutCompany.role,
           'Phone number': eybLeadWithoutCompany.telephone_number,
+          'Email': eybLeadWithoutCompany.email,
         },
       })
     })
@@ -220,6 +223,7 @@ describe('EYB lead details', () => {
       cy.get('[data-test="button-add-investment-project"]').should('not.exist')
     })
   })
+
   context(
     'When viewing an EYB lead with company and investment projects associated',
     () => {
@@ -266,6 +270,7 @@ describe('EYB lead details', () => {
       })
     }
   )
+
   context('When viewing an EYB lead with high, low, and unknown values', () => {
     const testCases = [true, false, null]
     testCases.forEach((value) => {
@@ -280,6 +285,71 @@ describe('EYB lead details', () => {
         cy.get(
           selectors.keyValueTable('eyb-lead-details-table').valueCell(2)
         ).should('have.text', VALUES_VALUE_TO_LABEL_MAP[eybLead.is_high_value])
+      })
+    })
+  })
+
+  context('When viewing an EYB lead without an email', () => {
+    const eybLeadWithNoEmail = eybLeadFaker({
+      company: {
+        name: 'Mars',
+        id: 'fc752802-e454-4c7c-bbfd-4bdd84759b84',
+      },
+      value: true,
+      sector: {
+        name: 'Mining',
+        id: 'a622c9d2-5f95-e211-a939-e4115bead28a',
+      },
+      triage_created: '2023-06-07T10:00:00Z',
+      intent: [
+        'Find people with specialist skills',
+        'Set up a new distribution centre',
+        'Other',
+        'Onward sales and exports from the UK',
+      ],
+      hiring: '6-50',
+      spend: '500000-1000000',
+      is_high_value: true,
+      full_name: 'Joe Bloggs',
+      role: 'CEO',
+      email: null,
+      telephone_number: '01234567890',
+      landing_timeframe: 'In the next 6 months',
+      company_website: 'fake.website.com',
+      investment_projects: [],
+    })
+    beforeEach(() => {
+      setup(eybLeadWithNoEmail)
+      cy.visit(investments.eybLeads.details(eybLeadWithNoEmail.id))
+      cy.wait('@getEYBLeadDetails')
+    })
+
+    it('should render all the fields of the details table with email test displayed as "Not set"', () => {
+      assertSummaryTable({
+        dataTest: 'eyb-lead-details-table',
+        // prettier-ignore
+        content: {
+          'Company name': eybLeadWithNoEmail.company.name,
+          'Value': 'High value',
+          'Sector or industry': eybLeadWithNoEmail.sector.name,
+          'Location of company headquarters': 'Canada',
+          'Submitted to EYB': '07 Jun 2023',
+          'Company website address':
+            eybLeadWithNoEmail.company_website + ' (opens in new tab)',
+          'When do you want to set up?': eybLeadWithNoEmail.landing_timeframe,
+          'Do you know where you want to set up in the UK?': 'Yes',
+          'Where do you want to set up in the UK?': 'Cardiff',
+          'How do you plan to expand your business in the UK?':
+            eybLeadWithNoEmail.intent.join(''),
+          'How many people do you want to hire in the UK in the first 3 years?':
+            eybLeadWithNoEmail.hiring,
+          'How much do you want to spend on setting up in the first 3 years?':
+            eybLeadWithNoEmail.spend,
+          'Full name': eybLeadWithNoEmail.full_name,
+          'Job title': eybLeadWithNoEmail.role,
+          'Phone number': eybLeadWithNoEmail.telephone_number,
+          'Email': NOT_SET_TEXT,
+        },
       })
     })
   })
