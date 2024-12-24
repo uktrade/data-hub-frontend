@@ -765,7 +765,10 @@ module.exports = {
     index: url('/export'),
     create: url('/export/create?companyId=', ':companyId'),
     details: url('/export', '/:exportId/details'),
-    interactions: url('/export', '/:exportId/interactions'),
+    interactions: {
+      index: url('/export', '/:exportId/interactions'),
+      details: url('/export', '/:exportId/interactions/details'),
+    },
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },
