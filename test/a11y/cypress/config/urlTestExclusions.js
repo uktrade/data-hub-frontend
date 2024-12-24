@@ -54,6 +54,7 @@ export const urlTestExclusions = [
   },
   { url: '/export/:exportId/details' },
   { url: '/export/:exportId/interactions' },
+  { url: '/export/:exportId/interactions/details' },
   { url: '/omis/:orderId/edit/lead-adviser/:adviserId' },
   { url: '/interactions/ess/:essInteractionId/details' },
   {
