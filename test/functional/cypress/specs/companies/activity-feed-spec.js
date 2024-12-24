@@ -1,5 +1,6 @@
 import { collectionListRequest } from '../../support/actions'
 import {
+  companyActivityEYBListFaker,
   companyActivityGreatListFaker,
   companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
@@ -233,7 +234,7 @@ describe('Company activity feed', () => {
       cy.get('[data-test="eyb-kind-label"]').contains('EYB')
     })
 
-    it('displays the EYB Lead company name with link', () => {
+    it('displays the EYB Lead linked company name', () => {
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -242,6 +243,193 @@ describe('Company activity feed', () => {
             'have.attr',
             'href',
             '/investments/eyb-leads/e686c9d9-d7ba-444d-a85b-a64c477fc1ba/details'
+          )
+      )
+    })
+  })
+
+  context('EYB lead has value and linked company name', () => {
+    const EYBListHighValue = companyActivityEYBListFaker(
+      1,
+      {
+        company: {
+          name: 'Linked Company Name',
+          id: '1c5f7b5f-acd0-4a17-ac9d-8600bb5ded86',
+        },
+      },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: true,
+      }
+    )
+    const EYBListLowValue = companyActivityEYBListFaker(
+      1,
+      {
+        company: {
+          name: 'Linked Company Name',
+          id: '1c5f7b5f-acd0-4a17-ac9d-8600bb5ded86',
+        },
+      },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: false,
+      }
+    )
+    const EYBListUnknownValue = companyActivityEYBListFaker(
+      1,
+      {
+        company: {
+          name: 'Linked Company Name',
+          id: '1c5f7b5f-acd0-4a17-ac9d-8600bb5ded86',
+        },
+      },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: null,
+      }
+    )
+    it('displays a lead of high value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListHighValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value High')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('Linked Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
+          )
+      )
+    })
+
+    it('displays a lead of low value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListLowValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value Low')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('Linked Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
+          )
+      )
+    })
+
+    it('displays a lead of unknown value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListUnknownValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value Unknown')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('Linked Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
+          )
+      )
+    })
+  })
+
+  context('EYB lead has value and no linked company name', () => {
+    const EYBListHighValue = companyActivityEYBListFaker(
+      1,
+      { company: [] },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: true,
+      }
+    )
+    const EYBListLowValue = companyActivityEYBListFaker(
+      1,
+      { company: [] },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: false,
+      }
+    )
+    const EYBListUnknownValue = companyActivityEYBListFaker(
+      1,
+      { company: [] },
+      {
+        id: '54f0a0c3-1aba-4047-b4c2-9fe30fee6b12',
+        company_name: 'EYB Company Name',
+        is_high_value: null,
+      }
+    )
+    it('displays a lead of high value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListHighValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value High')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('EYB Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
+          )
+      )
+    })
+
+    it('displays a lead of low value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListLowValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value Low')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('EYB Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
+          )
+      )
+    })
+
+    it('displays a lead of unknown value and EYB company name', () => {
+      collectionListRequest(
+        'v4/search/company-activity',
+        EYBListUnknownValue,
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+      cy.get('[data-test="metadata-item"]').contains('Value Unknown')
+      cy.get('[data-test="collection-item"]').each(() =>
+        cy
+          .get('a')
+          .contains('EYB Company Name')
+          .should(
+            'have.attr',
+            'href',
+            '/investments/eyb-leads/54f0a0c3-1aba-4047-b4c2-9fe30fee6b12/details'
           )
       )
     })
