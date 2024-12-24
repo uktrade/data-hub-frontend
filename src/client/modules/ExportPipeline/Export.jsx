@@ -66,9 +66,9 @@ const Export = () => {
             label: 'Project details',
             content: <ExportDetails />,
           },
-          [urls.exportPipeline.interactions(exportId)]: {
+          [urls.exportPipeline.interactions.index(exportId)]: {
             label: 'Interactions',
-            content: ExportInteractionsList,
+            content: <ExportInteractionsList exportId={exportId} />,
           },
         }}
       />
