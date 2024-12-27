@@ -1,0 +1,114 @@
+{
+  "id": "d831fb8e-9b5a-417d-b53e-ebf9089934b8",
+  "company": {
+    "name": "DIAGEO PLC",
+    "id": "8d0016ed-f616-4813-9511-f795cb481d08"
+  },
+  "companies": [],
+  "contacts": [
+    {
+      "name": "James Brown",
+      "first_name": "James",
+      "last_name": "Brown",
+      "job_title": "Senior Associate",
+      "id": "2b4b2944-d18e-4b41-a662-08c079547216"
+    },
+    {
+      "name": "Fred Peterson",
+      "first_name": "Fred",
+      "last_name": "Peterson",
+      "job_title": "Manager",
+      "id": "1430e18a-52ac-4185-b71d-b2be5a771fd0"
+    }
+  ],
+  "created_on": "2024-12-23T07:44:42.226309Z",
+  "created_by": {
+    "name": "Paul Gain",
+    "first_name": "Paul",
+    "last_name": "Gain",
+    "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934"
+  },
+  "event": null,
+  "is_event": null,
+  "status": "complete",
+  "kind": "interaction",
+  "modified_by": {
+    "name": "Paul Gain",
+    "first_name": "Paul",
+    "last_name": "Gain",
+    "id": "8b76daf2-0f8a-4887-9b4b-43bbda21c934"
+  },
+  "modified_on": "2024-12-23T07:44:42.226325Z",
+  "date": "2024-12-23",
+  "dit_participants": [
+    {
+      "adviser": {
+        "name": "David Webber",
+        "first_name": "David",
+        "last_name": "Webber",
+        "id": "3994da68-cebc-42e2-bdd2-2f7c23c52114"
+      },
+      "team": {
+        "name": "Doncaster Council",
+        "id": "3a48318c-9698-e211-a939-e4115bead28a"
+      }
+    },
+    {
+      "adviser": {
+        "name": "Jason Jason",
+        "first_name": "Jason",
+        "last_name": "Jason",
+        "id": "3994da68-cebc-42e2-bdd2-2f7c23c52114"
+      },
+      "team": {
+        "id": "23f12898-9698-e211-a939-e4115bead28a",
+        "name": "UK Fashion and Textile Association Ltd (UKFT)"
+      }
+    }
+  ],
+  "communication_channel": {
+    "name": "Fax",
+    "id": "71c226d7-5d95-e211-a939-e4115bead28a"
+  },
+  "grant_amount_offered": null,
+  "company_export": {
+    "title": "Baileys export to Brazil",
+    "id": "e3f3f1e6-9f0e-4832-84d8-59ba108d1d95"
+  },
+  "investment_project": null,
+  "large_capital_opportunity": null,
+  "net_company_receipt": null,
+  "service": {
+    "name": "Account management : General",
+    "id": "9484b82b-3499-e211-a939-e4115bead28a"
+  },
+  "service_answers": null,
+  "service_delivery_status": null,
+  "subject": "Magnum bottles of Bailey",
+  "theme": "export",
+  "notes": "",
+  "archived_documents_url_path": "",
+  "policy_feedback_notes": "",
+  "helped_remove_export_barrier": true,
+  "export_barrier_types": [],
+  "export_barrier_notes": "",
+  "was_policy_feedback_provided": false,
+  "were_countries_discussed": null,
+  "export_countries": [],
+  "archived": false,
+  "archived_by": null,
+  "archived_on": null,
+  "archived_reason": "",
+  "company_referral": null,
+  "has_related_trade_agreements": null,
+  "related_trade_agreements": [
+    {
+        "name": "Atlantic Declaration",
+        "id": "2aaa2df3-7a02-4ebc-912e-426edb76fff8"
+    },
+    {
+        "name": "Comprehensive and Progressive Agreement for Trans-Pacific Partnership",
+        "id": "af704a93-5404-4bc6-adda-381756993902"
+    }
+  ]
+}
