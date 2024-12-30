@@ -3,6 +3,7 @@ import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
+// import InteractionResource from '../../../components/Resource/Interaction'
 // Remove this import and delete the file once the endpoint is in place
 import exportInteraction from './exportInteraction.json'
 import {
@@ -56,6 +57,16 @@ const ExportInteractionsDetails = () => {
         { text: <ExportProjectTitle id={exportId} /> },
       ]}
     >
+      {/* 
+       Uncomment InteractionResource and move the StyledSummaryTable up into
+       the InteractionResource render function once the export projects
+       interaction endpoint is in place. Warning, we may have to create a
+       new Resource.
+
+      <InteractionResource id={exportId}>
+        {(exportInteraction) => ()}
+      </InteractionResource> */}
+
       <StyledSummaryTable>
         <SummaryTable.Row heading="Company">
           <Link
