@@ -8,7 +8,7 @@ import urls from '../../../lib/urls'
 import { state2props, TASK_EDIT_OMIS_QUOTE_INFORMATION } from './state'
 import { FORM_LAYOUT } from '../../../common/constants'
 import { transformQuoteInformationForApi } from './transformers'
-import { transformDateStringToDateObject } from '../../../apps/transformers'
+import { transformDateStringToDateObject } from '../../../client/transformers'
 import { validateIfDateInFuture } from './validators'
 import OMISLayout from './OMISLayout'
 
