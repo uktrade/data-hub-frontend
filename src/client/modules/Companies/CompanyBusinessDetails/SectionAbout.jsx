@@ -10,6 +10,7 @@ import { currencyGBP } from '../../../utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../components'
 import { exportSegmentsLabels, exportSubSegmentsLabels } from './labels'
 import urls from '../../../../lib/urls'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -54,7 +55,7 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
     )}
 
     <SummaryTable.Row heading="Trading name">
-      {isEmpty(company.tradingNames) ? 'Not set' : company.tradingNames}
+      {isEmpty(company.tradingNames) ? NOT_SET_TEXT : company.tradingNames}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="CDMS reference" hideWhenEmpty={true}>
@@ -72,6 +73,10 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
         </NewWindowLink>
       </SummaryTable.Row>
     )}
+
+    <SummaryTable.Row heading="DUNS number">
+      {company.dunsNumber ? company.dunsNumber : NOT_SET_TEXT}
+    </SummaryTable.Row>
 
     <SummaryTable.Row heading="Annual turnover">
       {company.turnoverGbp && (
@@ -93,7 +98,7 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
         </>
       )}
       {!company.turnoverGbp &&
-        (company.turnoverRange ? company.turnoverRange.name : 'Not set')}
+        (company.turnoverRange ? company.turnoverRange.name : NOT_SET_TEXT)}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Number of employees">
@@ -114,14 +119,14 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
         </>
       )}
       {!company.numberOfEmployees &&
-        (company.employeeRange ? company.employeeRange.name : 'Not set')}
+        (company.employeeRange ? company.employeeRange.name : NOT_SET_TEXT)}
     </SummaryTable.Row>
 
     <SummaryTable.Row heading="Website">
       {company.website ? (
         <NewWindowLink href={company.website}>{company.website}</NewWindowLink>
       ) : (
-        'Not set'
+        NOT_SET_TEXT
       )}
     </SummaryTable.Row>
 
