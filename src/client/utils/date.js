@@ -14,7 +14,6 @@ const {
   endOfToday,
   startOfMonth: getStartOfMonth,
   isWithinInterval,
-  format: formatFns,
   formatDistanceToNowStrict,
   isAfter,
   isValid,
@@ -26,11 +25,12 @@ const {
 } = require('date-fns')
 
 const {
-  DATE_LONG_FORMAT_2,
-  DATE_LONG_FORMAT_3,
-  DATE_SHORT_FORMAT,
-  DATE_DAY_MONTH,
-} = require('../../common/constants')
+  formatDate,
+  DATE_FORMAT_ISO,
+  DATE_FORMAT_COMPACT,
+  DATE_FORMAT_DAY_MONTH,
+  DATE_FORMAT_YEAR_MONTH,
+} = require('./date-utils')
 
 /**
  * Date validation functions
@@ -44,22 +44,13 @@ function isUnparsedDateValid(date) {
   return isValid(date)
 }
 
-function isNormalisedDateValid(year, month, day, format = DATE_LONG_FORMAT_3) {
+function isNormalisedDateValid(year, month, day, format = DATE_FORMAT_ISO) {
   const date = normaliseAndFormatDate(year, month, day)
   return isValid(parse(date, format, new Date()))
 }
 
 function isShortDateValid(year, month) {
-  return isNormalisedDateValid(year, month, null, DATE_SHORT_FORMAT)
-}
-
-/**
- * @deprecated This function is deprecated. Use `formatDate` instead.
- *
- * This function will be removed in the near future.
- */
-function format(dateStr, dateFormat = DATE_LONG_FORMAT_2) {
-  return isDateValid(dateStr) ? formatFns(parseISO(dateStr), dateFormat) : null
+  return isNormalisedDateValid(year, month, null, DATE_FORMAT_YEAR_MONTH)
 }
 
 /**
@@ -134,8 +125,10 @@ function formatStartAndEndDate(startDate, endDate) {
   if (startDate) {
     const startDateParsed = startDate ? parseISO(startDate) : startDate
     const endDateParsed = endDate ? parseISO(endDate) : endDate
-    const startDateFormatted = startDate ? format(startDate) : startDate
-    const endDateFormatted = endDate ? format(endDate) : endDate
+    const startDateFormatted = startDate
+      ? formatDate(startDate, DATE_FORMAT_COMPACT)
+      : startDate
+    const endDateFormatted = endDate ? formatDate(endDate) : endDate
 
     //When end date is missing or before start date
     if (!endDate || !isAfter(endDateParsed, startDateParsed)) {
@@ -151,7 +144,7 @@ function formatStartAndEndDate(startDate, endDate) {
     }
     // When start and end date are in the same year
     if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
-      return `${format(startDate, DATE_DAY_MONTH)} to ${endDateFormatted}`
+      return `${formatDate(startDate, DATE_FORMAT_DAY_MONTH)} to ${endDateFormatted}`
     }
     // When start and end date are in different years
     return `${startDateFormatted} to ${endDateFormatted}`
@@ -260,7 +253,6 @@ function isWithinLastTwelveMonths(date) {
 }
 
 module.exports = {
-  format,
   generateFinancialYearLabel,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
