@@ -46,9 +46,10 @@ const EditQuoteInformation = ({ csrfToken }) => {
                 name="delivery_date"
                 label="Delivery date of work"
                 hint="For example 28 10 2018"
-                initialValue={transformDateStringToDateObject(
-                  order.deliveryDate
-                )}
+                initialValue={
+                  order.deliveryDate &&
+                  transformDateStringToDateObject(order.deliveryDate)
+                }
                 validate={validateIfDateInFuture}
               />
             </Form>
