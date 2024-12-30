@@ -109,44 +109,6 @@ describe('Global transformers', () => {
     })
   })
 
-  describe('#transformDateStringToDateObject', () => {
-    context('when invalid date string', () => {
-      it('should return empty date object for no args', () => {
-        const actual = this.transformers.transformDateStringToDateObject()
-
-        expect(actual).to.deep.equal({
-          year: '',
-          month: '',
-          day: '',
-        })
-      })
-
-      it('should return empty date object for invalid date', () => {
-        const actual =
-          this.transformers.transformDateStringToDateObject('12345-098-11')
-
-        expect(actual).to.deep.equal({
-          year: '',
-          month: '',
-          day: '',
-        })
-      })
-    })
-
-    context('when valid date string', () => {
-      it('should return correct date object from date string', () => {
-        const actual =
-          this.transformers.transformDateStringToDateObject('2017-09-25')
-
-        expect(actual).to.deep.equal({
-          year: '2017',
-          month: '09',
-          day: '25',
-        })
-      })
-    })
-  })
-
   describe('#transformCountryToOptionWithIsoCode', () => {
     it('should return object with id, name as label and code as value', () => {
       const actual = this.transformers.transformCountryToOptionWithIsoCode({

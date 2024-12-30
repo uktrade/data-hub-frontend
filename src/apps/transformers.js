@@ -1,6 +1,5 @@
 const { filter, upperFirst } = require('lodash')
 
-const { format, isDateValid } = require('../client/utils/date')
 const { OPTION_NO, OPTION_YES } = require('../common/constants')
 const groupExportCountries = require('../lib/group-export-countries')
 
@@ -38,16 +37,6 @@ function transformDateObjectToDateString(key) {
       .join('-')
 
     return dateString === '--' ? null : dateString
-  }
-}
-
-function transformDateStringToDateObject(dateString) {
-  const isValidDate = dateString && isDateValid(dateString)
-
-  return {
-    year: isValidDate ? format(dateString, 'yyyy') : '',
-    month: isValidDate ? format(dateString, 'MM') : '',
-    day: isValidDate ? format(dateString, 'dd') : '',
   }
 }
 
@@ -94,7 +83,6 @@ module.exports = {
   transformContactToOption,
   transformCountryToOptionWithIsoCode,
   transformDateObjectToDateString,
-  transformDateStringToDateObject,
   transformOptionToValue,
   transformArrayOfOptionsToValues,
   transformToYesNo,
