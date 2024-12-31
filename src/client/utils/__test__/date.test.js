@@ -1,9 +1,10 @@
-import { subMonths, subYears, addDays } from 'date-fns'
+import { subMonths, subYears, addDays, isValid, format } from 'date-fns'
 
 import {
   areDatesEqual,
   getStartOfMonth,
   getRandomDateInRange,
+  parseDateWithYearMonth,
   isWithinLastTwelveMonths,
   convertDateToFieldDateObject,
   convertDateToFieldShortDateObject,
@@ -127,5 +128,67 @@ describe('getRandomDateInRange', () => {
     expect(() => getRandomDateInRange(startDate, endDate)).to.throw(
       'Start date cannot be greater than end date.'
     )
+  })
+})
+
+describe('parseDateWithYearMonth', () => {
+  it('should parse a valid full date (yyyy-MM-dd)', () => {
+    const date = parseDateWithYearMonth('2024', '12', '31')
+    expect(isValid(date)).to.be.true
+    expect(format(date, 'yyyy-MM-dd')).to.equal('2024-12-31')
+  })
+
+  it('should parse a valid year and month (yyyy-MM)', () => {
+    const date = parseDateWithYearMonth('2024', '12')
+    expect(isValid(date)).to.be.true
+    expect(format(date, 'yyyy-MM')).to.equal('2024-12')
+  })
+
+  it('should handle invalid year (non-numeric)', () => {
+    const date = parseDateWithYearMonth('abcd', '12', '31')
+    expect(isValid(date)).to.be.false
+  })
+
+  it('should handle invalid month (out of range)', () => {
+    const date = parseDateWithYearMonth('2024', '13', '31')
+    expect(isValid(date)).to.be.false
+  })
+
+  it('should handle invalid day (out of range)', () => {
+    const date = parseDateWithYearMonth('2024', '12', '32')
+    expect(isValid(date)).to.be.false
+  })
+
+  it('should handle missing day gracefully (assume first of month)', () => {
+    const date = parseDateWithYearMonth('2024', '12')
+    expect(isValid(date)).to.be.true
+    expect(format(date, 'yyyy-MM-dd')).to.equal('2024-12-01')
+  })
+
+  it('should handle single-digit month and day', () => {
+    const date = parseDateWithYearMonth('2024', '2', '9')
+    expect(isValid(date)).to.be.true
+    expect(format(date, 'yyyy-MM-dd')).to.equal('2024-02-09')
+  })
+
+  it('should handle valid leap year date', () => {
+    const date = parseDateWithYearMonth('2024', '2', '29')
+    expect(isValid(date)).to.be.true
+    expect(format(date, 'yyyy-MM-dd')).to.equal('2024-02-29')
+  })
+
+  it('should handle invalid non-leap year date', () => {
+    const date = parseDateWithYearMonth('2023', '2', '29')
+    expect(isValid(date)).to.be.false
+  })
+
+  it('should handle missing month (invalid case)', () => {
+    const date = parseDateWithYearMonth('2024', null, '31')
+    expect(isValid(date)).to.be.false
+  })
+
+  it('should handle missing year (invalid case)', () => {
+    const date = parseDateWithYearMonth(null, '12', '31')
+    expect(isValid(date)).to.be.false
   })
 })
