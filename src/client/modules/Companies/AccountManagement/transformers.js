@@ -1,5 +1,5 @@
 import { transformDateStringToDateObject } from '../../../transformers'
-import { transformValueForAPI } from '../../../utils/date'
+import { formatDateWithYearMonth } from '../../../utils/date'
 import {
   transformBoolToRadioOption,
   transformRadioOptionToBool,
@@ -16,7 +16,7 @@ export const transformFormValuesForAPI = ({
 }) => ({
   subject,
   detail,
-  target_date: transformValueForAPI(target_date),
+  target_date: formatDateWithYearMonth(target_date),
   company,
   has_blocker: transformRadioOptionToBool(has_blocker),
   blocker_description,
