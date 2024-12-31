@@ -1,7 +1,12 @@
 import { uniq } from 'lodash'
 
 import { OPTION_NO, OPTION_YES } from '../../common/constants'
-import { format, isDateValid } from '../../client/utils/date'
+import {
+  formatDate,
+  DATE_FORMAT_DAY,
+  DATE_FORMAT_YEAR,
+  DATE_FORMAT_MONTH,
+} from '../../client/utils/date-utils'
 
 export const transformDateObjectToDateString = (value) => {
   if (value) {
@@ -54,13 +59,11 @@ export const transformIdNameToValueLabel = (value) => {
   return null
 }
 
-export const transformDateStringToDateObject = (dateString) => {
-  const isValidDate = dateString && isDateValid(dateString)
-
+export const transformDateStringToDateObject = (dateISO) => {
   return {
-    year: isValidDate ? format(dateString, 'yyyy') : '',
-    month: isValidDate ? format(dateString, 'MM') : '',
-    day: isValidDate ? format(dateString, 'dd') : '',
+    year: formatDate(dateISO, DATE_FORMAT_YEAR),
+    month: formatDate(dateISO, DATE_FORMAT_MONTH),
+    day: formatDate(dateISO, DATE_FORMAT_DAY),
   }
 }
 

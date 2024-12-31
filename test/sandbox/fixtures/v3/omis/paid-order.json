@@ -59,7 +59,7 @@
   "further_info": "legacy further info",
   "existing_agents": "legacy existing agents",
   "permission_to_approach_contacts": "legacy permission to approach contacts",
-  "delivery_date": "",
+  "delivery_date": null,
   "po_number": "123PO",
   "vat_status": "eu",
   "vat_number": "0123456789",
