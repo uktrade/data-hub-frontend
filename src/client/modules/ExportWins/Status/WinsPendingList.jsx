@@ -18,17 +18,25 @@ import urls from '../../../../lib/urls'
 
 export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
+    /**
+     * WARNING: Legacy export wins (i.e. wins not created in Data Hub) may not have an associated company.
+     * To prevent UI issues, safeguards are necessary. If no company is present, the company field is null,
+     * and we cannot provide a link to the company.
+     */
+
     <ul>
       {exportWins.map((item) => (
         <CollectionItem
           key={item.id}
           headingText={`${item.name_of_export} to ${item?.country?.name}`}
-          headingUrl={urls.companies.exportWins.editSummary(
-            item.company.id,
-            item.id
-          )}
-          subheading={item.company.name}
-          subheadingUrl={urls.companies.overview.index(item.company.id)}
+          headingUrl={
+            item.company &&
+            urls.companies.exportWins.editSummary(item.company.id, item.id)
+          }
+          subheading={item.company?.name || item.company_name || 'Not set'}
+          subheadingUrl={
+            item.company && urls.companies.overview.index(item.company.id)
+          }
           tags={createRoleTags(item, currentAdviserId)}
           metadata={[
             ...(item.company_contacts[0]
