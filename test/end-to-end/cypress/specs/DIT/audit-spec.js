@@ -3,7 +3,7 @@ const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const {
   formatDate,
-  DATE_FORMAT_COMPACT,
+  DATE_FORMAT_MEDIUM,
 } = require('../../../../../src/client/utils/date-utils')
 const {
   assertFlashMessage,
@@ -16,7 +16,7 @@ const {
   assertBadgeNotPresent,
 } = require('../../../../functional/cypress/support/collection-list-assertions')
 
-const todaysDate = formatDate(new Date(), DATE_FORMAT_COMPACT)
+const todaysDate = formatDate(new Date(), DATE_FORMAT_MEDIUM)
 let companyObj
 let contactObj
 let investmentProjectObj
