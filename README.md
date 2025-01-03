@@ -209,4 +209,4 @@ You can use Prettier to automatically reformat markdown files, which is very use
 prettier --write README.md
 ```
 
-On Webstorm you can use `ALT+SHIFT+COMMAND+P` shortcut.
+On Webstorm you can use `ALT+SHIFT+COMMAND+P` shortcut..
