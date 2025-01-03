@@ -19,6 +19,7 @@ describe('Section about', () => {
     tradingNames: ['Venus company'],
     referenceCode: 'ORG-10096257',
     companyNumber: '12345678',
+    dunsNumber: '987654321',
     turnoverGbp: '1000000',
     numberOfEmployees: '5',
     website: 'www.example.com',
@@ -52,6 +53,7 @@ describe('Section about', () => {
             'Companies House number':
               companyWithDetails.companyNumber +
               'View on Companies House website (opens in new tab)',
+            'DUNS number': '987654321',
             'Annual turnover': '£1,000,000',
             'Number of employees': companyWithDetails.numberOfEmployees,
             Website: companyWithDetails.website + ' (opens in new tab)',
@@ -78,6 +80,7 @@ describe('Section about', () => {
           showEditLink: true,
           content: {
             'Trading name': 'Not set',
+            'DUNS number': 'Not set',
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
             Website: 'Not set',
@@ -104,6 +107,7 @@ describe('Section about', () => {
           showEditLink: false,
           content: {
             'Trading name': 'Not set',
+            'DUNS number': 'Not set',
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
             Website: 'Not set',
