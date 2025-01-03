@@ -18,6 +18,10 @@ const feedbackFormConfig = (browserInfo) => ({
           label: "I don't have access",
         },
         {
+          value: 'data_amendment',
+          label: 'I require a data amendment',
+        },
+        {
           value: 'bug',
           label: 'I have another problem',
         },
