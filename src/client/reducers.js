@@ -3,8 +3,8 @@ import tasks from './components/Task/reducer'
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import companyListsReducer from './components/CompanyLists/reducer'
 
-import { ID as REFERRALS_SEND_ID } from './modules/Companies/Referrals/SendReferralForm/state.js'
-import referralsSendReducer from './modules/Companies/Referrals/SendReferralForm/reducer.js'
+import { ID as REFERRALS_SEND_ID } from './modules/Companies/Referrals/SendReferralForm/state'
+import referralsSendReducer from './modules/Companies/Referrals/SendReferralForm/reducer'
 
 import { ID as EXPORTS_HISTORY_ID } from './modules/Companies/CompanyExports/ExportHistory/state.js'
 import exportsHistoryReducer from './modules/Companies/CompanyExports/ExportHistory/reducer.js'

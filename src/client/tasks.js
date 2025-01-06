@@ -1,5 +1,4 @@
 import * as companyListsTasks from './components/CompanyLists/tasks'
-import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
 import * as exportsHistoryTasks from './modules/Companies/CompanyExports/ExportHistory/tasks.js'
 import referralListTask from './components/ReferralList/tasks'
 import { TASK_SAVE_REFERRAL } from './modules/Companies/Referrals/SendReferralForm/state.js'
@@ -469,7 +468,6 @@ export const tasks = {
   'Company list': companyListsTasks.fetchCompanyList,
   'Add or remove from list': companyListsTasks.addOrRemoveFromList,
   'Exports history': exportsHistoryTasks.fetchExportsHistory,
-  'Referral details': referralTasks.fetchReferralDetails,
   Referrals: referralListTask,
   'Update Lead ITA': manageAdviser.updateAdviser,
   'Get send referral initial values': referralsSendTasks.getInitialFormValues,
