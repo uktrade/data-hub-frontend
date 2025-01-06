@@ -33,14 +33,6 @@ const {
 } = require('./date-utils')
 
 /**
- * Date validation functions
- */
-
-function isDateValid(date) {
-  return isValid(parseISO(date))
-}
-
-/**
  * Parses a date string given a year, month, and optional day.
  *
  * @param {string} year - The year as a string (e.g., '2024').
@@ -276,7 +268,6 @@ module.exports = {
   getDifferenceInDaysLabel,
   getDifferenceInWords,
   getFinancialYearStart,
-  isDateValid,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
   createDateFromObject,
