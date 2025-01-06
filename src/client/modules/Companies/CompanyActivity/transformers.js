@@ -6,6 +6,8 @@ import {
   NEW_PROJECT_TAG,
   NEW_ORDER_TAG,
   GREAT_EXPORT_TAG,
+  INVESTMENT_TAG,
+  EYB_TAG,
 } from './constants'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
@@ -84,6 +86,8 @@ export const transformActivities = (activities) => {
         return transformOrderToListItem(activity)
       case 'great_export_enquiry':
         return transformGreatExportEnquiryToListItem(activity)
+      case 'eyb_lead':
+        return transformEYBLeadToListItem(activity)
       default:
         return {}
     }
@@ -232,11 +236,8 @@ export const transformInvestmentToListItem = (activity) => {
       { label: 'Number of jobs', value: project.number_new_jobs },
     ].filter(({ value }) => Boolean(value)),
     tags: [
-      {
-        text: 'Investment',
-        colour: 'govBlue',
-        dataTest: 'investment-theme-label',
-      },
+      activity.investment.eyb_leads.length && EYB_TAG,
+      INVESTMENT_TAG,
       {
         text: `Project - ${project.investment_type.name}`,
         colour: 'blue',
@@ -329,6 +330,38 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
     headingText: `Enquiry ` + truncateData(greatExportEnquiry.meta_subject, 35),
   }
 }
+
+const getEYBValue = (activity) => {
+  const eybValue = activity?.eyb_lead?.is_high_value
+
+  switch (eybValue) {
+    case true:
+      return 'High'
+    case false:
+      return 'Low'
+    default:
+      return 'Unknown'
+  }
+}
+
+export const transformEYBLeadToListItem = (activity) => ({
+  id: activity.eyb_lead.id,
+  metadata: [
+    {
+      label: 'Submitted to EYB date',
+      value: formatDate(activity.eyb_lead.triage_created),
+    },
+    {
+      label: 'Value',
+      value: getEYBValue(activity),
+    },
+  ].filter(({ value }) => Boolean(value)),
+  tags: [EYB_TAG, INVESTMENT_TAG].filter(({ text }) => Boolean(text)),
+  headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
+  headingText: activity.company.name
+    ? activity.company.name
+    : activity.eyb_lead.company_name,
+})
 
 export const transformResponseToCollection = (activities) => ({
   // activities.count comes from the backend because the frontend
