@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import useSearchParam from 'react-use/lib/useSearchParam'
@@ -10,14 +11,13 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
   const [companies, setCompanies] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
-  const setActivePage = (page) =>
-    window.history.pushState({}, '', getPageUrl(page))
 
   const onPageClick = (page) => {
-    setActivePage(page)
+    navigate(getPageUrl(page))
   }
 
   useEffect(() => {

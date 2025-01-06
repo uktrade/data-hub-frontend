@@ -1,7 +1,7 @@
 import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import useSearchParam from 'react-use/lib/useSearchParam'
 import { connect } from 'react-redux'
 import qs from 'qs'
@@ -18,15 +18,14 @@ import InvestmentName from './InvestmentName'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 
 const ProjectTasks = () => {
+  const navigate = useNavigate()
   const { projectId } = useParams()
   const parsedQueryString = qs.parse(location.search.slice(1))
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
-  const setActivePage = (page) =>
-    window.history.pushState({}, '', getPageUrl(page))
 
   const onPageClick = (page) => {
-    setActivePage(page)
+    navigate(getPageUrl(page))
   }
   const returnUrl = encodeURIComponent(location.pathname + location.search)
 
