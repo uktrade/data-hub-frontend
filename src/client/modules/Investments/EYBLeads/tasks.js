@@ -9,19 +9,22 @@ export const getEYBLeads = ({
   limit = 10,
   page = 1,
   company,
-  country,
-  sector,
-  value,
+  overseas_region = [],
+  country = [],
+  sector = [],
+  value = [],
 }) => {
   let params = new URLSearchParams({
     limit,
     offset: limit * (parseInt(page, 10) - 1) || 0,
     ...(company ? { company } : null),
   })
-  if (country)
-    country.forEach((countryId) => params.append('country', countryId))
-  if (sector) sector.forEach((sectorId) => params.append('sector', sectorId))
-  if (value) value.forEach((valueOfLead) => params.append('value', valueOfLead))
+  overseas_region.forEach((overseasRegionId) =>
+    params.append('overseas_region', overseasRegionId)
+  )
+  country.forEach((countryId) => params.append('country', countryId))
+  sector.forEach((sectorId) => params.append('sector', sectorId))
+  value.forEach((valueOfLead) => params.append('value', valueOfLead))
   return apiProxyAxios
     .get(`v4/investment-lead/eyb?${params.toString()}`)
     .then(({ data }) => ({
@@ -32,10 +35,15 @@ export const getEYBLeads = ({
 
 export const loadEYBLeadFilterOptions = () =>
   Promise.all([
+    getMetadataOptions(urls.metadata.overseasRegion()),
     getMetadataOptions(urls.metadata.country()),
     getMetadataOptions(urls.metadata.sector(), {
       params: {
         level__lte: '0',
       },
     }),
-  ]).then(([countries, sectors]) => ({ countries, sectors }))
+  ]).then(([overseasRegions, countries, sectors]) => ({
+    overseasRegions,
+    countries,
+    sectors,
+  }))

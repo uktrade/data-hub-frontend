@@ -65,6 +65,7 @@ import hvc from '../../../fixtures/v4/metadata/hvc.json' assert { type: 'json' }
 import associatedProgramme from '../../../fixtures/v4/metadata/associated-programme.json' assert { type: 'json' }
 import hqTeamRegionOrPostInvestment from '../../../fixtures/v4/metadata/hq-team-region-or-post-investment.json' assert { type: 'json' }
 import hqTeamRegionOrPostTrade from '../../../fixtures/v4/metadata/hq-team-region-or-post-trade.json' assert { type: 'json' }
+import overseasRegion from '../../../fixtures/v4/metadata/overseas-region.json' assert { type: 'json' }
 
 export const getLikelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
@@ -337,4 +338,8 @@ export const getHqTeamRegionOrPost = function (req, res) {
     '42bdaf2e-ae19-4589-9840-5dbb67b50add': hqTeamRegionOrPostInvestment, // Investment (ITFG or IG)
   }
   res.json(hqTeamRegionOrPost[req.query.team_type] || {})
+}
+
+export const getOverseasRegion = function (req, res) {
+  res.json(overseasRegion)
 }

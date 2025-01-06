@@ -225,6 +225,7 @@ import {
   getEvidenceTag as _evidenceTag,
   getEmployeeRange as _employeeRange,
   getCountry as _country,
+  getOverseasRegion as _overseasRegion,
   getUkRegion as _ukRegion,
   getAdministrativeArea,
   getReferralSourceWebsite as _referralSourceWebsite,
@@ -457,6 +458,7 @@ app.get('/v4/metadata/business-type', _businessType)
 app.get('/v4/metadata/evidence-tag', _evidenceTag)
 app.get('/v4/metadata/employee-range', _employeeRange)
 app.get('/v4/metadata/country', _country)
+app.get('/v4/metadata/overseas-region', _overseasRegion)
 app.get('/v4/metadata/uk-region', _ukRegion)
 app.get('/v4/metadata/winukregion', _ukRegion)
 app.get('/v4/metadata/administrative-area', getAdministrativeArea)
