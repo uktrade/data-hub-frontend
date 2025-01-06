@@ -5,6 +5,7 @@ import {
   getStartOfMonth,
   getRandomDateInRange,
   parseDateWithYearMonth,
+  formatDateWithYearMonth,
   isWithinLastTwelveMonths,
   convertDateToFieldDateObject,
   convertDateToFieldShortDateObject,
@@ -190,5 +191,51 @@ describe('parseDateWithYearMonth', () => {
   it('should handle missing year (invalid case)', () => {
     const date = parseDateWithYearMonth(null, '12', '31')
     expect(isValid(date)).to.be.false
+  })
+})
+
+describe('formatDateWithYearMonth', () => {
+  it('should format a full date (year, month, day)', () => {
+    const result = formatDateWithYearMonth({ year: 2025, month: 1, day: 6 })
+    expect(result).to.equal('2025-01-06')
+  })
+
+  it('should format a date when only year and month are provided', () => {
+    const result = formatDateWithYearMonth({ year: 2025, month: 11 })
+    expect(result).to.equal('2025-11')
+  })
+
+  it('should handle single-digit months and days', () => {
+    const result = formatDateWithYearMonth({ year: 2025, month: 4, day: 9 })
+    expect(result).to.equal('2025-04-09')
+  })
+
+  it('should throw an error for invalid year', () => {
+    expect(() =>
+      formatDateWithYearMonth({ year: 'invalid', month: 1, day: 1 })
+    ).to.throw()
+  })
+
+  it('should throw an error for invalid month', () => {
+    expect(() =>
+      formatDateWithYearMonth({ year: 2025, month: 13, day: 1 })
+    ).to.throw()
+  })
+
+  it('should throw an error for invalid day', () => {
+    expect(() =>
+      formatDateWithYearMonth({ year: 2025, month: 2, day: 30 })
+    ).to.throw()
+  })
+
+  it('should handle edge case: February 29 on a leap year', () => {
+    const result = formatDateWithYearMonth({ year: 2024, month: 2, day: 29 })
+    expect(result).to.equal('2024-02-29')
+  })
+
+  it('should throw an error for February 29 on a non-leap year', () => {
+    expect(() =>
+      formatDateWithYearMonth({ year: 2023, month: 2, day: 29 })
+    ).to.throw()
   })
 })
