@@ -107,6 +107,7 @@ import AddPropositionDocument from './modules/Investments/Projects/Propositions/
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
+import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 
 function Routes() {
   const routes = useRoutes([
@@ -356,6 +357,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CompanyEditHistory />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/referrals/send',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <SendReferralForm />
         </ProtectedRoute>
       ),
     },
