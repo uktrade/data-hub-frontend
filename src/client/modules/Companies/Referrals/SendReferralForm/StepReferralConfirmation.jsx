@@ -4,14 +4,14 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 
-import { useFormContext } from '../../../../../../client/components/Form/hooks'
+import { useFormContext } from '../../../../components/Form/hooks'
 
 import {
   SummaryTable,
   FormActions,
   SecondaryButton,
   FieldInput,
-} from '../../../../../../client/components'
+} from '../../../../components'
 
 const StepReferralConfirmation = ({ cancelUrl }) => {
   const { values = {}, goBack } = useFormContext()

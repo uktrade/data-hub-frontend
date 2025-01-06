@@ -3,11 +3,8 @@ import tasks from './components/Task/reducer'
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import companyListsReducer from './components/CompanyLists/reducer'
 
-import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/companies/apps/referrals/details/client/state'
-import referralsReducer from '../apps/companies/apps/referrals/details/client/reducer'
-
-import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
-import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
+import { ID as REFERRALS_SEND_ID } from './modules/Companies/Referrals/SendReferralForm/state.js'
+import referralsSendReducer from './modules/Companies/Referrals/SendReferralForm/reducer.js'
 
 import { ID as EXPORTS_HISTORY_ID } from './modules/Companies/CompanyExports/ExportHistory/state.js'
 import exportsHistoryReducer from './modules/Companies/CompanyExports/ExportHistory/reducer.js'
@@ -200,7 +197,6 @@ export const reducers = {
   [COMPANY_LISTS_STATE_ID]: companyListsReducer,
   [COMPANIES_ID]: companiesReducer,
   [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
-  [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
   [REFERRALS_SEND_ID]: referralsSendReducer,
   [addCompanyState.ID]: addCompanyReducer,
   ...HeadlessTabNav.reducerSpread,

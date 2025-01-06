@@ -1,7 +1,4 @@
-import {
-  SEND_REFERRAL_FORM__SUBMIT,
-  TASK__ERROR,
-} from '../../../../../../client/actions'
+import { SEND_REFERRAL_FORM__SUBMIT, TASK__ERROR } from '../../../../actions'
 
 // eslint-disable-next-line no-unused-vars
 export default (state = {}, { type }) => {

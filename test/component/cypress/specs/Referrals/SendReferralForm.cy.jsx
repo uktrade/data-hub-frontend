@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SendReferralForm from '../../../../../src/apps/companies/apps/referrals/send-referral/client/SendReferralForm'
+import SendReferralForm from '../../../../../src/client/modules/Companies/Referrals/SendReferralForm/SendReferralForm'
 import { companyFaker } from '../../../../functional/cypress/fakers/companies'
 import { contactFaker } from '../../../../functional/cypress/fakers/contacts'
 

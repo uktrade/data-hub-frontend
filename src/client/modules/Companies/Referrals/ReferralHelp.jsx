@@ -4,11 +4,11 @@ import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
-import { DefaultLayout, NewWindowLink } from '../../../../components'
-import urls from '../../../../../lib/urls'
-import { buildCompanyBreadcrumbs } from '../../utils'
-import { ReferralResource } from '../../../../components/Resource'
-import { CompanyName } from '../../../../../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
+import { DefaultLayout, NewWindowLink } from '../../../components'
+import urls from '../../../../lib/urls'
+import { buildCompanyBreadcrumbs } from '../utils'
+import { ReferralResource } from '../../../components/Resource'
+import { CompanyName } from './SendReferralForm/SendReferralForm'
 
 const AdviserDetails = ({ name, email }) => (
   <>

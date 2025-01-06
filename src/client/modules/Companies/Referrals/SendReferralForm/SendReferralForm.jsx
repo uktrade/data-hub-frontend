@@ -4,19 +4,19 @@ import { useParams } from 'react-router-dom'
 
 import StepReferralDetails from './StepReferralDetails'
 import StepReferralConfirmation from './StepReferralConfirmation'
-import Step from '../../../../../../client/components/Form/elements/Step'
-import urls from '../../../../../../lib/urls'
-import Task from '../../../../../../client/components/Task'
-import Form from '../../../../../../client/components/Form'
-import { DefaultLayout } from '../../../../../../client/components'
+import Step from '../../../../components/Form/elements/Step'
+import urls from '../../../../../lib/urls'
+import Task from '../../../../components/Task'
+import Form from '../../../../components/Form'
+import { DefaultLayout } from '../../../../components'
 import {
   AdviserResource,
   CompanyResource,
-} from '../../../../../../client/components/Resource'
-import State from '../../../../../../client/components/State'
+} from '../../../../components/Resource'
+import State from '../../../../components/State'
 
 import { ID as STATE_ID, TASK_SAVE_REFERRAL } from './state'
-import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../../client/components/ContactForm/state'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../components/ContactForm/state'
 
 export const CompanyName = ({ id }) => (
   <CompanyResource.Inline id={id}>

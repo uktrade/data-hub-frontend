@@ -6,25 +6,15 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
-import urls from '../../../../../../lib/urls'
+import urls from '../../../../lib/urls'
 import { ID as STATE_ID } from './state'
 
-import SecondaryButton from '../../../../../../client/components/SecondaryButton'
-import {
-  DefaultLayout,
-  SummaryTable,
-  FormActions,
-} from '../../../../../../client/components/'
-import {
-  CompanyResource,
-  ReferralResource,
-} from '../../../../../../client/components/Resource'
-import { CompanyName } from '../../send-referral/client/SendReferralForm'
+import SecondaryButton from '../../../components/SecondaryButton'
+import { DefaultLayout, SummaryTable, FormActions } from '../../../components'
+import { CompanyResource, ReferralResource } from '../../../components/Resource'
+import { CompanyName } from './SendReferralForm/SendReferralForm'
 
-const {
-  formatDate,
-  DATE_FORMAT_COMPACT,
-} = require('../../../../../../client/utils/date-utils')
+const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
 export const AdviserDetails = ({ name, email, team }) => (
   <>

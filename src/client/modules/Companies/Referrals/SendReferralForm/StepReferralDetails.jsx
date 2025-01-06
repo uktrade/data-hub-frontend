@@ -5,7 +5,7 @@ import { H2, Button, Link } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { ID as STORE_ID } from './state'
-import urls, { contacts } from '../../../../../../lib/urls'
+import urls, { contacts } from '../../../../../lib/urls'
 import {
   Panel,
   NewWindowLink,
@@ -13,10 +13,10 @@ import {
   FieldInput,
   FieldTypeahead,
   FieldTextarea,
-} from '../../../../../../client/components'
+} from '../../../../components'
 
-import { useFormContext } from '../../../../../../client/components/Form/hooks'
-import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
+import { useFormContext } from '../../../../components/Form/hooks'
+import { apiProxyAxios } from '../../../../components/Task/utils'
 
 const StyledPanel = styled(Panel)({
   marginBottom: SPACING.SCALE_4,
