@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
@@ -7,13 +6,9 @@ import { useParams } from 'react-router-dom'
 
 import { DefaultLayout, NewWindowLink } from '../../../../components'
 import urls from '../../../../../lib/urls'
-
-import Task from '../../../../components/Task'
-import { state2props } from './state'
-
-import { REFERRAL_DETAILS } from '../../../../actions'
-
 import { buildCompanyBreadcrumbs } from '../../utils'
+import { ReferralResource } from '../../../../components/Resource'
+import { CompanyName } from '../../../../../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 
 const AdviserDetails = ({ name, email }) => (
   <>
@@ -26,7 +21,15 @@ const AdviserDetails = ({ name, email }) => (
   </>
 )
 
-export default connect(state2props)(({ company, sendingAdviser }) => {
+const transformAdviser = ({ name, contactEmail }) => {
+  const transformedAdviser = {
+    name,
+    email: contactEmail,
+  }
+  return <AdviserDetails {...transformedAdviser} />
+}
+
+const ReferralHelp = () => {
   const { companyId, referralId } = useParams()
 
   // Although this input creates impurity I think for simplicity its ok in this context
@@ -40,37 +43,29 @@ export default connect(state2props)(({ company, sendingAdviser }) => {
     referralId
   )}`
   return (
-    <Task.Status
-      name="Referral details"
-      id="referralDetails"
-      progressMessage="loading referral details"
-      startOnRender={{
-        payload: referralId,
-        onSuccessDispatch: REFERRAL_DETAILS,
-      }}
+    <DefaultLayout
+      pageTitle={`I cannot accept this referral - Referral - ${(<CompanyName id={companyId} />)} - Companies`}
+      heading="I cannot accept this referral"
+      breadcrumbs={buildCompanyBreadcrumbs(
+        [
+          {
+            link: urls.companies.referrals.details(companyId, referralId),
+            text: 'Referral',
+          },
+          { text: 'I cannot accept this referral' },
+        ],
+        companyId,
+        <CompanyName id={companyId} />
+      )}
     >
-      {() =>
-        company && (
-          <DefaultLayout
-            pageTitle={`I cannot accept this referral - Referral - ${company.name} - Companies`}
-            heading="I cannot accept this referral"
-            breadcrumbs={buildCompanyBreadcrumbs(
-              [
-                {
-                  link: urls.companies.referrals.details(companyId, referralId),
-                  text: 'Referral',
-                },
-                { text: 'I cannot accept this referral' },
-              ],
-              companyId,
-              company.name
-            )}
-          >
+      <ReferralResource id={referralId}>
+        {(referral) => (
+          <>
             <H2 size={LEVEL_SIZE[3]}>I need more information</H2>
 
             <p>
               Contact the sender for more info:{' '}
-              <AdviserDetails {...sendingAdviser} />
+              {transformAdviser(referral.createdBy, false)}
             </p>
             <p>
               Or{' '}
@@ -87,9 +82,11 @@ export default connect(state2props)(({ company, sendingAdviser }) => {
             <Link href={relReferralLink}>Back to the referral</Link>
             <br />
             <br />
-          </DefaultLayout>
-        )
-      }
-    </Task.Status>
+          </>
+        )}
+      </ReferralResource>
+    </DefaultLayout>
   )
-})
+}
+
+export default ReferralHelp
