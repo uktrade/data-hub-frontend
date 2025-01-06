@@ -236,7 +236,7 @@ export const transformInvestmentToListItem = (activity) => {
       { label: 'Number of jobs', value: project.number_new_jobs },
     ].filter(({ value }) => Boolean(value)),
     tags: [
-      activity.investment.eyb_leads.length !== 0 && EYB_TAG,
+      activity.investment.eyb_leads.length && EYB_TAG,
       INVESTMENT_TAG,
       {
         text: `Project - ${project.investment_type.name}`,
@@ -332,7 +332,7 @@ export const transformGreatExportEnquiryToListItem = (activity) => {
 }
 
 const getEYBValue = (activity) => {
-  const eybValue = activity.eyb_lead.is_high_value
+  const eybValue = activity?.eyb_lead?.is_high_value
 
   switch (eybValue) {
     case true:
@@ -344,26 +344,24 @@ const getEYBValue = (activity) => {
   }
 }
 
-export const transformEYBLeadToListItem = (activity) => {
-  return {
-    id: activity.eyb_lead.id,
-    metadata: [
-      {
-        label: 'Submitted to EYB date',
-        value: formatDate(activity.eyb_lead.triage_created),
-      },
-      {
-        label: 'Value',
-        value: getEYBValue(activity),
-      },
-    ].filter(({ value }) => Boolean(value)),
-    tags: [EYB_TAG, INVESTMENT_TAG].filter(({ text }) => Boolean(text)),
-    headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
-    headingText: activity.company.name
-      ? activity.company.name
-      : activity.eyb_lead.company_name,
-  }
-}
+export const transformEYBLeadToListItem = (activity) => ({
+  id: activity.eyb_lead.id,
+  metadata: [
+    {
+      label: 'Submitted to EYB date',
+      value: formatDate(activity.eyb_lead.triage_created),
+    },
+    {
+      label: 'Value',
+      value: getEYBValue(activity),
+    },
+  ].filter(({ value }) => Boolean(value)),
+  tags: [EYB_TAG, INVESTMENT_TAG].filter(({ text }) => Boolean(text)),
+  headingUrl: urls.investments.eybLeads.details(activity.eyb_lead.id),
+  headingText: activity.company.name
+    ? activity.company.name
+    : activity.eyb_lead.company_name,
+})
 
 export const transformResponseToCollection = (activities) => ({
   // activities.count comes from the backend because the frontend
