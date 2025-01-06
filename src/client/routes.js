@@ -108,6 +108,7 @@ import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
+import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 
 function Routes() {
   const routes = useRoutes([
@@ -365,6 +366,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <SendReferralForm />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/referrals/:referralId',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ReferralDetails />
         </ProtectedRoute>
       ),
     },

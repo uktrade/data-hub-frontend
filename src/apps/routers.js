@@ -138,6 +138,7 @@ const reactRoutes = [
   '/investments/eyb-leads',
   '/investments/eyb-leads/:eybLeadId/details',
   '/companies/:companyId/referrals/send',
+  '/companies/:companyId/referrals/:referralId',
 ]
 
 reactRoutes.forEach((path) => {

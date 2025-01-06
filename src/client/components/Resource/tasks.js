@@ -96,6 +96,7 @@ import CompanyAuditHistory from './CompanyAuditHistory'
 import EvidenceTag from './EvidenceTag'
 import ProjectAuditHistory from './ProjectAuditHistory'
 import WinUKRegions from './WinUKRegions'
+import Referral from './Referral'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -196,4 +197,5 @@ export default {
   ...CompanyAuditHistory.tasks,
   ...EvidenceTag.tasks,
   ...ProjectAuditHistory.tasks,
+  ...Referral.tasks,
 }

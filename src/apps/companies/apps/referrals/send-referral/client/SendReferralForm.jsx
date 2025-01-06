@@ -18,7 +18,7 @@ import State from '../../../../../../client/components/State'
 import { ID as STATE_ID, TASK_SAVE_REFERRAL } from './state'
 import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../../../../client/components/ContactForm/state'
 
-const CompanyName = ({ id }) => (
+export const CompanyName = ({ id }) => (
   <CompanyResource.Inline id={id}>
     {(company) => company.name}
   </CompanyResource.Inline>
