@@ -40,10 +40,6 @@ function isDateValid(date) {
   return isValid(parseISO(date))
 }
 
-function isUnparsedDateValid(date) {
-  return isValid(date)
-}
-
 /**
  * Parses a date string given a year, month, and optional day.
  *
@@ -283,7 +279,6 @@ module.exports = {
   isDateValid,
   isValid,
   parseDateWithYearMonth,
-  isUnparsedDateValid,
   formatDateWithYearMonth,
   createDateFromObject,
   formatStartAndEndDate,
