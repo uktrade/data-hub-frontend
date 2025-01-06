@@ -277,7 +277,6 @@ module.exports = {
   getDifferenceInWords,
   getFinancialYearStart,
   isDateValid,
-  isValid,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
   createDateFromObject,
