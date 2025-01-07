@@ -10,18 +10,14 @@ const {
   differenceInCalendarDays,
   endOfToday,
   formatDistanceToNowStrict,
-  isAfter,
   isValid,
   parse,
   parseISO,
-  differenceInCalendarMonths,
 } = require('date-fns')
 
 const {
   formatDate,
   DATE_FORMAT_ISO,
-  DATE_FORMAT_COMPACT,
-  DATE_FORMAT_DAY_MONTH,
   DATE_FORMAT_YEAR_MONTH,
 } = require('./date-utils')
 
@@ -118,37 +114,6 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-function formatStartAndEndDate(startDate, endDate) {
-  if (startDate) {
-    const startDateParsed = startDate ? parseISO(startDate) : startDate
-    const endDateParsed = endDate ? parseISO(endDate) : endDate
-    const startDateFormatted = startDate
-      ? formatDate(startDate, DATE_FORMAT_COMPACT)
-      : startDate
-    const endDateFormatted = endDate ? formatDate(endDate) : endDate
-
-    //When end date is missing or before start date
-    if (!endDate || !isAfter(endDateParsed, startDateParsed)) {
-      return startDateFormatted
-    }
-    //When start and end date are on same day
-    if (startDateParsed.toDateString() === endDateParsed.toDateString()) {
-      return startDateFormatted
-    }
-    // When start and end date are in the same month
-    if (differenceInCalendarMonths(endDateParsed, startDateParsed) == 0) {
-      return `${startDateParsed.getDate()} to ${endDateFormatted}`
-    }
-    // When start and end date are in the same year
-    if (startDateParsed.getFullYear() === endDateParsed.getFullYear()) {
-      return `${formatDate(startDate, DATE_FORMAT_DAY_MONTH)} to ${endDateFormatted}`
-    }
-    // When start and end date are in different years
-    return `${startDateFormatted} to ${endDateFormatted}`
-  }
-  return null
-}
-
 /**
  * Convert a date to a short object format required by the FieldDate component
  * @param {*} date a string representing a date or a Date type
@@ -216,7 +181,6 @@ module.exports = {
   getFinancialYearStart,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
-  formatStartAndEndDate,
   convertDateToFieldShortDateObject,
   convertDateToFieldDateObject,
   convertUnparsedDateToFieldDateObject,
