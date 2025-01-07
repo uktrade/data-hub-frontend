@@ -11,7 +11,6 @@ module.exports = () => {
     res.locals.globalProps = {
       sentryDsn: config.sentryDsn,
       sentryEnvironment: config.sentryEnvironment,
-      csrfToken: req.csrfToken(),
       modulePermissions: transformModulePermissions([
         ...res.locals.ALLOWED_APPS,
         ...res.locals.PERMITTED_APPLICATIONS.map(({ key }) => key),
