@@ -11,7 +11,7 @@ import ActivityCardWrapper from './card/ActivityCardWrapper'
 import ActivityCardSubject from './card/ActivityCardSubject'
 import ActivityCardMetadata from './card/ActivityCardMetadata'
 import ActivityCardLabels from './card/ActivityCardLabels'
-import { formatStartAndEndDate } from '../../../utils/date'
+import { formatStartAndEndDate } from './date'
 
 export const AVENTRI_ATTENDEE_REG_STATUSES = {
   Attended: 'Attended',

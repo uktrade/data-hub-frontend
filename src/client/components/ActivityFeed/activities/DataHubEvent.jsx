@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import CardUtils from './card/CardUtils'
 
-import { formatStartAndEndDate } from '../../../utils/date'
+import { formatStartAndEndDate } from './date'
 import { ACTIVITY_TYPE } from '../constants'
 
 import ActivityCardWrapper from './card/ActivityCardWrapper'

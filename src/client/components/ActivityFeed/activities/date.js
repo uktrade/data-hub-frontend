@@ -1,10 +1,10 @@
-const { isAfter, parseISO, differenceInCalendarMonths } = require('date-fns')
+import { isAfter, parseISO, differenceInCalendarMonths } from 'date-fns'
 
-const {
+import {
   formatDate,
   DATE_FORMAT_COMPACT,
   DATE_FORMAT_DAY_MONTH,
-} = require('./date-utils')
+} from '../../../../client/utils/date-utils'
 
 export const formatStartAndEndDate = (startDate, endDate) => {
   if (startDate) {
