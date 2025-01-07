@@ -1,4 +1,4 @@
-import { isWithinLastTwelveMonths } from '../../../utils/date'
+import { isWithinLastTwelveMonths } from './date'
 
 const TEXT_FIELD_MAX_LENGTH = 128
 

@@ -8,7 +8,7 @@ import Countries from '../../../components/Resource/Countries'
 import Sector from '../../../components/Resource/Sector'
 
 import { useFormContext } from '../../../../client/components/Form/hooks'
-import { getStartDateOfTwelveMonthsAgo } from '../../../utils/date'
+import { getStartDateOfTwelveMonthsAgo } from './date'
 import { formatValue, sumAllWinTypeYearlyValues } from './utils'
 import { BLACK, WHITE } from '../../../../client/utils/colours'
 import { validateWinDate, validateTextField } from './validators'
