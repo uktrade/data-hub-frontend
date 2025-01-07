@@ -1,7 +1,7 @@
 import urls from '../../../../lib/urls'
 import { idNamesToValueLabels } from '../../../utils'
 import { apiProxyAxios } from '../../../components/Task/utils'
-import { transformValueForAPI } from '../../../utils/date'
+import { formatDateWithYearMonth } from '../../../utils/date'
 import { getMetadataOptions } from '../../../metadata'
 
 import { transformInvestmentOpportunityDetails } from './transformers'
@@ -47,7 +47,7 @@ export function saveOpportunityDetails({ values, opportunityId }) {
         : undefined,
       required_checks_conducted_by: values.requiredChecksConductedBy?.value,
       required_checks_conducted_on: values.requiredChecksConductedOn
-        ? transformValueForAPI(values.requiredChecksConductedOn)
+        ? formatDateWithYearMonth(values.requiredChecksConductedOn)
         : undefined,
       lead_dit_relationship_manager: values.leadRelationshipManager?.value,
       other_dit_contacts: values.otherDitContacts?.map(({ value }) => value),

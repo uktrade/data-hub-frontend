@@ -7,7 +7,7 @@ import {
   transformIdNameToValueLabel,
 } from '../../../transformers'
 import {
-  transformValueForAPI,
+  formatDateWithYearMonth,
   convertDateToFieldDateObject,
 } from '../../../utils/date'
 import { formatDate, DATE_FORMAT_ISO } from '../../../utils/date-utils'
@@ -61,7 +61,7 @@ export const getDueDate = (dueDate, customDate) => {
   const today = new Date()
 
   const handlers = {
-    custom: () => transformValueForAPI(customDate),
+    custom: () => formatDateWithYearMonth(customDate),
     month: () => formatDate(addMonths(today, 1), DATE_FORMAT_ISO),
     week: () => formatDate(addDays(today, 7), DATE_FORMAT_ISO),
   }

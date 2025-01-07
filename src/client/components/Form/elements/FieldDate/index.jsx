@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isValid } from 'date-fns'
 import { castArray, snakeCase } from 'lodash'
 import styled from 'styled-components'
 import ErrorText from '@govuk-react/error-text'
@@ -16,10 +17,7 @@ import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
 import { useFormContext } from '../../hooks'
 
-const {
-  isNormalisedDateValid,
-  isShortDateValid,
-} = require('../../../../utils/date')
+const { parseDateWithYearMonth } = require('../../../../utils/date')
 
 const DAY = 'day'
 const MONTH = 'month'
@@ -56,10 +54,8 @@ const StyledList = styled.div`
 const getValidator =
   (required, invalid, format) =>
   ({ day, month, year }) => {
+    const isDateValid = isValid(parseDateWithYearMonth(year, month, day))
     const isLong = format === FORMAT_LONG
-    const isValid = isLong
-      ? isNormalisedDateValid(year, month, day)
-      : isShortDateValid(year, month)
 
     const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
@@ -71,7 +67,7 @@ const getValidator =
       return required
     }
 
-    if (!isValid && !isDateEmpty) {
+    if (!isDateValid && !isDateEmpty) {
       return invalid || 'Enter a valid date'
     }
 

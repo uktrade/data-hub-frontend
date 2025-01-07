@@ -33,51 +33,61 @@ const {
 } = require('./date-utils')
 
 /**
- * Date validation functions
+ * Parses a date string given a year, month, and optional day.
+ *
+ * @param {string} year - The year as a string (e.g., '2024').
+ * @param {string} month - The month as a string (1-based, e.g., '12' for December).
+ * @param {string} [day] - The optional day as a string (e.g., '31'). If omitted, defaults to the first day of the month.
+ * @returns {Date} A `Date` object representing the parsed date. If the input values are invalid,
+ *                 the returned `Date` object will be invalid (check with `isValid(date)`).
+ *
+ * @example
+ * // Full date parsing
+ * const date = parseDateWithYearMonth('2024', '12', '31')
+ * console.log(date) // Outputs: Tue Dec 31 2024 00:00:00 GMT+0000 (UTC)
+ *
+ * @example
+ * // Parsing only year and month
+ * const date = parseDateWithYearMonth('2024', '12')
+ * console.log(date) // Outputs: Sun Dec 01 2024 00:00:00 GMT+0000 (UTC)
+ *
+ * @example
+ * // Invalid date
+ * const date = parseDateWithYearMonth('2024', '13', '31')
+ * console.log(isValid(date)) // Outputs: false
+ *
+ * @note This function does not throw errors for invalid inputs but returns an invalid `Date` object instead.
  */
-
-function isDateValid(date) {
-  return isValid(parseISO(date))
-}
-
-function isUnparsedDateValid(date) {
-  return isValid(date)
-}
-
-function isNormalisedDateValid(year, month, day, format = DATE_FORMAT_ISO) {
-  const date = normaliseAndFormatDate(year, month, day)
-  return isValid(parse(date, format, new Date()))
-}
-
-function isShortDateValid(year, month) {
-  return isNormalisedDateValid(year, month, null, DATE_FORMAT_YEAR_MONTH)
+function parseDateWithYearMonth(year, month, day) {
+  const dateString = day ? `${year}-${month}-${day}` : `${year}-${month}`
+  const format = day ? DATE_FORMAT_ISO : DATE_FORMAT_YEAR_MONTH
+  return parse(dateString, format, new Date())
 }
 
 /**
- * Parsing functions
+ * Formats a date string based on a given year, month, and optional day.
+ *
+ * @param {Object} params - The date components to format.
+ * @param {string} params.year - The year as a string (e.g., '2024').
+ * @param {string} params.month - The month as a string (1-based, e.g., '12' for December).
+ * @param {string} [params.day] - The optional day as a string (e.g., '31'). If omitted, defaults to the first day of the month.
+ * @returns {string} The formatted date string in either 'yyyy-MM-dd' or 'yyyy-MM'.
+ *
+ * @example
+ * // Format full date
+ * const formattedDate = formatDateWithYearMonth({ year: '2024', month: '12', day: '31' })
+ * console.log(formattedDate) // Outputs: '2024-12-31'
+ *
+ * @example
+ * // Format year and month only
+ * const formattedDate = formatDateWithYearMonth({ year: '2024', month: '12' })
+ * console.log(formattedDate) // Outputs: '2024-12'
  */
-
-const padZero = (value) => {
-  const parsedValue = parseInt(value, 10)
-  if (Number.isNaN(parsedValue)) {
-    return value
-  }
-  return parsedValue < 10 ? `0${parsedValue}` : parsedValue.toString()
-}
-
-function normaliseAndFormatDate(year, month, day) {
-  const y = padZero(year)
-  const m = padZero(month)
-  const yearAndMonth = `${padZero(y)}-${padZero(m)}`
-  return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
-}
-
-function transformValueForAPI({ year, month, day = 1 }) {
-  if (year && month && day) {
-    return normaliseAndFormatDate(year, month, day)
-  }
-
-  return null
+const formatDateWithYearMonth = ({ year, month, day }) => {
+  return formatDate(
+    parseDateWithYearMonth(year, month, day),
+    day ? DATE_FORMAT_ISO : DATE_FORMAT_YEAR_MONTH
+  )
 }
 
 /**
@@ -258,12 +268,8 @@ module.exports = {
   getDifferenceInDaysLabel,
   getDifferenceInWords,
   getFinancialYearStart,
-  isDateValid,
-  isValid,
-  isNormalisedDateValid,
-  isShortDateValid,
-  isUnparsedDateValid,
-  transformValueForAPI,
+  parseDateWithYearMonth,
+  formatDateWithYearMonth,
   createDateFromObject,
   formatStartAndEndDate,
   convertDateToFieldShortDateObject,

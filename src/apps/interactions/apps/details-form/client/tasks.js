@@ -36,7 +36,7 @@ import {
   DATE_FORMAT_YEAR,
 } from '../../../../../client/utils/date-utils'
 
-const { transformValueForAPI } = require('../../../../../client/utils/date')
+const { formatDateWithYearMonth } = require('../../../../../client/utils/date')
 
 const FIELDS_TO_OMIT = [
   'currently_exporting',
@@ -276,7 +276,7 @@ export function saveInteraction({ values, companyIds, referralId }) {
     dit_participants: values.dit_participants.map((a) => ({
       adviser: a.value,
     })),
-    date: transformValueForAPI(values.date),
+    date: formatDateWithYearMonth(values.date),
     policy_areas: transformArrayOfOptionsToValues(values.policy_areas),
     communication_channel: transformOptionToValue(values.communication_channel),
     event: transformOptionToValue(values.event),

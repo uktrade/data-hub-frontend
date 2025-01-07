@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
-import { transformValueForAPI } from '../../../../utils/date'
+import { formatDateWithYearMonth } from '../../../../utils/date'
 import { VIRUS_SCAN_STATUSES } from '../constants'
 
 import urls from '../../../../../lib/urls'
@@ -32,7 +32,7 @@ export const transformPropositionForAPI = ({ projectId, values }) => {
     deadline_day: proposition_deadline.day,
     deadline_month: proposition_deadline.month,
     deadline_year: proposition_deadline.year,
-    deadline: transformValueForAPI(proposition_deadline),
+    deadline: formatDateWithYearMonth(proposition_deadline),
   }
 }
 
