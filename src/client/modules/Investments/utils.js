@@ -2,7 +2,10 @@ import urls from '../../../lib/urls'
 
 const transformToSentenceCase = (text) => {
   let result = text.replace(/_/g, ' ')
-  return result.charAt(0).toUpperCase() + result.slice(1).toLowerCase()
+  return (
+    result.charAt(0).toUpperCase() +
+    result.slice(1).toLowerCase().replace(/uk/g, 'UK')
+  )
 }
 
 export const buildProjectBreadcrumbs = (pageBreadcrumbs) => {
@@ -36,16 +39,15 @@ export const buildEYBLeadBreadcrumbs = (pageBreadcrumbs) => {
 }
 
 export const camelCaseToSentenceCase = (text) => {
-  
-  if (typeof text === "string") { 
+  if (typeof text === 'string') {
     return transformToSentenceCase(text)
   } else if (Array.isArray(text)) {
-    return text.map(item => {
-      if (typeof item === "string") { 
+    return text.map((item) => {
+      if (typeof item === 'string') {
         return transformToSentenceCase(item)
       } else {
         return item
       }
     })
-  } 
+  }
 }
