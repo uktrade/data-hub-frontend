@@ -125,12 +125,6 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-function createDateFromObject({ day, month, year }) {
-  const monthIndex = parseInt(month, 10) - 1
-  const result = new Date(year, monthIndex, day)
-  return result
-}
-
 function formatStartAndEndDate(startDate, endDate) {
   if (startDate) {
     const startDateParsed = startDate ? parseISO(startDate) : startDate
@@ -270,7 +264,6 @@ module.exports = {
   getFinancialYearStart,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
-  createDateFromObject,
   formatStartAndEndDate,
   convertDateToFieldShortDateObject,
   convertDateToFieldDateObject,
