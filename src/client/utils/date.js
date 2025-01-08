@@ -115,23 +115,37 @@ function getDifferenceInWords(date, suffix = true) {
 }
 
 /**
- * Convert a date to a short object format required by the FieldDate component
- * @param {*} date a string representing a date or a Date type
- * @returns an object of the format {month:'', year:''}
+ * Converts an ISO 8601 date string into an object with year, month, and day properties.
+ *
+ * @param {string} isoString - The ISO 8601 date string to convert (e.g., "2025-10-31").
+ * @returns {Object} - An object with the following properties:
+ *                     - year: {number|string} The year from the date (e.g., 2025). Empty string if invalid.
+ *                     - month: {number|string} The 1-based month (1-12). Empty string if invalid.
+ *                     - day: {number|string} The day of the month (1-31). Empty string if invalid.
+ *
+ * @example
+ * isoStringToDateParts('2025-10-31')
+ * // Returns: { year: 2025, month: 10, day: 31 }
+ *
+ * isoStringToDateParts('invalid-date')
+ * // Returns: { year: '', month: '', day: '' }
  */
-function convertDateToFieldShortDateObject(date) {
-  const { month, year } = convertDateToFieldDateObject(date)
-  return { month, year }
-}
+function isoStringToDateParts(isoString) {
+  const emptyDateParts = { year: '', month: '', day: '' }
 
-/**
- * Convert a date to a short object format required by the FieldDate component
- * @param {*} date a string representing a date or a Date type
- * @returns an object of the format {month:'', year:''}
- */
-function convertUnparsedDateToFieldShortDateObject(date) {
-  const { month, year } = convertUnparsedDateToFieldDateObject(date)
-  return { month, year }
+  if (!isoString) {
+    return emptyDateParts
+  }
+
+  const date = parseISO(isoString)
+
+  return isValid(date)
+    ? {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+      }
+    : emptyDateParts
 }
 
 /**
@@ -159,20 +173,6 @@ function convertDateToFieldDateObject(date) {
   return { day: '', month: '', year: '' }
 }
 
-/**
- * Same as convertDateToFieldDateObject, but for dates that don't need parsing
- */
-function convertUnparsedDateToFieldDateObject(date) {
-  if (isValid(date)) {
-    return {
-      day: date.getDate(),
-      month: date.getMonth() + 1, //getMonth is zero based
-      year: date.getFullYear(),
-    }
-  }
-  return { day: '', month: '', year: '' }
-}
-
 module.exports = {
   generateFinancialYearLabel,
   getDifferenceInDays,
@@ -181,8 +181,6 @@ module.exports = {
   getFinancialYearStart,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
-  convertDateToFieldShortDateObject,
+  isoStringToDateParts,
   convertDateToFieldDateObject,
-  convertUnparsedDateToFieldDateObject,
-  convertUnparsedDateToFieldShortDateObject,
 }
