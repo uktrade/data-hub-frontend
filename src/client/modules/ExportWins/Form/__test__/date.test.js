@@ -1,4 +1,4 @@
-import { addDays, subMonths, subYears, startOfMonth, isEqual } from 'date-fns'
+import { addDays, subMonths, subDays, startOfMonth, isEqual } from 'date-fns'
 
 import {
   getRandomDateInRange,
@@ -23,10 +23,10 @@ describe('getStartDateOfTwelveMonthsAgo', () => {
 describe('isWithinLastTwelveMonths', () => {
   const twelveMonthsAgo = getStartDateOfTwelveMonthsAgo()
   const twelveMonthsAgoAddOneDay = addDays(twelveMonthsAgo, 1)
-  const twelveMonthsAgoSubOneDay = subYears(twelveMonthsAgo, 1)
+  const twelveMonthsAgoSubOneDay = subDays(twelveMonthsAgo, 1)
   const today = new Date()
   const tomorrow = addDays(today, 1)
-  const yesterday = subYears(today, 1)
+  const yesterday = subDays(today, 1)
 
   it('should be valid for the 1st of the month twelve months ago', () => {
     expect(isWithinLastTwelveMonths(twelveMonthsAgo)).to.equal(true)
