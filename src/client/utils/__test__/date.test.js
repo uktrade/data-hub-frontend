@@ -1,55 +1,40 @@
 import { isValid, format } from 'date-fns'
 
 import {
+  isoStringToDateParts,
   parseDateWithYearMonth,
   formatDateWithYearMonth,
-  convertDateToFieldDateObject,
-  convertDateToFieldShortDateObject,
 } from '../date'
 
-describe('convertDateToFieldShortDateObject', () => {
-  context('when called with an invalid date', () => {
-    it('should return an empty short date format object', () => {
-      expect(convertDateToFieldShortDateObject('ab')).to.deep.equal({
-        month: '',
-        year: '',
-      })
-    })
+describe('isoStringToDateParts', () => {
+  it('should return correct date parts for a valid ISO string', () => {
+    const result = isoStringToDateParts('2025-01-08T10:30:00Z')
+    expect(result).to.deep.equal({ year: 2025, month: 1, day: 8 })
   })
 
-  context('when called with a valid date', () => {
-    it('should return a short date format object with month and year correctly populated', () => {
-      expect(
-        convertDateToFieldShortDateObject('2025-05-07T12:44:54')
-      ).to.deep.equal({
-        month: 5,
-        year: 2025,
-      })
-    })
-  })
-})
-
-describe('convertDateToFieldDateObject', () => {
-  context('when called with an invalid date', () => {
-    it('should return an empty short date format object', () => {
-      expect(convertDateToFieldDateObject('ab')).to.deep.equal({
-        day: '',
-        month: '',
-        year: '',
-      })
-    })
+  it('should return empty date parts for an invalid ISO string', () => {
+    const result = isoStringToDateParts('invalid-date')
+    expect(result).to.deep.equal({ year: '', month: '', day: '' })
   })
 
-  context('when called with a valid date', () => {
-    it('should return a short date format object with month and year correctly populated', () => {
-      expect(convertDateToFieldDateObject('2025-05-07T12:44:54')).to.deep.equal(
-        {
-          day: 7,
-          month: 5,
-          year: 2025,
-        }
-      )
-    })
+  it('should return empty date parts for an empty string', () => {
+    const result = isoStringToDateParts('')
+    expect(result).to.deep.equal({ year: '', month: '', day: '' })
+  })
+
+  it('should return empty date parts for null input', () => {
+    const result = isoStringToDateParts(null)
+    expect(result).to.deep.equal({ year: '', month: '', day: '' })
+  })
+
+  it('should return empty date parts for undefined input', () => {
+    const result = isoStringToDateParts(undefined)
+    expect(result).to.deep.equal({ year: '', month: '', day: '' })
+  })
+
+  it('should correctly handle valid ISO date strings without time component', () => {
+    const result = isoStringToDateParts('2025-01-08')
+    expect(result).to.deep.equal({ year: 2025, month: 1, day: 8 })
   })
 })
 
