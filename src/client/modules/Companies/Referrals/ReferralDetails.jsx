@@ -54,6 +54,7 @@ const BackButton = ({ referrerUrl, companyId }) => {
           ? urls.companies.referrals.list()
           : urls.companies.detail(companyId)
       }
+      data-test="back-button"
     >
       Back
     </Link>
@@ -88,7 +89,10 @@ export default connect(({ referrerUrl, ...state }) => ({
           <CompanyResource id={companyId}>
             {(company) => (
               <>
-                <SummaryTable caption={referral.subject}>
+                <SummaryTable
+                  caption={referral.subject}
+                  data-test="referral-details-table"
+                >
                   <SummaryTable.Row heading="Company">
                     <Link href={urls.companies.detail(company.id)}>
                       {company.name}
@@ -116,7 +120,10 @@ export default connect(({ referrerUrl, ...state }) => ({
                 </SummaryTable>
                 {referral.completedOn ? (
                   <>
-                    <SummaryTable caption="Referral accepted">
+                    <SummaryTable
+                      caption="Referral accepted"
+                      data-test="complete-referral-table"
+                    >
                       <SummaryTable.Row heading="Date">
                         {formatDate(referral.completedOn, DATE_FORMAT_COMPACT)}
                       </SummaryTable.Row>
@@ -143,7 +150,10 @@ export default connect(({ referrerUrl, ...state }) => ({
                   </>
                 ) : (
                   <>
-                    <Details summary="Why can I not edit the referral?">
+                    <Details
+                      summary="Why can I not edit the referral?"
+                      data-test="cannot-edit-details"
+                    >
                       <p>
                         For now, you can't edit the referral once it's been
                         sent.
@@ -153,6 +163,7 @@ export default connect(({ referrerUrl, ...state }) => ({
                     <FormActions>
                       <Button
                         as={'a'}
+                        data-test="accept-button"
                         href={urls.companies.referrals.interactions.create(
                           company.id,
                           referralId
@@ -162,6 +173,7 @@ export default connect(({ referrerUrl, ...state }) => ({
                       </Button>
                       <SecondaryButton
                         as={'a'}
+                        data-test="help-button"
                         href={urls.companies.referrals.help(
                           company.id,
                           referralId

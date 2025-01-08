@@ -26,7 +26,7 @@ describe('StepReferralDetails component', () => {
   const company = companyFaker()
   const companyContacts = [contactFaker()]
   const task = taskFaker()
-  const cancelUrl = 'cancelUrl'
+  const cancelUrl = urls.companies.detail(company.id)
 
   describe('All but successful completion', () => {
     beforeEach(() => {
@@ -36,7 +36,6 @@ describe('StepReferralDetails component', () => {
             <StepReferralDetails
               companyId={company.id}
               companyContacts={companyContacts}
-              cancelUrl={cancelUrl}
               openContactFormTask={task}
             />
           </Form>
@@ -103,7 +102,7 @@ describe('StepReferralDetails component', () => {
     })
 
     context('the "Cancel" button link', () => {
-      it('should contain the "cancelUrl"', () => {
+      it('should contain the correct link', () => {
         assertLink('referral-details-cancel', cancelUrl)
       })
     })
