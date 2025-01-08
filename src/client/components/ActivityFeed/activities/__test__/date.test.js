@@ -1,4 +1,4 @@
-const { formatStartAndEndDate } = require('../../client/utils/date')
+const { formatStartAndEndDate } = require('../date')
 
 describe('Date tests', () => {
   describe('#formatStartAndEndDate', () => {

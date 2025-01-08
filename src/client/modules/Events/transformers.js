@@ -2,7 +2,8 @@ import { compact } from 'lodash'
 
 import urls from '../../../lib/urls'
 
-import { getDifferenceInDays, formatStartAndEndDate } from '../../utils/date'
+import { getDifferenceInDays } from '../../utils/date'
+import { formatStartAndEndDate } from '../../components/ActivityFeed/activities/date'
 
 import { TAG_COLOURS } from '../../components/Tag'
 import {

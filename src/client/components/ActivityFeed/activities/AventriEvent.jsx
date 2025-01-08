@@ -3,7 +3,7 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { formatStartAndEndDate } from '../../../utils/date'
+import { formatStartAndEndDate } from './date'
 import { ACTIVITY_TYPE } from '../constants'
 
 import CardUtils from './card/CardUtils'
