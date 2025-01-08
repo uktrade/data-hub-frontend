@@ -2,7 +2,7 @@ import {
   transformArrayIdNameToValueLabel,
   transformIdNameToValueLabel,
 } from '../../transformers'
-import { convertDateToFieldShortDateObject } from '../../utils/date'
+import { isoStringToDateParts } from '../../utils/date'
 
 export const transformFormValuesForAPI = ({
   company,
@@ -62,9 +62,7 @@ export const transformAPIValuesForForm = ({
   team_members: transformArrayIdNameToValueLabel(team_members),
   estimated_export_value_years: estimated_export_value_years?.id,
   estimated_export_value_amount: estimated_export_value_amount,
-  estimated_win_date: estimated_win_date
-    ? convertDateToFieldShortDateObject(estimated_win_date)
-    : { month: '', year: '' },
+  estimated_win_date: isoStringToDateParts(estimated_win_date),
   destination_country:
     destination_country && transformIdNameToValueLabel(destination_country),
   sector: sector && transformIdNameToValueLabel(sector),
