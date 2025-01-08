@@ -3,7 +3,7 @@ import { addMonths, subMonths } from 'date-fns'
 import {
   getRandomDateInRange,
   getStartDateOfTwelveMonthsAgo,
-} from '../../../../../src/client/utils/date'
+} from '../../../../../src/client/modules/ExportWins/Form/date'
 import { clickContinueButton } from '../../support/actions'
 import { assertUrl } from '../../support/assertions'
 import { formFields } from './constants'

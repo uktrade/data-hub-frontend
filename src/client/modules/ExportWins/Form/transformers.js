@@ -3,10 +3,8 @@ import { isEmpty } from 'lodash'
 import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
 import { idNameToValueLabel } from '../../../../client/utils'
 import { sumWinTypeYearlyValues } from './utils'
-import {
-  convertDateToFieldDateObject,
-  isWithinLastTwelveMonths,
-} from '../../../utils/date'
+import { isWithinLastTwelveMonths } from './date'
+import { convertDateToFieldDateObject } from '../../../utils/date'
 import {
   winTypeId,
   GOODS_ID,
