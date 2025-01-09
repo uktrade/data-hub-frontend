@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { FieldAdvisersTypeahead, FieldDate } from '../../../../components'
-import { convertDateToFieldDateObject } from '../../../../utils/date'
+import { isoStringToDateParts } from '../../../../utils/date'
 import { validateDateWithinTheLastYear } from './validators'
 
 export const InvestorCheckDetails = ({ date, adviser }) => (
@@ -10,7 +10,7 @@ export const InvestorCheckDetails = ({ date, adviser }) => (
     <FieldDate
       name="date"
       label="Date of most recent checks"
-      initialValue={date ? convertDateToFieldDateObject(date) : null}
+      initialValue={isoStringToDateParts(date)}
       validate={validateDateWithinTheLastYear}
       required="Enter the date of the most recent checks"
       hint="For example, 12 11 2015"
