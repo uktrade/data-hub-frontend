@@ -9,6 +9,7 @@ const transformModulePermissions = (modules) =>
 module.exports = () => {
   return function reactGlobalProps(req, res, next) {
     res.locals.globalProps = {
+      flashMessages: res.locals.flashMessages,
       sentryDsn: config.sentryDsn,
       sentryEnvironment: config.sentryEnvironment,
       csrfToken: req.csrfToken(),

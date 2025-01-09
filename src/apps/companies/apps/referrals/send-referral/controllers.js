@@ -26,7 +26,9 @@ function renderSendReferralForm(req, res) {
         companyId: id,
         cancelUrl: urls.companies.detail(id),
         sendingAdviserTeamName,
-        flashMessages: res.locals.getMessages(),
+
+        // TODO: This should not be necessary as flashMessages are included in global props
+        // flashMessages: res.locals.flashMessages,
       },
     }
   )
