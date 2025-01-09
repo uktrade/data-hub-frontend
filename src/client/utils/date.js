@@ -80,6 +80,40 @@ const formatDateWithYearMonth = ({ year, month, day }) => {
 }
 
 /**
+ * Converts an ISO 8601 date string into an object with year, month, and day properties.
+ *
+ * @param {string} isoString - The ISO 8601 date string to convert (e.g., "2025-10-31").
+ * @returns {Object} - An object with the following properties:
+ *                     - year: {number|string} The year from the date (e.g., 2025). Empty string if invalid.
+ *                     - month: {number|string} The 1-based month (1-12). Empty string if invalid.
+ *                     - day: {number|string} The day of the month (1-31). Empty string if invalid.
+ *
+ * @example
+ * isoStringToDateParts('2025-10-31')
+ * // Returns: { year: 2025, month: 10, day: 31 }
+ *
+ * isoStringToDateParts('invalid-date')
+ * // Returns: { year: '', month: '', day: '' }
+ */
+function isoStringToDateParts(isoString) {
+  const emptyDateParts = { year: '', month: '', day: '' }
+
+  if (!isoString) {
+    return emptyDateParts
+  }
+
+  const date = parseISO(isoString)
+
+  return isValid(date)
+    ? {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+      }
+    : emptyDateParts
+}
+
+/**
  * Get the number of days to a given date as an integer.
  */
 function getDifferenceInDays(dateIn) {
@@ -114,47 +148,13 @@ function getDifferenceInWords(date, suffix = true) {
   }
 }
 
-/**
- * Converts an ISO 8601 date string into an object with year, month, and day properties.
- *
- * @param {string} isoString - The ISO 8601 date string to convert (e.g., "2025-10-31").
- * @returns {Object} - An object with the following properties:
- *                     - year: {number|string} The year from the date (e.g., 2025). Empty string if invalid.
- *                     - month: {number|string} The 1-based month (1-12). Empty string if invalid.
- *                     - day: {number|string} The day of the month (1-31). Empty string if invalid.
- *
- * @example
- * isoStringToDateParts('2025-10-31')
- * // Returns: { year: 2025, month: 10, day: 31 }
- *
- * isoStringToDateParts('invalid-date')
- * // Returns: { year: '', month: '', day: '' }
- */
-function isoStringToDateParts(isoString) {
-  const emptyDateParts = { year: '', month: '', day: '' }
-
-  if (!isoString) {
-    return emptyDateParts
-  }
-
-  const date = parseISO(isoString)
-
-  return isValid(date)
-    ? {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-      }
-    : emptyDateParts
-}
-
 module.exports = {
+  parseDateWithYearMonth,
+  formatDateWithYearMonth,
+  isoStringToDateParts,
   generateFinancialYearLabel,
   getDifferenceInDays,
   getDifferenceInDaysLabel,
   getDifferenceInWords,
   getFinancialYearStart,
-  parseDateWithYearMonth,
-  formatDateWithYearMonth,
-  isoStringToDateParts,
 }
