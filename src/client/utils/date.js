@@ -148,31 +148,6 @@ function isoStringToDateParts(isoString) {
     : emptyDateParts
 }
 
-/**
- * Convert a date to an object format required by the FieldDate component
- * @param {*} date a string representing a date or a Date type
- * @returns an object of the format {day:'', month:'', year:''}
- */
-function convertDateToFieldDateObject(date) {
-  if (date && isValid(date)) {
-    return {
-      day: date.getDate(),
-      month: date.getMonth() + 1, //getMonth is zero based
-      year: date.getFullYear(),
-    }
-  } else {
-    const parsedTime = parseISO(date)
-    if (date && isValid(parsedTime)) {
-      return {
-        day: parsedTime.getDate(),
-        month: parsedTime.getMonth() + 1, //getMonth is zero based
-        year: parsedTime.getFullYear(),
-      }
-    }
-  }
-  return { day: '', month: '', year: '' }
-}
-
 module.exports = {
   generateFinancialYearLabel,
   getDifferenceInDays,
@@ -182,5 +157,4 @@ module.exports = {
   parseDateWithYearMonth,
   formatDateWithYearMonth,
   isoStringToDateParts,
-  convertDateToFieldDateObject,
 }
