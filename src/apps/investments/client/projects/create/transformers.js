@@ -1,4 +1,4 @@
-import { OPTION_NO } from '../../../../../common/constants'
+import { OPTION_NO, OPTION_YES } from '../../../../../common/constants'
 import {
   FDI_TYPES,
   INVESTOR_TYPES,
@@ -23,12 +23,14 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
     client_contacts,
     other_business_activity,
     client_relationship_manager,
+    is_referral_source,
     referral_source_adviser,
     referral_source_activity,
     referral_source_activity_event,
     referral_source_activity_marketing,
     referral_source_activity_website,
     estimated_land_date,
+    likelihood_to_land,
     actual_land_date,
     investor_type,
     level_of_involvement,
@@ -54,14 +56,15 @@ export const transformFormValuesToPayload = (values, csrfToken) => {
         ? client_relationship_manager.value
         : adviser.id,
     referral_source_adviser:
-      values.referralSourceAdviser === OPTION_NO
-        ? referral_source_adviser.value
-        : adviser.id,
+      is_referral_source === OPTION_YES
+        ? adviser.id
+        : referral_source_adviser.value,
     referral_source_activity: referral_source_activity,
     referral_source_activity_event: referral_source_activity_event,
     referral_source_activity_marketing: referral_source_activity_marketing,
     referral_source_activity_website: referral_source_activity_website,
     estimated_land_date: formatEstimatedLandDate(estimated_land_date),
+    likelihood_to_land: likelihood_to_land?.value,
     actual_land_date: formatActualLandDate(actual_land_date),
     investor_type:
       fdi_type?.value === FDI_TYPES.expansionOfExistingSiteOrActivity.value
