@@ -110,6 +110,7 @@ import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
 import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/SendReferralForm'
 import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
+import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 
 function Routes() {
   const routes = useRoutes([
@@ -391,6 +392,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:contacts'}>
           <ContactDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/contacts/:contactId/interactions',
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactActivity />
         </ProtectedRoute>
       ),
     },

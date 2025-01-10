@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { GridRow, GridCol } from 'govuk-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import qs from 'qs'
 
 import { TASK_GET_CONTACT_ACTIVITIES, ID, state2props } from './state'
@@ -18,16 +18,18 @@ import ContactLayout from '../../../components/Layout/ContactLayout'
 import { ContactResource } from '../../../components/Resource'
 import { ItemTemplate } from '../../Companies/CompanyActivity'
 
-const ContactActivity = ({ contactId, results, count, permissions }) => {
+const ContactActivity = ({ results, count }) => {
+  const { contactId } = useParams()
+
   const totalPages = Math.ceil(count / 10)
   const qsParams = qs.parse(location.search.slice(1))
   const page = parseInt(qsParams.page, 10) || 1
   const navigate = useNavigate()
 
   return (
-    <ContactResource id={contactId}>
-      {(contact) => (
-        <ContactLayout contact={contact} permissions={permissions}>
+    <ContactLayout contactId={contactId}>
+      <ContactResource id={contactId}>
+        {(contact) => (
           <GridRow>
             <GridCol setWidth="full">
               <SectionHeader type="contact-activity">
@@ -80,9 +82,9 @@ const ContactActivity = ({ contactId, results, count, permissions }) => {
               </Task.Status>
             </GridCol>
           </GridRow>
-        </ContactLayout>
-      )}
-    </ContactResource>
+        )}
+      </ContactResource>
+    </ContactLayout>
   )
 }
 
