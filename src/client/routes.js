@@ -74,7 +74,7 @@ import LinkGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGlobalH
 import LinkSubsidiary from './modules/Companies/CompanyBusinessDetails/LinkSubsidiary'
 import ExportCountriesEdit from './modules/Companies/CompanyExports/ExportCountriesEdit'
 import ExportsEdit from './modules/Companies/CompanyExports/ExportsEdit'
-import ReferralHelp from './modules/Companies/Referrals/Help/ReferralHelp'
+import ReferralHelp from './modules/Companies/Referrals/ReferralHelp'
 import AbandonProposition from './modules/Investments/Projects/Propositions/AbandonProposition'
 import CreateProposition from './modules/Investments/Projects/Propositions/CreateProposition'
 import DeletePropositionDocument from './modules/Investments/Projects/Propositions/DeletePropositionDocument'
@@ -107,6 +107,8 @@ import AddPropositionDocument from './modules/Investments/Projects/Propositions/
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
+import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/SendReferralForm'
+import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 
 function Routes() {
   const routes = useRoutes([
@@ -356,6 +358,22 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CompanyEditHistory />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/referrals/send',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <SendReferralForm />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/referrals/:referralId',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <ReferralDetails />
         </ProtectedRoute>
       ),
     },

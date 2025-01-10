@@ -1,7 +1,13 @@
-const urls = require('../../../../../../src/lib/urls')
-const fixtures = require('../../../fixtures')
-const selectors = require('../../../../../selectors')
-const { assertFlashMessage } = require('../../../support/assertions')
+import { companies, dashboard } from '../../../../../../src/lib/urls'
+import { company } from '../../../fixtures'
+import { sendReferral } from '../../../../../selectors'
+import {
+  assertBreadcrumbs,
+  assertErrorSummary,
+  assertFlashMessage,
+  assertLocalHeader,
+  assertSummaryTable,
+} from '../../../support/assertions'
 
 const selectTypeahead = (field, input) =>
   cy.get(field).within(() => {
@@ -12,25 +18,29 @@ const selectTypeahead = (field, input) =>
   })
 
 const enterAdviserDefault = () =>
-  selectTypeahead(selectors.sendReferral.adviserField, 'shawn')
+  selectTypeahead(sendReferral.adviserField, 'shawn')
 
 const enterSubjectDefault = () =>
-  cy.get(selectors.sendReferral.subjectField).click().type('Example subject')
+  cy.get(sendReferral.subjectField).click().type('Example subject')
 
 const enterNotesDefault = () =>
-  cy.get(selectors.sendReferral.notesField).click().type('Example notes')
+  cy.get(sendReferral.notesField).click().type('Example notes')
 
 const enterContactDefault = () =>
-  selectTypeahead(selectors.sendReferral.contactField, 'johnny')
+  selectTypeahead(sendReferral.contactField, 'johnny')
 
 describe('Send a referral form', () => {
-  before(() => {
-    cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
-  })
-
   describe('All but successful completion', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
+      cy.visit(companies.referrals.send(company.withContacts.id))
+
+      assertBreadcrumbs({
+        Home: dashboard.index(),
+        Companies: companies.index(),
+        [company.withContacts.name]: companies.detail(company.withContacts.id),
+        'Send a referral': null,
+      })
+      assertLocalHeader('Send a referral')
     })
 
     context(
@@ -40,10 +50,9 @@ describe('Send a referral form', () => {
           enterAdviserDefault()
           enterNotesDefault()
           cy.contains('button', 'Continue').click()
-          cy.get('form').should(
-            'contain',
-            'Enter a subject for the referral (Max 255 characters)'
-          )
+          assertErrorSummary([
+            'Enter a subject for the referral (Max 255 characters)',
+          ])
         })
       }
     )
@@ -55,7 +64,7 @@ describe('Send a referral form', () => {
           enterAdviserDefault()
           enterSubjectDefault()
           cy.contains('button', 'Continue').click()
-          cy.get('form').should('contain', 'Enter notes for the referral')
+          assertErrorSummary(['Enter notes for the referral'])
         })
       }
     )
@@ -63,12 +72,12 @@ describe('Send a referral form', () => {
 
   describe('Advisor input fields', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
+      cy.visit(companies.referrals.send(company.withContacts.id))
     })
 
     context('When you search advisors', () => {
       it('should return inactive advisers with text indicating they are inactive next to their name', () => {
-        cy.get(selectors.sendReferral.adviserField).within(() => {
+        cy.get(sendReferral.adviserField).within(() => {
           cy.intercept('/api-proxy/adviser/?*').as('adviserResults')
           cy.get('input').clear().type('John Doe')
           cy.wait('@adviserResults')
@@ -82,7 +91,7 @@ describe('Send a referral form', () => {
       })
 
       it('should return active advisers without an inactive text next to their name', () => {
-        cy.get(selectors.sendReferral.adviserField).within(() => {
+        cy.get(sendReferral.adviserField).within(() => {
           cy.intercept('/api-proxy/adviser/?*').as('adviserResults')
           cy.get('input').clear().type('Shawn Cohen')
           cy.wait('@adviserResults')
@@ -98,9 +107,7 @@ describe('Send a referral form', () => {
     'when "Continue" button is clicked after all fields filled in',
     () => {
       it('should display the confirmation component with the values just input', () => {
-        cy.visit(
-          urls.companies.referrals.send(fixtures.company.withContacts.id)
-        )
+        cy.visit(companies.referrals.send(company.withContacts.id))
         enterAdviserDefault()
         enterSubjectDefault()
         enterNotesDefault()
@@ -108,37 +115,27 @@ describe('Send a referral form', () => {
 
         cy.contains('button', 'Continue').click()
 
+        assertSummaryTable({
+          dataTest: 'referral-confirmation-table',
+          content: {
+            'Refer this company to': 'Shawn Cohen, Charles Gilbert',
+            Subject: 'Example subject',
+            Notes: 'Example notes',
+            'Company contact': 'Johnny Cakeman',
+          },
+        })
+
         cy.contains('Check referral details').should('be.visible')
-        cy.get('table')
-          .should('contain', 'Shawn Cohen')
-          .and('contain', 'Example subject')
-          .and('contain', 'Example notes')
-          .and('contain', 'Johnny Cakeman')
-          .parents()
-          .find('button')
-          .should('contain', 'Edit Referral')
-          .next()
-          .should('contain', 'What happens next')
-          .next()
-          .find('li')
-          .eq(0)
-          .should(
-            'contain',
-            "You won't be able to edit the referral after this point"
-          )
-          .next()
-          .should(
-            'contain',
-            "A link to the referral will appear on the company record, your homepage and the recipient's homepage"
-          )
-          .next()
-          .should('contain', 'The referral might take 24 hours to appear')
-          .parents()
-          .next()
-          .find('button')
-          .should('contain', 'Send referral')
-          .next()
-          .should('contain', 'Cancel')
+        cy.contains('What happens next').should('be.visible')
+        cy.contains(
+          "You won't be able to edit the referral after this point"
+        ).should('be.visible')
+        cy.contains(
+          "A link to the referral will appear on the company record, your homepage and the recipient's homepage"
+        ).should('be.visible')
+        cy.contains('The referral might take 24 hours to appear').should(
+          'be.visible'
+        )
       })
     }
   )
@@ -147,9 +144,7 @@ describe('Send a referral form', () => {
     'when "Continue" then "Edit" button is clicked after all fields filled in',
     () => {
       it('the input data should appear in the form when "Edit Referral" is clicked', () => {
-        cy.visit(
-          urls.companies.referrals.send(fixtures.company.withContacts.id)
-        )
+        cy.visit(companies.referrals.send(company.withContacts.id))
         enterAdviserDefault()
         enterSubjectDefault()
         enterNotesDefault()
@@ -158,19 +153,16 @@ describe('Send a referral form', () => {
         cy.contains('button', 'Continue').click()
         cy.contains('Edit Referral').click()
 
-        cy.get(selectors.sendReferral.adviserField)
+        cy.get(sendReferral.adviserField)
           .find('input')
           .should('have.attr', 'value', 'Shawn Cohen, Charles Gilbert')
-        cy.get(selectors.sendReferral.subjectFieldInput).should(
+        cy.get(sendReferral.subjectFieldInput).should(
           'have.attr',
           'value',
           'Example subject'
         )
-        cy.get(selectors.sendReferral.notesField).should(
-          'contain',
-          'Example notes'
-        )
-        cy.get(selectors.sendReferral.contactField)
+        cy.get(sendReferral.notesField).should('contain', 'Example notes')
+        cy.get(sendReferral.contactField)
           .find('input')
           .should('have.attr', 'value', 'Johnny Cakeman')
       })
@@ -181,9 +173,7 @@ describe('Send a referral form', () => {
     'When the "Cancel" link is clicked from the confirmation component',
     () => {
       it('should return to the company page', () => {
-        cy.visit(
-          urls.companies.referrals.send(fixtures.company.withContacts.id)
-        )
+        cy.visit(companies.referrals.send(company.withContacts.id))
         enterAdviserDefault()
         enterSubjectDefault()
         enterNotesDefault()
@@ -191,7 +181,7 @@ describe('Send a referral form', () => {
         cy.contains('Cancel').click()
         cy.url().should(
           'contain',
-          urls.companies.overview.index(fixtures.company.withContacts.id)
+          companies.overview.index(company.withContacts.id)
         )
       })
     }
@@ -201,9 +191,7 @@ describe('Send a referral form', () => {
     'When the "Send referral" button is clicked from the confirmation component',
     () => {
       before(() => {
-        cy.visit(
-          urls.companies.referrals.send(fixtures.company.withContacts.id)
-        )
+        cy.visit(companies.referrals.send(company.withContacts.id))
       })
       it('should take user to the company page, display flash message and link to the homepage', () => {
         enterAdviserDefault()
@@ -214,12 +202,12 @@ describe('Send a referral form', () => {
         cy.contains('button', 'Send referral').click()
         cy.url().should(
           'contain',
-          urls.companies.overview.index(fixtures.company.withContacts.id)
+          companies.overview.index(company.withContacts.id)
         )
         assertFlashMessage('Referral sent')
         cy.contains('You can see all of your referrals on your Homepage.')
           .contains('see all of your referrals on your Homepage')
-          .should('have.attr', 'href', urls.companies.referrals.list())
+          .should('have.attr', 'href', companies.referrals.list())
       })
     }
   )
@@ -228,7 +216,7 @@ describe('Send a referral form', () => {
 describe('Contact loop', () => {
   context('when a contact does not exist and user wants to add one', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
+      cy.visit(companies.referrals.send(company.withContacts.id))
     })
 
     after(() => {
@@ -236,7 +224,7 @@ describe('Contact loop', () => {
     })
 
     it('should redirect the user back to the interaction form and add the contact after the contact is added', () => {
-      cy.get(selectors.sendReferral.subjectField)
+      cy.get(sendReferral.subjectField)
         .click()
         .type('Test if values are restored')
 
@@ -245,7 +233,7 @@ describe('Contact loop', () => {
       cy.contains('a', 'Cancel').should(
         'have.attr',
         'href',
-        urls.companies.referrals.send(fixtures.company.withContacts.id)
+        companies.referrals.send(company.withContacts.id)
       )
 
       cy.contains('div', 'First name').find('input').type('John')
@@ -262,20 +250,20 @@ describe('Contact loop', () => {
 
       cy.url().should(
         'include',
-        urls.companies.referrals.send(fixtures.company.withContacts.id)
+        companies.referrals.send(company.withContacts.id)
       )
 
       // We are not expecting John Doe here, because the mocked sandbox response
       // returns Json Russel
       cy.contains(`You have successfully added a new contact Json Russel`)
 
-      cy.get(selectors.sendReferral.subjectFieldInput).should(
+      cy.get(sendReferral.subjectFieldInput).should(
         'have.attr',
         'value',
         'Test if values are restored'
       )
 
-      cy.get(selectors.sendReferral.contactField)
+      cy.get(sendReferral.contactField)
         .find('input')
         .should('have.attr', 'value', 'Json Russel')
     })

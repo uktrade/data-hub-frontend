@@ -1,6 +1,6 @@
 import { ID as STORE_ID } from './state'
-import getContactFromQuery from '../../../../../../client/utils/getContactFromQuery'
-import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
+import getContactFromQuery from '../../../../utils/getContactFromQuery'
+import { apiProxyAxios } from '../../../../components/Task/utils'
 
 export async function getInitialFormValues() {
   const valuesFromStorage = JSON.parse(window.sessionStorage.getItem(STORE_ID))

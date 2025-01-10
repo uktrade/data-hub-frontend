@@ -17,9 +17,6 @@ import CannotFindMatch from '../../apps/companies/apps/match-company/client/Cann
 import EditCompanyList from '../../apps/company-lists/client/EditCompanyList.jsx'
 import CreateListForm from '../../apps/company-lists/client/CreateListForm.jsx'
 import ManageAdviser from '../../apps/companies/apps/advisers/client/ManageAdviser.jsx'
-import ReferralDetails from '../../apps/companies/apps/referrals/details/client/ReferralDetails.jsx'
-import SendReferralForm from '../../apps/companies/apps/referrals/send-referral/client/SendReferralForm.jsx'
-import InteractionReferralDetails from '../modules/Interactions/InteractionDetails/InteractionReferralDetails.jsx'
 import FlashMessages from '../components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from '../components/PersonalisedDashboard/index.jsx'
 import InvestmentProjectForm from '../../apps/investments/client/projects/create/InvestmentProjectForm.jsx'
@@ -163,17 +160,6 @@ export const App = () => {
           {(props) => (
             <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
           )}
-        </Mount>
-        <Mount selector="#send-referral-form">
-          {(props) => (
-            <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
-          )}
-        </Mount>
-        <Mount selector="#referral-details">
-          {(props) => <ReferralDetails {...props} />}
-        </Mount>
-        <Mount selector="#interaction-referral-details">
-          {(props) => <InteractionReferralDetails {...props} />}
         </Mount>
         <Mount selector="#flash-messages">
           {(props) => <FlashMessages {...props} />}

@@ -5,7 +5,7 @@ import { H2, Button, Link } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { ID as STORE_ID } from './state'
-import urls, { contacts } from '../../../../../../lib/urls'
+import urls, { contacts } from '../../../../../lib/urls'
 import {
   Panel,
   NewWindowLink,
@@ -13,23 +13,29 @@ import {
   FieldInput,
   FieldTypeahead,
   FieldTextarea,
-} from '../../../../../../client/components'
+} from '../../../../components'
 
-import { useFormContext } from '../../../../../../client/components/Form/hooks'
-import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
+import { useFormContext } from '../../../../components/Form/hooks'
+import { apiProxyAxios } from '../../../../components/Task/utils'
 
 const StyledPanel = styled(Panel)({
   marginBottom: SPACING.SCALE_4,
 })
 
 const StepReferralDetails = ({
-  cancelUrl,
   companyContacts,
   companyId,
   openContactFormTask,
 }) => {
   const MAX_LENGTH = 255
   const { values = {} } = useFormContext()
+
+  const transformedContacts = companyContacts.map(
+    ({ firstName, lastName, id }) => ({
+      name: `${firstName} ${lastName}`,
+      id: id,
+    })
+  )
 
   return (
     <>
@@ -139,7 +145,7 @@ const StepReferralDetails = ({
             </Link>
           </>
         }
-        options={companyContacts.map(({ name, id }) => ({
+        options={transformedContacts.map(({ name, id }) => ({
           label: name,
           value: id,
         }))}
@@ -149,7 +155,10 @@ const StepReferralDetails = ({
       />
       <FormActions>
         <Button name="forward">Continue</Button>
-        <Link data-test="referral-details-cancel" href={cancelUrl}>
+        <Link
+          data-test="referral-details-cancel"
+          href={urls.companies.detail(companyId)}
+        >
           Cancel
         </Link>
       </FormActions>

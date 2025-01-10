@@ -4,14 +4,14 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 
-import { useFormContext } from '../../../../../../client/components/Form/hooks'
+import { useFormContext } from '../../../../components/Form/hooks'
 
 import {
   SummaryTable,
   FormActions,
   SecondaryButton,
   FieldInput,
-} from '../../../../../../client/components'
+} from '../../../../components'
 
 const StepReferralConfirmation = ({ cancelUrl }) => {
   const { values = {}, goBack } = useFormContext()
@@ -21,7 +21,7 @@ const StepReferralConfirmation = ({ cancelUrl }) => {
       {/* TODO: remove when bug with Steps not pulling data from form context is fixed */}
       <FieldInput name="confirmed" type="hidden" />
       <H2 size={LEVEL_SIZE[3]}>Check referral details</H2>
-      <SummaryTable>
+      <SummaryTable data-test="referral-confirmation-table">
         <SummaryTable.Row heading="Refer this company to">
           {values.adviser.label}
         </SummaryTable.Row>

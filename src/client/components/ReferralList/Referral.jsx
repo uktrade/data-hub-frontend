@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { BLUE, GREEN } from '../../../client/utils/colours'
-import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
+import { AdviserDetails } from '../../modules/Companies/Referrals/ReferralDetails'
 import { Card, CardHeader } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
 import urls from '../../../lib/urls'
