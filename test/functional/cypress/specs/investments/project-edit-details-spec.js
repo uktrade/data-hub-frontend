@@ -495,6 +495,41 @@ describe('Editing the project summary', () => {
     }
   )
 
+  context('When submitting data check payload is transformmed for API', () => {
+    const project = setupProjectFaker({})
+    beforeEach(() => {
+      setup(project)
+      cy.intercept('PATCH', `/api-proxy/v3/investment/*`).as(
+        'editDetailsRequest'
+      )
+      cy.get('[data-test="submit"]').should('exist')
+    })
+    it('should pass referral source as the user if they are the referral source', () => {
+      cy.get('[data-test="field-is_referral_source"]').contains('Yes').click()
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest').its('request.body').should('include', {
+        referral_source_adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
+      })
+    })
+
+    it('should pass referral source as given adviser if they are the referral source', () => {
+      cy.get('[data-test="field-is_referral_source"]').contains('No')
+      cy.get('[data-test="field-referral_source_adviser"]').then((element) => {
+        assertFieldTypeahead({
+          element,
+          label: 'Referral source adviser',
+          placeholder: 'Choose a referral source adviser',
+          value: 'Puck Head',
+          isMulti: false,
+        })
+      })
+      clickButton('Submit')
+      cy.wait('@editDetailsRequest').its('request.body').should('include', {
+        referral_source_adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
+      })
+    })
+  })
+
   context('When changing the project FDI type from other to Expansion', () => {
     beforeEach(() => {
       const project = setupProjectFaker({
