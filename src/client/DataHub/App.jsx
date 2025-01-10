@@ -20,10 +20,6 @@ import ManageAdviser from '../../apps/companies/apps/advisers/client/ManageAdvis
 import FlashMessages from '../components/LocalHeader/FlashMessages.jsx'
 import PersonalisedDashboard from '../components/PersonalisedDashboard/index.jsx'
 import InvestmentProjectForm from '../../apps/investments/client/projects/create/InvestmentProjectForm.jsx'
-import ContactActivity from '../modules/Contacts/ContactActivity/ContactActivity.jsx'
-import ContactLocalHeader from '../components/ContactLocalHeader/index.jsx'
-import ContactDetails from '../modules/Contacts/ContactDetails/ContactDetails.jsx'
-import ContactAuditHistory from '../modules/Contacts/ContactAuditHistory/ContactAuditHistory.jsx'
 import InteractionDetails from '../modules/Interactions/InteractionDetails/index.jsx'
 import PropositionDetails from '../modules/Investments/Projects/Propositions/PropositionDetails.jsx'
 import CompanyHierarchy from '../modules/Companies/CompanyHierarchy/index.jsx'
@@ -173,21 +169,8 @@ export const App = () => {
             />
           )}
         </Mount>
-        <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
         <Mount selector="#contact-form">
           {(props) => <ContactForm {...props} id="contact-form" />}
-        </Mount>
-        <Mount selector="#contact-activity">
-          {(props) => <ContactActivity {...props} />}
-        </Mount>
-        <Mount selector="#contact-local-header">
-          {(props) => <ContactLocalHeader {...props} />}
-        </Mount>
-        <Mount selector="#contact-details">
-          {(props) => <ContactDetails {...props} />}
-        </Mount>
-        <Mount selector="#contact-audit-history">
-          {(props) => <ContactAuditHistory {...props} />}
         </Mount>
         <Mount selector="#interaction-details">
           {(props) => <InteractionDetails {...props} />}

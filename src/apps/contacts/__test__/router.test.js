@@ -7,9 +7,7 @@ describe('Contacts router', () => {
       ['/create', '/:contactId/edit'],
       '/export',
       '/:contactId',
-      '/:contactId/details',
       '/:id/unarchive',
-      '/:contactId/audit',
     ])
   })
 })
