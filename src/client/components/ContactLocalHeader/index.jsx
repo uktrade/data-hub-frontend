@@ -10,6 +10,7 @@ import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHead
 import { Badge } from '..'
 import urls from '../../../lib/urls'
 import ArchivePanel from '../ArchivePanel'
+import { ContactResource } from '../Resource'
 
 const dispatchToProps = (dispatch) => ({
   writeFlashMessage: (message) =>
@@ -58,60 +59,62 @@ const buildBreadcrumbs = (currentTab, id, name) => {
   return initialBreadcrumbs.concat(dynamicBreadcrumbs)
 }
 
-const ContactLocalHeader = ({ contact, writeFlashMessage }) => {
+const ContactLocalHeader = ({ contactId, writeFlashMessage }) => {
   return (
-    <>
-      <LocalHeader
-        breadcrumbs={buildBreadcrumbs(currentTab, contact.id, contact.name)}
-      >
-        <GridRow>
-          <GridCol>
-            <StyledLink
-              data-test="company-link"
-              href={urls.companies.overview.index(contact.company.id)}
-            >
-              {contact.company.name}
-            </StyledLink>
-            <StyledLocalHeaderHeading data-test="contact-name">
-              {contact.name}
-              {contact.primary && (
-                <Badge
-                  data-test="primary-badge"
-                  borderColour="purple"
-                  textColour="purple"
-                  fontSize={FONT_SIZE.SIZE_24}
-                >
-                  Primary
-                </Badge>
-              )}
-            </StyledLocalHeaderHeading>
-          </GridCol>
-          {!contact.archived && (
-            <GridCol setWidth="one-quarter">
-              <Button
-                as={'a'}
-                data-test="add-interaction-button"
-                href={urls.companies.interactions.create(contact.company.id)}
+    <ContactResource id={contactId}>
+      {(contact) => (
+        <LocalHeader
+          breadcrumbs={buildBreadcrumbs(currentTab, contactId, contact.name)}
+        >
+          <GridRow>
+            <GridCol>
+              <StyledLink
+                data-test="company-link"
+                href={urls.companies.overview.index(contact.company.id)}
               >
-                Add interaction
-              </Button>
+                {contact.company.name}
+              </StyledLink>
+              <StyledLocalHeaderHeading data-test="contact-name">
+                {contact.name}
+                {contact.primary && (
+                  <Badge
+                    data-test="primary-badge"
+                    borderColour="purple"
+                    textColour="purple"
+                    fontSize={FONT_SIZE.SIZE_24}
+                  >
+                    Primary
+                  </Badge>
+                )}
+              </StyledLocalHeaderHeading>
             </GridCol>
+            {!contact.archived && (
+              <GridCol setWidth="one-quarter">
+                <Button
+                  as={'a'}
+                  data-test="add-interaction-button"
+                  href={urls.companies.interactions.create(contact.company.id)}
+                >
+                  Add interaction
+                </Button>
+              </GridCol>
+            )}
+          </GridRow>
+          {contact.archived && (
+            <ArchivePanel
+              archivedBy={contact.archivedBy}
+              archivedOn={contact.archivedOn}
+              archiveReason={contact.archivedReason}
+              unarchiveUrl={urls.contacts.unarchive(contact.id)}
+              onClick={() => {
+                writeFlashMessage('Contact record updated')
+              }}
+              type="contact"
+            />
           )}
-        </GridRow>
-        {contact.archived && (
-          <ArchivePanel
-            archivedBy={contact.archivedBy}
-            archivedOn={contact.archivedOn}
-            archiveReason={contact.archivedReason}
-            unarchiveUrl={urls.contacts.unarchive(contact.id)}
-            onClick={() => {
-              writeFlashMessage('Contact record updated')
-            }}
-            type="contact"
-          />
-        )}
-      </LocalHeader>
-    </>
+        </LocalHeader>
+      )}
+    </ContactResource>
   )
 }
 

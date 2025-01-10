@@ -49,7 +49,11 @@ const ContactDetails = ({ contactId, companyAddress, permissions }) => (
   <ContactResource id={contactId}>
     {(contact) => (
       <>
-        <ContactLayout contact={contact} permissions={permissions}>
+        <ContactLayout
+          contact={contact}
+          permissions={permissions}
+          pageTitle={''}
+        >
           {contact.validEmail === false ? (
             <ErrorSummary
               heading="Please update the email address"
