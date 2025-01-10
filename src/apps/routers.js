@@ -141,6 +141,7 @@ const reactRoutes = [
   '/companies/:companyId/referrals/:referralId',
   '/contacts/:contactId/details',
   '/contacts/:contactId/interactions',
+  '/contacts/:contactId/audit',
 ]
 
 reactRoutes.forEach((path) => {

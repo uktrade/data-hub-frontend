@@ -111,6 +111,7 @@ import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/Sen
 import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
+import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 
 function Routes() {
   const routes = useRoutes([
@@ -400,6 +401,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:contacts'}>
           <ContactActivity />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/contacts/:contactId/audit',
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactAuditHistory />
         </ProtectedRoute>
       ),
     },
