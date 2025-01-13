@@ -178,7 +178,7 @@ describe('Event', () => {
 
     it('Should add an interaction with the attendee', () => {
       cy.visit(urls.events.details(event.pk))
-      cy.contains('a', 'Attendees').click()
+      cy.contains('button', 'Attendees').click()
       cy.contains('Add attendee').click()
       cy.get('input[name="name"]').type('Attendee').type('{enter}')
       cy.contains('Joe Attendee').click()
@@ -187,7 +187,7 @@ describe('Event', () => {
 
     it('Should not be able to add a duplicate attendee', () => {
       cy.visit(urls.events.details(event.pk))
-      cy.contains('a', 'Attendees').click()
+      cy.contains('button', 'Attendees').click()
       cy.contains('Add attendee').click()
       cy.get('input[name="name"]').type('Attendee').type('{enter}')
       cy.contains('Joe Attendee').click()
