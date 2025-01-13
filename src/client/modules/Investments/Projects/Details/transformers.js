@@ -58,13 +58,6 @@ const setReferralSourceEvent = (values) => {
     : ''
 }
 
-const setReferralSourceAdviser = (currentAdviser, values) => {
-  const { is_referral_source, referral_source_adviser } = values
-  return is_referral_source === 'yes'
-    ? currentAdviser
-    : checkIfItemHasValue(referral_source_adviser?.value)
-}
-
 const transformRadioOptionToInvertedBool = (radioOption) =>
   radioOption === null ? null : radioOption === OPTION_NO
 
@@ -135,7 +128,7 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
 
 export const transformProjectSummaryForApi = ({
   projectId,
-  currentAdviser,
+  currentAdviserId,
   values,
 }) => {
   const {
@@ -151,6 +144,7 @@ export const transformProjectSummaryForApi = ({
     investor_type,
     level_of_involvement,
     specific_programmes,
+    is_referral_source,
     business_activities,
     other_business_activity,
     client_contacts,
@@ -186,7 +180,10 @@ export const transformProjectSummaryForApi = ({
       referral_source_activity_website
     ),
     referral_source_activity_event: setReferralSourceEvent(values),
-    referral_source_adviser: setReferralSourceAdviser(currentAdviser, values),
+    referral_source_adviser:
+      is_referral_source === OPTION_YES
+        ? currentAdviserId
+        : values.referral_source_adviser.value,
   }
 
   if (Array.isArray(specific_programmes)) {

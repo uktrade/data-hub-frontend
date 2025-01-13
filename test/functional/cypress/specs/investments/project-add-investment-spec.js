@@ -1,7 +1,13 @@
+import {
+  clickButton,
+  selectFirstMockedTypeaheadOption,
+} from '../../support/actions'
+
 const { expect } = require('chai')
 
 const urls = require('../../../../../src/lib/urls')
 const { company } = require('../../fixtures')
+
 const {
   assertSummaryTable,
   assertFieldTypeahead,
@@ -494,5 +500,56 @@ describe('Validation error messages', () => {
     cy.get('[data-test="actual_land_date-year"]').type('2350')
     cy.get('[data-test="submit"]').click()
     cy.contains('Actual land date cannot be in the future')
+  })
+})
+
+describe('When creating investment project check payload is transformed for API', () => {
+  beforeEach(() => {
+    cy.visit(urls.investments.projects.index())
+    cy.get('[data-test="add-collection-item-button"]').click()
+    cy.intercept('POST', '/api-proxy/v3/investment').as('createInvestment')
+
+    cy.get('input[data-test="company-name"]').clear()
+    cy.get('input[data-test="company-name"]').type('alphabet')
+    cy.get('form button').click()
+    cy.get('form ol li:nth-child(1)').click()
+    cy.get('[data-test="investment-type-non-fdi"]').click()
+    cy.get('[data-test="continue"]').click()
+
+    cy.get('input[data-test="name-input"]').type('project name')
+    cy.get('textarea[name="description"]').type('project description')
+    cy.get('#sector').parent().selectTypeaheadOption('Advanced Engineering')
+    cy.get('#business_activities').parent().selectTypeaheadOption('Assembly')
+    cy.get('#client_contacts').parent().selectTypeaheadOption('Joseph Woof')
+    cy.get('input[data-test="client-relationship-manager-yes"]').click()
+    cy.get('#referral_source_activity').select('LEP')
+    cy.get('input[data-test="estimated_land_date-month"').type(10)
+    cy.get('input[data-test="estimated_land_date-year"').type(2024)
+
+    cy.intercept('POST', '/api-proxy/v3/investment').as('createInvestment')
+  })
+
+  it('should pass referral source as the user if they are the referral source', () => {
+    cy.get('[data-test="field-is_referral_source"]').contains('Yes').click()
+    clickButton('Submit')
+
+    cy.wait('@createInvestment').its('request.body').should('include', {
+      referral_source_adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
+    })
+  })
+
+  it('should pass referral source as given adviser if they are the referral source', () => {
+    cy.get('[data-test="field-is_referral_source"]').contains('No').click()
+
+    selectFirstMockedTypeaheadOption({
+      element: '[data-test="field-referral_source_adviser"]',
+      input: 'Puck Head',
+      mockAdviserResponse: false,
+    })
+
+    clickButton('Submit')
+    cy.wait('@createInvestment').its('request.body').should('include', {
+      referral_source_adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
+    })
   })
 })
