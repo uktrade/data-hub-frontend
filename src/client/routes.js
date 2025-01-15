@@ -418,7 +418,7 @@ function Routes() {
       ),
     },
     {
-      path: '/events/:id/details',
+      path: '/events/:id/*',
       element: (
         <ProtectedRoute module={'datahub:events'}>
           <EventDetails />

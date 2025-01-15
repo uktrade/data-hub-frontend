@@ -5,15 +5,12 @@ const proxyquire = require('proxyquire')
 const authorisedRequestStub = sinon.stub()
 const searchStub = sinon.stub()
 
-const { saveEvent, fetchEvent, getAllEvents, getActiveEvents } = proxyquire(
-  '../repos',
-  {
-    '../../lib/authorised-request': {
-      authorisedRequest: authorisedRequestStub,
-    },
-    '../../modules/search/services': { search: searchStub },
-  }
-)
+const { saveEvent, getActiveEvents } = proxyquire('../repos', {
+  '../../lib/authorised-request': {
+    authorisedRequest: authorisedRequestStub,
+  },
+  '../../modules/search/services': { search: searchStub },
+})
 
 const config = require('../../../config')
 
@@ -47,27 +44,6 @@ describe('Event Service', () => {
         method: 'PATCH',
         body: event,
       })
-    })
-  })
-
-  context('fetchEvent', () => {
-    it('should fetch single event by id', async () => {
-      const id = '123'
-      await fetchEvent(mockReq, id)
-      expect(authorisedRequestStub).to.have.been.calledWith(
-        mockReq,
-        `${config.apiRoot}/v3/event/${id}`
-      )
-    })
-  })
-
-  context('getAllEvents', () => {
-    it('should fetch all events with limit and offset', async () => {
-      await getAllEvents(mockReq)
-      expect(authorisedRequestStub).to.have.been.calledWith(
-        mockReq,
-        `${config.apiRoot}/v3/event?limit=100000&offset=0`
-      )
     })
   })
 
