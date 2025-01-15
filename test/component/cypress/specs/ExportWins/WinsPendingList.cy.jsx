@@ -107,6 +107,66 @@ describe('WinsPendingList', () => {
     })
   })
 
+  it('should render the company_name when the company is null', () => {
+    const exportWin = {
+      ...exportWinsFaker(),
+      company: null,
+      company_name: 'Some company Ltd',
+    }
+    const exportWinsList = [exportWin]
+
+    const Provider = createTestProvider({
+      'Export Wins': () => Promise.resolve(exportWinsList),
+      Company: () => Promise.resolve({ id: 123 }),
+      TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+    })
+
+    cy.mount(
+      <Provider>
+        <WinsPendingList exportWins={exportWinsList} />
+      </Provider>
+    )
+
+    cy.get('h3').should(
+      'have.text',
+      `${exportWin.name_of_export} to ${exportWin.country.name}`
+    )
+    cy.get('h3 a').should('not.exist')
+
+    cy.get('h4').should('have.text', exportWin.company_name)
+    cy.get('h4 a').should('not.exist')
+  })
+
+  it('should render "Not set" when both company is null and company_name is null', () => {
+    const exportWin = {
+      ...exportWinsFaker(),
+      company: null,
+      company_name: null,
+    }
+    const exportWinsList = [exportWin]
+
+    const Provider = createTestProvider({
+      'Export Wins': () => Promise.resolve(exportWinsList),
+      Company: () => Promise.resolve({ id: 123 }),
+      TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+    })
+
+    cy.mount(
+      <Provider>
+        <WinsPendingList exportWins={exportWinsList} />
+      </Provider>
+    )
+
+    cy.get('h3').should(
+      'have.text',
+      `${exportWin.name_of_export} to ${exportWin.country.name}`
+    )
+    cy.get('h3 a').should('not.exist')
+
+    cy.get('h4').should('have.text', 'Not set')
+    cy.get('h4 a').should('not.exist')
+  })
+
   it('should conditionally render tags', () => {
     const createProvider = (exportWins) =>
       createTestProvider({
