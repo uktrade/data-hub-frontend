@@ -55,7 +55,7 @@ describe('Contact activity', () => {
     })
 
     it('should display 0 activities', () => {
-      cy.get('#contact-activity').contains('0 activities')
+      cy.get('[data-test="collection-header"]').contains('0 activities')
     })
   })
 
@@ -71,7 +71,7 @@ describe('Contact activity', () => {
     })
 
     it('should display the total number of activites', () => {
-      cy.get('#contact-activity').contains('25 activities')
+      cy.get('[data-test="collection-header"]').contains('25 activities')
       cy.get('[data-test=pagination-summary]').contains('Page 1 of 3')
       cy.get('[data-test=pagination]').should(
         'have.attr',
