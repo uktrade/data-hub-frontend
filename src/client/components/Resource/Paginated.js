@@ -158,7 +158,7 @@ const PaginatedResource = multiInstance({
                       qsParamName={sortByQsParamName}
                     />
                   )}
-                  {result ? children(result.results) : null}
+                  {result ? children(result.results || result) : null}
                   <Pagination
                     totalPages={totalPages}
                     activePage={routePage}
