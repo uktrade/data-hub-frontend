@@ -1,5 +1,3 @@
-const { concat } = require('lodash')
-
 const GLOBAL_NAV_ITEM = {
   path: '/contacts',
   headerKey: 'datahub-contacts',
@@ -24,7 +22,7 @@ const LOCAL_NAV = [
   },
 ]
 
-const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
+const APP_PERMISSIONS = [LOCAL_NAV, GLOBAL_NAV_ITEM]
 
 const QUERY_FIELDS = [
   'archived',

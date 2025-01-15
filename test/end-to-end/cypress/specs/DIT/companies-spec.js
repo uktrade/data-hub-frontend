@@ -5,6 +5,9 @@ const userActions = require('../../support/user-actions')
 const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
+const {
+  assertFlashMessage,
+} = require('../../../../functional/cypress/support/assertions')
 
 describe('Advisors', () => {
   const company = fixtures.company.create.corp()
@@ -47,7 +50,9 @@ describe('Contacts', () => {
     cy.visit(contacts.create(company.pk))
     userActions.contacts.create(data)
 
-    cy.contains('You have successfully added a new contact Company Contact')
+    assertFlashMessage(
+      'You have successfully added a new contact Company Contact'
+    )
 
     assertKeyValueTable('bodyMainContent', {
       'Job title': 'Coffee machine operator',
