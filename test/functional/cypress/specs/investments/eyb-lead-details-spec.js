@@ -3,6 +3,7 @@ import {
   assertLeadBreadcrumbs,
 } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
+import { camelCaseToSentenceCase } from '../../../../../src/client/modules/Investments/utils'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
@@ -51,6 +52,18 @@ describe('EYB lead details', () => {
       setup(eybLeadWithValues)
       cy.visit(investments.eybLeads.details(eybLeadWithValues.id))
       cy.wait('@getEYBLeadDetails')
+    })
+
+    it('should return non-string, non-array items as it is', () => {
+      const input = [123, true, { key: 'value' }]
+      const output = camelCaseToSentenceCase(input)
+      expect(output).to.deep.equal([123, true, { key: 'value' }])
+    })
+
+    it('should transform a camelCase string to sentence case', () => {
+      expect(
+        camelCaseToSentenceCase('find people_with specialist skills_in uk')
+      ).to.equal('Find people with specialist skills in UK')
     })
 
     it('should render all the fields of the details table', () => {
