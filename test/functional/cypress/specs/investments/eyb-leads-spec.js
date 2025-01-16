@@ -103,6 +103,8 @@ const PAYLOADS = {
   lowValueFilter: { value: LOW_VALUE },
   unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
+  sortByCreated: { sortby: '-triage_created' },
+  sortByCompanyAZ: { sortby: 'company__name' },
 }
 
 const buildQueryString = (queryParams = {}) =>
@@ -549,4 +551,58 @@ describe('EYB leads collection page', () => {
       })
     }
   )
+  context('When sorting the EYB leads collection', () => {
+    beforeEach(() => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
+        statusCode: 200,
+        body: {
+          count: EYB_LEAD_LIST.length,
+          next: null,
+          previous: null,
+          results: EYB_LEAD_LIST,
+        },
+      }).as('apiRequest')
+      cy.visit(investments.eybLeads.index())
+      cy.wait('@apiRequest')
+    })
+
+    it('should load sort by dropdown', () => {
+      cy.get('[data-test="sortby"] select option').then((options) => {
+        const actual = [...options].map((o) => o.value)
+        expect(actual).to.deep.eq(['-triage_created', 'company__name'])
+      })
+    })
+
+    it('should sort by most recently created by default', () => {
+      assertQueryParams('sortby', '-triage_created')
+
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCreated)
+    })
+
+    it('should sort by company name A-Z', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
+        statusCode: 200,
+      }).as('sortRequest')
+      cy.get('[data-test="sortby"] select').select('company__name')
+      assertQueryParams('sortby', 'company__name')
+      cy.wait('@sortRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCompanyAZ)
+    })
+
+    it('should sort by most recently created when another option is selected', () => {
+      cy.get('[data-test="sortby"] select').select('company__name')
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
+        statusCode: 200,
+      }).as('sortRequest')
+      cy.get('[data-test="sortby"] select').select('-triage_created')
+      assertQueryParams('sortby', '-triage_created')
+
+      cy.wait('@sortRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCreated)
+    })
+  })
 })
