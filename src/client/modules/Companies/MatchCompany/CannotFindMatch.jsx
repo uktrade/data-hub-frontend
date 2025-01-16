@@ -5,17 +5,13 @@ import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 import Paragraph from '@govuk-react/paragraph'
 
-import {
-  SummaryList,
-  FieldInput,
-  DefaultLayout,
-} from '../../../../../client/components'
-import urls from '../../../../../lib/urls'
-import { WEBSITE_REGEX } from '../../add-company/client/constants'
-import Form from '../../../../../client/components/Form'
-import { buildCompanyBreadcrumbs } from '../../../../../client/modules/Companies/utils'
-import { CompanyResource } from '../../../../../client/components/Resource/index'
-import { CompanyName } from '../../../../../client/modules/Companies/Referrals/SendReferralForm/SendReferralForm'
+import { SummaryList, FieldInput, DefaultLayout } from '../../../components'
+import urls from '../../../../lib/urls'
+import { WEBSITE_REGEX } from '../../../../apps/companies/apps/add-company/client/constants'
+import Form from '../../../components/Form'
+import { buildCompanyBreadcrumbs } from '../utils'
+import { CompanyResource } from '../../../components/Resource/index'
+import { CompanyName } from '../Referrals/SendReferralForm/SendReferralForm'
 import { state2props } from './state'
 
 const requiredWebsiteOrPhoneValidator = (

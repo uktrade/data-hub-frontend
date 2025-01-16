@@ -244,6 +244,8 @@ import resourceTasks from '../client/components/Resource/tasks'
 import { getTypeaheadOptions } from '../client/components/Typeahead/tasks'
 
 import * as matchCompanyTasks from '../apps/companies/apps/match-company/client/tasks'
+import { cannotFindMatchSubmit } from './modules/Companies/MatchCompany/tasks.js'
+
 import * as companyListTasks from '../apps/company-lists/client/tasks'
 import { editCompany } from '../apps/companies/apps/edit-company/client/tasks'
 import { createList } from '../apps/company-lists/client/tasks.js'
@@ -462,7 +464,7 @@ export const tasks = {
   'Create company': createCompany,
   'Edit company list': companyListTasks.editCompanyList,
   'Match confirmation': matchCompanyTasks.onMatchSubmit,
-  'Cannot find match': matchCompanyTasks.cannotFindMatchSubmit,
+  'Cannot find match': cannotFindMatchSubmit,
   'Submit merge request': matchCompanyTasks.submitMergeRequest,
   'Company lists': companyListsTasks.fetchCompanyLists,
   'Company list': companyListsTasks.fetchCompanyList,

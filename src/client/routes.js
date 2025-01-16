@@ -112,7 +112,7 @@ import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
-import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
+import CannotFindMatch from './modules/Companies/MatchCompany/CannotFindMatch'
 
 function Routes() {
   const routes = useRoutes([
