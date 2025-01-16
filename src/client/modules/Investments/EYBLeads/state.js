@@ -1,4 +1,5 @@
 import { parseQueryString } from '../../../utils'
+import { SORT_OPTIONS } from './constants'
 import { transformLeadToListItem } from './transformers'
 
 export const INVESTMENT_EYB_LEADS_ID = 'eybLeads'
@@ -16,5 +17,6 @@ export const state2props = ({ router: { location }, ...state }) => {
     results: results.map(transformLeadToListItem),
     payload: queryParams,
     filterOptions,
+    sortOptions: SORT_OPTIONS,
   }
 }

@@ -23,3 +23,14 @@ export const VALUE_OPTIONS = [
   { value: 'low', label: VALUES.LOW_VALUE },
   { value: 'unknown', label: VALUES.UNKNOWN },
 ]
+
+export const SORT_OPTIONS = [
+  {
+    name: 'Recently created',
+    value: '-triage_created',
+  },
+  {
+    name: 'Company A-Z',
+    value: 'company__name',
+  },
+]

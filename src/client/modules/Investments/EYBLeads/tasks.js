@@ -13,11 +13,13 @@ export const getEYBLeads = ({
   country = [],
   sector = [],
   value = [],
+  sortby,
 }) => {
   let params = new URLSearchParams({
     limit,
     offset: limit * (parseInt(page, 10) - 1) || 0,
     ...(company ? { company } : null),
+    sortby: sortby ? sortby : '-triage_created',
   })
   overseas_region.forEach((overseasRegionId) =>
     params.append('overseas_region', overseasRegionId)
