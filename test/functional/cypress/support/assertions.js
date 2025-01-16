@@ -76,13 +76,15 @@ const assertSummaryTable = ({
 }
 
 /**
- * @param {{rows: [string, string | number][], caption?: string}} options
+ * @param {{rows: [string, string | number][] | Record<string, string>, caption?: string}} options
  */
 const assertSummaryTableStrict = ({ caption, rows }) => {
-  const assertRows = (el) => {
-    cy.wrap(el).find('tr').as('rows').should('have.length', rows.length)
+  const _rows = Array.isArray(rows) ? rows : Object.entries(rows)
 
-    rows.forEach(([key, val], i) => {
+  const assertRows = (el) => {
+    cy.wrap(el).find('tr').as('rows').should('have.length', _rows.length)
+
+    _rows.forEach(([key, val], i) => {
       cy.get('@rows')
         .eq(i)
         .within(() => {

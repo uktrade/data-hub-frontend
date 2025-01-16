@@ -6,6 +6,7 @@ import Company from './Company'
 import CompanyContacts from './CompanyContacts'
 import Countries from './Countries'
 import Interactions from './Interactions'
+import InteractionsV3 from './InteractionsV3'
 import Opportunity from './Opportunity'
 import OpportunityStatuses from './OpportunityStatuses'
 import UKRegions from './UKRegions'
@@ -110,6 +111,7 @@ export default {
   ...ContactAuditHistory.tasks,
   ...Countries.tasks,
   ...Interactions.tasks,
+  ...InteractionsV3.tasks,
   ...Opportunity.tasks,
   ...OpportunityStatuses.tasks,
   ...CapitalInvestmentRequiredChecksConducted.tasks,
