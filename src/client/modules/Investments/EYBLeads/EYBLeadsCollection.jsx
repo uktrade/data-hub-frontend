@@ -29,6 +29,7 @@ const EYBLeadCollection = ({
   filterOptions,
   payload,
   optionMetadata,
+  sortOptions,
   ...props
 }) => {
   const location = useLocation()
@@ -111,10 +112,12 @@ const EYBLeadCollection = ({
       <FilteredCollectionList
         {...props}
         collectionName="EYB lead"
+        sortOptions={sortOptions}
         taskProps={collectionListTask}
         entityName="eybLead"
         defaultQueryParams={{
           page: 1,
+          sortby: '-triage_created',
         }}
         selectedFilters={selectedFilters}
       >
