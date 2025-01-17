@@ -187,29 +187,6 @@ async function findDnbCompany(req, res, next) {
   }
 }
 
-async function renderCannotFindMatch(req, res, next) {
-  try {
-    const { company } = res.locals
-    const countries = await getCountries(req)
-
-    res.locals.title = `Send business details - ${company.name}`
-    res.render('companies/apps/match-company/views/cannot-find-match', {
-      props: {
-        company: {
-          ...pick(company, ['id', 'name']),
-          address: parseAddress({
-            dnbCompany: company.address,
-            countries,
-            prefix: '',
-          }),
-        },
-      },
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function submitNewDnbRecordRequest(req, res, next) {
   try {
     const { company } = res.locals
@@ -277,7 +254,6 @@ module.exports = {
   renderMatchConfirmation,
   renderFindCompanyForm,
   findDnbCompany,
-  renderCannotFindMatch,
   submitNewDnbRecordRequest,
   submitMergeRequest,
   linkCompanies,

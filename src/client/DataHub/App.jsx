@@ -13,7 +13,6 @@ import EditCompanyForm from '../../apps/companies/apps/edit-company/client/EditC
 import FindCompany from '../../apps/companies/apps/match-company/client/FindCompany.jsx'
 import DeleteCompanyList from '../../apps/company-lists/client/DeleteCompanyList.jsx'
 import MatchConfirmation from '../../apps/companies/apps/match-company/client/MatchConfirmation.jsx'
-import CannotFindMatch from '../../apps/companies/apps/match-company/client/CannotFindMatch.jsx'
 import EditCompanyList from '../../apps/company-lists/client/EditCompanyList.jsx'
 import CreateListForm from '../../apps/company-lists/client/CreateListForm.jsx'
 import ManageAdviser from '../../apps/companies/apps/advisers/client/ManageAdviser.jsx'
@@ -110,11 +109,6 @@ export const App = () => {
         <Mount selector="#match-confirmation">
           {(props) => (
             <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
-          )}
-        </Mount>
-        <Mount selector="#cannot-find-match">
-          {(props) => (
-            <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
         <Mount selector="#find-company">
