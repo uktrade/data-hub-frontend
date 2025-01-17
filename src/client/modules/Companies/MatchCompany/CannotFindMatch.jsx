@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
@@ -12,7 +11,6 @@ import Form from '../../../components/Form'
 import { buildCompanyBreadcrumbs } from '../utils'
 import { CompanyResource } from '../../../components/Resource/index'
 import { CompanyName } from '../Referrals/SendReferralForm/SendReferralForm'
-import { state2props } from './state'
 
 const requiredWebsiteOrPhoneValidator = (
   value,
@@ -26,7 +24,7 @@ const websiteValidator = (value) => {
   WEBSITE_REGEX.test(value) ? null : 'Enter a valid website URL'
 }
 
-function CannotFindMatch({ csrfToken }) {
+function CannotFindMatch() {
   const { companyId } = useParams()
   return (
     <DefaultLayout
@@ -53,7 +51,7 @@ function CannotFindMatch({ csrfToken }) {
             submissionTaskName="Cannot find match"
             analyticsFormName="cannotFindMatchForm"
             redirectTo={() => urls.companies.detail(companyId)}
-            transformPayload={(values) => ({ values, company, csrfToken })}
+            transformPayload={(values) => ({ values, company })}
             flashMessage={() =>
               'Verification request sent for third party review'
             }
@@ -119,4 +117,4 @@ function CannotFindMatch({ csrfToken }) {
   )
 }
 
-export default connect(state2props)(CannotFindMatch)
+export default CannotFindMatch
