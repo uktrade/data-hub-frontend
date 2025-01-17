@@ -1,7 +1,6 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
-import { transformResponseToEventDetails } from '../transformers'
 
-export const getEventDetails = (eventId) =>
-  apiProxyAxios
-    .get(`/v4/event/${eventId}`)
-    .then(({ data }) => transformResponseToEventDetails(data))
+export const removeAttendee = (interactionId) =>
+  apiProxyAxios.post(`/v3/interaction/${interactionId}/archive`, {
+    reason: 'attendee removed from event',
+  })

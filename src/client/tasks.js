@@ -39,8 +39,7 @@ import {
   TASK_GET_EVENTS_METADATA,
 } from '../client/modules/Events/CollectionList/state'
 
-import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
-import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
+import { removeAttendee } from '../client/modules/Events/EventDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_DETAILS } from './modules/Events/EventAventriDetails/state'
 import { getEventAventriDetails } from './modules/Events/EventAventriDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES } from './modules/Events/EventAventriRegistrationStatus/state'
@@ -547,7 +546,6 @@ export const tasks = {
   [TASK_GET_EVENTS_LIST]: getEvents,
   [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
   [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
-  [TASK_GET_EVENT_DETAILS]: getEventDetails,
   [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
   [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
     getEventAventriRegistrationStatusAttendees,
@@ -715,4 +713,5 @@ export const tasks = {
   [TASK_RESEND_EXPORT_WIN]: resendExportWin,
   [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
   [TASK_GET_COMPANY_OVERVIEW_ACTIVITY]: getCompanyOverviewActivities,
+  'remove attendee': removeAttendee,
 }

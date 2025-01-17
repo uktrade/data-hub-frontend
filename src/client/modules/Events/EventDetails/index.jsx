@@ -1,7 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
-import { useParams } from 'react-router-dom'
+import { useParams, Link as RouterLink, Routes, Route } from 'react-router-dom'
 
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
@@ -9,10 +8,13 @@ import styled from 'styled-components'
 import { H3, Link } from 'govuk-react'
 
 import urls from '../../../../lib/urls'
-import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
-import { EVENTS__DETAILS_LOADED } from '../../../actions'
-import Task from '../../../components/Task'
-import { SummaryTable, FormActions, DefaultLayout } from '../../../components'
+import {
+  SummaryTable,
+  FormActions,
+  DefaultLayout,
+  SecondaryButton,
+  Form,
+} from '../../../components'
 import CollectionItem from '../../../components/CollectionList/CollectionItem'
 import State from '../../../components/State'
 
@@ -20,6 +22,9 @@ import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import StatusMessage from '../../../components/StatusMessage'
+import { RED } from '../../../utils/colours'
+import Interaction from '../../../components/Resource/Interaction'
+import Event from '../../../components/Resource/Event'
 
 const ATTENDEE_SORT_OPTIONS = [
   { name: 'Last name: A-Z', value: 'last_name_of_first_contact' },
@@ -45,21 +50,41 @@ const Attendees = ({ eventId, isDisabled }) => (
       </StatusMessage>
     )}
     <InteractionsV3.Paginated
-      id="???"
+      id="event-attendees"
       heading="attendee"
       addItemUrl={!isDisabled && `/events/${eventId}/attendees/find-new`}
       sortOptions={ATTENDEE_SORT_OPTIONS}
       payload={{
         event_id: eventId,
+        // TODO: Once the API supports it, we need to add a filter to the payload,
+        // which makes the API only return interactions/attendees which were not archived (deleted).
+
+        // archived: false,
       }}
     >
       {(page) => (
         <ul>
           {page.map(
-            ({ contacts: [contact], companies: [company], date, service }) => (
+            ({
+              id,
+              archived,
+              contacts: [contact],
+              companies: [company],
+              date,
+              service,
+            }) => (
               <CollectionItem
                 headingText={contact?.name || 'Not available'}
                 headingUrl={contact && `/contacts/${contact?.id}`}
+                buttons={
+                  <SecondaryButton as={RouterLink} to={`remove/${id}`}>
+                    Delete
+                  </SecondaryButton>
+                }
+                // TODO: Remove this when we can only fetch non-archived attendees.
+                // This is here only for the sake of development, to see that an
+                // attendee has been in deed archived by hitting the delete button.
+                tags={archived && [{ text: 'Archived' }]}
                 metadata={[
                   {
                     label: 'Company',
@@ -169,79 +194,144 @@ const Details = ({
   </>
 )
 
-const EventDetails = ({ name, ...props }) => {
-  const { id, ['*']: path } = useParams()
+const ConfirmRemove = () => {
+  const { interactionId } = useParams()
 
   return (
-    <State>
-      {({ flashMessages }) => (
-        <DefaultLayout
-          heading={name}
-          pageTitle="Events"
-          flashMessages={{
-            ...flashMessages,
-            info: [
-              ...(flashMessages.info || []),
-              ...(props.disabledOn
-                ? [
-                    `This event was disabled on ${formatDate(props.disabledOn, DATE_FORMAT_FULL)} and can no longer be edited.`,
-                  ]
-                : []),
-            ],
-          }}
-          breadcrumbs={[
-            {
-              link: urls.dashboard.index(),
-              text: 'Home',
-            },
-            {
-              link: urls.events.index(),
-              text: 'Events',
-            },
-            {
-              text: name,
-            },
-            {
-              text: { details: 'Details', attendees: 'Attendees' }[path],
-            },
-          ]}
-          useReactRouter={true}
-        >
-          <Task.Status
-            name={TASK_GET_EVENT_DETAILS}
-            id={ID}
-            progressMessage="loading event details"
-            startOnRender={{
-              payload: id,
-              onSuccessDispatch: EVENTS__DETAILS_LOADED,
-            }}
-          >
-            {() => (
-              <VerticalTabNav
-                routed={true}
-                id="event-details-tab-nav"
-                label="Event tab navigation"
-                selectedIndex="attendees"
-                tabs={{
-                  [`/events/${id}/details`]: {
-                    label: 'Details',
-                    content: <Details {...props} />,
-                  },
-                  [`/events/${id}/attendees`]: {
-                    label: 'Attendees',
-                    content: (
-                      <Attendees eventId={id} isDisabled={props.disabledOn} />
-                    ),
-                  },
-                }}
-              />
-            )}
-          </Task.Status>
-        </DefaultLayout>
-      )}
-    </State>
+    <>
+      <Interaction id={interactionId}>
+        {(interaction) => {
+          const attendeeName = interaction.contacts?.[0].name
+          return (
+            <Form
+              id="remove-event-attendee-confirmation"
+              submissionTaskName="remove attendee"
+              submitButtonLabel="Delete"
+              cancelButtonLabel="Return without deleting"
+              submitButtonColour={RED}
+              // This tells the form to use React-Router SPA navigation
+              // instead of hard-loading the next page,
+              // which results in a much smoother UX experience and
+              // is what we ultimately want to achieve.
+              // Alas, the flash messages don't work with SPA navigation.
+              // A quick fix is to force the form to reload the page with `redirectMode="hard"`.
+              // Unfortunately, this also applies to the Cancel link of the form.
+              redirectMode="soft"
+              cancelRedirectTo={() => '../attendees'}
+              redirectTo={() => '../attendees'}
+              transformPayload={() => interactionId}
+              flashMessage={() => [
+                `You have removed ${attendeeName} from the event`,
+                'The associate service delivery has been canceled.',
+                'success',
+              ]}
+            >
+              <p>
+                Do you really want to remove the attendee {attendeeName} from
+                the event?
+              </p>
+            </Form>
+          )
+        }}
+      </Interaction>
+    </>
   )
 }
 
-// TODO: Get rid of this
-export default connect(state2props)(EventDetails)
+const EventDetails = ({ ...props }) => {
+  const { id, ['*']: path } = useParams()
+  const isDeleteAttendee = path.startsWith('attendees/remove/')
+
+  return (
+    <Event id={id}>
+      {(event) => (
+        <State>
+          {({ flashMessages }) => (
+            <DefaultLayout
+              heading={event.name}
+              pageTitle="Events"
+              flashMessages={{
+                ...flashMessages,
+                info: [
+                  ...(flashMessages.info || []),
+                  ...(props.disabledOn
+                    ? [
+                        `This event was disabled on ${formatDate(props.disabledOn, DATE_FORMAT_FULL)} and can no longer be edited.`,
+                      ]
+                    : []),
+                ],
+              }}
+              breadcrumbs={[
+                {
+                  link: urls.dashboard.index(),
+                  text: 'Home',
+                },
+                {
+                  link: urls.events.index(),
+                  text: 'Events',
+                },
+                {
+                  text: event.name,
+                  link: urls.events.details(id),
+                },
+                ...(isDeleteAttendee
+                  ? [
+                      {
+                        text: 'Attendees',
+                        link: isDeleteAttendee && urls.events.attendees(id),
+                      },
+                      {
+                        text: 'Delete',
+                      },
+                    ]
+                  : [
+                      {
+                        text: { details: 'Details', attendees: 'Attendees' }[
+                          path
+                        ],
+                      },
+                    ]),
+              ]}
+              useReactRouter={true}
+            >
+              <Routes>
+                <Route
+                  path="attendees/remove/:interactionId"
+                  element={<ConfirmRemove />}
+                />
+                <Route
+                  path="*"
+                  element={
+                    <VerticalTabNav
+                      routed={true}
+                      id="event-details-tab-nav"
+                      label="Event tab navigation"
+                      selectedIndex="attendees"
+                      tabs={{
+                        [`/events/${id}/details`]: {
+                          label: 'Details',
+                          content: <Details {...props} />,
+                        },
+                        [`/events/${id}/attendees`]: {
+                          label: 'Attendees',
+                          content: (
+                            <Attendees
+                              eventId={id}
+                              isDisabled={props.disabledOn}
+                            />
+                          ),
+                        },
+                      }}
+                    />
+                  }
+                />
+              </Routes>
+            </DefaultLayout>
+          )}
+        </State>
+      )}
+    </Event>
+  )
+}
+
+export default EventDetails
