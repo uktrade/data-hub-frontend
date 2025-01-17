@@ -388,6 +388,11 @@ const _Form = ({
                                   <Link
                                     href={cancelRedirectTo()}
                                     data-test="cancel-button"
+                                    onClick={(e) => {
+                                      if (redirectMode === 'hard') return
+                                      e.preventDefault()
+                                      navigate(cancelRedirectTo())
+                                    }}
                                   >
                                     {cancelButtonLabel}
                                   </Link>
