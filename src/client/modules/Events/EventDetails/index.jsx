@@ -77,7 +77,7 @@ const Attendees = ({ eventId, isDisabled }) => (
                 headingText={contact?.name || 'Not available'}
                 headingUrl={contact && `/contacts/${contact?.id}`}
                 buttons={
-                  <SecondaryButton as={RouterLink} to={`remove/${id}`}>
+                  <SecondaryButton as={RouterLink} to={`delete/${id}`}>
                     Delete
                   </SecondaryButton>
                 }
@@ -240,7 +240,7 @@ const ConfirmRemove = () => {
 
 const EventDetails = ({ ...props }) => {
   const { id, ['*']: path } = useParams()
-  const isDeleteAttendee = path.startsWith('attendees/remove/')
+  const isDeleteAttendee = path.startsWith('attendees/delete/')
 
   return (
     <Event id={id}>
@@ -296,7 +296,7 @@ const EventDetails = ({ ...props }) => {
             >
               <Routes>
                 <Route
-                  path="attendees/remove/:interactionId"
+                  path="attendees/delete/:interactionId"
                   element={<ConfirmRemove />}
                 />
                 <Route
