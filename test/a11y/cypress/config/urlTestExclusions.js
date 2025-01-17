@@ -78,6 +78,10 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/hierarchies/ghq/:globalHqId/add' },
   { url: '/companies/:companyId/hierarchies/ghq/remove' },
   { url: '/companies/:companyId' },
+  { url: '/contacts/:contactId/interactions/:interactionId' },
+  { url: '/contacts/:contactId/interactions/create' },
+  { url: '/contacts/:contactId/interactions/create/:theme/:kind' },
+  { url: '/contacts/:contactId/interactions/:interactionId/edit' },
   // API calls with redirect
   { url: '/company-lists/' }, // Redirects to homepage (which is tested)
   { url: '/tasks/:taskId/status-complete' },

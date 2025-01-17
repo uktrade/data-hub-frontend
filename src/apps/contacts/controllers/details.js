@@ -27,25 +27,6 @@ async function getCommon(req, res, next) {
   }
 }
 
-function getDetails(req, res, next) {
-  try {
-    const contactId = req.params.contactId
-    const companyAddress = res.locals?.company.address
-    const permissions = res.locals?.user.permissions
-
-    res.render('contacts/views/details', {
-      props: {
-        contactId,
-        companyAddress,
-        permissions,
-      },
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
-  getDetails,
   getCommon,
 }

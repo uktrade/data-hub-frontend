@@ -12,13 +12,9 @@ const {
   redirectToFirstNavItem,
   handleRoutePermissions,
 } = require('../middleware')
-const { getCommon, getDetails } = require('./controllers/details')
+const { getCommon } = require('./controllers/details')
 const createAndEdit = require('./controllers/create-and-edit')
 const { unarchiveContact } = require('./controllers/archive')
-const { getAudit } = require('./controllers/audit')
-const { renderContactActivityForEntity } = require('./controllers/activity')
-
-const { setInteractionsDetails } = require('./middleware/interactions')
 
 router.get(['/create', '/:contactId/edit'], createAndEdit)
 
@@ -32,16 +28,7 @@ router.use(
 )
 
 router.get('/:contactId', redirectToFirstNavItem)
-router.get('/:contactId/details', getDetails)
 
 router.get('/:id/unarchive', unarchiveContact)
-
-router.get('/:contactId/audit', getAudit)
-
-router.use(
-  '/:contactId/interactions',
-  setInteractionsDetails,
-  renderContactActivityForEntity
-)
 
 module.exports = router

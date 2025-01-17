@@ -109,6 +109,9 @@ import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
 import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/SendReferralForm'
 import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
+import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
+import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
+import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 
 function Routes() {
   const routes = useRoutes([
@@ -382,6 +385,30 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:contacts'}>
           <ContactsCollectionList />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/contacts/:contactId/details',
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/contacts/:contactId/interactions',
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactActivity />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/contacts/:contactId/audit',
+      element: (
+        <ProtectedRoute module={'datahub:contacts'}>
+          <ContactAuditHistory />
         </ProtectedRoute>
       ),
     },
