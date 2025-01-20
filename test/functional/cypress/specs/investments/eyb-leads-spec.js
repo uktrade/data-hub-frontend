@@ -19,6 +19,7 @@ import {
 } from '../../../../../src/client/utils/date-utils'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
+import { convertEYBChoicesToLabels } from '../../../../../src/client/modules/Investments/utils'
 
 const EYB_RETRIEVE_API_ROUTE = '/api-proxy/v4/investment-lead/eyb'
 
@@ -212,7 +213,10 @@ describe('EYB leads collection page', () => {
         )
         .should('contain', `Estimated spend ${eybLead.spend}`)
         .should('contain', `Sector ${eybLead.sector.name}`)
-        .should('contain', `Estimated land date ${eybLead.landing_timeframe}`)
+        .should(
+          'contain',
+          `Estimated land date ${convertEYBChoicesToLabels(eybLead.landing_timeframe)}`
+        )
         .should(
           'contain',
           `Location ${eybLead.proposed_investment_region.name}`

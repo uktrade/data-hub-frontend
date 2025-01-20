@@ -22,12 +22,12 @@ const ALBERTA = {
 }
 
 const INTENT_CHOICES = [
-  'Set up new premises',
-  'Set up a new distribution centre',
-  'Onward sales and exports from the UK',
-  'Research, develop and collaborate',
-  'Find people with specialist skills',
-  'Other',
+  'SET_UP_NEW_PREMISES',
+  'SET_UP_A_NEW_DISTRIBUTION_CENTRE',
+  'ONWARD_SALES_AND_EXPORTS_FROM_THE_UK',
+  'RESEARCH_DEVELOP_AND_COLLABORATE',
+  'FIND_PEOPLE_WITH_SPECIALIST_SKILLS',
+  'OTHER',
 ]
 
 const HIRING_CHOICES = [
@@ -49,10 +49,10 @@ const SPEND_CHOICES = [
 ]
 
 const LANDING_TIMEFRAME_CHOICES = [
-  'In the next 6 months',
-  '6 to 12 months',
-  '1 to 2 years',
-  "In more than 2 years' time",
+  'UNDER_SIX_MONTHS',
+  'SIX_TO_TWELVE_MONTHS',
+  'ONE_TO_TWO_YEARS',
+  'MORE_THAN_TWO_YEARS',
 ]
 
 /**

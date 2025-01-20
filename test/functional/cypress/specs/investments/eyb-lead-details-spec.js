@@ -3,7 +3,7 @@ import {
   assertLeadBreadcrumbs,
 } from '../../support/assertions'
 import { investments } from '../../../../../src/lib/urls'
-import { camelCaseToSentenceCase } from '../../../../../src/client/modules/Investments/utils'
+import { convertEYBChoicesToLabels } from '../../../../../src/client/modules/Investments/utils'
 import { eybLeadFaker } from '../../fakers/eyb-leads'
 import { NOT_SET_TEXT } from '../../../../../src/apps/companies/constants'
 import { VALUES_VALUE_TO_LABEL_MAP } from '../../../../../src/client/modules/Investments/EYBLeads/constants'
@@ -32,19 +32,19 @@ describe('EYB lead details', () => {
       },
       triage_created: '2023-06-07T10:00:00Z',
       intent: [
-        'Find people with specialist skills',
-        'Set up a new distribution centre',
-        'Other',
-        'Onward sales and exports from the UK',
+        'FIND_PEOPLE_WITH_SPECIALIST_SKILLS',
+        'SET_UP_A_NEW_DISTRIBUTION_CENTRE',
+        'OTHER',
+        'ONWARD_SALES_AND_EXPORTS_FROM_THE_UK',
       ],
-      hiring: '6-50',
-      spend: '500000-1000000',
+      hiring: '6 to 50',
+      spend: '£500,000 to £1 million',
       is_high_value: true,
       full_name: 'Joe Bloggs',
       role: 'CEO',
       email: 'email@example.com',
       telephone_number: '01234567890',
-      landing_timeframe: 'In the next 6 months',
+      landing_timeframe: 'UNDER_SIX_MONTHS',
       company_website: 'fake.website.com',
       investment_projects: [],
     })
@@ -52,18 +52,6 @@ describe('EYB lead details', () => {
       setup(eybLeadWithValues)
       cy.visit(investments.eybLeads.details(eybLeadWithValues.id))
       cy.wait('@getEYBLeadDetails')
-    })
-
-    it('should return non-string, non-array items as it is', () => {
-      const input = [123, true, { key: 'value' }]
-      const output = camelCaseToSentenceCase(input)
-      expect(output).to.deep.equal([123, true, { key: 'value' }])
-    })
-
-    it('should transform a camelCase string to sentence case', () => {
-      expect(
-        camelCaseToSentenceCase('find people_with specialist skills_in uk')
-      ).to.equal('Find people with specialist skills in UK')
     })
 
     it('should render all the fields of the details table', () => {
@@ -78,11 +66,11 @@ describe('EYB lead details', () => {
           'Submitted to EYB': '07 Jun 2023',
           'Company website address':
             eybLeadWithValues.company_website + ' (opens in new tab)',
-          'When do you want to set up?': eybLeadWithValues.landing_timeframe,
+          'When do you want to set up?': convertEYBChoicesToLabels(eybLeadWithValues.landing_timeframe),
           'Do you know where you want to set up in the UK?': 'Yes',
           'Where do you want to set up in the UK?': 'Cardiff',
           'How do you plan to expand your business in the UK?':
-            eybLeadWithValues.intent.join(''),
+          convertEYBChoicesToLabels(eybLeadWithValues.intent).join(''),
           'How many people do you want to hire in the UK in the first 3 years?':
             eybLeadWithValues.hiring,
           'How much do you want to spend on setting up in the first 3 years?':
@@ -159,19 +147,19 @@ describe('EYB lead details', () => {
       sector: null,
       triage_created: '2023-06-07T10:00:00Z',
       intent: [
-        'Find people with specialist skills',
-        'Set up a new distribution centre',
-        'Other',
-        'Onward sales and exports from the UK',
+        'FIND_PEOPLE_WITH_SPECIALIST_SKILLS',
+        'SET_UP_A_NEW_DISTRIBUTION_CENTRE',
+        'OTHER',
+        'ONWARD_SALES_AND_EXPORTS_FROM_THE_UK',
       ],
-      hiring: '6-50',
-      spend: '500000-1000000',
+      hiring: '6 to 50',
+      spend: '£500,000 to £1 million',
       is_high_value: true,
       full_name: 'Joe Bloggs',
       role: 'CEO',
       email: 'email@example.com',
       telephone_number: '01234567890',
-      landing_timeframe: 'In the next 6 months',
+      landing_timeframe: 'UNDER_SIX_MONTHS',
       company_website: null,
       company_name: 'Mars Temp',
       investment_projects: [],
@@ -193,11 +181,11 @@ describe('EYB lead details', () => {
           'Location of company headquarters': 'Canada',
           'Submitted to EYB': '07 Jun 2023',
           'Company website address': NOT_SET_TEXT,
-          'When do you want to set up?': eybLeadWithoutCompany.landing_timeframe,
+          'When do you want to set up?': convertEYBChoicesToLabels(eybLeadWithoutCompany.landing_timeframe),
           'Do you know where you want to set up in the UK?': 'Yes',
           'Where do you want to set up in the UK?': 'Cardiff',
           'How do you plan to expand your business in the UK?':
-            eybLeadWithoutCompany.intent.join(''),
+          convertEYBChoicesToLabels(eybLeadWithoutCompany.intent).join(''),
           'How many people do you want to hire in the UK in the first 3 years?':
             eybLeadWithoutCompany.hiring,
           'How much do you want to spend on setting up in the first 3 years?':
@@ -315,19 +303,19 @@ describe('EYB lead details', () => {
       },
       triage_created: '2023-06-07T10:00:00Z',
       intent: [
-        'Find people with specialist skills',
-        'Set up a new distribution centre',
-        'Other',
-        'Onward sales and exports from the UK',
+        'FIND_PEOPLE_WITH_SPECIALIST_SKILLS',
+        'SET_UP_A_NEW_DISTRIBUTION_CENTRE',
+        'OTHER',
+        'ONWARD_SALES_AND_EXPORTS_FROM_THE_UK',
       ],
-      hiring: '6-50',
-      spend: '500000-1000000',
+      hiring: '6 to 50',
+      spend: '£500,000 to £1 million',
       is_high_value: true,
       full_name: 'Joe Bloggs',
       role: 'CEO',
       email: null,
       telephone_number: '01234567890',
-      landing_timeframe: 'In the next 6 months',
+      landing_timeframe: 'UNDER_SIX_MONTHS',
       company_website: 'fake.website.com',
       investment_projects: [],
     })
@@ -349,11 +337,11 @@ describe('EYB lead details', () => {
           'Submitted to EYB': '07 Jun 2023',
           'Company website address':
             eybLeadWithNoEmail.company_website + ' (opens in new tab)',
-          'When do you want to set up?': eybLeadWithNoEmail.landing_timeframe,
+          'When do you want to set up?': convertEYBChoicesToLabels(eybLeadWithNoEmail.landing_timeframe),
           'Do you know where you want to set up in the UK?': 'Yes',
           'Where do you want to set up in the UK?': 'Cardiff',
           'How do you plan to expand your business in the UK?':
-            eybLeadWithNoEmail.intent.join(''),
+          convertEYBChoicesToLabels(eybLeadWithNoEmail.intent).join(''),
           'How many people do you want to hire in the UK in the first 3 years?':
             eybLeadWithNoEmail.hiring,
           'How much do you want to spend on setting up in the first 3 years?':
