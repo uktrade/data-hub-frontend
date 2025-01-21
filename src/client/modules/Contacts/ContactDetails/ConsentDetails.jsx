@@ -14,7 +14,7 @@ const ConsentDetails = ({ contact }) => {
         </SectionHeader>
         {isNil(contact.consentData) ? (
           <p data-test="no-contact-consents">
-            There is no marketing communications preferences available for this
+            There is no marketing communication preference available for this
             contact
           </p>
         ) : (

@@ -11,7 +11,7 @@ describe('ConsentDetails', () => {
     it('should render a message that this data is missing for this contact', () => {
       cy.get('p').should(
         'have.text',
-        'There is no marketing communications preference available for this contact'
+        'There is no marketing communication preference available for this contact'
       )
     })
   })
