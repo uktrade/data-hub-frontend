@@ -2,6 +2,7 @@ import urls from '../../../../lib/urls'
 import { TAG_COLOURS } from '../../../components/Tag'
 import { VALUES_VALUE_TO_LABEL_MAP } from './constants'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
+import { convertEYBChoicesToLabels } from '../utils'
 
 export const transformLeadToListItem = ({
   id,
@@ -33,7 +34,10 @@ export const transformLeadToListItem = ({
     },
     { label: 'Estimated spend', value: spend },
     { label: 'Sector', value: sector ? sector.name : '' },
-    { label: 'Estimated land date', value: landing_timeframe },
+    {
+      label: 'Estimated land date',
+      value: convertEYBChoicesToLabels(landing_timeframe),
+    },
     {
       label: 'Location',
       value: proposed_investment_region ? proposed_investment_region.name : '',

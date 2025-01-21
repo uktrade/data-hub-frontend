@@ -4,7 +4,7 @@ import { Link } from 'govuk-react'
 
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
-import { camelCaseToSentenceCase } from '../utils'
+import { convertEYBChoicesToLabels } from '../utils'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
@@ -69,7 +69,7 @@ const EYBLeadDetails = () => {
               </SummaryTable.Row>
               <SummaryTable.Row
                 heading="When do you want to set up?"
-                children={camelCaseToSentenceCase(eybLead.landingTimeframe)}
+                children={convertEYBChoicesToLabels(eybLead.landingTimeframe)}
               />
               <SummaryTable.Row
                 heading="Do you know where you want to set up in the UK?"
@@ -81,11 +81,11 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="How do you plan to expand your business in the UK?"
-                children={camelCaseToSentenceCase(eybLead.intent)}
+                children={convertEYBChoicesToLabels(eybLead.intent)}
               />
               <SummaryTable.Row
                 heading="How many people do you want to hire in the UK in the first 3 years?"
-                children={camelCaseToSentenceCase(eybLead.hiring)}
+                children={convertEYBChoicesToLabels(eybLead.hiring)}
               />
               <SummaryTable.Row
                 heading="How much do you want to spend on setting up in the first 3 years?"

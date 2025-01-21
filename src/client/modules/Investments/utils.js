@@ -1,12 +1,6 @@
-import urls from '../../../lib/urls'
+import { sentence } from 'case'
 
-const transformToSentenceCase = (text) => {
-  let result = text.replace(/_/g, ' ')
-  return (
-    result.charAt(0).toUpperCase() +
-    result.slice(1).toLowerCase().replace(/uk/g, 'UK')
-  )
-}
+import urls from '../../../lib/urls'
 
 export const buildProjectBreadcrumbs = (pageBreadcrumbs) => {
   const initialBreadcrumbs = [
@@ -38,16 +32,31 @@ export const buildEYBLeadBreadcrumbs = (pageBreadcrumbs) => {
   return initialBreadcrumbs.concat(pageBreadcrumbs)
 }
 
-export const camelCaseToSentenceCase = (text) => {
-  if (typeof text === 'string') {
-    return transformToSentenceCase(text)
-  } else if (Array.isArray(text)) {
-    return text.map((item) => {
-      if (typeof item === 'string') {
-        return transformToSentenceCase(item)
-      } else {
-        return item
-      }
-    })
+/**
+ * Converts EYB choices to sentence case labels
+ * @param {string|string[]|null} choices - Single string, or array of strings, or null to convert
+ * @returns {string|string[]|null} - Converted string(s) in the same format as the input
+ */
+export const convertEYBChoicesToLabels = (choices) => {
+  if (choices === null) {
+    return null
   }
+
+  // Helper function to handle capitalisation of UK
+  const capitaliseUK = (str) => {
+    return str.replace(/\b[Uu][Kk]\b/g, 'UK')
+  }
+  // Helper function to process a single string
+  const processString = (str) => {
+    return capitaliseUK(sentence(str))
+  }
+
+  if (typeof choices == 'string') {
+    return processString(choices)
+  }
+  if (Array.isArray(choices)) {
+    return choices.map((choice) => processString(choice))
+  }
+
+  throw new Error('Input must be null, a string, or array of strings')
 }
