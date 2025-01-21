@@ -142,6 +142,7 @@ const reactRoutes = [
   '/contacts/:contactId/details',
   '/contacts/:contactId/interactions',
   '/contacts/:contactId/audit',
+  '/companies/:companyId/match/cannot-find',
 ]
 
 reactRoutes.forEach((path) => {

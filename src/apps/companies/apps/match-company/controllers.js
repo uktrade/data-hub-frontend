@@ -2,11 +2,7 @@ const { get, isEmpty, pick } = require('lodash')
 const url = require('url')
 
 const { searchDnbCompanies } = require('../../../../modules/search/services')
-const {
-  linkDataHubCompanyToDnBCompany,
-  createDnbCompanyInvestigation,
-} = require('../../repos')
-const { transformToDnbInvestigation } = require('./transformers')
+const { linkDataHubCompanyToDnBCompany } = require('../../repos')
 const { getOptions } = require('../../../../lib/options')
 const { postToZenDesk } = require('../../../support/services')
 const urls = require('../../../../lib/urls')
@@ -187,49 +183,6 @@ async function findDnbCompany(req, res, next) {
   }
 }
 
-async function renderCannotFindMatch(req, res, next) {
-  try {
-    const { company } = res.locals
-    const countries = await getCountries(req)
-
-    res.locals.title = `Send business details - ${company.name}`
-    res.render('companies/apps/match-company/views/cannot-find-match', {
-      props: {
-        company: {
-          ...pick(company, ['id', 'name']),
-          address: parseAddress({
-            dnbCompany: company.address,
-            countries,
-            prefix: '',
-          }),
-        },
-      },
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
-async function submitNewDnbRecordRequest(req, res, next) {
-  try {
-    const { company } = res.locals
-    const { website, telephone_number } = req.body
-
-    const transformed = transformToDnbInvestigation(
-      company,
-      website,
-      telephone_number
-    )
-
-    const dnbResponse = await createDnbCompanyInvestigation(req, transformed)
-
-    req.flash('success', 'Verification request sent for third party review')
-    res.json(dnbResponse)
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function submitMergeRequest(req, res, next) {
   try {
     const ticket = createMergeRequestMessage(req, res)
@@ -277,8 +230,6 @@ module.exports = {
   renderMatchConfirmation,
   renderFindCompanyForm,
   findDnbCompany,
-  renderCannotFindMatch,
-  submitNewDnbRecordRequest,
   submitMergeRequest,
   linkCompanies,
 }
