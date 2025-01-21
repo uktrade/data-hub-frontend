@@ -97,13 +97,15 @@ const EYB_LEAD_LIST = Array(
 )
 
 const PAYLOADS = {
-  minimum: { limit: '10', offset: '0' },
+  minimum: { limit: '10', offset: '0', sortby: '-triage_created' },
   companyFilter: { company: COMPANY_NAME },
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
   unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
+  sortByCreated: { sortby: '-triage_created' },
+  sortByCompanyAZ: { sortby: 'company__name' },
 }
 
 const buildQueryString = (queryParams = {}) =>
@@ -249,10 +251,14 @@ describe('EYB leads collection page', () => {
     })
 
     it('should filter from user input', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.company) {
+          req.alias = 'filteredRequest'
+        }
+      })
       cy.visit(`${investments.eybLeads.index()}`)
-      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
       cy.get(FILTER_ELEMENTS.company).type(`${COMPANY_NAME}{enter}`)
-      cy.wait('@apiRequest')
+      cy.wait('@filteredRequest')
         .its('request.query')
         .should('include', expectedPayload)
       assertQueryParams('company', COMPANY_NAME)
@@ -296,8 +302,12 @@ describe('EYB leads collection page', () => {
     })
 
     it('should filter from user input', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sector) {
+          req.alias = 'filteredRequest'
+        }
+      })
       cy.visit(`${investments.eybLeads.index()}`)
-      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
       assertTypeaheadHints({
         element: FILTER_ELEMENTS.sector,
         label: 'Sector of interest',
@@ -311,7 +321,7 @@ describe('EYB leads collection page', () => {
         element: FILTER_ELEMENTS.sector,
         expectedOption: SECTOR_NAME,
       })
-      cy.wait('@apiRequest')
+      cy.wait('@filteredRequest')
         .its('request.query')
         .should('include', expectedPayload)
       assertQueryParams('sector[0]', SECTOR_ID)
@@ -391,14 +401,17 @@ describe('EYB leads collection page', () => {
         })
 
         it('should filter from user input', () => {
-          cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+          cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+            if (req.query.value) {
+              req.alias = 'filteredRequest'
+            }
+          })
           cy.visit(`${investments.eybLeads.index()}`)
-          cy.wait('@apiRequest')
           clickCheckboxGroupOption({
             element: FILTER_ELEMENTS.value,
             value: testCase.queryParamValue,
           })
-          cy.wait('@apiRequest')
+          cy.wait('@filteredRequest')
             .its('request.query')
             .should('include', testCase.expectedPayload)
           assertQueryParams('value[0]', testCase.queryParamValue)
@@ -445,8 +458,12 @@ describe('EYB leads collection page', () => {
     })
 
     it('should filter from user input', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.country) {
+          req.alias = 'filteredRequest'
+        }
+      })
       cy.visit(`${investments.eybLeads.index()}`)
-      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
       assertTypeaheadHints({
         element: FILTER_ELEMENTS.country,
         label: 'Country',
@@ -460,7 +477,7 @@ describe('EYB leads collection page', () => {
         element: FILTER_ELEMENTS.country,
         expectedOption: COUNTRY_NAME_1,
       })
-      cy.wait('@apiRequest')
+      cy.wait('@filteredRequest')
         .its('request.query')
         .should('include', expectedPayload)
       assertQueryParams('country[0]', COUNTRY_ID_1)
@@ -508,8 +525,12 @@ describe('EYB leads collection page', () => {
       })
 
       it('should filter from user input', () => {
+        cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+          if (req.query.overseas_region) {
+            req.alias = 'filteredRequest'
+          }
+        })
         cy.visit(`${investments.eybLeads.index()}`)
-        cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
         assertTypeaheadHints({
           element: FILTER_ELEMENTS.overseas_region,
           label: 'HMTC region',
@@ -523,7 +544,7 @@ describe('EYB leads collection page', () => {
           element: FILTER_ELEMENTS.overseas_region,
           expectedOption: OVERSEAS_REGION_NAME_1,
         })
-        cy.wait('@apiRequest')
+        cy.wait('@filteredRequest')
           .its('request.query')
           .should('include', expectedPayload)
         assertQueryParams('overseas_region[0]', OVERSEAS_REGION_ID_1)
@@ -553,4 +574,47 @@ describe('EYB leads collection page', () => {
       })
     }
   )
+  context('When sorting the EYB leads collection', () => {
+    beforeEach(() => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`).as('apiRequest')
+      cy.visit(investments.eybLeads.index())
+    })
+
+    it('should load sort by dropdown', () => {
+      cy.get('[data-test="sortby"] select option').then((options) => {
+        const actual = [...options].map((o) => o.value)
+        expect(actual).to.deep.eq(['-triage_created', 'company__name'])
+      })
+    })
+
+    it('should sort by most recently created by default', () => {
+      assertQueryParams('sortby', '-triage_created')
+      cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCreated)
+    })
+
+    it('should sort by company name A-Z', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sortby === 'company__name') req.alias = 'sortedRequest'
+      })
+      cy.get('[data-test="sortby"] select').select('company__name')
+      assertQueryParams('sortby', 'company__name')
+      cy.wait('@sortedRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCompanyAZ)
+    })
+
+    it('should sort by most recently created when another sort option is selected', () => {
+      cy.get('[data-test="sortby"] select').select('company__name')
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sortby === '-triage_created') req.alias = 'sortedRequest'
+      })
+      cy.get('[data-test="sortby"] select').select('-triage_created')
+      assertQueryParams('sortby', '-triage_created')
+      cy.wait('@sortedRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByCreated)
+    })
+  })
 })
