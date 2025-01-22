@@ -47,5 +47,6 @@
       "consent_domain": "International",
       "consent": true
     }
-  ]
+  ],
+  "consent_data_management_url": "http://dbt.com?email=contact@bob.com"
 }

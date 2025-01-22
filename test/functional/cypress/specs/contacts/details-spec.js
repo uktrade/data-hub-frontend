@@ -55,8 +55,12 @@ describe('View contact details', () => {
         .should('have.attr', 'href', contacts.edit(completeUKContact.id))
     })
 
-    it('should render consent detail', () => {
+    it('should render the contacts consent choice', () => {
       cy.get('[data-test=no-contact-consents]').should('not.exist')
+    })
+
+    it('should render the consent management section', () => {
+      cy.get('[data-test=consent-management]').should('exist')
     })
 
     it('should render the archive container', () => {
@@ -199,8 +203,12 @@ describe('View contact details', () => {
       })
     })
 
-    it('should not render consent detail', () => {
+    it('should not render the contacts consent choice', () => {
       cy.get('[data-test=no-contact-consents]').should('exist')
+    })
+
+    it('should not render the consent management section', () => {
+      cy.get('[data-test=consent-management]').should('not.exist')
     })
 
     it('should not render the Edit Contact button', () => {
