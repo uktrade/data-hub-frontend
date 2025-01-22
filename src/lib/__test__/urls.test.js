@@ -99,20 +99,6 @@ describe('urls', () => {
         '/:companyId/account-management/advisers/remove'
       )
 
-      expect(urls.companies.dnbHierarchy.index.route).to.equal(
-        '/:companyId/dnb-hierarchy'
-      )
-      expect(urls.companies.dnbHierarchy.index(companyId)).to.equal(
-        `/companies/${companyId}/dnb-hierarchy`
-      )
-
-      expect(urls.companies.dnbHierarchy.data.route).to.equal(
-        '/:companyId/dnb-hierarchy/data'
-      )
-      expect(urls.companies.dnbHierarchy.data(companyId)).to.equal(
-        `/companies/${companyId}/dnb-hierarchy/data`
-      )
-
       expect(urls.companies.exports.index.route).to.equal('/:companyId/exports')
       expect(urls.companies.exports.index(companyId)).to.equal(
         `/companies/${companyId}/exports`

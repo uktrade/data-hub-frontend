@@ -2,9 +2,6 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const {
-  assertLocalNav,
-} = require('../../../../end-to-end/cypress/support/assertions')
 
 describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {
@@ -107,13 +104,6 @@ describe('Companies subsidiaries', () => {
           ),
           Subsidiaries: null,
         })
-      })
-
-      it('should display tabs for two types of hierarchies', () => {
-        assertLocalNav(selectors.tabbedLocalNav().tabs, [
-          'Dun & Bradstreet hierarchy',
-          'Manually linked subsidiaries',
-        ])
       })
 
       it('should render the helper text', () => {

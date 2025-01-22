@@ -8,16 +8,6 @@
   }) }}
 {% endblock %}
 
-{% block local_nav %}
-  {% if localNavItems.length > 0 %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        {{ TabbedLocalNav({ items: localNavItems }) }}
-      </div>
-    </div>
-  {% endif %}
-{% endblock %}
-
 {% block body_main_content %}
 
   <p>
