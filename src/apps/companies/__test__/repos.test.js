@@ -143,17 +143,4 @@ describe('Company repository', () => {
       expect(actual).to.deep.equal({ hello: true })
     })
   })
-
-  describe('getRelatedCompanies', () => {
-    it('should make the correct call to the API', async () => {
-      const authorisedRequestStub = sinon.stub().resolves({})
-      const repo = makeRepositoryWithAuthRequest(authorisedRequestStub)
-
-      await repo.getRelatedCompanies(stubRequest, '123', false, true)
-
-      expect(authorisedRequestStub).to.be.calledOnceWithExactly(stubRequest, {
-        url: `${config.apiRoot}/v4/dnb/123/related-companies?include_subsidiary_companies=true&include_parent_companies=false`,
-      })
-    })
-  })
 })

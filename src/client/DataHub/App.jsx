@@ -21,7 +21,6 @@ import PersonalisedDashboard from '../components/PersonalisedDashboard/index.jsx
 import InvestmentProjectForm from '../../apps/investments/client/projects/create/InvestmentProjectForm.jsx'
 import InteractionDetails from '../modules/Interactions/InteractionDetails/index.jsx'
 import PropositionDetails from '../modules/Investments/Projects/Propositions/PropositionDetails.jsx'
-import CompanyHierarchy from '../modules/Companies/CompanyHierarchy/index.jsx'
 
 import Footer from '../components/Footer/index.jsx'
 
@@ -142,9 +141,6 @@ export const App = () => {
         </Mount>
         <Mount selector="#add-remove-list-form">
           {(props) => <AddRemoveFromListForm {...props} />}
-        </Mount>
-        <Mount selector="#dnb-hierarchy">
-          {(props) => <CompanyHierarchy {...props} />}
         </Mount>
         <Mount selector="#manage-adviser">
           {(props) => (

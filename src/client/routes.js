@@ -24,7 +24,6 @@ import { CreateExportWin, EditExportWin } from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Status/Redirect'
 import Success from './modules/ExportWins/Form/Success'
 import EditSuccess from './modules/ExportWins/Form/EditSuccess'
-import CompanyHierarchy from './modules/Companies/CompanyHierarchy'
 import CompanyTree from './modules/Companies/CompanyHierarchy/CompanyTree'
 import Community from './modules/Community'
 import Strategy from './modules/Companies/AccountManagement/Strategy'
@@ -129,14 +128,6 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CompanyOverview />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/companies/:companyId/dnb-hierarchy',
-      element: (
-        <ProtectedRoute module={'datahub:companies'}>
-          <CompanyHierarchy />
         </ProtectedRoute>
       ),
     },

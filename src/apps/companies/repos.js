@@ -79,16 +79,6 @@ function getCompanySubsidiaries(req, companyId, page = 1) {
   })
 }
 
-function getGlobalUltimateHierarchy(req, globalUltimateDunnsNumber) {
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v4/company`,
-    qs: {
-      limit: 200,
-      global_ultimate_duns_number: globalUltimateDunnsNumber,
-    },
-  })
-}
-
 function getOneListGroupCoreTeam(req, companyId) {
   return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company/${companyId}/one-list-group-core-team`,
@@ -135,17 +125,6 @@ function createDnbChangeRequest(req, dunsNumber, changes) {
   })
 }
 
-function getRelatedCompanies(
-  req,
-  companyId,
-  include_parent_companies,
-  include_subsidiary_companies
-) {
-  return authorisedRequest(req, {
-    url: `${config.apiRoot}/v4/dnb/${companyId}/related-companies?include_subsidiary_companies=${include_subsidiary_companies}&include_parent_companies=${include_parent_companies}`,
-  })
-}
-
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -156,11 +135,9 @@ module.exports = {
   unarchiveCompany,
   updateCompany,
   getCompanySubsidiaries,
-  getGlobalUltimateHierarchy,
   getOneListGroupCoreTeam,
   saveDnbCompany,
   createDnbCompanyInvestigation,
   linkDataHubCompanyToDnBCompany,
   createDnbChangeRequest,
-  getRelatedCompanies,
 }

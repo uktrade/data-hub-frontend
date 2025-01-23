@@ -202,8 +202,6 @@ module.exports = {
       data: url('/companies', '/:companyId/edit-history/data'),
     },
     dnbHierarchy: {
-      index: url('/companies', '/:companyId/dnb-hierarchy'),
-      data: url('/companies', '/:companyId/dnb-hierarchy/data'),
       tree: url('/companies', '/:companyId/company-tree'),
       relatedCompaniesCount: url(
         '/v4/dnb',

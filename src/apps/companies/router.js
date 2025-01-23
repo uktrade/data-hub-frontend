@@ -32,23 +32,16 @@ const formatPostcodes = require('./middleware/format-postcodes')
 
 const addCompanyFormRouter = require('./apps/add-company/router')
 const editCompanyFormRouter = require('./apps/edit-company/router')
-const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const matchCompanyRouter = require('./apps/match-company/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const referralsRouter = require('./apps/referrals/router')
 const accountManagementRouter = require('./apps/account-management/router')
 
-const {
-  setCompanyHierarchyLocalNav,
-  setDnbHierarchyDetails,
-} = require('./apps/dnb-hierarchy/middleware')
-
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
-router.param('companyId', setDnbHierarchyDetails)
 
 router.get(
   urls.companies.export.route,
@@ -83,10 +76,8 @@ router.use(
 
 router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 
-router.use(urls.companies.subsidiaries.index.route, setCompanyHierarchyLocalNav)
 router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
 
-router.use(dnbHierarchyRouter)
 router.use(matchCompanyRouter)
 router.use(referralsRouter)
 router.use(accountManagementRouter)
