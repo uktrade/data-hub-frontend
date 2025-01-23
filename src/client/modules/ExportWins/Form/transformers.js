@@ -4,7 +4,7 @@ import { OPTION_YES, OPTION_NO } from '../../../../common/constants'
 import { idNameToValueLabel } from '../../../../client/utils'
 import { sumWinTypeYearlyValues } from './utils'
 import { isWithinLastTwelveMonths } from './date'
-import { convertDateToFieldDateObject } from '../../../utils/date'
+import { isoStringToDateParts } from '../../../utils/date'
 import {
   winTypeId,
   GOODS_ID,
@@ -146,7 +146,7 @@ export const transformExportWinForForm = (exportWin) => ({
   export_experience: idNameToValueLabel(exportWin.export_experience),
   // Win details
   country: idNameToValueLabel(exportWin.country),
-  date: convertDateToFieldDateObject(exportWin.date),
+  date: isoStringToDateParts(exportWin.date),
   description: exportWin.description,
   name_of_customer: exportWin.name_of_customer,
   name_of_customer_confidential: exportWin.name_of_customer_confidential
