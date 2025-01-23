@@ -1,4 +1,4 @@
-import { sentence, title } from 'case'
+import { sentence } from 'case'
 
 import urls from '../../../lib/urls'
 
@@ -70,8 +70,18 @@ export const formatProposedInvestmentCity = (choices) => {
   if (choices === null) {
     return null
   }
-  if (typeof choices == 'string') {
-    return title(choices)
+  if (typeof choices !== 'string') {
+    throw new Error('Input must be null or a string')
   }
-  throw new Error('Input must be null or a string')
+
+  const lowercaseWords = choices.toLowerCase().split('_')
+
+  const formattedWords = lowercaseWords.map((word) => {
+    if (word === 'of' || word === 'the' || word === 'and') {
+      return word // Keep lowercase
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter
+  })
+
+  return formattedWords.join(' ')
 }
