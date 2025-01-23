@@ -24,7 +24,7 @@ const EVENT_DETAILS_ROWS = {
 }
 
 describe('Event Details', () => {
-  it('should display one day event details', () => {
+  it('should display one day event details with correct event', () => {
     cy.visit(urls.events.details(fixtures.event.oneDayExhibition.id))
 
     assertBreadcrumbs({
@@ -38,7 +38,11 @@ describe('Event Details', () => {
       rows: EVENT_DETAILS_ROWS,
     })
 
-    cy.contains('a', 'Edit event')
+    cy.contains('a', 'Edit event').should(
+      'have.attr',
+      'href',
+      urls.events.edit(fixtures.event.oneDayExhibition.id)
+    )
   })
 
   it('should display one day event details with no teams', () => {
