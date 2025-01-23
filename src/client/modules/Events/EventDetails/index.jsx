@@ -225,7 +225,7 @@ const EventDetails = ({ name, ...props }) => {
                 tabs={{
                   [`/events/${id}/details`]: {
                     label: 'Details',
-                    content: <Details {...props} />,
+                    content: <Details {...props} id={id} />,
                   },
                   [`/events/${id}/attendees`]: {
                     label: 'Attendees',
