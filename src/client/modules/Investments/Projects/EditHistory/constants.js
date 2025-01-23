@@ -29,4 +29,6 @@ export const PROJECT_FIELD_NAME_TO_LABEL_MAP = {
   associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
   client_considering_other_countries:
     'Is the client considering other countries?',
+  site_address_is_company_address:
+    "Is the site address the same as the UK recipient company's address?",
 }
