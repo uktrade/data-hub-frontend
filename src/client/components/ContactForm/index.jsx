@@ -17,7 +17,6 @@ import {
   FieldInput,
   FieldRadios,
   FieldTextarea,
-  FieldCheckboxes,
   FieldAddress,
   Main,
   FormLayout,
@@ -80,7 +79,6 @@ const _ContactForm = ({
   // We need to convert these to YES / NO strings
   primary,
   addressSameAsCompany,
-  acceptsDitEmailMarketing,
   // These need to be renamed, so that they are compatible with the fields of
   // the address sub-form
   addressPostcode: postcode,
@@ -175,7 +173,6 @@ const _ContactForm = ({
                         city,
                         county,
                         postcode,
-                        acceptsDitEmailMarketing,
                         addressSameAsCompany,
                         primary,
                         email,
@@ -189,8 +186,6 @@ const _ContactForm = ({
                           email,
                           valid_email: true,
                           notes: moreDetails,
-                          accepts_dit_email_marketing:
-                            acceptsDitEmailMarketing.includes(YES),
                           primary,
                           company,
                           address_same_as_company:
@@ -251,12 +246,9 @@ const _ContactForm = ({
                         country: addressCountry?.id,
                         primary: boolToYesNo(primary),
                         addressSameAsCompany: boolToYesNo(addressSameAsCompany),
-                        acceptsDitEmailMarketing: [
-                          boolToYesNo(acceptsDitEmailMarketing),
-                        ].filter(Boolean),
                       }}
                     >
-                      {({ values }) => (
+                      {() => (
                         <>
                           <FieldInput
                             label="First name"
@@ -329,21 +321,6 @@ const _ContactForm = ({
                               { value: NO, label: NO },
                             ]}
                           />
-                          <FieldCheckboxes
-                            name="acceptsDitEmailMarketing"
-                            options={[
-                              {
-                                value: YES,
-                                label:
-                                  'The company contact does accept email marketing',
-                                hint:
-                                  values?.acceptsDitEmailMarketing?.includes(
-                                    YES
-                                  ) &&
-                                  'By checking this box, you confirm that the contact has opted in to email marketing.',
-                              },
-                            ]}
-                          />
                           <FieldTextarea
                             label="More details (optional)"
                             name="moreDetails"
@@ -394,7 +371,6 @@ ContactForm.propTypes = {
   primary: PropTypes.bool,
   fullTelephoneNumber: PropTypes.string,
   email: PropTypes.string,
-  acceptsDitEmailMarketing: PropTypes.bool,
   addressSameAsCompany: PropTypes.bool,
   address1: PropTypes.string,
   address2: PropTypes.string,

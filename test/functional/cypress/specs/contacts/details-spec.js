@@ -1,8 +1,4 @@
 import { contacts } from '../../../../../src/lib/urls'
-import {
-  EMAIL_CONSENT_NO,
-  EMAIL_CONSENT_YES,
-} from '../../../../../src/apps/contacts/constants'
 
 const completeUKContact = require('../../../../sandbox/fixtures/v3/contact/contact-complete-details-uk.json')
 const incompleteUKContact = require('../../../../sandbox/fixtures/v3/contact/contact-incomplete-details-uk.json')
@@ -49,7 +45,6 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: completeUKContact.email,
         'More details': completeUKContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
     })
 
@@ -58,6 +53,14 @@ describe('View contact details', () => {
         .should('exist')
         .should('have.text', 'Edit Contact')
         .should('have.attr', 'href', contacts.edit(completeUKContact.id))
+    })
+
+    it('should render the contacts consent choice', () => {
+      cy.get('[data-test=no-contact-consents]').should('not.exist')
+    })
+
+    it('should render the consent management section', () => {
+      cy.get('[data-test=consent-management]').should('exist')
     })
 
     it('should render the archive container', () => {
@@ -122,7 +125,6 @@ describe('View contact details', () => {
           'Job title': incompleteUKContact.job_title,
           Address: '123 Test Street, Sandbox Town, AB1 2CD, United Kingdom',
           Email: incompleteUKContact.email,
-          'Email marketing': EMAIL_CONSENT_YES,
         })
       })
     })
@@ -138,7 +140,6 @@ describe('View contact details', () => {
           Address:
             '3 Priory Court, Kingshill Road, Dursley, Gloucestershire, GL11 4DH, United Kingdom',
           Email: companyAddresscontact.email,
-          'Email marketing': EMAIL_CONSENT_NO,
         })
       })
     })
@@ -155,7 +156,6 @@ describe('View contact details', () => {
             '123 Test Boulevard, Basney, US State, 9416875, United States',
           Email: usContact.email,
           'More details': usContact.notes,
-          'Email marketing': EMAIL_CONSENT_NO,
         })
       })
     })
@@ -200,8 +200,15 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: archiveContact.email,
         'More details': archiveContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
+    })
+
+    it('should not render the contacts consent choice', () => {
+      cy.get('[data-test=no-contact-consents]').should('exist')
+    })
+
+    it('should not render the consent management section', () => {
+      cy.get('[data-test=consent-management]').should('not.exist')
     })
 
     it('should not render the Edit Contact button', () => {
@@ -249,7 +256,6 @@ describe('View contact details', () => {
           '123 Test Street, Address Line 2, Sandbox Town, Test County, AB1 2CD, United Kingdom',
         Email: invalidEmailContact.email,
         'More details': invalidEmailContact.notes,
-        'Email marketing': EMAIL_CONSENT_YES,
       })
     })
   })

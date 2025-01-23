@@ -14,11 +14,6 @@ function getContactAsFormData(contact) {
     return null
   }
 
-  // default is that people are always marketable, unless opted out
-  if (!contact.hasOwnProperty('accepts_dit_email_marketing')) {
-    contact.accepts_dit_email_marketing = true
-  }
-
   let result = {
     id: contact.id,
     company: contact.company.id,
@@ -29,7 +24,6 @@ function getContactAsFormData(contact) {
     primary: contact.primary ? 'yes' : 'no',
     full_telephone_number: contact.full_telephone_number,
     email: contact.email,
-    accepts_dit_email_marketing: contact.accepts_dit_email_marketing,
     address_same_as_company: contact.address_same_as_company ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
