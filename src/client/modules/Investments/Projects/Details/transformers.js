@@ -87,9 +87,11 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
     site_decided,
     strategic_drivers,
     uk_region_locations,
+    site_address_is_company_address,
   } = values
 
   const siteDecidedObject = setSiteDecidedSubValues(
+    site_address_is_company_address,
     site_decided,
     address1,
     address2,

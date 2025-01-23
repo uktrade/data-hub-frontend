@@ -2,6 +2,7 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
+import InsetText from '@govuk-react/inset-text'
 
 import {
   FieldAddress,
@@ -9,6 +10,7 @@ import {
   FieldTextarea,
   FieldTypeahead,
   Form,
+  SummaryList,
 } from '../../../../components'
 import {
   CountriesResource,
@@ -28,6 +30,7 @@ import {
 import {
   OPTIONS_YES_NO,
   OPTION_YES,
+  OPTION_NO,
   UNITED_KINGDOM_ID,
 } from '../../../../../common/constants'
 
@@ -38,7 +41,7 @@ import {
   isFieldOptionalForStageLabel,
   validateFieldForStage,
 } from '../validators'
-import { siteDecidedValidator } from './validators'
+import { siteAddressIsCompanyAddressValidator } from './validators'
 
 const ukObject = {
   name: 'United Kingdom',
@@ -177,8 +180,8 @@ const EditProjectRequirements = () => {
                 }}
               />
               <FieldRadios
-                name="site_decided"
-                label="Has the UK location (site address) for this investment been decided yet?"
+                name="site_address_is_company_address"
+                label="Is the site address the same as the UK recipient company's address?"
                 initialValue={transformBoolToRadioOptionWithNullCheck(
                   project.siteDecided
                 )}
@@ -187,8 +190,51 @@ const EditProjectRequirements = () => {
                   ...(option.value === OPTION_YES && {
                     children: (
                       <>
+                        <InsetText className="govuk-!-margin-bottom-3">
+                          The address will appear on this form once you have
+                          selected the recipient company
+                        </InsetText>
+                      </>
+                    ),
+                  }),
+                  ...(option.value === OPTION_YES &&
+                    (project.investorCompany.address1 ||
+                      project.investorCompany.address2 ||
+                      project.investorCompany.addressTown ||
+                      project.investorCompany.addressPostcode) && {
+                      children: (
+                        <>
+                          <InsetText className="govuk-!-margin-bottom-3">
+                            <SummaryList
+                              rows={[
+                                {
+                                  label: 'Address line 1',
+                                  value: project.investorCompany.address1,
+                                },
+                                {
+                                  label: 'Address line 2',
+                                  value: project.investorCompany.address2,
+                                },
+                                {
+                                  label: 'Town',
+                                  value: project.investorCompany.addressTown,
+                                },
+                                {
+                                  label: 'Postcode',
+                                  value:
+                                    project.investorCompany.addressPostcode,
+                                },
+                              ]}
+                            />
+                          </InsetText>
+                        </>
+                      ),
+                    }),
+                  ...(option.value === OPTION_NO && {
+                    children: (
+                      <>
                         <FieldAddress
-                          legend="Address"
+                          legend="What is the site address?"
                           name="address"
                           country={ukObject}
                           hideCountyField={true}
@@ -228,7 +274,11 @@ const EditProjectRequirements = () => {
                   }),
                 }))}
                 validate={(values, field, formFields) => {
-                  return siteDecidedValidator(field, formFields, project)
+                  return siteAddressIsCompanyAddressValidator(
+                    field,
+                    formFields,
+                    project
+                  )
                 }}
               />
               <ResourceOptionsField

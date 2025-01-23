@@ -28,6 +28,20 @@ export const siteDecidedValidator = (field, formFields, project) => {
     : null
 }
 
+export const siteAddressIsCompanyAddressValidator = (
+  field,
+  formFields,
+  project
+) => {
+  if (project?.stage?.id == STAGE.ACTIVE_ID && !formFields.values[field.name]) {
+    return `Select if the site address the same as the UK recipient company's address?`
+  }
+  return (
+    isFieldRequiredForStage(field.name, project) &&
+    formFields.values[field.name] != null
+  )
+}
+
 export const isUkRegionLocationsRequiredForStage = (project) => {
   return project?.stage?.id == STAGE.VERIFY_WIN_ID
 }
