@@ -60,3 +60,28 @@ export const convertEYBChoicesToLabels = (choices) => {
 
   throw new Error('Input must be null, a string, or array of strings')
 }
+
+/**
+ * Formats EYB lead proposed investment city to Title Case labels
+ * @param {string|null} city - Single string or null to format
+ * @returns {string|null} - Formatted string
+ */
+export const formatProposedInvestmentCity = (choices) => {
+  if (choices === null) {
+    return null
+  }
+  if (typeof choices !== 'string') {
+    throw new Error('Input must be null or a string')
+  }
+
+  const lowercaseWords = choices.toLowerCase().split('_')
+
+  const formattedWords = lowercaseWords.map((word) => {
+    if (word === 'of' || word === 'the' || word === 'and') {
+      return word // Keep lowercase
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter
+  })
+
+  return formattedWords.join(' ')
+}
