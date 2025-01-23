@@ -1,4 +1,4 @@
-import { sentence } from 'case'
+import { sentence, title } from 'case'
 
 import urls from '../../../lib/urls'
 
@@ -59,4 +59,19 @@ export const convertEYBChoicesToLabels = (choices) => {
   }
 
   throw new Error('Input must be null, a string, or array of strings')
+}
+
+/**
+ * Formats EYB lead proposed investment city to Title Case labels
+ * @param {string|null} city - Single string or null to format
+ * @returns {string|null} - Formatted string
+ */
+export const formatProposedInvestmentCity = (choices) => {
+  if (choices === null) {
+    return null
+  }
+  if (typeof choices == 'string') {
+    return title(choices)
+  }
+  throw new Error('Input must be null or a string')
 }

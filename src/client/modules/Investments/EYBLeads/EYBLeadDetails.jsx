@@ -4,7 +4,10 @@ import { Link } from 'govuk-react'
 
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
-import { convertEYBChoicesToLabels } from '../utils'
+import {
+  convertEYBChoicesToLabels,
+  formatProposedInvestmentCity,
+} from '../utils'
 import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
@@ -77,7 +80,9 @@ const EYBLeadDetails = () => {
               />
               <SummaryTable.Row
                 heading="Where do you want to set up in the UK?"
-                children={eybLead.proposedInvestmentCity}
+                children={formatProposedInvestmentCity(
+                  eybLead.proposedInvestmentCity
+                )}
               />
               <SummaryTable.Row
                 heading="How do you plan to expand your business in the UK?"
