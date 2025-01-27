@@ -52,7 +52,7 @@ describe('formatProposedInvestmentCity', () => {
     { input: 'MILTON_KEYNES', output: 'Milton Keynes' },
     { input: 'CITY_OF_EDINBURGH', output: 'City of Edinburgh' },
     { input: 'MANCHESTER', output: 'Manchester' },
-    { input: 'ANTRIM_AND_NEWTONABBEY', output: 'Antrim and Newtownabbey' },
+    { input: 'ANTRIM_AND_NEWTONABBEY', output: 'Antrim and Newtonabbey' },
     { input: 'ALEXANDER_THE_GREAT', output: 'Alexander the Great' },
   ]
   validCases.forEach((validCase) => {
