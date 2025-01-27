@@ -77,8 +77,8 @@ export const formatProposedInvestmentCity = (choices) => {
   const lowercaseWords = choices.toLowerCase().split('_')
 
   const formattedWords = lowercaseWords.map((word) => {
-    // Handle special case for "-on-"
-    if (word.includes('-on-')) {
+    // Handle special case for "-on-" or "-in-"
+    if (word.includes('-on-') || word.includes('-in-')) {
       return word
         .split('-')
         .map((subWord, index) =>
@@ -89,8 +89,8 @@ export const formatProposedInvestmentCity = (choices) => {
         .join('-')
     }
 
-    if (word === 'of' || word === 'the' || word === 'and') {
-      return word // Keep lowercase for "of," "the," or "and"
+    if (word === 'of' || word === 'the' || word === 'and' || word === 'upon') {
+      return word // Keep lowercase for "of," "the,", "and" or "upon"
     }
     return word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter
   })
