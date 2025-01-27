@@ -54,6 +54,7 @@ describe('formatProposedInvestmentCity', () => {
     { input: 'MANCHESTER', output: 'Manchester' },
     { input: 'ANTRIM_AND_NEWTONABBEY', output: 'Antrim and Newtonabbey' },
     { input: 'ALEXANDER_THE_GREAT', output: 'Alexander the Great' },
+    { input: 'HENLEY-ON-THEMES', output: 'Henley-on-Themes' },
   ]
   validCases.forEach((validCase) => {
     it(`should output ${validCase.output} for the input ${validCase.input}`, () => {
