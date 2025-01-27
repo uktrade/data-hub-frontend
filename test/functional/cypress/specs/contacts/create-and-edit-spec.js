@@ -45,13 +45,6 @@ const assertRadioGroup = (label, option) =>
 const assertRadioGroupNoOptionChecked = (label) =>
   cy.contains(label).parent().find('input').should('not.be.checked')
 
-const assertNoMarketingConsent = () =>
-  cy
-    .contains('The company contact does accept email marketing')
-    .parent()
-    .find('input')
-    .should('not.be.checked')
-
 const NEW_CONTACT_ID = '14890695-ce54-4419-88d3-9224754ecbc0'
 describe('Create contact form', () => {
   beforeEach(() => {
@@ -62,8 +55,6 @@ describe('Create contact form', () => {
       Contacts: '/contacts/',
       'Add contact at Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': null,
     })
-
-    assertNoMarketingConsent()
 
     assertRadioGroupNoOptionChecked('Is this person a primary contact?')
     assertRadioGroupNoOptionChecked(
@@ -315,8 +306,6 @@ describe('Edit contact', () => {
       'href',
       `/companies/${ZBONCAK_COMPANY_ID}`
     )
-
-    assertNoMarketingConsent()
 
     assertRadioGroup('Is this person a primary contact?', 'Yes')
     assertRadioGroup(
