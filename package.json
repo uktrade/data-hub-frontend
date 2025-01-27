@@ -160,7 +160,7 @@
     "@babel/register": "^7.25.9",
     "@babel/runtime": "^7.26.0",
     "@chromatic-com/storybook": "^3.2.3",
-    "@cypress/code-coverage": "^3.13.9",
+    "@cypress/code-coverage": "^3.13.10",
     "@faker-js/faker": "^9.3.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@storybook/addon-a11y": "^8.5.0",
