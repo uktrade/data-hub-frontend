@@ -1,6 +1,3 @@
-import { investmentProjectFaker } from '../../fakers/investment-projects'
-import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
-
 const urls = require('../../../../../src/lib/urls')
 const {
   assertBreadcrumbs,
@@ -16,85 +13,6 @@ const {
   R_AND_D_TRUE,
   R_AND_D_FALSE,
 } = require('../../../../../src/client/modules/Investments/Projects/constants')
-
-const projectWithRequirements = investmentProjectFaker({
-  stage: INVESTMENT_PROJECT_STAGES.prospect,
-  uk_company: {
-    name: 'Mars Components Ltd',
-    address_1: '12 Alpha Street',
-    address_2: '',
-    address_town: 'Volcanus',
-    address_postcode: 'NE28 5AQ',
-    id: '731bdcc1-f685-4c8e-bd66-b356b2c16995',
-  },
-  strategic_drivers: [
-    {
-      name: 'Access to market',
-      id: '382aa6d1-a362-4166-a09d-f579d9f3be75',
-    },
-  ],
-  client_requirements: 'Anywhere',
-  competitor_countries: [
-    {
-      name: 'Netherlands',
-      id: '1950bdb8-5d95-e211-a939-e4115bead28a',
-    },
-  ],
-  uk_region_locations: [
-    {
-      name: 'North East',
-      id: '814cd12a-6095-e211-a939-e4115bead28a',
-    },
-  ],
-  site_address_is_company_address: false,
-  address_1: '10 Eastings Road',
-  address_2: null,
-  address_town: 'London',
-  address_postcode: 'W1 2AA',
-  actual_uk_regions: [],
-  delivery_partners: [
-    {
-      name: 'New Anglia LEP',
-      id: 'cdcc392e-0bf1-e511-8ffa-e4115bead28a',
-    },
-    {
-      name: 'North Eastern LEP',
-      id: '6e85b4e3-0df1-e511-8ffa-e4115bead28a',
-    },
-  ],
-})
-const projectWithNoRequirementsOrValue = investmentProjectFaker({
-  stage: INVESTMENT_PROJECT_STAGES.prospect,
-  uk_company: null,
-  strategic_drivers: [],
-  client_requirements: null,
-  competitor_countries: [],
-  uk_region_locations: [],
-  site_address_is_company_address: null,
-  address_1: null,
-  address_2: null,
-  address_town: null,
-  address_postcode: null,
-  actual_uk_regions: [],
-  delivery_partners: [],
-  client_cannot_provide_total_investment: null,
-  total_investment: null,
-  client_cannot_provide_foreign_investment: null,
-  foreign_equity_investment: null,
-  gross_value_added_capital: null,
-  number_new_jobs: null,
-  gross_value_added_labour: null,
-  gross_value_added: null,
-  average_salary: null,
-  number_safeguarded_jobs: null,
-  fdi_value: null,
-  government_assistance: null,
-  r_and_d_budget: null,
-  non_fdi_r_and_d_budget: null,
-  new_tech_to_uk: null,
-  export_revenue: null,
-  associated_non_fdi_r_and_d_project: null,
-})
 
 describe('Investment project details', () => {
   context('When viewing a project with all the details fields', () => {
@@ -172,16 +90,11 @@ describe('Investment project details', () => {
   })
   context('When viewing a project with all the requirements fields', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${projectWithRequirements.id}`,
-        {
-          statusCode: 200,
-          body: projectWithRequirements,
-        }
-      ).as('getProjectDetails')
-      cy.visit(urls.investments.projects.details(projectWithRequirements.id))
-      cy.wait('@getProjectDetails')
+      cy.visit(
+        urls.investments.projects.details(
+          fixtures.investment.investmentWithRequirements.id
+        )
+      )
     })
 
     it('should render all the fields of the requirements table', () => {
@@ -193,8 +106,7 @@ describe('Investment project details', () => {
           'Client requirements': 'Anywhere',
           'Competitor countries': 'Netherlands',
           'Possible UK locations': 'North East',
-          'UK recipient company':
-            'Mars Components LtdEdit companyRemove company',
+          'UK recipient company': 'Mercury LtdEdit companyRemove company',
           'Delivery partners': 'New Anglia LEP, North Eastern LEP',
         },
       })
@@ -208,8 +120,8 @@ describe('Investment project details', () => {
           'have.attr',
           'href',
           urls.investments.projects.recipientCompany(
-            projectWithRequirements.id
-          ) + '?name=Mars Components Ltd'
+            fixtures.investment.investmentWithRequirements.id
+          ) + '?name=Mercury Ltd'
         )
 
       cy.get('[data-test="remove-company-link"]')
@@ -219,7 +131,7 @@ describe('Investment project details', () => {
           'have.attr',
           'href',
           urls.investments.projects.removeRecipientCompany(
-            projectWithRequirements.id
+            fixtures.investment.investmentWithRequirements.id
           )
         )
 
@@ -233,7 +145,9 @@ describe('Investment project details', () => {
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.editRequirements(projectWithRequirements.id)
+          urls.investments.projects.editRequirements(
+            fixtures.investment.investmentWithRequirements.id
+          )
         )
       cy.get('[data-test="requirements-inset"]').should('not.exist')
       cy.get('[data-test="add-requirements-button"]').should('not.exist')
@@ -362,18 +276,11 @@ describe('Investment project details', () => {
   )
   context('When viewing a project with no requirements or value', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${projectWithNoRequirementsOrValue.id}`,
-        {
-          statusCode: 200,
-          body: projectWithNoRequirementsOrValue,
-        }
-      ).as('getProjectDetails')
       cy.visit(
-        urls.investments.projects.details(projectWithNoRequirementsOrValue.id)
+        urls.investments.projects.details(
+          fixtures.investment.investmentWithNoExistingRequirements.id
+        )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('should only render the UK company field in the requirements table', () => {
@@ -390,7 +297,7 @@ describe('Investment project details', () => {
           'have.attr',
           'href',
           urls.investments.projects.recipientCompany(
-            projectWithNoRequirementsOrValue.id
+            fixtures.investment.investmentWithNoExistingRequirements.id
           )
         )
       cy.get('[data-test="edit-company-link"]').should('not.exist')
@@ -414,7 +321,7 @@ describe('Investment project details', () => {
           'have.attr',
           'href',
           urls.investments.projects.editRequirements(
-            projectWithNoRequirementsOrValue.id
+            fixtures.investment.investmentWithNoExistingRequirements.id
           )
         )
       cy.get('[data-test="edit-requirements-button"]').should('not.exist')
@@ -444,7 +351,7 @@ describe('Investment project details', () => {
           'have.attr',
           'href',
           urls.investments.projects.editValue(
-            projectWithNoRequirementsOrValue.id
+            fixtures.investment.investmentWithNoExistingRequirements.id
           )
         )
       cy.get('[data-test="edit-value-button"]').should('not.exist')

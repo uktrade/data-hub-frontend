@@ -1,5 +1,3 @@
-import { investmentProjectFaker } from '../../fakers/investment-projects'
-
 const fixtures = require('../../fixtures/index')
 const urls = require('../../../../../src/lib/urls')
 
@@ -17,30 +15,10 @@ const {
   selectFirstMockedTypeaheadOption,
 } = require('../../support/actions')
 
-const { investmentWithNoGlobalAccountManager } = fixtures.investment
-const investmentWithNoExistingRequirements = investmentProjectFaker({
-  investor_company: {
-    name: 'Venus Ltd',
-    id: '0f5216e0-849f-11e6-ae22-56b6b6499611',
-  },
-  client_relationship_manager: {
-    name: 'Puck Head',
-    first_name: 'Puck',
-    last_name: 'Head',
-    id: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
-  },
-  strategic_drivers: [],
-  client_requirements: null,
-  competitor_countries: [],
-  uk_region_locations: [],
-  site_address_is_company_address: null,
-  address_1: null,
-  address_2: null,
-  address_town: null,
-  address_postcode: null,
-  actual_uk_regions: [],
-  delivery_partners: [],
-})
+const {
+  investmentWithNoExistingRequirements,
+  investmentWithNoGlobalAccountManager,
+} = fixtures.investment
 const CLIENT_MANAGEMENT_INTERCEPT = 'clientManagementHttpRequest'
 
 describe('Edit client relationship management page', () => {
@@ -52,20 +30,11 @@ describe('Edit client relationship management page', () => {
 
   context('When the edit page is first rendered', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('should render breadcrumbs', () => {
@@ -107,20 +76,11 @@ describe('Edit client relationship management page', () => {
 
   context('When rendering the hidden help text', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('should render the hidden help text with visually hidden text for screen reader', () => {
@@ -139,20 +99,11 @@ describe('Edit client relationship management page', () => {
 
   context('When no edits are made', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('should save and redirect with no changes', () => {
@@ -184,20 +135,11 @@ describe('Edit client relationship management page', () => {
 
   context('When the client relationship manager is deleted', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('displays an error message on submission', () => {
@@ -210,20 +152,11 @@ describe('Edit client relationship management page', () => {
 
   context('When the client relationship manager is edited', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
       selectFirstMockedTypeaheadOption({
         element: '[data-test="field-client_relationship_manager"]',
         input: 'Shawn',
@@ -260,20 +193,11 @@ describe('Edit client relationship management page', () => {
 
   context('When the global account manager is set', () => {
     beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v3/investment/${investmentWithNoExistingRequirements.id}`,
-        {
-          statusCode: 200,
-          body: investmentWithNoExistingRequirements,
-        }
-      ).as('getProjectDetails')
       cy.visit(
         urls.investments.projects.clientRelationshipManagement(
           investmentWithNoExistingRequirements.id
         )
       )
-      cy.wait('@getProjectDetails')
     })
 
     it('should display the name of the global account manager', () => {

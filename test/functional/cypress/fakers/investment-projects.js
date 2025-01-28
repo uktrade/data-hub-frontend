@@ -84,7 +84,6 @@ const investmentProjectFaker = (overrides = {}) => ({
     id: faker.string.uuid(),
   },
   specific_programmes: [],
-  client_requirements: 'Some client requirements',
   ...overrides,
 })
 

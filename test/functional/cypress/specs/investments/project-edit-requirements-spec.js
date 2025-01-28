@@ -14,58 +14,10 @@ const {
 } = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 const { investmentProjectFaker } = require('../../fakers/investment-projects')
+const projectNoExistingRequirements = require('../../fixtures/investment/investment-no-existing-requirements.json')
+const projectHasExistingRequirements = require('../../fixtures/investment/investment-has-existing-requirements.json')
 const ukRegions = require('../../../../sandbox/fixtures/metadata/uk-region.json')
 
-const projectNoExistingRequirements = investmentProjectFaker({
-  strategic_drivers: [],
-  client_requirements: null,
-  competitor_countries: [],
-  uk_region_locations: [],
-  site_address_is_company_address: null,
-  address_1: null,
-  address_2: null,
-  address_town: null,
-  address_postcode: null,
-  actual_uk_regions: [],
-  delivery_partners: [],
-})
-const projectHasExistingRequirements = investmentProjectFaker({
-  strategic_drivers: [
-    {
-      name: 'Access to market',
-      id: '382aa6d1-a362-4166-a09d-f579d9f3be75',
-    },
-  ],
-  client_requirements: 'Anywhere',
-  competitor_countries: [
-    {
-      name: 'Netherlands',
-      id: '1950bdb8-5d95-e211-a939-e4115bead28a',
-    },
-  ],
-  uk_region_locations: [
-    {
-      name: 'North East',
-      id: '814cd12a-6095-e211-a939-e4115bead28a',
-    },
-  ],
-  site_address_is_company_address: false,
-  address_1: '10 Eastings Road',
-  address_2: null,
-  address_town: 'London',
-  address_postcode: 'W1 2AA',
-  actual_uk_regions: [],
-  delivery_partners: [
-    {
-      name: 'New Anglia LEP',
-      id: 'cdcc392e-0bf1-e511-8ffa-e4115bead28a',
-    },
-    {
-      name: 'North Eastern LEP',
-      id: '6e85b4e3-0df1-e511-8ffa-e4115bead28a',
-    },
-  ],
-})
 const ukCompany = {
   name: 'Mars Components Ltd',
   address_1: '12 Alpha Street',
@@ -362,19 +314,34 @@ describe('Edit the requirements of a project', () => {
 })
 
 describe('Site address fields', () => {
+  const siteAddressProject = (overrides) => {
+    return investmentProjectFaker({
+      stage: INVESTMENT_PROJECT_STAGES.prospect, // ensures all fields are optional at stage
+      strategic_drivers: [
+        {
+          name: 'Access to market',
+          id: '382aa6d1-a362-4166-a09d-f579d9f3be75',
+        },
+      ], // populating this field forces the `edit requirements` button to appear
+      uk_company: null,
+      site_address_is_company_address: null,
+      address_1: null,
+      address_2: null,
+      address_town: null,
+      address_postcode: null,
+      ...overrides,
+    })
+  }
+
   context('When viewing the site address fields', () => {
     it('should show unselected radios when site address is company address is null', () => {
-      const project = investmentProjectFaker({
-        uk_company: null,
-        site_address_is_company_address: null,
-      })
+      const project = siteAddressProject()
       navigateToForm({ project: project })
       assertSiteAddressIsCompanyAddressField(project)
     })
 
     it('should show the inset text when site address is company is true and uk company is not set', () => {
-      const project = investmentProjectFaker({
-        uk_company: null,
+      const project = siteAddressProject({
         site_address_is_company_address: true,
       })
       navigateToForm({ project: project })
@@ -382,7 +349,7 @@ describe('Site address fields', () => {
     })
 
     it('should show the company address fields when the site address is company address is true and uk company is set', () => {
-      const project = investmentProjectFaker({
+      const project = siteAddressProject({
         uk_company: ukCompany,
         site_address_is_company_address: true,
       })
@@ -391,13 +358,8 @@ describe('Site address fields', () => {
     })
 
     it('should show the address input fields when site address is company address is false', () => {
-      const project = investmentProjectFaker({
-        uk_company: null,
+      const project = siteAddressProject({
         site_address_is_company_address: false,
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
       })
       navigateToForm({ project: project })
       assertSiteAddressIsCompanyAddressField(project)
@@ -405,15 +367,7 @@ describe('Site address fields', () => {
   })
   context('When editing the site address fields and clicking submit', () => {
     it('should submit site address is company address is true only when user selects yes and uk company is null', () => {
-      const project = investmentProjectFaker({
-        stage: INVESTMENT_PROJECT_STAGES.prospect,
-        uk_company: null,
-        site_address_is_company_address: null,
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
-      })
+      const project = siteAddressProject()
       navigateToForm({ project: project })
       cy.get('[data-test="site-address-is-company-address-yes"]').click()
       cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, {
@@ -431,15 +385,7 @@ describe('Site address fields', () => {
         })
     })
     it('should submit site address is company address is true and populate address fields when user selects yes and project has uk company', () => {
-      const project = investmentProjectFaker({
-        stage: INVESTMENT_PROJECT_STAGES.prospect,
-        uk_company: ukCompany,
-        site_address_is_company_address: null,
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
-      })
+      const project = siteAddressProject({ uk_company: ukCompany })
       navigateToForm({ project: project })
       cy.get('[data-test="site-address-is-company-address-yes"]').click()
       cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, {
@@ -457,15 +403,7 @@ describe('Site address fields', () => {
         })
     })
     it('should raise validation errors when site address is company address is false and address fields have not been populated', () => {
-      const project = investmentProjectFaker({
-        stage: INVESTMENT_PROJECT_STAGES.prospect,
-        uk_company: null,
-        site_address_is_company_address: null,
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
-      })
+      const project = siteAddressProject()
       navigateToForm({ project: project })
       cy.get('[data-test="site-address-is-company-address-no"]').click()
       cy.get('[data-test="submit-button"]').click()
@@ -476,15 +414,7 @@ describe('Site address fields', () => {
       ])
     })
     it('should submit site address is company address is false and address fields when user selects no and enters address fields', () => {
-      const project = investmentProjectFaker({
-        stage: INVESTMENT_PROJECT_STAGES.prospect,
-        uk_company: null,
-        site_address_is_company_address: null,
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
-      })
+      const project = siteAddressProject()
       const address1 = 'Address line 1'
       const address2 = 'Address line 2'
       const city = 'City'
