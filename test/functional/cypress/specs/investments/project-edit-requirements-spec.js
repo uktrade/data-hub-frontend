@@ -366,6 +366,19 @@ describe('Site address fields', () => {
     })
   })
   context('When editing the site address fields and clicking submit', () => {
+    it('should submit site address is company address is null when user does not modify field', () => {
+      const project = siteAddressProject()
+      navigateToForm({ project: project })
+      cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, {
+        statusCode: 200,
+      }).as('patchProjectRequirements')
+      cy.get('[data-test="submit-button"]').click()
+      cy.wait('@patchProjectRequirements')
+        .its('request.body')
+        .should('include', {
+          site_address_is_company_address: null,
+        })
+    })
     it('should submit site address is company address is true only when user selects yes and uk company is null', () => {
       const project = siteAddressProject()
       navigateToForm({ project: project })
@@ -378,10 +391,10 @@ describe('Site address fields', () => {
         .its('request.body')
         .should('include', {
           site_address_is_company_address: true,
-          address_1: null,
-          address_2: null,
-          address_town: null,
-          address_postcode: null,
+          address_1: '',
+          address_2: '',
+          address_town: '',
+          address_postcode: '',
         })
     })
     it('should submit site address is company address is true and populate address fields when user selects yes and project has uk company', () => {

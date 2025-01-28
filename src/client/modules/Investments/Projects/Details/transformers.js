@@ -23,37 +23,34 @@ const setSiteAddressValues = (
   city,
   postcode
 ) => {
-  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === true) {
-    if (ukCompany) {
-      return {
-        address_1: ukCompany.address1,
-        address_2: ukCompany.address2,
-        address_town: ukCompany.addressTown,
-        address_postcode: ukCompany.addressPostcode,
-      }
-    } else {
-      return {
-        address_1: null,
-        address_2: null,
-        address_town: null,
-        address_postcode: null,
-      }
+  const siteAddressIsCompanyAddressBool = transformRadioOptionToBool(
+    siteAddressIsCompanyAddress
+  )
+  if (
+    siteAddressIsCompanyAddressBool === null ||
+    (siteAddressIsCompanyAddressBool === true && !ukCompany)
+  ) {
+    return {
+      address_1: '',
+      address_2: '',
+      address_town: '',
+      address_postcode: '',
     }
   }
-  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === false) {
+  if (siteAddressIsCompanyAddressBool === true && ukCompany) {
+    return {
+      address_1: ukCompany.address1,
+      address_2: ukCompany.address2,
+      address_town: ukCompany.addressTown,
+      address_postcode: ukCompany.addressPostcode,
+    }
+  }
+  if (siteAddressIsCompanyAddressBool === false) {
     return {
       address_1: address1,
       address_2: address2,
       address_town: city,
       address_postcode: postcode,
-    }
-  }
-  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === null) {
-    return {
-      address_1: null,
-      address_2: null,
-      address_town: null,
-      address_postcode: null,
     }
   }
 }
