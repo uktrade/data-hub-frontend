@@ -9,7 +9,7 @@ import urls from '../../../../lib/urls'
 
 import { INVESTMENT_OPPORTUNITY__UPDATED } from '../../../actions'
 
-import { convertDateToFieldDateObject } from '../../../utils/date'
+import { isoStringToDateParts } from '../../../utils/date'
 
 import Form from '../../../components/Form'
 import {
@@ -123,7 +123,7 @@ function OpportunityDetailsForm({ opportunityId, opportunity, dispatch }) {
                     name="requiredChecksConductedOn"
                     label="Date of most recent checks"
                     required="Enter a date"
-                    initialValue={convertDateToFieldDateObject(
+                    initialValue={isoStringToDateParts(
                       requiredChecksConductedOn
                     )}
                   />
