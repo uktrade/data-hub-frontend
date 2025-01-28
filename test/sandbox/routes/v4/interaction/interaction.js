@@ -17,6 +17,8 @@ import interactionWithExportCountries from '../../../fixtures/v4/interaction/int
 import interactionWithoutExportCountries from '../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json' assert { type: 'json' }
 import interactionWithBusIntel from '../../../fixtures/v4/interaction/interaction-with-business-intelligence.json' assert { type: 'json' }
 
+import { interactionByExportProject } from '../../../fixtures/v4/interaction/interaction-by-export-project.js'
+
 export const getInteractions = function (req, res) {
   if (req.query.contact_id) {
     return res.json(interactionByContactId)
@@ -30,6 +32,10 @@ export const getInteractions = function (req, res) {
     req.query.investment_project_id === '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
   ) {
     return res.json(interactionByInvestmentProjectId)
+  }
+
+  if (req.query.company_export_id === 'f5bc555e-0eba-4a7e-abe9-db89a78afc5c') {
+    return res.json(interactionByExportProject(req))
   }
 
   res.json(interactions)
