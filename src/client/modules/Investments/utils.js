@@ -60,3 +60,40 @@ export const convertEYBChoicesToLabels = (choices) => {
 
   throw new Error('Input must be null, a string, or array of strings')
 }
+
+/**
+ * Formats EYB lead proposed investment city to Title Case labels
+ * @param {string|null} city - Single string or null to format
+ * @returns {string|null} - Formatted string
+ */
+export const formatProposedInvestmentCity = (choices) => {
+  if (choices === null) {
+    return null
+  }
+  if (typeof choices !== 'string') {
+    throw new Error('Input must be null or a string')
+  }
+
+  const lowercaseWords = choices.toLowerCase().split('_')
+
+  const formattedWords = lowercaseWords.map((word) => {
+    // Handle special case for "-on-" or "-in-"
+    if (word.includes('-on-') || word.includes('-in-')) {
+      return word
+        .split('-')
+        .map((subWord, index) =>
+          index === 1
+            ? subWord
+            : subWord.charAt(0).toUpperCase() + subWord.slice(1)
+        )
+        .join('-')
+    }
+
+    if (word === 'of' || word === 'the' || word === 'and' || word === 'upon') {
+      return word // Keep lowercase for "of," "the,", "and" or "upon"
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first letter
+  })
+
+  return formattedWords.join(' ')
+}

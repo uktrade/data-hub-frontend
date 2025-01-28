@@ -1,4 +1,7 @@
-import { convertEYBChoicesToLabels } from '../utils'
+import {
+  convertEYBChoicesToLabels,
+  formatProposedInvestmentCity,
+} from '../utils'
 
 describe('convertEYBChoicesToLabels', () => {
   const validCases = [
@@ -38,6 +41,35 @@ describe('convertEYBChoicesToLabels', () => {
     it(`should throw an error for the input ${errorCase.input}`, () => {
       expect(() => {
         convertEYBChoicesToLabels(errorCase.input)
+      }).to.throw()
+    })
+  })
+})
+
+describe('formatProposedInvestmentCity', () => {
+  const validCases = [
+    { input: null, output: null },
+    { input: 'MILTON_KEYNES', output: 'Milton Keynes' },
+    { input: 'CITY_OF_EDINBURGH', output: 'City of Edinburgh' },
+    { input: 'MANCHESTER', output: 'Manchester' },
+    { input: 'ANTRIM_AND_NEWTONABBEY', output: 'Antrim and Newtonabbey' },
+    { input: 'ALEXANDER_THE_GREAT', output: 'Alexander the Great' },
+    { input: 'HENLEY-ON-THEMES', output: 'Henley-on-Themes' },
+    { input: 'NEWCASTLE_UPON_TYNE', output: 'Newcastle upon Tyne' },
+    { input: 'BARROW-IN-FURNESS', output: 'Barrow-in-Furness' },
+  ]
+  validCases.forEach((validCase) => {
+    it(`should output ${validCase.output} for the input ${validCase.input}`, () => {
+      expect(formatProposedInvestmentCity(validCase.input)).to.deep.equal(
+        validCase.output
+      )
+    })
+  })
+  const errorCases = [{ input: undefined }, { input: 123 }]
+  errorCases.forEach((errorCase) => {
+    it(`should throw an error for the input ${errorCase.input}`, () => {
+      expect(() => {
+        formatProposedInvestmentCity(errorCase.input)
       }).to.throw()
     })
   })
