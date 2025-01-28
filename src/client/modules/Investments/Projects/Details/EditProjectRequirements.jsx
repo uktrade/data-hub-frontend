@@ -224,14 +224,6 @@ const EditProjectRequirements = () => {
                           town: project.addressTown || '',
                           postcode: project.addressPostcode || '',
                         }}
-                        validate={(values, field, formFields) => {
-                          return validateFieldForStage(
-                            field,
-                            formFields,
-                            project,
-                            'Select a possible UK location'
-                          )
-                        }}
                       />
                     ),
                   }),
