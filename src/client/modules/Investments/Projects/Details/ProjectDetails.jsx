@@ -34,7 +34,6 @@ import InvestmentName from '../InvestmentName'
 
 const checkIfRequirementsStarted = (project) => {
   const requirementsArrays = [
-    project.actualUkRegions,
     project.competitorCountries,
     project.deliveryPartners,
     project.strategicDrivers,

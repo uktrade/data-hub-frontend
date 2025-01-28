@@ -41,6 +41,12 @@ const setupProjectFaker = (overrides) =>
         id: '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
       },
     ],
+    business_activities: [
+      {
+        name: 'Retail',
+        id: 'a2dbd807-ae52-421c-8d1d-88adfc7a506b',
+      },
+    ],
     referral_source_adviser: {
       name: 'Puck Head',
       first_name: 'Puck',
