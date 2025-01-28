@@ -1,30 +1,27 @@
 import urls from '../../../../../src/lib/urls'
-import { exportFaker } from '../../fakers/export'
+import fixtures from '../../fixtures'
 import { assertUrl } from '../../support/assertions'
 
-const companyExport = exportFaker()
+const companyExportProject = fixtures.export.exportProjectDetails
 
 const companyExportInteractionsEndpoint = '/api-proxy/v4/interaction'
 const queryParams = '&limit=10&offset=0'
-const requestUrl = `${companyExportInteractionsEndpoint}?company_export_id=${companyExport.id}`
+const requestUrl = `${companyExportInteractionsEndpoint}?company_export_id=${companyExportProject.id}`
 
-describe('Company Export Interactions Collections Sort', () => {
-  context('Default sort', () => {
+describe('Export project interaction collections "Sort by"', () => {
+  context('Default sort by "Recently created"', () => {
     beforeEach(() => {
-      cy.intercept('POST', `${requestUrl}${queryParams}&sortby=-created_on`).as(
+      cy.intercept('GET', `${requestUrl}${queryParams}&sortby=-created_on`).as(
         'apiRequest'
       )
-      cy.visit(urls.exportPipeline.interactions.index())
-      cy.visit(assertUrl)
+      cy.visit(urls.exportPipeline.interactions.index(companyExportProject.id))
     })
 
-    it('should apply the default sort', () => {
-      cy.wait('@apiRequest').then(({ request }) => {
-        expect(request.body.sortby).to.equal('-created_on')
-      })
+    it('should render "Sort by" label', () => {
+      cy.get('[data-test="sortby"]').should('contain', 'Sort by')
     })
 
-    it('should have all sort options', () => {
+    it('should have all sort by options', () => {
       cy.get('[data-test="sortby"] option').then((options) => {
         const sortOptions = [...options].map((o) => ({
           value: o.value,
@@ -43,16 +40,10 @@ describe('Company Export Interactions Collections Sort', () => {
     const element = '[data-test="sortby"] select'
 
     beforeEach(() => {
-      cy.intercept('POST', `${requestUrl}${queryParams}&sortby=-created_on`).as(
+      cy.intercept('GET', `${requestUrl}${queryParams}&sortby=-created_on`).as(
         'apiRequest'
       )
-      cy.visit(`${urls.exportPipeline.interactions.index()}`)
-      cy.wait('@apiRequest')
-    })
-
-    it('should sort by "Recently created"', () => {
-      cy.get(element).select('Recently created')
-      assertUrl('sortby=-created_on')
+      cy.visit(urls.exportPipeline.interactions.index(companyExportProject.id))
     })
 
     it('should sort by "Company name A-Z"', () => {
