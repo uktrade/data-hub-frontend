@@ -1,8 +1,6 @@
 import { STAGE } from '../../../../components/MyInvestmentProjects/constants'
 import { isFieldRequiredForStage } from '../validators'
 
-const { OPTION_YES } = require('../../../../../common/constants')
-
 export const totalInvestmentValidator = (value, foreignEquityInvestment) => {
   if (parseInt(value) < parseInt(foreignEquityInvestment)) {
     return 'Total investment must be >= to capital expenditure'
@@ -18,13 +16,14 @@ export const capitalExpenditureValidator = (value) => {
   return null
 }
 
-export const siteDecidedValidator = (field, formFields, project) => {
-  if (project?.stage?.id == STAGE.ACTIVE_ID && !formFields.values[field.name]) {
-    return 'Select a value for UK location decision'
-  }
+export const siteAddressIsCompanyAddressValidator = (
+  field,
+  formFields,
+  project
+) => {
   return isFieldRequiredForStage(field.name, project) &&
-    formFields.values[field.name] != OPTION_YES
-    ? 'A UK region is required'
+    !formFields.values[field.name]
+    ? "Select if the site address the same as the UK recipient company's address?"
     : null
 }
 

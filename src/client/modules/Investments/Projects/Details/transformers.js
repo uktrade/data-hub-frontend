@@ -15,26 +15,47 @@ const checkIfItemHasValueOrZero = (value) =>
 const setConditionalArrayValue = (radioValue, array) =>
   transformRadioOptionToBool(radioValue) ? array.map((x) => x.value) : []
 
-const setSiteDecidedSubValues = (
-  site_decided,
+const setSiteAddressValues = (
+  siteAddressIsCompanyAddress,
+  ukCompany,
   address1,
   address2,
   city,
   postcode
 ) => {
-  return transformRadioOptionToBool(site_decided)
-    ? {
-        address_1: address1,
-        address_2: address2,
-        address_town: city,
-        address_postcode: postcode,
+  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === true) {
+    if (ukCompany) {
+      return {
+        address_1: ukCompany.address1,
+        address_2: ukCompany.address2,
+        address_town: ukCompany.addressTown,
+        address_postcode: ukCompany.addressPostcode,
       }
-    : {
-        address_1: '',
-        address_2: '',
-        address_town: '',
-        address_postcode: '',
+    } else {
+      return {
+        address_1: null,
+        address_2: null,
+        address_town: null,
+        address_postcode: null,
       }
+    }
+  }
+  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === false) {
+    return {
+      address_1: address1,
+      address_2: address2,
+      address_town: city,
+      address_postcode: postcode,
+    }
+  }
+  if (transformRadioOptionToBool(siteAddressIsCompanyAddress) === null) {
+    return {
+      address_1: null,
+      address_2: null,
+      address_town: null,
+      address_postcode: null,
+    }
+  }
 }
 
 const checkLandDate = (estimatedLandDate) => {
@@ -73,9 +94,12 @@ export const transformBoolToRadioOptionWithNullCheck = (boolean) =>
 export const transformBoolToInvertedRadioOptionWithNullCheck = (boolean) =>
   boolean === null ? null : transformBoolToInvertedRadioOption(boolean)
 
-export const transformProjectRequirementsForApi = ({ projectId, values }) => {
+export const transformProjectRequirementsForApi = ({
+  projectId,
+  values,
+  ukCompany,
+}) => {
   const {
-    actual_uk_regions,
     address1,
     address2,
     city,
@@ -84,13 +108,14 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
     competitor_countries,
     delivery_partners,
     postcode,
-    site_decided,
+    site_address_is_company_address,
     strategic_drivers,
     uk_region_locations,
   } = values
 
-  const siteDecidedObject = setSiteDecidedSubValues(
-    site_decided,
+  const siteAddressObject = setSiteAddressValues(
+    site_address_is_company_address,
+    ukCompany,
     address1,
     address2,
     city,
@@ -99,10 +124,6 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
 
   const requirementsValues = {
     id: projectId,
-    actual_uk_regions: setConditionalArrayValue(
-      site_decided,
-      actual_uk_regions
-    ),
     client_considering_other_countries: transformRadioOptionToBoolWithNullCheck(
       client_considering_other_countries
     ),
@@ -114,7 +135,9 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
     delivery_partners: delivery_partners
       ? delivery_partners.map((x) => x.value)
       : [],
-    site_decided: transformRadioOptionToBoolWithNullCheck(site_decided),
+    site_address_is_company_address: transformRadioOptionToBoolWithNullCheck(
+      site_address_is_company_address
+    ),
     strategic_drivers: strategic_drivers
       ? strategic_drivers.map((x) => x.value)
       : [],
@@ -123,7 +146,7 @@ export const transformProjectRequirementsForApi = ({ projectId, values }) => {
       : [],
   }
 
-  return { ...siteDecidedObject, ...requirementsValues }
+  return { ...siteAddressObject, ...requirementsValues }
 }
 
 export const transformProjectSummaryForApi = ({

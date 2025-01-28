@@ -240,13 +240,6 @@ const ProjectDetails = ({ currentAdviserId }) => {
                     value={transformArray(project.ukRegionLocations)}
                   />
                 )}
-              {project.actualUkRegions &&
-                project.actualUkRegions.length > 0 && (
-                  <SummaryTable.TextRow
-                    heading="UK regions landed"
-                    value={transformArray(project.actualUkRegions)}
-                  />
-                )}
               <SummaryTable.TextRow
                 heading="UK recipient company"
                 value={
