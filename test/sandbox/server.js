@@ -312,6 +312,7 @@ import {
   getExportWinReview,
   patchExportWinReview,
 } from './routes/v4/export-win/export-win.js'
+import fixtures from '../functional/cypress/fixtures/index.js'
 
 // getaddress.io mock
 app.get('/sandbox/postcodelookup/', lookup)
@@ -573,6 +574,7 @@ app.post('/sandbox/reset-feature-flag', resetSandboxFlags)
 // V3 Interaction
 app.get('/v3/interaction', getInteractions)
 app.get('/v3/interaction/:interactionId', getInteractionById)
+// app.get('/v3/interaction/:companyExportId', getInteractions)
 app.post('/v3/interaction', createInteraction)
 app.post('/v3/interaction/:interactionId/archive', archiveInteraction)
 app.patch('/v3/interaction/:interactionId', archiveInteraction)
@@ -691,6 +693,7 @@ app.get('/v4/company/:companyId/objective/count', objectivesCount)
 // V4 interactions
 app.get('/v4/interaction', _getInteractions)
 app.get('/v4/interaction/:interactionId', _getInteractionById)
+// app.get('/v4/interaction/:companyExportId', _getInteractions)
 app.post('/v4/interaction', _createInteraction)
 app.post('/v4/interaction/:interactionId/archive', _archiveInteraction)
 app.patch('/v4/interaction/:interactionId', _archiveInteraction)
@@ -892,7 +895,13 @@ app.get('/v4/task/:taskId', getTask)
 app.post('/v4/task', createTask)
 app.patch('/v4/task/:taskId', updateTask)
 
-app.get('/v4/export', (req, res) => res.json({ count: 0, results: [] }))
+app.get('/v4/export/', (req, res) => res.json({ count: 0, results: [] }))
+
+app.get('/v4/export/:exportId', (req, res) => {
+  if (req.params.exportId === 'f5bc555e-0eba-4a7e-abe9-db89a78afc5c') {
+    res.json(fixtures.export.exportProjectDetails)
+  }
+})
 app.get('/v4/export/owner', (req, res) =>
   res.json([
     {
