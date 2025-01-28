@@ -48,8 +48,7 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
   ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
   ['export_revenue']: STAGE.VERIFY_WIN_ID,
-  ['site_decided']: STAGE.VERIFY_WIN_ID,
-  ['actual_uk_regions']: STAGE.VERIFY_WIN_ID,
+  ['site_address_is_company_address']: STAGE.VERIFY_WIN_ID,
   ['delivery_partners']: STAGE.VERIFY_WIN_ID,
   ['actual_land_date']: STAGE.VERIFY_WIN_ID,
   ['specific_programmes']: STAGE.VERIFY_WIN_ID,
@@ -139,7 +138,6 @@ export const INCOMPLETE_FIELDS = {
   address_1: 'Street',
   address_town: 'Town',
   address_postcode: 'Postcode',
-  actual_uk_regions: 'UK regions landed',
   actual_land_date: 'Actual land date',
   average_salary: 'Average salary of new jobs',
   client_cannot_provide_foreign_investment:
