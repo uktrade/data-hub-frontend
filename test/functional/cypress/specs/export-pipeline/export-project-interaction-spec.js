@@ -1,20 +1,51 @@
-import urls from '../../../../../src/lib/urls'
 import fixtures from '../../fixtures'
 import { assertUrl } from '../../support/assertions'
 
 const companyExportProject = fixtures.export.exportProjectDetails
-
-const companyExportInteractionsEndpoint = '/api-proxy/v4/interaction'
 const queryParams = '&limit=10&offset=0'
-const requestUrl = `${companyExportInteractionsEndpoint}?company_export_id=${companyExportProject.id}`
 
-describe('Export project interaction collections "Sort by"', () => {
+describe('Export project interaction collection list', () => {
+  context('When export project render with multiple interaction linked', () => {
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
+      ).as('apiRequest')
+      cy.visit(`/export/${companyExportProject.id}/interactions`)
+    })
+
+    it('should display the interactions list', () => {
+      cy.get('[data-test="collection-header-name').should(
+        'contain',
+        '1,233 interactions'
+      )
+    })
+
+    it('should show the current and number of pages', () => {
+      cy.contains('Page 1 of 124').should('be.visible')
+    })
+
+    it('should display 10 interactions per page', () => {
+      cy.get('[data-test="collection-item"]').should('have.length', 10)
+    })
+
+    it('should show the pagination', () => {
+      cy.get('[data-test="pagination"]').should('be.visible')
+      cy.get('[data-test="page-number-active"]').should('have.text', '1')
+      cy.get('[data-test="page-number"]').should('contain', '124')
+      cy.get('[data-test="next"]').should('have.text', 'Next page')
+    })
+  })
+})
+
+describe('Export interaction collections filters "Sort by"', () => {
   context('Default sort by "Recently created"', () => {
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}${queryParams}&sortby=-created_on`).as(
-        'apiRequest'
-      )
-      cy.visit(urls.exportPipeline.interactions.index(companyExportProject.id))
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
+      ).as('apiRequest')
+      cy.visit(`/export/${companyExportProject.id}/interactions`)
     })
 
     it('should render "Sort by" label', () => {
@@ -36,14 +67,15 @@ describe('Export project interaction collections "Sort by"', () => {
     })
   })
 
-  context('User sort', () => {
+  context('Other sort by filters', () => {
     const element = '[data-test="sortby"] select'
 
     beforeEach(() => {
-      cy.intercept('GET', `${requestUrl}${queryParams}&sortby=-created_on`).as(
-        'apiRequest'
-      )
-      cy.visit(urls.exportPipeline.interactions.index(companyExportProject.id))
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
+      ).as('apiRequest')
+      cy.visit(`/export/${companyExportProject.id}/interactions`)
     })
 
     it('should sort by "Company name A-Z"', () => {
