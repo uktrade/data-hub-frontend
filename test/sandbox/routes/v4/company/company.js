@@ -257,7 +257,6 @@ export const exportDetail = function (req, res) {
   } else if (exportId === companyWithExportProjectDetails.id) {
     res.json(companyWithExportProjectDetails)
   } else {
-    //Throw error message
     res.status(400).json(errorResponse)
   }
 }

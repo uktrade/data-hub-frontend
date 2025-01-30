@@ -19,17 +19,13 @@ describe('Export project interaction collection list', () => {
         'contain',
         '1,233 interactions'
       )
-    })
-
-    it('should show the current and number of pages', () => {
+      // should show current and total pages
       cy.contains('Page 1 of 124').should('be.visible')
-    })
 
-    it('should display 10 interactions per page', () => {
+      // should display 10 interactions per page
       cy.get('[data-test="collection-item"]').should('have.length', 10)
-    })
 
-    it('should show the pagination', () => {
+      // should show the pagination
       cy.get('[data-test="pagination"]').should('be.visible')
       cy.get('[data-test="page-number-active"]').should('have.text', '1')
       cy.get('[data-test="page-number"]').should('contain', '124')
@@ -39,7 +35,9 @@ describe('Export project interaction collection list', () => {
 })
 
 describe('Export interaction collections filters "Sort by"', () => {
-  context('Default sort by "Recently created"', () => {
+  context('Sort by filters with default "Recently created"', () => {
+    const element = '[data-test="sortby"] select'
+
     beforeEach(() => {
       cy.intercept(
         'GET',
@@ -64,18 +62,6 @@ describe('Export interaction collections filters "Sort by"', () => {
           { value: 'subject', name: 'Subject A-Z' },
         ])
       })
-    })
-  })
-
-  context('Other sort by filters', () => {
-    const element = '[data-test="sortby"] select'
-
-    beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
-      ).as('apiRequest')
-      cy.visit(`/export/${companyExportProject.id}/interactions`)
     })
 
     it('should sort by "Company name A-Z"', () => {
