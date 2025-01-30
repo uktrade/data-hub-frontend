@@ -122,7 +122,7 @@
   "client_cannot_provide_total_investment": false,
   "client_cannot_provide_foreign_investment": false,
   "client_requirements": "Anywhere",
-  "site_address_is_company_address": false,
+  "site_decided": true,
   "address_1": "10 Eastings Road",
   "address_2": null,
   "address_town": "London",
@@ -135,6 +135,12 @@
   ],
   "allow_blank_possible_uk_regions": false,
   "uk_region_locations": [
+    {
+      "name": "North East",
+      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+    }
+  ],
+  "actual_uk_regions": [
     {
       "name": "North East",
       "id": "814cd12a-6095-e211-a939-e4115bead28a"

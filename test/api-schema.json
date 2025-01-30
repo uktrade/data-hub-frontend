@@ -7506,7 +7506,7 @@
             "type": "string",
             "nullable": true
           },
-          "site_address_is_company_address": {
+          "site_decided": {
             "type": "boolean",
             "nullable": true
           },
@@ -7542,6 +7542,12 @@
             "description": "Controls whether possible UK regions is a required field (after the prospect stage). Intended for projects migrated from CDMS in the verify win and won stages where legacy data for possible UK regions does not exist."
           },
           "uk_region_locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "actual_uk_regions": {
             "type": "array",
             "items": {
               "type": "string"
@@ -9520,7 +9526,13 @@
             "nullable": true
           },
           "hiring": {
-            "enum": ["1-5", "6-50", "51-100", "101+", "NO_PLANS_TO_HIRE_YET"],
+            "enum": [
+              "1-5",
+              "6-50",
+              "51-100",
+              "101+",
+              "NO_PLANS_TO_HIRE_YET"
+            ],
             "type": "string"
           },
           "spend": {

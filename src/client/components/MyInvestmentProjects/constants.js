@@ -48,7 +48,8 @@ export const GET_REQUIRED_FIELDS_AFTER_STAGE = {
   ['non_fdi_r_and_d_budget']: STAGE.VERIFY_WIN_ID,
   ['new_tech_to_uk']: STAGE.VERIFY_WIN_ID,
   ['export_revenue']: STAGE.VERIFY_WIN_ID,
-  ['site_address_is_company_address']: STAGE.VERIFY_WIN_ID,
+  ['site_decided']: STAGE.VERIFY_WIN_ID,
+  ['actual_uk_regions']: STAGE.VERIFY_WIN_ID,
   ['delivery_partners']: STAGE.VERIFY_WIN_ID,
   ['actual_land_date']: STAGE.VERIFY_WIN_ID,
   ['specific_programmes']: STAGE.VERIFY_WIN_ID,
@@ -135,11 +136,10 @@ export const INCOMPLETE_FIELDS = {
     'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
   export_revenue:
     'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
-  site_address_is_company_address:
-    "Is the site address the same as the UK recipient company's address?",
   address_1: 'Street',
   address_town: 'Town',
   address_postcode: 'Postcode',
+  actual_uk_regions: 'UK regions landed',
   actual_land_date: 'Actual land date',
   average_salary: 'Average salary of new jobs',
   client_cannot_provide_foreign_investment:

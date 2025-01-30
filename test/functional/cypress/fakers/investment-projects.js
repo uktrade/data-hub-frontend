@@ -83,7 +83,6 @@ const investmentProjectFaker = (overrides = {}) => ({
     sector_classification_gva_multiplier: 'labour',
     id: faker.string.uuid(),
   },
-  specific_programmes: [],
   ...overrides,
 })
 
@@ -121,10 +120,11 @@ const investmentProjectEmptyFaker = (overrides = {}) =>
     non_fdi_r_and_d_budget: null,
     new_tech_to_uk: null,
     export_revenue: null,
-    site_address_is_company_address: null,
+    site_decided: null,
     address_1: null,
     address_town: null,
     address_postcode: null,
+    actual_uk_regions: null,
     delivery_partners: null,
     actual_land_date: null,
     specific_programmes: null,
