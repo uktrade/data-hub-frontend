@@ -95,12 +95,12 @@ export const mapFieldToUrl = (field, projectId) => {
     'Foreign equity investment',
   ]
   const requirementsFields = [
+    'UK regions landed',
     'Is the client considering other countries?',
     'Client requirements',
     'Delivery partners',
     'Strategic drivers behind this investment',
     'Possible UK locations for this investment',
-    "Is the site address the same as the UK recipient company's address?",
     'Street',
     'Town',
     'Postcode',

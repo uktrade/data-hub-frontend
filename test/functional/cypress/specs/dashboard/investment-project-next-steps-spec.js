@@ -87,7 +87,7 @@ describe('Dashboard - Investment project next steps', () => {
         .find('ul li')
         .should(
           'have.text',
-          'Actual land dateAverage salary of new jobsCan client provide capital expenditure value?Plus 23 additional fields'
+          'Actual land dateAverage salary of new jobsCan client provide capital expenditure value?Plus 24 additional fields'
         )
     })
     it('should display a link to the project details page', () => {

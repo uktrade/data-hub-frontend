@@ -89,11 +89,7 @@ export const FIELDS = {
     name: 'uk_region_locations',
     message: 'Select a possible UK location',
   },
-  SITE_ADDRESS_IS_COMPANY_ADDRESS: {
-    name: 'site_address_is_company_address',
-    message:
-      "Select if the site address the same as the UK recipient company's address",
-  },
+
   ADDRESS1: { name: 'address1', message: 'Enter an address' },
   CITY: { name: 'city', message: 'Enter a town or city' },
   POSTCODE: { name: 'postcode', message: 'Enter a postcode' },
@@ -173,7 +169,7 @@ export const EDIT_REQUIREMENTS_BASE_FIELDS = [
 export const EDIT_REQUIREMENTS_ADDITIONAL_FIELDS = [
   ...EDIT_REQUIREMENTS_BASE_FIELDS,
   FIELDS.DELIVERY_PARTNERS,
-  FIELDS.SITE_ADDRESS_IS_COMPANY_ADDRESS,
+  { name: 'site_decided', message: 'A UK region is required' },
 ]
 
 export const EDIT_VALUE_BASE_FIELDS = [

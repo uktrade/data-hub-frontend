@@ -31,7 +31,7 @@ function assertRequiredFieldsForStages(
   buttonName
 ) {
   stageRequiredFields.forEach((stageRequiredField) => {
-    const [stage, requiredFields, siteAddressIsCompanyAddress = false] =
+    const [stage, requiredFields, ukLocationRequired = false] =
       stageRequiredField
 
     context(`In the ${stage.name} stage `, () => {
@@ -59,12 +59,13 @@ function assertRequiredFieldsForStages(
         )
       })
 
-      if (siteAddressIsCompanyAddress) {
-        it('submitting an empty form with site_address_is_company_address set to No should show address validation errors', () => {
-          cy.get('[data-test="site-address-is-company-address-no"]').click()
+      if (ukLocationRequired) {
+        it('submitting an empty form with site_decide set to Yes should show address validation errors', () => {
+          cy.get('[data-test="site-decided-yes"]').click()
           cy.get('[data-test="submit-button"]').click()
 
           assertValidationMessages([
+            FIELDS.SITE_DECIDED,
             FIELDS.ADDRESS1,
             FIELDS.CITY,
             FIELDS.POSTCODE,
@@ -101,7 +102,17 @@ describe('Field validation for each stage', () => {
         EDIT_REQUIREMENTS_BASE_FIELDS,
         false,
       ],
-      [INVESTMENT_PROJECT_STAGES.active, EDIT_REQUIREMENTS_BASE_FIELDS, false],
+      [
+        INVESTMENT_PROJECT_STAGES.active,
+        [
+          ...EDIT_REQUIREMENTS_BASE_FIELDS,
+          {
+            name: 'site_decided',
+            message: 'Select a value for UK location decision',
+          },
+        ],
+        false,
+      ],
       [
         INVESTMENT_PROJECT_STAGES.verifyWin,
         EDIT_REQUIREMENTS_ADDITIONAL_FIELDS,
