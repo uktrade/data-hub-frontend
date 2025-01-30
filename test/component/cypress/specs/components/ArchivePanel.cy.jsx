@@ -20,6 +20,24 @@ const unarchiveUrl = 'https://www.example.com'
 const archiveReason = 'No longer needed'
 const prefixedArchiveReason = 'Reason: ' + archiveReason
 
+const assertArchiveMessage = (message) => {
+  cy.get('[data-test="archive-message"]')
+    .should('exist')
+    .should('have.text', message)
+}
+
+const assertArchiveReason = () => {
+  cy.get('[data-test=archive-reason]')
+    .should('exist')
+    .should('have.text', prefixedArchiveReason)
+}
+
+const assertUnarchiveLink = () => {
+  cy.get('[data-test=unarchive-link]')
+    .should('exist')
+    .should('have.attr', 'href', unarchiveUrl)
+}
+
 describe('ArchivePanel', () => {
   const Component = (props) => (
     <ArchivePanel
@@ -127,21 +145,3 @@ describe('ArchivePanel', () => {
     })
   })
 })
-
-const assertArchiveMessage = (message) => {
-  cy.get('[data-test="archive-message"]')
-    .should('exist')
-    .should('have.text', message)
-}
-
-const assertArchiveReason = () => {
-  cy.get('[data-test=archive-reason]')
-    .should('exist')
-    .should('have.text', prefixedArchiveReason)
-}
-
-const assertUnarchiveLink = () => {
-  cy.get('[data-test=unarchive-link]')
-    .should('exist')
-    .should('have.attr', 'href', unarchiveUrl)
-}
