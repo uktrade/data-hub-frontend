@@ -106,7 +106,6 @@ describe('Investment project details', () => {
           'Client requirements': 'Anywhere',
           'Competitor countries': 'Netherlands',
           'Possible UK locations': 'North East',
-          'UK regions landed': 'North East',
           'UK recipient company': 'Mercury LtdEdit companyRemove company',
           'Delivery partners': 'New Anglia LEP, North Eastern LEP',
         },

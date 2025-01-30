@@ -34,7 +34,6 @@ import InvestmentName from '../InvestmentName'
 
 const checkIfRequirementsStarted = (project) => {
   const requirementsArrays = [
-    project.actualUkRegions,
     project.competitorCountries,
     project.deliveryPartners,
     project.strategicDrivers,
@@ -238,13 +237,6 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   <SummaryTable.TextRow
                     heading="Possible UK locations"
                     value={transformArray(project.ukRegionLocations)}
-                  />
-                )}
-              {project.actualUkRegions &&
-                project.actualUkRegions.length > 0 && (
-                  <SummaryTable.TextRow
-                    heading="UK regions landed"
-                    value={transformArray(project.actualUkRegions)}
                   />
                 )}
               <SummaryTable.TextRow
