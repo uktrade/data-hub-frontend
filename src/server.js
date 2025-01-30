@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const express = require('express')
 const flash = require('connect-flash')
-const csrf = require('csurf')
+const { doubleCsrf } = require('csrf-csrf')
 
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
@@ -146,9 +146,12 @@ app.use(store())
 apiProxy(app)
 helpCentreApiProxy(app)
 // csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
-app.use(csrf())
+const doubleCsrfOptions = { getSecret: () => config.csrfToken }
+const { doubleCsrfProtection } = doubleCsrf(doubleCsrfOptions)
+app.use(doubleCsrfProtection)
 app.use(csrfToken())
 app.use(reactGlobalProps())
+
 // routing
 app.use(fixSlashes())
 app.use(routers)

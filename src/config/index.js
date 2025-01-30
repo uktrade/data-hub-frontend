@@ -89,6 +89,7 @@ const config = {
     user: envVars.BASIC_AUTH_USER,
     password: envVars.BASIC_AUTH_PASSWORD,
   },
+  csrfSecret: envVars.CSRF_SECRET,
   hawkCredentials: {
     dataHubBackend: {
       id: envVars.DATA_HUB_BACKEND_ACCESS_KEY_ID,
