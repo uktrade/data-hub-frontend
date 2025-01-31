@@ -42,7 +42,9 @@ import {
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
 import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_DETAILS } from './modules/Events/EventAventriDetails/state'
+import { TASK_GET_STOVA_EVENT_DETAILS } from './modules/Events/StovaEventDetails/state'
 import { getEventAventriDetails } from './modules/Events/EventAventriDetails/tasks'
+import { getStovaEventDetails } from './modules/Events/StovaEventDetails/tasks'
 import { TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES } from './modules/Events/EventAventriRegistrationStatus/state'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
@@ -551,6 +553,7 @@ export const tasks = {
   [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
   [TASK_GET_EVENT_DETAILS]: getEventDetails,
   [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
+  [TASK_GET_STOVA_EVENT_DETAILS]: getStovaEventDetails,
   [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
     getEventAventriRegistrationStatusAttendees,
   [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,

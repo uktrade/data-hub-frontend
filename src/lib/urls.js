@@ -379,6 +379,10 @@ module.exports = {
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
     addAttendee: url('/events', '/:eventId/attendees/create/:contactId'),
+    stova: {
+      details: url('/events', '/stova/:stovaEventId/details'),
+      attendees: url('/events', '/stova/:stovaEventId/attendees'),
+    },
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),

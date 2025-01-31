@@ -6,6 +6,7 @@ import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
 import EventAventriDetails from './modules/Events/EventAventriDetails'
+import StovaEventDetails from './modules/Events/StovaEventDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
@@ -457,6 +458,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:events'}>
           <EventAventriDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/events/stova/:stovaEventId/details',
+      element: (
+        <ProtectedRoute module={'datahub:events'}>
+          <StovaEventDetails />
         </ProtectedRoute>
       ),
     },
