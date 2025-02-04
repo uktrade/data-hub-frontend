@@ -462,7 +462,7 @@ function Routes() {
       ),
     },
     {
-      path: '/events/stova/:stovaEventId/details',
+      path: '/events/stova/:stovaEventId/*',
       element: (
         <ProtectedRoute module={'datahub:events'}>
           <StovaEventDetails />
