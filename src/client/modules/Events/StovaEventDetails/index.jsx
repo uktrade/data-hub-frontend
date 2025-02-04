@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { GridCol, GridRow } from 'govuk-react'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash'
+import { useParams } from 'react-router-dom'
 
 import urls from '../../../../lib/urls'
 import { TASK_GET_STOVA_EVENT_DETAILS, ID, state2props } from './state'
@@ -25,6 +26,7 @@ const EventDetails = ({ name, ...props }) => {
         <GridCol setWidth="one-quarter"></GridCol>
         <GridCol setWidth="three-quarters">
           <StyledSummaryTable>
+            <SummaryTable.Row heading="Name" children={name} />
             <SummaryTable.Row heading="Event date" children={props.eventDate} />
             <SummaryTable.Row
               heading="Event location type"
@@ -57,6 +59,8 @@ const EventDetails = ({ name, ...props }) => {
 }
 
 const StovaEventDetails = ({ name, ...props }) => {
+  const { stovaEventId } = useParams()
+
   const breadcrumbs = [
     {
       link: urls.dashboard.index(),
@@ -83,7 +87,7 @@ const StovaEventDetails = ({ name, ...props }) => {
         id={ID}
         progressMessage="loading stova event details"
         startOnRender={{
-          payload: props.stovaEventId,
+          payload: stovaEventId,
           onSuccessDispatch: EVENTS__STOVA_DETAILS_LOADED,
         }}
       >
@@ -95,7 +99,7 @@ const StovaEventDetails = ({ name, ...props }) => {
               label="Event tab navigation"
               selectedIndex="attendees"
               tabs={{
-                [`/events/stova/${props.stovaEventId}/details`]: {
+                [`/events/stova/${stovaEventId}/details`]: {
                   label: 'Details',
                   content: <EventDetails {...props} />,
                 },
