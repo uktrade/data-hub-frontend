@@ -21,6 +21,7 @@ import EYBLead from './EYBLead'
 import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
 import Event from './Event'
+import StovaEvent from './StovaEvent'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
@@ -131,6 +132,7 @@ export default {
   ...ExperienceCategories.tasks,
   ...ExportExperienceCategories.tasks,
   ...Event.tasks,
+  ...StovaEvent.tasks,
   ...ExportYears.tasks,
   ...ExportWin.tasks,
   ...ExportOwner.tasks,

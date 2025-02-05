@@ -105,6 +105,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/propositions/:propositionId/document/:documentId/delete',
   '/events/:eventId/attendees/find-new',
   '/events/stova/:stovaEventId/details',
+  '/events/stova/:stovaEventId/attendees',
   '/interactions/ess/:essInteractionId/details',
   '/investments/opportunities/create',
   '/investments/opportunities/:opportunityId/status',
