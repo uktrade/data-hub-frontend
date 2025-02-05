@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const DefaultLayout = ({
+  superheading,
   heading,
   headingLink,
   subheading,
@@ -48,6 +49,7 @@ const DefaultLayout = ({
         localHeader
       ) : (
         <LocalHeader
+          superheading={superheading}
           heading={heading}
           headingLink={headingLink}
           subheading={subheading}
