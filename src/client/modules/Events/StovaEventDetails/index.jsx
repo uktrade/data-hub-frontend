@@ -284,6 +284,9 @@ const StovaEventDetails = ({ name }) => {
             text: 'Events',
           },
           {
+            text: stovaEvent.name,
+          },
+          {
             text: { details: 'Details', attendees: 'Attendees' }[path],
           },
         ]
