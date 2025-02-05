@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react'
 
 import { TASK_GET_REMINDER_SUMMARY } from '../../../../src/client/components/NotificationAlert/state'
 import { INITIAL_STATE } from '../../../../src/client/components/NotificationAlert/reducer'
