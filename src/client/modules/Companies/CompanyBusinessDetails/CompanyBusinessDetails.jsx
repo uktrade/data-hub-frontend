@@ -24,6 +24,7 @@ import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import Task from '../../../components/Task'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
+import { canEditOneList, isOneListAccountOwner } from './utils'
 
 import {
   ID,
@@ -50,14 +51,6 @@ const lastUpdated = (company) =>
     .filter(Boolean)
     .sort()
     .reverse()[0]
-const canEditOneList = (company, user, permissions) =>
-  company.oneListAccountOwner == user ||
-  (permissions &&
-    permissions.includes('company.change_company') &&
-    permissions.includes('company.change_one_list_core_team_member') &&
-    permissions.includes(
-      'company.change_one_list_tier_and_global_account_manager'
-    ))
 
 const COMPANY_DISSOLVED_OPTION = 'Company is dissolved'
 
@@ -66,7 +59,7 @@ const CompanyBusinessDetails = ({
   isDnbPending,
   csrfToken,
   userPermissions,
-  user,
+  currentAdviserId,
 }) => {
   const { companyId } = useParams()
   return (
@@ -201,7 +194,8 @@ const CompanyBusinessDetails = ({
                   )
                 }
               </Task.Status>
-              {canEditOneList(company, user, userPermissions) && (
+              {(isOneListAccountOwner(company, currentAdviserId) ||
+                canEditOneList(userPermissions)) && (
                 <Button as={'a'} href={urls.companies.editOneList(companyId)}>
                   Edit One List Information
                 </Button>
