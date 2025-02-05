@@ -16,6 +16,7 @@ import interactionInvestmentTheme from '../../../fixtures/v4/interaction/interac
 import interactionWithExportCountries from '../../../fixtures/v4/interaction/interaction-with-export-countries.json' assert { type: 'json' }
 import interactionWithoutExportCountries from '../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json' assert { type: 'json' }
 import interactionWithBusIntel from '../../../fixtures/v4/interaction/interaction-with-business-intelligence.json' assert { type: 'json' }
+import interactionStovaEvent from '../../../fixtures/v4/interaction/interaction-with-stova-event.json' assert { type: 'json' }
 
 export const getInteractions = function (req, res) {
   if (req.query.contact_id) {
@@ -48,6 +49,7 @@ export const getInteractionById = function (req, res) {
     'c58d8d92-5340-436f-a7f0-5ca08d91b078': interactionWithExportCountries,
     'c58d8d92-5340-436f-a7f0-5ca08d91b079': interactionWithoutExportCountries,
     '54281b53-ee73-48bc-a09e-281e9b7c5f00': interactionWithBusIntel,
+    '2b7331f3-c065-4b8e-8c66-ff49cd3acc28': interactionStovaEvent,
   }
 
   var interactionResponse =
