@@ -91,7 +91,6 @@ const EventDetails = ({ stovaEvent }) => {
       <H3 as="h2">Stova Event Details</H3>
       <AventriEventSyncWarning stovaEventId={stovaEvent.stovaEventId} />
       <GridRow data-test="eventAventriDetails">
-        <GridCol setWidth="one-quarter"></GridCol>
         <GridCol setWidth="three-quarters">
           <StyledSummaryTable>
             <SummaryTable.Row heading="Name" children={stovaEvent.name} />
