@@ -210,7 +210,7 @@
     "seedrandom": "^3.0.5",
     "sharp": "^0.33.5",
     "sinon": "^19.0.2",
-    "sinon-chai": "^3.7.0",
+    "sinon-chai": "^4.0.0",
     "std-mocks": "^2.0.0",
     "storybook": "^8.5.0",
     "supertest": "^7.0.0",
