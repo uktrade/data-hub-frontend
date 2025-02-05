@@ -268,7 +268,7 @@ const EventDetails = ({ stovaEvent, stovaLink }) => {
 }
 
 const StovaEventDetails = ({ name }) => {
-  const { stovaEventId } = useParams()
+  const { stovaEventId, ['*']: path } = useParams()
 
   return (
     <StovaEventResource id={stovaEventId}>
@@ -284,7 +284,7 @@ const StovaEventDetails = ({ name }) => {
             text: 'Events',
           },
           {
-            text: stovaEvent.name,
+            text: { details: 'Details', attendees: 'Attendees' }[path],
           },
         ]
         return (
