@@ -12,7 +12,6 @@ import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { VerticalTabNav } from '../../../components/TabNav'
 import { formatStartAndEndDate } from '../../../components/ActivityFeed/activities/date'
 import { StovaEventResource } from '../../../components/Resource'
-import StatusMessage from '../../../components/StatusMessage'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -29,13 +28,9 @@ const ATTENDEE_SORT_OPTIONS = [
   { name: 'Least recently added', value: 'created_on' },
 ]
 
-const Attendees = ({ datahubEventId, stovaLink }) => (
+const Attendees = ({ datahubEventId }) => (
   <div>
     <H3 as="h2">Stova Event Attendees</H3>
-    <StatusMessage>
-      Attendees must be added via Stova. <br />
-      <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
-    </StatusMessage>
     <InteractionsV3.Paginated
       id="???"
       heading="attendee"
@@ -89,15 +84,6 @@ const Attendees = ({ datahubEventId, stovaLink }) => (
 const EventDetails = ({ stovaEvent, stovaLink }) => {
   return (
     <>
-      <H3 as="h2">Stova Event Details</H3>
-      <StatusMessage>
-        <div>This event has been automatically synced from Stova.</div>
-        <div>
-          Event details, registrants and attendees can only be edited in Stova.
-          Changes can take up to 24 hours to sync.
-        </div>
-        <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
-      </StatusMessage>
       <StyledSummaryTable>
         <SummaryTable.Row heading="Name" children={stovaEvent.name} />
         <SummaryTable.Row
@@ -267,7 +253,7 @@ const EventDetails = ({ stovaEvent, stovaLink }) => {
   )
 }
 
-const StovaEventDetails = ({ name }) => {
+const StovaEventDetails = () => {
   const { stovaEventId, ['*']: path } = useParams()
 
   return (
@@ -292,10 +278,23 @@ const StovaEventDetails = ({ name }) => {
         ]
         return (
           <DefaultLayout
-            heading={name}
+            heading={stovaEvent.name}
             pageTitle="Events"
             breadcrumbs={breadcrumbs}
             useReactRouter={true}
+            flashMessages={[
+              [
+                <>
+                  This event has been automatically synced from Stova.
+                  <br />
+                  Event details and attendees can only be edited in Stova.
+                  <br />
+                  <NewWindowLink href={stovaLink}>
+                    View Event in Stova
+                  </NewWindowLink>
+                </>,
+              ],
+            ]}
           >
             <VerticalTabNav
               routed={true}
