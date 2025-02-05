@@ -286,6 +286,39 @@ describe('Interaction details', () => {
     assertCannotCompleteTextNotVisible()
   })
 
+  context('Interaction for a stova event', () => {
+    const params = {}
+
+    beforeEach(() => {
+      params.companyId = fixtures.company.venusLtd.id
+      params.interactionId = fixtures.interaction.withStovaEvent.id
+
+      cy.visit(
+        `/companies/${params.companyId}/interactions/${params.interactionId}`
+      )
+    })
+    it('should have a stova url for stova events', () => {
+      assertSummaryTable({
+        dataTest: 'interaction-details-table',
+        heading: null,
+        showEditLink: false,
+        content: {
+          Company: companyObject,
+          'Contact(s)': {
+            href: contacts.details('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
+            name: 'Johnny Cakeman',
+          },
+          Service: 'Events - UK based',
+          Notes: 'This is a dummy service delivery for testing',
+          'Date of service delivery': '5 September 2017',
+          Event: {
+            href: events.stova.details('22cf10ad-0af6-487b-b7a2-325a8830a009'),
+            name: 'Stova Grand exhibition',
+          },
+        },
+      })
+    })
+  })
   context('Complete investment project interaction', () => {
     const params = {}
 

@@ -115,7 +115,15 @@ const InteractionDetails = ({ interactionId }) => {
                 heading="Event"
                 children={
                   interaction.isEvent ? (
-                    <Link href={urls.events.details(interaction.event.id)}>
+                    <Link
+                      href={
+                        interaction.event.stovaEventId
+                          ? urls.events.stova.details(
+                              interaction.event.stovaEventId
+                            )
+                          : urls.events.details(interaction.event.id)
+                      }
+                    >
                       {interaction.event.name}
                     </Link>
                   ) : (
