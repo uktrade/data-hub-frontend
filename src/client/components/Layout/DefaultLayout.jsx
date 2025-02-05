@@ -45,19 +45,23 @@ const DefaultLayout = ({
         showVerticalNav={showVerticalNav}
         onShowVerticalNav={setShowVerticalNav}
       />
-      <LocalHeader
-        superheading={superheading}
-        heading={heading}
-        headingLink={headingLink}
-        subheading={subheading}
-        flashMessages={flashMessages}
-        breadcrumbs={
-          breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
-        }
-        useReactRouter={useReactRouter}
-      >
-        {localHeaderChildren}
-      </LocalHeader>
+      {localHeader ? (
+        localHeader
+      ) : (
+        <LocalHeader
+          superheading={superheading}
+          heading={heading}
+          headingLink={headingLink}
+          subheading={subheading}
+          flashMessages={flashMessages}
+          breadcrumbs={
+            breadcrumbs || [{ link: '/', text: 'Home' }, { text: heading }]
+          }
+          useReactRouter={useReactRouter}
+        >
+          {localHeaderChildren}
+        </LocalHeader>
+      )}
       <Main>
         <GridRow>
           <GridCol>{children}</GridCol>
