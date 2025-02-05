@@ -28,6 +28,14 @@ updates:
       - dependency-name: nivo/core # CPS-639
         versions:
           - '> 0.87.0'
+      
+      # We can't upgrade to the latest chai version without rebuilding the whole app
+      - dependency-name: chai
+        versions:
+          - '>= 5.0.0'
+      - dependency-name: sinon-chai
+        versions:
+          - '>= 3.7.0'
 
       # These are part of dependency groups and should be updated via the relevant script.
       - dependency-name: '@storybook/addon-a11y'
@@ -43,6 +51,9 @@ updates:
         versions:
           - '>= 0'
       - dependency-name: '@storybook/manager-api'
+        versions:
+          - '>= 0'
+      - dependency-name: '@storybook/test'
         versions:
           - '>= 0'
       - dependency-name: 'storybook'
