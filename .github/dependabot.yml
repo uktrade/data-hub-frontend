@@ -45,6 +45,9 @@ updates:
       - dependency-name: '@storybook/manager-api'
         versions:
           - '>= 0'
+      - dependency-name: '@storybook/test'
+        versions:
+          - '>= 0'
       - dependency-name: 'storybook'
         versions:
           - '>= 0'

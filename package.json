@@ -42,7 +42,7 @@
     "adr-list": "adr list",
     "adr-graph": "adr generate graph",
     "adr-toc": "adr generate toc",
-    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addon-webpack5-compiler-babel@latest @storybook/manager-api@latest @storybook/react@latest @storybook/react-webpack5@latest storybook@latest",
+    "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addon-webpack5-compiler-babel@latest @storybook/manager-api@latest @storybook/react@latest @storybook/react-webpack5@latest @storybook/test@latest storybook@latest",
     "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest",
     "dependabot:update-nivo": "npm install @nivo/core@latest @nivo/pie@latest @nivo/tooltip@latest"
   },
@@ -169,6 +169,7 @@
     "@storybook/manager-api": "^8.5.3",
     "@storybook/react": "^8.5.3",
     "@storybook/react-webpack5": "^8.5.3",
+    "@storybook/test": "^8.5.3",
     "babel-loader": "^9.2.1",
     "babel-plugin-istanbul": "7.0.0",
     "chai": "^4.5.0",
