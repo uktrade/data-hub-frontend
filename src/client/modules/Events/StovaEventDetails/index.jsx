@@ -1,6 +1,6 @@
 import React from 'react'
 import { compact, isEmpty } from 'lodash'
-import { GridCol, GridRow, H3, Link } from 'govuk-react'
+import { H3, Link } from 'govuk-react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 
@@ -11,7 +11,6 @@ import { DefaultLayout, NewWindowLink, SummaryTable } from '../../../components'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { VerticalTabNav } from '../../../components/TabNav'
 import { formatStartAndEndDate } from '../../../components/ActivityFeed/activities/date'
-import AventriEventSyncWarning from '../../../components/ActivityFeed/activities/AventriEventSyncWarning'
 import { StovaEventResource } from '../../../components/Resource'
 import StatusMessage from '../../../components/StatusMessage'
 
@@ -30,10 +29,13 @@ const ATTENDEE_SORT_OPTIONS = [
   { name: 'Least recently added', value: 'created_on' },
 ]
 
-const Attendees = ({ datahubEventId }) => (
+const Attendees = ({ datahubEventId, stovaLink }) => (
   <div>
     <H3 as="h2">Stova Event Attendees</H3>
-    <StatusMessage>Attendees must be added via Stova.</StatusMessage>
+    <StatusMessage>
+      Attendees must be added via Stova. <br />
+      <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
+    </StatusMessage>
     <InteractionsV3.Paginated
       id="???"
       heading="attendee"
@@ -84,201 +86,183 @@ const Attendees = ({ datahubEventId }) => (
   </div>
 )
 
-const EventDetails = ({ stovaEvent }) => {
-  const aventriEventLink = `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaEvent.stovaEventId}`
+const EventDetails = ({ stovaEvent, stovaLink }) => {
   return (
     <>
       <H3 as="h2">Stova Event Details</H3>
-      <AventriEventSyncWarning stovaEventId={stovaEvent.stovaEventId} />
-      <GridRow data-test="eventAventriDetails">
-        <GridCol setWidth="three-quarters">
-          <StyledSummaryTable>
-            <SummaryTable.Row heading="Name" children={stovaEvent.name} />
-            <SummaryTable.Row
-              heading="Event date"
-              children={formatStartAndEndDate(
-                stovaEvent.startDate,
-                stovaEvent.endDate
-              )}
-            />
-            <SummaryTable.Row
-              heading="Event location type"
-              children={
-                isEmpty(stovaEvent.locationName)
-                  ? 'Not set'
-                  : stovaEvent.locationName
-              }
-            />
-            <SummaryTable.Row
-              heading="Location Address"
-              children={
-                isEmpty(
-                  compact([
-                    stovaEvent.locationAddress1,
-                    stovaEvent.locationAddress2,
-                    stovaEvent.locationAddress3,
-                    stovaEvent.locationCity,
-                    stovaEvent.locationPostcode,
-                    stovaEvent.locationState,
-                    stovaEvent.locationCountry,
-                  ])
-                )
-                  ? 'Not set'
-                  : compact([
-                      stovaEvent.locationAddress1,
-                      stovaEvent.locationAddress2,
-                      stovaEvent.locationAddress3,
-                      stovaEvent.locationCity,
-                      stovaEvent.locationPostcode,
-                      stovaEvent.locationState,
-                      stovaEvent.locationCountry,
-                    ])
-              }
-            />
-            <SummaryTable.Row
-              heading="Aventri reference number"
-              children={
-                <>
-                  <span>
-                    {stovaEvent.stovaEventId}&nbsp;
-                    <NewWindowLink href={aventriEventLink}>
-                      View in Aventri
-                    </NewWindowLink>
-                  </span>
-                </>
-              }
-            />
-            <SummaryTable.Row
-              heading="Approval Required"
-              children={
-                isEmpty(stovaEvent.approvalRequired)
-                  ? 'Not set'
-                  : stovaEvent.approvalRequired
-              }
-            />
-            <SummaryTable.Row
-              heading="Close Date"
-              children={
-                isEmpty(stovaEvent.closeDate) ? 'Not set' : stovaEvent.closeDate
-              }
-            />
-            <SummaryTable.Row
-              heading="Code"
-              children={isEmpty(stovaEvent.code) ? 'Not set' : stovaEvent.code}
-            />
-            <SummaryTable.Row
-              heading="Contact Info"
-              children={
-                isEmpty(stovaEvent.contactInfo)
-                  ? 'Not set'
-                  : stovaEvent.contactInfo
-              }
-            />
-            <SummaryTable.Row
-              heading="Default Language"
-              children={
-                isEmpty(stovaEvent.defaultLanguage)
-                  ? 'Not set'
-                  : stovaEvent.defaultLanguage
-              }
-            />
-            <SummaryTable.Row
-              heading="Description"
-              children={
-                isEmpty(stovaEvent.description)
-                  ? 'Not set'
-                  : stovaEvent.description
-              }
-            />
-            <SummaryTable.Row
-              heading="Price Type"
-              children={
-                isEmpty(stovaEvent.priceType) ? 'Not set' : stovaEvent.priceType
-              }
-            />
-            <SummaryTable.Row
-              heading="Standard Currency"
-              children={
-                isEmpty(stovaEvent.standardCurrency)
-                  ? 'Not set'
-                  : stovaEvent.standardCurrency
-              }
-            />
-            <SummaryTable.Row
-              heading="Live Date"
-              children={
-                isEmpty(stovaEvent.liveDate) ? 'Not set' : stovaEvent.liveDate
-              }
-            />
-            <SummaryTable.Row
-              heading="Folder ID"
-              children={
-                isEmpty(stovaEvent.folderId) ? 'Not set' : stovaEvent.folderId
-              }
-            />
-            <SummaryTable.Row
-              heading="Max Reg"
-              children={
-                isEmpty(stovaEvent.maxReg) ? 'Not set' : stovaEvent.maxReg
-              }
-            />
-            <SummaryTable.Row
-              heading="Address"
-              children={
-                isEmpty(
-                  compact([
-                    stovaEvent.city,
-                    stovaEvent.country,
-                    stovaEvent.state,
-                  ])
-                )
-                  ? 'Not set'
-                  : compact([
-                      stovaEvent.city,
-                      stovaEvent.country,
-                      stovaEvent.state,
-                    ])
-              }
-            />
-            <SummaryTable.Row
-              heading="Timezone"
-              children={
-                isEmpty(stovaEvent.timezone) ? 'Not set' : stovaEvent.timezone
-              }
-            />
-            <SummaryTable.Row
-              heading="Created By"
-              children={
-                isEmpty(stovaEvent.createdBy) ? 'Not set' : stovaEvent.createdBy
-              }
-            />
-            <SummaryTable.Row
-              heading="Created Date"
-              children={
-                isEmpty(stovaEvent.createdDate)
-                  ? 'Not set'
-                  : stovaEvent.createdDate
-              }
-            />
-            <SummaryTable.Row
-              heading="Modified By"
-              children={
-                isEmpty(stovaEvent.modifiedBy)
-                  ? 'Not set'
-                  : stovaEvent.modifiedBy
-              }
-            />
-            <SummaryTable.Row
-              heading="Modified Date"
-              children={
-                isEmpty(stovaEvent.modifiedDate)
-                  ? 'Not set'
-                  : stovaEvent.modifiedDate
-              }
-            />
-          </StyledSummaryTable>
-        </GridCol>
-      </GridRow>
+      <StatusMessage>
+        <div>This event has been automatically synced from Stova.</div>
+        <div>
+          Event details, registrants and attendees can only be edited in Stova.
+          Changes can take up to 24 hours to sync.
+        </div>
+        <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
+      </StatusMessage>
+      <StyledSummaryTable>
+        <SummaryTable.Row heading="Name" children={stovaEvent.name} />
+        <SummaryTable.Row
+          heading="Event date"
+          children={formatStartAndEndDate(
+            stovaEvent.startDate,
+            stovaEvent.endDate
+          )}
+        />
+        <SummaryTable.Row
+          heading="Event location type"
+          children={
+            isEmpty(stovaEvent.locationName)
+              ? 'Not set'
+              : stovaEvent.locationName
+          }
+        />
+        <SummaryTable.Row
+          heading="Location Address"
+          children={
+            isEmpty(
+              compact([
+                stovaEvent.locationAddress1,
+                stovaEvent.locationAddress2,
+                stovaEvent.locationAddress3,
+                stovaEvent.locationCity,
+                stovaEvent.locationPostcode,
+                stovaEvent.locationState,
+                stovaEvent.locationCountry,
+              ])
+            )
+              ? 'Not set'
+              : compact([
+                  stovaEvent.locationAddress1,
+                  stovaEvent.locationAddress2,
+                  stovaEvent.locationAddress3,
+                  stovaEvent.locationCity,
+                  stovaEvent.locationPostcode,
+                  stovaEvent.locationState,
+                  stovaEvent.locationCountry,
+                ])
+          }
+        />
+        <SummaryTable.Row
+          heading="Stova reference number"
+          children={
+            <>
+              <span>
+                {stovaEvent.stovaEventId}&nbsp;
+                <NewWindowLink href={stovaLink}>View in Stova</NewWindowLink>
+              </span>
+            </>
+          }
+        />
+        <SummaryTable.Row
+          heading="Approval Required"
+          children={
+            isEmpty(stovaEvent.approvalRequired)
+              ? 'Not set'
+              : stovaEvent.approvalRequired
+          }
+        />
+        <SummaryTable.Row
+          heading="Close Date"
+          children={
+            isEmpty(stovaEvent.closeDate) ? 'Not set' : stovaEvent.closeDate
+          }
+        />
+        <SummaryTable.Row
+          heading="Code"
+          children={isEmpty(stovaEvent.code) ? 'Not set' : stovaEvent.code}
+        />
+        <SummaryTable.Row
+          heading="Contact Info"
+          children={
+            isEmpty(stovaEvent.contactInfo) ? 'Not set' : stovaEvent.contactInfo
+          }
+        />
+        <SummaryTable.Row
+          heading="Default Language"
+          children={
+            isEmpty(stovaEvent.defaultLanguage)
+              ? 'Not set'
+              : stovaEvent.defaultLanguage
+          }
+        />
+        <SummaryTable.Row
+          heading="Description"
+          children={
+            isEmpty(stovaEvent.description) ? 'Not set' : stovaEvent.description
+          }
+        />
+        <SummaryTable.Row
+          heading="Price Type"
+          children={
+            isEmpty(stovaEvent.priceType) ? 'Not set' : stovaEvent.priceType
+          }
+        />
+        <SummaryTable.Row
+          heading="Standard Currency"
+          children={
+            isEmpty(stovaEvent.standardCurrency)
+              ? 'Not set'
+              : stovaEvent.standardCurrency
+          }
+        />
+        <SummaryTable.Row
+          heading="Live Date"
+          children={
+            isEmpty(stovaEvent.liveDate) ? 'Not set' : stovaEvent.liveDate
+          }
+        />
+        <SummaryTable.Row
+          heading="Folder ID"
+          children={
+            isEmpty(stovaEvent.folderId) ? 'Not set' : stovaEvent.folderId
+          }
+        />
+        <SummaryTable.Row
+          heading="Max Reg"
+          children={isEmpty(stovaEvent.maxReg) ? 'Not set' : stovaEvent.maxReg}
+        />
+        <SummaryTable.Row
+          heading="Address"
+          children={
+            isEmpty(
+              compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
+            )
+              ? 'Not set'
+              : compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
+          }
+        />
+        <SummaryTable.Row
+          heading="Timezone"
+          children={
+            isEmpty(stovaEvent.timezone) ? 'Not set' : stovaEvent.timezone
+          }
+        />
+        <SummaryTable.Row
+          heading="Created By"
+          children={
+            isEmpty(stovaEvent.createdBy) ? 'Not set' : stovaEvent.createdBy
+          }
+        />
+        <SummaryTable.Row
+          heading="Created Date"
+          children={
+            isEmpty(stovaEvent.createdDate) ? 'Not set' : stovaEvent.createdDate
+          }
+        />
+        <SummaryTable.Row
+          heading="Modified By"
+          children={
+            isEmpty(stovaEvent.modifiedBy) ? 'Not set' : stovaEvent.modifiedBy
+          }
+        />
+        <SummaryTable.Row
+          heading="Modified Date"
+          children={
+            isEmpty(stovaEvent.modifiedDate)
+              ? 'Not set'
+              : stovaEvent.modifiedDate
+          }
+        />
+      </StyledSummaryTable>
     </>
   )
 }
@@ -289,6 +273,7 @@ const StovaEventDetails = ({ name }) => {
   return (
     <StovaEventResource id={stovaEventId}>
       {(stovaEvent) => {
+        const stovaLink = `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaEvent.stovaEventId}`
         const breadcrumbs = [
           {
             link: urls.dashboard.index(),
@@ -317,12 +302,20 @@ const StovaEventDetails = ({ name }) => {
               tabs={{
                 [urls.events.stova.details(stovaEventId)]: {
                   label: 'Details',
-                  content: <EventDetails stovaEvent={stovaEvent} />,
+                  content: (
+                    <EventDetails
+                      stovaEvent={stovaEvent}
+                      stovaLink={stovaLink}
+                    />
+                  ),
                 },
                 [urls.events.stova.attendees(stovaEventId)]: {
                   label: 'Attendees',
                   content: (
-                    <Attendees datahubEventId={stovaEvent.datahubEvent[0]} />
+                    <Attendees
+                      datahubEventId={stovaEvent.datahubEvent[0]}
+                      stovaLink={stovaLink}
+                    />
                   ),
                 },
               }}
