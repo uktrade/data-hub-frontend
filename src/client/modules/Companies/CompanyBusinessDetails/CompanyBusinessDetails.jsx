@@ -196,9 +196,10 @@ const CompanyBusinessDetails = ({
               </Task.Status>
               {(isOneListAccountOwner(company, currentAdviserId) ||
                 canEditOneList(userPermissions)) && (
-                <Button as={'a'} href={urls.companies.editOneList(companyId)}>
-                  Edit One List Information
-                </Button>
+                  <></>
+                // <Button as={'a'} href={urls.companies.editOneList(companyId)}>
+                //   Edit One List Information
+                // </Button>
               )}
               <ArchiveForm
                 type="company"
