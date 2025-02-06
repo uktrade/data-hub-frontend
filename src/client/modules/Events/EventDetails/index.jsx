@@ -8,6 +8,7 @@ import styled from 'styled-components'
 
 import { H3, Link } from 'govuk-react'
 
+import { ATTENDEE_SORT_OPTIONS } from '../constants'
 import urls from '../../../../lib/urls'
 import { TASK_GET_EVENT_DETAILS, ID, state2props } from './state'
 import { EVENTS__DETAILS_LOADED } from '../../../actions'
@@ -20,17 +21,6 @@ import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import StatusMessage from '../../../components/StatusMessage'
-
-const ATTENDEE_SORT_OPTIONS = [
-  { name: 'Last name: A-Z', value: 'last_name_of_first_contact' },
-  { name: 'Last name: Z-A', value: '-last_name_of_first_contact' },
-  { name: 'First name: A-Z', value: 'first_name_of_first_contact' },
-  { name: 'First name: Z-A', value: '-first_name_of_first_contact' },
-  { name: 'Company name: A-Z', value: 'company__name' },
-  { name: 'Company name: Z-A', value: '-company__name' },
-  { name: 'Recently added', value: '-created_on' },
-  { name: 'Least recently added', value: 'created_on' },
-]
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
