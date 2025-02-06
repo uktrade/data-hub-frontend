@@ -297,6 +297,7 @@ describe('Interaction details', () => {
         `/companies/${params.companyId}/interactions/${params.interactionId}`
       )
     })
+
     it('should have a stova url for stova events', () => {
       assertSummaryTable({
         dataTest: 'interaction-details-table',
