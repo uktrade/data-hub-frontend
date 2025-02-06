@@ -1,309 +1,90 @@
 import React from 'react'
-import { compact, isEmpty } from 'lodash'
-import { H3, Link } from 'govuk-react'
-import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 
-import { ATTENDEE_SORT_OPTIONS } from '../constants'
-import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
-import CollectionItem from '../../../components/CollectionList/CollectionItem'
-import { DefaultLayout, NewWindowLink, SummaryTable } from '../../../components'
-import InteractionsV3 from '../../../components/Resource/InteractionsV3'
+import { DefaultLayout, NewWindowLink } from '../../../components'
 import { VerticalTabNav } from '../../../components/TabNav'
-import { formatStartAndEndDate } from '../../../components/ActivityFeed/activities/date'
 import { StovaEventResource } from '../../../components/Resource'
-
-const StyledSummaryTable = styled(SummaryTable)({
-  marginTop: 0,
-})
-
-const Attendees = ({ datahubEventId }) => (
-  <div>
-    <H3 as="h2">Stova Event Attendees</H3>
-    <InteractionsV3.Paginated
-      id="interaction-for-stova-event"
-      heading="attendee"
-      sortOptions={ATTENDEE_SORT_OPTIONS}
-      payload={{
-        event_id: datahubEventId,
-      }}
-    >
-      {(page) => (
-        <ul>
-          {page.map(
-            ({ contacts: [contact], companies: [company], date, service }) => (
-              <CollectionItem
-                headingText={contact?.name || 'Not available'}
-                headingUrl={contact && `/contacts/${contact?.id}`}
-                metadata={[
-                  {
-                    label: 'Company',
-                    value: (
-                      <Link href={`/companies/${company?.id}`}>
-                        {company?.name}
-                      </Link>
-                    ),
-                  },
-                  {
-                    label: 'Job title',
-                    value: contact?.job_title || 'Not available',
-                  },
-                  {
-                    label: 'Date attended',
-                    value: formatDate(date, DATE_FORMAT_FULL),
-                  },
-                  {
-                    label: 'Service delivery',
-                    value: (
-                      <Link href={`/companies/${service.id}`}>
-                        {service.name}
-                      </Link>
-                    ),
-                  },
-                ]}
-              />
-            )
-          )}
-        </ul>
-      )}
-    </InteractionsV3.Paginated>
-  </div>
-)
-
-const EventDetails = ({ stovaEvent, stovaLink }) => {
-  const locationAddress = compact([
-    stovaEvent.locationAddress1,
-    stovaEvent.locationAddress2,
-    stovaEvent.locationAddress3,
-    stovaEvent.locationCity,
-    stovaEvent.locationPostcode,
-    stovaEvent.locationState,
-    stovaEvent.locationCountry,
-  ])
-  return (
-    <>
-      <StyledSummaryTable>
-        <SummaryTable.Row heading="Name" children={stovaEvent.name} />
-        <SummaryTable.Row
-          heading="Event date"
-          children={formatStartAndEndDate(
-            stovaEvent.startDate,
-            stovaEvent.endDate
-          )}
-        />
-        <SummaryTable.Row
-          heading="Event location type"
-          children={
-            isEmpty(stovaEvent.locationName)
-              ? 'Not set'
-              : stovaEvent.locationName
-          }
-        />
-        <SummaryTable.Row
-          heading="Location Address"
-          children={isEmpty(locationAddress) ? 'Not set' : locationAddress}
-        />
-        <SummaryTable.Row
-          heading="Stova reference number"
-          children={
-            <>
-              <span>
-                {stovaEvent.stovaEventId}&nbsp;
-                <NewWindowLink href={stovaLink}>View in Stova</NewWindowLink>
-              </span>
-            </>
-          }
-        />
-        <SummaryTable.Row
-          heading="Approval Required"
-          children={
-            isEmpty(stovaEvent.approvalRequired)
-              ? 'Not set'
-              : stovaEvent.approvalRequired
-          }
-        />
-        <SummaryTable.Row
-          heading="Close Date"
-          children={
-            isEmpty(stovaEvent.closeDate) ? 'Not set' : stovaEvent.closeDate
-          }
-        />
-        <SummaryTable.Row
-          heading="Code"
-          children={isEmpty(stovaEvent.code) ? 'Not set' : stovaEvent.code}
-        />
-        <SummaryTable.Row
-          heading="Contact Info"
-          children={
-            isEmpty(stovaEvent.contactInfo) ? 'Not set' : stovaEvent.contactInfo
-          }
-        />
-        <SummaryTable.Row
-          heading="Default Language"
-          children={
-            isEmpty(stovaEvent.defaultLanguage)
-              ? 'Not set'
-              : stovaEvent.defaultLanguage
-          }
-        />
-        <SummaryTable.Row
-          heading="Description"
-          children={
-            isEmpty(stovaEvent.description) ? 'Not set' : stovaEvent.description
-          }
-        />
-        <SummaryTable.Row
-          heading="Price Type"
-          children={
-            isEmpty(stovaEvent.priceType) ? 'Not set' : stovaEvent.priceType
-          }
-        />
-        <SummaryTable.Row
-          heading="Standard Currency"
-          children={
-            isEmpty(stovaEvent.standardCurrency)
-              ? 'Not set'
-              : stovaEvent.standardCurrency
-          }
-        />
-        <SummaryTable.Row
-          heading="Live Date"
-          children={
-            isEmpty(stovaEvent.liveDate) ? 'Not set' : stovaEvent.liveDate
-          }
-        />
-        <SummaryTable.Row
-          heading="Folder ID"
-          children={
-            isEmpty(stovaEvent.folderId) ? 'Not set' : stovaEvent.folderId
-          }
-        />
-        <SummaryTable.Row
-          heading="Max Reg"
-          children={isEmpty(stovaEvent.maxReg) ? 'Not set' : stovaEvent.maxReg}
-        />
-        <SummaryTable.Row
-          heading="Address"
-          children={
-            isEmpty(
-              compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
-            )
-              ? 'Not set'
-              : compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
-          }
-        />
-        <SummaryTable.Row
-          heading="Timezone"
-          children={
-            isEmpty(stovaEvent.timezone) ? 'Not set' : stovaEvent.timezone
-          }
-        />
-        <SummaryTable.Row
-          heading="Created By"
-          children={
-            isEmpty(stovaEvent.createdBy) ? 'Not set' : stovaEvent.createdBy
-          }
-        />
-        <SummaryTable.Row
-          heading="Created Date"
-          children={
-            isEmpty(stovaEvent.createdDate) ? 'Not set' : stovaEvent.createdDate
-          }
-        />
-        <SummaryTable.Row
-          heading="Modified By"
-          children={
-            isEmpty(stovaEvent.modifiedBy) ? 'Not set' : stovaEvent.modifiedBy
-          }
-        />
-        <SummaryTable.Row
-          heading="Modified Date"
-          children={
-            isEmpty(stovaEvent.modifiedDate)
-              ? 'Not set'
-              : stovaEvent.modifiedDate
-          }
-        />
-      </StyledSummaryTable>
-    </>
-  )
-}
+import { Attendees } from './Attendees'
+import { EventDetails } from './EventDetails'
+import StatusMessage from '../../../../client/components/StatusMessage'
+import { getExternalStovaLink } from './constants'
 
 const StovaEventDetails = () => {
   const { stovaEventId, ['*']: path } = useParams()
 
   return (
     <StovaEventResource id={stovaEventId}>
-      {(stovaEvent) => {
-        const stovaLink = `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaEvent.stovaEventId}`
-        const breadcrumbs = [
-          {
-            link: urls.dashboard.index(),
-            text: 'Home',
-          },
-          {
-            link: urls.events.index(),
-            text: 'Events',
-          },
-          {
-            text: stovaEvent.name,
-          },
-          {
-            text: { details: 'Details', attendees: 'Attendees' }[path],
-          },
-        ]
-        return (
-          <DefaultLayout
-            heading={stovaEvent.name}
-            pageTitle="Events"
-            breadcrumbs={breadcrumbs}
-            useReactRouter={true}
-            flashMessages={[
-              [
-                <>
-                  This event has been automatically synced from Stova.
-                  <br />
-                  Event details and attendees can only be edited in Stova.
-                  <br />
-                  <NewWindowLink href={stovaLink}>
-                    View Event in Stova
-                  </NewWindowLink>
-                </>,
-              ],
-            ]}
-          >
-            <VerticalTabNav
-              routed={true}
-              id="stova-event-details-tab-nav"
-              label="Event tab navigation"
-              selectedIndex="attendees"
-              tabs={{
-                [urls.events.stova.details(stovaEventId)]: {
-                  label: 'Details',
-                  content: (
-                    <EventDetails
-                      stovaEvent={stovaEvent}
-                      stovaLink={stovaLink}
-                    />
-                  ),
-                },
-                [urls.events.stova.attendees(stovaEventId)]: {
-                  label: 'Attendees',
-                  content: (
-                    <Attendees
-                      datahubEventId={stovaEvent.datahubEvent[0]}
-                      stovaLink={stovaLink}
-                    />
-                  ),
-                },
-              }}
-            />
-          </DefaultLayout>
-        )
-      }}
+      {(stovaEvent) => (
+        <StovaEventDetailsPage stovaEvent={stovaEvent} path={path} />
+      )}
     </StovaEventResource>
   )
 }
 
-export default StovaEventDetails
+const StovaEventDetailsPage = ({ stovaEvent, path }) => {
+  const stovaLink = getExternalStovaLink(stovaEvent.stovaEventId)
+  const breadcrumbs = [
+    {
+      link: urls.dashboard.index(),
+      text: 'Home',
+    },
+    {
+      link: urls.events.index(),
+      text: 'Events',
+    },
+    {
+      text: stovaEvent.name,
+    },
+    {
+      text: { details: 'Details', attendees: 'Attendees' }[path],
+    },
+  ]
+
+  const eventMessage = (
+    <StatusMessage>
+      This event has been automatically synced from Stova. Event details and
+      attendees can only be edited in Stova.
+      <br />
+      <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
+    </StatusMessage>
+  )
+
+  return (
+    <DefaultLayout
+      heading={stovaEvent.name}
+      pageTitle="Events"
+      breadcrumbs={breadcrumbs}
+      useReactRouter={true}
+    >
+      <VerticalTabNav
+        routed={true}
+        id="stova-event-details-tab-nav"
+        label="Event tab navigation"
+        selectedIndex="attendees"
+        tabs={{
+          [urls.events.stova.details(stovaEvent.id)]: {
+            label: 'Details',
+            content: (
+              <>
+                {eventMessage}
+                <EventDetails stovaEvent={stovaEvent} />
+              </>
+            ),
+          },
+          [urls.events.stova.attendees(stovaEvent.id)]: {
+            label: 'Attendees',
+            content: (
+              <>
+                {eventMessage}
+                <Attendees datahubEventId={stovaEvent.datahubEvent[0]} />
+              </>
+            ),
+          },
+        }}
+      />
+    </DefaultLayout>
+  )
+}
+
+export { StovaEventDetails, StovaEventDetailsPage }

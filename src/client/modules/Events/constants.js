@@ -1,4 +1,4 @@
-export const ATTENDEE_SORT_OPTIONS = [
+const ATTENDEE_SORT_OPTIONS = [
   { name: 'Last name: A-Z', value: 'last_name_of_first_contact' },
   { name: 'Last name: Z-A', value: '-last_name_of_first_contact' },
   { name: 'First name: A-Z', value: 'first_name_of_first_contact' },
@@ -8,3 +8,7 @@ export const ATTENDEE_SORT_OPTIONS = [
   { name: 'Recently added', value: '-created_on' },
   { name: 'Least recently added', value: 'created_on' },
 ]
+
+module.exports = {
+  ATTENDEE_SORT_OPTIONS,
+}
