@@ -162,6 +162,15 @@ const CompanyActivityCollectionNoAS = ({
                   selectedOptions={selectedFilters.createdByOthers.options}
                   data-test="created-by-others-filter"
                 />*/}
+
+                <Filters.Input
+                  id="subject"
+                  label={LABELS.subject}
+                  name="subject"
+                  qsParam="subject"
+                  placeholder="Search subject"
+                  data-test="subject-filter"
+                />
                 <Filters.Date
                   label={LABELS.dateAfter}
                   name="date_after"
