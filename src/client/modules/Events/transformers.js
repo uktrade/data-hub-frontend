@@ -85,7 +85,7 @@ const transformEventToListItem = ({
     })
   }
 
-  let headingUrl = (headingUrl = urls.events.details(id))
+  let headingUrl = urls.events.details(id)
   if (stova_event) {
     headingUrl = urls.events.stova.details(stova_event.id)
   }
