@@ -45,7 +45,7 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 > If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
 ```bash
-export VERSION=4.3.9 # Increment this version each time when you edit Dockerfile.
+export VERSION=4.3.10 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
