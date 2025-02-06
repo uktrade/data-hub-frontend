@@ -22,16 +22,16 @@ export default function AventriEventSyncWarning({ aventriEventId }) {
     aventriEventId
   return (
     <StyledStatusMessage>
-      <div className="statusHeader">
+      <div class="statusHeader">
         This event has been automatically synced from Aventri.
       </div>
 
-      <div className="statusContent">
+      <div class="statusContent">
         Event details, registrants and attendees can only be edited in Aventri.
         Changes can take up to 24 hours to sync.
       </div>
 
-      <div className="statusLink">
+      <div class="statusLink">
         <NewWindowLink href={aventriEventLink}>View in Aventri</NewWindowLink>
       </div>
     </StyledStatusMessage>
