@@ -22,7 +22,7 @@ const Attendees = ({ datahubEventId }) => (
   <div>
     <H3 as="h2">Stova Event Attendees</H3>
     <InteractionsV3.Paginated
-      id="???"
+      id="interaction-for-stova-event"
       heading="attendee"
       sortOptions={ATTENDEE_SORT_OPTIONS}
       payload={{
@@ -72,6 +72,15 @@ const Attendees = ({ datahubEventId }) => (
 )
 
 const EventDetails = ({ stovaEvent, stovaLink }) => {
+  const locationAddress = compact([
+    stovaEvent.locationAddress1,
+    stovaEvent.locationAddress2,
+    stovaEvent.locationAddress3,
+    stovaEvent.locationCity,
+    stovaEvent.locationPostcode,
+    stovaEvent.locationState,
+    stovaEvent.locationCountry,
+  ])
   return (
     <>
       <StyledSummaryTable>
@@ -93,29 +102,7 @@ const EventDetails = ({ stovaEvent, stovaLink }) => {
         />
         <SummaryTable.Row
           heading="Location Address"
-          children={
-            isEmpty(
-              compact([
-                stovaEvent.locationAddress1,
-                stovaEvent.locationAddress2,
-                stovaEvent.locationAddress3,
-                stovaEvent.locationCity,
-                stovaEvent.locationPostcode,
-                stovaEvent.locationState,
-                stovaEvent.locationCountry,
-              ])
-            )
-              ? 'Not set'
-              : compact([
-                  stovaEvent.locationAddress1,
-                  stovaEvent.locationAddress2,
-                  stovaEvent.locationAddress3,
-                  stovaEvent.locationCity,
-                  stovaEvent.locationPostcode,
-                  stovaEvent.locationState,
-                  stovaEvent.locationCountry,
-                ])
-          }
+          children={isEmpty(locationAddress) ? 'Not set' : locationAddress}
         />
         <SummaryTable.Row
           heading="Stova reference number"
