@@ -33,7 +33,7 @@
     "test:e2e:da": "CYPRESS_coverage=false cypress run --config '{\"specPattern\":[\"test/end-to-end/cypress/specs/DA/**/*.js\"]}' --browser chrome",
     "test:e2e:dit": "CYPRESS_retries=3 CYPRESS_coverage=false cypress run --config '{\"specPattern\":[\"test/end-to-end/cypress/specs/DIT/**/*.js\"]}' --browser chrome",
     "test:e2e:watch": "CYPRESS_coverage=false cypress open --config '{\"specPattern\":[\"test/end-to-end/cypress/specs/**/*.js\"]}' --e2e --browser chrome",
-    "test:component": "CYPRESS_coverage=false nyc cypress run --component --browser chrome",
+    "test:component": "nyc cypress run --component --browser chrome",
     "test:component:watch": "CYPRESS_coverage=false cypress open --component --browser chrome",
     "coverage": "npx nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
     "prune-dev-dependencies": "NPM_CONFIG_PRODUCTION=true npm prune --production",
