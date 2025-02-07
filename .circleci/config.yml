@@ -163,9 +163,9 @@ jobs:
             fi
 
       - persist_to_workspace:
-        root: ~/
-        paths:
-          - "project/component-coverage/*"
+          root: ~/
+          paths:
+            - "project/component-coverage/*"
 
   release-storybook:
     docker:
