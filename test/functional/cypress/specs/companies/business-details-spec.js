@@ -163,7 +163,7 @@ describe('Companies business details', () => {
     it('the company account manager should be shown the Edit One List Information button', () => {
       const company = companyFaker()
 
-      // Get current user id and set as one list groupd global account manager
+      // Get current user id and set as one list global account manager
       cy.request(whoAmIUri).then((response) => {
         const oneListGroupGlobalAccountManager = {
           name: response.body.name,
@@ -185,7 +185,7 @@ describe('Companies business details', () => {
       cy.get('[data-test="edit-one-list-information"]').should('be.visible')
     })
 
-    it('other users should not see the Edit One List Information button', () => {
+    it('for other companies user should not see the Edit One List Information button', () => {
       const company = companyFaker()
       cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
         'businessDetails'
