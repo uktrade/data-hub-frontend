@@ -468,4 +468,31 @@ describe('Site address fields', () => {
         })
     })
   })
+  context('When editing and submitting the landed uk regions field', () => {
+    it('should submit an empty list if no regions are selected', () => {
+      const project = siteAddressProject({ actual_uk_regions: [] })
+      navigateToForm({ project: project })
+      cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, {
+        statusCode: 200,
+      }).as('patchProjectRequirements')
+      cy.get('[data-test="submit-button"]').click()
+      cy.wait('@patchProjectRequirements')
+        .its('request.body.actual_uk_regions')
+        .should('be.empty')
+    })
+    it('should submit a list if one or more regions are selected', () => {
+      const project = siteAddressProject({ actual_uk_regions: [] })
+      navigateToForm({ project: project })
+      cy.get('[data-test="field-actual_uk_regions"]')
+        .selectTypeaheadOption('East Midlands')
+        .selectTypeaheadOption('East of England')
+      cy.intercept('PATCH', `/api-proxy/v3/investment/${project.id}`, {
+        statusCode: 200,
+      }).as('patchProjectRequirements')
+      cy.get('[data-test="submit-button"]').click()
+      cy.wait('@patchProjectRequirements')
+        .its('request.body.actual_uk_regions')
+        .should('have.lengthOf', 2)
+    })
+  })
 })
