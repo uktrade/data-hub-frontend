@@ -253,14 +253,14 @@ const EditProjectRequirements = () => {
                 )}
                 placeholder="Select a UK region"
                 isMulti={true}
-                validate={(values, field, formFields) => {
-                  return validateFieldForStage(
+                validate={(values, field, formFields) =>
+                  validateFieldForStage(
                     field,
                     formFields,
                     project,
                     'Select a UK region'
                   )
-                }}
+                }
               />
               <ResourceOptionsField
                 name="delivery_partners"
