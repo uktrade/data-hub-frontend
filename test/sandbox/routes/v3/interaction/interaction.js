@@ -13,6 +13,7 @@ import interactionDraftPastMeeting from '../../../fixtures/v3/interaction/intera
 import interactionValidationError from '../../../fixtures/v3/interaction/interaction-validation-error.json' with { type: 'json' }
 import interactionWithReferral from '../../../fixtures/v3/interaction/interaction-with-referral.json' with { type: 'json' }
 import interactionWithoutTheme from '../../../fixtures/v3/interaction/interaction-without-theme.js'
+import { interactionByExportProject } from '../../../fixtures/v4/interaction/interaction-by-export-project.js'
 
 export const getInteractions = function (req, res) {
   if (req.query.contact_id) {
@@ -31,6 +32,10 @@ export const getInteractions = function (req, res) {
 
   if (req.query.event_id === 'b93d4273-36fe-4008-ac40-fbc197910791') {
     return res.json(noInteractions)
+  }
+
+  if (req.query.company_export_id === 'f5bc555e-0eba-4a7e-abe9-db89a78afc5c') {
+    return res.json(interactionByExportProject(req))
   }
 
   res.json(interactions)
