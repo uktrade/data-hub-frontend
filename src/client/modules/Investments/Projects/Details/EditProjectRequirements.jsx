@@ -2,6 +2,7 @@ import React from 'react'
 import { H2 } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
+import InsetText from '@govuk-react/inset-text'
 
 import {
   FieldAddress,
@@ -28,6 +29,7 @@ import {
 import {
   OPTIONS_YES_NO,
   OPTION_YES,
+  OPTION_NO,
   UNITED_KINGDOM_ID,
 } from '../../../../../common/constants'
 
@@ -38,7 +40,7 @@ import {
   isFieldOptionalForStageLabel,
   validateFieldForStage,
 } from '../validators'
-import { siteDecidedValidator } from './validators'
+import { siteAddressIsCompanyAddressValidator } from './validators'
 
 const ukObject = {
   name: 'United Kingdom',
@@ -78,6 +80,7 @@ const EditProjectRequirements = () => {
                 transformProjectRequirementsForApi({
                   projectId,
                   values,
+                  ukCompany: project.ukCompany,
                 })
               }
             >
@@ -177,59 +180,87 @@ const EditProjectRequirements = () => {
                 }}
               />
               <FieldRadios
-                name="site_decided"
-                label="Has the UK location (site address) for this investment been decided yet?"
+                name="site_address_is_company_address"
+                label={
+                  "Is the site address the same as the UK recipient company's address?" +
+                  isFieldOptionalForStageLabel(
+                    'site_address_is_company_address',
+                    project
+                  )
+                }
                 initialValue={transformBoolToRadioOptionWithNullCheck(
-                  project.siteDecided
+                  project.siteAddressIsCompanyAddress
                 )}
                 options={OPTIONS_YES_NO.map((option) => ({
                   ...option,
                   ...(option.value === OPTION_YES && {
                     children: (
                       <>
-                        <FieldAddress
-                          legend="Address"
-                          name="address"
-                          country={ukObject}
-                          hideCountyField={true}
-                          useStaticPostcodeField={true}
-                          initialValue={{
-                            address1: project.address1 || '',
-                            address2: project.address2 || '',
-                            town: project.addressTown || '',
-                            postcode: project.addressPostcode || '',
-                          }}
-                        />
-                        <FieldUKRegionTypeahead
-                          name="actual_uk_regions"
-                          label={
-                            'UK regions landed' +
-                            isFieldOptionalForStageLabel(
-                              'actual_uk_regions',
-                              project
-                            )
-                          }
-                          initialValue={transformArrayForTypeahead(
-                            project.actualUkRegions
-                          )}
-                          placeholder="Select a UK region"
-                          isMulti={true}
-                          validate={(values, field, formFields) => {
-                            return validateFieldForStage(
-                              field,
-                              formFields,
-                              project,
-                              'Select a UK region'
-                            )
-                          }}
-                        />
+                        <InsetText className="govuk-!-margin-bottom-3">
+                          The address will appear on this form once you have
+                          selected the recipient company
+                        </InsetText>
                       </>
+                    ),
+                  }),
+                  ...(option.value === OPTION_YES &&
+                    project.ukCompany && {
+                      children: (
+                        <>
+                          <InsetText className="govuk-!-margin-bottom-3">
+                            <p>{project.ukCompany.address1}</p>
+                            <p>{project.ukCompany.address2}</p>
+                            <p>{project.ukCompany.addressTown}</p>
+                            <p>{project.ukCompany.addressPostcode}</p>
+                          </InsetText>
+                        </>
+                      ),
+                    }),
+                  ...(option.value === OPTION_NO && {
+                    children: (
+                      <FieldAddress
+                        legend="What is the site address?"
+                        name="address"
+                        country={ukObject}
+                        hideCountyField={true}
+                        useStaticPostcodeField={true}
+                        initialValue={{
+                          address1: project.address1 || '',
+                          address2: project.address2 || '',
+                          town: project.addressTown || '',
+                          postcode: project.addressPostcode || '',
+                        }}
+                      />
                     ),
                   }),
                 }))}
                 validate={(values, field, formFields) => {
-                  return siteDecidedValidator(field, formFields, project)
+                  return siteAddressIsCompanyAddressValidator(
+                    field,
+                    formFields,
+                    project
+                  )
                 }}
+              />
+              <FieldUKRegionTypeahead
+                name="actual_uk_regions"
+                label={
+                  'UK regions landed' +
+                  isFieldOptionalForStageLabel('actual_uk_regions', project)
+                }
+                initialValue={transformArrayForTypeahead(
+                  project.actualUkRegions
+                )}
+                placeholder="Select a UK region"
+                isMulti={true}
+                validate={(values, field, formFields) =>
+                  validateFieldForStage(
+                    field,
+                    formFields,
+                    project,
+                    'Select a UK region'
+                  )
+                }
               />
               <ResourceOptionsField
                 name="delivery_partners"

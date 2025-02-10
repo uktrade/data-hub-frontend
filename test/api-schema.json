@@ -7506,7 +7506,7 @@
             "type": "string",
             "nullable": true
           },
-          "site_decided": {
+          "site_address_is_company_address": {
             "type": "boolean",
             "nullable": true
           },
@@ -9526,13 +9526,7 @@
             "nullable": true
           },
           "hiring": {
-            "enum": [
-              "1-5",
-              "6-50",
-              "51-100",
-              "101+",
-              "NO_PLANS_TO_HIRE_YET"
-            ],
+            "enum": ["1-5", "6-50", "51-100", "101+", "NO_PLANS_TO_HIRE_YET"],
             "type": "string"
           },
           "spend": {

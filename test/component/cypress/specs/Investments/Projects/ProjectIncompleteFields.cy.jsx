@@ -49,10 +49,7 @@ const activeIncompleteFields = [
   'non_fdi_r_and_d_budget',
   'new_tech_to_uk',
   'export_revenue',
-  'address_1',
-  'address_town',
-  'address_postcode',
-  'actual_uk_regions',
+  'site_address_is_company_address',
   'delivery_partners',
   'actual_land_date',
   'foreign_equity_investment',
@@ -226,10 +223,10 @@ describe('ProjectIncompleteFields', () => {
           'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
           valueLink
         )
-        assertLink('Street', requirementsLink)
-        assertLink('Town', requirementsLink)
-        assertLink('Postcode', requirementsLink)
-        assertLink('UK regions landed', requirementsLink)
+        assertLink(
+          "Is the site address the same as the UK recipient company's address?",
+          requirementsLink
+        )
         assertLink('Delivery partners', requirementsLink)
         assertLink('Actual land date', detailsLink)
         assertLink('Foreign equity investment', valueLink)
