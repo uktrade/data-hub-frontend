@@ -196,10 +196,13 @@ const CompanyBusinessDetails = ({
               </Task.Status>
               {(isOneListAccountOwner(company, currentAdviserId) ||
                 canEditOneList(userPermissions)) && (
-                  <></>
-                // <Button as={'a'} href={urls.companies.editOneList(companyId)}>
-                //   Edit One List Information
-                // </Button>
+                <Button
+                  as={'a'}
+                  href={urls.companies.editOneList(companyId)}
+                  data-test="edit-one-list-information"
+                >
+                  Edit One List Information
+                </Button>
               )}
               <ArchiveForm
                 type="company"
@@ -233,6 +236,7 @@ CompanyBusinessDetails.propTypes = {
   csrfToken: PropTypes.string,
   permissions: PropTypes.array,
   user: PropTypes.object,
+  currentAdviserId: PropTypes.string,
 }
 
 export default connect(state2props)(CompanyBusinessDetails)
