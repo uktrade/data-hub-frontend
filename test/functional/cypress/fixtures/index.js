@@ -73,6 +73,7 @@ module.exports = {
   },
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
+    exportProjectDetails: require('../../../sandbox/fixtures/v4/company/company-with-export-project-details.json'),
   },
 
   omis: {
