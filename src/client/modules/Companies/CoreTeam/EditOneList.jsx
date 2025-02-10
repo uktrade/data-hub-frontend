@@ -27,7 +27,6 @@ const EditOneList = ({
   oneListTiers,
   globalAccountManager,
   userPermissions,
-  user,
 }) => {
   const { companyId } = useParams()
   const query = useQuery()
@@ -71,7 +70,6 @@ const EditOneList = ({
             <EditOneListForm
               company={company}
               userPermissions={userPermissions}
-              user={user}
               returnUrl={returnUrl}
               oneListTiers={oneListTiers}
               formInitialValues={{
