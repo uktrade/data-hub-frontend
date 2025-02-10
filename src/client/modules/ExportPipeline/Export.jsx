@@ -22,12 +22,12 @@ const StyledLink = styled('a')({
 
 export const CompanyLink = (props) => (
   <ExportResource.Inline {...props}>
-    {(exportProject) => (
+    {({ company }) => (
       <StyledLink
         data-test="export-company-link"
-        href={urls.companies.detail(exportProject.company.id)}
+        href={urls.companies.detail(company.id)}
       >
-        {exportProject.company.name.toUpperCase()}
+        {company.name.toUpperCase()}
       </StyledLink>
     )}
   </ExportResource.Inline>

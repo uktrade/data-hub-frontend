@@ -11,6 +11,7 @@ describe('ExportInteractionsList', () => {
     }
 
     const interaction = {
+      id: 123,
       date: '2024-12-23',
       contacts: [
         {
@@ -30,6 +31,7 @@ describe('ExportInteractionsList', () => {
       service: {
         name: 'Account management : General',
       },
+      subject: 'Video call meeting to Baileys',
     }
 
     const interactionList = [
@@ -56,8 +58,8 @@ describe('ExportInteractionsList', () => {
 
     cy.get('@firstItem').within(() => {
       cy.get('h3 a')
-        .should('have.text', 'Baileys export to Brazil')
-        .and('have.attr', 'href', '/export/1/interactions/details')
+        .should('have.text', 'Video call meeting to Baileys')
+        .and('have.attr', 'href', '/export/123/interactions/details')
 
       const items = '[data-test="metadata-item"]'
       cy.get(items).should('have.length', 4)
@@ -77,6 +79,7 @@ describe('ExportInteractionsList', () => {
 
   it('should render a list of multiple contacts', () => {
     const interaction = {
+      id: 224,
       date: '2024-12-23',
       contacts: [
         {
@@ -93,6 +96,7 @@ describe('ExportInteractionsList', () => {
       service: {
         name: 'Account management : General',
       },
+      subject: 'Video call meeting to Baileys',
     }
     cy.mountWithProvider(<ExportInteractionsList />, {
       tasks: {
@@ -138,6 +142,7 @@ describe('ExportInteractionsList', () => {
       service: {
         name: 'Account management : General',
       },
+      subject: 'Send email to Baileys',
     }
     cy.mountWithProvider(<ExportInteractionsList />, {
       tasks: {

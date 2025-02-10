@@ -26,6 +26,7 @@ import companyWithValidationError from '../../../fixtures/v4/company/company-val
 import companyAudit from '../../../fixtures/v4/company-audit/company-audit.json' assert { type: 'json' }
 import companyUsState from '../../../fixtures/v4/company/company-us-state.json' assert { type: 'json' }
 import companyCanadianProvince from '../../../fixtures/v4/company/company-canada-province.json' assert { type: 'json' }
+import companyWithExportProjectDetails from '../../../fixtures/v4/company/company-with-export-project-details.json' assert { type: 'json' }
 import exportWins from '../../../fixtures/v4/company-export-wins/export-wins.json' assert { type: 'json' }
 import exportWinsPage1 from '../../../fixtures/v4/company-export-wins/export-wins-page-1.json' assert { type: 'json' }
 import exportWinsPage2 from '../../../fixtures/v4/company-export-wins/export-wins-page-2.json' assert { type: 'json' }
@@ -245,13 +246,18 @@ export const getReferralDetails = function (req, res) {
 
 export const exportDetail = function (req, res) {
   var companyId = req.params.companyId
+  var exportId = req.params.exportId
+
+  var errorResponse = { non_field_errors: ['A 400 error message here'] }
 
   if (companyId === companyLambdaPlc.id) {
     res.status(500).send('')
   } else if (companyId === companyDnBCorp.id) {
-    res.status(400).json({ non_field_errors: ['A 400 error message here'] })
+    res.status(400).json(errorResponse)
+  } else if (exportId === companyWithExportProjectDetails.id) {
+    res.json(companyWithExportProjectDetails)
   } else {
-    res.send('')
+    res.status(400).json(errorResponse)
   }
 }
 

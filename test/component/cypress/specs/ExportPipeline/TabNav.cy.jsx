@@ -4,77 +4,65 @@ import Export from '../../../../../src/client/modules/ExportPipeline/Export'
 import { assertBreadcrumbs } from '../../../../functional/cypress/support/assertions'
 import { assertTabNav } from '../../../../end-to-end/cypress/support/assertions'
 import urls from '../../../../../src/lib/urls'
+import fixtures from '../../../../functional/cypress/fixtures'
 
-const exportProject = {
-  id: '1',
-  title: 'Rolls Royce to UAE',
-  company: {
-    id: '2',
-    name: 'Rolls Royce',
-  },
-  team_members: [
-    {
-      name: 'David Jones',
-      id: '1',
-    },
-  ],
-  contacts: [
-    {
-      name: 'Johan Person',
-      email: 'johan@nederlands.com',
-      id: '1',
-    },
-  ],
-}
+const exportProjectDetails = fixtures.export.exportProjectDetails
 
 describe('Export project tab navigation', () => {
   it('should render the breadcrumbs for details', () => {
     cy.mountWithProvider(<Export />, {
-      initialPath: '/export/1/details',
+      initialPath: `/export/${exportProjectDetails.id}/details`,
       tasks: {
-        Export: () => exportProject,
+        Export: () => exportProjectDetails,
       },
     })
     assertBreadcrumbs({
       Home: urls.exportPipeline.index(),
-      [exportProject.title]: null,
+      [exportProjectDetails.title]: null,
     })
   })
 
   it('should render the same breadcrumbs for interactions', () => {
     cy.mountWithProvider(<Export />, {
-      initialPath: '/export/1/interactions/',
+      initialPath: `/export/${exportProjectDetails.id}/interactions/`,
       tasks: {
-        Export: () => exportProject,
+        Export: () => exportProjectDetails,
       },
     })
     assertBreadcrumbs({
       Home: urls.exportPipeline.index(),
-      [exportProject.title]: null,
+      [exportProjectDetails.title]: null,
     })
   })
 
   it('should render a company link and page heading', () => {
     cy.mountWithProvider(<Export />, {
-      initialPath: '/export/1/details',
+      initialPath: `/export/${exportProjectDetails.id}/details`,
       tasks: {
-        Export: () => exportProject,
+        Export: () => exportProjectDetails,
       },
     })
 
     cy.get('[data-test=export-company-link]')
-      .should('have.text', exportProject.company.name.toUpperCase())
-      .should('have.attr', 'href', `/companies/${exportProject.company.id}`)
+      .should('have.text', exportProjectDetails.company.name.toUpperCase())
+      .should(
+        'have.attr',
+        'href',
+        `/companies/${exportProjectDetails.company.id}`
+      )
 
-    cy.get('[data-test="heading"]').should('have.text', 'Rolls Royce to UAE')
+    cy.get('[data-test="heading"]').should(
+      'have.text',
+      exportProjectDetails.title
+    )
   })
 
   it('should render two tabs: Project details and Interactions', () => {
     cy.mountWithProvider(<Export />, {
-      initialPath: '/export/1/details',
+      initialPath: `/export/${exportProjectDetails.id}/details`,
       tasks: {
-        Export: () => Promise.resolve(exportProject),
-        TASK_GET_EXPORT_DETAIL: () => Promise.resolve(exportProject),
+        Export: () => Promise.resolve(exportProjectDetails),
+        TASK_GET_EXPORT_DETAIL: () => Promise.resolve(exportProjectDetails),
       },
     })
     assertTabNav({
