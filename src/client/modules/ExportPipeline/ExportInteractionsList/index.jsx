@@ -6,18 +6,17 @@ import { H2 } from 'govuk-react'
 import Interactions from '../../../components/Resource/Interactions'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import { CollectionItem } from '../../../components'
-import { ExportProjectTitle } from '../Export'
 import urls from '../../../../lib/urls'
 import { SORT_OPTIONS_EXPORT_INTERACTION } from '../constants'
 
-const ExportInteractionsList = ({ interactions = [], exportId }) =>
+const ExportInteractionsList = ({ interactions = [] }) =>
   interactions.length === 0 ? null : (
     <ul data-test="export-interactions-list">
       {interactions.map((item) => (
         <CollectionItem
           key={item.id}
-          headingText={<ExportProjectTitle id={exportId} />}
-          headingUrl={urls.exportPipeline.interactions.details(exportId)}
+          headingText={item.subject}
+          headingUrl={urls.exportPipeline.interactions.details(item.id)}
           metadata={[
             {
               label: 'Date:',
@@ -58,9 +57,7 @@ export default ({ exportId }) => (
       payload={{ company_export_id: exportId }}
       sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
     >
-      {(page) => (
-        <ExportInteractionsList interactions={page} exportId={exportId} />
-      )}
+      {(page) => <ExportInteractionsList interactions={page} />}
     </Interactions.Paginated>
   </>
 )
