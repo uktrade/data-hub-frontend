@@ -153,6 +153,7 @@ describe('Companies business details', () => {
   context('when viewing business details', () => {
     it('the company account manager should be shown the Edit One List Information button', () => {
       const company = companyFaker()
+
       // Get current user id and set as one list groupd global account manager
       cy.request('/api-proxy/whoami/?format=json').then((response) => {
         const oneListGroupGlobalAccountManager = {
@@ -177,6 +178,9 @@ describe('Companies business details', () => {
 
     it('other users should not see the Edit One List Information button', () => {
       const company = companyFaker()
+      cy.request('PUT', '/api-proxy/whoami/?format=json', {
+        permissions: ['company.view_company'],
+      })
       cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
         'businessDetails'
       )
