@@ -1,19 +1,22 @@
 import React from 'react'
 
+import { LEVEL_SIZE } from '@govuk-react/constants'
+import { H2 } from 'govuk-react'
+
 import Interactions from '../../../components/Resource/Interactions'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import { CollectionItem } from '../../../components'
-import { ExportProjectTitle } from '../Export'
 import urls from '../../../../lib/urls'
+import { SORT_OPTIONS_EXPORT_INTERACTION } from '../constants'
 
-const ExportInteractionsList = ({ interactions = [], exportId }) =>
+const ExportInteractionsList = ({ interactions = [] }) =>
   interactions.length === 0 ? null : (
     <ul data-test="export-interactions-list">
       {interactions.map((item) => (
         <CollectionItem
           key={item.id}
-          headingText={<ExportProjectTitle id={exportId} />}
-          headingUrl={urls.exportPipeline.interactions.details(exportId)}
+          headingText={item.subject}
+          headingUrl={urls.exportPipeline.interactions.details(item.id)}
           metadata={[
             {
               label: 'Date:',
@@ -40,21 +43,21 @@ const ExportInteractionsList = ({ interactions = [], exportId }) =>
   )
 
 export default ({ exportId }) => (
-  <Interactions.Paginated
-    id="export-interactions"
-    heading="interactions"
-    shouldPluralize={true}
-    noResults="You don't have any export interactions."
-    payload={{ company_export_id: exportId }}
-    sortOptions={[
-      // These values are assumed as the BE work hasn't been implemented yet
-      { value: 'created_on:desc', name: 'Recently created' },
-      { value: 'company.name:asc', name: 'Company A-Z' },
-      { value: 'subject:asc', name: 'Subject A-Z' },
-    ]}
-  >
-    {(page) => (
-      <ExportInteractionsList interactions={page} exportId={exportId} />
-    )}
-  </Interactions.Paginated>
+  <>
+    <H2 size={LEVEL_SIZE[3]}>Interactions</H2>
+    <p>
+      An interaction could be a meeting, call, email or another activity
+      associated with this export.
+    </p>
+    <Interactions.Paginated
+      id="export-interactions"
+      heading="interactions"
+      shouldPluralize={true}
+      noResults="You don't have any export interactions."
+      payload={{ company_export_id: exportId }}
+      sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
+    >
+      {(page) => <ExportInteractionsList interactions={page} />}
+    </Interactions.Paginated>
+  </>
 )
