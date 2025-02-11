@@ -388,7 +388,6 @@ function objectDiff(a, b) {
 
 function assertRequestBody(expectedBody, callback) {
   cy.wait('@interactionHttpRequest').then((xhr) => {
-    // eslint-disable-next-line no-console
     cy.log(
       'Request body fields that differ',
       objectDiff(xhr.request.body, expectedBody)

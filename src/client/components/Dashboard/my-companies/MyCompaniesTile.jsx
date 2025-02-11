@@ -42,7 +42,6 @@ function MyCompaniesTile() {
   return (
     <StyledDiv>
       <ListSelector />
-      {/* eslint-disable no-nested-ternary */}
       {hasLists ? (
         hasCompanies ? (
           <MyCompaniesTable />

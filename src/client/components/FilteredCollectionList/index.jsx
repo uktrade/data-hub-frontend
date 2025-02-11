@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-// this is because there isn't necessarily a unique id to use as the key
-
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useLocation, useNavigate } from 'react-router-dom'

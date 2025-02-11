@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import React from 'react'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'

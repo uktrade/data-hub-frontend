@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { CANADA_ID, UNITED_STATES_ID } = require('../../../../common/constants')
 
 const transformFormData = (

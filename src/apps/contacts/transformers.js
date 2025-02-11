@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { get, pickBy, compact, assign } = require('lodash')
 
 const { contactMetaItemLabels } = require('./labels')

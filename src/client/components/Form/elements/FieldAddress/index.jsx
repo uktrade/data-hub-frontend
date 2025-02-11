@@ -285,7 +285,6 @@ const FieldAddress = ({
                 <FormGroup>
                   <Select label="Select an address" onChange={onAddressSelect}>
                     {addressList.map(({ address1 }, index) => (
-                      // eslint-disable-next-line react/no-array-index-key
                       <option key={index} value={index}>
                         {address1}
                       </option>

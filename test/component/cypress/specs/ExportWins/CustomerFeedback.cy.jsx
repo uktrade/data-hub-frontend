@@ -55,7 +55,7 @@ describe.skip('ExportWins/CustomerFeedback', () => {
         company: { id: '123' },
         },
         ].forEach(({ testTitle, win, company }) => {
-      // eslint-disable-next-line mocha/no-exclusive-tests
+       
       it(testTitle, () => {
         // TODO: The CustomerFeedback component uses the useParams hook, therefore, we need
         // to wrap the component with a Route so the hook works.

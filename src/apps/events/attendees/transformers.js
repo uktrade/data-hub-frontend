@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { compact, get, pickBy } = require('lodash')
 
 const { attendeeLabels } = require('./labels')

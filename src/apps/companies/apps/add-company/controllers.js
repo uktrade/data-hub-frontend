@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 const { transformCountryToOptionWithIsoCode } = require('../../../transformers')
 const { fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')

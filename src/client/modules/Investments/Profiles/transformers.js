@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { companies } from '../../../../lib/urls'
 
 const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
