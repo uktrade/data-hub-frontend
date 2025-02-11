@@ -12,6 +12,30 @@ const {
 describe('StovaEventDetailsPage', () => {
   let stovaEvent
 
+  const assertStovaEventDetailsPageLayout = () => {
+    assertLocalHeader(stovaEvent.name)
+
+    cy.get('[data-test="tablist"]')
+      .should('exist')
+      .eq(0)
+      .should('exist')
+      .children()
+      .should('have.length', 2)
+      .first()
+      .should('have.text', 'Details')
+      .next()
+      .should('have.text', 'Attendees')
+
+    assertFlashMessage(
+      'This event has been automatically synced from Stova. Event details and attendees can only be edited in Stova.'
+    )
+    cy.get('[data-test="newWindowLink"]').should(
+      'have.attr',
+      'href',
+      urls.external.stova('a-stova-event-id')
+    )
+  }
+
   context('When component loads the initial page', () => {
     beforeEach(() => {
       stovaEvent = {
@@ -33,27 +57,7 @@ describe('StovaEventDetailsPage', () => {
         Details: null,
       })
 
-      assertLocalHeader(stovaEvent.name)
-
-      cy.get('[data-test="tablist"]')
-        .should('exist')
-        .eq(0)
-        .should('exist')
-        .children()
-        .should('have.length', 2)
-        .first()
-        .should('have.text', 'Details')
-        .next()
-        .should('have.text', 'Attendees')
-
-      assertFlashMessage(
-        'This event has been automatically synced from Stova. Event details and attendees can only be edited in Stova.'
-      )
-      cy.get('[data-test="newWindowLink"]').should(
-        'have.attr',
-        'href',
-        urls.external.stova('a-stova-event-id')
-      )
+      assertStovaEventDetailsPageLayout()
     })
 
     it('should render the component with the attendee layout', () => {
@@ -69,27 +73,7 @@ describe('StovaEventDetailsPage', () => {
         Attendees: null,
       })
 
-      assertLocalHeader(stovaEvent.name)
-
-      cy.get('[data-test="tablist"]')
-        .should('exist')
-        .eq(0)
-        .should('exist')
-        .children()
-        .should('have.length', 2)
-        .first()
-        .should('have.text', 'Details')
-        .next()
-        .should('have.text', 'Attendees')
-
-      assertFlashMessage(
-        'This event has been automatically synced from Stova. Event details and attendees can only be edited in Stova.'
-      )
-      cy.get('[data-test="newWindowLink"]').should(
-        'have.attr',
-        'href',
-        'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=a-stova-event-id'
-      )
+      assertStovaEventDetailsPageLayout()
     })
   })
 })
