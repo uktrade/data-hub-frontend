@@ -9,7 +9,7 @@ const {
   assertFlashMessage,
 } = require('../../../../../functional/cypress/support/assertions')
 
-describe('StovaEventDetails', () => {
+describe('StovaEventDetailsPage', () => {
   let stovaEvent
 
   context('When component loads the initial page', () => {
