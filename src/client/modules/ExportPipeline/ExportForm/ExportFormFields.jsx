@@ -153,6 +153,7 @@ const ExportFormFields = ({
                 <FieldRadios
                   name="status"
                   label="Export status"
+                  hint="Marking a project as won does not create an export win. To create an export win, first save your changes then on the next page click on 'Convert to export win'."
                   required={ERROR_MESSAGES.status}
                   field={FieldRadios}
                   options={STATUS_OPTIONS}

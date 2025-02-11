@@ -1049,6 +1049,14 @@ const assertFieldError = (element, errorMessage, hasHint = true) =>
     .eq(hasHint ? 1 : 0)
     .should('have.text', errorMessage)
 
+const assertFieldErrorMessage = (element, errorMessage) =>
+  element
+    .find('span')
+    .filter((_, s) => Cypress.$(s).text().includes(errorMessage))
+    .should('have.length.greaterThan', 0)
+    .first()
+    .should('contain.text', errorMessage)
+
 const assertFieldErrorStrict = ({ inputName, errorMessage }) =>
   cy
     .get(`[data-test="field-${inputName}"]`)
@@ -1160,6 +1168,7 @@ module.exports = {
   assertAPIRequest,
   assertExactUrl,
   assertFieldError,
+  assertFieldErrorMessage,
   assertFieldErrorStrict,
   assertTypeaheadValues,
   assertLink,
