@@ -184,7 +184,7 @@ import {
   patchEvent,
   createEvent,
 } from './routes/v4/event/event.js'
-
+import { getCompanyActivityById } from './routes/v4/company-activity/company-activity.js'
 import {
   getLargeCapitalOpportunity,
   saveOpportunityDetails,
@@ -558,6 +558,12 @@ app.get('/v3/event/:eventId', getEventById)
 app.get('/v4/event/:eventId', _eventById)
 app.patch('/v4/event/:eventId', patchEvent)
 app.post('/v4/event', createEvent)
+
+// V4 Company Activity
+app.get(
+  '/v4/company-activity/stova-events/:stovaEventId',
+  getCompanyActivityById
+)
 
 // V4 Export Win
 app.get('/v4/export-win', getExportWinCollection)
