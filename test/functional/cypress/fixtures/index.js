@@ -71,6 +71,7 @@ module.exports = {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
     oneDayExhibition: require('./event/one-day-exhibition'),
     teddyBearExpo: require('./event/teddy-bear-expo'),
+    stovaEvent: require('./event/stova-event.json'),
   },
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
