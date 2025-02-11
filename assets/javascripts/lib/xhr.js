@@ -43,6 +43,7 @@ const XHR = {
       const url = `?${queryString.stringify(params)}`
       try {
         history.replace(url, { data: res.data })
+        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         // state was too large for browser to handle. Do full page load.
         win.location.assign(url)

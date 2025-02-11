@@ -9,6 +9,7 @@ const ExtendedJoi = Joi.extend((joi) => ({
   coerce(value, helpers) {
     try {
       return { value: JSON.parse(value) }
+      // eslint-disable-next-line no-unused-vars
     } catch (ignoreErr) {
       return { value, errors: helpers.error('json.invalid') }
     }
