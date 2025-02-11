@@ -1,6 +1,17 @@
+import qs from 'qs'
+
 import urls from '../../../../../src/lib/urls'
 
 const companySearchEndpoint = '/api-proxy/v4/search/company'
+const companyActivitiesEndPoint = '/api-proxy/v4/search/company-activity'
+const fixtures = require('../../fixtures')
+
+const buildQueryString = (queryParams = {}) =>
+  qs.stringify({
+    // Default query params
+    sortby: 'date:desc',
+    ...queryParams,
+  })
 
 describe('Contact Collections Sort', () => {
   context('Default sort', () => {
@@ -66,6 +77,28 @@ describe('Contact Collections Sort', () => {
       })
       cy.wait('@apiRequest').then(({ request }) => {
         expect(request.body.sortby).to.equal('latest_interaction_date:desc')
+      })
+    })
+  })
+
+  context('Subject sort', () => {
+    const element = '[data-test="sortby"] select'
+
+    beforeEach(() => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
+      cy.visit(
+        `${urls.companies.activity.index(
+          fixtures.company.allActivitiesCompany.id
+        )}?${queryString}`
+      )
+      cy.wait('@apiRequest')
+    })
+
+    it('should sort by "Subject A-Z (interaction)"', () => {
+      cy.get(element).select('subject')
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body.sortby).to.equal('subject')
       })
     })
   })
