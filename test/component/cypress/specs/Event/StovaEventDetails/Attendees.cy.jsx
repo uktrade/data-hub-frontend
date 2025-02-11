@@ -10,6 +10,7 @@ import {
   assertMetadataItem,
   assertTitle,
 } from '../../../../../functional/cypress/support/collection-list-assertions'
+import { assertMetadataItems } from '../../../support/activity-assertions'
 
 describe('AttendeeList', () => {
   let interactions
@@ -40,22 +41,12 @@ describe('AttendeeList', () => {
       cy.mountWithProvider(<AttendeeList interactions={[interactions[0]]} />)
 
       assertTitle('Ima Contact')
-      assertMetadataItem(
-        '[data-test=collection-item]',
-        `Company ${interactions[0].companies[0].name}`
-      )
-      assertMetadataItem(
-        '[data-test=collection-item]',
-        `Job title ${interactions[0].contacts[0].job_title}`
-      )
-      assertMetadataItem(
-        '[data-test=collection-item]',
-        `Date attended ${formatDate(interactions[0].date, DATE_FORMAT_FULL)}`
-      )
-      assertMetadataItem(
-        '[data-test=collection-item]',
-        `Service delivery ${interactions[0].service.name}`
-      )
+      assertMetadataItems([
+        `Company ${interactions[0].companies[0].name}`,
+        `Job title ${interactions[0].contacts[0].job_title}`,
+        `Date attended ${formatDate(interactions[0].date, DATE_FORMAT_FULL)}`,
+        `Service delivery ${interactions[0].service.name}`,
+      ])
     })
   })
 })
