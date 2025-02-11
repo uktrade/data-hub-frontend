@@ -138,6 +138,8 @@ module.exports = {
     euVIES: 'https://ec.europa.eu/taxation_customs/vies/',
     cleanEnergyTransition:
       'https://www.gov.uk/government/consultations/aligning-uk-international-support-for-the-clean-energy-transition',
+    stova: (stovaId) =>
+      `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaId}`,
   },
 
   dashboard: {

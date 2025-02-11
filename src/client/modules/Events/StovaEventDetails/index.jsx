@@ -8,7 +8,6 @@ import { StovaEventResource } from '../../../components/Resource'
 import { Attendees } from './Attendees'
 import { EventDetails } from './EventDetails'
 import StatusMessage from '../../../../client/components/StatusMessage'
-import { getExternalStovaLink } from './constants'
 
 const StovaEventDetails = () => {
   const { stovaEventId, ['*']: path } = useParams()
@@ -23,7 +22,6 @@ const StovaEventDetails = () => {
 }
 
 const StovaEventDetailsPage = ({ stovaEvent, path }) => {
-  const stovaLink = getExternalStovaLink(stovaEvent.stovaEventId)
   const breadcrumbs = [
     {
       link: urls.dashboard.index(),
@@ -46,7 +44,9 @@ const StovaEventDetailsPage = ({ stovaEvent, path }) => {
       This event has been automatically synced from Stova. Event details and
       attendees can only be edited in Stova.
       <br />
-      <NewWindowLink href={stovaLink}>View Event in Stova</NewWindowLink>
+      <NewWindowLink href={urls.external.stova(stovaEvent.stovaEventId)}>
+        View Event in Stova
+      </NewWindowLink>
     </StatusMessage>
   )
 

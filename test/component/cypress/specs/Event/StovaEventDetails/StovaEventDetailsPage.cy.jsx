@@ -52,7 +52,7 @@ describe('StovaEventDetailsPage', () => {
       cy.get('[data-test="newWindowLink"]').should(
         'have.attr',
         'href',
-        'https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=a-stova-event-id'
+        urls.external.stova('a-stova-event-id')
       )
     })
 

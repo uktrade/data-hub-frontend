@@ -1,9 +1,9 @@
 import React from 'react'
 import { compact } from 'lodash'
 
+import urls from '../../../../../../src/lib/urls'
 import { formatStartAndEndDate } from '../../../../../../src/client/components/ActivityFeed/activities/date'
 import { EventDetails } from '../../../../../../src/client/modules/Events/StovaEventDetails/EventDetails'
-import { getExternalStovaLink } from '../../../../../../src/client/modules/Events/StovaEventDetails/constants'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
@@ -84,7 +84,7 @@ describe('StovaEventDetails', () => {
       })
     })
 
-    it('should render the table with not set for fields missing data', () => {
+    it('should render the table with given data', () => {
       const eventDate = formatStartAndEndDate(
         stovaEvent.startDate,
         stovaEvent.endDate
@@ -98,7 +98,7 @@ describe('StovaEventDetails', () => {
         stovaEvent.locationState,
         stovaEvent.locationCountry,
       ])
-      const stovaLink = getExternalStovaLink(stovaEvent.stovaEventId)
+      const stovaLink = urls.external.stova(stovaEvent.stovaEventId)
       cy.mountWithProvider(<EventDetails stovaEvent={stovaEvent} />)
       assertSummaryTableStrict({
         caption: '',

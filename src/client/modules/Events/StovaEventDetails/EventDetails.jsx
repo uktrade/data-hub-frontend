@@ -2,9 +2,10 @@ import React from 'react'
 import { compact, isEmpty } from 'lodash'
 import styled from 'styled-components'
 
+import urls from '../../../../lib/urls'
 import { NewWindowLink, SummaryTable } from '../../../components'
 import { formatStartAndEndDate } from '../../../components/ActivityFeed/activities/date'
-import { getExternalStovaLink } from './constants'
+import { isEmptyWithDefault } from './utils'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
@@ -15,9 +16,6 @@ const StyledSummaryTable = styled(SummaryTable)({
 })
 
 export const EventDetails = ({ stovaEvent }) => {
-  const stovaLink = stovaEvent.stovaEventId
-    ? getExternalStovaLink(stovaEvent.stovaEventId)
-    : ''
   const locationAddress = compact([
     stovaEvent.locationAddress1,
     stovaEvent.locationAddress2,
@@ -35,29 +33,31 @@ export const EventDetails = ({ stovaEvent }) => {
     <StyledSummaryTable>
       <SummaryTable.Row
         heading="Name"
-        children={isEmpty(stovaEvent.name) ? 'Not set' : stovaEvent.name}
+        children={isEmptyWithDefault(stovaEvent.name)}
       />
       <SummaryTable.Row
         heading="Event date"
-        children={isEmpty(eventDate) ? 'Not set' : eventDate}
+        children={isEmptyWithDefault(eventDate)}
       />
       <SummaryTable.Row
         heading="Event location name"
-        children={
-          isEmpty(stovaEvent.locationName) ? 'Not set' : stovaEvent.locationName
-        }
+        children={isEmptyWithDefault(stovaEvent.locationName)}
       />
       <SummaryTable.Row
         heading="Location Address"
-        children={isEmpty(locationAddress) ? 'Not set' : locationAddress}
+        children={isEmptyWithDefault(locationAddress)}
       />
       <SummaryTable.Row
         heading="Stova reference number"
         children={
-          stovaLink ? (
+          stovaEvent.stovaEventId ? (
             <>
               {stovaEvent.stovaEventId}{' '}
-              <NewWindowLink href={stovaLink}>View in Stova</NewWindowLink>
+              <NewWindowLink
+                href={urls.external.stova(stovaEvent.stovaEventId)}
+              >
+                View in Stova
+              </NewWindowLink>
             </>
           ) : (
             'Not set'
@@ -66,11 +66,7 @@ export const EventDetails = ({ stovaEvent }) => {
       />
       <SummaryTable.Row
         heading="Approval Required"
-        children={
-          isEmpty(stovaEvent.approvalRequired)
-            ? 'Not set'
-            : stovaEvent.approvalRequired
-        }
+        children={isEmptyWithDefault(stovaEvent.approvalRequired)}
       />
       <SummaryTable.Row
         heading="Close Date"
@@ -82,41 +78,27 @@ export const EventDetails = ({ stovaEvent }) => {
       />
       <SummaryTable.Row
         heading="Code"
-        children={isEmpty(stovaEvent.code) ? 'Not set' : stovaEvent.code}
+        children={isEmptyWithDefault(stovaEvent.code)}
       />
       <SummaryTable.Row
         heading="Contact Info"
-        children={
-          isEmpty(stovaEvent.contactInfo) ? 'Not set' : stovaEvent.contactInfo
-        }
+        children={isEmptyWithDefault(stovaEvent.contactInfo)}
       />
       <SummaryTable.Row
         heading="Default Language"
-        children={
-          isEmpty(stovaEvent.defaultLanguage)
-            ? 'Not set'
-            : stovaEvent.defaultLanguage
-        }
+        children={isEmptyWithDefault(stovaEvent.defaultLanguage)}
       />
       <SummaryTable.Row
         heading="Description"
-        children={
-          isEmpty(stovaEvent.description) ? 'Not set' : stovaEvent.description
-        }
+        children={isEmptyWithDefault(stovaEvent.description)}
       />
       <SummaryTable.Row
         heading="Price Type"
-        children={
-          isEmpty(stovaEvent.priceType) ? 'Not set' : stovaEvent.priceType
-        }
+        children={isEmptyWithDefault(stovaEvent.priceType)}
       />
       <SummaryTable.Row
         heading="Standard Currency"
-        children={
-          isEmpty(stovaEvent.standardCurrency)
-            ? 'Not set'
-            : stovaEvent.standardCurrency
-        }
+        children={isEmptyWithDefault(stovaEvent.standardCurrency)}
       />
       <SummaryTable.Row
         heading="Live Date"
@@ -128,35 +110,25 @@ export const EventDetails = ({ stovaEvent }) => {
       />
       <SummaryTable.Row
         heading="Folder ID"
-        children={
-          isEmpty(stovaEvent.folderId) ? 'Not set' : stovaEvent.folderId
-        }
+        children={isEmptyWithDefault(stovaEvent.folderId)}
       />
       <SummaryTable.Row
         heading="Max Reg"
-        children={isEmpty(stovaEvent.maxReg) ? 'Not set' : stovaEvent.maxReg}
+        children={isEmptyWithDefault(stovaEvent.maxReg)}
       />
       <SummaryTable.Row
         heading="Address"
-        children={
-          isEmpty(
-            compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
-          )
-            ? 'Not set'
-            : compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
-        }
+        children={isEmptyWithDefault(
+          compact([stovaEvent.city, stovaEvent.country, stovaEvent.state])
+        )}
       />
       <SummaryTable.Row
         heading="Timezone"
-        children={
-          isEmpty(stovaEvent.timezone) ? 'Not set' : stovaEvent.timezone
-        }
+        children={isEmptyWithDefault(stovaEvent.timezone)}
       />
       <SummaryTable.Row
         heading="Created By"
-        children={
-          isEmpty(stovaEvent.createdBy) ? 'Not set' : stovaEvent.createdBy
-        }
+        children={isEmptyWithDefault(stovaEvent.createdBy)}
       />
       <SummaryTable.Row
         heading="Created Date"
@@ -168,9 +140,7 @@ export const EventDetails = ({ stovaEvent }) => {
       />
       <SummaryTable.Row
         heading="Modified By"
-        children={
-          isEmpty(stovaEvent.modifiedBy) ? 'Not set' : stovaEvent.modifiedBy
-        }
+        children={isEmptyWithDefault(stovaEvent.modifiedBy)}
       />
       <SummaryTable.Row
         heading="Modified Date"
