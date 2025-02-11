@@ -91,6 +91,30 @@ describe('Company Activity Feed Filter', () => {
       })
     })
 
+    context('Subject Filter', () => {
+      it('should pass the interaction subject search term as a filter in the request payload', () => {
+        const queryString = buildQueryString({
+          subject: 'amazing',
+        })
+        cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
+        cy.visit(
+          `${urls.companies.activity.index(
+            fixtures.company.allActivitiesCompany.id
+          )}?${queryString}`
+        )
+
+        assertPayload('@apiRequest', {
+          limit: 10,
+          offset: 0,
+          subject: 'amazing',
+          company: fixtures.company.allActivitiesCompany.id,
+          include_parent_companies: false,
+          include_subsidiary_companies: false,
+          sortby: 'date:desc',
+        })
+      })
+    })
+
     context('Dates', () => {
       const dateAfterFilter = '[data-test="date-after-filter"]'
       const dateBeforeFilter = '[data-test="date-before-filter"]'
