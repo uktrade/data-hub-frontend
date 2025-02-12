@@ -51,9 +51,7 @@ export const CoreTeamAdvisers = ({ company }) => (
           <Table.Row>
             <Table.CellHeader setWidth="25%">Team</Table.CellHeader>
             <Table.CellHeader setWidth="15%">Location</Table.CellHeader>
-            <Table.CellHeader setWidth="25%">
-              Global Account Manager
-            </Table.CellHeader>
+            <Table.CellHeader setWidth="25%">Lead ITA</Table.CellHeader>
             <Table.CellHeader setWidth="35%">Email</Table.CellHeader>
           </Table.Row>
           {buildGAMRow(oneListTeam)}
