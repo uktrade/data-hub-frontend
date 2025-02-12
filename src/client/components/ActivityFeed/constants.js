@@ -50,7 +50,6 @@ export const SOURCE_TYPES = {
 export const ACTIVITY_TYPE = {
   CompaniesHouseAccount: ['dit:Accounts'],
   CompaniesHouseCompany: ['dit:Company'],
-  DataHubEvent: ['dit:dataHub:Event'],
   HmrcExporter: ['dit:Export'],
   Interaction: ['dit:Interaction', 'dit:ServiceDelivery'],
   InvestmentProject: ['dit:InvestmentProject'],
