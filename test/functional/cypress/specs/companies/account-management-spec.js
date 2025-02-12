@@ -282,7 +282,7 @@ describe('One List core team', () => {
       assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
-          ['Team', 'Location', 'Global Account Manager', 'Email'],
+          ['Team', 'Location', 'Lead ITA', 'Email'],
           [
             globalAccountManager.dit_team.name,
             globalAccountManager.dit_team.uk_region.name,
@@ -347,7 +347,7 @@ describe('One List core team', () => {
       assertGovReactTable({
         element: '[data-test="global-acc-manager-table"]',
         rows: [
-          ['Team', 'Location', 'Global Account Manager', 'Email'],
+          ['Team', 'Location', 'Lead ITA', 'Email'],
           [
             globalAccountManager.dit_team.name,
             globalAccountManager.dit_team.uk_region.name,
