@@ -111,64 +111,6 @@ describe('events Collections Filter', () => {
     })
   })
 
-  context.skip('Aventri ID', () => {
-    const element = '[data-test="aventri-id-filter"]'
-    const aventriId = '200300400'
-    const invalidAventriId = 'Testing %'
-    const invalidAventriIdNumbers = '200300400500600'
-    const queryParamWithAventriId = 'aventri_id=200300400'
-    const queryParamWithInvalidAventriId = 'aventri_id=Testing %'
-
-    beforeEach(() => {
-      cy.intercept(
-        'GET',
-        `${events.activity.data()}?sortBy=modified_on:desc&aventriId=200300400&page=1`
-      ).as('aventriIdRequest')
-      cy.get('[data-test="toggle-section-button"]').contains('Aventri').click()
-    })
-
-    context('should filter from user input', () => {
-      it('should pass the aventri Id to the controller', () => {
-        cy.get(element).type(`${aventriId}{enter}`)
-        cy.wait('@aventriIdRequest').then((request) => {
-          expect(request.response.statusCode).to.eql(200)
-        })
-      })
-
-      it('should add an aventri ID from user input to query param', () => {
-        cy.get(element).type(`${aventriId}{enter}`)
-        cy.url().should('include', queryParamWithAventriId)
-      })
-    })
-
-    context('should apply validation', () => {
-      it('should not add anything to the query param if the name is backspaced', () => {
-        cy.get(element).type(`{selectAll}{backspace}{enter}`)
-        cy.url().should('not.include', queryParamWithAventriId)
-      })
-
-      it('should not allow non numerical characters', () => {
-        cy.get(element).type(`${invalidAventriId}{enter}`).should('be.empty')
-        cy.url().should('not.include', queryParamWithInvalidAventriId)
-      })
-
-      it('should truncate any long numbers to 9 digits', () => {
-        cy.get(element)
-          .type(`${invalidAventriIdNumbers}{enter}`)
-          .should('have.value', 200300400)
-      })
-    })
-
-    context('should filter from url', () => {
-      it('should add aventri id from url to filter', () => {
-        cy.visit(
-          `events?page=1&sortby=modified_on%3Adesc&${queryParamWithAventriId}`
-        )
-        cy.get(element).should('have.value', aventriId)
-      })
-    })
-  })
-
   context('Country', () => {
     const element = '[data-test="country-filter"]'
     const queryParamWithCountry =

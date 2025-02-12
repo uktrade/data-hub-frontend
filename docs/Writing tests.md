@@ -40,9 +40,9 @@ One approach to TDD is first writing a minimal happy path in your feature spec a
 
 **framework:** cypress
 
-**what:** These tests can be used to render and test one component in isolation, so that the code around the entire app and data setup needed doesn't need to run, and only the logic under test is run. It also avoids duplicating tests for shared components across functional tests. E.g. for the `AventriAttendee` component we can pass in the different mock data needed to test different cases, so then in any functional tests where that component appears we only need to check that we pass data into the component.
+**what:** These tests can be used to render and test one component in isolation, so that the code around the entire app and data setup needed doesn't need to run, and only the logic under test is run. It also avoids duplicating tests for shared components across functional tests. E.g. for the `CompanyLists` component we can pass in the different mock data needed to test different cases, so then in any functional tests where that component appears we only need to check that we pass data into the component.
 
-**examples:** [ActivityFeed/AventriAttendee.test.jsx](https://github.com/uktrade/data-hub-frontend/blob/main/test/component/cypress/specs/ActivityFeed/AventriAttendee.test.jsx),  [CompanyLists/Table.test.jsx](https://github.com/uktrade/data-hub-frontend/blob/main/test/component/cypress/specs/CompanyLists/Table.test.jsx) 
+**examples:** [CompanyLists/Table.test.jsx](https://github.com/uktrade/data-hub-frontend/blob/main/test/component/cypress/specs/CompanyLists/Table.test.jsx) 
 
 **how to run:** [component unit tests](https://github.com/uktrade/data-hub-frontend/blob/main/docs/Running%20tests.md#component-unit-tests)
 
@@ -54,7 +54,7 @@ One approach to TDD is first writing a minimal happy path in your feature spec a
 
 **where:** As close to what's being under test as possible. e.g. in a __test__ folder on the same level. 
 
-**examples:** date.test.js, src/client/components/ActivityFeed/activities/__test__/AventriAttendee.test.js (shows how to stub a function that isn't needed)
+**examples:** date.test.js
 
 **how to run:** [unit tests](https://github.com/uktrade/data-hub-frontend/blob/main/docs/Running%20tests.md#unit-tests)
 

@@ -25,7 +25,6 @@ export const urlTestExclusions = [
   { url: '/company-lists/:listId/rename' },
   { url: '/contacts/:contactId/archive' },
   { url: '/contacts/:contactId/unarchive' },
-  { url: '/events/aventri/:aventriEventId/registration/:status' },
   { url: '/investments/opportunities/:opportunityId' },
   { url: '/investments/:investmentId/edit-history' },
   { url: '/omis/edit/payment-reconciliation' },
@@ -102,6 +101,4 @@ export const urlTestExclusions = [
   { url: '/companies/:companyId/exportwins/:winId/customer-feedback' },
   { url: '/companies/:companyId/export/:exportId/exportwins/create' },
   { url: '/companies/e59a2b0f-7d84-4de7-bc1e-f70339f4255f/overview' },
-  //TODO - Reinstate this link once the Aventri integration is back
-  { url: '/events/aventri/:aventriEventId/details' },
 ]

@@ -437,18 +437,6 @@ describe('Company overview page', () => {
       { is_high_value: null }
     )
 
-    it.skip('should display aventri event activity', () => {
-      cy.get('[data-test="aventri-event-summary"]')
-        .children()
-        .first()
-        .contains('02 Mar 2021 to 04 May 2022')
-        .next()
-        .children()
-        .contains('Aventri Event')
-      cy.get('[data-test="activity-summary-subject"]')
-        .children()
-        .contains('a', 'EITA Test Event 2022')
-    })
     it.skip('should display HMRC exporters record activity', () => {
       cy.get('[data-test="hmrc-exporter-activity-summary"]')
         .children()

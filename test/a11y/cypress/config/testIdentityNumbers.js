@@ -16,7 +16,6 @@ const proposition = propositionFaker({ investmentProject: investment })
 const doNotHave = 'do_not_have'
 
 export const testIdentityNumbers = {
-  ':aventriEventId': '1111',
   ':companyId': listOfObjectives[0].company.id,
   ':contactId': '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
   ':countryId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',

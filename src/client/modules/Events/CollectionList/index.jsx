@@ -122,13 +122,6 @@ const EventsCollection = ({
     },
   }
 
-  //TODO - Restore this once the event DAG is in place
-  /*const maxLengthAventriIdValidation = (e) => {
-    if (e.target.value.length > AVENTRI_ID_MAX_LENGTH) {
-      e.target.value = e.target.value.slice(0, AVENTRI_ID_MAX_LENGTH)
-    }
-  }*/
-
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
       <FilteredCollectionList
@@ -238,23 +231,6 @@ const EventsCollection = ({
               groupId="related-programme-filter"
             />
           </FilterToggleSection>
-          {/* TODO - restore this filter once the event DAG is in place */}
-          {/*<FilterToggleSection
-            id="EventCollection.aventri"
-            label="Aventri"
-            isOpen={false}
-          >
-            <Filters.AventriId
-              id="EventsCollection.aventriId"
-              label={LABELS.aventriId}
-              name="aventri_id"
-              qsParam="aventri_id"
-              hintText="For example, 100100100"
-              type="number"
-              onInput={maxLengthAventriIdValidation}
-              data-test="aventri-id-filter"
-            />
-          </FilterToggleSection>*/}
         </CollectionFilters>
       </FilteredCollectionList>
     </DefaultLayout>

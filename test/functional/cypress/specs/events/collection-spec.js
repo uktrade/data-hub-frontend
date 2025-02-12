@@ -99,24 +99,8 @@ describe('Event Collection List Page', () => {
       assertItemLink('@firstListItem', event1.name, events.details(event1.id))
     })
 
-    it.skip('should display an aventri event name with link', () => {
-      cy.get('@firstAventriEvent')
-        .find('[data-test="aventri-event-name"]')
-        .should('exist')
-        .contains('a', 'Aventri Test Event')
-        .should('be.visible')
-        .should('have.attr', 'href', '/events/aventri/1113/details')
-    })
-
     it('should display a data hub event date', () => {
       assertMetadataItem('@firstListItem', 'Event date 24 Sep to 01 Oct 2017')
-    })
-
-    it.skip('should display an Aventri event date', () => {
-      cy.get('@firstAventriEvent')
-        .find('[data-test="event-date-label"]')
-        .should('exist')
-        .should('contain', '02 Mar 2021 to 04 May 2022')
     })
 
     it('should display the event organiser', () => {
