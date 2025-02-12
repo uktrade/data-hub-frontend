@@ -24,7 +24,8 @@
   },
   "event":{
      "name":"Grand exhibition",
-     "id":"bda12a57-433c-4a0c-a7ce-5ebd080e09e8"
+     "id":"bda12a57-433c-4a0c-a7ce-5ebd080e09e8",
+     "stova_event_id": null
   },
   "is_event":true,
   "status": "complete",

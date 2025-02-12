@@ -41,6 +41,7 @@ module.exports = {
     cancelledMeeting: require('./interaction/cancelled-meeting'),
     draftFutureMeeting: require('./interaction/draft-future-meeting'),
     draftPastMeeting: require('./interaction/draft-past-meeting'),
+    withStovaEvent: require('./interaction/with-stova-event.json'),
     withNoLink: require('./interaction/with-no-link.json'),
     withLink: require('./interaction/with-link.json'),
     withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
@@ -70,6 +71,7 @@ module.exports = {
     emptyOneDayExhibition: require('./event/empty-one-day-exhibition'),
     oneDayExhibition: require('./event/one-day-exhibition'),
     teddyBearExpo: require('./event/teddy-bear-expo'),
+    stovaEvent: require('./event/stova-event.json'),
   },
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),

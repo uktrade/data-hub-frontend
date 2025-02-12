@@ -28,6 +28,7 @@ const transformEventToListItem = ({
   organiser,
   lead_team,
   service,
+  stova_event,
 } = {}) => {
   const [, service2] = service ? service.name.split(' : ') : ''
   const tags = []
@@ -84,10 +85,15 @@ const transformEventToListItem = ({
     })
   }
 
+  let headingUrl = urls.events.details(id)
+  if (stova_event) {
+    headingUrl = urls.events.stova.details(stova_event.id)
+  }
+
   return {
     id,
     headingText: name,
-    headingUrl: urls.events.details(id),
+    headingUrl: headingUrl,
     subheading:
       modified_on &&
       `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,

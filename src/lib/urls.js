@@ -138,6 +138,8 @@ module.exports = {
     euVIES: 'https://ec.europa.eu/taxation_customs/vies/',
     cleanEnergyTransition:
       'https://www.gov.uk/government/consultations/aligning-uk-international-support-for-the-clean-energy-transition',
+    stova: (stovaId) =>
+      `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaId}`,
   },
 
   dashboard: {
@@ -379,6 +381,10 @@ module.exports = {
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
     addAttendee: url('/events', '/:eventId/attendees/create/:contactId'),
+    stova: {
+      details: url('/events', '/stova/:stovaEventId/details'),
+      attendees: url('/events', '/stova/:stovaEventId/attendees'),
+    },
     aventri: {
       details: url('/events', '/aventri/:aventriEventId/details'),
       detailsData: url('/events', '/aventri/:aventriEventId/details/data'),

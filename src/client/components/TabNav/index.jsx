@@ -60,6 +60,7 @@ const TabNav = ({
   id,
   routed,
   keepQueryParams = false,
+  dispatch,
   ...props
 }) => {
   const location = useLocation()

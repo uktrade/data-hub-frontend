@@ -91,6 +91,7 @@ const ALLOWLIST = [
   '/v4/investment-lead/eyb/:eybLeadId',
   '/v4/investment-lead/eyb',
   '/v4/dnb/company-investigation',
+  '/v4/company-activity/stova-events/:id',
 ]
 
 module.exports = (app) => {
