@@ -7,8 +7,8 @@ import {
   transformIdNameToValueLabel,
 } from '../../../transformers'
 import {
+  isoStringToDateParts,
   formatDateWithYearMonth,
-  convertDateToFieldDateObject,
 } from '../../../utils/date'
 import { formatDate, DATE_FORMAT_ISO } from '../../../utils/date-utils'
 
@@ -82,7 +82,7 @@ export const transformAPIValuesForForm = (task, currentAdviserId) => ({
   title: task.title,
   description: task.description,
   dueDate: task.dueDate ? 'custom' : 'none',
-  customDate: task.dueDate ? convertDateToFieldDateObject(task.dueDate) : null,
+  customDate: isoStringToDateParts(task.dueDate),
   emailRemindersEnabled: task.emailRemindersEnabled ? OPTION_YES : OPTION_NO,
   reminderDays: task.reminderDays,
   assignedTo: transformAdvisor(task.advisers, currentAdviserId),
