@@ -2,6 +2,7 @@ const { assertCompanyBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
+const { companyFaker } = require('../../fakers/companies')
 
 describe('Companies business details', () => {
   context(
@@ -148,4 +149,51 @@ describe('Companies business details', () => {
       })
     }
   )
+
+  context('when viewing business details', () => {
+    const whoAmIUri = '/api-proxy/whoami/?format=json'
+
+    // Only set the most basic permissions for the current user.
+    beforeEach(() => {
+      cy.request('PUT', whoAmIUri, {
+        permissions: ['company.view_company'],
+      })
+    })
+
+    it('the company account manager should be shown the Edit One List Information button', () => {
+      const company = companyFaker()
+
+      // Get current user id and set as one list global account manager
+      cy.request(whoAmIUri).then((response) => {
+        const oneListGroupGlobalAccountManager = {
+          name: response.body.name,
+          first_name: response.body.first_name,
+          last_name: response.body.last_name,
+          contact_email: response.body.contact_email,
+          dit_team: response.body.dit_team,
+          id: response.body.id,
+        }
+        company.oneListGroupGlobalAccountManager =
+          oneListGroupGlobalAccountManager
+        cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
+          'businessDetails'
+        )
+
+        cy.visit(urls.companies.businessDetails(company.id))
+      })
+      cy.wait('@businessDetails')
+      cy.get('[data-test="edit-one-list-information"]').should('be.visible')
+    })
+
+    it('for other companies user should not see the Edit One List Information button', () => {
+      const company = companyFaker()
+      cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
+        'businessDetails'
+      )
+      cy.visit(urls.companies.businessDetails(company.id))
+      cy.wait('@businessDetails')
+
+      cy.get('[data-test="edit-one-list-information"]').should('not.exist')
+    })
+  })
 })
