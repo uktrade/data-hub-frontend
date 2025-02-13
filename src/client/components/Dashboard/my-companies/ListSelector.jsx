@@ -62,7 +62,6 @@ export default () => {
                     }),
                 }}
               >
-                {/* eslint-disable react/no-array-index-key */}
                 {lists.map(({ name }, idx) => (
                   <option key={idx} value={idx}>
                     {name}

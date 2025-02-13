@@ -9,13 +9,13 @@ const ExtendedJoi = Joi.extend((joi) => ({
   coerce(value, helpers) {
     try {
       return { value: JSON.parse(value) }
+      // eslint-disable-next-line no-unused-vars
     } catch (ignoreErr) {
       return { value, errors: helpers.error('json.invalid') }
     }
   },
 }))
 
-/* eslint-disable prettier/prettier */
 const OAUTH2_STR = Joi.string().when('OAUTH2_BYPASS_SSO', {
   is: false,
   then: Joi.required(),
@@ -189,6 +189,5 @@ const envSchema = Joi.object({
   // The S3 region for investment evidence documents
   INVESTMENT_DOCUMENT_AWS_REGION: Joi.string().required(),
 })
-/* eslint-enable prettier/prettier */
 
 module.exports = envSchema

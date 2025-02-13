@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { assign, get, uniq } = require('lodash')
 
 const castCompactArray = require('../../lib/cast-compact-array')

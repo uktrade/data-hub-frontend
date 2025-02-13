@@ -1,4 +1,3 @@
-/* eslint-disable no-new */
 const AddAnotherFragment = require('../../../../../assets/javascripts/modules/add-items')
 
 const selectMarkup = `<div id="group-field-adviser" class="c-form-group js-adviser">

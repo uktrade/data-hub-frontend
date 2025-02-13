@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Adds a Cypress command with nice logging. In particular, solves the problem
  * when the created shapshot doesn't highlight the selected DOM element.
@@ -363,4 +362,3 @@ Cypress.Commands.add('isScrolledTo', (element) => {
 })
 
 Cypress.Commands.add('dataTest', (value) => cy.get(`[data-test="${value}"]`))
-

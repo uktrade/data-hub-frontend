@@ -31,6 +31,7 @@ filter.highlightTerm = function highlightTerm(phrase, term = '') {
     const cleanTerm = term.replace(/\*/g, '').replace(/\\/g, '\\\\')
     const regex = new RegExp(escapeRegExp(`(${cleanTerm})`), 'gi')
     return phrase.replace(regex, '<strong>$1</strong>')
+    // eslint-disable-next-line no-unused-vars
   } catch (e) {
     return phrase
   }

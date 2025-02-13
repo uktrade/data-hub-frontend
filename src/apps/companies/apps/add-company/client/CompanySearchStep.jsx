@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import React from 'react'
 import { flushSync } from 'react-dom'
 import { Link } from 'govuk-react'

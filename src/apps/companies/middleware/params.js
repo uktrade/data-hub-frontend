@@ -36,6 +36,7 @@ async function setIsCompanyAlreadyAdded(req, res, next, id) {
   try {
     await getDitCompanyFromList(req, id)
     isCompanyAlreadyAdded = true
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     //  Do nothing
   }

@@ -1,4 +1,3 @@
-/* eslint-disable */
 require('dotenv').config()
 const loadWebpack = require('@cypress/react/plugins/load-webpack')
 

@@ -9,6 +9,7 @@ let webpackManifest = {}
 
 try {
   webpackManifest = require(`${config.buildDir}/assets-manifest.json`)
+  // eslint-disable-next-line no-unused-vars
 } catch (err) {
   logger.error('Manifest file is not found. Ensure assets are built.', {
     eventType: logger.eventTypes.expressStartup,
