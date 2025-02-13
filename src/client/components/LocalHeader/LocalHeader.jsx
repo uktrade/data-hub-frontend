@@ -28,11 +28,6 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-top: 0;
 `
 
-const StyledSuperheading = styled.div({
-  fontSize: 20,
-  lineHeight: '32px',
-})
-
 const StyledLink = styled('a')({
   fontSize: 20,
   display: 'inline-block',
@@ -47,10 +42,10 @@ const StyledLink = styled('a')({
 const LocalHeader = ({
   breadcrumbs,
   flashMessages,
-  heading,
-  subheading,
-  headingLink,
   superheading,
+  heading,
+  headingLink,
+  subheading,
   children,
   useReactRouter = false,
 }) => (
@@ -83,7 +78,7 @@ const LocalHeader = ({
         )}
       </BreadcrumbsWrapper>
       <FlashMessages flashMessages={flashMessages} />
-      {superheading && <StyledSuperheading>{superheading}</StyledSuperheading>}
+      {superheading}
       {headingLink && (
         <StyledLink data-test="heading-link" href={headingLink.url}>
           {headingLink.text}
