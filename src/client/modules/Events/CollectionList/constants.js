@@ -9,10 +9,7 @@ export const LABELS = {
   relatedProgrammes: 'Related programme',
   earliestStartDate: 'Earliest start date',
   latestStartDate: 'Latest start date',
-  aventriId: 'Aventri ID',
 }
-
-export const AVENTRI_ID_MAX_LENGTH = 9
 
 export const SORT_OPTIONS = [
   {

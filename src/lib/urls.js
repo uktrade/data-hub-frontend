@@ -385,18 +385,6 @@ module.exports = {
       details: url('/events', '/stova/:stovaEventId/details'),
       attendees: url('/events', '/stova/:stovaEventId/attendees'),
     },
-    aventri: {
-      details: url('/events', '/aventri/:aventriEventId/details'),
-      detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
-      registrationStatus: url(
-        '/events',
-        '/aventri/:aventriEventId/registration/:status'
-      ),
-      registrationStatusData: url(
-        '/events',
-        '/aventri/:aventriEventId/registration/attendees/data'
-      ),
-    },
   },
   search: {
     index: url('/search'),

@@ -80,43 +80,6 @@ describe('Contact activity', () => {
       )
     })
 
-    context.skip('when using the sort by selector', () => {
-      beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `${urls.contacts.activity.data(
-            contactId
-          )}?page=1&selectedSortBy=newest`
-        ).as('newestRequest')
-        cy.intercept(
-          'GET',
-          `${urls.contacts.activity.data(
-            contactId
-          )}?page=1&selectedSortBy=oldest`
-        ).as('oldestRequest')
-        cy.visit(urls.contacts.contactActivities(contactId))
-      })
-
-      after(() => {
-        cy.visit(urls.contacts.contactActivities(contactId))
-      })
-
-      it('should default to sort by newest', () => {
-        cy.get('[data-test=aventri-activity]').contains('EITA Test Event 2022')
-      })
-
-      it('should sort by oldest', () => {
-        const element = '[data-test="sortby"] select'
-        cy.get(element).select('Oldest')
-        cy.wait('@oldestRequest').then((request) => {
-          expect(request.response.statusCode).to.eql(200)
-        })
-        cy.get('[data-test="interaction-activity"]').contains(
-          'Meeting between Brendan Smith and Tyson Morar'
-        )
-      })
-    })
-
     context('when viewing a Contact with Data Hub interaction', () => {
       it('should display interaction activity kind label', () => {
         cy.get('@firstListItem').each(() => {
@@ -177,12 +140,6 @@ describe('Contact activity', () => {
             .should('not.contain', 'Adviser')
         })
       })
-    })
-  })
-
-  context.skip('When viewing a Contact with Aventri activities', () => {
-    it('should display the aventri activity', () => {
-      cy.get('[data-test="aventri-activity"]').should('exist')
     })
   })
 

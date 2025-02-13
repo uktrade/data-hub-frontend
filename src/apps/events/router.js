@@ -10,9 +10,6 @@ const { createAttendee } = require('./attendees/controllers/create')
 router.get('/create', renderEventsView)
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router.get('/aventri/:aventriEventId/details', renderEventsView)
-router.get('/aventri/:aventriEventId/registration/:status', renderEventsView)
-
 router.use(
   '/:eventId',
   handleRoutePermissions(LOCAL_NAV),
