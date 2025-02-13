@@ -38,7 +38,7 @@ const RoutedInput = ({
   const [searchParams, setSearchParams] = useSearchParams()
 
   const writeQs = (value) => {
-    searchParams.set('name', value)
+    searchParams.set(qsParam, value)
     setSearchParams(searchParams)
   }
 
