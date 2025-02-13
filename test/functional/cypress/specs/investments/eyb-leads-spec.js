@@ -53,6 +53,7 @@ const OVERSEAS_REGION_ID_2 = '5616ccf5-ab4a-4c2c-9624-13c69be3c46b'
 
 const EYB_LEAD_LIST = Array(
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     company: { name: `${COMPANY_NAME} and Co` },
     is_high_value: true,
@@ -66,6 +67,7 @@ const EYB_LEAD_LIST = Array(
     },
   }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     sector: { name: SECTOR_NAME, id: SECTOR_ID },
     is_high_value: false,
@@ -78,9 +80,18 @@ const EYB_LEAD_LIST = Array(
       },
     },
   }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: null }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: null,
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: false,
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     is_high_value: false,
     company: null,
@@ -584,7 +595,11 @@ describe('EYB leads collection page', () => {
     it('should load sort by dropdown', () => {
       cy.get('[data-test="sortby"] select option').then((options) => {
         const actual = [...options].map((o) => o.value)
-        expect(actual).to.deep.eq(['-triage_created', 'company__name'])
+        expect(actual).to.deep.eq([
+          '-triage_modified',
+          '-triage_created',
+          'company__name',
+        ])
       })
     })
 
