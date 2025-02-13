@@ -9,6 +9,7 @@ import {
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
+  assertQueryParamsPlus,
 } from '../../support/assertions'
 
 import { contactsListFaker } from '../../fakers/contacts'
@@ -117,7 +118,7 @@ describe('Contacts Collections Filter', () => {
         expect(request.body).to.deep.equal(expectedPayload)
       })
 
-      assertQueryParams('name', name)
+      assertQueryParamsPlus('name', name)
       assertChipExists({ label: name, position: 1 })
       assertChipExists({ label: 'Active', position: 2 })
 
