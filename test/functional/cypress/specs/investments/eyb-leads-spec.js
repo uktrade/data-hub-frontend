@@ -635,13 +635,13 @@ describe('EYB leads collection page', () => {
     it('should sort by most recently created when another sort option is selected', () => {
       cy.get('[data-test="sortby"] select').select('company__name')
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
-        if (req.query.sortby === '-triage_created') req.alias = 'sortedRequest'
+        if (req.query.sortby === '-triage_modified') req.alias = 'sortedRequest'
       })
-      cy.get('[data-test="sortby"] select').select('-triage_created')
-      assertQueryParams('sortby', '-triage_created')
+      cy.get('[data-test="sortby"] select').select('-triage_modified')
+      assertQueryParams('sortby', '-triage_modified')
       cy.wait('@sortedRequest')
         .its('request.query')
-        .should('include', PAYLOADS.sortByCreated)
+        .should('include', PAYLOADS.sortByModified)
     })
   })
 })
