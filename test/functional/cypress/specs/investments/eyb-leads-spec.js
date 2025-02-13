@@ -53,6 +53,7 @@ const OVERSEAS_REGION_ID_2 = '5616ccf5-ab4a-4c2c-9624-13c69be3c46b'
 
 const EYB_LEAD_LIST = Array(
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     company: { name: `${COMPANY_NAME} and Co` },
     is_high_value: true,
@@ -66,6 +67,7 @@ const EYB_LEAD_LIST = Array(
     },
   }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     sector: { name: SECTOR_NAME, id: SECTOR_ID },
     is_high_value: false,
@@ -78,9 +80,18 @@ const EYB_LEAD_LIST = Array(
       },
     },
   }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: null }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: null,
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: false,
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     is_high_value: false,
     company: null,
@@ -97,13 +108,14 @@ const EYB_LEAD_LIST = Array(
 )
 
 const PAYLOADS = {
-  minimum: { limit: '10', offset: '0', sortby: '-triage_created' },
+  minimum: { limit: '10', offset: '0', sortby: '-triage_modified' },
   companyFilter: { company: COMPANY_NAME },
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
   unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
+  sortByModified: { sortby: '-triage_modified' },
   sortByCreated: { sortby: '-triage_created' },
   sortByCompanyAZ: { sortby: 'company__name' },
 }
@@ -583,13 +595,28 @@ describe('EYB leads collection page', () => {
     it('should load sort by dropdown', () => {
       cy.get('[data-test="sortby"] select option').then((options) => {
         const actual = [...options].map((o) => o.value)
-        expect(actual).to.deep.eq(['-triage_created', 'company__name'])
+        expect(actual).to.deep.eq([
+          '-triage_modified',
+          '-triage_created',
+          'company__name',
+        ])
       })
     })
 
-    it('should sort by most recently created by default', () => {
-      assertQueryParams('sortby', '-triage_created')
+    it('should sort by most recently modified by default', () => {
+      assertQueryParams('sortby', '-triage_modified')
       cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByModified)
+    })
+
+    it('should sort by recently created', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sortby === '-triage_created') req.alias = 'sortedRequest'
+      })
+      cy.get('[data-test="sortby"] select').select('-triage_created')
+      assertQueryParams('sortby', '-triage_created')
+      cy.wait('@sortedRequest')
         .its('request.query')
         .should('include', PAYLOADS.sortByCreated)
     })
@@ -608,13 +635,13 @@ describe('EYB leads collection page', () => {
     it('should sort by most recently created when another sort option is selected', () => {
       cy.get('[data-test="sortby"] select').select('company__name')
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
-        if (req.query.sortby === '-triage_created') req.alias = 'sortedRequest'
+        if (req.query.sortby === '-triage_modified') req.alias = 'sortedRequest'
       })
-      cy.get('[data-test="sortby"] select').select('-triage_created')
-      assertQueryParams('sortby', '-triage_created')
+      cy.get('[data-test="sortby"] select').select('-triage_modified')
+      assertQueryParams('sortby', '-triage_modified')
       cy.wait('@sortedRequest')
         .its('request.query')
-        .should('include', PAYLOADS.sortByCreated)
+        .should('include', PAYLOADS.sortByModified)
     })
   })
 })
