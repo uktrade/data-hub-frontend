@@ -97,13 +97,14 @@ const EYB_LEAD_LIST = Array(
 )
 
 const PAYLOADS = {
-  minimum: { limit: '10', offset: '0', sortby: '-triage_created' },
+  minimum: { limit: '10', offset: '0', sortby: '-triage_modified' },
   companyFilter: { company: COMPANY_NAME },
   sectorFilter: { sector: SECTOR_ID },
   highValueFilter: { value: HIGH_VALUE },
   lowValueFilter: { value: LOW_VALUE },
   unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
+  sortByModified: { sortby: '-triage_modified' },
   sortByCreated: { sortby: '-triage_created' },
   sortByCompanyAZ: { sortby: 'company__name' },
 }
@@ -587,9 +588,20 @@ describe('EYB leads collection page', () => {
       })
     })
 
-    it('should sort by most recently created by default', () => {
-      assertQueryParams('sortby', '-triage_created')
+    it('should sort by most recently modified by default', () => {
+      assertQueryParams('sortby', '-triage_modified')
       cy.wait('@apiRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByModified)
+    })
+
+    it('should sort by recently created', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sortby === '-triage_created') req.alias = 'sortedRequest'
+      })
+      cy.get('[data-test="sortby"] select').select('-triage_created')
+      assertQueryParams('sortby', '-triage_created')
+      cy.wait('@sortedRequest')
         .its('request.query')
         .should('include', PAYLOADS.sortByCreated)
     })
