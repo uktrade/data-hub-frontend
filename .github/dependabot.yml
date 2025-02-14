@@ -10,24 +10,8 @@ updates:
     open-pull-requests-limit: 10
     ignore:
       # When updating this list please ensure that a ticket for unblocking the update has been added to the TechEx/ backlog.
-      - dependency-name: jsdom # TET-371
-        versions:
-          - '> 20.0.3'
-      - dependency-name: eslint # Waiting for related dependencies to add support
-        versions:
-          - '> 8.57.0'
-      - dependency-name: http-proxy-middleware # TET-698
-        versions:
-          - '> 2.0.6'
-      - dependency-name: chai-as-promised # TET-757
-        versions:
-          - '> 7.1.2'
-      - dependency-name: history # TET-758
-        versions:
-          - '> 4.10.1'
-      - dependency-name: nivo/core # CPS-639
-        versions:
-          - '> 0.87.0'
+      
+      # Add dependencies with ticket numbers here (and delete this comment if one is added)
       
       # We can't upgrade to the latest chai version without rebuilding the whole app
       - dependency-name: chai
@@ -89,10 +73,6 @@ updates:
       time: '02:00'
       timezone: Europe/London
     open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: eslint # See above
-        versions:
-          - '> 8.57.0'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
