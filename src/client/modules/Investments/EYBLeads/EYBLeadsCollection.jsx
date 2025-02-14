@@ -117,7 +117,7 @@ const EYBLeadCollection = ({
         entityName="eybLead"
         defaultQueryParams={{
           page: 1,
-          sortby: '-triage_modified',
+          sortby: '-triage_created',
         }}
         selectedFilters={selectedFilters}
       >

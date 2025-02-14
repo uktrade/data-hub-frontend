@@ -26,12 +26,12 @@ export const VALUE_OPTIONS = [
 
 export const SORT_OPTIONS = [
   {
-    name: 'Recently modified',
-    value: '-triage_modified',
-  },
-  {
     name: 'Recently created',
     value: '-triage_created',
+  },
+  {
+    name: 'Recently modified',
+    value: '-triage_modified',
   },
   {
     name: 'Company A-Z',
