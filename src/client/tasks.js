@@ -41,9 +41,6 @@ import {
 
 import { TASK_GET_EVENT_DETAILS } from '../client/modules/Events/EventDetails/state'
 import { getEventDetails } from '../client/modules/Events/EventDetails/tasks'
-import { TASK_GET_EVENT_AVENTRI_DETAILS } from './modules/Events/EventAventriDetails/state'
-import { getEventAventriDetails } from './modules/Events/EventAventriDetails/tasks'
-import { TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES } from './modules/Events/EventAventriRegistrationStatus/state'
 import {
   TASK_GET_EVENTS_FORM_AND_METADATA,
   TASK_SAVE_EVENT,
@@ -256,7 +253,6 @@ import { TASK_ARCHIVE_CONTACT } from '../client/modules/Contacts/ContactDetails/
 import { archiveContact } from '../client/modules/Contacts/ContactDetails/tasks'
 import { TASK_GET_USER_FEATURE_FLAGS } from './components/CheckUserFeatureFlags/state'
 import { getUserFeatureFlags } from './components/CheckUserFeatureFlags/tasks'
-import { getEventAventriRegistrationStatusAttendees } from './modules/Events/EventAventriRegistrationStatus/tasks'
 
 import {
   TASK_ARCHIVE_INTERACTION,
@@ -550,9 +546,6 @@ export const tasks = {
   [TASK_GET_EVENTS_METADATA]: getEventsMetadata,
   [TASK_GET_EVENTS_ORGANISER_NAME]: getAdviserNames,
   [TASK_GET_EVENT_DETAILS]: getEventDetails,
-  [TASK_GET_EVENT_AVENTRI_DETAILS]: getEventAventriDetails,
-  [TASK_GET_EVENT_AVENTRI_REGISTRATION_STATUS_ATTENDEES]:
-    getEventAventriRegistrationStatusAttendees,
   [TASK_GET_EVENTS_FORM_AND_METADATA]: getEventFormAndMetadata,
   [TASK_SAVE_EVENT]: saveEvent,
   [TASK_SEARCH_ATTENDEE]: searchAttendee,

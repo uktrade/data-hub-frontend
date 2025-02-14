@@ -6,7 +6,6 @@ import { default as Input } from './RoutedInputField/Filter'
 import { default as NumericRange } from './RoutedNumericRangeField/Filter'
 import { default as Typeahead } from './RoutedTypeahead/Filter'
 import { default as TeamsTypeahead } from './RoutedTeamsTypeahead/Filter'
-import { default as AventriId } from './RoutedAventriIdField/Filter'
 import { default as RelatedCompaniesCheckboxGroup } from './RoutedRelatedCompaniesCheckboxGroup/Filter'
 
 export default {
@@ -18,6 +17,5 @@ export default {
   NumericRange,
   Typeahead,
   TeamsTypeahead,
-  AventriId,
   RelatedCompaniesCheckboxGroup,
 }
