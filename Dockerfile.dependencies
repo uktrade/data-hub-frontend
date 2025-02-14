@@ -53,7 +53,7 @@ COPY --chown=node:node package*.json "$HOME/"
 WORKDIR $HOME
 
 # Install specific version of cypress
-RUN npm install -g cypress@14.0.2 \
+RUN npm install -g cypress@14.0.3 \
   && npx cypress verify \
   && npx cypress cache path \
   && npx cypress cache list \
