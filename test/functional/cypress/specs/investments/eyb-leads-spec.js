@@ -89,6 +89,22 @@ const EYB_LEAD_LIST = Array(
     triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     is_high_value: false,
+    audit_log: [
+      {
+        id: 777,
+        timestamp: '2025-02-17T09:00:20.773368Z',
+        changes: {
+          is_high_value: [true, false],
+        },
+      },
+      {
+        id: 777,
+        timestamp: '2025-02-15T09:00:20.773368Z',
+        changes: {
+          is_high_value: [false, true],
+        },
+      },
+    ],
   }),
   eybLeadFaker({
     triage_modified: DATE_TIME_STRING,
@@ -168,6 +184,7 @@ const getEYBLeadsByOverseasRegionId = (overseasRegionID) => {
 describe('EYB leads collection page', () => {
   context('When visiting the EYB leads tab', () => {
     const eybLead = EYB_LEAD_LIST[0]
+    const eybLeadWithAuditData = EYB_LEAD_LIST[3]
 
     beforeEach(() => {
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
@@ -244,6 +261,20 @@ describe('EYB leads collection page', () => {
       cy.get('[data-test="collection-item"]')
         .eq(4)
         .should('contain', COMPANY_NAME_DEFAULT)
+    })
+    it('should display the audit log metadata for each collection item correctly', () => {
+      cy.get('[data-test="collection-item"]')
+        .eq(3)
+        .should(
+          'contain',
+          `Value modified on ${formatDate(eybLeadWithAuditData.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+        )
+        .should('contain', `Value change High to Low`)
+
+      cy.get('[data-test="collection-item"]')
+        .eq(1)
+        .should('not.contain', 'Value modified on')
+        .should('not.contain', `Value change`)
     })
   })
 

@@ -29,14 +29,16 @@ export const transformLeadToListItem = ({
   ]
 
   const getLowHighValueAuditLog = (auditLog) => {
-    return auditLog.filter((entry) =>
-      entry.changes.hasOwnProperty('is_high_value')
+    return (
+      auditLog?.filter?.((entry) =>
+        entry.changes?.hasOwnProperty('is_high_value')
+      ) || []
     )
   }
 
   const getLatestIsHighValueChange = (auditLog) => {
     const highValueChanges = getLowHighValueAuditLog(auditLog)
-    if (highValueChanges.length === 0) return []
+    if (highValueChanges.length === 0) return null
 
     const latestChange = highValueChanges.reduce((latest, entry) =>
       new Date(entry.timestamp) > new Date(latest.timestamp) ? entry : latest
@@ -61,7 +63,14 @@ export const transformLeadToListItem = ({
       label: 'Submitted to EYB',
       value: formatDate(triage_created, DATE_FORMAT_COMPACT),
     },
-    ...getLatestIsHighValueChange(audit_log),
+  ]
+
+  const latestChangeMetadata = getLatestIsHighValueChange(audit_log)
+  if (latestChangeMetadata) {
+    metadata.push(...latestChangeMetadata)
+  }
+
+  metadata.push(
     { label: 'Estimated spend', value: spend },
     { label: 'Sector', value: sector ? sector.name : '' },
     {
@@ -71,14 +80,17 @@ export const transformLeadToListItem = ({
     {
       label: 'Location',
       value: proposed_investment_region ? proposed_investment_region.name : '',
-    },
-  ].filter((metadata) => metadata.value)
+    }
+  )
+
+  // Remove any entries with falsy values
+  const filteredMetadata = metadata.filter((item) => item.value)
 
   return {
     id,
     headingUrl: urls.investments.eybLeads.details(id),
     headingText: company ? company.name : company_name,
     tags,
-    metadata,
+    metadata: filteredMetadata,
   }
 }
