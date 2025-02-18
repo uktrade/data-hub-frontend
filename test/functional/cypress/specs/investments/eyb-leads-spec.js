@@ -120,6 +120,22 @@ const EYB_LEAD_LIST = Array(
         id: OVERSEAS_REGION_ID_2,
       },
     },
+    audit_log: [
+      {
+        id: 244,
+        timestamp: '2025-02-14T09:00:20.773368Z',
+        changes: {
+          is_high_value: [false, true],
+        },
+      },
+      {
+        id: 445,
+        timestamp: '2025-02-11T09:00:20.773368Z',
+        changes: {
+          is_high_value: [true, false],
+        },
+      },
+    ],
   })
 )
 
