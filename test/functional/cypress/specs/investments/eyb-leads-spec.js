@@ -91,6 +91,13 @@ const EYB_LEAD_LIST = Array(
     is_high_value: false,
     audit_log: [
       {
+        id: 356,
+        timestamp: '2025-02-18T09:00:20.773368Z',
+        changes: {
+          is_high_value: [null, false],
+        },
+      },
+      {
         id: 777,
         timestamp: '2025-02-17T09:00:20.773368Z',
         changes: {
@@ -284,7 +291,7 @@ describe('EYB leads collection page', () => {
         .eq(3)
         .should(
           'contain',
-          `Value modified on ${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+          `Value modified on ${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[1].timestamp, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Value change High to Low`)
 
