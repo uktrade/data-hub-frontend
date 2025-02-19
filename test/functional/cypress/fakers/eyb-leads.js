@@ -119,6 +119,7 @@ const eybLeadFaker = (overrides = {}) => ({
       id: faker.string.uuid(),
     },
   ],
+  audit_log: [],
   ...overrides,
 })
 
