@@ -108,6 +108,7 @@ describe('Investment project details', () => {
           'Possible UK locations': 'North East',
           'UK regions landed': 'North East',
           'UK recipient company': 'Mercury LtdEdit companyRemove company',
+          'UK location (site address)': '10 Eastings Road London W1 2AA',
           'Delivery partners': 'New Anglia LEP, North Eastern LEP',
         },
       })
@@ -289,6 +290,7 @@ describe('Investment project details', () => {
         dataTest: 'project-requirements-table',
         content: {
           'UK recipient company': 'Find company',
+          'UK location (site address)': 'Not set',
         },
       })
       cy.get('[data-test="find-company-link"]')
