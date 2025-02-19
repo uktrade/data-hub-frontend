@@ -66,51 +66,47 @@ const RenderHasAccountManager = ({
   </div>
 )
 
-export const LeadITA = ({ company, permissions }) => {
-  const getLeadIta =
-    company.oneListGroupTier.name ==
-    'Tier D - International Trade Adviser Accounts'
-      ? 'Advisers on core team'
-      : 'Lead ITA'
-  return (
-    <>
-      <H2 size={LEVEL_SIZE[3]} data-test="lead-ita-heading">
-        {getLeadIta}
-      </H2>
-      {!!company.oneListGroupGlobalAccountManager ? (
-        <RenderHasAccountManager
-          leadITA={company.oneListGroupGlobalAccountManager}
-          companyId={company.id}
-          permissions={permissions}
-          addUrl={urls.companies.accountManagement.advisers.assign(company.id)}
-        />
-      ) : (
-        <>
-          <p>
-            This company record has no Lead International Trade Adviser (ITA).
-          </p>
-          {hasPermissionToAddIta(permissions) && (
-            <>
-              <p>
-                You can add a Lead ITA. This will be visible to all Data Hub
-                users.
-              </p>
-              <Button
-                as={'a'}
-                href={urls.companies.accountManagement.advisers.assign(
-                  company.id
-                )}
-                data-test="add-ita-button"
-              >
-                Add a Lead ITA
-              </Button>
-            </>
-          )}
-        </>
-      )}
-    </>
-  )
-}
+export const LeadITA = ({ company, permissions }) => (
+  <>
+    <H2 size={LEVEL_SIZE[3]} data-test="lead-ita-heading">
+      {company.oneListGroupTier?.name ==
+      'Tier D - International Trade Adviser Accounts'
+        ? 'Advisers on core team'
+        : 'Lead ITA'}
+    </H2>
+    {!!company.oneListGroupGlobalAccountManager ? (
+      <RenderHasAccountManager
+        leadITA={company.oneListGroupGlobalAccountManager}
+        companyId={company.id}
+        permissions={permissions}
+        addUrl={urls.companies.accountManagement.advisers.assign(company.id)}
+      />
+    ) : (
+      <>
+        <p>
+          This company record has no Lead International Trade Adviser (ITA).
+        </p>
+        {hasPermissionToAddIta(permissions) && (
+          <>
+            <p>
+              You can add a Lead ITA. This will be visible to all Data Hub
+              users.
+            </p>
+            <Button
+              as={'a'}
+              href={urls.companies.accountManagement.advisers.assign(
+                company.id
+              )}
+              data-test="add-ita-button"
+            >
+              Add a Lead ITA
+            </Button>
+          </>
+        )}
+      </>
+    )}
+  </>
+)
 
 LeadITA.propTypes = {
   company: PropTypes.object.isRequired,
