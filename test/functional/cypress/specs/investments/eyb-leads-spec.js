@@ -200,8 +200,8 @@ const getEYBLeadsByOverseasRegionId = (overseasRegionID) => {
 describe('EYB leads collection page', () => {
   context('When visiting the EYB leads tab', () => {
     const eybLead = EYB_LEAD_LIST[0]
-    const eybLeadWithAuditDataHighValue = EYB_LEAD_LIST[3]
-    const eybLeadWithAuditDataLowValue = EYB_LEAD_LIST[5]
+    const eybLeadWithAuditDataHighToLowValue = EYB_LEAD_LIST[3]
+    const eybLeadWithAuditDataLowToHighValue = EYB_LEAD_LIST[4]
 
     beforeEach(() => {
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
@@ -284,7 +284,7 @@ describe('EYB leads collection page', () => {
         .eq(3)
         .should(
           'contain',
-          `Value modified on ${formatDate(eybLeadWithAuditDataHighValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+          `Value modified on ${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Value change High to Low`)
 
@@ -294,10 +294,10 @@ describe('EYB leads collection page', () => {
         .should('not.contain', `Value change`)
 
       cy.get('[data-test="collection-item"]')
-        .eq(5)
+        .eq(4)
         .should(
           'contain',
-          `Value modified on ${formatDate(eybLeadWithAuditDataLowValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+          `Value modified on ${formatDate(eybLeadWithAuditDataLowToHighValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Value change Low to High`)
     })
