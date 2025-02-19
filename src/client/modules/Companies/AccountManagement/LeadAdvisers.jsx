@@ -72,7 +72,7 @@ export const LeadITA = ({ company, permissions }) => (
       {company.oneListGroupTier?.name ==
       'Tier D - International Trade Adviser Accounts'
         ? 'Advisers on core team'
-        : 'Lead ITA'}
+        : `Lead ITA for ${company.name}`}
     </H2>
     {!!company.oneListGroupGlobalAccountManager ? (
       <RenderHasAccountManager
