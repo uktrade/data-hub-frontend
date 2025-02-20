@@ -69,8 +69,7 @@ const RenderHasAccountManager = ({
 export const LeadITA = ({ company, permissions }) => (
   <>
     <H2 size={LEVEL_SIZE[3]} data-test="lead-ita-heading">
-      {company.oneListGroupTier?.name ==
-      'Tier D - International Trade Adviser Accounts'
+      {company.oneListGroupTier?.id == '1929c808-99b4-4abf-a891-45f2e187b410'
         ? 'Advisers on core team'
         : `Lead ITA for ${company.name}`}
     </H2>
