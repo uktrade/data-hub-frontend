@@ -370,7 +370,7 @@ describe('One List core Tier D team', () => {
     it('should render the heading', () => {
       cy.get('[data-test=lead-ita-heading]')
         .should('exist')
-        .should('have.text', "Lead ITA for Ian's Camper Vans Ltd")
+        .should('have.text', 'Advisers on core team')
     })
 
     it('should render the Lead ITA table', () => {
@@ -398,7 +398,10 @@ describe('One List core Tier D team', () => {
         one_list_group_global_account_manager: adviserFaker({
           dit_team: undefined,
         }),
-        one_list_group_tier: { id: '1929c808-99b4-4abf-a891-45f2e187b410' },
+        one_list_group_tier: {
+          id: '1929c808-99b4-4abf-a891-45f2e187b410',
+          name: 'Tier D - International Trade Adviser Accounts',
+        },
         id: companyTierD.id,
       })
 
@@ -415,7 +418,7 @@ describe('One List core Tier D team', () => {
       it('should render the heading', () => {
         cy.get('[data-test=lead-ita-heading]')
           .should('exist')
-          .should('have.text', `Lead ITA for ${companyTierDNoTeam.name}`)
+          .should('have.text', `Advisers on core team`)
       })
 
       it('should render the Lead ITA table', () => {
