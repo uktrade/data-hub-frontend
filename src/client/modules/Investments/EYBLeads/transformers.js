@@ -37,7 +37,11 @@ export const transformLeadToListItem = ({
   }
 
   const getLatestIsHighValueChange = (auditLog) => {
-    const highValueChanges = getLowHighValueAuditLog(auditLog)
+    const highValueChanges = getLowHighValueAuditLog(auditLog).filter(
+      (entry) =>
+        entry.changes.is_high_value[0] !== null &&
+        entry.changes.is_high_value[1] !== null
+    ) // Exclude null values
     if (highValueChanges.length === 0) return null
 
     const latestChange = highValueChanges.reduce((latest, entry) =>
