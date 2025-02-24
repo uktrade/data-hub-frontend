@@ -191,7 +191,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "git-directory-deploy": "^1.5.1",
-    "globals": "^15.14.0",
+    "globals": "^16.0.0",
     "html": "^1.0.0",
     "http-server": "^14.1.1",
     "image-minimizer-webpack-plugin": "^4.1.3",
