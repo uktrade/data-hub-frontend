@@ -56,7 +56,7 @@ describe('Lead advisers', () => {
         fixtures.company.oneListTierDita.one_list_group_global_account_manager
 
       it('should display a header with the company name', () => {
-        cy.contains("Lead ITA for Ian's Camper Vans Ltd")
+        cy.contains('Advisers on core team')
       })
       it('should render the global account manager table', () => {
         assertGovReactTable({

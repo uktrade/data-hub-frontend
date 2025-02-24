@@ -9043,6 +9043,10 @@
               "type": "string"
             }
           },
+          "audit_log": {
+            "type": "string",
+            "readOnly": true
+          },
           "reasons_for_abandonment": {
             "type": "array",
             "items": {
