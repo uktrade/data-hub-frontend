@@ -105,6 +105,7 @@ import AddPropositionDocument from './modules/Investments/Projects/Propositions/
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
+import EYBLeadEditHistory from './modules/Investments/EYBLeads/EYBLeadEditHistory/EYBLeadEditHistory'
 import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/SendReferralForm'
 import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -1041,6 +1042,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:investments'}>
           <EYBLeadDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/investments/eyb-leads/:eybLeadId/edit-history',
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EYBLeadEditHistory />
         </ProtectedRoute>
       ),
     },

@@ -19,7 +19,7 @@ const AuditHistory = ({
   excludedFields = [],
   auditType,
 }) => (
-  <Rsrc.Paginated id={id}>
+  <Rsrc.Paginated sortOptions={['Test', 'Blah']} id={id}>
     {(items) => (
       <ul>
         {transformAuditResponseToCollection(

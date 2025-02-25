@@ -138,6 +138,7 @@ const reactRoutes = [
   '/investments/projects/:projectId/propositions/:propositionId/document',
   '/investments/eyb-leads',
   '/investments/eyb-leads/:eybLeadId/details',
+  '/investments/eyb-leads/:eybLeadId/edit-history',
   '/companies/:companyId/referrals/send',
   '/companies/:companyId/referrals/:referralId',
   '/contacts/:contactId/details',
