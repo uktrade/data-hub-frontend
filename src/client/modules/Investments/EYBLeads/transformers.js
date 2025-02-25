@@ -79,7 +79,7 @@ export const transformLeadToListItem = ({
     { label: 'Estimated spend', value: spend },
     {
       label: 'Location of company headquarters',
-      value: address.country.name ? address.country.name : '',
+      value: address?.country?.name ? address?.country?.name : '',
     },
     { label: 'Sector', value: sector ? sector.name : '' },
     {
