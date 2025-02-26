@@ -17,6 +17,7 @@ import StatusMessage from '../../../StatusMessage'
 import FieldWrapper from '../FieldWrapper'
 import FieldUneditable from '../FieldUneditable'
 import FieldInput from '../FieldInput'
+import FieldCompanyDnBTypeahead from '../FieldCompanyDnBTypeahead'
 import ButtonLink from '../../../ButtonLink'
 import useEntitySearch from '../../../EntityList/useEntitySearch'
 import useDnbSearch from '../../../EntityList/useDnbSearch'
@@ -56,6 +57,7 @@ const FieldDnbCompany = ({
   queryParams = {},
   entityRenderer,
   onCannotFind,
+  csrfToken,
   searchResultsMessage = SEARCH_RESULTS_MESSAGE,
   features,
 }) => {
@@ -96,6 +98,15 @@ const FieldDnbCompany = ({
             {country}
           </FieldUneditable>
         )}
+
+        <FieldCompanyDnBTypeahead
+          name="companyDnB"
+          aria-label="Search a company"
+          label="Company Name"
+          required="Search a company"
+          isMulti={true}
+          csrfToken={csrfToken}
+        />
 
         <FieldInput
           label="Company name"
