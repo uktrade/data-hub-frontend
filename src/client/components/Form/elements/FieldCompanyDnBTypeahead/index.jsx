@@ -26,7 +26,6 @@ const FieldCompanyDnBTypeahead = ({
   name,
   label,
   required,
-  isMulti,
   placeholder = 'Type to search for companies',
   loadOptions,
   csrfToken,
@@ -72,8 +71,8 @@ const FieldCompanyDnBTypeahead = ({
 FieldCompanyDnBTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
   required: PropTypes.string,
-  isMulti: PropTypes.bool,
   placeholder: PropTypes.string,
 }
 
