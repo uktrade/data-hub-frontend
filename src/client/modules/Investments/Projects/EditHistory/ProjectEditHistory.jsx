@@ -28,6 +28,7 @@ const ProjectEditHistory = () => {
         valueTransformer={getValue}
         fieldMapper={mapFieldNameToLabel}
         auditType="the project"
+        showSort={false}
       />
     </ProjectLayoutNew>
   )

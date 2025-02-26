@@ -18,8 +18,9 @@ const AuditHistory = ({
   fieldMapper = transformFieldName,
   excludedFields = [],
   auditType,
+  showSort = true,
 }) => (
-  <Rsrc.Paginated sortOptions={['Test', 'Blah']} id={id}>
+  <Rsrc.Paginated showSort={showSort} id={id}>
     {(items) => (
       <ul>
         {transformAuditResponseToCollection(
@@ -68,6 +69,10 @@ AuditHistory.propTypes = {
    * The type of record. This is displayed as part of the 'no changes saved' text.
    */
   auditType: PropTypes.string.isRequired,
+  /**
+   * An option to show / hide the sort options. This is true by default.
+   */
+  showSort: PropTypes.bool,
 }
 
 export default AuditHistory

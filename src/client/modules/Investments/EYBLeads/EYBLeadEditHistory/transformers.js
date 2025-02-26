@@ -2,7 +2,6 @@ import { isBoolean, isNumber } from 'lodash'
 
 import { EYB_LEAD_FIELD_NAME_TO_LABEL_MAP } from './constants'
 import { NOT_SET, YES, NO } from '../../../../components/AuditHistory/constants'
-// import { currencyGBP } from '../../../../utils/number-utils'
 import { transformFieldName } from '../../../../components/AuditHistory/transformers'
 import {
   convertEYBChoicesToLabels,

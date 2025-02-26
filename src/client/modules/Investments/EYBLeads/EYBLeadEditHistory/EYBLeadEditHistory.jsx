@@ -50,6 +50,7 @@ const EYBLeadEditHistory = () => {
         fieldMapper={mapFieldNameToLabel}
         excludedFields={EXCLUDED_FIELDS}
         auditType="eyb details"
+        showSort={false}
       />
     </DefaultLayout>
   )

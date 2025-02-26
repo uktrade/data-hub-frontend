@@ -104,6 +104,7 @@ const PaginatedResource = multiInstance({
     shouldPluralize,
     noResults = "You don't have any results",
     addItemUrl,
+    showSort = true,
   }) => {
     // We know better than ESLint that we are in deed in a React component
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -120,7 +121,6 @@ const PaginatedResource = multiInstance({
           const routePage = parseInt(qsParams.page, 10) || 1
           const totalPages = result ? Math.ceil(result.count / pageSize) : 0
           const hasZeroResults = result?.count === 0
-
           const task = getTask(name, id)
 
           return (
@@ -156,7 +156,8 @@ const PaginatedResource = multiInstance({
                     shouldPluralize={shouldPluralize}
                     addItemUrl={addItemUrl}
                   />
-                  {totalPages > 0 && (
+                  {showSort}
+                  {totalPages > 0 && showSort && (
                     <StyledCollectionSort
                       totalPages={totalPages}
                       sortOptions={sortOptions}
