@@ -33,11 +33,7 @@ const EYBLeadDetails = () => {
               <StyledRoot>
                 <div>
                   Changes made to this information can be found on the{' '}
-                  <Link
-                    href={urls.investments.eybLeads.editHistory.index(
-                      eybLeadId
-                    )}
-                  >
+                  <Link href={urls.investments.eybLeads.editHistory(eybLeadId)}>
                     Edit history page
                   </Link>
                   .

@@ -533,10 +533,7 @@ module.exports = {
     eybLeads: {
       index: url('/investments', '/eyb-leads'),
       details: url('/investments', '/eyb-leads/:eybLeadId/details'),
-      editHistory: {
-        index: url('/investments/eyb-leads', '/:eybLeadId/edit-history'),
-        data: url('/investments/eyb-leads', '/:eybLeadId/edit-history/data'),
-      },
+      editHistory: url('/investments/eyb-leads', '/:eybLeadId/edit-history'),
     },
   },
   metadata: {

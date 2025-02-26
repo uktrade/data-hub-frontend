@@ -12,7 +12,7 @@ export const mapFieldNameToLabel = (fieldName) =>
   EYB_LEAD_FIELD_NAME_TO_LABEL_MAP[fieldName] || transformFieldName(fieldName)
 
 const getValueFromBoolean = (value, field) => {
-  if (field === 'Value') {
+  if (field === EYB_LEAD_FIELD_NAME_TO_LABEL_MAP.is_high_value) {
     return value ? 'High' : 'Low'
   }
   return value ? YES : NO
@@ -23,21 +23,18 @@ export const getValue = (value, field) => {
     return getValueFromBoolean(value, field)
   }
 
-  if (field === 'Where do you want to set up in the UK?') {
+  if (field === EYB_LEAD_FIELD_NAME_TO_LABEL_MAP.proposed_investment_city) {
     return formatProposedInvestmentCity(value) || NOT_SET
   }
 
   if (
-    field === 'How do you plan to expand your business in the UK?' ||
-    field === 'When do you want to set up?'
+    field === EYB_LEAD_FIELD_NAME_TO_LABEL_MAP.intent ||
+    field === EYB_LEAD_FIELD_NAME_TO_LABEL_MAP.landing_timeframe
   ) {
     return convertEYBChoicesToLabels(value) || NOT_SET
   }
 
-  if (
-    field ===
-    'How many people do you want to hire in the UK in the first 3 years?'
-  ) {
+  if (field === EYB_LEAD_FIELD_NAME_TO_LABEL_MAP.hiring) {
     if (value === 'NO_PLANS_TO_HIRE_YET') {
       return convertEYBChoicesToLabels(value)
     }

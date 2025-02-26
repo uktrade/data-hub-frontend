@@ -32,7 +32,7 @@ describe('Edit History', () => {
 
   beforeEach(() => {
     setup(eybLeadWithValues)
-    cy.visit(urls.investments.eybLeads.editHistory.index(eybLeadWithValues.id))
+    cy.visit(urls.investments.eybLeads.editHistory(eybLeadWithValues.id))
     cy.get('[data-test="collection-item"]').as('collectionItems')
     cy.get('@collectionItems').eq(0).as('listItem1')
     cy.get('@collectionItems').eq(1).as('listItem2')
