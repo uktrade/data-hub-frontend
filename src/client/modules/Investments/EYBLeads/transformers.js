@@ -15,6 +15,7 @@ export const transformLeadToListItem = ({
   proposed_investment_region,
   is_high_value,
   audit_log,
+  address,
 }) => {
   const tags = [
     {
@@ -76,6 +77,10 @@ export const transformLeadToListItem = ({
 
   metadata.push(
     { label: 'Estimated spend', value: spend },
+    {
+      label: 'Location of company headquarters',
+      value: address?.country?.name ? address?.country?.name : '',
+    },
     { label: 'Sector', value: sector ? sector.name : '' },
     {
       label: 'Estimated land date',

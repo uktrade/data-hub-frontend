@@ -267,6 +267,10 @@ describe('EYB leads collection page', () => {
           `Submitted to EYB ${formatDate(eybLead.triage_created, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Estimated spend ${eybLead.spend}`)
+        .should(
+          'contain',
+          `Location of company headquarters ${eybLead.address.country.name}`
+        )
         .should('contain', `Sector ${eybLead.sector.name}`)
         .should(
           'contain',
