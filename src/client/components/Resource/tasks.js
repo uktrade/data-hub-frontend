@@ -99,6 +99,7 @@ import EvidenceTag from './EvidenceTag'
 import ProjectAuditHistory from './ProjectAuditHistory'
 import WinUKRegions from './WinUKRegions'
 import Referral from './Referral'
+import EYBLeadAuditHistory from './EYBLeadAuditHistory'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -202,4 +203,5 @@ export default {
   ...EvidenceTag.tasks,
   ...ProjectAuditHistory.tasks,
   ...Referral.tasks,
+  ...EYBLeadAuditHistory.tasks,
 }

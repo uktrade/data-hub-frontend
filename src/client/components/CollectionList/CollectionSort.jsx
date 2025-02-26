@@ -12,23 +12,29 @@ const StyledSpan = styled('span')`
   color: ${DARK_GREY};
 `
 
-const CollectionSort = ({ sortOptions, totalPages, ...props }) => {
-  const actions = sortOptions ? (
-    <RoutedSelect
-      data-test="sortby"
-      name="sortBy"
-      qsParamName="sortby"
-      label="Sort by"
-    >
-      {sortOptions.map(({ name, value }, i) => {
-        return (
-          <option value={value} key={i}>
-            {name}
-          </option>
-        )
-      })}
-    </RoutedSelect>
-  ) : null
+const CollectionSort = ({
+  sortOptions,
+  totalPages,
+  showSort = true,
+  ...props
+}) => {
+  const actions =
+    sortOptions && showSort ? (
+      <RoutedSelect
+        data-test="sortby"
+        name="sortBy"
+        qsParamName="sortby"
+        label="Sort by"
+      >
+        {sortOptions.map(({ name, value }, i) => {
+          return (
+            <option value={value} key={i}>
+              {name}
+            </option>
+          )
+        })}
+      </RoutedSelect>
+    ) : null
 
   const location = useLocation()
 

@@ -233,7 +233,9 @@ export const createCollectionResource = (name, endpoint) => {
   Component.taskName = name
   Component.resourceName = name
 
-  Component.Paginated = (props) => <PaginatedResource {...props} name={name} />
+  Component.Paginated = ({ showSort = true, ...props }) => (
+    <PaginatedResource {...props} name={name} showSort={showSort} />
+  )
 
   return Component
 }

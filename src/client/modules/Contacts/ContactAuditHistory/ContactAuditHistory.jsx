@@ -19,6 +19,7 @@ const ContactAuditHistory = () => {
         fieldMapper={mapFieldNameToLabel}
         excludedFields={EXCLUDED_FIELDS}
         auditType="the contact"
+        showSort={false}
       />
     </ContactLayout>
   )

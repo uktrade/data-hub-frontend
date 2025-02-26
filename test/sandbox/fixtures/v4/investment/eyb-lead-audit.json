@@ -1,0 +1,102 @@
+{
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 761,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-27T13:10:19.466999Z",
+            "comment": "Changed Is high value.",
+            "changes": {
+                "is_high_value": [
+                    false,
+                    true
+                ]
+            }
+        },
+        {
+            "id": 759,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-26T13:09:05.063004Z",
+            "comment": "Changed Proposed investment city.",
+            "changes": {
+                "proposed_investment_city": [
+                    "CARDIFF",
+                    "SWANSEA"
+                ]
+            }
+        },
+        {
+            "id": 761,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-25T13:10:19.466999Z",
+            "comment": "Changed Intent.",
+            "changes": {
+                "intent": [
+                    [
+                        "RESEARCH_DEVELOP_AND_COLLABORATE"
+                    ],
+                    [
+                        "SET_UP_A_NEW_DISTRIBUTION_CENTRE"
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 754,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-24T12:50:15.712184Z",
+            "comment": "Changed Hiring.",
+            "changes": {
+                "hiring": [
+                    "NO_PLANS_TO_HIRE_YET",
+                    "6-10"
+                ]
+            }
+        },
+        {
+            "id": 754,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-23T12:50:15.712184Z",
+            "comment": "Changed Proposed investment location none.",
+            "changes": {
+                "proposed_investment_location_none": [
+                    false,
+                    true
+                ]
+            }
+        }
+    ]
+  }
+  

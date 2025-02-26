@@ -2,59 +2,58 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
-  CompanyResource,
-  CompanyAuditHistoryResource,
+  EYBLeadResource,
+  EYBLeadAuditHistoryResource,
 } from '../../../../components/Resource'
 import { AuditHistory, DefaultLayout } from '../../../../components'
 import { getValue, mapFieldNameToLabel } from './transformers'
 import urls from '../../../../../lib/urls'
 import { EXCLUDED_FIELDS } from './constants'
 
-const CompanyName = ({ id }) => (
-  <CompanyResource.Inline id={id}>
-    {(company) => company.name}
-  </CompanyResource.Inline>
+const EYBLeadName = ({ id }) => (
+  <EYBLeadResource id={id}>{(eybLead) => eybLead.company.name}</EYBLeadResource>
 )
 
-const CompanyEditHistory = () => {
-  const { companyId } = useParams()
+const EYBLeadEditHistory = () => {
+  const { eybLeadId } = useParams()
+
   return (
     <DefaultLayout
       pageTitle={
         <>
-          Edit history - Business details - <CompanyName id={companyId} /> -
-          Companies
+          Edit history - EYB lead details - <EYBLeadName id={eybLeadId} /> -
+          Investments
         </>
       }
       heading="Edit history"
       breadcrumbs={[
         { link: urls.dashboard.index(), text: 'Home' },
         {
-          link: urls.companies.index(),
-          text: 'Companies',
+          link: urls.investments.index(),
+          text: 'Investments',
         },
         {
-          link: urls.companies.detail(companyId),
-          text: <CompanyName id={companyId} />,
+          link: urls.investments.eybLeads.index(),
+          text: 'EYB leads',
         },
         {
-          link: urls.companies.businessDetails(companyId),
-          text: 'Business details',
+          link: urls.investments.eybLeads.details(eybLeadId),
+          text: <EYBLeadName id={eybLeadId} />,
         },
         { text: 'Edit history' },
       ]}
     >
       <AuditHistory
-        resource={CompanyAuditHistoryResource}
-        id={companyId}
+        resource={EYBLeadAuditHistoryResource}
+        id={eybLeadId}
         valueTransformer={getValue}
         fieldMapper={mapFieldNameToLabel}
         excludedFields={EXCLUDED_FIELDS}
-        auditType="business details"
+        auditType="eyb details"
         showSort={false}
       />
     </DefaultLayout>
   )
 }
 
-export default CompanyEditHistory
+export default EYBLeadEditHistory

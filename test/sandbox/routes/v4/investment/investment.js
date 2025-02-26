@@ -3,6 +3,7 @@ import completeLargeCapitalOpportunity from '../../../fixtures/v4/investment/lar
 import largeCapitalOpportunityList from '../../../fixtures/v4/investment/large-capital-opportunity-list.json' assert { type: 'json' }
 import largeCapitalOpportunityListOnePage from '../../../fixtures/v4/investment/large-capital-opportunity-list-one-page.json' assert { type: 'json' }
 import eybLeadList from '../../../fixtures/v4/investment/eyb-lead-list.json' assert { type: 'json' }
+import eybLeadEditHistory from '../../../fixtures/v4/investment/eyb-lead-audit.json' assert { type: 'json' }
 
 export const getLargeCapitalOpportunity = function (req, res) {
   if (req.params.opportunityId == completeLargeCapitalOpportunity.id) {
@@ -29,4 +30,8 @@ export const getEYBLead = function (req, res) {
 
 export const getEYBLeadList = function (req, res) {
   res.json(eybLeadList)
+}
+
+export const getEYBLeadEditHistory = function (req, res) {
+  res.json(eybLeadEditHistory)
 }
