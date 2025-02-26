@@ -157,11 +157,12 @@ const PaginatedResource = multiInstance({
                     addItemUrl={addItemUrl}
                   />
                   {showSort}
-                  {totalPages > 0 && showSort && (
+                  {totalPages > 0 && (
                     <StyledCollectionSort
                       totalPages={totalPages}
                       sortOptions={sortOptions}
                       qsParamName={sortByQsParamName}
+                      showSort={showSort}
                     />
                   )}
                   {result ? children(result.results) : null}
