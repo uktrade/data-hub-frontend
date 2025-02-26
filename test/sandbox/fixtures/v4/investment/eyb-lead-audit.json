@@ -78,6 +78,24 @@
                     "6-10"
                 ]
             }
+        },
+        {
+            "id": 754,
+            "user": {
+                "id": "64741bc5-b851-44ec-a565-75ec2e1a43cb",
+                "first_name": "",
+                "last_name": "",
+                "name": "",
+                "email": "test@gov.uk"
+            },
+            "timestamp": "2025-02-23T12:50:15.712184Z",
+            "comment": "Changed Proposed investment location none.",
+            "changes": {
+                "proposed_investment_location_none": [
+                    false,
+                    true
+                ]
+            }
         }
     ]
   }

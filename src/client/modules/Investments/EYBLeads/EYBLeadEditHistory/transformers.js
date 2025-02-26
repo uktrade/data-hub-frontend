@@ -1,4 +1,4 @@
-import { isBoolean, isNumber } from 'lodash'
+import { isBoolean } from 'lodash'
 
 import { EYB_LEAD_FIELD_NAME_TO_LABEL_MAP } from './constants'
 import { NOT_SET, YES, NO } from '../../../../components/AuditHistory/constants'
@@ -21,10 +21,6 @@ const getValueFromBoolean = (value, field) => {
 export const getValue = (value, field) => {
   if (isBoolean(value)) {
     return getValueFromBoolean(value, field)
-  }
-
-  if (isNumber(value)) {
-    return value.toString()
   }
 
   if (field === 'Where do you want to set up in the UK?') {

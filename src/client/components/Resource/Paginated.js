@@ -156,7 +156,6 @@ const PaginatedResource = multiInstance({
                     shouldPluralize={shouldPluralize}
                     addItemUrl={addItemUrl}
                   />
-                  {showSort}
                   {totalPages > 0 && (
                     <StyledCollectionSort
                       totalPages={totalPages}
