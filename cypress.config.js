@@ -26,6 +26,7 @@ module.exports = defineConfig({
     specPattern: 'test/functional/cypress/specs/**/*.{js,jsx}',
     baseUrl: 'http://localhost:3000',
     supportFile: 'test/cypress/support/index.js',
+    experimentalWebKitSupport: true,
   },
   retries: {
     runMode: 2,
