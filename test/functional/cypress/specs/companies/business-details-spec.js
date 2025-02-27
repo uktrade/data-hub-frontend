@@ -21,7 +21,7 @@ describe('Companies business details', () => {
       assertCompanyBreadcrumbs(
         fixtures.company.oneListCorp.name,
         urls.companies.detail(fixtures.company.oneListCorp.id),
-        'Business details'
+        'Details'
       )
 
       it('should display the "Last updated" paragraph', () => {
