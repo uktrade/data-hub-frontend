@@ -27,6 +27,7 @@ export { default as ExportExperienceCategoriesResource } from './ExportExperienc
 export { default as ExportResource } from './Export'
 export { default as ExportYearsResource } from './ExportYears'
 export { default as EYBLeadResource } from './EYBLead'
+export { default as EYBLeadAuditHistoryResource } from './EYBLeadAuditHistory'
 export { default as FDITypesResource } from './FDITypes'
 export { default as FDIValuesResource } from './FDIValues'
 export { default as HQTeamRegionOrPostsResource } from './HQTeamRegionOrPost'
