@@ -18,7 +18,7 @@ export const localNavItems = (companyId) => {
     {
       path: 'business-details',
       url: urls.companies.businessDetails(companyId),
-      label: 'Business details',
+      label: 'Details',
     },
     {
       path: 'contacts',
