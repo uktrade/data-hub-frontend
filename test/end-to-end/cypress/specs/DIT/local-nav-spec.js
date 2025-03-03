@@ -54,7 +54,7 @@ describe('DBT Permission', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Overview',
         'Activity',
-        'Business details',
+        'Details',
         'Contacts',
         'Account management',
         'Investment',
