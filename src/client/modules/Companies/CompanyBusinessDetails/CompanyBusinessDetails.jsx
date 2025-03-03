@@ -68,9 +68,9 @@ const CompanyBusinessDetails = ({
         {(company) => (
           <CompanyLayout
             company={company}
-            breadcrumbs={[{ text: 'Business details' }]}
+            breadcrumbs={[{ text: 'Details' }]}
             csrfToken={csrfToken}
-            pageTitle="Business details"
+            pageTitle="Details"
           >
             <StyledRoot>
               <div>
