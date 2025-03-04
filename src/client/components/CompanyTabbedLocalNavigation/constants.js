@@ -29,6 +29,12 @@ export const localNavItems = (companyId) => {
       ariaDescription: 'Company contacts',
     },
     {
+      path: 'files',
+      url: urls.companies.files(companyId),
+      label: 'Files',
+      ariaDescription: 'Files',
+    },
+    {
       path: 'account-management',
       url: urls.companies.accountManagement.index(companyId),
       label: 'Account management',

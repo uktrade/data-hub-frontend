@@ -91,6 +91,7 @@ import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGloba
 import CompanyActivityCollectionNoAs from './modules/Companies/CompanyActivity/index'
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
 import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
+import CompanyFilesCollection from './modules/Files/CollectionList/CompanyFilesCollection'
 import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
@@ -281,6 +282,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CompanyContactsCollection />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies/:companyId/files',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyFilesCollection />
         </ProtectedRoute>
       ),
     },
