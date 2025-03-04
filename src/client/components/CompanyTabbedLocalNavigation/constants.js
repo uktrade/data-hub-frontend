@@ -18,7 +18,7 @@ export const localNavItems = (companyId) => {
     {
       path: 'business-details',
       url: urls.companies.businessDetails(companyId),
-      label: 'Business details',
+      label: 'Details',
     },
     {
       path: 'contacts',
@@ -27,6 +27,12 @@ export const localNavItems = (companyId) => {
       search: '?archived%5B0%5D=false&sortby=modified_on%3Adesc&page=1',
       permissions: ['company.view_contact'],
       ariaDescription: 'Company contacts',
+    },
+    {
+      path: 'files',
+      url: urls.companies.files(companyId),
+      label: 'Files',
+      ariaDescription: 'Files',
     },
     {
       path: 'account-management',

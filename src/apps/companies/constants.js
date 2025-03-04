@@ -50,6 +50,11 @@ const LOCAL_NAV = [
     ariaDescription: 'Company contacts',
   },
   {
+    path: 'files',
+    label: 'Files',
+    ariaDescription: 'Files',
+  },
+  {
     path: 'account-management',
     label: 'Account management',
     ariaDescription: 'Account management',

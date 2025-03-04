@@ -90,6 +90,9 @@ import {
 } from './modules/Contacts/CollectionList/state'
 import contactsReducer from './modules/Contacts/CollectionList/reducer'
 
+import { FILES_LIST_ID } from './modules/Files/CollectionList/state'
+import filesReducer from './modules/Files/CollectionList/reducer'
+
 import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
 import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 
@@ -223,6 +226,7 @@ export const reducers = {
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
+  [FILES_LIST_ID]: filesReducer,
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
   [INTERACTIONS_ID]: interactionsReducer,

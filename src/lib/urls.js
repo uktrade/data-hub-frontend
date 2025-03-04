@@ -174,6 +174,7 @@ module.exports = {
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('/companies', '/:companyId/contacts'),
+    files: url('/companies', '/:companyId/files'),
     unarchive: url('/companies', '/:companyId/unarchive'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
