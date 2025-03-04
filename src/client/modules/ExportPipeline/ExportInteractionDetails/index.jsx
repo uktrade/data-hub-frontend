@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -19,10 +20,10 @@ import {
 import {
   transformAdvisers,
   transformArray,
-  transformCompany,
   transformContacts,
 } from '../../Interactions/InteractionDetails/transformers'
 import { transformBoolToYesNo } from '../../../transformers'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -74,54 +75,85 @@ const ExportInteractionsDetails = () => {
                   ]}
                 >
                   <StyledSummaryTable>
-                    {company && transformCompany(company)}
-                    {contacts && (
-                      <SummaryTable.Row
-                        heading="Contact(s)"
-                        children={transformContacts(contacts)}
-                      />
-                    )}
-                    {service && (
-                      <SummaryTable.Row
-                        heading="Service"
-                        children={service.name}
-                      />
-                    )}
-                    {notes && (
-                      <SummaryTable.Row heading="Notes" children={notes} />
-                    )}
-                    {date && (
-                      <SummaryTable.Row
-                        heading="Date of interaction"
-                        children={formatDate(date, DATE_FORMAT_DAY_MONTH_YEAR)}
-                      />
-                    )}
-                    {ditParticipants && (
-                      <SummaryTable.Row
-                        heading="Adviser(s)"
-                        children={transformAdvisers(ditParticipants)}
-                      />
-                    )}
-                    {communicationChannel && (
-                      <SummaryTable.Row
-                        heading="Communication channel"
-                        children={communicationChannel.name}
-                      />
-                    )}
-                    {hasRelatedTradeAgreements && (
-                      <SummaryTable.Row
-                        heading="Named trade agreement(s)"
-                        children={transformArray(relatedTradeAgreements)}
-                      />
-                    )}
-                    {
-                      <SummaryTable.Row
-                        heading="Helped remove an export barrier"
-                        children={transformBoolToYesNo(
-                          helpedRemoveExportBarrier
-                        )}
-                      />
-                    }
+                    <SummaryTable.Row
+                      heading="Company"
+                      hideWhenEmpty={false}
+                      children={
+                        company ? (
+                          <Link
+                            href={urls.companies.overview.index(company.id)}
+                          >
+                            {company.name}
+                          </Link>
+                        ) : (
+                          NOT_SET_TEXT
+                        )
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Contact(s)"
+                      hideWhenEmpty={false}
+                      children={
+                        contacts.length > 0
+                          ? transformContacts(contacts)
+                          : NOT_SET_TEXT
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Service"
+                      hideWhenEmpty={false}
+                      children={service ? service.name : NOT_SET_TEXT}
+                    />
+                    <SummaryTable.Row
+                      heading="Notes"
+                      hideWhenEmpty={false}
+                      children={notes ? notes : NOT_SET_TEXT}
+                    />
+                    <SummaryTable.Row
+                      heading="Date of interaction"
+                      hideWhenEmpty={false}
+                      children={
+                        date
+                          ? formatDate(date, DATE_FORMAT_DAY_MONTH_YEAR)
+                          : NOT_SET_TEXT
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Adviser(s)"
+                      hideWhenEmpty={false}
+                      children={
+                        !!ditParticipants && ditParticipants?.length > 0
+                          ? transformAdvisers(ditParticipants)
+                          : NOT_SET_TEXT
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Communication channel"
+                      hideWhenEmpty={false}
+                      children={
+                        communicationChannel
+                          ? communicationChannel.name
+                          : NOT_SET_TEXT
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Named trade agreement(s)"
+                      hideWhenEmpty={false}
+                      children={
+                        hasRelatedTradeAgreements &&
+                        relatedTradeAgreements?.length > 0
+                          ? transformArray(relatedTradeAgreements)
+                          : NOT_SET_TEXT
+                      }
+                    />
+                    <SummaryTable.Row
+                      heading="Helped remove an export barrier"
+                      children={
+                        !!helpedRemoveExportBarrier
+                          ? transformBoolToYesNo(helpedRemoveExportBarrier)
+                          : NOT_SET_TEXT
+                      }
+                    />
                   </StyledSummaryTable>
                   <ActionsContainer>
                     <SecondaryButton
