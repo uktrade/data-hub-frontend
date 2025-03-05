@@ -12,10 +12,7 @@ export const transformContactToListItem = () => (file) => {
   let summaryRows = []
 
   // Check if document type is SharePoint-related
-  if (
-    file.document_type === 181 ||
-    file.document_type === 'sharepointdocument'
-  ) {
+  if (file.document_type === 'documents.sharepointdocument') {
     title = 'SharePoint link'
     if (file.document.title) {
       title += ` - ${file.document.title}`
@@ -40,7 +37,7 @@ export const transformContactToListItem = () => (file) => {
           DATE_FORMAT_MEDIUM_WITH_TIME
         ),
       },
-      { label: 'Added by', value: file.document.created_by },
+      { label: 'Added by', value: file.created_by.name },
       { label: 'SharePoint url', value: file.document.url },
     ]
   } else {
