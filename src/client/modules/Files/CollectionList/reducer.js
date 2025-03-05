@@ -2,7 +2,6 @@ import { FILES__LOADED } from '../../../actions'
 
 const initialState = {
   results: [],
-  metadata: {},
   isComplete: false,
 }
 

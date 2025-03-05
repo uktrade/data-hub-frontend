@@ -35,25 +35,8 @@ const CompanyFilesCollection = ({
     },
   }
 
-  const collectionSummaryCardItemTemplateDefault = (
-    item,
-    titleRenderer,
-    useReactRouter,
-    pushAnalytics
-  ) => {
-    return (
-      <CollectionSummaryCardItem
-        {...item}
-        key={item.id}
-        titleRenderer={titleRenderer}
-        useReactRouter={useReactRouter}
-        onClick={() => {
-          pushAnalytics({
-            event: 'filterResultClick',
-          })
-        }}
-      />
-    )
+  const collectionSummaryCardItemTemplateDefault = (item) => {
+    return <CollectionSummaryCardItem {...item} key={item.id} />
   }
 
   return (
@@ -70,7 +53,7 @@ const CompanyFilesCollection = ({
                 summary="Why can I not add a file?"
                 data-test="archived-details"
               >
-                Contacts files be added to an archived company.{' '}
+                Files cannot be added to an archived company.{' '}
                 <Link href={`/companies/${company.id}/unarchive`}>
                   Click here to unarchive
                 </Link>
