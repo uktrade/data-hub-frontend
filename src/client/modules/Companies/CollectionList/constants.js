@@ -21,8 +21,9 @@ export const LABELS = {
 }
 
 export const COMPANY_STATUS_OPTIONS = [
-  { label: 'Active', value: 'false' },
+  { label: 'Active', value: 'true' },
   { label: 'Inactive', value: 'true' },
+  { label: 'Matched', value: 'false' },
 ]
 
 export const SORT_OPTIONS = [
