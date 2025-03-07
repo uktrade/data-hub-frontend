@@ -59,7 +59,7 @@ describe('ExportInteractionsList', () => {
     cy.get('@firstItem').within(() => {
       cy.get('h3 a')
         .should('have.text', 'Video call meeting to Baileys')
-        .and('have.attr', 'href', '/export/123/interactions/details')
+        .and('have.attr', 'href', '/export/1/interactions/123/details')
 
       const items = '[data-test="metadata-item"]'
       cy.get(items).should('have.length', 4)
