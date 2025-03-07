@@ -22,7 +22,6 @@ import {
   transformArray,
   transformContacts,
 } from '../../Interactions/InteractionDetails/transformers'
-import { transformBoolToYesNo } from '../../../transformers'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const StyledSummaryTable = styled(SummaryTable)({
@@ -150,7 +149,9 @@ const ExportInteractionsDetails = () => {
                       heading="Helped remove an export barrier"
                       children={
                         !!helpedRemoveExportBarrier
-                          ? transformBoolToYesNo(helpedRemoveExportBarrier)
+                          ? helpedRemoveExportBarrier
+                            ? 'Yes'
+                            : 'No'
                           : NOT_SET_TEXT
                       }
                     />
