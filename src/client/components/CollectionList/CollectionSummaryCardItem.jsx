@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
 const CollectionSummaryCardItem = ({ title, links, rows }) => (
-  <div className="govuk-summary-card govuk-!-margin-top-6">
+  <div
+    data-test="collection-item"
+    className="govuk-summary-card govuk-!-margin-top-6"
+  >
     <div class="govuk-summary-card__title-wrapper">
       <h2 class="govuk-summary-card__title">{title}</h2>
       <div className="govuk-summary-card__title-actions">
@@ -23,7 +26,11 @@ const CollectionSummaryCardItem = ({ title, links, rows }) => (
     <div class="govuk-summary-card__content">
       <dl class="govuk-summary-list">
         {rows.map((row, index) => (
-          <div className="govuk-summary-list__row" key={index}>
+          <div
+            data-test="metadata"
+            className="govuk-summary-list__row"
+            key={index}
+          >
             <dt className="govuk-summary-list__key">{row.label}</dt>
             <dd className="govuk-summary-list__value">{row.value}</dd>
           </div>

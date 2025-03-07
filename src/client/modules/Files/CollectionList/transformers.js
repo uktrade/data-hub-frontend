@@ -9,7 +9,10 @@ export const transformFileToListItem = () => (file) => {
   const links = []
   let summaryRows = []
 
-  // Check if document type is SharePoint-related
+  // Function to format the summary rows
+  const addSummaryRow = (label, value) => ({ label, value })
+
+  // Handle different document types
   switch (file.document_type) {
     case DOCUMENT_TYPES.SHAREPOINT:
       title = 'SharePoint link'
@@ -17,7 +20,7 @@ export const transformFileToListItem = () => (file) => {
         title += ` - ${file.document.title}`
       }
 
-      // Add links
+      // Add links for SharePoint document
       links.push(
         {
           text: 'View file (opens in new tab)',
@@ -25,24 +28,26 @@ export const transformFileToListItem = () => (file) => {
           attrs: { target: '_blank', rel: 'noopener noreferrer' },
         },
         { text: 'Delete', url: '#' }
-        // TODO: Handle that when delete is clicked you go to the delete flow.
       )
 
-      // Add summary rows
+      // Add summary rows for SharePoint document
       summaryRows = [
-        {
-          label: 'Date added',
-          value: formatDate(
-            file.document.created_on,
-            DATE_FORMAT_MEDIUM_WITH_TIME
-          ),
-        },
-        { label: 'Added by', value: file.created_by.name },
-        { label: 'SharePoint url', value: file.document.url },
+        addSummaryRow(
+          'Date added',
+          formatDate(file.document.created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+        ),
+        addSummaryRow('Added by', file.created_by.name),
+        addSummaryRow('SharePoint url', file.document.url),
       ]
+      break
+
     case DOCUMENT_TYPES.FILE_UPLOAD:
-    // TODO: Handle flow for uploaded files.
+      // TODO: Handle flow for uploaded files
+      break
+
     default:
+      // Handle other cases or leave empty if none
+      break
   }
 
   return {

@@ -61,7 +61,7 @@ const CompanyFilesCollection = ({
             ) : null}
             <FilteredCollectionList
               {...props}
-              collectionName="SharePoint link"
+              collectionName="File"
               sortOptions={optionMetadata.sortOptions}
               taskProps={collectionListTask}
               collectionItemTemplate={collectionSummaryCardItemTemplateDefault}
