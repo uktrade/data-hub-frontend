@@ -44,6 +44,8 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 
 > If you have issues when building the dependencies image, especially if you are using a Mac with an Apple chip, this is most likely due to incompatibility with the `arm` architecture; instead you need to build on `amd` architecture. Please refer to [troubleshooting guide](./Troubleshooting.md) and follow the steps under the Building dependency images section, before retrying the build command below.
 
+> If you have authentication issues such as: `Denied: Unauthenticated request. Unauthenticated requests do not have permission "artifactregistry.repositories.uploadArtifacts" on resource "projects/sre-docker-registry/locations/us/repositories/gcr.io" (or it may not exist)`, try running: `gcloud auth configure-docker gcr.io`.
+
 ```bash
 export VERSION=5.0.0 # Increment this version each time when you edit Dockerfile.
 
