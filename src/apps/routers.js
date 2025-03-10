@@ -125,6 +125,7 @@ const reactRoutes = [
   '/companies/:companyId/activity',
   '/companies/:companyId/contacts',
   '/companies/:companyId/orders',
+  '/companies/:companyId/files',
   '/companies/:companyId/account-management',
   '/companies/:companyId/investments',
   '/companies/:companyId/investments/projects',

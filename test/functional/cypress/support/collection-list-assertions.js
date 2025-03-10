@@ -152,6 +152,46 @@ const assertOMISSumary = (summaryText) => {
   })
 }
 
+const assertSummaryCardTitle = (item, headingText) => {
+  it('should render a summary card title', () => {
+    cy.get(item).find('h2').should('contain', headingText)
+  })
+}
+
+const assertSummaryCardLinks = (item, expectedLinkTexts) => {
+  it('should contain links in the summary card title actions with correct text', () => {
+    cy.get(item)
+      .find('.govuk-summary-card__title-actions')
+      .find('a')
+      .should('have.length', expectedLinkTexts.length)
+      .each(($link, index) => {
+        cy.wrap($link).should('contain.text', expectedLinkTexts[index])
+      })
+  })
+}
+
+const assertSummaryCardList = (item, expectedRows) => {
+  it('should display correct summary card rows', () => {
+    cy.get(item).within(() => {
+      cy.get('[data-test="metadata"]').should(
+        'have.length',
+        expectedRows.length
+      )
+
+      // Loop through each expected row and check the label and value
+      expectedRows.forEach(([label, value], index) => {
+        cy.get('[data-test="metadata"]') // Find all rows again
+          .eq(index) // Check the row at the specific index
+          .within(() => {
+            // Check if the label and value are displayed correctly
+            cy.get('.govuk-summary-list__key').should('have.text', label)
+            cy.get('.govuk-summary-list__value').should('have.text', value)
+          })
+      })
+    })
+  })
+}
+
 module.exports = {
   getCollectionList,
   assertCollectionBreadcrumbs,
@@ -177,4 +217,7 @@ module.exports = {
   assertTag,
   assertTagNotPresent,
   assertTagShouldNotExist,
+  assertSummaryCardTitle,
+  assertSummaryCardLinks,
+  assertSummaryCardList,
 }
