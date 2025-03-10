@@ -13,11 +13,9 @@ import {
 import { genericDocumentsListFaker } from '../../fakers/generic-documents'
 
 describe('Generic Documents / Files Collections for company', () => {
-  const companyId = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
+  const relatedObjectId = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
   const genericDocumentsList = [...genericDocumentsListFaker(3)]
-
-  // Define the API URL once
-  const apiUrl = `/api-proxy/v4/document/?related_object_id=${companyId}&limit=10&offset=0&sortby=created_on:desc`
+  const apiUrl = `/api-proxy/v4/document/?related_object_id=${relatedObjectId}&limit=10&offset=0&sortby=-created_on`
 
   // Helper function to intercept the API request
   const interceptApiRequest = () => {
@@ -31,8 +29,8 @@ describe('Generic Documents / Files Collections for company', () => {
 
   beforeEach(() => {
     interceptApiRequest()
-    cy.visit(companies.files(companyId), {
-      qs: { sortby: 'created_on:desc' },
+    cy.visit(companies.files(relatedObjectId), {
+      qs: { sortby: '-created_on' },
     })
     cy.wait('@apiRequest')
     getCollectionList()
@@ -62,5 +60,9 @@ describe('Generic Documents / Files Collections for company', () => {
         ['SharePoint url', genericDocumentsList[0].document.url],
       ])
     })
+  })
+
+  context('SharePoint type documents / files sorting', () => {
+    it('should render the elements sorted correctly', () => {})
   })
 })

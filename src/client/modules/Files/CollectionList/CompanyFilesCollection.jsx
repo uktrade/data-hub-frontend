@@ -29,7 +29,7 @@ const CompanyFilesCollection = ({
     startOnRender: {
       payload: {
         ...payload,
-        companyId: companyId,
+        relatedObjectId: companyId,
       },
       onSuccessDispatch: FILES__LOADED,
     },
@@ -71,7 +71,7 @@ const CompanyFilesCollection = ({
               }
               entityName="file"
               defaultQueryParams={{
-                sortby: 'created_on:desc',
+                sortby: '-created_on',
                 page: 1,
               }}
             />

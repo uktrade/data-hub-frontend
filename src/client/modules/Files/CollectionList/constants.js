@@ -1,6 +1,6 @@
 export const SORT_OPTIONS = [
-  { value: 'created_on:desc', name: 'Recently created' },
-  { value: 'created_on:asc', name: 'Oldest' },
+  { value: '-created_on', name: 'Recently created' },
+  { value: 'created_on', name: 'Oldest' },
 ]
 
 export const DOCUMENT_TYPES = {
