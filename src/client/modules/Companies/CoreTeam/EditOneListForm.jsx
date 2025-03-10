@@ -39,7 +39,7 @@ const EditOneListForm = ({
     flashMessage={() => 'Core team has been updated.'}
     showStepInUrl={true}
   >
-    {({ values, currentStep, goToStep }) => (
+    {({ values, currentStep, goToStep, permissions }) => (
       <>
         <Step name="oneListTier">
           <FieldRadios
@@ -53,11 +53,17 @@ const EditOneListForm = ({
         {values.one_list_tier !== NONE && (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Step name="oneListAdvisers">
-              <FieldAdvisersTypeahead
-                name={ACCOUNT_MANAGER_FIELD_NAME}
-                label="Global Account Manager"
-                required="Select at least one adviser"
-              />
+              {permissions &&
+                permissions.includes('company.change_company') &&
+                permissions.includes(
+                  'company.change_one_list_tier_and_global_account_manager'
+                ) && (
+                  <FieldAdvisersTypeahead
+                    name={ACCOUNT_MANAGER_FIELD_NAME}
+                    label="Global Account Manager"
+                    required="Select at least one adviser"
+                  />
+                )}
               <FieldAdvisersTypeahead
                 name={ONE_LIST_TEAM_FIELD_NAME}
                 label="Advisers on the core team (optional)"

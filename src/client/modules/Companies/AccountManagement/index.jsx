@@ -64,10 +64,10 @@ const ArchivedObjectivesLink = styled(GridCol)`
 const canEditOneList = (permissions) =>
   permissions &&
   permissions.includes('company.change_company') &&
-  permissions.includes('company.change_one_list_core_team_member') &&
-  permissions.includes(
-    'company.change_one_list_tier_and_global_account_manager'
-  )
+  (permissions.includes('company.change_one_list_core_team_member') ||
+    permissions.includes(
+      'company.change_one_list_tier_and_global_account_manager'
+    ))
 
 const DataWorkspaceAccountPlan = ({ company }) => (
   <SectionGridRow data-test="account-plan-row">
