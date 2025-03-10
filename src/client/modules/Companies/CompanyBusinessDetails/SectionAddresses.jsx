@@ -7,6 +7,7 @@ import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { Badge, SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 
 const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
@@ -59,13 +60,16 @@ const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
         )
       }
     >
-      <Table.Row>
-        {!hasOnlyOneAddress && (
-          <Address address={company.registeredAddress} isRegistered={true} />
-        )}
-
-        <Address address={company.address} isRegistered={hasOnlyOneAddress} />
-      </Table.Row>
+      {company.address ? (
+        <Table.Row>
+          {!hasOnlyOneAddress && (
+            <Address address={company.registeredAddress} isRegistered={true} />
+          )}
+          <Address address={company.address} isRegistered={hasOnlyOneAddress} />
+        </Table.Row>
+      ) : (
+        <SummaryTable.Row>{NOT_SET_TEXT}</SummaryTable.Row>
+      )}
     </SummaryTable>
   )
 }

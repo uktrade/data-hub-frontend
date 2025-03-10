@@ -1,8 +1,12 @@
-const { assertCompanyBreadcrumbs } = require('../../support/assertions')
+const {
+  assertCompanyBreadcrumbs,
+  assertSummaryTable,
+} = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 const { companyFaker } = require('../../fakers/companies')
+const { addressFaker } = require('../../fakers/addresses')
 
 describe('Companies business details', () => {
   context(
@@ -196,4 +200,40 @@ describe('Companies business details', () => {
       cy.get('[data-test="edit-one-list-information"]').should('not.exist')
     })
   })
+
+  context(
+    'when viewing the company address on the buisness details page',
+    () => {
+      it('should display the address for a company with an address', () => {
+        const companyWithAddress = companyFaker({
+          address: addressFaker({ line_1: 'Address Line 1' }),
+        })
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyWithAddress.id}`,
+          companyWithAddress
+        ).as('businessDetails')
+        cy.visit(urls.companies.businessDetails(companyWithAddress.id))
+        cy.wait('@businessDetails')
+        cy.contains('Address Line 1').should('be.visible')
+      })
+
+      it('should display the not set text for a company without an address', () => {
+        const companyWithoutAddress = companyFaker({ address: null })
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyWithoutAddress.id}`,
+          companyWithoutAddress
+        ).as('businessDetails')
+        cy.visit(urls.companies.businessDetails(companyWithoutAddress.id))
+        cy.wait('@businessDetails')
+        assertSummaryTable({
+          dataTest: 'addressesDetailsContainer',
+          heading: 'Addresses',
+          showEditLink: true,
+          content: ['Not set'],
+        })
+      })
+    }
+  )
 })
