@@ -42,6 +42,7 @@ const minimumPayload = {
 
 const activeStatusFlag = 'false'
 const inactiveStatusFlag = 'true'
+const matchedStatusFlag = 'true'
 const companySearchEndpoint = '/api-proxy/v4/search/company'
 const adviserSearchEndpoint = '/api-proxy/v4/search/adviser'
 const ukRegionsEndpoint = '/api-proxy/v4/metadata/uk-region*'
@@ -59,7 +60,7 @@ describe('Companies Collections Filter', () => {
 
       cy.get('[data-test="company-status-filter"]')
         .find('input')
-        .eq(0)
+        .eq(2)
         .should('be.checked')
     })
   })
@@ -114,7 +115,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('headquarter_type[0]', globalHqId)
       assertChipExists({ label: 'Global HQ', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
 
       removeChip(globalHqId)
       cy.wait('@apiRequest')
@@ -156,7 +157,7 @@ describe('Companies Collections Filter', () => {
 
       assertQueryParams('name', companyNameQuery)
       assertChipExists({ label: companyNameQuery, position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(companyNameQuery)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -204,7 +205,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('sector_descends', [aerospaceSectorId])
       assertChipExists({ label: 'Aerospace', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(aerospaceSectorId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -252,7 +253,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('sector_descends', [aircraftDesignSubSectorId])
       assertChipExists({ label: 'Aerospace : Aircraft Design', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(aircraftDesignSubSectorId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -303,7 +304,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('country', [brazilCountryId])
       assertChipExists({ label: 'Brazil', position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(brazilCountryId)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -360,7 +361,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('us_state', [state.id])
       assertChipExists({ label: `US state: ${state.name}`, position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(state.id)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -427,7 +428,7 @@ describe('Companies Collections Filter', () => {
         label: `Canadian province: ${province.name}`,
         position: 1,
       })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(province.id)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -514,7 +515,7 @@ describe('Companies Collections Filter', () => {
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('uk_region', [ukRegion.id])
       assertChipExists({ label: ukRegion.name, position: 1 })
-      assertChipExists({ label: 'Active', position: 2 })
+      assertChipExists({ label: 'Matched', position: 2 })
       removeChip(ukRegion.id)
       cy.wait('@apiRequest')
       removeChip(activeStatusFlag)
@@ -544,7 +545,7 @@ describe('Companies Collections Filter', () => {
         value: 'false',
         checked: true,
       })
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
     })
 
     it('should filter from user input and remove chips', () => {
@@ -555,20 +556,26 @@ describe('Companies Collections Filter', () => {
 
       cy.get(element).as('filter').find('label').as('options')
       cy.get('@options')
-        .should('have.length', 2)
+        .should('have.length', 3)
         .eq(0)
         .should('contain', 'Active')
         .find('input')
         .as('active')
-        .should('be.checked')
+        .should('not.be.checked')
       cy.get('@options')
         .eq(1)
         .should('contain', 'Inactive')
         .find('input')
         .as('inactive')
         .should('not.be.checked')
+      cy.get('@options')
+        .eq(2)
+        .should('contain', 'Matched')
+        .find('input')
+        .as('matched')
+        .should('be.checked')
       assertQueryParams('archived', ['false'])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
 
       // Uncheck all
       removeChip(activeStatusFlag)
@@ -584,16 +591,28 @@ describe('Companies Collections Filter', () => {
       })
       assertChipExists({ label: 'Inactive', position: 1 })
 
+      cy.get('@inactive').check()
+      cy.wait('@apiRequest').then(({ request }) => {
+        expect(request.body).to.deep.equal({
+          ...minimumPayload,
+          archived: true,
+        })
+      })
+      assertChipExists({ label: 'Matched', position: 2 })
+
       // Check active and inactive
       cy.get('@active').check()
       assertPayload('@apiRequest', minimumPayload)
       assertChipExists({ label: 'Active', position: 1 })
       assertChipExists({ label: 'Inactive', position: 2 })
+      assertChipExists({ label: 'Matched', position: 3 })
 
       // Remove chips
       removeChip(activeStatusFlag)
       cy.wait('@apiRequest')
       removeChip(inactiveStatusFlag)
+      cy.wait('@apiRequest')
+      removeChip(matchedStatusFlag)
       assertPayload('@apiRequest', minimumPayload)
     })
   })
@@ -617,7 +636,7 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Brazil', position: 2 })
     })
 
@@ -639,7 +658,7 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('export_to_countries', [brazilCountryId])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Brazil', position: 2 })
       removeChip(brazilCountryId)
       cy.wait('@apiRequest')
@@ -669,7 +688,7 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Brazil')
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Brazil', position: 2 })
     })
 
@@ -691,7 +710,7 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('future_interest_countries', [brazilCountryId])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Brazil', position: 2 })
       removeChip(brazilCountryId)
       cy.wait('@apiRequest')
@@ -720,7 +739,7 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'High export potential')
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'High export potential', position: 2 })
     })
 
@@ -742,7 +761,7 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('export_segment', [segmentValue])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'High export potential', position: 2 })
       removeChip(segmentValue)
       cy.wait('@apiRequest')
@@ -771,7 +790,7 @@ describe('Companies Collections Filter', () => {
       cy.visit(`/companies?${queryString}`)
       assertPayload('@apiRequest', expectedPayload)
       cy.get(element).should('contain', 'Sustain: nurture & grow')
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Sustain: nurture & grow', position: 2 })
     })
 
@@ -793,7 +812,7 @@ describe('Companies Collections Filter', () => {
       })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('export_sub_segment', [subSegmentValue])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({ label: 'Sustain: nurture & grow', position: 2 })
       removeChip(subSegmentValue)
       cy.wait('@apiRequest')
@@ -946,7 +965,7 @@ describe('Companies Collections Filter', () => {
       selectFirstMockedTypeaheadOption({ element, input: adviserName })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('one_list_group_global_account_manager', [adviserId])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({
         label: `Lead ITA or global account manager: ${adviserName}`,
         position: 2,
@@ -998,7 +1017,7 @@ describe('Companies Collections Filter', () => {
       selectFirstMockedTypeaheadOption({ element, input: adviserName })
       assertPayload('@apiRequest', expectedPayload)
       assertQueryParams('adviser', [adviserId])
-      assertChipExists({ label: 'Active', position: 1 })
+      assertChipExists({ label: 'Matched', position: 1 })
       assertChipExists({
         label: `Adviser: ${adviserName}`,
         position: 2,
@@ -1068,7 +1087,7 @@ describe('Companies Collections Filter', () => {
 
     it('should remove all filters and chips', () => {
       cy.get('[data-test=filter-chips]').children().as('filterChips')
-      cy.get('@filterChips').should('have.length', 15)
+      cy.get('@filterChips').should('have.length', 16)
       cy.get('[data-test=clear-filters]').click()
       cy.get('[data-test=filter-chips]').children().should('have.length', 0)
       assertCheckboxGroupNoneSelected('[data-test="headquarter-type-filter"]')
