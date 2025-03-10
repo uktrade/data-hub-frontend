@@ -1,17 +1,17 @@
-import interaction from '../../../fixtures/v3/interaction/interaction.json' assert { type: 'json' }
-import interactionWithDocumentLink from '../../../fixtures/v3/interaction/interaction-with-document-link.json' assert { type: 'json' }
-import interactionWithoutDocumentLink from '../../../fixtures/v3/interaction/interaction-without-document-link.json' assert { type: 'json' }
-import interactions from '../../../fixtures/v3/interaction/interactions.json' assert { type: 'json' }
-import noInteractions from '../../../fixtures/v3/interaction/no_interactions.json' assert { type: 'json' }
-import interactionByInvestmentProjectId from '../../../fixtures/v3/interaction/interaction-by-investment-project-id.json' assert { type: 'json' }
-import interactionByCompanyId from '../../../fixtures/v3/interaction/interaction-by-company-id.json' assert { type: 'json' }
-import interactionByContactId from '../../../fixtures/v3/interaction/interaction-by-contact-id.json' assert { type: 'json' }
-import interactionCancelledMeeting from '../../../fixtures/v3/interaction/interaction-cancelled-meeting.json' assert { type: 'json' }
-import interactionCreate from '../../../fixtures/v3/interaction/interaction-create.json' assert { type: 'json' }
-import interactionDraftFutureMeeting from '../../../fixtures/v3/interaction/interaction-draft-future-meeting.json' assert { type: 'json' }
-import interactionDraftPastMeeting from '../../../fixtures/v3/interaction/interaction-draft-past-meeting.json' assert { type: 'json' }
-import interactionValidationError from '../../../fixtures/v3/interaction/interaction-validation-error.json' assert { type: 'json' }
-import interactionWithReferral from '../../../fixtures/v3/interaction/interaction-with-referral.json' assert { type: 'json' }
+import interaction from '../../../fixtures/v3/interaction/interaction.json' with { type: 'json' }
+import interactionWithDocumentLink from '../../../fixtures/v3/interaction/interaction-with-document-link.json' with { type: 'json' }
+import interactionWithoutDocumentLink from '../../../fixtures/v3/interaction/interaction-without-document-link.json' with { type: 'json' }
+import interactions from '../../../fixtures/v3/interaction/interactions.json' with { type: 'json' }
+import noInteractions from '../../../fixtures/v3/interaction/no_interactions.json' with { type: 'json' }
+import interactionByInvestmentProjectId from '../../../fixtures/v3/interaction/interaction-by-investment-project-id.json' with { type: 'json' }
+import interactionByCompanyId from '../../../fixtures/v3/interaction/interaction-by-company-id.json' with { type: 'json' }
+import interactionByContactId from '../../../fixtures/v3/interaction/interaction-by-contact-id.json' with { type: 'json' }
+import interactionCancelledMeeting from '../../../fixtures/v3/interaction/interaction-cancelled-meeting.json' with { type: 'json' }
+import interactionCreate from '../../../fixtures/v3/interaction/interaction-create.json' with { type: 'json' }
+import interactionDraftFutureMeeting from '../../../fixtures/v3/interaction/interaction-draft-future-meeting.json' with { type: 'json' }
+import interactionDraftPastMeeting from '../../../fixtures/v3/interaction/interaction-draft-past-meeting.json' with { type: 'json' }
+import interactionValidationError from '../../../fixtures/v3/interaction/interaction-validation-error.json' with { type: 'json' }
+import interactionWithReferral from '../../../fixtures/v3/interaction/interaction-with-referral.json' with { type: 'json' }
 import interactionWithoutTheme from '../../../fixtures/v3/interaction/interaction-without-theme.js'
 
 export const getInteractions = function (req, res) {

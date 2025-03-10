@@ -1,17 +1,17 @@
-import cancelledOrder from '../../../fixtures/v3/omis/cancelled-order.json' assert { type: 'json' }
-import draftOrder from '../../../fixtures/v3/omis/draft-order.json' assert { type: 'json' }
-import paidOrder from '../../../fixtures/v3/omis/paid-order.json' assert { type: 'json' }
-import assignees from '../../../fixtures/v3/omis/assignees.json' assert { type: 'json' }
-import invoice from '../../../fixtures/v3/omis/invoice.json' assert { type: 'json' }
-import payments from '../../../fixtures/v3/omis/payments.json' assert { type: 'json' }
-import quote from '../../../fixtures/v3/omis/quote.json' assert { type: 'json' }
-import quotePreview from '../../../fixtures/v3/omis/quote-preview.json' assert { type: 'json' }
-import quoteAccepted from '../../../fixtures/v3/omis/quote-accepted.json' assert { type: 'json' }
-import subscribers from '../../../fixtures/v3/omis/subscribers.json' assert { type: 'json' }
-import quoteAwaitOrder from '../../../fixtures/v3/omis/quote-awaiting-order.json' assert { type: 'json' }
-import emptyOrder from '../../../fixtures/v3/omis/empty-order.json' assert { type: 'json' }
-import quoteNotAccepted from '../../../fixtures/v3/omis/quote-not-accepted.json' assert { type: 'json' }
-import quoteCancelled from '../../../fixtures/v3/omis/quote-cancelled.json' assert { type: 'json' }
+import cancelledOrder from '../../../fixtures/v3/omis/cancelled-order.json' with { type: 'json' }
+import draftOrder from '../../../fixtures/v3/omis/draft-order.json' with { type: 'json' }
+import paidOrder from '../../../fixtures/v3/omis/paid-order.json' with { type: 'json' }
+import assignees from '../../../fixtures/v3/omis/assignees.json' with { type: 'json' }
+import invoice from '../../../fixtures/v3/omis/invoice.json' with { type: 'json' }
+import payments from '../../../fixtures/v3/omis/payments.json' with { type: 'json' }
+import quote from '../../../fixtures/v3/omis/quote.json' with { type: 'json' }
+import quotePreview from '../../../fixtures/v3/omis/quote-preview.json' with { type: 'json' }
+import quoteAccepted from '../../../fixtures/v3/omis/quote-accepted.json' with { type: 'json' }
+import subscribers from '../../../fixtures/v3/omis/subscribers.json' with { type: 'json' }
+import quoteAwaitOrder from '../../../fixtures/v3/omis/quote-awaiting-order.json' with { type: 'json' }
+import emptyOrder from '../../../fixtures/v3/omis/empty-order.json' with { type: 'json' }
+import quoteNotAccepted from '../../../fixtures/v3/omis/quote-not-accepted.json' with { type: 'json' }
+import quoteCancelled from '../../../fixtures/v3/omis/quote-cancelled.json' with { type: 'json' }
 
 export const getAssignees = function (req, res) {
   res.json(assignees)

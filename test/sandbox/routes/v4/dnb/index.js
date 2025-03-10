@@ -1,13 +1,13 @@
-import companyCreate from '../../../fixtures/v4/dnb/company-create.json' assert { type: 'json' }
-import companySearch from '../../../fixtures/v4/dnb/company-search.json' assert { type: 'json' }
-import companyLink from '../../../fixtures/v4/dnb/company-link.json' assert { type: 'json' }
-import companyChangeRequest from '../../../fixtures/v4/dnb/company-change-request.json' assert { type: 'json' }
-import companySearchMatched from '../../../fixtures/v4/dnb/company-search-matched.json' assert { type: 'json' }
-import companySearchNotMatched from '../../../fixtures/v4/dnb/company-search-not-matched.json' assert { type: 'json' }
-import companySearchNotMatchedNoCountry from '../../../fixtures/v4/dnb/company-search-not-matched-no-country.json' assert { type: 'json' }
-import companySearchNotMatchedUS from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' assert { type: 'json' }
-import companyInvestigation from '../../../fixtures/v4/dnb/company-investigation.json' assert { type: 'json' }
-import dnbGlobalUltimate from '../../../fixtures/v4/company/company-dnb-global-ultimate.json' assert { type: 'json' }
+import companyCreate from '../../../fixtures/v4/dnb/company-create.json' with { type: 'json' }
+import companySearch from '../../../fixtures/v4/dnb/company-search.json' with { type: 'json' }
+import companyLink from '../../../fixtures/v4/dnb/company-link.json' with { type: 'json' }
+import companyChangeRequest from '../../../fixtures/v4/dnb/company-change-request.json' with { type: 'json' }
+import companySearchMatched from '../../../fixtures/v4/dnb/company-search-matched.json' with { type: 'json' }
+import companySearchNotMatched from '../../../fixtures/v4/dnb/company-search-not-matched.json' with { type: 'json' }
+import companySearchNotMatchedNoCountry from '../../../fixtures/v4/dnb/company-search-not-matched-no-country.json' with { type: 'json' }
+import companySearchNotMatchedUS from '../../../fixtures/v4/dnb/company-search-not-matched-us.json' with { type: 'json' }
+import companyInvestigation from '../../../fixtures/v4/dnb/company-investigation.json' with { type: 'json' }
+import dnbGlobalUltimate from '../../../fixtures/v4/company/company-dnb-global-ultimate.json' with { type: 'json' }
 
 import { fakerCompanyFamilyTree } from './company-tree.js'
 

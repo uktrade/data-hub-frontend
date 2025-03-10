@@ -1,9 +1,9 @@
-import incompleteLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-incomplete.json' assert { type: 'json' }
-import completeLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-complete.json' assert { type: 'json' }
-import largeCapitalOpportunityList from '../../../fixtures/v4/investment/large-capital-opportunity-list.json' assert { type: 'json' }
-import largeCapitalOpportunityListOnePage from '../../../fixtures/v4/investment/large-capital-opportunity-list-one-page.json' assert { type: 'json' }
-import eybLeadList from '../../../fixtures/v4/investment/eyb-lead-list.json' assert { type: 'json' }
-import eybLeadEditHistory from '../../../fixtures/v4/investment/eyb-lead-audit.json' assert { type: 'json' }
+import incompleteLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-incomplete.json' with { type: 'json' }
+import completeLargeCapitalOpportunity from '../../../fixtures/v4/investment/large-capital-opportunity-complete.json' with { type: 'json' }
+import largeCapitalOpportunityList from '../../../fixtures/v4/investment/large-capital-opportunity-list.json' with { type: 'json' }
+import largeCapitalOpportunityListOnePage from '../../../fixtures/v4/investment/large-capital-opportunity-list-one-page.json' with { type: 'json' }
+import eybLeadList from '../../../fixtures/v4/investment/eyb-lead-list.json' with { type: 'json' }
+import eybLeadEditHistory from '../../../fixtures/v4/investment/eyb-lead-audit.json' with { type: 'json' }
 
 export const getLargeCapitalOpportunity = function (req, res) {
   if (req.params.opportunityId == completeLargeCapitalOpportunity.id) {

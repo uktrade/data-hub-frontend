@@ -1,6 +1,6 @@
-import events from '../../../fixtures/v3/search/event.json' assert { type: 'json' }
-import eventFilter from '../../../fixtures/v3/search/filter/event-filter.json' assert { type: 'json' }
-import eventSort from '../../../fixtures/v3/search/sort/event-sort-by.json' assert { type: 'json' }
+import events from '../../../fixtures/v3/search/event.json' with { type: 'json' }
+import eventFilter from '../../../fixtures/v3/search/filter/event-filter.json' with { type: 'json' }
+import eventSort from '../../../fixtures/v3/search/sort/event-sort-by.json' with { type: 'json' }
 
 export const searchEvents = function (req, res) {
   var eventList = {

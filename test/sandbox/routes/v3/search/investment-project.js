@@ -1,4 +1,4 @@
-import investmentProjects from '../../../fixtures/v3/search/investment-project.json' assert { type: 'json' }
+import investmentProjects from '../../../fixtures/v3/search/investment-project.json' with { type: 'json' }
 
 export const searchInvestmentProjects = function (req, res) {
   const hasFilters = !!(
