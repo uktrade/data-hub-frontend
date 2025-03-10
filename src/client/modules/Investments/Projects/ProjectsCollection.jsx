@@ -126,7 +126,7 @@ const ProjectsCollection = ({
         addItemUrl={
           !company
             ? `/investments/projects/create`
-            : company.archived || company.ukBased
+            : company.archived || company.ukBased || !company.address
               ? null
               : `/investments/projects/create/${company.id}`
         }
