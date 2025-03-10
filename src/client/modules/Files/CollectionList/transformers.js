@@ -36,8 +36,8 @@ export const transformFileToListItem = () => (file) => {
           'Date added',
           formatDate(file.document.created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
         ),
-        addSummaryRow('Added by', file.created_by.name),
-        addSummaryRow('SharePoint url', file.document.url),
+        addSummaryRow('Added by', file?.created_by?.name),
+        addSummaryRow('SharePoint url', file?.document?.url),
       ]
       break
 
