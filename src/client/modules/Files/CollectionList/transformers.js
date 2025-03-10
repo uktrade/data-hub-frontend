@@ -40,13 +40,7 @@ export const transformFileToListItem = () => (file) => {
         addSummaryRow('SharePoint url', file?.document?.url),
       ]
       break
-
-    case DOCUMENT_TYPES.FILE_UPLOAD:
-      // TODO: Handle flow for uploaded files
-      break
-
     default:
-      // Handle other cases or leave empty if none
       break
   }
 
