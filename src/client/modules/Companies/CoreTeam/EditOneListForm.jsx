@@ -22,6 +22,7 @@ const EditOneListForm = ({
   oneListTiers,
   formInitialValues,
   returnUrl,
+  userPermissions,
 }) => (
   <Form
     id="edit-one-list"
@@ -29,7 +30,11 @@ const EditOneListForm = ({
     initialValues={formInitialValues}
     submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
     analyticsFormName="editOneList"
-    transformPayload={(values) => ({ values, companyId: company.id })}
+    transformPayload={(values) => ({
+      values,
+      companyId: company.id,
+      userPermissions,
+    })}
     redirectTo={() =>
       returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
     }

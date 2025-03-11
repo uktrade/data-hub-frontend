@@ -24,7 +24,10 @@ import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import Task from '../../../components/Task'
 import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
-import { canEditOneList, isOneListAccountOwner } from './utils'
+import {
+  canEditOneListTierAndGlobalAccountManager,
+  isOneListAccountOwner,
+} from './utils'
 
 import {
   ID,
@@ -195,7 +198,7 @@ const CompanyBusinessDetails = ({
                 }
               </Task.Status>
               {(isOneListAccountOwner(company, currentAdviserId) ||
-                canEditOneList(userPermissions)) && (
+                canEditOneListTierAndGlobalAccountManager(userPermissions)) && (
                 <Button
                   as={'a'}
                   href={urls.companies.editOneList(companyId)}

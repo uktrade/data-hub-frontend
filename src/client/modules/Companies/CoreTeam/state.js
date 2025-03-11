@@ -17,5 +17,6 @@ export const state2props = (state) => {
     ),
     oneListTiers: transformOneListTiers(state[ID].oneListTiers),
     oneListTeam: transformTeamMembers(state[ID].oneListTeam),
+    userPermissions: state.userPermissions,
   }
 }
