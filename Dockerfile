@@ -1,4 +1,4 @@
-FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:5.0.0
+FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:5.0.1
 
 ARG CURRENT_UID
 ARG CURRENT_GID
