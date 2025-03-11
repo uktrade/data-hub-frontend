@@ -5,7 +5,7 @@ When NodeJs is updated it is worth noting it needs to be updated in a few places
 ## Selecting the new version
 
 There are a couple of considerations to consider when selecting a Node version to upgrade to:
-- The version must be supported by the latest release of the [CloudFoundry Node buildpack](https://github.com/cloudfoundry/nodejs-buildpack/releases).
+- The version must be supported by the latest release of the [ci-image-builder](https://github.com/uktrade/ci-image-builder/blob/main/image_builder/configuration/builder_configuration.yml) [paketo-buildpacks/builder-jammy-full](https://github.com/paketo-buildpacks/builder-jammy-full/releases) buildpack.
 - The version must have a Cypress docker image associated with it, and appear in the [list of Cypress image tags](https://hub.docker.com/r/cypress/base/tags).
 
 If both of these criteria are not met, it will not be possible to build the new dependency image locally and it will not be possible to proceed with the upgrade.
