@@ -14,7 +14,7 @@ If both of these criteria are not met, it will not be possible to build the new 
 
 1. Update the `data-hub-frontend/.circleci/config.yml` file to the latest [paketo builder-jammy-full buildpack](https://github.com/paketo-buildpacks/builder-jammy-full).
 2. Check its releases and see what version of [paketo-buildpacks/node-engine](https://github.com/paketo-buildpacks/node-engine) is installed. This is the package which installs node.
-2. You can see what node versions are available in the [paketo-buildpacks/node-engine](https://github.com/paketo-buildpacks/node-engine) by checking the releases.
+3. You can see what node versions are available in the [paketo-buildpacks/node-engine](https://github.com/paketo-buildpacks/node-engine) by checking the releases.
 3. Install and set your local `nvm` to use the chosen Node version
 ```bash
 nvm install VERSION
