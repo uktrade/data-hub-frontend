@@ -1,7 +1,7 @@
 # A base image with all operating system dependencies, but no Cypress or browsers.
 # See https://github.com/cypress-io/cypress-docker-images for more info.
 
-FROM cypress/base:22.13.0
+FROM cypress/base:22.12.0
 
 # Setting environment variables
 ENV CHROME_VERSION=129.0.6668.89-1
