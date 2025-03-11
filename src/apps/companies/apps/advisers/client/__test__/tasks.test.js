@@ -1,6 +1,6 @@
-import proxyquire from 'proxyquire'
-
 import { expectThrowsAsync } from '../../../../../../../test/unit/helpers/promise-assertions'
+
+const proxyquire = require('proxyquire')
 
 describe('updateAdviser', () => {
   const adviserData = {
