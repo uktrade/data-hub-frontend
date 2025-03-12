@@ -18,6 +18,7 @@ describe('ExportInteractionsList', () => {
           name: 'James Brown',
         },
       ],
+      company_export: { id: '987', title: 'Sample export project 987' },
       dit_participants: [
         {
           adviser: {
@@ -59,7 +60,7 @@ describe('ExportInteractionsList', () => {
     cy.get('@firstItem').within(() => {
       cy.get('h3 a')
         .should('have.text', 'Video call meeting to Baileys')
-        .and('have.attr', 'href', '/export/1/interactions/123/details')
+        .and('have.attr', 'href', '/export/987/interactions/123/details')
 
       const items = '[data-test="metadata-item"]'
       cy.get(items).should('have.length', 4)
@@ -92,6 +93,7 @@ describe('ExportInteractionsList', () => {
           name: 'Jude Brown',
         },
       ],
+      company_export: { id: '654', title: 'Sample export project 654' },
       dit_participants: [],
       service: {
         name: 'Account management : General',
@@ -113,6 +115,7 @@ describe('ExportInteractionsList', () => {
     const interaction = {
       date: '2024-12-23',
       contacts: [],
+      company_export: { id: '321', title: 'Sample export project 321' },
       dit_participants: [
         {
           adviser: {

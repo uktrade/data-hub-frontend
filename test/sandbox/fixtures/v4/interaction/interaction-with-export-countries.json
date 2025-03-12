@@ -4,6 +4,10 @@
       "name": "Venus Ltd",
       "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
     },
+    "company_export": {
+      "id": "f5bc555e-0eba-4a7e-abe9-db89a78afc5c",
+      "title": "Export Project for Venus ltd - TEST"
+    },
     "companies": [
         {
           "name": "Venus Ltd",

@@ -8,20 +8,20 @@ const {
 
 describe('Export project interaction details', () => {
   context('when summary tables renders with values', () => {
-    const exporProjectDetails = fixtures.export.exportProjectDetails
-    const exportProjectInteraction = fixtures.interaction.withoutExportCountries
+    const exportProjectDetails = fixtures.export.exportProjectDetails
+    const exportProjectInteraction = fixtures.interaction.withExportCountries
 
     beforeEach(() => {
       cy.visit(
-        `/export/${exporProjectDetails.id}/interactions/${exportProjectInteraction.id}/details`
+        `/export/${exportProjectDetails.id}/interactions/${exportProjectInteraction.id}/details`
       )
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.exportPipeline.index(),
-        [exporProjectDetails.title]: urls.exportPipeline.interactions.index(
-          exporProjectDetails.id
+        [exportProjectDetails.title]: urls.exportPipeline.interactions.index(
+          exportProjectDetails.id
         ),
         ['Interactions']: null,
       })
@@ -66,36 +66,31 @@ describe('Export project interaction details', () => {
         .should(
           'have.attr',
           'href',
-          urls.exportPipeline.interactions.index(exporProjectDetails.id)
+          urls.exportPipeline.interactions.index(exportProjectDetails.id)
         )
     })
   })
 
   context('when summary tables renders even with empty value of fields', () => {
-    const exporProjectDetails = fixtures.export.exportProjectDetails
+    const exportProjectDetails = fixtures.export.exportProjectDetails
     const interactionWithEmptyValues = fixtures.interaction.withStovaEvent //minimal interaction data
 
     beforeEach(() => {
       cy.visit(
-        `/export/${exporProjectDetails.id}/interactions/${interactionWithEmptyValues.id}/details`
+        `/export/${exportProjectDetails.id}/interactions/${interactionWithEmptyValues.id}/details`
       )
     })
 
-    it('should render breadcrumbs', () => {
+    it('should render export interaction details page with "Not set" fields for empty values', () => {
       assertBreadcrumbs({
         Home: urls.exportPipeline.index(),
-        [exporProjectDetails.title]: urls.exportPipeline.interactions.index(
-          exporProjectDetails.id
-        ),
+        [exportProjectDetails.title]:
+          urls.exportPipeline.interactions.index(undefined),
         ['Interactions']: null,
       })
-    })
 
-    it('should render the heading', () => {
       cy.get('[data-test="heading"]').should('have.text', 'Stova subject')
-    })
 
-    it('should render export interaction details page with "Not set" fields for empty values', () => {
       assertKeyValueTable('bodyMainContent', {
         Company: 'Not set',
         'Contact(s)': 'Johnny Cakeman',
