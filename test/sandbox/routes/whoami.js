@@ -1,4 +1,4 @@
-import whoami from '../fixtures/whoami.json' assert { type: 'json' }
+import whoami from '../fixtures/whoami.json' with { type: 'json' }
 
 var defaultTeamId = whoami.dit_team.id
 var defaultAdviserId = whoami.id

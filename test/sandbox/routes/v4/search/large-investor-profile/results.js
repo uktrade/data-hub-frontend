@@ -1,4 +1,4 @@
-import largeCapitalProfile from './../../../../fixtures/v4/investment/large-capital-profile-list10.json' assert { type: 'json' }
+import largeCapitalProfile from './../../../../fixtures/v4/investment/large-capital-profile-list10.json' with { type: 'json' }
 
 export const largeInvestorProfile = function (req, res) {
   const countryOfOriginFilter = req.body.country_of_origin || []

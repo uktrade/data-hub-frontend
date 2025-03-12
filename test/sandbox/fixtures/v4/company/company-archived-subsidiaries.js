@@ -1,5 +1,5 @@
-import companywithInvestment1 from './company-with-investment-1.json' assert { type: 'json' }
-import companywithInvestment2 from './company-with-investment-2.json' assert { type: 'json' }
+import companywithInvestment1 from './company-with-investment-1.json' with { type: 'json' }
+import companywithInvestment2 from './company-with-investment-2.json' with { type: 'json' }
 
 export default {
   count: 2,
