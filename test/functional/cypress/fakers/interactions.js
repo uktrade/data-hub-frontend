@@ -14,6 +14,7 @@ const interactionFaker = (overrides = {}) => ({
       id: faker.string.uuid(),
     },
   ],
+  company_export: {id: faker.string.uuid, title: faker.word.sample()},
   contacts: [userFaker()],
   dit_participants: [
     {

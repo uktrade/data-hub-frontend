@@ -9,7 +9,7 @@ import { CollectionItem } from '../../../components'
 import urls from '../../../../lib/urls'
 import { SORT_OPTIONS_EXPORT_INTERACTION } from '../constants'
 
-const ExportInteractionsList = ({ interactions = [], exportId }) =>
+const ExportInteractionsList = ({ interactions = [] }) =>
   interactions.length === 0 ? null : (
     <ul data-test="export-interactions-list">
       {interactions.map((item) => (
@@ -17,7 +17,7 @@ const ExportInteractionsList = ({ interactions = [], exportId }) =>
           key={item.id}
           headingText={item.subject}
           headingUrl={urls.exportPipeline.interactions.details(
-            exportId,
+            item.company_export.id,
             item.id
           )}
           metadata={[
@@ -60,9 +60,7 @@ export default ({ exportId }) => (
       payload={{ company_export_id: exportId }}
       sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
     >
-      {(page) => (
-        <ExportInteractionsList interactions={page} exportId={exportId} />
-      )}
+      {(page) => <ExportInteractionsList interactions={page} />}
     </Interactions.Paginated>
   </>
 )
