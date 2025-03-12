@@ -17,7 +17,7 @@ import {
   ExportFormEdit,
 } from './modules/ExportPipeline/ExportForm'
 import ExportFormDelete from './modules/ExportPipeline/ExportDelete'
-import ExportDetails from './modules/ExportPipeline/ExportDetails'
+import Export from './modules/ExportPipeline/Export'
 import ExportWinsTabNav from './modules/ExportWins/Status/ExportWinsTabNav'
 import { CreateExportWin, EditExportWin } from './modules/ExportWins/Form'
 import ExportWinsRedirect from './modules/ExportWins/Status/Redirect'
@@ -713,7 +713,15 @@ function Routes() {
       path: '/export/:exportId/details',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
-          <ExportDetails />
+          <Export />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/export/:exportId/interactions',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <Export />
         </ProtectedRoute>
       ),
     },
