@@ -15,6 +15,7 @@ const reactRoutes = [
   '/omis',
   '/access-denied',
   '/reminders',
+  '/files/create',
   '/reminders/investments-estimated-land-dates',
   '/reminders/investments-no-recent-interactions',
   '/reminders/investments-outstanding-propositions',

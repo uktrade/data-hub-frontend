@@ -153,6 +153,7 @@ import {
   getContactsMetadata,
 } from './modules/Contacts/CollectionList/tasks'
 import { getFiles } from './modules/Files/CollectionList/tasks'
+import { createFile } from './modules/Files/CreateFile/tasks.js'
 import {
   getInteractions,
   getInteractionsMetadata,
@@ -184,6 +185,7 @@ import {
 } from './modules/Contacts/CollectionList/state'
 
 import { TASK_GET_FILES_LIST } from './modules/Files/CollectionList/state'
+import { TASK_CREATE_FILE } from './modules/Files/CreateFile/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
@@ -536,6 +538,7 @@ export const tasks = {
     investmentProfilesTasks.loadFilterOptions,
   [TASK_GET_CONTACTS_LIST]: getContacts,
   [TASK_GET_FILES_LIST]: getFiles,
+  [TASK_CREATE_FILE]: createFile,
   [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
   [TASK_GET_INTERACTIONS_LIST]: getInteractions,
   [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,

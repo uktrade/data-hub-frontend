@@ -2,7 +2,10 @@ import { faker, jsf } from '../../../sandbox/utils/random'
 
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
-import { DOCUMENT_TYPES } from '../../../../src/client/modules/Files/CollectionList/constants'
+import {
+  DOCUMENT_TYPES,
+  RELATED_OBJECT_TYPES,
+} from '../../../../src/client/modules/Files/CollectionList/constants'
 
 const genericDocumentFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.GenericDocumentRetrieve),
@@ -42,8 +45,8 @@ const genericDocumentFaker = (overrides = {}) => ({
   document_object_id: faker.string.uuid(),
   related_object_id: faker.string.uuid(),
   archived_by: null,
-  document_type: DOCUMENT_TYPES.SHAREPOINT,
-  related_object_type: 'company.company',
+  document_type: DOCUMENT_TYPES.SHAREPOINT.type,
+  related_object_type: RELATED_OBJECT_TYPES.COMPANY,
   ...overrides,
 })
 
