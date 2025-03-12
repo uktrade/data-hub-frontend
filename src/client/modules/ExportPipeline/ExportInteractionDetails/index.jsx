@@ -48,6 +48,7 @@ const ExportInteractionsDetails = () => {
         {({
           subject,
           company,
+          companyExport,
           contacts,
           service,
           notes,
@@ -58,124 +59,120 @@ const ExportInteractionsDetails = () => {
           relatedTradeAgreements,
           helpedRemoveExportBarrier,
         }) => (
-          <ExportResource id={exportId}>
-            {({ title }) =>
-              title && (
-                <DefaultLayout
-                  heading={subject}
-                  pageTitle="Export interaction details"
-                  breadcrumbs={[
-                    { link: urls.exportPipeline.index(), text: 'Home' },
-                    {
-                      link: urls.exportPipeline.interactions.index(exportId),
-                      text: `${title}`,
-                    },
-                    { text: 'Interactions' },
-                  ]}
-                >
-                  <StyledSummaryTable>
-                    <SummaryTable.Row
-                      heading="Company"
-                      hideWhenEmpty={false}
-                      children={
-                        company ? (
-                          <Link
-                            href={urls.companies.overview.index(company.id)}
-                          >
-                            {company.name}
-                          </Link>
-                        ) : (
-                          NOT_SET_TEXT
-                        )
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Contact(s)"
-                      hideWhenEmpty={false}
-                      children={
-                        contacts.length > 0
-                          ? transformContacts(contacts)
-                          : NOT_SET_TEXT
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Service"
-                      hideWhenEmpty={false}
-                      children={service ? service.name : NOT_SET_TEXT}
-                    />
-                    <SummaryTable.Row
-                      heading="Notes"
-                      hideWhenEmpty={false}
-                      children={notes ? notes : NOT_SET_TEXT}
-                    />
-                    <SummaryTable.Row
-                      heading="Date of interaction"
-                      hideWhenEmpty={false}
-                      children={
-                        date
-                          ? formatDate(date, DATE_FORMAT_DAY_MONTH_YEAR)
-                          : NOT_SET_TEXT
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Adviser(s)"
-                      hideWhenEmpty={false}
-                      children={
-                        !!ditParticipants && ditParticipants?.length > 0
-                          ? transformAdvisers(ditParticipants)
-                          : NOT_SET_TEXT
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Communication channel"
-                      hideWhenEmpty={false}
-                      children={
-                        communicationChannel
-                          ? communicationChannel.name
-                          : NOT_SET_TEXT
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Named trade agreement(s)"
-                      hideWhenEmpty={false}
-                      children={
-                        hasRelatedTradeAgreements &&
-                        relatedTradeAgreements?.length > 0
-                          ? transformArray(relatedTradeAgreements)
-                          : NOT_SET_TEXT
-                      }
-                    />
-                    <SummaryTable.Row
-                      heading="Helped remove an export barrier"
-                      children={
-                        !!helpedRemoveExportBarrier
-                          ? helpedRemoveExportBarrier
-                            ? 'Yes'
-                            : 'No'
-                          : NOT_SET_TEXT
-                      }
-                    />
-                  </StyledSummaryTable>
-                  <ActionsContainer>
-                    <SecondaryButton
-                      data-test="edit-interaction"
-                      as={StyledLink}
-                      href={urls.interactions.edit(interactionId)}
-                      aria-label="Edit interaction"
-                    >
-                      Edit interaction
-                    </SecondaryButton>
-                    <StyledLink
-                      data-test="back"
-                      href={urls.exportPipeline.interactions.index(exportId)}
-                    >
-                      Back
-                    </StyledLink>
-                  </ActionsContainer>
-                </DefaultLayout>
-              )
-            }
-          </ExportResource>
+          <DefaultLayout
+            heading={subject}
+            pageTitle="Export interaction details"
+            breadcrumbs={[
+              { link: urls.exportPipeline.index(), text: 'Home' },
+              {
+                link: urls.exportPipeline.interactions.index(companyExport?.id),
+                text: (
+                  <ExportResource.Inline id={exportId}>
+                    {({ title }) => `${title}`}
+                  </ExportResource.Inline>
+                ),
+              },
+              { text: 'Interactions' },
+            ]}
+          >
+            <StyledSummaryTable>
+              <SummaryTable.Row
+                heading="Company"
+                hideWhenEmpty={false}
+                children={
+                  company ? (
+                    <Link href={urls.companies.overview.index(company.id)}>
+                      {company.name}
+                    </Link>
+                  ) : (
+                    NOT_SET_TEXT
+                  )
+                }
+              />
+              <SummaryTable.Row
+                heading="Contact(s)"
+                hideWhenEmpty={false}
+                children={
+                  contacts.length > 0
+                    ? transformContacts(contacts)
+                    : NOT_SET_TEXT
+                }
+              />
+              <SummaryTable.Row
+                heading="Service"
+                hideWhenEmpty={false}
+                children={service ? service.name : NOT_SET_TEXT}
+              />
+              <SummaryTable.Row
+                heading="Notes"
+                hideWhenEmpty={false}
+                children={notes ? notes : NOT_SET_TEXT}
+              />
+              <SummaryTable.Row
+                heading="Date of interaction"
+                hideWhenEmpty={false}
+                children={
+                  date
+                    ? formatDate(date, DATE_FORMAT_DAY_MONTH_YEAR)
+                    : NOT_SET_TEXT
+                }
+              />
+              <SummaryTable.Row
+                heading="Adviser(s)"
+                hideWhenEmpty={false}
+                children={
+                  !!ditParticipants && ditParticipants?.length > 0
+                    ? transformAdvisers(ditParticipants)
+                    : NOT_SET_TEXT
+                }
+              />
+              <SummaryTable.Row
+                heading="Communication channel"
+                hideWhenEmpty={false}
+                children={
+                  communicationChannel
+                    ? communicationChannel.name
+                    : NOT_SET_TEXT
+                }
+              />
+              <SummaryTable.Row
+                heading="Named trade agreement(s)"
+                hideWhenEmpty={false}
+                children={
+                  hasRelatedTradeAgreements &&
+                  relatedTradeAgreements?.length > 0
+                    ? transformArray(relatedTradeAgreements)
+                    : NOT_SET_TEXT
+                }
+              />
+              <SummaryTable.Row
+                heading="Helped remove an export barrier"
+                children={
+                  !!helpedRemoveExportBarrier
+                    ? helpedRemoveExportBarrier
+                      ? 'Yes'
+                      : 'No'
+                    : NOT_SET_TEXT
+                }
+              />
+            </StyledSummaryTable>
+            <ActionsContainer>
+              <SecondaryButton
+                data-test="edit-interaction"
+                as={StyledLink}
+                href={urls.interactions.edit(interactionId)}
+                aria-label="Edit interaction"
+              >
+                Edit interaction
+              </SecondaryButton>
+              <StyledLink
+                data-test="back"
+                href={urls.exportPipeline.interactions.index(companyExport?.id)}
+              >
+                Back
+              </StyledLink>
+            </ActionsContainer>
+          </DefaultLayout>
         )}
       </InteractionResource>
     </>
