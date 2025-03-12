@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { H3 } from 'govuk-react'
+import { H4 } from 'govuk-react'
 
 import {
   DefaultLayout,
@@ -62,9 +62,7 @@ const SharePointForm = ({ relatedObjectId }) => {
         validate={websiteValidator}
         initialValue=""
         required="You must enter a SharePoint share link"
-        hint="Paste in the share link from the Sharepoint file. See how to share
-          SharePoint files and folders (opens in new tab) for information on
-          generating this."
+        hint="Paste in the share link from the Sharepoint file."
       />
 
       <FieldInput
@@ -76,7 +74,7 @@ const SharePointForm = ({ relatedObjectId }) => {
           use"
       />
 
-      <H3>Access requests</H3>
+      <H4>Access requests</H4>
       <p>
         Access to this file will be handled via SharePoint permissions. People
         who do not have access will need to request file access via SharePoint.
