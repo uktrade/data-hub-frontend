@@ -23,8 +23,9 @@ describe('LEP Permission', () => {
     it('should display LEP only tabs', () => {
       assertLocalReactNav('[data-test="tabbedLocalNavList"]', [
         'Overview',
-        'Contacts',
         'Details',
+        'Contacts',
+        'Files',
         'Account management',
         'Investment',
       ])

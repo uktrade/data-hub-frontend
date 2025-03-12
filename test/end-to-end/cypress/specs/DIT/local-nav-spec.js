@@ -56,6 +56,7 @@ describe('DBT Permission', () => {
         'Activity',
         'Details',
         'Contacts',
+        'Files',
         'Account management',
         'Investment',
         'Export',
