@@ -21,7 +21,6 @@ describe('DA Permission', () => {
         'Overview',
         'Contacts',
         'Details',
-        'Files',
         'Account management',
         'Investment',
         'Orders',
@@ -42,7 +41,6 @@ describe('DA Permission', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
-        'Files',
         'Investments',
         'Orders',
         'Market access',
@@ -73,7 +71,6 @@ describe('DA Permission', () => {
     it('should display DA only tabs', () => {
       assertLocalReactNav('[data-test=local-nav] > ul', [
         'Details',
-        'Files',
         'Audit history',
       ])
     })
@@ -93,7 +90,6 @@ describe('DA Permission', () => {
         'Project details',
         'Project team',
         'Tasks',
-        'Files',
         'Interactions',
         'Evaluations',
         'Propositions',
