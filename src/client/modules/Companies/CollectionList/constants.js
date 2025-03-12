@@ -10,6 +10,7 @@ export const LABELS = {
   ukPostcode: 'UK postcode',
   ukRegion: 'UK region',
   companyStatus: 'Status',
+  hasName: 'Company has name',
   currentlyExportingTo: 'Currently exporting to',
   futureCountriesOfInterest: 'Future countries of interest',
   exportSegment: 'Export Segment',
@@ -23,7 +24,11 @@ export const LABELS = {
 export const COMPANY_STATUS_OPTIONS = [
   { label: 'Active', value: 'false' },
   { label: 'Inactive', value: 'true' },
-  { label: 'Matched', value: 'false' },
+]
+
+export const COMPANY_HAS_NAME = [
+  { label: 'True', value: 'true' },
+  { label: 'False', value: 'false' },
 ]
 
 export const SORT_OPTIONS = [

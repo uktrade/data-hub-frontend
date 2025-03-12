@@ -1,6 +1,14 @@
 import { buildSelectedFilters } from './filters'
-import { COMPANY_STATUS_OPTIONS, SORT_OPTIONS } from './constants'
-import { transformArchivedToApi, transformPostcodeToApi } from './transformers'
+import {
+  COMPANY_HAS_NAME,
+  COMPANY_STATUS_OPTIONS,
+  SORT_OPTIONS,
+} from './constants'
+import {
+  transformArchivedToApi,
+  transformHasNameToApi,
+  transformPostcodeToApi,
+} from './transformers'
 import { parseQueryString } from '../../../utils'
 
 export const TASK_GET_COMPANIES_LIST = 'TASK_GET_COMPANIES_LIST'
@@ -18,6 +26,7 @@ export const state2props = ({ router, ...state }) => {
   const queryParams = parseQueryString(queryString)
   const archived = transformArchivedToApi(queryParams.archived)
   const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
+  const hasName = transformHasNameToApi(queryParams.has_name)
 
   const { metadata, selectedLeadItaOrGlobalAccountManagers, advisers } =
     state[ID]
@@ -35,10 +44,12 @@ export const state2props = ({ router, ...state }) => {
       ...queryParams,
       archived,
       uk_postcode: ukPostcode,
+      has_name: hasName,
     },
     optionMetadata: {
       sortOptions: SORT_OPTIONS,
       companyStatusOptions: COMPANY_STATUS_OPTIONS,
+      companyHasNameOptions: COMPANY_HAS_NAME,
       ...metadata,
     },
     selectedFilters,

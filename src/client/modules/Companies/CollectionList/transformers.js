@@ -17,6 +17,13 @@ export const transformArchivedToApi = (archivedParam) => {
   return archived?.length === 1 ? archived[0] === 'true' : undefined
 }
 
+export const transformHasNameToApi = (hasNameParam) => {
+  const hasName = Array.isArray(hasNameParam)
+    ? hasNameParam
+    : hasNameParam && [hasNameParam]
+  return hasName?.length === 1 ? hasName[0] === 'true' : undefined
+}
+
 export const transformPostcodeToApi = (postcode) =>
   postcode && postcode.split(',').map((postcode) => postcode.trim())
 
