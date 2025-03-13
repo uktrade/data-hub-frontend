@@ -44,7 +44,7 @@ const EditOneListForm = ({
     flashMessage={() => 'Core team has been updated.'}
     showStepInUrl={true}
   >
-    {({ values, currentStep, goToStep, permissions }) => (
+    {({ values, currentStep, goToStep }) => (
       <>
         <Step name="oneListTier">
           <FieldRadios
@@ -58,9 +58,9 @@ const EditOneListForm = ({
         {values.one_list_tier !== NONE && (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Step name="oneListAdvisers">
-              {permissions &&
-                permissions.includes('company.change_company') &&
-                permissions.includes(
+              {userPermissions &&
+                userPermissions.includes('company.change_company') &&
+                userPermissions.includes(
                   'company.change_one_list_tier_and_global_account_manager'
                 ) && (
                   <FieldAdvisersTypeahead
