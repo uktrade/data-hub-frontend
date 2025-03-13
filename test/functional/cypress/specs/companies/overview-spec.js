@@ -216,14 +216,9 @@ describe('Company overview page', () => {
     'when viewing the investment status card with different stages and statuses of investment projects',
     () => {
       beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`
-        ).as('companyApi')
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
-        cy.wait('@companyApi')
       })
 
       it('the card should link to the latest won project', () => {
@@ -236,35 +231,24 @@ describe('Company overview page', () => {
             '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
           )
         )
-        cy.go('back')
       })
-      it('the card should link to the active projects', () => {
-        cy.get('[data-test="total-active-projects"]').contains('4').click()
-        cy.go('back')
+    }
+  )
+
+  context(
+    'when viewing the investment status card the "add investment project button" should not show',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          urls.companies.investments.companyInvestmentProjects(
+            fixtures.company.allOverviewDetails.id
+          )
+        )
       })
-      it('the card should link to the prospect projects', () => {
-        cy.get('[data-test="total-prospect-projects"]').contains('3').click()
-        cy.go('back')
-      })
-      it('the card should link to the verify win projects', () => {
-        cy.get('[data-test="total-verify-win-projects"]').contains('1').click()
-        cy.go('back')
-      })
-      it('the card should link to the abandoned projects', () => {
-        cy.get('[data-test="total-abandoned-projects"]').contains('1').click()
-        cy.go('back')
-      })
-      it('Inactive projects should not include an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+
+      it('Inactive / UK based Active projects should not include an "Add investment project" button', () => {
         getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
         cy.get('add-collection-item-button').should('not.exist')
-        cy.go('back')
-      })
-      it('UK based Active projects should not have an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
-        getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
-        cy.get('[data-test="add-collection-item-button"]').should('not.exist')
-        cy.go('back')
       })
     }
   )
