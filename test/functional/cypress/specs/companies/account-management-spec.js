@@ -260,7 +260,11 @@ describe('Company account management', () => {
 describe('One List core team', () => {
   context('when viewing a One List Tier company', () => {
     beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/company/${company.id}`).as(
+        'companyApi'
+      )
       cy.visit(urls.companies.accountManagement.index(company.id))
+      cy.wait('@companyApi')
     })
 
     it('should render the heading', () => {

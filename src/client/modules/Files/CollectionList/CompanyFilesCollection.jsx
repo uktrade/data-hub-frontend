@@ -4,6 +4,7 @@ import { Link, Details } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
 import { FILES__LOADED } from '../../../actions'
+import { DOCUMENT_TYPES, RELATED_OBJECT_TYPES } from './constants'
 import { FilteredCollectionList } from '../../../components'
 import { listSkeletonPlaceholder } from '../../../components/SkeletonPlaceholder'
 import { CompanyResource } from '../../../components/Resource'
@@ -61,13 +62,15 @@ const CompanyFilesCollection = ({
             ) : null}
             <FilteredCollectionList
               {...props}
-              collectionName="File"
+              collectionName="SharePoint link"
               sortOptions={optionMetadata.sortOptions}
               taskProps={collectionListTask}
               collectionItemTemplate={collectionSummaryCardItemTemplateDefault}
               selectedFilters={selectedFilters}
               addItemUrl={
-                company.archived ? null : `/files/create?company=${company.id}`
+                company.archived
+                  ? null
+                  : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
               }
               entityName="file"
               defaultQueryParams={{

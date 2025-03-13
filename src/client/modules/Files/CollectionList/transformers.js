@@ -14,7 +14,7 @@ export const transformFileToListItem = () => (file) => {
 
   // Handle different document types
   switch (file.document_type) {
-    case DOCUMENT_TYPES.SHAREPOINT:
+    case DOCUMENT_TYPES.SHAREPOINT.type:
       title = 'SharePoint link'
       if (file.document.title) {
         title += ` - ${file.document.title}`
@@ -26,8 +26,8 @@ export const transformFileToListItem = () => (file) => {
           text: 'View file (opens in new tab)',
           url: file.document.url,
           attrs: { target: '_blank', rel: 'noopener noreferrer' },
-        },
-        { text: 'Delete', url: '#' }
+        }
+        // { text: 'Delete', url: '#' } removed for now as functionality missing
       )
 
       // Add summary rows for SharePoint document
