@@ -17,7 +17,6 @@ import interactionWithExportCountries from '../../../fixtures/v4/interaction/int
 import interactionWithoutExportCountries from '../../../fixtures/v4/interaction/interaction-with-no-countries-discussed.json' with { type: 'json' }
 import interactionWithBusIntel from '../../../fixtures/v4/interaction/interaction-with-business-intelligence.json' with { type: 'json' }
 import interactionStovaEvent from '../../../fixtures/v4/interaction/interaction-with-stova-event.json' with { type: 'json' }
-
 import { interactionByExportProject } from '../../../fixtures/v4/interaction/interaction-by-export-project.js'
 
 export const getInteractions = function (req, res) {

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 import StepInteractionType from './StepInteractionType'
+import StepCompanyExportInteractionType from './StepCompanyExportInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
 import Step from '../../../../../client/components/Form/elements/Step'
 import Task from '../../../../../client/components/Task'
@@ -23,6 +24,7 @@ const getReturnLink = (
   companyId,
   referralId,
   investmentId,
+  companyExportId,
   contactId,
   interactionId
 ) => {
@@ -39,6 +41,11 @@ const getReturnLink = (
     )
   } else if (contactId) {
     return urls.contacts.interactions.detail(contactId, interactionId)
+  } else if (companyExportId) {
+    return urls.exportPipeline.interactions.detail(
+      companyExportId,
+      interactionId
+    )
   }
 
   return urls.companies.interactions.detail(companyId, interactionId)
@@ -64,6 +71,7 @@ const getFlashMessage = (interactionId, wasPolicyFeedbackProvided) => {
 const InteractionDetailsForm = ({
   companyId,
   investmentId,
+  companyExportId,
   contactId,
   user,
   interactionId,
@@ -100,6 +108,7 @@ const InteractionDetailsForm = ({
                 companyId,
                 referral,
                 investmentId,
+                companyExportId,
                 contactId,
                 user,
                 interactionId,
@@ -116,6 +125,7 @@ const InteractionDetailsForm = ({
                   companyId,
                   referral?.id,
                   investmentId,
+                  companyExportId,
                   contactId,
                   data.id
                 )
@@ -133,7 +143,7 @@ const InteractionDetailsForm = ({
                 <>
                   {/* Step registered if creating the interaction
                   and haven't come from an investment project */}
-                  {!interactionId && !investmentId && (
+                  {!interactionId && !investmentId && !companyExportId && (
                     <Step
                       name="interaction_type"
                       cancelUrl={urls.companies.detail(companyId)}
@@ -141,7 +151,14 @@ const InteractionDetailsForm = ({
                       {() => <StepInteractionType />}
                     </Step>
                   )}
-
+                  {!interactionId && !investmentId && companyExportId && (
+                    <Step
+                      name="interaction_type"
+                      cancelUrl={urls.exportPipeline.details(companyExportId)}
+                    >
+                      {() => <StepCompanyExportInteractionType />}
+                    </Step>
+                  )}
                   <Step
                     name="interaction_details"
                     forwardButton={

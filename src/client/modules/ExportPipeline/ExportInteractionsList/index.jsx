@@ -16,7 +16,7 @@ const ExportInteractionsList = ({ interactions = [] }) =>
         <CollectionItem
           key={item.id}
           headingText={item.subject}
-          headingUrl={urls.exportPipeline.interactions.details(
+          headingUrl={urls.exportPipeline.interactions.detail(
             item.company_export.id,
             item.id
           )}
@@ -32,7 +32,11 @@ const ExportInteractionsList = ({ interactions = [] }) =>
             {
               label: 'Adviser(s):',
               value: item.dit_participants
-                .map(({ adviser, team }) => `${adviser.name} - ${team.name}`)
+                .map(({ adviser, team }) =>
+                  team
+                    ? `${adviser.name} - ${team.name}`
+                    : `${adviser.name} - Not set`
+                )
                 .join(', '),
             },
             {
@@ -54,11 +58,12 @@ export default ({ exportId }) => (
     </p>
     <Interactions.Paginated
       id="export-interactions"
-      heading="interactions"
+      heading="interaction"
       shouldPluralize={true}
       noResults="You don't have any export interactions."
       payload={{ company_export_id: exportId }}
       sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
+      addItemUrl={urls.exportPipeline.interactions.create(exportId)}
     >
       {(page) => <ExportInteractionsList interactions={page} />}
     </Interactions.Paginated>
