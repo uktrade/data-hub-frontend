@@ -211,9 +211,14 @@ describe('Company overview page', () => {
     'when viewing the investment status card with different stages and statuses of investment projects',
     () => {
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`
+        ).as('companyApi')
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
+        cy.wait('@companyApi')
       })
 
       it('the card should link to the latest won project', () => {
@@ -738,6 +743,7 @@ describe('Company overview page', () => {
             '0e686ea4-b8a2-4337-aec4-114d92ad4588'
           )}`
         )
+        cy.wait(5000)
         cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
         cy.go('back')
         cy.get('[data-test="active-investment-page-new-restaurant-link"]')
@@ -765,6 +771,7 @@ describe('Company overview page', () => {
             '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
           )}`
         )
+        cy.wait(5000)
         cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
         cy.go('back')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
