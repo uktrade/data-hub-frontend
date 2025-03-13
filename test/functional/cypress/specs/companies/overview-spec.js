@@ -36,9 +36,14 @@ describe('Company overview page', () => {
     'when viewing company overview the tab should display Overview',
     () => {
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyGlobalUltimateAllDetails.id}`
+        ).as('companyApi')
         cy.visit(
           urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
         )
+        cy.wait('@companyApi')
       })
 
       it('tab should contain the text Overview', () => {
