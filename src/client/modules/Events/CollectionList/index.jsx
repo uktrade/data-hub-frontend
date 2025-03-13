@@ -69,7 +69,7 @@ const EventTemplate = (item) => {
     <StyledCollectionItem
       dataTest="data-hub-event"
       headingText={item.headingText}
-      headingUrl={`/events/${item.id}/details`}
+      headingUrl={item.headingUrl}
       metadata={item.metadata}
       tags={item.tags}
       titleRenderer={TitleRenderer}
@@ -121,13 +121,6 @@ const EventsCollection = ({
       onSuccessDispatch: EVENTS__LOADED,
     },
   }
-
-  //TODO - Restore this once the event DAG is in place
-  /*const maxLengthAventriIdValidation = (e) => {
-    if (e.target.value.length > AVENTRI_ID_MAX_LENGTH) {
-      e.target.value = e.target.value.slice(0, AVENTRI_ID_MAX_LENGTH)
-    }
-  }*/
 
   return (
     <DefaultLayout heading="Events" pageTitle="Events">
@@ -238,23 +231,6 @@ const EventsCollection = ({
               groupId="related-programme-filter"
             />
           </FilterToggleSection>
-          {/* TODO - restore this filter once the event DAG is in place */}
-          {/*<FilterToggleSection
-            id="EventCollection.aventri"
-            label="Aventri"
-            isOpen={false}
-          >
-            <Filters.AventriId
-              id="EventsCollection.aventriId"
-              label={LABELS.aventriId}
-              name="aventri_id"
-              qsParam="aventri_id"
-              hintText="For example, 100100100"
-              type="number"
-              onInput={maxLengthAventriIdValidation}
-              data-test="aventri-id-filter"
-            />
-          </FilterToggleSection>*/}
         </CollectionFilters>
       </FilteredCollectionList>
     </DefaultLayout>

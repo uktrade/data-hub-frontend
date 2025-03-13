@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { compact, get } = require('lodash')
 
 const { INTERACTION_NAMES } = require('../constants')

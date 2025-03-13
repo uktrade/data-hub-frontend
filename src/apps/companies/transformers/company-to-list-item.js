@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { get, isEqual } = require('lodash')
 
 const labels = require('../labels')

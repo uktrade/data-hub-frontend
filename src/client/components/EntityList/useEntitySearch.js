@@ -12,6 +12,7 @@ function useEntitySearch(searchEntitiesCallback) {
       setError(null)
       const newEntities = await searchEntitiesCallback(filters)
       setEntities(newEntities)
+      // eslint-disable-next-line no-unused-vars
     } catch (ex) {
       setEntities([])
       setError('Error occurred while searching entities.')

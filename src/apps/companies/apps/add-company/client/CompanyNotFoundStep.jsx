@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import React from 'react'
 import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'

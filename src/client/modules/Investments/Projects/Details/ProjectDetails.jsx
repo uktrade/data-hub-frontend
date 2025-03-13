@@ -289,6 +289,29 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   )
                 }
               />
+              <SummaryTable.TextRow
+                heading="UK location (site address)"
+                value={
+                  project.address1 ? (
+                    <>
+                      {project.address1} <br />
+                      {project.address2 && (
+                        <>
+                          {project.address2} <br />
+                        </>
+                      )}
+                      {project.addressTown && (
+                        <>
+                          {project.addressTown} <br />
+                        </>
+                      )}
+                      {project.addressPostcode}
+                    </>
+                  ) : (
+                    'Not set'
+                  )
+                }
+              />
               {project.deliveryPartners &&
                 project.deliveryPartners.length > 0 && (
                   <SummaryTable.TextRow

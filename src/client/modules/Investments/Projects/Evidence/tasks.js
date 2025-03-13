@@ -37,6 +37,7 @@ export const addProjectDocument = async ({ projectId, values }) => {
     return await apiProxyAxios.post(
       `v3/investment/${projectId}/evidence-document/${id}/upload-callback`
     )
+    // eslint-disable-next-line no-unused-vars
   } catch (err) {
     await apiProxyAxios.delete(
       `v3/investment/${projectId}/evidence-document/${id}`

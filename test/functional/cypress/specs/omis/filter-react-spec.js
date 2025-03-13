@@ -15,6 +15,7 @@ import {
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
+  assertQueryParamsPlus,
   assertCheckboxGroupOption,
 } from '../../support/assertions'
 import { testTypeahead, testTypeaheadOptionsLength } from '../../support/tests'
@@ -410,7 +411,7 @@ describe('Orders Collections Filter', () => {
 
       cy.get(element).type(`${name}{enter}`)
       assertPayload('@apiRequest', expectedPayload)
-      assertQueryParams('name', name)
+      assertQueryParamsPlus('name', name)
       assertChipExists({ label: name, position: 1 })
 
       removeChip(name)

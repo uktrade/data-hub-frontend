@@ -14,6 +14,7 @@ import {
   assertPayload,
   assertFieldTypeahead,
   assertFieldError,
+  assertFieldErrorMessage,
   assertLocalHeader,
   assertBreadcrumbs,
   assertFieldEmpty,
@@ -184,7 +185,7 @@ describe('Export pipeline create', () => {
           ERROR_MESSAGES.destination_country,
           false
         )
-        assertFieldError(
+        assertFieldErrorMessage(
           cy.get('[data-test="field-status"]'),
           ERROR_MESSAGES.status
         )
@@ -192,7 +193,7 @@ describe('Export pipeline create', () => {
           cy.get('[data-test="field-sector"]'),
           ERROR_MESSAGES.sector
         )
-        assertFieldError(
+        assertFieldErrorMessage(
           cy.get('[data-test="field-status"]'),
           ERROR_MESSAGES.status
         )

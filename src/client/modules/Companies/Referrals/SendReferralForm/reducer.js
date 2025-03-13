@@ -1,6 +1,5 @@
 import { SEND_REFERRAL_FORM__SUBMIT, TASK__ERROR } from '../../../../actions'
 
-// eslint-disable-next-line no-unused-vars
 export default (state = {}, { type }) => {
   switch (type) {
     case TASK__ERROR:

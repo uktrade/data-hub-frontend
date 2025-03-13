@@ -5,12 +5,11 @@ import CompaniesCollectionList from './modules/Companies/CollectionList'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
-import EventAventriDetails from './modules/Events/EventAventriDetails'
+import { StovaEventDetails } from './modules/Events/StovaEventDetails'
 import EventForm from './modules/Events/EventForm'
 import InteractionsCollectionList from './modules/Interactions/CollectionList'
 import OmisCollectionList from './modules/Omis/CollectionList'
 import ESSInteractionDetails from './modules/Interactions/ESSInteractionDetails'
-import EventAventriRegistrationStatus from './modules/Events/EventAventriRegistrationStatus'
 import Reminders from './modules/Reminders/Reminders'
 import { RemindersForms, RemindersSettings } from './modules/Reminders'
 import {
@@ -92,6 +91,7 @@ import RemoveGlobalHQ from './modules/Companies/CompanyBusinessDetails/LinkGloba
 import CompanyActivityCollectionNoAs from './modules/Companies/CompanyActivity/index'
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
 import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
+import CompanyFilesCollection from './modules/Files/CollectionList/CompanyFilesCollection'
 import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
@@ -106,6 +106,7 @@ import AddPropositionDocument from './modules/Investments/Projects/Propositions/
 import ProtectedRoute from './components/ProtectedRoute/index'
 import CustomerFeedback from './modules/ExportWins/CustomerFeedback'
 import EYBLeadDetails from './modules/Investments/EYBLeads/EYBLeadDetails'
+import EYBLeadEditHistory from './modules/Investments/EYBLeads/EYBLeadEditHistory/EYBLeadEditHistory'
 import SendReferralForm from './modules/Companies/Referrals/SendReferralForm/SendReferralForm'
 import ReferralDetails from './modules/Companies/Referrals/ReferralDetails'
 import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
@@ -285,6 +286,14 @@ function Routes() {
       ),
     },
     {
+      path: '/companies/:companyId/files',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompanyFilesCollection />
+        </ProtectedRoute>
+      ),
+    },
+    {
       path: '/companies/:companyId/orders',
       element: (
         <ProtectedRoute module={'datahub:companies'}>
@@ -453,18 +462,10 @@ function Routes() {
       ),
     },
     {
-      path: '/events/aventri/:aventriEventId/details',
+      path: '/events/stova/:stovaEventId/*',
       element: (
         <ProtectedRoute module={'datahub:events'}>
-          <EventAventriDetails />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/events/aventri/:aventriEventId/registration/:status',
-      element: (
-        <ProtectedRoute module={'datahub:events'}>
-          <EventAventriRegistrationStatus />
+          <StovaEventDetails />
         </ProtectedRoute>
       ),
     },
@@ -1058,6 +1059,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:investments'}>
           <EYBLeadDetails />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/investments/eyb-leads/:eybLeadId/edit-history',
+      element: (
+        <ProtectedRoute module={'datahub:investments'}>
+          <EYBLeadEditHistory />
         </ProtectedRoute>
       ),
     },

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { uniqBy, sortBy } = require('lodash')
 
 function transformServicesOptions(services) {

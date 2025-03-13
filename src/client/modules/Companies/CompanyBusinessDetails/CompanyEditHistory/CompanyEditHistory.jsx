@@ -51,6 +51,7 @@ const CompanyEditHistory = () => {
         fieldMapper={mapFieldNameToLabel}
         excludedFields={EXCLUDED_FIELDS}
         auditType="business details"
+        showSort={false}
       />
     </DefaultLayout>
   )

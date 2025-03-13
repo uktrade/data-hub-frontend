@@ -135,6 +135,7 @@ const filters = {
         '<span class="u-highlight">$1</span>'
       )
       return new nunjucks.runtime.SafeString(result)
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       return searchResultText
     }

@@ -22,6 +22,7 @@ const {
 const { companies, investments } = require('../../../../../../src/lib/urls')
 const fixtures = require('../../../fixtures')
 const urls = require('../../../../../../src/lib/urls')
+const { companyFaker } = require('../../../fakers/companies')
 
 const { dnbCorp, archivedLtd } = fixtures.company
 
@@ -208,6 +209,29 @@ describe('Company Investments Collection Page', () => {
       assertAddItemButtonNotPresent()
     })
   })
+
+  context(
+    'when viewing investments projects for a company without an address',
+    () => {
+      beforeEach(() => {
+        const companyWithoutAddress = companyFaker({ address: null })
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${companyWithoutAddress.id}`,
+          companyWithoutAddress
+        ).as('companyOverview')
+        cy.visit(
+          companies.investments.companyInvestmentProjects(
+            companyWithoutAddress.id
+          )
+        )
+        cy.wait('@companyOverview')
+      })
+      it('should not render an "Add investment project" button', () => {
+        assertAddItemButtonNotPresent()
+      })
+    }
+  )
 
   context('API payload', () => {
     it('should have the correct payload', () => {

@@ -2,10 +2,9 @@ import React, { useEffect } from 'react'
 import Input from '@govuk-react/input'
 import PropTypes from 'prop-types'
 import qs from 'qs'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import multiInstance from '../../utils/multiinstance'
-import { useTextCaretPosition } from './useTextCaretPosition'
 import {
   ROUTED_INPUT__CHANGE,
   ROUTED_INPUT__RESET,
@@ -28,7 +27,6 @@ const RoutedInput = ({
   type,
   ...props
 }) => {
-  const { ref, updateTextCaret } = useTextCaretPosition()
   // This is the only way we can reset the value when the query string param is
   // reset from outside this component
   useEffect(() => {
@@ -37,36 +35,30 @@ const RoutedInput = ({
     }
   }, [selectedValue, qsValue])
 
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const qsParams = qs.parse(location.search.slice(1))
-  const writeQs = () =>
-    navigate({
-      search: qs.stringify({
-        ...qsParams,
-        [qsParam]: value,
-      }),
-      replace: true,
-    })
+  const writeQs = (value) => {
+    searchParams.set(qsParam, value)
+    setSearchParams(searchParams)
+  }
 
   return (
     <Input
       {...props}
-      ref={ref}
       value={value}
       type={type}
       onChange={(e) => {
         onChange(e.target.value)
-        updateTextCaret()
       }}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
           onEnter(e.target.value)
-          writeQs()
+          writeQs(e.target.value)
         }
       }}
-      onBlur={writeQs}
+      onBlur={(e) => {
+        writeQs(e.target.value)
+      }}
     />
   )
 }

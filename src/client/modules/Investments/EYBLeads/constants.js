@@ -30,6 +30,10 @@ export const SORT_OPTIONS = [
     value: '-triage_created',
   },
   {
+    name: 'Recently modified',
+    value: '-triage_modified',
+  },
+  {
     name: 'Company A-Z',
     value: 'company__name',
   },

@@ -14,6 +14,7 @@ import {
   TASK_GET_COMPANY_INVESTMENT_COUNT,
   companyInvestmentCountState2props,
 } from './state'
+import { NOT_SET_TEXT } from '../../../../companies/constants'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -40,7 +41,7 @@ const CompanySummaryTable = ({ company, companyInvestmentCount }) => (
       {company.name}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Country" hideWhenEmpty={true}>
-      {company.address.country.name}
+      {company.address ? company.address.country.name : NOT_SET_TEXT}
     </SummaryTable.Row>
     <SummaryTable.Row heading="Company investments">
       <Task.Status

@@ -184,13 +184,14 @@ import {
   patchEvent,
   createEvent,
 } from './routes/v4/event/event.js'
-
+import { getCompanyActivityById } from './routes/v4/company-activity/company-activity.js'
 import {
   getLargeCapitalOpportunity,
   saveOpportunityDetails,
   getLargeCapitalOpportunityList,
   getEYBLead,
   getEYBLeadList,
+  getEYBLeadEditHistory,
 } from './routes/v4/investment/investment.js'
 import {
   getInteractions as _getInteractions,
@@ -559,6 +560,12 @@ app.get('/v4/event/:eventId', _eventById)
 app.patch('/v4/event/:eventId', patchEvent)
 app.post('/v4/event', createEvent)
 
+// V4 Company Activity
+app.get(
+  '/v4/company-activity/stova-events/:stovaEventId',
+  getCompanyActivityById
+)
+
 // V4 Export Win
 app.get('/v4/export-win', getExportWinCollection)
 app.get('/v4/export-win/:exportWinId', getExportWin)
@@ -868,6 +875,7 @@ app.get('/v4/large-capital-opportunity', getLargeCapitalOpportunityList)
 app.post('/v4/search/large-capital-opportunity', getLargeCapitalOpportunityList)
 app.get('/v4/investment-lead/eyb/:eybLeadId', getEYBLead)
 app.get('/v4/investment-lead/eyb', getEYBLeadList)
+app.get('/v4/investment-lead/eyb/:eybLeadId/audit', getEYBLeadEditHistory)
 
 // V4 Proposition
 app.get('/v4/proposition', propositions)

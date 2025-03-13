@@ -881,6 +881,28 @@ const assertQueryParams = (key, value) => {
 }
 
 /**
+ * Asserts the key-value pair are defined within the query params with RFC1738.
+ * Instead of a space ' ' becoming '%20' it can become '+' as long as its part of the
+ * query string and not part of the path. This is what React seems to use.
+ * https://github.com/ljharb/qs?tab=readme-ov-file#rfc-3986-and-rfc-1738-space-encoding
+ *
+ * Example:
+ * assert.equal(qs.stringify({ a: 'b c' }), 'a=b%20c');
+ * assert.equal(qs.stringify({ a: 'b c' }, { format : 'RFC1738' }), 'a=b+c');
+ */
+const assertQueryParamsPlus = (key, value) => {
+  cy.url().should(
+    'include',
+    qs.stringify(
+      {
+        [key]: value,
+      },
+      { format: 'RFC1738' }
+    )
+  )
+}
+
+/**
  * Asserts the key-value pair are defined within the query params
  */
 const assertNotQueryParams = (key, value) => {
@@ -1049,6 +1071,14 @@ const assertFieldError = (element, errorMessage, hasHint = true) =>
     .eq(hasHint ? 1 : 0)
     .should('have.text', errorMessage)
 
+const assertFieldErrorMessage = (element, errorMessage) =>
+  element
+    .find('span')
+    .filter((_, s) => Cypress.$(s).text().includes(errorMessage))
+    .should('have.length.greaterThan', 0)
+    .first()
+    .should('contain.text', errorMessage)
+
 const assertFieldErrorStrict = ({ inputName, errorMessage }) =>
   cy
     .get(`[data-test="field-${inputName}"]`)
@@ -1141,6 +1171,7 @@ module.exports = {
   assertChipsEmpty,
   assertFieldEmpty,
   assertQueryParams,
+  assertQueryParamsPlus,
   assertNotQueryParams,
   assertPayload,
   assertRequestUrl,
@@ -1160,6 +1191,7 @@ module.exports = {
   assertAPIRequest,
   assertExactUrl,
   assertFieldError,
+  assertFieldErrorMessage,
   assertFieldErrorStrict,
   assertTypeaheadValues,
   assertLink,

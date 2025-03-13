@@ -58,6 +58,7 @@ export const ACTIVITY_TYPE_OPTIONS = [
 export const SORT_OPTIONS = [
   { value: 'date:desc', name: 'Recently created' },
   { value: 'date:asc', name: 'Oldest first' },
+  { value: 'subject', name: 'Subject A-Z (interaction)' },
 ]
 
 export const NEW_PROJECT_TAG = {

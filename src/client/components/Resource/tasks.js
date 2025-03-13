@@ -21,6 +21,7 @@ import EYBLead from './EYBLead'
 import ContactAuditHistory from './ContactAuditHistory'
 import Interaction from './Interaction'
 import Event from './Event'
+import StovaEvent from './StovaEvent'
 import CompanyOneListTeam from './CompanyOneListTeam'
 import ExportYears from './ExportYears'
 import ExportWin from './ExportWin'
@@ -98,6 +99,7 @@ import EvidenceTag from './EvidenceTag'
 import ProjectAuditHistory from './ProjectAuditHistory'
 import WinUKRegions from './WinUKRegions'
 import Referral from './Referral'
+import EYBLeadAuditHistory from './EYBLeadAuditHistory'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -131,6 +133,7 @@ export default {
   ...ExperienceCategories.tasks,
   ...ExportExperienceCategories.tasks,
   ...Event.tasks,
+  ...StovaEvent.tasks,
   ...ExportYears.tasks,
   ...ExportWin.tasks,
   ...ExportOwner.tasks,
@@ -200,4 +203,5 @@ export default {
   ...EvidenceTag.tasks,
   ...ProjectAuditHistory.tasks,
   ...Referral.tasks,
+  ...EYBLeadAuditHistory.tasks,
 }

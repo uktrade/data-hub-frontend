@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import _ from 'lodash'
 import React from 'react'
 
@@ -160,9 +159,9 @@ describe.skip('Resource/Paginated', () => {
 
   it('Should forward selected sortby option to the task payload', () => {
     const SORT_OPTIONS = [
-      {name: 'Foo', value: 'foo'},
-      {name: 'Bar', value: 'bar'},
-      {name: 'Baz', value: 'baz'},
+      { name: 'Foo', value: 'foo' },
+      { name: 'Bar', value: 'bar' },
+      { name: 'Baz', value: 'baz' },
     ]
 
     const stub = cy.stub().returns({
@@ -185,31 +184,38 @@ describe.skip('Resource/Paginated', () => {
           foo: stub,
         },
       }
-    )
-      .then(() => {
-        expect(stub).to.have.been.calledOnceWith({
+    ).then(() => {
+      expect(stub).to.have.been.calledOnceWith(
+        {
           limit: 10,
           offset: 0,
           sortby: 'foo',
-        }, 'whatever')
-      })
+        },
+        'whatever'
+      )
+    })
 
-    cy.get('select option')
-      .then($selection => {
-        expect($selection.toArray().map(({innerText, value}) => ({
+    cy.get('select option').then(($selection) => {
+      expect(
+        $selection.toArray().map(({ innerText, value }) => ({
           name: innerText,
           value,
-        }))).to.deep.eq(SORT_OPTIONS)
-      })
+        }))
+      ).to.deep.eq(SORT_OPTIONS)
+    })
 
-    SORT_OPTIONS.forEach(({name, value}) => {
-      cy.get('select').select(name)
+    SORT_OPTIONS.forEach(({ name, value }) => {
+      cy.get('select')
+        .select(name)
         .then(() => {
-          expect(stub).to.have.been.calledWith({
-            limit: 10,
-            offset: 0,
-            sortby: value,
-          }, 'whatever')
+          expect(stub).to.have.been.calledWith(
+            {
+              limit: 10,
+              offset: 0,
+              sortby: value,
+            },
+            'whatever'
+          )
         })
     })
   })

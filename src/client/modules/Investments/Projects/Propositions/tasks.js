@@ -53,6 +53,7 @@ export const addPropositionDocument = async ({
     return await apiProxyAxios.post(
       `v3/investment/${projectId}/proposition/${propositionId}/document/${id}/upload-callback`
     )
+    // eslint-disable-next-line no-unused-vars
   } catch (err) {
     await apiProxyAxios.delete(
       `v3/investment/${projectId}/proposition/${propositionId}/document/${id}`

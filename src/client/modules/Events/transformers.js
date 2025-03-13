@@ -28,6 +28,7 @@ const transformEventToListItem = ({
   organiser,
   lead_team,
   service,
+  stova_event,
 } = {}) => {
   const [, service2] = service ? service.name.split(' : ') : ''
   const tags = []
@@ -84,10 +85,15 @@ const transformEventToListItem = ({
     })
   }
 
+  let headingUrl = urls.events.details(id)
+  if (stova_event) {
+    headingUrl = urls.events.stova.details(stova_event.id)
+  }
+
   return {
     id,
     headingText: name,
-    headingUrl: urls.events.details(id),
+    headingUrl: headingUrl,
     subheading:
       modified_on &&
       `Updated on ${formatDate(modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`,
@@ -151,40 +157,4 @@ const transformResponseToEventDetails = ({
   disabledOn: disabled_on,
 })
 
-const transformResponseToEventAventriDetails = ({
-  id,
-  object,
-  type,
-  registrationStatuses = [],
-}) => {
-  const eventDetails = {
-    id,
-    name: object?.name,
-    type,
-    eventDate: formatStartAndEndDate(object?.startTime, object?.endTime),
-    upcomingEvent: getDifferenceInDays(object?.endTime) > 0,
-    location: object['dit:aventri:locationname'],
-    fullAddress: compact([
-      object['dit:aventri:location_address1'],
-      object['dit:aventri:location_address2'],
-      object['dit:aventri:location_city'],
-      object['dit:aventri:location_postcode'],
-      object['dit:aventri:location_country'],
-    ]),
-  }
-  eventDetails.registrationStatusCounts = registrationStatuses.filter(
-    (s) => s.count > 0
-  )
-  return eventDetails
-}
-
-const transformAventriEventAttendeesRegistionStatusToBolean = ({
-  totalAttendees,
-}) => ({ status: totalAttendees >= 1 ? true : false, total: totalAttendees })
-
-export {
-  transformResponseToEventCollection,
-  transformResponseToEventDetails,
-  transformResponseToEventAventriDetails,
-  transformAventriEventAttendeesRegistionStatusToBolean,
-}
+export { transformResponseToEventCollection, transformResponseToEventDetails }

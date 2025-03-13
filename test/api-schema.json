@@ -4789,6 +4789,196 @@
         "tags": ["v4"]
       }
     },
+    "/v4/document/": {
+      "get": {
+        "operationId": "listGenericDocumentRetrieves",
+        "description": "Generic document viewset.",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sortby",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GenericDocumentRetrieve"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "v4"
+        ]
+      },
+      "post": {
+        "operationId": "createGenericDocumentCreate",
+        "description": "Create a GenericDocument instance along with a specific-type document instance.\n\nExample payload to create a SharePointDocument related to a Company:\n\n```\n{\n    \"document_type\": \"documents.sharepointdocument\",\n    \"document_data\": {\n        \"title\": \"Project Proposal\",\n        \"url\": \"https://sharepoint.example.com/project-proposal.docx\"\n    },\n    \"related_object_type\": \"company.company\",\n    \"related_object_id\": \"\u003Cuuid of company\u003E\"\n}\n```",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericDocumentCreate"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericDocumentCreate"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericDocumentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericDocumentCreate"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "v4"
+        ]
+      }
+    },
+    "/v4/document/{id}": {
+      "get": {
+        "operationId": "retrieveGenericDocumentRetrieve",
+        "description": "Generic document viewset.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortby",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericDocumentRetrieve"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "v4"
+        ]
+      },
+      "delete": {
+        "operationId": "destroyGenericDocumentRetrieve",
+        "description": "Archive the GenericDocument and specific-type document instance.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortby",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "v4"
+        ]
+      }
+    },
     "/whoami/": {
       "get": {
         "operationId": "listwho_am_is",
@@ -9043,6 +9233,10 @@
               "type": "string"
             }
           },
+          "audit_log": {
+            "type": "string",
+            "readOnly": true
+          },
           "reasons_for_abandonment": {
             "type": "array",
             "items": {
@@ -9753,6 +9947,79 @@
             "type": "boolean"
           }
         }
+      },
+      "GenericDocumentRetrieve": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_by": {
+            "type": "string",
+            "readOnly": true
+          },
+          "modified_by": {
+            "type": "string",
+            "readOnly": true
+          },
+          "document": {
+            "type": "string",
+            "readOnly": true
+          },
+          "related_object": {
+            "type": "string",
+            "readOnly": true
+          },
+          "created_on": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "modified_on": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "nullable": true
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "archived_on": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "archived_reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "document_object_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "related_object_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "archived_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "document_type": {
+            "type": "integer"
+          },
+          "related_object_type": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "document_object_id",
+          "related_object_id",
+          "document_type",
+          "related_object_type"
+        ]
       },
       "SearchEventQuery": {
         "type": "object",

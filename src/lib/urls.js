@@ -138,6 +138,8 @@ module.exports = {
     euVIES: 'https://ec.europa.eu/taxation_customs/vies/',
     cleanEnergyTransition:
       'https://www.gov.uk/government/consultations/aligning-uk-international-support-for-the-clean-energy-transition',
+    stova: (stovaId) =>
+      `https://eu-admin.eventscloud.com/loggedin/eVent/index.php?eventid=${stovaId}`,
   },
 
   dashboard: {
@@ -172,6 +174,7 @@ module.exports = {
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('/companies', '/:companyId/contacts'),
+    files: url('/companies', '/:companyId/files'),
     unarchive: url('/companies', '/:companyId/unarchive'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     editOneList: url('/companies', '/:companyId/edit-one-list'),
@@ -379,17 +382,9 @@ module.exports = {
     attendees: url('/events', '/:eventId/attendees'),
     find: url('/events', '/:eventId/attendees/find-new'),
     addAttendee: url('/events', '/:eventId/attendees/create/:contactId'),
-    aventri: {
-      details: url('/events', '/aventri/:aventriEventId/details'),
-      detailsData: url('/events', '/aventri/:aventriEventId/details/data'),
-      registrationStatus: url(
-        '/events',
-        '/aventri/:aventriEventId/registration/:status'
-      ),
-      registrationStatusData: url(
-        '/events',
-        '/aventri/:aventriEventId/registration/attendees/data'
-      ),
+    stova: {
+      details: url('/events', '/stova/:stovaEventId/details'),
+      attendees: url('/events', '/stova/:stovaEventId/attendees'),
     },
   },
   search: {
@@ -539,6 +534,7 @@ module.exports = {
     eybLeads: {
       index: url('/investments', '/eyb-leads'),
       details: url('/investments', '/eyb-leads/:eybLeadId/details'),
+      editHistory: url('/investments/eyb-leads', '/:eybLeadId/edit-history'),
     },
   },
   metadata: {

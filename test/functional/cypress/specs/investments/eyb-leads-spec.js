@@ -53,6 +53,7 @@ const OVERSEAS_REGION_ID_2 = '5616ccf5-ab4a-4c2c-9624-13c69be3c46b'
 
 const EYB_LEAD_LIST = Array(
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     company: { name: `${COMPANY_NAME} and Co` },
     is_high_value: true,
@@ -66,6 +67,7 @@ const EYB_LEAD_LIST = Array(
     },
   }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     sector: { name: SECTOR_NAME, id: SECTOR_ID },
     is_high_value: false,
@@ -78,9 +80,41 @@ const EYB_LEAD_LIST = Array(
       },
     },
   }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: null }),
-  eybLeadFaker({ triage_created: DATE_TIME_STRING, is_high_value: false }),
   eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: null,
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
+    triage_created: DATE_TIME_STRING,
+    is_high_value: false,
+    audit_log: [
+      {
+        id: 356,
+        timestamp: '2025-02-18T09:00:20.773368Z',
+        changes: {
+          is_high_value: [null, false],
+        },
+      },
+      {
+        id: 777,
+        timestamp: '2025-02-17T09:00:20.773368Z',
+        changes: {
+          is_high_value: [true, false],
+        },
+      },
+      {
+        id: 777,
+        timestamp: '2025-02-15T09:00:20.773368Z',
+        changes: {
+          is_high_value: [false, true],
+        },
+      },
+    ],
+  }),
+  eybLeadFaker({
+    triage_modified: DATE_TIME_STRING,
     triage_created: DATE_TIME_STRING,
     is_high_value: false,
     company: null,
@@ -93,6 +127,22 @@ const EYB_LEAD_LIST = Array(
         id: OVERSEAS_REGION_ID_2,
       },
     },
+    audit_log: [
+      {
+        id: 244,
+        timestamp: '2025-02-14T09:00:20.773368Z',
+        changes: {
+          is_high_value: [false, true],
+        },
+      },
+      {
+        id: 445,
+        timestamp: '2025-02-11T09:00:20.773368Z',
+        changes: {
+          is_high_value: [true, false],
+        },
+      },
+    ],
   })
 )
 
@@ -105,6 +155,7 @@ const PAYLOADS = {
   unknownValueFilter: { value: UNKNOWN_VALUE },
   countryFilter: { country: COUNTRY_ID_1 },
   sortByCreated: { sortby: '-triage_created' },
+  sortByModified: { sortby: '-triage_modified' },
   sortByCompanyAZ: { sortby: 'company__name' },
 }
 
@@ -156,6 +207,8 @@ const getEYBLeadsByOverseasRegionId = (overseasRegionID) => {
 describe('EYB leads collection page', () => {
   context('When visiting the EYB leads tab', () => {
     const eybLead = EYB_LEAD_LIST[0]
+    const eybLeadWithAuditDataHighToLowValue = EYB_LEAD_LIST[3]
+    const eybLeadWithAuditDataLowToHighValue = EYB_LEAD_LIST[4]
 
     beforeEach(() => {
       cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, {
@@ -214,6 +267,10 @@ describe('EYB leads collection page', () => {
           `Submitted to EYB ${formatDate(eybLead.triage_created, DATE_FORMAT_COMPACT)}`
         )
         .should('contain', `Estimated spend ${eybLead.spend}`)
+        .should(
+          'contain',
+          `Location of company headquarters ${eybLead.address.country.name}`
+        )
         .should('contain', `Sector ${eybLead.sector.name}`)
         .should(
           'contain',
@@ -232,6 +289,28 @@ describe('EYB leads collection page', () => {
       cy.get('[data-test="collection-item"]')
         .eq(4)
         .should('contain', COMPANY_NAME_DEFAULT)
+    })
+    it('should display the audit log metadata for each collection item correctly', () => {
+      cy.get('[data-test="collection-item"]')
+        .eq(3)
+        .should(
+          'contain',
+          `Value modified on ${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[1].timestamp, DATE_FORMAT_COMPACT)}`
+        )
+        .should('contain', `Value change High to Low`)
+
+      cy.get('[data-test="collection-item"]')
+        .eq(1)
+        .should('not.contain', 'Value modified on')
+        .should('not.contain', `Value change`)
+
+      cy.get('[data-test="collection-item"]')
+        .eq(4)
+        .should(
+          'contain',
+          `Value modified on ${formatDate(eybLeadWithAuditDataLowToHighValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+        )
+        .should('contain', `Value change Low to High`)
     })
   })
 
@@ -583,7 +662,11 @@ describe('EYB leads collection page', () => {
     it('should load sort by dropdown', () => {
       cy.get('[data-test="sortby"] select option').then((options) => {
         const actual = [...options].map((o) => o.value)
-        expect(actual).to.deep.eq(['-triage_created', 'company__name'])
+        expect(actual).to.deep.eq([
+          '-triage_created',
+          '-triage_modified',
+          'company__name',
+        ])
       })
     })
 
@@ -592,6 +675,17 @@ describe('EYB leads collection page', () => {
       cy.wait('@apiRequest')
         .its('request.query')
         .should('include', PAYLOADS.sortByCreated)
+    })
+
+    it('should sort by recently modified', () => {
+      cy.intercept('GET', `${EYB_RETRIEVE_API_ROUTE}?*`, (req) => {
+        if (req.query.sortby === '-triage_modified') req.alias = 'sortedRequest'
+      })
+      cy.get('[data-test="sortby"] select').select('-triage_modified')
+      assertQueryParams('sortby', '-triage_modified')
+      cy.wait('@sortedRequest')
+        .its('request.query')
+        .should('include', PAYLOADS.sortByModified)
     })
 
     it('should sort by company name A-Z', () => {

@@ -11,6 +11,7 @@ function useAdministrativeAreasSearch(areaSearchCallback) {
       setIsSubmitting(true)
       setAdministrativeAreaSearchError(null)
       setAdministrativeAreaList(await areaSearchCallback(countryId))
+      // eslint-disable-next-line no-unused-vars
     } catch (ex) {
       setAdministrativeAreaList(null)
       setAdministrativeAreaSearchError(

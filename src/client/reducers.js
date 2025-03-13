@@ -90,17 +90,14 @@ import {
 } from './modules/Contacts/CollectionList/state'
 import contactsReducer from './modules/Contacts/CollectionList/reducer'
 
+import { FILES_LIST_ID } from './modules/Files/CollectionList/state'
+import filesReducer from './modules/Files/CollectionList/reducer'
+
 import { ID as INTERACTIONS_ID } from './modules/Interactions/CollectionList/state'
 import interactionsReducer from './modules/Interactions/CollectionList/reducer'
 
 import { ID as EVENTS_DETAILS_ID } from './modules/Events/EventDetails/state'
 import eventDetailsReducer from './modules/Events/EventDetails/reducer'
-
-import { ID as EVENTS_AVENTRI_DETAILS_ID } from './modules/Events/EventAventriDetails/state'
-import eventAventriDetailsReducer from './modules/Events/EventAventriDetails/reducer'
-
-import { ID as EVENTS_AVENTRI_REGISTRATION_STATUS_ID } from './modules/Events/EventAventriRegistrationStatus/state'
-import eventAventriRegistrationStatusReducer from './modules/Events/EventAventriRegistrationStatus/reducer'
 
 import { ID as INTERACTION_ESS_DETAILS_ID } from './modules/Interactions/ESSInteractionDetails/state'
 import interactionEssDetailsReducer from './modules/Interactions/ESSInteractionDetails/reducer'
@@ -229,14 +226,12 @@ export const reducers = {
   [INVESTMENT_REMINDERS_ID]: investmentRemindersReducer,
   [REMINDER_SUMMARY_ID]: reminderSummaryReducer,
   [CONTACTS_LIST_ID]: contactsReducer,
+  [FILES_LIST_ID]: filesReducer,
   [CONTACT_ACTIVITIES_ID]: contactActivitiesReducer,
   [COMPANY_CONTACTS_LIST_ID]: contactsReducer,
   [INTERACTIONS_ID]: interactionsReducer,
   [EVENTS_ID]: eventsReducer,
   [EVENTS_DETAILS_ID]: eventDetailsReducer,
-  [EVENTS_AVENTRI_DETAILS_ID]: eventAventriDetailsReducer,
-  [EVENTS_AVENTRI_REGISTRATION_STATUS_ID]:
-    eventAventriRegistrationStatusReducer,
   [INTERACTION_ESS_DETAILS_ID]: interactionEssDetailsReducer,
   [SEARCH_ATTENDEE_ID]: attendeeSearchReducer,
   [ORDERS_LIST_ID]: ordersReducer,
