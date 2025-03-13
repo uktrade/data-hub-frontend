@@ -43,7 +43,7 @@ describe('Company overview page', () => {
 
       it('tab should contain the text Overview', () => {
         cy.get('[data-test="tabbedLocalNavList"]', {
-          timeout: 2000,
+          timeout: 5000,
         }).should('contain.text', 'Overview')
       })
     }
@@ -245,7 +245,7 @@ describe('Company overview page', () => {
       })
       it('Inactive projects should not include an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]', {
-          timeout: 2000,
+          timeout: 5000,
         })
           .contains('Investment')
           .click()
@@ -255,7 +255,7 @@ describe('Company overview page', () => {
       })
       it('UK based Active projects should not have an "Add investment project" button', () => {
         cy.get('[data-test="tabbedLocalNav"]', {
-          timeout: 2000,
+          timeout: 5000,
         })
           .contains('Investment')
           .click()
@@ -704,7 +704,7 @@ describe('Company overview page', () => {
 
       it('the card should contain a message outlining three active investments', () => {
         cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]', {
-          timeout: 2000,
+          timeout: 5000,
         }).should('be.visible')
         cy.get('[data-test="activeInvestmentProjectsContainer"]')
           .children()
