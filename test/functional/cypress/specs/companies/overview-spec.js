@@ -45,8 +45,9 @@ describe('Company overview page', () => {
         )
         cy.wait('@companyApi')
       })
-      cy.wait(7000)
+
       it('tab should contain the text Overview', () => {
+        cy.wait(7000)
         cy.get('[data-test="tabbedLocalNavList"]').should(
           'contain.text',
           'Overview'
