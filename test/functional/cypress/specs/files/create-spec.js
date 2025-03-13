@@ -53,11 +53,11 @@ describe('SharePoint link file create for company', () => {
 
   context('when filling in a valid SharePoint form', () => {
     it('should save with expected values and endpoint', () => {
-      const test_url = 'http://somevalidurl.com'
-      const test_title = 'Some test title'
+      const testUrl = 'http://somevalidurl.com'
+      const testTitle = 'Some test title'
 
-      cy.get('#url').type(test_url)
-      cy.get('#title').type(test_title)
+      cy.get('#url').type(testUrl)
+      cy.get('#title').type(testTitle)
 
       cy.contains('button', 'Add SharePoint link').click()
 
@@ -66,8 +66,8 @@ describe('SharePoint link file create for company', () => {
         related_object_type: RELATED_OBJECT_TYPES.COMPANY,
         document_type: DOCUMENT_TYPES.SHAREPOINT.type,
         document_data: {
-          title: test_title,
-          url: test_url,
+          title: testTitle,
+          url: testUrl,
         },
       }
 
