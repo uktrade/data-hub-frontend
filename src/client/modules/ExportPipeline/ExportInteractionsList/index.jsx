@@ -16,7 +16,10 @@ const ExportInteractionsList = ({ interactions = [] }) =>
         <CollectionItem
           key={item.id}
           headingText={item.subject}
-          headingUrl={urls.exportPipeline.interactions.details(item.id)}
+          headingUrl={urls.exportPipeline.interactions.detail(
+            item.company_export.id,
+            item.id
+          )}
           metadata={[
             {
               label: 'Date:',
@@ -51,11 +54,12 @@ export default ({ exportId }) => (
     </p>
     <Interactions.Paginated
       id="export-interactions"
-      heading="interactions"
+      heading="interaction"
       shouldPluralize={true}
       noResults="You don't have any export interactions."
       payload={{ company_export_id: exportId }}
       sortOptions={SORT_OPTIONS_EXPORT_INTERACTION}
+      addItemUrl={urls.exportPipeline.interactions.create(exportId)}
     >
       {(page) => <ExportInteractionsList interactions={page} />}
     </Interactions.Paginated>

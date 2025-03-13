@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 import ExportInteractionsList from './ExportInteractionsList'
 import ExportResource from '../../components/Resource/Export'
@@ -9,7 +9,6 @@ import TabNav from '../../components/TabNav'
 import ExportDetails from './ExportDetails'
 import urls from '../../../lib/urls'
 
-const EXPORT_ID_REGEX = /\/export\/([^/]+)\//
 const EXPORT_ASPECT_REGEX = /\/([^/]+)$/
 
 const StyledLink = styled('a')({
@@ -40,12 +39,10 @@ export const ExportProjectTitle = (props) => (
 )
 
 const Export = () => {
+  const { exportId } = useParams()
   const location = useLocation()
-  const matchId = location.pathname.match(EXPORT_ID_REGEX)
-  const exportId = matchId ? matchId[1] : null
   const matchAspect = location.pathname.match(EXPORT_ASPECT_REGEX)
   const aspect = matchAspect ? matchAspect[1] : null // aspect will be either 'details' or 'interactions'
-
   return (
     <DefaultLayout
       superheading={<CompanyLink id={exportId} />}
@@ -54,6 +51,9 @@ const Export = () => {
       breadcrumbs={[
         { link: urls.exportPipeline.index(), text: 'Home' },
         { text: <ExportProjectTitle id={exportId} /> },
+        {
+          text: { interactions: 'Interactions' }[aspect],
+        },
       ]}
     >
       <TabNav

@@ -762,10 +762,10 @@ module.exports = {
     index: url('/export'),
     create: url('/export/create?companyId=', ':companyId'),
     details: url('/export', '/:exportId/details'),
-    interactions: {
-      index: url('/export', '/:exportId/interactions'),
-      details: url('/export', '/:exportId/interactions/details'),
-    },
+    interactions: createInteractionsSubApp(
+      '/export',
+      '/:exportId/interactions'
+    ),
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },
