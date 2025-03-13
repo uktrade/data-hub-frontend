@@ -60,13 +60,17 @@ function url(mountPoint, subMountPoint, path) {
   return getUrl
 }
 
-function createInteractionsSubApp(mountPoint, pathPrefix = '') {
+function createInteractionsSubApp(
+  mountPoint,
+  pathPrefix = '',
+  pathPostfix = ''
+) {
   return {
     index:
       mountPoint === '/interactions'
         ? url(mountPoint, PRIMARY_LINK_PARAMS.interactions, pathPrefix)
         : url(mountPoint, pathPrefix),
-    detail: url(mountPoint, pathPrefix + '/:interactionId'),
+    detail: url(mountPoint, pathPrefix + '/:interactionId' + pathPostfix),
     create: url(mountPoint, pathPrefix + '/create'),
     createType: url(mountPoint, pathPrefix + '/create/:theme/:kind'),
     edit: url(mountPoint, pathPrefix + '/:interactionId/edit'),
@@ -762,10 +766,11 @@ module.exports = {
     index: url('/export'),
     create: url('/export/create?companyId=', ':companyId'),
     details: url('/export', '/:exportId/details'),
-    interactions: {
-      index: url('/export', '/:exportId/interactions'),
-      details: url('/export', '/:exportId/interactions/:interactionId/details'),
-    },
+    interactions: createInteractionsSubApp(
+      '/export',
+      '/:exportId/interactions',
+      '/details'
+    ),
     edit: url('/export', '/:exportId/edit'),
     delete: url('/export', '/:exportId/delete'),
   },

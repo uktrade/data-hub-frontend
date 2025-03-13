@@ -45,7 +45,6 @@ const Export = () => {
   const exportId = matchId ? matchId[1] : null
   const matchAspect = location.pathname.match(EXPORT_ASPECT_REGEX)
   const aspect = matchAspect ? matchAspect[1] : null // aspect will be either 'details' or 'interactions'
-
   return (
     <DefaultLayout
       superheading={<CompanyLink id={exportId} />}
@@ -54,6 +53,9 @@ const Export = () => {
       breadcrumbs={[
         { link: urls.exportPipeline.index(), text: 'Home' },
         { text: <ExportProjectTitle id={exportId} /> },
+        {
+          text: { interactions: 'Interactions' }[aspect],
+        },
       ]}
     >
       <TabNav
