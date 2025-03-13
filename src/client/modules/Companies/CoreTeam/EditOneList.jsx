@@ -69,9 +69,9 @@ const EditOneList = ({
           oneListTiers && (
             <EditOneListForm
               company={company}
-              userPermissions={userPermissions}
               returnUrl={returnUrl}
               oneListTiers={oneListTiers}
+              userPermissions={userPermissions}
               formInitialValues={{
                 [TIER_FIELD_NAME]: company.one_list_group_tier?.id,
                 [ACCOUNT_MANAGER_FIELD_NAME]: globalAccountManager,

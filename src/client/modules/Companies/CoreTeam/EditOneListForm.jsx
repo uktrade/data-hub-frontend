@@ -22,6 +22,7 @@ const EditOneListForm = ({
   oneListTiers,
   formInitialValues,
   returnUrl,
+  userPermissions,
 }) => (
   <Form
     id="edit-one-list"
@@ -29,7 +30,11 @@ const EditOneListForm = ({
     initialValues={formInitialValues}
     submissionTaskName={TASK_SAVE_ONE_LIST_DETAILS}
     analyticsFormName="editOneList"
-    transformPayload={(values) => ({ values, companyId: company.id })}
+    transformPayload={(values) => ({
+      values,
+      companyId: company.id,
+      userPermissions,
+    })}
     redirectTo={() =>
       returnUrl ? returnUrl : urls.companies.businessDetails(company.id)
     }
@@ -53,11 +58,17 @@ const EditOneListForm = ({
         {values.one_list_tier !== NONE && (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Step name="oneListAdvisers">
-              <FieldAdvisersTypeahead
-                name={ACCOUNT_MANAGER_FIELD_NAME}
-                label="Global Account Manager"
-                required="Select at least one adviser"
-              />
+              {userPermissions &&
+                userPermissions.includes('company.change_company') &&
+                userPermissions.includes(
+                  'company.change_one_list_tier_and_global_account_manager'
+                ) && (
+                  <FieldAdvisersTypeahead
+                    name={ACCOUNT_MANAGER_FIELD_NAME}
+                    label="Global Account Manager"
+                    required="Select at least one adviser"
+                  />
+                )}
               <FieldAdvisersTypeahead
                 name={ONE_LIST_TEAM_FIELD_NAME}
                 label="Advisers on the core team (optional)"

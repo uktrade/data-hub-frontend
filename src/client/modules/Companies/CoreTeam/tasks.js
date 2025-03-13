@@ -1,4 +1,5 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
+import { canEditOneListTierAndGlobalAccountManager } from '../CompanyBusinessDetails/utils'
 import {
   NONE,
   ACCOUNT_MANAGER_FIELD_NAME,
@@ -20,14 +21,20 @@ export async function getOneListDetails(companyId) {
   )
 }
 
-async function assignOneListTierandGlobalManagerRequest({ companyId, values }) {
-  return await apiProxyAxios.post(
-    `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
-    {
-      [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
-      [TIER_FIELD_NAME]: values[TIER_FIELD_NAME],
-    }
-  )
+async function assignOneListTierandGlobalManagerRequest({
+  companyId,
+  values,
+  userPermissions,
+}) {
+  if (canEditOneListTierAndGlobalAccountManager(userPermissions)) {
+    return await apiProxyAxios.post(
+      `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
+      {
+        [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
+        [TIER_FIELD_NAME]: values[TIER_FIELD_NAME],
+      }
+    )
+  }
 }
 
 async function removeFromOneList({ companyId }) {
@@ -58,7 +65,11 @@ async function removeCoreTeamRequest({ companyId }) {
   )
 }
 
-export async function saveOneListDetails({ values, companyId }) {
+export async function saveOneListDetails({
+  values,
+  companyId,
+  userPermissions = NONE,
+}) {
   let request
 
   if (values[TIER_FIELD_NAME] === NONE) {
@@ -67,12 +78,20 @@ export async function saveOneListDetails({ values, companyId }) {
     )
   } else if (!values[ONE_LIST_TEAM_FIELD_NAME]) {
     request = Promise.all([
-      assignOneListTierandGlobalManagerRequest({ companyId, values }),
+      assignOneListTierandGlobalManagerRequest({
+        companyId,
+        values,
+        userPermissions,
+      }),
       removeCoreTeamRequest({ companyId }),
     ])
   } else {
     request = Promise.all([
-      assignOneListTierandGlobalManagerRequest({ companyId, values }),
+      assignOneListTierandGlobalManagerRequest({
+        companyId,
+        values,
+        userPermissions,
+      }),
       assignCoreTeamRequest({ companyId, values }),
     ])
   }

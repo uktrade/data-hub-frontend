@@ -10,6 +10,8 @@ const selectors = require('../../../../selectors')
 const metadataTiers = require('../../../../sandbox/fixtures/metadata/one-list-tier.json')
 const urls = require('../../../../../src/lib/urls')
 
+const whoAmIUri = '/api-proxy/whoami/?format=json'
+
 describe('Edit One List', () => {
   const visitWithWait = (companyId, url) => {
     cy.intercept(
@@ -47,6 +49,14 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     beforeEach(() => {
+      cy.request('PUT', whoAmIUri, {
+        permissions: [
+          'company.view_company',
+          'company.change_company',
+          'company.change_one_list_tier_and_global_account_manager',
+        ],
+      })
+
       visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
     })
 
@@ -71,6 +81,7 @@ describe('Edit One List', () => {
 
     it('should have the account manager pre-selected', () => {
       cy.contains('Continue').click()
+      cy.get('#global_account_manager').should('exist')
 
       cy.get(selectors.companyEditOneList.globalAccountManagerField)
         .find('input')
@@ -247,6 +258,38 @@ describe('Edit One List', () => {
       cy.location('pathname').should(
         'eq',
         urls.companies.accountManagement.index(testCompany.id)
+      )
+    })
+  })
+
+  context('non Account managers when editing One list', () => {
+    const testCompany = fixtures.company.oneListCorp
+
+    beforeEach(() => {
+      cy.request('PUT', whoAmIUri, {
+        permissions: ['company.view_company', 'company.change_company'],
+      })
+
+      visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
+    })
+
+    it('should not have account manager field', () => {
+      cy.contains('Continue').click()
+      cy.get('#global_account_manager').should('not.exist')
+    })
+
+    it('should submit updated data', () => {
+      cy.contains('Continue').click()
+
+      cy.get(
+        selectors.companyEditOneList.coreTeamField
+      ).selectTypeaheadOptionInFieldset('leroy')
+
+      cy.contains('Submit').click()
+
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.businessDetails(testCompany.id)
       )
     })
   })
