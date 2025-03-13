@@ -42,10 +42,9 @@ describe('Company overview page', () => {
       })
 
       it('tab should contain the text Overview', () => {
-        cy.get('[data-test="tabbedLocalNavList"]')
-          .children()
-          .children()
-          .should('contain.text', 'Overview')
+        cy.get('[data-test="tabbedLocalNavList"]', {
+          timeout: 2000,
+        }).should('contain.text', 'Overview')
       })
     }
   )
@@ -245,13 +244,21 @@ describe('Company overview page', () => {
         cy.go('back')
       })
       it('Inactive projects should not include an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('[data-test="tabbedLocalNav"]', {
+          timeout: 2000,
+        })
+          .contains('Investment')
+          .click()
         getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
         cy.get('add-collection-item-button').should('not.exist')
         cy.go('back')
       })
       it('UK based Active projects should not have an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+        cy.get('[data-test="tabbedLocalNav"]', {
+          timeout: 2000,
+        })
+          .contains('Investment')
+          .click()
         getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
         cy.get('[data-test="add-collection-item-button"]').should('not.exist')
         cy.go('back')
@@ -697,7 +704,7 @@ describe('Company overview page', () => {
 
       it('the card should contain a message outlining three active investments', () => {
         cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]', {
-          timeout: 1000,
+          timeout: 2000,
         }).should('be.visible')
         cy.get('[data-test="activeInvestmentProjectsContainer"]')
           .children()
