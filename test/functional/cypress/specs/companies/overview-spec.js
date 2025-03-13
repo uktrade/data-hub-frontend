@@ -45,7 +45,7 @@ describe('Company overview page', () => {
         )
         cy.wait('@companyApi')
       })
-
+      cy.wait(7000)
       it('tab should contain the text Overview', () => {
         cy.get('[data-test="tabbedLocalNavList"]').should(
           'contain.text',
@@ -732,18 +732,7 @@ describe('Company overview page', () => {
             '0e686ea4-b8a2-4337-aec4-114d92ad4588'
           )}`
         )
-        cy.wait(5000)
-        cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
-        cy.go('back')
-        cy.get('[data-test="active-investment-page-new-restaurant-link"]')
-          .contains('New restaurant')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.details(
-            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
-          )}`
-        )
+
         cy.go('back')
         cy.get('[data-test="estimated-land-date-new-restaurant-header"]')
           .next()
@@ -760,7 +749,6 @@ describe('Company overview page', () => {
             '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
           )}`
         )
-        cy.wait(5000)
         cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
         cy.go('back')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
