@@ -46,6 +46,11 @@
               </div>
             {% endif %}
 
+            {% if props.preHeading %}
+              <div data-test="localHeaderPreHeading" class="c-local-header__subheading">
+                {{props.preHeading | safe}}
+              </div>
+            {% endif %}
             {% if props.heading %}
               <h1 class="c-local-header__heading">
                 {{ props.heading }} {{ props.headingSuffix | safe }}
