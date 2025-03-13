@@ -260,7 +260,11 @@ describe('Company account management', () => {
 describe('One List core team', () => {
   context('when viewing a One List Tier company', () => {
     beforeEach(() => {
+      cy.intercept('GET', `/api-proxy/v4/company/${company.id}`).as(
+        'companyApi'
+      )
       cy.visit(urls.companies.accountManagement.index(company.id))
+      cy.wait('@companyApi')
     })
 
     it('should render the heading', () => {
@@ -315,7 +319,7 @@ describe('One List core team', () => {
     })
 
     it('should render the edit core team button', () => {
-      cy.get('[data-test="edit-core-team-button"]', { timeout: 10000 })
+      cy.get('[data-test="edit-core-team-button"]')
         .should('exist')
         .should('have.attr', 'href', urls.companies.editVirtualTeam(company.id))
     })

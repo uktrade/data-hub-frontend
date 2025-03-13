@@ -697,9 +697,14 @@ describe('Company overview page', () => {
     'when viewing the active investment projects card for a business that has all information added',
     () => {
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`
+        ).as('companyApi')
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
+        cy.wait('@companyApi')
       })
 
       it('the card should contain a message outlining three active investments', () => {
