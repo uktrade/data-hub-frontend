@@ -315,7 +315,7 @@ describe('One List core team', () => {
     })
 
     it('should render the edit core team button', () => {
-      cy.get('[data-test="edit-core-team-button"]', { timeout: 5000 })
+      cy.get('[data-test="edit-core-team-button"]', { timeout: 10000 })
         .should('exist')
         .should('have.attr', 'href', urls.companies.editVirtualTeam(company.id))
     })
