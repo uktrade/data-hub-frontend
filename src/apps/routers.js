@@ -25,6 +25,7 @@ const reactRoutes = [
   '/export/:exportId/edit',
   '/export/:exportId/details',
   '/export/:exportId/interactions',
+  '/export/:exportId/interactions/:interactionId/details',
   '/export/:exportId/delete',
   '/exportwins',
   '/companies/:companyId/exportwins/create',
