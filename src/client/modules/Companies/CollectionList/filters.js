@@ -8,7 +8,7 @@ import {
   buildInputFieldFilter,
 } from '../../../filters'
 
-import { LABELS, COMPANY_STATUS_OPTIONS } from './constants'
+import { LABELS, COMPANY_STATUS_OPTIONS, COMPANY_HAS_NAME } from './constants'
 
 export const buildSelectedFilters = (
   queryParams,
@@ -92,6 +92,14 @@ export const buildSelectedFilters = (
       options: COMPANY_STATUS_OPTIONS,
       value: queryParams.archived,
       categoryLabel: LABELS.companyStatus,
+    }),
+  },
+  companyHasName: {
+    queryParam: 'has_name',
+    options: buildOptionsFilter({
+      options: COMPANY_HAS_NAME,
+      value: queryParams.has_name,
+      categoryLabel: LABELS.hasName,
     }),
   },
   exportToCountries: {

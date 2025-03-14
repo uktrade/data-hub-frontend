@@ -10,11 +10,11 @@ const {
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } = require('../../../utils/date-utils')
 
-export const transformArchivedToApi = (archivedParam) => {
-  const archived = Array.isArray(archivedParam)
-    ? archivedParam
-    : archivedParam && [archivedParam]
-  return archived?.length === 1 ? archived[0] === 'true' : undefined
+export const transformCheckBoxGroupToApi = (queryParam) => {
+  const param = Array.isArray(queryParam)
+    ? queryParam
+    : queryParam && [queryParam]
+  return param?.length === 1 ? param[0] === 'true' : undefined
 }
 
 export const transformPostcodeToApi = (postcode) =>

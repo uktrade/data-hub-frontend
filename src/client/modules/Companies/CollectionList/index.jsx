@@ -137,6 +137,15 @@ const CompaniesCollection = ({
               data-test="company-status-filter"
               groupId="company-status-filter"
             />
+            <Filters.CheckboxGroup
+              legend={LABELS.hasName}
+              name="has_name"
+              qsParam="has_name"
+              options={optionMetadata.companyHasNameOptions}
+              selectedOptions={selectedFilters.companyHasName.options}
+              data-test="company-has-name-filter"
+              groupId="company-has-name-filter"
+            />
             <Filters.AdvisersTypeahead
               isMulti={true}
               taskProps={leadItaGlobalAccountManagerTask}

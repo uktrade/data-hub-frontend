@@ -43,10 +43,10 @@ describe('urls', () => {
     it('should return the correct values', () => {
       expect(urls.companies.index.mountPoint).to.equal('/companies')
       expect(urls.companies.index.route).to.equal(
-        '?archived[0]=false&sortby=modified_on:desc&page=1'
+        '?archived[0]=false&sortby=modified_on:desc&page=1&has_name[0]=true'
       )
       expect(urls.companies.index()).to.equal(
-        '/companies?archived[0]=false&sortby=modified_on:desc&page=1'
+        '/companies?archived[0]=false&sortby=modified_on:desc&page=1&has_name[0]=true'
       )
 
       expect(urls.companies.detail.route).to.equal('/:companyId')

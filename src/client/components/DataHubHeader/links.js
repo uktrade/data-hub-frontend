@@ -5,7 +5,8 @@ export default [
     useRouter: true,
     to: {
       pathname: '/companies',
-      search: '?archived[0]=false&sortby=modified_on:desc&page=1',
+      search:
+        '?archived[0]=false&sortby=modified_on:desc&page=1&has_name[0]=true',
     },
   },
   {
