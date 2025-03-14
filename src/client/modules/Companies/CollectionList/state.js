@@ -5,8 +5,7 @@ import {
   SORT_OPTIONS,
 } from './constants'
 import {
-  transformArchivedToApi,
-  transformHasNameToApi,
+  transformCheckBoxGroupToApi,
   transformPostcodeToApi,
 } from './transformers'
 import { parseQueryString } from '../../../utils'
@@ -24,9 +23,9 @@ export const ID = 'companiesList'
 export const state2props = ({ router, ...state }) => {
   const queryString = router.location.search.slice(1)
   const queryParams = parseQueryString(queryString)
-  const archived = transformArchivedToApi(queryParams.archived)
+  const archived = transformCheckBoxGroupToApi(queryParams.archived)
   const ukPostcode = transformPostcodeToApi(queryParams.uk_postcode)
-  const hasName = transformHasNameToApi(queryParams.has_name)
+  const hasName = transformCheckBoxGroupToApi(queryParams.has_name)
 
   const { metadata, selectedLeadItaOrGlobalAccountManagers, advisers } =
     state[ID]
