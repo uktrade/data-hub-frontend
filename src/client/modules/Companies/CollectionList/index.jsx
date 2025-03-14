@@ -143,8 +143,8 @@ const CompaniesCollection = ({
               qsParam="has_name"
               options={optionMetadata.companyHasNameOptions}
               selectedOptions={selectedFilters.companyHasName.options}
-              data-test="company-status-filter"
-              groupId="company-status-filter"
+              data-test="company-has-name-filter"
+              groupId="company-has-name-filter"
             />
             <Filters.AdvisersTypeahead
               isMulti={true}

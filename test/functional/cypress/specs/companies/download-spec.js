@@ -48,7 +48,7 @@ describe('Download CSV', () => {
         .should(
           'have.attr',
           'href',
-          '/companies/export?archived=false&sortby=modified_on%3Adesc'
+          '/companies/export?archived=false&sortby=modified_on%3Adesc&has_name=true'
         )
         .and('contain', 'Download')
     })
