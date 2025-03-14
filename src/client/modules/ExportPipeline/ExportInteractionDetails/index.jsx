@@ -43,10 +43,28 @@ const ExportInteractionsDetails = () => {
   const { exportId, interactionId } = params
 
   return (
-    <>
+    <DefaultLayout
+      heading={
+        <InteractionResource.Inline id={interactionId}>
+          {({ subject }) => `${subject}`}
+        </InteractionResource.Inline>
+      }
+      pageTitle="Export interaction details"
+      breadcrumbs={[
+        { link: urls.exportPipeline.index(), text: 'Home' },
+        {
+          link: urls.exportPipeline.interactions.index(exportId),
+          text: (
+            <ExportResource.Inline id={exportId}>
+              {({ title }) => `${title}`}
+            </ExportResource.Inline>
+          ),
+        },
+        { text: 'Interactions' },
+      ]}
+    >
       <InteractionResource id={interactionId}>
         {({
-          subject,
           company,
           companyExport,
           contacts,
@@ -59,22 +77,7 @@ const ExportInteractionsDetails = () => {
           relatedTradeAgreements,
           helpedRemoveExportBarrier,
         }) => (
-          <DefaultLayout
-            heading={subject}
-            pageTitle="Export interaction details"
-            breadcrumbs={[
-              { link: urls.exportPipeline.index(), text: 'Home' },
-              {
-                link: urls.exportPipeline.interactions.index(companyExport?.id),
-                text: (
-                  <ExportResource.Inline id={exportId}>
-                    {({ title }) => `${title}`}
-                  </ExportResource.Inline>
-                ),
-              },
-              { text: 'Interactions' },
-            ]}
-          >
+          <>
             <StyledSummaryTable>
               <SummaryTable.Row
                 heading="Company"
@@ -172,10 +175,10 @@ const ExportInteractionsDetails = () => {
                 Back
               </StyledLink>
             </ActionsContainer>
-          </DefaultLayout>
+          </>
         )}
       </InteractionResource>
-    </>
+    </DefaultLayout>
   )
 }
 
