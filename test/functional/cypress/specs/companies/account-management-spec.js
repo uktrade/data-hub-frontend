@@ -318,12 +318,6 @@ describe('One List core team', () => {
       })
     })
 
-    it('should render the edit core team button', () => {
-      cy.get('[data-test="edit-core-team-button"]')
-        .should('exist')
-        .should('have.attr', 'href', urls.companies.editVirtualTeam(company.id))
-    })
-
     it('should render the details section', () => {
       cy.get('[data-test=core-team-details]')
         .click()

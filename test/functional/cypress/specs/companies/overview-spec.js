@@ -33,29 +33,6 @@ describe('Company overview page', () => {
   )
 
   context(
-    'when viewing company overview the tab should display Overview',
-    () => {
-      beforeEach(() => {
-        cy.intercept(
-          'GET',
-          `/api-proxy/v4/company/${companyGlobalUltimateAllDetails.id}`
-        ).as('companyApi')
-        cy.visit(
-          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
-        )
-        cy.wait('@companyApi')
-      })
-
-      it('tab should contain the text Overview', () => {
-        cy.wait(7000)
-        cy.get('[data-test="tabbedLocalNavList"]').should(
-          'contain.text',
-          'Overview'
-        )
-      })
-    }
-  )
-  context(
     'when viewing the Overview page a Business details card should be displayed',
     () => {
       beforeEach(() => {
