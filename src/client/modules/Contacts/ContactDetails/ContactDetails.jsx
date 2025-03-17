@@ -17,6 +17,9 @@ import ContactLayout from '../../../components/Layout/ContactLayout'
 import ConsentDetails from './ConsentDetails'
 
 const getAddress = (contact, companyAddress) => {
+  if (!companyAddress) {
+    return 'Not set'
+  }
   const address = contact.addressSameAsCompany
     ? {
         line1: companyAddress.line1,
