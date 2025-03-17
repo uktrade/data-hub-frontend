@@ -1,10 +1,11 @@
-import { jsf } from '../../../sandbox/utils/random'
+import { jsf, faker } from '../../../sandbox/utils/random'
 import apiSchema from '../../../api-schema.json'
 import { listFaker } from './utils'
 import { ditTeamFaker } from './dit-team'
 
 const adviserFaker = (overrides = {}) => ({
   ...jsf.generate(apiSchema.components.schemas.Adviser),
+  id: faker.string.uuid(),
   dit_team: ditTeamFaker(),
   ...overrides,
 })
