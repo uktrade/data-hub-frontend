@@ -13,10 +13,7 @@ import {
   SecondaryButton,
 } from '../../../components'
 import urls from '../../../../lib/urls'
-import {
-  ExportResource,
-  InteractionResource,
-} from '../../../components/Resource'
+import { InteractionResource } from '../../../components/Resource'
 import {
   transformAdvisers,
   transformArray,
@@ -40,7 +37,7 @@ const StyledLink = styled.a`
 
 const ExportInteractionsDetails = () => {
   const params = useParams()
-  const { exportId, interactionId } = params
+  const { interactionId } = params
 
   return (
     <>
@@ -65,12 +62,10 @@ const ExportInteractionsDetails = () => {
             breadcrumbs={[
               { link: urls.exportPipeline.index(), text: 'Home' },
               {
-                link: urls.exportPipeline.interactions.index(companyExport?.id),
-                text: (
-                  <ExportResource.Inline id={exportId}>
-                    {({ title }) => `${title}`}
-                  </ExportResource.Inline>
-                ),
+                link: companyExport
+                  ? urls.exportPipeline.interactions.index(companyExport.id)
+                  : null,
+                text: companyExport ? companyExport.title : NOT_SET_TEXT,
               },
               { text: 'Interactions' },
             ]}
