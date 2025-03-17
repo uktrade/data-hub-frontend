@@ -84,8 +84,7 @@ describe('Export project interaction details', () => {
     it('should render export interaction details page with "Not set" fields for empty values', () => {
       assertBreadcrumbs({
         Home: urls.exportPipeline.index(),
-        [exportProjectDetails.title]:
-          urls.exportPipeline.interactions.index(undefined),
+        ['Not set']: null,
         ['Interactions']: null,
       })
 
