@@ -245,18 +245,13 @@ export const getReferralDetails = function (req, res) {
 
 export const exportDetail = function (req, res) {
   var companyId = req.params.companyId
-  var exportId = req.params.exportId
-
-  var errorResponse = { non_field_errors: ['A 400 error message here'] }
 
   if (companyId === companyLambdaPlc.id) {
     res.status(500).send('')
   } else if (companyId === companyDnBCorp.id) {
-    res.status(400).json(errorResponse)
-  } else if (exportId === companyWithExportProjectDetails.id) {
-    res.json(companyWithExportProjectDetails)
+    res.status(400).json({ non_field_errors: ['A 400 error message here'] })
   } else {
-    res.status(400).json(errorResponse)
+    res.send('')
   }
 }
 
