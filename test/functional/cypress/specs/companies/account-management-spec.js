@@ -359,6 +359,61 @@ describe('One List core team', () => {
   })
 })
 
+describe('Edit One List core team permissions', () => {
+  context('when viewing a One List Tier company', () => {
+    after(() => {
+      cy.resetUser()
+    })
+
+    it('should not render the edit core team button for view only account', () => {
+      cy.setModulePermissions(['company.view_company'])
+      cy.visit(urls.companies.accountManagement.index(company.id))
+    })
+    ;[
+      {
+        permissions: [
+          'company.view_company',
+          'company.change_company',
+          'company.change_one_list_core_team_member',
+        ],
+        globalAccountManagerFieldVisible: false,
+      },
+      {
+        permissions: [
+          'company.view_company',
+          'company.change_company',
+          'company.change_one_list_tier_and_global_account_manager',
+        ],
+        globalAccountManagerFieldVisibility: true,
+      },
+    ].forEach(({ permissions, globalAccountManagerFieldVisibility }) =>
+      it('should render the edit core team button and form', () => {
+        cy.setModulePermissions(permissions)
+        cy.visit(urls.companies.accountManagement.index(company.id))
+
+        cy.intercept('GET', urls.companies.editVirtualTeam(company.id)).as(
+          'edit-one-list'
+        )
+
+        cy.get('[data-test="edit-core-team-button"]')
+          .should('exist')
+          .should(
+            'have.attr',
+            'href',
+            urls.companies.editVirtualTeam(company.id)
+          )
+          .click()
+
+        cy.wait('@edit-one-list')
+        if (globalAccountManagerFieldVisibility)
+          cy.get('#global_account_manager').should('exist')
+        else cy.get('#global_account_manager').should('not.exist')
+        cy.get('#core_team_members').should('exist')
+      })
+    )
+  })
+})
+
 describe('One List core Tier D team', () => {
   context('when viewing a One List Tier D company', () => {
     beforeEach(() => {
