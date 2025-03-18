@@ -29,14 +29,23 @@ const StyledActions = styled('div')`
   }
 `
 
-const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
+const CollectionHeaderRow = ({
+  primary,
+  actions,
+  actionsList,
+  children,
+  ...rest
+}) => {
+  // if (!actionsList) {
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
 
+      {actionsList && <StyledActions>{actionsList}</StyledActions>}
       {actions && <StyledActions>{actions}</StyledActions>}
     </StyledRowWrapper>
   )
+  // }
 }
 
 CollectionHeaderRow.propTypes = {
