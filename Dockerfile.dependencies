@@ -4,9 +4,8 @@
 FROM cypress/base:22.12.0
 
 # Setting environment variables
-ENV CHROME_VERSION=129.0.6668.89-1
-ENV CHROME_DOWNLOAD_URL=https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
-ENV DOCKERIZE_VERSION=v0.7.0
+ENV CHROME_DOWNLOAD_URL=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ENV DOCKERIZE_VERSION=v0.9.2
 ENV TZ=Europe/London
 ENV TERM=xterm
 ENV LANG=C.UTF-8
@@ -53,7 +52,7 @@ COPY --chown=node:node package*.json "$HOME/"
 WORKDIR $HOME
 
 # Install specific version of cypress
-RUN npm install -g cypress@14.0.3 \
+RUN npm install -g cypress@14.2.0 \
   && npx cypress verify \
   && npx cypress cache path \
   && npx cypress cache list \
