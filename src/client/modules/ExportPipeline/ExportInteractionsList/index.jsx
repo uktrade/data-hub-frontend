@@ -16,7 +16,10 @@ const ExportInteractionsList = ({ interactions = [] }) =>
         <CollectionItem
           key={item.id}
           headingText={item.subject}
-          headingUrl={urls.exportPipeline.interactions.details(item.id)}
+          headingUrl={urls.exportPipeline.interactions.details(
+            item.company_export.id,
+            item.id
+          )}
           metadata={[
             {
               label: 'Date:',
