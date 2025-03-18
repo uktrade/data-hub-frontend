@@ -85,6 +85,7 @@ const FilteredCollectionList = ({
   entityName,
   entityNamePlural,
   addItemUrl,
+  addItemsButtons,
   defaultQueryParams,
   titleRenderer = null,
   sanitizeFiltersForAnalytics = null,
@@ -124,6 +125,7 @@ const FilteredCollectionList = ({
               selectedFilters={selectedFilters}
               addItemUrl={addItemUrl}
               useReactRouter={useReactRouter}
+              addItemsButtons={addItemsButtons}
             />
           )}
           {sortOptions && (
