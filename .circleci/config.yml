@@ -156,7 +156,7 @@ jobs:
 
   release-storybook:
     docker:
-      - image: node:20.11.0-buster
+      - image: node:22.12.0-bullseye
     steps:
       - checkout
       - add_ssh_keys:
