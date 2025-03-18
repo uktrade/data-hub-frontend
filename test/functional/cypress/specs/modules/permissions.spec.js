@@ -1,7 +1,7 @@
 const links = [
   {
     text: 'Companies',
-    href: '/companies?archived[0]=false&sortby=modified_on:desc&page=1',
+    href: '/companies?archived[0]=false&sortby=modified_on:desc&page=1&has_name[0]=true',
   },
   {
     text: 'Contacts',

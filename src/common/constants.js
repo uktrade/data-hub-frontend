@@ -18,7 +18,8 @@ const UK_REGIONS = {
 }
 
 const PRIMARY_LINK_PARAMS = {
-  companies: '?archived[0]=false&sortby=modified_on:desc&page=1',
+  companies:
+    '?archived[0]=false&sortby=modified_on:desc&page=1&has_name[0]=true',
   contacts: '?archived[0]=false&sortby=modified_on:desc&page=1',
   events: '?page=1&sortby=modified_on:desc',
   interactions: '?page=1&sortby=date:desc',
