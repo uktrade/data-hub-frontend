@@ -1,4 +1,4 @@
-import outstandingPropositions from '../../../fixtures/v4/proposition/outstanding_propositions.json' assert { type: 'json' }
+import outstandingPropositions from '../../../fixtures/v4/proposition/outstanding_propositions.json' with { type: 'json' }
 
 export const propositions = function (req, res) {
   outstandingPropositions.results = outstandingPropositions.results.map(

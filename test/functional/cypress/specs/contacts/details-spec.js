@@ -6,6 +6,7 @@ const companyAddresscontact = require('../../../../sandbox/fixtures/v3/contact/c
 const usContact = require('../../../../sandbox/fixtures/v3/contact/contact-with-us-address.json')
 const archiveContact = require('../../../../sandbox/fixtures/v3/contact/contact-archived.json')
 const invalidEmailContact = require('../../../../sandbox/fixtures/v3/contact/contact-invalid-email.json')
+const company = require('../../../../sandbox/fixtures/v4/company/company.json')
 
 const ARCHIVE_INTERCEPT = 'archiveHttpRequest'
 
@@ -156,6 +157,31 @@ describe('View contact details', () => {
             '123 Test Boulevard, Basney, US State, 9416875, United States',
           Email: usContact.email,
           'More details': usContact.notes,
+        })
+      })
+    })
+
+    context('Company has no address', () => {
+      beforeEach(() => {
+        company.address = null
+        cy.intercept(
+          'GET',
+          '/api-proxy/v4/company/4cd4128b-1bad-4f1e-9146-5d4678c6a018',
+          {
+            body: {
+              company,
+            },
+          }
+        )
+        cy.visit('/contacts/a55af9e5-c53c-4696-9647-065b28ea02de')
+      })
+
+      it('should display "Not set" when company address is empty', () => {
+        assertKeyValueTable('contact-details-table', {
+          'Job title': usContact.job_title,
+          'Phone number': usContact.full_telephone_number,
+          Address: 'Not set',
+          Email: usContact.email,
         })
       })
     })

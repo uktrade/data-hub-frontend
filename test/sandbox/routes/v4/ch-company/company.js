@@ -1,4 +1,4 @@
-import mercuryTradingLtd from '../../../fixtures/v4/ch-company/mercury-trading-ltd.json' assert { type: 'json' }
+import mercuryTradingLtd from '../../../fixtures/v4/ch-company/mercury-trading-ltd.json' with { type: 'json' }
 
 export const company = function (req, res) {
   var companies = {

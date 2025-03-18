@@ -1,10 +1,10 @@
-import allProjects from '../../../fixtures/v3/investment/projects.json' assert { type: 'json' }
-import project from '../../../fixtures/v3/investment/project.json' assert { type: 'json' }
-import projectAudit from '../../../fixtures/v3/investment/project-audit.json' assert { type: 'json' }
-import projectEvidence from '../../../fixtures/v3/investment/project-evidence.json' assert { type: 'json' }
-import projectNoEvidence from '../../../fixtures/v3/investment/project-no-evidence.json' assert { type: 'json' }
-import projectDocumentDownload from '../../../fixtures/v3/investment/project-document-download.json' assert { type: 'json' }
-import projectUploadEvidence from '../../../fixtures/v3/investment/project-upload-evidence.json' assert { type: 'json' }
+import allProjects from '../../../fixtures/v3/investment/projects.json' with { type: 'json' }
+import project from '../../../fixtures/v3/investment/project.json' with { type: 'json' }
+import projectAudit from '../../../fixtures/v3/investment/project-audit.json' with { type: 'json' }
+import projectEvidence from '../../../fixtures/v3/investment/project-evidence.json' with { type: 'json' }
+import projectNoEvidence from '../../../fixtures/v3/investment/project-no-evidence.json' with { type: 'json' }
+import projectDocumentDownload from '../../../fixtures/v3/investment/project-document-download.json' with { type: 'json' }
+import projectUploadEvidence from '../../../fixtures/v3/investment/project-upload-evidence.json' with { type: 'json' }
 
 var allProjectsMap = {}
 allProjects.results.forEach(function (project) {

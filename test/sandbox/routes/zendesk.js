@@ -1,4 +1,4 @@
-import zendeskTickets from '../fixtures/zendesk/tickets.json' assert { type: 'json' }
+import zendeskTickets from '../fixtures/zendesk/tickets.json' with { type: 'json' }
 
 export const tickets = function (req, res) {
   var response = _.set(

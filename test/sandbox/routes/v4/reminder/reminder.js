@@ -1,4 +1,4 @@
-import summary from '../../../fixtures/v4/reminder/summary.json' assert { type: 'json' }
+import summary from '../../../fixtures/v4/reminder/summary.json' with { type: 'json' }
 
 import { faker } from '../../../utils/random.js'
 

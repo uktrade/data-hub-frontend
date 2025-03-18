@@ -1,4 +1,4 @@
-import stovaEvent from '../../../fixtures/v4/company-activity/stova-event.json' assert { type: 'json' }
+import stovaEvent from '../../../fixtures/v4/company-activity/stova-event.json' with { type: 'json' }
 
 export const getCompanyActivityById = (req, res) => {
   const companyActivity = {
