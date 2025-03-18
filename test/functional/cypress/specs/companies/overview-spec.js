@@ -727,6 +727,7 @@ describe('Company overview page', () => {
             '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
           )}`
         )
+        cy.wait(10000)
         cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
         cy.go('back')
         cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
@@ -753,6 +754,7 @@ describe('Company overview page', () => {
             '3520b973-0e77-46cf-be75-3585f2f6691e'
           )}`
         )
+        cy.wait(10000)
         cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
         cy.go('back')
         cy.get('[data-test="active-investment-page-wig-factory-link"]')
