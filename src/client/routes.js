@@ -92,6 +92,7 @@ import CompanyActivityCollectionNoAs from './modules/Companies/CompanyActivity/i
 import CompanyContactsCollection from './modules/Contacts/CollectionList/CompanyContactsCollection'
 import CompanyOrdersCollection from './modules/Omis/CollectionList/CompanyOrdersCollection'
 import CompanyFilesCollection from './modules/Files/CollectionList/CompanyFilesCollection'
+import CreateFile from './modules/Files/CreateFile/CreateFile'
 import AccountManagement from './modules/Companies/AccountManagement'
 import CompanyProjectsCollection from './modules/Companies/CompanyInvestments/CompanyProjectsCollection'
 import LargeCapitalProfile from './modules/Companies/CompanyInvestments/LargeCapitalProfile'
@@ -386,6 +387,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CannotFindMatch />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/files/create',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CreateFile />
         </ProtectedRoute>
       ),
     },

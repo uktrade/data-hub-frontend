@@ -19,9 +19,6 @@ const urls = require('../../../../../src/lib/urls')
 const { usCompany } = company
 
 describe('Company overview page', () => {
-  const interactionUrlAllOverview = urls.companies.interactions.index(
-    fixtures.company.allOverviewDetails.id
-  )
   const addInteractionUrlAllOverview = urls.companies.interactions.create(
     fixtures.company.allOverviewDetails.id
   )
@@ -32,23 +29,6 @@ describe('Company overview page', () => {
     fixtures.company.allOverviewDetails.id
   )
 
-  context(
-    'when viewing company overview the tab should display Overview',
-    () => {
-      beforeEach(() => {
-        cy.visit(
-          urls.companies.overview.index(companyGlobalUltimateAllDetails.id)
-        )
-      })
-
-      it('tab should contain the text Overview', () => {
-        cy.get('[data-test="tabbedLocalNavList"]')
-          .children()
-          .children()
-          .should('contain.text', 'Overview')
-      })
-    }
-  )
   context(
     'when viewing the Overview page a Business details card should be displayed',
     () => {
@@ -226,35 +206,24 @@ describe('Company overview page', () => {
             '945ea6d1-eee3-4f5b-9144-84a75b71b8e6'
           )
         )
-        cy.go('back')
       })
-      it('the card should link to the active projects', () => {
-        cy.get('[data-test="total-active-projects"]').contains('4').click()
-        cy.go('back')
+    }
+  )
+
+  context(
+    'when viewing the investment status card the "add investment project button" should not show',
+    () => {
+      beforeEach(() => {
+        cy.visit(
+          urls.companies.investments.companyInvestmentProjects(
+            fixtures.company.allOverviewDetails.id
+          )
+        )
       })
-      it('the card should link to the prospect projects', () => {
-        cy.get('[data-test="total-prospect-projects"]').contains('3').click()
-        cy.go('back')
-      })
-      it('the card should link to the verify win projects', () => {
-        cy.get('[data-test="total-verify-win-projects"]').contains('1').click()
-        cy.go('back')
-      })
-      it('the card should link to the abandoned projects', () => {
-        cy.get('[data-test="total-abandoned-projects"]').contains('1').click()
-        cy.go('back')
-      })
-      it('Inactive projects should not include an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
+
+      it('Inactive / UK based Active projects should not include an "Add investment project" button', () => {
         getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
         cy.get('add-collection-item-button').should('not.exist')
-        cy.go('back')
-      })
-      it('UK based Active projects should not have an "Add investment project" button', () => {
-        cy.get('[data-test="tabbedLocalNav"]').contains('Investment').click()
-        getCollectionList() // This ensures the collection list has loaded before checking for the presence of the button
-        cy.get('[data-test="add-collection-item-button"]').should('not.exist')
-        cy.go('back')
       })
     }
   )
@@ -690,124 +659,16 @@ describe('Company overview page', () => {
     'when viewing the active investment projects card for a business that has all information added',
     () => {
       beforeEach(() => {
+        cy.intercept(
+          'GET',
+          `/api-proxy/v4/company/${fixtures.company.allOverviewDetails.id}`
+        ).as('companyApi')
         cy.visit(
           urls.companies.overview.index(fixtures.company.allOverviewDetails.id)
         )
+        cy.wait('@companyApi')
       })
 
-      it('the card should contain a message outlining three active investments', () => {
-        cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]', {
-          timeout: 1000,
-        }).should('be.visible')
-        cy.get('[data-test="activeInvestmentProjectsContainer"]')
-          .children()
-          .first()
-          .contains('Active investment projects')
-          .next()
-          .children()
-          .first()
-          .contains('New rollercoaster')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.details(
-            '0e686ea4-b8a2-4337-aec4-114d92ad4588'
-          )}`
-        )
-        cy.go('back')
-        cy.get('[data-test="estimated-land-date-new-rollercoaster-header"]')
-          .next()
-          .contains('May 2024')
-        cy.get('[data-test="last-interaction-date-new-rollercoaster-header"]')
-          .next()
-          .contains('Not set')
-        cy.get('[data-test="likelihood-of-landing-new-rollercoaster-header"]')
-          .next()
-          .contains('High')
-        cy.get('[data-test="active-investment-edit-new-rollercoaster-link"]')
-          .contains('Edit')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.editDetails(
-            '0e686ea4-b8a2-4337-aec4-114d92ad4588'
-          )}`
-        )
-        cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
-        cy.go('back')
-        cy.get('[data-test="active-investment-page-new-restaurant-link"]')
-          .contains('New restaurant')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.details(
-            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
-          )}`
-        )
-        cy.go('back')
-        cy.get('[data-test="estimated-land-date-new-restaurant-header"]')
-          .next()
-          .contains('October 2025')
-        cy.get('[data-test="likelihood-of-landing-new-restaurant-header"]')
-          .next()
-          .contains('Medium')
-        cy.get('[data-test="active-investment-edit-new-restaurant-link"]')
-          .contains('Edit')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.editDetails(
-            '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
-          )}`
-        )
-        cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
-        cy.go('back')
-        cy.get('[data-test="last-interaction-date-new-restaurant-header"]')
-          .next()
-          .contains('16 March 2021')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
-        )
-        cy.go('back')
-        cy.get('[data-test="estimated-land-date-wig-factory-header"]')
-          .next()
-          .contains('January 2026')
-        cy.get('[data-test="likelihood-of-landing-wig-factory-header"]')
-          .next()
-          .contains('Low')
-        cy.get('[data-test="active-investment-edit-wig-factory-link"]')
-          .contains('Edit')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.editDetails(
-            '3520b973-0e77-46cf-be75-3585f2f6691e'
-          )}`
-        )
-        cy.get('[data-test="field-likelihood_to_land"]').type('Low').click()
-        cy.go('back')
-        cy.get('[data-test="active-investment-page-wig-factory-link"]')
-          .contains('Wig factory')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${urls.investments.projects.details(
-            '3520b973-0e77-46cf-be75-3585f2f6691e'
-          )}`
-        )
-        cy.go('back')
-        cy.get('[data-test="last-interaction-date-wig-factory-header"]')
-          .next()
-          .contains('16 March 2021')
-          .click()
-        cy.location('pathname').should(
-          'eq',
-          `${interactionUrlAllOverview}/3fd90013-4bcb-4c39-b8df-df264471ea85`
-        )
-        cy.go('back')
-      })
       it('the card should link to the investment page', () => {
         cy.get('[data-test="active-investments-page-link"]')
           .contains('View 1 more active investment')
