@@ -10,8 +10,6 @@ const selectors = require('../../../../selectors')
 const metadataTiers = require('../../../../sandbox/fixtures/metadata/one-list-tier.json')
 const urls = require('../../../../../src/lib/urls')
 
-const whoAmIUri = '/api-proxy/whoami/?format=json'
-
 describe('Edit One List', () => {
   const visitWithWait = (companyId, url) => {
     cy.intercept(
@@ -49,15 +47,15 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     beforeEach(() => {
-      cy.request('PUT', whoAmIUri, {
-        permissions: [
-          'company.view_company',
-          'company.change_company',
-          'company.change_one_list_tier_and_global_account_manager',
-        ],
-      })
-
+      cy.setModulePermissions([
+        'company.view_company',
+        'company.change_company',
+        'company.change_one_list_tier_and_global_account_manager',
+      ])
       visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
+    })
+    after(() => {
+      cy.resetUser()
     })
 
     it('should render One List tier options with tier pre-selected', () => {
@@ -266,11 +264,14 @@ describe('Edit One List', () => {
     const testCompany = fixtures.company.oneListCorp
 
     beforeEach(() => {
-      cy.request('PUT', whoAmIUri, {
-        permissions: ['company.view_company', 'company.change_company'],
-      })
-
+      cy.setModulePermissions([
+        'company.view_company',
+        'company.change_company',
+      ])
       visitWithWait(testCompany.id, urls.companies.editOneList(testCompany.id))
+    })
+    after(() => {
+      cy.resetUser()
     })
 
     it('should not have account manager field', () => {
