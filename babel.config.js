@@ -15,6 +15,9 @@ module.exports = {
       plugins: ['istanbul'],
     },
   },
+  // Check if this can be removed when upgrading to Babel version 8.
+  // https://babeljs.io/docs/babel-plugin-syntax-import-attributes
+  generatorOpts: { importAttributesKeyword: 'with' },
   presets: [
     ['@babel/preset-react'],
     ['@babel/preset-typescript'],

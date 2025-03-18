@@ -1,8 +1,8 @@
-import eventById from '../../../fixtures/v3/event/single-event.json' assert { type: 'json' }
-import missingTeams from '../../../fixtures/v3/event/single-event-missing-teams.json' assert { type: 'json' }
-import emptyEvent from '../../../fixtures/v3/event/empty-event.json' assert { type: 'json' }
-import disabledEvent from '../../../fixtures/v3/event/disable-event.json' assert { type: 'json' }
-import eventCreate from '../../../fixtures/v4/event/event-create.json' assert { type: 'json' }
+import eventById from '../../../fixtures/v3/event/single-event.json' with { type: 'json' }
+import missingTeams from '../../../fixtures/v3/event/single-event-missing-teams.json' with { type: 'json' }
+import emptyEvent from '../../../fixtures/v3/event/empty-event.json' with { type: 'json' }
+import disabledEvent from '../../../fixtures/v3/event/disable-event.json' with { type: 'json' }
+import eventCreate from '../../../fixtures/v4/event/event-create.json' with { type: 'json' }
 
 function _getEventById(res, req) {
   var events = {

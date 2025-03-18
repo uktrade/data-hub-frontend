@@ -1,4 +1,4 @@
-import whoami from '../../../fixtures/whoami.json' assert { type: 'json' }
+import whoami from '../../../fixtures/whoami.json' with { type: 'json' }
 
 export default [
   {

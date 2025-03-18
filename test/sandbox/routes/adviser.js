@@ -1,6 +1,6 @@
-import advisersList from '../fixtures/adviser-list.json' assert { type: 'json' }
-import autoCompleteAdvisers from '../fixtures/autocomplete-adviser-list.json' assert { type: 'json' }
-import singleAdviser from '../fixtures/single-adviser.json' assert { type: 'json' }
+import advisersList from '../fixtures/adviser-list.json' with { type: 'json' }
+import autoCompleteAdvisers from '../fixtures/autocomplete-adviser-list.json' with { type: 'json' }
+import singleAdviser from '../fixtures/single-adviser.json' with { type: 'json' }
 
 export const advisers = function (req, res) {
   if (req.query.autocomplete) {

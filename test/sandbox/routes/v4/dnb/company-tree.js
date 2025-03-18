@@ -1,10 +1,10 @@
 // TODO - the logic in this should be moved to the fakers folder once there is a real api to call
 
 import { faker } from '../../../utils/random.js'
-import ukRegion from '../../../fixtures/v4/metadata/uk-region.json' assert { type: 'json' }
-import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' assert { type: 'json' }
-import headquarterType from '../../../fixtures/v4/metadata/headquarter-type.json' assert { type: 'json' }
-import oneListTier from '../../../fixtures/v4/metadata/one-list-tier.json' assert { type: 'json' }
+import ukRegion from '../../../fixtures/v4/metadata/uk-region.json' with { type: 'json' }
+import employeeRange from '../../../fixtures/v4/metadata/employee-range.json' with { type: 'json' }
+import headquarterType from '../../../fixtures/v4/metadata/headquarter-type.json' with { type: 'json' }
+import oneListTier from '../../../fixtures/v4/metadata/one-list-tier.json' with { type: 'json' }
 
 const address = {
   line_1: faker.location.streetAddress(),

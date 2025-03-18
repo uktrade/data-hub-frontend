@@ -1,8 +1,8 @@
-import filteredCompanyLists from '../../../fixtures/v4/company-list/filtered-company-lists.json' assert { type: 'json' }
-import companyLists from '../../../fixtures/v4/company-list/company-lists.json' assert { type: 'json' }
-import companyListsDB from '../../../fixtures/v4/company-list/company-lists-db.json' assert { type: 'json' }
-import multipleItemCompanyList from '../../../fixtures/v4/company-list/single-list-with-multiple-items.json' assert { type: 'json' }
-import errorOnDeleteCompanyList from '../../../fixtures/v4/company-list/single-list-with-error-on-delete.json' assert { type: 'json' }
+import filteredCompanyLists from '../../../fixtures/v4/company-list/filtered-company-lists.json' with { type: 'json' }
+import companyLists from '../../../fixtures/v4/company-list/company-lists.json' with { type: 'json' }
+import companyListsDB from '../../../fixtures/v4/company-list/company-lists-db.json' with { type: 'json' }
+import multipleItemCompanyList from '../../../fixtures/v4/company-list/single-list-with-multiple-items.json' with { type: 'json' }
+import errorOnDeleteCompanyList from '../../../fixtures/v4/company-list/single-list-with-error-on-delete.json' with { type: 'json' }
 
 const LAMBDA_COMPANY_ID = '0fb3379c-341c-4da4-b825-bf8d47b26baa'
 
