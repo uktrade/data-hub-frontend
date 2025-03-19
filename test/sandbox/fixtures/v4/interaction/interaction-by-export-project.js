@@ -1,5 +1,5 @@
 import { faker } from '../../../utils/random.js'
-import interactionsFixture from './interactions.json' assert { type: 'json' }
+import interactionsFixture from './interactions.json' with { type: 'json' }
 
 export const interactionByExportProject = (req) => {
   const interactionsByExportProjectList = interactionsFixture.results.map(
