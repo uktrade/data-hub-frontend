@@ -202,7 +202,10 @@ describe('Companies business details', () => {
       })
 
       it('should display the not set text for a company without an address', () => {
-        const companyWithoutAddress = companyFaker({ address: null })
+        const companyWithoutAddress = companyFaker({
+          address: null,
+          dunsNumber: false,
+        })
         cy.intercept(
           'GET',
           `/api-proxy/v4/company/${companyWithoutAddress.id}`,
