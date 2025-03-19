@@ -100,17 +100,21 @@ function FilteredCollectionHeader({
   useReactRouter = false,
   addItemButtons = [],
 }) {
-  const actionsList = addItemButtons?.length > 0 && (
-    <Button
-      as={StyledReactRouterLink}
-      to={addItemButtons}
-      buttonColour={GREY_3}
-      buttonTextColour={BLACK}
-      data-test="add-collection-item-button"
-    >
-      Upload file
-    </Button>
-  )
+  let actionsList = []
+  for (const actionsItem of addItemButtons) {
+    actionsList.push(
+      <Button
+        id={Math.random()}
+        as={StyledReactRouterLink}
+        to={actionsItem.url}
+        buttonColour={GREY_3}
+        buttonTextColour={BLACK}
+        data-test="add-collection-item-button"
+      >
+        {actionsItem.text}
+      </Button>
+    )
+  }
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
   const actions =

@@ -36,16 +36,24 @@ const CollectionHeaderRow = ({
   children,
   ...rest
 }) => {
-  // if (!actionsList) {
-  return (
-    <StyledRowWrapper primary={primary} {...rest}>
-      {children}
+  if (!actionsList) {
+    return (
+      <StyledRowWrapper primary={primary} {...rest}>
+        {children}
 
-      {actionsList && <StyledActions>{actionsList}</StyledActions>}
-      {actions && <StyledActions>{actions}</StyledActions>}
-    </StyledRowWrapper>
-  )
-  // }
+        {actions && <StyledActions>{actions}</StyledActions>}
+      </StyledRowWrapper>
+    )
+  } else {
+    return (
+      <StyledRowWrapper primary={primary} {...rest}>
+        {children}
+
+        {actionsList && <StyledActions>{actionsList[0]}</StyledActions>}
+        {actionsList && <StyledActions>{actionsList[1]}</StyledActions>}
+      </StyledRowWrapper>
+    )
+  }
 }
 
 CollectionHeaderRow.propTypes = {
