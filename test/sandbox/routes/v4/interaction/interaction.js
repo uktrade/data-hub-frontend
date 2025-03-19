@@ -20,8 +20,6 @@ import interactionStovaEvent from '../../../fixtures/v4/interaction/interaction-
 
 import { interactionByExportProject } from '../../../fixtures/v4/interaction/interaction-by-export-project.js'
 
-import { interactionByExportProject } from '../../../fixtures/v4/interaction/interaction-by-export-project.js'
-
 export const getInteractions = function (req, res) {
   if (req.query.contact_id) {
     return res.json(interactionByContactId)
