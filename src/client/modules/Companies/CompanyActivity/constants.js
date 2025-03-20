@@ -61,6 +61,13 @@ export const SORT_OPTIONS = [
   { value: 'subject', name: 'Subject A-Z (interaction)' },
 ]
 
+export const BUSINESS_INTELLIGENCE_OPTION = [
+  {
+    label: 'Includes business intelligence',
+    value: 'true',
+  },
+]
+
 export const NEW_PROJECT_TAG = {
   text: 'New Investment Project',
   colour: 'grey',

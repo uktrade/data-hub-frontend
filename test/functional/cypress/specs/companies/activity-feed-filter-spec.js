@@ -3,13 +3,18 @@ import qs from 'qs'
 import {
   assertChipExists,
   assertChipsEmpty,
+  assertCheckboxGroupOption,
   assertFieldEmpty,
   assertTypeaheadOptionSelected,
   assertDateInput,
   assertPayload,
 } from '../../support/assertions'
 
-import { inputDateValue, removeChip } from '../../support/actions'
+import {
+  clickCheckboxGroupOption,
+  inputDateValue,
+  removeChip,
+} from '../../support/actions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -24,6 +29,13 @@ const relatedCompaniesFilter =
 const adviser = {
   id: myAdviserId,
   name: 'Jimmy West',
+}
+
+const minimumPayload = {
+  limit: 10,
+  offset: 0,
+  sortby: 'date:desc',
+  was_policy_feedback_provided: true,
 }
 
 const buildQueryString = (queryParams = {}) =>
@@ -307,6 +319,66 @@ describe('Company Activity Feed Filter', () => {
           })
         })
       })
+    })
+  })
+  context('Business intelligence', () => {
+    const element = '[data-test="business-intelligence-filter"]'
+    const expectedPayload = {
+      ...minimumPayload,
+      was_policy_feedback_provided: true,
+    }
+
+    it('should filter from the url', () => {
+      const queryString = buildQueryString({
+        was_policy_feedback_provided: ['true'],
+      })
+      cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
+      cy.visit(
+        `${urls.companies.activity.index(
+          fixtures.company.allActivitiesCompany.id
+        )}?${queryString}`
+      )
+      assertPayload('@apiRequest', {
+        limit: 10,
+        offset: 0,
+        company: fixtures.company.allActivitiesCompany.id,
+        sortby: 'date:desc',
+        include_parent_companies: false,
+        include_subsidiary_companies: false,
+        was_policy_feedback_provided: ['true'],
+      })
+      assertCheckboxGroupOption({
+        element,
+        value: 'true',
+        checked: true,
+      })
+      assertChipExists({ label: 'Includes business intelligence', position: 1 })
+    })
+    it('should filter from user input and remove chips', () => {
+      const queryString = buildQueryString()
+      cy.intercept('POST', companyActivitiesEndPoint).as('apiRequest')
+      cy.visit(
+        `${urls.companies.activity.index(
+          fixtures.company.allActivitiesCompany.id
+        )}?${queryString}`
+      )
+      cy.wait('@apiRequest', expectedPayload)
+      clickCheckboxGroupOption({
+        element,
+        value: 'true',
+      })
+      assertPayload('@apiRequest', {
+        limit: 10,
+        offset: 0,
+        company: fixtures.company.allActivitiesCompany.id,
+        sortby: 'date:desc',
+        include_parent_companies: false,
+        include_subsidiary_companies: false,
+        was_policy_feedback_provided: ['true'],
+      })
+      assertChipExists({ label: 'Includes business intelligence', position: 1 })
+      removeChip('true')
+      assertChipsEmpty()
     })
   })
 })

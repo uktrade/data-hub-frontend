@@ -9,7 +9,7 @@ import {
   COMPANY_ACTIVITIES__METADATA_LOADED,
 } from '../../../actions'
 
-import { LABELS } from './constants'
+import { LABELS, BUSINESS_INTELLIGENCE_OPTION } from './constants'
 
 import {
   CollectionFilters,
@@ -213,6 +213,16 @@ const CompanyActivityCollectionNoAS = ({
                     noOptionsMessage="No advisers found"
                     selectedOptions={selectedFilters.advisers.options}
                     data-test="adviser-filter"
+                  />
+                  <Filters.CheckboxGroup
+                    legend={LABELS.businessIntelligence}
+                    name="was_policy_feedback_provided"
+                    qsParam="was_policy_feedback_provided"
+                    options={BUSINESS_INTELLIGENCE_OPTION}
+                    selectedOptions={
+                      selectedFilters.businessIntelligence.options
+                    }
+                    data-test="business-intelligence-filter"
                   />
                 </FilterToggleSection>
                 {/* TODO - reinstate this once we have initial DAGs in place for external items */}
