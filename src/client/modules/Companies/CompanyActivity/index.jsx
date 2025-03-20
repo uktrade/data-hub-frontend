@@ -191,7 +191,7 @@ const CompanyActivityCollectionNoAS = ({
                 />
                 <FilterToggleSection
                   id="CompanyActivityCollection.interaction-details-filters"
-                  label="Interaction detailsm"
+                  label="Interaction details"
                   isOpen={true}
                 >
                   <Filters.Input
