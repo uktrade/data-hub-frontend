@@ -120,7 +120,12 @@ const transformValues = (interaction, callback, fieldNames) => {
     )
 }
 
-const transformInteractionToValues = (interaction, companyId, investmentId) => {
+const transformInteractionToValues = (
+  interaction,
+  companyId,
+  investmentId,
+  companyExportId
+) => {
   const advisers = interaction.dit_participants
     .filter((participant) => participant.adviser.name)
     .map((participant) => participant.adviser)
@@ -150,6 +155,7 @@ const transformInteractionToValues = (interaction, companyId, investmentId) => {
     },
     companies: [companyId],
     investment_project: investmentId,
+    company_export_id: companyExportId,
     helped_remove_export_barrier: interaction.helped_remove_export_barrier
       ? OPTION_YES
       : OPTION_NO,
@@ -195,6 +201,7 @@ export async function getInitialFormValues({
   companyId,
   referral,
   investmentId,
+  companyExportId,
   user,
   interactionId,
 }) {
@@ -241,6 +248,7 @@ export async function getInitialFormValues({
     return {
       companies: [companyId],
       investment_project: investmentId,
+      company_export: companyExportId,
       date: {
         day: formatDate(date, DATE_FORMAT_DAY),
         month: formatDate(date, DATE_FORMAT_MONTH),

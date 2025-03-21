@@ -1,8 +1,18 @@
 import fixtures from '../../fixtures'
-import { assertUrl } from '../../support/assertions'
+
+const urls = require('../../../../../src/lib/urls')
+const selectors = require('../../../../selectors')
+const {
+  assertLocalHeader,
+  assertBreadcrumbs,
+  assertUrl,
+} = require('../../support/assertions')
 
 const companyExportProject = fixtures.export.exportProjectDetails
 const queryParams = '&limit=10&offset=0'
+const addInteractionUrl = urls.exportPipeline.interactions.create(
+  companyExportProject.id
+)
 
 describe('Export project interaction collection list', () => {
   context('When export project render with multiple interaction linked', () => {
@@ -30,6 +40,13 @@ describe('Export project interaction collection list', () => {
       cy.get('[data-test="page-number-active"]').should('have.text', '1')
       cy.get('[data-test="page-number"]').should('contain', '124')
       cy.get('[data-test="next"]').should('have.text', 'Next page')
+    })
+
+    it('should render the Add Interaction button', () => {
+      cy.get('[data-test=add-collection-item-button]')
+        .should('exist')
+        .should('have.text', 'Add interaction')
+        .should('have.attr', 'href', addInteractionUrl)
     })
   })
 })
@@ -72,6 +89,98 @@ describe('Export interaction collections filters "Sort by"', () => {
     it('should sort by "Subject A-Z"', () => {
       cy.get(element).select('Subject A-Z')
       assertUrl('sortby=subject')
+    })
+  })
+})
+
+describe('Export project interaction collection', () => {
+  context('When Add interaction button is clicked', () => {
+    beforeEach(() => {
+      cy.intercept(
+        'GET',
+        `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
+      ).as('apiRequest')
+      cy.visit(`/export/${companyExportProject.id}/interactions`)
+      cy.get('[data-test=add-collection-item-button]').click()
+    })
+    it('should take us to create export interaction page', () => {
+      cy.location('pathname').should('eq', addInteractionUrl)
+    })
+  })
+})
+
+describe('Create Export project interaction', () => {
+  beforeEach(() => {
+    cy.intercept(
+      'GET',
+      `/api-proxy/v4/interaction?company_export_id=${companyExportProject.id}&sortby=-created_on${queryParams}`
+    ).as('apiRequest')
+    cy.intercept('POST', '/api-proxy/v4/interaction').as('addInteraction')
+    cy.visit(addInteractionUrl)
+  })
+
+  context('should render add export interaction form', () => {
+    it('should render the header', () => {
+      cy.get('[data-test="localHeaderPreHeading"]>a')
+        .should('have.text', companyExportProject.company.name)
+        .and(
+          'have.attr',
+          'href',
+          urls.companies.detail(companyExportProject.company.id)
+        )
+      assertLocalHeader(
+        `${companyExportProject.title} to ${companyExportProject.destination_country.name}`
+      )
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: urls.exportPipeline.index(),
+        [companyExportProject.title]: urls.exportPipeline.details(
+          companyExportProject.id
+        ),
+        Interactions: urls.exportPipeline.interactions.index(
+          companyExportProject.id
+        ),
+        'Add interaction': null,
+      })
+    })
+
+    it('should offer selection of interaction or service delivery only', () => {
+      cy.get('[data-test="field-kind"]')
+        .should('contain', 'What would you like to record?')
+        .should('not.contain', 'What is this regarding?')
+    })
+
+    it('should continue to second page and add interaction', () => {
+      cy.get('[data-test="export-kind-a-standard-interaction"').click()
+      cy.get('[data-test="continue"]').click()
+      const subject = 'The best Investment Project interaction'
+      const formSelectors = selectors.interactionForm
+
+      cy.get(formSelectors.service)
+        .select('Export win')
+        .get(formSelectors.contact)
+        .selectTypeaheadOption('Johnny Cakeman')
+        .get(formSelectors.communicationChannel)
+        .selectTypeaheadOption('Email/Website')
+        .get(formSelectors.subject)
+        .type(subject)
+        .get(formSelectors.notes)
+        .type('Conversation about Investment services')
+        .get(formSelectors.policyFeedbackNo)
+        .click()
+        .get(formSelectors.add)
+        .click()
+        .wait('@addInteraction')
+        .then(({ request: { body }, response }) => {
+          expect(body).to.include({
+            kind: 'interaction',
+            theme: 'export',
+            company_export: 'f5bc555e-0eba-4a7e-abe9-db89a78afc5c',
+          })
+          expect(response.statusCode).to.eql(201)
+        })
     })
   })
 })
