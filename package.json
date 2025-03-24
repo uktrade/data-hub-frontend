@@ -219,7 +219,7 @@
     "sinon-chai": "^3.7.0",
     "std-mocks": "^2.0.0",
     "storybook": "^8.6.7",
-    "supertest": "^7.0.0",
+    "supertest": "^7.1.0",
     "webpack": "^5.98.0",
     "webpack-assets-manifest": "^5.2.1",
     "webpack-cli": "^6.0.1",
