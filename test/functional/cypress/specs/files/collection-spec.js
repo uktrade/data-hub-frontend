@@ -4,6 +4,7 @@ import {
   assertSummaryCardTitle,
   assertSummaryCardLinks,
   assertSummaryCardList,
+  assertMultipleAddItemButtons,
 } from '../../support/collection-list-assertions'
 import { companies } from '../../../../../src/lib/urls'
 import {
@@ -39,6 +40,10 @@ describe('Generic Documents / Files Collections for company', () => {
 
   it('should display a list of generic documents / files', () => {
     assertListLength(genericDocumentsList)
+  })
+
+  it('should display multiple buttons', () => {
+    assertMultipleAddItemButtons('Upload file', 'Add SharePoint link')
   })
 
   context('SharePoint type documents / files', () => {
